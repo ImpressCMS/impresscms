@@ -46,147 +46,135 @@ $filter_post = array('mid' => 'int');
 $mid = 0;
 
 /** common header for the admin functions */
-include "admin_header.php";
+include 'admin_header.php';
 
 !empty($op) || $op = 'list';
 
 $icmsAdminTpl = new icms_view_Tpl();
 
-include_once ICMS_MODULES_PATH . "/system/admin/modules/modules.php";
+include_once ICMS_MODULES_PATH . '/system/admin/modules/modules.php';
 icms_loadLanguageFile('system', 'blocks', true); // @todo - why is this here?
 
-if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
-	if (!icms::$security->check()) {
-		$op = 'list';
-	}
+if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok')) && !icms::$security->check()) {
+	$op = 'list';
 }
 
 switch ($op) {
-		case "list":
-			icms_cp_header();
-			echo xoops_module_list();
+	case 'list':
+		icms_cp_header();
+		echo xoops_module_list();
+		icms_cp_footer();
+		break;
+
+	case 'confirm':
+		icms_cp_header();
+		$error = array();
+		if (!is_writable(ICMS_CACHE_PATH . '/')) {
+			// attempt to chmod 666
+			if (!chmod(ICMS_CACHE_PATH . '/', 0777)) {
+				$error[] = sprintf(_MUSTWABLE, '<strong>' . ICMS_CACHE_PATH . '/</strong>');
+			}
+		}
+
+		if (count($error) > 0) {
+			icms_core_Message::error($error);
+			printf("<p><a class='btn btn-primary' href='admin.php?fct=modules'>%s</a></p>", _MD_AM_BTOMADMIN);
 			icms_cp_footer();
 			break;
+		}
 
-		case "confirm":
-			icms_cp_header();
-			$error = array();
-			if (!is_writable(ICMS_CACHE_PATH . '/')) {
-				// attempt to chmod 666
-				if (!chmod(ICMS_CACHE_PATH . '/', 0777)) {
-					$error[] = sprintf(_MUSTWABLE, "<strong>" . ICMS_CACHE_PATH . '/</strong>');
-				}
+		printf("<h4 style='text-align:%s;'>%s</h4><form action='admin.php' method='post'><input type='hidden' name='fct' value='modules' /><input type='hidden' name='op' value='submit' /><table width='100%%' border='0' cellspacing='1' class='table outer'><tr class='center' align='center'><th>%s</th><th>%s</th><th>%s</th></tr>", _GLOBAL_LEFT, _MD_AM_PCMFM, _CO_ICMS_MODULE, _AM_ACTION, _MD_AM_ORDER);
+		$mcount = 0;
+		foreach ($module as $mid) {
+			$class = ($mcount % 2 != 0) ? 'odd' : 'even';
+			echo '<tr class="' . $class . '"><td align="center">' . icms_core_DataFilter::stripSlashesGPC($oldname[$mid]);
+			$newname[$mid] = trim(icms_core_DataFilter::stripslashesGPC($newname[$mid]));
+			if ($newname[$mid] != $oldname[$mid]) {
+				printf('&nbsp;&raquo;&raquo;&nbsp;<span style="color:#ff0000;font-weight:bold;">%s</span>', $newname[$mid]);
 			}
-
-			if (count($error) > 0) {
-				icms_core_Message::error($error);
-				echo "<p><a class='btn btn-primary' href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a></p>";
-				icms_cp_footer();
-				break;
-			}
-
-			echo "<h4 style='text-align:" . _GLOBAL_LEFT . ";'>" . _MD_AM_PCMFM . "</h4>"
-			. "<form action='admin.php' method='post'>"
-			. "<input type='hidden' name='fct' value='modules' />"
-			. "<input type='hidden' name='op' value='submit' />"
-			. "<table width='100%' border='0' cellspacing='1' class='table outer'>"
-			. "<tr class='center' align='center'><th>" . _CO_ICMS_MODULE . "</th><th>" . _AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
-			$mcount = 0;
-			foreach ($module as $mid) {
-				if ($mcount % 2 != 0) {
-					$class = 'odd';
+			echo '</td><td align="center">';
+			if (isset($newstatus[$mid]) && $newstatus[$mid] == 1) {
+				if ($oldstatus[$mid] == 0) {
+					printf("<span style='color:#ff0000;font-weight:bold;'>%s</span>", _MD_AM_ACTIVATE);
 				} else {
-					$class = 'even';
-				}
-				echo '<tr class="' . $class . '"><td align="center">' . icms_core_DataFilter::stripSlashesGPC($oldname[$mid]);
-				$newname[$mid] = trim(icms_core_DataFilter::stripslashesGPC($newname[$mid]));
-				if ($newname[$mid] != $oldname[$mid]) {
-					echo '&nbsp;&raquo;&raquo;&nbsp;<span style="color:#ff0000;font-weight:bold;">' . $newname[$mid] . '</span>';
-				}
-				echo '</td><td align="center">';
-				if (isset($newstatus[$mid]) && $newstatus[$mid] == 1) {
-					if ($oldstatus[$mid] == 0) {
-						echo "<span style='color:#ff0000;font-weight:bold;'>" . _MD_AM_ACTIVATE . "</span>";
-					} else {
 						echo _MD_AM_NOCHANGE;
 					}
 				} else {
 					$newstatus[$mid] = 0;
 					if ($oldstatus[$mid] == 1) {
-						echo "<span style='color:#ff0000;font-weight:bold;'>" . _MD_AM_DEACTIVATE . "</span>";
+						printf("<span style='color:#ff0000;font-weight:bold;'>%s</span>", _MD_AM_DEACTIVATE);
 					} else {
 						echo _MD_AM_NOCHANGE;
 					}
-				}
-				echo "</td><td align='center'>";
-				if ($oldweight[$mid] != $weight[$mid]) {
-					echo "<span style='color:#ff0000;font-weight:bold;'>" . $weight[$mid] . "</span>";
-				} else {
-					echo $weight[$mid];
-				}
-				echo "<input type='hidden' name='module[]' value='" . (int) $mid
-				."' /><input type='hidden' name='oldname[" . $mid . "]' value='" . htmlspecialchars($oldname[$mid], ENT_QUOTES, _CHARSET)
-				."' /><input type='hidden' name='newname[" . $mid . "]' value='" . htmlspecialchars($newname[$mid], ENT_QUOTES, _CHARSET)
-				."' /><input type='hidden' name='oldstatus[" . $mid . "]' value='" . (int) $oldstatus[$mid]
-				."' /><input type='hidden' name='newstatus[" . $mid . "]' value='" . (int) $newstatus[$mid]
-				."' /><input type='hidden' name='oldweight[" . $mid . "]' value='" . (int) $oldweight[$mid]
-				."' /><input type='hidden' name='weight[" . $mid . "]' value='" . (int) $weight[$mid]
-				."' /></td></tr>";
 			}
-
-			echo "<tr class='foot' align='center'><td colspan='3'><input class='btn btn-primary' type='submit' value='"
-			. _MD_AM_SUBMIT . "' />&nbsp;<input class='btn btn-warning' type='button' value='" . _MD_AM_CANCEL
-			. "' onclick='location=\"admin.php?fct=modules\"' />" . icms::$security->getTokenHTML()
-			. "</td></tr></table></form>";
-			icms_cp_footer();
-			break;
-
-		case "submit":
-			$ret = array();
-			$write = false;
-			foreach ($module as $mid) {
-				if (isset($newstatus[$mid]) && $newstatus[$mid] == 1) {
-					if ($oldstatus[$mid] == 0) {
-						$ret[] = xoops_module_activate($mid);
-					}
-				} else {
-					if ($oldstatus[$mid] == 1) {
-						$ret[] = xoops_module_deactivate($mid);
-					}
-				}
-				$newname[$mid] = trim($newname[$mid]);
-				if ($oldname[$mid] != $newname[$mid] || $oldweight[$mid] != $weight[$mid]) {
-					$ret[] = xoops_module_change($mid, $weight[$mid], $newname[$mid]);
-					$write = true;
-				}
-				flush();
+			echo "</td><td align='center'>";
+			if ($oldweight[$mid] != $weight[$mid]) {
+				printf("<span style='color:#ff0000;font-weight:bold;'>%s</span>", $weight[$mid]);
+			} else {
+				echo $weight[$mid];
 			}
+			printf("<input type='hidden' name='module[]' value='%d' /><input type='hidden' name='oldname[%d]' value='%s' /><input type='hidden' name='newname[%d]' value='%s' /><input type='hidden' name='oldstatus[%d]' value='%d' /><input type='hidden' name='newstatus[%d]' value='%d' /><input type='hidden' name='oldweight[%d]' value='%d' /><input type='hidden' name='weight[%d]' value='%d' /></td></tr>", (int)$mid, $mid, htmlspecialchars($oldname[$mid], ENT_QUOTES, _CHARSET), $mid, htmlspecialchars($newname[$mid], ENT_QUOTES, _CHARSET), $mid, (int)$oldstatus[$mid], $mid, (int)$newstatus[$mid], $mid, (int)$oldweight[$mid], $mid, (int)$weight[$mid]);
+		}
+
+		printf("<tr class='foot' align='center'><td colspan='3'><input class='btn btn-primary' type='submit' value='%s' />&nbsp;<input class='btn btn-warning' type='button' value='%s' onclick='location=\"admin.php?fct=modules\"' />%s</td></tr></table></form>", _MD_AM_SUBMIT, _MD_AM_CANCEL, icms::$security->getTokenHTML());
+		icms_cp_footer();
+		break;
+
+	case 'submit':
+		$ret = array();
+		$write = false;
+		$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
+		$output = new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer);
+		/**
+		 * @var icms_module_Handler $module_handler
+		 */
+		$module_handler = icms::handler('icms_module');
+
+		foreach ($module as $mid) {
+			if (isset($newstatus[$mid]) && $newstatus[$mid] == 1) {
+				if ($oldstatus[$mid] == 0) {
+					$module_handler->activate($mid, $output);
+				}
+			} else {
+				if ($oldstatus[$mid] == 1) {
+					$module_handler->deactivate($mid, $output);
+				}
+			}
+			$newname[$mid] = trim($newname[$mid]);
+			if ($oldname[$mid] != $newname[$mid] || $oldweight[$mid] != $weight[$mid]) {
+				$module_handler->change($mid, $weight[$mid], $newname[$mid], $output);
+				$write = true;
+			}
+			$ret[] = nl2br(
+				$buffer->fetch() . PHP_EOL
+			);
+		}
 			if ($write) {
 				$contents = impresscms_get_adminmenu();
 				if (!xoops_module_write_admin_menu($contents)) {
-					$ret[] = "<p>" . _MD_AM_FAILWRITE . "</p>";
+					$ret[] = sprintf('<p>%s</p>', _MD_AM_FAILWRITE);
 				}
 			}
-			icms_cp_header();
-			if (count($ret) > 0) {
-				foreach ($ret as $msg) {
-					if ($msg != '') {
-						echo $msg;
-					}
+		icms_cp_header();
+		if (count($ret) > 0) {
+			foreach ($ret as $msg) {
+				if ($msg != '') {
+					echo $msg;
 				}
 			}
-			echo "<br /><a class='btn btn-primary' href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
-			icms_cp_footer();
-			break;
+		}
+		printf("<br /><a class='btn btn-primary' href='admin.php?fct=modules'>%s</a>", _MD_AM_BTOMADMIN);
+		icms_cp_footer();
+		break;
 
 		case 'install':
 			$module_handler = icms::handler('icms_module');
-			$mod = & $module_handler->create();
+			$mod = &$module_handler->create();
 			$mod->loadInfoAsVar($module);
 			if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
-				$msgs = '<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
+				$msgs = sprintf("<img src=\"%s/%s/%s\" alt=\"\" />", ICMS_MODULES_URL, $mod->getVar('dirname'), trim($mod->getInfo('image')));
 			}
-			$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREINS;
+			$msgs .= sprintf('<br /><span style="font-size:smaller;">%s</span><br /><br />%s', $mod->getVar('name'), _MD_AM_RUSUREINS);
 			if (empty($from_112)) {
 				$from_112 = false;
 			}
@@ -200,20 +188,23 @@ switch ($op) {
 			 * @var icms_module_Handler $module_handler
 			 */
 			$module_handler = icms::handler('icms_module');
-			$logger = new \Psr\Log\NullLogger(); // TODO: change this to normal
+			$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
 			$module_handler->install(
-				$module->getVar('dirname'),
-				$logger
+				$module,
+				new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
 			);
 			if ($from_112) {
 				$module_handler->update(
-					$module->getVar('dirname'),
-					$logger
+					$module,
+					new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
 				);
 			}
+			$ret[] = nl2br(
+				$buffer->fetch()
+			);
 			$contents = impresscms_get_adminmenu();
 			if (!xoops_module_write_admin_menu($contents)) {
-				$ret[] = "<p>" . _MD_AM_FAILWRITE . "</p>";
+				$ret[] = sprintf('<p>%s</p>', _MD_AM_FAILWRITE);
 			}
 			icms_cp_header();
 			if (count($ret) > 0) {
@@ -223,19 +214,19 @@ switch ($op) {
 					}
 				}
 			}
-			echo "<br /><a class='btn btn-primary' href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
+			printf("<br /><a class='btn btn-primary' href='admin.php?fct=modules'>%s</a>", _MD_AM_BTOMADMIN);
 			icms_cp_footer();
 			break;
 
 		case 'uninstall':
 			$module_handler = icms::handler('icms_module');
-			$mod = & $module_handler->getByDirname($module);
+			$mod = &$module_handler->getByDirname($module);
 			$mod->registerClassPath();
 
 			if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
-				$msgs = '<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
+				$msgs = sprintf('<img src="%s/%s/%s" alt="" />', ICMS_MODULES_URL, $mod->getVar('dirname'), trim($mod->getInfo('image')));
 			}
-			$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREUNINS;
+			$msgs .= sprintf('<br /><span style="font-size:smaller;">%s</span><br /><br />%s', $mod->getVar('name'), _MD_AM_RUSUREUNINS);
 			icms_cp_header();
 			icms_core_Message::confirm(array('module' => $module, 'op' => 'uninstall_ok', 'fct' => 'modules'), 'admin.php', $msgs, _YES);
 			icms_cp_footer();
@@ -243,14 +234,17 @@ switch ($op) {
 
 		case 'uninstall_ok':
 			$module_handler = icms::handler('icms_module');
-			$logger = new \Psr\Log\NullLogger(); // TODO: change this to normal
+			$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
 			$module_handler->uninstall(
-				$module->getVar('dirname'),
-				$logger
+				$module,
+				new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
+			);
+			$ret[] = nl2br(
+				$buffer->fetch()
 			);
 			$contents = impresscms_get_adminmenu();
 			if (!xoops_module_write_admin_menu($contents)) {
-				$ret[] = "<p>" . _MD_AM_FAILWRITE . "</p>";
+				$ret[] = sprintf('<p>%s</p>', _MD_AM_FAILWRITE);
 			}
 			icms_cp_header();
 			if (count($ret) > 0) {
@@ -260,23 +254,23 @@ switch ($op) {
 					}
 				}
 			}
-			echo "<a class='btn btn-primary' href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
+			printf("<a class='btn btn-primary' href='admin.php?fct=modules'>%s</a>", _MD_AM_BTOMADMIN);
 			icms_cp_footer();
 			break;
 
 		case 'update':
 			$module_handler = icms::handler('icms_module');
-			$mod = & $module_handler->getByDirname($module);
+			$mod = &$module_handler->getByDirname($module);
 			if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
-				$msgs = '<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
+				$msgs = sprintf('<img src="%s/%s/%s" alt="" />', ICMS_MODULES_URL, $mod->getVar('dirname'), trim($mod->getInfo('image')));
 			}
-			$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREUPD;
+			$msgs .= sprintf('<br /><span style="font-size:smaller;">%s</span><br /><br />%s', $mod->getVar('name'), _MD_AM_RUSUREUPD);
 			icms_cp_header();
 
 			if (icms_getModuleInfo('system')->getDBVersion() < 14 && (!is_writable(ICMS_PLUGINS_PATH) || !is_dir(ICMS_ROOT_PATH . '/plugins/preloads') || !is_writable(ICMS_ROOT_PATH . '/plugins/preloads'))) {
 				icms_core_Message::error(sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH, ICMS_ROOT_PATH . '/plugins/preloads'), _MD_AM_PLUGINSFOLDER_UPDATE_TITLE, true);
 			}
-			if (icms_getModuleInfo('system')->getDBVersion() < 37 && !is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
+			if (!is_writable(ICMS_IMANAGER_FOLDER_PATH) && icms_getModuleInfo('system')->getDBVersion() < 37) {
 				icms_core_Message::error(sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH)), _MD_AM_IMAGESFOLDER_UPDATE_TITLE, true);
 			}
 
@@ -286,14 +280,17 @@ switch ($op) {
 
 		case 'update_ok':
 			$module_handler = icms::handler('icms_module');
-			$logger = new \Psr\Log\NullLogger(); // TODO: change this to normal
+			$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
 			$module_handler->update(
-				$module->getVar('dirname'),
-				$logger
+				$module,
+				new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
+			);
+			$ret[] = nl2br(
+				$buffer->fetch()
 			);
 			$contents = impresscms_get_adminmenu();
 			if (!xoops_module_write_admin_menu($contents)) {
-				$ret[] = "<p>" . _MD_AM_FAILWRITE . "</p>";
+				$ret[] = sprintf('<p>%s</p>', _MD_AM_FAILWRITE);
 			}
 			icms_cp_header();
 			if (count($ret) > 0) {
@@ -303,7 +300,7 @@ switch ($op) {
 					}
 				}
 			}
-			echo "<br /><a class='btn btn-primary' href='admin.php?fct=modules'>" . _MD_AM_BTOMADMIN . "</a>";
+			printf("<br /><a class='btn btn-primary' href='admin.php?fct=modules'>%s</a>", _MD_AM_BTOMADMIN);
 			icms_cp_footer();
 			break;
 

@@ -27,12 +27,16 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+
 /**
  * Manage modules
  *
  * @copyright    http://www.impresscms.org/ The ImpressCMS Project
  * @license    LICENSE.txt
  */
+
+use ImpressCMS\Core\SetupSteps\OutputDecorator;
+use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 
 /**
  * Module handler class.
@@ -45,7 +49,8 @@
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
 class icms_module_Handler
-	extends icms_ipf_Handler {
+	extends icms_ipf_Handler
+{
 
 	/**
 	 * Constructor
@@ -71,7 +76,7 @@ class icms_module_Handler
 	 */
 	static public function getAvailable()
 	{
-		$dirtyList = $cleanList = array();
+		$cleanList = array();
 		$dirtyList = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/');
 		foreach ($dirtyList as $item) {
 			if (file_exists(ICMS_MODULES_PATH . '/' . $item . '/icms_version.php')) {
@@ -116,11 +121,11 @@ class icms_module_Handler
 				// We are in /admin.php
 				return icms::$user->isAdmin(-1);
 			} else {
-				return $perm_handler->checkRight('module_admin', $module->getVar('mid'), icms::$user->getGroups());
+				return $perm_handler->checkRight('module_admin', $module->mid, icms::$user->getGroups());
 			}
 		} elseif ($module) {
 			$groups = (icms::$user) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
-			return $perm_handler->checkRight('module_read', $module->getVar('mid'), $groups);
+			return $perm_handler->checkRight('module_read', $module->mid, $groups);
 		}
 		// We are in /something.php: let the page handle permissions
 		return true;
@@ -133,47 +138,20 @@ class icms_module_Handler
 	}
 
 	/**
-	 * Load a module from the database
-	 *
-	 * @param    int $id ID of the module
-	 * @param    bool $loadConfig set to TRUE in case you want to load the module config in addition
-	 * @param    bool $debug Debug enabled for object?
-	 * @param   bool|object $criteria Criteria for getting object if needed
-	 *
-	 * @return    \icms_module_Object|false
-	 */
-	public function &get($id, $loadConfig = false, $debug = false, $criteria = false)
-	{
-		$module = parent::get($id, true, $debug, $criteria);
-		if ($loadConfig) {
-			$this->loadConfig($module);
-		}
-		return $module;
-	}
-
-	/**
 	 * Function and rendering for installation of a module
 	 *
 	 * @param string $dirname Module dirname
-	 *
-	 * @param \Psr\Log\LoggerInterface|null $logger Logger where to put action messages
+	 * @param OutputDecorator $output Output where to write messages
 	 *
 	 * @return bool
 	 */
-	public function install($dirname, ?\Psr\Log\LoggerInterface $logger = null): bool
+	public function install(string $dirname, OutputDecorator $output): bool
 	{
-		if ($logger === null) {
-			$logger = new \Psr\Log\NullLogger();
-		}
 		$dirname = trim($dirname);
 
 		if ($this->getCount(new icms_db_criteria_Item('dirname', $dirname)) > 0) {
-			$logger->emergency(
-				sprintf(_MD_AM_FAILINS, $dirname)
-			);
-			$logger->error(
-				sprintf(_MD_AM_ALEXISTS, $dirname)
-			);
+			$output->fatal(_MD_AM_FAILINS, $dirname);
+			$output->error(_MD_AM_ALEXISTS, $dirname);
 			return false;
 		}
 
@@ -182,156 +160,125 @@ class icms_module_Handler
 		$module->registerClassPath();
 		$module->setVar('weight', 1);
 
-		$logger->info(_MD_AM_INSTALLING . $module->getInfo('name'));
-		$logger->debug(_VERSION . ': ' . icms_conv_nr2local($module->getInfo('version')));
+		$output->info(_MD_AM_INSTALLING . $module->getInfo('name'));
+		$output->writeln(_VERSION . ': ' . icms_conv_nr2local($module->getInfo('version')));
 		if (($module->getInfo('author') !== false) && trim($module->getInfo('author'))) {
-			$logger->debug(_AUTHOR . ': ' . trim($module->getInfo('author')));
+			$output->writeln(_AUTHOR . ': ' . trim($module->getInfo('author')));
 		}
 		/**
-		 * @var \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface[] $helpers
+		 * @var SetupStepInterface[] $steps
 		 */
-		$helpers = (array)\icms::getInstance()->get('module_installation_helper');
-		usort($helpers, function (\ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperA, \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperB) {
-			return $helperA->getModuleInstallStepPriority() > $helperB->getModuleInstallStepPriority();
+		$steps = (array)icms::getInstance()->get('setup_step.module.install');
+		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
+			return $stepA->getPriority() > $stepB->getPriority();
 		});
 
 		if (!$this->save($module)) {
-			$logger->error(
-				sprintf(_MD_AM_DATA_INSERT_FAIL, $module->getVar('name'))
-			);
-			$logger->emergency(
-				$logger->sprintf(_MD_AM_FAILINS, $module->getVar('name'))
-			);
+			$output->error(_MD_AM_DATA_INSERT_FAIL, $module->name);
+			$output->fatal(_MD_AM_FAILINS, $module->name);
 			return false;
 		}
 
 		// execute module steps that needs to be runned before module installation
-		$executedHelpers = [];
-		foreach ($helpers as $helper) {
-			if ($helper->executeModuleInstallStep($module, $logger)) {
-				$executedHelpers[] = $helper;
-			} else {
-				$logger->emergency(
-					sprintf(_MD_AM_FAILINS, $dirname)
-				);
-				foreach ($executedHelpers as $helper) {
-					$helper->executeModuleUninstallStep($module, $logger);
-				}
+		foreach ($steps as $step) {
+			if (!$step->execute($module, $output)) {
+				$output->fatal(_MD_AM_FAILINS, $dirname);
 				return false;
 			}
 		}
-		$logger->info(
-			sprintf(_MD_AM_OKINS, $module->getVar('name'))
-		);
+		$output->success(_MD_AM_OKINS, $module->name);
 		return true;
 	}
 
 	/**
 	 * Logic for uninstalling a module
 	 *
-	 * @param unknown_type $dirname
-	 * @return    string    Result messages for uninstallation
+	 * @param string $dirname Dirname of module to uninstall
+	 * @param OutputDecorator $output Output where to write messages
+	 *
+	 * @return    bool
 	 */
-	public function uninstall($dirname, ?\Psr\Log\LoggerInterface $logger = null)
+	public function uninstall(string $dirname, OutputDecorator $output)
 	{
-		if ($logger === null) {
-			$logger = new \Psr\Log\NullLogger();
-		}
 		global $icmsConfig;
 
 		$module = $this->getByDirname($dirname);
 		$module->registerClassPath();
-		icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
-		if ($module->getVar('dirname') == 'system') {
-			$logger->emergency(
-				sprintf(_MD_AM_FAILUNINS, $module->getVar('name')) . ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_SYSNO
+		icms_view_Tpl::template_clear_module_cache($module->mid);
+		if ($module->dirname == 'system') {
+			$output->fatal(
+				_MD_AM_FAILUNINS, $module->name
 			);
+			$output->writeln(_MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_SYSNO);
 			return false;
 		}
 
-		if ($module->getVar('dirname') === $icmsConfig['startpage']) {
-			$logger->emergency(
-				sprintf(_MD_AM_FAILUNINS, $module->getVar('name'))
-				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+		if ($module->dirname === $icmsConfig['startpage']) {
+			$output->fatal(
+				_MD_AM_FAILUNINS, $module->name
 			);
+			$output->writeln(_MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO);
 			return false;
 		}
 
 		/**
 		 * @var icms_member_Handler $member_handler
 		 */
-		$member_handler = \icms::handler('icms_member');
+		$member_handler = icms::handler('icms_member');
 		$grps = $member_handler->getGroupList();
 		foreach ($grps as $k => $v) {
 			$stararr = explode('-', $icmsConfig['startpage'][$k]);
 			if (count($stararr) > 0) {
-				if ($module->getVar('mid') == $stararr[0]) {
-					$logger->emergency(
-						sprintf(_MD_AM_FAILDEACT, $module->getVar('name')
-						) . ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+				if ($module->mid == $stararr[0]) {
+					$output->fatal(_MD_AM_FAILDEACT, $module->name);
+					$output->writeln(
+						_MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
 					);
 					return false;
 				}
 			}
 		}
-		if (in_array($module->getVar('dirname'), $icmsConfig['startpage'], true)) {
-			$logger->emergency(
-				sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
-				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+		if (in_array($module->dirname, $icmsConfig['startpage'], true)) {
+			$output->fatal(
+				_MD_AM_FAILDEACT, $module->name
 			);
+			$output->writeln(_MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO);
 			return false;
 		}
 
 		/**
-		 * @var \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface[] $helpers
+		 * @var SetupStepInterface[] $steps
 		 */
-		$helpers = (array)\icms::getInstance()->get('module_installation_helper');
-		usort($helpers, function (\ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperA, \ImpressCMS\Core\ModuleInstallationHelpers\ModuleInstallationHelperInterface $helperB) {
-			return $helperA->getModuleUninstallStepPriority() > $helperB->getModuleUninstallStepPriority();
+		$steps = (array)icms::getInstance()->get('setup_step.module.uninstall');
+		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
+			return $stepA->getPriority() > $stepB->getPriority();
 		});
 
 		// execute module steps that needs to be runned before module uninstallation
-		foreach ($helpers as $helper) {
-			if ($helper->getModuleUninstallStepPriority() >= 0) {
+		foreach ($steps as $step) {
+			if ($step->getPriority() >= 0) {
 				continue;
 			}
-			$helper->executeModuleUninstallStep($module, $logger);
+			$step->execute($module, $output);
 		}
 
 		if (!$this->delete($module)) {
-			$logger->error(
-				sprintf('  ' . _MD_AM_DELETE_FAIL, $module->getVar('name'))
-			);
+			$output->incrIndent();
+			$output->error(_MD_AM_DELETE_FAIL, $module->name);
+			$output->decrIndent();
 			return false;
 		}
 
-		// delete permissions if any
-		$logger->info(_MD_AM_GROUPPERM_DELETE);
-		$gperm_handler = icms::handler('icms_member_groupperm');
-		if (!$gperm_handler->deleteByModule($module->getVar('mid'))) {
-			$logger->error('  ' . _MD_AM_GROUPPERM_DELETE_FAIL);
-		} else {
-			$logger->info('  ' . _MD_AM_GROUPPERM_DELETED);
-		}
-
-		// delete urllinks
-		$urllink_handler = icms::handler('icms_data_urllink');
-		$urllink_handler->deleteAll(icms_buildCriteria(array("mid" => $module->getVar("mid"))));
-
-		// delete files
-		$file_handler = icms::handler('icms_data_file');
-		$file_handler->deleteAll(icms_buildCriteria(array("mid" => $module->getVar("mid"))));
-
 		// execute module steps that needs to be runned after module uninstallation
-		foreach ($helpers as $helper) {
-			if ($helper->getModuleUninstallStepPriority() < 0) {
+		foreach ($steps as $step) {
+			if ($step->getPriority() < 0) {
 				continue;
 			}
-			$helper->executeModuleUninstallStep($module, $logger);
+			$step->execute($module, $output);
 		}
 
-		$logger->info(
-			sprintf(_MD_AM_OKUNINS, $module->getVar('name'))
+		$output->success(
+			_MD_AM_OKUNINS, $module->name
 		);
 
 		return true;
@@ -342,7 +289,8 @@ class icms_module_Handler
 	 *
 	 * @param string $dirname
 	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
-	 * @return    \icms_module_Object|false
+	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
+	 * @return    icms_module_Object|false
 	 * @todo Make caching work
 	 */
 	public function getByDirname($dirname, $loadConfig = false)
@@ -400,19 +348,19 @@ class icms_module_Handler
 		// delete admin permissions assigned for this module
 		$sql = sprintf(
 			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
+			$this->db->prefix('group_permission'), (int)$module->mid
 		);
 		$this->db->query($sql);
 		// delete read permissions assigned for this module
 		$sql = sprintf(
 			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->getVar('mid')
+			$this->db->prefix('group_permission'), (int)$module->mid
 		);
 		$this->db->query($sql);
 
 		$sql = sprintf(
 			"SELECT block_id FROM %s WHERE module_id = '%u'",
-			$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
+			$this->db->prefix('block_module_link'), (int)$module->mid
 		);
 		if ($result = $this->db->query($sql)) {
 			$block_id_arr = array();
@@ -426,14 +374,14 @@ class icms_module_Handler
 			foreach ($block_id_arr as $i) {
 				$sql = sprintf(
 					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
-					$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
+					$this->db->prefix('block_module_link'), (int)$module->mid, (int)$i
 				);
 				if ($result2 = $this->db->query($sql)) {
 					if (0 < $this->db->getRowsNum($result2)) {
 						// this block has other entries, so delete the entry for this module
 						$sql = sprintf(
 							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
-							$this->db->prefix('block_module_link'), (int)$module->getVar('mid'), (int)$i
+							$this->db->prefix('block_module_link'), (int)$module->mid, (int)$i
 						);
 						$this->db->query($sql);
 					} else {
@@ -445,18 +393,18 @@ class icms_module_Handler
 						$this->db->query($sql);
 						$sql = sprintf(
 							"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
-							$this->db->prefix('block_module_link'), (int)$module->getVar('mid')
+							$this->db->prefix('block_module_link'), (int)$module->mid
 						);
 						$this->db->query($sql);
 					}
 				}
 			}
 		}
-		if (!empty($this->_cachedModule[$module->getVar('dirname')])) {
-			unset($this->_cachedModule[$module->getVar('dirname')]);
+		if (!empty($this->_cachedModule[$module->dirname])) {
+			unset($this->_cachedModule[$module->dirname]);
 		}
-		if (!empty($this->_cachedModule_lookup[$module->getVar('mid')])) {
-			unset($this->_cachedModule_lookup[$module->getVar('mid')]);
+		if (!empty($this->_cachedModule_lookup[$module->mid])) {
+			unset($this->_cachedModule_lookup[$module->mid]);
 		}
 		return true;
 	}
@@ -464,51 +412,90 @@ class icms_module_Handler
 	/**
 	 * Logic for updating a module
 	 *
-	 * @param str $dirname
-	 * @return    str    Result messages from the module update
+	 * @param string $dirname Dirname of module to uninstall
+	 * @param OutputDecorator $output Output where to write messages
+	 *
+	 * @return    bool
 	 */
-	public function update($dirname, ?\Psr\Log\LoggerInterface $logger = null)
+	public function update($dirname, OutputDecorator $output)
 	{
-		if ($logger === null) {
-			$logger = new \Psr\Log\NullLogger();
+		$dirname = trim($dirname);
+		$module_handler = icms::handler('icms_module');
+		$module = $module_handler->getByDirname($dirname);
+
+		// Save current version for use in the update function
+		$prev_version = $module->version;
+		$prev_dbversion = $module->dbversion;
+
+		icms_view_Tpl::template_clear_module_cache($module->mid);
+		// we dont want to change the module name set by admin
+		$temp_name = $module->name;
+		$module->loadInfoAsVar($dirname);
+		$module->setVar('name', $temp_name);
+
+		/*
+		 * ensure to only update those fields that are currently available in the database
+		 * this is required to allow structural updates for the module table
+		 */
+		$table = new icms_db_legacy_updater_Table('modules');
+		foreach (array_keys($module->vars) as $k) {
+			if (!$table->fieldExists($k)) {
+				unset($module->vars[$k]);
+			}
 		}
+
+		if (!$module->store()) {
+			$output->fatal(_MD_AM_UPDATE_FAIL, $module->name);
+			return false;
+		}
+
+		$output->success(_MD_AM_MOD_DATA_UPDATED);
+
+		/**
+		 * @var SetupStepInterface[] $steps
+		 */
+		$steps = (array)icms::getInstance()->get('setup_step.module.update');
+		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
+			return $stepA->getPriority() > $stepB->getPriority();
+		});
+
+		foreach ($steps as $step) {
+			$step->execute($module, $output, $prev_version, $prev_dbversion);
+		}
+
+		$output->success(_MD_AM_OKUPD, $module->name);
+
+		return false;
 	}
 
 	/**
 	 * Logic for activating a module
 	 *
 	 * @param int $mid Module id
-	 * @param \Psr\Log\LoggerInterface $logger Logger where write messages
+	 * @param OutputDecorator $output Output where to write messages
 	 *
 	 * @return   bool
 	 */
-	public function activate($mid, ?\Psr\Log\LoggerInterface $logger = null)
+	public function activate($mid, OutputDecorator $output)
 	{
-		if ($logger === null) {
-			$logger = new \Psr\Log\NullLogger();
-		}
 		$module = $this->get($mid);
-		icms_view_Tpl::template_clear_module_cache($module->getVar('mid'));
+		icms_view_Tpl::template_clear_module_cache($module->mid);
 		$module->setVar('isactive', 1);
 		if (!$module->store()) {
-			$logger->emergency(
-				sprintf(_MD_AM_FAILACT, $module->getVar('name')) . ' ' . _MD_AM_ERRORSC
-			);
-			$logger->notice(
+			$output->fatal(_MD_AM_FAILACT . ' ' . _MD_AM_ERRORSC);
+			$output->msg(
 				$module->getHtmlErrors()
 			);
 			return false;
 		}
 		$icms_block_handler = icms_getModuleHandler('blocks', 'system');
-		$blocks = &$icms_block_handler->getByModule($module->getVar('mid'));
+		$blocks = &$icms_block_handler->getByModule($module->mid);
 		$bcount = count($blocks);
 		for ($i = 0; $i < $bcount; $i++) {
 			$blocks[$i]->setVar('isactive', 1);
 			$blocks[$i]->store();
 		}
-		$logger->info(
-			sprintf(_MD_AM_OKACT, $module->getVar('name'))
-		);
+		$output->success(_MD_AM_OKACT, $module->name);
 		return true;
 	}
 
@@ -520,7 +507,7 @@ class icms_module_Handler
 	 * @param bool $debug Debug enabled for object?
 	 * @param bool|object $criteria Criteria for getting object if needed
 	 *
-	 * @return    object  {@link icms_module_Object} FALSE on fail
+	 * @return    icms_module_Object|false
 	 */
 	public function &get($id, $loadConfig = false, $debug = false, $criteria = false)
 	{
@@ -535,31 +522,29 @@ class icms_module_Handler
 	 * Logic for deactivating a module
 	 *
 	 * @param int $mid Module id
-	 * @param \Psr\Log\LoggerInterface $logger Logger where to write messages
+	 * @param OutputDecorator $output Output where to write messages
 	 *
 	 * @return bool
 	 */
-	public function deactivate($mid, ?\Psr\Log\LoggerInterface $logger = null)
+	public function deactivate($mid, OutputDecorator $output)
 	{
 		global $icmsConfig;
-
-		if ($logger === null) {
-			$logger = new \Psr\Log\NullLogger();
-		}
 
 		$module = $this->get($mid);
 		icms_view_Tpl::template_clear_module_cache($mid);
 		$module->setVar('isactive', 0);
-		if ($module->getVar('dirname') == "system") {
-			$logger->emergency(
-				sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
-				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_SYSNO
+		if ($module->dirname == "system") {
+			$output->fatal(
+				_MD_AM_FAILDEACT
+				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_SYSNO,
+				$module->name
 			);
 			return false;
-		} elseif ($module->getVar('dirname') == $icmsConfig['startpage']) {
-			$logger->emergency(
-				sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
-				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+		} elseif ($module->dirname == $icmsConfig['startpage']) {
+			$output->fatal(
+				_MD_AM_FAILDEACT
+				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO,
+				$module->name
 			);
 			return false;
 		} else {
@@ -568,43 +553,44 @@ class icms_module_Handler
 			foreach ($grps as $k => $v) {
 				$stararr = explode('-', $icmsConfig['startpage'][$k]);
 				if (count($stararr) > 0) {
-					if ($module->getVar('mid') == $stararr[0]) {
-						$logger->emergency(
-							sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
-							. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+					if ($module->mid == $stararr[0]) {
+						$output->fatal(
+							_MD_AM_FAILDEACT
+							. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO,
+							$module->name
 						);
 						return false;
 					}
 				}
 			}
-			if (in_array($module->getVar('dirname'), $icmsConfig['startpage'], true)) {
-				$logger->emergency(
-					sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
-					. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+			if (in_array($module->dirname, $icmsConfig['startpage'], true)) {
+				$output->fatal(
+					_MD_AM_FAILDEACT
+					. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO,
+					$module->name
 				);
 				return false;
 			}
 			if (!$module->store()) {
-				$logger->emergency(
-					sprintf(_MD_AM_FAILDEACT, $module->getVar('name'))
-					. ' ' . _MD_AM_ERRORSC
+				$output->fatal(
+					_MD_AM_FAILDEACT
+					. ' ' . _MD_AM_ERRORSC,
+					$module->name
 				);
-				$logger->notice(
+				$output->msg(
 					$module->getHtmlErrors()
 				);
 				return false;
 			}
 
 			$icms_block_handler = icms_getModuleHandler('blocks', 'system');
-			$blocks = &$icms_block_handler->getByModule($module->getVar('mid'));
+			$blocks = &$icms_block_handler->getByModule($module->mid);
 			$bcount = count($blocks);
 			for ($i = 0; $i < $bcount; $i++) {
 				$blocks[$i]->setVar('isactive', false);
 				$icms_block_handler->insert($blocks[$i]);
 			}
-			$logger->info(
-				sprintf(_MD_AM_OKDEACT, $module->getVar('name'))
-			);
+			$output->success(_MD_AM_OKDEACT, $module->name);
 			return true;
 		}
 	}
@@ -614,33 +600,28 @@ class icms_module_Handler
 	 *
 	 * @param int $mid Unique ID for the module to change
 	 * @param int $weight Integer value of the weight to be applied to the module
-	 * @param str $name Name to be applied to the module
-	 * @param \Psr\Log\LoggerInterface $logger Logger where to write messages
+	 * @param string $name Name to be applied to the module
+	 * @param OutputDecorator $output Output where to write messages
 	 *
 	 * @return bool
 	 */
-	public function change($mid, $weight, $name, ?\Psr\Log\LoggerInterface $logger = null)
+	public function change($mid, $weight, $name, OutputDecorator $output)
 	{
-		if ($logger === null) {
-			$logger = new \Psr\Log\NullLogger();
-		}
-
 		$module = $this->get($mid);
 		$module->setVar('weight', $weight);
 		$module->setVar('name', $name);
 		if (!$module->store()) {
-			$logger->emergency(
-				sprintf(_MD_AM_FAILORDER, icms_core_DataFilter::stripSlashesGPC($name))
-				. ' ' . _MD_AM_ERRORSC
+			$output->fatal(
+				_MD_AM_FAILORDER
+				. ' ' . _MD_AM_ERRORSC,
+				icms_core_DataFilter::stripSlashesGPC($name)
 			);
-			$logger->notice(
+			$output->msg(
 				$module->getHtmlErrors()
 			);
 			return false;
 		}
-		$logger->info(
-			sprintf(_MD_AM_OKORDER, icms_core_DataFilter::stripSlashesGPC($name))
-		);
+		$output->success(_MD_AM_OKORDER, icms_core_DataFilter::stripSlashesGPC($name));
 		return true;
 	}
 

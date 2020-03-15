@@ -221,38 +221,6 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler
 	}
 
 	/**
-	 * Get selected autotask system handler
-	 *
-	 * @param string system name
-	 *
-	 * @return AutomatedTasks
-	 */
-	public function getSelectedSystemHandler($name) {
-		if ("$name" == '') {
-			$name = 'internal';
-		}
-		$name = trim(strtolower($name));
-		require_once $this->getSystemHandlerFileName((string) $name);
-		$handler_name = 'IcmsAutoTasks' . ucfirst($name);
-		if (class_exists($handler_name)) {
-			$handler = new $handler_name($this);
-		} else {
-			trigger_error('Needed autotask handler not found!');
-		}
-		return $handler;
-	}
-
-	/**
-	 * Gets system handler filename
-	 *
-	 * @param	string	name
-	 * @return	string
-	 */
-	private function getSystemHandlerFileName($name) {
-		return ICMS_PLUGINS_PATH . '/autotasks/' . $name . '.php';
-	}
-
-	/**
 	 * Get system handler name from filename
 	 *
 	 * @param string filename
@@ -260,40 +228,6 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler
 	 */
 	private function getSystemHandlerNameFromFileName($filename) {
 		return substr($filename, strlen(ICMS_PLUGINS_PATH . '/autotasks/'), -strlen('.php'));
-	}
-
-	/**
-	 * Gets autotasks settings
-	 *
-	 * @return Array(ConfigObjectItems)
-	 */
-	public function getConfig() {
-		if ($this->isVirtualConfigEnabled()) {
-			return $this->_virtual_config;
-		}
-		//$old_handler_name = get_class($handler);
-		$config_handler = icms::handler('icms_config');
-		$config_atasks = $config_handler->getConfigsByCat(\icms_config_Handler::CATEGORY_AUTOTASKS);
-		return $config_atasks;
-	}
-
-	/**
-	 * Get AutoTasks System
-	 *
-	 * @param bool force update handler
-	 *
-	 * @return AutomatedTasks|null
-	 */
-	public function getCurrentSystemHandler($forceUpdate = false) {
-		static $handler = false;
-		if (defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE) {
-			return null;
-		}
-		if ($forceUpdate || ($handler === false)) {
-			$config_atasks = $this->getConfig();
-			$handler = $this->getSelectedSystemHandler($config_atasks['autotasks_system']);
-		}
-		return $handler;
 	}
 
 	/**
@@ -323,16 +257,5 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler
 		}
 		sort($ret);
 		return $ret;
-	}
-
-	/**
-	 * Get system handler name from filename
-	 *
-	 * @param string filename
-	 * @return string
-	 */
-	private function getSystemHandlerNameFromFileName($filename)
-	{
-		return substr($filename, strlen(ICMS_PLUGINS_PATH . '/autotasks/'), -strlen('.php'));
 	}
 }
