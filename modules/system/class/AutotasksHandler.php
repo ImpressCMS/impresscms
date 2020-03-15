@@ -39,11 +39,39 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler
 	}
 
 	/**
+	 * Get virtual configuration status
+	 *
+	 * @return bool
+	 */
+	public function isVirtualConfigEnabled()
+	{
+		return $this->_use_virtual_config;
+	}
+
+	/**
 	 * Disable virtual configuration
 	 */
 	public function disableVirtualConfig()
 	{
 		$this->_use_virtual_config = false;
+	}
+
+	/**
+	 * Gets selected type current events for current user
+	 *
+	 * @param int $ type
+	 * @return Object
+	 */
+	public function getTasks()
+	{
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->setSort('sat_lastruntime');
+		$criteria->setOrder('ASC');
+		$criteria->add(new icms_db_criteria_Item('(sat_lastruntime + sat_interval)', time(), '<=', null, "%s"));
+		$criteria->add(new icms_db_criteria_Item('sat_repeat', 0, '>=', null, "'%s'"));
+		$criteria->add(new icms_db_criteria_Item('sat_enabled', 1));
+		$rez = $this->getObjects($criteria, false);
+		return $rez;
 	}
 
 	/**
@@ -67,111 +95,17 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler
 	}
 
 	/**
-	 * Gets selected type current events for current user
-	 *
-	 * @param int $ type
-	 * @return Object
-	 */
-	public function getTasks()
-	{
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->setSort('sat_lastruntime');
-		$criteria->setOrder('ASC');
-		$criteria->add(new icms_db_criteria_Item('(sat_lastruntime + sat_interval)', time(), '<=', null, "%s"));
-		$criteria->add(new icms_db_criteria_Item('sat_repeat', 0, '>=', null, "'%s'"));
-		$criteria->add(new icms_db_criteria_Item('sat_enabled', 1));
-		$rez = $this->getObjects($criteria, false);
-		return $rez;
-	}
-
-	/**
 	 * Get if current autotask handler needs execution
 	 *
 	 * @return bool
 	 */
-	public function needExecution() {
+	public function needExecution()
+	{
 		$handler = $this->getCurrentSystemHandler();
 		if ($handler === null) {
 			return false;
 		}
 		return $handler->needExecution();
-	}
-
-	/**
-	 * Get AutoTasks System
-	 *
-	 * @param bool force update handler
-	 *
-	 * @return AutomatedTasks
-	 */
-	public function getCurrentSystemHandler($forceUpdate = false)
-	{
-		static $handler = false;
-		if ($forceUpdate || ($handler === false)) {
-			$config_atasks = $this->getConfig();
-			$handler = $this->getSelectedSystemHandler($config_atasks['autotasks_system']);
-		}
-		return $handler;
-	}
-
-	/**
-	 * Gets autotasks settings
-	 *
-	 * @return Array(ConfigObjectItems)
-	 */
-	public function getConfig()
-	{
-		if ($this->isVirtualConfigEnabled()) {
-			return $this->_virtual_config;
-		}
-		//$old_handler_name = get_class($handler);
-		$config_handler = icms::handler('icms_config');
-		$config_atasks = $config_handler->getConfigsByCat(\icms_config_Handler::CATEGORY_AUTOTASKS);
-		return $config_atasks;
-	}
-
-	/**
-	 * Get virtual configuration status
-	 *
-	 * @return bool
-	 */
-	public function isVirtualConfigEnabled()
-	{
-		return $this->_use_virtual_config;
-	}
-
-	/**
-	 * Get selected autotask system handler
-	 *
-	 * @param string system name
-	 *
-	 * @return AutomatedTasks
-	 */
-	public function getSelectedSystemHandler($name)
-	{
-		if ("$name" == '') {
-			$name = 'internal';
-		}
-		$name = trim(strtolower($name));
-		require_once $this->getSystemHandlerFileName((string)$name);
-		$handler_name = 'IcmsAutoTasks' . ucfirst($name);
-		if (class_exists($handler_name)) {
-			$handler = new $handler_name($this);
-		} else {
-			trigger_error('Needed autotask handler not found!');
-		}
-		return $handler;
-	}
-
-	/**
-	 * Gets system handler filename
-	 *
-	 * @param string    name
-	 * @return    string
-	 */
-	private function getSystemHandlerFileName($name)
-	{
-		return ICMS_PLUGINS_PATH . '/autotasks/' . $name . '.php';
 	}
 
 	/**
@@ -221,13 +155,84 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler
 	}
 
 	/**
+	 * Get selected autotask system handler
+	 *
+	 * @param string system name
+	 *
+	 * @return AutomatedTasks
+	 */
+	public function getSelectedSystemHandler($name)
+	{
+		if ("$name" == '') {
+			$name = 'internal';
+		}
+		$name = trim(strtolower($name));
+		require_once $this->getSystemHandlerFileName((string)$name);
+		$handler_name = 'IcmsAutoTasks' . ucfirst($name);
+		if (class_exists($handler_name)) {
+			$handler = new $handler_name($this);
+		} else {
+			trigger_error('Needed autotask handler not found!');
+		}
+		return $handler;
+	}
+
+	/**
+	 * Gets system handler filename
+	 *
+	 * @param string    name
+	 * @return    string
+	 */
+	private function getSystemHandlerFileName($name)
+	{
+		return ICMS_PLUGINS_PATH . '/autotasks/' . $name . '.php';
+	}
+
+	/**
 	 * Get system handler name from filename
 	 *
 	 * @param string filename
 	 * @return string
 	 */
-	private function getSystemHandlerNameFromFileName($filename) {
+	private function getSystemHandlerNameFromFileName($filename)
+	{
 		return substr($filename, strlen(ICMS_PLUGINS_PATH . '/autotasks/'), -strlen('.php'));
+	}
+
+	/**
+	 * Gets autotasks settings
+	 *
+	 * @return Array(ConfigObjectItems)
+	 */
+	public function getConfig()
+	{
+		if ($this->isVirtualConfigEnabled()) {
+			return $this->_virtual_config;
+		}
+		//$old_handler_name = get_class($handler);
+		$config_handler = icms::handler('icms_config');
+		$config_atasks = $config_handler->getConfigsByCat(\icms_config_Handler::CATEGORY_AUTOTASKS);
+		return $config_atasks;
+	}
+
+	/**
+	 * Get AutoTasks System
+	 *
+	 * @param bool force update handler
+	 *
+	 * @return AutomatedTasks|null
+	 */
+	public function getCurrentSystemHandler($forceUpdate = false)
+	{
+		static $handler = false;
+		if (defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE) {
+			return null;
+		}
+		if ($forceUpdate || ($handler === false)) {
+			$config_atasks = $this->getConfig();
+			$handler = $this->getSelectedSystemHandler($config_atasks['autotasks_system']);
+		}
+		return $handler;
 	}
 
 	/**
