@@ -38,46 +38,9 @@
  * mechanism and thus makes templates inclusion faster. Note that however, this new behavior may
  * create problems in some cases (but you can prevent them most of the times, for example by always
  * using a <var>tmp_</var> prefix for the variables you create in included templates looping sections).
+ *
+ * @deprecated
  */
-function smarty_compiler_includeq( $tag_args, &$comp ) {
+class Smarty_Compiler_Includeq extends Smarty_Internal_Compile_Include {
 
-	$attrs = $comp->_parse_attrs($tag_args);
-    $arg_list = array();
-
-    if (empty($attrs['file'])) {
-        $comp->_syntax_error("missing 'file' attribute in includeq tag", E_USER_ERROR, __FILE__, __LINE__);
-    }
-
-    foreach ($attrs as $arg_name => $arg_value) {
-        if ($arg_name == 'file') {
-            $include_file = $arg_value;
-            continue;
-        } else if ($arg_name == 'assign') {
-            $assign_var = $arg_value;
-            continue;
-        }
-        if (is_bool($arg_value))
-            $arg_value = $arg_value ? 'true' : 'false';
-        $arg_list[] = "'$arg_name' => $arg_value";
-    }
-
-    $output = '';
-
-    if (isset($assign_var)) {
-        $output .= "ob_start();\n";
-    }
-
-    //$output .= "\$_smarty_tpl_vars = \$this->_tpl_vars;\n";
-    $_params = "array('smarty_include_tpl_file' => " . $include_file . ", 'smarty_include_vars' => array(".implode(',', (array)$arg_list)."))";
-    $output .= "\$this->_smarty_include($_params);\n";
-    //"\$this->_tpl_vars = \$_smarty_tpl_vars;\n" .
-    //"unset(\$_smarty_tpl_vars);\n";
-
-    if (isset($assign_var)) {
-        $output .= "\$this->assign(" . $assign_var . ", ob_get_contents()); ob_end_clean();\n";
-    }
-    //$output .= '';
-    return $output;
 }
-
-
