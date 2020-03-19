@@ -26,50 +26,50 @@ define("RECOMMENDED_SETTINGS", "Aanbevolen instellingen");
 define("RECOMMENDED_EXTENSIONS", "Aanbevolen extensies");
 define("SETTING_NAME", "Naam instelling");
 define("RECOMMENDED", "Aanbevolen");
-define("CURRENT", "Current");
-define("RECOMMENDED_EXTENSIONS_MSG", "These extensions are not required for normal use, but may be necessary to exploit
-	some specific features (like the multi-language or RSS support). Thus, it is recommended to have them installed." );
+define("CURRENT", "Huidig");
+define("RECOMMENDED_EXTENSIONS_MSG", "Deze extensies zijn niet nodig voor normaal gebruik, maar kunnen nodig zijn om gebruik te maken van
+sommige specifieke functies (zoals de taal of RSS support). Daarom wordt aanbevolen om ze geïnstalleerd te hebben." );
 define("NONE", "Geen");
-define("SUCCESS", "Success");
-define("WARNING", "Warning");
-define("FAILED", "Failed");
+define("SUCCESS", "Geslaagd");
+define("WARNING", "Waarschuwing");
+define("FAILED", "Mislukt");
 
 // Titles (main and pages)
-define("XOOPS_INSTALL_WIZARD", " %s - Installation Wizard");
-define("INSTALL_STEP", "Step");
-define("INSTALL_H3_STEPS", "Steps");
-define("INSTALL_OUTOF", " out of ");
+define("XOOPS_INSTALL_WIZARD", " %s - Installatie Wizard");
+define("INSTALL_STEP", "Stap");
+define("INSTALL_H3_STEPS", "Stappen");
+define("INSTALL_OUTOF", " van de ");
 define("INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"https://www.impresscms.org\" target=\"_blank\">The ImpressCMS Project</a>");
 
-define("LANGUAGE_SELECTION", "Language selection");
-define("LANGUAGE_SELECTION_TITLE", "Choose your language"); // L128
-define("INTRODUCTION", "Introduction");
-define("INTRODUCTION_TITLE", "Welcome to the ImpressCMS installation assistant"); // L0
-define("CONFIGURATION_CHECK", "Configuration check");
-define("CONFIGURATION_CHECK_TITLE", "Checking your server configuration");
-define("PATHS_SETTINGS", "Paths settings");
-define("PATHS_SETTINGS_TITLE", "Paths settings");
-define("DATABASE_CONNECTION", "Database connection");
-define("DATABASE_CONNECTION_TITLE", "Database connection");
-define("DATABASE_CONFIG", "Database configuration");
-define("DATABASE_CONFIG_TITLE", "Database configuration");
-define("CONFIG_SAVE", "Configuration save");
-define("CONFIG_SAVE_TITLE", "Saving your system configuration");
-define("TABLES_CREATION", "Tables creation");
-define("TABLES_CREATION_TITLE", "Database tables creation");
-define("INITIAL_SETTINGS", "Initial settings");
-define("INITIAL_SETTINGS_TITLE", "Please enter your initial settings");
-define("DATA_INSERTION", "Data insertion");
-define("DATA_INSERTION_TITLE", "Saving your settings to the database");
+define("LANGUAGE_SELECTION", "Taal selectie");
+define("LANGUAGE_SELECTION_TITLE", "Kies uw taal"); // L128
+define("INTRODUCTION", "Inleiding");
+define("INTRODUCTION_TITLE", "Welkom bij de ImpressCMS installatieassistent"); // L0
+define("CONFIGURATION_CHECK", "Configuratie Controle");
+define("CONFIGURATION_CHECK_TITLE", "Controle van de serverconfiguratie");
+define("PATHS_SETTINGS", "Paden instellingen");
+define("PATHS_SETTINGS_TITLE", "Paden instellingen");
+define("DATABASE_CONNECTION", "Database verbinding");
+define("DATABASE_CONNECTION_TITLE", "Database verbinding");
+define("DATABASE_CONFIG", "Database configuratie");
+define("DATABASE_CONFIG_TITLE", "Database configuratie");
+define("CONFIG_SAVE", "Instellingen opslaan");
+define("CONFIG_SAVE_TITLE", "Uw systeemconfiguratie wordt opgeslagen");
+define("TABLES_CREATION", "Tabellen aanmaken");
+define("TABLES_CREATION_TITLE", "Database tabellen aanmaken");
+define("INITIAL_SETTINGS", "Initiële instellingen");
+define("INITIAL_SETTINGS_TITLE", "Voer uw begininstellingen in");
+define("DATA_INSERTION", "Invoeging van gegevens");
+define("DATA_INSERTION_TITLE", "Je instellingen worden opgeslagen in de database");
 define("WELCOME", "Welkom");
-define("NO_PHP5", "No PHP 5");
-define("WELCOME_TITLE", "Installation of ImpressCMS completed"); // L0
-define("MODULES_INSTALL", "Install modules");
-define("MODULES_INSTALL_TITLE", "Installation of modules ");
-define("NO_PHP5_TITLE", "No PHP 5");
-define("NO_PHP5_CONTENT", "PHP 5.2.0 minimum is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.2.0 (5.2.8 + is recommended) before attempting to install again. For more information, read <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS on PHP5 </a>.");
-define("SAFE_MODE", "Safe Mode On");
-define("SAFE_MODE_TITLE", "Safe Mode On");
+define("NO_PHP5", "Geen PHP 5");
+define("WELCOME_TITLE", "Installatie van ImpressCMS is voltooid"); // L0
+define("MODULES_INSTALL", "Installeer modules");
+define("MODULES_INSTALL_TITLE", "Installatie van modules ");
+define("NO_PHP5_TITLE", "Geen PHP 5");
+define("NO_PHP5_CONTENT", "PHP 5.2.0 minimum is vereist om ImpressCMS goed te laten functioneren - uw installatie kan niet doorgaan. Werk met uw hostingprovider samen om uw omgeving te upgraden naar een versie van PHP die nieuwer is dan 5..0 (5.2.8 + wordt aanbevolen) voordat u opnieuw probeert te installeren. Voor meer informatie lees <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS op PHP5 </a>.");
+define("SAFE_MODE", "Veilige modus aan");
+define("SAFE_MODE_TITLE", "Veilige modus aan");
 define("SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again.");
 
 // Settings (labels and help text)
@@ -144,12 +144,12 @@ define("TABLE_NOT_DROPPED", "Failed deleting table %s."); // L164
 define("ERR_COULD_NOT_ACCESS", "Could not access the specified folder. Please verify that it exists and is readable by the server.");
 define("ERR_NO_XOOPS_FOUND", "No ImpressCMS installation could be found in the specified folder.");
 define("ERR_INVALID_EMAIL", "Ongeldige e-mail"); // L73
-define("ERR_REQUIRED", "Please enter all the required info."); // L41
-define("ERR_PASSWORD_MATCH", "The two passwords do not match");
-define("ERR_NEED_WRITE_ACCESS", "The server must be given write access to the following files and folders<br />(i.e. <em>chmod 777 directory_name</em> on a UNIX/LINUX server)"); // L72
-define("ERR_NO_DATABASE", "Could not create database. Contact the server administrator for details."); // L31
-define("ERR_NO_DBCONNECTION", "Could not connect to the database server."); // L106
-define("ERR_WRITING_CONSTANT", "Failed writing constant %s."); // L122
+define("ERR_REQUIRED", "Vul alle verplichten velden in."); // L41
+define("ERR_PASSWORD_MATCH", "De twee wachtwoorden komen niet overeen");
+define("ERR_NEED_WRITE_ACCESS", "De server moet schrijftoegang krijgen tot de volgende bestanden en mappen<br />(d.w.z. <em>chmod 777 map_name</em> op een UNIX/LINUX server)"); // L72
+define("ERR_NO_DATABASE", "Kan de database niet aanmaken. Neem voor meer informatie contact op met de serverbeheerder."); // L31
+define("ERR_NO_DBCONNECTION", "Kan geen verbinding maken met de databaseserver."); // L106
+define("ERR_WRITING_CONSTANT", "Schrijven constante %s mislukt."); // L122
 define('ERR_WRITE_ENV_DATA', 'Error write .env data');
 define("ERR_INVALID_DBCHARSET", "The charset '%s' is not supported.");
 define("ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported.");
