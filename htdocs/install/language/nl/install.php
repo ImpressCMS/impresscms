@@ -9,23 +9,23 @@
  * @package 		installer
  */
 
-define("SHOW_HIDE_HELP", "Show/hide help text");
+define("SHOW_HIDE_HELP", "Helptekst weergeven/verbergen");
 
-define("ALTERNATE_LANGUAGE_MSG", "Download an alternate language pack from the ImpressCMS website");
-define("ALTERNATE_LANGUAGE_LNK_MSG", "Select another language not listed here.");
+define("ALTERNATE_LANGUAGE_MSG", "Download een alternatief taalpakket van de ImpressCMS website");
+define("ALTERNATE_LANGUAGE_LNK_MSG", "Selecteer een andere taal die hier niet is vermeld.");
 define("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 
 // Configuration check page
 define("SERVER_API", "Server API");
-define("PHP_EXTENSION", "%s extension");
-define("CHAR_ENCODING", "Character encoding");
+define("PHP_EXTENSION", "%s extensie");
+define("CHAR_ENCODING", "Karakter codering");
 define("XML_PARSING", "XML parsing");
-define("REQUIREMENTS", "Requirements");
-define("_PHP_VERSION", "PHP version");
-define("RECOMMENDED_SETTINGS", "Recommended settings");
-define("RECOMMENDED_EXTENSIONS", "Recommended extensions");
-define("SETTING_NAME", "Setting name");
-define("RECOMMENDED", "Recommended");
+define("REQUIREMENTS", "Vereisten");
+define("_PHP_VERSION", "PHP versie");
+define("RECOMMENDED_SETTINGS", "Aanbevolen instellingen");
+define("RECOMMENDED_EXTENSIONS", "Aanbevolen extensies");
+define("SETTING_NAME", "Naam instelling");
+define("RECOMMENDED", "Aanbevolen");
 define("CURRENT", "Current");
 define("RECOMMENDED_EXTENSIONS_MSG", "These extensions are not required for normal use, but may be necessary to exploit
 	some specific features (like the multi-language or RSS support). Thus, it is recommended to have them installed." );
