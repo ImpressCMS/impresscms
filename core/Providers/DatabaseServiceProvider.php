@@ -35,8 +35,8 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 			return $this->createDatabaseConnection(
 				env('DB_TYPE', 'mysql'),
 				env('DB_HOST', '127.0.0.1'),
-				env('DB_USER'),
-				env('DB_PASS'),
+				env('DB_USER', ''),
+				env('DB_PASS', ''),
 				(int)env('DB_PCONNECT', 0),
 				env('DB_NAME', 'impresscms'),
 				env('DB_CHARSET', 'utf8'),
