@@ -54,5 +54,4 @@ jobs:
             htdocs/editors/CKeditor/ceditfinder
             htdocs/editors/CKeditor/ckeditor
             htdocs/editors/tinymce/tinymce.php
-            libraries/smarty
             plugins/sourceeditors/editarea/editor/edit_area_compressor.php

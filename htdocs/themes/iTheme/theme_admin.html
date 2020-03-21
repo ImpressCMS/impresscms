@@ -29,8 +29,8 @@
 	<meta name="generator" content="ImpressCMS" />
 
 <!-- Favicon -->
-	<link rel="shortcut icon" type="image/ico" href="<{xoImgUrl icons/favicon.ico}>" />
-	<link rel="icon" type="image/png" href="<{xoImgUrl icons/icon.png}>" />
+	<link rel="shortcut icon" type="image/ico" href="<{xoImgUrl 'icons/favicon.ico'}>"/>
+	<link rel="icon" type="image/png" href="<{xoImgUrl 'icons/icon.png'}>"/>
 
 <!-- Module Header -->
 		<{$icms_module_header}>
@@ -45,7 +45,7 @@
 			$('[data-toggle="tooltip"]').tooltip()
 		});
 	</script>
-	
+
 </head>
 
 <body id="<{$icms_dirname}>" class="<{$icms_langcode}>">
@@ -136,7 +136,7 @@
 	<span id="nav-change-language">[mlimg]</span>
   <{/if}>
 </div>
-<{ if $modname != '' }>
+<{if $modname != '' }>
   <div id="navOptionsCP">
 	<div class="modname">
 	  <{$modname}>

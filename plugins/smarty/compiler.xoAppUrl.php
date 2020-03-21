@@ -45,43 +45,40 @@
  * ([xoAppUrl "modules/something/yourpage.php?order=`$sortby`"])
  * </code>
  */
-function smarty_compiler_xoAppUrl( $argStr, &$compiler ) {
-	global $xoops;
-	$argStr = trim( $argStr );
+function smarty_compiler_xoAppUrl($args, &$compiler)
+{
+	$url = trim($args[0]);
+	$params = array_slice($args, 1);
 
-	@list( $url, $params ) = explode( ' ', $argStr, 2 );
-
-	if ( substr( $url, 0, 1 ) == '/' ) {
+	if (strpos($url, '/') === 0) {
 		$url = 'www' . $url;
 	}
 	// Static URL generation
-	if ( strpos( $argStr, '$' ) === false && $url != '.' ) {
+	if ($url !== '.' && strpos($url[0], '$') === false) {
 		if ( isset($params) ) {
-			$params = $compiler->_parse_attrs( $params, false );
 			foreach ( $params as $k => $v ) {
 				if ( in_array( substr( $v, 0, 1 ), array( '"', "'" ) ) ) {
 					$params[$k] = substr( $v, 1, -1 );
 				}
 			}
-			$url = $xoops->buildUrl( $url, $params );
+			$url = \icms::buildUrl( $url, $params );
 		}
-		$url = icms::path($url, true);
-		return "echo '" . addslashes( htmlspecialchars( $url ) ) . "';";
+		$url = icms::path( $url, true );
+		return htmlspecialchars($url);
 	}
 	// Dynamic URL generation
 	if ( $url == '.' ) {
 		$str = "\$_SERVER['REQUEST_URI']";
 	} else {
-		$str = "icms::path( '$url', true )";
+		$str = "\\icms::path( '$url', true )";
 	}
 	if ( isset($params) ) {
-		$params = $compiler->_parse_attrs( $params, false );
-		$str = "icms::buildUrl( $str, array(\n";
+		$str = "\\icms::buildUrl( $str, array(\n";
 		foreach ( $params as $k => $v ) {
 			$str .= var_export( $k, true ) . " => $v,\n";
 		}
-		$str .= ") )";
+		$str .= ') )';
 	}
-	return "echo htmlspecialchars( $str );";
+	return "<?php echo htmlspecialchars( $str ); ?" . '>';
 }
 

@@ -91,6 +91,4 @@ define('ICMS_IMANAGER_FOLDER_URL', ICMS_UPLOAD_URL . '/imagemanager');
 $icms_images_setname = 'kfaenza';
 define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
 
-define('SMARTY_DIR', ICMS_LIBRARIES_PATH . '/smarty/');
-
 define('XOOPS_DB_CHKREF', 1);
