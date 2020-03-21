@@ -51,6 +51,7 @@
     "aura/sql": "^3.0",
     "aura/sqlschema": "^2.0",
     "cerdic/css-tidy": "^1.5",
+    "composer/composer": "^1.10",
     "erusev/parsedown": "^1.7.0",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
@@ -102,6 +103,169 @@
       "commands": [
       ],
       "boot": "mainfile.php"
+    },
+    "providers": [
+      "\\ImpressCMS\\Core\\Providers\\PreloadServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\LoggerServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\FilesystemServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\DatabaseServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\SecurityServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\SessionServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\ConfigServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\ModuleServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider"
+    ],
+    "services": {
+      "\\IcmsPreloadAdsense": {
+        "tags": [
+          "preload"
+        ]
+      },
+      "\\icms_AutologinEventHandler": {
+        "tags": [
+          "preload"
+        ]
+      },
+      "\\IcmsPreloadAutotasks": {
+        "tags": [
+          "preload"
+        ]
+      },
+      "\\IcmsPreloadCustomtag": {
+        "tags": [
+          "preload"
+        ]
+      },
+      "\\icms_MultilanguageEventHandler": {
+        "tags": [
+          "preload"
+        ]
+      },
+      "\\IcmsPreloadProtectEmail": {
+        "tags": [
+          "preload"
+        ]
+      },
+      "\\IcmsPreloadUserInfo": {
+        "tags": [
+          "preload"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\AutotasksSetupStep": {
+        "tags": [
+          "setup_step.module.install"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\BlockSetupStep": {
+        "tags": [
+          "setup_step.module.install"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\ConfigSetupStep": {
+        "tags": [
+          "setup_step.module.install"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\ScriptSetupStep": {
+        "tags": [
+          "setup_step.module.install"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\TablesSetupStep": {
+        "tags": [
+          "setup_step.module.install"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\ViewTemplateSetupStep": {
+        "tags": [
+          "setup_step.module.install"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\AutotasksSetupStep": {
+        "tags": [
+          "setup_step.module.update"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\BlocksSetupStep": {
+        "tags": [
+          "setup_step.module.update"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\ConfigSetupStep": {
+        "tags": [
+          "setup_step.module.update"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\ScriptSetupStep": {
+        "tags": [
+          "setup_step.module.update"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\ViewTemplateSetupStep": {
+        "tags": [
+          "setup_step.module.update"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\AutotasksSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\BlockSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\CommentsSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\ConfigSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\DataPageSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\FilesSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\GroupPermissionsSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\NotificationsSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\ScriptSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\TablesSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\UrlLinksSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\ViewTemplateSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      }
     }
   },
   "config": {

@@ -267,98 +267,74 @@ final class icms extends Container {
 	}
 
 	/**
+	 * Get extras part from composer
+	 *
+	 * @param string $composerJsonPath Composer.json path
+	 *
+	 * @return array
+	 */
+	private function getComposerExtras(string $composerJsonPath): array
+	{
+		static $extras = null;
+
+		if ($extras === null) {
+			chdir($composerJsonPath);
+			$composer = \Composer\Factory::create(
+				new \Composer\IO\NullIO()
+			);
+			$extras = $composer->getPackage()->getExtra();
+			/**
+			 * @var \Composer\Package\CompletePackage $package
+			 */
+			foreach ($composer->getRepositoryManager()->getLocalRepository()->getPackages() as $package) {
+				if (!in_array($package->getType(), ['impresscms-module'])) {
+					continue;
+				}
+				$extras = array_merge_recursive($extras, $package->getExtra());
+			}
+
+			chdir(__DIR__);
+		}
+
+		return $extras;
+	}
+
+	/**
+	 * Loads composer definitions
+	 *
+	 * @param \ImpressCMS\Core\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition Composer definition class
+	 */
+	protected function loadComposerDefinition(\ImpressCMS\Core\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition)
+	{
+		$composerJsonPath = dirname(__DIR__);
+		if ($composerDefinition->needsUpdate($composerJsonPath)) {
+			$composerDefinition->updateCache(
+				$this->getComposerExtras($composerJsonPath)
+			);
+		}
+		$composerDefinition->load($this);
+	}
+
+	/**
 	 * Launch bootstrap and instanciate global services
 	 *
 	 * @return $this
 	 */
 	public function boot()
 	{
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\PreloadServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\LoggerServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\FilesystemServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\DatabaseServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\SecurityServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\SessionServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\ConfigServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\ModuleServiceProvider::class);
-		$this->addServiceProvider(\ImpressCMS\Core\Providers\CacheServiceProvider::class);
+		$this->loadComposerDefinition(
+			new \ImpressCMS\Core\ComposerDefinitions\ProvidersComposerDefinition()
+		);
+		$this->loadComposerDefinition(
+			new \ImpressCMS\Core\ComposerDefinitions\ServicesComposerDefinition()
+		);
+
 		// register module install steps
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Install\AutotasksSetupStep::class)
-			->addTag('setup_step.module.install');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Install\BlockSetupStep::class)
-			->addTag('setup_step.module.install');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Install\ConfigSetupStep::class)
-			->addTag('setup_step.module.install');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Install\ScriptSetupStep::class)
-			->addTag('setup_step.module.install');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Install\TablesSetupStep::class)
-			->addTag('setup_step.module.install');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Install\ViewTemplateSetupStep::class)
-			->addTag('setup_step.module.install');
-		// register module update steps
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Update\AutotasksSetupStep::class)
-			->addTag('setup_step.module.update');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Update\BlocksSetupStep::class)
-			->addTag('setup_step.module.update');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Update\ConfigSetupStep::class)
-			->addTag('setup_step.module.update');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Update\ScriptSetupStep::class)
-			->addTag('setup_step.module.update');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Update\ViewTemplateSetupStep::class)
-			->addTag('setup_step.module.update');
-		// register module uninstall steps
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\AutotasksSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\BlockSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\CommentsSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\ConfigSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\DataPageSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\FilesSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\GroupPermissionsSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\NotificationsSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\ScriptSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\TablesSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\UrlLinksSetupStep::class)
-			->addTag('setup_step.module.uninstall');
-		$this
-			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\ViewTemplateSetupStep::class)
-			->addTag('setup_step.module.uninstall');
 		// register links for compatibility
 		self::$db = $this->get('db');
 		self::$xoopsDB = $this->get('xoopsDB');
 		self::$logger = $this->get('logger');
-		self::$preload = $this->get('preload');
+		self::$preload = $this->get(icms_preload_Handler::class);
 		self::$config = $this->get('config');
 		self::$security = $this->get('security');
 		self::$session = $this->get('session');

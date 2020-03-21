@@ -23,16 +23,6 @@
 class icms_preload_Handler {
 
 	/**
-	 * @var array $_preloadFilesArray array containing a list of all preload files in ICMS_PRELOAD_PATH
-	 */
-	private $_preloadFilesArray = array();
-
-	/**
-	 * @var array $_preloadEventsArray array containing a list of all events for all preload file, indexed by event name and sorted by order of execution
-	 */
-	private $_preloadEventsArray = array();
-
-	/**
 	 * Constructor
 	 *
 	 * Determine the preloads by scanning the preloads directory and the preloads directory for each module specified
@@ -42,22 +32,8 @@ class icms_preload_Handler {
 	 * @return	void
 	 */
 	public function __construct() {
-		$preloadFilesArray = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_PRELOAD_PATH, '', array('php')));
-		foreach ($preloadFilesArray as $filename) {
-			// exclude index.html
-			if (!in_array($this->getClassName($filename), get_declared_classes())) {
-				$this->_preloadFilesArray[] = $filename;
-				$this->addPreloadEvents($filename);
-			}
-		}
-
-		// add ondemand preload
-		global $icmsOnDemandPreload;
-		if (isset($icmsOnDemandPreload) && count($icmsOnDemandPreload) > 0) {
-			foreach ($icmsOnDemandPreload as $onDemandPreload) {
-				$this->_preloadFilesArray[] = $onDemandPreload['filename'];
-				$this->addPreloadEvents($onDemandPreload['filename'], $onDemandPreload['module']);
-			}
+		foreach (icms::getInstance()->get('preload') as $preloadClass) {
+			$this->registerEvents($preloadClass);
 		}
 	}
 
@@ -68,11 +44,14 @@ class icms_preload_Handler {
 	 * and have a defined event (like 'beforeFilterHTMLinput'). A fully qualified method would look
 	 * like 'eventBeforeFilterHTMLinput'
 	 *
-	 * @todo	implement an order parameter, to enable prioritizing responses to an event
+	 * @param string $filename Filename for where to add Preload events
+	 * @param bool $module Module name
 	 *
-	 * @param string $filename
+	 * @todo    implement an order parameter, to enable prioritizing responses to an event
+	 *
 	 */
-	public function addPreloadEvents($filename, $module = false) {
+	public function addPreloadEvents($filename, $module = false)
+	{
 		if ($module) {
 			$filepath = ICMS_ROOT_PATH . "/modules/$module/preload/$filename.php";
 		} else {
@@ -82,25 +61,26 @@ class icms_preload_Handler {
 
 		$classname = $this->getClassName($filename);
 
-		if (in_array($classname, get_declared_classes())) {
-			$preloadItem = new $classname();
+		if (in_array($classname, get_declared_classes(), true)) {
+			$this->registerEvents(
+				new $classname()
+			);
+		}
+	}
 
-			$class_methods = get_class_methods($classname);
-			foreach ($class_methods as $method) {
-				if (strpos($method, 'event') === 0) {
-					$preload_event = strtolower(str_replace('event', '', $method));
+	/**
+	 * Register preload events
+	 *
+	 * @param object $instance Preload instance
+	 */
+	protected function registerEvents($instance)
+	{
+		$class_methods = get_class_methods($instance);
+		foreach ($class_methods as $method) {
+			if (strpos($method, 'event') === 0) {
+				$preload_event = strtolower(str_replace('event', '', $method));
 
-					$callback = array($preloadItem, $method);
-					icms_Event::attach('icms', $preload_event, $callback);
-					/*
-					$preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);
-					if (defined($preload_event_weight_define_name)) {
-						$preload_event_weight = constant($preload_event_weight_define_name);
-						$this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;
-					} else {
-						$this->_preloadEventsArray[$preload_event][] = $preload_event_array;
-					}*/
-				}
+				icms_Event::attach('icms', $preload_event, [$instance, $method]);
 			}
 		}
 	}
@@ -110,10 +90,11 @@ class icms_preload_Handler {
 	 *
 	 * @static
 	 * @staticvar   object
-	 * @return	object
+	 * @return    object
 	 *
 	 */
-	static public function &getInstance() {
+	static public function &getInstance()
+	{
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new icms_preload_Handler();
