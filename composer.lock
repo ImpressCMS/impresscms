@@ -1,20 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "452bbb70117fe91bce90f61bead141d6",
-    "packages": [
-        {
-            "name": "0.0.0/composer-include-files",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpexpertsinc/composer-include-files.git",
-                "reference": "6776421c358c6a25b16eccb617de9478b7ae2019"
-            },
-            "dist": {
+  "_readme": [
+	"This file locks the dependencies of your project to a known state",
+	"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+	"This file is @generated automatically"
+  ],
+  "content-hash": "e946f27abdb815c79d9a7f18655f3555",
+  "packages": [
+	{
+	  "name": "0.0.0/composer-include-files",
+	  "version": "1.5.0",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/phpexpertsinc/composer-include-files.git",
+		"reference": "6776421c358c6a25b16eccb617de9478b7ae2019"
+	  },
+	  "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpexpertsinc/composer-include-files/zipball/6776421c358c6a25b16eccb617de9478b7ae2019",
                 "reference": "6776421c358c6a25b16eccb617de9478b7ae2019",
