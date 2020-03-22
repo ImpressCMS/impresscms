@@ -163,40 +163,11 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler
 	 */
 	public function getSelectedSystemHandler($name)
 	{
-		if ("$name" == '') {
-			$name = 'internal';
+		$name = trim($name);
+		if (empty($name)) {
+			$name = IcmsAutoTasksInternal::class;
 		}
-		$name = trim(strtolower($name));
-		require_once $this->getSystemHandlerFileName((string)$name);
-		$handler_name = 'IcmsAutoTasks' . ucfirst($name);
-		if (class_exists($handler_name)) {
-			$handler = new $handler_name($this);
-		} else {
-			trigger_error('Needed autotask handler not found!');
-		}
-		return $handler;
-	}
-
-	/**
-	 * Gets system handler filename
-	 *
-	 * @param string    name
-	 * @return    string
-	 */
-	private function getSystemHandlerFileName($name)
-	{
-		return ICMS_PLUGINS_PATH . '/autotasks/' . $name . '.php';
-	}
-
-	/**
-	 * Get system handler name from filename
-	 *
-	 * @param string filename
-	 * @return string
-	 */
-	private function getSystemHandlerNameFromFileName($filename)
-	{
-		return substr($filename, strlen(ICMS_PLUGINS_PATH . '/autotasks/'), -strlen('.php'));
+		return \icms::getInstance()->get('\\' . $name);;
 	}
 
 	/**
@@ -209,7 +180,6 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler
 		if ($this->isVirtualConfigEnabled()) {
 			return $this->_virtual_config;
 		}
-		//$old_handler_name = get_class($handler);
 		$config_handler = icms::handler('icms_config');
 		$config_atasks = $config_handler->getConfigsByCat(\icms_config_Handler::CATEGORY_AUTOTASKS);
 		return $config_atasks;
@@ -232,6 +202,7 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler
 			$config_atasks = $this->getConfig();
 			$handler = $this->getSelectedSystemHandler($config_atasks['autotasks_system']);
 		}
+
 		return $handler;
 	}
 
@@ -246,21 +217,14 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler
 	{
 		static $ret = null;
 		if ($ret === null) {
-			$files = glob($this->getSystemHandlerFileName('*'));
-			$ret = false;
-			foreach ($files as $file) {
-				$name = (string)$this->getSystemHandlerNameFromFileName((string)$file);
-				$handler = $this->getSelectedSystemHandler($name);
-				if (!$handler) {
-					continue;
-				}
+			foreach (\icms::getInstance()->get('autotasks.system') as $handler) {
 				if ($checkIfItIsAvaibleOnCurrentSystem && (!$handler->canRun())) {
 					continue;
 				}
-				$ret[] = $name;
+				$ret[get_class($handler)] = $handler->getName();
 			}
+			asort($ret);
 		}
-		sort($ret);
 		return $ret;
 	}
 }
