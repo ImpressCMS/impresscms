@@ -64,10 +64,10 @@ class icms_response_HTML extends icms_response_Text {
 			$this->addRedirectMessageScripts($redirect_message);
 		}
 
-		if (isset($this->theme->plugins['icms_view_PageBuilder']) && is_object($this->theme->plugins['icms_view_PageBuilder'])) {
-			$this->theme->template->assign_by_ref('xoBlocks', $this->theme->plugins['icms_view_PageBuilder']->blocks);
-		}
-		$this->updateCacheTime();
+        if (isset($this->theme->plugins['icms_view_PageBuilder']) && is_object($this->theme->plugins['icms_view_PageBuilder'])) {
+			$this->theme->template->assignByRef('xoBlocks', $this->theme->plugins['icms_view_PageBuilder']->blocks);
+        }
+        $this->updateCacheTime();
 
 		global $icmsConfig;
 		$this->theme->template->assign('icmsLang', $icmsConfig['language']);

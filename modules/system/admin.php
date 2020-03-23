@@ -97,9 +97,6 @@ if (is_object(icms::$user)) {
 include_once ICMS_MODULES_PATH . '/system/constants.php';
 $error = false;
 if ($admintest != 0) {
-	if (icms_getModuleInfo('system')->getDBVersion() < ICMS_SYSTEM_DBVERSION) {
-		icms_core_Message::warning(_CO_ICMS_UPDATE_NEEDED, "", true);
-	}
 	if (isset($fct) && $fct != '') {
 		if (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $fct . '/icms_version.php')) {
 			icms_loadLanguageFile('system', $fct, true);

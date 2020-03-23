@@ -35,14 +35,6 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-if (!defined('SMARTY_DIR')) {
-	exit();
-}
-/**
- * Base class: Smarty template engine
- */
-require_once SMARTY_DIR . 'Smarty.class.php';
-
 /**
  * Template engine
  *
@@ -50,7 +42,8 @@ require_once SMARTY_DIR . 'Smarty.class.php';
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_view_Tpl extends Smarty {
+class icms_view_Tpl extends SmartyBC
+{
 
 	public $left_delimiter = '<{';
 	public $right_delimiter = '}>';
@@ -64,20 +57,11 @@ class icms_view_Tpl extends Smarty {
 
 		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
 		$this->_compile_id = $this->compile_id;
-		$this->compile_check = ($icmsConfig['theme_fromfile'] == 1);
-		$this->plugins_dir = array(
-			SMARTY_DIR . 'icms_plugins',
-			SMARTY_DIR . 'plugins',
-		);
+		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
 
-		// For backwars compatibility...
-		if (file_exists(ICMS_ROOT_PATH . '/class/smarty/plugins')) {
-			$this->plugins_dir[] = ICMS_ROOT_PATH . '/class/smarty/plugins';
-		}
+		parent::__construct();
 
-		if (file_exists(ICMS_ROOT_PATH . '/class/smarty/xoops_plugins')) {
-			$this->plugins_dir[] = ICMS_ROOT_PATH . '/class/smarty/xoops_plugins';
-		}
+		$this->addPluginsDir(ICMS_PLUGINS_PATH . DIRECTORY_SEPARATOR . 'smarty');
 
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
@@ -88,7 +72,6 @@ class icms_view_Tpl extends Smarty {
 				$this->debugging = true;
 			}
 		}
-		$this->Smarty();
 		if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 			$this->assign('icms_rtl', true);
 		}
@@ -109,22 +92,22 @@ class icms_view_Tpl extends Smarty {
 			'xoops_langcode' => _LANGCODE,
 			'xoops_charset' => _CHARSET,
 			'xoops_version' => ICMS_VERSION_NAME,
-			'xoops_upload_url' => ICMS_UPLOAD_URL
+			'xoops_upload_url' => ICMS_UPLOAD_URL,
+			'globals' => $GLOBALS
 			)
 		);
+
+		$this->registerObject('icms',icms::getInstance(),null,false);
 	}
 
 	/**
 	 * Renders output from template data
 	 *
-	 * @param   string  $data		The template to render
+	 * @param   string  $tplSource		The template to render
 	 * @param	bool	$display	If rendered text should be output or returned
 	 * @return  string  			Rendered output if $display was false
 	 */
 	public function fetchFromData($tplSource, $display = false, $vars = null) {
-		if (!function_exists('smarty_function_eval')) {
-			require_once SMARTY_DIR . '/plugins/function.eval.php';
-		}
 		if (isset($vars)) {
 			$oldVars = $this->_tpl_vars;
 			$this->assign($vars);
@@ -138,35 +121,43 @@ class icms_view_Tpl extends Smarty {
 	/**
 	 * Touch the resource (file) which means get it to recompile the resource
 	 *
-	 * @param   string  $resourcename	Resourcename to touch
-	 * @return  string  $result         Was the resource recompiled
+	 * @param   string  $resourceName	Resource name to touch
+	 *
+	 * @return  int
 	 */
 	public function touch($resourceName) {
-		$isForced = $this->force_compile;
-		$this->force_compile = true;
-		$this->clear_cache($resourceName);
-		$result = $this->_compile_resource($resourceName, $this->_get_compile_path($resourceName));
-		$this->force_compile = $isForced;
-		return $result;
+		return $this->clearCache($resourceName);
 	}
 
 	/**
 	 * Touch template by id
 	 *
-	 * @param   string  $tpl_id
+	 * @param string $tpl_id
 	 *
 	 * @return  boolean
+	 * @throws \Psr\Cache\InvalidArgumentException
 	 */
-	static public function template_touch($tpl_id) {
-		$tplfile_handler = & icms::handler('icms_view_template_file');
-		$tplfile = & $tplfile_handler->get($tpl_id);
+	public static function template_touch($tpl_id) {
+		$tplFileHandler = & icms::handler('icms_view_template_file');
+		$tplFile = & $tplFileHandler->get($tpl_id);
 
-		if (is_object($tplfile)) {
-			$file = $tplfile->tpl_file;
-			$tpl = new icms_view_Tpl();
-			return $tpl->touch("db:$file");
+		if (!is_object($tplFile)) {
+			return false;
 		}
-		return false;
+
+		$file = $tplFile->tpl_file;
+
+		/**
+		 * @var \Psr\Cache\CacheItemPoolInterface $cache
+		 */
+		$cache = \icms::getInstance()->get('cache');
+		$cache->deleteItem('tpl_db_' . base64_encode($file));
+
+		$tpl = new icms_view_Tpl();
+
+		$tpl->touch("db:$file");
+
+		return true;
 	}
 
 	/**
@@ -179,11 +170,11 @@ class icms_view_Tpl extends Smarty {
 		$block_arr = $icms_block_handler->getByModule($mid);
 		$count = count($block_arr);
 		if ($count > 0) {
-			$xoopsTpl = new icms_view_Tpl();
-			$xoopsTpl->caching = 2;
+			$tpl = new self();
+			$tpl->caching = 2;
 			for ($i = 0; $i < $count; $i++) {
 				if ($block_arr[$i]->getVar('template') != '') {
-					$xoopsTpl->clear_cache('db:' . $block_arr[$i]->getVar('template'), 'blk_' . $block_arr[$i]->getVar('bid'));
+					$tpl->clear_cache('db:' . $block_arr[$i]->getVar('template'), 'blk_' . $block_arr[$i]->getVar('bid'));
 				}
 			}
 		}
