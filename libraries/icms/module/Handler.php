@@ -93,7 +93,7 @@ class icms_module_Handler
 	 *
 	 * This method is necessary to be able to use a static method
 	 *
-	 * @return    array    List of active modules
+	 * @return    string[]    List of active modules
 	 * @since    1.3
 	 */
 	static public function getActive()

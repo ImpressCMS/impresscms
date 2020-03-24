@@ -71,7 +71,12 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 			}
 			if (isset($serviceInfo['methods'])) {
 				foreach ($serviceInfo['methods'] as $method => $arguments) {
-					$ret .= '    ->addMethodCall(' . var_export($method, true) . ',' . var_export((array)$arguments, true) . ')' . PHP_EOL;
+					$ret .= '    ->addMethodCall(' . PHP_EOL;
+					$ret .= sprintf('        %s,', var_export($method, true)) . PHP_EOL;
+					foreach (explode(PHP_EOL, var_export((array)$arguments, true)) as $line) {
+						$ret .= '        ' . $line . PHP_EOL;
+					}
+					$ret .= '    )' . PHP_EOL;
 				}
 			}
 			$ret = trim($ret) . ';' . PHP_EOL;

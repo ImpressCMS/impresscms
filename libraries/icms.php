@@ -338,6 +338,11 @@ final class icms extends Container {
 		self::$config = $this->get('config');
 		self::$security = $this->get('security');
 		self::$session = $this->get('session');
+
+		$this->loadComposerDefinition(
+			new \ImpressCMS\Core\ComposerDefinitions\RoutesComposerDefinition()
+		);
+
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
 
