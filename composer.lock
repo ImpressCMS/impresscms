@@ -4,7 +4,7 @@
 	"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
 	"This file is @generated automatically"
   ],
-  "content-hash": "67b37cd92c145a628f1e8edcd7906bef",
+  "content-hash": "17e4e225ae2d705369860f8be7822d4e",
   "packages": [
 	{
 	  "name": "0.0.0/composer-include-files",
@@ -15,16 +15,16 @@
 		"reference": "6776421c358c6a25b16eccb617de9478b7ae2019"
 	  },
 	  "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/composer-include-files/zipball/6776421c358c6a25b16eccb617de9478b7ae2019",
-                "reference": "6776421c358c6a25b16eccb617de9478b7ae2019",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/phpexpertsinc/composer-include-files/zipball/6776421c358c6a25b16eccb617de9478b7ae2019",
+		"reference": "6776421c358c6a25b16eccb617de9478b7ae2019",
+		"shasum": ""
+	  },
+	  "require": {
+		"composer-plugin-api": "^1.0"
+	  },
+	  "type": "composer-plugin",
+	  "extra": {
                 "class": "ComposerIncludeFiles\\Plugin"
             },
             "autoload": {
@@ -776,21 +776,21 @@
             "autoload": {
                 "classmap": [
                     "src/geshi/",
-                    "src/geshi.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Benny Baumann",
-				  "email": "BenBE@geshi.org",
-				  "homepage": "http://blog.benny-baumann.de/",
-				  "role": "Developer"
-				}
-			],
+				  "src/geshi.php"
+				]
+			},
+		  "notification-url": "https://packagist.org/downloads/",
+		  "license": [
+			"GPL-2.0+"
+		  ],
+		  "authors": [
+			{
+			  "name": "Benny Baumann",
+			  "email": "BenBE@geshi.org",
+			  "homepage": "http://blog.benny-baumann.de/",
+			  "role": "Developer"
+			}
+		  ],
 		  "description": "Generic Syntax Highlighter",
 		  "homepage": "http://qbnz.com/highlighter/",
 		  "time": "2019-10-20T20:54:46+00:00"
@@ -927,16 +927,16 @@
 	  "dist": {
 		"type": "zip",
 		"url": "https://api.github.com/repos/imponeer/composer-custom-commands/zipball/d9ca04d6344426a2dc710965eb476b195dd07bf0",
-                "reference": "d9ca04d6344426a2dc710965eb476b195dd07bf0",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1",
-                "php": ">=5.5",
-                "symfony/console": "^3.4"
-            },
-            "require-dev": {
-                "composer/composer": "^1.6"
+		"reference": "d9ca04d6344426a2dc710965eb476b195dd07bf0",
+		"shasum": ""
+	  },
+	  "require": {
+		"composer-plugin-api": "^1.1",
+		"php": ">=5.5",
+		"symfony/console": "^3.4"
+	  },
+	  "require-dev": {
+		"composer/composer": "^1.6"
             },
             "type": "composer-plugin",
             "extra": {
@@ -1294,16 +1294,16 @@
             "description": "Filesystem abstraction: Many filesystems, one API.",
             "keywords": [
                 "Cloud Files",
-                "WebDAV",
-                "abstraction",
-                "aws",
-                "cloud",
-                "copy.com",
-                "dropbox",
-                "file systems",
-                "files",
-                "filesystem",
-                "filesystems",
+			  "WebDAV",
+			  "abstraction",
+			  "aws",
+			  "cloud",
+			  "copy.com",
+			  "dropbox",
+			  "file systems",
+			  "files",
+			  "filesystem",
+			  "filesystems",
 			  "ftp",
 			  "rackspace",
 			  "remote",
@@ -1396,16 +1396,16 @@
 	  "dist": {
 		"type": "zip",
 		"url": "https://api.github.com/repos/lulco/phoenix/zipball/a993a93210c0c80acec95545a13c202d028a2f62",
-                "reference": "a993a93210c0c80acec95545a13c202d028a2f62",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "ext-pdo": "*",
-                "php": ">= 7.1",
-                "symfony/console": ">=3.1 <3.4.31|>=4.0 <4.3.4",
-                "symfony/finder": "^3.1|^4.0"
-            },
+		"reference": "a993a93210c0c80acec95545a13c202d028a2f62",
+		"shasum": ""
+	  },
+	  "require": {
+		"ext-json": "*",
+		"ext-pdo": "*",
+		"php": ">= 7.1",
+		"symfony/console": ">=3.1 <3.4.31|>=4.0 <4.3.4",
+		"symfony/finder": "^3.1|^4.0"
+	  },
             "require-dev": {
                 "nette/neon": "^2.3|^3.0",
                 "phpunit/phpunit": ">7.2",
@@ -1597,16 +1597,16 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jordi Boggiano",
-                    "email": "j.boggiano@seld.be",
-                    "homepage": "http://seld.be"
-                }
-            ],
+		  "license": [
+			"MIT"
+		  ],
+		  "authors": [
+			{
+			  "name": "Jordi Boggiano",
+			  "email": "j.boggiano@seld.be",
+			  "homepage": "http://seld.be"
+			}
+		  ],
 		  "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
 		  "homepage": "http://github.com/Seldaek/monolog",
 		  "keywords": [
@@ -1730,16 +1730,16 @@
 	  "dist": {
 		"type": "zip",
 		"url": "https://api.github.com/repos/OldXoopsLibraries/php-downloader/zipball/95e0d6a7d886fbfea6e9450e6bc86a8541290fd4",
-                "reference": "95e0d6a7d886fbfea6e9450e6bc86a8541290fd4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~3.7"
-            },
-            "type": "library",
+		"reference": "95e0d6a7d886fbfea6e9450e6bc86a8541290fd4",
+		"shasum": ""
+	  },
+	  "require": {
+		"php": ">=5.0"
+	  },
+	  "require-dev": {
+		"phpunit/phpunit": "~3.7"
+	  },
+	  "type": "library",
             "autoload": {
                 "classmap": [
                     "./src/zipfile.php",
@@ -2051,16 +2051,16 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common Container Interface (PHP FIG PSR-11)",
-            "homepage": "https://github.com/php-fig/container",
+			  "MIT"
+			],
+		  "authors": [
+			{
+			  "name": "PHP-FIG",
+			  "homepage": "http://www.php-fig.org/"
+			}
+		  ],
+		  "description": "Common Container Interface (PHP FIG PSR-11)",
+		  "homepage": "https://github.com/php-fig/container",
 		  "keywords": [
 			"PSR-11",
 			"container",
@@ -2289,16 +2289,16 @@
 	  "dist": {
 		"type": "zip",
 		"url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
-                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+		"reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
+		"shasum": ""
+	  },
+	  "require": {
+		"php": ">=5.3.0"
+	  },
+	  "type": "library",
+	  "extra": {
+		"branch-alias": {
+		  "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -2306,16 +2306,16 @@
                     "Psr\\Log\\": "Psr/Log/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
+	  "notification-url": "https://packagist.org/downloads/",
+	  "license": [
+		"MIT"
+	  ],
+	  "authors": [
+		{
+		  "name": "PHP-FIG",
+		  "homepage": "http://www.php-fig.org/"
+		}
+	  ],
 	  "description": "Common interface for logging libraries",
 	  "homepage": "https://github.com/php-fig/log",
 	  "keywords": [
@@ -2376,16 +2376,16 @@
 	  "dist": {
 		"type": "zip",
 		"url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/e2e5d290e4d2a4f0eb449f510071392e00e10d19",
-                "reference": "e2e5d290e4d2a4f0eb449f510071392e00e10d19",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.3 || ^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
-            },
-            "bin": [
+		"reference": "e2e5d290e4d2a4f0eb449f510071392e00e10d19",
+		"shasum": ""
+	  },
+	  "require": {
+		"php": "^5.3 || ^7.0"
+	  },
+	  "require-dev": {
+		"phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
+	  },
+	  "bin": [
                 "bin/jsonlint"
             ],
             "type": "library",

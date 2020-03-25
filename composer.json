@@ -296,6 +296,15 @@
       }
     },
     "routes": {
+      "/": {
+        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex"
+      },
+      "/error.php": {
+        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getError"
+      },
+      "/error": {
+        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getError"
+      }
     }
   },
   "config": {

@@ -71,47 +71,19 @@ $request = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
 try {
 	$response = $router->dispatch($request);
 } catch (\Exception $exception) {
-	$_REQUEST['e'] = 404;
-	include __DIR__ . '/error.php';
+	$defController = new \ImpressCMS\Core\Controllers\DefaultController();
+	$_GET['e'] = 404;
+	$response = $defController->getError(
+		(new \GuzzleHttp\Psr7\ServerRequest(
+			$request->getMethod(),
+			$request->getUri(),
+			$request->getHeaders(),
+			$request->getBody(),
+			$request->getProtocolVersion()
+		))
+			->withQueryParams($_GET)
+			->withParsedBody($_POST)
+	);
 }
 
 \icms::getInstance()->get('sapi-emitter')->emit($response);
-
-/*
-$member_handler = \icms::handler('icms_member');
-$group = $member_handler->getUserBestGroup(
-	(!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
-);
-
-// added failover to default startpage for the registered users group -- JULIAN EGELSTAFF Apr 3 2017
-$groups = (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-if (($icmsConfig['startpage'][$group] == "" or $icmsConfig['startpage'][$group] == "--")
-	and in_array(ICMS_GROUP_USERS, $groups)
-	and $icmsConfig['startpage'][ICMS_GROUP_USERS] != ""
-	and $icmsConfig['startpage'][ICMS_GROUP_USERS] != "--") {
-	$icmsConfig['startpage'] = $icmsConfig['startpage'][ICMS_GROUP_USERS];
-} else {
-	$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
-}
-
-
-if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != '' && $icmsConfig['startpage'] != '--') {
-	$arr = explode('-', $icmsConfig['startpage']);
-	if (count($arr) > 1) {
-		$page_handler = \icms::handler('icms_data_page');
-		$page = $page_handler->get($arr[1]);
-		if (is_object($page)) {
-			header('Location: ' . $page->getURL());
-		} else {
-			$icmsConfig['startpage'] = '--';
-			\icms::$response = new \icms_response_DefaultEmptyPage();
-			\icms::$response->render();
-		}
-	} else {
-		header('Location: ' . ICMS_MODULES_URL . '/' . $icmsConfig['startpage'] . '/');
-	}
-	exit();
-} else {
-	\icms::$response = new \icms_response_DefaultEmptyPage();
-	\icms::$response->render();
-}*/

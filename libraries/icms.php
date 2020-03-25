@@ -25,13 +25,6 @@ use League\Container\Container;
 final class icms extends Container {
 
 	/**
-	 * Current response
-	 *
-	 * @var \icms_response_Text
-	 */
-	static public $response;
-
-	/**
 	 * ImpressCMS paths locations
 	 *
 	 * @var array

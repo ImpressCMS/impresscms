@@ -2140,12 +2140,14 @@ if (!function_exists('icms_makeSmarty')) {
 	 */
 	function icms_makeSmarty(array $items)
 	{
+		global $icmsTpl, $icmsAdminTpl;
 		trigger_error('Use icms_response_* classes instead', E_USER_DEPRECATED);
-		if (!isset(\icms::$response)) {
-			return false;
+		if ($icmsAdminTpl) {
+			$icmsAdminTpl->assign($items);
 		} else {
-			\icms::$response->assign($items);
+			$icmsTpl->assign($items);
 		}
+
 		return true;
 	}
 }
