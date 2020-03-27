@@ -26,11 +26,13 @@ class LegacyController
 	{
 		$path = ICMS_ROOT_PATH . $request->getUri()->getPath();
 		if (pathinfo($path, PATHINFO_EXTENSION) === 'php') {
-			global $icmsTpl, $xoopsTpl, $xoopsOption;
+			global $icmsTpl, $xoopsTpl, $xoopsOption, $icmsAdminTpl, $icms_admin_handler;
+			ob_start();
+			require $path;
 			return new \GuzzleHttp\Psr7\Response(
 				200,
 				[],
-				require($path)
+				ob_get_clean()
 			);
 		}
 

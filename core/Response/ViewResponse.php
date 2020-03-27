@@ -300,18 +300,18 @@ class ViewResponse implements ResponseInterface
 	{
 		global $icmsConfig;
 
-		$cache = icms::getInstance()->get('cache');
+		$cache = \icms::getInstance()->get('cache');
 		$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
 
 		if (!$cached_menu->isHit()) {
-			xoops_module_write_admin_menu(impresscms_get_adminmenu());
+			\xoops_module_write_admin_menu(\impresscms_get_adminmenu());
 			$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
 		}
 
 		$admin_menu = $cached_menu->get();
 
-		$moduleperm_handler = icms::handler('icms_member_groupperm');
-		$module_handler = icms::handler('icms_module');
+		$moduleperm_handler = \icms::handler('icms_member_groupperm');
+		$module_handler = \icms::handler('icms_module');
 		$groups = \icms::$user->getGroups();
 		foreach ($admin_menu as $k => $navitem) {
 			//Getting array of allowed modules to use in admin home
@@ -332,7 +332,7 @@ class ViewResponse implements ResponseInterface
 			if ($navitem['id'] == 'opsystem') {
 				$all_ok = false;
 				if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
-					$sysperm_handler = icms::handler('icms_member_groupperm');
+					$sysperm_handler = \icms::handler('icms_member_groupperm');
 					$ok_syscats = &$sysperm_handler->getItemIds('system_admin', $groups);
 				} else {
 					$all_ok = true;
