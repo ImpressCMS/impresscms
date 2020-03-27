@@ -295,17 +295,16 @@
         "class": "\\Narrowspark\\HttpEmitter\\SapiEmitter"
       }
     },
-    "routes": {
-      "/": {
+    "routes": [
+      {
+        "path": "/",
         "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex"
       },
-      "/error.php": {
-        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getError"
-      },
-      "/error": {
+      {
+        "path": "/error.php",
         "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getError"
       }
-    }
+    ]
   },
   "config": {
     "optimize-autoloader": true,

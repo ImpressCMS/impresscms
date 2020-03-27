@@ -4,6 +4,7 @@
 namespace ImpressCMS\Core\ComposerDefinitions;
 
 use ImpressCMS\Core\Controllers\LegacyController;
+use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use League\Container\Container;
 use League\Route\Strategy\ApplicationStrategy;
 use League\Route\Strategy\JsonStrategy;
@@ -60,8 +61,8 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			$this->getOldStyleRoutes(),
 			$data['routes'] ?? []
 		);
-		foreach ($routes as $path => $definition) {
-			foreach ($this->generateDefinitionVariants($path, $definition) as $parsedDefinition) {
+		foreach ($routes as $definition) {
+			foreach ($this->generateDefinitionVariants($definition) as $parsedDefinition) {
 				$hasPort = isset($parsedDefinition['port']);
 				$hasHost = isset($parsedDefinition['host']);
 				$hasScheme = isset($parsedDefinition['scheme']);
@@ -149,14 +150,15 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			if (in_array($fileInfo->getFilename(), ['mainfile.php', 'header.php', 'footer.php', 'phoenix.php'])) {
 				continue;
 			}
-			$ret['/' . $fileInfo->getFilename()] = [
+			$ret[] = [
+				'path' => '/' . $fileInfo->getFilename(),
 				'method' => ['GET', 'POST'],
 				'handler' => LegacyController::class . '::proxy',
 			];
 		}
 		foreach ($paths as $path) {
-			foreach ($this->getOldStyleRoutesForPath($path) as $p => $route) {
-				$ret[$p] = $route;
+			foreach ($this->getOldStyleRoutesForPath($path) as $route) {
+				$ret[] = $route;
 			}
 		}
 
@@ -199,7 +201,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				continue;
 			}
 			$method = ($fileInfo->getExtension() === 'php') ? ['GET', 'POST'] : 'GET';
-			$ret[$path] = compact('method', 'handler');
+			$ret[] = compact('method', 'handler', 'path');
 		}
 		return $ret;
 	}
@@ -207,16 +209,21 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 	/**
 	 * Generate route definition variants
 	 *
-	 * @param string $path Route path
 	 * @param array $definition Route definition
 	 *
 	 * @return array
+	 *
+	 * @throws RoutePathUndefinedException
 	 */
-	protected function generateDefinitionVariants(string $path, array $definition): array
+	protected function generateDefinitionVariants(array $definition): array
 	{
 		$ret = [];
 		$methods = (array)($definition['method'] ?? 'GET');
 		$handler = $definition['handler'];
+		if (!isset($definition['path'])) {
+			throw new RoutePathUndefinedException();
+		}
+		$path = $definition['path'];
 		if (isset($definition['strategy'])) {
 			switch (strtolower(trim($definition['strategy']))) {
 				case 'json':
