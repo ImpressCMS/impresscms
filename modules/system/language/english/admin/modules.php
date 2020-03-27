@@ -94,7 +94,7 @@ define('_MD_AM_BLOCK_UPDATED', 'Block %s updated. Block ID: %s.');
 define('_MD_AM_BLOCK_CREATED', 'Block %s created. Block ID: %s.');
 
 define('_MD_AM_BLOCKS_ADDING', 'Adding blocks...');
-define('_MD_AM_BLOCKS_ADD_FAIL', 'ERROR: Could not add block %1$s to the database! Database error: %2$s');
+define('_MD_AM_BLOCKS_ADD_FAIL', 'ERROR: Could not add block %1$s to the database!');
 define('_MD_AM_BLOCK_ADDED', 'Block %1$s added. Block ID: %2$s');
 define('_MD_AM_BLOCKS_DELETE', 'Deleting block...');
 define('_MD_AM_BLOCK_DELETE_FAIL', 'ERROR: Could not delete block %1$s. Block ID: %2$s');

@@ -11,7 +11,8 @@
  *
  * @package ImpressCMS\Modules\System\Class\Autotasks
  */
-class mod_system_AutotasksHandler extends icms_ipf_Handler {
+class mod_system_AutotasksHandler extends icms_ipf_Handler
+{
 
 	private $_use_virtual_config = false;
 	private $_virtual_config = array();
@@ -19,18 +20,20 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	/**
 	 * Constructor
 	 *
-	 * @param object $db	Database object
+	 * @param object $db Database object
 	 */
-	public function __construct($db) {
+	public function __construct($db)
+	{
 		parent::__construct($db, 'autotasks', 'sat_id', 'sat_name', 'sat_code', 'system');
 	}
 
 	/**
 	 * Enable virtual configuartion and set it
 	 *
-	 * @param	array
+	 * @param array
 	 */
-	public function enableVirtualConfig(&$array) {
+	public function enableVirtualConfig(&$array)
+	{
 		$this->_virtual_config = $array;
 		$this->_use_virtual_config = true;
 	}
@@ -40,14 +43,16 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @return bool
 	 */
-	public function isVirtualConfigEnabled() {
+	public function isVirtualConfigEnabled()
+	{
 		return $this->_use_virtual_config;
 	}
 
 	/**
 	 * Disable virtual configuration
 	 */
-	public function disableVirtualConfig() {
+	public function disableVirtualConfig()
+	{
 		$this->_use_virtual_config = false;
 	}
 
@@ -57,7 +62,8 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 * @param int $ type
 	 * @return Object
 	 */
-	public function getTasks() {
+	public function getTasks()
+	{
 		$criteria = new icms_db_criteria_Compo();
 		$criteria->setSort('sat_lastruntime');
 		$criteria->setOrder('ASC');
@@ -73,7 +79,8 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @return array
 	 */
-	public function execTasks() {
+	public function execTasks()
+	{
 		$rez = array('all' => 0, 'ok' => 0);
 		if (!($tasks = $this->getTasks())) {
 			return $rez;
@@ -92,7 +99,8 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @return bool
 	 */
-	public function needExecution() {
+	public function needExecution()
+	{
 		$handler = $this->getCurrentSystemHandler();
 		if ($handler === null) {
 			return false;
@@ -116,7 +124,8 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	/**
 	 * Starts handler if needed
 	 */
-	public function startIfNeeded() {
+	public function startIfNeeded()
+	{
 		$system = $this->getCurrentSystemHandler();
 		if ($system !== null && $system->needStart()) {
 			if ($system->canRun()) {
@@ -134,14 +143,15 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @return int
 	 */
-	public function getRealTasksRunningTime() {
+	public function getRealTasksRunningTime()
+	{
 		$sql = 'SELECT MIN(sat_interval) INTV FROM ' . $this->db->prefix('system_autotasks') . ' WHERE sat_enabled = TRUE LIMIT 1';
 		if (!$result = $this->db->query($sql)) {
 			return 0;
 		}
 		$data = $this->db->fetchArray($result);
-		$interval = (int) $data['INTV'];
-		return ($interval == 0)? strtotime('60 minutes'):$interval;
+		$interval = (int)$data['INTV'];
+		return ($interval == 0) ? strtotime('60 minutes') : $interval;
 	}
 
 	/**
@@ -151,12 +161,13 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @return AutomatedTasks
 	 */
-	public function getSelectedSystemHandler($name) {
+	public function getSelectedSystemHandler($name)
+	{
 		if ("$name" == '') {
 			$name = 'internal';
 		}
 		$name = trim(strtolower($name));
-		require_once $this->getSystemHandlerFileName((string) $name);
+		require_once $this->getSystemHandlerFileName((string)$name);
 		$handler_name = 'IcmsAutoTasks' . ucfirst($name);
 		if (class_exists($handler_name)) {
 			$handler = new $handler_name($this);
@@ -169,10 +180,11 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	/**
 	 * Gets system handler filename
 	 *
-	 * @param	string	name
-	 * @return	string
+	 * @param string    name
+	 * @return    string
 	 */
-	private function getSystemHandlerFileName($name) {
+	private function getSystemHandlerFileName($name)
+	{
 		return ICMS_PLUGINS_PATH . '/autotasks/' . $name . '.php';
 	}
 
@@ -182,7 +194,8 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 * @param string filename
 	 * @return string
 	 */
-	private function getSystemHandlerNameFromFileName($filename) {
+	private function getSystemHandlerNameFromFileName($filename)
+	{
 		return substr($filename, strlen(ICMS_PLUGINS_PATH . '/autotasks/'), -strlen('.php'));
 	}
 
@@ -191,7 +204,8 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @return Array(ConfigObjectItems)
 	 */
-	public function getConfig() {
+	public function getConfig()
+	{
 		if ($this->isVirtualConfigEnabled()) {
 			return $this->_virtual_config;
 		}
@@ -208,7 +222,8 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	 *
 	 * @return AutomatedTasks|null
 	 */
-	public function getCurrentSystemHandler($forceUpdate = false) {
+	public function getCurrentSystemHandler($forceUpdate = false)
+	{
 		static $handler = false;
 		if (defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE) {
 			return null;
@@ -223,17 +238,18 @@ class mod_system_AutotasksHandler extends icms_ipf_Handler {
 	/**
 	 * Gets all avaible system handlers
 	 *
-	 * @param	bool	checkIfItIsAvaibleOnCurrentSystem
+	 * @param bool    checkIfItIsAvaibleOnCurrentSystem
 	 *
-	 * @return	array
+	 * @return    array
 	 */
-	public function getSystemHandlersList($checkIfItIsAvaibleOnCurrentSystem = true) {
+	public function getSystemHandlersList($checkIfItIsAvaibleOnCurrentSystem = true)
+	{
 		static $ret = null;
 		if ($ret === null) {
 			$files = glob($this->getSystemHandlerFileName('*'));
 			$ret = false;
 			foreach ($files as $file) {
-				$name = (string) $this->getSystemHandlerNameFromFileName((string) $file);
+				$name = (string)$this->getSystemHandlerNameFromFileName((string)$file);
 				$handler = $this->getSelectedSystemHandler($name);
 				if (!$handler) {
 					continue;

@@ -500,5 +500,6 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		return $count;
 
 	}
+
 }
 

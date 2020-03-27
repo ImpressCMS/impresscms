@@ -282,6 +282,78 @@ final class icms extends Container {
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\ConfigServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\ModuleServiceProvider::class);
 		$this->addServiceProvider(\ImpressCMS\Core\Providers\CacheServiceProvider::class);
+		// register module install steps
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Install\AutotasksSetupStep::class)
+			->addTag('setup_step.module.install');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Install\BlockSetupStep::class)
+			->addTag('setup_step.module.install');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Install\ConfigSetupStep::class)
+			->addTag('setup_step.module.install');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Install\ScriptSetupStep::class)
+			->addTag('setup_step.module.install');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Install\TablesSetupStep::class)
+			->addTag('setup_step.module.install');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Install\ViewTemplateSetupStep::class)
+			->addTag('setup_step.module.install');
+		// register module update steps
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Update\AutotasksSetupStep::class)
+			->addTag('setup_step.module.update');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Update\BlocksSetupStep::class)
+			->addTag('setup_step.module.update');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Update\ConfigSetupStep::class)
+			->addTag('setup_step.module.update');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Update\ScriptSetupStep::class)
+			->addTag('setup_step.module.update');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Update\ViewTemplateSetupStep::class)
+			->addTag('setup_step.module.update');
+		// register module uninstall steps
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\AutotasksSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\BlockSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\CommentsSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\ConfigSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\DataPageSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\FilesSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\GroupPermissionsSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\NotificationsSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\ScriptSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\TablesSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\UrlLinksSetupStep::class)
+			->addTag('setup_step.module.uninstall');
+		$this
+			->add(\ImpressCMS\Core\SetupSteps\Module\Uninstall\ViewTemplateSetupStep::class)
+			->addTag('setup_step.module.uninstall');
 		// register links for compatibility
 		self::$db = $this->get('db');
 		self::$xoopsDB = $this->get('xoopsDB');
