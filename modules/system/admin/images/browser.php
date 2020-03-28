@@ -52,12 +52,6 @@ global $icmsConfig;
 // Adding language files
 icms_loadLanguageFile('system', 'images', true);
 switch ($op) {
-	default:
-	case 'list':
-		icmsPopupHeader();
-		echo imanager_index($imgcat_id);
-		icmsPopupFooter();
-		break;
 
 	case 'listimg':
 		icmsPopupHeader();
@@ -76,10 +70,10 @@ switch ($op) {
 	case 'delfile':
 		icmsPopupHeader();
 		$image_handler = icms::handler('icms_image');
-		$image = & $image_handler->get($image_id);
+		$image = &$image_handler->get($image_id);
 		$imgcat_handler = icms::handler('icms_image_category');
-		$imagecategory = & $imgcat_handler->get($image->getVar('imgcat_id'));
-		$src = '<img src="' . ICMS_MODULES_URL . "/system/admin/images/preview.php?file=" . $image->getVar('image_name') . '" title="' . $image->getVar('image_nicename') . '" /><br />';
+		$imagecategory = &$imgcat_handler->get($image->getVar('imgcat_id'));
+		$src = sprintf('<img src="%s/system/admin/images/preview.php?file=%s" title="%s" /><br />', ICMS_MODULES_URL, $image->getVar('image_name'), $image->getVar('image_nicename'));
 		echo '<div style="margin:5px;" align="center">' . $src . '</div>';
 		icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'target' => $target, 'type' => $type), 'browser.php', _MD_DELETE_AVATAR);
 		icmsPopupFooter();
@@ -94,7 +88,7 @@ switch ($op) {
 		break;
 
 	case 'save_edit_ok':
-		$msg = isset($_GET['msg'])? urldecode($_GET['msg']):null;
+		$msg = isset($_GET['msg']) ? urldecode($_GET['msg']) : null;
 		redir($imgcat_id, $msg);
 		break;
 
@@ -102,13 +96,19 @@ switch ($op) {
 		imanager_addcat();
 		break;
 
+	case 'list':
 	default:
+		icmsPopupHeader();
+		echo imanager_index($imgcat_id);
+		icmsPopupFooter();
 		break;
 }
 
 /**
  * index for the image manager
+ * @param null $imgcat_id
  * @return  string    the fetched and constructed template
+ * @throws SmartyException
  */
 function imanager_index($imgcat_id = null) {
 	global $icmsTpl, $icmsConfig, $target, $type;
