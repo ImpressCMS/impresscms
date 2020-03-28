@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 
 		$tables = array();
-		$content .= nl2br(
+		$content = nl2br(
 			$buffer->fetch()
 		);
 		$content .= "<div style='height:auto;max-height:400px;overflow:auto;'>" . $dbm->report() . "</div>";
