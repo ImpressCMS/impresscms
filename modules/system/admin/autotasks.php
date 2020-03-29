@@ -24,9 +24,10 @@ include "admin_header.php";
 /**
  * Method for editing autotask entries
  *
- * @param boolean	$showmenu		This parameter is not used - why is it here?
- * @param int		$autotasksid	The unique identifier for the autotask
- * @param boolean	$clone			Indicator if an autotask is being created from another
+ * @param boolean $showmenu This parameter is not used - why is it here?
+ * @param int $autotasksid The unique identifier for the autotask
+ * @param boolean $clone Indicator if an autotask is being created from another
+ * @throws SmartyException
  */
 function editautotasks($showmenu = false, $autotasksid = 0, $clone = false) {
 	global $icms_admin_handler, $icmsAdminTpl;

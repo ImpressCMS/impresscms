@@ -396,45 +396,41 @@ class icms_ipf_Object extends icms_core_Object {
 	 * Get control information for an instance variable
 	 *
 	 * @param string $var
+	 * @return array|mixed
 	 */
-	public function getControl($var) {
-		if (isset($this->controls[$var])) {
+	public function getControl($var)
+	{
+		if (isset($this->controls[$var]) && $this->controls[$var] !== null) {
 			return $this->controls[$var];
 		} else {
-			switch (isset($this->_vars[$var][self::VARCFG_DEP_DATA_TYPE])?$this->_vars[$var][self::VARCFG_DEP_DATA_TYPE]:$this->_vars[$var][self::VARCFG_TYPE]) {
-				case self::DTYPE_BOOLEAN:return array('name' => 'yesno'
-					);
+			switch ($this->_vars[$var][self::VARCFG_DEP_DATA_TYPE] ?? $this->_vars[$var][self::VARCFG_TYPE]) {
+				case self::DTYPE_BOOLEAN:
+					return ['name' => 'yesno'];
 				// case self::DTYPE_DEP_CURRENCY:
 				case self::DTYPE_DEP_MTIME:
 				case self::DTYPE_DATETIME:
 				case self::DTYPE_DEP_STIME:
-					return array('name' => 'datetime'
-					);
+					return ['name' => 'datetime'];
 				case self::DTYPE_DEP_TIME_ONLY:
-					return array('name' => 'time'
-					);
+					return ['name' => 'time'];
 				case self::DTYPE_DEP_URL:
 				case self::DTYPE_DEP_URLLINK:
-					return array('name' => 'urllink'
-					);
+					return ['name' => 'urllink'];
 				case self::DTYPE_DEP_SOURCE:
-					return array('name' => 'source'
-					);
+					return ['name' => 'source'];
 				case self::DTYPE_DEP_EMAIL:
-					return array('name' => 'email'
-					);
-				case self::DTYPE_DEP_TXTBOX:
-					return array('name' => 'text'
-					);
+					return ['name' => 'email'];
 				case self::DTYPE_DEP_IMAGE:
-					return array('name' => 'image'
-					);
+					return ['name' => 'image'];
 				case self::DTYPE_FILE:
-					return array('name' => 'richfile'
-					);
+					return ['name' => 'richfile'];
+				case self::DTYPE_STRING:
+					$options = $this->getVarInfo($var, 'options');
+					if (isset($options[self::VARCFG_SOURCE_FORMATING])) {
+						return ['name' => 'source', self::VARCFG_SOURCE_FORMATING => $options[self::VARCFG_SOURCE_FORMATING]];
+					}
 				default:
-					return array('name' => 'text'
-					);
+					return ['name' => 'text'];
 			}
 		}
 	}
