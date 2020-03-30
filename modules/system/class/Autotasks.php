@@ -37,16 +37,16 @@ class mod_system_Autotasks extends icms_ipf_Object {
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {
-				$this->initVar('sat_id', self::DTYPE_INTEGER, 0, false);
-				$this->initVar('sat_lastruntime', self::DTYPE_INTEGER, 0, false, null, null, null, _CO_ICMS_AUTOTASKS_LASTRUNTIME);
-				$this->initVar('sat_name', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_AUTOTASKS_NAME, _CO_ICMS_AUTOTASKS_NAME_DSC);
-				$this->initVar('sat_code', self::DTYPE_STRING, '', true, null, array(self::VARCFG_SOURCE_FORMATING => 'php'), null, _CO_ICMS_AUTOTASKS_CODE, _CO_ICMS_AUTOTASKS_CODE_DSC);
-				$this->initVar('sat_repeat', self::DTYPE_INTEGER, 0, true, null, null, null, _CO_ICMS_AUTOTASKS_REPEAT, _CO_ICMS_AUTOTASKS_REPEAT_DSC);
-				$this->initVar('sat_interval', self::DTYPE_INTEGER, 1440, true, null, null, null, _CO_ICMS_AUTOTASKS_INTERVAL, _CO_ICMS_AUTOTASKS_INTERVAL_DSC);
-				$this->initVar('sat_onfinish', self::DTYPE_INTEGER, 0, true, 2, null, null, _CO_ICMS_AUTOTASKS_ONFINISH, _CO_ICMS_AUTOTASKS_ONFINISH_DSC);
-				$this->initVar('sat_enabled', self::DTYPE_INTEGER, 1, true, 1, null, null, _CO_ICMS_AUTOTASKS_ENABLED, _CO_ICMS_AUTOTASKS_ENABLED_DSC);
-				$this->initVar('sat_type', self::DTYPE_STRING, ':custom', true, 100, null, null, _CO_ICMS_AUTOTASKS_TYPE);
-				$this->initVar('sat_addon_id', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('sat_id', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('sat_lastruntime', self::DTYPE_INTEGER, 0, false, null, null, null, _CO_ICMS_AUTOTASKS_LASTRUNTIME);
+		$this->initVar('sat_name', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_AUTOTASKS_NAME, _CO_ICMS_AUTOTASKS_NAME_DSC);
+		$this->initVar('sat_code', self::DTYPE_STRING, '', true, null, array(self::VARCFG_SOURCE_FORMATING => 'php', self::VARCFG_AF_DISABLED => true), null, _CO_ICMS_AUTOTASKS_CODE, _CO_ICMS_AUTOTASKS_CODE_DSC);
+		$this->initVar('sat_repeat', self::DTYPE_INTEGER, 0, true, null, null, null, _CO_ICMS_AUTOTASKS_REPEAT, _CO_ICMS_AUTOTASKS_REPEAT_DSC);
+		$this->initVar('sat_interval', self::DTYPE_INTEGER, 1440, true, null, null, null, _CO_ICMS_AUTOTASKS_INTERVAL, _CO_ICMS_AUTOTASKS_INTERVAL_DSC);
+		$this->initVar('sat_onfinish', self::DTYPE_INTEGER, 0, true, 2, null, null, _CO_ICMS_AUTOTASKS_ONFINISH, _CO_ICMS_AUTOTASKS_ONFINISH_DSC);
+		$this->initVar('sat_enabled', self::DTYPE_INTEGER, 1, true, 1, null, null, _CO_ICMS_AUTOTASKS_ENABLED, _CO_ICMS_AUTOTASKS_ENABLED_DSC);
+		$this->initVar('sat_type', self::DTYPE_STRING, ':custom', true, 100, null, null, _CO_ICMS_AUTOTASKS_TYPE);
+		$this->initVar('sat_addon_id', self::DTYPE_INTEGER, 0, false);
 
 		parent::__construct($handler);
 
@@ -179,23 +179,26 @@ class mod_system_Autotasks extends icms_ipf_Object {
 			}
 
 			// only execute autotasks for active modules
-			$module = icms::handler("icms_module")->getByDirname($dirname);
-			if ($module->getVar("isactive") != 1) {
+			$module = icms::handler('icms_module')->getByDirname($dirname);
+			if ($module->getVar('isactive') != 1) {
 				return false;
 			}
 
-			$dirname = ICMS_MODULES_PATH . '/' . $dirname;
-			$dirname = $dirname . '/' . $code;
+			$dirname = ICMS_MODULES_PATH . '/' . $dirname . '/' . $code;
 			$code = " require '" . $dirname . "';";
-			$is_bug = !(@highlight_string(file_get_contents($dirname), true));
-		} else {
-			$is_bug = !(@highlight_string('<?' . 'php ' . $code . ' return TRUE; ?' . '>', true));
 		}
-		if ($is_bug) {
-			trigger_error(sprintf(_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR, $code));
+
+		try {
+			eval($code);
+		} catch (ParseError $e) {
+			icms::getInstance()->get('logger')->error(
+				sprintf(_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR, $code),
+				[
+					'Exception' => $e
+				]
+			);
 			return false;
 		}
-		eval($code);
 		$count = $this->getVar('sat_repeat');
 		if ($count > 0) {
 			if ($count == 1) {
