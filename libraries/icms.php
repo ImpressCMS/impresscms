@@ -319,9 +319,11 @@ final class icms extends Container {
 	/**
 	 * Launch bootstrap and instanciate global services
 	 *
+	 * @param bool $registerCommonServices Do we need to register common services?
+	 *
 	 * @return $this
 	 */
-	public function boot()
+	public function boot(bool $registerCommonServices = true)
 	{
 		$this->loadComposerDefinition(
 			new \ImpressCMS\Core\ComposerDefinitions\ProvidersComposerDefinition()
@@ -330,9 +332,8 @@ final class icms extends Container {
 			new \ImpressCMS\Core\ComposerDefinitions\ServicesComposerDefinition()
 		);
 
-		// register module install steps
 		// register links for compatibility
-		if ((PHP_SAPI !== 'cli') || (defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE)) {
+		if ($registerCommonServices) {
 			$this->registerCommonServiceVariables();
 		}
 

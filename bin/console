@@ -14,7 +14,7 @@ namespace ImpressCMS\Console {
 		'nocommon' => 1
 	];
 	require dirname(__DIR__) . '/mainfile.php';
-	\icms::getInstance()->boot();
+	\icms::getInstance()->boot(false);
 
 	$cd = getcwd();
 	chdir(dirname(__DIR__));

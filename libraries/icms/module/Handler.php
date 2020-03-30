@@ -477,7 +477,7 @@ class icms_module_Handler
 
 		$output->success(_MD_AM_OKUPD, $module->name);
 
-		return false;
+		return true;
 	}
 
 	/**
