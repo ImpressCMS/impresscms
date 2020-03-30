@@ -332,7 +332,7 @@ final class icms extends Container {
 
 		// register module install steps
 		// register links for compatibility
-		if (PHP_SAPI !== 'cli') {
+		if ((PHP_SAPI !== 'cli') || (defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE)) {
 			$this->registerCommonServiceVariables();
 		}
 
