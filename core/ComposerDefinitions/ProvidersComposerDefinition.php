@@ -40,6 +40,9 @@ class ProvidersComposerDefinition implements ComposerDefinitionInterface
 	public function updateCache(array $data): void
 	{
 		$ret = '<?php' . PHP_EOL;
+		$ret .= '/**' . PHP_EOL;
+		$ret .= ' * @var ' . Container::class . ' $container' . PHP_EOL;
+		$ret .= ' */' . PHP_EOL;
 		$ret .= '$container' . PHP_EOL;
 		foreach ($this->generateData($data) as $provider) {
 			$ret .= '    ->addServiceProvider(' . var_export($provider, true) . ')' . PHP_EOL;
