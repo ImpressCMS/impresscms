@@ -130,7 +130,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			return $this->_cachedModule[$dirname];
 		} else {
 			$module = FALSE;
-			$sql = "SELECT * FROM " . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
+			$sql = "SELECT * FROM " . $this->db->prefix('modules') . " WHERE dirname = " . $this->db->quote(trim($dirname));
 			if (!$result = $this->db->query($sql)) return $module;
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
