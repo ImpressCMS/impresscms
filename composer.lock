@@ -827,30 +827,33 @@
         },
         {
             "name": "lulco/phoenix",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lulco/phoenix.git",
-                "reference": "67287d2ea8f1e38cf61c90c5a99b9a846763980b"
+                "reference": "78e73cd63dc694006be90d967093f48d822d4206"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lulco/phoenix/zipball/67287d2ea8f1e38cf61c90c5a99b9a846763980b",
-                "reference": "67287d2ea8f1e38cf61c90c5a99b9a846763980b",
+                "url": "https://api.github.com/repos/lulco/phoenix/zipball/78e73cd63dc694006be90d967093f48d822d4206",
+                "reference": "78e73cd63dc694006be90d967093f48d822d4206",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-pdo": "*",
                 "php": ">= 7.1",
-                "symfony/console": ">=3.1 <3.4.31|>=4.0 <4.3.4",
-                "symfony/finder": "^3.1|^4.0"
+                "symfony/console": "^3.1|^4.0|^5.0",
+                "symfony/finder": "^3.1|^4.0|^5.0"
+            },
+            "conflict": {
+                "symfony/console": "3.4.31|4.3.4"
             },
             "require-dev": {
                 "nette/neon": "^2.3|^3.0",
                 "phpunit/phpunit": ">7.2",
-                "ramsey/uuid": "^3.7",
-                "symfony/yaml": "^3.1|^4.0"
+                "ramsey/uuid": "^3.7|^4.0",
+                "symfony/yaml": "^3.1|^4.0|^5.0"
             },
             "suggest": {
                 "nette/neon": "Allows use *.neon file as config file and class Phoenix\\Config\\Parser\\NeonConfigParser to parse it",
@@ -882,7 +885,7 @@
                 "rollback",
                 "status"
             ],
-            "time": "2020-03-16T00:26:49+00:00"
+            "time": "2020-04-16T13:19:50+00:00"
         },
         {
             "name": "mibe/feedwriter",
@@ -1621,16 +1624,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.4.30",
+            "version": "v3.4.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "12940f20a816c978860fa4925b3f1bbb27e9ac46"
+                "reference": "bf60d5e606cd595391c5f82bf6b570d9573fa120"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/12940f20a816c978860fa4925b3f1bbb27e9ac46",
-                "reference": "12940f20a816c978860fa4925b3f1bbb27e9ac46",
+                "url": "https://api.github.com/repos/symfony/console/zipball/bf60d5e606cd595391c5f82bf6b570d9573fa120",
+                "reference": "bf60d5e606cd595391c5f82bf6b570d9573fa120",
                 "shasum": ""
             },
             "require": {
@@ -1689,11 +1692,11 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-07-24T14:46:41+00:00"
+            "time": "2020-03-27T17:07:22+00:00"
         },
         {
             "name": "symfony/debug",
-            "version": "v4.4.7",
+            "version": "v4.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -1749,7 +1752,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v4.4.7",
+            "version": "v4.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
