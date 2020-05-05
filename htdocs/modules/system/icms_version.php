@@ -62,11 +62,11 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "RC",
-	'status'=> "RC",
-	'date'=> "12 Dec 2019",
+	'status_version'=> "Final",
+	'status'=> "Final",
+	'date'=> "19 Dec 2019",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_RC,
+	'warning'=>_CO_ICMS_WARNING_FINAL,
 
 /** Contributors */
 	'developer_website_url' => "https://www.impresscms.org",
@@ -318,7 +318,9 @@ $modversion['templates'] = array(
 	array(	'file' => 'system_adm_adsense.html',	'description' => ''	),
 	array(	'file' => 'system_print.html',	'description' => ''	),
 	array(	'file' => 'system_adm_rating.html',	'description' => ''	),
+	array(	'file' => 'system_adm_modulemenu.html',	'description' => ''	),
 	array(	'file' => 'system_rating_form.html',	'description' => ''	),
 	array(	'file' => 'system_adm_mimetype.html',	'description' => ''	),
 	array(	'file' => 'system_adm_userrank.html',	'description' => ''	),
+	array(	'file' => 'system_adm_version.html',	'description' => 'Version information template'	),
 	array(	'file' => 'system_adm_autotasks.html',	'description' => ''	));

@@ -48,7 +48,6 @@ if (isset($_COOKIE['xo_install_lang'])) {
 	<script type="text/javascript" src="../libraries/jquery/jquery.js"></script>
 	<script type="text/javascript" src="stylesheetToggle.js"></script>
 	<script type="text/javascript" src="jquery.scrollTo.js"></script>
-	<script type="text/javascript" src="prototype.js"></script>
 	<script type="text/javascript">
 		$(function () {
 			$.stylesheetInit();
