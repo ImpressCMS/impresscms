@@ -288,6 +288,7 @@
           "setup_step.module.uninstall"
         ]
       }
+    }
   },
   "config": {
     "optimize-autoloader": true,
