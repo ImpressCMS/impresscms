@@ -268,12 +268,12 @@
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\CopyAssetsSetupStep": {
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\UrlLinksSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\UrlLinksSetupStep": {
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\CopyAssetsSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
