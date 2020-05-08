@@ -101,11 +101,6 @@
     "phpunit/phpunit": "5.7.27"
   },
   "extra": {
-    "custom-commands": {
-      "commands": [
-      ],
-      "boot": "mainfile.php"
-    },
     "providers": [
       "\\ImpressCMS\\Core\\Providers\\PreloadServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\LoggerServiceProvider",
@@ -293,7 +288,6 @@
           "setup_step.module.uninstall"
         ]
       }
-    }
   },
   "config": {
     "optimize-autoloader": true,
