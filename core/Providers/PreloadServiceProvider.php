@@ -15,13 +15,6 @@ class PreloadServiceProvider extends AbstractServiceProvider implements Bootable
 	/**
 	 * @inheritdoc
 	 */
-	protected $provides = [
-		'preload'
-	];
-
-	/**
-	 * @inheritdoc
-	 */
 	public function register()
 	{
 
@@ -32,9 +25,10 @@ class PreloadServiceProvider extends AbstractServiceProvider implements Bootable
 	 */
 	public function boot()
 	{
-		$preload = PreloadHandler::getInstance();
-		$preload->triggerEvent('startCoreBoot');
-
-		$this->getContainer()->add('preload', $preload);
+		$this->getContainer()->add(PreloadHandler::class, function () {
+			$preload = PreloadHandler::getInstance();
+			$preload->triggerEvent('startCoreBoot');
+			return $preload;
+		});
 	}
 }
