@@ -201,6 +201,11 @@
           "setup_step.module.install"
         ]
       },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\CopyAssetsSetupStep": {
+        "tags": [
+          "setup_step.module.install"
+        ]
+      },
       "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\AutotasksSetupStep": {
         "tags": [
           "setup_step.module.update"
@@ -222,6 +227,11 @@
         ]
       },
       "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\ViewTemplateSetupStep": {
+        "tags": [
+          "setup_step.module.update"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\CopyAssetsSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
@@ -277,6 +287,11 @@
         ]
       },
       "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\UrlLinksSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\CopyAssetsSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
