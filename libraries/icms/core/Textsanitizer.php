@@ -76,7 +76,7 @@ class icms_core_Textsanitizer {
 	/**
 	 * Access the only instance of this class
 	 *
-	 * @return   object
+	 * @return   self
 	 *
 	 * @static
 	 * @staticvar   object
