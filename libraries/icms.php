@@ -307,6 +307,7 @@ final class icms extends Container {
 	protected function loadComposerDefinition(\ImpressCMS\Core\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition)
 	{
 		$composerJsonPath = dirname(__DIR__);
+
 		if ($composerDefinition->needsUpdate($composerJsonPath)) {
 			$composerDefinition->updateCache(
 				$this->getComposerExtras($composerJsonPath)
@@ -318,9 +319,11 @@ final class icms extends Container {
 	/**
 	 * Launch bootstrap and instanciate global services
 	 *
+	 * @param bool $registerCommonServices Do we need to register common services?
+	 *
 	 * @return $this
 	 */
-	public function boot()
+	public function boot(bool $registerCommonServices = true)
 	{
 		$this->loadComposerDefinition(
 			new \ImpressCMS\Core\ComposerDefinitions\ProvidersComposerDefinition()
@@ -329,19 +332,29 @@ final class icms extends Container {
 			new \ImpressCMS\Core\ComposerDefinitions\ServicesComposerDefinition()
 		);
 
-		// register module install steps
 		// register links for compatibility
-		self::$db = $this->get('db');
-		self::$xoopsDB = $this->get('xoopsDB');
-		self::$logger = $this->get('logger');
-		self::$preload = $this->get(icms_preload_Handler::class);
-		self::$config = $this->get('config');
-		self::$security = $this->get('security');
-		self::$session = $this->get('session');
+		if ($registerCommonServices) {
+			$this->registerCommonServiceVariables();
+		}
+
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
 
 		return $this;
+	}
+
+	/**
+	 * Registers common services variables
+	 */
+	public function registerCommonServiceVariables(): void
+	{
+		self::$db = $this->get('db');
+		self::$xoopsDB = $this->get('xoopsDB');
+		self::$config = $this->get('config');
+		self::$session = $this->get('session');
+		self::$logger = $this->get('logger');
+		self::$preload = $this->get(icms_preload_Handler::class);
+		self::$security = $this->get('security');
 	}
 
 	/**

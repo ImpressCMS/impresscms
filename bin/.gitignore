@@ -1,2 +1,4 @@
 *
 !.gitignore
+!console
+!console.bat
