@@ -117,9 +117,9 @@ class OutputDecorator implements OutputInterface
 			}
 			$messages = rtrim($tmpMsg);
 		}
-		if (trim($messages) == '') {
+		/*if (trim($messages) == '') {
 			return $this->output->write(var_export([$messages, debug_backtrace(false)[1]], true), $newline, $options);
-		}
+		}*/
 		return $this->output->write($messages, $newline, $options);
 	}
 
