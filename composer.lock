@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6ca9ba23b1b90fff2d204ebd0fe7bb9",
+    "content-hash": "76b83401fa83856dda822dc2f1ddfc98",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -931,50 +931,6 @@
                 "psr-7"
             ],
             "time": "2018-07-31T19:32:56+00:00"
-        },
-        {
-            "name": "imponeer/composer-custom-commands",
-            "version": "0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/imponeer/composer-custom-commands.git",
-                "reference": "d9ca04d6344426a2dc710965eb476b195dd07bf0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/composer-custom-commands/zipball/d9ca04d6344426a2dc710965eb476b195dd07bf0",
-                "reference": "d9ca04d6344426a2dc710965eb476b195dd07bf0",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.1",
-                "php": ">=5.5",
-                "symfony/console": "^3.4"
-            },
-            "require-dev": {
-                "composer/composer": "^1.6"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "\\Imponeer\\ComposerCustomCommands\\Plugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Imponeer\\ComposerCustomCommands\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Raimondas Rimkevičius",
-                    "email": "mekdrop@impresscms.org"
-                }
-            ],
-            "description": "Adds possibility to define console commands as composer commands with Symfony console component syntax",
-            "time": "2018-03-22T08:11:04+00:00"
         },
         {
             "name": "ircmaxell/random-lib",
@@ -3387,6 +3343,50 @@
                 "instantiate"
             ],
             "time": "2019-03-17T17:37:11+00:00"
+        },
+        {
+            "name": "imponeer/composer-custom-commands",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/composer-custom-commands.git",
+                "reference": "d9ca04d6344426a2dc710965eb476b195dd07bf0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/composer-custom-commands/zipball/d9ca04d6344426a2dc710965eb476b195dd07bf0",
+                "reference": "d9ca04d6344426a2dc710965eb476b195dd07bf0",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1",
+                "php": ">=5.5",
+                "symfony/console": "^3.4"
+            },
+            "require-dev": {
+                "composer/composer": "^1.6"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "\\Imponeer\\ComposerCustomCommands\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\ComposerCustomCommands\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "mekdrop@impresscms.org"
+                }
+            ],
+            "description": "Adds possibility to define console commands as composer commands with Symfony console component syntax",
+            "time": "2018-03-22T08:11:04+00:00"
         },
         {
             "name": "myclabs/deep-copy",

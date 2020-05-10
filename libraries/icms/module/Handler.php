@@ -56,6 +56,7 @@ class icms_module_Handler
 	 * Constructor
 	 *
 	 * @param object $db
+	 * @param string $module
 	 */
 	public function __construct(&$db, $module = 'icms')
 	{
@@ -203,6 +204,13 @@ class icms_module_Handler
 		global $icmsConfig;
 
 		$module = $this->getByDirname($dirname);
+		if (!$module) {
+			$output->fatal(
+				_MD_AM_FAILUNINS, $module->name
+			);
+			return false;
+		}
+
 		$module->registerClassPath();
 		icms_view_Tpl::template_clear_module_cache($module->mid);
 		if ($module->dirname == 'system') {
@@ -422,6 +430,10 @@ class icms_module_Handler
 		$dirname = trim($dirname);
 		$module_handler = icms::handler('icms_module');
 		$module = $module_handler->getByDirname($dirname);
+		if (!$module) {
+			$output->fatal(_MD_AM_UPDATE_FAIL, $module->name);
+			return false;
+		}
 
 		// Save current version for use in the update function
 		$prev_version = $module->version;
@@ -465,7 +477,7 @@ class icms_module_Handler
 
 		$output->success(_MD_AM_OKUPD, $module->name);
 
-		return false;
+		return true;
 	}
 
 	/**

@@ -56,7 +56,6 @@
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
     "http-interop/http-factory-guzzle": "^1.0",
-    "imponeer/composer-custom-commands": "^0.1.0",
     "ircmaxell/random-lib": "^1.2",
     "keo/iso-639": "^1.0",
     "league/container": "^3.2",
@@ -73,6 +72,7 @@
     "simplepie/simplepie": "^1.5",
     "smarty/smarty": "^3.1",
     "smottt/wideimage": "^v1.1.3",
+    "symfony/console": "<4.3.4",
     "symfony/polyfill-iconv": "^1.12",
     "tecnickcom/tcpdf": "^6.2",
     "vlucas/phpdotenv": "^3.3.3"
@@ -107,11 +107,6 @@
     "phpunit/phpunit": "5.7.27"
   },
   "extra": {
-    "custom-commands": {
-      "commands": [
-      ],
-      "boot": "mainfile.php"
-    },
     "providers": [
       "\\ImpressCMS\\Core\\Providers\\PreloadServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\LoggerServiceProvider",
@@ -172,6 +167,31 @@
       "\\IcmsPreloadUserInfo": {
         "tags": [
           "preload"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Commands\\CacheClearCommand": {
+        "tags": [
+          "console.command"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Commands\\TemplatesCacheClearCommand": {
+        "tags": [
+          "console.command"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Commands\\ModuleInstallCommand": {
+        "tags": [
+          "console.command"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Commands\\ModuleUpdateCommand": {
+        "tags": [
+          "console.command"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Commands\\ModuleUninstallCommand": {
+        "tags": [
+          "console.command"
         ]
       },
       "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\AutotasksSetupStep": {

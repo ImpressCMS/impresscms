@@ -4,6 +4,7 @@
 namespace ImpressCMS\Core\ComposerDefinitions;
 
 use League\Container\Container;
+use League\Container\ContainerAwareInterface;
 
 /**
  * Handles services definition from composer.json
@@ -40,9 +41,16 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 	public function updateCache(array $data): void
 	{
 		$ret = '<?php' . PHP_EOL;
+		$ret .= '/**' . PHP_EOL;
+		$ret .= ' * @var ' . Container::class . ' $container' . PHP_EOL;
+		$ret .= ' */' . PHP_EOL;
+		$ret .= '$container' . PHP_EOL;
+		$ret .= "    ->add('container', \icms::getInstance());" . PHP_EOL;
 		$services = (isset($data['services']) && is_array($data['services'])) ? $data['services'] : [];
+		$containerAwareStr = '    ->addMethodCall(' . var_export('setLeagueContainer', true) . ',[' . var_export('container', true) . '])' . PHP_EOL;
 		foreach ($services as $alias => $serviceInfo) {
 			$ret .= '$container' . PHP_EOL;
+			$class = $serviceInfo['class'] ?? $alias;
 			$ret .= sprintf(
 				'    ->add(%s, %s, %s)%s',
 				var_export(
@@ -50,7 +58,7 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 					true
 				),
 				var_export(
-					$serviceInfo['class'] ?? $alias,
+					$class,
 					true
 				),
 				var_export(
@@ -68,6 +76,9 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 				foreach ($serviceInfo['arguments'] as $argument) {
 					$ret .= '    ->addArgument(' . var_export($argument, true) . ')' . PHP_EOL;
 				}
+			}
+			if ($this->implementsContainerAwareInterface($class)) {
+				$ret .= $containerAwareStr;
 			}
 			if (isset($serviceInfo['methods'])) {
 				foreach ($serviceInfo['methods'] as $method => $arguments) {
@@ -87,6 +98,21 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 			$ret,
 			LOCK_EX
 		);
+	}
+
+	/**
+	 * Checks if class implements ContainerAwareInterface
+	 *
+	 * @param string $class Class to check
+	 *
+	 * @return bool
+	 *
+	 * @throws \ReflectionException
+	 */
+	protected function implementsContainerAwareInterface(string $class): bool
+	{
+		$reflect = new \ReflectionClass($class);
+		return $reflect->implementsInterface(ContainerAwareInterface::class);
 	}
 
 	/**

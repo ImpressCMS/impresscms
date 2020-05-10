@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+namespace ImpressCMS\Console {
+
+	use League\Container\Exception\NotFoundException;
+	use Symfony\Component\Console\Application;
+	use Symfony\Component\Console\Input\ArgvInput;
+
+	set_time_limit(0);
+
+	global $xoopsOption;
+	$xoopsOption = [
+		'nocommon' => 1
+	];
+	require dirname(__DIR__) . '/mainfile.php';
+	\icms::getInstance()->boot(false);
+
+	$cd = getcwd();
+	chdir(dirname(__DIR__));
+
+	$composer = \Composer\Factory::create(
+		new \Composer\IO\NullIO()
+	);
+
+	$version = $composer->getPackage()->getVersion();
+
+	chdir($cd);
+
+	$application = new Application('ImpressCMS Console', $version);
+	try {
+		$application->addCommands(
+			\icms::getInstance()->get('console.command')
+		);
+	} catch (NotFoundException $exception) {
+
+	}
+	$application->run(
+		new ArgvInput()
+	);
+}

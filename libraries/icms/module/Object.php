@@ -132,7 +132,7 @@ class icms_module_Object
 	 */
 	public function registerClassPath($isactive = null) {
 		//if ($this->getVar("dirname") == "system") return;
-		$class_path = ICMS_MODULES_PATH . "/" . $this->getVar("dirname") . "/class";
+		$class_path = ICMS_MODULES_PATH . '/' . $this->getVar('dirname') . '/class';
 
 		// check if class path exists
 		if (!is_dir($class_path)) {
@@ -140,15 +140,15 @@ class icms_module_Object
 		}
 
 		// check if module is active (only if applicable)
-		if ($isactive !== null && $this->getVar("isactive") != (int) $isactive) {
+		if ($isactive !== null && $this->getVar("isactive") != (int)$isactive) {
 			return;
 		}
 
 		// register class path
-		if ($this->getVar("ipf")) {
-			$modname = ($this->getVar("modname") != "")?
-				$this->getVar("modname"):$this->getVar("dirname");
-			icms_Autoloader::register($class_path, "mod_" . $modname);
+		if ($this->getVar('ipf')) {
+			$modname = ($this->getVar('modname') != '') ?
+				$this->getVar('modname') : $this->getVar('dirname');
+			icms_Autoloader::register($class_path, 'mod_' . $modname);
 		} else {
 			icms_Autoloader::register($class_path);
 		}
