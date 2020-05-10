@@ -88,7 +88,9 @@
       "plugins/preloads/"
     ],
     "psr-4": {
-      "ImpressCMS\\Core\\": "core/"
+      "ImpressCMS\\Core\\": "core/",
+      "ImpressCMS\\Editors\\": "htdocs/editors/",
+      "ImpressCMS\\Plugins\\": "plugins/"
     },
     "files": [
       "include/version.php",
@@ -266,6 +268,36 @@
       "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\ViewTemplateSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
+        ]
+      },
+      "CKeditor": {
+        "class": "\\ImpressCMS\\Editors\\CKeditor\\Editor",
+        "tags": [
+          "editor.content"
+        ]
+      },
+      "dhtmltextarea": {
+        "class": "\\ImpressCMS\\Editors\\DHTMLTextArea\\Editor",
+        "tags": [
+          "editor.content"
+        ]
+      },
+      "tinymce": {
+        "class": "\\ImpressCMS\\Editors\\TinyMCE\\Editor",
+        "tags": [
+          "editor.content"
+        ]
+      },
+      "codemirror": {
+        "class": "\\ImpressCMS\\Plugins\\SourceEditors\\CodeMirror\\Editor",
+        "tags": [
+          "editor.source"
+        ]
+      },
+      "editarea": {
+        "class": "\\ImpressCMS\\Plugins\\SourceEditors\\EditArea\\Editor",
+        "tags": [
+          "editor.source"
         ]
       }
     }

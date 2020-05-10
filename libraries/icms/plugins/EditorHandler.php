@@ -38,13 +38,6 @@
 class icms_plugins_EditorHandler {
 
 	/**
-	 * Path where is editor
-	 *
-	 * @var string
-	 */
-	private $root_path = '';
-
-	/**
 	 * No HTML mode?
 	 *
 	 * @var bool
@@ -63,28 +56,32 @@ class icms_plugins_EditorHandler {
 	 *
 	 * @var string
 	 */
-	private $_type = '';
+	private $_type;
 
 	/**
 	 * Constructor
 	 *
-	 * @param   string  $type	Editor type
+	 * @param string $type Editor type
 	 */
-	public function __construct($type = '') {
-		$this->root_path = self::_getRootPath($type);
+	public function __construct($type = 'content')
+	{
 		$this->_type = $type;
 	}
 
 	/**
 	 * Access the only instance of this class
 	 *
-	 * @param	    string	type
-	 * @return	object
+	 * @param string    type
+	 * @return    self
 	 * @static
 	 * @staticvar   object
 	 */
-	static public function &getInstance($type = '') {
+	static public function &getInstance($type = 'content')
+	{
 		static $instances = array();
+		if (empty($type)) {
+			$type = 'content';
+		}
 		if (!isset($instances[$type])) {
 			$instances[$type] = new self($type);
 		}
@@ -92,74 +89,83 @@ class icms_plugins_EditorHandler {
 	}
 
 	/**
-	 * @param	string	$name		Editor name which is actually the folder name
-	 * @param	array 	$options	editor options: $key => $val
-	 * @param	string	$OnFailure  a pre-validated editor that will be used if the required editor is failed to create
-	 * @param	bool	$noHtml		dohtml disabled
+	 * Checks if such editor exists
+	 *
+	 * @param string $name Editor name
+	 *
+	 * @return bool
 	 */
-	public function &get($name = "", $options = null, $noHtml = false, $OnFailure = "") {
+	public function has(string $name): bool
+	{
+		return $this->_loadEditor($name) ? true : false;
+	}
+
+	/**
+	 * @param string $name Editor name which is actually the folder name
+	 * @param array $options editor options: $key => $val
+	 * @param string $OnFailure a pre-validated editor that will be used if the required editor is failed to create
+	 * @param bool $noHtml dohtml disabled
+	 * @return object
+	 * @throws Exception
+	 */
+	public function &get($name = '', $options = null, $noHtml = false, $OnFailure = '')
+	{
+		if (empty($options)) {
+			$options = [];
+		}
 		if ($editor = $this->_loadEditor($name, $options)) {
-			return $editor;
+			return $editor->create($options);
 		}
 		$list = array_keys($this->getList($noHtml));
 		if (empty($OnFailure) || !in_array($OnFailure, $list)) {
 			$OnFailure = $list[0];
 		}
-		$editor = $this->_loadEditor($OnFailure, $options);
-		return $editor;
+
+		return $this->_loadEditor($OnFailure, $options)->create($options);
 	}
 
 	/**
 	 * Gets list of available editors
 	 *
-	 * @param   bool    $noHtml   is this an editor with no html options?
+	 * @param bool $noHtml is this an editor with no html options?
 	 * @return  array   $_list    list of available editors that are allowed (through admin config)
+	 * @throws Exception
 	 */
-	public function &getList($noHtml = false) {
-		$cache = icms::getInstance()->get('cache');
-		$cached_item = $cache->getItem('editors_list');
-
-		if (!$cached_item->isHit()) {
-			$list = array();
-			$order = array();
-			$_list = icms_core_Filesystem::getDirList($this->root_path . '/');
-
-			foreach ($_list as $item) {
-				$file = $this->root_path . '/' . $item . '/editor_registry.php';
-				if (file_exists($file)) {
-					include($file);
-					if (empty($config['order'])) {
-						continue;
-					}
-					$order[] = $config['order'];
-					$list[$item] = [
-						'title' => $config['title'],
-						'nohtml' => isset($config['nohtml'])?$config['nohtml']:0
-					];
-				}
-			}
-
-			array_multisort($order, $list);
-
-			$cached_item->set($list);
-			$cache->save($cached_item);
-		}
-
-		$list = $cached_item->get();
-
-		$editors = array_keys($list);
-		if (!empty($this->allowed_editors)) {
-			$editors = array_intersect($editors, $this->allowed_editors);
-		}
-
-		$_list = array();
-		foreach ($editors as $name) {
-			if (!empty($noHtml) && empty($list[$name]['nohtml'])) {
+	public function &getList($noHtml = false)
+	{
+		$editors = [];
+		$sort = [
+			'titles' => [],
+			'order' => []
+		];
+		/**
+		 * @var \icms\plugins\EditorInterface $editor
+		 */
+		foreach (\icms::getInstance()->get('editor.' . $this->_type) as $editor) {
+			if (!($editor instanceof \icms\plugins\EditorInterface)) {
 				continue;
 			}
-			$_list[$name] = $list[$name]['title'];
+			$name = \icms::getInstance()->getServiceDefinition(get_class($editor))->getAlias();
+			if (!empty($this->allowed_editors) && !in_array($name, $this->allowed_editors, true)) {
+				continue;
+			}
+			if ($noHtml && !$editor->supportsHTML()) {
+				continue;
+			}
+			$sort['titles'][] = $editor->getTitle();
+			$sort['order'][] = $editor->getOrder() ?? PHP_INT_MAX;
+			$editors[$name] = $editor->getTitle();
 		}
-		return $_list;
+
+		array_multisort(
+			$sort['order'],
+			SORT_ASC,
+			$sort['titles'],
+			SORT_ASC,
+			$editors
+		);
+
+		return $editors;
 	}
 
 	/**
@@ -190,49 +196,30 @@ class icms_plugins_EditorHandler {
 	/**
 	 * Loads the editor
 	 *
-	 * @param   string    $name       Name of the editor to load
-	 * @param   string    $options    Options in the editor to load (configuration)
-	 * @return  object                The loaded Editor object
+	 * @param string $name Name of the editor to load
+	 * @return  \icms\plugins\EditorInterface                The loaded Editor object
 	 *
 	 */
-	public function &_loadEditor($name, $options = null) {
-		$editor = null;
-
+	public function _loadEditor($name)
+	{
 		if (empty($name)) {
-			return $editor;
-		}
-		$editor_path = $this->root_path . "/" . $name;
-
-		if (!include $editor_path . "/editor_registry.php") {
-			return $editor;
-		}
-		if (empty($config['order'])) {
 			return null;
 		}
-		require_once $config['file'];
-		$editor = new $config['class']($options);
-		return $editor;
-	}
 
-	/**
-	 * Determines the root path of the editor type
-	 * @param string $type
-	 * @return string
-	 */
-	private function _getRootPath($type = '') {
-		if ($type == '') {
-			return ICMS_EDITOR_PATH;
-		} else {
-			return ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
-		}
+		/**
+		 * @var \icms\plugins\EditorInterface $editor
+		 */
+		$editor = \icms::getInstance()->get($name);
+		return ($editor instanceof \icms\plugins\EditorInterface) ? $editor : null;
 	}
 
 	/**
 	 * Retrieve a list of the available editors, by type
-	 * @param	string	$type
-	 * @return	array	Available editors
+	 * @param string $type
+	 * @return    array    Available editors
 	 */
-	static public function getListByType($type = '') {
+	public static function getListByType($type = 'content')
+	{
 		$editor = self::getInstance($type);
 		return $editor->getList();
 	}

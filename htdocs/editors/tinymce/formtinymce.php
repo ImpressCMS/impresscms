@@ -19,18 +19,19 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
 	var $_height = "500px";
 
 	var $tinymce;
-	var $config = array( );
+	var $config = array();
 
 	/**
 	 * Constructor
 	 *
-	 * @param	array   $configs  Editor Options
-	 * @param	bool 	  $checkCompatible  true - return false on failure
+	 * @param array $configs Editor Options
+	 * @param bool $checkCompatible true - return false on failure
 	 */
-	function XoopsFormTinymce($configs, $checkCompatible = false) {
+	function __construct($configs, $checkCompatible = false)
+	{
 		$current_path = __FILE__;
-		if (DIRECTORY_SEPARATOR != "/") {
-					$current_path = str_replace(strpos($current_path, "\\\\", 2)?"\\\\":DIRECTORY_SEPARATOR, "/", $current_path);
+		if (DIRECTORY_SEPARATOR != '/') {
+			$current_path = str_replace(strpos($current_path, "\\\\", 2) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
 		}
 		$this->rootpath = substr(strstr(dirname($current_path), ICMS_ROOT_PATH), strlen(ICMS_ROOT_PATH));
 
@@ -46,7 +47,7 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
 		}
 
 		if ($checkCompatible && !$this->isCompatible()) {
-			return false;
+			return;
 		}
 
 		parent::__construct(@$this->_caption, @$this->_name, @$this->_value);
@@ -109,7 +110,7 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
 			return false;
 		}';*/
 
-		require_once dirname(__FILE__) . "/tinymce.php";
+		require_once __DIR__ . '/tinymce.php';
 		$this->tinymce = TinyMCE::instance($this->config);
 	}
 
@@ -129,12 +130,13 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
   /**
    * Gets the fonts for tinymce
    */
-	function getFonts() {
-		if (empty ($this->config ["fonts"]) && defined("_XOOPS_EDITOR_TINYMCE_FONTS")) {
-			$this->config ["fonts"] = constant("_XOOPS_EDITOR_TINYMCE_FONTS");
+	function getFonts()
+	{
+		if (empty ($this->config ['fonts']) && defined('_XOOPS_EDITOR_TINYMCE_FONTS')) {
+			$this->config ['fonts'] = constant('_XOOPS_EDITOR_TINYMCE_FONTS');
 		}
 
-		return @$this->config ["fonts"];
+		return @$this->config ['fonts'];
 	}
 
 	/**
@@ -156,7 +158,8 @@ class XoopsFormTinymce extends icms_form_elements_Textarea {
 	 *
 	 * @return  bool
 	 */
-	function isCompatible() {
-		return is_readable(ICMS_ROOT_PATH . $this->rootpath . "/tinymce.php");
+	function isCompatible()
+	{
+		return is_readable(ICMS_ROOT_PATH . $this->rootpath . '/tinymce.php');
 	}
 }

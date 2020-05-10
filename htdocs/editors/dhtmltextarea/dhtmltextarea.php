@@ -18,24 +18,26 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @author	    phppp (D.J.)
  * @copyright	copyright (c) 2005 XOOPS.org
  */
-class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea {
+class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
+{
 	/**
 	 * Constructor
 	 *
-	 * @param	array   $configs  Editor Options
-	 * @param	binary 	$checkCompatible  true - return false on failure
+	 * @param array $configs Editor Options
+	 * @param bool $checkCompatible true - return false on failure
 	 */
-	function FormDhtmlTextArea($configs, $checkCompatible = false) {
+	function __construct($configs, $checkCompatible = false)
+	{
 		if (!empty($configs)) {
 			foreach ($configs as $key => $val) {
 				${$key} = $val;
 				$this->$key = $val;
 			}
 		}
-		$value = isset($value)?$value:"";
-		$rows = isset($rows)?$rows:5;
-		$cols = isset($cols)?$cols:50;
-		$hiddentext = empty($hiddentext)?"xoopsHiddenText":$hiddentext;
+		$value = isset($value) ? $value : "";
+		$rows = isset($rows) ? $rows : 5;
+		$cols = isset($cols) ? $cols : 50;
+		$hiddentext = empty($hiddentext) ? 'xoopsHiddenText' : $hiddentext;
 		parent::__construct(@$caption, $name, $value, $rows, $cols, $hiddentext, $configs);
 	}
 }

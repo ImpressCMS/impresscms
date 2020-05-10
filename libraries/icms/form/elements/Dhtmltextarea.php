@@ -64,20 +64,21 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	/**
 	 * Constructor
 	 *
-	 * @param	string  $caption	Caption
-	 * @param	string  $name	   "name" attribute
-	 * @param	string  $value	  Initial text
-	 * @param	int	 $rows	   Number of rows
-	 * @param	int	 $cols	   Number of columns
-	 * @param	string  $hiddentext Hidden Text
+	 * @param string $caption Caption
+	 * @param string $name "name" attribute
+	 * @param string $value Initial text
+	 * @param int $rows Number of rows
+	 * @param int $cols Number of columns
+	 * @param string $hiddentext Hidden Text
+	 * @throws Exception
 	 */
 	public function __construct($caption, $name, $value, $rows = 5, $cols = 50, $hiddentext = "xoopsHiddenText", $options = array()) {
 		parent::__construct($caption, $name, $value, $rows, $cols);
 		$this->_hiddenText = $hiddentext;
 		global $icmsConfig, $icmsModule;
 
-		$groups   = (is_object(icms::$user))? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
-		$moduleid = (is_object($icmsModule) && $name != 'com_text')?$icmsModule->getVar('mid'):1;
+		$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+		$moduleid = (is_object($icmsModule) && $name != 'com_text') ? $icmsModule->getVar('mid') : 1;
 
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $icmsConfig['editor_default']) {
 			$editor_default = $options['editor'];
@@ -86,22 +87,11 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		}
 
 		$gperm_handler = icms::handler('icms_member_groupperm');
-		if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)) {
-			include ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php";
-			$this->htmlEditor = array($editorversion['class'], ICMS_EDITOR_PATH . "/" . $editorversion['dirname'] . "/" . $editorversion['file']);
-		}
-
-		if (!empty($this->htmlEditor)) {
-			$options['name'] = $this->_name;
-			$options['value'] = $this->_value;
-
-			list($class, $path) = $this->htmlEditor;
-			include_once $path;
-			if (class_exists($class)) {
-				$this->htmlEditor = new $class($options);
-			} else {
-				$this->htmlEditor = false;
-			}
+		$editorHandler = icms_plugins_EditorHandler::getInstance('content');
+		if ($editorHandler->has($editor_default) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)) {
+			$this->htmlEditor = $editorHandler->get($editor_default);
+		} else {
+			$this->htmlEditor = false;
 		}
 	}
 
