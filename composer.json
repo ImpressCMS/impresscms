@@ -85,10 +85,13 @@
     },
     "classmap": [
       "modules/",
+      "plugins/autotasks/",
       "plugins/preloads/"
     ],
     "psr-4": {
-      "ImpressCMS\\Core\\": "core/"
+      "ImpressCMS\\Core\\": "core/",
+      "ImpressCMS\\Editors\\": "htdocs/editors/",
+      "ImpressCMS\\Plugins\\": "plugins/"
     },
     "files": [
       "include/version.php",
@@ -113,6 +116,21 @@
       "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider"
     ],
     "services": {
+      "\\IcmsAutoTasksAt": {
+        "tags": [
+          "autotasks.system"
+        ]
+      },
+      "\\IcmsAutoTasksCron": {
+        "tags": [
+          "autotasks.system"
+        ]
+      },
+      "\\IcmsAutoTasksInternal": {
+        "tags": [
+          "autotasks.system"
+        ]
+      },
       "\\IcmsPreloadAdsense": {
         "tags": [
           "preload"
@@ -203,6 +221,11 @@
           "setup_step.module.install"
         ]
       },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\CopyAssetsSetupStep": {
+        "tags": [
+          "setup_step.module.install"
+        ]
+      },
       "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\AutotasksSetupStep": {
         "tags": [
           "setup_step.module.update"
@@ -224,6 +247,11 @@
         ]
       },
       "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\ViewTemplateSetupStep": {
+        "tags": [
+          "setup_step.module.update"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\CopyAssetsSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
@@ -283,9 +311,44 @@
           "setup_step.module.uninstall"
         ]
       },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\CopyAssetsSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ]
+      },
       "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\ViewTemplateSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
+        ]
+      },
+      "CKeditor": {
+        "class": "\\ImpressCMS\\Editors\\CKeditor\\Editor",
+        "tags": [
+          "editor.content"
+        ]
+      },
+      "dhtmltextarea": {
+        "class": "\\ImpressCMS\\Editors\\DHTMLTextArea\\Editor",
+        "tags": [
+          "editor.content"
+        ]
+      },
+      "tinymce": {
+        "class": "\\ImpressCMS\\Editors\\TinyMCE\\Editor",
+        "tags": [
+          "editor.content"
+        ]
+      },
+      "codemirror": {
+        "class": "\\ImpressCMS\\Plugins\\SourceEditors\\CodeMirror\\Editor",
+        "tags": [
+          "editor.source"
+        ]
+      },
+      "editarea": {
+        "class": "\\ImpressCMS\\Plugins\\SourceEditors\\EditArea\\Editor",
+        "tags": [
+          "editor.source"
         ]
       }
     }

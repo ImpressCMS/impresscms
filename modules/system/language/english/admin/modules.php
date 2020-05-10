@@ -162,3 +162,7 @@ define('_MD_AM_CONFIGOPTIONS_DELETE', 'Deleting module config options...');
 define('_MD_AM_CONFIGOPTION_DELETE_FAIL', 'ERROR: Could not delete config data from the database. Config ID: %s');
 define('_MD_AM_CONFIGOPTION_DELETED', 'Config data deleted from the database. Config ID: %s');
 
+define('_MD_AM_COPY_ASSETS_INFO', 'Updating assets...');
+define('_MD_AM_COPY_ASSETS_DELETE_OLD', 'Deleting old public assets content...');
+define('_MD_AM_COPY_ASSETS_COPYING', 'Copying \'%s\'...');
+define('_MD_AM_COPY_ASSETS_DELETING', 'Deleting assets...');

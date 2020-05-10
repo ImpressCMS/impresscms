@@ -22,7 +22,16 @@ $content .= '
 	<li>Setup the web server, PHP and database server properly.</li>
 	<li>Prepare a database for ImpressCMS. This can be an existing database as well as a newly created one.</li>
 	<li>Prepare a user account and grant this user access to the database (all rights).</li>
-	<li>Make the directories of uploads/, ../storage/templates_c, ../storage/cache, ../storage/log, ../storage/htmlpurifier, ../modules/ writable (chmod 777 or 755 - depending on servers).</li>
+	<li>Make these directories writable (chmod 777 or 755 - depending on servers):
+	<ul style="list-style-type: disc; list-style-position: inside">
+	<li>uploads/</li>
+	<li>modules/</li>
+	<li>../storage/templates_c</li>
+	<li>../storage/cache</li>
+	<li>../storage/log</li>
+	<li>../storage/htmlpurifier</li>
+	<li>../modules/</li>
+</ul>
 	<li>Make the file ../.env writable (chmod 666 depending on server).</li>
 	<li>In your internet browser settings turn on the allowance of cookies and JavaScript.</li>
 </ul>

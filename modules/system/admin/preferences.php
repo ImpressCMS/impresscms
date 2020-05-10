@@ -142,8 +142,8 @@ switch ($op) {
 						$handler = icms_getModuleHandler('autotasks', 'system');
 						$options = $handler->getSystemHandlersList(true);
 						$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 1, false);
-						foreach ($options as $option) {
-							$ele->addOption($option, $option);
+						foreach ($options as $k => $v) {
+							$ele->addOption($k, $v);
 						}
 						unset($handler, $options, $option);
 						break;

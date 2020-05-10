@@ -356,4 +356,28 @@ final class icms extends Container {
 		self::$preload = $this->get(icms_preload_Handler::class);
 		self::$security = $this->get('security');
 	}
+
+	/**
+	 * Gets service definition
+	 *
+	 * @param string $serviceName Service name to get
+	 *
+	 * @return \League\Container\Definition\DefinitionInterface|null
+	 * @throws Exception
+	 */
+	public function getServiceDefinition($serviceName): ?\League\Container\Definition\DefinitionInterface
+	{
+		if (!$this->definitions->has($serviceName)) {
+			/**
+			 * @var \League\Container\Definition\DefinitionInterface $definition
+			 */
+			foreach ($this->definitions->getIterator() as $definition) {
+				if (($definition->getConcrete() === $serviceName) || ($definition->getConcrete() === '\\' . $serviceName)) {
+					return $definition;
+				}
+			}
+			return null;
+		}
+		return $this->definitions->getDefinition($serviceName);
+	}
 }

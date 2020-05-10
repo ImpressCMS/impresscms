@@ -41,6 +41,9 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 				),
 				'themes' => new Filesystem(
 					new Local(ICMS_THEME_PATH)
+				),
+				'public' => new Filesystem(
+					new Local(ICMS_PUBLIC_PATH)
 				)
 			]);
 		});

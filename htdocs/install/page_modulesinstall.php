@@ -25,7 +25,6 @@ $pageHasHelp = false;
 $vars = & $_SESSION['settings'];
 include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "include" . DIRECTORY_SEPARATOR . "common.php";
 include_once __DIR__ . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'dbmanager.php';
-include __DIR__ . DIRECTORY_SEPARATOR . "modulesadmin.php";
 
 $dbm = new db_manager();
 
@@ -45,24 +44,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit();
 	}
 	if ($_POST['mod'] == 1) {
+		icms_loadLanguageFile('system', 'modules', true);
+
 		/**
 		 * Automatically updating the system module before installing the selected modules
 		 * @since 1.3
+		 *
+		 * @var icms_module_Handler $module_handler
 		 */
 		$module_handler = icms::handler('icms_module');
-		$system_moduleObj = $module_handler->getByDirname('system');
-		$content .= $system_moduleObj->messages;
 
-		$install_mods = isset($_POST['install_mods'])?$_POST['install_mods']:'';
-		$anon_accessible_mods = isset($_POST['anon_accessible_mods'])?$_POST['anon_accessible_mods']:'';
+		$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
+		$output = new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer);
+
+		$module_handler->update('system', $output);
+
+		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
+		$anon_accessible_mods = isset($_POST['anon_accessible_mods']) ? $_POST['anon_accessible_mods'] : '';
 		if (isset($_POST['install_mods'])) {
 			for ($i = 0; $i <= count($install_mods) - 1; $i++) {
-				$content .= xoops_module_install($install_mods[$i]);
+				$module_handler->install($install_mods[$i], $output);
 				impresscms_get_adminmenu();
 			}
 		}
 
 		$tables = array();
+		$content = nl2br(
+			$buffer->fetch()
+		);
 		$content .= "<div style='height:auto;max-height:400px;overflow:auto;'>" . $dbm->report() . "</div>";
 	} else {
 		$wizard->redirectToPage('+1');
