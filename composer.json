@@ -85,6 +85,7 @@
     },
     "classmap": [
       "modules/",
+      "plugins/autotasks/",
       "plugins/preloads/"
     ],
     "psr-4": {
@@ -120,6 +121,21 @@
       "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider"
     ],
     "services": {
+      "\\IcmsAutoTasksAt": {
+        "tags": [
+          "autotasks.system"
+        ]
+      },
+      "\\IcmsAutoTasksCron": {
+        "tags": [
+          "autotasks.system"
+        ]
+      },
+      "\\IcmsAutoTasksInternal": {
+        "tags": [
+          "autotasks.system"
+        ]
+      },
       "\\IcmsPreloadAdsense": {
         "tags": [
           "preload"
