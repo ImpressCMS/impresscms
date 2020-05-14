@@ -1,6 +1,6 @@
 ImpressCMS 1.3.12
 ======================
-This is a security release that fixes an SQL Injection vulnerability, as found by Sebastian Fabry at ripstech.
+This is a security release that fixes an SQL Injection vulnerability in the module handler in certain cases, as found by Sebastian Fabry at RIPS Technologies GmbH (https://www.ripstech.com).
 
 Installation
 ------------
