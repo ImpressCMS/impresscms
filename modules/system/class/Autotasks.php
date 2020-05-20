@@ -179,23 +179,26 @@ class mod_system_Autotasks extends icms_ipf_Object {
 			}
 
 			// only execute autotasks for active modules
-			$module = icms::handler("icms_module")->getByDirname($dirname);
-			if ($module->getVar("isactive") != 1) {
+			$module = icms::handler('icms_module')->getByDirname($dirname);
+			if ($module->getVar('isactive') != 1) {
 				return false;
 			}
 
-			$dirname = ICMS_MODULES_PATH . '/' . $dirname;
-			$dirname = $dirname . '/' . $code;
+			$dirname = ICMS_MODULES_PATH . '/' . $dirname . '/' . $code;
 			$code = " require '" . $dirname . "';";
-			$is_bug = !(@highlight_string(file_get_contents($dirname), true));
-		} else {
-			$is_bug = !(@highlight_string('<?' . 'php ' . $code . ' return TRUE; ?' . '>', true));
 		}
-		if ($is_bug) {
-			trigger_error(sprintf(_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR, $code));
+
+		try {
+			eval($code);
+		} catch (ParseError $e) {
+			icms::getInstance()->get('logger')->error(
+				sprintf(_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR, $code),
+				[
+					'Exception' => $e
+				]
+			);
 			return false;
 		}
-		eval($code);
 		$count = $this->getVar('sat_repeat');
 		if ($count > 0) {
 			if ($count == 1) {
