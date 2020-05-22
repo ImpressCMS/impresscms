@@ -64,7 +64,7 @@ $modversion = array(
 /**  Development information */
 	'status_version'=> "Final",
 	'status'=> "Final",
-	'date'=> "14 May 2020",
+	'date'=> "23 May 2020",
 	'author_word'=> "",
 	'warning'=>_CO_ICMS_WARNING_FINAL,
 
