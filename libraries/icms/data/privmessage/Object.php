@@ -33,6 +33,7 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
+namespace ImpressCMS\Core\Data\PrivateMessage;
 
 /**
  * A handler for Private Messages
@@ -50,7 +51,7 @@
  * @property string $msg_text     Text (content)
  * @property int    $read_msg     Is this message read?
  */
-class icms_data_privmessage_Object extends icms_ipf_Object {
+class icms_data_privmessage_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * constructor

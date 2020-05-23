@@ -1,4 +1,7 @@
 <?php
+
+namespace ImpressCMS\Core\Preload;
+
 /**
  * icms_preload_Item
  *

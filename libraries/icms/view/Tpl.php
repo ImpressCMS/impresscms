@@ -35,6 +35,8 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
+namespace ImpressCMS\Core\View;
+
 /**
  * Template engine
  *

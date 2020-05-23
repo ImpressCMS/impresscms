@@ -35,66 +35,7 @@
  * @author       http://www.xoops.org The XOOPS Project
  */
 
-/**#@+
- * Config type
- */
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_MAIN instead!
- */
-define('ICMS_CONF', \icms_config_Handler::CATEGORY_MAIN);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_USER instead!
- */
-define('ICMS_CONF_USER', \icms_config_Handler::CATEGORY_USER);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_METAFOOTER instead!
- */
-define('ICMS_CONF_METAFOOTER', \icms_config_Handler::CATEGORY_METAFOOTER);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_CENSOR instead!
- */
-define('ICMS_CONF_CENSOR', \icms_config_Handler::CATEGORY_CENSOR);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_SEARCH instead!
- */
-define('ICMS_CONF_SEARCH', \icms_config_Handler::CATEGORY_SEARCH);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_MAILER instead!
- */
-define('ICMS_CONF_MAILER', \icms_config_Handler::CATEGORY_MAILER);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_AUTH instead!
- */
-define('ICMS_CONF_AUTH', \icms_config_Handler::CATEGORY_AUTH);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_MULILANGUAGE instead!
- */
-define('ICMS_CONF_MULILANGUAGE', \icms_config_Handler::CATEGORY_MULILANGUAGE);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_CONTENT instead!
- */
-define('ICMS_CONF_CONTENT', \icms_config_Handler::CATEGORY_CONTENT);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_PERSONA instead!
- */
-define('ICMS_CONF_PERSONA', \icms_config_Handler::CATEGORY_PERSONA);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_CAPTCHA instead!
- */
-define('ICMS_CONF_CAPTCHA', \icms_config_Handler::CATEGORY_CAPTCHA);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_PLUGINS instead!
- */
-define('ICMS_CONF_PLUGINS', \icms_config_Handler::CATEGORY_PLUGINS);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_AUTOTASKS instead!
- */
-define('ICMS_CONF_AUTOTASKS', \icms_config_Handler::CATEGORY_AUTOTASKS);
-/**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_PURIFIER instead!
- */
-define('ICMS_CONF_PURIFIER', \icms_config_Handler::CATEGORY_PURIFIER);
-/**#@-*/
+namespace ImpressCMS\Core\Config\Item;
 
 /**
  * Configuration handler class.
@@ -106,7 +47,7 @@ define('ICMS_CONF_PURIFIER', \icms_config_Handler::CATEGORY_PURIFIER);
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @package	ICMS\Config\Item
  */
-class icms_config_item_Handler extends icms_ipf_Handler {
+class icms_config_item_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 	public function __construct(&$db) {
 			parent::__construct($db, 'config_item', 'conf_id', 'conf_name', 'conf_value', 'icms', 'config', 'conf_id');

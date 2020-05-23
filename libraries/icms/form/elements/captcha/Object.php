@@ -17,6 +17,7 @@
  * @since	XOOPS
  * @package	ICMS\Form\Elements\Captcha
  */
+namespace ImpressCMS\Core\Form\Elements\Captcha;
 
 /**
  * Creates the captcha object

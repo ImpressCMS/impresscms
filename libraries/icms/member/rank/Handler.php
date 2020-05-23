@@ -8,12 +8,14 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+namespace ImpressCMS\Core\Member\Rank;
+
 /**
  * Handler for the user ranks object
  *
  * @package	ICMS\Member\Rank
  */
-class icms_member_rank_Handler extends icms_ipf_Handler {
+class icms_member_rank_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 	/** */
 	public $objects = false;

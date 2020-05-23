@@ -54,6 +54,8 @@
  }
  */
 
+namespace ImpressCMS\Core\File;
+
 /**
  * Upload Media files
  * Example of usage:
@@ -81,7 +83,7 @@
  * @author      phppp
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_file_MediaUploadHandler {
+class MediaUploadHandler {
 
 	/**
 	 * @var bool Flag indicating if unrecognized mimetypes should be allowed (use with precaution ! may lead to security issues )

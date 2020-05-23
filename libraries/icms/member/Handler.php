@@ -35,6 +35,8 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
+namespace ImpressCMS\Core\Member;
+
 /**
  * Member handler class.
  * This class provides simple interface (a facade class) for handling groups/users/

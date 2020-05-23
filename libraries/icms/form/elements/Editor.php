@@ -34,6 +34,7 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
+namespace ImpressCMS\Core\Form\Elements;
 
 /**
  * XoopsEditor hanlder

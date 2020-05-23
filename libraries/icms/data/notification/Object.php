@@ -34,6 +34,8 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
 
+namespace ImpressCMS\Core\Data\Notification;
+
 /**
  * A Notification
  *
@@ -49,7 +51,7 @@
  * @property int    $not_uid       User ID who receives this notification
  * @property int    $not_mode      How this notification should be received?
  */
-class icms_data_notification_Object extends icms_ipf_Object {
+class icms_data_notification_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Constructor

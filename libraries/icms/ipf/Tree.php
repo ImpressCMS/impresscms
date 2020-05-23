@@ -36,6 +36,8 @@
  * @author	marcan aka Marc-André Lanciault <marcan@smartfactory.ca>
  */
 
+namespace ImpressCMS\Core\IPF;
+
 /**
  * A tree structures with objects as nodes
  *
@@ -129,7 +131,7 @@ class icms_ipf_Tree {
 	 * returns an object from the tree specified by its id
 	 *
 	 * @param   string  $key    ID of the object to retrieve
-	 * @return  object  Object within the tree
+	 * @return  AbstractModel  Object within the tree
 	 */
 	public function & getByKey($key) {
 		return $this->_tree[$key]['obj'];

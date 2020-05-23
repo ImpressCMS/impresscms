@@ -1,7 +1,7 @@
 <?php
 
 
-namespace icms\plugins;
+namespace ImpressCMS\Core\Plugins;
 
 /**
  * If class implements this interface it means, that it is some kind editor

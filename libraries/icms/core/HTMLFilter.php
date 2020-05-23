@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core;
+
 /**
  * Class to Clean & Filter HTML for various uses.
  * Class uses external HTML Purifier for filtering.
@@ -9,7 +11,7 @@
  * @author	ImpressCMS Project
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 */
-class icms_core_HTMLFilter extends icms_core_DataFilter {
+class HTMLFilter extends DataFilter {
 
 	/**
 	 * variable used by HTML Filter Library
@@ -86,7 +88,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
 			$filterList = array();
 
-			$fileList = icms_core_Filesystem::getFileList($dirPath, '', array('php'), true);
+			$fileList = Filesystem::getFileList($dirPath, '', array('php'), true);
 			unset($fileList['ExtractStyleBlocks.php'], $fileList['YouTube.php']);
 			$fileList = array_values($fileList);
 

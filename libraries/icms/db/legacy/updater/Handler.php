@@ -9,6 +9,7 @@
  * @link        http://www.smartfactory.ca The SmartFactory
  * @package	ICMS\Database\Legacy\Updater
  */
+namespace ImpressCMS\Core\Database\Legacy\Updater;
 
 /**
  * Include the language constants for the icms_db_legacy_updater_Handler

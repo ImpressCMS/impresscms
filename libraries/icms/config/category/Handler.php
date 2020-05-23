@@ -35,6 +35,8 @@
  * @author		Kazumi Ono (aka onokazo)
  */
 
+namespace ImpressCMS\Core\Config\Category;
+
 /**
  * Configuration category handler class.
  *
@@ -45,7 +47,7 @@
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @package	ICMS\Config\Category
  */
-class icms_config_category_Handler extends icms_ipf_Handler {
+class icms_config_category_Handler extends \ImpressCMS\Core\IPF\Handler {
 
         public function __construct(&$db) {
             parent::__construct($db, 'config_category', 'confcat_id', 'confcat_name', 'confcat_order', 'icms', 'configcategory', 'confcat_id');

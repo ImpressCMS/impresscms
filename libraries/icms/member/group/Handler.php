@@ -35,6 +35,8 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
+namespace ImpressCMS\Core\Member\Group;
+
 /**
  * Group handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -43,7 +45,7 @@
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @package	ICMS\Member\Group
  */
-class icms_member_group_Handler extends icms_ipf_Handler {
+class icms_member_group_Handler extends \ImpressCMS\Core\IPF\Handler {
 
         public function __construct(&$db) {
             parent::__construct($db, 'member_group', 'groupid', 'name', 'description', 'icms', 'groups', 'groupid');

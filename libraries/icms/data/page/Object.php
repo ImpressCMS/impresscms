@@ -9,6 +9,8 @@
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
 
+namespace ImpressCMS\Core\Data\Page;
+
 /**
  * ImpressCMS page class.
  *
@@ -20,7 +22,7 @@
  *
  * @package	ICMS\Data\Page
  */
-class icms_data_page_Object extends icms_ipf_Object {
+class icms_data_page_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	public function __construct(& $handler, $data = array()) {
 			$this->initVar('page_id', self::DTYPE_INTEGER);

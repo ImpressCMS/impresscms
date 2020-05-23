@@ -27,6 +27,9 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+
+namespace ImpressCMS\Core\Database;
+
 /**
  * Establishes database class and connection
  *

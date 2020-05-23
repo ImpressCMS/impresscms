@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\Plugins;
+
 /**
  * Handler for plugins
  *

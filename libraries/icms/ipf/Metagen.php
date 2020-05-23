@@ -10,6 +10,8 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
+namespace ImpressCMS\Core\IPF;
+
 /**
  * Generates META tags
  *

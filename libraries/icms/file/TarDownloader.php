@@ -33,6 +33,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
+namespace ImpressCMS\Core\File;
 
 /**
  * Send tar files through a http socket
@@ -41,7 +42,7 @@
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @package	ICMS\File
  */
-class icms_file_TarDownloader extends icms_file_DownloadHandler {
+class TarDownloader extends DownloadHandler {
 
 	/**
 	 * Constructor

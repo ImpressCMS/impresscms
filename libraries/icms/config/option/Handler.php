@@ -32,6 +32,8 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
+namespace ImpressCMS\Core\Config\Option;
+
 /**
  * Configuration option handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -41,7 +43,7 @@
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @package	ICMS\Config\Option
  */
-class icms_config_option_Handler extends icms_ipf_Handler {
+class icms_config_option_Handler extends \ImpressCMS\Core\IPF\Handler {
 
         public function __construct(&$db) {
             parent::__construct($db, 'config_option', 'confop_id', 'confop_name', 'confop_value', 'icms', 'configoption', 'confop_id');

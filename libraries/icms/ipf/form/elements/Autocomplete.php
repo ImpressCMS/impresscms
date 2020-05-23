@@ -8,6 +8,8 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
+namespace ImpressCMS\Core\IPF\Form\Elements;
+
 /**
  * To make the Autocomplete field work, the include file needs to look like the following
  * (in this example the Autocomplete field would use the conf_name field of the config table as a

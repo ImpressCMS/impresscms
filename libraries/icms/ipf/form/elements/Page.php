@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Form\Elements;
+
 /**
  * Form control creating a page element for an object derived from icms_ipf_Object
  *

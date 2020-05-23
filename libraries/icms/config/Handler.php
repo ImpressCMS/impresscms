@@ -32,6 +32,8 @@
  * @author		Kazumi Ono (aka onokazo)
  */
 
+namespace ImpressCMS\Core\Config;
+
 /**
  * Configuration handling class.
  * This class acts as an interface for handling general configurations

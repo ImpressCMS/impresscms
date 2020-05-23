@@ -15,10 +15,10 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
     public function testAvailability() {
         foreach ([
             'icms_ipf_Tree' => null,
-            'icms_ipf_Object' => ['icms_core_Object'],
+            '\ImpressCMS\IPF\BaseModel' => ['icms_core_Object'],
             'icms_ipf_Metagen' => null,
             'icms_ipf_Highlighter' => null,
-            'icms_ipf_Handler' => ['icms_core_ObjectHandler'],
+            '\ImpressCMS\IPF\BaseHandler' => ['icms_core_ObjectHandler'],
             'icms_ipf_Controller' => null,
             'icms_ipf_About' => null,
             'icms_ipf_view_Column' => null,
@@ -26,7 +26,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_view_Single' => null,
             'icms_ipf_view_Table' => null,
             'icms_ipf_view_Tree' => ['icms_ipf_view_Table'],
-            'icms_ipf_seo_Object' => ['icms_ipf_Object'],
+            'icms_ipf_seo_Object' => ['\ImpressCMS\IPF\BaseModel'],
             'icms_ipf_registry_Handler' => null,
             'icms_ipf_permission_Handler' => null,
             'icms_ipf_member_Handler' => ['icms_member_Handler'],
@@ -61,7 +61,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_export_Renderer' => null,
             'icms_ipf_export_Handler' => null,
             'icms_ipf_category_Object' => ['icms_ipf_seo_Object'],
-            'icms_ipf_category_Handler' => ['icms_ipf_Handler']
+            'icms_ipf_category_Handler' => ['\ImpressCMS\IPF\BaseHandler']
         ] as $class => $must_be_instances_of) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
             if ($must_be_instances_of === null) {
@@ -101,7 +101,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'getAllParent',
                 'makeSelBox'
             ],
-            'icms_ipf_Object' => [
+            '\ImpressCMS\IPF\BaseModel' => [
                 'isLoadedOnCreation',
                 'accessGranted',
                 'openFormSection',
@@ -179,7 +179,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'buildAutoMetaTags',
                 'createMetaTags'
             ],
-            'icms_ipf_Handler' => [
+            '\ImpressCMS\IPF\BaseHandler' => [
                 'addEventHook',
                 'addPermission',
                 'setGrantedObjectsCriteria',
@@ -220,8 +220,8 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'postDataToObject',
                 'doStoreFromDefaultForm',
                 'storeFromDefaultForm',
-                'storeicms_ipf_ObjectD',
-                'storeicms_ipf_Object',
+                'store\ImpressCMS\IPF\BaseModelD',
+                'store\ImpressCMS\IPF\BaseModel',
                 'handleObjectDeletion',
                 'handleObjectDeletionFromUserSide',
                 'getAdminViewItemLink',
@@ -395,7 +395,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 '_myId' => 'string',
                 '_tree'    => 'array'
             ],
-            'icms_ipf_Object' => [
+            '\ImpressCMS\IPF\BaseModel' => [
                 '_image_path' => 'string',
                 '_image_url' => 'string',
                 'seoEnabled' => 'bool',
@@ -417,7 +417,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_Highlighter' => [
                 'content' => 'string'
             ],
-            'icms_ipf_Handler' => [
+            '\ImpressCMS\IPF\BaseHandler' => [
                 '_itemname' => 'string',
                 'table' => 'string',
                 'keyName' => 'string',

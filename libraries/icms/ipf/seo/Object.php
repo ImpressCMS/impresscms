@@ -8,6 +8,8 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
+namespace ImpressCMS\Core\IPF\Seo;
+
 /**
  * icms_ipf_Object base SEO-enabled class
  *
@@ -19,7 +21,7 @@
  *
  * @package	ICMS\IPF\SEO
  */
-class icms_ipf_seo_Object extends icms_ipf_Object {
+class icms_ipf_seo_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	public function __construct(&$handler) {
 		parent::__construct($handler);

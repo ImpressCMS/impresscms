@@ -35,6 +35,8 @@
  * @package	ICMS\Core
  */
 
+namespace ImpressCMS\Core;
+
 /**
  * Abstract object handler class.
  *

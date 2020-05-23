@@ -32,6 +32,8 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
+namespace ImpressCMS\Core\Config\Option;
+
 /**
  * A Config-Option
  *
@@ -44,7 +46,7 @@
  * @property string     $confop_value  Value
  * @property int        $conf_id       Config ID
  */
-class icms_config_option_Object extends icms_ipf_Object {
+class icms_config_option_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * Constructor
 	 */

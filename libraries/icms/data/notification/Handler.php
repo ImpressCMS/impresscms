@@ -36,6 +36,8 @@
  * @package	ICMS\Data\Notification
  */
 
+namespace ImpressCMS\Core\Data\Notification;
+
 // RMV-NOTIFY
 include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 
@@ -49,7 +51,7 @@ include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @package	ICMS\Data\Notification
  */
-class icms_data_notification_Handler extends icms_ipf_Handler {
+class icms_data_notification_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'data_notification', 'not_id', 'not_event', 'not_itemid', 'icms', 'xoopsnotifications', 'not_id');

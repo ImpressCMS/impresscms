@@ -8,6 +8,8 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
+namespace ImpressCMS\Core\IPF\Registry;
+
 /**
  * Registry of icms_ipf_Object
  *

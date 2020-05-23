@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\Data\File;
+
 /**
  * Richfile Handler
  *
@@ -9,7 +11,7 @@
  * @author	Phoenyx
  */
 
-class icms_data_file_Handler extends icms_ipf_Handler {
+class icms_data_file_Handler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * constrcutor
 	 *

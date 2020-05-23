@@ -1,11 +1,13 @@
 <?php
+namespace ImpressCMS\Core\Image\Body;
+
 /**
  * Image body
  *
  * @property int    $image_id       Image ID
  * @property string $image_body     Image body
  */
-class icms_image_body_Object extends \icms_ipf_Object {
+class icms_image_body_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Constructor

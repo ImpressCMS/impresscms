@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Export;
+
 /**
  * Class to easily export data from IcmsPersistables
  *

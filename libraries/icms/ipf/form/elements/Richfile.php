@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Form\Elements;
+
 /**
  * Form control creating a rich file element for an object derived from icms_ipf_Object
  *

@@ -8,6 +8,8 @@
  * @author	Phoenyx
  */
 
+namespace ImpressCMS\Core\Data\UrlLink;
+
 /**
  * Url Link object
  *
@@ -20,7 +22,7 @@
  *
  * @package	ICMS\Data\UrlLink
  */
-class icms_data_urllink_Object extends icms_ipf_Object {
+class icms_data_urllink_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * constructor
 	 */

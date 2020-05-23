@@ -9,6 +9,8 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
+namespace ImpressCMS\Core\Preload;
+
 /**
  * icms_preload_LibrariesHandler
  *

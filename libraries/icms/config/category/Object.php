@@ -33,6 +33,8 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
+namespace ImpressCMS\Core\Config\Category;
+
 /**
  * A category of configs
  *
@@ -44,7 +46,7 @@
  * @property string $confcat_name      Category name
  * @property int    $confcat_order     Category display order
  */
-class icms_config_category_Object extends icms_ipf_Object {
+class icms_config_category_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * Constructor
 	 *

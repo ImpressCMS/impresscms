@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Member;
+
 /**
  * Member handler class.
  * This class provides simple interface (a facade class) for handling groups/users/

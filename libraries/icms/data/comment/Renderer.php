@@ -34,13 +34,15 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
 
+namespace ImpressCMS\Core\Data\Comment;
+
 /**
  * Display comments
  *
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @package	ICMS\Data\Comment
  */
-class icms_data_comment_Renderer {
+class CommentRenderer {
 
 	private $_tpl;
 	private $_comments = null;
@@ -75,12 +77,12 @@ class icms_data_comment_Renderer {
 	 * @param boolean $use_icons
 	 * @param boolean $do_iconcheck
 	 *
-	 * @return icms_data_comment_Renderer
+	 * @return CommentRenderer
 	 */
 	static function &instance(&$tpl, $use_icons = true, $do_iconcheck = false) {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_data_comment_Renderer($tpl, $use_icons, $do_iconcheck);
+			$instance = new CommentRenderer($tpl, $use_icons, $do_iconcheck);
 		}
 		return $instance;
 	}

@@ -8,6 +8,7 @@
  * @author	marcan <marcan@impresscms.org>
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
+namespace ImpressCMS\Core\IPF\Category;
 
 /**
  * Provides data access mechanisms to the icms_ipf_category_Object object
@@ -17,7 +18,7 @@
  * @package	ICMS\IPF\Category
  * @since 	1.1
  */
-class icms_ipf_category_Handler extends icms_ipf_Handler {
+class icms_ipf_category_Handler extends \ImpressCMS\Core\IPF\Handler {
 	/** */
 	public $allCategoriesObj = false;
 	/** */

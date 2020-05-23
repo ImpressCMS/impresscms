@@ -35,37 +35,8 @@
  * @license	LICENSE.txt
  * @package	ICMS\Core
  */
-/* * #@+
- * Object datatype
- *
- * */
-define('XOBJ_DTYPE_TXTBOX', icms_properties_Handler::DTYPE_DEP_TXTBOX);
-define('XOBJ_DTYPE_TXTAREA', icms_properties_Handler::DTYPE_STRING);
-define('XOBJ_DTYPE_STRING', icms_properties_Handler::DTYPE_STRING);
-define('XOBJ_DTYPE_INT', icms_properties_Handler::DTYPE_INTEGER); // shorthund
-define('XOBJ_DTYPE_INTEGER', icms_properties_Handler::DTYPE_INTEGER);
-define('XOBJ_DTYPE_URL', icms_properties_Handler::DTYPE_DEP_URL);
-define('XOBJ_DTYPE_EMAIL', icms_properties_Handler::DTYPE_DEP_EMAIL);
-define('XOBJ_DTYPE_ARRAY', icms_properties_Handler::DTYPE_ARRAY);
-define('XOBJ_DTYPE_OTHER', icms_properties_Handler::DTYPE_DEP_OTHER);
-define('XOBJ_DTYPE_SOURCE', icms_properties_Handler::DTYPE_DEP_SOURCE);
-define('XOBJ_DTYPE_STIME', icms_properties_Handler::DTYPE_DEP_STIME);
-define('XOBJ_DTYPE_MTIME', icms_properties_Handler::DTYPE_DEP_MTIME);
-define('XOBJ_DTYPE_DATETIME', icms_properties_Handler::DTYPE_DATETIME);
-define('XOBJ_DTYPE_LTIME', icms_properties_Handler::DTYPE_DATETIME);
 
-
-define('XOBJ_DTYPE_SIMPLE_ARRAY', icms_properties_Handler::DTYPE_LIST);
-define('XOBJ_DTYPE_CURRENCY', icms_properties_Handler::DTYPE_DEP_CURRENCY);
-define('XOBJ_DTYPE_FLOAT', icms_properties_Handler::DTYPE_FLOAT);
-define('XOBJ_DTYPE_TIME_ONLY', icms_properties_Handler::DTYPE_DEP_TIME_ONLY);
-define('XOBJ_DTYPE_URLLINK', icms_properties_Handler::DTYPE_DEP_URLLINK);
-define('XOBJ_DTYPE_FILE', icms_properties_Handler::DTYPE_DEP_FILE);
-define('XOBJ_DTYPE_IMAGE', icms_properties_Handler::DTYPE_DEP_IMAGE);
-define('XOBJ_DTYPE_FORM_SECTION', icms_properties_Handler::DTYPE_DEP_FORM_SECTION);
-define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_properties_Handler::DTYPE_DEP_FORM_SECTION_CLOSE);
-
-/* * #@- */
+namespace ImpressCMS\Core;
 
 /**
  * Base class for all objects in the kernel (and beyond)
@@ -77,7 +48,7 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_properties_Handler::DTYPE_DEP_FORM_
  * @since	XOOPS
  * @author	Kazumi Ono (AKA onokazu)
  * */
-class icms_core_Object extends icms_properties_Handler {
+class AbstractModel extends Properties\icms_properties_Handler {
 
 	/**
 	 * is it a newly created object?

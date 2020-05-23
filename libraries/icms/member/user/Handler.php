@@ -34,6 +34,8 @@
  * @license	LICENSE.txt
  * @package	ICMS\Member\User
  */
+namespace ImpressCMS\Core\Member\User;
+
 
 include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
 
@@ -47,7 +49,7 @@ include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
  * @package	ICMS\Member\User
  */
 class icms_member_user_Handler
-	extends icms_ipf_Handler {
+	extends \ImpressCMS\Core\IPF\Handler {
 
 		public function __construct(&$db, $module = 'icms') {
 			if (!$module) {

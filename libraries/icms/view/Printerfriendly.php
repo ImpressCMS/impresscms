@@ -9,6 +9,8 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+namespace ImpressCMS\Core\View;
+
 /**
  * Class to manage a printer friendly page
  *

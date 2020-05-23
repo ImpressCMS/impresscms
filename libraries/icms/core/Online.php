@@ -34,6 +34,8 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
+namespace ImpressCMS\Core;
+
 /**
  * A handler for "Who is Online?" information
  *
@@ -43,7 +45,7 @@
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_core_OnlineHandler {
+class Online {
 
 	/**
 	 * Database connection
@@ -64,13 +66,13 @@ class icms_core_OnlineHandler {
 	/**
 	 * Inserts online information into the database
 	 *
-	 * @param	int     $uid    UID of the active user
-	 * @param	string  $uname  Username
-	 * @param	string  $timestamp
-	 * @param	string  $module Current module
-	 * @param	string  $ip     User's IP adress
+	 * @param int $uid UID of the active user
+	 * @param string $uname Username
+	 * @param $time
+	 * @param string $module Current module
+	 * @param string $ip User's IP adress
 	 *
-	 * @return	bool    TRUE on success
+	 * @return    bool    TRUE on success
 	 */
 	public function write($uid, $uname, $time, $module, $ip) {
 		$uid = (int) $uid;

@@ -35,6 +35,8 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
+
+namespace ImpressCMS\Core\File;
 /**
  * Sends non HTML files through a http socket
  *
@@ -42,7 +44,7 @@
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-abstract class icms_file_DownloadHandler {
+abstract class DownloadHandler {
 
 	/**#@+
 	 * file information

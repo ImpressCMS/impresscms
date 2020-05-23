@@ -35,6 +35,8 @@
  * @license	LICENSE.txt
  */
 
+namespace ImpressCMS\Core\Member\User;
+
 /**
  * Class for users
  *
@@ -73,7 +75,7 @@
  * @property bool   $pass_expired      Is password expired?
  * @property string $login_name        Login name
  */
-class icms_member_user_Object extends icms_ipf_Object {
+class icms_member_user_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * @var bool is the user admin?

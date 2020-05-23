@@ -35,6 +35,8 @@
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
+namespace ImpressCMS\Core\View\Block;
+
 /**
  * ImpressCMS Core Block Object Handler Class
  *
@@ -44,7 +46,7 @@
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class icms_view_block_Handler extends icms_ipf_Handler {
+class icms_view_block_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 	private $block_positions;
 	private $modules_name;

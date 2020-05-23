@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Form;
+
 /**
  * Form control creating a secure form
  *

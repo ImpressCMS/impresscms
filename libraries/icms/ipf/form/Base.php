@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Form;
+
 /**
  * Form control creating an image upload element for an object derived from icms_ipf_Object
  *

@@ -12,12 +12,14 @@
 
 /* This may be loaded by other modules - and not just through the cpanel */
 
+namespace ImpressCMS\Core\View\Block\Position;
+
 /**
  * icms_view_block_position_Handler
  *
  * @package	ICMS\View\Block\Position
  */
-class icms_view_block_position_Handler extends icms_ipf_Handler {
+class icms_view_block_position_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 	/**
 	 * Constructor

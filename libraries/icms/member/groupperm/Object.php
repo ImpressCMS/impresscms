@@ -35,6 +35,8 @@
  * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  */
 
+namespace ImpressCMS\Core\Member\GroupPerm;
+
 /**
  * A group permission
  *
@@ -50,7 +52,7 @@
  * @property int    $gperm_modid   Linked module ID
  * @property string $gperm_name    Name
  */
-class icms_member_groupperm_Object extends icms_ipf_Object {
+class icms_member_groupperm_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * Constructor
 	 *

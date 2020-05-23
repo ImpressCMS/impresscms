@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Form\Elements;
+
 /**
  * Form control creating an hidden field for an object derived from icms_ipf_Object
  * @todo	Remove the hardcoded height attribute, line breaks, styles

@@ -33,6 +33,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
  */
+namespace ImpressCMS\Core\Image;
 
 /**
  * Image handler class.
@@ -44,7 +45,7 @@
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_image_Handler extends \icms_ipf_Handler {
+class icms_image_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 	/**
 	 * Handler for image bodies

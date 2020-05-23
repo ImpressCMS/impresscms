@@ -1,4 +1,7 @@
 <?php
+
+namespace ImpressCMS\Core\Database;
+
 if (interface_exists('icms_db_legacy_IDatabase')) {
 	return;
 }
@@ -14,7 +17,7 @@ interface icms_db_legacy_IDatabase {
 	/**
 	 * assign a logger to the database
 	 *
-	 * @see icms_core_Logger
+	 * @see Logger
 	 * @param \icms_core_Logger $logger reference to a logger object
 	 */
 	public function setLogger($logger);

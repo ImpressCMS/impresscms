@@ -35,6 +35,8 @@
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  */
 
+namespace ImpressCMS\Core\Data\Comment;
+
 /**
  * A Comment
  *
@@ -62,7 +64,7 @@
  * @property int    $doimage       Show images?
  * @property int    $dobr          Do line breaks?
  */
-class icms_data_comment_Object extends icms_ipf_Object {
+class icms_data_comment_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Constructor

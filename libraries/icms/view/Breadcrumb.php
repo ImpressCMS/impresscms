@@ -7,6 +7,8 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
+namespace ImpressCMS\Core\View;
+
 /**
  * Breadcrumb
  *

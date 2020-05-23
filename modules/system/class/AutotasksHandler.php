@@ -11,7 +11,7 @@
  *
  * @package ImpressCMS\Modules\System\Class\Autotasks
  */
-class mod_system_AutotasksHandler extends icms_ipf_Handler
+class mod_system_AutotasksHandler extends \ImpressCMS\IPF\BaseHandler
 {
 
 	private $_use_virtual_config = false;

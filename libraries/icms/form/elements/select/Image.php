@@ -19,6 +19,8 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
+namespace ImpressCMS\Core\Form\Elements\Select;
+
 /**
  * Create a form element to select an image
  *

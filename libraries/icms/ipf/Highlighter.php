@@ -1,4 +1,7 @@
 <?php
+
+namespace ImpressCMS\Core\IPF;
+
 /**
  * This class highlight the chosen keywords in the current output buffer
  *

@@ -1,4 +1,5 @@
 <?php
+namespace ImpressCMS\Core\Database;
 
 /**
  * Database connection

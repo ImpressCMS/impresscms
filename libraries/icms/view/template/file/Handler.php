@@ -34,6 +34,8 @@
  * @license    LICENSE.txt
  */
 
+namespace ImpressCMS\Core\View\Template\File;
+
 /**
  * Template file handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -43,7 +45,7 @@
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class icms_view_template_file_Handler extends icms_ipf_Handler {
+class icms_view_template_file_Handler extends \ImpressCMS\Core\IPF\Handler {
 	private $_prefetch_cache = array();
 
 	public function __construct(&$db) {

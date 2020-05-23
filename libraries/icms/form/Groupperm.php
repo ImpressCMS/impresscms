@@ -33,6 +33,7 @@
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		LICENSE.txt
 */
+namespace ImpressCMS\Core\Form;
 
 /**
  * Renders a form for setting module specific group permissions

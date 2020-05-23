@@ -17,7 +17,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
        foreach (['category', 'Item', 'option'] as $name) {
-           foreach (['Handler' => 'icms_ipf_Handler', 'Object' => 'icms_ipf_Object'] as $type => $instanecOfType) {
+           foreach (['Handler' => '\ImpressCMS\IPF\BaseHandler', 'Object' => '\ImpressCMS\IPF\BaseModel'] as $type => $instanecOfType) {
                $class = 'icms_config_' . $name . '_' . $type;
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 

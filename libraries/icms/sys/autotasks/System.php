@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\Sys\Autotasks;
+
 /**
  * ImpressCMS AUTOTASKSs Library - Base class
  *

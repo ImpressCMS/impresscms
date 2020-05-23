@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\Properties;
+
 /**
  * Contains methods for dealing with object properties
  *

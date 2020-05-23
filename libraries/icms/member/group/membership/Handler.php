@@ -35,6 +35,8 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
+namespace ImpressCMS\Core\Member\Group\Membership;
+
 /**
  * Group membership handler class. (Singleton)
  *
@@ -44,7 +46,7 @@
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @package	ICMS\Member\Group\Membership
  */
-class icms_member_group_membership_Handler extends icms_ipf_Handler {
+class icms_member_group_membership_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'member_group_membership', 'linkid', 'groupid', 'uid', 'icms', 'groups_users_link', 'linkid');

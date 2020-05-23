@@ -11,27 +11,30 @@
  * @since	1.3
  */
 
+namespace ImpressCMS\Core;
+
 /**
  * Create and display messages on the screen
  */
-class icms_core_Message {
+class Message {
 
 	/* Since all the methods are static, there is no __construct necessary	 */
 
 	/**
 	 * Replaces xoops_warning() and icms_warning_msg()
-	 * Given either an array of messages or a string, and an optional title, create a formatted warning 
+	 * Given either an array of messages or a string, and an optional title, create a formatted warning
 	 * message
 	 *
-	 * @author		XOOPS - include/functions.php :: xoops_warning()
-	 * @author		modified by skenow <skenow@impresscms.org>
-	 * @copyright	copyright (c) 2000-2003 XOOPS.org
-	 * 				You should have received a copy of XOOPS_copyrights.txt with
-	 * 				this file. If not, you may obtain a copy from xoops.org
+	 * @param string $msg
+	 * @param string $title
+	 * @param boolean $render
+	 * @return string
+	 * @author        modified by skenow <skenow@impresscms.org>
+	 * @copyright    copyright (c) 2000-2003 XOOPS.org
+	 *                You should have received a copy of XOOPS_copyrights.txt with
+	 *                this file. If not, you may obtain a copy from xoops.org
 	 *
-	 * @param 		string $msg
-	 * @param 		string $title
-	 * @param 		boolean $render
+	 * @author        XOOPS - include/functions.php :: xoops_warning()
 	 */
 	static public function warning($msg, $title = '', $render = false) {
 		$ret = '<div class="warningMsg alert alert-warning" role="alert">';
@@ -55,7 +58,7 @@ class icms_core_Message {
 
 	/**
 	 * Replaces icms_error_msg()
-	 * 
+	 *
 	 * @author	XOOPS - include/functions.php :: xoops_error()
 	 * @param	string $msg
 	 * @param	string $title

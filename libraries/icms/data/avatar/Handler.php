@@ -35,6 +35,8 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
+namespace ImpressCMS\Core\Data\Avatar;
+
 /**
  * Avatar handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -45,7 +47,7 @@
  *
  * @package	ICMS\Data\Avatar
  */
-class icms_data_avatar_Handler extends icms_ipf_Handler {
+class icms_data_avatar_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'data_avatar', 'avatar_id', 'avatar_name', 'avatar_file', 'icms', 'avatar', 'avatar_id');

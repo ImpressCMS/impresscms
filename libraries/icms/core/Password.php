@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core;
+
 /**
  * Class to encrypt User Passwords.
  *
@@ -9,7 +11,7 @@
  * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
  * @package	ICMS\Core
  */
-final class icms_core_Password {
+final class Password {
 
 	private $pass, $salt, $mainSalt, $uname;
 
@@ -29,7 +31,7 @@ final class icms_core_Password {
 	static public function getInstance() {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_core_Password();
+			$instance = new Password();
 		}
 		return $instance;
 	}

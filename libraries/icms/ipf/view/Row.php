@@ -5,6 +5,8 @@
  * @license		LICENSE.txt
  */
 
+namespace ImpressCMS\Core\IPF\View;
+
 /**
  * icms_ipf_view_Row class
  *

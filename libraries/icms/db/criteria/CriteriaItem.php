@@ -38,6 +38,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
+namespace ImpressCMS\Core\Database\Criteria;
 
 /**
  * A single criteria
@@ -46,7 +47,7 @@
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_db_criteria_Item extends icms_db_criteria_Element {
+class CriteriaItem extends CriteriaElement {
 
 	/**
 	 * Prefix for column

@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Export;
+
 /**
  * icms_ipf_export_Renderer class
  *

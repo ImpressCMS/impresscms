@@ -33,6 +33,8 @@
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  */
 
+namespace ImpressCMS\Core\View\Theme;
+
 /**
  * Builds the theme components
  *

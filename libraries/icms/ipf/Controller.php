@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF;
+
 /**
  * This class is responsible for providing operations to an object for managing the object's manipulation
  *
@@ -430,7 +432,7 @@ class icms_ipf_Controller {
 	/**
 	 * Retrieve the object admin side link for a page
 	 *
-	 * @param	object	$icmsObj	reference to the object from which we want the user side link
+	 * @param	AbstractModel	$icmsObj	reference to the object from which we want the user side link
 	 * @param	bool	$onlyUrl	whether or not to return a simple URL or a full <a> link
 	 * @param	bool	$withimage	return a linked image instead of linked text
 	 * @return	string	admin side link to the object
@@ -456,7 +458,7 @@ class icms_ipf_Controller {
 	/**
 	 * Retrieve the object user side link
 	 *
-	 * @param object $icmsObj reference to the object from which we want the user side link
+	 * @param AbstractModel $icmsObj reference to the object from which we want the user side link
 	 * @param bool $onlyUrl wether or not to return a simple URL or a full <a> link
 	 * @return string user side link to the object
 	 */
@@ -492,7 +494,7 @@ class icms_ipf_Controller {
 	/**
 	 * This method returns a view link of the Object
 	 *
-	 * @param icms_ipf_Object $icmsObj
+	 * @param AbstractModel $icmsObj
 	 * @param boolean $onlyUrl
 	 * @param boolean $withimage
 	 * @param boolean $userSide
@@ -522,7 +524,7 @@ class icms_ipf_Controller {
 
 	/**
 	 *
-	 * @param	object	$icmsObj
+	 * @param	AbstractModel	$icmsObj
 	 * @param	bool	$onlyUrl
 	 * @param	bool	$withimage
 	 */

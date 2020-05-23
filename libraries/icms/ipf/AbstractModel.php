@@ -8,6 +8,8 @@
  * @author marcan <marcan@impresscms.org>
  */
 
+namespace ImpressCMS\Core\IPF;
+
 /**
  * icms_ipf_Object base class
  *
@@ -17,7 +19,7 @@
  * @author marcan <marcan@smartfactory.ca>
  * @todo Properly identify and declare the visibility of vars and functions
  */
-class icms_ipf_Object extends icms_core_Object {
+abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 
 	/**
 	 * Image path

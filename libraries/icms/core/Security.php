@@ -33,6 +33,9 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
+
+namespace ImpressCMS\Core;
+
 /**
  * Class for managing security aspects such as checking referers, applying tokens and checking global variables for contamination
  *
@@ -41,7 +44,7 @@
  * @author	Jan Pedersen <mithrandir@xoops.org>
  * @copyright	(c) 2000-2005 The Xoops Project - www.xoops.org
  */
-class icms_core_Security {
+class Security {
 
 	public $errors = array();
 

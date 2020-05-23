@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Permission;
+
 /**
  * IcmsPermission
  *

@@ -8,6 +8,8 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+namespace ImpressCMS\Core\Member\Rank;
+
 /**
  * Ranks to assign members
  *
@@ -20,7 +22,7 @@
  * @property int    $rank_special  Is this rank special?
  * @property string $rank_image    Image
  */
-class icms_member_rank_Object extends icms_ipf_Object {
+class icms_member_rank_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/** */
 	public $content = false;

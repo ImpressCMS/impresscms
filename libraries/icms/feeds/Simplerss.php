@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\Feeds;
+
 /**
  * Class handling RSS feeds, using SimplePie class
  *
@@ -10,9 +12,9 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since	1.2
  * @author	malanciault <marcan@impresscms.org)
- * @package	ICMS\Feeds 
+ * @package	ICMS\Feeds
  */
-class icms_feeds_Simplerss extends SimplePie {
+class Simplerss extends \SimplePie {
 
 	/**
 	 * The icms_feeds_Simplerss class contains feed level data and options

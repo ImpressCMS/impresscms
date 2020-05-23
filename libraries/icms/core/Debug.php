@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core;
+
 /**
  * A static class for debugging
  *
@@ -11,7 +13,7 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since	1.3
  */
-class icms_core_Debug {
+class Debug {
 
 	/* Since all the methods are static, there is no __construct necessary	 */
 
@@ -36,7 +38,7 @@ class icms_core_Debug {
 	 */
  	static public function vardump($var) {
  		if (class_exists('icms_core_Textsanitizer')) {
-			self::message(icms_core_DataFilter::checkVar(var_export($var, true), 'text', 'output'));
+			self::message(DataFilter::checkVar(var_export($var, true), 'text', 'output'));
  		} else {
 			$var = var_export($var, true);
 			$var = preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $var);
@@ -79,7 +81,7 @@ class icms_core_Debug {
 			$msg = _CORE_DEPRECATED_CALLEDBY;
 		}
 
-		$logger = icms_core_Logger::instance();
+		$logger = Logger::instance();
 		$logger->addDeprecated(
 			$pre . ($replacement?' <strong><em>' . sprintf(_CORE_DEPRECATED_REPLACEMENT, $replacement) . '</em></strong>.':'')
 			. ($extra?' <strong><em>' . $extra . '</em></strong>':'')

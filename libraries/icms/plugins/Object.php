@@ -1,4 +1,7 @@
 <?php
+
+namespace ImpressCMS\Core\Plugins;
+
 /**
  *
  * Class To load plugins for modules.

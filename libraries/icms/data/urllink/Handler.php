@@ -1,4 +1,7 @@
 <?php
+
+namespace ImpressCMS\Core\Data\UrlLink;
+
 /**
  * UrlLink Handler
  *
@@ -9,7 +12,7 @@
  * @author	Phoenyx
  */
 
-class icms_data_urllink_Handler extends icms_ipf_Handler {
+class icms_data_urllink_Handler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * constrcutor
 	 *

@@ -28,6 +28,8 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 
+namespace ImpressCMS\Core;
+
 /**
  * Class to filter Data
  *
@@ -37,7 +39,7 @@
  * @author      ImpressCMS Project
  * @copyright   (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
  */
-class icms_core_DataFilter {
+class DataFilter {
 
 	/**
 	 * @public	array
@@ -770,7 +772,7 @@ class icms_core_DataFilter {
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
 			$text = preg_replace_callback($patterns, function($matches) use ($image) {
-				$code = icms_core_DataFilter::codeSanitizer($matches[1], ($image != 0)?1:0);
+				$code = DataFilter::codeSanitizer($matches[1], ($image != 0)?1:0);
 				return '<div class=\"icmsCode\">' . $code . '</div>';
 			}, $text);
 		}
@@ -1101,7 +1103,7 @@ class icms_core_DataFilter {
 								return false;
 							}
 						}
-						$icmsStopSpammers = new icms_core_StopSpammer();
+						$icmsStopSpammers = new StopSpammer();
 						if ($icmsStopSpammers->badEmail($data)) {
 							return false;
 						}

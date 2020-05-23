@@ -23,7 +23,7 @@
  *
  * @property string $name       Name
  */
-class mod_system_Rating extends icms_ipf_Object {
+class mod_system_Rating extends \ImpressCMS\IPF\BaseModel {
 
 	/** */
 	public $_modulePlugin = false;

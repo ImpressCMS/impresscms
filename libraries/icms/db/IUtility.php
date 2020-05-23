@@ -6,6 +6,8 @@
  * @license		GNU General Public License (GPL) - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
+namespace ImpressCMS\Core\Database;
+
 /**
  * Utility interface for all DB drivers
  *

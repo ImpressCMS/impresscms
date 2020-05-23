@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Form\Elements;
+
 /**
  * Form control creating an element to link and URL to an object derived from icms_ipf_Object
  *

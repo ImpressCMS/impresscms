@@ -33,6 +33,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
+namespace ImpressCMS\Core\File;
 
 /**
  * Handles compression of files in zip format and sending to the browser for download
@@ -41,7 +42,7 @@
  * @author	xoops.org
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_file_ZipDownloader extends icms_file_DownloadHandler {
+class ZipDownloader extends DownloadHandler {
 	/**
 	 * Constructor
 	 *

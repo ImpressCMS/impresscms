@@ -8,12 +8,14 @@
  * @author	Ignacio Segura, "Nachenko"
  */
 
+namespace ImpressCMS\Core\Feeds;
+
 /**
  * Generates the data necessary for an RSS feed and assigns it to a smarty template
  *
  * @package	ICMS\Feeds
  */
-class icms_feeds_Rss {
+class Rss {
 
 	public $title;
 	public $url;

@@ -8,6 +8,8 @@
  * @link http://www.smartfactory.ca The SmartFactory
  */
 
+namespace ImpressCMS\Core\Database\Legacy\Updater;
+
 /**
  * icms_db_legacy_updater_Table class
  *

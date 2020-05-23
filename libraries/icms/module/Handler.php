@@ -35,6 +35,8 @@
  * @license    LICENSE.txt
  */
 
+namespace ImpressCMS\Core\Module;
+
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 
@@ -49,7 +51,7 @@ use ImpressCMS\Core\SetupSteps\SetupStepInterface;
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
 class icms_module_Handler
-	extends icms_ipf_Handler
+	extends \ImpressCMS\Core\IPF\Handler
 {
 
 	/**

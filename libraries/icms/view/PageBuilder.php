@@ -34,6 +34,8 @@
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  */
 
+namespace ImpressCMS\Core\View;
+
 /**
  * icms_view_PageBuilder main class
  *

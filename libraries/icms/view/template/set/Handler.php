@@ -34,6 +34,8 @@
  * @license	LICENSE.txt
  */
 
+namespace ImpressCMS\Core\View\Template\Set;
+
 /**
  * Template set handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -43,7 +45,7 @@
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\View\Template\Set
  */
-class icms_view_template_set_Handler extends icms_ipf_Handler {
+class icms_view_template_set_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'view_template_set', 'tplset_id', 'tplset_name', 'tplset_name', 'icms', 'tplset', 'tplset_id');

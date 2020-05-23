@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\Database\Mysql;
+
 /**
  * Redefinida por Claudia A. V. Callegari
  * Participação de Rodrigo Lima

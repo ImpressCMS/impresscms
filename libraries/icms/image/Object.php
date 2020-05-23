@@ -36,6 +36,8 @@
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 
+namespace ImpressCMS\Core\Image;
+
 /**
  * An Image Object
  *
@@ -53,7 +55,7 @@
  * @property string $image_body        Image contents
  * @property int    $imgcat_id         Image category ID
  */
-class icms_image_Object extends \icms_ipf_Object {
+class icms_image_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Info of Image file (width, height, bits, mimetype)

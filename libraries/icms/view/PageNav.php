@@ -34,6 +34,8 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
+namespace ImpressCMS\Core\View;
+
 /**
  * Class to facilitate navigation in a multi page document/list
  *

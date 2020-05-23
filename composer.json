@@ -72,6 +72,7 @@
     "symfony/console": "<4.3.4",
     "symfony/polyfill-iconv": "^1.12",
     "tecnickcom/tcpdf": "^6.2",
+    "typo3/class-alias-loader": "^1.1",
     "vlucas/phpdotenv": "^3.3.3"
   },
   "suggest": {
@@ -96,6 +97,7 @@
     "files": [
       "include/version.php",
       "include/constants.php",
+      "include/deprecated_constants.php",
       "include/functions.php",
       "include/cp_functions.php"
     ]
@@ -351,6 +353,12 @@
           "editor.source"
         ]
       }
+    },
+    "typo3/class-alias-loader": {
+      "class-alias-maps": [
+        "include/deprecated_class_aliases.php"
+      ],
+      "always-add-alias-loader": true
     }
   },
   "config": {

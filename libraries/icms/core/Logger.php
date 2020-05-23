@@ -1,17 +1,18 @@
 <?php
 
+namespace ImpressCMS\Core;
+
 use Monolog\Handler\BrowserConsoleHandler;
 use Monolog\Handler\ChromePHPHandler;
 use Monolog\Handler\FirePHPHandler;
 use Monolog\Handler\PHPConsoleHandler;
 use Monolog\Handler\ProcessableHandlerInterface;
 use Monolog\Handler\RotatingFileHandler;
-use Monolog\Logger;
 
 /**
  * Proxy logger class to add some compatibility stuff with older ICMS versions
  */
-class icms_core_Logger extends Logger
+class Logger extends Monolog\Logger
 {
 
 	/**

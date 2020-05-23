@@ -36,6 +36,8 @@
  * @author    Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
+namespace ImpressCMS\Core\View\Block;
+
 /**
  * ImpressCMS Core Block Object Class
  *
@@ -64,7 +66,7 @@
  * @property int $last_modified  When it was last modified?
  * @property string $options        Options
  */
-class icms_view_block_Object extends icms_ipf_Object
+class icms_view_block_Object extends \ImpressCMS\Core\IPF\AbstractModel
 {
 
 	/**

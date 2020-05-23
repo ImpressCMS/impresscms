@@ -37,6 +37,8 @@
  * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  */
 
+namespace ImpressCMS\Core\Form\Elements\Select;
+
 /**
  * user select with page navigation
  *

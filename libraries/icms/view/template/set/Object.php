@@ -34,6 +34,8 @@
  * @license	LICENSE.txt
  */
 
+namespace ImpressCMS\Core\View\Template\Set;
+
 /**
  * Base class for all template sets
  *
@@ -47,7 +49,7 @@
  * @property string $tplset_credits Credits
  * @property int    $tplset_created When it was created?
  * */
-class icms_view_template_set_Object extends icms_ipf_Object {
+class icms_view_template_set_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * constructor

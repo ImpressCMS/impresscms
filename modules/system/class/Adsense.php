@@ -26,7 +26,7 @@
  * @property string $color_text         Text color
  * @property string $style              Styles
  */
-class mod_system_Adsense extends icms_ipf_Object {
+class mod_system_Adsense extends \ImpressCMS\IPF\BaseModel {
 	public $content = false;
 
 	/**
@@ -61,7 +61,7 @@ class mod_system_Adsense extends icms_ipf_Object {
 	/**
 	 * Override accessor for several properties
 	 *
-	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
+	 * @see htdocs/libraries/icms/ipf/\ImpressCMS\IPF\BaseModel::getVar()
 	 */
 	public function getVar($key, $format = 's') {
 		if ($format == 's' && in_array($key, array("color_border", "color_background", "color_link", "color_url", "color_text"))) {

@@ -8,6 +8,8 @@
  * @author		marcan <marcan@impresscms.org>
  */
 
+namespace ImpressCMS\Core\IPF;
+
 /**
  * icms_ipf_About
  *

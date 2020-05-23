@@ -34,6 +34,8 @@
  * @license	LICENSE.txt
  */
 
+namespace ImpressCMS\Core\Member\Group;
+
 /**
  * a group of users
  *
@@ -46,7 +48,7 @@
  * @property string  $description    Description
  * @property string  $group_type     Type
  */
-class icms_member_group_Object extends icms_ipf_Object {
+class icms_member_group_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * constructor
 	 */

@@ -27,6 +27,9 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+
+namespace ImpressCMS\Core\View;
+
 /**
  * Handles all tree functions within ImpressCMS
  *
@@ -67,12 +70,13 @@ class icms_view_Tree {
 
 	/**
 	 * Overloading method to allow access to private properties outside the class
-	 * 
-	 * Instead of creating separate methods for each private property, this allows 
+	 *
+	 * Instead of creating separate methods for each private property, this allows
 	 * you to access (read) the properties and still keep them from being written from
 	 * the public scope
-	 * 
+	 *
 	 * @param string $name
+	 * @return
 	 */
 	public function __get($name) {
 		if (property_exists(__CLASS__, $name)) {
@@ -80,7 +84,7 @@ class icms_view_Tree {
 		}
 		throw new RuntimeException("You tried to access a property $name that doesn't exist in " . __CLASS__);
 	}
-			
+
 	/**
 	 * Returns an array of first child objects for a given id($sel_id)
 	 * @param integer $sel_id

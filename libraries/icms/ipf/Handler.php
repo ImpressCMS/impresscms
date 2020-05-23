@@ -15,6 +15,8 @@
  * @todo	Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
 
+namespace ImpressCMS\Core\IPF;
+
 /**
  * Persistable Object Handlder
  *

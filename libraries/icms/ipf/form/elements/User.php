@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\IPF\Form\Elements;
+
 /**
  * Form control creating a simple users selectbox for an object derived from icms_ipf_Object
  *

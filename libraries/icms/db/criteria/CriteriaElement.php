@@ -33,118 +33,136 @@
 //       also refactored to remove about 20 lines of redundant code.         //
 // ------------------------------------------------------------------------- //
 /**
- * icms_db_criteria_Compo
+ * Criteria Base Class for composing Where clauses in SQL Queries
  *
- * @copyright	Copyright (c) 2000 XOOPS.org
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since	1.3
- * @author	marcan <marcan@impresscms.org>
+ * @author	modified by UnderDog <underdog@impresscms.org>
  */
+
+namespace ImpressCMS\Core\Database\Criteria;
 
 /**
- * Collection of multiple criteria elements
+ * A criteria (grammar?) for a database query.
  *
+ * Abstract base class should never be instantiated directly.
+ *
+ * @abstract
  * @package	ICMS\Database\Criteria
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
+ *
+ * @author	Kazumi Ono      <onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_db_criteria_Compo extends icms_db_criteria_Element {
+abstract class CriteriaElement {
+	/**
+	 * Sort order
+	 * @var	string
+	 */
+	public $order = 'ASC';
 
 	/**
-	 * The elements of the collection
-	 *
-	 * @var	\icms_db_criteria_Element[] $criteriaElements
+	 * @var	string
 	 */
-	public $criteriaElements = array();
+	public $sort = '';
 
 	/**
-	 * Conditions
-	 * @var	array
+	 * Number of records to retrieve
+	 * @var	int
 	 */
-	public $conditions = array();
+	public $limit = 0;
+
+	/**
+	 * Offset of first record
+	 * @var	int
+	 */
+	public $start = 0;
+
+	/**
+	 * @var	string
+	 */
+	public $groupby = '';
 
 	/**
 	 * Constructor
-	 *
-	 * @param   object  $ele
-	 * @param   string  $condition
 	 */
-	public function __construct($ele = null, $condition = 'AND') {
-		if (isset($ele) && is_object($ele)) {
-			$this->add($ele, $condition);
-		}
+	public function __construct() {}
+
+	/**
+	 * Render the criteria element
+	 */
+	abstract public function render();
+
+	/**
+	 * @param	string  $sort
+	 */
+	public function setSort($sort) {
+		$this->sort = $sort;
 	}
 
 	/**
-	 * Add an element
-	 *
-	 * @param   object  $criteriaElement
-	 * @param   string  $condition
-	 *
-	 * @return  object  reference to this collection
-	 */
-	public function &add($criteriaElement, $condition = 'AND') {
-		$this->criteriaElements[] = & $criteriaElement;
-		$this->conditions[] = $condition;
-		return $this;
-	}
-
-	/**
-	 * Make the criteria into a query string
-	 *
 	 * @return	string
 	 */
-	public function render() {
-		$ret = '';
-		$count = count($this->criteriaElements);
-		if ($count > 0) {
-			$ret = '(' . $this->criteriaElements[0]->render();
-			for ($i = 1; $i < $count; $i++) {
-				$query = $this->criteriaElements[$i]->render();
-				if (!$query) {
-					continue;
-				}
-				$ret .= ' ' . $this->conditions[$i] . ' ' . $query;
-			}
-			$ret .= ')';
-		}
-		return $ret;
+	public function getSort() {
+		return $this->sort;
 	}
 
 	/**
-	 * Make the criteria into a SQL "WHERE" clause
-	 *
+	 * @param	string  $order
+	 */
+	public function setOrder($order) {
+				$order = strtoupper($order);
+				if ($order == 'DESC' || $order == 'ASC') {
+						$this->order = $order;
+				}
+	}
+
+	/**
 	 * @return	string
 	 */
-	public function renderWhere() {
-		$ret = $this->render();
-		$ret = ($ret != '')?'WHERE ' . $ret:$ret;
-		return $ret;
+	public function getOrder() {
+		return $this->order;
 	}
 
 	/**
-	 * Generate an LDAP filter from criteria
-	 *
-	 * @return string
-	 * @author Nathan Dial ndial@trillion21.com
+	 * @param	int $limit
 	 */
-	public function renderLdap() {
-		$retval = '';
-		$count = count($this->criteriaElements);
-		if ($count > 0) {
-			$retval = $this->criteriaElements[0]->renderLdap();
-			for ($i = 1; $i < $count; $i++) {
-				$cond = $this->conditions[$i];
-				if (strtoupper($cond) == 'AND') {
-					$op = '&';
-				} elseif (strtoupper($cond) == 'OR') {
-					$op = '|';
-				}
-				$retval = "(" . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ")";
-			}
-		}
-		return $retval;
+	public function setLimit($limit = 0) {
+		$this->limit = (int) ($limit);
+	}
+
+	/**
+	 * @return	int
+	 */
+	public function getLimit() {
+		return $this->limit;
+	}
+
+	/**
+	 * @param	int $start
+	 */
+	public function setStart($start = 0) {
+		$this->start = (int) ($start);
+	}
+
+	/**
+	 * @return	int
+	 */
+	public function getStart() {
+		return $this->start;
+	}
+
+	/**
+	 * @param	string  $group
+	 */
+	public function setGroupby($group) {
+		$this->groupby = $group;
+	}
+
+	/**
+	 * @return	string
+	 */
+	public function getGroupby() {
+		return ' GROUP BY ' . $this->groupby;
 	}
 }
 

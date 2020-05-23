@@ -39,6 +39,7 @@
  * @author	    http://www.xoops.org The XOOPS Project
  * @author	    modified by UnderDog <underdog@impresscms.org>
  */
+namespace ImpressCMS\Core\Image\Set;
 
 /**
  * An imageset
@@ -53,7 +54,7 @@
  * @property string $imgset_name    Name
  * @property int    $imgset_refid
  */
-class icms_image_set_Object extends \icms_ipf_Object {
+class icms_image_set_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Constructor

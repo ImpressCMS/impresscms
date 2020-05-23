@@ -8,6 +8,7 @@
  * @author	marcan <marcan@impresscms.org>
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
+namespace ImpressCMS\Core\IPF\Category;
 
 /**
  * Persistble category object
@@ -64,7 +65,7 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	}
 	/**
 	 * Returns the description for the category
-	 * @see 	icms_ipf_Object::getValueFor()
+	 * @see 	AbstractModel::getValueFor()
 	 * @return 	string	Text to display as the description
 	 */
 	public function description() {

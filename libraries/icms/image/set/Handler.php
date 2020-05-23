@@ -40,6 +40,7 @@
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
+namespace ImpressCMS\Core\Image\Set;
 
 /**
  * XOOPS imageset handler class.
@@ -50,7 +51,7 @@
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_image_set_Handler extends \icms_ipf_Handler {
+class icms_image_set_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 		/**
 		 * Constructor

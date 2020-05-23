@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core\Form\Elements\Captcha;
+
 /**
  * Image Creation script
  * Xoops Frameworks addon

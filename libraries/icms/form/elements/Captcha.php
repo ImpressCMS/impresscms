@@ -13,6 +13,8 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+namespace ImpressCMS\Core\Form\Elements;
+
 /**
  * CAPTCHA form element
  *

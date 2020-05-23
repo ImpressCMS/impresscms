@@ -9,6 +9,8 @@
  * @author	Phoenyx
  */
 
+namespace ImpressCMS\Core\Data\File;
+
 /**
  * File object
  *
@@ -20,7 +22,7 @@
  *
  * @package	ICMS\Data\File
  */
-class icms_data_file_Object extends icms_ipf_Object {
+class icms_data_file_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * constructor

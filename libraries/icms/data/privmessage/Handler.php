@@ -34,6 +34,8 @@
  * @copyright    http://www.impresscms.org/ The ImpressCMS Project
  */
 
+namespace ImpressCMS\Core\Data\PrivateMessage;
+
 /**
  * Private message handler class.
  *
@@ -44,7 +46,7 @@
  * @copyright    copyright (c) 2000-2007 XOOPS.org
  * @package    ICMS\Data\Privmessage
  */
-class icms_data_privmessage_Handler extends icms_ipf_Handler
+class icms_data_privmessage_Handler extends \ImpressCMS\Core\IPF\Handler
 {
 
 	public function __construct(&$db)

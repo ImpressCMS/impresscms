@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core;
+
 /**
  * icms_core_StopSpammer object
  *
@@ -12,7 +14,7 @@
  * @author	marcan <marcan@impresscms.org>
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
-class icms_core_StopSpammer {
+class StopSpammer {
 	private $api_url;
 
 	/**
@@ -41,7 +43,7 @@ class icms_core_StopSpammer {
 			$output = '';
 			$ch = curl_init();
 			if (!curl_setopt($ch, CURLOPT_URL, "$url")) {
-				icms_core_Debug::message($this->api_url . $field . '=' . $value);
+				Debug::message($this->api_url . $field . '=' . $value);
 				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
 			}
 			curl_setopt($ch, CURLOPT_URL, "$url");
@@ -56,7 +58,7 @@ class icms_core_StopSpammer {
 		} else {
 			$file = fopen($url, "r");
 			if (!$file) {
-				icms_core_Debug::message($this->api_url . $field . '=' . $value);
+				Debug::message($this->api_url . $field . '=' . $value);
 				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
 			}
 			while (!feof($file)) {

@@ -35,6 +35,8 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+namespace ImpressCMS\Core;
+
 /**
  * Class to "clean up" text for various uses
  *
@@ -46,7 +48,7 @@
  * @author	Goghs Cheng
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class icms_core_Textsanitizer {
+class Textsanitizer {
 
 	/**
 	 * @public	array
@@ -84,7 +86,7 @@ class icms_core_Textsanitizer {
 	static public function &getInstance() {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_core_Textsanitizer();
+			$instance = new Textsanitizer();
 		}
 		return $instance;
 	}
@@ -134,9 +136,9 @@ class icms_core_Textsanitizer {
 		icms::$preload->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		if ($html = 0) {
-			$text = icms_core_DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
+			$text = DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
 		} else {
-			$text = icms_core_DataFilter::filterHTMLdisplay($text, $xcode, $br);
+			$text = DataFilter::filterHTMLdisplay($text, $xcode, $br);
 		}
 
 		/* trigger all events tied to the afterDisplayTarea event */
@@ -163,12 +165,12 @@ class icms_core_Textsanitizer {
 		/* trigger all the events tied to the beforePreviewTarea event */
 		icms::$preload->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
-		$text = icms_core_DataFilter::stripSlashesGPC($text);
+		$text = DataFilter::stripSlashesGPC($text);
 
 		if ($html = 0) {
-			$text = icms_core_DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
+			$text = DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
 		} else {
-			$text = icms_core_DataFilter::filterHTMLdisplay($text, $xcode, $br);
+			$text = DataFilter::filterHTMLdisplay($text, $xcode, $br);
 		}
 
 		/* trigger all the events tied to the afterPreviewTarea event */

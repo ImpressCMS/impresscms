@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core;
+
 /**
  * A static class for file system functions
  *
@@ -11,7 +13,7 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since	1.3
  */
-class icms_core_Filesystem {
+class Filesystem {
 
 	/* Since all the methods are static, there is no __construct necessary	 */
 

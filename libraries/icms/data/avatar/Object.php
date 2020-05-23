@@ -36,6 +36,8 @@
  * @author		Kazumi Ono (aka onokazo)
  */
 
+namespace ImpressCMS\Core\Data\Avatar;
+
 /**
  * Avatar class
  *
@@ -52,7 +54,7 @@
  * @property int        $avatar_weight     Weight (used for sorting avatars for user)
  * @property string     $avatar_type       Type
  */
-class icms_data_avatar_Object extends icms_ipf_Object {
+class icms_data_avatar_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 	/** @var integer */
 	private $_userCount;
 

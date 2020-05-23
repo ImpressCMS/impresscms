@@ -3,6 +3,8 @@
  * Class used to determine if the core, or modules, need to be updated
  */
 
+namespace ImpressCMS\Core;
+
 /**
  * IcmsVersionChecker
  *
@@ -14,7 +16,7 @@
  * @since	1.0
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_core_Versionchecker {
+class VersionChecker {
 
 	/**
 	 * Errors
