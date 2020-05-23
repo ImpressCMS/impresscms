@@ -166,7 +166,7 @@ return [
 	'icms_module_Handler',
 	'icms_module_Object',
 	'icms_plugins_EditorHandler',
-	'icms\\plugins\\EditorInterface',
+	'icms\\plugins\\EditorInterface' => \ImpressCMS\Core\Plugins\EditorInterface::class,
 	'icms_plugins_Handler',
 	'icms_plugins_Object',
 	'icms_preload_Handler',
