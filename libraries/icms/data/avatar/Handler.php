@@ -55,7 +55,7 @@ class icms_data_avatar_Handler extends \ImpressCMS\Core\IPF\Handler {
 
 	/**
 	 * Deletes an avatar
-	 * @see icms_core_ObjectHandler#delete($object)
+	 * @see ObjectHandler#delete($object)
 	 *
 	 * @param icms_data_avatar_Object   $avatar Avatar to delete
 	 * @param bool                      $force  Force deletion?

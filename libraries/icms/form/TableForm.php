@@ -28,7 +28,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form attribut styled by the theme
+ * Creates a form styled by a table
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -36,17 +36,17 @@
 namespace ImpressCMS\Core\Form;
 
 /**
- * Form that will output as a theme-enabled HTML table
+ * Form that will output formatted as a HTML table
  *
- * Also adds JavaScript to validate required fields
+ * No styles and no JavaScript to check for required fields.
  *
  * @package	ICMS\Form
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_Theme extends icms_form_Base {
+class TableForm extends AbstractForm {
 	/**
-	 * Insert an empty row in the table to serve as a seperator.
+	 * Insert an empty row in the table to serve as a separator.
 	 *
 	 * @param	string  $extra  HTML to be displayed in the empty row.
 	 * @param	string	$class	CSS class name for <td> tag
@@ -64,47 +64,29 @@ class icms_form_Theme extends icms_form_Base {
 	}
 
 	/**
-	 * create HTML to output the form as a theme-enabled table with validation.
+	 * create HTML to output the form as a table
 	 *
-	 * @return	string
+	 * @return	string  $ret  the constructed HTML
 	 */
 	public function render() {
-		$ele_name = $this->getName();
-		$ret = "<form id='" . $ele_name
-				. "' name='" . $ele_name
-				. "' action='" . $this->getAction()
-				. "' method='" . $this->getMethod()
-				. "' onsubmit='return xoopsFormValidate_" . $ele_name . "();'" . $this->getExtra() . ">
-			<div class='xo-theme-form'>
-			<table width='100%' class='outer table' cellspacing='1'>
-			<tr><th colspan='2'>" . $this->getTitle() . "</th></tr>
-		";
+		$ret = $this->getTitle() . "\n<form name='" . $this->getName()
+			. "' id='" . $this->getName()
+			. "' action='" . $this->getAction()
+			. "' method='" . $this->getMethod() . "'" . $this->getExtra()
+			. ">\n<table class='table' border='0' width='100%'>\n";
 		$hidden = '';
-		$class = 'even';
 		foreach ($this->getElements() as $ele) {
-			if (!is_object($ele)) {
-				$ret .= $ele;
-			} elseif (!$ele->isHidden()) {
-				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>";
-				if (($caption = $ele->getCaption()) != '') {
-					$ret .=
-						"<div class='xoops-form-element-caption" . ($ele->isRequired()?"-required":"") . "'>"
-						. "<span class='caption-text'>{$caption}</span>";
-						if (($desc = $ele->getDescription()) != '') {
-							$ret .= "<div class='xoops-form-element-help'>{$desc}</div>";
-						}
-					$ret .= "<span class='caption-marker'> *</span>"
-						. "</div>";
+			if (!$ele->isHidden()) {
+				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td>" . $ele->getCaption();
+				if ($ele_desc = $ele->getDescription()) {
+					$ret .= '<br /><br /><span style="font-weight: normal;">' . $ele_desc . '</span>';
 				}
-
-				$ret .= "</td><td class='$class'>" . $ele->render() . "</td></tr>\n";
+				$ret .= "</td><td>" . $ele->render() . "</td></tr>";
 			} else {
-				$hidden .= $ele->render();
+				$hidden .= $ele->render() . "\n";
 			}
 		}
-		$ret .= "</table>\n$hidden\n</div>\n</form>\n";
-		$ret .= $this->renderValidationJS(true);
+		$ret .= "</table>\n$hidden</form>\n";
 		return $ret;
 	}
 }
-

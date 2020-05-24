@@ -53,7 +53,7 @@ namespace ImpressCMS\Core;
  *
  * @abstract
  */
-abstract class icms_core_ObjectHandler {
+abstract class ObjectHandler {
 
 	/**
 	 * holds referenced

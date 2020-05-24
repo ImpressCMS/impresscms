@@ -12,7 +12,7 @@ namespace ImpressCMS\Core\IPF;
  * @copyright	2004
  * @link 	http://setecastronomy.stufftoread.com
  */
-class icms_ipf_Highlighter {
+class Highlighter {
 
 	/**
 	 * PREG keywords

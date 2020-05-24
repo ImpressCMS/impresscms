@@ -17,6 +17,8 @@
 
 namespace ImpressCMS\Core\IPF;
 
+use ImpressCMS\Core\ObjectHandler;
+
 /**
  * Persistable Object Handlder
  *
@@ -24,7 +26,7 @@ namespace ImpressCMS\Core\IPF;
  * @since	1.1
  * @todo	Properly name the vars using the naming conventions
  */
-class icms_ipf_Handler extends icms_core_ObjectHandler {
+class Handler extends ObjectHandler {
 
 	/**
 	 * Loaded items cache

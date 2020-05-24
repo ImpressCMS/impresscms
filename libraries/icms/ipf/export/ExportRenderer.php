@@ -9,7 +9,7 @@ namespace ImpressCMS\Core\IPF\Export;
  * @author	marcan <marcan@smartfactory.ca>
  * @package	ICMS\IPF\Export
  */
-class icms_ipf_export_Renderer {
+class ExportRenderer {
 
 	/**
 	 * Contains the data to be exported
@@ -108,9 +108,10 @@ class icms_ipf_export_Renderer {
 	 * @param str $val
 	 * @param str $separator
 	 * @param str $trimFunction
+	 * @return str|string|string[]
 	 */
 	public function valToCsvHelper($val, $separator, $trimFunction) {
-		if ($trimFunction) {
+		if (is_callable($trimFunction)) {
 				$val = $trimFunction($val);
 		}
 		//If there is a separator (;) or a quote (") or a linebreak in the string, we need to quote it.

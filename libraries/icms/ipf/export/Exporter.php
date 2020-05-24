@@ -11,7 +11,7 @@ namespace ImpressCMS\Core\IPF\Export;
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @package	ICMS\IPF\Export
  */
-class icms_ipf_export_Handler {
+class Exporter {
 
 	/**
 	 * Handler that can provide data
@@ -82,10 +82,10 @@ class icms_ipf_export_Handler {
 	 * @param \icms_ipf_Handler         $objectHandler  IcmsPersistableHandler handling the data we want to export
 	 * @param \icms_db_criteria_Element $criteria       Containing the criteria of the query fetching the objects to be exported
 	 * @param array|false               $fields         Fields to be exported. If FALSE then all fields will be exported
-	 * @param string                    $filename       Name of the file to be created
-	 * @param string                    $filepath       Path where the file will be saved
+	 * @param false|string              $filename       Name of the file to be created
+	 * @param false|string              $filepath       Path where the file will be saved
 	 * @param string                    $format         Format of the ouputed export. Currently only supports CSV
-	 * @param array                     $options        Options of the format to be exported in
+	 * @param false|array               $options        Options of the format to be exported in
 	 */
 	public function __construct(&$objectHandler, $criteria = null, $fields = false, $filename = false, $filepath = false, $format = 'csv', $options = false) {
 		$this->handler = $objectHandler;
@@ -130,7 +130,7 @@ class icms_ipf_export_Handler {
 		$data = array();
 		$data['rows'] = $rows;
 		$data['columnsHeaders'] = $columnsHeaders;
-		$smartExportRenderer = new icms_ipf_export_Renderer($data, $this->filename, $this->filepath, $this->format, $this->options);
+		$smartExportRenderer = new ExportRenderer($data, $this->filename, $this->filepath, $this->format, $this->options);
 		$smartExportRenderer->execute();
 	}
 

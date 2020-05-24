@@ -43,7 +43,7 @@ namespace ImpressCMS\Core\Messaging;
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\Messaging
  */
-class icms_messaging_Handler {
+class MailHandler {
 
 	/**
 	 * Charset
@@ -62,7 +62,7 @@ class icms_messaging_Handler {
 	/**
 	 * reference
 	 *
-	 * @var		icms_messaging_EmailHandler
+	 * @var		Mailer
 	 */
 	private $multimailer;
 
@@ -147,7 +147,7 @@ class icms_messaging_Handler {
 		if (class_exists('XoopsMailerLocal')) {
 			$this->multimailer = new XoopsMailerLocal();
 		} else {
-			$this->multimailer = new icms_messaging_Handler();
+			$this->multimailer = new MailHandler();
 		}
 		$this->reset();
 	}

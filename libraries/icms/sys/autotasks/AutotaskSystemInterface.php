@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\Sys\Autotasks;
  * @since	1.2 alpha 2
  * @author	MekDrop <mekdrop@gmail.com>
  */
-interface icms_sys_autotasks_ISystem {
+interface AutotaskSystemInterface {
 
 	/**
 	 * check if can run

@@ -42,7 +42,7 @@ namespace ImpressCMS\Core\Form;
  * @author	Kazumi Ono <onokazu@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_Groupperm extends icms_form_Base {
+class GroupPermissionForm extends AbstractForm {
 	/**
 	 * Module ID
 	 *

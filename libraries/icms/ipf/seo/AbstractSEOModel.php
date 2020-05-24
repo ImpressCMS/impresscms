@@ -21,7 +21,7 @@ namespace ImpressCMS\Core\IPF\Seo;
  *
  * @package	ICMS\IPF\SEO
  */
-class icms_ipf_seo_Object extends \ImpressCMS\Core\IPF\AbstractModel {
+abstract class AbstractSEOModel extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	public function __construct(&$handler) {
 		parent::__construct($handler);

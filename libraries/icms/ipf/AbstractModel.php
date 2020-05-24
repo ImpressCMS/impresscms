@@ -59,7 +59,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	/**
 	 * Reference to the handler managing this object
 	 *
-	 * @var icms_ipf_Handler
+	 * @var Handler
 	 */
 	public $handler;
 
@@ -259,7 +259,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 
 	public function updateMetas() {
 		// Auto create meta tags if empty
-		$icms_metagen = new icms_ipf_Metagen($this->title(), $this->getVar('meta_keywords'), $this->summary());
+		$icms_metagen = new Metagen($this->title(), $this->getVar('meta_keywords'), $this->summary());
 
 		if (empty($this->meta_keywords)) {
 			$this->setVar('meta_keywords', $icms_metagen->_keywords);
@@ -483,7 +483,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 			$ret = array_intersect_key($ret, array_flip($this->handler->visibleColumns));
 		}
 		if ($this->handler->identifierName != "") {
-			$controller = new icms_ipf_Controller($this->handler);
+			$controller = new Controller($this->handler);
 			/**
 			 * Addition of some automatic value
 			 */
@@ -635,7 +635,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return string user side link to the object
 	 */
 	public function getAdminViewItemLink($onlyUrl = false) {
-		$controller = new icms_ipf_Controller($this->handler);
+		$controller = new Controller($this->handler);
 		return $controller->getAdminViewItemLink($this, $onlyUrl);
 	}
 
@@ -647,7 +647,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return string user side link to the object
 	 */
 	public function getItemLink($onlyUrl = false) {
-		$controller = new icms_ipf_Controller($this->handler);
+		$controller = new Controller($this->handler);
 		return $controller->getItemLink($this, $onlyUrl);
 	}
 
@@ -661,7 +661,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 *        $userSide
 	 */
 	public function getViewItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		$controller = new icms_ipf_Controller($this->handler);
+		$controller = new Controller($this->handler);
 		return $controller->getViewItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
@@ -672,7 +672,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param bool $userSide
 	 */
 	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		$controller = new icms_ipf_Controller($this->handler);
+		$controller = new Controller($this->handler);
 		return $controller->getEditItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
@@ -683,14 +683,14 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param bool $userSide
 	 */
 	public function getDeleteItemLink($onlyUrl = false, $withimage = false, $userSide = false) {
-		$controller = new icms_ipf_Controller($this->handler);
+		$controller = new Controller($this->handler);
 		return $controller->getDeleteItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
 	/**
 	 */
 	public function getPrintAndMailLink() {
-		$controller = new icms_ipf_Controller($this->handler);
+		$controller = new Controller($this->handler);
 		return $controller->getPrintAndMailLink($this);
 	}
 

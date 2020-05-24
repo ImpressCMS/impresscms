@@ -19,7 +19,7 @@ namespace ImpressCMS\Core\View;
  * @author	marcan <marcan@impresscms.org>
  * @package	ICMS\View
  */
-class icms_view_Breadcrumb {
+class BreadcrumbView {
 
 	private $_tpl;
 	private $items;
@@ -34,7 +34,10 @@ class icms_view_Breadcrumb {
 
 	/**
 	 * Adds the breadcrumb items to the template
+	 *
 	 * @param boolean $fetchOnly Whether to display the breadcrumbs, or not
+	 *
+	 * @return string|null
 	 */
 	public function render($fetchOnly = false) {
 

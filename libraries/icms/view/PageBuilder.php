@@ -58,6 +58,7 @@ class icms_view_PageBuilder {
 	/**
 	 * Initializes the page object and loads all the blocks
 	 * @param $options
+	 * @return bool
 	 */
 	public function xoInit($options = array()) {
 		$this->retrieveBlocks();
@@ -122,7 +123,7 @@ class icms_view_PageBuilder {
 	 * @global icms_module_Object $icmsModule current module
 	 * @return void
 	 */
-	static public function getPage() {
+	public static function getPage() {
 		global $icmsConfig, $icmsModule;
 
 		if (is_array(self::$modid)) {

@@ -11,7 +11,7 @@ namespace ImpressCMS\Core\Properties;
  * @package		ICMS\Properties
  * @todo		Properly identify and declare the visibility of vars and functions
  */
-abstract class icms_properties_Handler implements Serializable {
+abstract class AbstractProperties implements Serializable {
 
 	/**
 	 * Specifies property that a property stores a string
@@ -845,7 +845,7 @@ abstract class icms_properties_Handler implements Serializable {
 		$vars = array();
 		foreach ($keys as $key) {
 			if (isset($this->_vars[$key])) {
-				if (is_object($this->_vars[$key][self::VARCFG_VALUE]) && ($this->_vars[$key][self::VARCFG_VALUE] instanceof icms_properties_Handler)) {
+				if (is_object($this->_vars[$key][self::VARCFG_VALUE]) && ($this->_vars[$key][self::VARCFG_VALUE] instanceof AbstractProperties)) {
 					if ($maxDepth) {
 						$vars[$key] = $this->_vars[$key]->getValues(null, $format, $maxDepth - 1);
 					}

@@ -12,7 +12,7 @@ namespace ImpressCMS\Core\IPF;
  * @todo	Use language constants for messages
  * @package	ICMS\IPF
  */
-class icms_ipf_Controller {
+class Controller {
 
 	/** */
 	public $handler;

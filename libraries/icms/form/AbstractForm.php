@@ -43,7 +43,7 @@ namespace ImpressCMS\Core\Form;
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @package	ICMS\Form
  */
-abstract class icms_form_Base {
+abstract class AbstractForm {
 
 	/**#@+
 	 * @access  private
@@ -75,7 +75,7 @@ abstract class icms_form_Base {
 	/**
 	 * Elements of form
 	 *
-	 * @var  icms_form_Element[]
+	 * @var  AbstractFormElement[]
 	 */
 	protected $_elements = array();
 
@@ -155,7 +155,7 @@ abstract class icms_form_Base {
 	/**
 	 * Add an element to the form
 	 *
-	 * @param	icms_form_Element  &$formElement   Form element
+	 * @param	AbstractFormElement  &$formElement   Form element
 	 * @param	bool    $required       is this a "required" element?
 	 */
 	public function addElement(&$formElement, $required = false) {
@@ -182,7 +182,7 @@ abstract class icms_form_Base {
 	 * get an array of forms elements
 	 *
 	 * @param	  bool	  get elements recursively?
-	 * @return	icms_form_Element[]
+	 * @return	AbstractFormElement[]
 	 */
 	public function &getElements($recurse = false) {
 		if (!$recurse) {
@@ -228,7 +228,7 @@ abstract class icms_form_Base {
 	 *
 	 * @param  string  $name	"name" attribute assigned to a form element
 	 *
-	 * @return icms_form_Element|false
+	 * @return AbstractFormElement|false
 	 */
 	public function &getElementByName($name) {
 		$elements = $this->getElements(true);
@@ -333,7 +333,7 @@ abstract class icms_form_Base {
 	/**
 	 * make an element "required"
 	 *
-	 * @param	icms_form_Element  &$formElement   Form element
+	 * @param	AbstractFormElement  &$formElement   Form element
 	 */
 	public function setRequired(&$formElement) {
 		$this->_required[] = & $formElement;
@@ -342,7 +342,7 @@ abstract class icms_form_Base {
 	/**
 	 * get an array of "required" form elements
 	 *
-	 * @return	icms_form_Element[]
+	 * @return	AbstractFormElement[]
 	 */
 	public function &getRequired() {
 		return $this->_required;

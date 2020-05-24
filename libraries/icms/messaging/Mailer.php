@@ -46,7 +46,7 @@ use PHPMailer\PHPMailer\PHPMailer;
  * @copyright	copyright (c) 2000-2003 The XOOPS Project (http://www.xoops.org)
  * @package	ICMS\Messaging
  */
-class icms_messaging_EmailHandler extends PHPMailer {
+class Mailer extends PHPMailer {
 
 	/**
 	 * "from" address

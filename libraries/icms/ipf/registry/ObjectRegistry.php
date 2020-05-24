@@ -15,13 +15,14 @@ namespace ImpressCMS\Core\IPF\Registry;
  *
  * Class responsible of caching objects to make them easily reusable without querying the database
  *
+ * @deprecated Use PSR caching for this functionality! Will be removed in 2.1
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	ICMS\IPF\Registry
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_ipf_registry_Handler {
+class ObjectRegistry {
 
 	/**
 	 *
@@ -37,10 +38,10 @@ class icms_ipf_registry_Handler {
 	 * @static
 	 * @staticvar   object
 	 */
-	static public function &getInstance() {
+	public static function &getInstance() {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_ipf_registry_Handler();
+			$instance = new ObjectRegistry();
 		}
 		return $instance;
 	}

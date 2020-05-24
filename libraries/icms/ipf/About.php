@@ -22,7 +22,7 @@ namespace ImpressCMS\Core\IPF;
  * @todo	Properly set visibility of vars
  * @package	ICMS\IPF
  */
-class icms_ipf_About {
+class About {
 
 	/**
 	 * Title
@@ -176,7 +176,7 @@ class icms_ipf_About {
 	 * Initiate the object, based on $icmsModule
 	 *
 	 * @param string $aboutTitle text used in the extreme right caption of the menu
-	 * @return icms_ipf_About
+	 * @return About
 	 */
 	public function __construct($aboutTitle = _MODABOUT_ABOUT) {
 		global $icmsModule, $icmsConfig;

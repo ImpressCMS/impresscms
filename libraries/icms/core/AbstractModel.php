@@ -48,7 +48,7 @@ namespace ImpressCMS\Core;
  * @since	XOOPS
  * @author	Kazumi Ono (AKA onokazu)
  * */
-class AbstractModel extends Properties\icms_properties_Handler {
+class AbstractModel extends Properties\AbstractProperties {
 
 	/**
 	 * is it a newly created object?

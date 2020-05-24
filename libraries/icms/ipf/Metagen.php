@@ -18,7 +18,7 @@ namespace ImpressCMS\Core\IPF;
  * @package	ICMS\IPF
  * @todo	Properly set visibility of variables - in version 2.0
  */
-class icms_ipf_Metagen {
+class Metagen {
 
 		/**
 		 * Instance of icms_core_Textsanitizer
@@ -79,10 +79,10 @@ class icms_ipf_Metagen {
 	/**
 	 * Constructor for icms_ipf_Metagen
 	 *
-	 * @param string $title         Page title
-	 * @param string $keywords      List of meta keywords
-	 * @param string $description   Meta description
-	 * @param string $categoryPath  Category path
+	 * @param string $title Page title
+	 * @param bool $keywords List of meta keywords
+	 * @param bool $description Meta description
+	 * @param bool $categoryPath Category path
 	 */
 	public function __construct($title, $keywords = false, $description = false, $categoryPath = false) {
 		$this->_myts = icms_core_Textsanitizer::GetInstance();
@@ -146,7 +146,7 @@ class icms_ipf_Metagen {
 		$tableau = array_filter($tableau, array($this, "emptyString")); // Supprime les chaines vides du tableau
 		$title   = implode("-", $tableau); // Transforme un tableau en chaine de caract�res s�par� par un tiret
 
-		if (sizeof($title) > 0) {
+		if (count($title) > 0) {
 			if ($withExt) {
 				$title .= '.html';
 			}

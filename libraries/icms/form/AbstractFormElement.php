@@ -43,7 +43,7 @@ namespace ImpressCMS\Core\Form;
  * @author	Taiwen Jiang    <phppp@users.sourceforge.net>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-abstract class icms_form_Element {
+abstract class AbstractFormElement {
 
 	/**
 	 * Javascript performing additional validation of this element data
@@ -320,7 +320,7 @@ abstract class icms_form_Element {
 	/**
 	 * Render custom javascript validation code
 	 *
-	 * @see icms_form_Base::renderValidationJS
+	 * @see AbstractForm::renderValidationJS
 	 */
 	public function renderValidationJS() {
 		// render custom validation code if any

@@ -10,8 +10,8 @@ namespace ImpressCMS\Core\Sys\Autotasks;
  * @since	1.2 alpha 2
  * @author	MekDrop <mekdrop@gmail.com>
  */
-abstract class icms_sys_autotasks_System
-implements icms_sys_autotasks_ISystem {
+abstract class AbstractAutotaskSystem
+implements AutotaskSystemInterface {
 
 	/**
 	 *
