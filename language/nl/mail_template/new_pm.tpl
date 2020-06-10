@@ -1,18 +1,18 @@
 Hallo {X_UNAME},
 
-"{X_FROMUNAME}" just sent you a Private Message :
+"{X_FROMUNAME}" heeft zonet een privébericht gestuurd :
 
-SUBJECT : {X_SUBJECT}
+Onderwerp : {X_SUBJECT}
 
 {X_MESSAGE}
 
 -----------
-Click on the following link to view, reply or delete this message :
+Klik op de volgende link om dit bericht te bekijken, te beantwoorden of te verwijderen:
 {X_ITEM_URL}
 
 -----------
 
-You received this notification because you selected email notification method.
+Je ontvangt deze melding omdat je de email notificatiemethode hebt gekozen.
 
 Reageer niet op dit bericht.
 
