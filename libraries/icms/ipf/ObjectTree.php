@@ -45,7 +45,7 @@ namespace ImpressCMS\Core\IPF;
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  * @package	ICMS\IPF
  */
-class icms_ipf_Tree {
+class ObjectTree {
 
 		/**
 		 * Field name of parent object ID

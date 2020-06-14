@@ -149,7 +149,7 @@ return [
 	'icms_ipf_Highlighter' => \ImpressCMS\Core\IPF\Highlighter::class,
 	'icms_ipf_Metagen' => \ImpressCMS\Core\IPF\Metagen::class,
 	'icms_ipf_Object' => \ImpressCMS\Core\IPF\AbstractModel::class,
-	'icms_ipf_Tree',
+	'icms_ipf_Tree' => \ImpressCMS\Core\IPF\ObjectTree::class,
 	'icms_member_group_membership_Handler',
 	'icms_member_group_membership_Object',
 	'icms_member_group_Handler',
