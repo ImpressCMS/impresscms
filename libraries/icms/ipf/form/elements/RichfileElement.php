@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_ipf_form_elements_Richfile extends icms_form_elements_Tray {
+class RichfileElement extends icms_form_elements_Tray {
 	/**
 	 * Constructor
 	 * @param	icms_ipf_Object	$object	target object
@@ -27,24 +27,24 @@ class icms_ipf_form_elements_Richfile extends icms_form_elements_Tray {
 		}
 
 		if ($fileObj->isNew()) {
-			$this->addElement(new icms_ipf_form_elements_Fileupload($fileObj, $key));
+			$this->addElement(new FileUploadElement($fileObj, $key));
 			$this->addElement(new icms_form_elements_Label("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
 			$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_URL_FILE));
-			$this->addElement(new icms_ipf_form_elements_Text($fileObj, "url_" . $key));
+			$this->addElement(new TextElement($fileObj, "url_" . $key));
 		}
 
 		$this->addElement(new icms_form_elements_Hidden("mid_" . $key, $module->getVar("mid")));
 		$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_CAPTION));
-		$this->addElement(new icms_ipf_form_elements_Text($fileObj, "caption_" . $key));
+		$this->addElement(new TextElement($fileObj, "caption_" . $key));
 		$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_DESC));
-		$this->addElement(new icms_ipf_form_elements_Text($fileObj, "desc_" . $key));
+		$this->addElement(new TextElement($fileObj, "desc_" . $key));
 
 		if (!$fileObj->isNew()) {
 			$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_CHANGE_FILE));
-			$this->addElement(new icms_ipf_form_elements_Fileupload($fileObj, $key));
+			$this->addElement(new FileUploadElement($fileObj, $key));
 			$this->addElement(new icms_form_elements_Label("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
 			$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_URL_FILE));
-			$this->addElement(new icms_ipf_form_elements_Text($fileObj, "url_" . $key));
+			$this->addElement(new TextElement($fileObj, "url_" . $key));
 		}
 	}
 }

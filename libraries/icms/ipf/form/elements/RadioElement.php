@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_ipf_form_elements_Radio extends icms_form_elements_Radio {
+class RadioElement extends icms_form_elements_Radio {
 
 	private $_delimeter = "&nbsp;";
 

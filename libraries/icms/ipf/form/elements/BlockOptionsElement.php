@@ -11,7 +11,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @author	phoenyx
  * @package	ICMS\IPF\Form\Elements
  */
-class icms_ipf_form_elements_Blockoptions extends icms_form_elements_Tray {
+class BlockOptionsElement extends icms_form_elements_Tray {
 	/**
 	 * Constructor
 	 * @param	\icms_ipf_Object    $object   reference to targetobject

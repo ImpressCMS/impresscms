@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_ipf_form_Base extends icms_form_Theme {
+class Form extends icms_form_Theme {
 	public $targetObject = null;
 	public $form_fields = null;
 	private $_cancel_js_action = false;

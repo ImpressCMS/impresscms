@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_ipf_form_elements_Passwordtray extends icms_form_elements_Tray {
+class PasswordTrayElement extends icms_form_elements_Tray {
 	private $_key;
 
 	/**

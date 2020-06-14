@@ -9,7 +9,7 @@ namespace ImpressCMS\Core\IPF\Form;
  * @package	ICMS\IPF\Form
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_ipf_form_Secure extends icms_ipf_form_Base {
+class SecureForm extends Form {
 	/**
 	 * Constructor
 	 * Sets all the values / variables for the icms_ipf_form_Base (parent) class

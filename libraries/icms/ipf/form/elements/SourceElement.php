@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.2
  * @author	MekDrop <mekdrop@gmail.com>
  */
-class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
+class SourceElement extends icms_form_elements_Textarea {
 	/*
 	 * Editor's class instance
 	 */

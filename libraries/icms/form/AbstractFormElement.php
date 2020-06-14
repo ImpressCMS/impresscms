@@ -320,7 +320,7 @@ abstract class AbstractFormElement {
 	/**
 	 * Render custom javascript validation code
 	 *
-	 * @see AbstractForm::renderValidationJS
+	 * @see Form::renderValidationJS
 	 */
 	public function renderValidationJS() {
 		// render custom validation code if any

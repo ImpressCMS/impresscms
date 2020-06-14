@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_ipf_form_elements_Section extends icms_form_Element {
+class FormSectionElement extends icms_form_Element {
 	/**
 	 * @var string
 	 * @access	private
