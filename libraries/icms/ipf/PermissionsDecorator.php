@@ -1,5 +1,5 @@
 <?php
-namespace ImpressCMS\Core\IPF\Permission;
+namespace ImpressCMS\Core\IPF;
 
 /**
  * IcmsPermission
@@ -16,16 +16,16 @@ class PermissionsDecorator {
 
 	/**
 	 *
-	 * @var unknown_type
+	 * @var Handler
 	 */
 	public $handler;
 
 	/**
 	 * Constructor
 	 *
-	 * @param unknown_type $handler
+	 * @param Handler $handler
 	 */
-	public function __construct($handler) {
+	public function __construct(Handler $handler) {
 		$this->handler = $handler;
 	}
 
@@ -55,8 +55,9 @@ class PermissionsDecorator {
 
 	/**
 	 *
-	 * @param	arr		$item_ids_array
-	 * @param	str		$gperm_name
+	 * @param arr $item_ids_array
+	 * @param str $gperm_name
+	 * @return array|mixed
 	 */
 	public function getGrantedGroupsForIds($item_ids_array, $gperm_name = false) {
 
@@ -100,7 +101,7 @@ class PermissionsDecorator {
 	/**
 	 * Returns permissions for a certain type
 	 *
-	 * @param string $type "global", "forum" or "topic" (should perhaps have "post" as well - but I don't know)
+	 * @param string $gperm_name "global", "forum" or "topic" (should perhaps have "post" as well - but I don't know)
 	 * @param int $id id of the item (forum, topic or possibly post) to get permissions for
 	 *
 	 * @return array
@@ -145,7 +146,7 @@ class PermissionsDecorator {
 	 *  saveCategory_Permissions()
 	 *
 	 * @param array $groups : group with granted permission
-	 * @param integer $categoryID : categoryID on which we are setting permissions for Categories and Forums
+	 * @param integer $itemid : categoryID on which we are setting permissions for Categories and Forums
 	 * @param string $perm_name : name of the permission
 	 * @return boolean : TRUE if the no errors occured
 	 */
