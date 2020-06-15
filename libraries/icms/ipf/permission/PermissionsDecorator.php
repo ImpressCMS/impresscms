@@ -12,7 +12,7 @@ namespace ImpressCMS\Core\IPF\Permission;
  * @author	marcan <marcan@impresscms.org>
  * @package	ICMS\IPF\Permission
  */
-class icms_ipf_permission_Handler {
+class PermissionsDecorator {
 
 	/**
 	 *
