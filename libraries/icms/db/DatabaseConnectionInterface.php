@@ -16,7 +16,7 @@ namespace ImpressCMS\Core\Database;
  * @since 1.4
  * @package	ICMS\Database
  */
-interface icms_db_IConnection {
+interface DatabaseConnectionInterface {
 
 	/**
 	 * Set the value of a database connection attribute.

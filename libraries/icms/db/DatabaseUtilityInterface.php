@@ -16,7 +16,7 @@ namespace ImpressCMS\Core\Database;
  * @package	ICMS\Database
  * @since	2.0
  */
-interface icms_db_IUtility {
+interface DatabaseUtilityInterface {
 
 	/**
 	 * Creates a new utility object

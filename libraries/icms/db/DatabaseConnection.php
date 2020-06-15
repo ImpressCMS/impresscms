@@ -8,7 +8,7 @@ namespace ImpressCMS\Core\Database;
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package    ICMS\Database
  */
-class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConnection, icms_db_legacy_IDatabase
+class DatabaseConnection extends \Aura\Sql\ExtendedPdo implements DatabaseConnectionInterface, LegacyDatabaseConnectionInterface
 {
 	/**
 	 * Database prefix
@@ -29,9 +29,9 @@ class icms_db_Connection extends \Aura\Sql\ExtendedPdo implements icms_db_IConne
 	 *
 	 * This is a legacy method and not part of PDO and must be declared in any class that implements this interface
 	 *
-	 * @see icms_db_IConnection::escape()
-	 * @param    string $string
+	 * @param string $string
 	 * @return    string
+	 *@see DatabaseConnectionInterface::escape()
 	 */
 	public function escape($string)
 	{

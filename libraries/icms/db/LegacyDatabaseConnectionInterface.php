@@ -13,7 +13,7 @@ if (interface_exists('icms_db_legacy_IDatabase')) {
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	ICMS\Database\Legacy
  */
-interface icms_db_legacy_IDatabase {
+interface LegacyDatabaseConnectionInterface {
 	/**
 	 * assign a logger to the database
 	 *

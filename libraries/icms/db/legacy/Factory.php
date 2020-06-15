@@ -37,6 +37,8 @@
 
 namespace ImpressCMS\Core\Database\Legacy;
 
+use ImpressCMS\Core\Database\DatabaseConnectionFactory as CurrentDatabaseConnectionFactory;
+
 /**
  * Creates a database connection
  *
@@ -45,7 +47,7 @@ namespace ImpressCMS\Core\Database\Legacy;
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @package	ICMS\Database\Legacy
  */
-class icms_db_legacy_Factory extends icms_db_Factory {
+class DatabaseConnectionFactory extends CurrentDatabaseConnectionFactory {
 	/**
 	 * Constructor
 	 *

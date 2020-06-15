@@ -25,7 +25,7 @@ global $icmsConfigPersona;
  * @author marcan <marcan@smartfactory.ca>
  * @link http://www.smartfactory.ca The SmartFactory
  */
-class icms_db_legacy_updater_Handler {
+class DatabaseUpdater {
 
 	/**
 	 * @var \icms_db_Connection
@@ -134,7 +134,7 @@ class icms_db_legacy_updater_Handler {
 
 		if (isset($parentObjectVars)) {
 			$objectVars = $object->getVars();
-			$table = new icms_db_legacy_updater_Table(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
+			$table = new TableUpdater(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
 			foreach (array_keys($objectVars) as $var) {
 				if (!isset($parentObjectVars[$var])) {
 					$table->addDropedField($var);
@@ -145,7 +145,7 @@ class icms_db_legacy_updater_Handler {
 			if (in_array($module_handler->table, $reservedTables)) {
 							return false;
 			}
-			$table = new icms_db_legacy_updater_Table(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
+			$table = new TableUpdater(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
 			$ret = $table->dropTable();
 		}
 		$this->_messages = array_merge($this->_messages, $table->_messages);
@@ -271,7 +271,7 @@ class icms_db_legacy_updater_Handler {
 			return false;
 		}
 
-		$table = new icms_db_legacy_updater_Table(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
+		$table = new TableUpdater(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
 		$object = $module_handler->create();
 		$class = new ReflectionClass($object);
 		$isExtention = false;
@@ -507,9 +507,9 @@ class icms_db_legacy_updater_Handler {
 	 * @param \icms_db_legacy_updater_Table $table Table that will be updated
 	 * @param bool $force force the query even in a GET process
 	 *
-	 * @see icms_db_legacy_updater_Table
-	 *
 	 * @return bool true if success, false if an error occurred
+	 *@see TableUpdater
+	 *
 	 */
 	function updateTable($table, $force = false)
 	{

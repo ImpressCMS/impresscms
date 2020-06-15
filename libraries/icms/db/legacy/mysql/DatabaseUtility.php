@@ -35,6 +35,8 @@
  */
 namespace ImpressCMS\Core\Database\Legacy\Mysql;
 
+use ImpressCMS\Core\Database\DatabaseUtilityInterface;
+
 /**
  * Provide some utility methods for databases
  *
@@ -42,7 +44,7 @@ namespace ImpressCMS\Core\Database\Legacy\Mysql;
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
+class DatabaseUtility implements DatabaseUtilityInterface {
 
 	/**
 	 * Creates a new utility object
@@ -61,7 +63,7 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
 	 */
-	static public function splitMySqlFile(&$ret, $sql) {
+	public static function splitMySqlFile(&$ret, $sql) {
 		$sql               = trim($sql);
 		$sql_len           = strlen($sql);
 		$char              = '';

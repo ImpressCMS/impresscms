@@ -38,7 +38,7 @@ namespace ImpressCMS\Core\Database;
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
  */
-class icms_db_Factory
+class DatabaseConnectionFactory
 {
 
 	/**

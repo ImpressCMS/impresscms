@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\Database\Mysql;
 
+use ImpressCMS\Core\Database\DatabaseUtilityInterface;
+
 /**
  * Redefinida por Claudia A. V. Callegari
  * Participação de Rodrigo Lima
@@ -13,7 +15,7 @@ namespace ImpressCMS\Core\Database\Mysql;
  * @copyright	The ImpressCMS Project - http://www.impresscms.org/
  * @package	ICMS\Database\MySQL
  */
-abstract class icms_db_mysql_Utility implements icms_db_IUtility {
+abstract class DatabaseUtility implements DatabaseUtilityInterface {
 
 	/**
 	 * add a prefix.'_' to all tablenames in a query
