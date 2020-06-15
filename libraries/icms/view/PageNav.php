@@ -43,7 +43,7 @@ namespace ImpressCMS\Core\View;
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_view_PageNav {
+class PageNav {
 
 	/**
 	 * @public int $total  Total of pages to show

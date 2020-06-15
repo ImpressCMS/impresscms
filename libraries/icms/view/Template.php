@@ -44,7 +44,7 @@ namespace ImpressCMS\Core\View;
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_view_Tpl extends SmartyBC
+class Template extends SmartyBC
 {
 
 	public $left_delimiter = '<{';
@@ -155,7 +155,7 @@ class icms_view_Tpl extends SmartyBC
 		$cache = \icms::getInstance()->get('cache');
 		$cache->deleteItem('tpl_db_' . base64_encode($file));
 
-		$tpl = new icms_view_Tpl();
+		$tpl = new Template();
 
 		$tpl->touch("db:$file");
 

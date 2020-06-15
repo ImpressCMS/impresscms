@@ -41,7 +41,7 @@ class BreadcrumbView {
 	 */
 	public function render($fetchOnly = false) {
 
-		$this->_tpl = new icms_view_Tpl();
+		$this->_tpl = new Template();
 		$this->_tpl->assign('icms_breadcrumb_items', $this->items);
 
 		if ($fetchOnly) {

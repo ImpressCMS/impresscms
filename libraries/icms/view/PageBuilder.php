@@ -44,7 +44,7 @@ namespace ImpressCMS\Core\View;
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @author      Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class icms_view_PageBuilder {
+class PageBuilder {
 
 	/** */
 	static private $modid;
@@ -90,7 +90,7 @@ class icms_view_PageBuilder {
 			$template = & $this->theme->template;
 			$backup = array($template->caching, $template->cache_lifetime);
 		} else {
-			$template = new icms_view_Tpl();
+			$template = new Template();
 		}
 
 		/** moved here from buildBlocks to reduce redundant calls */

@@ -35,6 +35,8 @@
 
 namespace ImpressCMS\Core\View\Theme;
 
+use ImpressCMS\Core\View\PageBuilder;
+
 /**
  * Builds the theme components
  *
@@ -42,7 +44,7 @@ namespace ImpressCMS\Core\View\Theme;
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\View\Theme
  */
-class icms_view_theme_Object {
+class ThemeComponent {
 	/**
 	 * The name of this theme
 	 * @public string
@@ -83,7 +85,7 @@ class icms_view_theme_Object {
 	 * Page construction plug-ins to use
 	 * @public array
 	 */
-	public $plugins = array('icms_view_PageBuilder');
+	public $plugins = [PageBuilder::class];
 
 	public $renderCount = 0;
 	/**
@@ -328,10 +330,11 @@ class icms_view_theme_Object {
 	 * If render() hasn't been called before, the theme defaults will be used for the canvas and
 	 * page template (and xoopsOption['template_main'] for the content).
 	 *
-	 * @param string $canvasTpl		The canvas template, if different from the theme default
-	 * @param string $pageTpl		The page template, if different from the theme default (unsupported, 2.3+ only)
-	 * @param string $contentTpl	The content template
-	 * @param array	 $vars			Template variables to send to the template engine
+	 * @param string $canvasTpl The canvas template, if different from the theme default
+	 * @param string $pageTpl The page template, if different from the theme default (unsupported, 2.3+ only)
+	 * @param string $contentTpl The content template
+	 * @param array $vars Template variables to send to the template engine
+	 * @return bool
 	 */
 	public function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = array()) {
 		global $xoops, $xoopsOption;

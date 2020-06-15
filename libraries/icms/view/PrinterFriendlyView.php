@@ -17,7 +17,7 @@ namespace ImpressCMS\Core\View;
  * @package	ICMS\View
  * @link       The IcmsFactory <www.smartfactory.ca>
  */
-class icms_view_Printerfriendly {
+class PrinterFriendlyView {
 
 	public $_title;
 	public $_dsc;
@@ -51,7 +51,7 @@ class icms_view_Printerfriendly {
 		 * @todo make the output XHTML compliant
 		 */
 
-		$this->_tpl = new icms_view_Tpl();
+		$this->_tpl = new Template();
 
 		$this->_tpl->assign('icms_print_pageTitle', $this->_pageTitle?$this->_pageTitle:$this->_title);
 		$this->_tpl->assign('icms_print_title', $this->_title);

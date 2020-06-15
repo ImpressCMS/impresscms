@@ -43,7 +43,7 @@ namespace ImpressCMS\Core\View\Theme;
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\View\Theme
  */
-class icms_view_theme_Factory {
+class ThemeFactory {
 
 	public $xoBundleIdentifier = 'icms_view_theme_Factory';
 
@@ -155,7 +155,7 @@ class icms_view_theme_Factory {
 			$GLOBALS['icmsConfig']['theme_set'] = $options['folderName'];
 		}
 		$options['path'] = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'])) ? ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'] : ICMS_THEME_PATH . '/' . $options['folderName'];
-		$inst = new icms_view_theme_Object();
+		$inst = new ThemeComponent();
 		foreach ($options as $k => $v) {
 			$inst->$k = $v;
 		}
