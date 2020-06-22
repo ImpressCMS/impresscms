@@ -50,7 +50,7 @@ $redirect = isset($_GET['xoops_redirect'])
 		? $_GET['xoops_redirect']
 		: isset($_POST['xoops_redirect'])
 			? $_POST['xoops_redirect']
-			: FALSE;
+			: ICMS_URL;
 if ($redirect) {
 	$redirect = htmlspecialchars(trim($redirect), ENT_QUOTES);
 	$isExternal = FALSE;
