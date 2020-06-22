@@ -86,7 +86,7 @@ ob_start();
 			<div class="dbconn_line"><label for="adminname"><?php echo ADMIN_DISPLAY_LABEL; ?></label>
 				<div class="clear">&nbsp;</div>
 				<input type="text" name="adminname" id="adminname" maxlength="25"
-					   value="<?php if(isset($vars['adminname'])) { if(isset($vars['adminname'])) echo htmlspecialchars( $vars['adminname'], ENT_QUOTES );} ?>" />
+					   value="<?php if(isset($vars['adminname'])) echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
 			</div>
 			<div class="dbconn_line"><label for="adminlogin_name"><?php echo ADMIN_LOGIN_LABEL; ?></label>
 				<div class="clear">&nbsp;</div>
