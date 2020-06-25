@@ -71,7 +71,7 @@ class SystemCustomtag extends icms_ipf_Object {
 					$ret = $this->getVar('customtag_content', 'N');
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 1);
 					break;
-					
+
 				case ICMS_CUSTOMTAG_TYPE_HTML:
 					$ret = $this->getVar('customtag_content', 'N');
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 0);
@@ -80,7 +80,7 @@ class SystemCustomtag extends icms_ipf_Object {
 				case ICMS_CUSTOMTAG_TYPE_PHP:
 					$ret = $this->renderWithPhp();
 					break;
-					
+
 				default:
 					break;
 			}
@@ -116,7 +116,7 @@ class SystemCustomtag extends icms_ipf_Object {
 	 * Generate a bbcode for the custom tag
 	 */
 	public function getXoopsCode() {
-		$ret = '[customtag]' . $this->getVar('name', 'n') . '[/customtag]';
+		$ret = '[customtag]' . $this->getVar('name', 's') . '[/customtag]';
 		return $ret;
 	}
 
@@ -140,7 +140,7 @@ class SystemCustomtag extends icms_ipf_Object {
 	 * Accessor for the name property
 	 */
 	public function getCustomtagName() {
-		$ret = $this->getVar('name');
+		$ret = $this->getVar('name', 's');
 		return $ret;
 	}
 }
