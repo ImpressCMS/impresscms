@@ -56,24 +56,24 @@
         },
         {
             "name": "apix/cache",
-            "version": "1.3.4",
+            "version": "1.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apix/cache.git",
-                "reference": "9bddf271f878e7a09eadc81461e1793ea328afd5"
+                "reference": "1ed9395a0c42c9029c17462df1927d4536b513da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apix/cache/zipball/9bddf271f878e7a09eadc81461e1793ea328afd5",
-                "reference": "9bddf271f878e7a09eadc81461e1793ea328afd5",
+                "url": "https://api.github.com/repos/apix/cache/zipball/1ed9395a0c42c9029c17462df1927d4536b513da",
+                "reference": "1ed9395a0c42c9029c17462df1927d4536b513da",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.2|^7.0",
-                "psr/cache": "1.0.*"
+                "php": ">=5.3.0",
+                "psr/cache": "^1.0"
             },
             "provide": {
-                "psr/cache-implementation": "~1.0"
+                "psr/cache-implementation": "^1.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.0|^5.0",
@@ -141,7 +141,7 @@
                 "sqlite",
                 "tagging"
             ],
-            "time": "2019-10-30T13:14:01+00:00"
+            "time": "2020-06-11T09:10:14+00:00"
         },
         {
             "name": "aura/session",
