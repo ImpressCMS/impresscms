@@ -58,39 +58,42 @@ class icms_core_Debug {
  	 * @param string $extra Additional information to provide about the change
  	 */
  	static public function setDeprecated($replacement='', $extra='') {
-		icms_loadLanguageFile('core', 'core');
-		$trace = debug_backtrace();
-		array_shift($trace);
-		$level = $msg = $message = '';
-		$pre =  '<strong><em>(' . _CORE_DEPRECATED . ')</em></strong> - ';
-		if ($trace[0]['function'] != 'include'
-			&& $trace[0]['function'] != 'include_once'
-			&& $trace[0]['function'] != 'require'
-			&& $trace[0]['function'] != 'require_once'
-		) {
-			$pre .= $trace[0]['function'] . ': ';
-		}
-
-		foreach ( $trace as $step) {
-		    $level .= '-';
-			if (isset($step['file'])) {
-			    	$message .= $level . $msg
-						. (isset( $step['class'] ) ? $step['class'] : '')
-						. (isset( $step['type'] ) ? $step['type'] : '' )
-						. sprintf(_CORE_DEPRECATED_MSG, $step['function'],
-							str_replace(array(ICMS_TRUST_PATH, ICMS_ROOT_PATH), array("TRUSTPATH", "ROOTPATH"), $step['file']),
-							$step['line']
-						);
+ 		trigger_error($replacement, E_USER_DEPRECATED);
+ 		if (icms::$logger->activated) {
+	 		icms_loadLanguageFile('core', 'core');
+			$trace = debug_backtrace();
+			array_shift($trace);
+			$level = $msg = $message = '';
+			$pre =  '<strong><em>(' . _CORE_DEPRECATED . ')</em></strong> - ';
+			if ($trace[0]['function'] != 'include'
+				&& $trace[0]['function'] != 'include_once'
+				&& $trace[0]['function'] != 'require'
+				&& $trace[0]['function'] != 'require_once'
+			) {
+				$pre .= $trace[0]['function'] . ': ';
 			}
-			$msg = _CORE_DEPRECATED_CALLEDBY;
-		}
 
-		$logger = icms_core_Logger::instance();
-		$logger->addDeprecated(
-			$pre . ($replacement ? ' <strong><em>' . sprintf(_CORE_DEPRECATED_REPLACEMENT, $replacement) . '</em></strong>.' : '')
-			. ($extra ? ' <strong><em>' . $extra . '</em></strong>' : '')
-			. _CORE_DEPRECATED_CALLSTACK . $message
-		);
+			foreach ( $trace as $step) {
+			    $level .= '-';
+				if (isset($step['file'])) {
+				    	$message .= $level . $msg
+							. (isset( $step['class'] ) ? $step['class'] : '')
+							. (isset( $step['type'] ) ? $step['type'] : '' )
+							. sprintf(_CORE_DEPRECATED_MSG, $step['function'],
+								str_replace(array(ICMS_TRUST_PATH, ICMS_ROOT_PATH), array("TRUSTPATH", "ROOTPATH"), $step['file']),
+								$step['line']
+							);
+				}
+				$msg = _CORE_DEPRECATED_CALLEDBY;
+			}
+
+
+			icms::$logger->addDeprecated(
+				$pre . ($replacement ? ' <strong><em>' . sprintf(_CORE_DEPRECATED_REPLACEMENT, $replacement) . '</em></strong>.' : '')
+				. ($extra ? ' <strong><em>' . $extra . '</em></strong>' : '')
+				. _CORE_DEPRECATED_CALLSTACK . $message
+			);
+	 	}
  	}
  }
 
