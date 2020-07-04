@@ -8,13 +8,13 @@ Build Version: 97
 This release fixes several bugs that were present in the 1.4.0 release
 
 ### Fixes
- - Stored XSS on ImpressCMS 1.4.0 ( #659 )
- - Existence of banners folder results in errors ( #600 )
- - module admin menu is not shown in 1.4 ( #604 )
- - ImageManager : admin can no longer preview images ( #590 )
- - Fatal error during installation at page_tablescreate.php ( #576 )
- - Test 1.4 on PHP 7.3 ( #573 )
- - Login in Chrome points to blank page ( #100 )
+ - Stored XSS on ImpressCMS 1.4.0 ( #659 ) @Mekdrop
+ - Existence of banners folder results in errors ( #600 ) @fiammybe
+ - module admin menu is not shown in 1.4 ( #604 ) @skenow
+ - ImageManager : admin can no longer preview images ( #590 ) @skenow
+ - Fatal error during installation at page_tablescreate.php ( #576 ) @skenow
+ - Test 1.4 on PHP 7.3 ( #573 ) @fiammybe
+ - Login in Chrome points to blank page ( #100 ) @fiammybe
  
 ## ImpressCMS 1.4.0
 Date: 19 Dec 2019
