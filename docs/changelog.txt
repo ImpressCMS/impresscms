@@ -1,5 +1,21 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 1.4.1 Beta
+Date: 04 Jul 2020
+DB Version: 45 
+Build Version: 97
+
+This release fixes several bugs that were present in the 1.4.0 release
+
+### Fixes
+ - Stored XSS on ImpressCMS 1.4.0 ( #659 )
+ - Existence of banners folder results in errors ( #600 )
+ - module admin menu is not shown in 1.4 ( #604 )
+ - ImageManager : admin can no longer preview images ( #590 )
+ - Fatal error during installation at page_tablescreate.php ( #576 )
+ - Test 1.4 on PHP 7.3 ( #573 )
+ - Login in Chrome points to blank page ( #100 )
+ 
 ## ImpressCMS 1.4.0
 Date: 19 Dec 2019
 DB Version: 45 
