@@ -38,7 +38,6 @@
  *
  * @package		core
  * @since		1.2
- * @version		SVN: $Id: icms_version.php 12500 2015-06-15 20:03:56Z fiammy $
  */
 
 defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
@@ -46,7 +45,7 @@ defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
-	'version'=> '1.4.0',
+	'version'=> '1.4.1',
 	'description'=> _MI_SYSTEM_DESC,
 	'author'=> "",
 	'credits'=> "The ImpressCMS Project",
@@ -62,11 +61,11 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "Final",
-	'status'=> "Final",
-	'date'=> "19 Dec 2019",
+	'status_version'=> "Beta",
+	'status'=> "Beta",
+	'date'=> "04 Jul 2020",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_FINAL,
+	'warning'=>_CO_ICMS_WARNING_BETA,
 
 /** Contributors */
 	'developer_website_url' => "https://www.impresscms.org",
