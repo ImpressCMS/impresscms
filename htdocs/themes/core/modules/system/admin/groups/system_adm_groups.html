@@ -2,19 +2,21 @@
 	<div class="CPbigTitle" style="background-image: url(<{$icms_url}>/modules/system/admin/groups/images/groups_big.png)"><{$smarty.const._AM_EDITADG}>
 	</div><br>
 	<div class="row">
-		<{foreach item=grouparray from=$grouparray}>
+		<{foreach item=groupitem from=$grouparray}>
 		<{if $grouprights}>
-			<div class="col-xs-6 col-sm-4 col-md-3">
+		<div class="col-xs-6 col-sm-4 col-md-3">
 				<div class="thumbnail">
 					<div class="caption">
-						<h4><{$grouparray.name}></h4>
-						<p><{$grouparray.description}></p>
+						<h4><{$groupitem.name}></h4>
+						<p><{$groupitem.description}></p>
 						<div class="center">
-							<a class="btn btn-sm btn-primary" href="admin.php?fct=groups&amp;op=modify&amp;g_id=<{$grouparray.id}>"><{$smarty.const._AM_MODIFY}></a>
-							<{if $grouparray.permissions == true}>
-							<a class="btn btn-sm btn-danger" href="admin.php?fct=groups&amp;op=del&amp;g_id=<{$grouparray.id}>"><{$smarty.const._AM_DELETEADG}></a>
+							<a class="btn btn-sm btn-primary"
+							   href="admin.php?fct=groups&amp;op=modify&amp;g_id=<{$groupitem.id}>"><{$smarty.const._AM_MODIFY}></a>
+							<{if $groupitem.permissions == true}>
+							<a class="btn btn-sm btn-danger"
+							   href="admin.php?fct=groups&amp;op=del&amp;g_id=<{$groupitem.id}>"><{$smarty.const._AM_DELETEADG}></a>
 							<{/if}>
-						</div> 
+						</div>
 					</div>
 				</div>
 			</div>
@@ -36,9 +38,9 @@
 							<div class="control-group">
 								<label><{$smarty.const._AM_NONMEMBERS}></label>
 								<select multiple class="form-control" name="uids[]" multiple="multiple">
-									<{foreach item=usersarray from=$usersarray}>
-										<option value="<{$usersarray.id}>"><{$usersarray.name}></option>
-									<{/foreach}>	
+									<{foreach item=user from=$usersarray}>
+									<option value="<{$user.id}>"><{$user.name}></option>
+									<{/foreach}>
 								</select>
 							</div>
 							<input type="hidden" name="op" value="addUser"><{$security}>
@@ -54,8 +56,8 @@
 							<div class="control-group">
 								<label><{$smarty.const._AM_MEMBERS}></label>
 								<select multiple class="form-control" name="uids[]" multiple="multiple">
-									<{foreach item=multiple from=$multiple}>
-										<option value="<{$multiple.id}>"><{$multiple.name}></option>
+									<{foreach item=m from=$multiple}>
+									<option value="<{$m.id}>"><{$m.name}></option>
 									<{/foreach}>
 								</select>
 							</div>
@@ -84,14 +86,14 @@
 						<input type="hidden" name="groupid" value="<{$groupid}>">
 						<input type="hidden" name="memstart" value="<{$memstart}>"><{$security}>
 						<select multiple class="form-control" name="uids[]" multiple="multiple">
-							<{foreach item=multiple from=$multiple}>
-								<option value="<{$multiple.id}>"><{$multiple.name}></option>
+							<{foreach item=m from=$multiple}>
+							<option value="<{$m.id}>"><{$m.name}></option>
 							<{/foreach}>
 						</select><br>
 						<input class="btn btn-primary" type="submit" name="submit" value="<{$smarty.const._DELETE}>">
 					</td>
 				</tr>
 			</table>
-		</form>	
+		</form>
 	<{/if}>
 <{/if}>
