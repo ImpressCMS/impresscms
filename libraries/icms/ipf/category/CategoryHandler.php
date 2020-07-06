@@ -18,7 +18,7 @@ namespace ImpressCMS\Core\IPF\Category;
  * @package	ICMS\IPF\Category
  * @since 	1.1
  */
-class icms_ipf_category_Handler extends \ImpressCMS\Core\IPF\Handler {
+class CategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 	/** */
 	public $allCategoriesObj = false;
 	/** */
@@ -29,7 +29,7 @@ class icms_ipf_category_Handler extends \ImpressCMS\Core\IPF\Handler {
 	 *
 	 * @param object $db A database object
 	 * @param string $modulename The directory name for the module
-	 * @return icms_ipf_category_Handler
+	 * @return CategoryHandler
 	 */
 	public function __construct($db, $modulename) {
 		parent::__construct($db, 'category', 'categoryid', 'name', 'description', $modulename);

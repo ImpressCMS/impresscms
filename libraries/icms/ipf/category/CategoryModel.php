@@ -21,12 +21,12 @@ namespace ImpressCMS\Core\IPF\Category;
  *
  * @package	ICMS\IPF\Category
  */
-class icms_ipf_category_Object extends icms_ipf_seo_Object {
+class CategoryModel extends icms_ipf_seo_Object {
 	/** Path that corresponds to the category */
 	private $_categoryPath;
 	/**
 	 * Constructor for icms_ipf_category_Object
-	 * @return icms_ipf_category_Object
+	 * @return CategoryModel
 	 */
 	public function __construct() {
 		$this->initVar('categoryid', self::DTYPE_INTEGER, '', true);
