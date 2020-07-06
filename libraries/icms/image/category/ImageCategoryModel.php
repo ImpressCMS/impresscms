@@ -33,7 +33,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
  */
-namespace ImpressCMS\Core\Image\Category;
+namespace ImpressCMS\Core\Image;
 
 /**
  * An image category
@@ -56,7 +56,7 @@ namespace ImpressCMS\Core\Image\Category;
  * @property string $imgcat_type       Type
  * @property string $imgcat_storetype  Storing type
  */
-class icms_image_category_Object extends \ImpressCMS\Core\IPF\AbstractModel {
+class ImageCategoryModel extends \ImpressCMS\Core\IPF\AbstractModel {
 
 		/**
 		 * Image count

@@ -40,7 +40,7 @@
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
-namespace ImpressCMS\Core\Image\Set;
+namespace ImpressCMS\Core\Image;
 
 /**
  * XOOPS imageset handler class.
@@ -51,7 +51,7 @@ namespace ImpressCMS\Core\Image\Set;
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_image_set_Handler extends \ImpressCMS\Core\IPF\Handler {
+class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 
 		/**
 		 * Constructor
@@ -97,7 +97,7 @@ class icms_image_set_Handler extends \ImpressCMS\Core\IPF\Handler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$imgset = new icms_image_set_Object($this, $myrow);
+			$imgset = new ImageSetModel($this, $myrow);
 			if (!$id_as_key) {
 				$ret[] = & $imgset;
 			} else {

@@ -33,7 +33,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
  */
-namespace ImpressCMS\Core\Image\Category;
+namespace ImpressCMS\Core\Image;
 
 /**
  * Image caetgory handler class.
@@ -44,7 +44,7 @@ namespace ImpressCMS\Core\Image\Category;
  * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_image_category_Handler extends \ImpressCMS\Core\IPF\Handler {
+class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 
 		/**
 		 * Constructor
@@ -61,7 +61,7 @@ class icms_image_category_Handler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param \icms_db_criteria_Element $criteria Criteria with conditions for the image categories
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
 	 *
-	 * @return icms_image_category_Object[]
+	 * @return ImageCategoryModel[]
 	 */
 	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
 			$this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
@@ -108,7 +108,7 @@ class icms_image_category_Handler extends \ImpressCMS\Core\IPF\Handler {
 		 * @param null|integer  $display        Do we need to list only visible or hidden items?
 		 * @param string|null   $storetype      How to store images of this category?
 		 *
-		 * @return icms_image_category_Object[]
+		 * @return ImageCategoryModel[]
 		 */
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
 		$criteria = new icms_db_criteria_Compo();

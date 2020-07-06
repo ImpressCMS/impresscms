@@ -45,7 +45,7 @@ namespace ImpressCMS\Core\Image;
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_image_Handler extends \ImpressCMS\Core\IPF\Handler {
+class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 
 	/**
 	 * Handler for image bodies
@@ -105,7 +105,7 @@ class icms_image_Handler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param bool|string $sql  Extra sql
 	 * @param bool $debug Debug mode?
 	 *
-	 * @return icms_image_Object[]
+	 * @return ImageModel[]
 	 */
 	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false, $sql = false, $debug = false) {
 		if ($getbinary) {

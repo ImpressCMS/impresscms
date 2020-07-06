@@ -1,12 +1,12 @@
 <?php
-namespace ImpressCMS\Core\Image\Body;
+namespace ImpressCMS\Core\Image;
 
 /**
  * Image body storing class
  *
  * @package	ICMS\Image\Body
  */
-class icms_image_body_Handler extends \ImpressCMS\Core\IPF\Handler {
+class ImageBodyHandler extends \ImpressCMS\Core\IPF\Handler {
 
 		/**
 		 * Constructor
