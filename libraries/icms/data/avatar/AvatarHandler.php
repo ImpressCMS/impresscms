@@ -47,7 +47,7 @@ namespace ImpressCMS\Core\Data\Avatar;
  *
  * @package	ICMS\Data\Avatar
  */
-class icms_data_avatar_Handler extends \ImpressCMS\Core\IPF\Handler {
+class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'data_avatar', 'avatar_id', 'avatar_name', 'avatar_file', 'icms', 'avatar', 'avatar_id');
@@ -57,7 +57,7 @@ class icms_data_avatar_Handler extends \ImpressCMS\Core\IPF\Handler {
 	 * Deletes an avatar
 	 * @see ObjectHandler#delete($object)
 	 *
-	 * @param icms_data_avatar_Object   $avatar Avatar to delete
+	 * @param AvatarModel   $avatar Avatar to delete
 	 * @param bool                      $force  Force deletion?
 	 *
 	 * @return boolean
@@ -97,7 +97,7 @@ class icms_data_avatar_Handler extends \ImpressCMS\Core\IPF\Handler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$avatar = new icms_data_avatar_Object($this, $myrow);
+			$avatar = new AvatarModel($this, $myrow);
 			$avatar->setUserCount($myrow['count']);
 			if (!$id_as_key) {
 				$ret[] = & $avatar;

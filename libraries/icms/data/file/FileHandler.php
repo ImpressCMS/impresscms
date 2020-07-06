@@ -11,7 +11,7 @@ namespace ImpressCMS\Core\Data\File;
  * @author	Phoenyx
  */
 
-class icms_data_file_Handler extends \ImpressCMS\Core\IPF\Handler {
+class FileHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * constrcutor
 	 *

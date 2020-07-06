@@ -12,7 +12,7 @@ namespace ImpressCMS\Core\Data\UrlLink;
  * @author	Phoenyx
  */
 
-class icms_data_urllink_Handler extends \ImpressCMS\Core\IPF\Handler {
+class UrlLinkHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * constrcutor
 	 *

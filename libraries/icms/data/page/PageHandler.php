@@ -18,7 +18,7 @@ namespace ImpressCMS\Core\Data\Page;
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  * @package	ICMS\Data\Page
  */
-class icms_data_page_Handler extends \ImpressCMS\Core\IPF\Handler {
+class PageHandler extends \ImpressCMS\Core\IPF\Handler {
 
 	public function __construct(& $db) {
 		parent::__construct($db, 'page', 'page_id', 'page_title', '', 'icms');

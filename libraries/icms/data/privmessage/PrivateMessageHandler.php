@@ -28,45 +28,68 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Private messages
+ * Manage private messages
  *
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
  */
+
 namespace ImpressCMS\Core\Data\PrivateMessage;
 
 /**
- * A handler for Private Messages
+ * Private message handler class.
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS\Data\Privmessage
+ * This class is responsible for providing data access mechanisms to the data source
+ * of private message class objects.
  *
- * @property int    $msg_id       Message ID
- * @property string $msg_image    Image
- * @property string $subject      Subject
- * @property int    $from_userid  From what User ID
- * @property int    $to_userid    To what User ID
- * @property int    $msg_time     Sending time
- * @property string $msg_text     Text (content)
- * @property int    $read_msg     Is this message read?
+ * @author    Kazumi Ono    <onokazu@xoops.org>
+ * @copyright    copyright (c) 2000-2007 XOOPS.org
+ * @package    ICMS\Data\Privmessage
  */
-class icms_data_privmessage_Object extends \ImpressCMS\Core\IPF\AbstractModel {
+class PrivateMessageHandler extends \ImpressCMS\Core\IPF\Handler
+{
+
+	public function __construct(&$db)
+	{
+		parent::__construct($db, 'data_privmessage', 'msg_id', 'subject', 'msg_text', 'icms', 'priv_msgs', 'msg_id');
+	}
 
 	/**
-	 * constructor
+	 * Mark a message as read
+	 * @param \icms_data_privmessage_Object $pm Private message
+	 * @return    bool
 	 */
-	public function __construct(&$handler, $data = array()) {
-		$this->initVar('msg_id', self::DTYPE_INTEGER, null, false);
-		$this->initVar('msg_image', self::DTYPE_STRING, 'icon1.gif', false, 100);
-		$this->initVar('subject', self::DTYPE_STRING, null, true, 255);
-		$this->initVar('from_userid', self::DTYPE_INTEGER, null, true);
-		$this->initVar('to_userid', self::DTYPE_INTEGER, null, true);
-		$this->initVar('msg_time', self::DTYPE_DATETIME, null, false);
-		$this->initVar('msg_text', self::DTYPE_STRING, null, true);
-		$this->initVar('read_msg', self::DTYPE_INTEGER, 0, false);
+	public function setRead(&$pm)
+	{
+		if (!is_a($pm, 'icms_data_privmessage_Object')) {
+			return false;
+		}
 
-		parent::__construct($handler, $data);
+		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->table, (int)$pm->getVar('msg_id'));
+		if (!$this->db->queryF($sql)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Gets message count for user
+	 *
+	 * @param icms_member_user_Object|null $user User for whom get message count
+	 *
+	 * @return int
+	 */
+	public function getCountForUser(\icms_member_user_Object $user = null): int {
+		static $msgCount = [];
+		if ($user === null) {
+			$user = icms::$user;
+		}
+		if (!isset($msgCount[$user->uid])) {
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('read_msg', 0));
+			$criteria->add(new icms_db_criteria_Item('to_userid', $user->uid));
+			$msgCount[$user->uid] = (int)$this->getCount($criteria);
+		}
+		return $msgCount[$user->uid];
 	}
 }
 

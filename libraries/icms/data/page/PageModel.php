@@ -22,7 +22,7 @@ namespace ImpressCMS\Core\Data\Page;
  *
  * @package	ICMS\Data\Page
  */
-class icms_data_page_Object extends \ImpressCMS\Core\IPF\AbstractModel {
+class PageModel extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	public function __construct(& $handler, $data = array()) {
 			$this->initVar('page_id', self::DTYPE_INTEGER);
