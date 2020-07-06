@@ -46,7 +46,7 @@ namespace ImpressCMS\Core\Config;
  *                  - error handling
  * @access	public
  */
-class icms_config_Handler {
+class Config {
 	static protected $instance;
 
 		/**
@@ -150,14 +150,14 @@ class icms_config_Handler {
 	 * @param	object  &$db    reference to database object
 	 */
 	public function __construct(&$db) {
-		$this->_cHandler = new icms_config_item_Handler($db);
-		$this->_oHandler = new icms_config_option_Handler($db);
+		$this->_cHandler = new ConfigItemHandler($db);
+		$this->_oHandler = new ConfigOptionHandler($db);
 	}
 
 	/**
 	 * Create a config
 	 *
-	 * @see     icms_config_Item_Object
+	 * @see     ConfigItemHandler
 	 * @return	\icms_config_Item_Object
 	 */
 	public function &createConfig() {

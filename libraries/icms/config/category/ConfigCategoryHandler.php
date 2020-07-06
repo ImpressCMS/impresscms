@@ -25,31 +25,32 @@
 //  ------------------------------------------------------------------------ //
 
 /**
- * Manage configuration items
+ * Manage configuration categories
  *
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since        XOOPS
- * @author       Kazumi Ono (aka onokazo)
- * @author       http://www.xoops.org The XOOPS Project
+ *
+ * @category	ICMS
+ * @author		Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Config\Item;
+namespace ImpressCMS\Core\Config;
 
 /**
- * Configuration handler class.
+ * Configuration category handler class.
  *
  * This class is responsible for providing data access mechanisms to the data source
- * of configuration class objects.
+ * of configuration category class objects.
  *
- * @author      Kazumi Ono <onokazu@xoops.org>
+ * @author  	Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @package	ICMS\Config\Item
+ * @package	ICMS\Config\Category
  */
-class icms_config_item_Handler extends \ImpressCMS\Core\IPF\Handler {
+class ConfigCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 
-	public function __construct(&$db) {
-			parent::__construct($db, 'config_item', 'conf_id', 'conf_name', 'conf_value', 'icms', 'config', 'conf_id');
-		}
+        public function __construct(&$db) {
+            parent::__construct($db, 'config_category', 'confcat_id', 'confcat_name', 'confcat_order', 'icms', 'configcategory', 'confcat_id');
+        }
 }
+

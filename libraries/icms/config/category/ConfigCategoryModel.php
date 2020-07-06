@@ -23,8 +23,9 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+
 /**
- * Manage configuration options
+ * Manage configuration categories
  *
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -32,21 +33,30 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Config\Option;
+namespace ImpressCMS\Core\Config;
 
 /**
- * Configuration option handler class.
- * This class is responsible for providing data access mechanisms to the data source
- * of configuration option class objects.
+ * A category of configs
  *
- * @author  	Kazumi Ono <onokazu@xoops.org>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @package	ICMS\Config\Option
+ * @package	ICMS\Config\Category
+ *
+ * @property int    $confcat_id        Category ID
+ * @property string $confcat_name      Category name
+ * @property int    $confcat_order     Category display order
  */
-class icms_config_option_Handler extends \ImpressCMS\Core\IPF\Handler {
+class ConfigCategoryModel extends \ImpressCMS\Core\IPF\AbstractModel {
+	/**
+	 * Constructor
+	 *
+	 */
+	public function __construct(&$handler, $data = array()) {
+		$this->initVar('confcat_id', self::DTYPE_INTEGER, null);
+		$this->initVar('confcat_name', self::DTYPE_STRING, null, true, 255);
+		$this->initVar('confcat_order', self::DTYPE_INTEGER, 0);
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'config_option', 'confop_id', 'confop_name', 'confop_value', 'icms', 'configoption', 'confop_id');
-        }
-
+                parent::__construct($handler, $data);
+	}
 }
+

@@ -32,7 +32,7 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Config\Item;
+namespace ImpressCMS\Core\Config;
 
 /**
  * Config item
@@ -52,7 +52,7 @@ namespace ImpressCMS\Core\Config\Item;
  * @property string     $conf_valuetype     Type of value
  * @property int        $conf_order         Order (used to sorting fields before displaying on form)
  */
-class icms_config_item_Object extends \ImpressCMS\Core\IPF\AbstractModel {
+class ConfigItemModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * Config options
 	 *

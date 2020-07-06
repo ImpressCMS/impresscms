@@ -25,38 +25,31 @@
 //  ------------------------------------------------------------------------ //
 
 /**
- * Manage configuration categories
+ * Manage configuration items
  *
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @author	Kazumi Ono (aka onokazo)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since        XOOPS
+ * @author       Kazumi Ono (aka onokazo)
+ * @author       http://www.xoops.org The XOOPS Project
  */
 
-namespace ImpressCMS\Core\Config\Category;
+namespace ImpressCMS\Core\Config;
 
 /**
- * A category of configs
+ * Configuration handler class.
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
+ * This class is responsible for providing data access mechanisms to the data source
+ * of configuration class objects.
+ *
+ * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @package	ICMS\Config\Category
- *
- * @property int    $confcat_id        Category ID
- * @property string $confcat_name      Category name
- * @property int    $confcat_order     Category display order
+ * @package	ICMS\Config\Item
  */
-class icms_config_category_Object extends \ImpressCMS\Core\IPF\AbstractModel {
-	/**
-	 * Constructor
-	 *
-	 */
-	public function __construct(&$handler, $data = array()) {
-		$this->initVar('confcat_id', self::DTYPE_INTEGER, null);
-		$this->initVar('confcat_name', self::DTYPE_STRING, null, true, 255);
-		$this->initVar('confcat_order', self::DTYPE_INTEGER, 0);
+class ConfigItemHandler extends \ImpressCMS\Core\IPF\Handler {
 
-                parent::__construct($handler, $data);
-	}
+	public function __construct(&$db) {
+			parent::__construct($db, 'config_item', 'conf_id', 'conf_name', 'conf_value', 'icms', 'config', 'conf_id');
+		}
 }
-
