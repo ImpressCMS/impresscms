@@ -21,13 +21,15 @@
 
 namespace ImpressCMS\Core\Form\Elements\Select;
 
+use ImpressCMS\Core\Form\Elements\SelectElement;
+
 /**
  * Create a form element to select an image
  *
  * @package	ICMS\Form\Elements\Select
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
-class icms_form_elements_select_Image extends icms_form_elements_Select {
+class ImageElement extends SelectElement {
 	/**
 	 * OptGroup
 	 * @var array
@@ -80,12 +82,12 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 	 */
 	public function getImageList($cat = null) {
 		$ret = array();
-		if (!is_object(icms::$user)) {
+		if (!is_object(\icms::$user)) {
 			$group = array(ICMS_GROUP_ANONYMOUS);
 		} else {
-			$group = & icms::$user->getGroups();
+			$group = & \icms::$user->getGroups();
 		}
-		$imgcat_handler = icms::handler('icms_image_category');
+		$imgcat_handler = \icms::handler('icms_image_category');
 		$catlist = $imgcat_handler->getList($group, 'imgcat_read', 1);
 		if (is_array($cat) && count($catlist) > 0) {
 			foreach ($catlist as $k=>$v) {
@@ -97,7 +99,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 			$catlist = array_key_exists($cat, $catlist)?array($cat=>$catlist[$cat]):array();
 		}
 
-		$image_handler = icms::handler('icms_image');
+		$image_handler = \icms::handler('icms_image');
 		foreach ($catlist as $k=>$v) {
 			$this->_optgroupsID[$v] = $k;
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('imgcat_id', $k));

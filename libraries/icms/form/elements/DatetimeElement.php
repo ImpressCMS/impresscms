@@ -28,39 +28,49 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form field for selecting a user group or groups
+ * Creates a form datatime object
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-namespace ImpressCMS\Core\Form\Elements\Select;
+namespace ImpressCMS\Core\Form\Elements;
 
 /**
- * A field with a choice of available groups
+ * Date and time selection field
  *
- * @package	ICMS\Form\Elements\Select
+ * This extends the icms_form_elements_Tray class because this field actually contains
+ * 2 different elements - the date and the time
+ *
+ * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Group extends icms_form_elements_Select {
+class DatetimeElement extends TrayElement {
+
 	/**
 	 * Constructor
-	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	bool	$include_anon	Include group "anonymous"?
-	 * @param	mixed	$value	    	Pre-selected value (or array of them).
-	 * @param	int		$size	        Number or rows. "1" makes a drop-down-list.
-	 * @param	bool    $multiple       Allow multiple selections?
+	 * @param	string  $caption    Caption of the element
+	 * @param	string  $name       Name of the element
+	 * @param	string  $size       Size of the element
+	 * @param	string  $value      Value of the element
 	 */
-	public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false) {
-		parent::__construct($caption, $name, $value, $size, $multiple);
-		$member_handler = icms::handler('icms_member');
-		if (!$include_anon) {
-			$this->addOptionArray($member_handler->getGroupList(new icms_db_criteria_Item('groupid', ICMS_GROUP_ANONYMOUS, '!=')));
-		} else {
-			$this->addOptionArray($member_handler->getGroupList());
+	public function __construct($caption, $name, $size = 15, $value = 0) {
+		parent::__construct($caption, '&nbsp;');
+		$value = (int) ($value);
+		$value = ($value > 0)?$value:time();
+		$datetime = getDate($value);
+		$this->addElement(new DateElement('', $name . '[date]', $size, $value));
+		$timearray = array();
+		for ($i = 0; $i < 24; $i++) {
+			for ($j = 0; $j < 60; $j = $j + 10) {
+				$key = ($i * 3600) + ($j * 60);
+				$timearray[$key] = ($j != 0)?$i . ':' . $j:$i . ':0' . $j;
+			}
 		}
+		ksort($timearray);
+		$timeselect = new SelectElement('', $name . '[time]', $datetime['hours'] * 3600 + 600 * ceil($datetime['minutes'] / 10));
+		$timeselect->addOptionArray($timearray);
+		$this->addElement($timeselect);
 	}
 }
 

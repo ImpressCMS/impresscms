@@ -34,6 +34,8 @@
  */
 namespace ImpressCMS\Core\Form\Elements;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
+
 /**
  * Renders checkbox options for a group permission form
  *
@@ -41,7 +43,7 @@ namespace ImpressCMS\Core\Form\Elements;
  * @author	Kazumi Ono <onokazu@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Groupperm extends icms_form_Element {
+class GrouppermElement extends AbstractFormElement {
 	/**
 	 * Pre-selected value(s)
 	 *

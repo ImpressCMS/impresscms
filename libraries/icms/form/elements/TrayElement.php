@@ -28,120 +28,132 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form radiobutton attribute (base class)
+ * Creates a form element tray
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 namespace ImpressCMS\Core\Form\Elements;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
+
 /**
- * A Group of radiobuttons
+ * A group of form elements
  *
  * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Radio extends icms_form_Element {
+class TrayElement extends AbstractFormElement {
 
 	/**
-	 * Array of Options
-	 * @var	array
+	 * array of form element objects
+	 * @var array
+	 * @access  private
 	 */
-	private $_options = array();
+	private $_elements = array();
 
 	/**
-	 * Pre-selected value
-	 * @var	string
+	 * required elements
+	 * @var array
 	 */
-	private $_value = null;
+	private $_required = array();
 
 	/**
 	 * HTML to separate the elements
 	 * @var	string
+	 * @access  private
 	 */
 	private $_delimeter;
 
 	/**
-	 * Constructor
+	 * constructor
 	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$name		"name" attribute
-	 * @param	string	$value		Pre-selected value
+	 * @param    string $caption Caption for the group.
+	 * @param    string $delimeter HTML to separate the elements
+	 * @param 	 string $name Name of tray
 	 */
-	public function __construct($caption, $name, $value = null, $delimeter = "") {
-		$this->setCaption($caption);
+	public function __construct($caption, $delimeter = "&nbsp;", $name = "") {
 		$this->setName($name);
-		if (isset($value)) {
-			$this->setValue($value);
-		}
+		$this->setCaption($caption);
 		$this->_delimeter = $delimeter;
 	}
 
 	/**
-	 * Get the "value" attribute
+	 * Is this element a container of other elements?
 	 *
-	 * @param	bool    $encode To sanitizer the text?
-	 * @return	string
+	 * @return	bool true
 	 */
-	public function getValue($encode = false) {
-		return ($encode && $this->_value !== null)
-			? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET)
-			: $this->_value;
+	public function isContainer() {
+		return true;
 	}
 
 	/**
-	 * Set the pre-selected value
+	 * Find out if there are required elements.
 	 *
-	 * @param	$value	string
+	 * @return	bool
 	 */
-	public function setValue($value) {
-		$this->_value = $value;
+	public function isRequired() {
+		return !empty($this->_required);
 	}
 
 	/**
-	 * Add an option
+	 * Add an element to the group
 	 *
-	 * @param	string	$value	"value" attribute - This gets submitted as form-data.
-	 * @param	string	$name	"name" attribute - This is displayed. If empty, we use the "value" instead.
+	 * @param icms_form_Element $formElement Form element to add
+	 * @param bool $required Is required?
 	 */
-	public function addOption($value, $name = "") {
-		if ($name != "") {
-			$this->_options[$value] = $name;
+	public function addElement($formElement, $required = false) {
+		$this->_elements[] = & $formElement;
+		if (!$formElement->isContainer()) {
+			if ($required) {
+				$formElement->setRequired();
+				$this->_required[] = & $formElement;
+			}
 		} else {
-			$this->_options[$value] = $value;
-		}
-	}
-
-	/**
-	 * Adds multiple options
-	 *
-	 * @param	array	$options	Associative array of value->name pairs.
-	 */
-	function addOptionArray($options) {
-		if (is_array($options)) {
-			foreach ($options as $k => $v) {
-				$this->addOption($k, $v);
+			$required_elements = & $formElement->getRequired();
+			$count = count($required_elements);
+			for ($i = 0; $i < $count; $i++) {
+				$this->_required[] = & $required_elements[$i];
 			}
 		}
 	}
 
 	/**
-	 * Get an array with all the options
+	 * get an array of "required" form elements
 	 *
-	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
-	 * @return	array   Associative array of value->name pairs
+	 * @return	\icms_form_Element[]
 	 */
-	function getOptions($encode = false) {
-		if (!$encode) {
-			return $this->_options;
+	public function &getRequired() {
+		return $this->_required;
+	}
+
+	/**
+	 * Get an array of the elements in this group
+	 *
+	 * @param	bool	$recurse	get elements recursively?
+	 * @return  \icms_form_Element[]
+	 */
+	public function &getElements($recurse = false) {
+		if (!$recurse) {
+			return $this->_elements;
+		} else {
+			$ret = array();
+			$count = count($this->_elements);
+			for ($i = 0; $i < $count; $i++) {
+				if (!$this->_elements[$i]->isContainer()) {
+					$ret[] = & $this->_elements[$i];
+				} else {
+					$elements = & $this->_elements[$i]->getElements(true);
+					$count2 = count($elements);
+					for ($j = 0; $j < $count2; $j++) {
+						$ret[] = & $elements[$j];
+					}
+					unset($elements);
+				}
+			}
+			return $ret;
 		}
-		$value = array();
-		foreach ($this->_options as $val => $name) {
-			$value[$encode? htmlspecialchars($val, ENT_QUOTES, _CHARSET):$val]
-				= ($encode > 1)? htmlspecialchars($name, ENT_QUOTES, _CHARSET):$name;
-		}
-		return $value;
 	}
 
 	/**
@@ -155,25 +167,25 @@ class icms_form_elements_Radio extends icms_form_Element {
 	}
 
 	/**
-	 * Prepare HTML for output
+	 * prepare HTML to output this group
 	 *
-	 * @return	string	HTML
+	 * @return	string  HTML output
 	 */
 	public function render() {
+		$count = 0;
 		$ret = "";
-		$ele_name = $this->getName();
-		$ele_value = $this->getValue();
-		$ele_options = $this->getOptions();
-		$ele_extra = $this->getExtra();
-		$ele_delimeter = $this->getDelimeter();
-		foreach ($ele_options as $value => $name) {
-			$ret .= "<input type='radio' name='" . $ele_name . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
-			if ($value == $ele_value) {
-				$ret .= " checked='checked'";
+		foreach ($this->getElements() as $ele) {
+			if ($count > 0) {
+				$ret .= $this->getDelimeter();
 			}
-			$ret .= $ele_extra . " />" . $name . $ele_delimeter . "\n";
+			if ($ele->getCaption() != '') {
+				$ret .= $ele->getCaption() . "&nbsp;";
+			}
+			$ret .= $ele->render() . "\n";
+			if (!$ele->isHidden()) {
+				$count++;
+			}
 		}
 		return $ret;
 	}
 }
-

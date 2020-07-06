@@ -14,7 +14,7 @@ namespace ImpressCMS\Core\Form\Elements\Captcha;
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @package	ICMS\Form\Elements\Captcha
  */
-class icms_form_elements_captcha_Text {
+class TextMode {
 
 	public $config = array();
 	public $code;
@@ -96,7 +96,7 @@ class icms_form_elements_captcha_Text {
 		 * @var Aura\Session\Session $session
 		 */
 		$session = \icms::getInstance()->get('session');
-		$session->getSegment(icms_form_elements_captcha_Object::class)->set('session_code', strval($this->code));
+		$session->getSegment(Image::class)->set('session_code', strval($this->code));
 	}
 
 }

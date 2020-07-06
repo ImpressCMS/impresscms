@@ -28,64 +28,31 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * icms_form_elements_Colorpicker component class file
- *
- * This class provides a textfield with a color picker popup. This color picker
- * comes from Tigra project (http://www.softcomplex.com/products/tigra_color_picker/).
- *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- */
+* Creates a hidden token form attribute
+*
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+*/
 namespace ImpressCMS\Core\Form\Elements;
 
 /**
- * Color Picker
+ * A hidden token field
  *
  * @package	ICMS\Form\Elements
- * @since	Xoops 2.0.15
- * @author	Zoullou <webmaster@zoullou.org>
- * @author	Kazumi Ono	<onokazu@xoops.org>
+ * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Colorpicker extends icms_form_elements_Text {
+class HiddentokenElement extends HiddenElement {
 
-	/**
-	 * Constructor
-	 * @param	string  $caption  Caption of the element
-	 * @param	string  $name     Name of the element
-	 * @param	string  $value    Value of the element
-	 */
-	public function __construct($caption, $name, $value = "#FFFFFF") {
-		parent::__construct($caption, $name, 9, 7, $value);
-	}
+  /**
+   * Constructor
+   *
+   * @param   string  $name       "name" attribute
+   * @param   int     $timeout    timeout variable for the createToken function
+   */
+  public function __construct($name = _CORE_TOKEN, $timeout = 0) {
 
-	/**
-	 * Render the color picker
-	 * @return  $string	rendered color picker HTML
-	 */
-	public function render() {
-		if (isset($GLOBALS ['xoTheme'])) {
-			$GLOBALS ['xoTheme']->addScript('include/color-picker.js');
-		} else {
-			echo "<script type=\"text/javascript\" src=\"" . ICMS_URL . "/include/color-picker.js\"></script>";
-		}
-		$this->setExtra(' style="background-color:' . $this->getValue() . ';"');
-		return parent::render() . "\n<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . ICMS_URL . "/include/',document.getElementById('" . $this->getName() . "'));\">\n";
-	}
-
-	/**
-	 * Returns custom validation Javascript
-	 *
-	 * @return	string	Element validation Javascript
-	 */
-	public function renderValidationJS() {
-		$eltname = $this->getName();
-		$eltcaption = $this->getCaption();
-		$eltmsg = empty($eltcaption)? sprintf(_FORM_ENTER, $eltname):sprintf(_FORM_ENTER, $eltcaption);
-		$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
-		$eltmsg = strip_tags($eltmsg);
-		return "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
-	}
-
+	  parent::__construct($name . '_REQUEST', icms::$security->createToken($timeout, $name));
+  }
 }
+

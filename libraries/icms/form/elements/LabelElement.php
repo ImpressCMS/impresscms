@@ -28,38 +28,58 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates form attribute which shows match possibilities for search form
+ * Creates a form text label attribute
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
+namespace ImpressCMS\Core\Form\Elements;
 
-namespace ImpressCMS\Core\Form\Elements\Select;
+use ImpressCMS\Core\Form\AbstractFormElement;
 
 /**
- * A selection box with options for matching search terms.
+ * A text label
  *
- * @package	ICMS\Form\Elements\Select
+ * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Matchoption extends icms_form_elements_Select {
+class LabelElement extends AbstractFormElement {
+	/**
+	 * Text
+	 * @var	string
+	 */
+	private $_value;
+
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	mixed	$value	Pre-selected value (or array of them).
-	 * 							Legal values are XOOPS_MATCH_START, XOOPS_MATCH_END,
-	 * 							XOOPS_MATCH_EQUAL, and XOOPS_MATCH_CONTAIN
-	 * @param	int		$size	Number of rows. "1" makes a drop-down-list
+	 * @param	string	$caption	Caption
+	 * @param	string	$value		Text
 	 */
-	public function __construct($caption, $name, $value = null, $size = 1) {
-		parent::__construct($caption, $name, $value, $size, false);
-		$this->addOption(XOOPS_MATCH_START, _STARTSWITH);
-		$this->addOption(XOOPS_MATCH_END, _ENDSWITH);
-		$this->addOption(XOOPS_MATCH_EQUAL, _MATCHES);
-		$this->addOption(XOOPS_MATCH_CONTAIN, _CONTAINS);
+	public function __construct($caption = "", $value = "", $name = "") {
+		$this->setCaption($caption);
+		$this->setName($name);
+		$this->_value = $value;
+	}
+
+	/**
+	 * Get the "value" attribute
+	 *
+	 * @param	bool    $encode To sanitizer the text?
+	 * @return	string
+	 */
+	public function getValue($encode = false) {
+		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
+	}
+
+	/**
+	 * Prepare HTML for output
+	 *
+	 * @return	string
+	 */
+	public function render() {
+		return $this->getValue();
 	}
 }
 

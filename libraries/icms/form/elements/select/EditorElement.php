@@ -27,34 +27,47 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-/**
- * Creates a form attribute which is able to select a language
- *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- */
 
 namespace ImpressCMS\Core\Form\Elements\Select;
 
+use ImpressCMS\Core\Form\Elements\SelectElement;
+use ImpressCMS\Core\Form\Elements\TrayElement;
+
 /**
- * A select field with available languages
+ * Creates a form attribute which is able to select an editor
  *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package	ICMS\Form\Elements\Select
- * @author	Kazumi Ono	<onokazu@xoops.org>
+ * @author	phppp (D.J.)
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Lang extends icms_form_elements_Select {
+class EditorElement extends TrayElement {
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	mixed	$value	Pre-selected value (or array of them).
-	 * 							Legal is any name of a ICMS_ROOT_PATH."/language/" subdirectory.
-	 * @param	int		$size	Number of rows. "1" makes a drop-down-list.
+	 * @param	object	$form	the form calling the editor selection
+	 * @param	string	$name	editor name
+	 * @param	string	$value	Pre-selected text value
+	 * @param	bool	$noHtml  dohtml disabled
 	 */
-	public function __construct($caption, $name, $value = null, $size = 1) {
-		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/"));
+	public function __construct(&$form, $name = "editor", $value = null, $noHtml = false) {
+		global $icmsConfig;
+
+		if (empty($value)) {
+			$value = $icmsConfig['editor_default'];
+		}
+
+		parent::__construct(_SELECT);
+		$edtlist = icms_plugins_EditorHandler::getListByType();
+		$option_select = new SelectElement("", $name, $value);
+		$querys = preg_replace('/editor=(.*?)&/', '', $_SERVER['QUERY_STRING']);
+		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
+				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&'.$querys . '\';
+			}"';
+		$option_select->setExtra($extra);
+		$option_select->addOptionArray($edtlist);
+
+		$this->addElement($option_select);
 	}
 }

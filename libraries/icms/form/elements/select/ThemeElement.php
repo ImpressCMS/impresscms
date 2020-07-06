@@ -28,31 +28,36 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
-* Creates a hidden token form attribute
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-*/
-namespace ImpressCMS\Core\Form\Elements;
+ * Creates a form attribute which is able to select a theme
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ */
+
+namespace ImpressCMS\Core\Form\Elements\Select;
+
+use ImpressCMS\Core\Form\Elements\SelectElement;
+use ImpressCMS\Core\View\Theme\ThemeFactory;
 
 /**
- * A hidden token field
+ * A select box with available themes
  *
- * @package	ICMS\Form\Elements
- * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @package	ICMS\Form\Elements\Select
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Hiddentoken extends icms_form_elements_Hidden {
-
-  /**
-   * Constructor
-   *
-   * @param   string  $name       "name" attribute
-   * @param   int     $timeout    timeout variable for the createToken function
-   */
-  public function __construct($name = _CORE_TOKEN, $timeout = 0) {
-
-	  parent::__construct($name . '_REQUEST', icms::$security->createToken($timeout, $name));
-  }
+class ThemeElement extends SelectElement {
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$caption
+	 * @param	string	$name
+	 * @param	mixed	$value	Pre-selected value (or array of them).
+	 * @param	int		$size	Number or rows. "1" makes a drop-down-list
+	 */
+	public function __construct($caption, $name, $value = null, $size = 1) {
+		parent::__construct($caption, $name, $value, $size);
+		$this->addOptionArray(ThemeFactory::getThemesList());
+	}
 }
 

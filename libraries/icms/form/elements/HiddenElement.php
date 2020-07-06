@@ -28,55 +28,45 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a button form attribut
+ * Creates a hidden form field
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-
 namespace ImpressCMS\Core\Form\Elements;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
+
 /**
- * A button
+ * A hidden field
  *
  * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Button extends icms_form_Element {
+class HiddenElement extends AbstractFormElement {
 
 	/**
 	 * Value
 	 * @var	string
-	 * @access	private
 	 */
 	private $_value;
 
 	/**
-	 * Type of the button. This could be either "button", "submit", or "reset"
-	 * @var	string
-	 * @access	private
-	 */
-	private $_type;
-
-	/**
 	 * Constructor
 	 *
-	 * @param	string  $caption    Caption
-	 * @param	string  $name
-	 * @param	string  $value
-	 * @param	string  $type       Type of the button.
-	 * This could be either "button", "submit", or "reset"
+	 * @param	string	$name	"name" attribute
+	 * @param	string	$value	"value" attribute
 	 */
-	public function __construct($caption, $name, $value = "", $type = "button") {
-		$this->setCaption($caption);
+	public function __construct($name, $value) {
 		$this->setName($name);
-		$this->_type = $type;
+		$this->setHidden();
 		$this->setValue($value);
+		$this->setCaption("");
 	}
 
 	/**
-	 * Get the initial value
+	 * Get the "value" attribute
 	 *
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
@@ -86,29 +76,30 @@ class icms_form_elements_Button extends icms_form_Element {
 	}
 
 	/**
-	 * Set the initial value
+	 * Sets the "value" attribute
 	 *
-	 * @return	string
+	 * @param  $value	string
 	 */
 	public function setValue($value) {
 		$this->_value = $value;
 	}
 
 	/**
-	 * Get the type
+	 * Prepare HTML for output
 	 *
-	 * @return	string
-	 */
-	public function getType() {
-		return in_array(strtolower($this->_type), array("button", "submit", "reset"))?$this->_type:"button";
-	}
-
-	/**
-	 * prepare HTML for output
-	 *
-	 * @return	string
+	 * @return	string	HTML
 	 */
 	public function render() {
-		return "<input type='" . $this->getType() . "' class='btn btn-primary formButton' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "'" . $this->getExtra() . " />";
+		if (is_array($this->getValue())) {
+			$ret = '';
+			foreach ($this->getValue() as $value) {
+				$ret .= "<input type='hidden' name='" . $this->getName() . "[]' id='" . $this->getName() . "' value='" . $value . "' />\n";
+			}
+		} else {
+			$ret = "<input type='hidden' name='" . $this->getName() . "' id='" . $this->getName() . "' value='" . $this->getValue() . "' />";
+		}
+
+		return $ret;
 	}
 }
+

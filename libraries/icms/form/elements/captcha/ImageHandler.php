@@ -14,7 +14,7 @@ namespace ImpressCMS\Core\Form\Elements\Captcha;
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @package	ICMS\Form\Elements\Captcha
  */
-class icms_form_elements_captcha_ImageHandler {
+class ImageHandler {
 	//var $mode = "gd"; // GD or bmp
 
 	public $invalid = false;
@@ -38,7 +38,7 @@ class icms_form_elements_captcha_ImageHandler {
 		 * @var Aura\Session\Session $session
 		 */
 		$session = \icms::getInstance()->get('session');
-		$this->captchaSection = $session->getSegment(icms_form_elements_captcha_Object::class);
+		$this->captchaSection = $session->getSegment(Image::class);
 
 		if (!$this->captchaSection->get('name')) {
 			$this->invalid = true;

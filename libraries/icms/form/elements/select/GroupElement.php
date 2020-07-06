@@ -28,76 +28,41 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a hidden form field
+ * Creates a form field for selecting a user group or groups
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-namespace ImpressCMS\Core\Form\Elements;
+namespace ImpressCMS\Core\Form\Elements\Select;
+
+use ImpressCMS\Core\Form\Elements\SelectElement;
 
 /**
- * A hidden field
+ * A field with a choice of available groups
  *
- * @package	ICMS\Form\Elements
+ * @package	ICMS\Form\Elements\Select
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Hidden extends icms_form_Element {
-
-	/**
-	 * Value
-	 * @var	string
-	 */
-	private $_value;
-
+class GroupElement extends SelectElement {
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$name	"name" attribute
-	 * @param	string	$value	"value" attribute
+	 * @param	string	$caption
+	 * @param	string	$name
+	 * @param	bool	$include_anon	Include group "anonymous"?
+	 * @param	mixed	$value	    	Pre-selected value (or array of them).
+	 * @param	int		$size	        Number or rows. "1" makes a drop-down-list.
+	 * @param	bool    $multiple       Allow multiple selections?
 	 */
-	public function __construct($name, $value) {
-		$this->setName($name);
-		$this->setHidden();
-		$this->setValue($value);
-		$this->setCaption("");
-	}
-
-	/**
-	 * Get the "value" attribute
-	 *
-	 * @param	bool    $encode To sanitizer the text?
-	 * @return	string
-	 */
-	public function getValue($encode = false) {
-		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
-	}
-
-	/**
-	 * Sets the "value" attribute
-	 *
-	 * @param  $value	string
-	 */
-	public function setValue($value) {
-		$this->_value = $value;
-	}
-
-	/**
-	 * Prepare HTML for output
-	 *
-	 * @return	string	HTML
-	 */
-	public function render() {
-		if (is_array($this->getValue())) {
-			$ret = '';
-			foreach ($this->getValue() as $value) {
-				$ret .= "<input type='hidden' name='" . $this->getName() . "[]' id='" . $this->getName() . "' value='" . $value . "' />\n";
-			}
+	public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false) {
+		parent::__construct($caption, $name, $value, $size, $multiple);
+		$member_handler = icms::handler('icms_member');
+		if (!$include_anon) {
+			$this->addOptionArray($member_handler->getGroupList(new icms_db_criteria_Item('groupid', ICMS_GROUP_ANONYMOUS, '!=')));
 		} else {
-			$ret = "<input type='hidden' name='" . $this->getName() . "' id='" . $this->getName() . "' value='" . $this->getValue() . "' />";
+			$this->addOptionArray($member_handler->getGroupList());
 		}
-
-		return $ret;
 	}
 }
 

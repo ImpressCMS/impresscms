@@ -36,6 +36,8 @@
 
 namespace ImpressCMS\Core\Form\Elements\Select;
 
+use ImpressCMS\Core\Form\Elements\SelectElement;
+
 /**
  * A select field with countries
  *
@@ -43,7 +45,7 @@ namespace ImpressCMS\Core\Form\Elements\Select;
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Country extends icms_form_elements_Select {
+class CountryElement extends SelectElement {
 	/**
 	 * Constructor
 	 *

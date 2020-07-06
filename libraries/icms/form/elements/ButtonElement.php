@@ -28,49 +28,89 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form datatime object
+ * Creates a button form attribut
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
+
 namespace ImpressCMS\Core\Form\Elements;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
+
 /**
- * Date and time selection field
- *
- * This extends the icms_form_elements_Tray class because this field actually contains
- * 2 different elements - the date and the time
+ * A button
  *
  * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Datetime extends icms_form_elements_Tray {
+class ButtonElement extends AbstractFormElement {
+
+	/**
+	 * Value
+	 * @var	string
+	 * @access	private
+	 */
+	private $_value;
+
+	/**
+	 * Type of the button. This could be either "button", "submit", or "reset"
+	 * @var	string
+	 * @access	private
+	 */
+	private $_type;
 
 	/**
 	 * Constructor
-	 * @param	string  $caption    Caption of the element
-	 * @param	string  $name       Name of the element
-	 * @param	string  $size       Size of the element
-	 * @param	string  $value      Value of the element
+	 *
+	 * @param	string  $caption    Caption
+	 * @param	string  $name
+	 * @param	string  $value
+	 * @param	string  $type       Type of the button.
+	 * This could be either "button", "submit", or "reset"
 	 */
-	public function __construct($caption, $name, $size = 15, $value = 0) {
-		parent::__construct($caption, '&nbsp;');
-		$value = (int) ($value);
-		$value = ($value > 0)?$value:time();
-		$datetime = getDate($value);
-		$this->addElement(new icms_form_elements_Date('', $name . '[date]', $size, $value));
-		$timearray = array();
-		for ($i = 0; $i < 24; $i++) {
-			for ($j = 0; $j < 60; $j = $j + 10) {
-				$key = ($i * 3600) + ($j * 60);
-				$timearray[$key] = ($j != 0)?$i . ':' . $j:$i . ':0' . $j;
-			}
-		}
-		ksort($timearray);
-		$timeselect = new icms_form_elements_Select('', $name . '[time]', $datetime['hours'] * 3600 + 600 * ceil($datetime['minutes'] / 10));
-		$timeselect->addOptionArray($timearray);
-		$this->addElement($timeselect);
+	public function __construct($caption, $name, $value = "", $type = "button") {
+		$this->setCaption($caption);
+		$this->setName($name);
+		$this->_type = $type;
+		$this->setValue($value);
+	}
+
+	/**
+	 * Get the initial value
+	 *
+	 * @param	bool    $encode To sanitizer the text?
+	 * @return	string
+	 */
+	public function getValue($encode = false) {
+		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
+	}
+
+	/**
+	 * Set the initial value
+	 *
+	 * @return	string
+	 */
+	public function setValue($value) {
+		$this->_value = $value;
+	}
+
+	/**
+	 * Get the type
+	 *
+	 * @return	string
+	 */
+	public function getType() {
+		return in_array(strtolower($this->_type), array("button", "submit", "reset"))?$this->_type:"button";
+	}
+
+	/**
+	 * prepare HTML for output
+	 *
+	 * @return	string
+	 */
+	public function render() {
+		return "<input type='" . $this->getType() . "' class='btn btn-primary formButton' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "'" . $this->getExtra() . " />";
 	}
 }
-

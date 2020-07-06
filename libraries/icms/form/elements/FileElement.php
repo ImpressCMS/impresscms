@@ -28,106 +28,62 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a textarea form attribut
+ * Creates a form file field
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 namespace ImpressCMS\Core\Form\Elements;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
+
 /**
- * A textarea
+ * Create a field for uploading a file
  *
  * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Textarea extends icms_form_Element {
+class FileElement extends AbstractFormElement {
 	/**
-	 * number of columns
+	 * Maximum size for an uploaded file
 	 * @var	int
 	 */
-	protected $_cols;
+	private $_maxFileSize;
 
 	/**
-	 * number of rows
-	 * @var	int
-	 */
-	protected $_rows;
-
-	/**
-	 * initial content
-	 * @var	string
-	 */
-	protected $_value;
-
-	/**
-	 * Constuctor
+	 * Constructor
 	 *
-	 * @param	string  $caption    caption
-	 * @param	string  $name       name
-	 * @param	string  $value      initial content
-	 * @param	int     $rows       number of rows
-	 * @param	int     $cols       number of columns
+	 * @param	string	$caption		Caption
+	 * @param	string	$name			"name" attribute
+	 * @param	int		$maxfilesize	Maximum size for an uploaded file
 	 */
-	public function __construct($caption, $name, $value = "", $rows = 5, $cols = 50) {
+	public function __construct($caption, $name, $maxfilesize = '4096000') {
 		$this->setCaption($caption);
 		$this->setName($name);
-		$this->_rows = (int) $rows;
-		$this->_cols = (int) $cols;
-		$this->setValue($value);
+		$this->_maxFileSize = (int) ($maxfilesize);
 	}
 
 	/**
-	 * get number of rows
+	 * Get the maximum filesize
 	 *
 	 * @return	int
 	 */
-	public function getRows() {
-		return $this->_rows;
-	}
-
-	/**
-	 * Get number of columns
-	 *
-	 * @return	int
-	 */
-	public function getCols() {
-		return $this->_cols;
-	}
-
-	/**
-	 * Get initial content
-	 *
-	 * @param	bool    $encode To sanitize the text? Default value should be "true"; however we have to set "false" for backward compatibility
-	 * @return	string
-	 */
-	public function getValue($encode = false) {
-		return $encode? htmlspecialchars($this->_value):$this->_value;
-	}
-
-	/**
-	 * Set initial content
-	 *
-	 * @param	$value	string
-	 */
-	public function setValue($value) {
-		$this->_value = $value;
+	public function getMaxFileSize() {
+		return $this->_maxFileSize;
 	}
 
 	/**
 	 * prepare HTML for output
 	 *
-	 * @return string HTML
+	 * @return	string	HTML
 	 */
 	public function render() {
-		return "<textarea class='form-control' name='" . $this->getName()
-			. "' id='" . $this->getName() . '_tarea'
-			. "' rows='" . $this->getRows()
-			. "' cols='" . $this->getCols()
-			. "'" . $this->getExtra() . ">"
-			. $this->getValue()
-			. "</textarea>";
+		$ele_name = $this->getName();
+		$ret  = "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />";
+		$ret .= "<input type='file' name='" . $ele_name . "' id='" . $ele_name . "'" . $this->getExtra() . " />";
+		$ret .= "<input type='hidden' name='xoops_upload_file[]' id='xoops_upload_file[]' value='" . $ele_name . "' />";
+		return $ret;
 	}
 }
 

@@ -46,7 +46,7 @@ namespace ImpressCMS\Core\Form\Elements;
  *
  * @todo	To be removed as this is not used anywhere in the core
  */
-class icms_form_elements_Editor extends icms_form_elements_Textarea {
+class EditorElement extends TextareaElement {
 	var $editor;
 
 	/**

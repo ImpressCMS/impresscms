@@ -28,101 +28,88 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form password field
+ * Creates a textarea form attribut
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 namespace ImpressCMS\Core\Form\Elements;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
+
 /**
- * A password field
+ * A textarea
  *
  * @package	ICMS\Form\Elements
- * @author 	Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Password extends icms_form_Element {
+class TextareaElement extends AbstractFormElement {
 	/**
-	 * Size of the field.
-	 * @var 		int
+	 * number of columns
+	 * @var	int
 	 */
-	private $_size;
+	protected $_cols;
 
 	/**
-	 * Maximum length of the text
-	 * @var 		int
+	 * number of rows
+	 * @var	int
 	 */
-	private $_maxlength;
+	protected $_rows;
 
 	/**
-	 * Initial content of the field.
-	 * @var 		string
+	 * initial content
+	 * @var	string
 	 */
-	private $_value;
+	protected $_value;
 
 	/**
-	 * Turns off the browser autocomplete function.
-	 * @var 		boolean
-	 */
-	public  $autocomplete = false;
-
-	/**
-	 * Initial content of the field.
-	 * @var 		string
-	 */
-	private $_classname;
-
-	/**
-	 * Constructor
+	 * Constuctor
 	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$name		"name" attribute
-	 * @param	int		$size		Size of the field
-	 * @param	int		$maxlength	Maximum length of the text
-	 * @param	int		$value		Initial value of the field.
-	 * 							<b>Warning:</b> this is readable in cleartext in the page's source!
+	 * @param	string  $caption    caption
+	 * @param	string  $name       name
+	 * @param	string  $value      initial content
+	 * @param	int     $rows       number of rows
+	 * @param	int     $cols       number of columns
 	 */
-	public function __construct($caption, $name, $size, $maxlength, $value = '', $autocomplete = false, $classname = '') {
+	public function __construct($caption, $name, $value = "", $rows = 5, $cols = 50) {
 		$this->setCaption($caption);
 		$this->setName($name);
-		$this->_size = (int) ($size);
-		$this->_maxlength = (int) ($maxlength);
+		$this->_rows = (int) $rows;
+		$this->_cols = (int) $cols;
 		$this->setValue($value);
-		$this->autoComplete = !empty($autocomplete);
-		$this->setClassName($classname);
 	}
 
 	/**
-	 * Get the field size
+	 * get number of rows
 	 *
 	 * @return	int
 	 */
-	public function getSize() {
-		return $this->_size;
+	public function getRows() {
+		return $this->_rows;
 	}
 
 	/**
-	 * Get the max length
+	 * Get number of columns
 	 *
 	 * @return	int
 	 */
-	public function getMaxlength() {
-		return $this->_maxlength;
+	public function getCols() {
+		return $this->_cols;
 	}
 
 	/**
-	 * Get the "value" attribute
+	 * Get initial content
 	 *
-	 * @param	bool    $encode To sanitizer the text?
+	 * @param	bool    $encode To sanitize the text? Default value should be "true"; however we have to set "false" for backward compatibility
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
+		return $encode? htmlspecialchars($this->_value):$this->_value;
 	}
 
 	/**
-	 * Set the initial value
+	 * Set initial content
 	 *
 	 * @param	$value	string
 	 */
@@ -131,38 +118,18 @@ class icms_form_elements_Password extends icms_form_Element {
 	}
 
 	/**
-	 * Set the initial value
+	 * prepare HTML for output
 	 *
-	 * @param	$value	string
-	 */
-	public function setClassName($classname) {
-		$this->_classname = $classname;
-	}
-
-	/**
-	 * Get the "class" attribute
-	 *
-	 * @param	bool    $encode To sanitizer the text?
-	 * @return	string
-	 */
-	public function getClassName($encode = false) {
-		return $encode? htmlspecialchars($this->_classname, ENT_QUOTES, _CHARSET):$this->_classname;
-	}
-
-	/**
-	 * Prepare HTML for output
-	 *
-	 * @return	string	HTML
+	 * @return string HTML
 	 */
 	public function render() {
-		global $icmsConfigUser;
-		$ele_name = $this->getName();
-		return "<input class='" . $this->getClassName()
-			. "' type='password' name='" . $ele_name
-			. "' id='" . $ele_name
-			. "' size='" . $this->getSize()
-			. "' maxlength='" . $this->getMaxlength()
-			. "' value='" . $this->getValue() . "'" . $this->getExtra() . " " . ($this->autoComplete?"":"autocomplete='off' ")
-			. "/>";
+		return "<textarea class='form-control' name='" . $this->getName()
+			. "' id='" . $this->getName() . '_tarea'
+			. "' rows='" . $this->getRows()
+			. "' cols='" . $this->getCols()
+			. "'" . $this->getExtra() . ">"
+			. $this->getValue()
+			. "</textarea>";
 	}
 }
+

@@ -28,60 +28,114 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form file field
+ * Creates a textbox form field
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 namespace ImpressCMS\Core\Form\Elements;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
+
 /**
- * Create a field for uploading a file
+ * A simple text field
  *
  * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_File extends icms_form_Element {
+class TextElement extends AbstractFormElement {
 	/**
-	 * Maximum size for an uploaded file
+	 * Size
 	 * @var	int
 	 */
-	private $_maxFileSize;
+	private $_size;
+
+	/**
+	 * Maximum length of the text
+	 * @var	int
+	 */
+	private $_maxlength;
+
+	/**
+	 * Initial text
+	 * @var	string
+	 */
+	private $_value;
+
+	/**
+	 * Turns off the browser autocomplete function.
+	 * @var 		boolean
+	 */
+	public $autocomplete = false;
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$caption		Caption
-	 * @param	string	$name			"name" attribute
-	 * @param	int		$maxfilesize	Maximum size for an uploaded file
+	 * @param	string	$caption	Caption
+	 * @param	string	$name       "name" attribute
+	 * @param	int		$size	    Size
+	 * @param	int		$maxlength	Maximum length of text
+	 * @param	string  $value      Initial text
 	 */
-	public function __construct($caption, $name, $maxfilesize = '4096000') {
+	public function __construct($caption, $name, $size, $maxlength, $value = '', $autocomplete = false) {
 		$this->setCaption($caption);
 		$this->setName($name);
-		$this->_maxFileSize = (int) ($maxfilesize);
+		$this->_size = (int) $size;
+		$this->_maxlength = (int) $maxlength;
+		$this->setValue($value);
+		$this->autoComplete = !empty($autocomplete);
 	}
 
 	/**
-	 * Get the maximum filesize
+	 * Get size
 	 *
 	 * @return	int
 	 */
-	public function getMaxFileSize() {
-		return $this->_maxFileSize;
+	public function getSize() {
+		return $this->_size;
 	}
 
 	/**
-	 * prepare HTML for output
+	 * Get maximum text length
 	 *
-	 * @return	string	HTML
+	 * @return	int
+	 */
+	public function getMaxlength() {
+		return $this->_maxlength;
+	}
+
+	/**
+	 * Get initial content
+	 *
+	 * @param	bool    $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compat
+	 * @return	string
+	 */
+	public function getValue($encode = false) {
+		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
+	}
+
+	/**
+	 * Set initial text value
+	 *
+	 * @param	$value  string
+	 */
+	public function setValue($value) {
+		$this->_value = $value;
+	}
+
+	/**
+	 * Prepare HTML for output
+	 *
+	 * @return	string  HTML
 	 */
 	public function render() {
-		$ele_name = $this->getName();
-		$ret  = "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />";
-		$ret .= "<input type='file' name='" . $ele_name . "' id='" . $ele_name . "'" . $this->getExtra() . " />";
-		$ret .= "<input type='hidden' name='xoops_upload_file[]' id='xoops_upload_file[]' value='" . $ele_name . "' />";
-		return $ret;
+		return "<input class='form-control' type='text' name='" . $this->getName()
+			. "' id='" . $this->getName()
+			. "' size='" . $this->getSize()
+			. "' maxlength='" . $this->getMaxlength()
+			. "' value='" . $this->getValue() . "'" . $this->getExtra()
+			. " />";
 	}
 }
 

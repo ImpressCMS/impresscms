@@ -28,33 +28,64 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form attribute which is able to select a theme
+ * icms_form_elements_Colorpicker component class file
  *
+ * This class provides a textfield with a color picker popup. This color picker
+ * comes from Tigra project (http://www.softcomplex.com/products/tigra_color_picker/).
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-
-namespace ImpressCMS\Core\Form\Elements\Select;
+namespace ImpressCMS\Core\Form\Elements;
 
 /**
- * A select box with available themes
+ * Color Picker
  *
- * @package	ICMS\Form\Elements\Select
+ * @package	ICMS\Form\Elements
+ * @since	Xoops 2.0.15
+ * @author	Zoullou <webmaster@zoullou.org>
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Theme extends icms_form_elements_Select {
+class ColorpickerElement extends TextElement {
+
 	/**
 	 * Constructor
-	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	mixed	$value	Pre-selected value (or array of them).
-	 * @param	int		$size	Number or rows. "1" makes a drop-down-list
+	 * @param	string  $caption  Caption of the element
+	 * @param	string  $name     Name of the element
+	 * @param	string  $value    Value of the element
 	 */
-	public function __construct($caption, $name, $value = null, $size = 1) {
-		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(icms_view_theme_Factory::getThemesList());
+	public function __construct($caption, $name, $value = "#FFFFFF") {
+		parent::__construct($caption, $name, 9, 7, $value);
 	}
-}
 
+	/**
+	 * Render the color picker
+	 * @return  $string	rendered color picker HTML
+	 */
+	public function render() {
+		if (isset($GLOBALS ['xoTheme'])) {
+			$GLOBALS ['xoTheme']->addScript('include/color-picker.js');
+		} else {
+			echo "<script type=\"text/javascript\" src=\"" . ICMS_URL . "/include/color-picker.js\"></script>";
+		}
+		$this->setExtra(' style="background-color:' . $this->getValue() . ';"');
+		return parent::render() . "\n<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . ICMS_URL . "/include/',document.getElementById('" . $this->getName() . "'));\">\n";
+	}
+
+	/**
+	 * Returns custom validation Javascript
+	 *
+	 * @return	string	Element validation Javascript
+	 */
+	public function renderValidationJS() {
+		$eltname = $this->getName();
+		$eltcaption = $this->getCaption();
+		$eltmsg = empty($eltcaption)? sprintf(_FORM_ENTER, $eltname):sprintf(_FORM_ENTER, $eltcaption);
+		$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
+		$eltmsg = strip_tags($eltmsg);
+		return "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+	}
+
+}

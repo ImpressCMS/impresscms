@@ -28,75 +28,40 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form with selectable timezone
+ * Creates form attribute which shows match possibilities for search form
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 namespace ImpressCMS\Core\Form\Elements\Select;
 
+use ImpressCMS\Core\Form\Elements\SelectElement;
+
 /**
- * A select box with timezones
+ * A selection box with options for matching search terms.
  *
  * @package	ICMS\Form\Elements\Select
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Timezone extends icms_form_elements_Select {
-
+class MatchOptionElement extends SelectElement {
 	/**
 	 * Constructor
 	 *
 	 * @param	string	$caption
 	 * @param	string	$name
 	 * @param	mixed	$value	Pre-selected value (or array of them).
-	 * 							Legal values are "-12" to "12" with some ".5"s strewn in ;-)
-	 * @param	int		$size	Number of rows. "1" makes a drop-down-box.
+	 * 							Legal values are XOOPS_MATCH_START, XOOPS_MATCH_END,
+	 * 							XOOPS_MATCH_EQUAL, and XOOPS_MATCH_CONTAIN
+	 * @param	int		$size	Number of rows. "1" makes a drop-down-list
 	 */
 	public function __construct($caption, $name, $value = null, $size = 1) {
-		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(self::getTimeZoneList());
+		parent::__construct($caption, $name, $value, $size, false);
+		$this->addOption(XOOPS_MATCH_START, _STARTSWITH);
+		$this->addOption(XOOPS_MATCH_END, _ENDSWITH);
+		$this->addOption(XOOPS_MATCH_EQUAL, _MATCHES);
+		$this->addOption(XOOPS_MATCH_CONTAIN, _CONTAINS);
 	}
-
-	/**
-	 * Create an array of timezones, translated by the local language files
-	 */
-	static public function getTimeZoneList() {
-		icms_loadLanguageFile('core', 'timezone');
-		$time_zone_list = array(
-			"-12" => _TZ_GMTM12,
-			"-11" => _TZ_GMTM11,
-			"-10" => _TZ_GMTM10,
-			"-9" => _TZ_GMTM9,
-			"-8" => _TZ_GMTM8,
-			"-7" => _TZ_GMTM7,
-			"-6" => _TZ_GMTM6,
-			"-5" => _TZ_GMTM5,
-			"-4" => _TZ_GMTM4,
-			"-3.5" => _TZ_GMTM35,
-			"-3" => _TZ_GMTM3,
-			"-2" => _TZ_GMTM2,
-			"-1" => _TZ_GMTM1,
-			"0" => _TZ_GMT0,
-			"1" => _TZ_GMTP1,
-			"2" => _TZ_GMTP2,
-			"3" => _TZ_GMTP3,
-			"3.5" => _TZ_GMTP35,
-			"4" => _TZ_GMTP4,
-			"4.5" => _TZ_GMTP45,
-			"5" => _TZ_GMTP5,
-			"5.5" => _TZ_GMTP55,
-			"6" => _TZ_GMTP6,
-			"7" => _TZ_GMTP7,
-			"8" => _TZ_GMTP8,
-			"9" => _TZ_GMTP9,
-			"9.5" => _TZ_GMTP95,
-			"10" => _TZ_GMTP10,
-			"11" => _TZ_GMTP11,
-			"12" => _TZ_GMTP12
-		);
-		return $time_zone_list;
-	}
-
 }
+

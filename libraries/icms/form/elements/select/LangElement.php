@@ -28,53 +28,35 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Class to create a form field with a date selector
+ * Creates a form attribute which is able to select a language
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-namespace ImpressCMS\Core\Form\Elements;
+
+namespace ImpressCMS\Core\Form\Elements\Select;
+
+use ImpressCMS\Core\Form\Elements\SelectElement;
 
 /**
- * A text field with calendar popup
+ * A select field with available languages
  *
- * @package	ICMS\Form\Elements
+ * @package	ICMS\Form\Elements\Select
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Date extends icms_form_elements_Text {
-
-
+class LangElement extends SelectElement {
 	/**
 	 * Constructor
 	 *
-	 * @param string	$caption
-	 * @param string	$name
-	 * @param int		$size
-	 * @param mixed		$value
+	 * @param	string	$caption
+	 * @param	string	$name
+	 * @param	mixed	$value	Pre-selected value (or array of them).
+	 * 							Legal is any name of a ICMS_ROOT_PATH."/language/" subdirectory.
+	 * @param	int		$size	Number of rows. "1" makes a drop-down-list.
 	 */
-	public function __construct($caption, $name, $size = 15, $value = 0) {
-		$value = !is_numeric($value)? time():(int) ($value);
-		parent::__construct($caption, $name, $size, 25, $value);
-	}
-
-	/**
-	 * Render the Date field
-	 */
-	public function render() {
-		global $icmsConfigPersona;
-		$ele_name = $this->getName();
-		$ele_value = $this->getValue(false);
-		$jstime = formatTimestamp($ele_value, _SHORTDATESTRING);
-
-		include_once ICMS_ROOT_PATH . '/include/calendar' . ($icmsConfigPersona['use_jsjalali'] == true?'jalali':'') . 'js.php';
-
-	if ($icmsConfigPersona['use_jsjalali']) {
-			include_once ICMS_ROOT_PATH . '/include/jalali.php';
-		}
-
-		$result = "<input type='text' class='datepick'  name='" . $ele_name . "' id='" . $ele_name . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . date(_SHORTDATESTRING, $ele_value) . "'" . $this->getExtra() . " />";
-
-		return $result;
+	public function __construct($caption, $name, $value = null, $size = 1) {
+		parent::__construct($caption, $name, $value, $size);
+		$this->addOptionArray(icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/"));
 	}
 }

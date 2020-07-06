@@ -39,6 +39,9 @@
 
 namespace ImpressCMS\Core\Form\Elements\Select;
 
+use ImpressCMS\Core\Form\Elements\SelectElement;
+use ImpressCMS\Core\Form\Elements\TrayElement;
+
 /**
  * user select with page navigation
  *
@@ -47,7 +50,7 @@ namespace ImpressCMS\Core\Form\Elements\Select;
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_User extends icms_form_elements_Tray {
+class UserElement extends TrayElement {
 
 	/**
 	 * Constructor
@@ -62,11 +65,11 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 	 */
 	public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false, $showremovedusers = false, $justremovedusers = false) {
 		$limit = 200;
-		$select_element = new icms_form_elements_Select('', $name, $value, $size, $multiple);
+		$select_element = new SelectElement('', $name, $value, $size, $multiple);
 		if ($include_anon) {
 			$select_element->addOption(0, $GLOBALS['icmsConfig']['anonymous']);
 		}
-		$member_handler = icms::handler('icms_member');
+		$member_handler = \icms::handler('icms_member');
 		$user_count = $member_handler->getUserCount();
 		$value = is_array($value)
 			?$value

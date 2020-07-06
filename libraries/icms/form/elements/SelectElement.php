@@ -35,6 +35,8 @@
  */
 namespace ImpressCMS\Core\Form\Elements;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
+
 /**
  * A select field
  *
@@ -42,7 +44,7 @@ namespace ImpressCMS\Core\Form\Elements;
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Select extends icms_form_Element {
+class SelectElement extends AbstractFormElement {
 
 	/**
 	 * Options

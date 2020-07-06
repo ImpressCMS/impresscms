@@ -42,7 +42,7 @@ namespace ImpressCMS\Core\Form\Elements;
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
+class DhtmltextareaElement extends TextareaElement {
 	/**
 	 * Extended HTML editor definition
 	 *

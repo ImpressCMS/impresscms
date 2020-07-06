@@ -28,7 +28,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form text label attribute
+ * Class to create a form field with a date selector
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -36,48 +36,45 @@
 namespace ImpressCMS\Core\Form\Elements;
 
 /**
- * A text label
+ * A text field with calendar popup
  *
  * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Label extends icms_form_Element {
-	/**
-	 * Text
-	 * @var	string
-	 */
-	private $_value;
+class DateElement extends TextElement {
+
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$value		Text
+	 * @param string	$caption
+	 * @param string	$name
+	 * @param int		$size
+	 * @param mixed		$value
 	 */
-	public function __construct($caption = "", $value = "", $name = "") {
-		$this->setCaption($caption);
-		$this->setName($name);
-		$this->_value = $value;
+	public function __construct($caption, $name, $size = 15, $value = 0) {
+		$value = !is_numeric($value)? time():(int) ($value);
+		parent::__construct($caption, $name, $size, 25, $value);
 	}
 
 	/**
-	 * Get the "value" attribute
-	 *
-	 * @param	bool    $encode To sanitizer the text?
-	 * @return	string
-	 */
-	public function getValue($encode = false) {
-		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
-	}
-
-	/**
-	 * Prepare HTML for output
-	 *
-	 * @return	string
+	 * Render the Date field
 	 */
 	public function render() {
-		return $this->getValue();
+		global $icmsConfigPersona;
+		$ele_name = $this->getName();
+		$ele_value = $this->getValue(false);
+		$jstime = formatTimestamp($ele_value, _SHORTDATESTRING);
+
+		include_once ICMS_ROOT_PATH . '/include/calendar' . ($icmsConfigPersona['use_jsjalali'] == true?'jalali':'') . 'js.php';
+
+	if ($icmsConfigPersona['use_jsjalali']) {
+			include_once ICMS_ROOT_PATH . '/include/jalali.php';
+		}
+
+		$result = "<input type='text' class='datepick'  name='" . $ele_name . "' id='" . $ele_name . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . date(_SHORTDATESTRING, $ele_value) . "'" . $this->getExtra() . " />";
+
+		return $result;
 	}
 }
-

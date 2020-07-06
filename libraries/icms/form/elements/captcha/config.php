@@ -19,8 +19,6 @@
  * @since	XOOPS
  */
 
-$config = array(
-	"name" => 'icmscaptcha',
-);
-
-return $config;
+return [
+	'name' => 'icmscaptcha',
+];

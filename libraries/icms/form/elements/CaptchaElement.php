@@ -15,6 +15,8 @@
 
 namespace ImpressCMS\Core\Form\Elements;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
+
 /**
  * CAPTCHA form element
  *
@@ -32,7 +34,7 @@ namespace ImpressCMS\Core\Form\Elements;
  *
  * @package	ICMS\Form\Elements
  */
-class icms_form_elements_Captcha extends icms_form_Element {
+class CaptchaElement extends AbstractFormElement {
 	private $_captchaHandler;
 
 	/**
