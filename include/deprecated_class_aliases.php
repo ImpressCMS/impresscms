@@ -134,7 +134,7 @@ return [
 	'icms_ipf_form_elements_Yesno' => \ImpressCMS\Core\IPF\Form\Elements\YesNoElement::class,
 	'icms_ipf_form_Base' => \ImpressCMS\Core\IPF\Form\Form::class,
 	'icms_ipf_form_Secure' => \ImpressCMS\Core\IPF\Form\SecureForm::class,
-	'icms_ipf_member_Handler' => \ImpressCMS\Core\IPF\MemberHandler::class,
+	'icms_ipf_member_Handler' => \ImpressCMS\Core\IPF\MemberDecorator::class,
 	'icms_ipf_permission_Handler' => \ImpressCMS\Core\IPF\PermissionsDecorator::class,
 	'icms_ipf_registry_Handler' => \ImpressCMS\Core\IPF\ObjectRegistry::class,
 	'icms_ipf_seo_Object' => \ImpressCMS\Core\IPF\Seo\AbstractSEOModel::class,
