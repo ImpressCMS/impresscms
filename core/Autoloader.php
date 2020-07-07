@@ -120,7 +120,7 @@ class Autoloader {
 	static public function autoload($class) {
 		if ($path = self::classPath($class)) {
 			list($ns, $local) = self::split($class);
-			include_once "Autoloader.php";
+			include_once "$path.php";
 			return true;
 		}
 		return false;
