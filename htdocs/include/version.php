@@ -10,7 +10,7 @@
  * @version		$Id: version.php 12500 2015-06-15 20:03:56Z fiammy $
  */
 
-define('ICMS_VERSION_NAME', 'ImpressCMS 1.4.1 beta');
+define('ICMS_VERSION_NAME', 'ImpressCMS 1.4.1');
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
@@ -23,7 +23,7 @@ define('XOOPS_VERSION', ICMS_VERSION_NAME);
  * 10 = Final
  */
 
-define('ICMS_VERSION_STATUS', 2);
+define('ICMS_VERSION_STATUS', 10);
 
 /**
  * Build number
@@ -32,7 +32,7 @@ define('ICMS_VERSION_STATUS', 2);
  */
 // impresscms_1.3.10 = 82, 2.0.0 alpha 4 = 73, 1.4 beta : 94, 1.4.0=96
 
-define('ICMS_VERSION_BUILD', 97);
+define('ICMS_VERSION_BUILD', 98);
 
 /**
  * Latest dbversion of the System Module
