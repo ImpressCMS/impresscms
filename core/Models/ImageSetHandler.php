@@ -40,7 +40,7 @@
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
-namespace ImpressCMS\Core\Image;
+namespace ImpressCMS\Core\Models;
 
 /**
  * XOOPS imageset handler class.

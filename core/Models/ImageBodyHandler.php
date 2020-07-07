@@ -1,5 +1,5 @@
 <?php
-namespace ImpressCMS\Core\Image;
+namespace ImpressCMS\Core\Models;
 
 /**
  * Image body storing class

@@ -1,4 +1,5 @@
 <?php
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,76 +29,42 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Image categories
+ * Manage of imagesets baseclass
+ * Image sets - the image directory within a module - are part of templates
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @copyright       http://www.xoops.org/ The XOOPS Project
+ * @copyright       http://www.impresscms.org/ The ImpressCMS Project
+ * @license	    LICENSE.txt
+ * @since	    XOOPS
+ * @author	    http://www.xoops.org The XOOPS Project
+ * @author	    modified by UnderDog <underdog@impresscms.org>
  */
-namespace ImpressCMS\Core\Image;
+namespace ImpressCMS\Core\Models;
 
 /**
- * An image category
+ * An imageset
  *
- * These categories are managed through a icms_image_category_Handler object
+ * These sets are managed through a icms_image_set_Handler object
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS\Image\Category
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright       copyright (c) 2000-2003 XOOPS.org
+ * @package         ICMS\Image\Set
  *
- * @property int    $imgcat_id         Image category ID
- * @property int    $imgcat_pid        Image category parent ID
- * @property string $imgcat_name       Name
- * @property string $imgcat_foldername Foldername
- * @property int    $imgcat_display    Shold be this category displayed?
- * @property int    $imgcat_weight     Weight used for sorting categories
- * @property int    $imgcat_maxsize    Max image size in this category
- * @property int    $imgcat_maxwidth   Max image width in this category
- * @property int    $imgcat_maxheight  Max image height in this category
- * @property string $imgcat_type       Type
- * @property string $imgcat_storetype  Storing type
+ * @property int    $imgset_id      Image set ID
+ * @property string $imgset_name    Name
+ * @property int    $imgset_refid
  */
-class ImageCategory extends \ImpressCMS\Core\IPF\AbstractModel {
-
-		/**
-		 * Image count
-		 *
-		 * @var int
-		 */
-	private $_imageCount;
+class ImageSet extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Constructor
-	 *
 	 */
 	public function __construct(&$handler, $data = array()) {
-		$this->initVar('imgcat_id', self::DTYPE_INTEGER, null, false);
-		$this->initVar('imgcat_pid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('imgcat_name', self::DTYPE_STRING, null, true, 100);
-		$this->initVar('imgcat_foldername', self::DTYPE_STRING, null, true, 100);
-		$this->initVar('imgcat_display', self::DTYPE_INTEGER, 1, false);
-		$this->initVar('imgcat_weight', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('imgcat_maxsize', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('imgcat_maxwidth', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('imgcat_maxheight', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('imgcat_type', self::DTYPE_STRING, null, false, 1);
-		$this->initVar('imgcat_storetype', self::DTYPE_STRING, null, false, 5);
+		$this->initVar('imgset_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('imgset_name', self::DTYPE_STRING, null, true, 50);
+		$this->initVar('imgset_refid', self::DTYPE_INTEGER, 0, false);
 
-				parent::__construct($handler, $data);
+		parent::__construct($handler, $data);
 	}
 
-	/**
-	 * Set count of images in a category
-	 * @param	int $value Value
-	 */
-	public function setImageCount($value) {
-		$this->_imageCount = (int) $value;
-	}
-
-	/**
-	 * Gets count of images in a category
-	 * @return	int _imageCount number of images
-	 */
-	public function getImageCount() {
-		return $this->_imageCount;
-	}
 }

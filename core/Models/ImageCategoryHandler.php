@@ -33,7 +33,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
  */
-namespace ImpressCMS\Core\Image;
+namespace ImpressCMS\Core\Models;
 
 /**
  * Image caetgory handler class.

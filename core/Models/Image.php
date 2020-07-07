@@ -36,7 +36,7 @@
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 
-namespace ImpressCMS\Core\Image;
+namespace ImpressCMS\Core\Models;
 
 /**
  * An Image Object
