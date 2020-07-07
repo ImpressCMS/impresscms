@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class UploadElement extends icms_form_elements_File {
+class UploadElement extends \ImpressCMS\Core\Form\Elements\FileElement {
 	/**
 	 * Constructor
 	 * @param	\icms_ipf_Object    $object   reference to targetobject

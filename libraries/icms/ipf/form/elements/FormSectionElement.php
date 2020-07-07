@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
+
 /**
  * Form control creating a section in a form for an object derived from icms_ipf_Object
  *
@@ -10,7 +12,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class FormSectionElement extends icms_form_Element {
+class FormSectionElement extends AbstractFormElement {
 	/**
 	 * @var string
 	 * @access	private

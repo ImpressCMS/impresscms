@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use ImpressCMS\Core\Form\Elements\Select\LangElement;
+
 /**
  * Form control creating an image upload element for an object derived from icms_ipf_Object
  *
@@ -10,7 +12,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class LanguageElement extends icms_form_elements_select_Lang {
+class LanguageElement extends LangElement {
 	/**
 	 * Constructor
 	 * @param	\icms_ipf_Object    $object   reference to targetobject

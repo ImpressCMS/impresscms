@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class ParentCategoryElement extends icms_form_elements_Select {
+class ParentCategoryElement extends \ImpressCMS\Core\Form\Elements\SelectElement {
 	/**
 	 * Constructor
 	 * @param	\icms_ipf_Object    $object   reference to targetobject

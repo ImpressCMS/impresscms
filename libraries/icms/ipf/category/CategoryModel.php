@@ -11,6 +11,7 @@
 namespace ImpressCMS\Core\IPF\Category;
 
 use ImpressCMS\Core\IPF\Controller;
+use ImpressCMS\Core\IPF\Seo\AbstractSEOModel;
 
 /**
  * Persistble category object
@@ -23,7 +24,7 @@ use ImpressCMS\Core\IPF\Controller;
  *
  * @package	ICMS\IPF\Category
  */
-class CategoryModel extends icms_ipf_seo_Object {
+class CategoryModel extends AbstractSEOModel {
 	/** Path that corresponds to the category */
 	private $_categoryPath;
 	/**

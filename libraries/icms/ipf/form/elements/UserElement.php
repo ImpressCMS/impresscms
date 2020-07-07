@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class UserElement extends icms_form_elements_Select {
+class UserElement extends \ImpressCMS\Core\Form\Elements\Select\UserElement {
 	private $_multiple = false;
 
 	/**

@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class DateElement extends icms_form_elements_Date {
+class DateElement extends \ImpressCMS\Core\Form\Elements\DateElement {
 	/**
 	 * Constructor
 	 * @param	\icms_ipf_Object    $object   reference to targetobject

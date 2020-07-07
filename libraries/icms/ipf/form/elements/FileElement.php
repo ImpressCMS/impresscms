@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @author	marcan <marcan@impresscms.org>
  * @package	ICMS\IPF\Form\Elements
  */
-class FileElement extends icms_form_elements_File {
+class FileElement extends \ImpressCMS\Core\Form\Elements\FileElement {
 	private $_object;
 	private $_key;
 

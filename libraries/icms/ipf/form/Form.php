@@ -7,6 +7,7 @@ use ImpressCMS\Core\Form\Elements\Select\GroupElement;
 use ImpressCMS\Core\Form\Elements\Select\TimezoneElement;
 use ImpressCMS\Core\Form\Elements\Select\UserElement;
 use ImpressCMS\Core\Form\Elements\SelectElement;
+use ImpressCMS\Core\Form\ThemeForm;
 use ImpressCMS\Core\View\Theme\ThemeFactory;
 
 /**
@@ -18,7 +19,7 @@ use ImpressCMS\Core\View\Theme\ThemeFactory;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class Form extends icms_form_Theme {
+class Form extends ThemeForm {
 	public $targetObject = null;
 	public $form_fields = null;
 	private $_cancel_js_action = false;
