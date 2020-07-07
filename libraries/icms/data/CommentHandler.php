@@ -36,7 +36,7 @@
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  */
 
-namespace ImpressCMS\Core\Data\Comment;
+namespace ImpressCMS\Core\Data;
 
 /**
  * Comment handler class.

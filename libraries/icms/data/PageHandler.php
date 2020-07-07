@@ -9,7 +9,7 @@
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
 
-namespace ImpressCMS\Core\Data\Page;
+namespace ImpressCMS\Core\Data;
 
 /**
  * ImpressCMS page handler class.

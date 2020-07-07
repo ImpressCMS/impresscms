@@ -34,7 +34,9 @@
  * @copyright    http://www.impresscms.org/ The ImpressCMS Project
  */
 
-namespace ImpressCMS\Core\Data\PrivateMessage;
+namespace ImpressCMS\Core\Data;
+
+use ImpressCMS\Core\Data\PrivateMessage\PrivateMessageModel;
 
 /**
  * Private message handler class.
@@ -56,12 +58,12 @@ class PrivateMessageHandler extends \ImpressCMS\Core\IPF\Handler
 
 	/**
 	 * Mark a message as read
-	 * @param \icms_data_privmessage_Object $pm Private message
+	 * @param PrivateMessageModel $pm Private message
 	 * @return    bool
 	 */
 	public function setRead(&$pm)
 	{
-		if (!is_a($pm, 'icms_data_privmessage_Object')) {
+		if (!is_a($pm, PrivateMessageModel::class)) {
 			return false;
 		}
 
@@ -79,7 +81,7 @@ class PrivateMessageHandler extends \ImpressCMS\Core\IPF\Handler
 	 *
 	 * @return int
 	 */
-	public function getCountForUser(\\ImpressCMS\Core\Member\UserModel $user = null): int {
+	public function getCountForUser(\ImpressCMS\Core\Member\UserModel $user = null): int {
 		static $msgCount = [];
 		if ($user === null) {
 			$user = \icms::$user;

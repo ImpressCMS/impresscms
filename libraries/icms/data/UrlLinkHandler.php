@@ -1,6 +1,6 @@
 <?php
 
-namespace ImpressCMS\Core\Data\UrlLink;
+namespace ImpressCMS\Core\Data;
 
 /**
  * UrlLink Handler

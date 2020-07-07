@@ -33,7 +33,7 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
-namespace ImpressCMS\Core\Data\PrivateMessage;
+namespace ImpressCMS\Core\Data;
 
 /**
  * A handler for Private Messages

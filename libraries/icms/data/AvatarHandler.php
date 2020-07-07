@@ -35,7 +35,7 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Data\Avatar;
+namespace ImpressCMS\Core\Data;
 
 /**
  * Avatar handler class.
