@@ -9,7 +9,7 @@ namespace ImpressCMS\Core;
  * @package	ICMS
  * @since	1.3
  * @author	Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
- * @deprecated
+ * @deprecated 2.0 use composer instead!
  */
 class Autoloader {
 	/**
