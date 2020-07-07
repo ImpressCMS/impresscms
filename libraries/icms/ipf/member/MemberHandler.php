@@ -14,7 +14,7 @@ namespace ImpressCMS\Core\IPF\Member;
  * @author	marcan <marcan@impresscms.org>
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
-class icms_ipf_member_Handler extends icms_member_Handler {
+class MemberHandler extends \icms_member_Handler {
 
 	/**
 	 * constructor
