@@ -50,7 +50,7 @@ class MemberHandler extends \icms_member_Handler {
 		$newuser = false;
 		$i = 0;
 		while ($newuser == false) {
-		$crit = new icms_db_criteria_Item('uname', $usernames[$i]);
+		$crit = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uname', $usernames[$i]);
 		$count = $this->getUserCount($crit);
 		if ($count == 0) {
 		$newuser = true;
@@ -169,7 +169,7 @@ class MemberHandler extends \icms_member_Handler {
 			} else {
 				$basename = strtolower($name[0]);
 			}
-			$basename = icms_core_DataFilter::icms_substr($basename, 0, 60, '');
+			$basename = \ImpressCMS\Core\DataFilter::icms_substr($basename, 0, 60, '');
 			//Prevent Duplication of Email Username and Name
 			if (!in_array($basename, $names)) {
 				$names[] = $basename;
@@ -182,10 +182,10 @@ class MemberHandler extends \icms_member_Handler {
 		while ($i < $count) {
 			$num = $this->genRandNumber();
 			if ($onbasename < 0 && $hasbasename) {
-				$names[] = icms_core_DataFilter::icms_substr($basename, 0, 58, '') . $num;
+				$names[] = \ImpressCMS\Core\DataFilter::icms_substr($basename, 0, 58, '') . $num;
 
 			} else {
-				$names[] = icms_core_DataFilter::icms_substr($emailname, 0, 58, '') . $num;
+				$names[] = \ImpressCMS\Core\DataFilter::icms_substr($emailname, 0, 58, '') . $num;
 			}
 			$i = count($names);
 			$onbasename = ~ $onbasename;

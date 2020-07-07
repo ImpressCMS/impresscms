@@ -102,8 +102,8 @@ class ImageElement extends SelectElement {
 		$image_handler = \icms::handler('icms_image');
 		foreach ($catlist as $k=>$v) {
 			$this->_optgroupsID[$v] = $k;
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('imgcat_id', $k));
-			$criteria->add(new icms_db_criteria_Item('image_display', 1));
+			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_id', $k));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('image_display', 1));
 			$total = $image_handler->getCount($criteria);
 			if ($total > 0) {
 				$imgcat = & $imgcat_handler->get($k);

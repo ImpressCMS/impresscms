@@ -36,7 +36,7 @@ class LibrariesPreloader {
 	 * @return	void
 	 */
 	public function __construct() {
-		$librariesArray = icms_core_Filesystem::getDirList(ICMS_LIBRARIES_PATH);
+		$librariesArray = \ImpressCMS\Core\Filesystem::getDirList(ICMS_LIBRARIES_PATH);
 		foreach ($librariesArray as $library) {
 			$library_boot_file = $this->getLibraryBootFilePath($library);
 			if (file_exists($library_boot_file)) {

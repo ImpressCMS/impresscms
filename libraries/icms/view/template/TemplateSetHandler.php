@@ -59,7 +59,7 @@ class TemplateSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	 *@see TemplateSetModel
 	 */
 	public function &getByName($tplset_name) {
-				$criteria = new icms_db_criteria_Item('tplset_name', trim($tplset_name));
+				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tplset_name', trim($tplset_name));
 				$criteria->setLimit(1);
 				$objs = $this->getObjects($criteria);
 				return isset($objs[0])?$objs[0]:null;

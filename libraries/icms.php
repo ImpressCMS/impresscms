@@ -51,7 +51,7 @@ final class icms extends Container {
 	/**
 	 * Current logged in user
 	 *
-	 * @var icms_member_user_Object|null
+	 * @var \ImpressCMS\Core\Member\UserModel|null
 	 */
 	public static $user;
 
@@ -240,7 +240,7 @@ final class icms extends Container {
 				'HTTP_REFERER' => 'url',
 			);
 
-			$clean_SERVER = icms_core_DataFilter::checkVarArray($_SERVER, $filters, false);
+			$clean_SERVER = \ImpressCMS\Core\DataFilter::checkVarArray($_SERVER, $filters, false);
 
 			$phpself = $clean_SERVER['SCRIPT_NAME'];
 			$httphost = $clean_SERVER['HTTP_HOST'];
@@ -353,7 +353,7 @@ final class icms extends Container {
 		self::$config = $this->get('config');
 		self::$session = $this->get('session');
 		self::$logger = $this->get('logger');
-		self::$preload = $this->get(icms_preload_Handler::class);
+		self::$preload = $this->get(\ImpressCMS\Core\Preload\EventsPreloader::class);
 		self::$security = $this->get('security');
 	}
 

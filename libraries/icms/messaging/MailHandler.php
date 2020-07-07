@@ -194,7 +194,7 @@ class MailHandler {
 	}
 
 	public function setFromUser(&$user) {
-		if (get_class($user) == "icms_member_user_Object") {
+		if (get_class($user) == "\ImpressCMS\Core\Member\UserModel") {
 			$this->fromUser = & $user;
 		}
 	}
@@ -457,7 +457,7 @@ class MailHandler {
 	public function setToUsers(&$user)
 	{
 		if (!is_array($user)) {
-			if (get_class($user) == "icms_member_user_Object") {
+			if (get_class($user) == "\ImpressCMS\Core\Member\UserModel") {
 				array_push($this->toUsers, $user);
 			}
 		} else {

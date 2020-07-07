@@ -168,7 +168,7 @@ class Template extends SmartyBC
 	 * @param   int $mid    Module ID
 	 */
 	static public function template_clear_module_cache($mid) {
-		$icms_block_handler = icms::handler('icms_view_block');
+		$icms_block_handler = \icms::handler('icms_view_block');
 		$block_arr = $icms_block_handler->getByModule($mid);
 		$count = count($block_arr);
 		if ($count > 0) {

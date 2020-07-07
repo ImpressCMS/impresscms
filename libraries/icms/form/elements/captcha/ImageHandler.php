@@ -235,7 +235,7 @@ class ImageHandler {
 		$items = array();
 
 		$file_path = "{$name}";
-		$files = icms_core_Filesystem::getFileList($file_path);
+		$files = \ImpressCMS\Core\Filesystem::getFileList($file_path);
 		foreach ($files as $item) {
 			if (empty($extension) || preg_match("/(\.{$extension})$/i", $item)) {
 				$items[] = $item;

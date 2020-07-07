@@ -65,10 +65,10 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
 			$this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
-			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=c.imgcat_id";
+			. $this->db->prefix('group_permission') . ' l ON l.gperm_itemid=c.imgcat_id';
 
-			$criteria_main = new \icms_db_criteria_Compo();
-			$criteria_main->add(new \icms_db_criteria_Item('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
+			$criteria_main = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$criteria_main->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
 			$criteria_main->setSort('imgcat_weight, imgcat_id');
 			$criteria_main->setOrder('ASC');
 
@@ -87,11 +87,11 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	public function getCount($criteria = null) {
 			$this->generalSQL = 'SELECT COUNT(*) FROM ' . $this->table . ' i LEFT JOIN '
-			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id";
+			. $this->db->prefix('group_permission') . ' l ON l.gperm_itemid=i.imgcat_id';
 
 
-			$criteria_main = new \icms_db_criteria_Compo();
-			$criteria_main->add(new \icms_db_criteria_Item('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
+			$criteria_main = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$criteria_main->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
 
 			if ($criteria !== null) {
 				$criteria_main->add($criteria);
@@ -111,23 +111,23 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 		 * @return ImageCategoryModel[]
 		 */
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
+			$criteriaTray = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 			foreach ($groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
+				$criteriaTray->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
 			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $perm));
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', 1));
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new icms_db_criteria_Item('imgcat_display', (int) ($display)));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
-			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_storetype', $storetype));
 		}
 		$categories = $this->getObjects($criteria, true);
 		$ret = array();
@@ -149,28 +149,28 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return array  list of categories
 	 */
 		public function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id = null) {
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
+			$criteriaTray = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 			foreach ($groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
+				$criteriaTray->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
 			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $perm));
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', 1));
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new icms_db_criteria_Item('imgcat_display', (int) ($display)));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
-			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_storetype', $storetype));
 		}
 		if ($imgcat_id === null) {
 					$imgcat_id = 0;
 				}
-		$criteria->add(new icms_db_criteria_Item('imgcat_pid', $imgcat_id));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_pid', $imgcat_id));
 		$categories = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($categories) as $i) {

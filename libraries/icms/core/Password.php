@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core;
 
+use ImpressCMS\Core\Database\Legacy\Updater\TableUpdater;
+
 /**
  * Class to encrypt User Passwords.
  *
@@ -105,7 +107,7 @@ final class Password {
 	 */
 	private function _passExpired($uname) {
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
-		$table = new icms_db_legacy_updater_Table('users');
+		$table = new TableUpdater('users');
 
 		if ($table->fieldExists('loginname')) {
 			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE loginname = %s",
@@ -156,7 +158,7 @@ final class Password {
 	 * To be removed in future versions
 	 */
 	private function _getUserSalt($uname) {
-		$table = new icms_db_legacy_updater_Table('users');
+		$table = new TableUpdater('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
 		if ($table->fieldExists('loginname')) {
@@ -206,7 +208,7 @@ final class Password {
 	 * To be removed in future versions
 	 */
 	private function _getUserEncType($uname) {
-		$table = new icms_db_legacy_updater_Table('users');
+		$table = new TableUpdater('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
 		if ($table->fieldExists('loginname')) {
@@ -370,7 +372,7 @@ final class Password {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
-		$table = new icms_db_legacy_updater_Table('users');
+		$table = new TableUpdater('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
 		if ($table->fieldExists('loginname')) {

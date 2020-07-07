@@ -90,7 +90,7 @@ class ThemeComponent {
 	public $renderCount = 0;
 	/**
 	 * Pointer to the theme template engine
-	 * @var \icms_view_Tpl
+	 * @var \\ImpressCMS\Core\View\Template
 	 */
 	public $template = false;
 
@@ -149,7 +149,7 @@ class ThemeComponent {
 			? ICMS_MODULES_URL . '/system/themes/' . $this->folderName
 			: ICMS_THEME_URL . '/' . $this->folderName;
 
-		$this->template = new icms_view_Tpl();
+		$this->template = new \ImpressCMS\Core\View\Template();
 		$this->template->currentTheme = $this;
 		$this->template->assignByRef('xoTheme', $this);
 
@@ -597,7 +597,7 @@ class ThemeComponent {
 						/* all local files will be a path, all remote files will have scheme:// */
 						$filepath = array_flip(str_replace(ICMS_URL, "", array_keys($this->metas[$zone][$type])));
 						/* combineFiles($filearray, $filetype, $minimize, $replace, $maxage, $location) */
-						$filesrc = icms_core_Filesystem::combineFiles($filepath, "css", true);
+						$filesrc = \ImpressCMS\Core\Filesystem::combineFiles($filepath, "css", true);
 						/* only render a link if the result is not FALSE */
 						if ($filepath !== false) {
 							$str .= '<link href="' . str_replace(ICMS_ROOT_PATH, ICMS_URL, $filesrc) . '" rel="stylesheet" type="text/css">';

@@ -101,8 +101,8 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	public function getByModule($mid, $asObject = true) {
 		$mid = (int) $mid;
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('mid', $mid));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('mid', $mid));
 		$ret = $this->getObjects($criteria, false, $asObject);
 		return $ret;
 	}
@@ -130,8 +130,8 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 			if ($tp != '') {
 			 	$q_side = "";
 				$icms_blockposition_handler = icms::handler('icms_view_block_position');
-				$criteria = new icms_db_criteria_Compo();
-				$criteria->add(new icms_db_criteria_Item('block_type', $tp));
+				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach ($blockpositions as $bp) {
 					$q_side .= "side='" . (int) $bp->getVar('id') . "' OR ";
@@ -166,8 +166,8 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 					while ($myrow = $this->db->fetchArray($result)) {
 						$blockids[] = $myrow['bid'];
 					}
-					$criteria = new icms_db_criteria_Compo();
-					$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+					$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+					$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('bid', '(' . implode(',', $blockids) . ')', 'IN'));
 					$blocks = $this->getObjects($criteria, true, true);
 					foreach ($blocks as $block) {
 						$ret[$block->getVar("bid")] = $block->getVar("title");
@@ -301,8 +301,8 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	private function &getMultiple($blockids)
 	{
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('bid', '(' . implode(',', $blockids) . ')', 'IN'));
 		$criteria->setSort('weight');
 		$ret = $this->getObjects($criteria, true, true);
 		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link')
@@ -488,15 +488,15 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 		if ($funcNum < 1 || $moduleId < 1) {
 			return 0;
 		}
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		if (isset($showFunc)) {
 			// showFunc is set for more strict comparison
-			$criteria->add(new icms_db_criteria_Item('mid', $moduleId));
-			$criteria->add(new icms_db_criteria_Item('func_num', $funcNum));
-			$criteria->add(new icms_db_criteria_Item('show_func', $showFunc));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('mid', $moduleId));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('func_num', $funcNum));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('show_func', $showFunc));
 		} else {
-			$criteria->add(new icms_db_criteria_Item('mid', $moduleId));
-			$criteria->add(new icms_db_criteria_Item('func_num', $funcNum));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('mid', $moduleId));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('func_num', $funcNum));
 		}
 		$count = $this->handler->getCount($criteria);
 		return $count;

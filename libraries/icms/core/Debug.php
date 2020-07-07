@@ -54,7 +54,7 @@ class Debug {
  	 * @param string $extra Additional information to provide about the change
  	 */
  	static public function setDeprecated($replacement = '', $extra = '') {
-		icms_loadLanguageFile('core', 'core');
+		\icms_loadLanguageFile('core', 'core');
 		$trace = debug_backtrace();
 		array_shift($trace);
 		$level = $msg = $message = '';

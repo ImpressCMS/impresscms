@@ -59,7 +59,7 @@ class GroupElement extends SelectElement {
 		parent::__construct($caption, $name, $value, $size, $multiple);
 		$member_handler = icms::handler('icms_member');
 		if (!$include_anon) {
-			$this->addOptionArray($member_handler->getGroupList(new icms_db_criteria_Item('groupid', ICMS_GROUP_ANONYMOUS, '!=')));
+			$this->addOptionArray($member_handler->getGroupList(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('groupid', ICMS_GROUP_ANONYMOUS, '!=')));
 		} else {
 			$this->addOptionArray($member_handler->getGroupList());
 		}

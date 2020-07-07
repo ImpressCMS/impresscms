@@ -49,11 +49,11 @@ class icms_auth_method_ldap_Provisioning {
 	/**
 	 * Return a User Object
 	 * @param   string $uname Username of the user
-	 * @return  \icms_member_user_Object|false icms_member_user_Object or false if failed
+	 * @return  \\ImpressCMS\Core\Member\UserModel|false \ImpressCMS\Core\Member\UserModel or false if failed
 	 */
-	public function geticms_member_user_Object($uname) {
+	public function get\ImpressCMS\Core\Member\UserModel($uname) {
 		$member_handler = icms::handler('icms_member');
-		$criteria = new icms_db_criteria_Item('uname', $uname);
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uname', $uname);
 		$getuser = $member_handler->getUsers($criteria);
 		if (count($getuser) == 1) {
 			return $getuser[0];
@@ -67,10 +67,10 @@ class icms_auth_method_ldap_Provisioning {
 	 * @param array $datas Some Data
 	 * @param string $uname Username of the user
 	 * @param string $pwd Password of the user
-	 * @return \icms_member_user_Object icms_member_user_Object
+	 * @return \\ImpressCMS\Core\Member\UserModel \ImpressCMS\Core\Member\UserModel
 	 */
 	public function sync($datas, $uname, $pwd = null) {
-		$icmsUser = $this->geticms_member_user_Object($uname);
+		$icmsUser = $this->get\ImpressCMS\Core\Member\UserModel($uname);
 		if (!$icmsUser) {
 			// User Database not exists
 			if ($this->ldap_provisionning) {
@@ -130,11 +130,11 @@ class icms_auth_method_ldap_Provisioning {
 
 	/**
 	 * Modify user information
-	 * @param icms_member_user_Object $icmsUser reference
+	 * @param \ImpressCMS\Core\Member\UserModel $icmsUser reference
 	 * @param array $datas Some Data
 	 * @param string $uname Username of the user
 	 * @param string $pwd Password of the user
-	 * @return \icms_member_user_Object
+	 * @return \\ImpressCMS\Core\Member\UserModel
 	 */
 	public function change(&$icmsUser, $datas, $uname, $pwd = null) {
 		$ret = false;

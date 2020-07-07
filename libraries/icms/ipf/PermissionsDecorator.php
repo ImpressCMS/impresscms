@@ -74,11 +74,11 @@ class PermissionsDecorator {
 
 		$icmsModule = & $this->handler->getModuleInfo();
 
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('gperm_modid', $icmsModule->getVar('mid')));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', $icmsModule->getVar('mid')));
 
 		if ($gperm_name) {
-			$criteria->add(new icms_db_criteria_Item('gperm_name', $gperm_name));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $gperm_name));
 		}
 
 		//Get group permissions handler

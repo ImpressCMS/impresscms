@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core;
 
+use ImpressCMS\Core\Config\Config;
+
 /**
  * Class to Clean & Filter HTML for various uses.
  * Class uses external HTML Purifier for filtering.
@@ -17,13 +19,6 @@ class HTMLFilter extends DataFilter {
 	 * variable used by HTML Filter Library
 	 */
 	public $purifier;
-
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
 
 	/**
 	 * Access the only instance of this class
@@ -49,7 +44,7 @@ class HTMLFilter extends DataFilter {
 	 * @return   string
 	 */
 	static public function filterHTML($html) {
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
+		$icmsConfigPurifier = \icms::$config->getConfigsByCat(Config::CATEGORY_PURIFIER);
 
 		$fcomment = '<!-- filtered with htmlpurifier -->';
 
@@ -83,8 +78,8 @@ class HTMLFilter extends DataFilter {
 	 */
 	static private function getCustomFilterList() {
 		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
-		$test = new HTMLPurifier();
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
+		$test = new \HTMLPurifier();
+		$icmsConfigPurifier = \icms::$config->getConfigsByCat(Config::CATEGORY_PURIFIER);
 		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
 			$filterList = array();
 
@@ -109,7 +104,7 @@ class HTMLFilter extends DataFilter {
 	 * @return  array    $icmsPurifierConf
 	 */
 	static protected function getHTMLFilterConfig() {
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_PURIFIER);
+		$icmsConfigPurifier = \icms::$config->getConfigsByCat(Config::CATEGORY_PURIFIER);
 
 		$IframeRegExp = $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'];
 		if ($IframeRegExp !== '') {

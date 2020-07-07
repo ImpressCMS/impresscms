@@ -63,9 +63,9 @@ class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return	bool TRUE on success
 	 */
 	public function deleteByGroup($gperm_groupid, $gperm_modid = null) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_groupid', (int) ($gperm_groupid)));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', (int) ($gperm_groupid)));
 		if (isset($gperm_modid)) {
-			$criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', (int) $gperm_modid));
 		}
 		return $this->deleteAll($criteria);
 	}
@@ -80,11 +80,11 @@ class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return	bool TRUE on success
 	 */
 	public function deleteByModule($gperm_modid, $gperm_name = null, $gperm_itemid = null) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', (int) $gperm_modid));
 		if (isset($gperm_name)) {
-			$criteria->add(new icms_db_criteria_Item('gperm_name', $gperm_name));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $gperm_name));
 			if (isset($gperm_itemid)) {
-				$criteria->add(new icms_db_criteria_Item('gperm_itemid', (int) $gperm_itemid));
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_itemid', (int) $gperm_itemid));
 			}
 		}
 		return $this->deleteAll($criteria);
@@ -103,26 +103,26 @@ class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return	bool    TRUE if permission is enabled
 	 */
 	public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $webmasterAlwaysTrue = true) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_modid', $gperm_modid));
-		$criteria->add(new icms_db_criteria_Item('gperm_name', $gperm_name));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', $gperm_modid));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $gperm_name));
 		$gperm_itemid = (int) $gperm_itemid;
 		if ($gperm_itemid > 0) {
-			$criteria->add(new icms_db_criteria_Item('gperm_itemid', $gperm_itemid));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_itemid', $gperm_itemid));
 		}
 		if (is_array($gperm_groupid)) {
 			if ($webmasterAlwaysTrue && in_array(ICMS_GROUP_ADMIN, $gperm_groupid)) {
 				return true;
 			}
-			$criteria2 = new icms_db_criteria_Compo();
+			$criteria2 = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 			foreach ($gperm_groupid as $gid) {
-				$criteria2->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
+				$criteria2->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteria2);
 		} else {
 			if ($webmasterAlwaysTrue && ICMS_GROUP_ADMIN == $gperm_groupid) {
 				return true;
 			}
-			$criteria->add(new icms_db_criteria_Item('gperm_groupid', $gperm_groupid));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', $gperm_groupid));
 		}
 		if ($this->getCount($criteria) > 0) {
 			return true;
@@ -160,16 +160,16 @@ class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	public function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1) {
 		$ret = array();
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', $gperm_name));
-		$criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $gperm_name));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', (int) $gperm_modid));
 		if (is_array($gperm_groupid)) {
-			$criteria2 = new icms_db_criteria_Compo();
+			$criteria2 = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 			foreach ($gperm_groupid as $gid) {
-				$criteria2->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
+				$criteria2->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteria2);
 		} else {
-			$criteria->add(new icms_db_criteria_Item('gperm_groupid', (int) $gperm_groupid));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', (int) $gperm_groupid));
 		}
 		$perms = $this->getObjects($criteria, true);
 		foreach (array_keys($perms) as $i) {
@@ -188,9 +188,9 @@ class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  array   array of group IDs
 	 */
 	public function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1) {
-				$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', $gperm_name));
-				$criteria->add(new icms_db_criteria_Item('gperm_itemid', (int) $gperm_itemid));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', (int) $gperm_modid));
+				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $gperm_name));
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_itemid', (int) $gperm_itemid));
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', (int) $gperm_modid));
 				$perms = $this->getObjects($criteria, true);
 				$ret = array();
 		foreach (array_keys($perms) as $i) {

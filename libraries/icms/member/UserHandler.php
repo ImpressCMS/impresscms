@@ -82,7 +82,7 @@ class UserHandler
 	 * @TODO we need some kind of error message instead of just a FALSE return to inform whether user was deleted aswell as PM messages.
 	 */
 	public function delete(&$user, $force = false) {
-				if (!($user instanceof icms_member_user_Object)) {
+				if (!($user instanceof \ImpressCMS\Core\Member\UserModel)) {
 									return;
 				}
 		$sql = sprintf(
@@ -154,7 +154,7 @@ class UserHandler
 
 		// check email
 		if ((is_object($thisUser) && $thisUser->getVar('email', 'e') != $email && $email !== false) || !is_object($thisUser)) {
-			if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) {
+			if (!\ImpressCMS\Core\DataFilter::checkVar($email, 'email', 0, 1)) {
 				$stop .= _US_INVALIDMAIL . '<br />';
 			}
 			$count = $this->getCount(icms_buildCriteria(array('email' => addslashes($email))));
@@ -164,7 +164,7 @@ class UserHandler
 		}
 
 		// check login_name
-		$login_name = icms_core_DataFilter::icms_trim($login_name);
+		$login_name = \ImpressCMS\Core\DataFilter::icms_trim($login_name);
 		if ((is_object($thisUser) && $thisUser->getVar('login_name', 'e') != $login_name && $login_name !== false) || !is_object($thisUser)) {
 			if (empty($login_name) || preg_match($restriction, $login_name)) {
 				$stop .= _US_INVALIDNICKNAME . '<br />';
@@ -208,7 +208,7 @@ class UserHandler
 			} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
 				$stop .= sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']) . '<br />';
 			}
-			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)) {
+			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == \ImpressCMS\Core\DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)) {
 				$stop .= _US_BADPWD . '<br />';
 			}
 		}
@@ -226,7 +226,7 @@ class UserHandler
 	 *
 	 * @param	integer	$uid	uid of the related user
 	 * @param	boolean	$name	TRUE to return the fullname, FALSE to use the username; if TRUE and the user does not have fullname, username will be used instead
-	 * @param	array	$users	array already containing icms_member_user_Object objects in which case we will save a query
+	 * @param	array	$users	array already containing \ImpressCMS\Core\Member\UserModel objects in which case we will save a query
 	 * @param	boolean	$withContact TRUE if we want contact details to be added in the value returned (PM and email links)
 	 * @param	boolean	$isAuthor	Set this to TRUE if you want the rel='author' attribute added to the link
 	 */
@@ -262,7 +262,7 @@ class UserHandler
 					$linkeduser = $fullname . "[";
 				}
 				$linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $uid . '"' . $author . '>';
-				$linkeduser .= icms_core_DataFilter::htmlSpecialChars($username) . "</a>";
+				$linkeduser .= \ImpressCMS\Core\DataFilter::htmlSpecialChars($username) . "</a>";
 				if (!empty($fullname)) {
 					$linkeduser .= "]";
 				}
@@ -322,7 +322,7 @@ class UserHandler
 							   );
 			list($name) = $this->db->fetchRow($sql);
 						if ($name) {
-							return icms_core_DataFilter::htmlSpecialChars($name);
+							return \ImpressCMS\Core\DataFilter::htmlSpecialChars($name);
 						}
 		}
 		return $GLOBALS['icmsConfig']['anonymous'];
@@ -331,13 +331,13 @@ class UserHandler
 	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 				if ($limit > 0) {
 					if ($criteria === null) {
-						$criteria = new icms_db_criteria_Compo();
+						$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 					}
 					$criteria->setLimit($limit);
 				}
 				if ($start > 0) {
 					if ($criteria === null) {
-						$criteria = new icms_db_criteria_Compo();
+						$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 					}
 					$criteria->setLimit($start);
 				}

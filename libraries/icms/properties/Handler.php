@@ -489,7 +489,7 @@ abstract class AbstractProperties implements Serializable {
 					if (!preg_match($this->_vars[$key][self::VARCFG_VALIDATE_RULE], $value)) {
 						trigger_error(sprintf('Bad format for %s var (%s)', $key, $value), E_USER_ERROR);
 					} elseif (!isset($this->_vars[$key][self::VARCFG_SOURCE_FORMATING]) || empty($this->_vars[$key][self::VARCFG_SOURCE_FORMATING])) {
-						$value = icms_core_DataFilter::censorString($value);
+						$value = \ImpressCMS\Core\DataFilter::censorString($value);
 					}
 				}
 				if (isset($this->_vars[$key][self::VARCFG_MAX_LENGTH]) && ($this->_vars[$key][self::VARCFG_MAX_LENGTH] > 0) && (mb_strlen($value) > $this->_vars[$key][self::VARCFG_MAX_LENGTH])) {
@@ -909,10 +909,10 @@ abstract class AbstractProperties implements Serializable {
 					if ($html) {
 						return $ts->displayTarea($this->_vars[$name][self::VARCFG_VALUE], $html, $smiley, $xcode, $image, $br);
 					} else {
-						return $this->_vars[$name][self::VARCFG_VALUE]; //icms_core_DataFilter::checkVar($this->_vars[$name][self::VARCFG_VALUE], 'text', 'output');
+						return $this->_vars[$name][self::VARCFG_VALUE]; //\ImpressCMS\Core\DataFilter::checkVar($this->_vars[$name][self::VARCFG_VALUE], 'text', 'output');
 					}
 				} else {
-					$ret = str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET)); //icms_core_DataFilter::htmlSpecialchars($this->_vars[$name][self::VARCFG_VALUE]);
+					$ret = str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET)); //\ImpressCMS\Core\DataFilter::htmlSpecialchars($this->_vars[$name][self::VARCFG_VALUE]);
 					if (method_exists($this, 'formatForML')) {
 						return $this->formatForML($ret);
 					} else {

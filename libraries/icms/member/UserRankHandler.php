@@ -46,13 +46,13 @@ class UserRankHandler extends \ImpressCMS\Core\IPF\Handler {
 		$rank_id = (int) $rank_id;
 		$posts = (int) $posts;
 
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		if ($rank_id != 0) {
-			$criteria->add(new icms_db_criteria_Item("rank_id", $rank_id));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem("rank_id", $rank_id));
 		} else {
-			$criteria->add(new icms_db_criteria_Item("rank_min", $posts, "<="));
-			$criteria->add(new icms_db_criteria_Item("rank_max", $posts, ">="));
-			$criteria->add(new icms_db_criteria_Item("rank_special", "0"));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem("rank_min", $posts, "<="));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem("rank_max", $posts, ">="));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem("rank_special", "0"));
 		}
 
 		$ranks = $this->getObjects($criteria);
@@ -81,7 +81,7 @@ class UserRankHandler extends \ImpressCMS\Core\IPF\Handler {
 		foreach ($Query as $qpart) {
 			$file_orig = ICMS_UPLOAD_PATH . "/" . $qpart["rank_image"];
 			if (file_exists($file_orig)) {
-				icms_core_Filesystem::copyRecursive($file_orig, $this->getImagePath() . $qpart["rank_image"]);
+				\ImpressCMS\Core\Filesystem::copyRecursive($file_orig, $this->getImagePath() . $qpart["rank_image"]);
 			}
 		}
 

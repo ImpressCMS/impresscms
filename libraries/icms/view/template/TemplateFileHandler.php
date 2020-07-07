@@ -118,28 +118,28 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  array $ret containing number of templates in the tpl_set or empty array if fails
 	 */
 	public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false) {
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		if (isset($tplset)) {
-			$criteria->add(new icms_db_criteria_Item('tpl_tplset', $tplset));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_tplset', $tplset));
 		}
 		if (isset($module)) {
-			$criteria->add(new icms_db_criteria_Item('tpl_module', $module));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_module', $module));
 		}
 		if (isset($refid)) {
-			$criteria->add(new icms_db_criteria_Item('tpl_refid', $refid));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_refid', $refid));
 		}
 		if (isset($file)) {
-			$criteria->add(new icms_db_criteria_Item('tpl_file', $file));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_file', $file));
 		}
 		if (isset($type)) {
 			if (is_array($type)) {
-				$criteria2 = new icms_db_criteria_Compo();
+				$criteria2 = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 				foreach ($type as $t) {
-					$criteria2->add(new icms_db_criteria_Item('tpl_type', $t), 'OR');
+					$criteria2->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_type', $t), 'OR');
 				}
 				$criteria->add($criteria2);
 			} else {
-				$criteria->add(new icms_db_criteria_Item('tpl_type', $type));
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_type', $type));
 			}
 		}
 		return $this->getObjects($criteria, false, true);
@@ -153,8 +153,8 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  bool true if exists, false if not
 	 */
 	public function templateExists($tplname, $tplset_name) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('tpl_file', trim($tplname)));
-		$criteria->add(new icms_db_criteria_Item('tpl_tplset', trim($tplset_name)));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_file', trim($tplname)));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_tplset', trim($tplset_name)));
 		if ($this->getCount($criteria) > 0) {
 			return true;
 		}
@@ -180,8 +180,8 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 			$tplNames[] = $block->template?$block->template:"system_block_dummy.html";
 		}
 
-		$criteria = new icms_db_criteria_Compo(
-			new icms_db_criteria_Item(
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(
+			new \ImpressCMS\Core\Database\Criteria\CriteriaItem(
 				'tpl_tplset',
 				'(' .
 				implode(
@@ -201,7 +201,7 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 			)
 		);
 		$criteria->add(
-			new icms_db_criteria_Item(
+			new \ImpressCMS\Core\Database\Criteria\CriteriaItem(
 				'tpl_file',
 				'(' .
 				implode(

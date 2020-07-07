@@ -92,7 +92,7 @@ class Member {
 	/**
 	 * create a new user
 	 *
-	 * @return icms_member_user_Object
+	 * @return \ImpressCMS\Core\Member\UserModel
 	 */
 	public function &createUser(&$isNew = true) {
 		$inst = & $this->_uHandler->create();
@@ -107,20 +107,20 @@ class Member {
 	 */
 	public function deleteGroup(&$group) {
 		$this->_gHandler->delete($group);
-		$this->_mHandler->deleteAll(new icms_db_criteria_Item('groupid', $group->getVar('groupid')));
+		$this->_mHandler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('groupid', $group->getVar('groupid')));
 		return true;
 	}
 
 	/**
 	 * delete a user
 	 *
-	 * @param icms_member_user_Object $user reference to the user to delete
+	 * @param \ImpressCMS\Core\Member\UserModel $user reference to the user to delete
 	 *
 	 * @return bool
 	 */
 	public function deleteUser(&$user) {
 		$this->_uHandler->delete($user);
-		$this->_mHandler->deleteAll(new icms_db_criteria_Item('uid', $user->getVar('uid')));
+		$this->_mHandler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uid', $user->getVar('uid')));
 		return true;
 	}
 
@@ -152,7 +152,7 @@ class Member {
 	 * @param \icms_db_criteria_Element $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 *
-	 * @return icms_member_user_Object[]
+	 * @return \ImpressCMS\Core\Member\UserModel[]
 	 */
 	public function getUsers($criteria = null, $id_as_key = false) {
 		return $this->_uHandler->getObjects($criteria, $id_as_key);
@@ -216,11 +216,11 @@ class Member {
 	 * @return bool success?
 	 */
 	public function removeUsersFromGroup($group_id, $user_ids = array()) {
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('groupid', $group_id));
-		$criteria2 = new icms_db_criteria_Compo();
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('groupid', $group_id));
+		$criteria2 = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		foreach ($user_ids as $uid) {
-			$criteria2->add(new icms_db_criteria_Item('uid', $uid), 'OR');
+			$criteria2->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uid', $uid), 'OR');
 		}
 		$criteria->add($criteria2);
 		return $this->_mHandler->deleteAll($criteria);
@@ -233,7 +233,7 @@ class Member {
 	 * @param bool $asobject return the users as objects?
 	 * @param int $limit number of users to return
 	 * @param int $start index of the first user to return
-	 * @return array|icms_member_user_Object[]
+	 * @return array|\ImpressCMS\Core\Member\UserModel[]
 	 * or of associative arrays matching the record structure in the database.
 	 */
 	public function &getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
@@ -257,7 +257,7 @@ class Member {
 	 * retrieve a user
 	 *
 	 * @param int $id ID for the user
-	 * @return icms_member_user_Object icms_member_user_Object reference to the user
+	 * @return \ImpressCMS\Core\Member\UserModel \ImpressCMS\Core\Member\UserModel reference to the user
 	 */
 	public function &getUser($id)
 	{
@@ -271,7 +271,7 @@ class Member {
 	 * log in a user
 	 * @param string $uname username as entered in the login form
 	 * @param string $pwd password entered in the login form
-	 * @return icms_member_user_Object|false
+	 * @return \ImpressCMS\Core\Member\UserModel|false
 	 */
 	public function loginUser($uname, $pwd) {
 
@@ -290,13 +290,13 @@ class Member {
 
 		$table = new icms_db_legacy_updater_Table('users');
 		if ($table->fieldExists('loginname')) {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
+			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('loginname', $uname));
 		} elseif ($table->fieldExists('login_name')) {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
+			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('login_name', $uname));
 		} else {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
+			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uname', $uname));
 		}
-		$criteria->add(new icms_db_criteria_Item('pass', $pwd));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('pass', $pwd));
 		$user = $this->_uHandler->getObjects($criteria, false);
 		if (!$user || count($user) != 1) {
 			$user = false;
@@ -341,13 +341,13 @@ class Member {
 	 * @return int
 	 */
 	public function getUserCountByGroup($group_id) {
-		return $this->_mHandler->getCount(new icms_db_criteria_Item('groupid', $group_id));
+		return $this->_mHandler->getCount(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('groupid', $group_id));
 	}
 
 	/**
 	 * updates a single field in a users record
 	 *
-	 * @param icms_member_user_Object $user reference
+	 * @param \ImpressCMS\Core\Member\UserModel $user reference
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
 	 * @return bool TRUE if success or unchanged, FALSE on failure
@@ -360,7 +360,7 @@ class Member {
 	/**
 	 * insert a user into the database
 	 *
-	 * @param \icms_member_user_Object $user User
+	 * @param \\ImpressCMS\Core\Member\UserModel $user User
 	 * @return bool TRUE if already in database and unchanged
 	 * FALSE on failure
 	 */
@@ -384,7 +384,7 @@ class Member {
 	/**
 	 * activate a user
 	 *
-	 * @param icms_member_user_Object $user User
+	 * @param \ImpressCMS\Core\Member\UserModel $user User
 	 * @return bool successful?
 	 */
 	public function activateUser(&$user) {
@@ -404,7 +404,7 @@ class Member {
 	 * @param bool $asobject return the users as objects?
 	 * @param bool $id_as_key use the UID as key for the array if $asobject is TRUE
 	 *
-	 * @return array|icms_member_user_Object[]
+	 * @return array|\ImpressCMS\Core\Member\UserModel[]
 	 */
 	public function getUsersByGroupLink($groups, $criteria = null, $asobject = false, $id_as_key = false) {
 		$ret = array();
@@ -435,7 +435,7 @@ class Member {
 		}
 		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			if ($asobject) {
-				$user = new icms_member_user_Object($this, $myrow);
+				$user = new \ImpressCMS\Core\Member\UserModel($this, $myrow);
 				if (!$id_as_key) {
 					$ret[] = & $user;
 				} else {

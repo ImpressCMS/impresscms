@@ -80,7 +80,7 @@ class ModuleHandler
 	static public function getAvailable()
 	{
 		$cleanList = array();
-		$dirtyList = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/');
+		$dirtyList = \ImpressCMS\Core\Filesystem::getDirList(ICMS_MODULES_PATH . '/');
 		foreach ($dirtyList as $item) {
 			if (file_exists(ICMS_MODULES_PATH . '/' . $item . '/icms_version.php')) {
 				$cleanList[$item] = $item;
@@ -102,7 +102,7 @@ class ModuleHandler
 	static public function getActive()
 	{
 		$module_handler = new self(icms::$xoopsDB);
-		$criteria = new icms_db_criteria_Item('isactive', 1);
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1);
 		return $module_handler->getList($criteria, true);
 	}
 
@@ -152,7 +152,7 @@ class ModuleHandler
 	{
 		$dirname = trim($dirname);
 
-		if ($this->getCount(new icms_db_criteria_Item('dirname', $dirname)) > 0) {
+		if ($this->getCount(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('dirname', $dirname)) > 0) {
 			$output->fatal(_MD_AM_FAILINS, $dirname);
 			$output->error(_MD_AM_ALEXISTS, $dirname);
 			return false;
@@ -214,7 +214,7 @@ class ModuleHandler
 		}
 
 		$module->registerClassPath();
-		icms_view_Tpl::template_clear_module_cache($module->mid);
+		\ImpressCMS\Core\View\Template::template_clear_module_cache($module->mid);
 		if ($module->dirname == 'system') {
 			$output->fatal(
 				_MD_AM_FAILUNINS, $module->name
@@ -306,7 +306,7 @@ class ModuleHandler
 	public function getByDirname($dirname, $loadConfig = false)
 	{
 		//if (!($module = $this->getFromCache('dirname', $dirname))) {
-		$criteria = new icms_db_criteria_Item('dirname', trim($dirname));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('dirname', trim($dirname));
 		$criteria->setLimit(1);
 		$objs = $this->getObjects($criteria);
 		if (isset($objs[0])) {
@@ -441,7 +441,7 @@ class ModuleHandler
 		$prev_version = $module->version;
 		$prev_dbversion = $module->dbversion;
 
-		icms_view_Tpl::template_clear_module_cache($module->mid);
+		\ImpressCMS\Core\View\Template::template_clear_module_cache($module->mid);
 		// we dont want to change the module name set by admin
 		$temp_name = $module->name;
 		$module->loadInfoAsVar($dirname);
@@ -493,7 +493,7 @@ class ModuleHandler
 	public function activate($mid, OutputDecorator $output)
 	{
 		$module = $this->get($mid);
-		icms_view_Tpl::template_clear_module_cache($module->mid);
+		\ImpressCMS\Core\View\Template::template_clear_module_cache($module->mid);
 		$module->setVar('isactive', 1);
 		if (!$module->store()) {
 			$output->fatal(_MD_AM_FAILACT . ' ' . _MD_AM_ERRORSC);
@@ -545,7 +545,7 @@ class ModuleHandler
 		global $icmsConfig;
 
 		$module = $this->get($mid);
-		icms_view_Tpl::template_clear_module_cache($mid);
+		\ImpressCMS\Core\View\Template::template_clear_module_cache($mid);
 		$module->setVar('isactive', 0);
 		if ($module->dirname == "system") {
 			$output->fatal(
@@ -628,14 +628,14 @@ class ModuleHandler
 			$output->fatal(
 				_MD_AM_FAILORDER
 				. ' ' . _MD_AM_ERRORSC,
-				icms_core_DataFilter::stripSlashesGPC($name)
+				\ImpressCMS\Core\DataFilter::stripSlashesGPC($name)
 			);
 			$output->msg(
 				$module->getHtmlErrors()
 			);
 			return false;
 		}
-		$output->success(_MD_AM_OKORDER, icms_core_DataFilter::stripSlashesGPC($name));
+		$output->success(_MD_AM_OKORDER, \ImpressCMS\Core\DataFilter::stripSlashesGPC($name));
 		return true;
 	}
 
@@ -657,9 +657,9 @@ class ModuleHandler
 	 */
 	public function getAdminMenuItems()
 	{
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('hasadmin', 1));
-		$criteria->add(new icms_db_criteria_Item('isactive', 1));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('hasadmin', 1));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1));
 		$criteria->setOrder('ASC');
 		$criteria->setSort('name');
 		$modules = $this->getObjects($criteria);

@@ -43,15 +43,15 @@ class PluginHandler {
 	public function getPluginsArray($path) {
 
 		$module_handler = icms::handler('icms_module');
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('isactive', 1));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1));
 		$tempModulesObj = $module_handler->getObjects($criteria);
 		$modulesObj = array();
 		foreach ($tempModulesObj as $moduleObj) {
 			$modulesObj[$moduleObj->getVar('dirname')] = $moduleObj;
 		}
 
-		$aFiles = str_replace('.php', '', icms_core_Filesystem::getFileList(ICMS_PLUGINS_PATH . '/' . $path . '/', '', array('php')));
+		$aFiles = str_replace('.php', '', \ImpressCMS\Core\Filesystem::getFileList(ICMS_PLUGINS_PATH . '/' . $path . '/', '', array('php')));
 		$ret = array();
 		foreach ($aFiles as $pluginName) {
 			$module_xoops_version_file = ICMS_MODULES_PATH . "/$pluginName/xoops_version.php";

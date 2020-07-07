@@ -292,7 +292,7 @@ class Handler extends ObjectHandler {
 		$icmspermissions_handler = new icms_ipf_permission_Handler($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
-			$criteria->add(new icms_db_criteria_Item($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
 			return true;
 		} else {
 			return false;
@@ -589,7 +589,7 @@ class Handler extends ObjectHandler {
 	public function getImagePath() {
 		$dir = $this->_uploadPath . $this->_itemname;
 		if (!file_exists($dir)) {
-			icms_core_Filesystem::mkdir($dir);
+			\ImpressCMS\Core\Filesystem::mkdir($dir);
 		}
 		return $dir . "/";
 	}
@@ -674,26 +674,26 @@ class Handler extends ObjectHandler {
 	{
 		if (is_array($this->keyName)) {
 			if (!$criteria) {
-				$criteria = new icms_db_criteria_Compo();
+				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 			}
 			foreach ($this->keyName as $i => $keyName) {
 				/**
 				 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
-				//$criteria->add(new icms_db_criteria_Item($keyName, ($id[$i]), '=', $this->_itemname));
-				$criteria->add(new icms_db_criteria_Item($keyName, $id[$i], '=', $this->_itemname));
+				//$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($keyName, ($id[$i]), '=', $this->_itemname));
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($keyName, $id[$i], '=', $this->_itemname));
 			}
 		} else {
 			if (!$criteria) {
-				$criteria = new icms_db_criteria_Item($this->keyName, $id);
+				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->keyName, $id);
 			} else {
-				//$criteria = new icms_db_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
+				//$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->keyName, intval($id), '=', $this->_itemname);
 				/**
 				 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
-				$criteria->add(new icms_db_criteria_Item($this->keyName, $id, '=', $this->_itemname));
+				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->keyName, $id, '=', $this->_itemname));
 			}
 		}
 
@@ -781,7 +781,7 @@ class Handler extends ObjectHandler {
 	public function getCustomList($keyName, $keyValue, $criteria = null, $limit = 0, $start = 0, $debug = false) {
 		$ret = array();
 		if ($criteria == null) {
-			$criteria = new icms_db_criteria_Compo();
+			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		}
 
 		if ($criteria->getSort() == '') {
@@ -1051,7 +1051,7 @@ class Handler extends ObjectHandler {
 			if (is_array($this->keyName)) {
 				$case = '  CASE ' . implode(', ', $this->keyName) . "\r\n";
 				$when = array();
-				$criteria = new icms_db_criteria_Compo();
+				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 				foreach ($data as $i => $obj) {
 					$fieldsToStoreInDB = $obj->getVarsForSQL(true);
 					$cr = $obj->getCriteriaForSelectByID();
@@ -1389,12 +1389,12 @@ class Handler extends ObjectHandler {
 		}
 		if (!empty($url_links)) {
 			$urllink_handler = icms::handler("icms_data_urllink");
-			$urllink_handler->deleteAll(new icms_db_criteria_Item($urllink_handler->keyName, $url_links, ' IN '));
+			$urllink_handler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($urllink_handler->keyName, $url_links, ' IN '));
 			unset($urllink_handler);
 		}
 		if (!empty($url_files)) {
 			$urllink_handler = icms::handler("icms_data_file");
-			$urllink_handler->deleteAll(new icms_db_criteria_Item($urllink_handler->keyName, $url_files, ' IN '));
+			$urllink_handler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($urllink_handler->keyName, $url_files, ' IN '));
 			unset($urllink_handler);
 		}
 

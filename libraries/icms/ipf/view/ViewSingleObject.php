@@ -70,7 +70,7 @@ class ViewSingleObject {
 	 */
 	public function render($fetchOnly = false, $debug = false) {
 
-		$this->_tpl = new icms_view_Tpl();
+		$this->_tpl = new \ImpressCMS\Core\View\Template();
 		$vars = $this->_object->getVars();
 		$icms_object_array = array();
 

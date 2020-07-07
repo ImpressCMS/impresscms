@@ -121,7 +121,7 @@ class DhtmltextareaElement extends TextareaElement {
 			. "<img onmouseover='style.cursor=\"pointer\"' onclick='javascript:openWithSelfMain(\"" . ICMS_URL . "/modules/system/admin/images/browser.php?target=" . $ele_name . "&type=iman\",\"imgmanager\",985,470);' src='" . ICMS_URL . "/images/image.gif' alt='image' />&nbsp;";
 		$jscript = '';
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-			$extension = icms_core_DataFilter::loadExtension($key);
+			$extension = \ImpressCMS\Core\DataFilter::loadExtension($key);
 			$func = "render_{$key}";
 			if (function_exists($func)) {
 				@list($encode, $js) = $func($ele_name);
@@ -235,7 +235,7 @@ class DhtmltextareaElement extends TextareaElement {
 	 * @return	string HTML
 	 */
 	private function _renderSmileys() {
-		$smiles = icms_core_DataFilter::getSmileys();
+		$smiles = \ImpressCMS\Core\DataFilter::getSmileys();
 		$ret = '';
 		$count = count($smiles);
 		$ele_name = $this->getName();

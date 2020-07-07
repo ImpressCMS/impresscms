@@ -505,7 +505,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 		 * if ($highlight && isset($_GET['keywords']))
 		 * {
 		 * $myts =& icms_core_Textsanitizer::getInstance();
-		 * $keywords= icms_core_DataFilter::htmlSpecialChars(trim(urldecode($_GET['keywords'])));
+		 * $keywords= \ImpressCMS\Core\DataFilter::htmlSpecialChars(trim(urldecode($_GET['keywords'])));
 		 * $h= new SmartHighlighter ($keywords, true , 'smart_highlighter');
 		 * foreach ($this->handler->highlightFields as $field) {
 		 * $ret[$field] = $h->highlight($ret[$field]);
@@ -822,7 +822,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 			if ($html) {
 				return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
 			} else {
-				return icms_core_DataFilter::checkVar($ret, 'text', 'output');
+				return \ImpressCMS\Core\DataFilter::checkVar($ret, 'text', 'output');
 			}
 		}
 	}
@@ -830,16 +830,16 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	/**
 	 * Returns criteria for selecting this element by id
 	 *
-	 * @return \icms_db_criteria_Item
+	 * @return \\ImpressCMS\Core\Database\Criteria\CriteriaItem
 	 */
 	public function getCriteriaForSelectByID() {
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		if (is_array($this->handler->keyName)) {
 			foreach ($this->handler->keyName as $key) {
-							$criteria->add(new icms_db_criteria_Item($key, $this->getVar($key)));
+							$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($key, $this->getVar($key)));
 			}
 		} else {
-					$criteria->add(new icms_db_criteria_Item($this->handler->keyName, $this->getVar($this->handler->keyName)));
+					$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->handler->keyName, $this->getVar($this->handler->keyName)));
 		}
 
 		return $criteria;

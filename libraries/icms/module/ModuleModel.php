@@ -338,7 +338,7 @@ class ModuleModel
 		global $icmsModule, $icmsConfig;
 		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'modinfo');
 		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'admin');
-		$tpl = new icms_view_Tpl();
+		$tpl = new \ImpressCMS\Core\View\Template();
 		$tpl->assign(
 			array(
 				'headermenu' => $this->getAdminHeaderMenu(),

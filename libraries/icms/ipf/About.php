@@ -166,7 +166,7 @@ class About {
 		/**
 		 * Template
 		 *
-		 * @var \icms_view_Tpl|null
+		 * @var \\ImpressCMS\Core\View\Template|null
 		 */
 	public $_tpl;
 
@@ -211,7 +211,7 @@ class About {
 	 * @return string sanitized value
 	 */
 	public function sanitize($value) {
-		return icms_core_DataFilter::checkVar($value, 'html', 'input'); // using input
+		return \ImpressCMS\Core\DataFilter::checkVar($value, 'html', 'input'); // using input
 	}
 
 	/**
@@ -228,7 +228,7 @@ class About {
 
 		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . " " . $versioninfo->getInfo('name'));
 
-		$this->_tpl = new icms_view_Tpl();
+		$this->_tpl = new \ImpressCMS\Core\View\Template();
 
 		$this->_tpl->assign('module_url', ICMS_URL . "/modules/" . $icmsModule->getVar('dirname') . "/");
 		$this->_tpl->assign('module_image', $versioninfo->getInfo('image'));
@@ -298,7 +298,7 @@ class About {
 		}
 
 		// Warning
-		$this->_tpl->assign('module_warning', icms_core_DataFilter::checkVar($versioninfo->getInfo('warning'), 'html', 'input'));
+		$this->_tpl->assign('module_warning', \ImpressCMS\Core\DataFilter::checkVar($versioninfo->getInfo('warning'), 'html', 'input'));
 
 		// Author's note
 		$this->_tpl->assign('module_author_word', $versioninfo->getInfo('author_word'));
@@ -310,7 +310,7 @@ class About {
 
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
-			$this->_tpl->assign('module_version_history', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
+			$this->_tpl->assign('module_version_history', \ImpressCMS\Core\DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
 			fclose($handle);
 		}
 
@@ -319,7 +319,7 @@ class About {
 
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
-			$this->_tpl->assign('module_version_history', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
+			$this->_tpl->assign('module_version_history', \ImpressCMS\Core\DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
 			fclose($handle);
 		}
 
@@ -338,7 +338,7 @@ class About {
 		if (is_file($filename)) {
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
-			$this->_tpl->assign('module_license_txt', icms_core_DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
+			$this->_tpl->assign('module_license_txt', \ImpressCMS\Core\DataFilter::checkVar(fread($handle, $filesize), 'text', 'output'));
 			fclose($handle);
 		}
 

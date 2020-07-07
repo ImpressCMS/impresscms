@@ -57,6 +57,6 @@ class LangElement extends SelectElement {
 	 */
 	public function __construct($caption, $name, $value = null, $size = 1) {
 		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/"));
+		$this->addOptionArray(\ImpressCMS\Core\Filesystem::getDirList(ICMS_ROOT_PATH . "/language/"));
 	}
 }

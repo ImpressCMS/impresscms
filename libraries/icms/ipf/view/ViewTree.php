@@ -27,7 +27,7 @@ class ViewTree extends ViewTable {
 	 * Construct the tree object
 	 *
 	 * @param icms_ipf_Handler $objectHandler Handler
-	 * @param icms_db_criteria_Compo|false $criteria		Criteria to filter results
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo|false $criteria		Criteria to filter results
 	 * @param string[] $actions		An array of actions for this object
 	 * @param boolean $userSide		TRUE - display on the user side; FALSE - do not display
 	 */

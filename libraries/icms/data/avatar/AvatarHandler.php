@@ -167,13 +167,13 @@ class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return array
 	 */
 	public function getList($avatar_type = null, $avatar_display = null) {
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		if (isset($avatar_type)) {
 			$avatar_type = ($avatar_type == 'C')?'C':'S';
-			$criteria->add(new icms_db_criteria_Item('avatar_type', $avatar_type));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('avatar_type', $avatar_type));
 		}
 		if (isset($avatar_display)) {
-			$criteria->add(new icms_db_criteria_Item('avatar_display', (int) $avatar_display));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('avatar_display', (int) $avatar_display));
 		}
 		$avatars = & $this->getObjects($criteria, true);
 		$ret = array('blank.gif' => _NONE);
@@ -192,9 +192,9 @@ class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 	static public function getListFromDir($avatar_dir = "") {
 		$avatars = array();
 		if ($avatar_dir != "") {
-			$avatars = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $avatar_dir . "/", $avatar_dir . "/", array('gif', 'jpg', 'png'));
+			$avatars = \ImpressCMS\Core\Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $avatar_dir . "/", $avatar_dir . "/", array('gif', 'jpg', 'png'));
 		} else {
-			$avatars = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/", '', array('gif', 'jpg', 'png'));
+			$avatars = \ImpressCMS\Core\Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/", '', array('gif', 'jpg', 'png'));
 		}
 		return $avatars;
 	}
@@ -207,10 +207,10 @@ class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 	static public function getAllFromDir() {
 		$avatars = array();
 		$dirlist = array();
-		$dirlist = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/images/avatar/");
+		$dirlist = \ImpressCMS\Core\Filesystem::getDirList(ICMS_ROOT_PATH . "/images/avatar/");
 		if (count($dirlist) > 0) {
 			foreach ($dirlist as $dir) {
-				$avatars[$dir] = & icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $dir . "/", $dir . "/", array('gif', 'jpg', 'png'));
+				$avatars[$dir] = & \ImpressCMS\Core\Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $dir . "/", $dir . "/", array('gif', 'jpg', 'png'));
 			}
 		} else {
 			return false;

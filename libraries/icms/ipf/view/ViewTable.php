@@ -74,7 +74,7 @@ class ViewTable {
 		$this->_objectHandler = $objectHandler;
 
 		if (!$criteria) {
-			$criteria = new icms_db_criteria_Compo();
+			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		}
 		$this->_criteria = $criteria;
 		$this->_actions = $actions;
@@ -600,7 +600,7 @@ class ViewTable {
 	 * @param $debug
 	 */
 	public function render($fetchOnly = false, $debug = false) {
-		$this->_tpl = new icms_view_Tpl();
+		$this->_tpl = new \ImpressCMS\Core\View\Template();
 
 		/**
 		 * We need access to the protected s of the icms_ipf_Object for a few things in the table creation.
@@ -654,7 +654,7 @@ class ViewTable {
 
 					icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_filtersel2', $this->_filtersel2);
 					if ($this->_filtersel2 != 'default') {
-						$this->_criteria->add(new icms_db_criteria_Item($this->_filtersel, $this->_filtersel2));
+						$this->_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->_filtersel, $this->_filtersel2));
 					}
 				}
 			}
@@ -662,13 +662,13 @@ class ViewTable {
 		// Check if we have a quicksearch
 
 		if (isset($_POST['quicksearch_' . $this->_id]) && $_POST['quicksearch_' . $this->_id] != '') {
-			$quicksearch_criteria = new icms_db_criteria_Compo();
+			$quicksearch_criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 			if (is_array($this->_quickSearch['fields'])) {
 				foreach ($this->_quickSearch['fields'] as $v) {
-					$quicksearch_criteria->add(new icms_db_criteria_Item($v, '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'), 'OR');
+					$quicksearch_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($v, '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'), 'OR');
 				}
 			} else {
-				$quicksearch_criteria->add(new icms_db_criteria_Item($this->_quickSearch['fields'], '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'));
+				$quicksearch_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->_quickSearch['fields'], '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'));
 			}
 			$this->_criteria->add($quicksearch_criteria);
 		}

@@ -33,7 +33,7 @@
 //       also refactored to remove about 20 lines of redundant code.         //
 // ------------------------------------------------------------------------- //
 /**
- * icms_db_criteria_Compo
+ * \ImpressCMS\Core\Database\Criteria\CriteriaCompo
  *
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	The ImpressCMS Project http://www.impresscms.org/

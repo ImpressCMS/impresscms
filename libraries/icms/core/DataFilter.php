@@ -522,7 +522,7 @@ class DataFilter {
 		$html = self::codeDecode($html);
 		$html = self::codeConv($html, 1, 1);
 
-		$html = icms_core_HTMLFilter::filterHTML($html);
+		$html = HTMLFilter::filterHTML($html);
 
 		$purified = strpos($html, '<!-- filtered with htmlpurifier -->');
 		if ($purified === false && $br == 1) {
@@ -557,7 +557,7 @@ class DataFilter {
 			$html = self::codeDecode($html);
 			$html = self::codeConv($html, 1, 1);
 
-			$html = icms_core_HTMLFilter::filterHTML($html);
+			$html = HTMLFilter::filterHTML($html);
 
 			$html .= '<!-- warning! output filtered only -->';
 
@@ -724,7 +724,7 @@ class DataFilter {
 	 *
 	 */
 	static public function censorString(&$text) {
-		$icmsConfigCensor = icms::$config->getConfigsByCat(\icms_config_Handler::CATEGORY_CENSOR);
+		$icmsConfigCensor = \icms::$config->getConfigsByCat(Config\Config::CATEGORY_CENSOR);
 		if ($icmsConfigCensor['censor_enable'] == true) {
 			$replacement = $icmsConfigCensor['censor_replace'];
 			if (!empty($icmsConfigCensor['censor_words'])) {

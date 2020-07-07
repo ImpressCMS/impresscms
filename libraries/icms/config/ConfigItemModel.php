@@ -34,6 +34,8 @@
 
 namespace ImpressCMS\Core\Config;
 
+use ImpressCMS\Core\DataFilter;
+
 /**
  * Config item
  *
@@ -137,11 +139,11 @@ class ConfigItemModel extends \ImpressCMS\Core\IPF\AbstractModel {
 				break;
 
 			case 'textsarea':
-				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'text', 'output');
+				return DataFilter::checkVar($this->getVar('conf_value'), 'text', 'output');
 				break;
 
 			case 'textarea':
-				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'html', 'output');
+				return DataFilter::checkVar($this->getVar('conf_value'), 'html', 'output');
 			default:
 				return $this->conf_value;
 				break;
@@ -156,9 +158,9 @@ class ConfigItemModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
 		if ($this->getVar('conf_formtype') == 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
-			$value = icms_core_DataFilter::checkVar($value, 'html', 'input');
+			$value = DataFilter::checkVar($value, 'html', 'input');
 		} elseif ($this->getVar('conf_formtype') == 'textsarea' && $this->getVar('conf_valuetype') !== 'array') {
-			$value = icms_core_DataFilter::checkVar($value, 'text', 'input');
+			$value = DataFilter::checkVar($value, 'text', 'input');
 		} elseif ($this->getVar('conf_formtype') == 'password') {
 			$value = filter_var($value, FILTER_SANITIZE_URL);
 		} else {

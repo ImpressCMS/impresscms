@@ -255,7 +255,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
         $mailer->setToEmails($user_email);
         $mailer->setFromEmail($icmsConfig['adminmail']);
         $mailer->setFromName($icmsConfig['sitename']);
-        $mailer->setSubject(sprintf(_US_YOURREGISTRATION, icms_core_DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
+        $mailer->setSubject(sprintf(_US_YOURREGISTRATION, \ImpressCMS\Core\DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
         if (!$mailer->send(true)) {
             $this->setErrors(_US_WELCOMEMSGFAILED);
             return false;
@@ -364,7 +364,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	public function isOnline() {
 		if (!isset($this->_isOnline)) {
 			$onlinehandler = icms::handler('icms_core_Online');
-			$this->_isOnline = ($onlinehandler->getCount(new icms_db_criteria_Item('online_uid', $this->getVar('uid'))) > 0)? true : false;
+			$this->_isOnline = ($onlinehandler->getCount(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('online_uid', $this->getVar('uid'))) > 0)? true : false;
 		}
 		return $this->_isOnline;
 	}

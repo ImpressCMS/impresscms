@@ -194,7 +194,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 	/**
 	 * Load user from ImpressCMS Database
 	 * @param string $uname UserName
-	 * @return \icms_member_user_Object
+	 * @return \\ImpressCMS\Core\Member\UserModel
 	 */
 	public function getFilter($uname) {
 		$filter = '';
@@ -211,7 +211,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 	 * @param string $userdn
 	 * @param string $uname Username
 	 * @param string $pwd Password
-	 * @return \icms_member_user_Object
+	 * @return \\ImpressCMS\Core\Member\UserModel
 	 */
 	public function getMember($userdn, $uname, $pwd = null) {
 		$provisHandler = icms_auth_method_ldap_Provisioning::getInstance($this);

@@ -36,6 +36,8 @@
 
 namespace ImpressCMS\Core;
 
+use ImpressCMS\Core\Form\Elements\HiddentokenElement;
+
 /**
  * Class for managing security aspects such as checking referers, applying tokens and checking global variables for contamination
  *
@@ -232,7 +234,7 @@ class Security {
 	 * @return string
 	 */
 	public function getTokenHTML($name = _CORE_TOKEN) {
-		$token = new icms_form_elements_Hiddentoken($name);
+		$token = new HiddentokenElement($name);
 		return $token->render();
 	}
 

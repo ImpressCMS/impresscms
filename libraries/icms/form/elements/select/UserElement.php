@@ -78,16 +78,16 @@ class UserElement extends TrayElement {
 				: array($value)
 			);
 		if ($user_count > $limit && count($value) > 0) {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item("uid", "(" . implode(",", $value) . ")", "IN"));
+			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem("uid", "(" . implode(",", $value) . ")", "IN"));
 		} else {
-			$criteria = new icms_db_criteria_Compo();
+			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 			$criteria->setLimit($limit);
 		}
 		$criteria->setSort('uname');
 		if (!$showremovedusers) {
-			$criteria->add(new icms_db_criteria_Item('level', '-1', '!='));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('level', '-1', '!='));
 		} elseif ($showremovedusers && $justremovedusers) {
-			$criteria->add(new icms_db_criteria_Item('level', '-1'));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('level', '-1'));
 		}
 		$criteria->setOrder('ASC');
 		$users = $member_handler->getUserList($criteria);

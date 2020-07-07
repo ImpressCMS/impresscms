@@ -35,14 +35,14 @@ class PageElement extends icms_form_elements_Tray {
 			$value = array($value);
 		}
 		$module_handler = icms::handler('icms_module');
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hasmain', 1));
-		$criteria->add(new icms_db_criteria_Item('isactive', 1));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('hasmain', 1));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1));
 		$module_list = $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module) {
 			$mods .= '<optgroup label="' . $module->getVar('name') . '">';
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_moduleid', $module->getVar('mid')));
-			$criteria->add(new icms_db_criteria_Item('page_status', 1));
+			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_moduleid', $module->getVar('mid')));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$sel = '';
 			if (in_array($module->getVar('mid') . '-0', $value)) {
@@ -61,8 +61,8 @@ class PageElement extends icms_form_elements_Tray {
 		}
 
 		$module = $module_handler->get(1);
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_moduleid', 1));
-		$criteria->add(new icms_db_criteria_Item('page_status', 1));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_moduleid', 1));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_status', 1));
 		$pages = $icms_page_handler->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0) {

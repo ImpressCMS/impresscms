@@ -287,7 +287,7 @@ class BlockModel extends \ImpressCMS\Core\IPF\AbstractModel
 					return $content;
 				} elseif ($c_type == static::CONTENT_TYPE_PHP) {
 					ob_start();
-					echo eval(icms_core_DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
+					echo eval(\ImpressCMS\Core\DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
 					$content = ob_get_contents();
 					ob_end_clean();
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
@@ -299,7 +299,7 @@ class BlockModel extends \ImpressCMS\Core\IPF\AbstractModel
 					return $myts->displayTarea($content, 1, 1);
 				} else {
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
-					return icms_core_DataFilter::checkVar($content, 'text', 'output');
+					return \ImpressCMS\Core\DataFilter::checkVar($content, 'text', 'output');
 				}
 				break;
 

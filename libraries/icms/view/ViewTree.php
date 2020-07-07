@@ -191,7 +191,7 @@ class ViewTree {
 			return $path;
 		}
 		list($parentid, $name) = $this->db->fetchRow($result);
-		$name = icms_core_DataFilter::htmlSpecialChars($name);
+		$name = \ImpressCMS\Core\DataFilter::htmlSpecialChars($name);
 		$path = '/' . $name . $path . '';
 		if ($parentid == 0) {
 			return $path;
@@ -236,7 +236,7 @@ class ViewTree {
 			$arr = $this->getChildTreeArray($catid, $order);
 			foreach ($arr as $option) {
 				$option['prefix'] = str_replace(".", "--", $option['prefix']);
-				$catpath = $option['prefix'] . "&nbsp;" . icms_core_DataFilter::htmlSpecialChars($option[$title]);
+				$catpath = $option['prefix'] . "&nbsp;" . \ImpressCMS\Core\DataFilter::htmlSpecialChars($option[$title]);
 				if ($option[$this->id] == $preset_id) {
 					$sel = " selected='selected'";
 				}
@@ -265,7 +265,7 @@ class ViewTree {
 			return $path;
 		}
 		list($parentid, $name) = $this->db->fetchRow($result);
-		$name = icms_core_DataFilter::htmlSpecialChars($name);
+		$name = \ImpressCMS\Core\DataFilter::htmlSpecialChars($name);
 		$path = '<a href="' . $funcURL . '&amp;' . $this->id . '=' . $sel_id . '">' . $name . '</a>' . $path . "";
 		if ($parentid == 0) {
 			return $path;

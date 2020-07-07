@@ -160,7 +160,7 @@ class Textsanitizer {
 	 * @return  string
 	 */
 	public function previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
-		 /* @deprecated Use icms_core_DataFilter::checkVar, instead - the events for previewTarea need to be added, first */
+		 /* @deprecated Use \ImpressCMS\Core\DataFilter::checkVar, instead - the events for previewTarea need to be added, first */
 
 		/* trigger all the events tied to the beforePreviewTarea event */
 		icms::$preload->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));

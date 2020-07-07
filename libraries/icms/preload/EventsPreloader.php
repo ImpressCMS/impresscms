@@ -114,14 +114,14 @@ class EventsPreloader {
 	 * - beforeFooter	 triggered when include/footer.php is called, at the beginning of the file
 	 * - startOutputInit	 triggered when starting to output the content, in include/header.php after instantiation of $xoopsTpl
 	 * - adminBeforeFooter	 triggered before the footer is loaded in the admin control panel
-	 * - beforeFilterTextareaInput	 triggered before text from a textarea is processed to save to the database (@see icms_core_DataFilter)
-	 * - afterFilterTextareaInput	 triggered after text from a textarea is processed to save to the database (@see icms_core_DataFilter)
-	 * - beforeFilterTextareaDisplay	 triggered before text from a textarea is processed to display (@see icms_core_DataFilter)
-	 * - afterFilterTextareaDisplay	 triggered after text from a textarea is processed to display (@see icms_core_DataFilter)
-	 * - beforeFilterHTMLinput	 triggered before text from a textarea is processed as HTML to save to the database (@see icms_core_DataFilter)
-	 * - afterFilterHTMLinput	 triggered after text from a textarea is processed as HTML to save to the database (@see icms_core_DataFilter)
-	 * - beforeFilterHTMLdisplay	 triggered before text from a textarea is processed as HTML to display (@see icms_core_DataFilter)
-	 * - afterFilterHTMLdisplay	 triggered after text from a textarea is processed as HTML to display (@see icms_core_DataFilter)
+	 * - beforeFilterTextareaInput	 triggered before text from a textarea is processed to save to the database (@see \ImpressCMS\Core\DataFilter)
+	 * - afterFilterTextareaInput	 triggered after text from a textarea is processed to save to the database (@see \ImpressCMS\Core\DataFilter)
+	 * - beforeFilterTextareaDisplay	 triggered before text from a textarea is processed to display (@see \ImpressCMS\Core\DataFilter)
+	 * - afterFilterTextareaDisplay	 triggered after text from a textarea is processed to display (@see \ImpressCMS\Core\DataFilter)
+	 * - beforeFilterHTMLinput	 triggered before text from a textarea is processed as HTML to save to the database (@see \ImpressCMS\Core\DataFilter)
+	 * - afterFilterHTMLinput	 triggered after text from a textarea is processed as HTML to save to the database (@see \ImpressCMS\Core\DataFilter)
+	 * - beforeFilterHTMLdisplay	 triggered before text from a textarea is processed as HTML to display (@see \ImpressCMS\Core\DataFilter)
+	 * - afterFilterHTMLdisplay	 triggered after text from a textarea is processed as HTML to display (@see \ImpressCMS\Core\DataFilter)
 	 * - beforeDisplayTarea	 triggered before before text from a textarea is processed to display (@see icms_core_Textsanitizer)
 	 * - afterDisplayTarea	 triggered after text from a textarea is processed to display (@see icms_core_Textsanitizer)
 	 * - beforePreviewTarea	 triggered before text from a textarea is processed for preview (@see icms_core_Textsanitizer)

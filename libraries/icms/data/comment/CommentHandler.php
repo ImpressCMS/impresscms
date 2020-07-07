@@ -85,10 +85,10 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  \icms_data_comment_Object[]
 	 */
 	public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
-		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_modid', (int) $module_id));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_itemid', (int) $item_id));
 		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('com_status', (int) ($status)));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_status', (int) ($status)));
 		}
 		if (isset($order)) {
 			$criteria->setOrder($order);
@@ -110,10 +110,10 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  \icms_data_comment_Object[]
 	 */
 	public function getCountByItemId($module_id, $item_id, $status = null) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
-		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_modid', (int) $module_id));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_itemid', (int) $item_id));
 		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('com_status', (int) $status));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_status', (int) $status));
 		}
 		return $this->getCount($criteria);
 	}
@@ -129,11 +129,11 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  \icms_data_comment_Object[]
 	 */
 	public function getTopComments($module_id, $item_id, $order, $status = null) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_modid', (int) $module_id));
-		$criteria->add(new icms_db_criteria_Item('com_itemid', (int) $item_id));
-		$criteria->add(new icms_db_criteria_Item('com_pid', 0));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_modid', (int) $module_id));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_itemid', (int) $item_id));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_pid', 0));
 		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('com_status', (int) $status));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_status', (int) $status));
 		}
 		$criteria->setOrder($order);
 		return $this->getObjects($criteria);
@@ -149,10 +149,10 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return \icms_data_comment_Object[]
 	 */
 	public function getThread($comment_rootid, $comment_id, $status = null) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('com_rootid', (int) $comment_rootid));
-		$criteria->add(new icms_db_criteria_Item('com_id', (int) $comment_id, '>='));
+		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_rootid', (int) $comment_rootid));
+		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_id', (int) $comment_id, '>='));
 		if (isset($status)) {
-			$criteria->add(new icms_db_criteria_Item('com_status', (int) $status));
+			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_status', (int) $status));
 		}
 		return $this->getObjects($criteria);
 	}
@@ -179,7 +179,7 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  bool
 	 */
 	public function deleteByModule($module_id) {
-		return $this->deleteAll(new icms_db_criteria_Item('com_modid', (int) $module_id));
+		return $this->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_modid', (int) $module_id));
 	}
 }
 

@@ -34,6 +34,9 @@
 
 namespace ImpressCMS\Core\Config;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+
 /**
  * Configuration handling class.
  * This class acts as an interface for handling general configurations
@@ -175,7 +178,7 @@ class Config {
 	public function &getConfig($id, $withoptions = false) {
 		$config = & $this->_cHandler->get($id);
 		if ($withoptions == true) {
-			$config->setConfOptions($this->getConfigOptions(new icms_db_criteria_Item('conf_id', $id)));
+			$config->setConfOptions($this->getConfigOptions(new CriteriaItem('conf_id', $id)));
 		}
 		return $config;
 	}
@@ -221,7 +224,7 @@ class Config {
 		$options = & $config->getConfOptions();
 		$count = count($options);
 		if ($count == 0) {
-			$options = $this->getConfigOptions(new icms_db_criteria_Item('conf_id', $config->getVar('conf_id')));
+			$options = $this->getConfigOptions(new CriteriaItem('conf_id', $config->getVar('conf_id')));
 			$count = count($options);
 		}
 		if (is_array($options) && $count > 0) {
@@ -268,8 +271,8 @@ class Config {
 	 */
 	public function &getConfigsByCat($category, $module = 0) {
 		if (is_array($category)) {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
-			$criteria->add(new icms_db_criteria_Item('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
+			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int) $module));
+			$criteria->add(new CriteriaItem('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach (array_keys($configs) as $i) {
@@ -285,9 +288,9 @@ class Config {
 				return $this->_cachedConfigs[$module][$category];
 			}
 
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
+			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int) $module));
 			if (!empty($category)) {
-				$criteria->add(new icms_db_criteria_Item('conf_catid', (int) $category));
+				$criteria->add(new CriteriaItem('conf_catid', (int) $category));
 			}
 			$ret = array();
 			$configs = $this->getConfigs($criteria, true);
@@ -358,9 +361,9 @@ class Config {
 		if (!empty($this->_cachedConfigs[$conf_modid][$conf_catid])) {
 			return $this->_cachedConfigs[$conf_modid][$conf_catid];
 		} else {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', $conf_modid));
+			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', $conf_modid));
 			if (empty($conf_catid)) {
-				$criteria->add(new icms_db_criteria_Item('conf_catid', $conf_catid));
+				$criteria->add(new CriteriaItem('conf_catid', $conf_catid));
 			}
 			$configs = & $this->_cHandler->getObjects($criteria);
 			$confcount = count($configs);
