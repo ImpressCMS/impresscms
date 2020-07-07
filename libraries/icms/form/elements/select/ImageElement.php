@@ -153,12 +153,12 @@ class ImageElement extends SelectElement {
 	 * @return   string    $ret    the constructed select form attribute HTML
 	 */
 	public function render() {
-		if (!is_object(icms::$user)) {
+		if (!is_object(\icms::$user)) {
 			$group = array(ICMS_GROUP_ANONYMOUS);
 		} else {
-			$group = & icms::$user->getGroups();
+			$group = & \icms::$user->getGroups();
 		}
-		$imgcat_handler = icms::handler('icms_image_category');
+		$imgcat_handler = \icms::handler('icms_image_category');
 		$catlist = $imgcat_handler->getList($group, 'imgcat_write', 1);
 		$catlist_total = count($catlist);
 		$optIds = $this->getOptGroupsID();

@@ -30,11 +30,11 @@ class PageElement extends icms_form_elements_Tray {
 	 * @return string html
 	 */
 	private function getPageSelOptions($value = null) {
-		$icms_page_handler = icms::handler('icms_data_page');
+		$icms_page_handler = \icms::handler('icms_data_page');
 		if (!is_array($value)) {
 			$value = array($value);
 		}
-		$module_handler = icms::handler('icms_module');
+		$module_handler = \icms::handler('icms_module');
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('hasmain', 1));
 		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1));
 		$module_list = $module_handler->getObjects($criteria);

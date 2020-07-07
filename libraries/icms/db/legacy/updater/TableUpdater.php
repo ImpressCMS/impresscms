@@ -93,9 +93,9 @@ class TableUpdater {
 	 *
 	 */
 	function __construct($name) {
-		$this->db = icms::$xoopsDB;
+		$this->db = \icms::$xoopsDB;
 		/** For backward compat */
-		$this->_db = icms::$xoopsDB;
+		$this->_db = \icms::$xoopsDB;
 
 		$this->_name = $name;
 		$this->_data = array();

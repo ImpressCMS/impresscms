@@ -65,7 +65,7 @@ class Rss {
 	 * Render the feed and display it directly
 	 */
 	public function render() {
-		icms::$logger->disableLogger();
+		\icms::$logger->disableLogger();
 
 		$feed = new \FeedWriter\RSS2();
 		$feed->setTitle($this->title);

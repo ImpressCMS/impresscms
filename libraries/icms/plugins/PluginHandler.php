@@ -42,7 +42,7 @@ class PluginHandler {
 	 */
 	public function getPluginsArray($path) {
 
-		$module_handler = icms::handler('icms_module');
+		$module_handler = \icms::handler('icms_module');
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1));
 		$tempModulesObj = $module_handler->getObjects($criteria);

@@ -15,10 +15,10 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * (in this example the Autocomplete field would use the conf_name field of the config table as a
  * lookup):
  *
- * icms::$logger->disableLogger();
- * $sql = "SELECT * FROM " . icms::$xoopsDB->prefix("config") . " WHERE conf_name LIKE '%" . $_GET['term'] . "%'";
- * $result = icms::$xoopsDB->query($sql);
- * while ($myrow = icms::$xoopsDB->fetchArray($result)) $ret[] = array("item" => $myrow["conf_name"]);
+ * \icms::$logger->disableLogger();
+ * $sql = "SELECT * FROM " . \icms::$xoopsDB->prefix("config") . " WHERE conf_name LIKE '%" . $_GET['term'] . "%'";
+ * $result = \icms::$xoopsDB->query($sql);
+ * while ($myrow = \icms::$xoopsDB->fetchArray($result)) $ret[] = array("item" => $myrow["conf_name"]);
  * echo $_GET["callback"] . "(" . json_encode($ret) . ")";
  *
  * Important:

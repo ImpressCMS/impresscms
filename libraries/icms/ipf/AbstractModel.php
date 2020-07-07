@@ -1036,7 +1036,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return icms_data_urllink_Object
 	 */
 	public function getUrlLinkObj($key) {
-		$urllink_handler = icms::handler("icms_data_urllink");
+		$urllink_handler = \icms::handler("icms_data_urllink");
 
 		$urllinkid = $this->getVar($key, 'n');
 		if ($urllinkid != 0) {
@@ -1053,7 +1053,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return bool
 	 */
 	public function storeUrlLinkObj($urllinkObj) {
-		$urllink_handler = icms::handler("icms_data_urllink");
+		$urllink_handler = \icms::handler("icms_data_urllink");
 		return $urllink_handler->insert($urllinkObj);
 	}
 
@@ -1065,7 +1065,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return icms_data_file_Object
 	 */
 	function getFileObj($key) {
-		$file_handler = icms::handler("icms_data_file");
+		$file_handler = \icms::handler("icms_data_file");
 		$fileid = $this->getVar($key) != null?$this->getVar($key):0;
 		if ($fileid != 0) {
 			return $file_handler->get($fileid);
@@ -1081,7 +1081,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return bool
 	 */
 	function storeFileObj($fileObj) {
-		$file_handler = icms::handler("icms_data_file");
+		$file_handler = \icms::handler("icms_data_file");
 		return $file_handler->insert($fileObj);
 	}
 
@@ -1097,7 +1097,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	public function unserialize($serialized) {
 		$data = unserialize($serialized);
 		if ($data['handler']['module'] == 'core' || $data['handler']['module'] == 'icms') {
-			$handler = icms::handler('icms_' . $data['handler']['itemname']);
+			$handler = \icms::handler('icms_' . $data['handler']['itemname']);
 		} else {
 			$handler = icms_getModuleHandler($data['handler']['itemname'], $data['handler']['module']);
 		}

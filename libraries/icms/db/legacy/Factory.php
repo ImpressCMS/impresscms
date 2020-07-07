@@ -67,7 +67,7 @@ class DatabaseConnectionFactory extends CurrentDatabaseConnectionFactory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	static public function &instance() {
-		return icms::getInstance()->get('db');
+		return \icms::getInstance()->get('db');
 	}
 
 	/**
@@ -79,7 +79,7 @@ class DatabaseConnectionFactory extends CurrentDatabaseConnectionFactory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	static public function &getDatabase() {
-		return icms::getInstance()->get('db');
+		return \icms::getInstance()->get('db');
 	}
 
 	/**

@@ -44,7 +44,7 @@ class CheckboxElement extends icms_form_elements_Checkbox {
 				if (isset($control['itemHandler'])) {
 					if (!isset($control['module'])) {
 						// Creating the specified core object handler
-						$control_handler = icms::handler($control['itemHandler']);
+						$control_handler = \icms::handler($control['itemHandler']);
 					} else {
 						$control_handler = & icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}

@@ -66,7 +66,7 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 	public function getBlockPositions($full = false) {
 		if (empty($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
-			$icms_blockposition_handler = icms::handler('icms_view_block_position');
+			$icms_blockposition_handler = \icms::handler('icms_view_block_position');
 			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
 			//			$result = $this->db->query($sql);
 			//			while ($row = $this->db->fetchArray($result)) {
@@ -129,7 +129,7 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 			$tp = ($side == -2)?'L':($side == -6)?'C':'';
 			if ($tp != '') {
 			 	$q_side = "";
-				$icms_blockposition_handler = icms::handler('icms_view_block_position');
+				$icms_blockposition_handler = \icms::handler('icms_view_block_position');
 				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);

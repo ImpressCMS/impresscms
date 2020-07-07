@@ -282,7 +282,7 @@ class Form extends icms_form_Theme {
 		$permissions = $this->targetObject->handler->getPermissions();
 
 		if ($permissions) {
-			$member_handler = icms::handler('icms_member');
+			$member_handler = \icms::handler('icms_member');
 			$group_list = $member_handler->getGroupList();
 			asort($group_list);
 			foreach ($permissions as $permission) {

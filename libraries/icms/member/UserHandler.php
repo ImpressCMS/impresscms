@@ -136,7 +136,7 @@ class UserHandler
 		global $icmsConfigUser;
 
 		// initializations
-		$member_handler = icms::handler('icms_member');
+		$member_handler = \icms::handler('icms_member');
 		$thisUser = ($uid > 0)?$thisUser = $member_handler->getUser($uid):false;
 		$icmsStopSpammers = new icms_core_StopSpammer();
 		$stop = '';
@@ -239,7 +239,7 @@ class UserHandler
 		$uid = (int) $uid;
 		if ($uid > 0) {
 			if ($users == array()) {
-				$member_handler = icms::handler("icms_member");
+				$member_handler = \icms::handler("icms_member");
 				$user = $member_handler->getUser($uid);
 			} else {
 				if (!isset($users[$uid])) {
@@ -292,7 +292,7 @@ class UserHandler
 	 * @return	string	A username matching the provided email address
 	 */
 	static public function getUnameFromEmail($email = '') {
-				$handler = icms::handler('icms_member_user');
+				$handler = \icms::handler('icms_member_user');
 		if ($email !== '') {
 			$sql = $handler->db->query("SELECT uname, email FROM " . $handler->table
 				. " WHERE email = '" . (!empty($email)?htmlspecialchars($email, ENT_QUOTES, _CHARSET):'')

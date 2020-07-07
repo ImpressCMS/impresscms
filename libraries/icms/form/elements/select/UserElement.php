@@ -129,7 +129,7 @@ class UserElement extends TrayElement {
 					}
 					</script>";
 
-		$token = icms::$security->createToken();
+		$token = \icms::$security->createToken();
 		$action_tray = new icms_form_elements_Tray("", " | ");
 		$action_tray->addElement(new icms_form_elements_Label('',
 			"<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name

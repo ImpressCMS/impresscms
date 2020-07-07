@@ -132,8 +132,8 @@ class GroupPermissionForm extends AbstractForm {
 			$this->_loadAllChildItemIds($item_id, $this->_itemTree[$item_id]['allchild']);
 		}
 
-		$gperm_handler = icms::handler('icms_member_groupperm');
-		$member_handler = icms::handler('icms_member');
+		$gperm_handler = \icms::handler('icms_member_groupperm');
+		$member_handler = \icms::handler('icms_member');
 		$glist = $member_handler->getGroupList();
 
 		foreach (array_keys($glist) as $i) {

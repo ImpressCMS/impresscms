@@ -161,7 +161,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	static public function getUnameFromId($userid, $usereal = 0)
 	{
 		trigger_error('Use same function from handler. This one is deprecahed!', E_DEPRECATED);
-		$handler = icms::handler('icms_member_user');
+		$handler = \icms::handler('icms_member_user');
 		return $handler->getUnameFromId($userid, (bool)$usereal);
 	}
 
@@ -276,7 +276,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 		global $icmsConfigUser, $icmsConfig;
 
         if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
-            $member_handler = icms::handler('icms_member');
+            $member_handler = \icms::handler('icms_member');
             $mailer = new icms_messaging_Handler();
             $mailer->useMail();
             $mailer->setTemplate('newuser_notify.tpl');
@@ -317,7 +317,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 		}
 
 		if (!isset($buffer[$module_id])) {
-			$moduleperm_handler = icms::handler('icms_member_groupperm');
+			$moduleperm_handler = \icms::handler('icms_member_groupperm');
 			$buffer[$module_id] = $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
 		}
 		return $buffer[$module_id];
@@ -331,7 +331,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	public function &getGroups()
 	{
 		if (empty($this->_groups)) {
-			$member_handler = icms::handler('icms_member');
+			$member_handler = \icms::handler('icms_member');
 			$this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
 		}
 		return $this->_groups;
@@ -363,7 +363,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	 */
 	public function isOnline() {
 		if (!isset($this->_isOnline)) {
-			$onlinehandler = icms::handler('icms_core_Online');
+			$onlinehandler = \icms::handler('icms_core_Online');
 			$this->_isOnline = ($onlinehandler->getCount(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('online_uid', $this->getVar('uid'))) > 0)? true : false;
 		}
 		return $this->_isOnline;
@@ -454,10 +454,10 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	 */
 	public function isSameAsLoggedInUser()
 	{
-		if (!icms::$user) {
+		if (!\icms::$user) {
 					return false;
 		}
-		return icms::$user->getVar('uid') == $this->getVar('uid');
+		return \icms::$user->getVar('uid') == $this->getVar('uid');
 	}
 
 	/**
@@ -467,7 +467,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	public function rank()
 	{
 		if (!isset($this->_rank)) {
-			$this->_rank = icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
+			$this->_rank = \icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
 		}
 		return $this->_rank;
 	}

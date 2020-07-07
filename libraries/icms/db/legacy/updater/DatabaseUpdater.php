@@ -167,7 +167,7 @@ class DatabaseUpdater {
 	function insertConfig($conf_catid, $conf_name, $conf_title, $conf_value, $conf_desc, $conf_formtype, $conf_valuetype, $conf_order)
 	{
 		global $dbVersion;
-		$configitem_handler = icms::handler('icms_config_item');
+		$configitem_handler = \icms::handler('icms_config_item');
 		$configitemObj = $configitem_handler->create();
 		$configitemObj->setVar('conf_modid', 0);
 		$configitemObj->setVar('conf_catid', $conf_catid);
@@ -559,7 +559,7 @@ class DatabaseUpdater {
 		if (!$dirname) {
 			$dirname = icms_getCurrentModuleName();
 		}
-		$module_handler = icms::handler('icms_module');
+		$module_handler = \icms::handler('icms_module');
 		$module = $module_handler->getByDirname($dirname);
 		$module->setVar('dbversion', $newDBVersion);
 

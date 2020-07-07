@@ -52,7 +52,7 @@ class icms_auth_method_ldap_Provisioning {
 	 * @return  \\ImpressCMS\Core\Member\UserModel|false \ImpressCMS\Core\Member\UserModel or false if failed
 	 */
 	public function get\ImpressCMS\Core\Member\UserModel($uname) {
-		$member_handler = icms::handler('icms_member');
+		$member_handler = \icms::handler('icms_member');
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uname', $uname);
 		$getuser = $member_handler->getUsers($criteria);
 		if (count($getuser) == 1) {
@@ -96,7 +96,7 @@ class icms_auth_method_ldap_Provisioning {
 	 */
 	public function add($datas, $uname, $pwd = null) {
 		$ret = false;
-		$member_handler = icms::handler('icms_member');
+		$member_handler = \icms::handler('icms_member');
 		// Create ImpressCMS Database User
 		$newuser = $member_handler->createUser();
 		$newuser->setVar('uname', $uname);
@@ -138,7 +138,7 @@ class icms_auth_method_ldap_Provisioning {
 	 */
 	public function change(&$icmsUser, $datas, $uname, $pwd = null) {
 		$ret = false;
-		$member_handler = icms::handler('icms_member');
+		$member_handler = \icms::handler('icms_member');
 		$icmsUser->setVar('pass', md5(stripslashes($pwd)));
 		$tab_mapping = explode('|', $this->ldap_field_mapping);
 		foreach ($tab_mapping as $mapping) {

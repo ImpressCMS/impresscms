@@ -50,7 +50,7 @@ class CategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 			$criteria->setSort($sort);
 			$criteria->setOrder($order);
-			$userIsAdmin = is_object(icms::$user) && icms::$user->isAdmin();
+			$userIsAdmin = is_object(\icms::$user) && \icms::$user->isAdmin();
 
 			if ($perm_name && !$userIsAdmin) {
 				if (!$this->setGrantedObjectsCriteria($criteria, $perm_name)) {

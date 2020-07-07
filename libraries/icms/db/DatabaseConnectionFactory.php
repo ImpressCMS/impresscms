@@ -63,7 +63,7 @@ class DatabaseConnectionFactory
 	 */
 	static public function instance()
 	{
-		return icms::getInstance()->get('db');
+		return \icms::getInstance()->get('db');
 	}
 
 	/**
@@ -74,6 +74,6 @@ class DatabaseConnectionFactory
 	 * @throws RuntimeException
 	 */
 	static public function pdoInstance() {
-		return icms::getInstance()->get('db');
+		return \icms::getInstance()->get('db');
 	}
 }

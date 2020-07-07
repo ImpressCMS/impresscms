@@ -75,12 +75,12 @@ class PageBuilder {
 	public function retrieveBlocks() {
 		global $xoops, $icmsModule, $icmsConfig;
 
-		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+		$groups = is_object(\icms::$user)? \icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 		self::getPage();
 		$modid = self::$modid['module'] . '-' . self::$modid['page'];
 		$isStart = self::$modid['isStart'];
 
-		$icms_block_handler = icms::handler('icms_view_block');
+		$icms_block_handler = \icms::handler('icms_view_block');
 		$oldzones = $icms_block_handler->getBlockPositions();
 
 		foreach ($oldzones as $zone) {
@@ -94,15 +94,15 @@ class PageBuilder {
 		}
 
 		/** moved here from buildBlocks to reduce redundant calls */
-		$gperm = icms::handler('icms_member_groupperm');
-		$ugroups = @is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+		$gperm = \icms::handler('icms_member_groupperm');
+		$ugroups = @is_object(\icms::$user)? \icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 		$agroups = $gperm->getGroupIds('system_admin', 5); //XOOPS_SYSTEM_BLOCK constant not available?
 		$this->uagroups = array_intersect($ugroups, $agroups);
 		/** End of snippet */
 
 		$block_arr = $icms_block_handler->getAllByGroupModule($groups, $modid, $isStart, XOOPS_BLOCK_VISIBLE);
 		// prefetch blocks to reduce the amount of queries required in the later step of rendering
-		$tplfile_handler = icms::handler('icms_view_template_file');
+		$tplfile_handler = \icms::handler('icms_view_template_file');
 		$tplfile_handler->prefetchBlocks($block_arr);
 		foreach ($block_arr as $block) {
 			$side = $oldzones[$block->side];
@@ -132,8 +132,8 @@ class PageBuilder {
 
 		// getting the start module and page configured in the admin panel
 		if (is_array($icmsConfig['startpage'])) {
-			$member_handler = icms::handler('icms_member');
-			$group = $member_handler->getUserBestGroup((is_object(icms::$user)? icms::$user->getVar('uid'):0));
+			$member_handler = \icms::handler('icms_member');
+			$group = $member_handler->getUserBestGroup((is_object(\icms::$user)? \icms::$user->getVar('uid'):0));
 			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 		}
 
@@ -141,10 +141,10 @@ class PageBuilder {
 
 		// setting the full and relative url of the actual page
 		$clean_request = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
-		$fullurl = icms::$urls['http'] . icms::$urls['httphost'] . $clean_request;
+		$fullurl = \icms::$urls['http'] . \icms::$urls['httphost'] . $clean_request;
 		$url = substr(str_replace(ICMS_URL, '', $fullurl), 1);
 
-		$icms_page_handler = icms::handler('icms_data_page');
+		$icms_page_handler = \icms::handler('icms_data_page');
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_url', $fullurl));
 		if (!empty($url)) {
 			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_url', $url), 'OR');
@@ -158,7 +158,7 @@ class PageBuilder {
 			$purl = filter_var($page->getVar('page_url'), FILTER_SANITIZE_URL);
 			$mid = (int) $page->getVar('page_moduleid');
 			$pid = $page->getVar('page_id');
-			$module_handler = icms::handler('icms_module');
+			$module_handler = \icms::handler('icms_module');
 			$module = $module_handler->get($mid);
 			$dirname = $module->getVar('dirname');
 			$isStart = ($startMod == $mid . '-' . $pid);
@@ -215,8 +215,8 @@ class PageBuilder {
 		global $icmsConfigPersona;
 		$bid = $xobject->getVar('bid');
 		if ($icmsConfigPersona['editre_block'] == true) {
-			if (icms::$user && count($this->uagroups) > 0) {
-				$url = base64_encode(str_replace(ICMS_URL, '', icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
+			if (\icms::$user && count($this->uagroups) > 0) {
+				$url = base64_encode(str_replace(ICMS_URL, '', \icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
 				$titlebtns = '&nbsp;<span id="edit_block" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><span class="glyphicon glyphicon-cog" style="font-size: 16px;"></span></a>'
 					. '<ul id="ed_block_' . $bid . '" class="dropdown-menu add-arrow">'
 					. "<li><a>" . _EDIT . " " . _BLOCK_ID . " " . $bid . "</a></li>"
@@ -260,14 +260,14 @@ class PageBuilder {
 		);
 
 		if (!$bcachetime || !$template->is_cached($tplName, $cacheid)) {
-			icms::$logger->addBlock($xobject->getVar('name'));
+			\icms::$logger->addBlock($xobject->getVar('name'));
 			if (!($bresult = $xobject->buildBlock())) {
 				return false;
 			}
 			$template->assign('block', $bresult);
 			$block['content'] = $bresult['content'] ? $bresult['content'] : $template->fetch($tplName, $cacheid);
 		} else {
-			icms::$logger->addBlock($xobject->getVar('name'), true, $bcachetime);
+			\icms::$logger->addBlock($xobject->getVar('name'), true, $bcachetime);
 			$block['content'] = $template->fetch($tplName, $cacheid);
 		}
 		return $block;

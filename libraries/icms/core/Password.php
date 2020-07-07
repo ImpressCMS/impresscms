@@ -110,17 +110,17 @@ final class Password {
 		$table = new TableUpdater('users');
 
 		if ($table->fieldExists('loginname')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE loginname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE loginname = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($pass_expired) = \icms::$xoopsDB->fetchRow($sql);
 		} elseif ($table->fieldExists('login_name')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE login_name = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE login_name = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($pass_expired) = \icms::$xoopsDB->fetchRow($sql);
 		} else {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE uname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE uname = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($pass_expired) = \icms::$xoopsDB->fetchRow($sql);
 		}
 
 		if ($pass_expired == 1) {
@@ -162,17 +162,17 @@ final class Password {
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
 		if ($table->fieldExists('loginname')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE loginname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($salt) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE loginname = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($salt) = \icms::$xoopsDB->fetchRow($sql);
 		} elseif ($table->fieldExists('login_name')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE login_name = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($salt) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE login_name = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($salt) = \icms::$xoopsDB->fetchRow($sql);
 		} else {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE uname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($salt) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE uname = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($salt) = \icms::$xoopsDB->fetchRow($sql);
 		}
 
 		return $salt;
@@ -212,17 +212,17 @@ final class Password {
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
 		if ($table->fieldExists('loginname')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE loginname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($enc_type) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE loginname = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($enc_type) = \icms::$xoopsDB->fetchRow($sql);
 		} elseif ($table->fieldExists('login_name')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE login_name = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($enc_type) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE login_name = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($enc_type) = \icms::$xoopsDB->fetchRow($sql);
 		} else {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE uname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($enc_type) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE uname = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($enc_type) = \icms::$xoopsDB->fetchRow($sql);
 		}
 
 		return (int) $enc_type;
@@ -376,17 +376,17 @@ final class Password {
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
 		if ($table->fieldExists('loginname')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE loginname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE loginname = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($pass) = \icms::$xoopsDB->fetchRow($sql);
 		} elseif ($table->fieldExists('login_name')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE login_name = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE login_name = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($pass) = \icms::$xoopsDB->fetchRow($sql);
 		} else {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE uname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass) = icms::$xoopsDB->fetchRow($sql);
+			$sql = \icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE uname = %s",
+				\icms::$xoopsDB->prefix('users'), \icms::$xoopsDB->quoteString($uname)));
+			list($pass) = \icms::$xoopsDB->fetchRow($sql);
 		}
 
 		return $pass;

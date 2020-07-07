@@ -82,7 +82,7 @@ class PrivateMessageHandler extends \ImpressCMS\Core\IPF\Handler
 	public function getCountForUser(\\ImpressCMS\Core\Member\UserModel $user = null): int {
 		static $msgCount = [];
 		if ($user === null) {
-			$user = icms::$user;
+			$user = \icms::$user;
 		}
 		if (!isset($msgCount[$user->uid])) {
 			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('read_msg', 0));

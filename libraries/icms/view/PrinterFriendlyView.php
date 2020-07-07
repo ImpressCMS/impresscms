@@ -59,7 +59,7 @@ class PrinterFriendlyView {
 		$this->_tpl->assign('icms_print_content', $this->_content);
 		$this->_tpl->assign('icms_print_width', $this->_width);
 
-		$current_url = icms::$urls['full'];
+		$current_url = \icms::$urls['full'];
 
 		$this->_tpl->assign('icms_print_currenturl', $current_url);
 		$this->_tpl->assign('icms_print_url', $this->url);

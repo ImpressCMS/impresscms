@@ -19,7 +19,7 @@ class URLLinkElement extends icms_form_elements_Tray {
 	public function __construct($object, $key) {
 		parent::__construct($object->getVarInfo($key, 'form_caption'), "&nbsp;");
 		$urllinkObj = $object->getUrlLinkObj($key);
-		$module_handler = icms::handler("icms_module");
+		$module_handler = \icms::handler("icms_module");
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
 		$this->addElement(new icms_form_elements_Label("", _CO_ICMS_URLLINK_URL));

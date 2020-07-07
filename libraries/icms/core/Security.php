@@ -89,7 +89,7 @@ class Security {
 
 		$tokenData = $session->getCsrfToken();
 		if (!$tokenData->isValid($token)) {
-			icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
+			\icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
 			return false;
 		}
 		if ($clearIfValid) {

@@ -31,7 +31,7 @@ class icms_auth_method_Local extends icms_auth_Object {
 	 * @return \\ImpressCMS\Core\Member\UserModel
 	 */
 	public function authenticate($uname, $pwd = null) {
-		$member_handler = icms::handler('icms_member');
+		$member_handler = \icms::handler('icms_member');
 		$user = $member_handler->loginUser($uname, $pwd);
 
 		if ($user == false) {

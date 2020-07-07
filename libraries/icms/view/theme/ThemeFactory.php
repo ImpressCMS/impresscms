@@ -90,7 +90,7 @@ class ThemeFactory {
 	 */
 	static public function getThemesList() {
 		$dirlist = [];
-		$fs = icms::getInstance()->get('filesystem');
+		$fs = \icms::getInstance()->get('filesystem');
 		foreach ($fs->listContents('themes://') as $fileInfo) {
 			$file = $fileInfo['basename'];
 			if (substr($file, 0, 1) == '.' || $fs->has('themes://' . $file . '/theme.html') === false) {
@@ -107,7 +107,7 @@ class ThemeFactory {
 	 */
 	static public function getAdminThemesList() {
 		$items = [];
-		$fs = icms::getInstance()->get('filesystem');
+		$fs = \icms::getInstance()->get('filesystem');
 		foreach ($fs->listContents('themes://') as $fileInfo) {
 			$file = $fileInfo['basename'];
 			if (substr($file, 0, 1) == '.' || $fs->has('themes://' . $file . '/theme_admin.html') === false) {

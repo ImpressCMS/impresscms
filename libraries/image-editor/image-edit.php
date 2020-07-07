@@ -15,7 +15,7 @@ use WideImage\WideImage;
 
 $xoopsOption ['nodebug'] = 1;
 
-if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGroups())) {
+if (!is_object(\icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, \icms::$user->getGroups())) {
 	exit(_NOPERM);
 }
 
@@ -130,9 +130,9 @@ if (!empty($op) && $op == 'save') {
 	$simage_temp = $image_temp;
 	$soverwrite = $overwrite;
 
-	$image_handler = icms::handler('icms_image');
+	$image_handler = \icms::handler('icms_image');
 	$simage = & $image_handler->get($simage_id);
-	$imgcat_handler = icms::handler('icms_image_category');
+	$imgcat_handler = \icms::handler('icms_image_category');
 	$imagecategory = & $imgcat_handler->get ( $simage->getVar ( 'imgcat_id' ) );
 
 	$categ_path = $imgcat_handler->getCategFolder ( $imagecategory );
@@ -214,13 +214,13 @@ if (!empty($op) && $op == 'save') {
 	exit ();
 }
 
-$image_handler = icms::handler('icms_image');
+$image_handler = \icms::handler('icms_image');
 $original_image = & $image_handler->get ( $image_id );
 if (! is_object ( $original_image )) {
 	die ( _ERROR );
 }
 
-$imgcat_handler = icms::handler('icms_image_category');
+$imgcat_handler = \icms::handler('icms_image_category');
 $imagecategory = & $imgcat_handler->get ( $original_image->getVar ( 'imgcat_id' ) );
 if (! is_object ( $imagecategory )) {
 	die ( _ERROR );

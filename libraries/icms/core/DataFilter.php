@@ -450,12 +450,12 @@ class DataFilter {
 	 * @return  string
 	 */
 	static public function filterTextareaInput($text) {
-		icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
+		\icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
 		$text = self::htmlSpecialChars($text);
 		$text = self::stripSlashesGPC($text);
 
-		icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
+		\icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
 
 		return $text;
 	}
@@ -472,7 +472,7 @@ class DataFilter {
 	 * @return  string
 	 */
 	static public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
-		icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
+		\icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 
 		// neccessary for the time being until we rework the IPF & Data Object Types in 2.0
 		$text = str_replace('<!-- input filtered -->', '', $text);
@@ -496,7 +496,7 @@ class DataFilter {
 		}
 		$text = self::codeConv($text, $icode, $image);
 
-		icms::$preload->triggerEvent('afterFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
+		\icms::$preload->triggerEvent('afterFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 		return $text;
 	}
 
@@ -513,7 +513,7 @@ class DataFilter {
 	 * @return  string
 	 */
 	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1, $br = 0) {
-		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, 1, 1, 1, $br));
+		\icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 
 		$html = str_replace('<!-- input filtered -->', '', $html);
 
@@ -531,7 +531,7 @@ class DataFilter {
 
 		$html .= '<!-- input filtered -->';
 
-		icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, 1, 1, 1, $br));
+		\icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 		return $html;
 	}
 
@@ -548,7 +548,7 @@ class DataFilter {
 	 * @return  string
 	 */
 	static public function filterHTMLdisplay($html, $icode = 1, $br = 0) {
-		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
+		\icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
 
 		$ifiltered = strpos($html, '<!-- input filtered -->');
 		if ($ifiltered === false) {
@@ -573,7 +573,7 @@ class DataFilter {
 //        $html = str_replace('<!-- input filtered -->', '', $html);
 //        $html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
 
-		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, 1, $br));
+		\icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, 1, $br));
 		return $html;
 	}
 
@@ -1287,8 +1287,8 @@ class DataFilter {
 	 */
 	static private function priv_getSmileys($all = false) {
 		if (count(self::$allSmileys) == 0) {
-			if ($result = icms::$xoopsDB->query("SELECT * FROM " . icms::$xoopsDB->prefix('smiles'))) {
-				while ($smiley = icms::$xoopsDB->fetchArray($result)) {
+			if ($result = \icms::$xoopsDB->query("SELECT * FROM " . \icms::$xoopsDB->prefix('smiles'))) {
+				while ($smiley = \icms::$xoopsDB->fetchArray($result)) {
 					if ($smiley['display']) {
 						array_push(self::$displaySmileys, $smiley);
 					}

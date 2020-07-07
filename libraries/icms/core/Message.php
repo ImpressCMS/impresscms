@@ -140,7 +140,7 @@ class Message {
 		}
 	}
 	if ($addtoken !== false) {
-		echo icms::$security->getTokenHTML();
+		echo \icms::$security->getTokenHTML();
 	}
 	echo '<input class="btn btn-primary" type="submit" name="confirm_submit" value="' . $submit
 		. '" /> <input class="btn btn-danger" type="button" name="confirm_back" value="' . _CANCEL

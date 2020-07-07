@@ -67,9 +67,9 @@ class Template extends SmartyBC
 
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
-			$groups = (is_object(icms::$user))? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+			$groups = (is_object(\icms::$user))? \icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 			$moduleid = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->getVar('mid'):1;
-			$gperm_handler = icms::handler('icms_member_groupperm');
+			$gperm_handler = \icms::handler('icms_member_groupperm');
 			if ($icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
 			}
@@ -99,7 +99,7 @@ class Template extends SmartyBC
 			)
 		);
 
-		$this->registerObject('icms',icms::getInstance(),null,false);
+		$this->registerObject('icms',\icms::getInstance(),null,false);
 	}
 
 	/**
@@ -140,7 +140,7 @@ class Template extends SmartyBC
 	 * @throws \Psr\Cache\InvalidArgumentException
 	 */
 	public static function template_touch($tpl_id) {
-		$tplFileHandler = & icms::handler('icms_view_template_file');
+		$tplFileHandler = & \icms::handler('icms_view_template_file');
 		$tplFile = & $tplFileHandler->get($tpl_id);
 
 		if (!is_object($tplFile)) {

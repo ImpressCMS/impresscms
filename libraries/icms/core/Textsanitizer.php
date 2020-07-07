@@ -133,7 +133,7 @@ class Textsanitizer {
 	 */
 	public function displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
 		/* trigger all the events tied to the beforeDisplayTarea event */
-		icms::$preload->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		if ($html = 0) {
 			$text = DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
@@ -142,7 +142,7 @@ class Textsanitizer {
 		}
 
 		/* trigger all events tied to the afterDisplayTarea event */
-		icms::$preload->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 		return $text;
 	}
 
@@ -163,7 +163,7 @@ class Textsanitizer {
 		 /* @deprecated Use \ImpressCMS\Core\DataFilter::checkVar, instead - the events for previewTarea need to be added, first */
 
 		/* trigger all the events tied to the beforePreviewTarea event */
-		icms::$preload->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		$text = DataFilter::stripSlashesGPC($text);
 
@@ -174,7 +174,7 @@ class Textsanitizer {
 		}
 
 		/* trigger all the events tied to the afterPreviewTarea event */
-		icms::$preload->triggerEvent('afterPreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('afterPreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		return $text;
 	}

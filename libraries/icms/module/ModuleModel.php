@@ -117,7 +117,7 @@ class ModuleModel
 
 	/**
 	 * Initializes the module/application.
-	 * This method is called during execution of icms::launchModule() to allow the module
+	 * This method is called during execution of \icms::launchModule() to allow the module
 	 * to setup its global structures.
 	 * @return void
 	 */

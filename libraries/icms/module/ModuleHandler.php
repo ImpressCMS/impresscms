@@ -101,7 +101,7 @@ class ModuleHandler
 	 */
 	static public function getActive()
 	{
-		$module_handler = new self(icms::$xoopsDB);
+		$module_handler = new self(\icms::$xoopsDB);
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1);
 		return $module_handler->getList($criteria, true);
 	}
@@ -114,20 +114,20 @@ class ModuleHandler
 	 */
 	static public function checkModuleAccess($module, $inAdmin = false)
 	{
-		if ($inAdmin && !icms::$user) {
+		if ($inAdmin && !\icms::$user) {
 			return false;
 		}
 		/* @var $perm_handler icms_member_groupperm_Handler */
-		$perm_handler = icms::handler('icms_member_groupperm');
+		$perm_handler = \icms::handler('icms_member_groupperm');
 		if ($inAdmin) {
 			if (!$module) {
 				// We are in /admin.php
-				return icms::$user->isAdmin(-1);
+				return \icms::$user->isAdmin(-1);
 			} else {
-				return $perm_handler->checkRight('module_admin', $module->mid, icms::$user->getGroups());
+				return $perm_handler->checkRight('module_admin', $module->mid, \icms::$user->getGroups());
 			}
 		} elseif ($module) {
-			$groups = (icms::$user) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+			$groups = (\icms::$user) ? \icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
 			return $perm_handler->checkRight('module_read', $module->mid, $groups);
 		}
 		// We are in /something.php: let the page handle permissions
@@ -171,7 +171,7 @@ class ModuleHandler
 		/**
 		 * @var SetupStepInterface[] $steps
 		 */
-		$steps = (array)icms::getInstance()->get('setup_step.module.install');
+		$steps = (array)\icms::getInstance()->get('setup_step.module.install');
 		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
 			return $stepA->getPriority() > $stepB->getPriority();
 		});
@@ -234,7 +234,7 @@ class ModuleHandler
 		/**
 		 * @var icms_member_Handler $member_handler
 		 */
-		$member_handler = icms::handler('icms_member');
+		$member_handler = \icms::handler('icms_member');
 		$grps = $member_handler->getGroupList();
 		foreach ($grps as $k => $v) {
 			$stararr = explode('-', $icmsConfig['startpage'][$k]);
@@ -259,7 +259,7 @@ class ModuleHandler
 		/**
 		 * @var SetupStepInterface[] $steps
 		 */
-		$steps = (array)icms::getInstance()->get('setup_step.module.uninstall');
+		$steps = (array)\icms::getInstance()->get('setup_step.module.uninstall');
 		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
 			return $stepA->getPriority() > $stepB->getPriority();
 		});
@@ -337,7 +337,7 @@ class ModuleHandler
 			|| $module->getVar("hascomments") == 1
 			|| $module->getVar("hasnotification") == 1
 		) {
-			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
+			$module->config = \icms::$config->getConfigsByCat(0, $module->getVar("mid"));
 		}
 		return true;
 	}
@@ -430,7 +430,7 @@ class ModuleHandler
 	public function update($dirname, OutputDecorator $output)
 	{
 		$dirname = trim($dirname);
-		$module_handler = icms::handler('icms_module');
+		$module_handler = \icms::handler('icms_module');
 		$module = $module_handler->getByDirname($dirname);
 		if (!$module) {
 			$output->fatal(_MD_AM_UPDATE_FAIL, $module->name);
@@ -468,7 +468,7 @@ class ModuleHandler
 		/**
 		 * @var SetupStepInterface[] $steps
 		 */
-		$steps = (array)icms::getInstance()->get('setup_step.module.update');
+		$steps = (array)\icms::getInstance()->get('setup_step.module.update');
 		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
 			return $stepA->getPriority() > $stepB->getPriority();
 		});
@@ -562,7 +562,7 @@ class ModuleHandler
 			);
 			return false;
 		} else {
-			$member_handler = icms::handler('icms_member');
+			$member_handler = \icms::handler('icms_member');
 			$grps = $member_handler->getGroupList();
 			foreach ($grps as $k => $v) {
 				$stararr = explode('-', $icmsConfig['startpage'][$k]);

@@ -183,16 +183,16 @@ class ThemeComponent {
 			'xoops_slogan' => $this->template->getTemplateVars('icms_slogan'),
 			'xoops_dirname' => $this->template->getTemplateVars('icms_dirname')
 		));
-		if (isset(icms::$user) && is_object(icms::$user)) {
+		if (isset(\icms::$user) && is_object(\icms::$user)) {
 			$this->template->assign(array(
 				'icms_isuser' => true,
-				'icms_userid' => icms::$user->getVar('uid'),
-				'icms_uname' => icms::$user->getVar('uname'),
-				'icms_isadmin' => icms::$user->isAdmin(),
+				'icms_userid' => \icms::$user->getVar('uid'),
+				'icms_uname' => \icms::$user->getVar('uname'),
+				'icms_isadmin' => \icms::$user->isAdmin(),
 				'xoops_isuser' => true,
-				'xoops_userid' => icms::$user->getVar('uid'),
-				'xoops_uname' => icms::$user->getVar('uname'),
-				'xoops_isadmin' => icms::$user->isAdmin(),
+				'xoops_userid' => \icms::$user->getVar('uid'),
+				'xoops_uname' => \icms::$user->getVar('uname'),
+				'xoops_isadmin' => \icms::$user->isAdmin(),
 				)
 			);
 		} else {
@@ -275,10 +275,10 @@ class ThemeComponent {
 				$extra_string = $icmsConfig['language'];
 
 				// Generate group section
-				if (!@is_object(icms::$user)) {
+				if (!@is_object(\icms::$user)) {
 					$extra_string .= '|' . ICMS_GROUP_ANONYMOUS;
 				} else {
-					$groups = icms::$user->getGroups();
+					$groups = \icms::$user->getGroups();
 					sort($groups);
 					// Generate group string for non-anonymous groups,
 					$extra_string .= '|' . implode(",", $groups)
@@ -313,7 +313,7 @@ class ThemeComponent {
 			$this->contentCacheId = $this->generateCacheId($dirname . '|' . $uri);
 
 			if ($this->template->is_cached($template, $this->contentCacheId)) {
-				icms::$logger->addExtra($template, sprintf(_REGENERATES, $this->contentCacheLifetime));
+				\icms::$logger->addExtra($template, sprintf(_REGENERATES, $this->contentCacheLifetime));
 				$this->render(null, null, $template);
 				return true;
 			}
@@ -342,7 +342,7 @@ class ThemeComponent {
 		if ($this->renderCount) {
 			return false;
 		}
-		icms::$logger->startTime('Page rendering');
+		\icms::$logger->startTime('Page rendering');
 
 		// @internal: Lame fix to ensure the metas specified in the xoops config page don't appear twice. See line 184
 		$old = array('robots', 'keywords', 'description', 'rating', 'author', 'copyright');
@@ -401,7 +401,7 @@ class ThemeComponent {
 				}
 
 		$this->renderCount++;
-		icms::$logger->stopTime('Page rendering');
+		\icms::$logger->stopTime('Page rendering');
 	}
 
 	/**#@+ @tasktype 20 Manipulating page meta-information*/
@@ -440,7 +440,7 @@ class ThemeComponent {
 			$attributes = array();
 		}
 		if (!empty($src)) {
-			$attributes['src'] = icms::url($this->resourcePath($src));
+			$attributes['src'] = \icms::url($this->resourcePath($src));
 		}
 		if (!empty($content)) {
 			$attributes['_'] = $content;
@@ -467,7 +467,7 @@ class ThemeComponent {
 			$attributes = array();
 		}
 		if (!empty($src)) {
-			$attributes['href'] = icms::url($this->resourcePath($src));
+			$attributes['href'] = \icms::url($this->resourcePath($src));
 		}
 		if (!isset($attributes['type'])) {
 			$attributes['type'] = 'text/css';

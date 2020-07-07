@@ -491,7 +491,7 @@ class Handler extends ObjectHandler {
 					} else {
 						$ret[$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
 					}
-					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
+					\icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 					continue;
 				}
 				$obj = new $this->className($this, $myrow);
@@ -530,7 +530,7 @@ class Handler extends ObjectHandler {
 					} else {
 						$ret[$cname][$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
 					}
-					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
+					\icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 					continue;
 				}
 				$obj = new $this->className($this, $myrow);
@@ -608,8 +608,8 @@ class Handler extends ObjectHandler {
 				} else {
 					$ret[] = self::$_loadedItems[$this->className][$kname]->toArray();
 				}
-				if (isset(icms::$logger)) {
-					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
+				if (isset(\icms::$logger)) {
+					\icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 				}
 				continue;
 			}
@@ -1388,12 +1388,12 @@ class Handler extends ObjectHandler {
 			}
 		}
 		if (!empty($url_links)) {
-			$urllink_handler = icms::handler("icms_data_urllink");
+			$urllink_handler = \icms::handler("icms_data_urllink");
 			$urllink_handler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($urllink_handler->keyName, $url_links, ' IN '));
 			unset($urllink_handler);
 		}
 		if (!empty($url_files)) {
-			$urllink_handler = icms::handler("icms_data_file");
+			$urllink_handler = \icms::handler("icms_data_file");
 			$urllink_handler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($urllink_handler->keyName, $url_files, ' IN '));
 			unset($urllink_handler);
 		}
@@ -1410,8 +1410,8 @@ class Handler extends ObjectHandler {
 	 * @return    bool    TRUE
 	 */
 	private function deleteGrantedPermissions($obj = null) {
-		$gperm_handler = icms::handler("icms_member_groupperm");
-		$module = icms::handler("icms_module")->getByDirname($this->_moduleName);
+		$gperm_handler = \icms::handler("icms_member_groupperm");
+		$module = \icms::handler("icms_module")->getByDirname($this->_moduleName);
 		$permissions = $this->getPermissions();
 		if ($permissions === false) {
 			return true;

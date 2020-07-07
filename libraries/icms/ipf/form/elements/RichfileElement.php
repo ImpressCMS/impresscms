@@ -19,7 +19,7 @@ class RichfileElement extends icms_form_elements_Tray {
 	public function __construct($object, $key) {
 		parent::__construct($object->getVarInfo($key, 'form_caption'), "&nbsp;");
 		$fileObj = $object->getFileObj($key);
-		$module_handler = icms::handler("icms_module");
+		$module_handler = \icms::handler("icms_module");
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
 		if ($fileObj->getVar("url") != "") {

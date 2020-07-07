@@ -34,7 +34,7 @@ class EventsPreloader {
 	 * @return	void
 	 */
 	public function __construct() {
-		foreach (icms::getInstance()->get('preload') as $preloadClass) {
+		foreach (\icms::getInstance()->get('preload') as $preloadClass) {
 			$this->registerEvents($preloadClass);
 		}
 	}

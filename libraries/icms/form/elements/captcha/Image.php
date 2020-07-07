@@ -137,9 +137,9 @@ class Image {
 		$this->config["name"] = $name;
 
 		// Skip CAPTCHA for group
-		//$gperm_handler = icms::handler('icms_member_groupperm');
-		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
-		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
+		//$gperm_handler = \icms::handler('icms_member_groupperm');
+		$groups = is_object(\icms::$user)? \icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(\icms::$user)) {
 			$this->active = false;
 		} elseif ($icmsConfigCaptcha['captcha_mode'] == 'none') {
 			$this->active = false;
@@ -165,8 +165,8 @@ class Image {
 
 		$is_valid = false;
 
-		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
-		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
+		$groups = is_object(\icms::$user)? \icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(\icms::$user)) {
 			$is_valid = true;
 		} elseif (!empty($maxAttempts) && $captchaSection->get('attempt_' . $sessionName) > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;

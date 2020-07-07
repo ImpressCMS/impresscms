@@ -78,7 +78,7 @@ class DhtmltextareaElement extends TextareaElement {
 		$this->_hiddenText = $hiddentext;
 		global $icmsConfig, $icmsModule;
 
-		$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+		$groups = (is_object(\icms::$user)) ? \icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
 		$moduleid = (is_object($icmsModule) && $name != 'com_text') ? $icmsModule->getVar('mid') : 1;
 
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $icmsConfig['editor_default']) {
@@ -87,7 +87,7 @@ class DhtmltextareaElement extends TextareaElement {
 			$editor_default = $icmsConfig['editor_default'];
 		}
 
-		$gperm_handler = icms::handler('icms_member_groupperm');
+		$gperm_handler = \icms::handler('icms_member_groupperm');
 		$editorHandler = icms_plugins_EditorHandler::getInstance('content');
 		if ($editorHandler->has($editor_default) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)) {
 			$this->htmlEditor = $editorHandler->get($editor_default);

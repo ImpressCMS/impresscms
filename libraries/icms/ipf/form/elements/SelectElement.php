@@ -46,9 +46,9 @@ class SelectElement extends icms_form_elements_Select {
 				if (isset($control['itemHandler'])) {
 					if (!isset($control['module'])) {
 						// Creating the specified core object handler
-						$control_handler = icms::handler($control['itemHandler']);
+						$control_handler = \icms::handler($control['itemHandler']);
 					} elseif ($control['module'] == 'icms') {
-						$control_handler = icms::handler($control['module'] . '_' . $control['itemHandler']);
+						$control_handler = \icms::handler($control['module'] . '_' . $control['itemHandler']);
 					} else {
 						$control_handler = & icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}
