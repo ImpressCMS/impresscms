@@ -46,7 +46,7 @@ namespace ImpressCMS\Core\View\Block;
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class ViewBlockHandler extends \ImpressCMS\Core\IPF\Handler {
+class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 
 	private $block_positions;
 	private $modules_name;

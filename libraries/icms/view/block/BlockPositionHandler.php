@@ -19,7 +19,7 @@ namespace ImpressCMS\Core\View\Block;
  *
  * @package	ICMS\View\Block\Position
  */
-class ViewBlockPositionHandler extends \ImpressCMS\Core\IPF\Handler {
+class BlockPositionHandler extends \ImpressCMS\Core\IPF\Handler {
 
 	/**
 	 * Constructor
