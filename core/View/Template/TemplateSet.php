@@ -28,76 +28,40 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Image categories
+ * Manage template sets
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
  */
-namespace ImpressCMS\Core\Image;
+
+namespace ImpressCMS\Core\View\Template;
 
 /**
- * An image category
+ * Base class for all template sets
  *
- * These categories are managed through a icms_image_category_Handler object
- *
- * @author	Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS\Image\Category
+ * @package	ICMS\View\Template\Set
  *
- * @property int    $imgcat_id         Image category ID
- * @property int    $imgcat_pid        Image category parent ID
- * @property string $imgcat_name       Name
- * @property string $imgcat_foldername Foldername
- * @property int    $imgcat_display    Shold be this category displayed?
- * @property int    $imgcat_weight     Weight used for sorting categories
- * @property int    $imgcat_maxsize    Max image size in this category
- * @property int    $imgcat_maxwidth   Max image width in this category
- * @property int    $imgcat_maxheight  Max image height in this category
- * @property string $imgcat_type       Type
- * @property string $imgcat_storetype  Storing type
- */
-class ImageCategoryModel extends \ImpressCMS\Core\IPF\AbstractModel {
-
-		/**
-		 * Image count
-		 *
-		 * @var int
-		 */
-	private $_imageCount;
+ * @property int    $tplset_id      Template set ID
+ * @property string $tplset_name    Name
+ * @property string $tplset_desc    Description
+ * @property string $tplset_credits Credits
+ * @property int    $tplset_created When it was created?
+ * */
+class TemplateSet extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
-	 * Constructor
-	 *
+	 * constructor
 	 */
 	public function __construct(&$handler, $data = array()) {
-		$this->initVar('imgcat_id', self::DTYPE_INTEGER, null, false);
-		$this->initVar('imgcat_pid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('imgcat_name', self::DTYPE_STRING, null, true, 100);
-		$this->initVar('imgcat_foldername', self::DTYPE_STRING, null, true, 100);
-		$this->initVar('imgcat_display', self::DTYPE_INTEGER, 1, false);
-		$this->initVar('imgcat_weight', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('imgcat_maxsize', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('imgcat_maxwidth', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('imgcat_maxheight', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('imgcat_type', self::DTYPE_STRING, null, false, 1);
-		$this->initVar('imgcat_storetype', self::DTYPE_STRING, null, false, 5);
+		$this->initVar('tplset_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('tplset_name', self::DTYPE_STRING, null, false, 50);
+		$this->initVar('tplset_desc', self::DTYPE_STRING, null, false, 255);
+		$this->initVar('tplset_credits', self::DTYPE_STRING, null, false);
+		$this->initVar('tplset_created', self::DTYPE_INTEGER, 0, false);
 
-				parent::__construct($handler, $data);
-	}
-
-	/**
-	 * Set count of images in a category
-	 * @param	int $value Value
-	 */
-	public function setImageCount($value) {
-		$this->_imageCount = (int) $value;
-	}
-
-	/**
-	 * Gets count of images in a category
-	 * @return	int _imageCount number of images
-	 */
-	public function getImageCount() {
-		return $this->_imageCount;
+                parent::__construct($handler, $data);
 	}
 }
+

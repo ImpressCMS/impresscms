@@ -53,7 +53,7 @@ namespace ImpressCMS\Core\View\Template;
  * @property string $tpl_module        Module
  * @property string $tpl_type          Type
  * */
-class TemplateFileModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class TemplateFile extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	public $tpl_source = false;
 

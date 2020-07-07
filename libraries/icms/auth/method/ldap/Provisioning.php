@@ -130,7 +130,7 @@ class icms_auth_method_ldap_Provisioning {
 
 	/**
 	 * Modify user information
-	 * @param \ImpressCMS\Core\Member\UserModel $icmsUser reference
+	 * @param \ImpressCMS\Core\Member\User $icmsUser reference
 	 * @param array $datas Some Data
 	 * @param string $uname Username of the user
 	 * @param string $pwd Password of the user

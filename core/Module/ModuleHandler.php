@@ -108,7 +108,7 @@ class ModuleHandler
 
 	/**
 	 * Checks if the current user can access the specified module
-	 * @param ModuleModel $module
+	 * @param Module $module
 	 * @param bool $inAdmin
 	 * @return bool
 	 */
@@ -134,7 +134,7 @@ class ModuleHandler
 		return true;
 	}
 
-	public function beforeSave(ModuleModel &$module)
+	public function beforeSave(Module &$module)
 	{
 		$module->setVar('last_update', time());
 		return true;
@@ -300,7 +300,7 @@ class ModuleHandler
 	 * @param string $dirname
 	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
 	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
-	 * @return    ModuleModel|false
+	 * @return    Module|false
 	 * @todo Make caching work
 	 */
 	public function getByDirname($dirname, $loadConfig = false)
@@ -324,7 +324,7 @@ class ModuleHandler
 	/**
 	 * load config for a module before caching it
 	 *
-	 * @param ModuleModel $module
+	 * @param Module $module
 	 * @return    bool                TRUE
 	 */
 	private function loadConfig($module)
@@ -345,7 +345,7 @@ class ModuleHandler
 	/**
 	 * Delete a module from the database
 	 *
-	 * @param ModuleModel &$module
+	 * @param Module &$module
 	 * @param bool $force Force to delete?
 	 *
 	 * @return  bool
@@ -521,7 +521,7 @@ class ModuleHandler
 	 * @param bool $debug Debug enabled for object?
 	 * @param bool|object $criteria Criteria for getting object if needed
 	 *
-	 * @return    ModuleModel|false
+	 * @return    Module|false
 	 */
 	public function &get($id, $loadConfig = false, $debug = false, $criteria = false)
 	{

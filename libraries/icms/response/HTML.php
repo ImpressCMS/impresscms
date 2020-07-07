@@ -499,7 +499,7 @@ class icms_response_HTML extends icms_response_Text {
 	private function includeNotificationsSelection() {
 		global $icmsModule;
 		// RMV-NOTIFY
-		if (($icmsModule instanceof \ImpressCMS\Core\Module\ModuleModel) && ($icmsModule->hasnotification == 1) && is_object(\icms::$user)) {
+		if (($icmsModule instanceof \ImpressCMS\Core\Module\Module) && ($icmsModule->hasnotification == 1) && is_object(\icms::$user)) {
 			/** Require the notifications area */
 			global $xoTheme, $xoopsTpl;
 			$xoopsTpl = &$this;

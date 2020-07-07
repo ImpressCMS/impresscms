@@ -22,7 +22,7 @@ namespace ImpressCMS\Core\Data;
  *
  * @package	ICMS\Data\UrlLink
  */
-class UrlLinkModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class UrlLink extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * constructor
 	 */

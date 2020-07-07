@@ -19,7 +19,7 @@ namespace ImpressCMS\Core\Member\Group;
  * @property int $groupid       Group ID
  * @property int $uid           User ID
  */
-class GroupMembershipModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class GroupMembership extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * constructor
 	 */

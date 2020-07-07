@@ -54,7 +54,7 @@ use ImpressCMS\Core\DataFilter;
  * @property string     $conf_valuetype     Type of value
  * @property int        $conf_order         Order (used to sorting fields before displaying on form)
  */
-class ConfigItemModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class ConfigItem extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * Config options
 	 *

@@ -56,7 +56,7 @@ class TemplateSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	 *
 	 * @param string $tplset_name of the tempateset to get
 	 * @return \icms_view_template_set_Object reference to the new template
-	 *@see TemplateSetModel
+	 *@see TemplateSet
 	 */
 	public function &getByName($tplset_name) {
 				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tplset_name', trim($tplset_name));
@@ -72,7 +72,7 @@ class TemplateSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param bool $force Force delete?
 	 *
 	 * @return bool
-	 *@see TemplateSetModel
+	 *@see TemplateSet
 	 *
 	 */
 	public function delete(&$tplset, $force = false) {

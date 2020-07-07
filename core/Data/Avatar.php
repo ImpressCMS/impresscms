@@ -28,36 +28,68 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Manage groups
+ * Manage avatars for users
  *
+ * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @license		LICENSE.txt
+ * @author		Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Member\Group;
+namespace ImpressCMS\Core\Data;
 
 /**
- * a group of users
+ * Avatar class
  *
- * @author	Kazumi Ono <onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS\Member\Group
+ * @author	Kazumi Ono (aka onokazo)
+ * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @package	ICMS\Data\Avatar
  *
- * @property int     $groupid        Group ID
- * @property string  $name           Name
- * @property string  $description    Description
- * @property string  $group_type     Type
+ * @property int        $avatar_id         Avatar ID
+ * @property string     $avatar_file       File used for avatar
+ * @property string     $avatar_name       Name
+ * @property string     $avatar_mimetype   Mimetype of avatar file
+ * @property int        $avatar_created    When avatar was created?
+ * @property int        $avatar_display    Do we need to show avatar?
+ * @property int        $avatar_weight     Weight (used for sorting avatars for user)
+ * @property string     $avatar_type       Type
  */
-class GroupModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class Avatar extends \ImpressCMS\Core\IPF\AbstractModel {
+	/** @var integer */
+	private $_userCount;
+
 	/**
-	 * constructor
+	 * Constructor for avatar class, initializing all the properties of the class object
+	 *
 	 */
 	public function __construct(&$handler, $data = array()) {
-		$this->initVar('groupid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('name', self::DTYPE_STRING, null, true, 50);
-		$this->initVar('description', self::DTYPE_STRING, null, false);
-		$this->initVar('group_type', self::DTYPE_STRING, null, false, 10);
+		$this->initVar('avatar_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('avatar_file', self::DTYPE_STRING, null, false, 30);
+		$this->initVar('avatar_name', self::DTYPE_STRING, null, true, 100);
+		$this->initVar('avatar_mimetype', self::DTYPE_STRING, null, false, 30);
+		$this->initVar('avatar_created', self::DTYPE_INTEGER, null, false);
+		$this->initVar('avatar_display', self::DTYPE_INTEGER, 1, false);
+		$this->initVar('avatar_weight', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('avatar_type', self::DTYPE_STRING, '', false, 1);
 
                 parent::__construct($handler, $data);
 	}
+
+	/**
+	 * Sets the value for the number of users
+	 * @param integer $value
+	 *
+	 */
+	public function setUserCount($value) {
+		$this->_userCount = (int) $value;
+	}
+
+	/**
+	 * Gets the value for the number of users
+	 * @return integer
+	 */
+	public function getUserCount() {
+		return $this->_userCount;
+	}
 }
+

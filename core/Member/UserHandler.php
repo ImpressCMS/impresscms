@@ -84,7 +84,7 @@ class UserHandler
 	 * @TODO we need some kind of error message instead of just a FALSE return to inform whether user was deleted aswell as PM messages.
 	 */
 	public function delete(&$user, $force = false) {
-				if (!($user instanceof \ImpressCMS\Core\Member\UserModel)) {
+				if (!($user instanceof \ImpressCMS\Core\Member\User)) {
 									return;
 				}
 		$sql = sprintf(

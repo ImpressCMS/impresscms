@@ -97,7 +97,7 @@ class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$imgset = new ImageSetModel($this, $myrow);
+			$imgset = new ImageSet($this, $myrow);
 			if (!$id_as_key) {
 				$ret[] = & $imgset;
 			} else {

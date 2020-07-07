@@ -1,4 +1,5 @@
 <?php
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -23,40 +24,47 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
+/**
+ * Manage of imagesets baseclass
+ * Image sets - the image directory within a module - are part of templates
+ *
+ * @copyright       http://www.xoops.org/ The XOOPS Project
+ * @copyright       http://www.impresscms.org/ The ImpressCMS Project
+ * @license	    LICENSE.txt
+ * @since	    XOOPS
+ * @author	    http://www.xoops.org The XOOPS Project
+ * @author	    modified by UnderDog <underdog@impresscms.org>
+ */
+namespace ImpressCMS\Core\Image;
 
 /**
- * Manage configuration categories
+ * An imageset
  *
- * @copyright	Copyright (c) 2000 XOOPS.org
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @author	Kazumi Ono (aka onokazo)
+ * These sets are managed through a icms_image_set_Handler object
+ *
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright       copyright (c) 2000-2003 XOOPS.org
+ * @package         ICMS\Image\Set
+ *
+ * @property int    $imgset_id      Image set ID
+ * @property string $imgset_name    Name
+ * @property int    $imgset_refid
  */
+class ImageSet extends \ImpressCMS\Core\IPF\AbstractModel {
 
-namespace ImpressCMS\Core\Config;
-
-/**
- * A category of configs
- *
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @package	ICMS\Config\Category
- *
- * @property int    $confcat_id        Category ID
- * @property string $confcat_name      Category name
- * @property int    $confcat_order     Category display order
- */
-class ConfigCategoryModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * Constructor
-	 *
 	 */
 	public function __construct(&$handler, $data = array()) {
-		$this->initVar('confcat_id', self::DTYPE_INTEGER, null);
-		$this->initVar('confcat_name', self::DTYPE_STRING, null, true, 255);
-		$this->initVar('confcat_order', self::DTYPE_INTEGER, 0);
+		$this->initVar('imgset_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('imgset_name', self::DTYPE_STRING, null, true, 50);
+		$this->initVar('imgset_refid', self::DTYPE_INTEGER, 0, false);
 
-                parent::__construct($handler, $data);
+		parent::__construct($handler, $data);
 	}
-}
 
+}

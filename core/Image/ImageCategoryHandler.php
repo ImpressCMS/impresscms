@@ -61,7 +61,7 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param \icms_db_criteria_Element $criteria Criteria with conditions for the image categories
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
 	 *
-	 * @return ImageCategoryModel[]
+	 * @return ImageCategory[]
 	 */
 	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
 			$this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
@@ -108,7 +108,7 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 		 * @param null|integer  $display        Do we need to list only visible or hidden items?
 		 * @param string|null   $storetype      How to store images of this category?
 		 *
-		 * @return ImageCategoryModel[]
+		 * @return ImageCategory[]
 		 */
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();

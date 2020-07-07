@@ -55,7 +55,7 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Loads Template source from DataBase
 	 *
-	 * @see TemplateFileModel
+	 * @see TemplateFile
 	 * @param \icms_view_template_file_Object $tplfile object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 */

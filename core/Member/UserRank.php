@@ -22,7 +22,7 @@ namespace ImpressCMS\Core\Member;
  * @property int    $rank_special  Is this rank special?
  * @property string $rank_image    Image
  */
-class UserRankModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class UserRank extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/** */
 	public $content = false;

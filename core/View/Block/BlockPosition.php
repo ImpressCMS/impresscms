@@ -21,7 +21,7 @@ namespace ImpressCMS\Core\View\Block;
  * @property int    $block_default Is default?
  * @property string $block_type    Type
  */
-class BlockPositionModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class BlockPosition extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Constructor

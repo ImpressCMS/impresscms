@@ -64,7 +64,7 @@ namespace ImpressCMS\Core\Data;
  * @property int    $doimage       Show images?
  * @property int    $dobr          Do line breaks?
  */
-class CommentModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class Comment extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Constructor

@@ -24,12 +24,12 @@ use ImpressCMS\Core\IPF\Controller;
  *
  * @package	ICMS\IPF\Category
  */
-class CategoryModel extends AbstractSEOModel {
+class Category extends AbstractSEOModel {
 	/** Path that corresponds to the category */
 	private $_categoryPath;
 	/**
 	 * Constructor for icms_ipf_category_Object
-	 * @return CategoryModel
+	 * @return Category
 	 */
 	public function __construct() {
 		$this->initVar('categoryid', self::DTYPE_INTEGER, '', true);

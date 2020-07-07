@@ -75,7 +75,7 @@ namespace ImpressCMS\Core\Member;
  * @property bool   $pass_expired      Is password expired?
  * @property string $login_name        Login name
  */
-class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class User extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * @var bool is the user admin?
@@ -427,7 +427,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 		 * @var Aura\Session\Session $session
 		 */
 		$session = \icms::getInstance()->get('session');
-		$userSegment = $session->getSegment(UserModel::class);
+		$userSegment = $session->getSegment(User::class);
 		foreach ($data as $key => $value) {
 			$userSegment->set($key, $value);
 		}
@@ -442,7 +442,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 			 * @var Aura\Session\Session $session
 			 */
 			$session = \icms::getInstance()->get('session');
-			$userSegment = $session->getSegment(UserModel::class);
+			$userSegment = $session->getSegment(User::class);
 			$userSegment->set($name, parent::getVar($name));
 		}
 	}
@@ -483,7 +483,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 		 * @var Aura\Session\Session $session
 		 */
 		$session = \icms::getInstance()->get('session');
-		$userSegment = $session->getSegment(UserModel::class);
+		$userSegment = $session->getSegment(User::class);
 
 		if ($userid = $userSegment->get('userid')) {
 					return false;

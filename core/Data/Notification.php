@@ -51,7 +51,7 @@ namespace ImpressCMS\Core\Data;
  * @property int    $not_uid       User ID who receives this notification
  * @property int    $not_mode      How this notification should be received?
  */
-class NotificationModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class Notification extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Constructor

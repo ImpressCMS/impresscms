@@ -57,7 +57,7 @@ class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * Deletes an avatar
 	 * @see ObjectHandler#delete($object)
 	 *
-	 * @param AvatarModel   $avatar Avatar to delete
+	 * @param Avatar   $avatar Avatar to delete
 	 * @param bool                      $force  Force deletion?
 	 *
 	 * @return boolean
@@ -97,7 +97,7 @@ class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$avatar = new AvatarModel($this, $myrow);
+			$avatar = new Avatar($this, $myrow);
 			$avatar->setUserCount($myrow['count']);
 			if (!$id_as_key) {
 				$ret[] = & $avatar;

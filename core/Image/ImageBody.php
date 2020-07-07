@@ -7,7 +7,7 @@ namespace ImpressCMS\Core\Image;
  * @property int    $image_id       Image ID
  * @property string $image_body     Image body
  */
-class ImageBodyModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class ImageBody extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Constructor

@@ -22,7 +22,7 @@ namespace ImpressCMS\Core\Data;
  *
  * @package	ICMS\Data\File
  */
-class FileModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class File extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * constructor

@@ -51,7 +51,7 @@ final class icms extends Container {
 	/**
 	 * Current logged in user
 	 *
-	 * @var \ImpressCMS\Core\Member\UserModel|null
+	 * @var \ImpressCMS\Core\Member\User|null
 	 */
 	public static $user;
 

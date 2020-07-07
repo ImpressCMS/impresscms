@@ -105,7 +105,7 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param bool|string $sql  Extra sql
 	 * @param bool $debug Debug mode?
 	 *
-	 * @return ImageModel[]
+	 * @return Image[]
 	 */
 	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false, $sql = false, $debug = false) {
 		if ($getbinary) {

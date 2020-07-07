@@ -58,12 +58,12 @@ class PrivateMessageHandler extends \ImpressCMS\Core\IPF\Handler
 
 	/**
 	 * Mark a message as read
-	 * @param PrivateMessageModel $pm Private message
+	 * @param PrivateMessage $pm Private message
 	 * @return    bool
 	 */
 	public function setRead(&$pm)
 	{
-		if (!is_a($pm, PrivateMessageModel::class)) {
+		if (!is_a($pm, PrivateMessage::class)) {
 			return false;
 		}
 
@@ -77,11 +77,11 @@ class PrivateMessageHandler extends \ImpressCMS\Core\IPF\Handler
 	/**
 	 * Gets message count for user
 	 *
-	 * @param \ImpressCMS\Core\Member\UserModel|null $user User for whom get message count
+	 * @param \ImpressCMS\Core\Member\User|null $user User for whom get message count
 	 *
 	 * @return int
 	 */
-	public function getCountForUser(\ImpressCMS\Core\Member\UserModel $user = null): int {
+	public function getCountForUser(\ImpressCMS\Core\Member\User $user = null): int {
 		static $msgCount = [];
 		if ($user === null) {
 			$user = \icms::$user;

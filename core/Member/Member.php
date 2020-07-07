@@ -96,7 +96,7 @@ class Member {
 	/**
 	 * create a new user
 	 *
-	 * @return \ImpressCMS\Core\Member\UserModel
+	 * @return \ImpressCMS\Core\Member\User
 	 */
 	public function &createUser(&$isNew = true) {
 		$inst = & $this->_uHandler->create();
@@ -118,7 +118,7 @@ class Member {
 	/**
 	 * delete a user
 	 *
-	 * @param \ImpressCMS\Core\Member\UserModel $user reference to the user to delete
+	 * @param \ImpressCMS\Core\Member\User $user reference to the user to delete
 	 *
 	 * @return bool
 	 */
@@ -156,7 +156,7 @@ class Member {
 	 * @param \icms_db_criteria_Element $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 *
-	 * @return \ImpressCMS\Core\Member\UserModel[]
+	 * @return \ImpressCMS\Core\Member\User[]
 	 */
 	public function getUsers($criteria = null, $id_as_key = false) {
 		return $this->_uHandler->getObjects($criteria, $id_as_key);
@@ -237,7 +237,7 @@ class Member {
 	 * @param bool $asobject return the users as objects?
 	 * @param int $limit number of users to return
 	 * @param int $start index of the first user to return
-	 * @return array|\ImpressCMS\Core\Member\UserModel[]
+	 * @return array|\ImpressCMS\Core\Member\User[]
 	 * or of associative arrays matching the record structure in the database.
 	 */
 	public function &getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
@@ -261,7 +261,7 @@ class Member {
 	 * retrieve a user
 	 *
 	 * @param int $id ID for the user
-	 * @return \ImpressCMS\Core\Member\UserModel \ImpressCMS\Core\Member\UserModel reference to the user
+	 * @return \ImpressCMS\Core\Member\User \ImpressCMS\Core\Member\UserModel reference to the user
 	 */
 	public function &getUser($id)
 	{
@@ -275,7 +275,7 @@ class Member {
 	 * log in a user
 	 * @param string $uname username as entered in the login form
 	 * @param string $pwd password entered in the login form
-	 * @return \ImpressCMS\Core\Member\UserModel|false
+	 * @return \ImpressCMS\Core\Member\User|false
 	 */
 	public function loginUser($uname, $pwd) {
 
@@ -351,7 +351,7 @@ class Member {
 	/**
 	 * updates a single field in a users record
 	 *
-	 * @param \ImpressCMS\Core\Member\UserModel $user reference
+	 * @param \ImpressCMS\Core\Member\User $user reference
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
 	 * @return bool TRUE if success or unchanged, FALSE on failure
@@ -388,7 +388,7 @@ class Member {
 	/**
 	 * activate a user
 	 *
-	 * @param \ImpressCMS\Core\Member\UserModel $user User
+	 * @param \ImpressCMS\Core\Member\User $user User
 	 * @return bool successful?
 	 */
 	public function activateUser(&$user) {
@@ -408,7 +408,7 @@ class Member {
 	 * @param bool $asobject return the users as objects?
 	 * @param bool $id_as_key use the UID as key for the array if $asobject is TRUE
 	 *
-	 * @return array|\ImpressCMS\Core\Member\UserModel[]
+	 * @return array|\ImpressCMS\Core\Member\User[]
 	 */
 	public function getUsersByGroupLink($groups, $criteria = null, $asobject = false, $id_as_key = false) {
 		$ret = array();
@@ -439,7 +439,7 @@ class Member {
 		}
 		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
 			if ($asobject) {
-				$user = new \ImpressCMS\Core\Member\UserModel($this, $myrow);
+				$user = new \ImpressCMS\Core\Member\User($this, $myrow);
 				if (!$id_as_key) {
 					$ret[] = & $user;
 				} else {

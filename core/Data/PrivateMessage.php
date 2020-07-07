@@ -23,40 +23,50 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 /**
- * Manage configuration options
+ * Private messages
  *
- * @copyright	Copyright (c) 2000 XOOPS.org
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @author	Kazumi Ono (aka onokazo)
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
-
-namespace ImpressCMS\Core\Config;
+namespace ImpressCMS\Core\Data;
 
 /**
- * A Config-Option
+ * A handler for Private Messages
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @package	ICMS\Config\Option
+ * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @package	ICMS\Data\Privmessage
  *
- * @property int        $confop_id     Config option id
- * @property string     $confop_name   Name
- * @property string     $confop_value  Value
- * @property int        $conf_id       Config ID
+ * @property int    $msg_id       Message ID
+ * @property string $msg_image    Image
+ * @property string $subject      Subject
+ * @property int    $from_userid  From what User ID
+ * @property int    $to_userid    To what User ID
+ * @property int    $msg_time     Sending time
+ * @property string $msg_text     Text (content)
+ * @property int    $read_msg     Is this message read?
  */
-class ConfigOptionModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class PrivateMessage extends \ImpressCMS\Core\IPF\AbstractModel {
+
 	/**
-	 * Constructor
+	 * constructor
 	 */
 	public function __construct(&$handler, $data = array()) {
-		$this->initVar('confop_id', self::DTYPE_INTEGER, null);
-		$this->initVar('confop_name', self::DTYPE_STRING, null, true, 255);
-		$this->initVar('confop_value', self::DTYPE_STRING, null, true, 255);
-		$this->initVar('conf_id', self::DTYPE_INTEGER, 0);
+		$this->initVar('msg_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('msg_image', self::DTYPE_STRING, 'icon1.gif', false, 100);
+		$this->initVar('subject', self::DTYPE_STRING, null, true, 255);
+		$this->initVar('from_userid', self::DTYPE_INTEGER, null, true);
+		$this->initVar('to_userid', self::DTYPE_INTEGER, null, true);
+		$this->initVar('msg_time', self::DTYPE_DATETIME, null, false);
+		$this->initVar('msg_text', self::DTYPE_STRING, null, true);
+		$this->initVar('read_msg', self::DTYPE_INTEGER, 0, false);
 
-                parent::__construct($handler, $data);
+		parent::__construct($handler, $data);
 	}
 }
 

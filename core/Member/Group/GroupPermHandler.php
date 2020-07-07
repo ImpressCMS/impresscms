@@ -44,7 +44,7 @@ namespace ImpressCMS\Core\Member\Group;
  * of group permission class objects.
  *
  * @package	ICMS\Member\GroupPermission
- * @see        GroupPermModel
+ * @see        GroupPerm
  * @author	Kazumi Ono  <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */

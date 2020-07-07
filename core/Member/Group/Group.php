@@ -28,45 +28,36 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Private messages
+ * Manage groups
  *
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
  */
-namespace ImpressCMS\Core\Data;
+
+namespace ImpressCMS\Core\Member\Group;
 
 /**
- * A handler for Private Messages
+ * a group of users
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @package	ICMS\Data\Privmessage
+ * @author	Kazumi Ono <onokazu@xoops.org>
+ * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package	ICMS\Member\Group
  *
- * @property int    $msg_id       Message ID
- * @property string $msg_image    Image
- * @property string $subject      Subject
- * @property int    $from_userid  From what User ID
- * @property int    $to_userid    To what User ID
- * @property int    $msg_time     Sending time
- * @property string $msg_text     Text (content)
- * @property int    $read_msg     Is this message read?
+ * @property int     $groupid        Group ID
+ * @property string  $name           Name
+ * @property string  $description    Description
+ * @property string  $group_type     Type
  */
-class PrivateMessageModel extends \ImpressCMS\Core\IPF\AbstractModel {
-
+class Group extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * constructor
 	 */
 	public function __construct(&$handler, $data = array()) {
-		$this->initVar('msg_id', self::DTYPE_INTEGER, null, false);
-		$this->initVar('msg_image', self::DTYPE_STRING, 'icon1.gif', false, 100);
-		$this->initVar('subject', self::DTYPE_STRING, null, true, 255);
-		$this->initVar('from_userid', self::DTYPE_INTEGER, null, true);
-		$this->initVar('to_userid', self::DTYPE_INTEGER, null, true);
-		$this->initVar('msg_time', self::DTYPE_DATETIME, null, false);
-		$this->initVar('msg_text', self::DTYPE_STRING, null, true);
-		$this->initVar('read_msg', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('groupid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('name', self::DTYPE_STRING, null, true, 50);
+		$this->initVar('description', self::DTYPE_STRING, null, false);
+		$this->initVar('group_type', self::DTYPE_STRING, null, false, 10);
 
-		parent::__construct($handler, $data);
+                parent::__construct($handler, $data);
 	}
 }
-

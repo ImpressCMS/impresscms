@@ -52,7 +52,7 @@ namespace ImpressCMS\Core\Member\Group;
  * @property int    $gperm_modid   Linked module ID
  * @property string $gperm_name    Name
  */
-class GroupPermModel extends \ImpressCMS\Core\IPF\AbstractModel {
+class GroupPerm extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * Constructor
 	 *

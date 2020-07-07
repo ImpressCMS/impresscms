@@ -28,7 +28,7 @@ class PluginHandler {
 			$function = 'icms_plugin_' . $dirname;
 			if (function_exists($function)) {
 				$array = $function();
-				$ret = new PluginModel($array);
+				$ret = new Plugin($array);
 				return $ret;
 			}
 		}
