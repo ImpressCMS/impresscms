@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core;
+
 /**
  * Different utilities used by the core
  *
@@ -17,7 +19,7 @@
  * @since	1.3
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_Utils {
+class Utils {
 	/**
 	 * mimetypes
 	 *

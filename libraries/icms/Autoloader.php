@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core;
+
 /**
  * ImpressCMS Autoloader
  *
@@ -7,9 +9,9 @@
  * @package	ICMS
  * @since	1.3
  * @author	Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
+ * @deprecated
  */
-
-class icms_Autoloader {
+class Autoloader {
 	/**
 	 * Paths of known global repositories
 	 * @var array

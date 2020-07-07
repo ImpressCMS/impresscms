@@ -22,7 +22,7 @@ class icms_MultilanguageEventHandler {
 	 *
 	 */
 	static public function setup() {
-		icms_Event::attach('icms', 'loadService-session', array(__CLASS__, 'initMultilang'));
+		Event::attach('icms', 'loadService-session', array(__CLASS__, 'initMultilang'));
 	}
 
 	/**

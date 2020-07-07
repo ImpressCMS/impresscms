@@ -191,7 +191,7 @@ return [
 	'icms_view_Printerfriendly' => \ImpressCMS\Core\View\PrinterFriendlyView::class,
 	'icms_view_Tpl' => \ImpressCMS\Core\View\Template::class,
 	'icms_view_Tree' => \ImpressCMS\Core\View\ViewTree::class,
-	'icms_Autoloader',
-	'icms_Event',
-	'icms_Utils'
+	'icms_Autoloader' => \ImpressCMS\Core\Autoloader::class,
+	'icms_Event' => \ImpressCMS\Core\Event::class,
+	'icms_Utils' => \ImpressCMS\Core\Utils::class,
 ];

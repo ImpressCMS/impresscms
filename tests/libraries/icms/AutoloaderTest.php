@@ -13,7 +13,7 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase {
      * Test if icms_core_DataFilter is available
      */
     public function testAvailability() {
-        $this->assertTrue(class_exists('icms_Autoloader', true), "icms_Autoloader class doesn't exist");
+        $this->assertTrue(class_exists('Autoloader', true), "icms_Autoloader class doesn't exist");
     }
 
     /**
@@ -21,7 +21,7 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase {
      */
     public function testStaticMethodsAvailability() {
          foreach ([ 'setup', 'split', 'register', 'import', 'autoload', 'classPath', 'registerLegacy' ] as $method) {
-             $this->assertTrue(method_exists('icms_Autoloader', $method), $method . ' doesn\'t exists for icms_Autoloader');
+             $this->assertTrue(method_exists('Autoloader', $method), $method . ' doesn\'t exists for icms_Autoloader');
          }
     }
 

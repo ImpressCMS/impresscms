@@ -215,7 +215,7 @@ final class icms extends Container {
 		self::$paths['themes'] = array(ICMS_THEME_PATH, ICMS_THEME_URL);
 		// Initialize the autoloader
 		require_once __DIR__ . '/icms/Autoloader.php';
-		icms_Autoloader::setup();
+		Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
 		$this->buildRelevantUrls();
 

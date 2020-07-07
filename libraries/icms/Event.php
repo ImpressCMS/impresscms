@@ -1,4 +1,6 @@
 <?php
+namespace ImpressCMS\Core;
+
 /**
  * icms_Event class definition
  *
@@ -6,7 +8,7 @@
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-class icms_Event {
+class Event {
 	/**
 	 * Registered event handlers
 	 * @var array
@@ -21,7 +23,7 @@ class icms_Event {
 	/**
 	 * Returns information about a fired event.
 	 * @param int $index 0 for current, 1 for parent (if current event due to another event), and so on...
-	 * @return icms_Event
+	 * @return Event
 	 */
 	static public function current($index = 0) {
 		return isset(self::$events[$index])? self::$events[$index]:false;
@@ -77,7 +79,7 @@ class icms_Event {
 	 * @param string $name Event name (use * to attach to all events of $namespace)
 	 * @param object $source Object that triggered this event
 	 * @param array $parameters Event parameters
-	 * @return icms_Event
+	 * @return Event
 	 */
 	static public function trigger($namespace, $name, $source, $parameters = array()) {
 		$cancancel = false;
@@ -85,7 +87,7 @@ class icms_Event {
 			$cancancel = true;
 			$name = substr($name, 1);
 		}
-		$event = new icms_Event($namespace, $name, $source, $parameters, $cancancel);
+		$event = new Event($namespace, $name, $source, $parameters, $cancancel);
 		array_unshift(self::$events, $event);
 		foreach (array("*", $name) as $handlers) {
 			if (isset(self::$handlers[$namespace][$handlers])) {
