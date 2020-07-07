@@ -51,7 +51,7 @@ class icms_auth_method_ldap_Provisioning {
 	 * @param   string $uname Username of the user
 	 * @return  \\ImpressCMS\Core\Member\UserModel|false \ImpressCMS\Core\Member\UserModel or false if failed
 	 */
-	public function get\ImpressCMS\Core\Member\UserModel($uname) {
+	public function geticms_member_user_Object($uname) {
 		$member_handler = \icms::handler('icms_member');
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uname', $uname);
 		$getuser = $member_handler->getUsers($criteria);
@@ -70,7 +70,7 @@ class icms_auth_method_ldap_Provisioning {
 	 * @return \\ImpressCMS\Core\Member\UserModel \ImpressCMS\Core\Member\UserModel
 	 */
 	public function sync($datas, $uname, $pwd = null) {
-		$icmsUser = $this->get\ImpressCMS\Core\Member\UserModel($uname);
+		$icmsUser = $this->geticms_member_user_Object($uname);
 		if (!$icmsUser) {
 			// User Database not exists
 			if ($this->ldap_provisionning) {
