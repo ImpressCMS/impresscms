@@ -21,7 +21,7 @@ namespace ImpressCMS\Core\IPF\View;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_ipf_view_Tree extends icms_ipf_view_Table {
+class ViewTree extends ViewTable {
 
 	/**
 	 * Construct the tree object
@@ -151,7 +151,7 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 	/**
 	 * Create all the rows
 	 *
-	 * @see icms_ipf_view_Table::createTableRows()
+	 * @see ViewTable::createTableRows()
 	 */
 	public function createTableRows() {
 		$this->_aObjects = array();
@@ -172,7 +172,7 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 	/**
 	 * Get all the objects, using parentid as the key
 	 *
-	 * @see icms_ipf_view_Table::fetchObjects()
+	 * @see ViewTable::fetchObjects()
 	 */
 	public function fetchObjects() {
 		$ret = $this->_objectHandler->getObjects($this->_criteria, 'parentid');

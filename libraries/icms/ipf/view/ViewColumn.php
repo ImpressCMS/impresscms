@@ -21,7 +21,7 @@ namespace ImpressCMS\Core\IPF\View;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_ipf_view_Column {
+class ViewColumn {
 
 	/**
 	 * Keyname

@@ -18,7 +18,7 @@ namespace ImpressCMS\Core\IPF\View;
  * @package	ICMS\IPF\View
  * @author      marcan <marcan@smartfactory.ca>
  */
-class icms_ipf_view_Single {
+class ViewSingleObject {
 
 	protected $_object;
 	protected $_userSide;

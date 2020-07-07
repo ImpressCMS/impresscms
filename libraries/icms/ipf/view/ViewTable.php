@@ -24,7 +24,7 @@ namespace ImpressCMS\Core\IPF\View;
  * @author	marcan <marcan@impresscms.org>
  * @todo	Properly declare all protected s with their visibility (private, protected, public) and follow naming convention
  */
-class icms_ipf_view_Table {
+class ViewTable {
 
 	protected  $_id;
 	protected  $_objectHandler;
@@ -233,7 +233,7 @@ class icms_ipf_view_Table {
 	 * @param $actions
 	 */
 	public function addWithSelectedActions($actions = array()) {
-		$this->addColumn(new icms_ipf_view_Column('checked', 'center', 20, false, false, '&nbsp;'));
+		$this->addColumn(new ViewColumn('checked', 'center', 20, false, false, '&nbsp;'));
 		$this->_withSelectedActions = $actions;
 	}
 
