@@ -34,7 +34,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
 
-namespace ImpressCMS\Core\Data;
+namespace ImpressCMS\Core\Models;
 
 /**
  * A Notification

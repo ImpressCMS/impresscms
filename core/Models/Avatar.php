@@ -28,70 +28,68 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Manage private messages
+ * Manage avatars for users
  *
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @copyright	Copyright (c) 2000 XOOPS.org
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @author		Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Data;
-
-use ImpressCMS\Core\Data\PrivateMessage\PrivateMessageModel;
+namespace ImpressCMS\Core\Models;
 
 /**
- * Private message handler class.
+ * Avatar class
  *
- * This class is responsible for providing data access mechanisms to the data source
- * of private message class objects.
+ * @author	Kazumi Ono (aka onokazo)
+ * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @package	ICMS\Data\Avatar
  *
- * @author    Kazumi Ono    <onokazu@xoops.org>
- * @copyright    copyright (c) 2000-2007 XOOPS.org
- * @package    ICMS\Data\Privmessage
+ * @property int        $avatar_id         Avatar ID
+ * @property string     $avatar_file       File used for avatar
+ * @property string     $avatar_name       Name
+ * @property string     $avatar_mimetype   Mimetype of avatar file
+ * @property int        $avatar_created    When avatar was created?
+ * @property int        $avatar_display    Do we need to show avatar?
+ * @property int        $avatar_weight     Weight (used for sorting avatars for user)
+ * @property string     $avatar_type       Type
  */
-class PrivateMessageHandler extends \ImpressCMS\Core\IPF\Handler
-{
+class Avatar extends \ImpressCMS\Core\IPF\AbstractModel {
+	/** @var integer */
+	private $_userCount;
 
-	public function __construct(&$db)
-	{
-		parent::__construct($db, 'data_privmessage', 'msg_id', 'subject', 'msg_text', 'icms', 'priv_msgs', 'msg_id');
+	/**
+	 * Constructor for avatar class, initializing all the properties of the class object
+	 *
+	 */
+	public function __construct(&$handler, $data = array()) {
+		$this->initVar('avatar_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('avatar_file', self::DTYPE_STRING, null, false, 30);
+		$this->initVar('avatar_name', self::DTYPE_STRING, null, true, 100);
+		$this->initVar('avatar_mimetype', self::DTYPE_STRING, null, false, 30);
+		$this->initVar('avatar_created', self::DTYPE_INTEGER, null, false);
+		$this->initVar('avatar_display', self::DTYPE_INTEGER, 1, false);
+		$this->initVar('avatar_weight', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('avatar_type', self::DTYPE_STRING, '', false, 1);
+
+                parent::__construct($handler, $data);
 	}
 
 	/**
-	 * Mark a message as read
-	 * @param PrivateMessage $pm Private message
-	 * @return    bool
+	 * Sets the value for the number of users
+	 * @param integer $value
+	 *
 	 */
-	public function setRead(&$pm)
-	{
-		if (!is_a($pm, PrivateMessage::class)) {
-			return false;
-		}
-
-		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->table, (int)$pm->getVar('msg_id'));
-		if (!$this->db->queryF($sql)) {
-			return false;
-		}
-		return true;
+	public function setUserCount($value) {
+		$this->_userCount = (int) $value;
 	}
 
 	/**
-	 * Gets message count for user
-	 *
-	 * @param \ImpressCMS\Core\Member\User|null $user User for whom get message count
-	 *
-	 * @return int
+	 * Gets the value for the number of users
+	 * @return integer
 	 */
-	public function getCountForUser(\ImpressCMS\Core\Member\User $user = null): int {
-		static $msgCount = [];
-		if ($user === null) {
-			$user = \icms::$user;
-		}
-		if (!isset($msgCount[$user->uid])) {
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('read_msg', 0));
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('to_userid', $user->uid));
-			$msgCount[$user->uid] = (int)$this->getCount($criteria);
-		}
-		return $msgCount[$user->uid];
+	public function getUserCount() {
+		return $this->_userCount;
 	}
 }
 

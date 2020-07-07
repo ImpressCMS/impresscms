@@ -36,7 +36,7 @@
  * @package	ICMS\Data\Notification
  */
 
-namespace ImpressCMS\Core\Data;
+namespace ImpressCMS\Core\Models;
 
 // RMV-NOTIFY
 include_once ICMS_ROOT_PATH . '/include/notification_constants.php';

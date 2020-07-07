@@ -1,5 +1,5 @@
 <?php
-namespace ImpressCMS\Core\Data;
+namespace ImpressCMS\Core\Models;
 
 /**
  * Richfile Handler
