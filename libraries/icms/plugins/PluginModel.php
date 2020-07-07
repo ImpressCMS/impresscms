@@ -13,7 +13,7 @@ namespace ImpressCMS\Core\Plugins;
  * @author	ImpressCMS
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
-class icms_plugins_Object {
+class PluginModel {
 
 	/**
 	 * Plugin information (storied as array)

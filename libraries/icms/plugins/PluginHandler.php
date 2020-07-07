@@ -11,7 +11,7 @@ namespace ImpressCMS\Core\Plugins;
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @package	ICMS\Plugins
  */
-class icms_plugins_Handler {
+class PluginHandler {
 
 	public $pluginPatterns = false;
 
@@ -28,7 +28,7 @@ class icms_plugins_Handler {
 			$function = 'icms_plugin_' . $dirname;
 			if (function_exists($function)) {
 				$array = $function();
-				$ret = new icms_plugins_Object($array);
+				$ret = new PluginModel($array);
 				return $ret;
 			}
 		}
