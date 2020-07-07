@@ -21,8 +21,10 @@ namespace ImpressCMS\Core\Preload;
  * @package	ICMS\Preload
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
+ *
+ * @deprecated since 2.0 - use composer instead!
  */
-class icms_preload_LibrariesHandler {
+class LibrariesPreloader {
 	/**
 	 * @public array $_librariesArray array containing a list of all available third party libraries
 	 */

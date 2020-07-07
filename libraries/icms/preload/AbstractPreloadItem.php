@@ -14,7 +14,7 @@ namespace ImpressCMS\Core\Preload;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_preload_Item {
+abstract class AbstractPreloadItem {
 
 	public function __construct() {
 	}

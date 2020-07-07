@@ -22,7 +22,7 @@ namespace ImpressCMS\Core\Preload;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class icms_preload_Handler {
+class EventsPreloader {
 
 	/**
 	 * Constructor
@@ -99,7 +99,7 @@ class icms_preload_Handler {
 	{
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_preload_Handler();
+			$instance = new EventsPreloader();
 		}
 		return $instance;
 	}
