@@ -1,5 +1,5 @@
 <?php
-namespace ImpressCMS\Core\IPF\Member;
+namespace ImpressCMS\Core\IPF;
 
 /**
  * Member handler class.
