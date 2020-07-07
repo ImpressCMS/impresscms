@@ -34,7 +34,7 @@
  * @license	LICENSE.txt
  */
 
-namespace ImpressCMS\Core\Module;
+namespace ImpressCMS\Core\Models;
 
 /**
  * A Module

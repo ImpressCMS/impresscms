@@ -35,7 +35,7 @@
  * @license    LICENSE.txt
  */
 
-namespace ImpressCMS\Core\Module;
+namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
