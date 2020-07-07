@@ -53,7 +53,7 @@ return [
 	'icms_feeds_Rss' => \ImpressCMS\Core\Feeds\Rss::class,
 	'icms_feeds_Simplerss' => \ImpressCMS\Core\Feeds\Simplerss::class,
 	'icms_file_DownloadHandler' => \ImpressCMS\Core\File\DownloadHandler::class,
-	'icms_file_MediaUploadHandler' => \ImpressCMS\Core\File\MediaUploadHandler::class,
+	'icms_file_MediaUploadHandler' => \ImpressCMS\Core\File\MediaUploader::class,
 	'icms_file_TarDownloader' => \ImpressCMS\Core\File\TarDownloader::class,
 	'icms_file_ZipDownloader' => \ImpressCMS\Core\File\ZipDownloader::class,
 	'icms_form_elements_captcha_Image' => \ImpressCMS\Core\Form\Elements\Captcha\ImageMode::class,

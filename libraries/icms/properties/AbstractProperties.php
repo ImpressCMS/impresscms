@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\Properties;
 
-use ImpressCMS\Core\File\MediaUploadHandler;
+use ImpressCMS\Core\File\MediaUploader;
 
 /**
  * Contains methods for dealing with object properties
@@ -406,7 +406,7 @@ abstract class AbstractProperties implements Serializable {
 				return (array) $value;
 			case self::DTYPE_FILE:
 				if (isset($_FILES[$key])) {
-					$uploader = new MediaUploadHandler($this->_vars[$key]['path'], $this->_vars[$key]['allowedMimeTypes'], $this->_vars[$key]['maxFileSize'], $this->_vars[$key]['maxWidth'], $this->_vars[$key]['maxHeight']);
+					$uploader = new MediaUploader($this->_vars[$key]['path'], $this->_vars[$key]['allowedMimeTypes'], $this->_vars[$key]['maxFileSize'], $this->_vars[$key]['maxWidth'], $this->_vars[$key]['maxHeight']);
 					if ($uploader->fetchMedia($key)) {
 						if (!empty($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
 							$filename = call_user_func($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION], 'post', $uploader->getMediaType(), $uploader->getMediaName());
@@ -432,7 +432,7 @@ abstract class AbstractProperties implements Serializable {
 							'mimetype' => $this->getFileMimeType($value),
 						);
 					}
-					$uploader = new MediaUploadHandler($this->_vars[$key][self::VARCFG_PATH], $this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES], $this->_vars[$key][self::VARCFG_MAX_FILESIZE], $this->_vars[$key][self::VARCFG_MAX_WIDTH], $this->_vars[$key][self::VARCFG_MAX_HEIGHT]);
+					$uploader = new MediaUploader($this->_vars[$key][self::VARCFG_PATH], $this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES], $this->_vars[$key][self::VARCFG_MAX_FILESIZE], $this->_vars[$key][self::VARCFG_MAX_WIDTH], $this->_vars[$key][self::VARCFG_MAX_HEIGHT]);
 					if ($uploader->fetchFromURL($value)) {
 						if (!empty($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
 							$filename = call_user_func($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION], 'post', $uploader->getMediaType(), $uploader->getMediaName());

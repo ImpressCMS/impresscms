@@ -83,7 +83,7 @@ namespace ImpressCMS\Core\File;
  * @author      phppp
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class MediaUploadHandler {
+class MediaUploader {
 
 	/**
 	 * @var bool Flag indicating if unrecognized mimetypes should be allowed (use with precaution ! may lead to security issues )
