@@ -37,7 +37,7 @@ namespace ImpressCMS\Core\Plugins;
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\Plugins
  */
-class icms_plugins_EditorHandler {
+class EditorHandler {
 
 	/**
 	 * No HTML mode?

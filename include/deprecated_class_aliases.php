@@ -165,7 +165,7 @@ return [
 	'icms_messaging_Handler' => \ImpressCMS\Core\Messaging\MailHandler::class,
 	'icms_module_Handler' => \ImpressCMS\Core\Module\ModuleHandler::class,
 	'icms_module_Object' => \ImpressCMS\Core\Module\ModuleModel::class,
-	'icms_plugins_EditorHandler',
+	'icms_plugins_EditorHandler' => \ImpressCMS\Core\Plugins\EditorHandler::class,
 	'icms\\plugins\\EditorInterface' => \ImpressCMS\Core\Plugins\EditorInterface::class,
 	'icms_plugins_Handler',
 	'icms_plugins_Object',
