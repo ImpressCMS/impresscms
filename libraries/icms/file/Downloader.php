@@ -44,7 +44,7 @@ namespace ImpressCMS\Core\File;
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-abstract class DownloadHandler {
+abstract class Downloader {
 
 	/**#@+
 	 * file information

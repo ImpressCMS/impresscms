@@ -52,7 +52,7 @@ return [
 	'icms_db_IUtility' => \ImpressCMS\Core\Database\DatabaseUtilityInterface::class,
 	'icms_feeds_Rss' => \ImpressCMS\Core\Feeds\Rss::class,
 	'icms_feeds_Simplerss' => \ImpressCMS\Core\Feeds\Simplerss::class,
-	'icms_file_DownloadHandler' => \ImpressCMS\Core\File\DownloadHandler::class,
+	'icms_file_DownloadHandler' => \ImpressCMS\Core\File\Downloader::class,
 	'icms_file_MediaUploadHandler' => \ImpressCMS\Core\File\MediaUploader::class,
 	'icms_file_TarDownloader' => \ImpressCMS\Core\File\TarDownloader::class,
 	'icms_file_ZipDownloader' => \ImpressCMS\Core\File\ZipDownloader::class,

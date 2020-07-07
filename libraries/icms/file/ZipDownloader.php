@@ -42,7 +42,7 @@ namespace ImpressCMS\Core\File;
  * @author	xoops.org
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class ZipDownloader extends DownloadHandler {
+class ZipDownloader extends Downloader {
 	/**
 	 * Constructor
 	 *

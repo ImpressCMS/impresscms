@@ -42,7 +42,7 @@ namespace ImpressCMS\Core\File;
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @package	ICMS\File
  */
-class TarDownloader extends DownloadHandler {
+class TarDownloader extends Downloader {
 
 	/**
 	 * Constructor
