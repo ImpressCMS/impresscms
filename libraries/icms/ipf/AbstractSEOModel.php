@@ -8,7 +8,7 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\IPF\Seo;
+namespace ImpressCMS\Core\IPF;
 
 /**
  * icms_ipf_Object base SEO-enabled class

@@ -10,8 +10,8 @@
  */
 namespace ImpressCMS\Core\IPF\Category;
 
+use ImpressCMS\Core\IPF\AbstractSEOModel;
 use ImpressCMS\Core\IPF\Controller;
-use ImpressCMS\Core\IPF\Seo\AbstractSEOModel;
 
 /**
  * Persistble category object
