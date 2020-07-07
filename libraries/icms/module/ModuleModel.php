@@ -60,7 +60,7 @@ namespace ImpressCMS\Core\Module;
  * @property string $modname           Internal name
  * @property int    $ipf               Is this module IPF based?
  */
-class icms_module_Object
+class ModuleModel
 	extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * Module configuration

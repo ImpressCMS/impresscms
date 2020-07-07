@@ -50,7 +50,7 @@ use ImpressCMS\Core\SetupSteps\SetupStepInterface;
  * @author    Kazumi Ono    <onokazu@xoops.org>
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class icms_module_Handler
+class ModuleHandler
 	extends \ImpressCMS\Core\IPF\Handler
 {
 
@@ -108,7 +108,7 @@ class icms_module_Handler
 
 	/**
 	 * Checks if the current user can access the specified module
-	 * @param icms_module_Object $module
+	 * @param ModuleModel $module
 	 * @param bool $inAdmin
 	 * @return bool
 	 */
@@ -134,7 +134,7 @@ class icms_module_Handler
 		return true;
 	}
 
-	public function beforeSave(icms_module_Object &$module)
+	public function beforeSave(ModuleModel &$module)
 	{
 		$module->setVar('last_update', time());
 		return true;
@@ -300,7 +300,7 @@ class icms_module_Handler
 	 * @param string $dirname
 	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
 	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
-	 * @return    icms_module_Object|false
+	 * @return    ModuleModel|false
 	 * @todo Make caching work
 	 */
 	public function getByDirname($dirname, $loadConfig = false)
@@ -324,7 +324,7 @@ class icms_module_Handler
 	/**
 	 * load config for a module before caching it
 	 *
-	 * @param icms_module_Object $module
+	 * @param ModuleModel $module
 	 * @return    bool                TRUE
 	 */
 	private function loadConfig($module)
@@ -345,7 +345,7 @@ class icms_module_Handler
 	/**
 	 * Delete a module from the database
 	 *
-	 * @param icms_module_Object &$module
+	 * @param ModuleModel &$module
 	 * @param bool $force Force to delete?
 	 *
 	 * @return  bool
@@ -521,7 +521,7 @@ class icms_module_Handler
 	 * @param bool $debug Debug enabled for object?
 	 * @param bool|object $criteria Criteria for getting object if needed
 	 *
-	 * @return    icms_module_Object|false
+	 * @return    ModuleModel|false
 	 */
 	public function &get($id, $loadConfig = false, $debug = false, $criteria = false)
 	{
