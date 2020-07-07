@@ -47,7 +47,7 @@ $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
 	'version'=> '1.4.1',
 	'description'=> _MI_SYSTEM_DESC,
-	'author'=> "",
+	'author'=> "fiammybe",
 	'credits'=> "The ImpressCMS Project",
 	'help'=> "",
 	'license'=> "GNU General Public License v2 (GPL2)",
@@ -61,11 +61,11 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "Beta",
-	'status'=> "Beta",
-	'date'=> "04 Jul 2020",
+	'status_version'=> "Final",
+	'status'=> "Final",
+	'date'=> "07 Jul 2020",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_BETA,
+	'warning'=>_CO_ICMS_WARNING_FINAL,
 
 /** Contributors */
 	'developer_website_url' => "https://www.impresscms.org",
