@@ -34,7 +34,7 @@
  * @license    LICENSE.txt
  */
 
-namespace ImpressCMS\Core\View\Template\File;
+namespace ImpressCMS\Core\View\Template;
 
 /**
  * Template file handler class.
@@ -45,7 +45,7 @@ namespace ImpressCMS\Core\View\Template\File;
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class icms_view_template_file_Handler extends \ImpressCMS\Core\IPF\Handler {
+class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	private $_prefetch_cache = array();
 
 	public function __construct(&$db) {
@@ -55,7 +55,7 @@ class icms_view_template_file_Handler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Loads Template source from DataBase
 	 *
-	 * @see icms_view_template_file_Object
+	 * @see TemplateFileModel
 	 * @param \icms_view_template_file_Object $tplfile object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 */

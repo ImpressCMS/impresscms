@@ -7,7 +7,7 @@
  * @since	1.0
  */
 
-namespace ImpressCMS\Core\View\Block\Position;
+namespace ImpressCMS\Core\View\Block;
 
 /**
  * Block position
@@ -21,12 +21,12 @@ namespace ImpressCMS\Core\View\Block\Position;
  * @property int    $block_default Is default?
  * @property string $block_type    Type
  */
-class icms_view_block_position_Object extends \ImpressCMS\Core\IPF\AbstractModel {
+class ViewBlockPositionModel extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Constructor
 	 *
-	 * @param icms_view_block_position_Handler $handler
+	 * @param ViewBlockPositionHandler $handler
 	 */
 	public function __construct(& $handler) {
 

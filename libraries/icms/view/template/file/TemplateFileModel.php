@@ -34,7 +34,7 @@
  * @license	LICENSE.txt
  */
 
-namespace ImpressCMS\Core\View\Template\File;
+namespace ImpressCMS\Core\View\Template;
 
 /**
  * Base class for all templates
@@ -53,7 +53,7 @@ namespace ImpressCMS\Core\View\Template\File;
  * @property string $tpl_module        Module
  * @property string $tpl_type          Type
  * */
-class icms_view_template_file_Object extends \ImpressCMS\Core\IPF\AbstractModel {
+class TemplateFileModel extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	public $tpl_source = false;
 

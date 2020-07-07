@@ -34,7 +34,7 @@
  * @license	LICENSE.txt
  */
 
-namespace ImpressCMS\Core\View\Template\Set;
+namespace ImpressCMS\Core\View\Template;
 
 /**
  * Template set handler class.
@@ -45,7 +45,7 @@ namespace ImpressCMS\Core\View\Template\Set;
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\View\Template\Set
  */
-class icms_view_template_set_Handler extends \ImpressCMS\Core\IPF\Handler {
+class TemplateSetHandler extends \ImpressCMS\Core\IPF\Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'view_template_set', 'tplset_id', 'tplset_name', 'tplset_name', 'icms', 'tplset', 'tplset_id');
@@ -54,9 +54,9 @@ class icms_view_template_set_Handler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Gets templateset from database by Name
 	 *
-	 * @see icms_view_template_set_Object
 	 * @param string $tplset_name of the tempateset to get
 	 * @return \icms_view_template_set_Object reference to the new template
+	 *@see TemplateSetModel
 	 */
 	public function &getByName($tplset_name) {
 				$criteria = new icms_db_criteria_Item('tplset_name', trim($tplset_name));
@@ -68,12 +68,12 @@ class icms_view_template_set_Handler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Deletes templateset from the database
 	 *
-	 * @see icms_view_template_set_Object
-	 *
 	 * @param \icms_view_template_set_Object $tplset reference to the object of the tempateset to delete
 	 * @param bool $force Force delete?
 	 *
 	 * @return bool
+	 *@see TemplateSetModel
+	 *
 	 */
 	public function delete(&$tplset, $force = false) {
 		if (!parent::delete($tplset, $force)) {

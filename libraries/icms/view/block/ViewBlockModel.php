@@ -66,7 +66,7 @@ namespace ImpressCMS\Core\View\Block;
  * @property int $last_modified  When it was last modified?
  * @property string $options        Options
  */
-class icms_view_block_Object extends \ImpressCMS\Core\IPF\AbstractModel
+class ViewBlockModel extends \ImpressCMS\Core\IPF\AbstractModel
 {
 
 	/**

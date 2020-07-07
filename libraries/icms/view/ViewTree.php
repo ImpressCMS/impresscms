@@ -40,7 +40,7 @@ namespace ImpressCMS\Core\View;
  * @author      Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_view_Tree {
+class ViewTree {
 	/** @var string table with parent-child structure */
 	public $table;
 	/** @var string name of unique id for records in table $table */
