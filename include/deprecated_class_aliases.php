@@ -156,7 +156,7 @@ return [
 	'icms_member_group_Object'=>\ImpressCMS\Core\Member\Group\GroupModel::class,
 	'icms_member_groupperm_Handler'=>\ImpressCMS\Core\Member\Group\GroupPermHandler::class,
 	'icms_member_groupperm_Object'=>\ImpressCMS\Core\Member\Group\GroupPermModel::class,
-	'icms_member_rank_Handler' => \ImpressCMS\Core\Member\Rank\UserRankHandler::class,
+	'icms_member_rank_Handler' => \ImpressCMS\Core\Member\UserRankHandler::class,
 	'icms_member_rank_Object' => \ImpressCMS\Core\Member\UserRankModel::class,
 	'icms_member_user_Handler' => \ImpressCMS\Core\Member\UserHandler::class,
 	'icms_member_user_Object' => \ImpressCMS\Core\Member\UserModel::class,
