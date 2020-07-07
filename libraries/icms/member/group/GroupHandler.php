@@ -32,32 +32,22 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
+ * @author	Kazumi Ono (aka onokazo)
  */
 
 namespace ImpressCMS\Core\Member\Group;
 
 /**
- * a group of users
+ * Group handler class.
+ * This class is responsible for providing data access mechanisms to the data source
+ * of group class objects.
  *
- * @author	Kazumi Ono <onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
+ * @author      Kazumi Ono <onokazu@xoops.org>
  * @package	ICMS\Member\Group
- *
- * @property int     $groupid        Group ID
- * @property string  $name           Name
- * @property string  $description    Description
- * @property string  $group_type     Type
  */
-class icms_member_group_Object extends \ImpressCMS\Core\IPF\AbstractModel {
-	/**
-	 * constructor
-	 */
-	public function __construct(&$handler, $data = array()) {
-		$this->initVar('groupid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('name', self::DTYPE_STRING, null, true, 50);
-		$this->initVar('description', self::DTYPE_STRING, null, false);
-		$this->initVar('group_type', self::DTYPE_STRING, null, false, 10);
+class GroupHandler extends \ImpressCMS\Core\IPF\Handler {
 
-                parent::__construct($handler, $data);
-	}
+        public function __construct(&$db) {
+            parent::__construct($db, 'member_group', 'groupid', 'name', 'description', 'icms', 'groups', 'groupid');
+        }
 }

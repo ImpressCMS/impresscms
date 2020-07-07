@@ -34,7 +34,7 @@
  * @license	LICENSE.txt
  * @package	ICMS\Member\User
  */
-namespace ImpressCMS\Core\Member\User;
+namespace ImpressCMS\Core\Member;
 
 
 include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
@@ -48,7 +48,7 @@ include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\Member\User
  */
-class icms_member_user_Handler
+class UserHandler
 	extends \ImpressCMS\Core\IPF\Handler {
 
 		public function __construct(&$db, $module = 'icms') {

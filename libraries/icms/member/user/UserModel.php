@@ -35,7 +35,7 @@
  * @license	LICENSE.txt
  */
 
-namespace ImpressCMS\Core\Member\User;
+namespace ImpressCMS\Core\Member;
 
 /**
  * Class for users
@@ -75,7 +75,7 @@ namespace ImpressCMS\Core\Member\User;
  * @property bool   $pass_expired      Is password expired?
  * @property string $login_name        Login name
  */
-class icms_member_user_Object extends \ImpressCMS\Core\IPF\AbstractModel {
+class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * @var bool is the user admin?
@@ -427,7 +427,7 @@ class icms_member_user_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 		 * @var Aura\Session\Session $session
 		 */
 		$session = \icms::getInstance()->get('session');
-		$userSegment = $session->getSegment(icms_member_user_Object::class);
+		$userSegment = $session->getSegment(UserModel::class);
 		foreach ($data as $key => $value) {
 			$userSegment->set($key, $value);
 		}
@@ -442,7 +442,7 @@ class icms_member_user_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 			 * @var Aura\Session\Session $session
 			 */
 			$session = \icms::getInstance()->get('session');
-			$userSegment = $session->getSegment(icms_member_user_Object::class);
+			$userSegment = $session->getSegment(UserModel::class);
 			$userSegment->set($name, parent::getVar($name));
 		}
 	}
@@ -483,7 +483,7 @@ class icms_member_user_Object extends \ImpressCMS\Core\IPF\AbstractModel {
 		 * @var Aura\Session\Session $session
 		 */
 		$session = \icms::getInstance()->get('session');
-		$userSegment = $session->getSegment(icms_member_user_Object::class);
+		$userSegment = $session->getSegment(UserModel::class);
 
 		if ($userid = $userSegment->get('userid')) {
 					return false;

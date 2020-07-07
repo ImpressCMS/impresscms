@@ -45,7 +45,7 @@ namespace ImpressCMS\Core\Member;
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @package	ICMS\Member
  */
-class icms_member_Handler {
+class Member {
 
 	/**
 	 * holds reference to user handler(DAO) class
@@ -82,7 +82,7 @@ class icms_member_Handler {
 	/**
 	 * create a new group
 	 *
-	 * @return icms_member_group_Object
+	 * @return GroupModel
 	 */
 	public function &createGroup(&$isNew = true) {
 		$inst = & $this->_gHandler->create();
@@ -102,7 +102,7 @@ class icms_member_Handler {
 	/**
 	 * delete a group
 	 *
-	 * @param icms_member_group_Object $group reference to the group to delete
+	 * @param GroupModel $group reference to the group to delete
 	 * @return bool
 	 */
 	public function deleteGroup(&$group) {
@@ -127,7 +127,7 @@ class icms_member_Handler {
 	/**
 	 * insert a group into the database
 	 *
-	 * @param icms_member_group_Object $group reference to the group to insert
+	 * @param GroupModel $group reference to the group to insert
 	 * @return bool
 	 */
 	public function insertGroup(&$group) {
@@ -140,7 +140,7 @@ class icms_member_Handler {
 	 * @param \icms_db_criteria_Element $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 *
-	 * @return icms_member_group_Object[]
+	 * @return GroupModel[]
 	 */
 	public function &getGroups($criteria = null, $id_as_key = false) {
 		return $this->_gHandler->getObjects($criteria, $id_as_key);
@@ -523,7 +523,7 @@ class icms_member_Handler {
 	 * @param int $user_id ID of the user
 	 * @param bool $asobject return groups as icms_member_group_Object objects or arrays?
 	 *
-	 * @return array|icms_member_group_Object[]
+	 * @return array|GroupModel[]
 	 */
 	public function &getGroupsByUser($user_id, $asobject = false)
 	{
@@ -543,7 +543,7 @@ class icms_member_Handler {
 	 *
 	 * @param int $id ID for the group
 	 *
-	 * @return icms_member_group_Object|null
+	 * @return GroupModel|null
 	 */
 	public function &getGroup($id)
 	{

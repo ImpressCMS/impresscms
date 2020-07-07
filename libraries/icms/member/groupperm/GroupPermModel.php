@@ -28,70 +28,44 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Manage memberships
+ * Manage groups and memberships
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
  * @license	LICENSE.txt
- * @author	Kazumi Ono (aka onokazo)
+ * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  */
 
-namespace ImpressCMS\Core\Member\Group\Membership;
+namespace ImpressCMS\Core\Member\Group;
 
 /**
- * Group membership handler class. (Singleton)
+ * A group permission
  *
- * This class is responsible for providing data access mechanisms to the data source
- * of group membership class objects.
+ * These permissions are managed through a icms_member_groupperm_Handler object
  *
- * @author      Kazumi Ono <onokazu@xoops.org>
- * @package	ICMS\Member\Group\Membership
+ * @author	Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package	ICMS\Member\GroupPermission
+ *
+ * @property int    $gperm_id      Group permission ID
+ * @property int    $gperm_groupid Linked group ID
+ * @property int    $gperm_itemid  Linked item ID
+ * @property int    $gperm_modid   Linked module ID
+ * @property string $gperm_name    Name
  */
-class icms_member_group_membership_Handler extends \ImpressCMS\Core\IPF\Handler {
-
-		public function __construct(&$db) {
-			parent::__construct($db, 'member_group_membership', 'linkid', 'groupid', 'uid', 'icms', 'groups_users_link', 'linkid');
-		}
-
+class GroupPermModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
-	 * retrieve groups for a user
+	 * Constructor
 	 *
-	 * @param int $uid ID of the user
-	 * @return array array of groups the user belongs to
 	 */
-	public function getGroupsByUser($uid) {
-		$ret = array();
-		$sql = "SELECT groupid FROM " . icms::$xoopsDB->prefix('groups_users_link')
-			. " WHERE uid='" . (int) $uid . "'";
-		$result = icms::$xoopsDB->query($sql);
-		if (!$result) {
-			return $ret;
-		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
-			$ret[] = $myrow['groupid'];
-		}
-		return $ret;
-	}
+	function __construct(&$handler, $data = array()) {
 
-	/**
-	 * retrieve users belonging to a group
-	 *
-	 * @param int $groupid ID of the group
-	 * @param int $limit number of entries to return
-	 * @param int $start offset of first entry to return
-	 * @return array array of users belonging to the group
-	 */
-	public function getUsersByGroup($groupid, $limit = 0, $start = 0) {
-		$ret = array();
-		$sql = "SELECT uid FROM " . icms::$xoopsDB->prefix('groups_users_link')
-			. " WHERE groupid='" . (int) $groupid . "'";
-		$result = icms::$xoopsDB->query($sql, $limit, $start);
-		if (!$result) {
-			return $ret;
-		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
-			$ret[] = $myrow['uid'];
-		}
-		return $ret;
+		$this->initVar('gperm_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('gperm_groupid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('gperm_itemid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('gperm_modid', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('gperm_name', self::DTYPE_STRING, null, false, 50);
+
+                parent::__construct($handler, $data);
 	}
 }
 

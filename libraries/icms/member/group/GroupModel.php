@@ -28,44 +28,36 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Manage groups and memberships
+ * Manage groups
  *
- * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
- * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  */
 
-namespace ImpressCMS\Core\Member\GroupPerm;
+namespace ImpressCMS\Core\Member\Group;
 
 /**
- * A group permission
+ * a group of users
  *
- * These permissions are managed through a icms_member_groupperm_Handler object
- *
- * @author	Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS\Member\GroupPermission
+ * @package	ICMS\Member\Group
  *
- * @property int    $gperm_id      Group permission ID
- * @property int    $gperm_groupid Linked group ID
- * @property int    $gperm_itemid  Linked item ID
- * @property int    $gperm_modid   Linked module ID
- * @property string $gperm_name    Name
+ * @property int     $groupid        Group ID
+ * @property string  $name           Name
+ * @property string  $description    Description
+ * @property string  $group_type     Type
  */
-class icms_member_groupperm_Object extends \ImpressCMS\Core\IPF\AbstractModel {
+class GroupModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
-	 * Constructor
-	 *
+	 * constructor
 	 */
-	function __construct(&$handler, $data = array()) {
-
-		$this->initVar('gperm_id', self::DTYPE_INTEGER, null, false);
-		$this->initVar('gperm_groupid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('gperm_itemid', self::DTYPE_INTEGER, null, false);
-		$this->initVar('gperm_modid', self::DTYPE_INTEGER, 0, false);
-		$this->initVar('gperm_name', self::DTYPE_STRING, null, false, 50);
+	public function __construct(&$handler, $data = array()) {
+		$this->initVar('groupid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('name', self::DTYPE_STRING, null, true, 50);
+		$this->initVar('description', self::DTYPE_STRING, null, false);
+		$this->initVar('group_type', self::DTYPE_STRING, null, false, 10);
 
                 parent::__construct($handler, $data);
 	}
 }
-

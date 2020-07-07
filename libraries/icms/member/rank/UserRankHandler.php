@@ -15,7 +15,7 @@ namespace ImpressCMS\Core\Member\Rank;
  *
  * @package	ICMS\Member\Rank
  */
-class icms_member_rank_Handler extends \ImpressCMS\Core\IPF\Handler {
+class UserRankHandler extends \ImpressCMS\Core\IPF\Handler {
 
 	/** */
 	public $objects = false;

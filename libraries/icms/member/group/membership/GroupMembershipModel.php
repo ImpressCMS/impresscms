@@ -7,7 +7,7 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Member\Group\Membership;
+namespace ImpressCMS\Core\Member\Group;
 
 /**
  * membership of a user in a group
@@ -19,7 +19,7 @@ namespace ImpressCMS\Core\Member\Group\Membership;
  * @property int $groupid       Group ID
  * @property int $uid           User ID
  */
-class icms_member_group_membership_Object extends \ImpressCMS\Core\IPF\AbstractModel {
+class GroupMembershipModel extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * constructor
 	 */

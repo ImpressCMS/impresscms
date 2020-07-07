@@ -118,7 +118,7 @@ class mod_system_Rating extends \ImpressCMS\IPF\BaseModel {
 	 * Create a link to the user profile associated with the rating
 	 *
 	 * @return	string
-	 * @see	icms_member_user_Handler::getUserLink
+	 * @see	UserHandler::getUserLink
 	 */
 	public function getUnameValue() {
 		return icms_member_user_Handler::getUserLink($this->getVar('uid'));

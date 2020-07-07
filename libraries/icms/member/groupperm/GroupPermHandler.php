@@ -35,7 +35,7 @@
  * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  */
 
-namespace ImpressCMS\Core\Member\GroupPerm;
+namespace ImpressCMS\Core\Member\Group;
 
 /**
  * Group permission handler class.
@@ -44,11 +44,11 @@ namespace ImpressCMS\Core\Member\GroupPerm;
  * of group permission class objects.
  *
  * @package	ICMS\Member\GroupPermission
- * @see		icms_member_groupperm_Object
+ * @see        GroupPermModel
  * @author	Kazumi Ono  <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_member_groupperm_Handler extends \ImpressCMS\Core\IPF\Handler {
+class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'member_groupperm', 'gperm_id', 'gperm_itemid', 'gperm_name', 'icms', 'group_permission', array('gperm_id', array('gperm_name', 'gperm_itemid', 'gperm_modid')));
