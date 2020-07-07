@@ -289,7 +289,7 @@ class Handler extends ObjectHandler {
 	 * @param str $perm_name
 	 */
 	public function setGrantedObjectsCriteria(&$criteria, $perm_name) {
-		$icmspermissions_handler = new icms_ipf_permission_Handler($this);
+		$icmspermissions_handler = new \ImpressCMS\Core\IPF\PermissionsDecorator($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
 			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));

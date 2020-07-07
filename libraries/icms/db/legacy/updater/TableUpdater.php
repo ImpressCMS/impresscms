@@ -11,7 +11,7 @@
 namespace ImpressCMS\Core\Database\Legacy\Updater;
 
 /**
- * icms_db_legacy_updater_Table class
+ * \ImpressCMS\Core\Database\Legacy\Updater\TableUpdater class
  *
  * Information about an individual table
  *

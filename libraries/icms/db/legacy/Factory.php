@@ -91,6 +91,6 @@ class DatabaseConnectionFactory extends CurrentDatabaseConnectionFactory {
 	 * @static
 	 */
 	static public function getDatabaseUpdater() {
-		return new icms_db_legacy_updater_Handler();
+		return new \ImpressCMS\Core\Database\Legacy\Updater\DatabaseUpdater();
 	}
 }

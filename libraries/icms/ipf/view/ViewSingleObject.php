@@ -11,7 +11,7 @@
 namespace ImpressCMS\Core\IPF\View;
 
 /**
- * icms_ipf_view_Single base class
+ * \ImpressCMS\Core\IPF\View\ViewSingleObject base class
  *
  * Base class handling the display of a single object
  *

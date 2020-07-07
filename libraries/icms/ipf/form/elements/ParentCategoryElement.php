@@ -25,7 +25,7 @@ class ParentCategoryElement extends icms_form_elements_Select {
 		$category_handler = icms_getModuleHandler('category', $object->handler->_moduleName);
 		$categories = $category_handler->getObjects($criteria);
 
-		$mytree = new icms_ipf_Tree($categories, "category_id", "category_pid");
+		$mytree = new \ImpressCMS\Core\IPF\ObjectTree($categories, "category_id", "category_pid");
 		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVar($key, 'e'));
 
 		$ret = array();
@@ -43,7 +43,7 @@ class ParentCategoryElement extends icms_form_elements_Select {
 	/**
 	 * Get options for a category select with hierarchy (recursive)
 	 *
-	 * @param \icms_ipf_Tree  $tree       Tree instance
+	 * @param \\ImpressCMS\Core\IPF\ObjectTree  $tree       Tree instance
 	 * @param string  $fieldName    The fieldname to get the option array for
 	 * @param int     $key          the key to get the optionarray for
 	 * @param string  $prefix_curr  the prefix

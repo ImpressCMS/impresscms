@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class RichfileElement extends icms_form_elements_Tray {
+class RichfileElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 	/**
 	 * Constructor
 	 * @param	icms_ipf_Object	$object	target object
@@ -23,27 +23,27 @@ class RichfileElement extends icms_form_elements_Tray {
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
 		if ($fileObj->getVar("url") != "") {
-			$this->addElement(new icms_form_elements_Label("", _CO_ICMS_CURRENT_FILE . $fileObj->render() . "<br /><br />"));
+			$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", _CO_ICMS_CURRENT_FILE . $fileObj->render() . "<br /><br />"));
 		}
 
 		if ($fileObj->isNew()) {
 			$this->addElement(new FileUploadElement($fileObj, $key));
-			$this->addElement(new icms_form_elements_Label("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
-			$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_URL_FILE));
+			$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
+			$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", "<br />" . _CO_ICMS_URL_FILE));
 			$this->addElement(new TextElement($fileObj, "url_" . $key));
 		}
 
-		$this->addElement(new icms_form_elements_Hidden("mid_" . $key, $module->getVar("mid")));
-		$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_CAPTION));
+		$this->addElement(new \ImpressCMS\Core\Form\Elements\HiddenElement("mid_" . $key, $module->getVar("mid")));
+		$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", "<br />" . _CO_ICMS_CAPTION));
 		$this->addElement(new TextElement($fileObj, "caption_" . $key));
-		$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_DESC));
+		$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", "<br />" . _CO_ICMS_DESC));
 		$this->addElement(new TextElement($fileObj, "desc_" . $key));
 
 		if (!$fileObj->isNew()) {
-			$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_CHANGE_FILE));
+			$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", "<br />" . _CO_ICMS_CHANGE_FILE));
 			$this->addElement(new FileUploadElement($fileObj, $key));
-			$this->addElement(new icms_form_elements_Label("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
-			$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_URL_FILE));
+			$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
+			$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", "<br />" . _CO_ICMS_URL_FILE));
 			$this->addElement(new TextElement($fileObj, "url_" . $key));
 		}
 	}

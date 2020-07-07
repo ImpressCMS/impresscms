@@ -504,7 +504,7 @@ class DatabaseUpdater {
 	/**
 	 * Use to update a table
 	 *
-	 * @param \icms_db_legacy_updater_Table $table Table that will be updated
+	 * @param \\ImpressCMS\Core\Database\Legacy\Updater\TableUpdater $table Table that will be updated
 	 * @param bool $force force the query even in a GET process
 	 *
 	 * @return bool true if success, false if an error occurred

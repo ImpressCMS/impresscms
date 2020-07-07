@@ -28,7 +28,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * icms_ipf_Tree
+ * \ImpressCMS\Core\IPF\ObjectTree
  *
  * @copyright	http://smartfactory.ca The SmartFactory
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

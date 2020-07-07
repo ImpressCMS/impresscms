@@ -38,7 +38,7 @@ namespace ImpressCMS\Core\Form\Elements;
 /**
  * Date and time selection field
  *
- * This extends the icms_form_elements_Tray class because this field actually contains
+ * This extends the \ImpressCMS\Core\Form\Elements\TrayElement class because this field actually contains
  * 2 different elements - the date and the time
  *
  * @package	ICMS\Form\Elements

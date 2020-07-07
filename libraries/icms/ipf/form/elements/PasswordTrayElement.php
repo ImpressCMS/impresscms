@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class PasswordTrayElement extends icms_form_elements_Tray {
+class PasswordTrayElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 	private $_key;
 
 	/**
@@ -25,7 +25,7 @@ class PasswordTrayElement extends icms_form_elements_Tray {
 		icms_loadLanguageFile('core', 'user');
 		parent::__construct($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
 
-		$password_box1 = new icms_form_elements_Password('', $key . '1', 10, 32, '', false, "password_adv");
+		$password_box1 = new \ImpressCMS\Core\Form\Elements\PasswordElement('', $key . '1', 10, 32, '', false, "password_adv");
 		$this->addElement($password_box1);
 
 		$this->_key = $key;

@@ -10,6 +10,8 @@
  */
 namespace ImpressCMS\Core\IPF\Category;
 
+use ImpressCMS\Core\IPF\Controller;
+
 /**
  * Persistble category object
  *
@@ -107,7 +109,7 @@ class CategoryModel extends icms_ipf_seo_Object {
 	 */
 	public function getCategoryPath($withAllLink = true, $currentCategory = false) {
 
-		$controller = new icms_ipf_Controller($this->handler);
+		$controller = new Controller($this->handler);
 
 		if (!$this->_categoryPath) {
 			if ($withAllLink && !$currentCategory) {

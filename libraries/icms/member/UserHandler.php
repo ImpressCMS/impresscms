@@ -37,6 +37,8 @@
 namespace ImpressCMS\Core\Member;
 
 
+use ImpressCMS\Core\StopSpammer;
+
 include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
 
 /**
@@ -138,7 +140,7 @@ class UserHandler
 		// initializations
 		$member_handler = \icms::handler('icms_member');
 		$thisUser = ($uid > 0)?$thisUser = $member_handler->getUser($uid):false;
-		$icmsStopSpammers = new icms_core_StopSpammer();
+		$icmsStopSpammers = new StopSpammer();
 		$stop = '';
 		switch ($icmsConfigUser['uname_test_level']) {
 			case 0: // strict

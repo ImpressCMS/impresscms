@@ -38,9 +38,9 @@ interface EditorInterface
 	 * @param array $configs Editor configuration
 	 * @param bool $checkCompatible If true, throws exception on failure
 	 *
-	 * @return \icms_form_elements_Textarea
+	 * @return \\ImpressCMS\Core\Form\Elements\TextElementarea
 	 */
-	public function create(array $configs, $checkCompatible = false): \icms_form_elements_Textarea;
+	public function create(array $configs, $checkCompatible = false): \\ImpressCMS\Core\Form\Elements\TextElementarea;
 
 	/**
 	 * Get order for sorting when displaying editor list

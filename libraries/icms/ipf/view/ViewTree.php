@@ -10,6 +10,8 @@
 
 namespace ImpressCMS\Core\IPF\View;
 
+use ImpressCMS\Core\IPF\Controller;
+
 /**
  * icms_ipf_view_Tree base class
  *
@@ -122,7 +124,7 @@ class ViewTree extends ViewTable {
 			}
 		}
 
-		$controller = new icms_ipf_Controller($this->_objectHandler);
+		$controller = new Controller($this->_objectHandler);
 
 		if (in_array('edit', $this->_actions)) {
 			$actions[] = $controller->getEditItemLink($object, false, true);

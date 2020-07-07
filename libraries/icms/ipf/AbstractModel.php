@@ -93,7 +93,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 *
 	 */
 	public function accessGranted($perm_name) {
-		$icmspermissions_handler = new icms_ipf_permission_Handler($this->handler);
+		$icmspermissions_handler = new \ImpressCMS\Core\IPF\PermissionsDecorator($this->handler);
 		return $icmspermissions_handler->accessGranted($perm_name, $this->id());
 	}
 
@@ -126,8 +126,8 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param int $maxlength maximum length of this variable, for self::DTYPE_STRING and self::DTYPE_INTEGER types only
 	 * @param string $options does this data have any select options?
 	 * @param bool $multilingual is this field needs to support multilingual features (NOT YET IMPLEMENTED...)
-	 * @param string $form_caption caption of this variable in a icms_ipf_form_Base and title of a column in a icms_ipf_ObjectTable
-	 * @param string $form_dsc description of this variable in a icms_ipf_form_Base
+	 * @param string $form_caption caption of this variable in a \ImpressCMS\Core\IPF\Form\Form and title of a column in a icms_ipf_ObjectTable
+	 * @param string $form_dsc description of this variable in a \ImpressCMS\Core\IPF\Form\Form
 	 * @param bool $sortby set to TRUE to make this field used to sort objects in icms_ipf_ObjectTable
 	 * @param bool $persistent set to FALSE if this field is not to be saved in the database
 	 * @param bool $displayOnForm to be displayed on the form or not
@@ -246,8 +246,8 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param string $key key of this field. This needs to be the name of the field in the related database table
 	 * @param int $data_type set to one of XOBJ_DTYPE_XXX constants (set to self::DTYPE_DEP_OTHER if no data type ckecking nor text sanitizing is required)
 	 * @param bool $required set to TRUE if this variable needs to have a value set before storing the object in the table
-	 * @param string $form_caption caption of this variable in a icms_ipf_form_Base and title of a column in a icms_ipf_ObjectTable
-	 * @param string $form_dsc description of this variable in a icms_ipf_form_Base
+	 * @param string $form_caption caption of this variable in a \ImpressCMS\Core\IPF\Form\Form and title of a column in a icms_ipf_ObjectTable
+	 * @param string $form_dsc description of this variable in a \ImpressCMS\Core\IPF\Form\Form
 	 * @param mixed $value default value of this variable
 	 */
 	public function quickInitVar($key, $data_type, $required = false, $form_caption = '', $form_dsc = '', $value = null) {
@@ -447,12 +447,12 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param bool $cancel_js_action Cancels JS action
 	 * @param bool $captcha Needs captcha?
 	 *
-	 * @return icms_ipf_form_Base
+	 * @return \ImpressCMS\Core\IPF\Form\Form
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
-		return new icms_ipf_form_Base($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+		return new \ImpressCMS\Core\IPF\Form\Form($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 	}
 
 	/**
@@ -465,12 +465,12 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param bool $cancel_js_action Cancels JS action
 	 * @param bool $captcha Needs captcha?
 	 *
-	 * @return icms_ipf_form_Secure
+	 * @return \ImpressCMS\Core\IPF\Form\SecureForm
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	public function getSecureForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
-		$form = new icms_ipf_form_Secure($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+		$form = new \ImpressCMS\Core\IPF\Form\SecureForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 
 		return $form;
 	}
@@ -593,7 +593,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 			return false;
 		}
 
-		$icmspermissions_handler = new icms_ipf_permission_Handler($this->handler);
+		$icmspermissions_handler = new \ImpressCMS\Core\IPF\PermissionsDecorator($this->handler);
 		$ret = $icmspermissions_handler->getGrantedGroups($group_perm, $this->id());
 
 		if (count($ret) == 0) {
@@ -927,12 +927,12 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return content of the template if $fetchOnly or nothing if !$fetchOnly
 	 */
 	public function displaySingleObject($fetchOnly = false, $userSide = false, $actions = array(), $headerAsRow = true) {
-		$singleview = new icms_ipf_view_Single($this, $userSide, $actions, $headerAsRow);
+		$singleview = new \ImpressCMS\Core\IPF\View\ViewSingleObject($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
 		foreach ($this->_vars as $key => $var) {
 			if ($key != $this->handler->keyName && $var['displayOnSingleView']) {
 				$is_header = ($key == $this->handler->identifierName);
-				$singleview->addRow(new icms_ipf_view_Row($key, false, $is_header));
+				$singleview->addRow(new \ImpressCMS\Core\IPF\View\ViewRow($key, false, $is_header));
 			}
 		}
 

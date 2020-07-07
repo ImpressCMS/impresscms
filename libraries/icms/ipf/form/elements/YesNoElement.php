@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class YesNoElement extends icms_form_elements_Radioyn {
+class YesNoElement extends \ImpressCMS\Core\Form\Elements\RadioynElement {
 	/**
 	 * Constructor
 	 * @param	\icms_ipf_Object    $object   reference to targetobject

@@ -96,7 +96,7 @@ class NotificationModel extends \ImpressCMS\Core\IPF\AbstractModel {
 		}
 		$method = $user->getVar('notify_method');
 
-		$mailer = new icms_messaging_Handler();
+		$mailer = new \ImpressCMS\Core\Messaging\MailHandler();
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 		switch ($method) {
 			case XOOPS_NOTIFICATION_METHOD_PM:

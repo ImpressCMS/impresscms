@@ -1,6 +1,14 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form;
 
+use ImpressCMS\Core\Form\Elements\ColorpickerElement;
+use ImpressCMS\Core\Form\Elements\Select\CountryElement;
+use ImpressCMS\Core\Form\Elements\Select\GroupElement;
+use ImpressCMS\Core\Form\Elements\Select\TimezoneElement;
+use ImpressCMS\Core\Form\Elements\Select\UserElement;
+use ImpressCMS\Core\Form\Elements\SelectElement;
+use ImpressCMS\Core\View\Theme\ThemeFactory;
+
 /**
  * Form control creating an image upload element for an object derived from icms_ipf_Object
  *
@@ -94,14 +102,14 @@ class Form extends icms_form_Theme {
 				$formElement->setExtra('disabled="disabled"');
 				$formElement->setName($key . '-readonly');
 				// Since this element is disabled, we still want to pass it's value in the form
-				$hidden = new icms_form_elements_Hidden($key, $this->targetObject->getVar($key, 'n'));
+				$hidden = new \ImpressCMS\Core\Form\Elements\HiddenElement($key, $this->targetObject->getVar($key, 'n'));
 				$this->addElement($hidden);
 			}
 						if (isset($var['form_dsc']) && !empty($var['form_dsc'])) {
 													$formElement->setDescription($var['form_dsc']);
 						}
 			if (isset($this->targetObject->controls[$key]['onSelect'])) {
-				$hidden = new icms_form_elements_Hidden('changedField', false);
+				$hidden = new \ImpressCMS\Core\Form\Elements\HiddenElement('changedField', false);
 				$this->addElement($hidden);
 				$otherExtra = isset($var['form_extra'])?$var['form_extra']:'';
 				$onchangedString = "this.form.elements.changedField.value='$key'; this.form.elements.op.value='changedField'; submit()";
@@ -138,7 +146,7 @@ class Form extends icms_form_Theme {
 			// need to be displayed, then we only create an hidden field
 			if ($key == $this->targetObject->handler->keyName || (isset($var['displayOnForm']) && !$var['displayOnForm'])) {
 				$val = isset($var['value'])?$var['value']:null;
-				$elementToAdd = new icms_form_elements_Hidden($key, $val);
+				$elementToAdd = new \ImpressCMS\Core\Form\Elements\HiddenElement($key, $val);
 				$this->addElement($elementToAdd, $key, $var, false);
 				unset($elementToAdd);
 				// If not, the we need to create the proper form control for this fields
@@ -155,7 +163,7 @@ class Form extends icms_form_Theme {
 								}
 
 								if ($controls[$key] === null) {
-									$elementToAdd = new icms_form_elements_Hidden($key, isset($var['value'])?$var['value']:null);
+									$elementToAdd = new \ImpressCMS\Core\Form\Elements\HiddenElement($key, isset($var['value'])?$var['value']:null);
 									$this->addElement($elementToAdd, $key, $var, false);
 									unset($elementToAdd);
 									continue;
@@ -270,7 +278,7 @@ class Form extends icms_form_Theme {
 			}
 		}
 		// Add a hidden field to store the URL of the page before this form
-		$this->addElement(new icms_form_elements_Hidden('icms_page_before_form', icms_get_page_before_form()));
+		$this->addElement(new \ImpressCMS\Core\Form\Elements\HiddenElement('icms_page_before_form', icms_get_page_before_form()));
 	}
 
 	/**
@@ -294,7 +302,7 @@ class Form extends icms_form_Theme {
 				} else {
 					$groups_value = $this->targetObject->getGroupPerm($permission['perm_name']);
 				}
-				$groups_select = new icms_form_elements_Select($permission['caption'], $permission['perm_name'], $groups_value, 4, true);
+				$groups_select = new SelectElement($permission['caption'], $permission['perm_name'], $groups_value, 4, true);
 				$groups_select->setDescription($permission['description']);
 				$groups_select->addOptionArray($group_list);
 				$this->addElement($groups_select);
@@ -311,16 +319,16 @@ class Form extends icms_form_Theme {
 	 * @param	string  $submit_button_caption  caption of the button
 	 */
 	private function createButtons($form_name, $form_caption, $submit_button_caption = false) {
-		$button_tray = new icms_form_elements_Tray('', '');
-		$button_tray->addElement(new icms_form_elements_Hidden('op', $form_name));
+		$button_tray = new \ImpressCMS\Core\Form\Elements\TrayElement('', '');
+		$button_tray->addElement(new \ImpressCMS\Core\Form\Elements\HiddenElement('op', $form_name));
 		if (!$submit_button_caption) {
 			if ($this->targetObject->isNew()) {
-				$butt_create = new icms_form_elements_Button('', 'create_button', _CO_ICMS_CREATE, 'submit');
+				$butt_create = new \ImpressCMS\Core\Form\Elements\ButtonElement('', 'create_button', _CO_ICMS_CREATE, 'submit');
 			} else {
-				$butt_create = new icms_form_elements_Button('', 'modify_button', _CO_ICMS_MODIFY, 'submit');
+				$butt_create = new \ImpressCMS\Core\Form\Elements\ButtonElement('', 'modify_button', _CO_ICMS_MODIFY, 'submit');
 			}
 		} else {
-			$butt_create = new icms_form_elements_Button('', 'modify_button', $submit_button_caption, 'submit');
+			$butt_create = new \ImpressCMS\Core\Form\Elements\ButtonElement('', 'modify_button', $submit_button_caption, 'submit');
 		}
 		$butt_create->setExtra('onclick="this.form.elements.op.value=\'' . $form_name . '\'"');
 		$button_tray->addElement($butt_create);
@@ -328,7 +336,7 @@ class Form extends icms_form_Theme {
 		//creating custom buttons
 		if ($this->_custom_button) {
 			foreach ($this->_custom_button as $custom_button) {
-				$butt_custom = new icms_form_elements_Button('', $custom_button['name'], $custom_button['caption'], 'submit');
+				$butt_custom = new \ImpressCMS\Core\Form\Elements\ButtonElement('', $custom_button['name'], $custom_button['caption'], 'submit');
 				if ($custom_button['onclick']) {
 					$butt_custom->setExtra('onclick="' . $custom_button['onclick'] . '"');
 				}
@@ -338,7 +346,7 @@ class Form extends icms_form_Theme {
 		}
 
 		// creating the "cancel" button
-		$butt_cancel = new icms_form_elements_Button('', 'cancel_button', _CO_ICMS_CANCEL, 'button');
+		$butt_cancel = new \ImpressCMS\Core\Form\Elements\ButtonElement('', 'cancel_button', _CO_ICMS_CANCEL, 'button');
 		if ($this->_cancel_js_action) {
 			$butt_cancel->setExtra('onclick="' . $this->_cancel_js_action . '"');
 		} else {
@@ -349,21 +357,22 @@ class Form extends icms_form_Theme {
 	}
 
 	/**
-	 * Gets a control from the targetobject (@todo, which object will be passed here?)
+	 * Gets a control from the targetobject (@param string $controlName name of the control element
+	 * @param string $key key of the form variables in the targetobject
+	 * @return ColorpickerElement|\ImpressCMS\Core\Form\Elements\DhtmltextareaElement|\ImpressCMS\Core\Form\Elements\LabelElement|\ImpressCMS\Core\Form\Elements\PasswordElement|CountryElement|GroupElement|TimezoneElement|UserElement|SelectElement|\ImpressCMS\Core\Form\Elements\TextElementarea
+	 * @todo, which object will be passed here?)
 	 *
-	 * @param	string  $controlName   name of the control element
-	 * @param	string  $key           key of the form variables in the targetobject
 	 */
 	private function getControl($controlName, $key) {
 		switch ($controlName) {
 			case 'color':
 				$control = $this->targetObject->getControl($key);
-				$controlObj = new icms_form_elements_Colorpicker($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
+				$controlObj = new ColorpickerElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
 				return $controlObj;
 				break;
 
 			case 'label':
-				return new icms_form_elements_Label($this->targetObject->getVarInfo($key, 'form_caption'), $this->targetObject->getVar($key));
+				return new \ImpressCMS\Core\Form\Elements\LabelElement($this->targetObject->getVarInfo($key, 'form_caption'), $this->targetObject->getVar($key));
 				break;
 
 			case 'textarea' :
@@ -371,7 +380,7 @@ class Form extends icms_form_Theme {
 				$form_rows = isset($this->targetObject->controls[$key]['rows'])?$this->targetObject->controls[$key]['rows']:5;
 				$form_cols = isset($this->targetObject->controls[$key]['cols'])?$this->targetObject->controls[$key]['cols']:60;
 
-				$editor = new icms_form_elements_Textarea($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
+				$editor = new \ImpressCMS\Core\Form\Elements\TextElementarea($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
 				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
 					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}
@@ -379,7 +388,7 @@ class Form extends icms_form_Theme {
 				break;
 
 			case 'dhtmltextarea' :
-				$editor = new icms_form_elements_Dhtmltextarea($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), 15, 50);
+				$editor = new \ImpressCMS\Core\Form\Elements\DhtmltextareaElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), 15, 50);
 				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
 					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}
@@ -395,43 +404,43 @@ class Form extends icms_form_Theme {
 				break;
 
 			case 'timezone':
-				return new icms_form_elements_select_Timezone($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
+				return new TimezoneElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
 				break;
 
 			case 'group':
-				return new icms_form_elements_select_Group($this->targetObject->getVarInfo($key, 'form_caption'), $key, false, $this->targetObject->getVar($key, 'e'), 1, false);
+				return new GroupElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, false, $this->targetObject->getVar($key, 'e'), 1, false);
 				break;
 
 			case 'group_multi':
-				return new icms_form_elements_select_Group($this->targetObject->getVarInfo($key, 'form_caption'), $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
+				return new GroupElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
 				break;
 
 			case 'user_multi':
-				return new icms_form_elements_select_User($this->targetObject->getVarInfo($key, 'form_caption'), $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
+				return new UserElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
 				break;
 
 			case 'password':
-				return new icms_form_elements_Password($this->targetObject->getVarInfo($key, 'form_caption'), $key, 50, 255, $this->targetObject->getVar($key, 'e'));
+				return new \ImpressCMS\Core\Form\Elements\PasswordElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, 50, 255, $this->targetObject->getVar($key, 'e'));
 				break;
 
 			case 'country':
-				return new icms_form_elements_select_Country($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'));
+				return new CountryElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'));
 				break;
 
 			default:
-				$classname = "icms_ipf_form_elements_" . ucfirst($controlName);
+				$classname = "\\ImpressCMS\\Core\\IPF\\Form\\Elements\\" . ucfirst($controlName);
 				if (!class_exists($classname)) {
 					// perhaps this is a control created by the module
 					$moduleName = $this->targetObject->handler->_moduleName;
-					$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/class/form/elements/";
-					$classname = ucfirst($moduleName) . ucfirst($controlName) . "Element";
-					$classFileName = strtolower($classname) . ".php";
+					$moduleFormElementsPath = $this->targetObject->handler->_modulePath . '/class/form/elements/';
+					$classname = ucfirst($moduleName) . ucfirst($controlName) . 'Element';
+					$classFileName = strtolower($classname) . '.php';
 
 					if (file_exists($moduleFormElementsPath . $classFileName)) {
 						include_once $moduleFormElementsPath . $classFileName;
 					} else {
-						trigger_error($classname . " not found", E_USER_WARNING);
-						return new icms_form_elements_Label();
+						trigger_error($classname . ' not found', E_USER_WARNING);
+						return new \ImpressCMS\Core\Form\Elements\LabelElement();
 					}
 				}
 				return new $classname($this->targetObject, $key);
@@ -448,10 +457,10 @@ class Form extends icms_form_Theme {
 	 */
 	private function getThemeSelect($key, $var, $multiple = false) {
 		$size = $multiple?5:1;
-		$theme_select = new icms_form_elements_Select($var['form_caption'], $key, $this->targetObject->getVar($key), $size, $multiple);
+		$theme_select = new SelectElement($var['form_caption'], $key, $this->targetObject->getVar($key), $size, $multiple);
 
 		$theme_select->addOptionArray(
-			icms_view_theme_Factory::getThemesList()
+			ThemeFactory::getThemesList()
 		);
 
 		return $theme_select;
@@ -564,7 +573,7 @@ class Form extends icms_form_Theme {
 			$eltcaption = trim($elt->getCaption());
 			$eltmsg = empty($eltcaption)? sprintf(_FORM_ENTER, $eltname):sprintf(_FORM_ENTER, $eltcaption);
 			$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
-			if (strtolower(get_class($elt)) == 'icms_form_elements_Radio') {
+			if (strtolower(get_class($elt)) == '\ImpressCMS\Core\Form\Elements\RadioElement') {
 				$js .= "var myOption = -1;";
 				$js .= "for (i=myform.{$eltname}.length-1; i > -1; i--) {
 					if (myform.{$eltname}[i].checked) {
@@ -589,7 +598,7 @@ class Form extends icms_form_Theme {
 				if (hasSelections == FALSE) {
 					window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'].options[0].focus(); return false; }\n";
 
-			} elseif (strtolower(get_class($elt)) == 'icms_form_elements_Checkbox') {
+			} elseif (strtolower(get_class($elt)) == '\ImpressCMS\Core\Form\Elements\CheckboxElement') {
 				$js .= "var hasSelections = FALSE;";
 				//sometimes, there is an implicit '[]', sometimes not
 				if (strpos($eltname, '[') === false) {
@@ -620,7 +629,7 @@ class Form extends icms_form_Theme {
 		// Now, handle custom validation code
 		$elements = $this->getElements(true);
 		foreach ($elements as $elt) {
-			if (method_exists($elt, 'renderValidationJS') && strtolower(get_class($elt)) != 'icms_form_elements_Checkbox') {
+			if (method_exists($elt, 'renderValidationJS') && strtolower(get_class($elt)) != '\ImpressCMS\Core\Form\Elements\CheckboxElement') {
 				if ($eltjs = $elt->renderValidationJS()) {
 					$js .= $eltjs . "\n";
 				}

@@ -11,7 +11,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @author	phoenyx
  * @package	ICMS\IPF\Form\Elements
  */
-class BlockOptionsElement extends icms_form_elements_Tray {
+class BlockOptionsElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 	/**
 	 * Constructor
 	 * @param	\icms_ipf_Object    $object   reference to targetobject
@@ -28,7 +28,7 @@ class BlockOptionsElement extends icms_form_elements_Tray {
 		if (!function_exists($func)) {
 			return;
 		}
-		$visible_label = new icms_form_elements_Label('', $func(explode('|', $object->getVar('options'))));
+		$visible_label = new \ImpressCMS\Core\Form\Elements\LabelElement('', $func(explode('|', $object->getVar('options'))));
 		$this->addElement($visible_label);
 	}
 }

@@ -35,6 +35,11 @@
 */
 namespace ImpressCMS\Core\Form;
 
+use ImpressCMS\Core\Form\Elements\ButtonElement;
+use ImpressCMS\Core\Form\Elements\GrouppermElement;
+use ImpressCMS\Core\Form\Elements\HiddenElement;
+use ImpressCMS\Core\Form\Elements\TrayElement;
+
 /**
  * Renders a form for setting module specific group permissions
  *
@@ -76,9 +81,9 @@ class GroupPermissionForm extends AbstractForm {
 		$this->_modid = (int) $modid;
 		$this->_permName = $permname;
 		$this->_permDesc = $permdesc;
-		$this->addElement(new icms_form_elements_Hidden('modid', $this->_modid));
+		$this->addElement(new HiddenElement('modid', $this->_modid));
 		if ($url != "") {
-			$this->addElement(new icms_form_elements_Hidden('redirect_url', $url));
+			$this->addElement(new HiddenElement('redirect_url', $url));
 		}
 	}
 
@@ -139,15 +144,15 @@ class GroupPermissionForm extends AbstractForm {
 		foreach (array_keys($glist) as $i) {
 			// get selected item id(s) for each group
 			$selected = $gperm_handler->getItemIds($this->_permName, $i, $this->_modid);
-			$ele = new icms_form_elements_Groupperm($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
+			$ele = new GrouppermElement($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
 			$ele->setOptionTree($this->_itemTree);
 			$this->addElement($ele);
 			unset ($ele);
 		}
 
-		$tray = new icms_form_elements_Tray('');
-		$tray->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
-		$tray->addElement(new icms_form_elements_Button('', 'reset', _CANCEL, 'reset'));
+		$tray = new TrayElement('');
+		$tray->addElement(new ButtonElement('', 'submit', _SUBMIT, 'submit'));
+		$tray->addElement(new ButtonElement('', 'reset', _CANCEL, 'reset'));
 		$this->addElement($tray);
 		$ret = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br />';
 		$ret .= "<form name='" . $this->getName()

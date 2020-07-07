@@ -46,7 +46,7 @@ class DhtmltextareaElement extends TextareaElement {
 	/**
 	 * Extended HTML editor definition
 	 *
-	 * Note: the PM window doesn't use icms_form_elements_Dhtmltextarea, so no need to report it doesn't work here
+	 * Note: the PM window doesn't use \ImpressCMS\Core\Form\Elements\DhtmltextareaElement, so no need to report it doesn't work here
 	 *
 	 * array('className', 'classPath'):  To create an instance of "className", declared in the file ICMS_ROOT_PATH . $classPath
 	 *

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class representing a single row of a icms_ipf_view_Single
+ * Class representing a single row of a \ImpressCMS\Core\IPF\View\ViewSingleObject
  *
  * @license		LICENSE.txt
  */
@@ -8,9 +8,9 @@
 namespace ImpressCMS\Core\IPF\View;
 
 /**
- * icms_ipf_view_Row class
+ * \ImpressCMS\Core\IPF\View\ViewRow class
  *
- * Class representing a single row of a icms_ipf_view_Single
+ * Class representing a single row of a \ImpressCMS\Core\IPF\View\ViewSingleObject
  *
  * @package	ICMS\IPF\View
  * @author	marcan <marcan@smartfactory.ca>

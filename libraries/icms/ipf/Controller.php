@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\IPF;
 
+use ImpressCMS\Core\File\MediaUploadHandler;
+
 /**
  * This class is responsible for providing operations to an object for managing the object's manipulation
  *
@@ -164,7 +166,7 @@ class Controller {
 		// Check if there were uploaded files
 		$uploaderResult = true;
 		if (isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file'])) {
-			$uploaderObj = new icms_file_MediaUploadHandler($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
+			$uploaderObj = new MediaUploadHandler($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
 			foreach ($_FILES as $name=>$file_array) {
 				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), $icmsObj->getVarNames())) {
 					if ($uploaderObj->fetchMedia($name)) {
@@ -233,7 +235,7 @@ class Controller {
 
 		if ($storeResult) {
 			if ($this->handler->getPermissions()) {
-				$icmspermissions_handler = new icms_ipf_permission_Handler($this->handler);
+				$icmspermissions_handler = new \ImpressCMS\Core\IPF\PermissionsDecorator($this->handler);
 				$icmspermissions_handler->storeAllPermissionsForId($icmsObj->id());
 			}
 		}

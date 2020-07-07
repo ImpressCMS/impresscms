@@ -22,7 +22,7 @@ class MemberHandler extends \icms_member_Handler {
 	 */
 	public function __construct(&$db) {
 		parent::__construct($db);
-		$this->_uHandler = new icms_member_user_Handler($db);
+		$this->_uHandler = new \ImpressCMS\Core\Member\UserHandler($db);
 	}
 
 	// This function here below needs some changes to work under 1.2 Final. it's temporarily disabled.
@@ -113,7 +113,7 @@ class MemberHandler extends \icms_member_Handler {
 
 		if ($notifyUser) {
 		// send some notifications
-		$mailer =  new icms_messaging_Handler();
+		$mailer =  new \ImpressCMS\Core\Messaging\MailHandler();
 		$mailer->useMail();
 		$mailer->setTemplateDir(ICMS_ROOT_PATH . 'language/' . $icmsConfig['language'] . '/mail_template');
 		$mailer->setTemplate('smartobject_notify_user_added_by_admin.tpl');

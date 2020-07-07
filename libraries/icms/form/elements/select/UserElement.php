@@ -39,6 +39,7 @@
 
 namespace ImpressCMS\Core\Form\Elements\Select;
 
+use ImpressCMS\Core\Form\Elements\LabelElement;
 use ImpressCMS\Core\Form\Elements\SelectElement;
 use ImpressCMS\Core\Form\Elements\TrayElement;
 
@@ -130,12 +131,12 @@ class UserElement extends TrayElement {
 					</script>";
 
 		$token = \icms::$security->createToken();
-		$action_tray = new icms_form_elements_Tray("", " | ");
-		$action_tray->addElement(new icms_form_elements_Label('',
+		$action_tray = new TrayElement("", " | ");
+		$action_tray->addElement(new LabelElement('',
 			"<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name
 			. ($multiple?"[]":"") . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>"
 			. _MA_USER_REMOVE . "</a>"));
-		$action_tray->addElement(new icms_form_elements_Label('',
+		$action_tray->addElement(new LabelElement('',
 			"<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL
 			. "/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >"
 			. _MA_USER_MORE . "</a>" . $js_addusers));

@@ -12,6 +12,8 @@
 
 namespace ImpressCMS\Core\IPF\View;
 
+use ImpressCMS\Core\View\PageNav;
+
 /**
  * icms_ipf_view_Table base class
  *
@@ -705,7 +707,7 @@ class ViewTable {
 			$new_get_array[] = "limitsel=" . $this->_limitsel;
 			$otherParams = implode('&', $new_get_array);
 
-			$pagenav = new icms_view_PageNav($this->_objectHandler->getCount($this->_criteria), $this->_criteria->getLimit(), $this->_criteria->getStart(), 'start' . $this->_objectHandler->keyName, $otherParams);
+			$pagenav = new PageNav($this->_objectHandler->getCount($this->_criteria), $this->_criteria->getLimit(), $this->_criteria->getStart(), 'start' . $this->_objectHandler->keyName, $otherParams);
 			$this->_tpl->assign('icms_pagenav', $pagenav->renderNav());
 		}
 		$this->renderOptionSelection($limitsArray, $params_of_the_options_sel);

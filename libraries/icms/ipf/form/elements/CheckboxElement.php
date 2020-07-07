@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @author	marcan <marcan@impresscms.org>
  * @package	ICMS\IPF\Form\Elements
  */
-class CheckboxElement extends icms_form_elements_Checkbox {
+class CheckboxElement extends \ImpressCMS\Core\Form\Elements\CheckboxElement {
 
 	private $_delimeter = "&nbsp;";
 

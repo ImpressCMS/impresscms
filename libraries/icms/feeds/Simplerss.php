@@ -17,15 +17,15 @@ namespace ImpressCMS\Core\Feeds;
 class Simplerss extends \SimplePie {
 
 	/**
-	 * The icms_feeds_Simplerss class contains feed level data and options
+	 * The Simplerss class contains feed level data and options
 	 *
-	 * There are two ways that you can create a new icms_feeds_Simplerss object. The first
-	 * is by passing a feed URL as a parameter to the icms_feeds_Simplerss constructor
+	 * There are two ways that you can create a new Simplerss object. The first
+	 * is by passing a feed URL as a parameter to the Simplerss constructor
 	 * (as well as optionally setting the cache expiry - The cache location is automatically set
 	 * as ICMS_CACHE_PATH). This will initialise the whole feed with all of the default settings, and you
 	 * can begin accessing methods and properties immediately.
 	 *
-	 * The second way is to create the icms_feeds_Simplerss object with no parameters
+	 * The second way is to create the Simplerss object with no parameters
 	 * at all. This will enable you to set configuration options. After setting
 	 * them, you must initialise the feed using $feed->init(). At that point the
 	 * object's methods and properties will be available to you.

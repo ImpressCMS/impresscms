@@ -451,7 +451,7 @@ class ModuleHandler
 		 * ensure to only update those fields that are currently available in the database
 		 * this is required to allow structural updates for the module table
 		 */
-		$table = new icms_db_legacy_updater_Table('modules');
+		$table = new \ImpressCMS\Core\Database\Legacy\Updater\TableUpdater('modules');
 		foreach (array_keys($module->vars) as $k) {
 			if (!$table->fieldExists($k)) {
 				unset($module->vars[$k]);

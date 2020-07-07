@@ -32,7 +32,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  *
  * @package	ICMS\IPF\Form\Elements
  */
-class AutocompleteElement extends icms_form_elements_Text {
+class AutocompleteElement extends \ImpressCMS\Core\Form\Elements\TextElement {
 	private $_file;
 
 	/**

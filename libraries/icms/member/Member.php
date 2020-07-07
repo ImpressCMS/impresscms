@@ -37,6 +37,10 @@
 
 namespace ImpressCMS\Core\Member;
 
+use ImpressCMS\Core\Member\Group\GroupHandler;
+use ImpressCMS\Core\Member\Group\GroupMembershipHandler;
+use ImpressCMS\Core\Password;
+
 /**
  * Member handler class.
  * This class provides simple interface (a facade class) for handling groups/users/
@@ -73,9 +77,9 @@ class Member {
 	 *
 	 */
 	public function __construct(&$db) {
-		$this->_gHandler = new icms_member_group_Handler($db);
-		$this->_uHandler = new icms_member_user_Handler($db);
-		$this->_mHandler = new icms_member_group_membership_Handler($db);
+		$this->_gHandler = new GroupHandler($db);
+		$this->_uHandler = new \ImpressCMS\Core\Member\UserHandler($db);
+		$this->_mHandler = new GroupMembershipHandler($db);
 		$this->db = &$db;
 	}
 
@@ -275,7 +279,7 @@ class Member {
 	 */
 	public function loginUser($uname, $pwd) {
 
-		$icmspass = new icms_core_Password();
+		$icmspass = new Password();
 
 		if (strstr($uname, '@')) {
 			$uname = self::icms_getLoginFromUserEmail($uname);
@@ -288,7 +292,7 @@ class Member {
 
         $pwd = $icmspass->verifyPass($pwd, $uname);
 
-		$table = new icms_db_legacy_updater_Table('users');
+		$table = new \ImpressCMS\Core\Database\Legacy\Updater\TableUpdater('users');
 		if ($table->fieldExists('loginname')) {
 			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('loginname', $uname));
 		} elseif ($table->fieldExists('login_name')) {
@@ -307,7 +311,7 @@ class Member {
 
 	public function icms_getLoginFromUserEmail($email = '')
 	{
-		$table = new icms_db_legacy_updater_Table('users');
+		$table = new \ImpressCMS\Core\Database\Legacy\Updater\TableUpdater('users');
 
 		if ($email !== '') {
 			if ($table->fieldExists('loginname')) {

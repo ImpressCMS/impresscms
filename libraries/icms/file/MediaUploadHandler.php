@@ -40,7 +40,7 @@
  $maxfilesize = 50000;
  $maxfilewidth = 120;
  $maxfileheight = 120;
- $uploader = new icms_file_MediaUploadHandler('/home/httpdocs/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+ $uploader = new \ImpressCMS\Core\File\MediaUploadHandler('/home/httpdocs/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
  if($uploader->fetchMedia($_POST['uploade_file_name'])) {
 	 if(!$uploader->upload()) {
 		 echo $uploader->getErrors();
@@ -64,7 +64,7 @@ namespace ImpressCMS\Core\File;
  * $maxfilesize = 50000;
  * $maxfilewidth = 120;
  * $maxfileheight = 120;
- * $uploader = new icms_file_MediaUploadHandler('/home/httpdocs/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+ * $uploader = new \ImpressCMS\Core\File\MediaUploadHandler('/home/httpdocs/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
  * if($uploader->fetchMedia($_POST['uploade_file_name'])) {
  *     if(!$uploader->upload()) {
  *         echo $uploader->getErrors();

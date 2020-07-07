@@ -246,7 +246,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 					return true;
 		}
 
-        $mailer = new icms_messaging_Handler();
+        $mailer = new \ImpressCMS\Core\Messaging\MailHandler();
         $mailer->useMail();
         $mailer->setBody($icmsConfigUser['welcome_msg_content']);
         $mailer->assign('UNAME', $this->getVar('uname'));
@@ -277,7 +277,7 @@ class UserModel extends \ImpressCMS\Core\IPF\AbstractModel {
 
         if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
             $member_handler = \icms::handler('icms_member');
-            $mailer = new icms_messaging_Handler();
+            $mailer = new \ImpressCMS\Core\Messaging\MailHandler();
             $mailer->useMail();
             $mailer->setTemplate('newuser_notify.tpl');
             $mailer->assign('UNAME', $this->getVar('uname'));

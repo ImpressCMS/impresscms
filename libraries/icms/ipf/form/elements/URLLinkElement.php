@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class URLLinkElement extends icms_form_elements_Tray {
+class URLLinkElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 	/**
 	 * Constructor
 	 * @param	icms_ipf_Object	$object	target object
@@ -22,16 +22,16 @@ class URLLinkElement extends icms_form_elements_Tray {
 		$module_handler = \icms::handler("icms_module");
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
-		$this->addElement(new icms_form_elements_Label("", _CO_ICMS_URLLINK_URL));
+		$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", _CO_ICMS_URLLINK_URL));
 		$this->addElement(new TextElement($urllinkObj, "url_" . $key));
-		$this->addElement(new icms_form_elements_Label("", "<br/>" . _CO_ICMS_CAPTION));
+		$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", "<br/>" . _CO_ICMS_CAPTION));
 		$this->addElement(new TextElement($urllinkObj, "caption_" . $key));
-		$this->addElement(new icms_form_elements_Label("", "<br/>" . _CO_ICMS_DESC));
+		$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", "<br/>" . _CO_ICMS_DESC));
 		$this->addElement(new TextElement($urllinkObj, "desc_" . $key));
-		$this->addElement(new icms_form_elements_Label("", "<br/>" . _CO_ICMS_URLLINK_TARGET));
-		$this->addElement(new icms_form_elements_Hidden("mid_" . $key, $module->getVar("mid")));
+		$this->addElement(new \ImpressCMS\Core\Form\Elements\LabelElement("", "<br/>" . _CO_ICMS_URLLINK_TARGET));
+		$this->addElement(new \ImpressCMS\Core\Form\Elements\HiddenElement("mid_" . $key, $module->getVar("mid")));
 		$targ_val = $urllinkObj->getVar("target");
-		$targetRadio = new icms_form_elements_Radio("", "target_" . $key, $targ_val != ""?$targ_val:"_blank");
+		$targetRadio = new \ImpressCMS\Core\Form\Elements\RadioElement("", "target_" . $key, $targ_val != ""?$targ_val:"_blank");
 		$control = $urllinkObj->getControl("target");
 		$targetRadio->addOptionArray($control["options"]);
 		$this->addElement($targetRadio);

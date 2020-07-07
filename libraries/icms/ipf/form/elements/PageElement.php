@@ -10,7 +10,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class PageElement extends icms_form_elements_Tray {
+class PageElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 	/**
 	 * Constructor
 	 * @param	\icms_ipf_Object    $object   reference to targetobject
@@ -19,7 +19,7 @@ class PageElement extends icms_form_elements_Tray {
 	public function __construct($object, $key) {
 		icms_loadLanguageFile('system', 'blocks', true);
 		parent::__construct(_AM_VISIBLEIN, ' ', $key . '_visiblein_tray');
-		$visible_label = new icms_form_elements_Label('', '<select class="form-control" name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->getVar('visiblein')) . '</select>');
+		$visible_label = new \ImpressCMS\Core\Form\Elements\LabelElement('', '<select class="form-control" name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->getVar('visiblein')) . '</select>');
 		$this->addElement($visible_label);
 	}
 

@@ -23,7 +23,7 @@ use ImpressCMS\Core\Form\AbstractFormElement;
  * Usage
  *
  * For form creation:
- * Add form element where proper: $form->addElement(new icms_form_elements_Captcha($caption, $name, $skipmember, ...);
+ * Add form element where proper: $form->addElement(new \ImpressCMS\Core\Form\Elements\CaptchaElement($caption, $name, $skipmember, ...);
  *
  * For verification:
  * $icmsCaptcha = icms_form_elements_captcha_Object::instance();
