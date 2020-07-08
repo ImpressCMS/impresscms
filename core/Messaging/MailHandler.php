@@ -36,6 +36,8 @@
 
 namespace ImpressCMS\Core\Messaging;
 
+use ImpressCMS\Core\Models\Group;
+
 /**
  * Class for sending messages.
  *
@@ -443,7 +445,7 @@ class MailHandler {
 
 	public function setToGroups($group) {
 		if (!is_array($group)) {
-			if (get_class($group) == "icms_member_group_Object") {
+			if (get_class($group) === Group::class) {
 				$member_handler = \icms::handler('icms_member');
 				$this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
 			}

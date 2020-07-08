@@ -29,15 +29,13 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * icms_view_theme_Object component class file
- *
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  */
 
 namespace ImpressCMS\Core\View\Theme;
 
 /**
- * icms_view_theme_Factory
+ * Theme Factory
  *
  * @author	Skalpa Keo <skalpa@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
@@ -68,15 +66,15 @@ class ThemeFactory {
 	/**
 	 * Gets theme factory for existing configuration
 	 *
-	 * @global      array                    $icmsConfig    ICMS Configuration array
+	 * @return ThemeFactory Returns preconfigured icms_view_theme_Factory object
+	 * @global      array $icmsConfig ICMS Configuration array
 	 * @staticvar   \icms_view_theme_Factory $themeFactory  Current instance of theme factory
-	 * @return      \icms_view_theme_Factory                Returns preconfigured icms_view_theme_Factory object
 	 */
 	public static function getInstance() {
 		static $themeFactory = null;
 		if ($themeFactory === null) {
 			global $icmsConfig;
-			$themeFactory = new \icms_view_theme_Factory();
+			$themeFactory = new self();
 			$themeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 			$themeFactory->defaultTheme = $icmsConfig['theme_set'];
 		}

@@ -36,6 +36,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Autoloader;
+
 /**
  * A Module
  *
@@ -150,9 +152,9 @@ class Module
 		if ($this->getVar('ipf')) {
 			$modname = ($this->getVar('modname') != '') ?
 				$this->getVar('modname') : $this->getVar('dirname');
-			icms_Autoloader::register($class_path, 'mod_' . $modname);
+			Autoloader::register($class_path, 'mod_' . $modname);
 		} else {
-			icms_Autoloader::register($class_path);
+			Autoloader::register($class_path);
 		}
 	}
 

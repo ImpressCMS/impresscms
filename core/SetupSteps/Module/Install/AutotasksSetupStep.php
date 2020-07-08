@@ -3,7 +3,7 @@
 
 namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
-use icms_module_Object;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\SetupSteps\StepOutput;
@@ -15,7 +15,7 @@ class AutotasksSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$atasks = $module->getInfo('autotasks');
 		$output->incrIndent();
@@ -23,7 +23,7 @@ class AutotasksSetupStep implements SetupStepInterface
 			$handler = icms_getModuleHandler('autotasks', 'system');
 			foreach ($atasks as $taskID => $taskData) {
 				/**
-				 * @var $task mod_system_Autotasks
+				 * @var $task \mod_system_Autotasks
 				 */
 				$task = $handler->create();
 				if (isset($taskData['enabled'])) {

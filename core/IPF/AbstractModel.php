@@ -10,6 +10,8 @@
 
 namespace ImpressCMS\Core\IPF;
 
+use ImpressCMS\Core\Textsanitizer;
+
 /**
  * icms_ipf_Object base class
  *
@@ -784,12 +786,13 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 *
 	 * @param unknown_type $key
 	 * @param unknown_type $editor
+	 * @return bool|mixed|string|string[]
 	 */
 	public function getValueFor($key, $editor = true) {
 		global $icmsModuleConfig;
 
 		$ret = $this->getVar($key, 'n');
-		$myts = icms_core_Textsanitizer::getInstance();
+		$myts = Textsanitizer::getInstance();
 
 		$control = isset($this->controls[$key])?$this->controls[$key]:false;
 		$form_editor = isset($control['form_editor'])?$control['form_editor']:'textarea';

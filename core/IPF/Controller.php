@@ -2,6 +2,8 @@
 namespace ImpressCMS\Core\IPF;
 
 use ImpressCMS\Core\File\MediaUploader;
+use ImpressCMS\Core\Message;
+use ImpressCMS\Core\Properties\AbstractProperties;
 
 /**
  * This class is responsible for providing operations to an object for managing the object's manipulation
@@ -39,13 +41,13 @@ class Controller {
 				continue;
 			}
 
-			$data_type = $icmsObj->getVarInfo($key, icms_properties_Handler::VARCFG_DEP_DATA_TYPE);
+			$data_type = $icmsObj->getVarInfo($key, AbstractProperties::VARCFG_DEP_DATA_TYPE);
 			if (!$data_type) {
-							$data_type = $icmsObj->getVarInfo($key, icms_properties_Handler::VARCFG_TYPE);
+							$data_type = $icmsObj->getVarInfo($key, AbstractProperties::VARCFG_TYPE);
 			}
 
 			switch ($data_type) {
-				case icms_properties_Handler::DTYPE_DEP_IMAGE:
+				case AbstractProperties::DTYPE_DEP_IMAGE:
 					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key] != '') {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 						if (!$eventResult) {
@@ -78,7 +80,7 @@ class Controller {
 					}
 					break;
 
-				case icms_properties_Handler::DTYPE_DEP_URLLINK:
+				case AbstractProperties::DTYPE_DEP_URLLINK:
 					$linkObj = $icmsObj->getUrlLinkObj($key);
 					$linkObj->setVar('mid', $_POST['mid_' . $key]);
 					$linkObj->setVar('caption', $_POST['caption_' . $key]);
@@ -92,7 +94,7 @@ class Controller {
 					$icmsObj->setVar($key, $linkObj->getVar('urllinkid'));
 					break;
 
-				case icms_properties_Handler::DTYPE_DEP_FILE:
+				case AbstractProperties::DTYPE_DEP_FILE:
 					if (!isset($_FILES['upload_' . $key]['name']) || $_FILES['upload_' . $key]['name'] == '') {
 						$fileObj = $icmsObj->getFileObj($key);
 						$fileObj->setVar('mid', $_POST['mid_' . $key]);
@@ -111,9 +113,9 @@ class Controller {
 					}
 					break;
 
-				case icms_properties_Handler::DTYPE_DEP_STIME:
-				case icms_properties_Handler::DTYPE_DEP_MTIME:
-				case icms_properties_Handler::DTYPE_DATETIME:
+				case AbstractProperties::DTYPE_DEP_STIME:
+				case AbstractProperties::DTYPE_DEP_MTIME:
+				case AbstractProperties::DTYPE_DATETIME:
 					// check if this field's value is available in the POST array
 					if (is_array($_POST[$key]) && isset($_POST[$key]['date'])) {
 						$value = strtotime($_POST[$key]['date']) + $_POST[$key]['time'];
@@ -126,13 +128,13 @@ class Controller {
 					$icmsObj->setVar($key, $value);
 					break;
 
-				case icms_properties_Handler::DTYPE_DEP_URL:
+				case AbstractProperties::DTYPE_DEP_URL:
 					if (isset($_POST[$key])) {
 						$icmsObj->setVar($key, filter_var($_POST[$key], FILTER_SANITIZE_URL));
 					}
 					break;
 
-				case icms_properties_Handler::DTYPE_ARRAY:
+				case AbstractProperties::DTYPE_ARRAY:
 					if (is_array($_POST[$key])) {
 						$icmsObj->setVar($key, serialize($_POST[$key]));
 					}
@@ -177,11 +179,11 @@ class Controller {
 							$related_field = str_replace('upload_', '', $name);
 							$uploadedArray[] = $related_field;
 							// if it's a richfile
-							$var_type = $icmsObj->getVarInfo($related_field, icms_properties_Handler::VARCFG_DEP_DATA_TYPE);
+							$var_type = $icmsObj->getVarInfo($related_field, AbstractProperties::VARCFG_DEP_DATA_TYPE);
 							if (!$var_type) {
-															$var_type = $icmsObj->getVarInfo($related_field, icms_properties_Handler::VARCFG_TYPE);
+															$var_type = $icmsObj->getVarInfo($related_field, AbstractProperties::VARCFG_TYPE);
 							}
-							if ($var_type == icms_properties_Handler::DTYPE_DEP_FILE) {
+							if ($var_type == AbstractProperties::DTYPE_DEP_FILE) {
 								$object_fileurl = $icmsObj->getUploadDir();
 								$fileObj = $icmsObj->getFileObj($related_field);
 								$fileObj->setVar('url', $object_fileurl . $uploaderObj->getSavedFileName());
@@ -376,7 +378,7 @@ class Controller {
 			if ($this->handler->_moduleName == 'system') {
 				$hiddens['fct'] = isset($_GET['fct'])?$_GET['fct']:false;
 			}
-			icms_core_Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg, $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
+			Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg, $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
 			icms_cp_footer();
 
@@ -416,7 +418,7 @@ class Controller {
 			}
 
 			ob_start();
-			icms_core_Message::confirm(array(
+			Message::confirm(array(
 				'op' => $op,
 				$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 				'confirm' => 1,

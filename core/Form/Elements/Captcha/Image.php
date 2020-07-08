@@ -56,25 +56,25 @@ class Image {
 	 * @param string	$mode	if no mode is set, just verify current mode
 	 */
 	public function setMode($mode = null) {
-		if (!empty($mode) && in_array($mode, array("text", "image"))) {
+		if (!empty($mode) && in_array($mode, ['text', 'image'])) {
 			$this->mode = $mode;
 
-			if ($this->mode != "image") {
+			if ($this->mode !== "image") {
 				return;
 			}
 		}
 
 		// Disable image mode
 		if (!extension_loaded('gd')) {
-			$this->mode = "text";
+			$this->mode = 'text';
 		} else {
 			$required_functions = array(
-				"imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle",
-				"imagejpeg", "imagedestroy", "imageftbbox"
+				'imagecreatetruecolor', 'imagecolorallocate', 'imagefilledrectangle',
+				'imagejpeg', 'imagedestroy', 'imageftbbox'
 			);
 			foreach ($required_functions as $func) {
 				if (!function_exists($func)) {
-					$this->mode = "text";
+					$this->mode = 'text';
 					break;
 				}
 			}
@@ -148,7 +148,8 @@ class Image {
 
 	/**
 	 * Verify user submission
-	 * @param bool	$skipMember	Skip Captcha because user is member / logged in
+	 * @param bool $skipMember Skip Captcha because user is member / logged in
+	 * @return bool
 	 */
 	public function verify($skipMember = null) {
 		global $icmsConfig, $icmsConfigCaptcha;
@@ -201,9 +202,9 @@ class Image {
 	 * @return bool True if destroying succeeded
 	 */
 	public function destroyGarbage($clearSession = false) {
-		$class = "icms_form_elements_captcha_" . ucfirst($this->mode);
+		$class = ($this->mode == 'image') ? ImageMode::class : TextMode::class;
 		$captcha_handler = new $class();
-		if (method_exists($captcha_handler, "destroyGarbage")) {
+		if (method_exists($captcha_handler, 'destroyGarbage')) {
 			$captcha_handler->loadConfig($this->config);
 			$captcha_handler->destroyGarbage();
 		}
@@ -213,7 +214,7 @@ class Image {
 			 * @var Aura\Session\Session $session
 			 */
 			$session = \icms::getInstance()->get('session');
-			$captchaSection = $session->getSegment(Image::class);
+			$captchaSection = $session->getSegment(__CLASS__);
 
 			$captchaSection->set('name', null);
 			$captchaSection->set('skip_member', null);
@@ -230,7 +231,7 @@ class Image {
 	 */
 	public function getCaption()
 	{
-		return defined("ICMS_CAPTCHA_CAPTION") ? constant("ICMS_CAPTCHA_CAPTION") : "";
+		return defined('ICMS_CAPTCHA_CAPTION') ? constant('ICMS_CAPTCHA_CAPTION') : '';
 	}
 
 	/**
@@ -239,7 +240,7 @@ class Image {
 	 */
 	public function getMessage()
 	{
-		return implode("<br />", $this->message);
+		return implode('<br />', $this->message);
 	}
 
 	/**
@@ -250,7 +251,7 @@ class Image {
 		global $icmsConfigCaptcha;
 		$form = "";
 
-		if (!$this->active || empty($this->config["name"])) {
+		if (!$this->active || empty($this->config['name'])) {
 			return $form;
 		}
 
@@ -258,9 +259,9 @@ class Image {
 		 * @var Aura\Session\Session $session
 		 */
 		$session = \icms::getInstance()->get('session');
-		$captchaSection = $session->getSegment(Image::class);
+		$captchaSection = $session->getSegment(__CLASS__);
 
-		$captchaSection->set('name', $this->config["name"]);
+		$captchaSection->set('name', $this->config['name']);
 		$captchaSection->set('skip_member', $icmsConfigCaptcha['captcha_skipmember']);
 		$maxAttempts = $icmsConfigCaptcha['captcha_maxattempt'];
 		$captchaSection->set('max_attempts', $maxAttempts);

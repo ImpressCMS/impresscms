@@ -12,6 +12,8 @@
 
 namespace ImpressCMS\Core\IPF;
 
+use ImpressCMS\Core\Textsanitizer;
+
 /**
  * Generates META tags
  *
@@ -85,7 +87,7 @@ class Metagen {
 	 * @param bool $categoryPath Category path
 	 */
 	public function __construct($title, $keywords = false, $description = false, $categoryPath = false) {
-		$this->_myts = icms_core_Textsanitizer::GetInstance();
+		$this->_myts = Textsanitizer::GetInstance();
 		$this->setCategoryPath($categoryPath);
 		$this->setTitle($title);
 		$this->setDescription($description);

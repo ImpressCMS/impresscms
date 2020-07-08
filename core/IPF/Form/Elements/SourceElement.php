@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use ImpressCMS\Core\Plugins\EditorHandler;
+
 /**
  * Form control creating a textbox for an object derived from icms_ipf_Object
  *
@@ -28,7 +30,7 @@ class SourceElement extends \ImpressCMS\Core\Form\Elements\TextElementarea {
 
 		$control = $object->getControl($key);
 
-		$editor_handler = icms_plugins_EditorHandler::getInstance('source');
+		$editor_handler = EditorHandler::getInstance('source');
 		$this->_editor = &$editor_handler->get($icmsConfig['sourceeditor_default'],
 			array('name' => $key,
 				'value' => $object->getVar($key, 'e'),

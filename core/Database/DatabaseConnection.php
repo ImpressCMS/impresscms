@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\Database;
 
+use ImpressCMS\Core\Event;
+
 /**
  * Database connection
  *
@@ -65,11 +67,11 @@ class DatabaseConnection extends \Aura\Sql\ExtendedPdo implements DatabaseConnec
 		$result = $this->perform($sql);
 		if ($result) {
 			$this->lastRowCount = $result->rowCount();
-			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $sql, 'errorno' => null, 'error' => null));
+			Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $sql, 'errorno' => null, 'error' => null));
 		} else {
 			$this->lastRowCount = null;
 			$errorinfo = $this->errorInfo();
-			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $sql, 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
+			Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $sql, 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
 		}
 		return $result;
 	}

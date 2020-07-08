@@ -30,7 +30,7 @@ class BlockPositionHandler extends \ImpressCMS\Core\IPF\Handler {
 		icms_loadLanguageFile('system', 'positions', true);
 
 		parent::__construct($db, 'blockposition', 'id', 'title', 'description', 'icms');
-		$this->className = 'icms_view_block_position_Object';
+		$this->className = BlockPosition::class;
 		$this->table = $this->db->prefix('block_positions');
 	}
 

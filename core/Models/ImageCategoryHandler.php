@@ -187,13 +187,13 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Get the folder path or url
 	 *
-	 * @param integer $imgcat - Category ID
-	 * @param string $full - if true return the full path or url else the relative path
+	 * @param ImageCategory $imgcat - Category ID
+	 * @param bool $full - if true return the full path or url else the relative path
 	 * @param string $type - path or url
 	 *
 	 * @return string - full folder path or url
 	 */
-	public function getCategFolder(\icms_image_category_Object &$imgcat, $full = true, $type = 'path') {
+	public function getCategFolder(\ImpressCMS\Core\Models\ImageCategory &$imgcat, $full = true, $type = 'path') {
 		if ($imgcat->imgcat_pid != 0) {
 			$sup = $this->get($imgcat->imgcat_pid);
 			$supcateg = $this->getCategFolder($sup, false, $type);

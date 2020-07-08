@@ -56,6 +56,8 @@
 
 namespace ImpressCMS\Core\File;
 
+use ImpressCMS\Core\Utils;
+
 /**
  * Upload Media files
  * Example of usage:
@@ -193,7 +195,7 @@ class MediaUploader {
 	 * @param   int     $maxHeight
 	 */
 	public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
-		$this->extensionToMime = icms_Utils::mimetypes();
+		$this->extensionToMime = Utils::mimetypes();
 		if (!is_array($this->extensionToMime)) {
 			$this->extensionToMime = array();
 			return false;

@@ -4,8 +4,7 @@
 namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
 
-use icms_db_legacy_mysql_Utility;
-use icms_module_Object;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 
@@ -51,7 +50,7 @@ class TablesSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$sqlfile = &$module->getInfo('sqlfile');
 		if ($sqlfile === false || !is_array($sqlfile)) {
@@ -69,13 +68,13 @@ class TablesSetupStep implements SetupStepInterface
 		$sql_query = trim(
 			file_get_contents($sql_file_path)
 		);
-		icms_db_legacy_mysql_Utility::splitSqlFile($pieces, $sql_query);
+		\ImpressCMS\Core\Database\Legacy\Mysql\DatabaseUtility::splitSqlFile($pieces, $sql_query);
 		$created_tables = array();
 		$output->incrIndent();
 		foreach ($pieces as $piece) {
 			// [0] contains the prefixed query
 			// [4] contains unprefixed table name
-			$prefixed_query = icms_db_legacy_mysql_Utility::prefixQuery($piece, $module->handler->db->prefix());
+			$prefixed_query = \ImpressCMS\Core\Database\Legacy\Mysql\DatabaseUtility::prefixQuery($piece, $module->handler->db->prefix());
 			if (!$prefixed_query) {
 				$output->error('"%s", %s', addslashes($piece), _MD_SQL_NOT_VALID);
 				return false;

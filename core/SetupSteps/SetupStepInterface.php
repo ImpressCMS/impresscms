@@ -2,7 +2,7 @@
 
 namespace ImpressCMS\Core\SetupSteps;
 
-use icms_module_Object;
+use ImpressCMS\Core\Models\Module;
 
 interface SetupStepInterface
 {
@@ -10,13 +10,13 @@ interface SetupStepInterface
 	/**
 	 * Execute setup step
 	 *
-	 * @param icms_module_Object $module Current module that is installing
+	 * @param Module $module Current module that is installing
 	 * @param OutputDecorator $output Output where to print messages
 	 * @param array $params Extra params
 	 *
 	 * @return bool
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool;
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool;
 
 	/**
 	 * Get priority to use this step

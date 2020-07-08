@@ -5,12 +5,10 @@ namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
 
 use icms;
-use icms_module_Object;
-use icms_view_block_Object;
-use icms_view_template_file_Object;
-use icms_view_Tpl;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
+use ImpressCMS\Core\View\Template;
 use function icms_conv_nr2local;
 
 class BlockSetupStep implements SetupStepInterface
@@ -19,7 +17,7 @@ class BlockSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$blocks = $module->getInfo('blocks');
 		if ($blocks !== false) {
@@ -100,7 +98,7 @@ class BlockSetupStep implements SetupStepInterface
 							$newtplid = $tplfile->getVar('tpl_id');
 							$output->success(_MD_AM_TEMPLATE_INSERTED, $block['template'], icms_conv_nr2local($newtplid));
 							// generate compiled file
-							if (!icms_view_Tpl::template_touch($newtplid)) {
+							if (!Template::template_touch($newtplid)) {
 								$output->error(_MD_AM_TEMPLATE_COMPILE_FAIL, $block['template'], icms_conv_nr2local($newtplid));
 							} else {
 								$output->success(_MD_AM_TEMPLATE_COMPILED, $block['template']);
@@ -142,7 +140,7 @@ class BlockSetupStep implements SetupStepInterface
 	 * @param icms_module_Object $module Module to update
 	 * @param OutputDecorator $output
 	 */
-	protected function updateBlocksPermissions(icms_module_Object $module, OutputDecorator $output)
+	protected function updateBlocksPermissions(Module $module, OutputDecorator $output)
 	{
 		$groups = $module->getInfo('hasMain') ? [ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS] : [ICMS_GROUP_ADMIN];
 		$icms_block_handler = icms::handler('icms_view_block');

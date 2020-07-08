@@ -38,6 +38,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Textsanitizer;
+
 /**
  * ImpressCMS Core Block Object Class
  *
@@ -294,7 +296,7 @@ class Block extends \ImpressCMS\Core\IPF\AbstractModel
 					$content = str_replace(env('DB_SALT'), '', $content);
 					return $content;
 				} elseif ($c_type == static::CONTENT_TYPE_AUTO_FORMAT) {
-					$myts = icms_core_Textsanitizer::getInstance();
+					$myts = Textsanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
 					return $myts->displayTarea($content, 1, 1);
 				} else {

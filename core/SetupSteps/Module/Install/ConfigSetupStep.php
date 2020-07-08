@@ -5,9 +5,8 @@ namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
 
 use icms;
-use icms_config_Handler;
-use icms_config_item_Object;
-use icms_module_Object;
+use ImpressCMS\Core\Facades\Config;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 
@@ -16,7 +15,7 @@ class ConfigSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$configs = (array)$module->getInfo('config');
 		if ($module->getVar('hascomments') != 0) {
@@ -31,7 +30,7 @@ class ConfigSetupStep implements SetupStepInterface
 			$output->info(_MD_AM_CONFIG_ADDING);
 			$output->incrIndent();
 			/**
-			 * @var icms_config_Handler $config_handler
+			 * @var Config $config_handler
 			 */
 			$config_handler = icms::handler('icms_config');
 			$order = 0;
@@ -110,10 +109,10 @@ class ConfigSetupStep implements SetupStepInterface
 	/**
 	 * Includes notifications config
 	 *
-	 * @param icms_module_Object $module Module info
+	 * @param Module $module Module info
 	 * @param array $configs Configs to be altered
 	 */
-	protected function includeNotificationsConfig(icms_module_Object $module, array &$configs)
+	protected function includeNotificationsConfig(Module $module, array &$configs)
 	{
 		include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
 		$options = [

@@ -17,7 +17,10 @@
 
 namespace ImpressCMS\Core\IPF;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\ObjectHandler;
+use ImpressCMS\Core\Properties\AbstractProperties;
 
 /**
  * Persistable Object Handlder
@@ -287,6 +290,7 @@ class Handler extends ObjectHandler {
 	 *
 	 * @param obj $criteria
 	 * @param str $perm_name
+	 * @return bool
 	 */
 	public function setGrantedObjectsCriteria(&$criteria, $perm_name) {
 		$icmspermissions_handler = new \ImpressCMS\Core\IPF\PermissionsDecorator($this);
@@ -303,12 +307,12 @@ class Handler extends ObjectHandler {
 	 * Runs precalculated info
 	 *
 	 * @param array $field_func
-	 * @param icms_db_criteria_Element $criteria
+	 * @param CriteriaElement $criteria
 	 * @param bool $debug
 	 *
 	 * @return array
 	 */
-	public function getCalculatedInfo(array $field_func, icms_db_criteria_Element $criteria = null, $debug = false) {
+	public function getCalculatedInfo(array $field_func, CriteriaElement $criteria = null, $debug = false) {
 		if (empty($field_func)) {
 			return array();
 		}
@@ -320,7 +324,7 @@ class Handler extends ObjectHandler {
 		$sql = substr($sql, 0, -2);
 		$sql .= ' FROM ' . $this->table;
 
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
@@ -331,7 +335,7 @@ class Handler extends ObjectHandler {
 		}
 
 		if ($debug) {
-			icms_core_Debug::message($sql);
+			Debug::message($sql);
 		}
 
 		$result = $this->db->query($sql);
@@ -380,7 +384,7 @@ class Handler extends ObjectHandler {
 			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM ' . $this->table . " AS " . $this->_itemname;
 		}
 
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -390,7 +394,7 @@ class Handler extends ObjectHandler {
 		}
 
 		if ($debug) {
-			icms_core_Debug::message($sql);
+			Debug::message($sql);
 		}
 
 		$result = $this->db->query($sql, $limit, $start);
@@ -497,10 +501,10 @@ class Handler extends ObjectHandler {
 				$obj = new $this->className($this, $myrow);
 				if (!$obj->isLoadedOnCreation()) {
 					$obj->assignVars($myrow);
-					$obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+					$obj->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
 				}
 				if (isset($fields_sk)) {
-					$obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+					$obj->setVarInfo($fields_sk, AbstractProperties::VARCFG_NOTLOADED, true);
 				}
 				//if (!$obj->handler)
 				//    $obj->handler = $this;
@@ -536,10 +540,10 @@ class Handler extends ObjectHandler {
 				$obj = new $this->className($this, $myrow);
 				if (!$obj->isLoadedOnCreation()) {
 					$obj->assignVars($myrow);
-					$obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+					$obj->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
 				}
 				if (isset($fields_sk)) {
-					$obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+					$obj->setVarInfo($fields_sk, AbstractProperties::VARCFG_NOTLOADED, true);
 				}
 				//if (!$obj->handler)
 				//    $obj->handler = $this;
@@ -617,11 +621,11 @@ class Handler extends ObjectHandler {
 			$obj = new $this->className($this, $myrow);
 			if (!$obj->isLoadedOnCreation()) {
 				$obj->assignVars($myrow);
-				$obj->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+				$obj->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
 			}
 
 			if (isset($fields_sk)) {
-				$obj->setVarInfo($fields_sk, icms_properties_Handler::VARCFG_NOTLOADED, true);
+				$obj->setVarInfo($fields_sk, AbstractProperties::VARCFG_NOTLOADED, true);
 			}
 			//if (!$obj->handler)
 			//    $obj->handler = $this;
@@ -793,7 +797,7 @@ class Handler extends ObjectHandler {
 			$sql .= ', ' . $keyValue;
 		}
 		$sql .= ' FROM ' . $this->table . " AS " . $this->_itemname;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -803,7 +807,7 @@ class Handler extends ObjectHandler {
 		}
 
 		if ($debug) {
-			icms_core_Debug::message($sql);
+			Debug::message($sql);
 		}
 
 		$result = $this->db->query($sql, $limit, $start);
@@ -902,25 +906,25 @@ class Handler extends ObjectHandler {
 
 				$sql = $this->generateInsertSQL($for_insert[0]);
 				if ($this->debugMode) {
-					icms_core_Debug::message($sql);
+					Debug::message($sql);
 				}
 				$result = $force?$this->db->queryF($sql):$this->db->query($sql);
 				if ($result) {
 					$insert_id = $this->db->getInsertId();
 					$id = $insert_id;
 					$for_insert[0]->setVar($this->keyName, $id++);
-					$for_insert[0]->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+					$for_insert[0]->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
 
 					$for_insert = array_slice($for_insert, 1);
 					$sql = $this->generateInsertSQL($for_insert);
 					if ($this->debugMode) {
-						icms_core_Debug::message($sql);
+						Debug::message($sql);
 					}
 					$result = $force?$this->db->queryF($sql):$this->db->query($sql);
 					if ($result) {
 						foreach ($for_insert as $i => $obj) {
 							$for_insert[$i]->setVar($this->keyName, $id++);
-							$for_insert[$i]->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+							$for_insert[$i]->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
 							$for_insert[$i]->unsetNew();
 							if (!$this->executeEvent('afterInsert', $for_insert[$i])) {
 								$scount--;
@@ -936,7 +940,7 @@ class Handler extends ObjectHandler {
 				$sql = $this->generateInsertSQL($for_insert);
 
 				if ($this->debugMode) {
-					icms_core_Debug::message($sql);
+					Debug::message($sql);
 				}
 
 				if ($force) {
@@ -946,7 +950,7 @@ class Handler extends ObjectHandler {
 				}
 				$id = $this->db->getInsertId();
 				$for_insert[0]->setVar($this->keyName, $id);
-				$for_insert[0]->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+				$for_insert[0]->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
 				$for_insert[0]->unsetNew();
 				$scount = (int) $this->executeEvent('afterInsert', $for_insert[0]);
 			}
@@ -958,14 +962,14 @@ class Handler extends ObjectHandler {
 			if ($sql !== null) {
 
 				if ($this->debugMode === true) {
-					icms_core_Debug::message($sql);
+					Debug::message($sql);
 				}
 
 				$force?$this->db->queryF($sql):$this->db->query($sql);
 				$scount += $this->db->getAffectedRows();
 
 				foreach ($for_update as $i => $obj) {
-					$for_update[$i]->setVarInfo(null, icms_properties_Handler::VARCFG_CHANGED, false);
+					$for_update[$i]->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
 					if (!$this->executeEvent('afterUpdate', $for_update[$i])) {
 						$scount--;
 						continue;
@@ -1189,7 +1193,7 @@ class Handler extends ObjectHandler {
 	public function query($sql, $criteria, $force = false, $debug = false) {
 		$ret = array();
 
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
@@ -1199,7 +1203,7 @@ class Handler extends ObjectHandler {
 			}
 		}
 		if ($debug) {
-			icms_core_Debug::message($sql);
+			Debug::message($sql);
 		}
 
 		if ($force) {
@@ -1228,7 +1232,7 @@ class Handler extends ObjectHandler {
 	public function getCount($criteria = null) {
 		$field = "";
 		$groupby = false;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			if ($criteria->groupby != "") {
 				$groupby = true;
 				$field = $criteria->groupby . ", "; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
@@ -1244,7 +1248,7 @@ class Handler extends ObjectHandler {
 		} else {
 			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->_itemname;
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->groupby != "") {
 				$sql .= $criteria->getGroupby();
@@ -1313,7 +1317,7 @@ class Handler extends ObjectHandler {
 			$set_clause .= $this->db->quoteString($fieldvalue);
 		}
 		$sql = 'UPDATE ' . $this->table . ' SET ' . $set_clause;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (false != $force) {
@@ -1379,21 +1383,21 @@ class Handler extends ObjectHandler {
 		$url_links = array();
 		$url_files = array();
 		foreach ($obj->getVars() as $key => $var) {
-			if (isset($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE])) {
-				if ($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE] == icms_properties_Handler::DTYPE_DEP_URLLINK) {
+			if (isset($var[AbstractProperties::VARCFG_DEP_DATA_TYPE])) {
+				if ($var[AbstractProperties::VARCFG_DEP_DATA_TYPE] === AbstractProperties::DTYPE_DEP_URLLINK) {
 					$url_links[] = $obj->getVar($key, 'n');
-				} elseif ($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE] == icms_properties_Handler::DTYPE_DEP_FILE) {
+				} elseif ($var[AbstractProperties::VARCFG_DEP_DATA_TYPE] === AbstractProperties::DTYPE_DEP_FILE) {
 					$url_files[] = $obj->getVar($key, 'n');
 				}
 			}
 		}
 		if (!empty($url_links)) {
-			$urllink_handler = \icms::handler("icms_data_urllink");
+			$urllink_handler = \icms::handler('icms_data_urllink');
 			$urllink_handler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($urllink_handler->keyName, $url_links, ' IN '));
 			unset($urllink_handler);
 		}
 		if (!empty($url_files)) {
-			$urllink_handler = \icms::handler("icms_data_file");
+			$urllink_handler = \icms::handler('icms_data_file');
 			$urllink_handler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($urllink_handler->keyName, $url_files, ' IN '));
 			unset($urllink_handler);
 		}

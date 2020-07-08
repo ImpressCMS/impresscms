@@ -37,9 +37,8 @@
 namespace ImpressCMS\Core\Models;
 
 
-use ImpressCMS\Core\Facades\Exception;
-use ImpressCMS\Core\Facades\icms_db_criteria_Element;
-use ImpressCMS\Core\Facades\the;
+
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\StopSpammer;
 
 include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
@@ -110,13 +109,14 @@ class UserHandler
 	 * @param \icms_db_criteria_Element $criteria Criteria
 	 * @return bool FALSE if deletion failed
 	 * @TODO we need to also delete the private messages of the user when we delete them! how do we determine which users were deleted from the criteria????
+	 * @throws \Exception
 	 */
 	public function deleteAll($criteria = null, $quick = false) {
 			if ($quick) {
-							throw new Exception('quick variable not supported!');
+							throw new \Exception('quick variable not supported!');
 			}
 			$sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), substr(md5(time()), 0, 8));
-			if ($criteria instanceof icms_db_criteria_Element) {
+			if ($criteria instanceof CriteriaElement) {
 							$sql .= ' ' . $criteria->renderWhere();
 			}
 			return (bool) $this->db->query($sql);

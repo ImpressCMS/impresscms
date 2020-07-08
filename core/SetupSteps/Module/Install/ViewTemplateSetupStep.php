@@ -5,11 +5,11 @@ namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
 
 use icms;
-use icms_module_Object;
-use icms_view_template_file_Object;
-use icms_view_Tpl;
+use ImpressCMS\Core\Models\Module;
+use ImpressCMS\Core\Models\TemplateFile;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
+use ImpressCMS\Core\View\Template;
 
 class ViewTemplateSetupStep implements SetupStepInterface
 {
@@ -17,7 +17,7 @@ class ViewTemplateSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$newmid = $module->getVar('mid');
 		$templates = $module->getInfo('templates');
@@ -30,7 +30,7 @@ class ViewTemplateSetupStep implements SetupStepInterface
 		$output->incrIndent();
 		foreach ($templates as $tpl) {
 			/**
-			 * @var icms_view_template_file_Object $tplfile
+			 * @var TemplateFile $tplfile
 			 */
 			$tplfile = $handler->create();
 			$tpldata = $this->readTemplate($dirname, $tpl['file']);
@@ -48,7 +48,7 @@ class ViewTemplateSetupStep implements SetupStepInterface
 				$newtplid = $tplfile->getVar('tpl_id');
 				$output->success(_MD_AM_TEMPLATE_INSERTED, $tpl['file'], $newtplid);
 
-				if (icms_view_Tpl::template_touch($newtplid)) {
+				if (Template::template_touch($newtplid)) {
 					$output->success(_MD_AM_TEMPLATE_COMPILED, $tpl['file']);
 				} else {
 					$output->error(_MD_AM_TEMPLATE_COMPILE_FAIL, $tpl['file'], $newtplid);
@@ -59,7 +59,7 @@ class ViewTemplateSetupStep implements SetupStepInterface
 		}
 		$output->resetIndent();
 
-		icms_view_Tpl::template_clear_module_cache($newmid);
+		Template::template_clear_module_cache($newmid);
 
 		return true;
 	}

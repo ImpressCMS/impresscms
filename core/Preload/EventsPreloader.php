@@ -11,6 +11,8 @@
 
 namespace ImpressCMS\Core\Preload;
 
+use ImpressCMS\Core\Event;
+
 /**
  * icms_preload_Handler
  *
@@ -82,7 +84,7 @@ class EventsPreloader {
 			if (strpos($method, 'event') === 0) {
 				$preload_event = strtolower(str_replace('event', '', $method));
 
-				icms_Event::attach('icms', $preload_event, [$instance, $method]);
+				Event::attach('icms', $preload_event, [$instance, $method]);
 			}
 		}
 	}
@@ -136,7 +138,7 @@ class EventsPreloader {
 	 */
 	public function triggerEvent($event, $array = array()) {
 		$event = strtolower($event);
-		icms_Event::trigger('icms', $event, null, $array);
+		Event::trigger('icms', $event, null, $array);
 	}
 
 	/**

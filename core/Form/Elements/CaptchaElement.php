@@ -52,7 +52,7 @@ class CaptchaElement extends AbstractFormElement {
 			$numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null,
 			$backgroundnum = null
 	) {
-		$this->_captchaHandler = & icms_form_elements_captcha_Object::instance();
+		$this->_captchaHandler = & \ImpressCMS\Core\Form\Elements\Captcha\Image::instance();
 		$this->_captchaHandler->init(
 			$name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum
 		);

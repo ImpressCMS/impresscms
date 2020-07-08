@@ -4,8 +4,7 @@
 namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
 
-use icms_db_legacy_Factory;
-use icms_module_Object;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 
@@ -15,7 +14,7 @@ class ScriptSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$install_script = $module->getInfo('onInstall');
 		$dirname = $module->getVar('dirname');
@@ -27,7 +26,7 @@ class ScriptSetupStep implements SetupStepInterface
 
 		$is_IPF = $module->getInfo('object_items');
 		if (!empty($is_IPF)) {
-			$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
+			$icmsDatabaseUpdater = \ImpressCMS\Core\Database\Legacy\DatabaseConnectionFactory::getDatabaseUpdater();
 			$icmsDatabaseUpdater->moduleUpgrade($module, true);
 			$output->msg(
 				implode(PHP_EOL, $icmsDatabaseUpdater->_messages)
@@ -45,11 +44,11 @@ class ScriptSetupStep implements SetupStepInterface
 
 	/**
 	 * @param string $func Function that should be executed
-	 * @param icms_module_Object $module Module that is installed
+	 * @param Module $module Module that is installed
 	 * @param OutputDecorator $output
 	 * @param array $params
 	 */
-	protected function execFunc($func, icms_module_Object $module, OutputDecorator $output, ...$params)
+	protected function execFunc($func, Module $module, OutputDecorator $output, ...$params)
 	{
 		array_unshift($params, $module);
 

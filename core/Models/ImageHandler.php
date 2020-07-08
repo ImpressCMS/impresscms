@@ -35,6 +35,8 @@
  */
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+
 /**
  * Image handler class.
  *
@@ -109,11 +111,11 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false, $sql = false, $debug = false) {
 		if ($getbinary) {
-			$this->generalSQL = "SELECT i.*, b.image_body FROM " . $this->table . " i LEFT JOIN " . $this->imagebody_handler->table . " b ON b.image_id=i.image_id";
+			$this->generalSQL = 'SELECT i.*, b.image_body FROM ' . $this->table . ' i LEFT JOIN ' . $this->imagebody_handler->table . ' b ON b.image_id=i.image_id';
 		} else {
 			$this->generalSQL = '';
 		}
-		if ($criteria instanceof \icms_db_criteria_Element) {
+		if ($criteria instanceof CriteriaElement) {
 			if (!in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))) {
 				$criteria->setSort('image_weight');
 			}

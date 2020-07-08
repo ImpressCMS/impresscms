@@ -10,6 +10,8 @@
 
 namespace ImpressCMS\Core\Database\Legacy\Updater;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+
 /**
  * \ImpressCMS\Core\Database\Legacy\Updater\TableUpdater class
  *
@@ -471,7 +473,7 @@ class TableUpdater {
 				$set_clause .= $this->_db->quoteString($fieldvalue);
 			}
 			$sql = 'UPDATE ' . $this->name() . ' SET ' . $set_clause;
-			if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+			if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 				$sql .= ' ' . $criteria->renderWhere();
 			}
 			if ($this->force) {
@@ -480,9 +482,9 @@ class TableUpdater {
 				$ret = $this->_db->query($sql);
 			}
 			if (!$ret) {
-				$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error() . ")";
+				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error() . ")";
 			} else {
-				$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name());
+				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name());
 			}
 		}
 		return $ret;
@@ -505,12 +507,11 @@ class TableUpdater {
 	 * @param \icms_db_criteria_Element $criteria Criteria with conditions to meet
 	 * @return bool
 	 */
-
 	function deleteAll() {
 		$ret = true;
 		foreach ($this->getDeleteAll() as $item) {
 			$criteria = isset($item['criteria'])?$item['criteria']:null;
-			if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+			if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 				$sql = 'DELETE FROM ' . $this->table;
 				$sql .= ' ' . $criteria->renderWhere();
 				if ($this->force) {
@@ -519,9 +520,9 @@ class TableUpdater {
 					$result = $this->_db->query($sql);
 				}
 				if (!$result) {
-					$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . " (" . $this->_db->error() . ")";
+					$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . ' (' . $this->_db->error() . ')';
 				} else {
-					$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . " (" . $this->_db->error() . ")";
+					$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . ' (' . $this->_db->error() . ')';
 				}
 			}
 			$ret = $result && $ret;

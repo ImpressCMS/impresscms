@@ -1,7 +1,9 @@
 <?php
 namespace ImpressCMS\Core\Properties;
 
+use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\File\MediaUploader;
+use ImpressCMS\Core\Textsanitizer;
 
 /**
  * Contains methods for dealing with object properties
@@ -902,7 +904,7 @@ abstract class AbstractProperties implements Serializable {
 		switch ($this->_vars[$name][self::VARCFG_TYPE]) {
 			case self::DTYPE_STRING:
 				if (!isset($this->_vars[$name][self::VARCFG_AF_DISABLED]) || !$this->_vars[$name][self::VARCFG_AF_DISABLED]) {
-					$ts = icms_core_Textsanitizer::getInstance();
+					$ts = Textsanitizer::getInstance();
 					$html = !empty($this->_vars['dohtml'])?1:0;
 					$xcode = (!isset($this->_vars['doxcode']) || $this->_vars['doxcode'][self::VARCFG_VALUE] == 1)?1:0;
 					$smiley = (!isset($this->_vars['dosmiley']) || $this->_vars['dosmiley'][self::VARCFG_VALUE] == 1)?1:0;
@@ -914,7 +916,7 @@ abstract class AbstractProperties implements Serializable {
 						return $this->_vars[$name][self::VARCFG_VALUE]; //\ImpressCMS\Core\DataFilter::checkVar($this->_vars[$name][self::VARCFG_VALUE], 'text', 'output');
 					}
 				} else {
-					$ret = str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET)); //\ImpressCMS\Core\DataFilter::htmlSpecialchars($this->_vars[$name][self::VARCFG_VALUE]);
+					$ret = str_replace(array('&amp;', '&nbsp;'), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET)); //\ImpressCMS\Core\DataFilter::htmlSpecialchars($this->_vars[$name][self::VARCFG_VALUE]);
 					if (method_exists($this, 'formatForML')) {
 						return $this->formatForML($ret);
 					} else {
@@ -1006,11 +1008,11 @@ abstract class AbstractProperties implements Serializable {
 				if (isset($this->_vars[$name])) {
 					return $this->_vars[$name][self::VARCFG_VALUE];
 				} else {
-					icms_core_Debug::setDeprecated('getVars()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+					Debug::setDeprecated('getVars()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
 					return $this->_vars;
 				}
 			case 'cleanVars':
-				icms_core_Debug::setDeprecated('toArray()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+				Debug::setDeprecated('toArray()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
 				return $this->toArray();
 			default:
 				if (!isset($this->_vars[$name])) {
@@ -1028,6 +1030,7 @@ abstract class AbstractProperties implements Serializable {
 	 *
 	 * @param string $name Var name
 	 * @param mixed $value New value
+	 * @return bool|void
 	 */
 	public function __set($name, $value) {
 		if (!isset($this->_vars[$name])) {

@@ -51,7 +51,7 @@ class EditorElement extends TrayElement {
 	 * @param	string	$value	Pre-selected text value
 	 * @param	bool	$noHtml  dohtml disabled
 	 */
-	public function __construct(&$form, $name = "editor", $value = null, $noHtml = false) {
+	public function __construct(&$form, $name = 'editor', $value = null, $noHtml = false) {
 		global $icmsConfig;
 
 		if (empty($value)) {
@@ -59,8 +59,8 @@ class EditorElement extends TrayElement {
 		}
 
 		parent::__construct(_SELECT);
-		$edtlist = icms_plugins_EditorHandler::getListByType();
-		$option_select = new SelectElement("", $name, $value);
+		$edtlist = \ImpressCMS\Core\Plugins\EditorHandler::getListByType();
+		$option_select = new SelectElement('', $name, $value);
 		$querys = preg_replace('/editor=(.*?)&/', '', $_SERVER['QUERY_STRING']);
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
 				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&'.$querys . '\';

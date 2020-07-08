@@ -61,7 +61,7 @@ class EditorElement extends TextareaElement {
 	 */
 	function __construct($caption, $name, $editor_configs = null, $noHtml = false, $OnFailure = "") {
 		parent::__construct($caption, $editor_configs["name"]);
-		$editor_handler = icms_plugins_EditorHandler::getInstance();
+		$editor_handler = \ImpressCMS\Core\Plugins\EditorHandler::getInstance();
 		$this->editor = & $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
 	}
 

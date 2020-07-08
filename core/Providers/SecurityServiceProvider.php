@@ -2,8 +2,8 @@
 
 namespace ImpressCMS\Core\Providers;
 
-use icms_core_Security;
 use ImpressCMS\Core\Event;
+use ImpressCMS\Core\Security;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 /**
@@ -25,7 +25,7 @@ class SecurityServiceProvider extends AbstractServiceProvider
 	public function register()
 	{
 		$this->getContainer()->add('security', function () {
-			$instance = new icms_core_Security();
+			$instance = new Security();
 			$instance->checkSuperglobals();
 			if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] != 'POST' || !$instance->checkReferer(XOOPS_DB_CHKREF))) {
 				define('XOOPS_DB_PROXY', 1);

@@ -28,8 +28,6 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * icms_view_theme_Object component class file
- *
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  */
 

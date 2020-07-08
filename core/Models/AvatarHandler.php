@@ -37,6 +37,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+
 /**
  * Avatar handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -83,12 +85,12 @@ class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 	public function &getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = "SELECT a.*, COUNT(u.user_id) AS count FROM "
-			. $this->table . " a LEFT JOIN "
-			. $this->db->prefix('avatar_user_link') . " u ON u.avatar_id=a.avatar_id";
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= " " . $criteria->renderWhere();
-			$sql .= " GROUP BY a.avatar_id ORDER BY avatar_weight, avatar_id";
+		$sql = 'SELECT a.*, COUNT(u.user_id) AS count FROM '
+			. $this->table . ' a LEFT JOIN '
+			. $this->db->prefix('avatar_user_link') . ' u ON u.avatar_id=a.avatar_id';
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
+			$sql .= ' ' . $criteria->renderWhere();
+			$sql .= ' GROUP BY a.avatar_id ORDER BY avatar_weight, avatar_id';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
@@ -145,11 +147,11 @@ class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 		$ret = array();
 
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if (!is_a($avatar, 'icms_data_avatar_Object')) {
+		if (!is_a($avatar, Avatar::class)) {
 			return false;
 		}
 
-		$sql = "SELECT user_id FROM " . $this->db->prefix('avatar_user_link')
+		$sql = 'SELECT user_id FROM ' . $this->db->prefix('avatar_user_link')
 			. " WHERE avatar_id='" . (int) $avatar->getVar('avatar_id') . "'";
 		if (!$result = $this->db->query($sql)) {
 			return $ret;

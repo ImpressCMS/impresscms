@@ -23,7 +23,7 @@ class PageHandler extends \ImpressCMS\Core\IPF\Handler {
 	public function __construct(& $db) {
 		parent::__construct($db, 'page', 'page_id', 'page_title', '', 'icms');
 		$this->table = $db->prefix('icmspage');
-		$this->className = 'icms_data_page_Object';
+		$this->className = Page::class;
 	}
 
 	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {

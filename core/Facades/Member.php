@@ -37,8 +37,11 @@
 
 namespace ImpressCMS\Core\Facades;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\Models\Group;
 use ImpressCMS\Core\Models\GroupHandler;
 use ImpressCMS\Core\Models\GroupMembershipHandler;
+use ImpressCMS\Core\Models\User;
 use ImpressCMS\Core\Password;
 
 /**
@@ -86,21 +89,19 @@ class Member {
 	/**
 	 * create a new group
 	 *
-	 * @return GroupModel
+	 * @return Group
 	 */
 	public function &createGroup(&$isNew = true) {
-		$inst = & $this->_gHandler->create();
-		return $inst;
+		return $this->_gHandler->create();
 	}
 
 	/**
 	 * create a new user
 	 *
-	 * @return \ImpressCMS\Core\Models\User
+	 * @return User
 	 */
 	public function &createUser(&$isNew = true) {
-		$inst = & $this->_uHandler->create();
-		return $inst;
+		return $this->_uHandler->create();
 	}
 
 	/**
@@ -118,7 +119,7 @@ class Member {
 	/**
 	 * delete a user
 	 *
-	 * @param \ImpressCMS\Core\Models\User $user reference to the user to delete
+	 * @param User $user reference to the user to delete
 	 *
 	 * @return bool
 	 */
@@ -156,7 +157,7 @@ class Member {
 	 * @param \icms_db_criteria_Element $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 *
-	 * @return \ImpressCMS\Core\Models\User[]
+	 * @return User[]
 	 */
 	public function getUsers($criteria = null, $id_as_key = false) {
 		return $this->_uHandler->getObjects($criteria, $id_as_key);
@@ -237,7 +238,7 @@ class Member {
 	 * @param bool $asobject return the users as objects?
 	 * @param int $limit number of users to return
 	 * @param int $start index of the first user to return
-	 * @return array|\ImpressCMS\Core\Models\User[]
+	 * @return array|User[]
 	 * or of associative arrays matching the record structure in the database.
 	 */
 	public function &getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
@@ -261,7 +262,7 @@ class Member {
 	 * retrieve a user
 	 *
 	 * @param int $id ID for the user
-	 * @return \ImpressCMS\Core\Models\User \ImpressCMS\Core\Member\UserModel reference to the user
+	 * @return User \ImpressCMS\Core\Member\UserModel reference to the user
 	 */
 	public function &getUser($id)
 	{
@@ -275,7 +276,7 @@ class Member {
 	 * log in a user
 	 * @param string $uname username as entered in the login form
 	 * @param string $pwd password entered in the login form
-	 * @return \ImpressCMS\Core\Models\User|false
+	 * @return User|false
 	 */
 	public function loginUser($uname, $pwd) {
 
@@ -351,7 +352,7 @@ class Member {
 	/**
 	 * updates a single field in a users record
 	 *
-	 * @param \ImpressCMS\Core\Models\User $user reference
+	 * @param User $user reference
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
 	 * @return bool TRUE if success or unchanged, FALSE on failure
@@ -388,7 +389,7 @@ class Member {
 	/**
 	 * activate a user
 	 *
-	 * @param \ImpressCMS\Core\Models\User $user User
+	 * @param User $user User
 	 * @return bool successful?
 	 */
 	public function activateUser(&$user) {
@@ -404,25 +405,25 @@ class Member {
 	 * Temporary solution
 	 *
 	 * @param int $groups IDs of groups
-	 * @param \icms_db_criteria_Element $criteria Criteria object
+	 * @param CriteriaElement $criteria Criteria object
 	 * @param bool $asobject return the users as objects?
 	 * @param bool $id_as_key use the UID as key for the array if $asobject is TRUE
 	 *
-	 * @return array|\ImpressCMS\Core\Models\User[]
+	 * @return array|User[]
 	 */
 	public function getUsersByGroupLink($groups, $criteria = null, $asobject = false, $id_as_key = false) {
 		$ret = array();
 
-		$select = $asobject?"u.*":"u.uid";
+		$select = $asobject? 'u.*' : 'u.uid';
 		$sql[] = "	SELECT DISTINCT {$select} "
-				. "	FROM " . \icms::$xoopsDB->prefix("users") . " AS u"
-				. " LEFT JOIN " . \icms::$xoopsDB->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
+				. '	FROM ' . \icms::$xoopsDB->prefix('users') . ' AS u'
+				. ' LEFT JOIN ' . \icms::$xoopsDB->prefix('groups_users_link') . ' AS m ON m.uid = u.uid'
 				. "	WHERE 1 = '1'";
 		if (!empty($groups)) {
-			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
+			$sql[] = 'm.groupid IN (' . implode((array)", ", $groups) . ')';
 		}
 		$limit = $start = 0;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql_criteria = $criteria->render();
 			if ($criteria->getSort() != '') {
 				$sql_criteria .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -439,7 +440,7 @@ class Member {
 		}
 		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
 			if ($asobject) {
-				$user = new \ImpressCMS\Core\Models\User($this, $myrow);
+				$user = new User($this, $myrow);
 				if (!$id_as_key) {
 					$ret[] = & $user;
 				} else {
@@ -463,17 +464,17 @@ class Member {
 	public function getUserCountByGroupLink($groups, $criteria = null) {
 		$ret = 0;
 
-		$sql[] = "	SELECT COUNT(DISTINCT u.uid) "
-				. "	FROM " . \icms::$xoopsDB->prefix("users") . " AS u"
-				. " LEFT JOIN " . \icms::$xoopsDB->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
+		$sql[] = '	SELECT COUNT(DISTINCT u.uid) '
+				. '	FROM ' . \icms::$xoopsDB->prefix('users') . ' AS u'
+				. ' LEFT JOIN ' . \icms::$xoopsDB->prefix('groups_users_link') . ' AS m ON m.uid = u.uid'
 				. "	WHERE 1 = '1'";
 		if (!empty($groups)) {
-			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
+			$sql[] = 'm.groupid IN (' . implode(', ', $groups) . ')';
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql[] = $criteria->render();
 		}
-		$sql_string = implode(" AND ", array_filter($sql));
+		$sql_string = implode(' AND ', array_filter($sql));
 		if (!$result = \icms::$xoopsDB->query($sql_string)) {
 			return $ret;
 		}

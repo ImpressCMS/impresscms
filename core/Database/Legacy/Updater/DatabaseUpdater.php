@@ -11,6 +11,10 @@
  */
 namespace ImpressCMS\Core\Database\Legacy\Updater;
 
+use ImpressCMS\Core\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractSEOModel;
+use ImpressCMS\Core\Properties\AbstractProperties;
+
 /**
  * Include the language constants for the icms_db_legacy_updater_Handler
  */
@@ -123,7 +127,7 @@ class DatabaseUpdater {
 		$class = new ReflectionClass($object);
 		//$isExtention = false;
 		if ($pclass = $class->getParentClass()) {
-			if ($pclass->isInstantiable() && !in_array($pclass->getName(), array('icms_ipf_Object', 'icms_core_Object'))) {
+			if ($pclass->isInstantiable() && !in_array($pclass->getName(), [AbstractModel::class, \ImpressCMS\Core\IPF\AbstractModel::class], true)) {
 				$pclass_instance = $pclass->newInstanceArgs(array(&$module_handler));
 				$parentObjectVars = $pclass_instance->getVars();
 				unset($pclass_instance);
@@ -263,8 +267,8 @@ class DatabaseUpdater {
 	/**
 	 * Upgrades the object
 	 * @param string $dirname
+	 * @return bool
 	 */
-
 	function upgradeObjectItem($dirname, $item) {
 		$module_handler = icms_getModuleHandler($item, $dirname);
 		if (!$module_handler) {
@@ -276,7 +280,7 @@ class DatabaseUpdater {
 		$class = new ReflectionClass($object);
 		$isExtention = false;
 		if ($pclass = $class->getParentClass()) {
-			if ($pclass->isInstantiable() && !in_array($pclass->getName(), array('icms_ipf_Object', 'icms_core_Object', 'icms_ipf_seo_Object'))) {
+			if ($pclass->isInstantiable() && !in_array($pclass->getName(), [AbstractModel::class, \ImpressCMS\Core\IPF\AbstractModel::class, AbstractSEOModel::class], true)) {
 				$pclass_instance = $pclass->newInstanceArgs(array(&$module_handler));
 				$parentObjectVars = $pclass_instance->getVars();
 				unset($pclass_instance);
@@ -405,41 +409,41 @@ class DatabaseUpdater {
 	 */
 	function getFieldTypeFromVar($var)
 	{
-		switch ($var[icms_properties_Handler::VARCFG_TYPE]) {
-			case icms_properties_Handler::DTYPE_BOOLEAN:
+		switch ($var[AbstractProperties::VARCFG_TYPE]) {
+			case AbstractProperties::DTYPE_BOOLEAN:
 				return 'TINYINT(1) UNSIGNED';
 				break;
-			case icms_properties_Handler::DTYPE_ARRAY:
+			case AbstractProperties::DTYPE_ARRAY:
 				return 'TEXT';
 				break;
-			case icms_properties_Handler::DTYPE_OBJECT:
+			case AbstractProperties::DTYPE_OBJECT:
 				return 'MEDIUMTEXT';
 				break;
-			case icms_properties_Handler::DTYPE_LIST:
+			case AbstractProperties::DTYPE_LIST:
 				return 'VARCHAR(100)';
 				break;
-			case icms_properties_Handler::DTYPE_DATETIME:
+			case AbstractProperties::DTYPE_DATETIME:
 				return 'DATETIME';
 				break;
-			case icms_properties_Handler::DTYPE_FILE:
+			case AbstractProperties::DTYPE_FILE:
 				return 'BLOB';
 				break;
-			case icms_properties_Handler::DTYPE_FLOAT:
-				if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH]) && ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] > 0)) {
-					return 'FLOAT(' . icms_properties_Handler::VARCFG_MAX_LENGTH . ')';
+			case AbstractProperties::DTYPE_FLOAT:
+				if (isset($var[AbstractProperties::VARCFG_MAX_LENGTH]) && ($var[AbstractProperties::VARCFG_MAX_LENGTH] > 0)) {
+					return 'FLOAT(' . AbstractProperties::VARCFG_MAX_LENGTH . ')';
 				} else {
 					return 'FLOAT';
 				}
 				break;
-			case icms_properties_Handler::DTYPE_INTEGER:
-				if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH]) && ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] > 0)) {
-					if ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 4) {
+			case AbstractProperties::DTYPE_INTEGER:
+				if (isset($var[AbstractProperties::VARCFG_MAX_LENGTH]) && ($var[AbstractProperties::VARCFG_MAX_LENGTH] > 0)) {
+					if ($var[AbstractProperties::VARCFG_MAX_LENGTH] < 4) {
 						return 'TINYINT';
-					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 5) {
+					} elseif ($var[AbstractProperties::VARCFG_MAX_LENGTH] < 5) {
 						return 'SMALLINT';
-					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 7) {
+					} elseif ($var[AbstractProperties::VARCFG_MAX_LENGTH] < 7) {
 						return 'MEDIUMINT';
-					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 11) {
+					} elseif ($var[AbstractProperties::VARCFG_MAX_LENGTH] < 11) {
 						return 'INT';
 					} else {
 						return 'BIGINT';
@@ -448,16 +452,13 @@ class DatabaseUpdater {
 					return 'INT';
 				}
 				break;
-			case icms_properties_Handler::DTYPE_LIST:
-				return 'TEXT';
-				break;
-			case icms_properties_Handler::DTYPE_STRING:
-				if (isset($var[icms_properties_Handler::VARCFG_MAX_LENGTH])) {
-					if ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 500) {
-						return 'VARCHAR(' . $var[icms_properties_Handler::VARCFG_MAX_LENGTH] . ')';
-					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 8000) {
+			case AbstractProperties::DTYPE_STRING:
+				if (isset($var[AbstractProperties::VARCFG_MAX_LENGTH])) {
+					if ($var[AbstractProperties::VARCFG_MAX_LENGTH] < 500) {
+						return 'VARCHAR(' . $var[AbstractProperties::VARCFG_MAX_LENGTH] . ')';
+					} elseif ($var[AbstractProperties::VARCFG_MAX_LENGTH] < 8000) {
 						return 'TEXT';
-					} elseif ($var[icms_properties_Handler::VARCFG_MAX_LENGTH] < 2097000) {
+					} elseif ($var[AbstractProperties::VARCFG_MAX_LENGTH] < 2097000) {
 						return 'MEDIUMTEXT';
 					} else {
 						return 'LONGTEXT';
@@ -466,6 +467,7 @@ class DatabaseUpdater {
 					return 'VARCHAR(255)';
 				}
 				break;
+			case AbstractProperties::DTYPE_LIST:
 			default:
 				return 'TEXT';
 		}
@@ -480,16 +482,16 @@ class DatabaseUpdater {
 	 */
 	function getFieldDefaultFromVar($var, $key = false)
 	{
-		if (in_array($var[icms_properties_Handler::VARCFG_TYPE], array(
-			icms_properties_Handler::DTYPE_DATETIME,
-			icms_properties_Handler::DTYPE_OBJECT,
-			icms_properties_Handler::DTYPE_LIST,
-			icms_properties_Handler::DTYPE_ARRAY,
-			icms_properties_Handler::DTYPE_DEP_TXTBOX
-		))) {
+		if (in_array($var[AbstractProperties::VARCFG_TYPE], [
+			AbstractProperties::DTYPE_DATETIME,
+			AbstractProperties::DTYPE_OBJECT,
+			AbstractProperties::DTYPE_LIST,
+			AbstractProperties::DTYPE_ARRAY,
+			AbstractProperties::DTYPE_DEP_TXTBOX
+		], true)) {
 			return null;
-		} elseif (isset($var[icms_properties_Handler::VARCFG_DEFAULT_VALUE])) {
-			return $var[icms_properties_Handler::VARCFG_DEFAULT_VALUE];
+		} elseif (isset($var[AbstractProperties::VARCFG_DEFAULT_VALUE])) {
+			return $var[AbstractProperties::VARCFG_DEFAULT_VALUE];
 		} else {
 			return null;
 		}

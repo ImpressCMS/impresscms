@@ -2,10 +2,6 @@
 
 namespace ImpressCMS\Core\Database;
 
-if (interface_exists('icms_db_legacy_IDatabase')) {
-	return;
-}
-
 /**
  * Standard interface for database classes
  *

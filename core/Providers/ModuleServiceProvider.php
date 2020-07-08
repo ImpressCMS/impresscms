@@ -3,7 +3,7 @@
 namespace ImpressCMS\Core\Providers;
 
 use icms;
-use icms_module_Handler as ModuleHandler;
+use ImpressCMS\Core\Models\ModuleHandler;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 /**
@@ -24,7 +24,7 @@ class ModuleServiceProvider extends AbstractServiceProvider
 	public function register()
 	{
 		$this->getContainer()->add('module', function () {
-			$module_handler = icms::handler("icms_module");
+			$module_handler = icms::handler('icms_module');
 			try {
 				$modules = $module_handler->getObjects();
 				foreach ($modules as $module) {

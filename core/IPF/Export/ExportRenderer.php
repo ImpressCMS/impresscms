@@ -51,8 +51,8 @@ class ExportRenderer {
 	 *
 	 * @param array     $data       Contains the data to be exported
 	 * @param string    $format     Format of the ouputed export. Currently only supports CSV
-	 * @param string    $filename   Name of the file in which the exported data will be saved
-	 * @param string    $filepath   Path where the file will be saved
+	 * @param false|string    $filename   Name of the file in which the exported data will be saved
+	 * @param false|string    $filepath   Path where the file will be saved
 	 * @param array     $options    Options of the format to be exported in
 	 */
 	public function __construct($data, $filename = false, $filepath = false, $format = 'csv', $options = array('separator'=>';')) {
@@ -67,10 +67,12 @@ class ExportRenderer {
 	 * Converts an array to a comma-separated string
 	 *
 	 *
-	 * @param arr $dataArray
-	 * @param str $separator
-	 * @param str $trim
+	 * @param array $dataArray
+	 * @param string $separator
+	 * @param string $trim
 	 * @param bool $removeEmptyLines
+	 *
+	 * @return string
 	 */
 	public function arrayToCsvString($dataArray, $separator, $trim = 'both', $removeEmptyLines = true) {
 		if (!is_array($dataArray) || empty ($dataArray)) {
@@ -200,7 +202,7 @@ class ExportRenderer {
 		} else {
 			$mimeType = 'text/csv';
 			$file = strrev($this->filename);
-			$temp_name = strtolower(strrev(substr($file, 0, strpos($file, "--"))));
+			$temp_name = strtolower(strrev(substr($file, 0, strpos($file, '--'))));
 			if ($temp_name == '') {
 				$file_name = $this->filename;
 			} else {
@@ -212,20 +214,20 @@ class ExportRenderer {
 				ini_set('zlib.output_compression', 'Off');
 			}
 
-			header("Pragma: public");
-			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-			header("Cache-Control: private", false);
-			header("Content-Transfer-Encoding: binary");
+			header('Pragma: public');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Cache-Control: private', false);
+			header('Content-Transfer-Encoding: binary');
 			if (isset($mimeType)) {
-				header("Content-Type: " . $mimeType);
+				header('Content-Type: ' . $mimeType);
 			}
 
-			header("Content-Disposition: attachment; filename=" . $file_name);
+			header('Content-Disposition: attachment; filename=' . $file_name);
 
-			if (isset($mimeType) && strstr($mimeType, "text/")) {
-				$fp = fopen($fullFileName, "r");
+			if (isset($mimeType) && strstr($mimeType, 'text/')) {
+				$fp = fopen($fullFileName, 'rb');
 			} else {
-				$fp = fopen($fullFileName, "rb");
+				$fp = fopen($fullFileName, 'rb');
 			}
 			fpassthru($fp);
 			exit();

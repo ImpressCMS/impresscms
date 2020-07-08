@@ -8,6 +8,7 @@ use ImpressCMS\Core\Form\Elements\Select\TimezoneElement;
 use ImpressCMS\Core\Form\Elements\Select\UserElement;
 use ImpressCMS\Core\Form\Elements\SelectElement;
 use ImpressCMS\Core\Form\ThemeForm;
+use ImpressCMS\Core\IPF\Form\Elements\SelectMultiElement;
 use ImpressCMS\Core\View\Theme\ThemeFactory;
 
 /**
@@ -501,9 +502,9 @@ class Form extends ThemeForm {
 			if (!is_object($ele)) {
 				$ret .= $ele;
 			} elseif (!$ele->isHidden()) {
-				if (get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection()) {
+				if (get_class($ele) == \ImpressCMS\Core\IPF\Form\Elements\FormSectionElement::class && !$ele->isClosingSection()) {
 					$ret .= '<tr><th colspan="2">' . $ele->render() . '</th></tr>';
-				} elseif (get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection()) {
+				} elseif (get_class($ele) == \ImpressCMS\Core\IPF\Form\Elements\FormSectionElement::class && $ele->isClosingSection()) {
 					$ret .= '<tr><td class="even" colspan="2">&nbsp;</td></tr>';
 				} else {
 					$ret .= "<tr id='" . $ele->getName() . "_row' valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>" . $ele->getCaption();
@@ -537,8 +538,8 @@ class Form extends ThemeForm {
 			$elements[$n]['body'] = $ele->render();
 			$elements[$n]['hidden'] = $ele->isHidden();
 			$elements[$n]['required'] = $ele->isRequired();
-			$elements[$n]['section'] = get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection();
-			$elements[$n]['section_close'] = get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection();
+			$elements[$n]['section'] = get_class($ele) == \ImpressCMS\Core\IPF\Form\Elements\FormSectionElement::class && !$ele->isClosingSection();
+			$elements[$n]['section_close'] = get_class($ele) == \ImpressCMS\Core\IPF\Form\Elements\FormSectionElement::class && $ele->isClosingSection();
 			$elements[$n]['hide'] = ($i == $n)?false:$this->targetObject->getVarInfo($n, 'hide', false);
 
 			if ($ele->getDescription() != '') {
@@ -587,8 +588,7 @@ class Form extends ThemeForm {
 			/**
 			 * @todo remove icmsformselect_multielement in 1.4
 			 */
-			} elseif (strtolower(get_class($elt)) == 'icms_ipf_form_elements_selectmulti' ||
-					 strtolower(get_class($elt)) == 'icmsformselect_multielement') {
+			} elseif (strtolower(get_class($elt)) == SelectMultiElement::class) {
 				$js .= "var hasSelections = FALSE;";
 				$js .= "for(var i = 0; i < myform['{$eltname}[]'].length; i++){
 					if (myform['{$eltname}[]'].options[i].selected) {
@@ -599,7 +599,7 @@ class Form extends ThemeForm {
 				if (hasSelections == FALSE) {
 					window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'].options[0].focus(); return false; }\n";
 
-			} elseif (strtolower(get_class($elt)) == '\ImpressCMS\Core\Form\Elements\CheckboxElement') {
+			} elseif (strtolower(get_class($elt)) == \ImpressCMS\Core\Form\Elements\CheckboxElement::class) {
 				$js .= "var hasSelections = FALSE;";
 				//sometimes, there is an implicit '[]', sometimes not
 				if (strpos($eltname, '[') === false) {

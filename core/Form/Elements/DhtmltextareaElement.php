@@ -88,7 +88,7 @@ class DhtmltextareaElement extends TextareaElement {
 		}
 
 		$gperm_handler = \icms::handler('icms_member_groupperm');
-		$editorHandler = icms_plugins_EditorHandler::getInstance('content');
+		$editorHandler = \ImpressCMS\Core\Plugins\EditorHandler::getInstance('content');
 		if ($editorHandler->has($editor_default) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)) {
 			$this->htmlEditor = $editorHandler->get($editor_default);
 		} else {

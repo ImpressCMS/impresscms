@@ -3,7 +3,7 @@
 
 namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
-use icms_module_Object;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 
@@ -13,7 +13,7 @@ class MigrateSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$migrationsPath = ICMS_MODULES_PATH . '/' . $module->getVar('dirname') . '/migrations/';
 		if (!file_exists($migrationsPath)) {

@@ -163,7 +163,7 @@ abstract class AbstractForm {
 	public function addElement(&$formElement, $required = false) {
 		if (is_string($formElement)) {
 			$this->_elements[] = $formElement;
-		} elseif (is_subclass_of($formElement, 'icms_form_Element')) {
+		} elseif (is_subclass_of($formElement, AbstractFormElement::class)) {
 			$this->_elements[] = & $formElement;
 			if (!$formElement->isContainer()) {
 				if ($required) {
