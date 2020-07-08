@@ -34,57 +34,34 @@
  * @license	LICENSE.txt
  */
 
-namespace ImpressCMS\Core\View\Template;
+namespace ImpressCMS\Core\Models;
 
 /**
- * Template set handler class.
- * This class is responsible for providing data access mechanisms to the data source
- * of template set class objects.
+ * Base class for all template sets
  *
- * @author	Kazumi Ono <onokazu@xoops.org>
+ * @author	Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\View\Template\Set
- */
-class TemplateSetHandler extends \ImpressCMS\Core\IPF\Handler {
-
-		public function __construct(&$db) {
-			parent::__construct($db, 'view_template_set', 'tplset_id', 'tplset_name', 'tplset_name', 'icms', 'tplset', 'tplset_id');
-		}
-
-	/**
-	 * Gets templateset from database by Name
-	 *
-	 * @param string $tplset_name of the tempateset to get
-	 * @return \icms_view_template_set_Object reference to the new template
-	 *@see TemplateSet
-	 */
-	public function &getByName($tplset_name) {
-				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tplset_name', trim($tplset_name));
-				$criteria->setLimit(1);
-				$objs = $this->getObjects($criteria);
-				return isset($objs[0])?$objs[0]:null;
-	}
+ *
+ * @property int    $tplset_id      Template set ID
+ * @property string $tplset_name    Name
+ * @property string $tplset_desc    Description
+ * @property string $tplset_credits Credits
+ * @property int    $tplset_created When it was created?
+ * */
+class TemplateSet extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
-	 * Deletes templateset from the database
-	 *
-	 * @param \icms_view_template_set_Object $tplset reference to the object of the tempateset to delete
-	 * @param bool $force Force delete?
-	 *
-	 * @return bool
-	 *@see TemplateSet
-	 *
+	 * constructor
 	 */
-	public function delete(&$tplset, $force = false) {
-		if (!parent::delete($tplset, $force)) {
-					return false;
-		}
-		$sql = sprintf(
-			"DELETE FROM %s WHERE tplset_name = %s",
-			$this->db->prefix('imgset_tplset_link'),
-			$this->db->quoteString($tplset->getVar('tplset_name'))
-		);
-		$this->db->query($sql);
-		return true;
+	public function __construct(&$handler, $data = array()) {
+		$this->initVar('tplset_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('tplset_name', self::DTYPE_STRING, null, false, 50);
+		$this->initVar('tplset_desc', self::DTYPE_STRING, null, false, 255);
+		$this->initVar('tplset_credits', self::DTYPE_STRING, null, false);
+		$this->initVar('tplset_created', self::DTYPE_INTEGER, 0, false);
+
+                parent::__construct($handler, $data);
 	}
 }
+

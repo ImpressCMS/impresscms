@@ -34,7 +34,7 @@
  * @license	LICENSE.txt
  */
 
-namespace ImpressCMS\Core\View\Template;
+namespace ImpressCMS\Core\Models;
 
 /**
  * Base class for all templates
