@@ -724,7 +724,7 @@ class DataFilter {
 	 *
 	 */
 	static public function censorString(&$text) {
-		$icmsConfigCensor = \icms::$config->getConfigsByCat(Config\Config::CATEGORY_CENSOR);
+		$icmsConfigCensor = \icms::$config->getConfigsByCat(ImpressCMS\Core\Models\Config::CATEGORY_CENSOR);
 		if ($icmsConfigCensor['censor_enable'] == true) {
 			$replacement = $icmsConfigCensor['censor_replace'];
 			if (!empty($icmsConfigCensor['censor_words'])) {

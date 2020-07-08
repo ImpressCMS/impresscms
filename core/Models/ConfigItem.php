@@ -32,7 +32,7 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Config;
+namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\DataFilter;
 

@@ -32,10 +32,12 @@
  * @author		Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Config;
+namespace ImpressCMS\Core\Facades;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Models\ConfigItemHandler;
+use ImpressCMS\Core\Models\ConfigOptionHandler;
 
 /**
  * Configuration handling class.

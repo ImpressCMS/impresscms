@@ -23,30 +23,33 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+
 /**
- * Manage configuration options
+ * Manage configuration items
  *
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @author	Kazumi Ono (aka onokazo)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since        XOOPS
+ * @author       Kazumi Ono (aka onokazo)
+ * @author       http://www.xoops.org The XOOPS Project
  */
 
-namespace ImpressCMS\Core\Config;
+namespace ImpressCMS\Core\Models;
 
 /**
- * Configuration option handler class.
- * This class is responsible for providing data access mechanisms to the data source
- * of configuration option class objects.
+ * Configuration handler class.
  *
- * @author  	Kazumi Ono <onokazu@xoops.org>
+ * This class is responsible for providing data access mechanisms to the data source
+ * of configuration class objects.
+ *
+ * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @package	ICMS\Config\Option
+ * @package	ICMS\Config\Item
  */
-class ConfigOptionHandler extends \ImpressCMS\Core\IPF\Handler {
+class ConfigItemHandler extends \ImpressCMS\Core\IPF\Handler {
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'config_option', 'confop_id', 'confop_name', 'confop_value', 'icms', 'configoption', 'confop_id');
-        }
-
+	public function __construct(&$db) {
+			parent::__construct($db, 'config_item', 'conf_id', 'conf_name', 'conf_value', 'icms', 'config', 'conf_id');
+		}
 }

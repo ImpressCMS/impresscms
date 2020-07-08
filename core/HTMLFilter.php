@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core;
 
-use ImpressCMS\Core\Config\Config;
+use ImpressCMS\Core\Facades\Config;
 
 /**
  * Class to Clean & Filter HTML for various uses.

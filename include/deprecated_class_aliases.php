@@ -1,13 +1,13 @@
 <?php
 
 return [
-	'icms_config_category_Handler' => \ImpressCMS\Core\Config\ConfigCategoryHandler::class,
-	'icms_config_category_Object' => \ImpressCMS\Core\Config\ConfigCategory::class,
-	'icms_config_item_Handler' => \ImpressCMS\Core\Config\ConfigItemHandler::class,
-	'icms_config_item_Object' => \ImpressCMS\Core\Config\ConfigItem::class,
-	'icms_config_option_Handler' => \ImpressCMS\Core\Config\ConfigOptionHandler::class,
-	'icms_config_option_Object' => \ImpressCMS\Core\Config\ConfigOption::class,
-	'icms_config_Handler' => \ImpressCMS\Core\Config\Config::class,
+	'icms_config_category_Handler' => \ImpressCMS\Core\Models\ConfigCategoryHandler::class,
+	'icms_config_category_Object' => \ImpressCMS\Core\Models\ConfigCategory::class,
+	'icms_config_item_Handler' => \ImpressCMS\Core\Models\ConfigItemHandler::class,
+	'icms_config_item_Object' => \ImpressCMS\Core\Models\ConfigItem::class,
+	'icms_config_option_Handler' => \ImpressCMS\Core\Models\ConfigOptionHandler::class,
+	'icms_config_option_Object' => \ImpressCMS\Core\Models\ConfigOption::class,
+	'icms_config_Handler' => \ImpressCMS\Core\Facades\Config::class,
 	'icms_core_DataFilter' => \ImpressCMS\Core\DataFilter::class,
 	'icms_core_Debug' => \ImpressCMS\Core\Debug::class,
 	'icms_core_Filesystem' => \ImpressCMS\Core\Filesystem::class,
