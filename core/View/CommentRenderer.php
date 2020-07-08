@@ -34,7 +34,7 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
 
-namespace ImpressCMS\Core\Models;
+namespace ImpressCMS\Core\View;
 
 /**
  * Display comments

@@ -26,7 +26,7 @@ return [
 	'icms_data_avatar_Object' => \ImpressCMS\Core\Models\Avatar::class,
 	'icms_data_comment_Handler' => \ImpressCMS\Core\Models\CommentHandler::class,
 	'icms_data_comment_Object' => \ImpressCMS\Core\Models\Comment::class,
-	'icms_data_comment_Renderer' => \ImpressCMS\Core\Models\CommentRenderer::class,
+	'icms_data_comment_Renderer' => \ImpressCMS\Core\View\CommentRenderer::class,
 	'icms_data_file_Handler' => \ImpressCMS\Core\Models\FileHandler::class,
 	'icms_data_file_Object' => \ImpressCMS\Core\Models\File::class,
 	'icms_data_notification_Handler' => ImpressCMS\Core\Models\NotificationHandler::class,
