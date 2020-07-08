@@ -24,7 +24,7 @@ class MemberDecorator extends Member {
 	 */
 	public function __construct(&$db) {
 		parent::__construct($db);
-		$this->_uHandler = new \ImpressCMS\Core\Member\UserHandler($db);
+		$this->_uHandler = new \ImpressCMS\Core\Models\UserHandler($db);
 	}
 
 	// This function here below needs some changes to work under 1.2 Final. it's temporarily disabled.

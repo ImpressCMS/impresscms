@@ -135,7 +135,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 		}
 
 		if (!isset($mode)) {
-			$user = new \ImpressCMS\Core\Member\User($user_id);
+			$user = new \ImpressCMS\Core\Models\User($user_id);
 			$mode = $user->getVar('notify_mode');
 		}
 

@@ -77,11 +77,11 @@ class PrivateMessageHandler extends \ImpressCMS\Core\IPF\Handler
 	/**
 	 * Gets message count for user
 	 *
-	 * @param \ImpressCMS\Core\Member\User|null $user User for whom get message count
+	 * @param \ImpressCMS\Core\Models\User|null $user User for whom get message count
 	 *
 	 * @return int
 	 */
-	public function getCountForUser(\ImpressCMS\Core\Member\User $user = null): int {
+	public function getCountForUser(\ImpressCMS\Core\Models\User $user = null): int {
 		static $msgCount = [];
 		if ($user === null) {
 			$user = \icms::$user;

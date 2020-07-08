@@ -35,7 +35,9 @@
  * @license	LICENSE.txt
  */
 
-namespace ImpressCMS\Core\Member;
+namespace ImpressCMS\Core\Models;
+
+use ImpressCMS\Core\Member\Aura;
 
 /**
  * Class for users

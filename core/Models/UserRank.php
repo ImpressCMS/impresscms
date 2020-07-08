@@ -8,7 +8,9 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-namespace ImpressCMS\Core\Member;
+namespace ImpressCMS\Core\Models;
+
+use ImpressCMS\Core\Member\str;
 
 /**
  * Ranks to assign members

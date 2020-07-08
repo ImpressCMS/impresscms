@@ -34,9 +34,12 @@
  * @license	LICENSE.txt
  * @package	ICMS\Member\User
  */
-namespace ImpressCMS\Core\Member;
+namespace ImpressCMS\Core\Models;
 
 
+use ImpressCMS\Core\Member\Exception;
+use ImpressCMS\Core\Member\icms_db_criteria_Element;
+use ImpressCMS\Core\Member\the;
 use ImpressCMS\Core\StopSpammer;
 
 include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
@@ -84,7 +87,7 @@ class UserHandler
 	 * @TODO we need some kind of error message instead of just a FALSE return to inform whether user was deleted aswell as PM messages.
 	 */
 	public function delete(&$user, $force = false) {
-				if (!($user instanceof \ImpressCMS\Core\Member\User)) {
+				if (!($user instanceof \ImpressCMS\Core\Models\User)) {
 									return;
 				}
 		$sql = sprintf(

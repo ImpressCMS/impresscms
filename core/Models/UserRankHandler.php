@@ -8,7 +8,7 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-namespace ImpressCMS\Core\Member;
+namespace ImpressCMS\Core\Models;
 
 /**
  * Handler for the user ranks object
