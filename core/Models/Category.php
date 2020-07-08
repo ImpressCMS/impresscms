@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the basic classe for managing a category object based on icms_ipf_Object
+ * Contains the basic classe for managing a category object based on \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -25,11 +25,12 @@ use ImpressCMS\Core\IPF\Controller;
  * @package	ICMS\IPF\Category
  */
 class Category extends AbstractSEOModel {
+
 	/** Path that corresponds to the category */
 	private $_categoryPath;
+
 	/**
-	 * Constructor for icms_ipf_category_Object
-	 * @return Category
+	 * Constructor
 	 */
 	public function __construct() {
 		$this->initVar('categoryid', self::DTYPE_INTEGER, '', true);

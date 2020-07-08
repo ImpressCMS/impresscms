@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the classes responsible for displaying a tree table filled with icms_ipf_Object
+ * Contains the classes responsible for displaying a tree table filled with \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -11,11 +11,12 @@
 namespace ImpressCMS\Core\IPF\View;
 
 use ImpressCMS\Core\IPF\Controller;
+use ImpressCMS\Core\IPF\Handler;
 
 /**
- * icms_ipf_view_Tree base class
+ * ViewTree base class
  *
- * Base class representing a table for displaying icms_ipf_Object tree objects
+ * Base class representing a table for displaying \ImpressCMS\Core\IPF\AbstractModel tree objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -28,7 +29,7 @@ class ViewTree extends ViewTable {
 	/**
 	 * Construct the tree object
 	 *
-	 * @param icms_ipf_Handler $objectHandler Handler
+	 * @param Handler $objectHandler Handler
 	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo|false $criteria		Criteria to filter results
 	 * @param string[] $actions		An array of actions for this object
 	 * @param boolean $userSide		TRUE - display on the user side; FALSE - do not display
@@ -42,7 +43,7 @@ class ViewTree extends ViewTable {
 	 * Get children objects given a specific category_pid
 	 *
 	 * @var int $category_pid id of the parent which children we want to retreive
-	 * @return array of icms_ipf_Object
+	 * @return \ImpressCMS\Core\IPF\AbstractModel[]
 	 */
 	public function getChildrenOf($category_pid = 0) {
 		return isset($this->_objects[$category_pid])?$this->_objects[$category_pid]:false;
@@ -51,7 +52,7 @@ class ViewTree extends ViewTable {
 	/**
 	 * Create a row based on the item and children
 	 *
-	 * @param icms_ipf_Object	$object	@IPF object to use add to table row
+	 * @param \ImpressCMS\Core\IPF\AbstractModel	$object	@IPF object to use add to table row
 	 * @param integer	$level	sub-level of the item
 	 */
 	public function createTableRow($object, $level = 0) {

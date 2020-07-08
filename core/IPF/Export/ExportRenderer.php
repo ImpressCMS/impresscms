@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\IPF\Export;
 
 /**
- * icms_ipf_export_Renderer class
+ * ExportRenderer class
  *
  * Class that renders a set of data into a specific export format
  *

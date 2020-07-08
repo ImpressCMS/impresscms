@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
 /**
- * Form control creating a rich file element for an object derived from icms_ipf_Object
+ * Form control creating a rich file element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -13,7 +13,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
 class RichfileElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 	/**
 	 * Constructor
-	 * @param	icms_ipf_Object	$object	target object
+	 * @param	\ImpressCMS\Core\IPF\AbstractModel	$object	target object
 	 * @param	string			$key	the key
 	 */
 	public function __construct($object, $key) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the basic classe for managing a category object based on icms_ipf_Object
+ * Contains the basic classe for managing a category object based on \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -11,7 +11,7 @@
 namespace ImpressCMS\Core\Models;
 
 /**
- * Provides data access mechanisms to the icms_ipf_category_Object object
+ * Provides data access mechanisms to the Category object
  *
  * @copyright 	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

@@ -4,7 +4,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
 use ImpressCMS\Core\Form\AbstractFormElement;
 
 /**
- * Form control creating a section in a form for an object derived from icms_ipf_Object
+ * Form control creating a section in a form for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -29,7 +29,7 @@ class FormSectionElement extends AbstractFormElement {
 	/**
 	 * Constructor
 	 *
-	 * @param	icms_ipf_Object	$object	reference to targetobject
+	 * @param	\ImpressCMS\Core\IPF\AbstractModel	$object	reference to targetobject
 	 * @param	string			$key	name of the form section
 	 */
 	public function __construct($object, $key) {

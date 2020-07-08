@@ -11,7 +11,7 @@
 namespace ImpressCMS\Core\IPF;
 
 /**
- * Registry of icms_ipf_Object
+ * Registry of \ImpressCMS\Core\IPF\AbstractModel
  *
  * Class responsible of caching objects to make them easily reusable without querying the database
  *
@@ -49,8 +49,8 @@ class ObjectRegistry {
 	/**
 	 * Adding objects to the registry
 	 *
-	 * @param icms_ipf_Handler $handler of the objects to add
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param Handler $handler of the objects to add
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo|false $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */
@@ -67,8 +67,8 @@ class ObjectRegistry {
 	/**
 	 * Adding objects as list to the registry
 	 *
-	 * @param icms_ipf_Handler $handler of the objects to add
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param Handler $handler of the objects to add
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo|false $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */

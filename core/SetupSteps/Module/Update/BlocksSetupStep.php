@@ -6,14 +6,11 @@ namespace ImpressCMS\Core\SetupSteps\Module\Update;
 
 use Exception;
 use icms;
-use icms_db_Connection;
-use icms_module_Object;
-use icms_view_block_Handler;
-use icms_view_block_Object;
-use icms_view_template_file_Object;
-use icms_view_Tpl;
+use ImpressCMS\Core\Models\Block;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\Module\Install\BlockSetupStep as InstallBlockSetupStep;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
+use ImpressCMS\Core\View\Template;
 use function icms_conv_nr2local;
 
 class BlocksSetupStep extends InstallBlockSetupStep
@@ -22,7 +19,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		global $icmsConfig;
 
@@ -122,7 +119,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 								} else {
 									$output->success(_MD_AM_TEMPLATE_UPDATED, $block['template']);
 									if ($icmsConfig['template_set'] == 'default') {
-										if (!icms_view_Tpl::template_touch($tplfile_new->getVar('tpl_id'))) {
+										if (!Template::template_touch($tplfile_new->getVar('tpl_id'))) {
 											$output->error(_MD_AM_TEMPLATE_RECOMPILE_FAIL, $block['template']);
 										} else {
 											$output->success(_MD_AM_TEMPLATE_RECOMPILED, $block['template']);
@@ -147,8 +144,8 @@ class BlocksSetupStep extends InstallBlockSetupStep
 						$newBlock->side = 1;
 						$newBlock->weight = 0;
 						$newBlock->visible = 0;
-						$newBlock->block_type = icms_view_block_Object::BLOCK_TYPE_MODULE;
-						$newBlock->c_type = icms_view_block_Object::CONTENT_TYPE_HTML;
+						$newBlock->block_type = Block::BLOCK_TYPE_MODULE;
+						$newBlock->c_type = Block::CONTENT_TYPE_HTML;
 						$newBlock->isactive = 1;
 						$newBlock->dirname = $module->dirname;
 						$newBlock->func_file = $block['file'];
@@ -194,7 +191,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 									$newid = $tplfile->getVar('tpl_id');
 									$output->success(_MD_AM_TEMPLATE_INSERTED, $block['template'], $newid);
 									if ($icmsConfig['template_set'] == 'default') {
-										if (!icms_view_Tpl::template_touch($newid)) {
+										if (!Template::template_touch($newid)) {
 											$output->error(_MD_AM_TEMPLATE_RECOMPILE_FAIL, $block['template']);
 										} else {
 											$output->success(_MD_AM_TEMPLATE_RECOMPILED, $block['template']);

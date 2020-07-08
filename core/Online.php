@@ -36,6 +36,8 @@
 
 namespace ImpressCMS\Core;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+
 /**
  * A handler for "Who is Online?" information
  *
@@ -139,14 +141,14 @@ class Online {
 	/**
 	 * Get an array of online information
 	 *
-	 * @param \icms_db_criteria_Element|null $criteria Criteria
-	 * @return \icms_db_criteria_Element[]|bool
+	 * @param CriteriaElement|null $criteria Criteria
+	 * @return CriteriaElement[]|bool
 	 */
 	public function getAll($criteria = null) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('online');
-		if (is_object($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (is_object($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -165,12 +167,12 @@ class Online {
 	/**
 	 * Count the number of online users
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria
+	 * @param CriteriaElement $criteria Criteria
 	 * @return bool
 	 */
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online');
-		if (is_object($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (is_object($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {

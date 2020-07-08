@@ -52,10 +52,9 @@ class UserRank extends \ImpressCMS\Core\IPF\AbstractModel {
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
+	 * @inheritDoc
 	 */
-	public function getVar($key, $format = "s") {
+	public function getVar($key, $format = 's') {
 		if ($format == "s" && in_array($key, array())) {
 			return call_user_func(array($this, $key));
 		}

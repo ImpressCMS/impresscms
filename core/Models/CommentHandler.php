@@ -59,7 +59,7 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Get a list of comments
 	 *
-	 * @param \icms_db_criteria_Element|null $criteria Criteria
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement|null $criteria Criteria
 	 *
 	 * @param int $limit How many to get?
 	 * @param int $start From where to start?

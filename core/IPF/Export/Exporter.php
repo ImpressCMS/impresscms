@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\IPF\Export;
 
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Class to easily export data from IcmsPersistables
  *
@@ -16,14 +18,14 @@ class Exporter {
 	/**
 	 * Handler that can provide data
 	 *
-	 * @var \icms_ipf_Handler
+	 * @var Handler
 	 */
 	public $handler;
 
 		/**
 		 * criteria how to filter exported data
 		 *
-		 * @var \icms_db_criteria_Element
+		 * @var \ImpressCMS\Core\Database\Criteria\CriteriaElement
 		 */
 	public $criteria;
 
@@ -79,8 +81,8 @@ class Exporter {
 	/**
 	 * Constructor
 	 *
-	 * @param \icms_ipf_Handler         $objectHandler  IcmsPersistableHandler handling the data we want to export
-	 * @param \icms_db_criteria_Element $criteria       Containing the criteria of the query fetching the objects to be exported
+	 * @param Handler         $objectHandler  IcmsPersistableHandler handling the data we want to export
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria       Containing the criteria of the query fetching the objects to be exported
 	 * @param array|false               $fields         Fields to be exported. If FALSE then all fields will be exported
 	 * @param false|string              $filename       Name of the file to be created
 	 * @param false|string              $filepath       Path where the file will be saved

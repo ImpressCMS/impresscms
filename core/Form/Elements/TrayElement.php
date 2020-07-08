@@ -100,7 +100,7 @@ class TrayElement extends AbstractFormElement {
 	/**
 	 * Add an element to the group
 	 *
-	 * @param icms_form_Element $formElement Form element to add
+	 * @param AbstractFormElement $formElement Form element to add
 	 * @param bool $required Is required?
 	 */
 	public function addElement($formElement, $required = false) {
@@ -122,7 +122,7 @@ class TrayElement extends AbstractFormElement {
 	/**
 	 * get an array of "required" form elements
 	 *
-	 * @return	\icms_form_Element[]
+	 * @return	AbstractFormElement[]
 	 */
 	public function &getRequired() {
 		return $this->_required;
@@ -132,7 +132,8 @@ class TrayElement extends AbstractFormElement {
 	 * Get an array of the elements in this group
 	 *
 	 * @param	bool	$recurse	get elements recursively?
-	 * @return  \icms_form_Element[]
+	 *
+	 * @return  AbstractFormElement[]
 	 */
 	public function &getElements($recurse = false) {
 		if (!$recurse) {

@@ -14,7 +14,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
 class BlockOptionsElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 	/**
 	 * Constructor
-	 * @param	\icms_ipf_Object    $object   reference to targetobject
+	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

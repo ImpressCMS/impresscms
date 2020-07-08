@@ -35,8 +35,11 @@
 namespace ImpressCMS\Core\Facades;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Models\ConfigItem;
 use ImpressCMS\Core\Models\ConfigItemHandler;
+use ImpressCMS\Core\Models\ConfigOption;
 use ImpressCMS\Core\Models\ConfigOptionHandler;
 
 /**
@@ -163,11 +166,10 @@ class Config {
 	 * Create a config
 	 *
 	 * @see     ConfigItemHandler
-	 * @return	\icms_config_Item_Object
+	 * @return ConfigItem
 	 */
 	public function &createConfig() {
-		$instance = & $this->_cHandler->create();
-		return $instance;
+		return $this->_cHandler->create();
 	}
 
 	/**
@@ -175,7 +177,7 @@ class Config {
 	 *
 	 * @param	int     $id             ID of the config
 	 * @param	bool    $withoptions    load the config's options now?
-	 * @return	\icms_config_Item_Object
+	 * @return	ConfigItem
 	 */
 	public function &getConfig($id, $withoptions = false) {
 		$config = & $this->_cHandler->get($id);
@@ -188,7 +190,7 @@ class Config {
 	/**
 	 * insert a new config in the database
 	 *
-	 * @param	\icms_config_Item_Object  &$config    reference
+	 * @param	ConfigItem  &$config    reference
 	 * @return	true|false if inserting config succeeded or not
 	 */
 	public function insertConfig(&$config) {
@@ -216,7 +218,7 @@ class Config {
 	/**
 	 * Delete a config from the database
 	 *
-	 * @param	\icms_config_Item_Object  &$config    refence
+	 * @param	ConfigItem  &$config    refence
 	 * @return	bool if deleting config item succeeded or not
 	 */
 	public function deleteConfig(&$config) {
@@ -243,11 +245,11 @@ class Config {
 	/**
 	 * get one or more Configs
 	 *
-	 * @param	\icms_db_criteria_Element  $criteria      Criteria
+	 * @param	CriteriaElement  $criteria      Criteria
 	 * @param	bool    $id_as_key      Use the configs' ID as keys?
 	 * @param	bool    $with_options   get the options now?
 	 *
-	 * @return	\icms_config_Item_Object[]
+	 * @return	ConfigItem[]
 	 */
 	public function getConfigs($criteria = null, $id_as_key = false, $with_options = false) {
 		return $this->_cHandler->getObjects($criteria, $id_as_key);
@@ -256,7 +258,7 @@ class Config {
 	/**
 	 * Count some configs
 	 *
-	 * @param	\icms_db_criteria_Element  $criteria   Criteria
+	 * @param	CriteriaElement  $criteria   Criteria
 	 * @return	int count result
 	 */
 	public function getConfigCount($criteria = null) {
@@ -269,7 +271,7 @@ class Config {
 	 * @param	int $category   ID of a category
 	 * @param	int $module     ID of a module
 	 *
-	 * @return	\icms_config_Item_Object[]
+	 * @return	ConfigItem[]
 	 */
 	public function &getConfigsByCat($category, $module = 0) {
 		if (is_array($category)) {
@@ -309,11 +311,10 @@ class Config {
 	/**
 	 * Make a new
 	 *
-	 * @return	\icms_config_option_Object
+	 * @return	ConfigOption
 	 */
 	public function &createConfigOption() {
-		$inst = & $this->_oHandler->create();
-		return $inst;
+		return $this->_oHandler->create();
 	}
 
 	/**
@@ -321,20 +322,19 @@ class Config {
 	 *
 	 * @param	int $id ID of the config option
 	 *
-	 * @return	\icms_config_option_Object
+	 * @return	ConfigOption
 	 */
 	public function &getConfigOption($id) {
-		$inst = & $this->_oHandler->get($id);
-		return $inst;
+		return $this->_oHandler->get($id);
 	}
 
 	/**
 	 * Get one or more object(s)
 	 *
-	 * @param	\icms_db_criteria_Element  $criteria   Criteria
+	 * @param	CriteriaElement  $criteria   Criteria
 	 * @param	bool    $id_as_key  Use IDs as keys in the array?
 	 *
-	 * @return	\icms_config_option_Object[]
+	 * @return	ConfigOption[]
 	 */
 	public function getConfigOptions($criteria = null, $id_as_key = false) {
 		return $this->_oHandler->getObjects($criteria, $id_as_key);
@@ -343,7 +343,7 @@ class Config {
 	/**
 	 * Count
 	 *
-	 * @param	\icms_db_criteria_Element|null  $criteria   Criteria or null if none criteria should be used
+	 * @param	CriteriaElement|null  $criteria   Criteria or null if none criteria should be used
 	 *
 	 * @return	int
 	 */

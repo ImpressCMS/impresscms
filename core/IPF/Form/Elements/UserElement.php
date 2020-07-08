@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
 /**
- * Form control creating a simple users selectbox for an object derived from icms_ipf_Object
+ * Form control creating a simple users selectbox for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -15,7 +15,7 @@ class UserElement extends \ImpressCMS\Core\Form\Elements\Select\UserElement {
 
 	/**
 	 * Constructor
-	 * @param	\icms_ipf_Object    $object   reference to targetobject
+	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -24,11 +24,11 @@ class UserElement extends \ImpressCMS\Core\Form\Elements\Select\UserElement {
 
 		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'), $size, $this->_multiple);
 
-		$sql = "SELECT uid, uname FROM " . \icms::$xoopsDB->prefix("users") . " ORDER BY uname ASC";
+		$sql = 'SELECT uid, uname FROM ' . \icms::$xoopsDB->prefix('users') . ' ORDER BY uname ASC';
 		$result = \icms::$xoopsDB->query($sql);
 		if ($result) {
 			while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
-				$uArray[$myrow["uid"]] = $myrow["uname"];
+				$uArray[$myrow['uid']] = $myrow['uname'];
 			}
 		}
 		$this->addOptionArray($uArray);

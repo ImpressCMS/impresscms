@@ -28,7 +28,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * icms_form_elements_Colorpicker component class file
+ * ColorpickerElement component class file
  *
  * This class provides a textfield with a color picker popup. This color picker
  * comes from Tigra project (http://www.softcomplex.com/products/tigra_color_picker/).

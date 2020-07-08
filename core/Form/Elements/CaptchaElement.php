@@ -4,7 +4,7 @@
  *
  * Currently there are two types of CAPTCHA forms, text and image
  * The default mode is "text", it can be changed in the priority:
- * 1 If mode is set through icms_form_elements_Captcha::setMode(), take it
+ * 1 If mode is set through CaptchaElement::setMode(), take it
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
  *
@@ -26,7 +26,7 @@ use ImpressCMS\Core\Form\AbstractFormElement;
  * Add form element where proper: $form->addElement(new \ImpressCMS\Core\Form\Elements\CaptchaElement($caption, $name, $skipmember, ...);
  *
  * For verification:
- * $icmsCaptcha = icms_form_elements_captcha_Object::instance();
+ * $icmsCaptcha = CaptchaElement::instance();
  * if (!$icmsCaptcha->verify()) {
  *   echo $icmsCaptcha->getMessage();
  *   ...
@@ -70,15 +70,14 @@ class CaptchaElement extends AbstractFormElement {
 	 * @param   string $name Config Name
 	 * @param   string $val Config Value
 	 *
-	 * @return  \icms_form_elements_captcha_Object
+	 * @return  CaptchaElement
 	 */
 	public function setConfig($name, $val) {
 		return $this->_captchaHandler->setConfig($name, $val);
 	}
 
 	/**
-	 *
-	 * @see htdocs/libraries/icms/form/icms_form_Element::render()
+	 * @inheritDoc
 	 */
 	public function render() {
 		if (!$this->isHidden()) {

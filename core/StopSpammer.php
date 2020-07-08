@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core;
 
 /**
- * icms_core_StopSpammer object
+ * StopSpammer object
  *
  * This class is responsible for cross referencing register information with StopForumSpam.com API
  *
@@ -22,7 +22,7 @@ class StopSpammer {
 	 */
 	public function __construct() {
 		// checkin stopforumspam API
-		$this->api_url = "http://www.stopforumspam.com/api?";
+		$this->api_url = 'http://www.stopforumspam.com/api?';
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 /**
- * icms_ipf_Object Table Listing
+ * \ImpressCMS\Core\IPF\AbstractModel Table Listing
  *
  * Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
  *
@@ -13,7 +13,7 @@
 namespace ImpressCMS\Core\IPF\View;
 
 /**
- * icms_ipf_view_Column class
+ * ViewColumn class
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

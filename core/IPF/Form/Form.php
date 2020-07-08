@@ -1,6 +1,7 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form;
 
+use ImpressCMS\Core\Form\AbstractFormElement;
 use ImpressCMS\Core\Form\Elements\ColorpickerElement;
 use ImpressCMS\Core\Form\Elements\Select\CountryElement;
 use ImpressCMS\Core\Form\Elements\Select\GroupElement;
@@ -12,7 +13,7 @@ use ImpressCMS\Core\IPF\Form\Elements\SelectMultiElement;
 use ImpressCMS\Core\View\Theme\ThemeFactory;
 
 /**
- * Form control creating an image upload element for an object derived from icms_ipf_Object
+ * Form control creating an image upload element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -93,7 +94,7 @@ class Form extends ThemeForm {
 	/**
 	 * Add an element to the form
 	 *
-	 * @param	\icms_form_Element  &$formElement   reference
+	 * @param	AbstractFormElement  &$formElement   reference
 	 * @param	string|false  $key            encrypted key string for the form
 	 * @param	string|false  $var            some form variables?
 	 * @param	bool|string    $required       is this a "required" element?
@@ -174,7 +175,7 @@ class Form extends ThemeForm {
 				//if (isset($controls[$key])) {
 					/* If the control has name, it's because it's an object already present in the script
 					 * for example, "user"
-					 * If the field does not have a name, than we will use a "select" (ie icms_form_elements_Select)
+					 * If the field does not have a name, than we will use a "select" (ie SelectElement)
 					 */
 					if (!isset($controls[$key]['name']) || !$controls[$key]['name']) {
 						$controls[$key]['name'] = 'select';

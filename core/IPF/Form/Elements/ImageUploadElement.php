@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
 /**
- * Form control creating an image upload element for an object derived from icms_ipf_Object
+ * Form control creating an image upload element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

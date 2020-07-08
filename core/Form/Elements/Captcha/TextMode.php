@@ -26,9 +26,9 @@ class TextMode {
 	}
 
 	/**
-	 * Creates icms_form_elements_captcha_Text object
+	 * Creates TextMode object
 	 *
-	 * @return \icms_form_elements_captcha_Text
+	 * @return TextMode
 	 */
 	public function &instance() {
 		static $instance;

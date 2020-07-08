@@ -35,6 +35,8 @@
  */
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+
 /**
  * Image caetgory handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -58,7 +60,7 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Retrieve array meeting certain conditions
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria with conditions for the image categories
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria with conditions for the image categories
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
 	 *
 	 * @return ImageCategory[]
@@ -81,7 +83,7 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Get number matching certain conditions
 	 *
-	 * @param null|icms_db_criteria_Element $criteria conditions to match
+	 * @param null|CriteriaElement $criteria conditions to match
 	 *
 	 * @return int
 	 */

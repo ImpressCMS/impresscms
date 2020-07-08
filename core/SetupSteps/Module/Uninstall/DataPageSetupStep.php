@@ -3,10 +3,10 @@
 namespace ImpressCMS\Core\SetupSteps\Module\Uninstall;
 
 use icms;
-use icms_data_page_Handler;
-use icms_db_criteria_Compo;
-use icms_db_criteria_Item;
-use icms_module_Object;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Models\Module;
+use ImpressCMS\Core\Models\PageHandler;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 
@@ -16,14 +16,14 @@ class DataPageSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		/**
-		 * @var icms_data_page_Handler $page_handler
+		 * @var PageHandler $page_handler
 		 */
 		$page_handler = icms::handler('icms_data_page');
-		$criteria = new icms_db_criteria_Compo(
-			new icms_db_criteria_Item('page_moduleid', $module->getVar('mid'))
+		$criteria = new CriteriaCompo(
+			new CriteriaItem('page_moduleid', $module->getVar('mid'))
 		);
 		$pages = (int)$page_handler->getCount($criteria);
 		if ($pages === 0) {

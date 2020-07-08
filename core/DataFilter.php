@@ -441,7 +441,7 @@ class DataFilter {
 	}
 	/**
 	 * Filters textarea form data for INPUt to DB (text only!!)
-	 * For HTML please use icms_core_HTMLFilter::filterHTMLinput()
+	 * For HTML please use HTMLFilter::filterHTMLinput()
 	 *
 	 * @author		vaughan montgomery (vaughan@impresscms.org)
 	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
@@ -462,7 +462,7 @@ class DataFilter {
 
 	/**
 	 * Filters textarea for DISPLAY purposes (text only!!)
-	 * For HTML please use icms_core_HTMLFilter::filterHTMLdisplay()
+	 * For HTML please use HTMLFilter::filterHTMLdisplay()
 	 *
 	 * @param   string  $text
 	 * @param   bool	$smiley allow smileys?

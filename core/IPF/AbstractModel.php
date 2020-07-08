@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the basis classes for managing any objects derived from icms_ipf_Object
+ * Contains the basis classes for managing any objects derived from \ImpressCMS\Core\AbstractModel
  *
  * @copyright The ImpressCMS Project http://www.impresscms.org/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -10,12 +10,14 @@
 
 namespace ImpressCMS\Core\IPF;
 
+use ImpressCMS\Core\Models\File;
+use ImpressCMS\Core\Models\UrlLink;
 use ImpressCMS\Core\Textsanitizer;
 
 /**
- * icms_ipf_Object base class
+ * \ImpressCMS\Core\IPF\AbstractModel base class
  *
- * Base class representing a single icms_ipf_Object
+ * Base class representing a single \ImpressCMS\Core\IPF\AbstractModel
  *
  * @package ICMS\IPF
  * @author marcan <marcan@smartfactory.ca>
@@ -338,7 +340,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 *
 	 * Now, using an array as $options, you can customize what information to
 	 * use in the control. For example, if one needs to display a select box for
-	 * the user to choose the status of an item. We only need to tell icms_ipf_Object
+	 * the user to choose the status of an item. We only need to tell \ImpressCMS\Core\IPF\AbstractModel
 	 * what method to execute within what handler to retreive the options of the
 	 * selectbox.
 	 *
@@ -354,7 +356,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * - method : name of the method of this handler that we will execute
 	 * - module : name of the module from wich the handler is
 	 *
-	 * So in this example, icms_ipf_Object will create a selectbox for the variable 'status' and it will
+	 * So in this example, \ImpressCMS\Core\IPF\AbstractModel will create a selectbox for the variable 'status' and it will
 	 * populate this selectbox with the result from SmartshopItemHandler::getStatus()
 	 *
 	 * Another example of the use of $options as an array is for TextArea :
@@ -362,7 +364,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * $this->setControl('body', array('name' => 'textarea',
 	 * 'form_editor' => 'default'));
 	 *
-	 * In this example, icms_ipf_Object will create a TextArea for the variable 'body'. And it will use
+	 * In this example, \ImpressCMS\Core\IPF\AbstractModel will create a TextArea for the variable 'body'. And it will use
 	 * the 'default' editor, providing it is defined in the module
 	 * preferences : $icmsModuleConfig['default_editor']
 	 *
@@ -506,7 +508,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 		 *
 		 * if ($highlight && isset($_GET['keywords']))
 		 * {
-		 * $myts =& icms_core_Textsanitizer::getInstance();
+		 * $myts =& Textsanitizer::getInstance();
 		 * $keywords= \ImpressCMS\Core\DataFilter::htmlSpecialChars(trim(urldecode($_GET['keywords'])));
 		 * $h= new SmartHighlighter ($keywords, true , 'smart_highlighter');
 		 * foreach ($this->handler->highlightFields as $field) {
@@ -1036,7 +1038,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 *
 	 * @param string $key
 	 *        field name
-	 * @return icms_data_urllink_Object
+	 * @return UrlLink
 	 */
 	public function getUrlLinkObj($key) {
 		$urllink_handler = \icms::handler("icms_data_urllink");
@@ -1052,7 +1054,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	/**
 	 * store urllink object
 	 *
-	 * @param icms_data_urllink_Object $urllinkObj
+	 * @param UrlLink $urllinkObj
 	 * @return bool
 	 */
 	public function storeUrlLinkObj($urllinkObj) {
@@ -1065,7 +1067,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 *
 	 * @param string $key
 	 *        field name
-	 * @return icms_data_file_Object
+	 * @return File
 	 */
 	function getFileObj($key) {
 		$file_handler = \icms::handler("icms_data_file");
@@ -1080,7 +1082,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	/**
 	 * store file object
 	 *
-	 * @param icms_data_file_Object $fileObj
+	 * @param File $fileObj
 	 * @return bool
 	 */
 	function storeFileObj($fileObj) {
@@ -1110,7 +1112,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	/**
 	 * Constructor
 	 *
-	 * @param \icms_ipf_Handler $handler Handler that linked to this object
+	 * @param Handler $handler Handler that linked to this object
 	 * @param array $data Data used when loading/creating object
 	 */
 	public function __construct(&$handler, $data = array()) {

@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
 /**
- * Form control creating an hidden field for an object derived from icms_ipf_Object
+ * Form control creating an hidden field for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  * @todo	Remove the hardcoded height attribute, line breaks, styles
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
@@ -14,7 +14,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
 class ImageElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 	/**
 	 * Constructor
-	 * @param	\icms_ipf_Object    $object   reference to targetobject
+	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

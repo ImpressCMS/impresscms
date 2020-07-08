@@ -62,7 +62,7 @@ class ViewTree {
 	 * @param $pid_name Name of the parent id field in the table
 	 */
 	public function __construct($table_name, $id_name, $pid_name) {
-		$this->db = & icms_db_Factory::instance();
+		$this->db = & \ImpressCMS\Core\Database\DatabaseConnectionFactory::instance();
 		$this->table = $table_name;
 		$this->id = $id_name;
 		$this->pid = $pid_name;

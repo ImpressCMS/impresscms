@@ -40,9 +40,6 @@ class Autoloader {
 	 */
 	static public function setup() {
 		if (!self::$initialized) {
-			//self::register(dirname(__DIR__));
-			//spl_autoload_register(array('icms_Autoloader', 'autoload'));
-			//spl_autoload_register(array('icms_Autoloader', 'registerLegacy'));
 			self::$initialized = true;
 		}
 	}

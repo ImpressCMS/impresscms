@@ -2,6 +2,8 @@
 
 namespace ImpressCMS\Core\Database;
 
+use ImpressCMS\Core\Logger;
+
 /**
  * Standard interface for database classes
  *
@@ -14,7 +16,7 @@ interface LegacyDatabaseConnectionInterface {
 	 * assign a logger to the database
 	 *
 	 * @see Logger
-	 * @param \icms_core_Logger $logger reference to a logger object
+	 * @param Logger $logger reference to a logger object
 	 */
 	public function setLogger($logger);
 	/**

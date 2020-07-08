@@ -1,6 +1,6 @@
 <?php
 /**
- * icms_ipf_Object Table Listing
+ * \ImpressCMS\Core\IPF\AbstractModel Table Listing
  *
  * Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
  *
@@ -12,12 +12,14 @@
 
 namespace ImpressCMS\Core\IPF\View;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\IPF\Handler;
 use ImpressCMS\Core\View\PageNav;
 
 /**
- * icms_ipf_view_Table base class
+ * ViewTable base class
  *
- * Base class representing a table for displaying icms_ipf_Object objects
+ * Base class representing a table for displaying \ImpressCMS\Core\IPF\AbstractModel objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -66,8 +68,8 @@ class ViewTable {
 	/**
 	 * Constructor
 	 *
-	 * @param \icms_ipf_Handler $objectHandler Handler
-	 * @param bool|\icms_db_criteria_Element $criteria Criteria
+	 * @param Handler $objectHandler Handler
+	 * @param false|CriteriaElement $criteria Criteria
 	 * @param string[] $actions array representing the actions to offer
 	 * @param bool $userSide For user side?
 	 */
@@ -600,13 +602,14 @@ class ViewTable {
 	 *
 	 * @param $fetchOnly
 	 * @param $debug
+	 * @return
 	 */
 	public function render($fetchOnly = false, $debug = false) {
 		$this->_tpl = new \ImpressCMS\Core\View\Template();
 
 		/**
-		 * We need access to the protected s of the icms_ipf_Object for a few things in the table creation.
-		 * Since we may not have an icms_ipf_Object to look into now, let's create one for this purpose
+		 * We need access to the protected s of the \ImpressCMS\Core\IPF\AbstractModel for a few things in the table creation.
+		 * Since we may not have an \ImpressCMS\Core\IPF\AbstractModel to look into now, let's create one for this purpose
 		 * and we will free it after
 		 */
 		$this->_tempObject = & $this->_objectHandler->create();

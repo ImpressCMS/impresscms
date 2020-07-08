@@ -16,12 +16,12 @@ use ImpressCMS\Core\IPF\AbstractSEOModel;
 use ImpressCMS\Core\Properties\AbstractProperties;
 
 /**
- * Include the language constants for the icms_db_legacy_updater_Handler
+ * Include the language constants for the DatabaseUpdater
  */
 global $icmsConfigPersona;
 
 /**
- * icms_db_legacy_updater_Handler class
+ * DatabaseUpdater class
  *
  * Class performing the database update for the module
  *
@@ -32,12 +32,12 @@ global $icmsConfigPersona;
 class DatabaseUpdater {
 
 	/**
-	 * @var \icms_db_Connection
+	 * @var \ImpressCMS\Core\Database\DatabaseConnection
 	 */
 	var $_db;
 
 	/**
-	 * @var \icms_db_Connection
+	 * @var \ImpressCMS\Core\Database\DatabaseConnection
 	 */
 	var $db;
 
@@ -100,10 +100,10 @@ class DatabaseUpdater {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE_ERR, $from);
+			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE_ERR, $from);
 			return false;
 		} else {
-			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE, $from, $to);
+			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE, $from, $to);
 			return true;
 		}
 	}

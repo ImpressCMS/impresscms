@@ -142,7 +142,7 @@ class Member {
 	/**
 	 * retrieve groups from the database
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 *
 	 * @return GroupModel[]
@@ -154,7 +154,7 @@ class Member {
 	/**
 	 * retrieve users from the database
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 *
 	 * @return User[]
@@ -166,7 +166,7 @@ class Member {
 	/**
 	 * get a list of groupnames and their IDs
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria object
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria object
 	 *
 	 * @return array associative array of group-IDs and names
 	 */
@@ -184,7 +184,7 @@ class Member {
 	 *
 	 * @deprecated	This isn't really a membership method, but for the user handler
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria object
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria object
 	 * @return array associative array of user-IDs and names
 	 */
 	public function getUserList($criteria = null) {
@@ -332,7 +332,7 @@ class Member {
 	/**
 	 * count users matching certain conditions
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria object
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria object
 	 * @return int
 	 */
 	public function getUserCount($criteria = null) {
@@ -379,7 +379,7 @@ class Member {
 	 *
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
-	 * @param \icms_db_criteria_Element $criteria Criteria object
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria object
 	 * @return bool TRUE if success or unchanged, FALSE on failure
 	 */
 	public function updateUsersByField($fieldName, $fieldValue, $criteria = null) {
@@ -526,9 +526,9 @@ class Member {
 	 * get a list of groups that a user is member of
 	 *
 	 * @param int $user_id ID of the user
-	 * @param bool $asobject return groups as icms_member_group_Object objects or arrays?
+	 * @param bool $asobject return groups as Group objects or arrays?
 	 *
-	 * @return array|GroupModel[]
+	 * @return array|Group[]
 	 */
 	public function &getGroupsByUser($user_id, $asobject = false)
 	{

@@ -38,6 +38,7 @@
 namespace ImpressCMS\Core\Database\Legacy;
 
 use ImpressCMS\Core\Database\DatabaseConnectionFactory as CurrentDatabaseConnectionFactory;
+use ImpressCMS\Core\Database\Legacy\Updater\DatabaseUpdater;
 
 /**
  * Creates a database connection
@@ -87,10 +88,10 @@ class DatabaseConnectionFactory extends CurrentDatabaseConnectionFactory {
 	 *
 	 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 	 *
-	 * @return	\icms_db_legacy_updater_Handler  Updater handler
+	 * @return	DatabaseUpdater  Updater handler
 	 * @static
 	 */
 	static public function getDatabaseUpdater() {
-		return new \ImpressCMS\Core\Database\Legacy\Updater\DatabaseUpdater();
+		return new DatabaseUpdater();
 	}
 }

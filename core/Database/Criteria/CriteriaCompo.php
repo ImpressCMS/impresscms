@@ -56,7 +56,7 @@ class CriteriaCompo extends CriteriaElement {
 	/**
 	 * The elements of the collection
 	 *
-	 * @var	\icms_db_criteria_Element[] $criteriaElements
+	 * @var	CriteriaElement[] $criteriaElements
 	 */
 	public $criteriaElements = array();
 

@@ -78,14 +78,14 @@ class ObjectTree {
 		/**
 		 * Array of objects
 		 *
-		 * @var \icms_core_Object[]
+		 * @var \ImpressCMS\Core\AbstractModel
 		 */
-	private $_objects = array();
+	private $_objects = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param   \icms_core_Object	$objectArr  Array of objects
+	 * @param   \ImpressCMS\Core\AbstractModel	$objectArr  Array of objects
 	 * @param   string	$myId       field name of object ID
 	 * @param   string	$parentId   field name of parent object ID
 	 * @param   string	$rootId     field name of root object ID

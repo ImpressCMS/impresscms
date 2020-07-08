@@ -37,7 +37,7 @@ class Debug {
 	 * @param string $var
 	 */
  	static public function vardump($var) {
- 		if (class_exists('icms_core_Textsanitizer')) {
+ 		if (class_exists(Textsanitizer::class)) {
 			self::message(DataFilter::checkVar(var_export($var, true), 'text', 'output'));
  		} else {
 			$var = var_export($var, true);

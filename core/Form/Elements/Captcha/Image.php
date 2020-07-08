@@ -7,7 +7,7 @@
  *
  * Currently there are two types of CAPTCHA forms, text and image
  * The default mode is "text", it can be changed in the priority:
- * 1 If mode is set through icms_form_elements_Captcha::setConfig("mode", $mode), take it
+ * 1 If mode is set through CaptchaElement::setConfig("mode", $mode), take it
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
  *
@@ -83,8 +83,8 @@ class Image {
 	}
 
 	/**
-	 * Creates instance of icms_form_elements_captcha_Object Object
-	 * @return  object Reference to the icms_form_elements_captcha_Object Object
+	 * Creates instance of CaptchaElement Object
+	 * @return  object Reference to the CaptchaElement Object
 	 */
 	static public function &instance()
 	{

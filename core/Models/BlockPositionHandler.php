@@ -15,7 +15,7 @@
 namespace ImpressCMS\Core\Models;
 
 /**
- * icms_view_block_position_Handler
+ * BlockPositionHandler
  *
  * @package	ICMS\View\Block\Position
  */

@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core;
 
 /**
- * icms_Event class definition
+ * Event class definition
  *
  * @package	ICMS
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
@@ -32,15 +32,15 @@ class Event {
 	/**
 	 * Registers an event handler
 	 *
-	 * icms_Event::attach( 'icms_db_IConnection', 'connect', 'something' );
+	 * Event::attach( 'icms_db_IConnection', 'connect', 'something' );
 	 * => will call something( $eventParams, $event ) when the event is fired
-	 * icms_Event::attach( 'icms_db_IConnection', 'connect', array( $object, 'something' ) );
+	 * Event::attach( 'icms_db_IConnection', 'connect', array( $object, 'something' ) );
 	 * => will call $object->something( $eventParams, $event ) when the event is fired
-	 * icms_Event::attach( 'icms_db_IConnection', '*', array( 'MyClass', 'something' ) );
+	 * Event::attach( 'icms_db_IConnection', '*', array( 'MyClass', 'something' ) );
 	 * => will call MyClass::something( $eventParams, $event ) when any event that
 	 * belongs to the 'icms_db_IConnection' namespace is fired
 	 * Also, on PHP 5.3+, you can use closures:
-	 * icms_Event::attach( 'icms_db_IConnection', 'execute', function ( $params, $event ) {
+	 * Event::attach( 'icms_db_IConnection', 'execute', function ( $params, $event ) {
 	 *    echo 'Executing: ' . $params['sql'];
 	 * } );
 	 *

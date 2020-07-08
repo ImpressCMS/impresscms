@@ -1,8 +1,8 @@
 <?php
 /**
- * icms_ipf_Metagen
+ * Metagen
  *
- * Containing the class to manage meta informations of icms_ipf_Object
+ * Containing the class to manage meta informations of \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -23,9 +23,9 @@ use ImpressCMS\Core\Textsanitizer;
 class Metagen {
 
 		/**
-		 * Instance of icms_core_Textsanitizer
+		 * Instance of Textsanitizer
 		 *
-		 * @var \icms_core_Textsanitizer
+		 * @var Textsanitizer
 		 */
 	public $_myts;
 
@@ -79,7 +79,7 @@ class Metagen {
 	public $_minChar = 4;
 
 	/**
-	 * Constructor for icms_ipf_Metagen
+	 * Constructor
 	 *
 	 * @param string $title Page title
 	 * @param bool $keywords List of meta keywords

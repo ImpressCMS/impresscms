@@ -45,7 +45,7 @@ class DatabaseConnection extends \Aura\Sql\ExtendedPdo implements DatabaseConnec
 	 * @see PDO::query()
 	 * @param string $statement
 	 * @param array $fetch
-	 * @return icms_db_Statement|mixed|PDOStatement
+	 * @return mixed|PDOStatement
 	 */
 	public function query($statement, ...$fetch)
 	{

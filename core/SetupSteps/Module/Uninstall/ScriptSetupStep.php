@@ -1,11 +1,9 @@
 <?php
 
-
 namespace ImpressCMS\Core\SetupSteps\Module\Uninstall;
 
-
-use icms_db_legacy_Factory;
-use icms_module_Object;
+use ImpressCMS\Core\Database\Legacy\DatabaseConnectionFactory;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\Module\Install\ScriptSetupStep as InstallScriptSetupStep;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 
@@ -15,7 +13,7 @@ class ScriptSetupStep extends InstallScriptSetupStep
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$uninstall_script = $module->getInfo('onUninstall');
 		$module_name = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $module->getInfo('dirname');
@@ -28,7 +26,7 @@ class ScriptSetupStep extends InstallScriptSetupStep
 
 		$is_IPF = $module->getInfo('object_items');
 		if (!empty($is_IPF)) {
-			$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
+			$icmsDatabaseUpdater = DatabaseConnectionFactory::getDatabaseUpdater();
 			$icmsDatabaseUpdater->moduleUpgrade($module, true);
 			if (!empty($icmsDatabaseUpdater->_messages)) {
 				$output->msg(

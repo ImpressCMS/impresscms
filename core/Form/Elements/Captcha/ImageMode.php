@@ -26,7 +26,8 @@ class ImageMode {
 
 	/**
 	 * Creates instance of icmsCaptchaImage
-	 * @return  object the icms_form_elements_captcha_Image object
+	 *
+	 * @return  ImageMode
 	 */
 	public function &instance() {
 		static $instance;

@@ -3,10 +3,10 @@
 namespace ImpressCMS\Core\SetupSteps\Module\Update;
 
 use icms;
-use icms_module_Object;
-use icms_view_Tpl;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\Module\Install\ViewTemplateSetupStep as InstallViewTemplateSetupStep;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
+use ImpressCMS\Core\View\Template;
 
 class ViewTemplateSetupStep extends InstallViewTemplateSetupStep
 {
@@ -14,7 +14,7 @@ class ViewTemplateSetupStep extends InstallViewTemplateSetupStep
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		global $icmsConfig;
 
@@ -23,7 +23,7 @@ class ViewTemplateSetupStep extends InstallViewTemplateSetupStep
 		$deltpl = $tplfile_handler->find('default', 'module', $newmid);
 		$delng = array();
 		if (is_array($deltpl)) {
-			$xoopsDelTpl = new icms_view_Tpl();
+			$xoopsDelTpl = new Template();
 			// clear cache files
 			$xoopsDelTpl->clear_cache(null, 'mod_' . $module->dirname);
 			// delete template file entry in db
@@ -63,7 +63,7 @@ class ViewTemplateSetupStep extends InstallViewTemplateSetupStep
 						$newid = $tplfile->getVar('tpl_id');
 						$output->success(_MD_AM_TEMPLATE_INSERTED, $tpl['file'], $newid);
 						if ($icmsConfig['template_set'] == 'default') {
-							if (!icms_view_Tpl::template_touch($newid)) {
+							if (!Template::template_touch($newid)) {
 								$output->error(_MD_AM_TEMPLATE_RECOMPILE_FAIL, $tpl['file']);
 							} else {
 								$output->success(_MD_AM_TEMPLATE_RECOMPILED, $tpl['file']);

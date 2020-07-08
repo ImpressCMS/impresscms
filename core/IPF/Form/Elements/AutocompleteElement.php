@@ -1,6 +1,6 @@
 <?php
 /**
- * Form control creating an autocomplete select box for an object derived from icms_ipf_Object
+ * Form control creating an autocomplete select box for an object derived from AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -9,6 +9,9 @@
  */
 
 namespace ImpressCMS\Core\IPF\Form\Elements;
+
+use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\View\Theme\ThemeComponent;
 
 /**
  * To make the Autocomplete field work, the include file needs to look like the following
@@ -37,7 +40,7 @@ class AutocompleteElement extends \ImpressCMS\Core\Form\Elements\TextElement {
 
 	/**
 	 * Constructor
-	 * @param	icms_ipf_Object	$object	reference to targetobject
+	 * @param	AbstractModel	$object	reference to targetobject
 	 * @param	string			$key	the form name
 	 */
 	public function __construct($object, $key) {
@@ -53,7 +56,7 @@ class AutocompleteElement extends \ImpressCMS\Core\Form\Elements\TextElement {
 	/**
 	 * Prepare HTML for output
 	 *
-	 * @global	icms_view_theme_Object	$xoTheme	theme object
+	 * @global	ThemeComponent	$xoTheme	theme object
 	 * @return	string					$ret		the constructed HTML
 	 */
 	public function render() {

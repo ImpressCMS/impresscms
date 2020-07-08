@@ -78,7 +78,7 @@ class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Retrieve array of images meeting certain conditions
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria with conditions for the imagesets
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria with conditions for the imagesets
 	 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
 	 *
 	 * @return \icms_image_set_Object[]

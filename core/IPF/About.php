@@ -11,7 +11,7 @@
 namespace ImpressCMS\Core\IPF;
 
 /**
- * icms_ipf_About
+ * About
  *
  * Simple class that lets you build an about page
  *

@@ -49,7 +49,7 @@ abstract class AbstractFormElement {
 	 * Javascript performing additional validation of this element data
 	 *
 	 * This property contains a list of Javascript snippets that will be sent to
-	 * icms_form_Base::renderValidationJS().
+	 * AbstractFormElement::renderValidationJS().
 	 * NB: All elements are added to the output one after the other, so don't forget
 	 * to add a ";" after each to ensure no Javascript syntax error is generated.
 	 *

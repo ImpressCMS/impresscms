@@ -1,6 +1,6 @@
 <?php
 /**
- * icms_db_IConnection interface definition
+ * DatabaseConnectionInterface interface definition
  *
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -83,7 +83,7 @@ interface DatabaseConnectionInterface {
 	 * Prepares an SQL statement
 	 * @param string $sql
 	 * @param array $options
-	 * @return icms_db_Statement
+	 * @return \PDOStatement
 	 */
 	public function prepare($sql, $options = array());
 
@@ -97,7 +97,7 @@ interface DatabaseConnectionInterface {
 	/**
 	 * Executes an SQL statement and returns a result set as a IStatement object.
 	 * @param string $sql
-	 * @return icms_db_Statement
+	 * @return \PDOStatement
 	 */
 	public function query($statement, ...$fetch);
 

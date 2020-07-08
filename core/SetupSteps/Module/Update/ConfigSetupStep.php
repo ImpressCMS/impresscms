@@ -3,8 +3,8 @@
 namespace ImpressCMS\Core\SetupSteps\Module\Update;
 
 use icms;
-use icms_db_criteria_Item;
-use icms_module_Object;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\Module\Install\ConfigSetupStep as InstallConfigSetupStep;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 
@@ -14,11 +14,11 @@ class ConfigSetupStep extends InstallConfigSetupStep
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		// first delete all config entries
 		$config_handler = icms::handler('icms_config');
-		$configs = $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
+		$configs = $config_handler->getConfigs(new CriteriaItem('conf_modid', $module->getVar('mid')));
 		$confcount = count($configs);
 		$config_delng = array();
 		if ($confcount > 0) {

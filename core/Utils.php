@@ -11,7 +11,7 @@ namespace ImpressCMS\Core;
  */
 
 /**
- * icms_Utils class
+ * Utils class
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -26,8 +26,8 @@ class Utils {
 	 * @return   array     array of mimetypes
 	 */
 	static public function mimetypes() {
-		return array(
-			 "hqx"		=> "application/mac-binhex40",
+		return [
+			 'hqx' => 'application/mac-binhex40',
 			 "doc"		=> "application/msword",
 			 "dot"		=> "application/msword",
 			 "bin"		=> "application/octet-stream",
@@ -127,7 +127,7 @@ class Utils {
 			 "mov"		=> "video/quicktime",
 			 "avi"		=> "video/x-msvideo",
 			 "mp4"		=> "video/mp4"
-		);
+		];
 	}
 }
 

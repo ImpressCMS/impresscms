@@ -395,7 +395,7 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 	}
 
 	/**
-	 * Save a icms_view_block_Object Object
+	 * Save a Block
 	 *
 	 * Overwrited Method
 	 *

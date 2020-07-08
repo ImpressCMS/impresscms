@@ -4,8 +4,8 @@
 namespace ImpressCMS\Core\SetupSteps\Module\Uninstall;
 
 use icms;
-use icms_db_criteria_Item;
-use icms_module_Object;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 use function icms_conv_nr2local;
@@ -16,13 +16,13 @@ class ConfigSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		if ($module->getVar('hasconfig') == 0 && $module->getVar('hascomments') == 0) {
 			return true;
 		}
 		$config_handler = icms::handler('icms_config');
-		$configs = $config_handler->getConfigs(new icms_db_criteria_Item('conf_modid', $module->getVar('mid')));
+		$configs = $config_handler->getConfigs(new CriteriaItem('conf_modid', $module->getVar('mid')));
 		$confcount = count($configs);
 		if ($confcount > 0) {
 			return true;

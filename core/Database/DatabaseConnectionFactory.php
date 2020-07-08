@@ -42,7 +42,7 @@ class DatabaseConnectionFactory
 {
 
 	/**
-	 * Just making icms_db_Factory constructor private.
+	 * Just making DatabaseConnectionFactory constructor private.
 	 */
 	private function __construct()
 	{

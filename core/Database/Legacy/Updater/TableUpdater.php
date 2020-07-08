@@ -79,7 +79,7 @@ class TableUpdater {
 	/**
 	 * xoopsDB database object
 	 *
-	 * @var \icms_db_legacy_IDatabase
+	 * @var \ImpressCMS\Core\Database\LegacyDatabaseConnectionInterface
 	 */
 	var $db;
 
@@ -246,7 +246,7 @@ class TableUpdater {
 	 *
 	 * @param string $fieldname Name of the field
 	 * @param string $fieldvalue Value to write
-	 * @param \icms_db_criteria_Element $criteria Criteria
+	 * @param CriteriaElement $criteria Criteria
 	 * @param bool $fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
 	 */
 	function addUpdateAll($fieldname, $fieldvalue, $criteria, $fieldvalueIsOperation) {
@@ -260,7 +260,7 @@ class TableUpdater {
 	/**
 	 * Add item to be updated on the the table via the UpdateAll method
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria
+	 * @param CriteriaElement $criteria Criteria
 	 *
 	 * @return void
 	 */
@@ -451,10 +451,6 @@ class TableUpdater {
 	/**
 	 * Change a value for objects with a certain criteria
 	 *
-	 * @param   string  $fieldname  Name of the field
-	 * @param   string  $fieldvalue Value to write
-	 * @param \icms_db_criteria_Element $criteria Criteria
-	 *
 	 * @return  bool
 	 */
 	function updateAll() {
@@ -504,7 +500,6 @@ class TableUpdater {
 	/**
 	 * delete all objects meeting the conditions
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria with conditions to meet
 	 * @return bool
 	 */
 	function deleteAll() {

@@ -175,7 +175,7 @@ class Controller {
 						$uploaderObj->setTargetFileName(time() . "_" . $uploaderObj->getMediaName());
 						if ($uploaderObj->upload()) {
 							$uploaderResult = $uploaderResult && true;
-							// Find the related field in the icms_ipf_Object
+							// Find the related field in the \ImpressCMS\Core\IPF\AbstractModel
 							$related_field = str_replace('upload_', '', $name);
 							$uploadedArray[] = $related_field;
 							// if it's a richfile
@@ -326,9 +326,10 @@ class Controller {
 
 	/**
 	 *
-	 * @param	bool	$debug
-	 * @param	bool	$xparam
-	 * @see		storeFromDefaultForm
+	 * @param bool $debug
+	 * @param bool $xparam
+	 * @return bool
+	 * @see        storeFromDefaultForm
 	 */
 	public function &storeicms_ipf_Object($debug = false, $xparam = false) {
 		$ret = & $this->storeFromDefaultForm('', '', null, $debug, $xparam);
@@ -339,8 +340,10 @@ class Controller {
 	/**
 	 * Handles deletion of an object which keyid is passed as a GET param
 	 *
-	 * @param string $redir_page redirect page after deleting the object
-	 * @return bool
+	 * @param bool $confirm_msg
+	 * @param string $op
+	 * @param bool $userSide
+	 * @return void
 	 */
 	public function handleObjectDeletion($confirm_msg = false, $op = 'del', $userSide = false) {
 		$objectid = (isset($_REQUEST[$this->handler->keyName]))?(int) $_REQUEST[$this->handler->keyName]:0;

@@ -5,7 +5,7 @@ namespace ImpressCMS\Core\SetupSteps\Module\Uninstall;
 
 
 use icms;
-use icms_module_Object;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 use function icms_conv_nr2local;
@@ -16,7 +16,7 @@ class BlockSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$icms_block_handler = icms::handler('icms_view_block');
 		$block_arr = $icms_block_handler->getByModule($module->getVar('mid'));

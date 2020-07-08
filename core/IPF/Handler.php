@@ -1,6 +1,6 @@
 <?php
 /**
- * icms_ipf_Handler
+ * Handler
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of derived class objects as well as some basic operations inherant to objects manipulation
@@ -211,7 +211,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * Constructor - called from child classes
 	 *
-	 * @param icms_db_IConnection $db Database object
+	 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db Database object
 	 * @param string $itemname Object to be managed
 	 * @param string $keyname Name of the table key that uniquely identify each object
 	 * @param string $idenfierName Name of the field which properly identify the object
@@ -354,7 +354,7 @@ class Handler extends ObjectHandler {
 	 *
 	 * @deprecated Use getObjects() instead. Since 2.0
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
 	 *
@@ -369,7 +369,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * retrieve objects from the database
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
 	 *
@@ -657,7 +657,7 @@ class Handler extends ObjectHandler {
 	 * @param string|float|int $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
 	 *
-	 * @return icms_ipf_Object|false
+	 * @return \ImpressCMS\Core\IPF\AbstractModel|false
 	 */
 	public function &getD($id, $as_object = true)
 	{
@@ -672,7 +672,7 @@ class Handler extends ObjectHandler {
 	 * @param string|int|float $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
 	 *
-	 * @return icms_ipf_Object|false
+	 * @return \ImpressCMS\Core\IPF\AbstractModel|false
 	 */
 	public function &get($id, $as_object = true, $debug = false, $criteria = false)
 	{
@@ -724,7 +724,7 @@ class Handler extends ObjectHandler {
 	 *
 	 * @param bool $isNew Flag the new objects as "new"?
 	 *
-	 * @return icms_ipf_Object
+	 * @return \ImpressCMS\Core\IPF\AbstractModel
 	 */
 	public function &create($isNew = true)
 	{
@@ -760,7 +760,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria conditions to be met
 	 * @param int   $limit      Max number of objects to fetch
 	 * @param int   $start      Which record to start at
 	 *
@@ -775,7 +775,7 @@ class Handler extends ObjectHandler {
 	 *
 	 * @param string $keyName  Key name
 	 * @param string $keyValue Key value
-	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria conditions to be met
 	 * @param int   $limit     Max number of objects to fetch
 	 * @param int   $start     Which record to start at
 	 * @param bool $debug Debug mode?
@@ -1184,7 +1184,7 @@ class Handler extends ObjectHandler {
 	 * query the database with the constructed $criteria object
 	 *
 	 * @param string $sql The SQL Query
-	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria conditions to be met
 	 * @param bool $force Force the query?
 	 * @param bool $debug Turn Debug on?
 	 *
@@ -1226,7 +1226,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * count objects matching a condition
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria to match
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria to match
 	 * @return int count of objects
 	 */
 	public function getCount($criteria = null) {
@@ -1288,7 +1288,8 @@ class Handler extends ObjectHandler {
 	/**
 	 * Build an array containing all the ids of an array of objects as array
 	 *
-	 * @param array $objectsAsArray array of icms_ipf_Object
+	 * @param \ImpressCMS\Core\IPF\AbstractModel[] $objectsAsArray array of \ImpressCMS\Core\IPF\AbstractModel
+	 * @return array
 	 */
 	public function getIdsFromObjectsAsArray($objectsAsArray) {
 		$ret = array();
@@ -1303,7 +1304,7 @@ class Handler extends ObjectHandler {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param \icms_db_criteria_Element $criteria Criteria
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria
 	 *
 	 * @return  bool
 	 * */
@@ -1334,7 +1335,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * delete all objects meeting the conditions
 	 *
-	 * @param \icms_db_criteria_Element $criteria Criteria with conditions to meet
+	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria with conditions to meet
 	 * @param bool $quick Do not load object on deletion?
 	 *
 	 * @return bool

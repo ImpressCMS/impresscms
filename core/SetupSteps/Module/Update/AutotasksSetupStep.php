@@ -3,9 +3,9 @@
 
 namespace ImpressCMS\Core\SetupSteps\Module\Update;
 
-use icms_db_criteria_Compo;
-use icms_db_criteria_Item;
-use icms_module_Object;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 use mod_system_Autotasks;
@@ -17,7 +17,7 @@ class AutotasksSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		// add module specific tasks to system autotasks list
 		$atasks = $module->getInfo('autotasks');
@@ -25,8 +25,8 @@ class AutotasksSetupStep implements SetupStepInterface
 		if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
 			$output->info(_MD_AM_AUTOTASK_UPDATE);
 			$output->incrIndent();
-			$criteria = new icms_db_criteria_Compo();
-			$criteria->add(new icms_db_criteria_Item('sat_type', 'addon/' . $module->getInfo('dirname')));
+			$criteria = new CriteriaCompo();
+			$criteria->add(new CriteriaItem('sat_type', 'addon/' . $module->getInfo('dirname')));
 			$items_atasks = $atasks_handler->getObjects($criteria, false);
 			foreach ($items_atasks as $task) {
 				$taskID = (int)$task->getVar('sat_addon_id');

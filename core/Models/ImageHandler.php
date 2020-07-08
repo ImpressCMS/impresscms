@@ -131,7 +131,7 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 	 *
 	 * @param int|null $imgcat_id Image category ID
 	 * @param bool|null|int $image_display List only displayed images?
-	 * @param int $notinuse Not use param (only added for fixing Declaration of icms_image_Handler::getList($imgcat_id, $image_display = NULL, $notinuse1 = 0, $debug = false) should be compatible with icms_ipf_Handler::getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) error)
+	 * @param int $notinuse Not use param (only added for fixing Declaration of icms_image_Handler::getList($imgcat_id, $image_display = NULL, $notinuse1 = 0, $debug = false) should be compatible with Handler::getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) error)
 	 * @param bool $debug Enable debug mode?
 	 *
 	 * @return array Array of <a href='psi_element://icms_image_Object'>icms_image_Object</a> objects

@@ -5,7 +5,7 @@ namespace ImpressCMS\Core\SetupSteps\Module\Uninstall;
 
 
 use icms;
-use icms_module_Object;
+use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 
@@ -15,7 +15,7 @@ class CommentsSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		if (!$module->getVar('hascomments')) {
 			return true;
