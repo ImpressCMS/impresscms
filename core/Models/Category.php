@@ -8,7 +8,7 @@
  * @author	marcan <marcan@impresscms.org>
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
-namespace ImpressCMS\Core\IPF\Category;
+namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\IPF\AbstractSEOModel;
 use ImpressCMS\Core\IPF\Controller;

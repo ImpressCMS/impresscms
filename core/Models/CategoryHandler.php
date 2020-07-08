@@ -8,7 +8,7 @@
  * @author	marcan <marcan@impresscms.org>
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
-namespace ImpressCMS\Core\IPF\Category;
+namespace ImpressCMS\Core\Models;
 
 /**
  * Provides data access mechanisms to the icms_ipf_category_Object object
