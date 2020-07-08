@@ -37,8 +37,8 @@
 
 namespace ImpressCMS\Core\Member;
 
-use ImpressCMS\Core\Member\Group\GroupHandler;
-use ImpressCMS\Core\Member\Group\GroupMembershipHandler;
+use ImpressCMS\Core\Models\GroupHandler;
+use ImpressCMS\Core\Models\GroupMembershipHandler;
 use ImpressCMS\Core\Password;
 
 /**

@@ -35,7 +35,7 @@
  * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  */
 
-namespace ImpressCMS\Core\Member\Group;
+namespace ImpressCMS\Core\Models;
 
 /**
  * Group permission handler class.

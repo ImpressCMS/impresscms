@@ -7,7 +7,7 @@
  * @author	Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Member\Group;
+namespace ImpressCMS\Core\Models;
 
 /**
  * membership of a user in a group

@@ -28,70 +28,36 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Manage memberships
+ * Manage groups
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
- * @author	Kazumi Ono (aka onokazo)
  */
 
-namespace ImpressCMS\Core\Member\Group;
+namespace ImpressCMS\Core\Models;
 
 /**
- * Group membership handler class. (Singleton)
+ * a group of users
  *
- * This class is responsible for providing data access mechanisms to the data source
- * of group membership class objects.
+ * @author	Kazumi Ono <onokazu@xoops.org>
+ * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package	ICMS\Member\Group
  *
- * @author      Kazumi Ono <onokazu@xoops.org>
- * @package	ICMS\Member\Group\Membership
+ * @property int     $groupid        Group ID
+ * @property string  $name           Name
+ * @property string  $description    Description
+ * @property string  $group_type     Type
  */
-class GroupMembershipHandler extends \ImpressCMS\Core\IPF\Handler {
-
-		public function __construct(&$db) {
-			parent::__construct($db, 'member_group_membership', 'linkid', 'groupid', 'uid', 'icms', 'groups_users_link', 'linkid');
-		}
-
+class Group extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
-	 * retrieve groups for a user
-	 *
-	 * @param int $uid ID of the user
-	 * @return array array of groups the user belongs to
+	 * constructor
 	 */
-	public function getGroupsByUser($uid) {
-		$ret = array();
-		$sql = "SELECT groupid FROM " . \icms::$xoopsDB->prefix('groups_users_link')
-			. " WHERE uid='" . (int) $uid . "'";
-		$result = \icms::$xoopsDB->query($sql);
-		if (!$result) {
-			return $ret;
-		}
-		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
-			$ret[] = $myrow['groupid'];
-		}
-		return $ret;
-	}
+	public function __construct(&$handler, $data = array()) {
+		$this->initVar('groupid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('name', self::DTYPE_STRING, null, true, 50);
+		$this->initVar('description', self::DTYPE_STRING, null, false);
+		$this->initVar('group_type', self::DTYPE_STRING, null, false, 10);
 
-	/**
-	 * retrieve users belonging to a group
-	 *
-	 * @param int $groupid ID of the group
-	 * @param int $limit number of entries to return
-	 * @param int $start offset of first entry to return
-	 * @return array array of users belonging to the group
-	 */
-	public function getUsersByGroup($groupid, $limit = 0, $start = 0) {
-		$ret = array();
-		$sql = "SELECT uid FROM " . \icms::$xoopsDB->prefix('groups_users_link')
-			. " WHERE groupid='" . (int) $groupid . "'";
-		$result = \icms::$xoopsDB->query($sql, $limit, $start);
-		if (!$result) {
-			return $ret;
-		}
-		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
-			$ret[] = $myrow['uid'];
-		}
-		return $ret;
+                parent::__construct($handler, $data);
 	}
 }
-
