@@ -7,7 +7,7 @@
  * @since	1.0
  */
 
-namespace ImpressCMS\Core\View\Block;
+namespace ImpressCMS\Core\Models;
 
 /**
  * Block position

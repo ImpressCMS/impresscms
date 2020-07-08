@@ -12,7 +12,7 @@
 
 /* This may be loaded by other modules - and not just through the cpanel */
 
-namespace ImpressCMS\Core\View\Block;
+namespace ImpressCMS\Core\Models;
 
 /**
  * icms_view_block_position_Handler

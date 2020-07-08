@@ -36,7 +36,7 @@
  * @author    Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
-namespace ImpressCMS\Core\View\Block;
+namespace ImpressCMS\Core\Models;
 
 /**
  * ImpressCMS Core Block Object Class
