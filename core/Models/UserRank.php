@@ -10,7 +10,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Member\str;
+use ImpressCMS\Core\Facades\str;
 
 /**
  * Ranks to assign members

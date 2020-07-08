@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\IPF;
 
-use ImpressCMS\Core\Member\Member;
+use ImpressCMS\Core\Facades\Member;
 
 /**
  * Member handler class.

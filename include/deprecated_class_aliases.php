@@ -160,7 +160,7 @@ return [
 	'icms_member_rank_Object' => \ImpressCMS\Core\Models\UserRank::class,
 	'icms_member_user_Handler' => \ImpressCMS\Core\Models\UserHandler::class,
 	'icms_member_user_Object' => \ImpressCMS\Core\Models\User::class,
-	'icms_member_Handler' => \ImpressCMS\Core\Member\Member::class,
+	'icms_member_Handler' => \ImpressCMS\Core\Facades\Member::class,
 	'icms_messaging_EmailHandler' => \ImpressCMS\Core\Messaging\Mailer::class,
 	'icms_messaging_Handler' => \ImpressCMS\Core\Messaging\MailHandler::class,
 	'icms_module_Handler' => \ImpressCMS\Core\Models\ModuleHandler::class,

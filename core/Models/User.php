@@ -37,7 +37,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Member\Aura;
+use ImpressCMS\Core\Facades\Aura;
 
 /**
  * Class for users

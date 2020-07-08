@@ -37,9 +37,9 @@
 namespace ImpressCMS\Core\Models;
 
 
-use ImpressCMS\Core\Member\Exception;
-use ImpressCMS\Core\Member\icms_db_criteria_Element;
-use ImpressCMS\Core\Member\the;
+use ImpressCMS\Core\Facades\Exception;
+use ImpressCMS\Core\Facades\icms_db_criteria_Element;
+use ImpressCMS\Core\Facades\the;
 use ImpressCMS\Core\StopSpammer;
 
 include_once ICMS_INCLUDE_PATH . '/notification_constants.php';

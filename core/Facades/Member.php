@@ -35,7 +35,7 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-namespace ImpressCMS\Core\Member;
+namespace ImpressCMS\Core\Facades;
 
 use ImpressCMS\Core\Models\GroupHandler;
 use ImpressCMS\Core\Models\GroupMembershipHandler;
