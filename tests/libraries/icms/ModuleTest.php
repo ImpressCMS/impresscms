@@ -14,8 +14,8 @@ class ModuleTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
         foreach ([
-                'icms_module_Handler' => '\ImpressCMS\IPF\Handler',
-                'icms_module_Object' => '\ImpressCMS\IPF\BaseModel'
+                'icms_module_Handler' => '\ImpressCMS\Core\IPF\Handler',
+                'icms_module_Object' => '\ImpressCMS\Core\IPF\AbstractModel'
             ] as $class => $must_be_instance_of) {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {

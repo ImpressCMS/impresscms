@@ -25,7 +25,7 @@ use ImpressCMS\Core\Models\UserHandler;
  *
  * @property string $name       Name
  */
-class mod_system_Rating extends \ImpressCMS\IPF\BaseModel {
+class mod_system_Rating extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/** */
 	public $_modulePlugin = false;

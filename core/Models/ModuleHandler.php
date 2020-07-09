@@ -37,9 +37,17 @@
 
 namespace ImpressCMS\Core\Models;
 
+use icms;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Database\Legacy\Updater\TableUpdater;
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Member;
+use ImpressCMS\Core\Filesystem;
+use ImpressCMS\Core\IPF\Handler;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
+use ImpressCMS\Core\View\Template;
 
 /**
  * Module handler class.
@@ -52,7 +60,7 @@ use ImpressCMS\Core\SetupSteps\SetupStepInterface;
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
 class ModuleHandler
-	extends \ImpressCMS\Core\IPF\Handler
+	extends Handler
 {
 
 	/**
@@ -81,7 +89,7 @@ class ModuleHandler
 	static public function getAvailable()
 	{
 		$cleanList = array();
-		$dirtyList = \ImpressCMS\Core\Filesystem::getDirList(ICMS_MODULES_PATH . '/');
+		$dirtyList = Filesystem::getDirList(ICMS_MODULES_PATH . '/');
 		foreach ($dirtyList as $item) {
 			if (file_exists(ICMS_MODULES_PATH . '/' . $item . '/icms_version.php')) {
 				$cleanList[$item] = $item;
@@ -102,8 +110,8 @@ class ModuleHandler
 	 */
 	static public function getActive()
 	{
-		$module_handler = new self(\icms::$xoopsDB);
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1);
+		$module_handler = new self(icms::$xoopsDB);
+		$criteria = new CriteriaItem('isactive', 1);
 		return $module_handler->getList($criteria, true);
 	}
 
@@ -115,20 +123,20 @@ class ModuleHandler
 	 */
 	static public function checkModuleAccess($module, $inAdmin = false)
 	{
-		if ($inAdmin && !\icms::$user) {
+		if ($inAdmin && !icms::$user) {
 			return false;
 		}
 		/* @var $perm_handler GroupPermHandler */
-		$perm_handler = \icms::handler('icms_member_groupperm');
+		$perm_handler = icms::handler('icms_member_groupperm');
 		if ($inAdmin) {
 			if (!$module) {
 				// We are in /admin.php
-				return \icms::$user->isAdmin(-1);
+				return icms::$user->isAdmin(-1);
 			} else {
-				return $perm_handler->checkRight('module_admin', $module->mid, \icms::$user->getGroups());
+				return $perm_handler->checkRight('module_admin', $module->mid, icms::$user->getGroups());
 			}
 		} elseif ($module) {
-			$groups = (\icms::$user) ? \icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+			$groups = (icms::$user) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
 			return $perm_handler->checkRight('module_read', $module->mid, $groups);
 		}
 		// We are in /something.php: let the page handle permissions
@@ -153,7 +161,7 @@ class ModuleHandler
 	{
 		$dirname = trim($dirname);
 
-		if ($this->getCount(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('dirname', $dirname)) > 0) {
+		if ($this->getCount(new CriteriaItem('dirname', $dirname)) > 0) {
 			$output->fatal(_MD_AM_FAILINS, $dirname);
 			$output->error(_MD_AM_ALEXISTS, $dirname);
 			return false;
@@ -172,7 +180,7 @@ class ModuleHandler
 		/**
 		 * @var SetupStepInterface[] $steps
 		 */
-		$steps = (array)\icms::getInstance()->get('setup_step.module.install');
+		$steps = (array)icms::getInstance()->get('setup_step.module.install');
 		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
 			return $stepA->getPriority() > $stepB->getPriority();
 		});
@@ -215,7 +223,7 @@ class ModuleHandler
 		}
 
 		$module->registerClassPath();
-		\ImpressCMS\Core\View\Template::template_clear_module_cache($module->mid);
+		Template::template_clear_module_cache($module->mid);
 		if ($module->dirname == 'system') {
 			$output->fatal(
 				_MD_AM_FAILUNINS, $module->name
@@ -235,7 +243,7 @@ class ModuleHandler
 		/**
 		 * @var Member $member_handler
 		 */
-		$member_handler = \icms::handler('icms_member');
+		$member_handler = icms::handler('icms_member');
 		$grps = $member_handler->getGroupList();
 		foreach ($grps as $k => $v) {
 			$stararr = explode('-', $icmsConfig['startpage'][$k]);
@@ -260,7 +268,7 @@ class ModuleHandler
 		/**
 		 * @var SetupStepInterface[] $steps
 		 */
-		$steps = (array)\icms::getInstance()->get('setup_step.module.uninstall');
+		$steps = (array)icms::getInstance()->get('setup_step.module.uninstall');
 		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
 			return $stepA->getPriority() > $stepB->getPriority();
 		});
@@ -307,7 +315,7 @@ class ModuleHandler
 	public function getByDirname($dirname, $loadConfig = false)
 	{
 		//if (!($module = $this->getFromCache('dirname', $dirname))) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('dirname', trim($dirname));
+		$criteria = new CriteriaItem('dirname', trim($dirname));
 		$criteria->setLimit(1);
 		$objs = $this->getObjects($criteria);
 		if (isset($objs[0])) {
@@ -338,7 +346,7 @@ class ModuleHandler
 			|| $module->getVar("hascomments") == 1
 			|| $module->getVar("hasnotification") == 1
 		) {
-			$module->config = \icms::$config->getConfigsByCat(0, $module->getVar("mid"));
+			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
 		}
 		return true;
 	}
@@ -431,7 +439,10 @@ class ModuleHandler
 	public function update($dirname, OutputDecorator $output)
 	{
 		$dirname = trim($dirname);
-		$module_handler = \icms::handler('icms_module');
+		/**
+		 * @var ModuleHandler $module_handler
+		 */
+		$module_handler = icms::handler('icms_module');
 		$module = $module_handler->getByDirname($dirname);
 		if (!$module) {
 			$output->fatal(_MD_AM_UPDATE_FAIL, $module->name);
@@ -442,7 +453,7 @@ class ModuleHandler
 		$prev_version = $module->version;
 		$prev_dbversion = $module->dbversion;
 
-		\ImpressCMS\Core\View\Template::template_clear_module_cache($module->mid);
+		Template::template_clear_module_cache($module->mid);
 		// we dont want to change the module name set by admin
 		$temp_name = $module->name;
 		$module->loadInfoAsVar($dirname);
@@ -452,7 +463,7 @@ class ModuleHandler
 		 * ensure to only update those fields that are currently available in the database
 		 * this is required to allow structural updates for the module table
 		 */
-		$table = new \ImpressCMS\Core\Database\Legacy\Updater\TableUpdater('modules');
+		$table = new TableUpdater('modules');
 		foreach (array_keys($module->vars) as $k) {
 			if (!$table->fieldExists($k)) {
 				unset($module->vars[$k]);
@@ -469,7 +480,7 @@ class ModuleHandler
 		/**
 		 * @var SetupStepInterface[] $steps
 		 */
-		$steps = (array)\icms::getInstance()->get('setup_step.module.update');
+		$steps = (array)icms::getInstance()->get('setup_step.module.update');
 		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
 			return $stepA->getPriority() > $stepB->getPriority();
 		});
@@ -494,7 +505,7 @@ class ModuleHandler
 	public function activate($mid, OutputDecorator $output)
 	{
 		$module = $this->get($mid);
-		\ImpressCMS\Core\View\Template::template_clear_module_cache($module->mid);
+		Template::template_clear_module_cache($module->mid);
 		$module->setVar('isactive', 1);
 		if (!$module->store()) {
 			$output->fatal(_MD_AM_FAILACT . ' ' . _MD_AM_ERRORSC);
@@ -546,7 +557,7 @@ class ModuleHandler
 		global $icmsConfig;
 
 		$module = $this->get($mid);
-		\ImpressCMS\Core\View\Template::template_clear_module_cache($mid);
+		Template::template_clear_module_cache($mid);
 		$module->setVar('isactive', 0);
 		if ($module->dirname == "system") {
 			$output->fatal(
@@ -563,7 +574,7 @@ class ModuleHandler
 			);
 			return false;
 		} else {
-			$member_handler = \icms::handler('icms_member');
+			$member_handler = icms::handler('icms_member');
 			$grps = $member_handler->getGroupList();
 			foreach ($grps as $k => $v) {
 				$stararr = explode('-', $icmsConfig['startpage'][$k]);
@@ -629,14 +640,14 @@ class ModuleHandler
 			$output->fatal(
 				_MD_AM_FAILORDER
 				. ' ' . _MD_AM_ERRORSC,
-				\ImpressCMS\Core\DataFilter::stripSlashesGPC($name)
+				DataFilter::stripSlashesGPC($name)
 			);
 			$output->msg(
 				$module->getHtmlErrors()
 			);
 			return false;
 		}
-		$output->success(_MD_AM_OKORDER, \ImpressCMS\Core\DataFilter::stripSlashesGPC($name));
+		$output->success(_MD_AM_OKORDER, DataFilter::stripSlashesGPC($name));
 		return true;
 	}
 
@@ -658,9 +669,9 @@ class ModuleHandler
 	 */
 	public function getAdminMenuItems()
 	{
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('hasadmin', 1));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1));
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('hasadmin', 1));
+		$criteria->add(new CriteriaItem('isactive', 1));
 		$criteria->setOrder('ASC');
 		$criteria->setSort('name');
 		$modules = $this->getObjects($criteria);

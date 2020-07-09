@@ -14,14 +14,14 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
         foreach ([
-                'icms_image_category_Handler' => '\ImpressCMS\IPF\Handler',
-                'icms_image_category_Object' => '\ImpressCMS\IPF\BaseModel',
-                'icms_image_set_Handler' => '\ImpressCMS\IPF\Handler',
-                'icms_image_set_Object' => '\ImpressCMS\IPF\BaseModel',
-                'icms_image_Handler' => '\ImpressCMS\IPF\Handler',
-                'icms_image_Object' => '\ImpressCMS\IPF\BaseModel',
-                'icms_image_body_Handler' => '\ImpressCMS\IPF\Handler',
-                'icms_image_body_Object' => '\ImpressCMS\IPF\BaseModel'
+                'icms_image_category_Handler' => '\ImpressCMS\Core\IPF\Handler',
+                'icms_image_category_Object' => '\ImpressCMS\Core\IPF\AbstractModel',
+                'icms_image_set_Handler' => '\ImpressCMS\Core\IPF\Handler',
+                'icms_image_set_Object' => '\ImpressCMS\Core\IPF\AbstractModel',
+                'icms_image_Handler' => '\ImpressCMS\Core\IPF\Handler',
+                'icms_image_Object' => '\ImpressCMS\Core\IPF\AbstractModel',
+                'icms_image_body_Handler' => '\ImpressCMS\Core\IPF\Handler',
+                'icms_image_body_Object' => '\ImpressCMS\Core\IPF\AbstractModel'
             ] as $class => $must_be_instance_of) {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {

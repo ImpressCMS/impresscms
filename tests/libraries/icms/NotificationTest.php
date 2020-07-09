@@ -13,7 +13,7 @@ class NotificationTest extends \PHPUnit_Framework_TestCase {
      * Test if icms_core_DataFilter is available
      */
     public function testAvailability() {
-        foreach (['Handler' => '\ImpressCMS\IPF\Handler', 'Object' => '\ImpressCMS\IPF\BaseModel'] as $type => $instanecOfType) {
+        foreach (['Handler' => '\ImpressCMS\Core\IPF\Handler', 'Object' => '\ImpressCMS\Core\IPF\AbstractModel'] as $type => $instanecOfType) {
                $class = 'icms_data_notification_' . $type;
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 
