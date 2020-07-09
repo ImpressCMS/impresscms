@@ -377,6 +377,8 @@ class Handler extends ObjectHandler {
 	 * @param CriteriaElement $criteria Criteria conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
+	 * @param bool $sql
+	 * @param bool $debug
 	 *
 	 * @return array
 	 */
@@ -386,7 +388,7 @@ class Handler extends ObjectHandler {
 		if ($this->generalSQL) {
 			$sql = $this->generalSQL;
 		} elseif (!$sql) {
-			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM ' . $this->table . " AS " . $this->_itemname;
+			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM ' . $this->table . ' AS ' . $this->_itemname;
 		}
 
 		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {

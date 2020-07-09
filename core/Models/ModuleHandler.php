@@ -308,7 +308,6 @@ class ModuleHandler
 	 *
 	 * @param string $dirname
 	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
-	 * @param bool $loadConfig set to TRUE in case you want to load the module config in addition
 	 * @return    Module|false
 	 * @todo Make caching work
 	 */
@@ -318,11 +317,7 @@ class ModuleHandler
 		$criteria = new CriteriaItem('dirname', trim($dirname));
 		$criteria->setLimit(1);
 		$objs = $this->getObjects($criteria);
-		if (isset($objs[0])) {
-			$module = $objs[0];
-		} else {
-			$module = null;
-		}
+		$module = $objs[0] ?? null;
 		//}
 		if ($module && $loadConfig) {
 			$this->loadConfig($module);
@@ -341,12 +336,12 @@ class ModuleHandler
 		if ($module->config !== null) {
 			return true;
 		}
-		icms_loadLanguageFile($module->getVar("dirname"), "main");
-		if ($module->getVar("hasconfig") == 1
-			|| $module->getVar("hascomments") == 1
-			|| $module->getVar("hasnotification") == 1
+		icms_loadLanguageFile($module->getVar('dirname'), 'main');
+		if ($module->getVar('hasconfig') == 1
+			|| $module->getVar('hascomments') == 1
+			|| $module->getVar('hasnotification') == 1
 		) {
-			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
+			$module->config = icms::$config->getConfigsByCat(0, $module->getVar('mid'));
 		}
 		return true;
 	}

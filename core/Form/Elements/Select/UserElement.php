@@ -137,7 +137,7 @@ class UserElement extends TrayElement {
 		$action_tray = new TrayElement("", " | ");
 		$action_tray->addElement(new LabelElement('',
 			"<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name
-			. ($multiple?"[]":"") . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>"
+			. ($multiple?"[]":"") . '\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}} return false;\'>"'
 			. _MA_USER_REMOVE . "</a>"));
 		$action_tray->addElement(new LabelElement('',
 			"<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL
