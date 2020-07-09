@@ -32,6 +32,7 @@ namespace ImpressCMS\Core\Form\Elements\Select;
 
 use ImpressCMS\Core\Form\Elements\SelectElement;
 use ImpressCMS\Core\Form\Elements\TrayElement;
+use ImpressCMS\Core\Plugins\EditorHandler;
 
 /**
  * Creates a form attribute which is able to select an editor
@@ -59,7 +60,7 @@ class EditorElement extends TrayElement {
 		}
 
 		parent::__construct(_SELECT);
-		$edtlist = \ImpressCMS\Core\Plugins\EditorHandler::getListByType();
+		$edtlist = EditorHandler::getListByType();
 		$option_select = new SelectElement('', $name, $value);
 		$querys = preg_replace('/editor=(.*?)&/', '', $_SERVER['QUERY_STRING']);
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){

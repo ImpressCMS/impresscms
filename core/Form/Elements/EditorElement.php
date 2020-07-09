@@ -36,6 +36,8 @@
  */
 namespace ImpressCMS\Core\Form\Elements;
 
+use ImpressCMS\Core\Plugins\EditorHandler;
+
 /**
  * XoopsEditor hanlder
  *
@@ -61,7 +63,7 @@ class EditorElement extends TextareaElement {
 	 */
 	function __construct($caption, $name, $editor_configs = null, $noHtml = false, $OnFailure = "") {
 		parent::__construct($caption, $editor_configs["name"]);
-		$editor_handler = \ImpressCMS\Core\Plugins\EditorHandler::getInstance();
+		$editor_handler = EditorHandler::getInstance();
 		$this->editor = & $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
 	}
 

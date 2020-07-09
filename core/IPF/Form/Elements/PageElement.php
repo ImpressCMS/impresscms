@@ -1,6 +1,13 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use icms;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Form\Elements\LabelElement;
+use ImpressCMS\Core\Form\Elements\TrayElement;
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Form control creating a page element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
@@ -10,16 +17,16 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class PageElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
+class PageElement extends TrayElement {
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
 		icms_loadLanguageFile('system', 'blocks', true);
 		parent::__construct(_AM_VISIBLEIN, ' ', $key . '_visiblein_tray');
-		$visible_label = new \ImpressCMS\Core\Form\Elements\LabelElement('', '<select class="form-control" name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->getVar('visiblein')) . '</select>');
+		$visible_label = new LabelElement('', '<select class="form-control" name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->getVar('visiblein')) . '</select>');
 		$this->addElement($visible_label);
 	}
 
@@ -30,19 +37,19 @@ class PageElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 	 * @return string html
 	 */
 	private function getPageSelOptions($value = null) {
-		$icms_page_handler = \icms::handler('icms_data_page');
+		$icms_page_handler = icms::handler('icms_data_page');
 		if (!is_array($value)) {
 			$value = array($value);
 		}
-		$module_handler = \icms::handler('icms_module');
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('hasmain', 1));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1));
+		$module_handler = icms::handler('icms_module');
+		$criteria = new CriteriaCompo(new CriteriaItem('hasmain', 1));
+		$criteria->add(new CriteriaItem('isactive', 1));
 		$module_list = $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module) {
 			$mods .= '<optgroup label="' . $module->getVar('name') . '">';
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_moduleid', $module->getVar('mid')));
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_status', 1));
+			$criteria = new CriteriaCompo(new CriteriaItem('page_moduleid', $module->getVar('mid')));
+			$criteria->add(new CriteriaItem('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$sel = '';
 			if (in_array($module->getVar('mid') . '-0', $value)) {
@@ -61,8 +68,8 @@ class PageElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 		}
 
 		$module = $module_handler->get(1);
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_moduleid', 1));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_status', 1));
+		$criteria = new CriteriaCompo(new CriteriaItem('page_moduleid', 1));
+		$criteria->add(new CriteriaItem('page_status', 1));
 		$pages = $icms_page_handler->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0) {

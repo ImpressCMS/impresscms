@@ -2,6 +2,7 @@
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
 use ImpressCMS\Core\Form\Elements\Select\LangElement;
+use ImpressCMS\Core\IPF\AbstractModel;
 
 /**
  * Form control creating an image upload element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
@@ -15,7 +16,7 @@ use ImpressCMS\Core\Form\Elements\Select\LangElement;
 class LanguageElement extends LangElement {
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

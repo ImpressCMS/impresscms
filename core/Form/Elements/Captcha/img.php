@@ -14,8 +14,10 @@
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-error_reporting(0);
-\icms::$logger->activated = false;
+use ImpressCMS\Core\Form\Elements\Captcha\Image;
 
-$image_handler = \icms::handler(\ImpressCMS\Core\Form\Elements\Captcha\Image::class);
+error_reporting(0);
+icms::$logger->activated = false;
+
+$image_handler = icms::handler(Image::class);
 $image_handler->loadImage();

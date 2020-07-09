@@ -10,6 +10,15 @@
 
 namespace ImpressCMS\Core\IPF;
 
+use;
+use icms;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\IPF\Form\Form;
+use ImpressCMS\Core\IPF\Form\SecureForm;
+use ImpressCMS\Core\IPF\View\ViewRow;
+use ImpressCMS\Core\IPF\View\ViewSingleObject;
 use ImpressCMS\Core\Models\File;
 use ImpressCMS\Core\Models\UrlLink;
 use ImpressCMS\Core\Textsanitizer;
@@ -97,7 +106,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 *
 	 */
 	public function accessGranted($perm_name) {
-		$icmspermissions_handler = new \ImpressCMS\Core\IPF\PermissionsDecorator($this->handler);
+		$icmspermissions_handler = new PermissionsDecorator($this->handler);
 		return $icmspermissions_handler->accessGranted($perm_name, $this->id());
 	}
 
@@ -451,10 +460,10 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param bool $cancel_js_action Cancels JS action
 	 * @param bool $captcha Needs captcha?
 	 *
-	 * @return \ImpressCMS\Core\IPF\Form\Form
+	 * @return Form
 	 */
 	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
-		return new \ImpressCMS\Core\IPF\Form\Form($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+		return new Form($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 	}
 
 	/**
@@ -467,10 +476,10 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param bool $cancel_js_action Cancels JS action
 	 * @param bool $captcha Needs captcha?
 	 *
-	 * @return \ImpressCMS\Core\IPF\Form\SecureForm
+	 * @return SecureForm
 	 */
 	public function getSecureForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
-		$form = new \ImpressCMS\Core\IPF\Form\SecureForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+		$form = new SecureForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 
 		return $form;
 	}
@@ -593,7 +602,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 			return false;
 		}
 
-		$icmspermissions_handler = new \ImpressCMS\Core\IPF\PermissionsDecorator($this->handler);
+		$icmspermissions_handler = new PermissionsDecorator($this->handler);
 		$ret = $icmspermissions_handler->getGrantedGroups($group_perm, $this->id());
 
 		if (count($ret) == 0) {
@@ -823,7 +832,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 			if ($html) {
 				return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
 			} else {
-				return \ImpressCMS\Core\DataFilter::checkVar($ret, 'text', 'output');
+				return DataFilter::checkVar($ret, 'text', 'output');
 			}
 		}
 	}
@@ -831,16 +840,16 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	/**
 	 * Returns criteria for selecting this element by id
 	 *
-	 * @return \\ImpressCMS\Core\Database\Criteria\CriteriaItem
+	 * @return \ImpressCMS\Core\Database\Criteria\CriteriaItem
 	 */
 	public function getCriteriaForSelectByID() {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria = new CriteriaCompo();
 		if (is_array($this->handler->keyName)) {
 			foreach ($this->handler->keyName as $key) {
-							$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($key, $this->getVar($key)));
+							$criteria->add(new CriteriaItem($key, $this->getVar($key)));
 			}
 		} else {
-					$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->handler->keyName, $this->getVar($this->handler->keyName)));
+					$criteria->add(new CriteriaItem($this->handler->keyName, $this->getVar($this->handler->keyName)));
 		}
 
 		return $criteria;
@@ -928,12 +937,12 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return content of the template if $fetchOnly or nothing if !$fetchOnly
 	 */
 	public function displaySingleObject($fetchOnly = false, $userSide = false, $actions = array(), $headerAsRow = true) {
-		$singleview = new \ImpressCMS\Core\IPF\View\ViewSingleObject($this, $userSide, $actions, $headerAsRow);
+		$singleview = new ViewSingleObject($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
 		foreach ($this->_vars as $key => $var) {
 			if ($key != $this->handler->keyName && $var['displayOnSingleView']) {
 				$is_header = ($key == $this->handler->identifierName);
-				$singleview->addRow(new \ImpressCMS\Core\IPF\View\ViewRow($key, false, $is_header));
+				$singleview->addRow(new ViewRow($key, false, $is_header));
 			}
 		}
 
@@ -1037,7 +1046,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return UrlLink
 	 */
 	public function getUrlLinkObj($key) {
-		$urllink_handler = \icms::handler("icms_data_urllink");
+		$urllink_handler = icms::handler("icms_data_urllink");
 
 		$urllinkid = $this->getVar($key, 'n');
 		if ($urllinkid != 0) {
@@ -1054,7 +1063,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return bool
 	 */
 	public function storeUrlLinkObj($urllinkObj) {
-		$urllink_handler = \icms::handler("icms_data_urllink");
+		$urllink_handler = icms::handler("icms_data_urllink");
 		return $urllink_handler->insert($urllinkObj);
 	}
 
@@ -1066,7 +1075,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return File
 	 */
 	function getFileObj($key) {
-		$file_handler = \icms::handler("icms_data_file");
+		$file_handler = icms::handler("icms_data_file");
 		$fileid = $this->getVar($key) != null?$this->getVar($key):0;
 		if ($fileid != 0) {
 			return $file_handler->get($fileid);
@@ -1082,7 +1091,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return bool
 	 */
 	function storeFileObj($fileObj) {
-		$file_handler = \icms::handler("icms_data_file");
+		$file_handler = icms::handler("icms_data_file");
 		return $file_handler->insert($fileObj);
 	}
 
@@ -1098,7 +1107,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	public function unserialize($serialized) {
 		$data = unserialize($serialized);
 		if ($data['handler']['module'] == 'core' || $data['handler']['module'] == 'icms') {
-			$handler = \icms::handler('icms_' . $data['handler']['itemname']);
+			$handler = icms::handler('icms_' . $data['handler']['itemname']);
 		} else {
 			$handler = icms_getModuleHandler($data['handler']['itemname'], $data['handler']['module']);
 		}

@@ -1,6 +1,9 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use icms;
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Form control creating a checkbox element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
@@ -16,7 +19,7 @@ class CheckboxElement extends \ImpressCMS\Core\Form\Elements\CheckboxElement {
 
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -44,7 +47,7 @@ class CheckboxElement extends \ImpressCMS\Core\Form\Elements\CheckboxElement {
 				if (isset($control['itemHandler'])) {
 					if (!isset($control['module'])) {
 						// Creating the specified core object handler
-						$control_handler = \icms::handler($control['itemHandler']);
+						$control_handler = icms::handler($control['itemHandler']);
 					} else {
 						$control_handler = & icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}

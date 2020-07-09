@@ -19,6 +19,8 @@
  */
 namespace ImpressCMS\Core\Form\Elements\Captcha;
 
+use icms;
+
 /**
  * Creates the captcha object
  *
@@ -138,8 +140,8 @@ class Image {
 
 		// Skip CAPTCHA for group
 		//$gperm_handler = \icms::handler('icms_member_groupperm');
-		$groups = is_object(\icms::$user)? \icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
-		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(\icms::$user)) {
+		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
 			$this->active = false;
 		} elseif ($icmsConfigCaptcha['captcha_mode'] == 'none') {
 			$this->active = false;
@@ -157,7 +159,7 @@ class Image {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = icms::getInstance()->get('session');
 		$captchaSection = $session->getSegment(Image::class);
 
 		$sessionName = $captchaSection->get('name');
@@ -166,8 +168,8 @@ class Image {
 
 		$is_valid = false;
 
-		$groups = is_object(\icms::$user)? \icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
-		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(\icms::$user)) {
+		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
 			$is_valid = true;
 		} elseif (!empty($maxAttempts) && $captchaSection->get('attempt_' . $sessionName) > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
@@ -213,7 +215,7 @@ class Image {
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::getInstance()->get('session');
+			$session = icms::getInstance()->get('session');
 			$captchaSection = $session->getSegment(__CLASS__);
 
 			$captchaSection->set('name', null);
@@ -258,7 +260,7 @@ class Image {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = icms::getInstance()->get('session');
 		$captchaSection = $session->getSegment(__CLASS__);
 
 		$captchaSection->set('name', $this->config['name']);

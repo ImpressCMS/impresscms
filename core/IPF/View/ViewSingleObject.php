@@ -10,6 +10,8 @@
 
 namespace ImpressCMS\Core\IPF\View;
 
+use ImpressCMS\Core\View\Template;
+
 /**
  * \ImpressCMS\Core\IPF\View\ViewSingleObject base class
  *
@@ -70,7 +72,7 @@ class ViewSingleObject {
 	 */
 	public function render($fetchOnly = false, $debug = false) {
 
-		$this->_tpl = new \ImpressCMS\Core\View\Template();
+		$this->_tpl = new Template();
 		$vars = $this->_object->getVars();
 		$icms_object_array = array();
 

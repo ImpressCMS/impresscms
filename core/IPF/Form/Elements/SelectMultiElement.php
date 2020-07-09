@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Form control creating a multi selectbox for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
@@ -13,7 +15,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
 class SelectMultiElement extends SelectElement {
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

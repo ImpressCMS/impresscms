@@ -1,6 +1,10 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use ImpressCMS\Core\Form\Elements\DhtmltextareaElement;
+use ImpressCMS\Core\Form\Elements\TrayElement;
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Form control creating a user signature textarea for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
@@ -10,10 +14,10 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class SignatureElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
+class SignatureElement extends TrayElement {
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -21,7 +25,7 @@ class SignatureElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 		parent::__construct($var['form_caption'], '<br /><br />', $key . '_signature_tray');
 
 		icms_loadLanguageFile('core', 'user');
-		$signature_textarea = new \ImpressCMS\Core\Form\Elements\DhtmltextareaElement('', $key, $object->getVar($key, 'e'));
+		$signature_textarea = new DhtmltextareaElement('', $key, $object->getVar($key, 'e'));
 		$this->addElement($signature_textarea);
 		$attach_checkbox = new \ImpressCMS\Core\Form\Elements\CheckboxElement('', 'attachsig', $object->getVar('attachsig', 'e'));
 		$attach_checkbox->addOption(1, _US_SHOWSIG);

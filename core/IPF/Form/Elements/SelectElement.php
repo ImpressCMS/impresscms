@@ -1,6 +1,9 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use icms;
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Form control creating a selectbox for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
@@ -15,7 +18,7 @@ class SelectElement extends \ImpressCMS\Core\Form\Elements\SelectElement {
 
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -46,9 +49,9 @@ class SelectElement extends \ImpressCMS\Core\Form\Elements\SelectElement {
 				if (isset($control['itemHandler'])) {
 					if (!isset($control['module'])) {
 						// Creating the specified core object handler
-						$control_handler = \icms::handler($control['itemHandler']);
+						$control_handler = icms::handler($control['itemHandler']);
 					} elseif ($control['module'] == 'icms') {
-						$control_handler = \icms::handler($control['module'] . '_' . $control['itemHandler']);
+						$control_handler = icms::handler($control['module'] . '_' . $control['itemHandler']);
 					} else {
 						$control_handler = & icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}

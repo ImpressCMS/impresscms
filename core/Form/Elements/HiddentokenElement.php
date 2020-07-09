@@ -35,6 +35,8 @@
 */
 namespace ImpressCMS\Core\Form\Elements;
 
+use icms;
+
 /**
  * A hidden token field
  *
@@ -52,7 +54,7 @@ class HiddentokenElement extends HiddenElement {
    */
   public function __construct($name = _CORE_TOKEN, $timeout = 0) {
 
-	  parent::__construct($name . '_REQUEST', \icms::$security->createToken($timeout, $name));
+	  parent::__construct($name . '_REQUEST', icms::$security->createToken($timeout, $name));
   }
 }
 

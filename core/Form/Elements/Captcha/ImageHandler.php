@@ -1,6 +1,10 @@
 <?php
 namespace ImpressCMS\Core\Form\Elements\Captcha;
 
+use Aura\Session\Segment;
+use icms;
+use ImpressCMS\Core\Filesystem;
+
 /**
  * Image Creation script
  * Xoops Frameworks addon
@@ -21,7 +25,7 @@ class ImageHandler {
 	/**
 	 * Captcha session section
 	 *
-	 * @var \Aura\Session\Segment
+	 * @var Segment
 	 */
 	protected $captchaSection;
 	private $code;
@@ -37,7 +41,7 @@ class ImageHandler {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = icms::getInstance()->get('session');
 		$this->captchaSection = $session->getSegment(Image::class);
 
 		if (!$this->captchaSection->get('name')) {
@@ -235,7 +239,7 @@ class ImageHandler {
 		$items = array();
 
 		$file_path = "{$name}";
-		$files = \ImpressCMS\Core\Filesystem::getFileList($file_path);
+		$files = Filesystem::getFileList($file_path);
 		foreach ($files as $item) {
 			if (empty($extension) || preg_match("/(\.{$extension})$/i", $item)) {
 				$items[] = $item;

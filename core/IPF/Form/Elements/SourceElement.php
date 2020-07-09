@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use ImpressCMS\Core\Form\Elements\TextElementarea;
+use ImpressCMS\Core\IPF\AbstractModel;
 use ImpressCMS\Core\Plugins\EditorHandler;
 
 /**
@@ -12,7 +14,7 @@ use ImpressCMS\Core\Plugins\EditorHandler;
  * @since	1.2
  * @author	MekDrop <mekdrop@gmail.com>
  */
-class SourceElement extends \ImpressCMS\Core\Form\Elements\TextElementarea {
+class SourceElement extends TextElementarea {
 	/*
 	 * Editor's class instance
 	 */
@@ -20,7 +22,7 @@ class SourceElement extends \ImpressCMS\Core\Form\Elements\TextElementarea {
 
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

@@ -2,6 +2,7 @@
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
 use ImpressCMS\Core\Form\AbstractFormElement;
+use ImpressCMS\Core\IPF\AbstractModel;
 
 /**
  * Form control creating a section in a form for an object derived from \ImpressCMS\Core\IPF\AbstractModel
@@ -29,7 +30,7 @@ class FormSectionElement extends AbstractFormElement {
 	/**
 	 * Constructor
 	 *
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel	$object	reference to targetobject
+	 * @param	AbstractModel	$object	reference to targetobject
 	 * @param	string			$key	name of the form section
 	 */
 	public function __construct($object, $key) {

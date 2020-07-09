@@ -1,6 +1,7 @@
 <?php
 namespace ImpressCMS\Core\IPF;
 
+use icms;
 use ImpressCMS\Core\File\MediaUploader;
 use ImpressCMS\Core\Message;
 use ImpressCMS\Core\Properties\AbstractProperties;
@@ -237,7 +238,7 @@ class Controller {
 
 		if ($storeResult) {
 			if ($this->handler->getPermissions()) {
-				$icmspermissions_handler = new \ImpressCMS\Core\IPF\PermissionsDecorator($this->handler);
+				$icmspermissions_handler = new PermissionsDecorator($this->handler);
 				$icmspermissions_handler->storeAllPermissionsForId($icmsObj->id());
 			}
 		}
@@ -246,7 +247,7 @@ class Controller {
 			return $icmsObj;
 		} else {
 			if (!$storeResult) {
-				redirect_header(\icms::$urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header(icms::$urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
 			} else {
 				$redirect_page = $redirect_page?$redirect_page:icms_get_page_before_form();
 				redirect_header($redirect_page, 2, $redirect_msg);
@@ -376,7 +377,7 @@ class Controller {
 						'op' => $op,
 						$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 						'confirm' => 1,
-						'redirect_page' => \icms::$urls['previouspage']
+						'redirect_page' => icms::$urls['previouspage']
 			);
 			if ($this->handler->_moduleName == 'system') {
 				$hiddens['fct'] = isset($_GET['fct'])?$_GET['fct']:false;
@@ -425,7 +426,7 @@ class Controller {
 				'op' => $op,
 				$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 				'confirm' => 1,
-				'redirect_page' => \icms::$urls['previouspage']),
+				'redirect_page' => icms::$urls['previouspage']),
 				xoops_getenv('SCRIPT_NAME'),
 				sprintf($confirm_msg,
 				$icmsObj->getVar($this->handler->identifierName)),

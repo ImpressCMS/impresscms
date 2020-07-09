@@ -1,16 +1,27 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form;
 
+use icms;
 use ImpressCMS\Core\Form\AbstractFormElement;
+use ImpressCMS\Core\Form\Elements\ButtonElement;
+use ImpressCMS\Core\Form\Elements\CheckboxElement;
 use ImpressCMS\Core\Form\Elements\ColorpickerElement;
+use ImpressCMS\Core\Form\Elements\DhtmltextareaElement;
+use ImpressCMS\Core\Form\Elements\HiddenElement;
+use ImpressCMS\Core\Form\Elements\LabelElement;
+use ImpressCMS\Core\Form\Elements\PasswordElement;
 use ImpressCMS\Core\Form\Elements\Select\CountryElement;
 use ImpressCMS\Core\Form\Elements\Select\GroupElement;
 use ImpressCMS\Core\Form\Elements\Select\TimezoneElement;
 use ImpressCMS\Core\Form\Elements\Select\UserElement;
 use ImpressCMS\Core\Form\Elements\SelectElement;
+use ImpressCMS\Core\Form\Elements\TextElementarea;
+use ImpressCMS\Core\Form\Elements\TrayElement;
 use ImpressCMS\Core\Form\ThemeForm;
+use ImpressCMS\Core\IPF\Form\Elements\FormSectionElement;
 use ImpressCMS\Core\IPF\Form\Elements\SelectMultiElement;
 use ImpressCMS\Core\View\Theme\ThemeFactory;
+use Smarty;
 
 /**
  * Form control creating an image upload element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
@@ -105,14 +116,14 @@ class Form extends ThemeForm {
 				$formElement->setExtra('disabled="disabled"');
 				$formElement->setName($key . '-readonly');
 				// Since this element is disabled, we still want to pass it's value in the form
-				$hidden = new \ImpressCMS\Core\Form\Elements\HiddenElement($key, $this->targetObject->getVar($key, 'n'));
+				$hidden = new HiddenElement($key, $this->targetObject->getVar($key, 'n'));
 				$this->addElement($hidden);
 			}
 						if (isset($var['form_dsc']) && !empty($var['form_dsc'])) {
 													$formElement->setDescription($var['form_dsc']);
 						}
 			if (isset($this->targetObject->controls[$key]['onSelect'])) {
-				$hidden = new \ImpressCMS\Core\Form\Elements\HiddenElement('changedField', false);
+				$hidden = new HiddenElement('changedField', false);
 				$this->addElement($hidden);
 				$otherExtra = isset($var['form_extra'])?$var['form_extra']:'';
 				$onchangedString = "this.form.elements.changedField.value='$key'; this.form.elements.op.value='changedField'; submit()";
@@ -149,7 +160,7 @@ class Form extends ThemeForm {
 			// need to be displayed, then we only create an hidden field
 			if ($key == $this->targetObject->handler->keyName || (isset($var['displayOnForm']) && !$var['displayOnForm'])) {
 				$val = isset($var['value'])?$var['value']:null;
-				$elementToAdd = new \ImpressCMS\Core\Form\Elements\HiddenElement($key, $val);
+				$elementToAdd = new HiddenElement($key, $val);
 				$this->addElement($elementToAdd, $key, $var, false);
 				unset($elementToAdd);
 				// If not, the we need to create the proper form control for this fields
@@ -166,7 +177,7 @@ class Form extends ThemeForm {
 								}
 
 								if ($controls[$key] === null) {
-									$elementToAdd = new \ImpressCMS\Core\Form\Elements\HiddenElement($key, isset($var['value'])?$var['value']:null);
+									$elementToAdd = new HiddenElement($key, isset($var['value'])?$var['value']:null);
 									$this->addElement($elementToAdd, $key, $var, false);
 									unset($elementToAdd);
 									continue;
@@ -281,7 +292,7 @@ class Form extends ThemeForm {
 			}
 		}
 		// Add a hidden field to store the URL of the page before this form
-		$this->addElement(new \ImpressCMS\Core\Form\Elements\HiddenElement('icms_page_before_form', icms_get_page_before_form()));
+		$this->addElement(new HiddenElement('icms_page_before_form', icms_get_page_before_form()));
 	}
 
 	/**
@@ -293,7 +304,7 @@ class Form extends ThemeForm {
 		$permissions = $this->targetObject->handler->getPermissions();
 
 		if ($permissions) {
-			$member_handler = \icms::handler('icms_member');
+			$member_handler = icms::handler('icms_member');
 			$group_list = $member_handler->getGroupList();
 			asort($group_list);
 			foreach ($permissions as $permission) {
@@ -322,16 +333,16 @@ class Form extends ThemeForm {
 	 * @param	string  $submit_button_caption  caption of the button
 	 */
 	private function createButtons($form_name, $form_caption, $submit_button_caption = false) {
-		$button_tray = new \ImpressCMS\Core\Form\Elements\TrayElement('', '');
-		$button_tray->addElement(new \ImpressCMS\Core\Form\Elements\HiddenElement('op', $form_name));
+		$button_tray = new TrayElement('', '');
+		$button_tray->addElement(new HiddenElement('op', $form_name));
 		if (!$submit_button_caption) {
 			if ($this->targetObject->isNew()) {
-				$butt_create = new \ImpressCMS\Core\Form\Elements\ButtonElement('', 'create_button', _CO_ICMS_CREATE, 'submit');
+				$butt_create = new ButtonElement('', 'create_button', _CO_ICMS_CREATE, 'submit');
 			} else {
-				$butt_create = new \ImpressCMS\Core\Form\Elements\ButtonElement('', 'modify_button', _CO_ICMS_MODIFY, 'submit');
+				$butt_create = new ButtonElement('', 'modify_button', _CO_ICMS_MODIFY, 'submit');
 			}
 		} else {
-			$butt_create = new \ImpressCMS\Core\Form\Elements\ButtonElement('', 'modify_button', $submit_button_caption, 'submit');
+			$butt_create = new ButtonElement('', 'modify_button', $submit_button_caption, 'submit');
 		}
 		$butt_create->setExtra('onclick="this.form.elements.op.value=\'' . $form_name . '\'"');
 		$button_tray->addElement($butt_create);
@@ -339,7 +350,7 @@ class Form extends ThemeForm {
 		//creating custom buttons
 		if ($this->_custom_button) {
 			foreach ($this->_custom_button as $custom_button) {
-				$butt_custom = new \ImpressCMS\Core\Form\Elements\ButtonElement('', $custom_button['name'], $custom_button['caption'], 'submit');
+				$butt_custom = new ButtonElement('', $custom_button['name'], $custom_button['caption'], 'submit');
 				if ($custom_button['onclick']) {
 					$butt_custom->setExtra('onclick="' . $custom_button['onclick'] . '"');
 				}
@@ -349,7 +360,7 @@ class Form extends ThemeForm {
 		}
 
 		// creating the "cancel" button
-		$butt_cancel = new \ImpressCMS\Core\Form\Elements\ButtonElement('', 'cancel_button', _CO_ICMS_CANCEL, 'button');
+		$butt_cancel = new ButtonElement('', 'cancel_button', _CO_ICMS_CANCEL, 'button');
 		if ($this->_cancel_js_action) {
 			$butt_cancel->setExtra('onclick="' . $this->_cancel_js_action . '"');
 		} else {
@@ -362,7 +373,7 @@ class Form extends ThemeForm {
 	/**
 	 * Gets a control from the targetobject (@param string $controlName name of the control element
 	 * @param string $key key of the form variables in the targetobject
-	 * @return ColorpickerElement|\ImpressCMS\Core\Form\Elements\DhtmltextareaElement|\ImpressCMS\Core\Form\Elements\LabelElement|\ImpressCMS\Core\Form\Elements\PasswordElement|CountryElement|GroupElement|TimezoneElement|UserElement|SelectElement|\ImpressCMS\Core\Form\Elements\TextElementarea
+	 * @return ColorpickerElement|DhtmltextareaElement|LabelElement|PasswordElement|CountryElement|GroupElement|TimezoneElement|UserElement|SelectElement|TextElementarea
 	 * @todo, which object will be passed here?)
 	 *
 	 */
@@ -375,7 +386,7 @@ class Form extends ThemeForm {
 				break;
 
 			case 'label':
-				return new \ImpressCMS\Core\Form\Elements\LabelElement($this->targetObject->getVarInfo($key, 'form_caption'), $this->targetObject->getVar($key));
+				return new LabelElement($this->targetObject->getVarInfo($key, 'form_caption'), $this->targetObject->getVar($key));
 				break;
 
 			case 'textarea' :
@@ -383,7 +394,7 @@ class Form extends ThemeForm {
 				$form_rows = isset($this->targetObject->controls[$key]['rows'])?$this->targetObject->controls[$key]['rows']:5;
 				$form_cols = isset($this->targetObject->controls[$key]['cols'])?$this->targetObject->controls[$key]['cols']:60;
 
-				$editor = new \ImpressCMS\Core\Form\Elements\TextElementarea($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
+				$editor = new TextElementarea($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
 				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
 					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}
@@ -391,7 +402,7 @@ class Form extends ThemeForm {
 				break;
 
 			case 'dhtmltextarea' :
-				$editor = new \ImpressCMS\Core\Form\Elements\DhtmltextareaElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), 15, 50);
+				$editor = new DhtmltextareaElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), 15, 50);
 				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
 					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}
@@ -423,7 +434,7 @@ class Form extends ThemeForm {
 				break;
 
 			case 'password':
-				return new \ImpressCMS\Core\Form\Elements\PasswordElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, 50, 255, $this->targetObject->getVar($key, 'e'));
+				return new PasswordElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, 50, 255, $this->targetObject->getVar($key, 'e'));
 				break;
 
 			case 'country':
@@ -443,7 +454,7 @@ class Form extends ThemeForm {
 						include_once $moduleFormElementsPath . $classFileName;
 					} else {
 						trigger_error($classname . ' not found', E_USER_WARNING);
-						return new \ImpressCMS\Core\Form\Elements\LabelElement();
+						return new LabelElement();
 					}
 				}
 				return new $classname($this->targetObject, $key);
@@ -503,9 +514,9 @@ class Form extends ThemeForm {
 			if (!is_object($ele)) {
 				$ret .= $ele;
 			} elseif (!$ele->isHidden()) {
-				if (get_class($ele) == \ImpressCMS\Core\IPF\Form\Elements\FormSectionElement::class && !$ele->isClosingSection()) {
+				if (get_class($ele) == FormSectionElement::class && !$ele->isClosingSection()) {
 					$ret .= '<tr><th colspan="2">' . $ele->render() . '</th></tr>';
-				} elseif (get_class($ele) == \ImpressCMS\Core\IPF\Form\Elements\FormSectionElement::class && $ele->isClosingSection()) {
+				} elseif (get_class($ele) == FormSectionElement::class && $ele->isClosingSection()) {
 					$ret .= '<tr><td class="even" colspan="2">&nbsp;</td></tr>';
 				} else {
 					$ret .= "<tr id='" . $ele->getName() . "_row' valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>" . $ele->getCaption();
@@ -526,7 +537,7 @@ class Form extends ThemeForm {
 	/**
 	 * assign to smarty form template instead of displaying directly
 	 *
-	 * @param	\Smarty  &$tpl         reference
+	 * @param	Smarty  &$tpl         reference
 	 * @param	mixed   $smartyName   if smartyName is passed, assign it to the smarty call else assign the name of the form element
 	 */
 	public function assign(&$tpl, $smartyName = false) {
@@ -539,8 +550,8 @@ class Form extends ThemeForm {
 			$elements[$n]['body'] = $ele->render();
 			$elements[$n]['hidden'] = $ele->isHidden();
 			$elements[$n]['required'] = $ele->isRequired();
-			$elements[$n]['section'] = get_class($ele) == \ImpressCMS\Core\IPF\Form\Elements\FormSectionElement::class && !$ele->isClosingSection();
-			$elements[$n]['section_close'] = get_class($ele) == \ImpressCMS\Core\IPF\Form\Elements\FormSectionElement::class && $ele->isClosingSection();
+			$elements[$n]['section'] = get_class($ele) == FormSectionElement::class && !$ele->isClosingSection();
+			$elements[$n]['section_close'] = get_class($ele) == FormSectionElement::class && $ele->isClosingSection();
 			$elements[$n]['hide'] = ($i == $n)?false:$this->targetObject->getVarInfo($n, 'hide', false);
 
 			if ($ele->getDescription() != '') {
@@ -600,7 +611,7 @@ class Form extends ThemeForm {
 				if (hasSelections == FALSE) {
 					window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'].options[0].focus(); return false; }\n";
 
-			} elseif (strtolower(get_class($elt)) == \ImpressCMS\Core\Form\Elements\CheckboxElement::class) {
+			} elseif (strtolower(get_class($elt)) == CheckboxElement::class) {
 				$js .= "var hasSelections = FALSE;";
 				//sometimes, there is an implicit '[]', sometimes not
 				if (strpos($eltname, '[') === false) {

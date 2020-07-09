@@ -10,6 +10,8 @@
 
 namespace ImpressCMS\Core\IPF\View;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\IPF\AbstractModel;
 use ImpressCMS\Core\IPF\Controller;
 use ImpressCMS\Core\IPF\Handler;
 
@@ -30,7 +32,7 @@ class ViewTree extends ViewTable {
 	 * Construct the tree object
 	 *
 	 * @param Handler $objectHandler Handler
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo|false $criteria		Criteria to filter results
+	 * @param CriteriaCompo|false $criteria		Criteria to filter results
 	 * @param string[] $actions		An array of actions for this object
 	 * @param boolean $userSide		TRUE - display on the user side; FALSE - do not display
 	 */
@@ -43,7 +45,7 @@ class ViewTree extends ViewTable {
 	 * Get children objects given a specific category_pid
 	 *
 	 * @var int $category_pid id of the parent which children we want to retreive
-	 * @return \ImpressCMS\Core\IPF\AbstractModel[]
+	 * @return AbstractModel[]
 	 */
 	public function getChildrenOf($category_pid = 0) {
 		return isset($this->_objects[$category_pid])?$this->_objects[$category_pid]:false;
@@ -52,7 +54,7 @@ class ViewTree extends ViewTable {
 	/**
 	 * Create a row based on the item and children
 	 *
-	 * @param \ImpressCMS\Core\IPF\AbstractModel	$object	@IPF object to use add to table row
+	 * @param AbstractModel	$object	@IPF object to use add to table row
 	 * @param integer	$level	sub-level of the item
 	 */
 	public function createTableRow($object, $level = 0) {

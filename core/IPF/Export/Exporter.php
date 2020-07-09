@@ -1,6 +1,7 @@
 <?php
 namespace ImpressCMS\Core\IPF\Export;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\IPF\Handler;
 
 /**
@@ -25,7 +26,7 @@ class Exporter {
 		/**
 		 * criteria how to filter exported data
 		 *
-		 * @var \ImpressCMS\Core\Database\Criteria\CriteriaElement
+		 * @var CriteriaElement
 		 */
 	public $criteria;
 
@@ -82,7 +83,7 @@ class Exporter {
 	 * Constructor
 	 *
 	 * @param Handler         $objectHandler  IcmsPersistableHandler handling the data we want to export
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria       Containing the criteria of the query fetching the objects to be exported
+	 * @param CriteriaElement $criteria       Containing the criteria of the query fetching the objects to be exported
 	 * @param array|false               $fields         Fields to be exported. If FALSE then all fields will be exported
 	 * @param false|string              $filename       Name of the file to be created
 	 * @param false|string              $filepath       Path where the file will be saved

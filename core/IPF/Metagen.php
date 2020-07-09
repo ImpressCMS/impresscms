@@ -12,6 +12,7 @@
 
 namespace ImpressCMS\Core\IPF;
 
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Textsanitizer;
 
 /**
@@ -255,7 +256,7 @@ class Metagen {
 		$description = preg_replace("/([^\r\n])\r\n([^\r\n])/", "\\1 \\2", $description);
 		$description = preg_replace("/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $description);
 		$description = preg_replace("/[ ]* [ ]*/", ' ', $description);
-		$description = \ImpressCMS\Core\DataFilter::stripSlashesGPC($description);
+		$description = DataFilter::stripSlashesGPC($description);
 
 		$this->_description = $description;
 		$this->_meta_description = $this->createMetaDescription();
@@ -318,7 +319,7 @@ class Metagen {
 		$text = preg_replace("/([^\r\n])\r\n([^\r\n])/", "\\1 \\2", $text);
 		$text = preg_replace("/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $text);
 		$text = preg_replace("/[ ]* [ ]*/", ' ', $text);
-		$text = \ImpressCMS\Core\DataFilter::stripSlashesGPC($text);
+		$text = DataFilter::stripSlashesGPC($text);
 
 		$originalKeywords = preg_split('/[^a-zA-Z\'"-]+/', $text, -1, PREG_SPLIT_NO_EMPTY);
 

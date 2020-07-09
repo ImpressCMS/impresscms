@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\Form\Elements\Captcha;
 
+use icms;
+
 /**
  * text version of Captcha element
  * Xoops Frameworks addon
@@ -95,7 +97,7 @@ class TextMode {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = icms::getInstance()->get('session');
 		$session->getSegment(Image::class)->set('session_code', strval($this->code));
 	}
 

@@ -1,6 +1,10 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use ImpressCMS\Core\Form\Elements\LabelElement;
+use ImpressCMS\Core\Form\Elements\TrayElement;
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Form control creating the options of a block
  *
@@ -11,10 +15,10 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @author	phoenyx
  * @package	ICMS\IPF\Form\Elements
  */
-class BlockOptionsElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
+class BlockOptionsElement extends TrayElement {
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -28,7 +32,7 @@ class BlockOptionsElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 		if (!function_exists($func)) {
 			return;
 		}
-		$visible_label = new \ImpressCMS\Core\Form\Elements\LabelElement('', $func(explode('|', $object->getVar('options'))));
+		$visible_label = new LabelElement('', $func(explode('|', $object->getVar('options'))));
 		$this->addElement($visible_label);
 	}
 }

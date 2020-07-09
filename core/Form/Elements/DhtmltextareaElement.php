@@ -242,7 +242,7 @@ class DhtmltextareaElement extends TextareaElement {
 		for ($i = 0; $i < $count; $i++) {
 			$ret .= "<img onclick='xoopsCodeSmilie(\"" . $ele_name . "_tarea\", \" " . $smiles[$i]['code'] . " \");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_UPLOAD_URL . "/" . htmlspecialchars($smiles[$i]['smile_url'], ENT_QUOTES, _CHARSET) . "' border='0' alt='' />";
 		}
-		$ret .= "&nbsp;[<a href='#moresmiley' onclick='javascript:openWithSelfMain(\"" . ICMS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target=" . $ele_name . "_tarea\",\"smilies\",300,475);'>" . _MORE . "</a>]";
+		$ret .= " . ICMS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target=" . $ele_name . "_tarea\",\"smilies\",300,475);'>" . _MORE . "</a>]";
 		return $ret;
 	}
 }

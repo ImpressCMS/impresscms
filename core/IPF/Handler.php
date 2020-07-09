@@ -17,8 +17,13 @@
 
 namespace ImpressCMS\Core\IPF;
 
+use icms;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Database\DatabaseConnectionInterface;
 use ImpressCMS\Core\Debug;
+use ImpressCMS\Core\Filesystem;
 use ImpressCMS\Core\ObjectHandler;
 use ImpressCMS\Core\Properties\AbstractProperties;
 
@@ -211,7 +216,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * Constructor - called from child classes
 	 *
-	 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db Database object
+	 * @param DatabaseConnectionInterface $db Database object
 	 * @param string $itemname Object to be managed
 	 * @param string $keyname Name of the table key that uniquely identify each object
 	 * @param string $idenfierName Name of the field which properly identify the object
@@ -293,10 +298,10 @@ class Handler extends ObjectHandler {
 	 * @return bool
 	 */
 	public function setGrantedObjectsCriteria(&$criteria, $perm_name) {
-		$icmspermissions_handler = new \ImpressCMS\Core\IPF\PermissionsDecorator($this);
+		$icmspermissions_handler = new PermissionsDecorator($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
+			$criteria->add(new CriteriaItem($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
 			return true;
 		} else {
 			return false;
@@ -352,13 +357,13 @@ class Handler extends ObjectHandler {
 	/**
 	 * retrieve objects with debug mode - so will show the query
 	 *
-	 * @deprecated Use getObjects() instead. Since 2.0
-	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria conditions to be met
+	 * @param CriteriaElement $criteria Criteria conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
 	 *
 	 * @return array
+	 *@deprecated Use getObjects() instead. Since 2.0
+	 *
 	 */
 	public function getObjectsD($criteria = null, $id_as_key = false, $as_object = true, $sql = false) {
 		trigger_error('Use getObjects() instead', E_USER_DEPRECATED);
@@ -369,7 +374,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * retrieve objects from the database
 	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria conditions to be met
+	 * @param CriteriaElement $criteria Criteria conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
 	 *
@@ -495,7 +500,7 @@ class Handler extends ObjectHandler {
 					} else {
 						$ret[$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
 					}
-					\icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
+					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 					continue;
 				}
 				$obj = new $this->className($this, $myrow);
@@ -534,7 +539,7 @@ class Handler extends ObjectHandler {
 					} else {
 						$ret[$cname][$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
 					}
-					\icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
+					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 					continue;
 				}
 				$obj = new $this->className($this, $myrow);
@@ -593,7 +598,7 @@ class Handler extends ObjectHandler {
 	public function getImagePath() {
 		$dir = $this->_uploadPath . $this->_itemname;
 		if (!file_exists($dir)) {
-			\ImpressCMS\Core\Filesystem::mkdir($dir);
+			Filesystem::mkdir($dir);
 		}
 		return $dir . "/";
 	}
@@ -612,8 +617,8 @@ class Handler extends ObjectHandler {
 				} else {
 					$ret[] = self::$_loadedItems[$this->className][$kname]->toArray();
 				}
-				if (isset(\icms::$logger)) {
-					\icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
+				if (isset(icms::$logger)) {
+					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 				}
 				continue;
 			}
@@ -652,12 +657,12 @@ class Handler extends ObjectHandler {
 	/**
 	 * retrieve object
 	 *
-	 * @deprecated Use get() instead. Since 2.0
-	 *
 	 * @param string|float|int $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
 	 *
-	 * @return \ImpressCMS\Core\IPF\AbstractModel|false
+	 * @return AbstractModel|false
+	 *@deprecated Use get() instead. Since 2.0
+	 *
 	 */
 	public function &getD($id, $as_object = true)
 	{
@@ -672,13 +677,13 @@ class Handler extends ObjectHandler {
 	 * @param string|int|float $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
 	 *
-	 * @return \ImpressCMS\Core\IPF\AbstractModel|false
+	 * @return AbstractModel|false
 	 */
 	public function &get($id, $as_object = true, $debug = false, $criteria = false)
 	{
 		if (is_array($this->keyName)) {
 			if (!$criteria) {
-				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+				$criteria = new CriteriaCompo();
 			}
 			foreach ($this->keyName as $i => $keyName) {
 				/**
@@ -686,18 +691,18 @@ class Handler extends ObjectHandler {
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
 				//$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($keyName, ($id[$i]), '=', $this->_itemname));
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($keyName, $id[$i], '=', $this->_itemname));
+				$criteria->add(new CriteriaItem($keyName, $id[$i], '=', $this->_itemname));
 			}
 		} else {
 			if (!$criteria) {
-				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->keyName, $id);
+				$criteria = new CriteriaItem($this->keyName, $id);
 			} else {
 				//$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->keyName, intval($id), '=', $this->_itemname);
 				/**
 				 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->keyName, $id, '=', $this->_itemname));
+				$criteria->add(new CriteriaItem($this->keyName, $id, '=', $this->_itemname));
 			}
 		}
 
@@ -724,7 +729,7 @@ class Handler extends ObjectHandler {
 	 *
 	 * @param bool $isNew Flag the new objects as "new"?
 	 *
-	 * @return \ImpressCMS\Core\IPF\AbstractModel
+	 * @return AbstractModel
 	 */
 	public function &create($isNew = true)
 	{
@@ -760,7 +765,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
 	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria conditions to be met
+	 * @param CriteriaElement $criteria Criteria conditions to be met
 	 * @param int   $limit      Max number of objects to fetch
 	 * @param int   $start      Which record to start at
 	 *
@@ -775,7 +780,7 @@ class Handler extends ObjectHandler {
 	 *
 	 * @param string $keyName  Key name
 	 * @param string $keyValue Key value
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria conditions to be met
+	 * @param CriteriaElement $criteria Criteria conditions to be met
 	 * @param int   $limit     Max number of objects to fetch
 	 * @param int   $start     Which record to start at
 	 * @param bool $debug Debug mode?
@@ -785,7 +790,7 @@ class Handler extends ObjectHandler {
 	public function getCustomList($keyName, $keyValue, $criteria = null, $limit = 0, $start = 0, $debug = false) {
 		$ret = array();
 		if ($criteria == null) {
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$criteria = new CriteriaCompo();
 		}
 
 		if ($criteria->getSort() == '') {
@@ -1055,7 +1060,7 @@ class Handler extends ObjectHandler {
 			if (is_array($this->keyName)) {
 				$case = '  CASE ' . implode(', ', $this->keyName) . "\r\n";
 				$when = array();
-				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+				$criteria = new CriteriaCompo();
 				foreach ($data as $i => $obj) {
 					$fieldsToStoreInDB = $obj->getVarsForSQL(true);
 					$cr = $obj->getCriteriaForSelectByID();
@@ -1184,7 +1189,7 @@ class Handler extends ObjectHandler {
 	 * query the database with the constructed $criteria object
 	 *
 	 * @param string $sql The SQL Query
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria conditions to be met
+	 * @param CriteriaElement $criteria Criteria conditions to be met
 	 * @param bool $force Force the query?
 	 * @param bool $debug Turn Debug on?
 	 *
@@ -1226,7 +1231,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * count objects matching a condition
 	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria to match
+	 * @param CriteriaElement $criteria Criteria to match
 	 * @return int count of objects
 	 */
 	public function getCount($criteria = null) {
@@ -1288,7 +1293,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * Build an array containing all the ids of an array of objects as array
 	 *
-	 * @param \ImpressCMS\Core\IPF\AbstractModel[] $objectsAsArray array of \ImpressCMS\Core\IPF\AbstractModel
+	 * @param AbstractModel[] $objectsAsArray array of \ImpressCMS\Core\IPF\AbstractModel
 	 * @return array
 	 */
 	public function getIdsFromObjectsAsArray($objectsAsArray) {
@@ -1304,7 +1309,7 @@ class Handler extends ObjectHandler {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria
+	 * @param CriteriaElement $criteria Criteria
 	 *
 	 * @return  bool
 	 * */
@@ -1335,7 +1340,7 @@ class Handler extends ObjectHandler {
 	/**
 	 * delete all objects meeting the conditions
 	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria with conditions to meet
+	 * @param CriteriaElement $criteria Criteria with conditions to meet
 	 * @param bool $quick Do not load object on deletion?
 	 *
 	 * @return bool
@@ -1393,13 +1398,13 @@ class Handler extends ObjectHandler {
 			}
 		}
 		if (!empty($url_links)) {
-			$urllink_handler = \icms::handler('icms_data_urllink');
-			$urllink_handler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($urllink_handler->keyName, $url_links, ' IN '));
+			$urllink_handler = icms::handler('icms_data_urllink');
+			$urllink_handler->deleteAll(new CriteriaItem($urllink_handler->keyName, $url_links, ' IN '));
 			unset($urllink_handler);
 		}
 		if (!empty($url_files)) {
-			$urllink_handler = \icms::handler('icms_data_file');
-			$urllink_handler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($urllink_handler->keyName, $url_files, ' IN '));
+			$urllink_handler = icms::handler('icms_data_file');
+			$urllink_handler->deleteAll(new CriteriaItem($urllink_handler->keyName, $url_files, ' IN '));
 			unset($urllink_handler);
 		}
 
@@ -1415,8 +1420,8 @@ class Handler extends ObjectHandler {
 	 * @return    bool    TRUE
 	 */
 	private function deleteGrantedPermissions($obj = null) {
-		$gperm_handler = \icms::handler("icms_member_groupperm");
-		$module = \icms::handler("icms_module")->getByDirname($this->_moduleName);
+		$gperm_handler = icms::handler("icms_member_groupperm");
+		$module = icms::handler("icms_module")->getByDirname($this->_moduleName);
 		$permissions = $this->getPermissions();
 		if ($permissions === false) {
 			return true;

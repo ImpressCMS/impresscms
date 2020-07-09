@@ -1,7 +1,9 @@
 <?php
 namespace ImpressCMS\Core\IPF;
 
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Member;
+use ImpressCMS\Core\Models\UserHandler;
 
 /**
  * Member handler class.
@@ -24,7 +26,7 @@ class MemberDecorator extends Member {
 	 */
 	public function __construct(&$db) {
 		parent::__construct($db);
-		$this->_uHandler = new \ImpressCMS\Core\Models\UserHandler($db);
+		$this->_uHandler = new UserHandler($db);
 	}
 
 	// This function here below needs some changes to work under 1.2 Final. it's temporarily disabled.
@@ -171,7 +173,7 @@ class MemberDecorator extends Member {
 			} else {
 				$basename = strtolower($name[0]);
 			}
-			$basename = \ImpressCMS\Core\DataFilter::icms_substr($basename, 0, 60, '');
+			$basename = DataFilter::icms_substr($basename, 0, 60, '');
 			//Prevent Duplication of Email Username and Name
 			if (!in_array($basename, $names)) {
 				$names[] = $basename;
@@ -184,10 +186,10 @@ class MemberDecorator extends Member {
 		while ($i < $count) {
 			$num = $this->genRandNumber();
 			if ($onbasename < 0 && $hasbasename) {
-				$names[] = \ImpressCMS\Core\DataFilter::icms_substr($basename, 0, 58, '') . $num;
+				$names[] = DataFilter::icms_substr($basename, 0, 58, '') . $num;
 
 			} else {
-				$names[] = \ImpressCMS\Core\DataFilter::icms_substr($emailname, 0, 58, '') . $num;
+				$names[] = DataFilter::icms_substr($emailname, 0, 58, '') . $num;
 			}
 			$i = count($names);
 			$onbasename = ~ $onbasename;

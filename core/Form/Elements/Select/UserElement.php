@@ -39,6 +39,9 @@
 
 namespace ImpressCMS\Core\Form\Elements\Select;
 
+use icms;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Form\Elements\LabelElement;
 use ImpressCMS\Core\Form\Elements\SelectElement;
 use ImpressCMS\Core\Form\Elements\TrayElement;
@@ -70,7 +73,7 @@ class UserElement extends TrayElement {
 		if ($include_anon) {
 			$select_element->addOption(0, $GLOBALS['icmsConfig']['anonymous']);
 		}
-		$member_handler = \icms::handler('icms_member');
+		$member_handler = icms::handler('icms_member');
 		$user_count = $member_handler->getUserCount();
 		$value = is_array($value)
 			?$value
@@ -79,16 +82,16 @@ class UserElement extends TrayElement {
 				: array($value)
 			);
 		if ($user_count > $limit && count($value) > 0) {
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem("uid", "(" . implode(",", $value) . ")", "IN"));
+			$criteria = new CriteriaCompo(new CriteriaItem("uid", "(" . implode(",", $value) . ")", "IN"));
 		} else {
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$criteria = new CriteriaCompo();
 			$criteria->setLimit($limit);
 		}
 		$criteria->setSort('uname');
 		if (!$showremovedusers) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('level', '-1', '!='));
+			$criteria->add(new CriteriaItem('level', '-1', '!='));
 		} elseif ($showremovedusers && $justremovedusers) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('level', '-1'));
+			$criteria->add(new CriteriaItem('level', '-1'));
 		}
 		$criteria->setOrder('ASC');
 		$users = $member_handler->getUserList($criteria);
@@ -130,7 +133,7 @@ class UserElement extends TrayElement {
 					}
 					</script>";
 
-		$token = \icms::$security->createToken();
+		$token = icms::$security->createToken();
 		$action_tray = new TrayElement("", " | ");
 		$action_tray->addElement(new LabelElement('',
 			"<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name

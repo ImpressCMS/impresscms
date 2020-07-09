@@ -1,6 +1,11 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\ObjectTree;
+
 /**
  * Form control creating a parent category selectbox for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
@@ -13,19 +18,19 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
 class ParentCategoryElement extends \ImpressCMS\Core\Form\Elements\SelectElement {
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
 		$category_title_field = $object->handler->identifierName;
 
 		$addNoParent = isset($object->controls[$key]['addNoParent'])?$object->controls[$key]['addNoParent']:true;
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria = new CriteriaCompo();
 		$criteria->setSort("weight, " . $category_title_field);
 		$category_handler = icms_getModuleHandler('category', $object->handler->_moduleName);
 		$categories = $category_handler->getObjects($criteria);
 
-		$mytree = new \ImpressCMS\Core\IPF\ObjectTree($categories, "category_id", "category_pid");
+		$mytree = new ObjectTree($categories, "category_id", "category_pid");
 		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVar($key, 'e'));
 
 		$ret = array();
@@ -43,7 +48,7 @@ class ParentCategoryElement extends \ImpressCMS\Core\Form\Elements\SelectElement
 	/**
 	 * Get options for a category select with hierarchy (recursive)
 	 *
-	 * @param \\ImpressCMS\Core\IPF\ObjectTree  $tree       Tree instance
+	 * @param \ImpressCMS\Core\IPF\ObjectTree  $tree       Tree instance
 	 * @param string  $fieldName    The fieldname to get the option array for
 	 * @param int     $key          the key to get the optionarray for
 	 * @param string  $prefix_curr  the prefix

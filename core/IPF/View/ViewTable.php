@@ -12,9 +12,13 @@
 
 namespace ImpressCMS\Core\IPF\View;
 
+use icms;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\IPF\Handler;
 use ImpressCMS\Core\View\PageNav;
+use ImpressCMS\Core\View\Template;
 
 /**
  * ViewTable base class
@@ -78,7 +82,7 @@ class ViewTable {
 		$this->_objectHandler = $objectHandler;
 
 		if (!$criteria) {
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$criteria = new CriteriaCompo();
 		}
 		$this->_criteria = $criteria;
 		$this->_actions = $actions;
@@ -149,7 +153,7 @@ class ViewTable {
 	 *
 	 */
 	public function addPrinterFriendlyLink() {
-		$current_url = \icms::$urls['full'];
+		$current_url = icms::$urls['full'];
 		$this->_printerFriendlyPage = $current_url . '&print';
 	}
 
@@ -505,7 +509,7 @@ class ViewTable {
 	 */
 	public function renderOptionSelection($limitsArray, $params_of_the_options_sel) {
 		// Rendering the form to select options on the table
-		$current_url = \icms::$urls['full'];
+		$current_url = icms::$urls['full'];
 
 		/**
 		 * What was $params_of_the_options_sel doing again ?
@@ -605,7 +609,7 @@ class ViewTable {
 	 * @return
 	 */
 	public function render($fetchOnly = false, $debug = false) {
-		$this->_tpl = new \ImpressCMS\Core\View\Template();
+		$this->_tpl = new Template();
 
 		/**
 		 * We need access to the protected s of the \ImpressCMS\Core\IPF\AbstractModel for a few things in the table creation.
@@ -659,7 +663,7 @@ class ViewTable {
 
 					icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_filtersel2', $this->_filtersel2);
 					if ($this->_filtersel2 != 'default') {
-						$this->_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->_filtersel, $this->_filtersel2));
+						$this->_criteria->add(new CriteriaItem($this->_filtersel, $this->_filtersel2));
 					}
 				}
 			}
@@ -667,13 +671,13 @@ class ViewTable {
 		// Check if we have a quicksearch
 
 		if (isset($_POST['quicksearch_' . $this->_id]) && $_POST['quicksearch_' . $this->_id] != '') {
-			$quicksearch_criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$quicksearch_criteria = new CriteriaCompo();
 			if (is_array($this->_quickSearch['fields'])) {
 				foreach ($this->_quickSearch['fields'] as $v) {
-					$quicksearch_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($v, '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'), 'OR');
+					$quicksearch_criteria->add(new CriteriaItem($v, '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'), 'OR');
 				}
 			} else {
-				$quicksearch_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($this->_quickSearch['fields'], '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'));
+				$quicksearch_criteria->add(new CriteriaItem($this->_quickSearch['fields'], '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'));
 			}
 			$this->_criteria->add($quicksearch_criteria);
 		}
@@ -716,8 +720,8 @@ class ViewTable {
 		$this->renderOptionSelection($limitsArray, $params_of_the_options_sel);
 
 		// retreive the current url and the query string
-		$current_url = \icms::$urls['full_phpself'];
-		$query_string = \icms::$urls['querystring'];
+		$current_url = icms::$urls['full_phpself'];
+		$query_string = icms::$urls['querystring'];
 		if ($query_string) {
 			$query_string = str_replace('?', '', $query_string);
 		}

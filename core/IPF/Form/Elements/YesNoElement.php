@@ -1,6 +1,9 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use ImpressCMS\Core\Form\Elements\RadioynElement;
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Form control creating a yesno radio button for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
@@ -10,10 +13,10 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class YesNoElement extends \ImpressCMS\Core\Form\Elements\RadioynElement {
+class YesNoElement extends RadioynElement {
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

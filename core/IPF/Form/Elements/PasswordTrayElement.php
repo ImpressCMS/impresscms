@@ -1,6 +1,10 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
+use ImpressCMS\Core\Form\Elements\PasswordElement;
+use ImpressCMS\Core\Form\Elements\TrayElement;
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Form control creating 2 password textboxes to allow the user to enter twice his password, for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
@@ -10,12 +14,12 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class PasswordTrayElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
+class PasswordTrayElement extends TrayElement {
 	private $_key;
 
 	/**
 	 * Constructor
-	 * @param	\ImpressCMS\Core\IPF\AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -25,7 +29,7 @@ class PasswordTrayElement extends \ImpressCMS\Core\Form\Elements\TrayElement {
 		icms_loadLanguageFile('core', 'user');
 		parent::__construct($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
 
-		$password_box1 = new \ImpressCMS\Core\Form\Elements\PasswordElement('', $key . '1', 10, 32, '', false, "password_adv");
+		$password_box1 = new PasswordElement('', $key . '1', 10, 32, '', false, "password_adv");
 		$this->addElement($password_box1);
 
 		$this->_key = $key;

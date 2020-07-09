@@ -10,6 +10,8 @@
 
 namespace ImpressCMS\Core\IPF;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+
 /**
  * Registry of \ImpressCMS\Core\IPF\AbstractModel
  *
@@ -50,7 +52,7 @@ class ObjectRegistry {
 	 * Adding objects to the registry
 	 *
 	 * @param Handler $handler of the objects to add
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo|false $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param CriteriaCompo|false $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */
@@ -68,7 +70,7 @@ class ObjectRegistry {
 	 * Adding objects as list to the registry
 	 *
 	 * @param Handler $handler of the objects to add
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo|false $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param CriteriaCompo|false $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */
@@ -88,7 +90,7 @@ class ObjectRegistry {
 	 *
 	 * @param string $item name of the item
 	 * @param string $modulename name of the module
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */
@@ -111,7 +113,7 @@ class ObjectRegistry {
 	 *
 	 * @param string $item name of the item
 	 * @param string $modulename name of the module
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */

@@ -21,6 +21,9 @@
 
 namespace ImpressCMS\Core\Form\Elements\Select;
 
+use icms;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Form\Elements\SelectElement;
 
 /**
@@ -82,12 +85,12 @@ class ImageElement extends SelectElement {
 	 */
 	public function getImageList($cat = null) {
 		$ret = array();
-		if (!is_object(\icms::$user)) {
+		if (!is_object(icms::$user)) {
 			$group = array(ICMS_GROUP_ANONYMOUS);
 		} else {
-			$group = & \icms::$user->getGroups();
+			$group = & icms::$user->getGroups();
 		}
-		$imgcat_handler = \icms::handler('icms_image_category');
+		$imgcat_handler = icms::handler('icms_image_category');
 		$catlist = $imgcat_handler->getList($group, 'imgcat_read', 1);
 		if (is_array($cat) && count($catlist) > 0) {
 			foreach ($catlist as $k=>$v) {
@@ -99,11 +102,11 @@ class ImageElement extends SelectElement {
 			$catlist = array_key_exists($cat, $catlist)?array($cat=>$catlist[$cat]):array();
 		}
 
-		$image_handler = \icms::handler('icms_image');
+		$image_handler = icms::handler('icms_image');
 		foreach ($catlist as $k=>$v) {
 			$this->_optgroupsID[$v] = $k;
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_id', $k));
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('image_display', 1));
+			$criteria = new CriteriaCompo(new CriteriaItem('imgcat_id', $k));
+			$criteria->add(new CriteriaItem('image_display', 1));
 			$total = $image_handler->getCount($criteria);
 			if ($total > 0) {
 				$imgcat = & $imgcat_handler->get($k);
@@ -153,12 +156,12 @@ class ImageElement extends SelectElement {
 	 * @return   string    $ret    the constructed select form attribute HTML
 	 */
 	public function render() {
-		if (!is_object(\icms::$user)) {
+		if (!is_object(icms::$user)) {
 			$group = array(ICMS_GROUP_ANONYMOUS);
 		} else {
-			$group = & \icms::$user->getGroups();
+			$group = & icms::$user->getGroups();
 		}
-		$imgcat_handler = \icms::handler('icms_image_category');
+		$imgcat_handler = icms::handler('icms_image_category');
 		$catlist = $imgcat_handler->getList($group, 'imgcat_write', 1);
 		$catlist_total = count($catlist);
 		$optIds = $this->getOptGroupsID();
