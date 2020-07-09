@@ -14,7 +14,7 @@ namespace ImpressCMS\Core\Preload;
 use ImpressCMS\Core\Event;
 
 /**
- * icms_preload_Handler
+ * EventsPreloader
  *
  * Class handling preload events automatically detect from the files in ICMS_PRELOAD_PATH
  *
@@ -124,10 +124,10 @@ class EventsPreloader {
 	 * - afterFilterHTMLinput	 triggered after text from a textarea is processed as HTML to save to the database (@see \ImpressCMS\Core\DataFilter)
 	 * - beforeFilterHTMLdisplay	 triggered before text from a textarea is processed as HTML to display (@see \ImpressCMS\Core\DataFilter)
 	 * - afterFilterHTMLdisplay	 triggered after text from a textarea is processed as HTML to display (@see \ImpressCMS\Core\DataFilter)
-	 * - beforeDisplayTarea	 triggered before before text from a textarea is processed to display (@see icms_core_Textsanitizer)
-	 * - afterDisplayTarea	 triggered after text from a textarea is processed to display (@see icms_core_Textsanitizer)
-	 * - beforePreviewTarea	 triggered before text from a textarea is processed for preview (@see icms_core_Textsanitizer)
-	 * - afterPreviewTarea	 triggered after text from a textarea is processed for preview (@see icms_core_Textsanitizer)
+	 * - beforeDisplayTarea	 triggered before before text from a textarea is processed to display (@see Textsanitizer)
+	 * - afterDisplayTarea	 triggered after text from a textarea is processed to display (@see Textsanitizer)
+	 * - beforePreviewTarea	 triggered before text from a textarea is processed for preview (@see Textsanitizer)
+	 * - afterPreviewTarea	 triggered after text from a textarea is processed for preview (@see Textsanitizer)
 	 * - savingSystemAdminPreferencesItem	 triggered before saving preferences in the admin control panel (modules/system/preferences/main.php)
 	 * - afterSaveSystemAdminPreferencesItems	triggered after  saving preferences in the admin control panel (modules/system/preferences/main.php)
 	 *

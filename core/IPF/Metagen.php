@@ -96,7 +96,7 @@ class Metagen {
 			$keywords = $this->createMetaKeywords();
 		}
 
-		/*		$myts = icms_core_Textsanitizer::getInstance();
+		/*		$myts = Textsanitizer::getInstance();
 		 if (method_exists($myts, 'formatForML')) {
 			$keywords = $myts->formatForML($keywords);
 			$description = $myts->formatForML($description);

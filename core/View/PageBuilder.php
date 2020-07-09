@@ -28,7 +28,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * icms_view_PageBuilder component class file
+ * PageBuilder component class file
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -36,8 +36,10 @@
 
 namespace ImpressCMS\Core\View;
 
+use ImpressCMS\Core\Models\Module;
+
 /**
- * icms_view_PageBuilder main class
+ * PageBuilder main class
  *
  * @package	ICMS\View
  * @author      Skalpa Keo <skalpa@xoops.org>
@@ -120,7 +122,7 @@ class PageBuilder {
 	 * isStart is only needed for this class (used in function retrieveBlocks()).
 	 *
 	 * @global array $icmsConfig ImpressCMS configuration array
-	 * @global icms_module_Object $icmsModule current module
+	 * @global Module $icmsModule current module
 	 * @return void
 	 */
 	public static function getPage() {

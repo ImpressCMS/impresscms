@@ -37,6 +37,7 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Facades\Member;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 
@@ -117,7 +118,7 @@ class ModuleHandler
 		if ($inAdmin && !\icms::$user) {
 			return false;
 		}
-		/* @var $perm_handler icms_member_groupperm_Handler */
+		/* @var $perm_handler GroupPermHandler */
 		$perm_handler = \icms::handler('icms_member_groupperm');
 		if ($inAdmin) {
 			if (!$module) {
@@ -232,7 +233,7 @@ class ModuleHandler
 		}
 
 		/**
-		 * @var icms_member_Handler $member_handler
+		 * @var Member $member_handler
 		 */
 		$member_handler = \icms::handler('icms_member');
 		$grps = $member_handler->getGroupList();

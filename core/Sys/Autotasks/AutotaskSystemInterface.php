@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\Sys\Autotasks;
 
 /**
- * ImpressCMS AUTOTASKSs Library - icms_sys_autotasks_ISystem interface
+ * ImpressCMS AUTOTASKSs Library - AutotaskSystemInterface interface
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

@@ -169,7 +169,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 *
 	 * @param  int  $user_id  ID of the user
 	 *
-	 * @return \icms_data_notification_Object[]
+	 * @return Notification[]
 	 */
 	public function getByUser($user_id) {
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_uid', $user_id);
@@ -183,7 +183,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param  int      $item_id  ID of the subscribed items
 	 * @param  int      $module_id  ID of the module of the subscribed items
 	 * @param  int      $user_id  ID of the user of the subscribed items
-	 * @return \icms_data_notification_Object[]
+	 * @return Notification[]
 	 */
 	public function getSubscribedEvents($category, $item_id, $module_id, $user_id) {
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
@@ -210,7 +210,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param   string  $order      Sort order
 	 * @param   string  $status     status
 	 *
-	 * @return  \icms_data_notification_Object[]
+	 * @return  Notification[]
 	 */
 	public function getByItemId($module_id, $item_id, $order = null, $status = null) {
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_modid', (int) $module_id));
@@ -476,7 +476,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Update
 	 *
-	 * @param   \icms_data_notification_Object  &$notification  Notification object
+	 * @param   Notification  &$notification  Notification object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *

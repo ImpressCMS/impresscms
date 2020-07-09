@@ -82,7 +82,7 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param   int     $limit      Max num of comments to retrieve
 	 * @param   int     $start      Start offset
 	 *
-	 * @return  \icms_data_comment_Object[]
+	 * @return  Comment[]
 	 */
 	public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_modid', (int) $module_id));
@@ -107,7 +107,7 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param   int     $item_id    Item ID
 	 * @param   int     $status     Status of the comment
 	 *
-	 * @return  \icms_data_comment_Object[]
+	 * @return  Comment[]
 	 */
 	public function getCountByItemId($module_id, $item_id, $status = null) {
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_modid', (int) $module_id));
@@ -126,7 +126,7 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param   strint  $order
 	 * @param   int     $status
 	 *
-	 * @return  \icms_data_comment_Object[]
+	 * @return  Comment[]
 	 */
 	public function getTopComments($module_id, $item_id, $order, $status = null) {
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_modid', (int) $module_id));
@@ -146,7 +146,7 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param   int     $comment_id
 	 * @param   int     $status
 	 *
-	 * @return \icms_data_comment_Object[]
+	 * @return Comment[]
 	 */
 	public function getThread($comment_rootid, $comment_id, $status = null) {
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_rootid', (int) $comment_rootid));
@@ -160,7 +160,7 @@ class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Update
 	 *
-	 * @param   \icms_data_comment_Object  &$comment      Comment object
+	 * @param   Comment  &$comment      Comment object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *

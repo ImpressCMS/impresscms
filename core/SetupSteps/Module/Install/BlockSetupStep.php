@@ -5,7 +5,9 @@ namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
 
 use icms;
+use ImpressCMS\Core\Models\Block;
 use ImpressCMS\Core\Models\Module;
+use ImpressCMS\Core\Models\TemplateFile;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\View\Template;
@@ -41,7 +43,7 @@ class BlockSetupStep implements SetupStepInterface
 					$template = trim($block['template']);
 				}
 				/**
-				 * @var icms_view_block_Object $newBlock
+				 * @var Block $newBlock
 				 */
 				$newBlock = $handler->create();
 				$newBlock->setVar('name', trim($block['name']));
@@ -80,7 +82,7 @@ class BlockSetupStep implements SetupStepInterface
 					$module->handler->db->query($sql);
 					if ($template != '') {
 						/**
-						 * @var icms_view_template_file_Object $tplfile
+						 * @var TemplateFile $tplfile
 						 */
 						$tplfile = icms::handler('icms_view_template_file')->create();
 						$tplfile->setVar('tpl_refid', $newbid);
@@ -137,7 +139,7 @@ class BlockSetupStep implements SetupStepInterface
 	/**
 	 * Updates blocks permissions
 	 *
-	 * @param icms_module_Object $module Module to update
+	 * @param Module $module Module to update
 	 * @param OutputDecorator $output
 	 */
 	protected function updateBlocksPermissions(Module $module, OutputDecorator $output)

@@ -56,7 +56,7 @@ class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 		/**
 		 * Constructor
 		 *
-		 * @param \icms_db_IConnection $db              Database connection
+		 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db              Database connection
 		 */
 		public function __construct(&$db) {
 				parent::__construct($db, 'image_set', 'imgset_id', 'imgset_name', '', 'icms', 'imgset');
@@ -65,7 +65,7 @@ class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 		/**
 		 * This event executes after deletion
 		 *
-		 * @param \icms_image_set_Object $obj           Instance of icms_image_set_Object
+		 * @param ImageSet $obj           Instance of icms_image_set_Object
 		 *
 		 * @return boolean
 		 */
@@ -81,7 +81,7 @@ class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria with conditions for the imagesets
 	 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
 	 *
-	 * @return \icms_image_set_Object[]
+	 * @return ImageSet[]
 	 */
 	public function &getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
@@ -160,7 +160,7 @@ class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param int $refid conditions to match
 	 * @param int $tplset conditions to match
 	 *
-	 * @return \icms_image_set_Object[]
+	 * @return ImageSet[]
 	 * */
 	public function getList($refid = null, $tplset = null) {
 		$criteria = new CriteriaCompo();

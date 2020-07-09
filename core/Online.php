@@ -59,7 +59,7 @@ class Online {
 	/**
 	 * Constructor
 	 *
-	 * @param	\icms_db_legacy_Database  &$db   Linked database instance
+	 * @param	\ImpressCMS\Core\Database\DatabaseConnectionInterface  &$db   Linked database instance
 	 */
 	public function __construct(&$db) {
 		$this->db = & $db;

@@ -130,9 +130,9 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param int $maxlength maximum length of this variable, for self::DTYPE_STRING and self::DTYPE_INTEGER types only
 	 * @param string $options does this data have any select options?
 	 * @param bool $multilingual is this field needs to support multilingual features (NOT YET IMPLEMENTED...)
-	 * @param string $form_caption caption of this variable in a \ImpressCMS\Core\IPF\Form\Form and title of a column in a icms_ipf_ObjectTable
+	 * @param string $form_caption caption of this variable in a \ImpressCMS\Core\IPF\Form\Form and title of a column in a Table
 	 * @param string $form_dsc description of this variable in a \ImpressCMS\Core\IPF\Form\Form
-	 * @param bool $sortby set to TRUE to make this field used to sort objects in icms_ipf_ObjectTable
+	 * @param bool $sortby set to TRUE to make this field used to sort objects in Table
 	 * @param bool $persistent set to FALSE if this field is not to be saved in the database
 	 * @param bool $displayOnForm to be displayed on the form or not
 	 *
@@ -250,7 +250,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param string $key key of this field. This needs to be the name of the field in the related database table
 	 * @param int $data_type set to one of XOBJ_DTYPE_XXX constants (set to self::DTYPE_DEP_OTHER if no data type ckecking nor text sanitizing is required)
 	 * @param bool $required set to TRUE if this variable needs to have a value set before storing the object in the table
-	 * @param string $form_caption caption of this variable in a \ImpressCMS\Core\IPF\Form\Form and title of a column in a icms_ipf_ObjectTable
+	 * @param string $form_caption caption of this variable in a \ImpressCMS\Core\IPF\Form\Form and title of a column in a Table
 	 * @param string $form_dsc description of this variable in a \ImpressCMS\Core\IPF\Form\Form
 	 * @param mixed $value default value of this variable
 	 */
@@ -452,8 +452,6 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param bool $captcha Needs captcha?
 	 *
 	 * @return \ImpressCMS\Core\IPF\Form\Form
-	 *
-	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
 		return new \ImpressCMS\Core\IPF\Form\Form($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
@@ -470,8 +468,6 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @param bool $captcha Needs captcha?
 	 *
 	 * @return \ImpressCMS\Core\IPF\Form\SecureForm
-	 *
-	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	public function getSecureForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
 		$form = new \ImpressCMS\Core\IPF\Form\SecureForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);

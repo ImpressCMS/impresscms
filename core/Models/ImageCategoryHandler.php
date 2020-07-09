@@ -51,7 +51,7 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 		/**
 		 * Constructor
 		 *
-		 * @param \icms_db_IConnection $db              Database connection
+		 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db              Database connection
 		 */
 		public function __construct(&$db) {
 				parent::__construct($db, 'image_category', 'imgcat_id', 'imgcat_name', '', 'icms', 'imagecategory');

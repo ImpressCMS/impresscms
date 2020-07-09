@@ -40,7 +40,7 @@ namespace ImpressCMS\Core\Models;
 /**
  * A group permission
  *
- * These permissions are managed through a icms_member_groupperm_Handler object
+ * These permissions are managed through a GroupPermHandler object
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org

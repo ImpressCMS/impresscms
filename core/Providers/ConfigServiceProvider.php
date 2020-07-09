@@ -35,7 +35,7 @@ class ConfigServiceProvider extends AbstractServiceProvider implements BootableS
 	{
 		$this->getContainer()->add('config', function () {
 			/**
-			 * @var \icms_config_Handler $instance
+			 * @var Config $instance
 			 */
 			$instance = icms::handler('icms_config');
 			$configs = !defined('ICMS_MIGRATION_MODE') || !ICMS_MIGRATION_MODE ? $instance->getConfigsByCat([

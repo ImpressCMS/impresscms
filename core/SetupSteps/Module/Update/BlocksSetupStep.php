@@ -7,7 +7,9 @@ namespace ImpressCMS\Core\SetupSteps\Module\Update;
 use Exception;
 use icms;
 use ImpressCMS\Core\Models\Block;
+use ImpressCMS\Core\Models\BlockHandler;
 use ImpressCMS\Core\Models\Module;
+use ImpressCMS\Core\Models\TemplateFileHandler;
 use ImpressCMS\Core\SetupSteps\Module\Install\BlockSetupStep as InstallBlockSetupStep;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\View\Template;
@@ -28,17 +30,17 @@ class BlocksSetupStep extends InstallBlockSetupStep
 		$output->incrIndent();
 
 		/**
-		 * @var icms_view_template_file_Object $tplfile_handler
+		 * @var TemplateFileHandler $tplfile_handler
 		 */
 		$tplfile_handler = &icms::handler('icms_view_template_file');
 
 		/**
-		 * @var icms_db_Connection $db
+		 * @var \ImpressCMS\Core\Database\DatabaseConnection $db
 		 */
 		$db = icms::getInstance()->get('db');
 
 		/**
-		 * @var icms_view_block_Handler $newBlocksHandler
+		 * @var BlockHandler $newBlocksHandler
 		 */
 		$newBlocksHandler = icms::handler('icms_view_block');
 
@@ -132,7 +134,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 
 					if ($fcount == 0) {
 						/**
-						 * @var icms_view_block_Object $newBlock
+						 * @var Block $newBlock
 						 */
 						$newBlock = $newBlocksHandler->create();
 						$newBlock->mid = $module->mid;

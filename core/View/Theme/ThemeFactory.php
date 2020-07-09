@@ -66,9 +66,9 @@ class ThemeFactory {
 	/**
 	 * Gets theme factory for existing configuration
 	 *
-	 * @return ThemeFactory Returns preconfigured icms_view_theme_Factory object
+	 * @return ThemeFactory Returns preconfigured instance
 	 * @global      array $icmsConfig ICMS Configuration array
-	 * @staticvar   \icms_view_theme_Factory $themeFactory  Current instance of theme factory
+	 * @staticvar   ThemeFactory $themeFactory  Current instance of theme factory
 	 */
 	public static function getInstance() {
 		static $themeFactory = null;

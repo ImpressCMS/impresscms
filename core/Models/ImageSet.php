@@ -44,7 +44,7 @@ namespace ImpressCMS\Core\Models;
 /**
  * An imageset
  *
- * These sets are managed through a icms_image_set_Handler object
+ * These sets are managed through a ImageSetHandler object
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright       copyright (c) 2000-2003 XOOPS.org

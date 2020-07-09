@@ -55,7 +55,7 @@ class TemplateSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * Gets templateset from database by Name
 	 *
 	 * @param string $tplset_name of the tempateset to get
-	 * @return \icms_view_template_set_Object reference to the new template
+	 * @return TemplateSet reference to the new template
 	 *@see TemplateSet
 	 */
 	public function &getByName($tplset_name) {
@@ -68,19 +68,19 @@ class TemplateSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Deletes templateset from the database
 	 *
-	 * @param \icms_view_template_set_Object $tplset reference to the object of the tempateset to delete
+	 * @param TemplateSet $tplset reference to the object of the tempateset to delete
 	 * @param bool $force Force delete?
 	 *
 	 * @return bool
-	 *@see TemplateSet
 	 *
+	 * @see TemplateSet
 	 */
 	public function delete(&$tplset, $force = false) {
 		if (!parent::delete($tplset, $force)) {
 					return false;
 		}
 		$sql = sprintf(
-			"DELETE FROM %s WHERE tplset_name = %s",
+			'DELETE FROM %s WHERE tplset_name = %s',
 			$this->db->prefix('imgset_tplset_link'),
 			$this->db->quoteString($tplset->getVar('tplset_name'))
 		);

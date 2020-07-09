@@ -187,7 +187,7 @@ class ConfigItem extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * Assign one or more
 	 *
-	 * @param	icms_config_Item_ObjectOption|icms_config_Item_ObjectOption[]
+	 * @param	ConfigOption|ConfigOption[]
 	 */
 	public function setConfOptions($option) {
 		if (is_array($option)) {
@@ -205,7 +205,7 @@ class ConfigItem extends \ImpressCMS\Core\IPF\AbstractModel {
 	/**
 	 * Get the options of this Config
 	 *
-	 * @return	\icms_config_Item_ObjectOption[]
+	 * @return	ConfigOption[]
 	 */
 	public function &getConfOptions() {
 		return $this->_confOptions;
@@ -215,7 +215,7 @@ class ConfigItem extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * This function will properly set the data type for each config item, overriding the
 	 * default in the __construct method
 	 *
-	 * @todo        Remove param $dummy once after removing setType from icms_properties_Handler (this is hack to bypass PHP strict message)
+	 * @todo        Remove param $dummy once after removing setType from AbstractProperties (this is hack to bypass PHP strict message)
 	 *
 	 * @since	1.3.3
 	 * @param	string	$newType	data type of the config item

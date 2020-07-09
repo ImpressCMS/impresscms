@@ -58,7 +58,7 @@ abstract class ObjectHandler {
 	/**
 	 * holds referenced
 	 *
-	 * @var icms_db_legacy_Database
+	 * @var \ImpressCMS\Core\Database\DatabaseConnectionInterface
 	 * @access public
 	 */
 	public $db;
@@ -67,7 +67,7 @@ abstract class ObjectHandler {
 	/**
 	 * called from child classes only
 	 *
-	 * @param icms_db_legacy_Database $db reference to db
+	 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db reference to db
 	 * @access protected
 	 */
 	function __construct(&$db) {

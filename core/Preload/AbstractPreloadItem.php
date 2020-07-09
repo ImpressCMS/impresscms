@@ -3,7 +3,7 @@
 namespace ImpressCMS\Core\Preload;
 
 /**
- * icms_preload_Item
+ * AbstractPreloadItem
  *
  * Class which is extended by any preload item. This class is empty for now but is there for
  * extended future purposes

@@ -56,7 +56,7 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * Loads Template source from DataBase
 	 *
 	 * @see TemplateFile
-	 * @param \icms_view_template_file_Object $tplfile object of the template file to load
+	 * @param TemplateFile $tplfile object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 */
 	public function loadSource(TemplateFile &$tplfile) {
@@ -74,7 +74,7 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 
 	/**
 	 * forces Template source into the DataBase
-	 * @param icms_view_template_file_Object $tplfile object of the template file to load
+	 * @param TemplateFile $tplfile object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 */
 	public function forceUpdate(&$tplfile) {
@@ -163,7 +163,7 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 
 	/**
 	 * Prefetch blocks to reduce the amount of queries required by Smarty to generate all blocks
-	 * This function is called exclusively in icms_view_PageBuilder
+	 * This function is called exclusively in PageBuilder
 	 *
 	 * @global	array	$icmsConfig		icms configuration array
 	 * @param	array	$block_arr		array of blocks to prefetch
@@ -172,12 +172,12 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	public function prefetchBlocks(&$block_arr) {
 		global $icmsConfig;
 
-		if (count($block_arr) == 0) {
+		if (count($block_arr) === 0) {
 			return false;
 		}
 		$tplNames = array();
 		foreach ($block_arr as $block) {
-			$tplNames[] = $block->template?$block->template:"system_block_dummy.html";
+			$tplNames[] = $block->template?: 'system_block_dummy.html';
 		}
 
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(

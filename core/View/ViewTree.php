@@ -55,7 +55,7 @@ class ViewTree {
 	private $db;
 
 	/**
-	 * Constructor of class icms_view_Tree
+	 * Constructor
 	 * Sets the names of table, unique id, and parent id
 	 * @param string $table_name Name of table containing the parent-child structure
 	 * @param string $id_name Name of the unique id field in the table

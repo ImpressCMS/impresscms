@@ -52,7 +52,7 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Handler for image bodies
 	 *
-	 * @var \icms_image_body_Handler
+	 * @var ImageBodyHandler
 	 */
 	protected $imagebody_handler;
 
@@ -60,7 +60,7 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Constructor
 	 *
-	 * @param \icms_db_IConnection $db              Database connection
+	 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db              Database connection
 	 */
 		public function __construct(&$db) {
 			$this->imagebody_handler = \icms::handler('icms_image_body');
@@ -71,7 +71,7 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 		/**
 		 * This event is executed when saving
 		 *
-		 * @param   \icms_image_body_Object $obj        Saving object
+		 * @param   ImageBody $obj        Saving object
 		 *
 		 * @return  boolean
 		 */
@@ -88,7 +88,7 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 		/**
 		 * This event executes after deletion
 		 *
-		 * @param \icms_image_body_Object $obj      Deleted object
+		 * @param ImageBody $obj      Deleted object
 		 *
 		 * @return boolean
 		 */
@@ -131,11 +131,10 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 	 *
 	 * @param int|null $imgcat_id Image category ID
 	 * @param bool|null|int $image_display List only displayed images?
-	 * @param int $notinuse Not use param (only added for fixing Declaration of icms_image_Handler::getList($imgcat_id, $image_display = NULL, $notinuse1 = 0, $debug = false) should be compatible with Handler::getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) error)
+	 * @param int $notinuse Not use param (only added for fixing Declaration of ImageHandler::getList($imgcat_id, $image_display = NULL, $notinuse1 = 0, $debug = false) should be compatible with Handler::getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) error)
 	 * @param bool $debug Enable debug mode?
 	 *
-	 * @return array Array of <a href='psi_element://icms_image_Object'>icms_image_Object</a> objects
-	 * objects
+	 * @return Image[]
 	 *
 	 * @todo Do better fix here for declaration compatibility
 	 */

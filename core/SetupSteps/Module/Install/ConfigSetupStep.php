@@ -6,6 +6,7 @@ namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
 use icms;
 use ImpressCMS\Core\Facades\Config;
+use ImpressCMS\Core\Models\ConfigItem;
 use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
@@ -36,7 +37,7 @@ class ConfigSetupStep implements SetupStepInterface
 			$order = 0;
 			foreach ($configs as $config) {
 				/**
-				 * @var icms_config_item_Object $confobj
+				 * @var ConfigItem $confobj
 				 */
 				$confobj = &$config_handler->createConfig();
 				$confobj->setVar('conf_modid', $module->getVar('mid'));

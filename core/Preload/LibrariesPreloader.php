@@ -12,7 +12,7 @@
 namespace ImpressCMS\Core\Preload;
 
 /**
- * icms_preload_LibrariesHandler
+ * LibrariesPreloader
  *
  * Class handling third party libraries within ImpressCMS
  *

@@ -36,6 +36,8 @@
 
 namespace ImpressCMS\Core\View;
 
+use ImpressCMS\Core\Models\Comment;
+
 /**
  * Display comments
  *
@@ -90,7 +92,7 @@ class CommentRenderer {
 	/**
 	 * Accessor
 	 *
-	 * @param   \icms_data_comment_Object[]  &$comments_arr  array of comments
+	 * @param   Comment[]  &$comments_arr  array of comments
 	 */
 	public function setComments(&$comments_arr) {
 		if (isset($this->_comments)) {

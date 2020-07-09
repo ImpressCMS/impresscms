@@ -21,12 +21,12 @@ class FileHandler extends \ImpressCMS\Core\IPF\Handler {
 		parent::__construct($db, "data_file", "fileid", "caption", "desc", "icms");
 	}
 
-	/*
+	/**
 	 * afterDelete event
 	 *
 	 * Event automatically triggered by IcmsPersistable Framework after the object is deleted
 	 *
-	 * @param icms_data_file_Object $obj object
+	 * @param File $obj object
 	 * @return bool TRUE
 	 */
 	protected function afterDelete(&$obj) {
