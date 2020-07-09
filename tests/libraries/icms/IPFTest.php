@@ -18,7 +18,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             '\ImpressCMS\IPF\BaseModel' => ['icms_core_Object'],
             'icms_ipf_Metagen' => null,
             'icms_ipf_Highlighter' => null,
-            '\ImpressCMS\IPF\BaseHandler' => ['icms_core_ObjectHandler'],
+            '\ImpressCMS\IPF\Handler' => ['icms_core_ObjectHandler'],
             'icms_ipf_Controller' => null,
             'icms_ipf_About' => null,
             'icms_ipf_view_Column' => null,
@@ -61,7 +61,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_export_Renderer' => null,
             'icms_ipf_export_Handler' => null,
             'icms_ipf_category_Object' => ['icms_ipf_seo_Object'],
-            'icms_ipf_category_Handler' => ['\ImpressCMS\IPF\BaseHandler']
+            'icms_ipf_category_Handler' => ['\ImpressCMS\IPF\Handler']
         ] as $class => $must_be_instances_of) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
             if ($must_be_instances_of === null) {
@@ -179,7 +179,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'buildAutoMetaTags',
                 'createMetaTags'
             ],
-            '\ImpressCMS\IPF\BaseHandler' => [
+            '\ImpressCMS\IPF\Handler' => [
                 'addEventHook',
                 'addPermission',
                 'setGrantedObjectsCriteria',
@@ -417,7 +417,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_Highlighter' => [
                 'content' => 'string'
             ],
-            '\ImpressCMS\IPF\BaseHandler' => [
+            '\ImpressCMS\IPF\Handler' => [
                 '_itemname' => 'string',
                 'table' => 'string',
                 'keyName' => 'string',

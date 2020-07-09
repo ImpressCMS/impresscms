@@ -4,6 +4,7 @@
 namespace ImpressCMS\Editors\DHTMLTextArea;
 
 use icms\plugins\EditorInterface;
+use ImpressCMS\Core\Form\Elements\TextareaElement;
 
 /**
  * Defines DHTMLTextArea editor
@@ -32,7 +33,7 @@ class Editor implements EditorInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function create(array $configs, $checkCompatible = false): \icms_form_elements_Textarea
+	public function create(array $configs, $checkCompatible = false): TextareaElement
 	{
 		require_once __DIR__ . '/dhtmltextarea.php';
 		return new \FormDhtmlTextArea($configs, $checkCompatible);

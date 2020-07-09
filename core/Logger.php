@@ -12,7 +12,7 @@ use Monolog\Handler\RotatingFileHandler;
 /**
  * Proxy logger class to add some compatibility stuff with older ICMS versions
  */
-class Logger extends Monolog\Logger
+class Logger extends \Monolog\Logger
 {
 
 	/**

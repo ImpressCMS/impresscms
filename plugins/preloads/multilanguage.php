@@ -22,7 +22,7 @@ class icms_MultilanguageEventHandler {
 	 *
 	 */
 	static public function setup() {
-		Event::attach('icms', 'loadService-session', array(__CLASS__, 'initMultilang'));
+		\ImpressCMS\Core\Event::attach('icms', 'loadService-session', array(__CLASS__, 'initMultilang'));
 	}
 
 	/**

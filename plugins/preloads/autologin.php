@@ -3,8 +3,8 @@
 class icms_AutologinEventHandler {
 
 	static public function setup() {
-		Event::attach('icms_core_Session', 'sessionStart', array(__CLASS__, 'onSessionStart'));
-		Event::attach('icms_core_Session', 'sessionClose', array(__CLASS__, 'onSessionClose'));
+		\ImpressCMS\Core\Event::attach('icms_core_Session', 'sessionStart', array(__CLASS__, 'onSessionStart'));
+		\ImpressCMS\Core\Event::attach('icms_core_Session', 'sessionClose', array(__CLASS__, 'onSessionClose'));
 	}
 	static public function onSessionStart() {
 		/**

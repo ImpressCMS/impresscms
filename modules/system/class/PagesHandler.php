@@ -22,7 +22,7 @@ class mod_system_PagesHandler extends icms_data_page_Handler {
 	 * @param $db
 	 */
 	public function __construct(& $db) {
-		\ImpressCMS\IPF\BaseHandler::__construct($db, 'pages', 'page_id', 'page_title', '', 'system');
+		\ImpressCMS\IPF\Handler::__construct($db, 'pages', 'page_id', 'page_title', '', 'system');
 		$this->table = $db->prefix('icmspage');
 	}
 

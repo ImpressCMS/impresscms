@@ -15,7 +15,7 @@ use ImpressCMS\Core\Form\Elements\Select\GroupElement;
 use ImpressCMS\Core\Form\Elements\Select\TimezoneElement;
 use ImpressCMS\Core\Form\Elements\Select\UserElement;
 use ImpressCMS\Core\Form\Elements\SelectElement;
-use ImpressCMS\Core\Form\Elements\TextElementarea;
+use ImpressCMS\Core\Form\Elements\TextareaElement;
 use ImpressCMS\Core\Form\Elements\TrayElement;
 use ImpressCMS\Core\Form\ThemeForm;
 use ImpressCMS\Core\IPF\Form\Elements\FormSectionElement;
@@ -373,7 +373,7 @@ class Form extends ThemeForm {
 	/**
 	 * Gets a control from the targetobject (@param string $controlName name of the control element
 	 * @param string $key key of the form variables in the targetobject
-	 * @return ColorpickerElement|DhtmltextareaElement|LabelElement|PasswordElement|CountryElement|GroupElement|TimezoneElement|UserElement|SelectElement|TextElementarea
+	 * @return ColorpickerElement|DhtmltextareaElement|LabelElement|PasswordElement|CountryElement|GroupElement|TimezoneElement|UserElement|SelectElement|TextareaElement
 	 * @todo, which object will be passed here?)
 	 *
 	 */
@@ -394,7 +394,7 @@ class Form extends ThemeForm {
 				$form_rows = isset($this->targetObject->controls[$key]['rows'])?$this->targetObject->controls[$key]['rows']:5;
 				$form_cols = isset($this->targetObject->controls[$key]['cols'])?$this->targetObject->controls[$key]['cols']:60;
 
-				$editor = new TextElementarea($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
+				$editor = new TextareaElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
 				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
 					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}

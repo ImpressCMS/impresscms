@@ -13,7 +13,7 @@ class UrllinkTest extends \PHPUnit_Framework_TestCase {
      * Test if icms_core_DataFilter is available
      */
     public function testAvailability() {
-        foreach (['Handler' => '\ImpressCMS\IPF\BaseHandler', 'Object' => '\ImpressCMS\IPF\BaseModel'] as $type => $instanecOfType) {
+        foreach (['Handler' => '\ImpressCMS\IPF\Handler', 'Object' => '\ImpressCMS\IPF\BaseModel'] as $type => $instanecOfType) {
                $class = 'icms_data_urllink_' . $type;
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 

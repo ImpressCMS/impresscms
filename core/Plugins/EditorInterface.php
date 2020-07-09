@@ -3,6 +3,8 @@
 
 namespace ImpressCMS\Core\Plugins;
 
+use ImpressCMS\Core\Form\Elements\TextareaElement;
+
 /**
  * If class implements this interface it means, that it is some kind editor
  *
@@ -38,9 +40,9 @@ interface EditorInterface
 	 * @param array $configs Editor configuration
 	 * @param bool $checkCompatible If true, throws exception on failure
 	 *
-	 * @return \\ImpressCMS\Core\Form\Elements\TextElementarea
+	 * @return TextareaElement
 	 */
-	public function create(array $configs, $checkCompatible = false): \\ImpressCMS\Core\Form\Elements\TextElementarea;
+	public function create(array $configs, $checkCompatible = false): TextareaElement;
 
 	/**
 	 * Get order for sorting when displaying editor list

@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core;
 
+use DirectoryIterator;
+
 /**
  * A static class for file system functions
  *

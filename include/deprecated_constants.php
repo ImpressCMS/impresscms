@@ -4,31 +4,31 @@
  * Object datatype
  *
  * */
-define('XOBJ_DTYPE_TXTBOX', icms_properties_Handler::DTYPE_DEP_TXTBOX);
-define('XOBJ_DTYPE_TXTAREA', icms_properties_Handler::DTYPE_STRING);
-define('XOBJ_DTYPE_STRING', icms_properties_Handler::DTYPE_STRING);
-define('XOBJ_DTYPE_INT', icms_properties_Handler::DTYPE_INTEGER); // shorthund
-define('XOBJ_DTYPE_INTEGER', icms_properties_Handler::DTYPE_INTEGER);
-define('XOBJ_DTYPE_URL', icms_properties_Handler::DTYPE_DEP_URL);
-define('XOBJ_DTYPE_EMAIL', icms_properties_Handler::DTYPE_DEP_EMAIL);
-define('XOBJ_DTYPE_ARRAY', icms_properties_Handler::DTYPE_ARRAY);
-define('XOBJ_DTYPE_OTHER', icms_properties_Handler::DTYPE_DEP_OTHER);
-define('XOBJ_DTYPE_SOURCE', icms_properties_Handler::DTYPE_DEP_SOURCE);
-define('XOBJ_DTYPE_STIME', icms_properties_Handler::DTYPE_DEP_STIME);
-define('XOBJ_DTYPE_MTIME', icms_properties_Handler::DTYPE_DEP_MTIME);
-define('XOBJ_DTYPE_DATETIME', icms_properties_Handler::DTYPE_DATETIME);
-define('XOBJ_DTYPE_LTIME', icms_properties_Handler::DTYPE_DATETIME);
+define('XOBJ_DTYPE_TXTBOX', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_TXTBOX);
+define('XOBJ_DTYPE_TXTAREA', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_STRING);
+define('XOBJ_DTYPE_STRING', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_STRING);
+define('XOBJ_DTYPE_INT', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_INTEGER); // shorthund
+define('XOBJ_DTYPE_INTEGER', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_INTEGER);
+define('XOBJ_DTYPE_URL', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_URL);
+define('XOBJ_DTYPE_EMAIL', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_EMAIL);
+define('XOBJ_DTYPE_ARRAY', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_ARRAY);
+define('XOBJ_DTYPE_OTHER', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_OTHER);
+define('XOBJ_DTYPE_SOURCE', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_SOURCE);
+define('XOBJ_DTYPE_STIME', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_STIME);
+define('XOBJ_DTYPE_MTIME', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_MTIME);
+define('XOBJ_DTYPE_DATETIME', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DATETIME);
+define('XOBJ_DTYPE_LTIME', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DATETIME);
 
 
-define('XOBJ_DTYPE_SIMPLE_ARRAY', icms_properties_Handler::DTYPE_LIST);
-define('XOBJ_DTYPE_CURRENCY', icms_properties_Handler::DTYPE_DEP_CURRENCY);
-define('XOBJ_DTYPE_FLOAT', icms_properties_Handler::DTYPE_FLOAT);
-define('XOBJ_DTYPE_TIME_ONLY', icms_properties_Handler::DTYPE_DEP_TIME_ONLY);
-define('XOBJ_DTYPE_URLLINK', icms_properties_Handler::DTYPE_DEP_URLLINK);
-define('XOBJ_DTYPE_FILE', icms_properties_Handler::DTYPE_DEP_FILE);
-define('XOBJ_DTYPE_IMAGE', icms_properties_Handler::DTYPE_DEP_IMAGE);
-define('XOBJ_DTYPE_FORM_SECTION', icms_properties_Handler::DTYPE_DEP_FORM_SECTION);
-define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_properties_Handler::DTYPE_DEP_FORM_SECTION_CLOSE);
+define('XOBJ_DTYPE_SIMPLE_ARRAY', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_LIST);
+define('XOBJ_DTYPE_CURRENCY', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_CURRENCY);
+define('XOBJ_DTYPE_FLOAT', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_FLOAT);
+define('XOBJ_DTYPE_TIME_ONLY', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_TIME_ONLY);
+define('XOBJ_DTYPE_URLLINK', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_URLLINK);
+define('XOBJ_DTYPE_FILE', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_FILE);
+define('XOBJ_DTYPE_IMAGE', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_IMAGE);
+define('XOBJ_DTYPE_FORM_SECTION', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_FORM_SECTION);
+define('XOBJ_DTYPE_FORM_SECTION_CLOSE', \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_DEP_FORM_SECTION_CLOSE);
 
 /* * #@- */
 
@@ -36,59 +36,59 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_properties_Handler::DTYPE_DEP_FORM_
  * Config type
  */
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_MAIN instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_MAIN instead!
  */
-define('ICMS_CONF', \icms_config_Handler::CATEGORY_MAIN);
+define('ICMS_CONF', \ImpressCMS\Core\Facades\Config::CATEGORY_MAIN);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_USER instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_USER instead!
  */
-define('ICMS_CONF_USER', \icms_config_Handler::CATEGORY_USER);
+define('ICMS_CONF_USER', \ImpressCMS\Core\Facades\Config::CATEGORY_USER);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_METAFOOTER instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_METAFOOTER instead!
  */
-define('ICMS_CONF_METAFOOTER', \icms_config_Handler::CATEGORY_METAFOOTER);
+define('ICMS_CONF_METAFOOTER', \ImpressCMS\Core\Facades\Config::CATEGORY_METAFOOTER);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_CENSOR instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_CENSOR instead!
  */
-define('ICMS_CONF_CENSOR', \icms_config_Handler::CATEGORY_CENSOR);
+define('ICMS_CONF_CENSOR', \ImpressCMS\Core\Facades\Config::CATEGORY_CENSOR);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_SEARCH instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_SEARCH instead!
  */
-define('ICMS_CONF_SEARCH', \icms_config_Handler::CATEGORY_SEARCH);
+define('ICMS_CONF_SEARCH', \ImpressCMS\Core\Facades\Config::CATEGORY_SEARCH);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_MAILER instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_MAILER instead!
  */
-define('ICMS_CONF_MAILER', \icms_config_Handler::CATEGORY_MAILER);
+define('ICMS_CONF_MAILER', \ImpressCMS\Core\Facades\Config::CATEGORY_MAILER);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_AUTH instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_AUTH instead!
  */
-define('ICMS_CONF_AUTH', \icms_config_Handler::CATEGORY_AUTH);
+define('ICMS_CONF_AUTH', \ImpressCMS\Core\Facades\Config::CATEGORY_AUTH);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_MULILANGUAGE instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_MULILANGUAGE instead!
  */
-define('ICMS_CONF_MULILANGUAGE', \icms_config_Handler::CATEGORY_MULILANGUAGE);
+define('ICMS_CONF_MULILANGUAGE', \ImpressCMS\Core\Facades\Config::CATEGORY_MULILANGUAGE);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_CONTENT instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_CONTENT instead!
  */
-define('ICMS_CONF_CONTENT', \icms_config_Handler::CATEGORY_CONTENT);
+define('ICMS_CONF_CONTENT', \ImpressCMS\Core\Facades\Config::CATEGORY_CONTENT);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_PERSONA instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_PERSONA instead!
  */
-define('ICMS_CONF_PERSONA', \icms_config_Handler::CATEGORY_PERSONA);
+define('ICMS_CONF_PERSONA', \ImpressCMS\Core\Facades\Config::CATEGORY_PERSONA);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_CAPTCHA instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_CAPTCHA instead!
  */
-define('ICMS_CONF_CAPTCHA', \icms_config_Handler::CATEGORY_CAPTCHA);
+define('ICMS_CONF_CAPTCHA', \ImpressCMS\Core\Facades\Config::CATEGORY_CAPTCHA);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_PLUGINS instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_PLUGINS instead!
  */
-define('ICMS_CONF_PLUGINS', \icms_config_Handler::CATEGORY_PLUGINS);
+define('ICMS_CONF_PLUGINS', \ImpressCMS\Core\Facades\Config::CATEGORY_PLUGINS);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_AUTOTASKS instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_AUTOTASKS instead!
  */
-define('ICMS_CONF_AUTOTASKS', \icms_config_Handler::CATEGORY_AUTOTASKS);
+define('ICMS_CONF_AUTOTASKS', \ImpressCMS\Core\Facades\Config::CATEGORY_AUTOTASKS);
 /**
- * @deprecated 2.0 Use \icms_config_Handler::CATEGORY_PURIFIER instead!
+ * @deprecated 2.0 Use \ImpressCMS\Core\Facades\Config::CATEGORY_PURIFIER instead!
  */
-define('ICMS_CONF_PURIFIER', \icms_config_Handler::CATEGORY_PURIFIER);
+define('ICMS_CONF_PURIFIER', \ImpressCMS\Core\Facades\Config::CATEGORY_PURIFIER);
 /**#@-*/

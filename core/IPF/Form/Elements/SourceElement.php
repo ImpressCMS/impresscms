@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
-use ImpressCMS\Core\Form\Elements\TextElementarea;
+use ImpressCMS\Core\Form\Elements\TextareaElement;
 use ImpressCMS\Core\IPF\AbstractModel;
 use ImpressCMS\Core\Plugins\EditorHandler;
 
@@ -14,7 +14,7 @@ use ImpressCMS\Core\Plugins\EditorHandler;
  * @since	1.2
  * @author	MekDrop <mekdrop@gmail.com>
  */
-class SourceElement extends TextElementarea {
+class SourceElement extends TextareaElement {
 	/*
 	 * Editor's class instance
 	 */

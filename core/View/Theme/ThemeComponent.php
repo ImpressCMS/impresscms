@@ -88,7 +88,7 @@ class ThemeComponent {
 	public $renderCount = 0;
 	/**
 	 * Pointer to the theme template engine
-	 * @var \\ImpressCMS\Core\View\Template
+	 * @var \ImpressCMS\Core\View\Template
 	 */
 	public $template = false;
 

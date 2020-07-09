@@ -4,6 +4,7 @@ namespace ImpressCMS\Core\Properties;
 use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\File\MediaUploader;
 use ImpressCMS\Core\Textsanitizer;
+use Serializable;
 
 /**
  * Contains methods for dealing with object properties

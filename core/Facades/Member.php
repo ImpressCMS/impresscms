@@ -365,7 +365,7 @@ class Member {
 	/**
 	 * insert a user into the database
 	 *
-	 * @param \\ImpressCMS\Core\Member\UserModel $user User
+	 * @param \ImpressCMS\Core\Member\UserModel $user User
 	 * @return bool TRUE if already in database and unchanged
 	 * FALSE on failure
 	 */

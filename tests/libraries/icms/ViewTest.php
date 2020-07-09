@@ -22,13 +22,13 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             'icms_view_Breadcrumb' => null,
             'icms_view_theme_Object' => null,
             'icms_view_theme_Factory' => null,
-            'icms_view_template_set_Handler' => ['\ImpressCMS\IPF\BaseHandler'],
+            'icms_view_template_set_Handler' => ['\ImpressCMS\IPF\Handler'],
             'icms_view_template_set_Object' => ['\ImpressCMS\IPF\BaseModel'],
             'icms_view_template_file_Object' => ['\ImpressCMS\IPF\BaseModel'],
-            'icms_view_template_file_Handler' => ['\ImpressCMS\IPF\BaseHandler'],
+            'icms_view_template_file_Handler' => ['\ImpressCMS\IPF\Handler'],
             'icms_view_block_Object' => ['\ImpressCMS\IPF\BaseModel'],
-            'icms_view_block_Handler' => ['\ImpressCMS\IPF\BaseHandler'],
-            'icms_view_block_position_Handler' => ['\ImpressCMS\IPF\BaseHandler'],
+            'icms_view_block_Handler' => ['\ImpressCMS\IPF\Handler'],
+            'icms_view_block_position_Handler' => ['\ImpressCMS\IPF\Handler'],
             'icms_view_block_position_Object' => ['\ImpressCMS\IPF\BaseModel']
         ] as $class => $must_be_instances_of) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
