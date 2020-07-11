@@ -290,7 +290,7 @@ class Controller {
 		 */
 
 		// if handler is the Multilanguage handler, we will need to treat this for multilanguage
-		if (is_subclass_of($this->handler, 'icmspersistablemlobjecthandler')) {
+		if (is_subclass_of($this->handler, Handler::class)) {
 
 			if ($icmsObj->isNew()) {
 				// This is a new object. We need to store the meta data and then the language data

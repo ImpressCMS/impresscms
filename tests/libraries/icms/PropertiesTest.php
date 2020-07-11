@@ -2,6 +2,9 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\Properties\AbstractProperties;
+use ReflectionMethod;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
@@ -10,19 +13,19 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 class PropertiesTest extends \PHPUnit_Framework_TestCase {
 
     /**
-     * Does icms_properties_Handler exists and it's usable?
+     * Does AbstractProperties exists and it's usable?
      */
     public function testExists() {
-        $this->assertTrue(class_exists('icms_properties_Handler', false), 'icms_properties_Handler class doesn exist');
-        $mock = $this->getMockForAbstractClass('icms_properties_Handler');
-        $this->assertInstanceOf(\icms_properties_Handler::class, $mock, 'Can\'t extend icms_properties_Handler with class');
+        $this->assertTrue(class_exists('AbstractProperties', false), 'AbstractProperties class doesn exist');
+        $mock = $this->getMockForAbstractClass('AbstractProperties');
+        $this->assertInstanceOf(AbstractProperties::class, $mock, 'Can\'t extend AbstractProperties with class');
     }
 
     /**
      * Tests that all needed public methods exists
      */
     public function testNeededPublicMethods() {
-        $mock = $this->getMockForAbstractClass('icms_properties_Handler');
+        $mock = $this->getMockForAbstractClass('AbstractProperties');
         foreach ([
                 'getVar' => null,
                 'setVar' => null,
@@ -55,9 +58,9 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
      * Tests if initVars works
      */
     public function testInitVars() {
-        $mock = $this->getMockForAbstractClass('icms_properties_Handler');
+        $mock = $this->getMockForAbstractClass('AbstractProperties');
 
-        $reflection_method = new \ReflectionMethod($mock, 'initVar');
+        $reflection_method = new ReflectionMethod($mock, 'initVar');
         $this->assertInternalType('object', $reflection_method, 'initVar method doesn\'t exists');
         $this->assertTrue($reflection_method->isProtected(), 'initVar method doesn\'t is protected');
 
@@ -65,7 +68,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertCount(0, $mock->getVars(), 'Properties creates object with existing vars. This must not be possible for new objects.');
 
-        $reflection_method->invoke($mock, 'var_array', \icms_properties_Handler::DTYPE_ARRAY, array(), false);
+        $reflection_method->invoke($mock, 'var_array', AbstractProperties::DTYPE_ARRAY, array(), false);
 
         $vars = $mock->getVars();
         $this->assertCount(1, $vars, 'Couln\'t init var');
@@ -81,10 +84,10 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
      * Tests file data type
      */
     public function testTypeFile() {
-        $mock = $this->createMockWithInitVar('v', \icms_properties_Handler::DTYPE_FILE, null, false, [
-            \icms_properties_Handler::VARCFG_PATH => sys_get_temp_dir(),
-            \icms_properties_Handler::VARCFG_PREFIX => crc32(microtime(true)),
-			\icms_properties_Handler::VARCFG_ALLOWED_MIMETYPES => [
+        $mock = $this->createMockWithInitVar('v', AbstractProperties::DTYPE_FILE, null, false, [
+			AbstractProperties::VARCFG_PATH => sys_get_temp_dir(),
+			AbstractProperties::VARCFG_PREFIX => crc32(microtime(true)),
+			AbstractProperties::VARCFG_ALLOWED_MIMETYPES => [
 				'image/gif'
 			]
         ]);
@@ -103,7 +106,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
      * Tests datetime data type
      */
     public function testTypeDateTime() {
-        $mock = $this->createMockWithInitVar('v', \icms_properties_Handler::DTYPE_DATETIME, null, false);
+        $mock = $this->createMockWithInitVar('v', AbstractProperties::DTYPE_DATETIME, null, false);
 
         $this->assertInternalType('null', $mock->v, 'DTYPE_DATETIME must have null uncoverted');
 
@@ -117,35 +120,35 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
      * Tests int data type
      */
     public function testTypeInt() {
-        $this->doDefaultDataTypeTest('DTYPE_INTEGER', \icms_properties_Handler::DTYPE_INTEGER, 'int');
+        $this->doDefaultDataTypeTest('DTYPE_INTEGER', AbstractProperties::DTYPE_INTEGER, 'int');
     }
 
     /**
      * Tests float data type
      */
     public function testTypeFloat() {
-        $this->doDefaultDataTypeTest('DTYPE_FLOAT', \icms_properties_Handler::DTYPE_FLOAT, 'float');
+        $this->doDefaultDataTypeTest('DTYPE_FLOAT', AbstractProperties::DTYPE_FLOAT, 'float');
     }
 
     /**
      * Tests bool data type
      */
     public function testTypeBool() {
-        $this->doDefaultDataTypeTest('DTYPE_BOOLEAN', \icms_properties_Handler::DTYPE_BOOLEAN, 'bool');
+        $this->doDefaultDataTypeTest('DTYPE_BOOLEAN', AbstractProperties::DTYPE_BOOLEAN, 'bool');
     }
 
     /**
      * Tests string data type
      */
     public function testTypeString() {
-        $this->doDefaultDataTypeTest('DTYPE_STRING', \icms_properties_Handler::DTYPE_STRING, 'string');
+        $this->doDefaultDataTypeTest('DTYPE_STRING', AbstractProperties::DTYPE_STRING, 'string');
     }
 
     /**
      * Tests object data type
      */
     public function testTypeObject() {
-        $this->doDefaultDataTypeTest('DTYPE_OBJECT', \icms_properties_Handler::DTYPE_OBJECT, 'object');
+        $this->doDefaultDataTypeTest('DTYPE_OBJECT', AbstractProperties::DTYPE_OBJECT, 'object');
     }
 
     /**
@@ -173,7 +176,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
      * Tests Array data type
      */
     public function testTypeArray() {
-        $mock = $this->createMockWithInitVar('v', \icms_properties_Handler::DTYPE_ARRAY, null, false);
+        $mock = $this->createMockWithInitVar('v', AbstractProperties::DTYPE_ARRAY, null, false);
 
         $this->assertInternalType('null', $mock->v, 'DTYPE_ARRAY must have null uncoverted');
 
@@ -201,8 +204,8 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
 	 * @throws \ReflectionException
 	 */
     private function createMockWithInitVar($key, $dataType, $defaultValue = null, $required = false, $otherCfg = null) {
-        $mock = $this->getMockForAbstractClass('icms_properties_Handler');
-        $reflection_method = new \ReflectionMethod($mock, 'initVar');
+        $mock = $this->getMockForAbstractClass('AbstractProperties');
+        $reflection_method = new ReflectionMethod($mock, 'initVar');
         $reflection_method->setAccessible(true);
         $reflection_method->invoke($mock, $key, $dataType, $defaultValue, $required, $otherCfg);
 

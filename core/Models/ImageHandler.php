@@ -36,6 +36,7 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 
 /**
  * Image handler class.
@@ -101,7 +102,7 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Load image from the database
 	 *
-	 * @param null|\ImpressCMS\Core\Database\Criteria\CriteriaItem $criteria Criteria
+	 * @param null|CriteriaItem $criteria Criteria
 	 * @param bool $id_as_key Use the ID as key into the array
 	 * @param bool $getbinary Get binary image?
 	 * @param bool|string $sql  Extra sql
@@ -119,7 +120,7 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 			if (!in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))) {
 				$criteria->setSort('image_weight');
 			}
-			if (($criteria instanceof \ImpressCMS\Core\Database\Criteria\CriteriaItem) && (!$criteria->prefix)) {
+			if (($criteria instanceof CriteriaItem) && (!$criteria->prefix)) {
 				$criteria->prefix = 'i';
 			}
 		}
@@ -142,11 +143,11 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
 		if ($imgcat_id !== null) {
 			$criteria->add(
-				new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_id', (int) ($imgcat_id))
+				new CriteriaItem('imgcat_id', (int) ($imgcat_id))
 			);
 		}
 		if ($image_display) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('image_display', (int) ($image_display)));
+			$criteria->add(new CriteriaItem('image_display', (int) ($image_display)));
 		}
 		$images = & $this->getObjects($criteria, false, true, false, true);
 		$ret = array();

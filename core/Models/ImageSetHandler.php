@@ -42,6 +42,8 @@
  */
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+
 /**
  * XOOPS imageset handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -86,8 +88,12 @@ class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	public function &getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT DISTINCT i.* FROM ' . $this->table . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		$sql = sprintf(
+			'SELECT DISTINCT i.* FROM %s i LEFT JOIN %s l ON l.imgset_id=i.imgset_id',
+			$this->table,
+			$this->db->prefix('imgset_tplset_link')
+		);
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -124,7 +130,11 @@ class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 		if (!$this->unlinkThemeset($imgset_id, $tplset_name)) {
 			return false;
 		}
-		$sql = sprintf("INSERT INTO %s (imgset_id, tplset_name) VALUES ('%u', %s)", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
+		$sql = sprintf(
+			"INSERT INTO %s (imgset_id, tplset_name) VALUES ('%u', %s)",
+			$this->db->prefix('imgset_tplset_link'),
+			$imgset_id, $this->db->quoteString($tplset_name)
+		);
 		$result = $this->db->query($sql);
 		if (!$result) {
 			return false;
@@ -146,7 +156,12 @@ class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 		if ($imgset_id <= 0 || $tplset_name == '') {
 			return false;
 		}
-		$sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u' AND tplset_name = %s", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
+		$sql = sprintf(
+			"DELETE FROM %s WHERE imgset_id = '%u' AND tplset_name = %s",
+			$this->db->prefix('imgset_tplset_link'),
+			$imgset_id,
+			$this->db->quoteString($tplset_name)
+		);
 		$result = $this->db->query($sql);
 		if (!$result) {
 			return false;

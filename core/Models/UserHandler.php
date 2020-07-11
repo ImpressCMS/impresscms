@@ -36,9 +36,8 @@
  */
 namespace ImpressCMS\Core\Models;
 
-
-
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\IPF\Handler;
 use ImpressCMS\Core\StopSpammer;
 
 include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
@@ -53,7 +52,7 @@ include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
  * @package	ICMS\Member\User
  */
 class UserHandler
-	extends \ImpressCMS\Core\IPF\Handler {
+	extends Handler {
 
 		public function __construct(&$db, $module = 'icms') {
 			if (!$module) {
@@ -86,7 +85,7 @@ class UserHandler
 	 * @TODO we need some kind of error message instead of just a FALSE return to inform whether user was deleted aswell as PM messages.
 	 */
 	public function delete(&$user, $force = false) {
-				if (!($user instanceof \ImpressCMS\Core\Models\User)) {
+				if (!($user instanceof User)) {
 									return;
 				}
 		$sql = sprintf(
