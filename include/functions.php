@@ -214,7 +214,7 @@ if (!function_exists('redirect_header')) {
 		// if the user selected a theme in the theme block, let's use this theme
 
 		$session = \icms::getInstance()->get('session');
-		$userSegment = $session->getSegment(icms_member_user_Object::class);
+		$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
 		$userTheme = $userSegment->get('theme');
 		if ($userTheme && in_array($userTheme, $icmsConfig['theme_set_allowed'])) {
 			$theme = $userTheme;

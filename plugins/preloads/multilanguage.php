@@ -39,9 +39,9 @@ class icms_MultilanguageEventHandler {
 			 * @var Aura\Session\Session $session
 			 */
 			$session = \icms::getInstance()->get('session');
-			$userSegment = $session->getSegment(icms_member_user_Object::class);
+			$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
 
-			$easiestml_langpaths = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/");
+			$easiestml_langpaths = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . '/language/');
 			$langs = array_combine($easiestml_langs, explode(',', $icmsConfigMultilang['ml_names']));
 
 			if ($icmsConfigMultilang['ml_autoselect_enabled']

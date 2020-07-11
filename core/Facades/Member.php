@@ -37,11 +37,15 @@
 
 namespace ImpressCMS\Core\Facades;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Database\Legacy\Updater\TableUpdater;
 use ImpressCMS\Core\Models\Group;
 use ImpressCMS\Core\Models\GroupHandler;
 use ImpressCMS\Core\Models\GroupMembershipHandler;
 use ImpressCMS\Core\Models\User;
+use ImpressCMS\Core\Models\UserHandler;
 use ImpressCMS\Core\Password;
 
 /**
@@ -52,7 +56,7 @@ use ImpressCMS\Core\Password;
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @package	ICMS\Member
  */
-class Member {
+class Member extends AbstractFacade {
 
 	/**
 	 * holds reference to user handler(DAO) class
@@ -73,7 +77,7 @@ class Member {
 	/**
 	 * holds temporary user objects
 	 */
-	private $_members = array();
+	private $_members = [];
 
 	/**
 	 * constructor
@@ -81,7 +85,7 @@ class Member {
 	 */
 	public function __construct(&$db) {
 		$this->_gHandler = new GroupHandler($db);
-		$this->_uHandler = new \ImpressCMS\Core\Models\UserHandler($db);
+		$this->_uHandler = new UserHandler($db);
 		$this->_mHandler = new GroupMembershipHandler($db);
 		$this->db = &$db;
 	}
@@ -112,7 +116,7 @@ class Member {
 	 */
 	public function deleteGroup(&$group) {
 		$this->_gHandler->delete($group);
-		$this->_mHandler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('groupid', $group->getVar('groupid')));
+		$this->_mHandler->deleteAll(new CriteriaItem('groupid', $group->getVar('groupid')));
 		return true;
 	}
 
@@ -125,7 +129,7 @@ class Member {
 	 */
 	public function deleteUser(&$user) {
 		$this->_uHandler->delete($user);
-		$this->_mHandler->deleteAll(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uid', $user->getVar('uid')));
+		$this->_mHandler->deleteAll(new CriteriaItem('uid', $user->getVar('uid')));
 		return true;
 	}
 
@@ -221,11 +225,11 @@ class Member {
 	 * @return bool success?
 	 */
 	public function removeUsersFromGroup($group_id, $user_ids = array()) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('groupid', $group_id));
-		$criteria2 = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('groupid', $group_id));
+		$criteria2 = new CriteriaCompo();
 		foreach ($user_ids as $uid) {
-			$criteria2->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uid', $uid), 'OR');
+			$criteria2->add(new CriteriaItem('uid', $uid), 'OR');
 		}
 		$criteria->add($criteria2);
 		return $this->_mHandler->deleteAll($criteria);
@@ -293,15 +297,15 @@ class Member {
 
         $pwd = $icmspass->verifyPass($pwd, $uname);
 
-		$table = new \ImpressCMS\Core\Database\Legacy\Updater\TableUpdater('users');
+		$table = new TableUpdater('users');
 		if ($table->fieldExists('loginname')) {
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('loginname', $uname));
+			$criteria = new CriteriaCompo(new CriteriaItem('loginname', $uname));
 		} elseif ($table->fieldExists('login_name')) {
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('login_name', $uname));
+			$criteria = new CriteriaCompo(new CriteriaItem('login_name', $uname));
 		} else {
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uname', $uname));
+			$criteria = new CriteriaCompo(new CriteriaItem('uname', $uname));
 		}
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('pass', $pwd));
+		$criteria->add(new CriteriaItem('pass', $pwd));
 		$user = $this->_uHandler->getObjects($criteria, false);
 		if (!$user || count($user) != 1) {
 			$user = false;
@@ -312,7 +316,7 @@ class Member {
 
 	public function icms_getLoginFromUserEmail($email = '')
 	{
-		$table = new \ImpressCMS\Core\Database\Legacy\Updater\TableUpdater('users');
+		$table = new TableUpdater('users');
 
 		if ($email !== '') {
 			if ($table->fieldExists('loginname')) {
@@ -346,7 +350,7 @@ class Member {
 	 * @return int
 	 */
 	public function getUserCountByGroup($group_id) {
-		return $this->_mHandler->getCount(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('groupid', $group_id));
+		return $this->_mHandler->getCount(new CriteriaItem('groupid', $group_id));
 	}
 
 	/**

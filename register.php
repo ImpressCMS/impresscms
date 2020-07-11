@@ -199,14 +199,14 @@ switch ($op) {
 				exit();
 			}
 
-			$thisuser = new icms_member_user_Object($newid);
+			$thisuser = \icms::handler('icms_member')->getUser($newid);
 
 			// Activation by user
 			if ($icmsConfigUser['activation_type'] == 0) {
 				$mailer = new icms_messaging_Handler();
 				$mailer->useMail();
 				$mailer->setTemplate('register.tpl');
-				$mailer->setToUsers(new icms_member_user_Object($newid));
+				$mailer->setToUsers(\icms::handler('icms_member')->getUser($newid));
 				$mailer->setFromEmail($icmsConfig['adminmail']);
 				$mailer->setFromName($icmsConfig['sitename']);
 				$mailer->setSubject(sprintf(_US_USERKEYFOR, $uname));

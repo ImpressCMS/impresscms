@@ -54,7 +54,7 @@ use ImpressCMS\Core\Models\ConfigOptionHandler;
  *                  - error handling
  * @access	public
  */
-class Config {
+class Config extends AbstractFacade {
 	static protected $instance;
 
 		/**

@@ -234,7 +234,7 @@ if ($action == 'showpopups') {
 					if ($onlines[$i]['online_uid'] == 0) {
 						$onlineUsers[$i]['user'] = '';
 					} else {
-						$onlineUsers[$i]['user'] = new icms_member_user_Object($onlines[$i]['online_uid']);
+						$onlineUsers[$i]['user'] = new \ImpressCMS\Core\Models\User($onlines[$i]['online_uid']);
 					}
 					$onlineUsers[$i]['ip'] = $onlines[$i]['online_ip'];
 					$onlineUsers[$i]['updated'] = $onlines[$i]['online_updated'];

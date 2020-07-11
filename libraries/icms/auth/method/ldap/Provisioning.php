@@ -49,7 +49,7 @@ class icms_auth_method_ldap_Provisioning {
 	/**
 	 * Return a User Object
 	 * @param   string $uname Username of the user
-	 * @return  \\ImpressCMS\Core\Member\UserModel|false \ImpressCMS\Core\Member\UserModel or false if failed
+	 * @return  \ImpressCMS\Core\Member\UserModel|false \ImpressCMS\Core\Member\UserModel or false if failed
 	 */
 	public function geticms_member_user_Object($uname) {
 		$member_handler = \icms::handler('icms_member');
@@ -67,7 +67,7 @@ class icms_auth_method_ldap_Provisioning {
 	 * @param array $datas Some Data
 	 * @param string $uname Username of the user
 	 * @param string $pwd Password of the user
-	 * @return \\ImpressCMS\Core\Member\UserModel \ImpressCMS\Core\Member\UserModel
+	 * @return \ImpressCMS\Core\Member\UserModel \ImpressCMS\Core\Member\UserModel
 	 */
 	public function sync($datas, $uname, $pwd = null) {
 		$icmsUser = $this->geticms_member_user_Object($uname);
