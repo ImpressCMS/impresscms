@@ -267,7 +267,7 @@ class PageBuilder {
 				return false;
 			}
 			$template->assign('block', $bresult);
-			$block['content'] = $bresult['content'] ? $bresult['content'] : $template->fetch($tplName, $cacheid);
+			$block['content'] = $bresult['content'] ?? $template->fetch($tplName, $cacheid);
 		} else {
 			\icms::$logger->addBlock($xobject->getVar('name'), true, $bcachetime);
 			$block['content'] = $template->fetch($tplName, $cacheid);

@@ -56,11 +56,15 @@ class Template extends SmartyBC
 	public $cache_dir = ICMS_CACHE_PATH;
 	public $compile_dir = ICMS_COMPILE_PATH;
 
+	/**
+	 * @var Theme\ThemeComponent
+	 */
+	public $currentTheme;
+
 	public function __construct() {
-		global $icmsConfig;
+		global $icmsConfig, $icmsModule;
 
 		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
-		$this->_compile_id = $this->compile_id;
 		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
 
 		parent::__construct();
@@ -87,7 +91,7 @@ class Template extends SmartyBC
 			'modules_url' => ICMS_MODULES_URL,
 			'modules_rootpath' => ICMS_MODULES_PATH,
 			'icms_langcode' => _LANGCODE,
-			'icms_langname' => $GLOBALS["icmsConfig"]["language"],
+			'icms_langname' => $GLOBALS['icmsConfig']['language'],
 			'icms_charset' => _CHARSET,
 			'icms_version' => ICMS_VERSION_NAME,
 			'icms_upload_url' => ICMS_UPLOAD_URL,
@@ -169,7 +173,7 @@ class Template extends SmartyBC
 	 *
 	 * @param   int $mid    Module ID
 	 */
-	static public function template_clear_module_cache($mid) {
+	public static function template_clear_module_cache($mid) {
 		$icms_block_handler = \icms::handler('icms_view_block');
 		$block_arr = $icms_block_handler->getByModule($mid);
 		$count = count($block_arr);
@@ -177,8 +181,8 @@ class Template extends SmartyBC
 			$tpl = new self();
 			$tpl->caching = 2;
 			for ($i = 0; $i < $count; $i++) {
-				if ($block_arr[$i]->getVar('template') != '') {
-					$tpl->clear_cache('db:' . $block_arr[$i]->getVar('template'), 'blk_' . $block_arr[$i]->getVar('bid'));
+				if ($block_arr[$i]->template) {
+					$tpl->clear_cache('db:' . $block_arr[$i]->template, 'blk_' . $block_arr[$i]->bid);
 				}
 			}
 		}

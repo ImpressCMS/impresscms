@@ -38,7 +38,7 @@ class Logger extends \Monolog\Logger
 				new RotatingFileHandler(
 					ICMS_LOGGING_PATH . '/default.log',
 					0,
-					$enabled ? Logger::DEBUG : Logger::ERROR
+					$enabled ? self::DEBUG : self::ERROR
 				)
 			]);
 			// Always catch errors, for security reasons

@@ -1,5 +1,7 @@
 <?php
 
+use ImpressCMS\Core\Models\Module;
+
 /**
  * Creates response of HTML type
  *
@@ -499,7 +501,7 @@ class icms_response_HTML extends icms_response_Text {
 	private function includeNotificationsSelection() {
 		global $icmsModule;
 		// RMV-NOTIFY
-		if (($icmsModule instanceof \ImpressCMS\Core\Models\Module) && ($icmsModule->hasnotification == 1) && is_object(\icms::$user)) {
+		if (($icmsModule instanceof Module) && ($icmsModule->hasnotification == 1) && is_object(\icms::$user)) {
 			/** Require the notifications area */
 			global $xoTheme, $xoopsTpl;
 			$xoopsTpl = &$this;
