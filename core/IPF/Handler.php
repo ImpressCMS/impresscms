@@ -876,29 +876,29 @@ class Handler extends ObjectHandler {
 		$for_insert = [];
 		$for_update = [];
 		foreach ($data as $i => $obj) {
-			if ($obj->handler->className != $this->className) {
+			if ($obj->handler->className !== $this->className) {
 				$obj->setErrors(get_class($obj) . ' Differs from ' . $this->className);
 				continue;
 			}
 			if (!$obj->isChanged()) {
-				$obj->setErrors("Not changed"); //will usually not be outputted as errors are not displayed when the method returns true, but it can be helpful when troubleshooting code - Mith
+				$obj->setErrors('Not changed'); //will usually not be outputted as errors are not displayed when the method returns true, but it can be helpful when troubleshooting code - Mith
 				$scount++;
 				continue;
 			}
 			if ($obj->seoEnabled) {
 				$obj->updateMetas();
 			}
-			if (!$this->executeEvent('beforeSave', $data[$i])) {
+			if ($this->executeEvent('beforeSave', $data[$i]) === false) {
 				continue;
 			}
 			if ($obj->isNew()) {
-				if (!$this->executeEvent('beforeInsert', $data[$i])) {
+				if ($this->executeEvent('beforeInsert', $data[$i]) === false) {
 					continue;
 				}
 
 				$for_insert[] = &$data[$i];
 			} else {
-				if (!$this->executeEvent('beforeUpdate', $data[$i])) {
+				if ($this->executeEvent('beforeUpdate', $data[$i]) === false) {
 					continue;
 				}
 
@@ -946,7 +946,6 @@ class Handler extends ObjectHandler {
 				//$this->db->query('UNLOCK TABLES;');
 			} else {
 				$sql = $this->generateInsertSQL($for_insert);
-
 				if ($this->debugMode) {
 					Debug::message($sql);
 				}
@@ -965,7 +964,7 @@ class Handler extends ObjectHandler {
 		}
 
 		if (($count = count($for_update)) > 0) {
-			$sql = ($count == 1)?$this->generateUpdateSQL($for_update[0]):$this->generateUpdateSQL($for_update);
+			$sql = ($count === 1)?$this->generateUpdateSQL($for_update[0]):$this->generateUpdateSQL($for_update);
 
 			if ($sql !== null) {
 

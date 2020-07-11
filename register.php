@@ -143,6 +143,9 @@ switch ($op) {
 		}
 
 		if (empty($stop)) {
+			/**
+			 * @var \ImpressCMS\Core\Facades\Member $member_handler
+			 */
 			$member_handler = icms::handler('icms_member');
 			$newuser = & $member_handler->createUser();
 			$newuser->setVar('user_viewemail', $user_viewemail, true);
@@ -170,14 +173,14 @@ switch ($op) {
 			if ($valid_actkey || $icmsConfigUser['activation_type'] == 1) {
 				$newuser->setVar('level', 1, true);
 			}
-			if (!$member_handler->insertUser($newuser)) {
-				echo "<div id='registerng'>" . _US_REGISTERNG . "</div>";
+			if (!$newuser->store()) {
+				echo "<div id='registerng'>" . _US_REGISTERNG . '</div>';
 				include 'footer.php';
 				exit();
 			}
 			$newid = (int) $newuser->getVar('uid');
 			if (!$member_handler->addUserToGroup(ICMS_GROUP_USERS, $newid)) {
-				echo "<div id='registerng'>" . _US_REGISTERNG . "</div>";
+				echo "<div id='registerng'>" . _US_REGISTERNG . '</div>';
 				include 'footer.php';
 				exit();
 			}

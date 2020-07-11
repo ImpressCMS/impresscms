@@ -48,6 +48,13 @@ class ImageHandler {
 	private $mode = 'gd';
 
 	/**
+	 * Linked form element name
+	 *
+	 * @var null|string
+	 */
+	private $name;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -56,8 +63,9 @@ class ImageHandler {
 		 */
 		$session = icms::getInstance()->get('session');
 		$this->captchaSection = $session->getSegment(Image::class);
+		$this->name = $this->captchaSection->get('name');
 
-		if (!$session->getId()) {
+		if (!$this->name) {
 			$this->invalid = true;
 		}
 
@@ -130,8 +138,8 @@ class ImageHandler {
 		// Increase the attempt records on refresh
 		if (!empty($maxAttempts)) {
 			$this->captchaSection->set(
-				'attempt',
-				$attempt = $this->captchaSection->get('attempt' ) + 1
+				'attempt_' . $this->name,
+				$attempt = $this->captchaSection->get('attempt_' . $this->name ) + 1
 			);
 			if ($attempt > $maxAttempts) {
 				$this->invalid = true;
@@ -145,7 +153,7 @@ class ImageHandler {
 	public function clearAttempts()
 	{
 		$this->captchaSection->set(
-			'attempt',
+			'attempt_' . $this->name,
 			0
 		);
 	}

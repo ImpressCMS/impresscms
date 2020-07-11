@@ -52,8 +52,8 @@ class ImageMode {
 	 */
 	public function render() {
 		global $icmsConfigCaptcha;
-		$form = "<input type='text' name='" . $this->config["name"]
-			. "' id='" . $this->config["name"]
+		$form = "<input type='text' name='" . $this->config['name']
+			. "' id='" . $this->config['name']
 			. "' size='" . $icmsConfigCaptcha['captcha_num_chars']
 			. "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars']
 			. "' value='' /> &nbsp; " . $this->loadImage();
@@ -73,7 +73,13 @@ class ImageMode {
 	public function loadImage() {
 		global $icmsConfigCaptcha;
 		$rule = $icmsConfigCaptcha['captcha_casesensitive']? constant('ICMS_CAPTCHA_RULE_CASESENSITIVE'):constant('ICMS_CAPTCHA_RULE_CASEINSENSITIVE');
-		return "<img id='captcha' src='" . $this->getBase64ImageUrl() . "' onclick='this.src=\"".ICMS_URL."/misc.php?action=update-captcha&amp;rnd=\" + Math.random();' style='cursor: pointer;margin-left: auto;margin-right: auto;text-align:center;' alt='" . htmlspecialchars($rule, ENT_QUOTES, _CHARSET) . "' />";
+		return sprintf(
+			"<img id='captcha' src='%s' onclick='this.src=\"%s/misc.php?action=update-captcha&amp;name=%s&amp;rnd=\" + Math.random();' style='cursor: pointer;margin-left: auto;margin-right: auto;text-align:center;' alt='%s' />",
+			$this->getBase64ImageUrl(),
+			ICMS_URL,
+			urlencode($this->config['name']),
+			htmlspecialchars($rule, ENT_QUOTES, _CHARSET)
+		);
 	}
 
 	/**

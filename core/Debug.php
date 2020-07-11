@@ -24,8 +24,8 @@ class Debug {
 	 * @param string $msg
 	 * @param boolean $exit
 	 */
-	static public function message($msg, $exit = false) {
-		echo "<div style='padding: 5px; color: red; font-weight: bold'>" . _CORE_DEBUG . " :: " . $msg . "</div>";
+	public static function message($msg, $exit = false) {
+		echo "<div style='padding: 5px; color: red; font-weight: bold'>" . _CORE_DEBUG . ' :: ' . $msg . '</div>';
 		if ($exit) {
 			die();
 		}
@@ -36,12 +36,12 @@ class Debug {
 	 *
 	 * @param string $var
 	 */
- 	static public function vardump($var) {
+ 	public static function vardump($var) {
  		if (class_exists(Textsanitizer::class)) {
 			self::message(DataFilter::checkVar(var_export($var, true), 'text', 'output'));
  		} else {
 			$var = var_export($var, true);
-			$var = preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $var);
+			$var = preg_replace("/(\015\012)|(\015)|(\012)/", '<br />', $var);
 			self::message($var);
  		}
  	}
@@ -53,7 +53,7 @@ class Debug {
  	 * @param string $replacement Method or function to be used instead of the deprecated method or function
  	 * @param string $extra Additional information to provide about the change
  	 */
- 	static public function setDeprecated($replacement = '', $extra = '') {
+ 	public static function setDeprecated($replacement = '', $extra = '') {
 		\icms_loadLanguageFile('core', 'core');
 		$trace = debug_backtrace();
 		array_shift($trace);
@@ -71,10 +71,10 @@ class Debug {
 			$level .= '-';
 			if (isset($step['file'])) {
 					$message .= $level . $msg
-						. (isset($step['class'])?$step['class']:'')
-						. (isset($step['type'])?$step['type']:'')
+						. ($step['class'] ?? '')
+						. ($step['type'] ?? '')
 						. sprintf(_CORE_DEPRECATED_MSG, $step['function'],
-							str_replace(ICMS_ROOT_PATH, "ROOTPATH", $step['file']),
+							str_replace(ICMS_ROOT_PATH, 'ROOTPATH', $step['file']),
 							$step['line']
 						);
 			}

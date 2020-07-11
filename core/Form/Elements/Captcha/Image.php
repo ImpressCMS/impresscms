@@ -88,7 +88,7 @@ class Image {
 	 * Creates instance of CaptchaElement Object
 	 * @return  object Reference to the CaptchaElement Object
 	 */
-	static public function &instance()
+	public static function &instance()
 	{
 		static $instance;
 		if (!isset($instance)) {
@@ -157,26 +157,26 @@ class Image {
 		global $icmsConfig, $icmsConfigCaptcha;
 
 		/**
-		 * @var Aura\Session\Session $session
+		 * @var \Aura\Session\Session $session
 		 */
 		$session = icms::getInstance()->get('session');
-		$captchaSection = $session->getSegment(Image::class);
+		$captchaSection = $session->getSegment(__CLASS__);
 
 		$sessionName = $captchaSection->get('name');
-		$skipMember = ($skipMember === null) ? $captchaSection->get('skip_member') : $skipMember;
+		$skipMember = $skipMember ?? $captchaSection->get('skip_member');
 		$maxAttempts = (int)$captchaSection->get('max_attempts');
 
 		$is_valid = false;
 
 		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
-		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
+		if (is_object(icms::$user) && array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember'])) {
 			$is_valid = true;
 		} elseif (!empty($maxAttempts) && $captchaSection->get('attempt_' . $sessionName) > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 			// Verify the code
 		} elseif ($session_code = $captchaSection->get('session_code')) {
-			$func = ($icmsConfigCaptcha['captcha_casesensitive'])?"strcmp":"strcasecmp";
+			$func = ($icmsConfigCaptcha['captcha_casesensitive'])? 'strcmp' : 'strcasecmp';
 			$is_valid = !$func(trim(@$_POST[$sessionName]), $session_code);
 		}
 
