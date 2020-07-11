@@ -2,6 +2,8 @@
 namespace ImpressCMS\Core;
 
 use DirectoryIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * A static class for file system functions
@@ -79,13 +81,17 @@ class Filesystem {
 	 *
 	 * Removes the content of a folder.
 	 * Replaces icms_clean_folders()
-	 * @todo	Rewrite with SPL Directory Iterators
 	 *
-	 * @author	Steve Kenow (aka skenow) <skenow@impresscms.org>
-	 * @author	modified by Vaughan <vaughan@impresscms.org>
-	 * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-	 * @param	string	$dir	The folder path to cleaned. Must be an array like: array('cache' => ICMS_CACHE_PATH . "/");
-	 * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
+	 * @param string $dir The folder path to cleaned. Must be an array like: array('cache' => ICMS_CACHE_PATH . "/");
+	 * @param bool $remove_admin_cache True to remove admin cache, if required.
+	 *
+	 * @return bool
+	 *
+	 * @author    modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+	 * @todo    Rewrite with SPL Directory Iterators
+	 *
+	 * @author    Steve Kenow (aka skenow) <skenow@impresscms.org>
+	 * @author    modified by Vaughan <vaughan@impresscms.org>
 	 */
 	static public function cleanFolders($dir, $remove_admin_cache = false) {
 		global $icmsConfig;

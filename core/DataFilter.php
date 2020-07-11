@@ -30,6 +30,8 @@
 
 namespace ImpressCMS\Core;
 
+use ImpressCMS\Core\Facades\Config;
+
 /**
  * Class to filter Data
  *
@@ -44,12 +46,12 @@ class DataFilter {
 	/**
 	 * @public	array
 	 */
-	static public $displaySmileys = array();
+	static public $displaySmileys = [];
 
 	/**
 	 * @public	array
 	 */
-	static public $allSmileys = array();
+	static public $allSmileys = [];
 
 	/**
 	 *
@@ -66,11 +68,11 @@ class DataFilter {
 	 * @param $text
 	 * @param $msg
 	 */
-	static public function filterDebugInfo($text, $msg) {
-		echo "<div style='padding: 5px; color: red; font-weight: bold'>$text</div>";
-		echo "<div><pre>";
+	public static function filterDebugInfo($text, $msg) {
+		printf("<div style='padding: 5px; color: red; font-weight: bold'>%s</div>", $text);
+		echo '<div><pre>';
 		print_r($msg);
-		echo "</pre></div>";
+		echo '</pre></div>';
 	}
 
 	/**
@@ -81,12 +83,8 @@ class DataFilter {
 	 * @param   array  $matches
 	 * @return  string
 	 */
-	static public function _filterImgUrl($matches) {
-		if (self::checkUrlString($matches[2])) {
-			return $matches[0];
-		} else {
-			return '';
-		}
+	public static function _filterImgUrl($matches) {
+		return self::checkUrlString($matches[2]) ? $matches[0] : '';
 	}
 
 	/**
@@ -97,13 +95,13 @@ class DataFilter {
 	 * @param   string  $text
 	 * @return  bool
 	 */
-	static public function checkUrlString($text) {
+	public static function checkUrlString($text) {
 		// Check control code
 		if (preg_match("/[\0-\31]/", $text)) {
 			return false;
 		}
 		// check black pattern(deprecated)
-		return !preg_match("/^(javascript|vbscript|about):/i", $text);
+		return !preg_match('/^(javascript|vbscript|about):/i', $text);
 	}
 
 	/**
@@ -112,7 +110,7 @@ class DataFilter {
 	 * @param	string  $text
 	 * @return   string
 	 */
-	static public function nl2Br($text) {
+	public static function nl2Br($text) {
 		return preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $text);
 	}
 
@@ -122,8 +120,8 @@ class DataFilter {
 	 * @param	string  $text
 	 * @return   string
 	 */
-	static public function htmlSpecialChars($text) {
-		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
+	public static function htmlSpecialChars($text) {
+		return preg_replace(array('/&amp;/i', '/&nbsp;/i'), array('&', '&amp;nbsp;'),
 			@htmlspecialchars($text, ENT_QUOTES, _CHARSET));
 	}
 
@@ -133,7 +131,7 @@ class DataFilter {
 	 * @param   string  $text
 	 * @return  string
 	 */
-	static public function undoHtmlSpecialChars($text) {
+	public static function undoHtmlSpecialChars($text) {
 		return htmlspecialchars_decode($text, ENT_QUOTES);
 	}
 
@@ -144,8 +142,8 @@ class DataFilter {
 	 *
 	 * @return string|string[]|null
 	 */
-	static public function htmlEntities($text) {
-		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
+	public static function htmlEntities($text) {
+		return preg_replace(array('/&amp;/i', '/&nbsp;/i'), array('&', '&amp;nbsp;'),
 				@htmlentities($text, ENT_QUOTES, _CHARSET));
 	}
 
@@ -159,7 +157,7 @@ class DataFilter {
 	 * @param   string  $text
 	 * @return  string
 	 */
-	static public function addSlashes($text) {
+	public static function addSlashes($text) {
 		if (!get_magic_quotes_gpc()) {
 			$text = addslashes($text);
 		}
@@ -174,7 +172,7 @@ class DataFilter {
 	 * @param	string  $text
 	 * @return   string
 	 */
-	static public function stripSlashesGPC($text) {
+	public static function stripSlashesGPC($text) {
 		if (get_magic_quotes_gpc()) {
 			$text = stripslashes($text);
 		}
@@ -189,7 +187,7 @@ class DataFilter {
 	 * @param       array     $array       Array to be filtered
 	 * @return      array     $array
 	 */
-	static public function cleanArray($arr) {
+	public static function cleanArray($arr) {
 		$rtn = array();
 
 		foreach ($arr as $key => $a) {
@@ -199,7 +197,7 @@ class DataFilter {
 				if (count($a) > 0) {
 					$a = self::cleanArray($a);
 					$rtn[$key] = $a;
-					if (count($a) == 0) {
+					if (count($a) === 0) {
 						unset($rtn[$key]);
 					}
 				}
@@ -282,13 +280,14 @@ class DataFilter {
 	*/
 
 	/**
-	 * @author		vaughan montgomery (vaughan@impresscms.org)
-	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
-	 *
 	 * @param $data
 	 * @param $type
 	 * @param $options1
 	 * @param $options2
+	 * @return bool|mixed|string|string[]
+	 * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 *
+	 * @author        vaughan montgomery (vaughan@impresscms.org)
 	 */
 	static public function checkVar($data, $type, $options1 = '', $options2 = '') {
 		if (!$data || !$type) {
@@ -449,7 +448,7 @@ class DataFilter {
 	 * @param   string  $text
 	 * @return  string
 	 */
-	static public function filterTextareaInput($text) {
+	public static function filterTextareaInput($text) {
 		\icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
 		$text = self::htmlSpecialChars($text);
@@ -471,7 +470,7 @@ class DataFilter {
 	 * @param   bool	$br	 convert linebreaks?
 	 * @return  string
 	 */
-	static public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
+	public static function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
 		\icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 
 		// neccessary for the time being until we rework the IPF & Data Object Types in 2.0
@@ -512,7 +511,7 @@ class DataFilter {
 	 * @param   bool	$image  allow inline images?
 	 * @return  string
 	 */
-	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1, $br = 0) {
+	public static function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1, $br = 0) {
 		\icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 
 		$html = str_replace('<!-- input filtered -->', '', $html);
@@ -547,7 +546,7 @@ class DataFilter {
 	 * @param   bool	$icode  allow icmscode?
 	 * @return  string
 	 */
-	static public function filterHTMLdisplay($html, $icode = 1, $br = 0) {
+	public static function filterHTMLdisplay($html, $icode = 1, $br = 0) {
 		\icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
 
 		$ifiltered = strpos($html, '<!-- input filtered -->');
@@ -585,7 +584,7 @@ class DataFilter {
 	 *				  On FALSE, uses links to images.
 	 * @return  string
 	 */
-	static public function codeDecode(&$text, $allowimage = 1) {
+	public static function codeDecode(&$text, $allowimage = 1) {
 		$patterns = array();
 		$replacements = array();
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
@@ -660,7 +659,7 @@ class DataFilter {
 	 * @param   string  $text
 	 * @return  string
 	 */
-	static public function makeClickable($text) {
+	public static function makeClickable($text) {
 		global $icmsConfigPersona;
 		$text = ' ' . $text;
 		$patterns = array(
@@ -704,7 +703,7 @@ class DataFilter {
 	 *
 	 * @param $message
 	 */
-	static public function smiley($message) {
+	public static function smiley($message) {
 		return self::priv_smiley($message);
 	}
 
@@ -712,7 +711,7 @@ class DataFilter {
 	 *
 	 * @param $message
 	 */
-	static public function getSmileys($all = false) {
+	public static function getSmileys($all = false) {
 		return self::priv_getSmileys($all);
 	}
 
@@ -723,9 +722,9 @@ class DataFilter {
 	 * @return  string
 	 *
 	 */
-	static public function censorString(&$text) {
-		$icmsConfigCensor = \icms::$config->getConfigsByCat(ImpressCMS\Core\Models\Config::CATEGORY_CENSOR);
-		if ($icmsConfigCensor['censor_enable'] == true) {
+	public static function censorString(&$text) {
+		$icmsConfigCensor = \icms::$config->getConfigsByCat(Config::CATEGORY_CENSOR);
+		if ($icmsConfigCensor['censor_enable']) {
 			$replacement = $icmsConfigCensor['censor_replace'];
 			if (!empty($icmsConfigCensor['censor_words'])) {
 				foreach ($icmsConfigCensor['censor_words'] as $bad) {
@@ -750,7 +749,7 @@ class DataFilter {
 	/**#@+
 	 * Sanitizing of [code] tag
 	 */
-	static public function codePreConv($text, $imcode = 1) {
+	public static function codePreConv($text, $imcode = 1) {
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
 			$text = preg_replace_callback($patterns, function($match) {
@@ -768,7 +767,7 @@ class DataFilter {
 	 * @param	 int	   $image	configuration for the purifier
 	 * @return	string	$text	 the converted text
 	 */
-	static public function codeConv($text, $imcode = 1, $image = 1) {
+	public static function codeConv($text, $imcode = 1, $image = 1) {
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
 			$text = preg_replace_callback($patterns, function($matches) use ($image) {
@@ -786,7 +785,7 @@ class DataFilter {
 	 * @param   string	$image	Is the string an image
 	 * @return  string	$str	  The sanitized decoded string
 	 */
-	static public function codeSanitizer($str, $image = 1) {
+	public static function codeSanitizer($str, $image = 1) {
 		$str = self::htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
 		$str = self::codeDecode($str, $image);
 		return $str;
@@ -800,7 +799,7 @@ class DataFilter {
 	 * @return string
 	 * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 */
-	static public function codeDecode_extended($text, $allowimage = 1) {
+	public static function codeDecode_extended($text, $allowimage = 1) {
 		global $icmsConfigPlugins;
 		if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 			foreach ($icmsConfigPlugins['sanitizer_plugins'] as $item) {
@@ -818,7 +817,7 @@ class DataFilter {
 	 * @param	 string	$name	 Name of the extension to load
 	 * @return	bool
 	 */
-	static public function loadExtension($name) {
+	public static function loadExtension($name) {
 		if (empty($name) || !include_once ICMS_PLUGINS_PATH . "/textsanitizer/{$name}/{$name}.php") {
 			return false;
 		}
@@ -833,7 +832,7 @@ class DataFilter {
 	 * @param	 string	$text	 Text to show if the function doesn't exist
 	 * @return	string	 the return of the called function
 	 */
-	static public function executeExtension($name, $text) {
+	public static function executeExtension($name, $text) {
 		self::loadExtension($name);
 		$func = "textsanitizer_{$name}";
 		if (!function_exists($func)) {
@@ -851,7 +850,7 @@ class DataFilter {
 	 * @param	 string	$text	 purifies (lightly) and then syntax highlights the text
 	 * @return	string	$text	 the syntax highlighted text
 	 */
-	static public function textsanitizer_syntaxhighlight(&$text) {
+	public static function textsanitizer_syntaxhighlight(&$text) {
 		global $icmsConfigPlugins;
 		if ($icmsConfigPlugins['code_sanitizer'] == 'php') {
 			$text = self::undoHtmlSpecialChars($text);
@@ -873,7 +872,7 @@ class DataFilter {
 	 * @param	 string	$text	 Text to highlight
 	 * @return	string	$buffer   the highlighted text
 	 */
-	static public function textsanitizer_php_highlight($text) {
+	public static function textsanitizer_php_highlight($text) {
 		$text = trim($text);
 		$addedtag_open = 0;
 		if (!strpos($text, '<?php') and (substr($text, 0, 5) != '<?php')) {
@@ -915,7 +914,7 @@ class DataFilter {
 	 * @param	 string	$text	 The text to highlight
 	 * @return	string	$code	 the highlighted text
 	 */
-	static public function textsanitizer_geshi_highlight($text) {
+	public static function textsanitizer_geshi_highlight($text) {
 		global $icmsConfigPlugins;
 
 		$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
@@ -945,7 +944,7 @@ class DataFilter {
 	 * @param	string	$text	The Text to trim
 	 * @return	string	$text	The trimmed text
 	 */
-	static public function icms_trim($text) {
+	public static function icms_trim($text) {
 		if (function_exists('xoops_language_trim')) {return xoops_language_trim($text); }
 		return trim($text);
 	}
@@ -960,7 +959,7 @@ class DataFilter {
 	 *				example: when TRUE: impresscms 2008 > 8002 smcsserpmi, FALSE: impresscms 2008 > 2008 smcsserpmi
 	 * @return string
 	 */
-	static public function utf8_strrev($str, $reverse = false) {
+	public static function utf8_strrev($str, $reverse = false) {
 		preg_match_all('/./us', $str, $ar);
 		if ($reverse) {
 			return join('', array_reverse($ar[0]));
@@ -999,7 +998,7 @@ class DataFilter {
 	 *
 	 * @return   string
 	 */
-	static public function icms_substr($str, $start, $length, $trimmarker = '...') {
+	public static function icms_substr($str, $start, $length, $trimmarker = '...') {
 		global $icmsConfigMultilang;
 
 		if ($icmsConfigMultilang['ml_enable']) {
@@ -1056,25 +1055,25 @@ class DataFilter {
 	 *
 	 * @return
 	 */
-	static private function priv_checkVar($data, $type, $options1, $options2) {
+	private static function priv_checkVar($data, $type, $options1, $options2) {
 		switch ($type) {
-			case "url": // returns False if URL invalid, returns $string if Valid
+			case 'url': // returns False if URL invalid, returns $string if Valid
 				$data = filter_var($data, FILTER_SANITIZE_URL);
 
 				switch ($options1) {
-					case "scheme":
+					case 'scheme':
 						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED);
 					break;
 
-					case "host":
+					case 'host':
 						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED);
 					break;
 
-					case "path":
+					case 'path':
 						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED);
 					break;
 
-					case "query":
+					case 'query':
 						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_QUERY_REQUIRED);
 					break;
 
@@ -1091,7 +1090,7 @@ class DataFilter {
 				return false;
 			break;
 
-			case "email": // returns False if email is invalid, returns $string if valid
+			case 'email': // returns False if email is invalid, returns $string if valid
 				global $icmsConfigUser;
 
 				$data = filter_var($data, FILTER_SANITIZE_EMAIL);
@@ -1118,21 +1117,21 @@ class DataFilter {
 				return $data;
 			break;
 
-			case "ip": // returns False if IP is invalid, returns TRUE if valid
+			case 'ip': // returns False if IP is invalid, returns TRUE if valid
 				switch ($options1) {
-					case "ipv4":
+					case 'ipv4':
 						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
 					break;
 
-					case "ipv6":
+					case 'ipv6':
 						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
 					break;
 
-					case "rfc":
+					case 'rfc':
 						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE);
 					break;
 
-					case "res":
+					case 'res':
 						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE);
 					break;
 
@@ -1144,27 +1143,27 @@ class DataFilter {
 
 			case 'str': // returns $string
 				switch ($options1) {
-					case "noencode":
+					case 'noencode':
 						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 					break;
 
-					case "striplow":
+					case 'striplow':
 						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
 					break;
 
-					case "striphigh":
+					case 'striphigh':
 						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 					break;
 
-					case "encodelow":
+					case 'encodelow':
 						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
 					break;
 
-					case "encodehigh":
+					case 'encodehigh':
 						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH);
 					break;
 
-					case "encodeamp":
+					case 'encodeamp':
 						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
 					break;
 
@@ -1174,7 +1173,7 @@ class DataFilter {
 				}
 			break;
 
-			case "int": // returns $int, returns FALSE if $opt1 & 2 set & $data is not inbetween values of $opt1 & 2
+			case 'int': // returns $int, returns FALSE if $opt1 & 2 set & $data is not inbetween values of $opt1 & 2
 				if ((isset($options1) && is_int($options1)) && (isset($options2) && is_int($options2))) {
 					$option = array('options' => array('min_range' => $options1,
 														'max_range' => $options2
@@ -1186,17 +1185,17 @@ class DataFilter {
 				}
 			break;
 
-			case "special": // returns $string
+			case 'special': // returns $string
 				switch ($options1) {
-					case "striplow":
+					case 'striplow':
 						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW);
 					break;
 
-					case "striphigh":
+					case 'striphigh':
 						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
 					break;
 
-					case "encodehigh":
+					case 'encodehigh':
 						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_ENCODE_HIGH);
 					break;
 
@@ -1206,7 +1205,7 @@ class DataFilter {
 				}
 			break;
 
-			case "html": // returns $string
+			case 'html': // returns $string
 				switch ($options1) {
 					case 'input':
 						default:
@@ -1233,7 +1232,7 @@ class DataFilter {
 				}
 			break;
 
-			case "text": // returns $string
+			case 'text': // returns $string
 				switch ($options1) {
 					case 'input':
 						default:
@@ -1263,7 +1262,7 @@ class DataFilter {
 	 * @param	string  $message
 	 * @return   string
 	 */
-	static private function priv_smiley($message) {
+	private static function priv_smiley($message) {
 		$smileys = self::priv_getSmileys(true);
 		foreach ($smileys as $smile) {
 			$message = str_replace(
@@ -1285,8 +1284,8 @@ class DataFilter {
 	 * @param	bool	$all
 	 * @return   array
 	 */
-	static private function priv_getSmileys($all = false) {
-		if (count(self::$allSmileys) == 0) {
+	private static function priv_getSmileys($all = false) {
+		if (count(self::$allSmileys) === 0) {
 			if ($result = \icms::$xoopsDB->query("SELECT * FROM " . \icms::$xoopsDB->prefix('smiles'))) {
 				while ($smiley = \icms::$xoopsDB->fetchArray($result)) {
 					if ($smiley['display']) {

@@ -1,6 +1,7 @@
 <?php
 namespace ImpressCMS\Core;
 
+use HTMLPurifier;
 use ImpressCMS\Core\Facades\Config;
 
 /**
