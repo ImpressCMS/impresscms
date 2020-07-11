@@ -2,6 +2,9 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\Handler;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
@@ -14,21 +17,21 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
         foreach ([
-                'icms_image_category_Handler' => '\ImpressCMS\Core\IPF\Handler',
-                'icms_image_category_Object' => '\ImpressCMS\Core\IPF\AbstractModel',
-                'icms_image_set_Handler' => '\ImpressCMS\Core\IPF\Handler',
-                'icms_image_set_Object' => '\ImpressCMS\Core\IPF\AbstractModel',
-                'icms_image_Handler' => '\ImpressCMS\Core\IPF\Handler',
-                'icms_image_Object' => '\ImpressCMS\Core\IPF\AbstractModel',
-                'icms_image_body_Handler' => '\ImpressCMS\Core\IPF\Handler',
-                'icms_image_body_Object' => '\ImpressCMS\Core\IPF\AbstractModel'
+                'icms_image_category_Handler' => Handler::class,
+                'icms_image_category_Object' => AbstractModel::class,
+                'icms_image_set_Handler' => Handler::class,
+                'icms_image_set_Object' => AbstractModel::class,
+                'icms_image_Handler' => Handler::class,
+                'icms_image_Object' => AbstractModel::class,
+                'icms_image_body_Handler' => Handler::class,
+                'icms_image_body_Object' => AbstractModel::class
             ] as $class => $must_be_instance_of) {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {
                 $instance = $this->getMockBuilder($class)
                     ->disableOriginalConstructor()
                     ->getMock();
-                $this->assertTrue( $instance instanceof $must_be_instance_of, $class . " is not instanceof " . $must_be_instance_of);
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' is not instanceof ' . $must_be_instance_of);
             }
         }
     }

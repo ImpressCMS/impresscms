@@ -15,7 +15,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
     public function testExists() {
         $this->assertTrue(class_exists('icms_properties_Handler', false), 'icms_properties_Handler class doesn exist');
         $mock = $this->getMockForAbstractClass('icms_properties_Handler');
-        $this->assertTrue($mock instanceof \icms_properties_Handler, 'Can\'t extend icms_properties_Handler with class');
+        $this->assertInstanceOf(\icms_properties_Handler::class, $mock, 'Can\'t extend icms_properties_Handler with class');
     }
 
     /**
@@ -58,7 +58,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
         $mock = $this->getMockForAbstractClass('icms_properties_Handler');
 
         $reflection_method = new \ReflectionMethod($mock, 'initVar');
-        $this->assertTrue(is_object($reflection_method), 'initVar method doesn\'t exists');
+        $this->assertInternalType('object', $reflection_method, 'initVar method doesn\'t exists');
         $this->assertTrue($reflection_method->isProtected(), 'initVar method doesn\'t is protected');
 
         $reflection_method->setAccessible(true);
@@ -188,17 +188,18 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
-    /**
-     * Create new mock object with initialized var
-     *
-     * @param string $key
-     * @param string $dataType
-     * @param mixed $defaultValue
-     * @param bool $required
-     * @param null|array $otherCfg
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
+	/**
+	 * Create new mock object with initialized var
+	 *
+	 * @param string $key
+	 * @param string $dataType
+	 * @param mixed $defaultValue
+	 * @param bool $required
+	 * @param null|array $otherCfg
+	 *
+	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 * @throws \ReflectionException
+	 */
     private function createMockWithInitVar($key, $dataType, $defaultValue = null, $required = false, $otherCfg = null) {
         $mock = $this->getMockForAbstractClass('icms_properties_Handler');
         $reflection_method = new \ReflectionMethod($mock, 'initVar');

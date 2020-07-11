@@ -77,11 +77,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase {
         $this->doDefaultResponseTypeTest('Events');
     }
 
-    /**
-     * Do default type
-     *
-     * @param string $type
-     */
+	/**
+	 * Do default type
+	 *
+	 * @param string $type
+	 * @throws \ReflectionException
+	 */
     private function doDefaultResponseTypeTest($type) {
         $class = 'icms_response_' . $type;
         $this->assertTrue(class_exists($class, true), $class . ' class doesn exist');

@@ -2,6 +2,9 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\Handler;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
@@ -22,14 +25,14 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             'icms_view_Breadcrumb' => null,
             'icms_view_theme_Object' => null,
             'icms_view_theme_Factory' => null,
-            'icms_view_template_set_Handler' => ['\ImpressCMS\Core\IPF\Handler'],
-            'icms_view_template_set_Object' => ['\ImpressCMS\Core\IPF\AbstractModel'],
-            'icms_view_template_file_Object' => ['\ImpressCMS\Core\IPF\AbstractModel'],
-            'icms_view_template_file_Handler' => ['\ImpressCMS\Core\IPF\Handler'],
-            'icms_view_block_Object' => ['\ImpressCMS\Core\IPF\AbstractModel'],
-            'icms_view_block_Handler' => ['\ImpressCMS\Core\IPF\Handler'],
-            'icms_view_block_position_Handler' => ['\ImpressCMS\Core\IPF\Handler'],
-            'icms_view_block_position_Object' => ['\ImpressCMS\Core\IPF\AbstractModel']
+            'icms_view_template_set_Handler' => [Handler::class],
+            'icms_view_template_set_Object' => [AbstractModel::class],
+            'icms_view_template_file_Object' => [AbstractModel::class],
+            'icms_view_template_file_Handler' => [Handler::class],
+            'icms_view_block_Object' => [AbstractModel::class],
+            'icms_view_block_Handler' => [Handler::class],
+            'icms_view_block_position_Handler' => [Handler::class],
+            'icms_view_block_position_Object' => [AbstractModel::class]
         ] as $class => $must_be_instances_of) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
             if ($must_be_instances_of === null) {
@@ -37,7 +40,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             }
             $instance = $this->getClassInstance($class);
             foreach ($must_be_instances_of as $must_be_instance_of) {
-                $this->assertTrue($instance instanceof $must_be_instance_of, $class . ' must be instance of ' . $must_be_instance_of . ' but is not');
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' must be instance of ' . $must_be_instance_of . ' but is not');
             }
         }
     }

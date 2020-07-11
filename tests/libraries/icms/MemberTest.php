@@ -2,6 +2,9 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\Handler;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
@@ -15,23 +18,23 @@ class MemberTest extends \PHPUnit_Framework_TestCase {
     public function testAvailability() {
         foreach ([
                 'icms_member_Handler' => null,
-                'icms_member_user_Handler' => '\ImpressCMS\Core\IPF\Handler',
-                'icms_member_user_Object' => '\ImpressCMS\Core\IPF\AbstractModel',
-                'icms_member_rank_Handler' => '\ImpressCMS\Core\IPF\Handler',
-                'icms_member_rank_Object' => '\ImpressCMS\Core\IPF\AbstractModel',
-                'icms_member_groupperm_Handler' => '\ImpressCMS\Core\IPF\Handler',
-                'icms_member_groupperm_Object' => '\ImpressCMS\Core\IPF\AbstractModel',
-                'icms_member_group_Object' => '\ImpressCMS\Core\IPF\AbstractModel',
-                'icms_member_group_Handler' => '\ImpressCMS\Core\IPF\Handler',
-                'icms_member_group_membership_Handler' => '\ImpressCMS\Core\IPF\Handler',
-                'icms_member_group_membership_Object' => '\ImpressCMS\Core\IPF\AbstractModel'
+                'icms_member_user_Handler' => Handler::class,
+                'icms_member_user_Object' => AbstractModel::class,
+                'icms_member_rank_Handler' => Handler::class,
+                'icms_member_rank_Object' => AbstractModel::class,
+                'icms_member_groupperm_Handler' => Handler::class,
+                'icms_member_groupperm_Object' => AbstractModel::class,
+                'icms_member_group_Object' => AbstractModel::class,
+                'icms_member_group_Handler' => Handler::class,
+                'icms_member_group_membership_Handler' => Handler::class,
+                'icms_member_group_membership_Object' => AbstractModel::class
             ] as $class => $must_be_instance_of) {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {
                 $instance = $this->getMockBuilder($class)
                     ->disableOriginalConstructor()
                     ->getMock();
-                $this->assertTrue( $instance instanceof $must_be_instance_of, $class . " is not instanceof " . $must_be_instance_of);
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' is not instanceof ' . $must_be_instance_of);
             }
         }
     }

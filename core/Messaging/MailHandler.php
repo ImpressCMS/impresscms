@@ -37,6 +37,7 @@
 namespace ImpressCMS\Core\Messaging;
 
 use ImpressCMS\Core\Models\Group;
+use ImpressCMS\Core\Models\User;
 
 /**
  * Class for sending messages.
@@ -142,43 +143,51 @@ class MailHandler {
 	private $assignedTags;
 	private $template;
 	private $templatedir;
+	/**
+	 * @var string
+	 */
+	private $priority;
+	/**
+	 * @var string
+	 */
+	private $LE;
 
 	public function __construct() {
 		icms_loadLanguageFile('core', 'xoopsmailerlocal');
 		icms_loadLanguageFile('core', 'mail');
 		if (class_exists('XoopsMailerLocal')) {
-			$this->multimailer = new XoopsMailerLocal();
+			$this->multimailer = new \XoopsMailerLocal();
 		} else {
-			$this->multimailer = new MailHandler();
+			$this->multimailer = new \MailHandler();
 		}
 		$this->reset();
 	}
 
 	// reset all properties to default
 	public function reset() {
-		$this->fromEmail = "";
-		$this->fromName = "";
+		$this->fromEmail = '';
+		$this->fromName = '';
 		$this->fromUser = null;
 		$this->priority = '';
-		$this->toUsers = array();
-		$this->toEmails = array();
-		$this->headers = array();
-		$this->subject = "";
-		$this->body = "";
-		$this->errors = array();
-		$this->success = array();
+		$this->toUsers = [];
+		$this->toEmails = [];
+		$this->headers = [];
+		$this->subject = '';
+		$this->body = '';
+		$this->errors = [];
+		$this->success = [];
 		$this->isMail = false;
 		$this->isPM = false;
-		$this->assignedTags = array();
-		$this->template = "";
-		$this->templatedir = "";
+		$this->assignedTags = [];
+		$this->template = '';
+		$this->templatedir = '';
 		// Change below to \r\n if you have problem sending mail
 		$this->LE = "\n";
 	}
 
 	public function setTemplateDir($value) {
-		if (substr($value, -1, 1) != "/") {
-			$value .= "/";
+		if (substr($value, -1, 1) !== '/') {
+			$value .= '/';
 		}
 		$this->templatedir = $value;
 	}
@@ -196,7 +205,7 @@ class MailHandler {
 	}
 
 	public function setFromUser(&$user) {
-		if (get_class($user) == "\ImpressCMS\Core\Member\UserModel") {
+		if (get_class($user) === User::class) {
 			$this->fromUser = & $user;
 		}
 	}
@@ -219,13 +228,13 @@ class MailHandler {
 
 	public function send($debug = false) {
 		global $icmsConfig;
-		if ($this->body == "" && $this->template == "") {
+		if ($this->body == '' && $this->template == '') {
 			if ($debug) {
 				$this->errors[] = _MAIL_MSGBODY;
 			}
 			return false;
-		} elseif ($this->template != "") {
-			$path = ($this->templatedir != "")?$this->templatedir . "" . $this->template:(ICMS_ROOT_PATH . "/language/" . $icmsConfig['language'] . "/mail_template/" . $this->template);
+		} elseif ($this->template != '') {
+			$path = ($this->templatedir != '')?$this->templatedir . '' . $this->template:(ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/' . $this->template);
 			if (!($fd = @fopen($path, 'r'))) {
 				if ($debug) {
 					$this->errors[] = _MAIL_FAILOPTPL;
@@ -238,11 +247,11 @@ class MailHandler {
 		// for sending mail only
 		if ($this->isMail || !empty($this->toEmails)) {
 			if (!empty($this->priority)) {
-				$this->headers[] = "X-Priority: " . $this->priority;
+				$this->headers[] = 'X-Priority: ' . $this->priority;
 			}
 			//$this->headers[] = "X-Mailer: PHP/" . phpversion();
 			//$this->headers[] = "Return-Path: " . $this->fromEmail;
-			$headers = join($this->LE, $this->headers);
+			$headers = implode($this->LE, $this->headers);
 		}
 
 		// TODO: we should have an option of no-reply for private messages and emails
@@ -261,8 +270,8 @@ class MailHandler {
 
 		// replace tags with actual values
 		foreach ($this->assignedTags as $k => $v) {
-			$this->body = str_replace("{" . $k . "}", $v, $this->body);
-			$this->subject = str_replace("{" . $k . "}", $v, $this->subject);
+			$this->body = str_replace('{' . $k . '}', $v, $this->body);
+			$this->subject = str_replace('{' . $k . '}', $v, $this->subject);
 		}
 		$this->body = str_replace("\r\n", "\n", $this->body);
 		$this->body = str_replace("\r", "\n", $this->body);
@@ -288,33 +297,45 @@ class MailHandler {
 		// receives (potentially) a different message
 		foreach ($this->toUsers as $user) {
 			// set some user specific variables
-			$subject = str_replace("{X_UNAME}", $user->getVar("uname"), $this->subject);
-			$text = str_replace("{X_USERLOGINNAME}", $user->getVar("login_name"), $this->body);
-			$text = str_replace("{X_UID}", $user->getVar("uid"), $text);
-			$text = str_replace("{X_UEMAIL}", $user->getVar("email"), $text);
-			$text = str_replace("{X_UNAME}", $user->getVar("uname"), $text);
-			$text = str_replace("{X_UACTLINK}", ICMS_URL . "/user.php?op=actv&id=" . $user->getVar("uid") . "&actkey=" . $user->getVar('actkey'), $text);
+			$subject = str_replace('{X_UNAME}', $user->getVar('uname'), $this->subject);
+			$text = str_replace(
+				[
+					'{X_USERLOGINNAME}',
+					'{X_UID}',
+					'{X_UEMAIL}',
+					'{X_UNAME}',
+					'{X_UACTLINK}'
+				],
+				[
+					$user->getVar('login_name'),
+					$user->getVar('uid'),
+					$user->getVar('email'),
+					$user->getVar('uname'),
+					ICMS_URL . '/user.php?op=actv&id=' . $user->getVar('uid') . '&actkey=' . $user->getVar('actkey')
+				],
+				$this->body
+			);
 			// send mail
 			if ($this->isMail) {
-				if (!$this->sendMail($user->getVar("email"), $subject, $text, $headers)) {
+				if (!$this->sendMail($user->getVar('email'), $subject, $text, $headers)) {
 					if ($debug) {
-						$this->errors[] = sprintf(_MAIL_SENDMAILNG, $user->getVar("uname"));
+						$this->errors[] = sprintf(_MAIL_SENDMAILNG, $user->getVar('uname'));
 					}
 				} else {
 					if ($debug) {
-						$this->success[] = sprintf(_MAIL_MAILGOOD, $user->getVar("uname"));
+						$this->success[] = sprintf(_MAIL_MAILGOOD, $user->getVar('uname'));
 					}
 				}
 			}
 			// send private message
 			if ($this->isPM) {
-				if (!$this->sendPM($user->getVar("uid"), $subject, $text)) {
+				if (!$this->sendPM($user->getVar('uid'), $subject, $text)) {
 					if ($debug) {
-						$this->errors[] = sprintf(_MAIL_SENDPMNG, $user->getVar("uname"));
+						$this->errors[] = sprintf(_MAIL_SENDPMNG, $user->getVar('uname'));
 					}
 				} else {
 					if ($debug) {
-						$this->success[] = sprintf(_MAIL_PMGOOD, $user->getVar("uname"));
+						$this->success[] = sprintf(_MAIL_PMGOOD, $user->getVar('uname'));
 					}
 				}
 			}
@@ -387,10 +408,10 @@ class MailHandler {
 	{
 		$pm_handler = \icms::handler('icms_data_privmessage');
 		$pm = &$pm_handler->create();
-		$pm->setVar("subject", $subject);
+		$pm->setVar('subject', $subject);
 		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : \icms::$user->getVar('uid'));
-		$pm->setVar("msg_text", $body);
-		$pm->setVar("to_userid", $uid);
+		$pm->setVar('msg_text', $body);
+		$pm->setVar('to_userid', $uid);
 		if (!$pm_handler->insert($pm)) {
 			return false;
 		}
@@ -402,12 +423,12 @@ class MailHandler {
 			return $this->errors;
 		} else {
 			if (!empty($this->errors)) {
-				$ret = "<h4>" . _ERRORS . "</h4>";
+				$ret = '<h4>' . _ERRORS . '</h4>';
 				foreach ($this->errors as $error) {
-					$ret .= $error . "<br />";
+					$ret .= $error . '<br />';
 				}
 			} else {
-				$ret = "";
+				$ret = '';
 			}
 			return $ret;
 		}
@@ -417,10 +438,10 @@ class MailHandler {
 		if (!$ashtml) {
 			return $this->success;
 		} else {
-			$ret = "";
+			$ret = '';
 			if (!empty($this->success)) {
 				foreach ($this->success as $suc) {
-					$ret .= $suc . "<br />";
+					$ret .= $suc . '<br />';
 				}
 			}
 			return $ret;
@@ -459,8 +480,8 @@ class MailHandler {
 	public function setToUsers(&$user)
 	{
 		if (!is_array($user)) {
-			if (get_class($user) == "\ImpressCMS\Core\Member\UserModel") {
-				array_push($this->toUsers, $user);
+			if (get_class($user) === User::class) {
+				$this->toUsers[] = $user;
 			}
 		} else {
 			foreach ($user as $u) {
