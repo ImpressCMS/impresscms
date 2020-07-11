@@ -16,7 +16,7 @@ return [
 	'icms_core_Message' => \ImpressCMS\Core\Message::class,
 	'icms_core_Object' => \ImpressCMS\Core\AbstractModel::class,
 	'icms_core_ObjectHandler' => \ImpressCMS\Core\ObjectHandler::class,
-	'icms_core_OnlineHandler' => \ImpressCMS\Core\Online::class,
+	'icms_core_OnlineHandler' => \ImpressCMS\Core\Models\OnlineHandler::class,
 	'icms_core_Password' => \ImpressCMS\Core\Password::class,
 	'icms_core_Security' => \ImpressCMS\Core\Security::class,
 	'icms_core_StopSpammer' => \ImpressCMS\Core\StopSpammer::class,

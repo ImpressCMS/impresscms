@@ -37,6 +37,8 @@
 
 namespace ImpressCMS\Core;
 
+use ImpressCMS\Core\Database\DatabaseConnectionInterface;
+
 /**
  * Abstract object handler class.
  *
@@ -58,7 +60,7 @@ abstract class ObjectHandler {
 	/**
 	 * holds referenced
 	 *
-	 * @var \ImpressCMS\Core\Database\DatabaseConnectionInterface
+	 * @var DatabaseConnectionInterface
 	 * @access public
 	 */
 	public $db;
@@ -67,7 +69,7 @@ abstract class ObjectHandler {
 	/**
 	 * called from child classes only
 	 *
-	 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db reference to db
+	 * @param DatabaseConnectionInterface $db reference to db
 	 * @access protected
 	 */
 	function __construct(&$db) {

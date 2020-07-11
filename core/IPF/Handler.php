@@ -233,7 +233,9 @@ class Handler extends ObjectHandler {
 		// Todo: Autodect module
 		if ($modulename === null || $modulename === 'icms') {
 			$this->_moduleName = 'icms';
-			$classname = $this->_moduleName . '_' . $itemname . '_Object';
+			if (!class_exists($classname = '\\ImpressCMS\\Core\\Models\\' . ucfirst($itemname))) {
+				$classname = $this->_moduleName . '_' . $itemname . '_Object';
+			}
 			if ($table == null) {
 				$table = $itemname;
 			}

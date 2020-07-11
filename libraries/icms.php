@@ -169,14 +169,14 @@ final class icms extends Container {
 	 * @param bool $optional Is the handler optional?
 	 * @return        object        $inst        The instance of the object that was created
 	 */
-	static public function &handler($name, $optional = false)
+	public static function &handler($name, $optional = false)
 	{
 		$instance = static::getInstance();
 		$real_name = $name . '_handler';
 		if (!$instance->has($real_name)) {
-			$class = $name . "Handler";
+			$class = $name . 'Handler';
 			if (!class_exists($class)) {
-				$class = $name . "_Handler";
+				$class = $name . '_Handler';
 				if (!class_exists($class)) {
 					// Try old style handler loading (should be removed later, in favor of the
 					// lookup table present in xoops_gethandler)
@@ -198,7 +198,7 @@ final class icms extends Container {
 		$handler = $instance->get($real_name);
 		if (!$handler && !$optional) {
 			//trigger_error(sprintf("Handler <b>%s</b> does not exist", $name), E_USER_ERROR);
-			throw new RuntimeException(sprintf("Handler <b>%s</b> does not exist", $name));
+			throw new RuntimeException(sprintf('Handler <b>%s</b> does not exist', $name));
 		}
 		return $handler;
 	}

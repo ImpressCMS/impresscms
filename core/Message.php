@@ -36,7 +36,7 @@ class Message {
 	 *
 	 * @author        XOOPS - include/functions.php :: xoops_warning()
 	 */
-	static public function warning($msg, $title = '', $render = false) {
+	public static function warning($msg, $title = '', $render = false) {
 		$ret = '<div class="warningMsg alert alert-warning" role="alert">';
 		if ($title != '') {
 			$ret .= '<h4>' . $title . '</h4>';
@@ -65,7 +65,7 @@ class Message {
 	 * @param	boolean $render
 	 * @return	mixed
 	 */
-	static public function error($msg, $title = '', $render = true) {
+	public static function error($msg, $title = '', $render = true) {
 		$ret = '<div class="errorMsg alert alert-danger" role="alert">';
 		if ($title != '') {
 			$ret .= '<h4>' . $title . '</h4>';
@@ -94,7 +94,7 @@ class Message {
 	 * @param	string $title
 	 * @return	void
 	 */
-	static public function result($msg, $title = '') {
+	public static function result($msg, $title = '') {
 		echo 'div class="resultMsg alert alert-info" role="alert"';
 		if ($title != '') {
 			echo '<h4>' . $title . '</h4>';
@@ -122,7 +122,7 @@ class Message {
 	 * @param	boolean $addtoken Whether or not to add a security token
 	 * @return	void
 	 */
-	static public function confirm($hiddens, $action, $msg, $submit = '', $addtoken = true) {
+	public static function confirm($hiddens, $action, $msg, $submit = '', $addtoken = true) {
 	$submit = ($submit != '')? trim($submit):_SUBMIT;
 	echo '<div class="confirmMsg alert alert-success" role="alert">
 			<h4>' . $msg . '</h4>
