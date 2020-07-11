@@ -240,9 +240,20 @@ class DhtmltextareaElement extends TextareaElement {
 		$count = count($smiles);
 		$ele_name = $this->getName();
 		for ($i = 0; $i < $count; $i++) {
-			$ret .= "<img onclick='xoopsCodeSmilie(\"" . $ele_name . "_tarea\", \" " . $smiles[$i]['code'] . " \");' onmouseover='style.cursor=\"pointer\"' src='" . ICMS_UPLOAD_URL . "/" . htmlspecialchars($smiles[$i]['smile_url'], ENT_QUOTES, _CHARSET) . "' border='0' alt='' />";
+			$ret .= sprintf(
+				"<img onclick='xoopsCodeSmilie(\"%s_tarea\", \" %s \");' onmouseover='style.cursor=\"pointer\"' src='%s/%s' border='0' alt='' />",
+				$ele_name,
+				$smiles[$i]['code'],
+				ICMS_UPLOAD_URL,
+				htmlspecialchars($smiles[$i]['smile_url'], ENT_QUOTES, _CHARSET)
+			);
 		}
-		$ret .= " . ICMS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target=" . $ele_name . "_tarea\",\"smilies\",300,475);'>" . _MORE . "</a>]";
+		$ret .= sprintf(
+			"&nbsp;[<a href='#moresmiley' onclick='javascript:openWithSelfMain(\"%s/misc.php?action=showpopups&amp;type=smilies&amp;target=%s_tarea\",\"smilies\",300,475);'>%s</a>]",
+			ICMS_URL,
+			$ele_name,
+			_MORE
+		);
 		return $ret;
 	}
 }

@@ -37,6 +37,8 @@
 
 namespace ImpressCMS\Core\View;
 
+use SmartyBC;
+
 /**
  * Template engine
  *

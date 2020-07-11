@@ -2,6 +2,7 @@
 namespace ImpressCMS\Core\Database;
 
 use ImpressCMS\Core\Event;
+use PDOStatement;
 
 /**
  * Database connection

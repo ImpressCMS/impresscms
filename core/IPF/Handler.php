@@ -24,6 +24,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Database\DatabaseConnectionInterface;
 use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\Filesystem;
+use ImpressCMS\Core\Models\GroupPermHandler;
 use ImpressCMS\Core\ObjectHandler;
 use ImpressCMS\Core\Properties\AbstractProperties;
 
@@ -393,7 +394,7 @@ class Handler extends ObjectHandler {
 
 		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
-			if ($criteria->getSort() != '') {
+			if ($criteria->getSort()) {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
@@ -406,7 +407,7 @@ class Handler extends ObjectHandler {
 
 		$result = $this->db->query($sql, $limit, $start);
 
-		$ret = (!$result)?array():$this->convertResultSet($result, $id_as_key, $as_object);
+		$ret = (!$result)? [] :$this->convertResultSet($result, $id_as_key, $as_object);
 
 		return $ret;
 	}
@@ -488,11 +489,11 @@ class Handler extends ObjectHandler {
 		return $ret;
 	}
 
-	protected function convertResultSet_ObjectWithKey($result, $key, $as_object) {
+	protected function convertResultSet_ObjectWithKey(\PDOStatement $result, $key, $as_object) {
 		$fields_sk = $this->getSkipKeys();
-		$se = count($fields_sk) == 0;
-		$ret = array();
-		if ($this->keyName == $key) {
+		$se = count($fields_sk) === 0;
+		$ret = [];
+		if ($this->keyName === $key) {
 			while ($myrow = $this->db->fetchArray($result)) {
 				$kname = $myrow[$this->keyName];
 				if (isset(self::$_loadedItems[$this->className][$kname])) {
@@ -583,7 +584,7 @@ class Handler extends ObjectHandler {
 			$fields_sk = $this->getFields(false, false);
 			return array_diff($fields_sk, $this->visibleColumns);
 		} else {
-			return array();
+			return [];
 		}
 	}
 
@@ -591,7 +592,7 @@ class Handler extends ObjectHandler {
 	 *
 	 */
 	public function getImageUrl() {
-		return $this->_uploadUrl . $this->_itemname . "/";
+		return $this->_uploadUrl . $this->_itemname . '/';
 	}
 
 	/**
@@ -607,8 +608,8 @@ class Handler extends ObjectHandler {
 
 	protected function convertResultSet_Object($result, $as_object) {
 		$fields_sk = $this->getSkipKeys();
-		$se = count($fields_sk) == 0;
-		$ret = array();
+		$se = count($fields_sk) === 0;
+		$ret = [];
 		while ($myrow = $this->db->fetchArray($result)) {
 			$kname = $myrow[$this->keyName];
 
@@ -791,11 +792,11 @@ class Handler extends ObjectHandler {
 	 */
 	public function getCustomList($keyName, $keyValue, $criteria = null, $limit = 0, $start = 0, $debug = false) {
 		$ret = array();
-		if ($criteria == null) {
+		if (!$criteria) {
 			$criteria = new CriteriaCompo();
 		}
 
-		if ($criteria->getSort() == '') {
+		if (!$criteria->getSort()) {
 			$criteria->setSort($keyValue);
 		}
 
@@ -803,10 +804,10 @@ class Handler extends ObjectHandler {
 		if (!empty($keyValue)) {
 			$sql .= ', ' . $keyValue;
 		}
-		$sql .= ' FROM ' . $this->table . " AS " . $this->_itemname;
+		$sql .= ' FROM ' . $this->table . ' AS ' . $this->_itemname;
 		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
-			if ($criteria->getSort() != '') {
+			if ($criteria->getSort()) {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
@@ -869,11 +870,11 @@ class Handler extends ObjectHandler {
 		if (is_array($obj_instances)) {
 			$data = &$obj_instances;
 		} else {
-			$data = array(&$obj_instances);
+			$data = [&$obj_instances];
 		}
 		$scount = 0;
-		$for_insert = array();
-		$for_update = array();
+		$for_insert = [];
+		$for_update = [];
 		foreach ($data as $i => $obj) {
 			if ($obj->handler->className != $this->className) {
 				$obj->setErrors(get_class($obj) . ' Differs from ' . $this->className);
@@ -1061,7 +1062,7 @@ class Handler extends ObjectHandler {
 			$sql = 'UPDATE ' . $this->table . ' SET ' . "\r\n";
 			if (is_array($this->keyName)) {
 				$case = '  CASE ' . implode(', ', $this->keyName) . "\r\n";
-				$when = array();
+				$when = [];
 				$criteria = new CriteriaCompo();
 				foreach ($data as $i => $obj) {
 					$fieldsToStoreInDB = $obj->getVarsForSQL(true);
@@ -1069,7 +1070,7 @@ class Handler extends ObjectHandler {
 					$criteria->add($cr, 'OR');
 					$rendered_criteria = $cr->render();
 					foreach ($fieldsToStoreInDB as $key => $value) {
-						if (in_array($key, $this->keyName)) {
+						if (in_array($key, $this->keyName, false)) {
 							continue;
 						}
 						$when[$key][$i] = '    WHEN ' . $rendered_criteria . ' THEN ' . $value;
@@ -1158,7 +1159,8 @@ class Handler extends ObjectHandler {
 
 	/**
 	 *
-	 * @param arr $arrayObjects
+	 * @param array $arrayObjects
+	 * @return array|bool
 	 */
 	public function getObjectsAsArray($arrayObjects) {
 		$ret = array();
@@ -1177,7 +1179,7 @@ class Handler extends ObjectHandler {
 	 *
 	 * @param mixed $id
 	 * @param string $field
-	 * @param numeric $value
+	 * @param int|float $value
 	 * @param string $math_func
 	 * @param bool $force
 	 * @param bool $debug
@@ -1205,7 +1207,7 @@ class Handler extends ObjectHandler {
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
 			}
-			if ($criteria->getSort() != '') {
+			if ($criteria->getSort()) {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 		}
@@ -1237,13 +1239,11 @@ class Handler extends ObjectHandler {
 	 * @return int count of objects
 	 */
 	public function getCount($criteria = null) {
-		$field = "";
+		$field = '';
 		$groupby = false;
-		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
-			if ($criteria->groupby != "") {
-				$groupby = true;
-				$field = $criteria->groupby . ", "; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
-			}
+		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class) && $criteria->groupby) {
+			$groupby = true;
+			$field = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
 		}
 		/**
 		 * if we have a generalSQL, lets used this one.
@@ -1422,18 +1422,24 @@ class Handler extends ObjectHandler {
 	 * @return    bool    TRUE
 	 */
 	private function deleteGrantedPermissions($obj = null) {
-		$gperm_handler = icms::handler("icms_member_groupperm");
-		$module = icms::handler("icms_module")->getByDirname($this->_moduleName);
+		/**
+		 * @var GroupPermHandler $gperm_handler
+		 */
+		$gperm_handler = icms::handler('icms_member_groupperm');
+		/**
+		 * @var Module $module
+		 */
+		$module = icms::handler('icms_module')->getByDirname($this->_moduleName);
 		$permissions = $this->getPermissions();
 		if ($permissions === false) {
 			return true;
 		}
 		foreach ($permissions as $permission) {
-			if ($obj != null) {
-				$gperm_handler->deleteByModule($module->getVar("mid"), $permission["perm_name"], $obj->id());
-			} else {
-				$gperm_handler->deleteByModule($module->getVar("mid"), $permission["perm_name"]);
-			}
+			$gperm_handler->deleteByModule(
+				$module->getVar('mid'),
+				$permission['perm_name'],
+				$obj === null ? null : $obj->id()
+			);
 		}
 		return true;
 	}
@@ -1463,8 +1469,7 @@ class Handler extends ObjectHandler {
 	 *
 	 */
 	public function getModuleItemString() {
-		$ret = $this->_moduleName . '_' . $this->_itemname;
-		return $ret;
+		return $this->_moduleName . '_' . $this->_itemname;
 	}
 
 	/**
@@ -1489,10 +1494,10 @@ class Handler extends ObjectHandler {
 	 */
 	public function enableUpload($allowedMimeTypes = false, $maxFileSize = false, $maxWidth = false, $maxHeight = false) {
 		$this->uploadEnabled = true;
-		$this->_allowedMimeTypes = $allowedMimeTypes?$allowedMimeTypes:$this->_allowedMimeTypes;
-		$this->_maxFileSize = $maxFileSize?$maxFileSize:$this->_maxFileSize;
-		$this->_maxWidth = $maxWidth?$maxWidth:$this->_maxWidth;
-		$this->_maxHeight = $maxHeight?$maxHeight:$this->_maxHeight;
+		$this->_allowedMimeTypes = $allowedMimeTypes?:$this->_allowedMimeTypes;
+		$this->_maxFileSize = $maxFileSize?:$this->_maxFileSize;
+		$this->_maxWidth = $maxWidth?:$this->_maxWidth;
+		$this->_maxHeight = $maxHeight?:$this->_maxHeight;
 	}
 
 }
