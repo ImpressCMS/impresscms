@@ -52,7 +52,7 @@
     "aura/sqlschema": "^2.0",
     "cerdic/css-tidy": "^1.5",
     "composer/composer": "^1.10",
-    "erusev/parsedown": "^1.7.0",
+    "erusev/parsedown": "^1.7",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
     "ircmaxell/random-lib": "^1.2",

@@ -41,6 +41,8 @@
  */
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * An imageset
  *
@@ -54,12 +56,12 @@ namespace ImpressCMS\Core\Models;
  * @property string $imgset_name    Name
  * @property int    $imgset_refid
  */
-class ImageSet extends \ImpressCMS\Core\IPF\AbstractModel {
+class ImageSet extends AbstractModel {
 
 	/**
 	 * Constructor
 	 */
-	public function __construct(&$handler, $data = array()) {
+	public function __construct(&$handler, $data = []) {
 		$this->initVar('imgset_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('imgset_name', self::DTYPE_STRING, null, true, 50);
 		$this->initVar('imgset_refid', self::DTYPE_INTEGER, 0, false);

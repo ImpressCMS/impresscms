@@ -25,8 +25,8 @@ class Event {
 	 * @param int $index 0 for current, 1 for parent (if current event due to another event), and so on...
 	 * @return Event
 	 */
-	static public function current($index = 0) {
-		return isset(self::$events[$index])? self::$events[$index]:false;
+	public static function current($index = 0) {
+		return self::$events[$index] ?? false;
 	}
 
 	/**
@@ -49,9 +49,9 @@ class Event {
 	 * @param mixed $callback
 	 * @return void
 	 */
-	static public function attach($namespace, $name, $callback) {
+	public static function attach($namespace, $name, $callback) {
 		if (!isset(self::$handlers[$namespace][$name])) {
-			self::$handlers[$namespace][$name] = array();
+			self::$handlers[$namespace][$name] = [];
 		}
 		self::$handlers[$namespace][$name][] = $callback;
 	}
@@ -61,7 +61,7 @@ class Event {
 	 * @param string $name
 	 * @param mixed $callback
 	 */
-	static public function detach($namespace, $name, $callback) {
+	public static function detach($namespace, $name, $callback) {
 		if (isset(self::$handlers[$namespace][$name])) {
 			foreach (self::$handlers[$namespace][$name] as $k => $handler) {
 				if ($handler === $callback) {
@@ -81,18 +81,18 @@ class Event {
 	 * @param array $parameters Event parameters
 	 * @return Event
 	 */
-	static public function trigger($namespace, $name, $source, $parameters = array()) {
+	public static function trigger($namespace, $name, $source, $parameters = array()) {
 		$cancancel = false;
-		if (substr($name, 0, 1) == "*") {
+		if (strpos($name, '*') === 0) {
 			$cancancel = true;
 			$name = substr($name, 1);
 		}
 		$event = new Event($namespace, $name, $source, $parameters, $cancancel);
 		array_unshift(self::$events, $event);
-		foreach (array("*", $name) as $handlers) {
+		foreach (['*', $name] as $handlers) {
 			if (isset(self::$handlers[$namespace][$handlers])) {
 				foreach (self::$handlers[$namespace][$handlers] as $callback) {
-					call_user_func($callback, $parameters, $event);
+					$callback($parameters, $event);
 					if ($cancancel && $event->canceled) {
 						break 2;
 					}
@@ -107,14 +107,14 @@ class Event {
 	 * @var string
 	 * @readonly
 	 */
-	public $namespace = "";
+	public $namespace = '';
 
 	/**
 	 * Name of this event
 	 * @var string
 	 * @readonly
 	 */
-	public $name = "";
+	public $name = '';
 
 	/**
 	 * Object that fired this event.
@@ -128,7 +128,7 @@ class Event {
 	 * @var array()
 	 * @readonly
 	 */
-	public $parameters = array();
+	public $parameters = [];
 
 	/**
 	 * Whether this event can be canceled or not.

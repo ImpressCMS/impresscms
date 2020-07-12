@@ -37,6 +37,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * A Comment
  *
@@ -64,7 +66,7 @@ namespace ImpressCMS\Core\Models;
  * @property int    $doimage       Show images?
  * @property int    $dobr          Do line breaks?
  */
-class Comment extends \ImpressCMS\Core\IPF\AbstractModel {
+class Comment extends AbstractModel {
 
 	/**
 	 * Constructor
@@ -100,6 +102,6 @@ class Comment extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * @return  bool
 	 */
 	public function isRoot() {
-		return ($this->getVar('com_id') == $this->getVar('com_rootid'));
+		return ($this->getVar('com_id') === $this->getVar('com_rootid'));
 	}
 }

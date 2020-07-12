@@ -66,11 +66,11 @@ class CommentRenderer {
 		$this->_useIcons = $use_icons;
 		$this->_doIconCheck = $do_iconcheck;
 		$this->_memberHandler = \icms::handler('icms_member');
-		$this->_statusText = array(
+		$this->_statusText = [
 			XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">' . _CM_PENDING . '</span>',
 			XOOPS_COMMENT_ACTIVE => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',
 			XOOPS_COMMENT_HIDDEN => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>'
-			);
+		];
 	}
 
 	/**

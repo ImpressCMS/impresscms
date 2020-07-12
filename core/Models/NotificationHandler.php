@@ -39,6 +39,10 @@
 namespace ImpressCMS\Core\Models;
 
 // RMV-NOTIFY
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\IPF\Handler;
+
 include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 
 /**
@@ -51,7 +55,7 @@ include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @package	ICMS\Data\Notification
  */
-class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
+class NotificationHandler extends Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'data_notification', 'not_id', 'not_event', 'not_itemid', 'icms', 'xoopsnotifications', 'not_id');
@@ -71,14 +75,14 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  mixed   array of objects or false
 	 */
 	public function &getNotification($module_id, $category, $item_id, $event, $user_id) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_itemid', (int) $item_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_event', \icms::$xoopsDB->escape($event)));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_uid', (int) $user_id));
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
+		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
+		$criteria->add(new CriteriaItem('not_event', \icms::$xoopsDB->escape($event)));
+		$criteria->add(new CriteriaItem('not_uid', (int) $user_id));
 		$objects = $this->getObjects($criteria);
-		if (count($objects) == 1) {
+		if (count($objects) === 1) {
 			return $objects[0];
 		}
 		$inst = false;
@@ -89,20 +93,21 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * Determine if a user is subscribed to a particular event in
 	 * a particular module.
 	 *
-	 * @param  string  $category  Category of notification event
-	 * @param  int     $item_id   Item ID of notification event
-	 * @param  string  $event     Event
-	 * @param  int     $module_id ID of module (default current module)
-	 * @param  int     $user_id   ID of user (default current user)
+	 * @param string $category Category of notification event
+	 * @param int $item_id Item ID of notification event
+	 * @param string $event Event
+	 * @param int $module_id ID of module (default current module)
+	 * @param int $user_id ID of user (default current user)
 	 * return int  0 if not subscribe; non-zero if subscribed (boolean... sort of)
+	 * @return int
 	 */
 	public function isSubscribed($category, $item_id, $event, $module_id, $user_id) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_itemid', (int) $item_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_event', \icms::$xoopsDB->escape($event)));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_uid', (int) $user_id));
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
+		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
+		$criteria->add(new CriteriaItem('not_event', \icms::$xoopsDB->escape($event)));
+		$criteria->add(new CriteriaItem('not_uid', (int) $user_id));
 		return $this->getCount($criteria);
 	}
 
@@ -112,13 +117,14 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Subscribe for notification for an event(s)
 	 *
-	 * @param  string $category    category of notification
-	 * @param  int    $item_id     ID of the item
-	 * @param  mixed  $events      event string or array of events
-	 * @param  int    $mode        force a particular notification mode
+	 * @param string $category category of notification
+	 * @param int $item_id ID of the item
+	 * @param mixed $events event string or array of events
+	 * @param int $mode force a particular notification mode
 	 *                             (e.g. once_only) (default to current user preference)
-	 * @param  int    $module_id   ID of the module (default to current module)
-	 * @param  int    $user_id     ID of the user (default to current user)
+	 * @param int $module_id ID of the module (default to current module)
+	 * @param int $user_id ID of the user (default to current user)
+	 * @return bool
 	 */
 	public function subscribe($category, $item_id, $events, $mode = null, $module_id = null, $user_id = null) {
 		if (!isset($user_id)) {
@@ -172,7 +178,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return Notification[]
 	 */
 	public function getByUser($user_id) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_uid', $user_id);
+		$criteria = new CriteriaItem('not_uid', $user_id);
 		return $this->getObjects($criteria, true);
 	}
 
@@ -186,13 +192,13 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return Notification[]
 	 */
 	public function getSubscribedEvents($category, $item_id, $module_id, $user_id) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
+		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
 		if ($item_id) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_itemid', (int) $item_id));
+			$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
 		}
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_uid', (int) $user_id));
+		$criteria->add(new CriteriaItem('not_uid', (int) $user_id));
 		$results = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($results) as $i) {
@@ -213,10 +219,10 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  Notification[]
 	 */
 	public function getByItemId($module_id, $item_id, $order = null, $status = null) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_modid', (int) $module_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_itemid', (int) $item_id));
+		$criteria = new CriteriaCompo(new CriteriaItem('com_modid', (int) $module_id));
+		$criteria->add(new CriteriaItem('com_itemid', (int) $item_id));
 		if (isset($status)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('com_status', (int) $status));
+			$criteria->add(new CriteriaItem('com_status', (int) $status));
 		}
 		if (isset($order)) {
 			$criteria->setOrder($order);
@@ -254,14 +260,15 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Send notifications to users
 	 *
-	 * @param  string   $category     notification category
-	 * @param  int      $item_id      ID of the item
-	 * @param  string   $event        notification event
-	 * @param  array    $extra_tags   array of substitutions for template to be
+	 * @param string $category notification category
+	 * @param int $item_id ID of the item
+	 * @param string $event notification event
+	 * @param array $extra_tags array of substitutions for template to be
 	 *                                merged with the one from function..
-	 * @param  array    $user_list    only notify the selected users
-	 * @param  int      $module_id    ID of the module
-	 * @param  int      $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
+	 * @param array $user_list only notify the selected users
+	 * @param int $module_id ID of the module
+	 * @param int $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
+	 * @return bool|void
 	 */
 	public function triggerEvent($category, $item_id, $event, $extra_tags = array(), $user_list = array(), $module_id = null, $omit_user_id = null) {
 		if (!isset($module_id)) {
@@ -291,20 +298,20 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 				$omit_user_id = 0;
 			}
 		}
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_itemid', (int) $item_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_event', \icms::$xoopsDB->escape($event)));
-		$mode_criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$mode_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_mode', XOOPS_NOTIFICATION_MODE_SENDALWAYS), 'OR');
-		$mode_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE), 'OR');
-		$mode_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT), 'OR');
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
+		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
+		$criteria->add(new CriteriaItem('not_event', \icms::$xoopsDB->escape($event)));
+		$mode_criteria = new CriteriaCompo();
+		$mode_criteria->add(new CriteriaItem('not_mode', XOOPS_NOTIFICATION_MODE_SENDALWAYS), 'OR');
+		$mode_criteria->add(new CriteriaItem('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE), 'OR');
+		$mode_criteria->add(new CriteriaItem('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT), 'OR');
 		$criteria->add($mode_criteria);
 		if (!empty($user_list)) {
-			$user_criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$user_criteria = new CriteriaCompo();
 			foreach ($user_list as $user) {
-				$user_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_uid', $user), 'OR');
+				$user_criteria->add(new CriteriaItem('not_uid', $user), 'OR');
 			}
 			$criteria->add($user_criteria);
 		}
@@ -376,7 +383,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  bool
 	 */
 	public function unsubscribeByUser($user_id) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_uid', (int) $user_id);
+		$criteria = new CriteriaItem('not_uid', (int) $user_id);
 		return $this->deleteAll($criteria);
 	}
 
@@ -406,17 +413,17 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 			$module_id = $icmsModule->getVar('mid');
 		}
 
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_itemid', (int) $item_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_uid', (int) $user_id));
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
+		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
+		$criteria->add(new CriteriaItem('not_uid', (int) $user_id));
 		if (!is_array($events)) {
 			$events = array($events);
 		}
-		$event_criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$event_criteria = new CriteriaCompo();
 		foreach ($events as $event) {
-			$event_criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_event', \icms::$xoopsDB->escape($event)), 'OR');
+			$event_criteria->add(new CriteriaItem('not_event', \icms::$xoopsDB->escape($event)), 'OR');
 		}
 		$criteria->add($event_criteria);
 		return $this->deleteAll($criteria);
@@ -432,7 +439,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  bool
 	 */
 	public function unsubscribeByModule($module_id) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_modid', (int) $module_id);
+		$criteria = new CriteriaItem('not_modid', (int) $module_id);
 		return $this->deleteAll($criteria);
 	}
 
@@ -446,10 +453,10 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return bool
 	 */
 	public function unsubscribeByItem($module_id, $category, $item_id) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_itemid', (int) $item_id));
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
+		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
 		return $this->deleteAll($criteria);
 	}
 
@@ -462,9 +469,9 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param  int  $user_id  ID of the user being logged in
 	 */
 	public function doLoginMaintenance($user_id) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_uid', (int) $user_id));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN));
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('not_uid', (int) $user_id));
+		$criteria->add(new CriteriaItem('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN));
 
 		$notifications = $this->getObjects($criteria, true);
 		foreach ($notifications as $n) {
@@ -495,7 +502,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param  int	 $module_id  ID of the module  (default current module)
 	 * @return bool
 	 */
-	static public function isEnabled($style, $module_id = null) {
+	public static function isEnabled($style, $module_id = null) {
 		if (isset($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
 			$status = $GLOBALS['xoopsModuleConfig']['notification_enabled'];
 		} else {
@@ -530,7 +537,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param  int	 $module_id  ID of the module (default current module)
 	 * @return mixed
 	 */
-	static public function &categoryInfo($category_name = '', $module_id = null) {
+	public static function &categoryInfo($category_name = '', $module_id = null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
 			$module_id = !empty($icmsModule)?$icmsModule->getVar('mid'):0;
@@ -565,7 +572,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param  int  $module_id  ID of the module (default current module)
 	 * @return mixed			Associative array of category info
 	 */
-	static public function &commentCategoryInfo($module_id = null) {
+	public static function &commentCategoryInfo($module_id = null) {
 		$ret = false;
 		$all_categories = & self::categoryInfo('', $module_id);
 		if (empty($all_categories)) {
@@ -596,7 +603,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param  int	 $module_id	  ID of the module (default current module)
 	 * @return mixed
 	 */
-	static public function &categoryEvents($category_name, $enabled_only, $module_id = null) {
+	public static function &categoryEvents($category_name, $enabled_only, $module_id = null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
 			$module_id = !empty($icmsModule)?$icmsModule->getVar('mid'):0;
@@ -717,7 +724,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param  object $module	Module
 	 * @return bool
 	 */
-	static public function eventEnabled(&$category, &$event, &$module) {
+	public static function eventEnabled(&$category, &$event, &$module) {
 		$mod_config = \icms::$config->getConfigsByCat(0, $module->getVar('mid'));
 
 		if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != array()) {
@@ -756,7 +763,7 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param  int  $module_id  ID of the module
 	 * @return mixed
 	 */
-	static public function &subscribableCategoryInfo($module_id = null) {
+	public static function &subscribableCategoryInfo($module_id = null) {
 		$all_categories = & self::categoryInfo('', $module_id);
 
 		// FIXME: better or more standardized way to do this?
@@ -809,12 +816,13 @@ class NotificationHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * and event titles.  These are pieced together in this function in
 	 * case we wish to alter the syntax.
 	 *
-	 * @param  array  $category  Array of category info
-	 * @param  array  $event	 Array of event info
-	 * @param  string $type	  The particular name to generate
+	 * @param array $category Array of category info
+	 * @param array $event Array of event info
+	 * @param string $type The particular name to generate
 	 * return string
+	 * @return bool|string
 	 */
-	static public function generateConfig(&$category, &$event, $type) {
+	public static function generateConfig(&$category, &$event, $type) {
 		switch ($type) {
 			case 'option_value':
 			case 'name':

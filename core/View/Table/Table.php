@@ -12,6 +12,7 @@
 
 namespace ImpressCMS\Core\View\Table;
 
+use Exception;
 use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
@@ -77,7 +78,7 @@ class Table {
 	 * @param string[] $actions array representing the actions to offer
 	 * @param bool $userSide For user side?
 	 */
-	public function __construct(&$objectHandler, $criteria = false, $actions = array('edit', 'delete'), $userSide = false) {
+	public function __construct(&$objectHandler, $criteria = false, $actions = ['edit', 'delete'], $userSide = false) {
 		$this->_id = $objectHandler->className;
 		$this->_objectHandler = $objectHandler;
 
@@ -187,7 +188,7 @@ class Table {
 	 * @param $caption
 	 */
 	public function addDefaultIntroButton($caption) {
-		$this->addIntroButton($this->_objectHandler->_itemname, $this->_objectHandler->_page . "?op=mod", $caption);
+		$this->addIntroButton($this->_objectHandler->_itemname, $this->_objectHandler->_page . '?op=mod', $caption);
 	}
 
 	/**
@@ -283,19 +284,19 @@ class Table {
 	 *
 	 */
 	public function setSortOrder() {
-		$this->_sortsel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'])?$_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']:$this->getDefaultSort();
+		$this->_sortsel = $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] ?? $this->getDefaultSort();
 		//$this->_sortsel = isset($_POST['sortsel']) ? $_POST['sortsel'] : $this->_sortsel;
 
 		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_sortsel', $this->_sortsel);
 		$fieldsForSorting = $this->_tempObject->getFieldsForSorting($this->_sortsel);
 
 		if ($this->_tempObject->getVarInfo($this->_sortsel, 'itemName')) {
-			$this->_criteria->setSort($this->_tempObject->getVarInfo($this->_sortsel, 'itemName') . "." . $this->_sortsel);
+			$this->_criteria->setSort($this->_tempObject->getVarInfo($this->_sortsel, 'itemName') . '.' . $this->_sortsel);
 		} else {
-			$this->_criteria->setSort($this->_objectHandler->_itemname . "." . $this->_sortsel);
+			$this->_criteria->setSort($this->_objectHandler->_itemname . '.' . $this->_sortsel);
 		}
 
-		$this->_ordersel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'])?$_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']:$this->getDefaultOrder();
+		$this->_ordersel = $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] ?? $this->getDefaultOrder();
 		//$this->_ordersel = isset($_POST['ordersel']) ? $_POST['ordersel'] :$this->_ordersel;
 		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_ordersel', $this->_ordersel);
 		$ordersArray = $this->getOrdersArray();
@@ -341,12 +342,12 @@ class Table {
 
 					$aColumn = array();
 
-					if ($i == 0) {
-						$class = "head";
+					if ($i === 0) {
+						$class = 'head';
 					} elseif ($i % 2 == 0) {
-						$class = "even";
+						$class = 'even';
 					} else {
-						$class = "odd";
+						$class = 'odd';
 					}
 					if (method_exists($object, 'initiateCustomFields')) {
 						//$object->initiateCustomFields();
@@ -364,7 +365,7 @@ class Table {
 						/**
 						 * If the column is the identifier, then put a link on it
 						 */
-						if ($column->getKeyName() == $this->_objectHandler->identifierName) {
+						if ($column->getKeyName() === $this->_objectHandler->identifierName) {
 							$value = $object->getViewItemLink(false, false, $this->_userSide);
 						} else {
 							$value = $object->getVar($column->getKeyName());
@@ -384,7 +385,7 @@ class Table {
 				$aObject['columns'] = $aColumns;
 				$aObject['id'] = $object->id();
 
-				$objectclass = ($objectclass == 'even')?'odd':'even';
+				$objectclass = ($objectclass === 'even')?'odd':'even';
 
 				$aObject['class'] = $objectclass;
 
@@ -397,10 +398,10 @@ class Table {
 					}
 				}
 
-				if ((!is_array($this->_actions)) || in_array('edit', $this->_actions)) {
+				if ((!is_array($this->_actions)) || in_array('edit', $this->_actions, true)) {
 					$actions[] = $object->getEditItemLink(false, true, $this->_userSide);
 				}
-				if ((!is_array($this->_actions)) || in_array('delete', $this->_actions)) {
+				if ((!is_array($this->_actions)) || in_array('delete', $this->_actions, true)) {
 					$actions[] = $object->getDeleteItemLink(false, true, $this->_userSide);
 				}
 				$aObject['actions'] = $actions;
@@ -422,6 +423,7 @@ class Table {
 	/**
 	 *
 	 * @param unknown_type $debug
+	 * @return array
 	 */
 	public function fetchObjects($debug = false) {
 		return $this->_objectHandler->getObjects($this->_criteria, true, true, false, $debug);
@@ -525,31 +527,31 @@ class Table {
 	public function getLimitsArray() {
 		$ret = array();
 		$ret['all']['caption'] = _CO_ICMS_LIMIT_ALL;
-		$ret['all']['selected'] = ('all' == $this->_limitsel)?"selected='selected'":"";
+		$ret['all']['selected'] = ('all' == $this->_limitsel)?"selected='selected'":'';
 
 		$ret['5']['caption'] = icms_conv_nr2local('5');
-		$ret['5']['selected'] = ('5' == $this->_limitsel)?"selected='selected'":"";
+		$ret['5']['selected'] = ('5' === (string) $this->_limitsel)?"selected='selected'":'';
 
 		$ret['10']['caption'] = icms_conv_nr2local('10');
-		$ret['10']['selected'] = ('10' == $this->_limitsel)?"selected='selected'":"";
+		$ret['10']['selected'] = ('10' === (string) $this->_limitsel)?"selected='selected'":'';
 
 		$ret['15']['caption'] = icms_conv_nr2local('15');
-		$ret['15']['selected'] = ('15' == $this->_limitsel)?"selected='selected'":"";
+		$ret['15']['selected'] = ('15' === (string) $this->_limitsel)?"selected='selected'":'';
 
 		$ret['20']['caption'] = icms_conv_nr2local('20');
-		$ret['20']['selected'] = ('20' == $this->_limitsel)?"selected='selected'":"";
+		$ret['20']['selected'] = ('20' === (string) $this->_limitsel)?"selected='selected'":'';
 
 		$ret['25']['caption'] = icms_conv_nr2local('25');
-		$ret['25']['selected'] = ('25' == $this->_limitsel)?"selected='selected'":"";
+		$ret['25']['selected'] = ('25' === (string) $this->_limitsel)?"selected='selected'":'';
 
 		$ret['30']['caption'] = icms_conv_nr2local('30');
-		$ret['30']['selected'] = ('30' == $this->_limitsel)?"selected='selected'":"";
+		$ret['30']['selected'] = ('30' === (string) $this->_limitsel)?"selected='selected'":'';
 
 		$ret['35']['caption'] = icms_conv_nr2local('35');
-		$ret['35']['selected'] = ('35' == $this->_limitsel)?"selected='selected'":"";
+		$ret['35']['selected'] = ('35' === (string) $this->_limitsel)?"selected='selected'":'';
 
 		$ret['40']['caption'] = icms_conv_nr2local('40');
-		$ret['40']['selected'] = ('40' == $this->_limitsel)?"selected='selected'":"";
+		$ret['40']['selected'] = ('40' === (string) $this->_limitsel)?"selected='selected'":'';
 		return $ret;
 	}
 
@@ -580,10 +582,10 @@ class Table {
 	public function getOrdersArray() {
 		$ret = array();
 		$ret['ASC']['caption'] = _CO_ICMS_SORT_ASC;
-		$ret['ASC']['selected'] = ('ASC' == $this->_ordersel)?"selected='selected'":"";
+		$ret['ASC']['selected'] = ('ASC' === $this->_ordersel)?"selected='selected'":'';
 
 		$ret['DESC']['caption'] = _CO_ICMS_SORT_DESC;
-		$ret['DESC']['selected'] = ('DESC' == $this->_ordersel)?"selected='selected'":"";
+		$ret['DESC']['selected'] = ('DESC' === $this->_ordersel)?"selected='selected'":'';
 
 		return $ret;
 	}
@@ -607,6 +609,7 @@ class Table {
 	 * @param $fetchOnly
 	 * @param $debug
 	 * @return
+	 * @throws \SmartyException
 	 */
 	public function render($fetchOnly = false, $debug = false) {
 		$this->_tpl = new Template();
@@ -623,18 +626,18 @@ class Table {
 		$this->setSortOrder();
 
 		if (!$this->_isTree) {
-			$this->_limitsel = isset($_GET['limitsel'])?$_GET['limitsel']:icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_limitsel', '15');
+			$this->_limitsel = $_GET['limitsel'] ?? icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_limitsel', '15');
 		} else {
 			$this->_limitsel = 'all';
 		}
 
-		$this->_limitsel = isset($_POST['limitsel'])?$_POST['limitsel']:$this->_limitsel;
+		$this->_limitsel = $_POST['limitsel'] ?? $this->_limitsel;
 		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_limitsel', $this->_limitsel);
 		$limitsArray = $this->getLimitsArray();
 		$this->_criteria->setLimit($this->_limitsel);
 
-		$this->_filtersel = isset($_GET['filtersel'])?$_GET['filtersel']:$this->getDefaultFilter();
-		$this->_filtersel = isset($_POST['filtersel'])?$_POST['filtersel']:$this->_filtersel;
+		$this->_filtersel = $_GET['filtersel'] ?? $this->getDefaultFilter();
+		$this->_filtersel = $_POST['filtersel'] ?? $this->_filtersel;
 		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_filtersel', $this->_filtersel);
 		$filtersArray = $this->getFiltersArray();
 
@@ -655,8 +658,8 @@ class Table {
 					$method = $this->_filterseloptions[$this->_filtersel];
 					$this->_filtersel2options = $this->_objectHandler->$method();
 
-					$this->_filtersel2 = isset($_GET['filtersel2'])?$_GET['filtersel2']:$this->getDefaultFilter2();
-					$this->_filtersel2 = isset($_POST['filtersel2'])?$_POST['filtersel2']:$this->_filtersel2;
+					$this->_filtersel2 = $_GET['filtersel2'] ?? $this->getDefaultFilter2();
+					$this->_filtersel2 = $_POST['filtersel2'] ?? $this->_filtersel2;
 
 					$filters2Array = $this->getFilters2Array();
 					$this->_tpl->assign('icms_optionssel_filters2Array', $filters2Array);
@@ -670,7 +673,7 @@ class Table {
 		}
 		// Check if we have a quicksearch
 
-		if (isset($_POST['quicksearch_' . $this->_id]) && $_POST['quicksearch_' . $this->_id] != '') {
+		if (isset($_POST['quicksearch_' . $this->_id]) && $_POST['quicksearch_' . $this->_id]) {
 			$quicksearch_criteria = new CriteriaCompo();
 			if (is_array($this->_quickSearch['fields'])) {
 				foreach ($this->_quickSearch['fields'] as $v) {
@@ -700,7 +703,7 @@ class Table {
 
 			$not_needed_params = array('sortsel', 'limitsel', 'ordersel', 'start' . $this->_objectHandler->keyName);
 			foreach ($_GET as $k => $v) {
-				if (!in_array($k, $not_needed_params)) {
+				if (!in_array($k, $not_needed_params, true)) {
 					$new_get_array[] = "$k=$v";
 					$params_of_the_options_sel[] = "$k=$v";
 				}
@@ -709,9 +712,9 @@ class Table {
 			/**
 			 * Adding the new params of the pagenav
 			 */
-			$new_get_array[] = "sortsel=" . $this->_sortsel;
-			$new_get_array[] = "ordersel=" . $this->_ordersel;
-			$new_get_array[] = "limitsel=" . $this->_limitsel;
+			$new_get_array[] = 'sortsel=' . $this->_sortsel;
+			$new_get_array[] = 'ordersel=' . $this->_ordersel;
+			$new_get_array[] = 'limitsel=' . $this->_limitsel;
 			$otherParams = implode('&', $new_get_array);
 
 			$pagenav = new PageNav($this->_objectHandler->getCount($this->_criteria), $this->_criteria->getLimit(), $this->_criteria->getStart(), 'start' . $this->_objectHandler->keyName, $otherParams);
@@ -728,7 +731,7 @@ class Table {
 		$query_stringArray = explode('&', $query_string);
 		$new_query_stringArray = array();
 		foreach ($query_stringArray as $query_string) {
-			if (strpos($query_string, 'sortsel') == false && strpos($query_string, 'ordersel') == false) {
+			if (strpos($query_string, 'sortsel') === false && strpos($query_string, 'ordersel') === false) {
 				$new_query_stringArray[] = $query_string;
 			}
 		}
@@ -754,19 +757,19 @@ class Table {
 			} elseif ($column->getCustomCaption()) {
 				$aColumn['caption'] = $column->getCustomCaption();
 			} else {
-				$aColumn['caption'] = $this->_tempObject->getVarInfo($column->getKeyName(), 'form_caption')?$this->_tempObject->getVarInfo($column->getKeyName(), 'form_caption'):$column->getKeyName();
+				$aColumn['caption'] = $this->_tempObject->getVarInfo($column->getKeyName(), 'form_caption')?:$column->getKeyName();
 			}
 			// Are we doing a GET sort on this column ?
-			$getSort = (isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) && $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] == $column->getKeyName()) || ($this->_sortsel == $column->getKeyName());
-			$order = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'])?$_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']:'DESC';
+			$getSort = (isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) && $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] === $column->getKeyName()) || ($this->_sortsel === $column->getKeyName());
+			$order = $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] ?? 'DESC';
 
-			if (isset($_REQUEST['quicksearch_' . $this->_id]) && $_REQUEST['quicksearch_' . $this->_id] != '') {
+			if (isset($_REQUEST['quicksearch_' . $this->_id]) && $_REQUEST['quicksearch_' . $this->_id]) {
 				$filter = isset($_POST['quicksearch_' . $this->_id])? INPUT_POST : INPUT_GET;
-				$qs_param = "&amp;quicksearch_" . $this->_id . "=" . filter_input($filter, 'quicksearch_' . $this->_id, FILTER_SANITIZE_SPECIAL_CHARS);
+				$qs_param = '&amp;quicksearch_' . $this->_id . '=' . filter_input($filter, 'quicksearch_' . $this->_id, FILTER_SANITIZE_SPECIAL_CHARS);
 			} else {
 				$qs_param = '';
 			}
-			if (!$this->_enableColumnsSorting || $column->_keyname == 'checked' || !$column->_sortable) {
+			if (!$this->_enableColumnsSorting || $column->_keyname === 'checked' || !$column->_sortable) {
 				$aColumn['caption'] = $aColumn['caption'];
 			} elseif ($getSort) {
 				$aColumn['caption'] = '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=' . $orderArray[$order]['neworder'] . $qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL . '/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';
@@ -799,7 +802,7 @@ class Table {
 			$this->_tpl->assign('icms_withSelectedActions', $this->_withSelectedActions);
 		}
 
-		$icms_table_template = $this->_customTemplate?$this->_customTemplate:'system_persistabletable_display.html';
+		$icms_table_template = $this->_customTemplate?:'system_persistabletable_display.html';
 		if ($fetchOnly) {
 			return $this->_tpl->fetch('db:' . $icms_table_template);
 		} else {
@@ -817,6 +820,7 @@ class Table {
 	/**
 	 *
 	 * @param $debug
+	 * @return string
 	 */
 	public function fetch($debug = false) {
 		return $this->render(true, $debug);

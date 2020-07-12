@@ -117,7 +117,7 @@ class Textsanitizer {
 			return false;
 		}
 		// check black pattern(deprecated)
-		return !preg_match("/^(javascript|vbscript|about):/i", $text);
+		return !preg_match('/^(javascript|vbscript|about):/i', $text);
 	}
 
 	/**

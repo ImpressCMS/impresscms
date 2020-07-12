@@ -171,7 +171,7 @@ class DatabaseUtility implements DatabaseUtilityInterface {
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
 	 */
-	static public function splitSqlFile(&$ret, $sql) {
+	public static function splitSqlFile(&$ret, $sql) {
 		$sql               = trim($sql);
 		$sql_len           = strlen($sql);
 		$char              = '';
@@ -276,7 +276,7 @@ class DatabaseUtility implements DatabaseUtilityInterface {
 	 * @param   string  $prefix prefix to add to all table names
 	 * @return  mixed   FALSE on failure
 	 */
-	static public function prefixQuery($query, $prefix) {
+	public static function prefixQuery($query, $prefix) {
 		$pattern = "/^(INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
 		if (preg_match($pattern, $query, $matches) || preg_match($pattern2, $query, $matches)) {
@@ -295,7 +295,7 @@ class DatabaseUtility implements DatabaseUtilityInterface {
 	 * @param string $sql
 	 * @return bool
 	 */
-	static public function checkSQL($sql) {
+	public static function checkSQL($sql) {
 		/* use Protector's db layer to prevent SQLi */
 		$class = env('DB_ALTERNATIVE');
 		if ($class && class_exists($class)) {
@@ -303,7 +303,7 @@ class DatabaseUtility implements DatabaseUtilityInterface {
 
 			$sql4check = substr($sql, 7);
 			foreach ($protectorDB->doubtful_needles as $needle) {
-				if (stristr($sql4check, $needle)) {
+				if (stripos($sql4check, $needle) !== false) {
 					$protectorDB->checkSql($sql);
 					return false;
 				}

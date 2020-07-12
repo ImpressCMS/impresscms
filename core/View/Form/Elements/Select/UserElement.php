@@ -82,7 +82,7 @@ class UserElement extends TrayElement {
 				: array($value)
 			);
 		if ($user_count > $limit && count($value) > 0) {
-			$criteria = new CriteriaCompo(new CriteriaItem("uid", "(" . implode(",", $value) . ")", "IN"));
+			$criteria = new CriteriaCompo(new CriteriaItem('uid', '(' . implode(',', $value) . ')', 'IN'));
 		} else {
 			$criteria = new CriteriaCompo();
 			$criteria->setLimit($limit);
@@ -97,24 +97,24 @@ class UserElement extends TrayElement {
 		$users = $member_handler->getUserList($criteria);
 		$select_element->addOptionArray($users);
 		if ($user_count <= $limit) {
-			parent::__construct($caption, "", $name);
+			parent::__construct($caption, '', $name);
 			$this->addElement($select_element);
 			return;
 		}
 
 		icms_loadLanguageFile('core', 'user');
 
-		$js_addusers = "<script type=\"text/javascript\">
+		$js_addusers = '<script type="text/javascript">
 					function addusers(opts){
-						var num = opts.substring(0, opts.indexOf(\":\"));
-						opts = opts.substring(opts.indexOf(\":\")+1, opts.length);
-						var sel = xoopsGetElementById(\"" . $name . ($multiple?"[]":"") . "\");
+						var num = opts.substring(0, opts.indexOf(":"));
+						opts = opts.substring(opts.indexOf(":")+1, opts.length);
+						var sel = xoopsGetElementById("' . $name . ($multiple? '[]' : '') . '");
 						var arr = new Array(num);
 						for (var n=0; n < num; n++) {
-							var nm = opts.substring(0, opts.indexOf(\":\"));
-							opts = opts.substring(opts.indexOf(\":\")+1, opts.length);
-							var val = opts.substring(0, opts.indexOf(\":\"));
-							opts = opts.substring(opts.indexOf(\":\")+1, opts.length);
+							var nm = opts.substring(0, opts.indexOf(":"));
+							opts = opts.substring(opts.indexOf(":")+1, opts.length);
+							var val = opts.substring(0, opts.indexOf(":"));
+							opts = opts.substring(opts.indexOf(":")+1, opts.length);
 							var txt = opts.substring(0, nm - val.length);
 							opts = opts.substring(nm - val.length, opts.length);
 							var added = false;
@@ -131,18 +131,18 @@ class UserElement extends TrayElement {
 						}
 						return true;
 					}
-					</script>";
+					</script>';
 
 		$token = icms::$security->createToken();
-		$action_tray = new TrayElement("", " | ");
+		$action_tray = new TrayElement('', ' | ');
 		$action_tray->addElement(new LabelElement('',
 			"<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name
-			. ($multiple?"[]":"") . '\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}} return false;\'>"'
-			. _MA_USER_REMOVE . "</a>"));
+			. ($multiple? '[]' : '') . '\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}} return false;\'>"'
+			. _MA_USER_REMOVE . '</a>'));
 		$action_tray->addElement(new LabelElement('',
 			"<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL
 			. "/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >"
-			. _MA_USER_MORE . "</a>" . $js_addusers));
+			. _MA_USER_MORE . '</a>' . $js_addusers));
 
 		parent::__construct($caption, '<br /><br />', $name);
 		$this->addElement($select_element);

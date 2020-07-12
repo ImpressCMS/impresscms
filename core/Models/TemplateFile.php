@@ -36,6 +36,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Base class for all templates
  *
@@ -53,7 +55,7 @@ namespace ImpressCMS\Core\Models;
  * @property string $tpl_module        Module
  * @property string $tpl_type          Type
  * */
-class TemplateFile extends \ImpressCMS\Core\IPF\AbstractModel {
+class TemplateFile extends AbstractModel {
 
 	public $tpl_source = false;
 
@@ -81,7 +83,7 @@ class TemplateFile extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * Gets Template Source
 	 */
 	public function getSource() {
-		$sql = "SELECT tpl_source FROM " . $this->handler->db->prefix('tplsource')
+		$sql = 'SELECT tpl_source FROM ' . $this->handler->db->prefix('tplsource')
 				. " WHERE tpl_id='" . $this->getVar('tpl_id') . "'";
 		if (!$result = $this->handler->db->query($sql)) {
 					return false;
@@ -91,7 +93,7 @@ class TemplateFile extends \ImpressCMS\Core\IPF\AbstractModel {
 	}
 
 		public function getVar($name, $format = 's') {
-			if ($name == 'tpl_source') {
+			if ($name === 'tpl_source') {
 				if ($this->tpl_source === false) {
 					$this->tpl_source = $this->getSource();
 				}
@@ -102,7 +104,7 @@ class TemplateFile extends \ImpressCMS\Core\IPF\AbstractModel {
 		}
 
 		public function assignVar($name, &$value) {
-			if ($name == 'tpl_source') {
+			if ($name === 'tpl_source') {
 				$this->tpl_source = $value;
 			} else {
 				parent::assignVar($name, $value);
@@ -110,7 +112,7 @@ class TemplateFile extends \ImpressCMS\Core\IPF\AbstractModel {
 		}
 
 		public function setVar($name, $value, $options = null) {
-			if ($name == 'tpl_source') {
+			if ($name === 'tpl_source') {
 				$this->tpl_source = $value;
 			} else {
 				parent::setVar($name, $value, $options);

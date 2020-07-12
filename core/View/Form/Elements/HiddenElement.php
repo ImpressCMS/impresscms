@@ -62,7 +62,7 @@ class HiddenElement extends AbstractFormElement {
 		$this->setName($name);
 		$this->setHidden();
 		$this->setValue($value);
-		$this->setCaption("");
+		$this->setCaption('');
 	}
 
 	/**

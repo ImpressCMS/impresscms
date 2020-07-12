@@ -52,7 +52,7 @@ class Controller {
 					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key] != '') {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 						if (!$eventResult) {
-							$icmsObj->setErrors("An error occured during the beforeFileUnlink event");
+							$icmsObj->setErrors('An error occured during the beforeFileUnlink event');
 						}
 						$oldFile = $icmsObj->getUploadDir(true) . $icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, $_POST['url_' . $key]);
@@ -61,13 +61,13 @@ class Controller {
 						}
 						$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
 						if (!$eventResult) {
-							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
+							$icmsObj->setErrors('An error occured during the afterFileUnlink event');
 						}
 					}
 					if (isset($_POST['delete_' . $key]) && $_POST['delete_' . $key] == '1') {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 						if (!$eventResult) {
-							$icmsObj->setErrors("An error occured during the beforeFileUnlink event");
+							$icmsObj->setErrors('An error occured during the beforeFileUnlink event');
 						}
 						$oldFile = $icmsObj->getUploadDir(true) . $icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, '');
@@ -76,7 +76,7 @@ class Controller {
 						}
 						$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
 						if (!$eventResult) {
-							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
+							$icmsObj->setErrors('An error occured during the afterFileUnlink event');
 						}
 					}
 					break;
@@ -150,12 +150,13 @@ class Controller {
 
 	/**
 	 *
-	 * @param	obj		$icmsObj	Object
-	 * @param	int		$objectid
-	 * @param	str		$created_success_msg	Message to display on successful creation
-	 * @param	str		$modified_success_msg	Message to display on successful modification
-	 * @param	bool	$redirect_page			Whether to redirect afterwards, or not
-	 * @param	bool	$debug					Whether to display debug information, or not
+	 * @param object $icmsObj Object
+	 * @param int $objectid
+	 * @param string $created_success_msg Message to display on successful creation
+	 * @param string $modified_success_msg Message to display on successful modification
+	 * @param bool $redirect_page Whether to redirect afterwards, or not
+	 * @param bool $debug Whether to display debug information, or not
+	 * @return obj
 	 */
 	public function &doStoreFromDefaultForm(&$icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page = false, $debug = false) {
 		$this->postDataToObject($icmsObj);
@@ -208,7 +209,7 @@ class Controller {
 
 								$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
 								if (!$eventResult) {
-									$icmsObj->setErrors("An error occured during the afterFileUnlink event");
+									$icmsObj->setErrors('An error occured during the afterFileUnlink event');
 									$uploaderResult = $uploaderResult && false;
 								}
 							}

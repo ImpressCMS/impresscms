@@ -69,7 +69,7 @@ class ImageCategory extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * Constructor
 	 *
 	 */
-	public function __construct(&$handler, $data = array()) {
+	public function __construct(&$handler, $data = []) {
 		$this->initVar('imgcat_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('imgcat_pid', self::DTYPE_INTEGER, null, false);
 		$this->initVar('imgcat_name', self::DTYPE_STRING, null, true, 100);

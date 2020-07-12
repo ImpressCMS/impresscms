@@ -37,7 +37,12 @@
 
 namespace ImpressCMS\Core\Models;
 
+use icms;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Aura;
+use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\Messaging\MailHandler;
 
 /**
  * Class for users
@@ -77,7 +82,7 @@ use ImpressCMS\Core\Facades\Aura;
  * @property bool   $pass_expired      Is password expired?
  * @property string $login_name        Login name
  */
-class User extends \ImpressCMS\Core\IPF\AbstractModel {
+class User extends AbstractModel {
 
 	/**
 	 * @var bool is the user admin?
@@ -160,10 +165,10 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * @param int $usereal switch for usename or realname
 	 * @return string name of the user. name for "anonymous" if not found.
 	 */
-	static public function getUnameFromId($userid, $usereal = 0)
+	public static function getUnameFromId($userid, $usereal = 0)
 	{
 		trigger_error('Use same function from handler. This one is deprecahed!', E_DEPRECATED);
-		$handler = \icms::handler('icms_member_user');
+		$handler = icms::handler('icms_member_user');
 		return $handler->getUnameFromId($userid, (bool)$usereal);
 	}
 
@@ -203,36 +208,36 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 		$this->setControl('user_viewoid', 'yesno');
 		$this->setControl('user_mailok', 'yesno');
 		$this->setControl('attachsig', 'yesno');
-		$this->setControl('rank', array(
+		$this->setControl('rank', [
 			'name' => 'select',
 			'itemHandler' => 'member_rank',
 			'module' => 'icms',
 			'method' => 'getList'
-		));
-		$this->setControl('notify_method', array(
+		]);
+		$this->setControl('notify_method', [
 			'name' => 'select',
-			'options' => array(
+			'options' => [
 				XOOPS_NOTIFICATION_METHOD_DISABLE => _NOT_METHOD_DISABLE,
 				XOOPS_NOTIFICATION_METHOD_PM => _NOT_METHOD_PM,
 				XOOPS_NOTIFICATION_METHOD_EMAIL => _NOT_METHOD_EMAIL
-			)
-		));
-		$this->setControl('notify_mode', array(
+			]
+		]);
+		$this->setControl('notify_mode', [
 			'name' => 'select',
-			'options' => array(
+			'options' => [
 				XOOPS_NOTIFICATION_MODE_SENDALWAYS => _NOT_MODE_SENDALWAYS,
 				XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE => _NOT_MODE_SENDONCE,
 				XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT => _NOT_MODE_SENDONCEPERLOGIN
-			)
-		));
-		$this->setControl('umode', array(
+			]
+		]);
+		$this->setControl('umode', [
 			'name' => 'select',
-			'options' => array("nest" => _NESTED, "flat" => _FLAT, "thread" => _THREADED)
-		));
-		$this->setControl('uorder', array(
+			'options' => ['nest' => _NESTED, 'flat' => _FLAT, 'thread' => _THREADED]
+		]);
+		$this->setControl('uorder', [
 			'name' => 'select',
-			'options' => array("0" => _OLDESTFIRST, "1" => _NEWESTFIRST)
-		));
+			'options' => ['0' => _OLDESTFIRST, '1' => _NEWESTFIRST]
+		]);
 		return parent::getForm($form_caption, $form_name, $form_action, $submit_button_caption, $cancel_js_action, $captcha);
 	}
 
@@ -248,7 +253,7 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 					return true;
 		}
 
-        $mailer = new \ImpressCMS\Core\Messaging\MailHandler();
+        $mailer = new MailHandler();
         $mailer->useMail();
         $mailer->setBody($icmsConfigUser['welcome_msg_content']);
         $mailer->assign('UNAME', $this->getVar('uname'));
@@ -257,7 +262,7 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
         $mailer->setToEmails($user_email);
         $mailer->setFromEmail($icmsConfig['adminmail']);
         $mailer->setFromName($icmsConfig['sitename']);
-        $mailer->setSubject(sprintf(_US_YOURREGISTRATION, \ImpressCMS\Core\DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
+        $mailer->setSubject(sprintf(_US_YOURREGISTRATION, DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
         if (!$mailer->send(true)) {
             $this->setErrors(_US_WELCOMEMSGFAILED);
             return false;
@@ -278,8 +283,8 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 		global $icmsConfigUser, $icmsConfig;
 
         if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
-            $member_handler = \icms::handler('icms_member');
-            $mailer = new \ImpressCMS\Core\Messaging\MailHandler();
+            $member_handler = icms::handler('icms_member');
+            $mailer = new MailHandler();
             $mailer->useMail();
             $mailer->setTemplate('newuser_notify.tpl');
             $mailer->assign('UNAME', $this->getVar('uname'));
@@ -312,14 +317,14 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 	 */
 	public function isAdmin($module_id = null) {
 		static $buffer = array();
-		if (is_null($module_id)) {
+		if ($module_id === null) {
 			$module_id = isset($GLOBALS['xoopsModule'])?$GLOBALS['xoopsModule']->mid:1;
 		} elseif ((int) $module_id < 1) {
 			$module_id = 0;
 		}
 
 		if (!isset($buffer[$module_id])) {
-			$moduleperm_handler = \icms::handler('icms_member_groupperm');
+			$moduleperm_handler = icms::handler('icms_member_groupperm');
 			$buffer[$module_id] = $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
 		}
 		return $buffer[$module_id];
@@ -333,7 +338,7 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 	public function &getGroups()
 	{
 		if (empty($this->_groups)) {
-			$member_handler = \icms::handler('icms_member');
+			$member_handler = icms::handler('icms_member');
 			$this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
 		}
 		return $this->_groups;
@@ -365,39 +370,40 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 	 */
 	public function isOnline() {
 		if (!isset($this->_isOnline)) {
-			$onlinehandler = \icms::handler('icms_core_Online');
-			$this->_isOnline = ($onlinehandler->getCount(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('online_uid', $this->getVar('uid'))) > 0)? true : false;
+			$onlinehandler = icms::handler('icms_core_Online');
+			$this->_isOnline = $onlinehandler->getCount(new CriteriaItem('online_uid', $this->getVar('uid'))) > 0;
 		}
 		return $this->_isOnline;
 	}
 
 	/**
 	 * Gravatar plugin for ImpressCMS
+	 * @param bool $rating
+	 * @param bool $size (size in pixels of the image. Accept values between 1 to 80. Default 80)
+	 * @param bool $default (url of default avatar. Will be used if no gravatar are found)
+	 * @param bool $border (hexadecimal color)
+	 *
+	 * @param bool $overwrite
+	 * @return string (gravatar or ImpressCMS avatar)
 	 * @author TheRplima
 	 *
-	 * @param string $rating
-	 * @param integer $size (size in pixels of the image. Accept values between 1 to 80. Default 80)
-	 * @param string $default (url of default avatar. Will be used if no gravatar are found)
-	 * @param string $border (hexadecimal color)
-	 *
-	 * @return string (gravatar or ImpressCMS avatar)
 	 */
 	public function gravatar($rating = false, $size = false, $default = false, $border = false, $overwrite = false) {
-		if (!$overwrite && is_file(ICMS_UPLOAD_PATH . '/' . $this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif') {
+		if ($this->getVar('user_avatar') !== 'blank.gif' && !$overwrite && is_file(ICMS_UPLOAD_PATH . '/' . $this->getVar('user_avatar'))) {
 			return ICMS_UPLOAD_URL . '/' . $this->getVar('user_avatar');
 		}
-		$ret = "//www.gravatar.com/avatar/" . md5(strtolower($this->getVar('email', 'E'))) . "?d=identicon";
-		if ($rating && $rating != '') {
-			$ret .= "&amp;rating=" . $rating;
+		$ret = '//www.gravatar.com/avatar/' . md5(strtolower($this->getVar('email', 'E'))) . '?d=identicon';
+		if ($rating) {
+			$ret .= '&amp;rating=' . $rating;
 		}
-		if ($size && $size != '') {
-			$ret .= "&amp;size=" . $size;
+		if ($size) {
+			$ret .= '&amp;size=' . $size;
 		}
-		if ($default && $default != '') {
-			$ret .= "&amp;default=" . urlencode($default);
+		if ($default) {
+			$ret .= '&amp;default=' . urlencode($default);
 		}
-		if ($border && $border != '') {
-			$ret .= "&amp;border=" . $border;
+		if ($border) {
+			$ret .= '&amp;border=' . $border;
 		}
 		return $ret;
 	}
@@ -428,8 +434,8 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
-		$userSegment = $session->getSegment(User::class);
+		$session = icms::getInstance()->get('session');
+		$userSegment = $session->getSegment(__CLASS__);
 		foreach ($data as $key => $value) {
 			$userSegment->set($key, $value);
 		}
@@ -443,8 +449,8 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::getInstance()->get('session');
-			$userSegment = $session->getSegment(User::class);
+			$session = icms::getInstance()->get('session');
+			$userSegment = $session->getSegment(__CLASS__);
 			$userSegment->set($name, parent::getVar($name));
 		}
 	}
@@ -456,10 +462,10 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 	 */
 	public function isSameAsLoggedInUser()
 	{
-		if (!\icms::$user) {
+		if (!icms::$user) {
 					return false;
 		}
-		return \icms::$user->getVar('uid') == $this->getVar('uid');
+		return icms::$user->getVar('uid') === $this->getVar('uid');
 	}
 
 	/**
@@ -469,7 +475,7 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 	public function rank()
 	{
 		if (!isset($this->_rank)) {
-			$this->_rank = \icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
+			$this->_rank = icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
 		}
 		return $this->_rank;
 	}
@@ -484,33 +490,15 @@ class User extends \ImpressCMS\Core\IPF\AbstractModel {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
-		$userSegment = $session->getSegment(User::class);
+		$session = icms::getInstance()->get('session');
+		$userSegment = $session->getSegment(__CLASS__);
 
 		if ($userid = $userSegment->get('userid')) {
 					return false;
 		}
-		if ($userid != $this->getVar('uid')) {
+		if ($userid !== $this->getVar('uid')) {
 			return false;
 		}
 		$session->clear();
 	}
-
-	/*  /**
-    * Converts user to array
-     *
-    * @return array
-    */
-	/*  public function toArray() {
-      $data = parent::toArray();
-      if ($this->isSameAsLoggedInUser()) {
-      if (!$data['user_viewoid'])
-      unset($data['pass_expired'], $data['login_name'], $data['pass']);
-      foreach (array_keys($data) as $key) {
-      if ($key == 'uid')
-      continue;
-      }
-      }
-      return $data;
-      } */
 }

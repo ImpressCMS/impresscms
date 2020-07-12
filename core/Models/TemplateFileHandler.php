@@ -36,6 +36,10 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Template file handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -45,7 +49,7 @@ namespace ImpressCMS\Core\Models;
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
+class TemplateFileHandler extends Handler {
 	private $_prefetch_cache = array();
 
 	public function __construct(&$db) {
@@ -61,7 +65,7 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	public function loadSource(TemplateFile &$tplfile) {
 		if (!$tplfile->getVar('tpl_source')) {
-			$sql = "SELECT tpl_source FROM " . $this->table
+			$sql = 'SELECT tpl_source FROM ' . $this->table
 				. " WHERE tpl_id='" . $tplfile->getVar('tpl_id') . "'";
 			if (!$result = $this->db->query($sql)) {
 				return false;
@@ -92,14 +96,14 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	public function getModuleTplCount($tplset) {
 		$ret = array();
-		$sql = "SELECT tpl_module, COUNT(tpl_id) AS count FROM " . $this->db->prefix('tplfile')
+		$sql = 'SELECT tpl_module, COUNT(tpl_id) AS count FROM ' . $this->db->prefix('tplfile')
 			. " WHERE tpl_tplset='" . $tplset . "' GROUP BY tpl_module";
 		$result = $this->db->query($sql);
 		if (!$result) {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			if ($myrow['tpl_module'] != '') {
+			if ($myrow['tpl_module']) {
 				$ret[$myrow['tpl_module']] = $myrow['count'];
 			}
 		}
@@ -118,28 +122,28 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  array $ret containing number of templates in the tpl_set or empty array if fails
 	 */
 	public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria = new CriteriaCompo();
 		if (isset($tplset)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_tplset', $tplset));
+			$criteria->add(new CriteriaItem('tpl_tplset', $tplset));
 		}
 		if (isset($module)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_module', $module));
+			$criteria->add(new CriteriaItem('tpl_module', $module));
 		}
 		if (isset($refid)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_refid', $refid));
+			$criteria->add(new CriteriaItem('tpl_refid', $refid));
 		}
 		if (isset($file)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_file', $file));
+			$criteria->add(new CriteriaItem('tpl_file', $file));
 		}
 		if (isset($type)) {
 			if (is_array($type)) {
-				$criteria2 = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+				$criteria2 = new CriteriaCompo();
 				foreach ($type as $t) {
-					$criteria2->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_type', $t), 'OR');
+					$criteria2->add(new CriteriaItem('tpl_type', $t), 'OR');
 				}
 				$criteria->add($criteria2);
 			} else {
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_type', $type));
+				$criteria->add(new CriteriaItem('tpl_type', $type));
 			}
 		}
 		return $this->getObjects($criteria, false, true);
@@ -153,8 +157,8 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return  bool true if exists, false if not
 	 */
 	public function templateExists($tplname, $tplset_name) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_file', trim($tplname)));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tpl_tplset', trim($tplset_name)));
+		$criteria = new CriteriaCompo(new CriteriaItem('tpl_file', trim($tplname)));
+		$criteria->add(new CriteriaItem('tpl_tplset', trim($tplset_name)));
 		if ($this->getCount($criteria) > 0) {
 			return true;
 		}
@@ -180,8 +184,8 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 			$tplNames[] = $block->template?: 'system_block_dummy.html';
 		}
 
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(
-			new \ImpressCMS\Core\Database\Criteria\CriteriaItem(
+		$criteria = new CriteriaCompo(
+			new CriteriaItem(
 				'tpl_tplset',
 				'(' .
 				implode(
@@ -190,7 +194,7 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 						[$this->db, 'quoteString'],
 						array_unique(
 							[
-								$icmsConfig["template_set"],
+								$icmsConfig['template_set'],
 								'default'
 							]
 						)
@@ -201,7 +205,7 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 			)
 		);
 		$criteria->add(
-			new \ImpressCMS\Core\Database\Criteria\CriteriaItem(
+			new CriteriaItem(
 				'tpl_file',
 				'(' .
 				implode(
@@ -230,14 +234,14 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * Return a prefetched block. This function only works if prefetchBlocks was called in advance.
 	 * This function is used in the user function smarty_resource_db_tplinfo().
 	 *
-	 * @param	str		$tplset		template set that's currently in use
-	 * @param	str		$tpl_name	name of the template
+	 * @param	string		$tplset		template set that's currently in use
+	 * @param	string		$tpl_name	name of the template
 	 * @return	array				array of templates (just one item)
 	 */
 	public function getPrefetchedBlock($tplset, $tpl_name) {
 		foreach ($this->_prefetch_cache as $block) {
-			if ($block->getVar("tpl_tplset") == $tplset && $block->getVar("tpl_file") == $tpl_name) {
-				return array($block);
+			if ($block->getVar('tpl_tplset') === $tplset && $block->getVar('tpl_file') === $tpl_name) {
+				return [$block];
 			}
 		}
 
@@ -247,8 +251,8 @@ class TemplateFileHandler extends \ImpressCMS\Core\IPF\Handler {
 		 */
 		if ($tplset != 'default') {
 			foreach ($this->_prefetch_cache as $block) {
-				if ($block->getVar("tpl_tplset") == "default" && $block->getVar("tpl_file") == $tpl_name) {
-					return array($block);
+				if ($block->getVar('tpl_tplset') === 'default' && $block->getVar('tpl_file') === $tpl_name) {
+					return [$block];
 				}
 			}
 		}

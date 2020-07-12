@@ -10,6 +10,8 @@
  */
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Provides data access mechanisms to the Category object
  *
@@ -18,7 +20,7 @@ namespace ImpressCMS\Core\Models;
  * @package	ICMS\IPF\Category
  * @since 	1.1
  */
-class CategoryHandler extends \ImpressCMS\Core\IPF\Handler {
+class CategoryHandler extends Handler {
 	/** */
 	public $allCategoriesObj = false;
 	/** */
@@ -86,7 +88,7 @@ class CategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 
 			$ret = array();
 			$sql = 'SELECT categoryid, parentid FROM ' . $this->table
-				. " AS " . $this->_itemname . ' ORDER BY parentid';
+				. ' AS ' . $this->_itemname . ' ORDER BY parentid';
 
 			$result = $this->db->query($sql);
 

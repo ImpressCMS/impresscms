@@ -35,6 +35,7 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\IPF\AbstractModel;
 
 /**
  * Config item
@@ -54,7 +55,7 @@ use ImpressCMS\Core\DataFilter;
  * @property string     $conf_valuetype     Type of value
  * @property int        $conf_order         Order (used to sorting fields before displaying on form)
  */
-class ConfigItem extends \ImpressCMS\Core\IPF\AbstractModel {
+class ConfigItem extends AbstractModel {
 	/**
 	 * Config options
 	 *
@@ -127,7 +128,7 @@ class ConfigItem extends \ImpressCMS\Core\IPF\AbstractModel {
 
 			case 'array':
 				$value = $this->conf_value;
-				if ($value === null || strlen($value) < 2 || (substr($value, 1, 1) != ':')) {
+				if ($value === null || strlen($value) < 2 || (substr($value, 1, 1) !== ':')) {
 									return array();
 				}
 				$value = @unserialize($value);
@@ -157,11 +158,11 @@ class ConfigItem extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * @param	bool    $force_slash
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
-		if ($this->getVar('conf_formtype') == 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
+		if ($this->getVar('conf_formtype') === 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
 			$value = DataFilter::checkVar($value, 'html', 'input');
-		} elseif ($this->getVar('conf_formtype') == 'textsarea' && $this->getVar('conf_valuetype') !== 'array') {
+		} elseif ($this->getVar('conf_formtype') === 'textsarea' && $this->getVar('conf_valuetype') !== 'array') {
 			$value = DataFilter::checkVar($value, 'text', 'input');
-		} elseif ($this->getVar('conf_formtype') == 'password') {
+		} elseif ($this->getVar('conf_formtype') === 'password') {
 			$value = filter_var($value, FILTER_SANITIZE_URL);
 		} else {
 			$value = StopXSS($value);
@@ -195,10 +196,8 @@ class ConfigItem extends \ImpressCMS\Core\IPF\AbstractModel {
 			for ($i = 0; $i < $count; $i++) {
 				$this->setConfOptions($option[$i]);
 			}
-		} else {
-			if (is_object($option)) {
-				$this->_confOptions[] = & $option;
-			}
+		} else if (is_object($option)) {
+			$this->_confOptions[] = & $option;
 		}
 	}
 

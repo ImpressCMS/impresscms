@@ -31,7 +31,7 @@ interface DatabaseUtilityInterface {
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
 	 */
-	static public function splitSqlFile(&$ret, $sql);
+	public static function splitSqlFile(&$ret, $sql);
 
 	/**
 	 * add a prefix.'_' to all tablenames in a query
@@ -40,7 +40,7 @@ interface DatabaseUtilityInterface {
 	 * @param   string  $prefix prefix to add to all table names
 	 * @return  mixed   FALSE on failure
 	 */
-	static public function prefixQuery($query, $prefix);
+	public static function prefixQuery($query, $prefix);
 
 	/**
 	 * Determine if the SQL string is safe
@@ -48,6 +48,6 @@ interface DatabaseUtilityInterface {
 	 * @param string $sql
 	 * @return bool	TRUE if the string is safe
 	 */
-	static public function checkSQL($sql);
+	public static function checkSQL($sql);
 
 }

@@ -82,7 +82,7 @@ class GroupPermissionForm extends AbstractForm {
 		$this->_permName = $permname;
 		$this->_permDesc = $permdesc;
 		$this->addElement(new HiddenElement('modid', $this->_modid));
-		if ($url != "") {
+		if ($url) {
 			$this->addElement(new HiddenElement('redirect_url', $url));
 		}
 	}
@@ -113,10 +113,10 @@ class GroupPermissionForm extends AbstractForm {
 		if (!empty ($this->_itemTree[$itemId]['children'])) {
 			$first_child = $this->_itemTree[$itemId]['children'];
 			foreach ($first_child as $fcid) {
-				array_push($childIds, $fcid);
+				$childIds[] = $fcid;
 				if (!empty ($this->_itemTree[$fcid]['children'])) {
 					foreach ($this->_itemTree[$fcid]['children'] as $_fcid) {
-						array_push($childIds, $_fcid);
+						$childIds[] = $_fcid;
 						$this->_loadAllChildItemIds($_fcid, $childIds);
 					}
 				}
@@ -169,7 +169,7 @@ class GroupPermissionForm extends AbstractForm {
 				$ret .= $elements[$i];
 			} elseif (!$elements[$i]->isHidden()) {
 				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>" . $elements[$i]->getCaption();
-				if ($elements[$i]->getDescription() != '') {
+				if ($elements[$i]->getDescription()) {
 					$ret .= '<br /><br /><span style="font-weight: normal;">' . $elements[$i]->getDescription() . '</span>';
 				}
 				$ret .= "</td>\n<td class='even'>\n" . $elements[$i]->render() . "\n</td></tr>\n";

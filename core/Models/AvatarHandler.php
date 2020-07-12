@@ -37,7 +37,11 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Filesystem;
+use ImpressCMS\Core\IPF\Handler;
 
 /**
  * Avatar handler class.
@@ -49,7 +53,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaElement;
  *
  * @package	ICMS\Data\Avatar
  */
-class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
+class AvatarHandler extends Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'data_avatar', 'avatar_id', 'avatar_name', 'avatar_file', 'icms', 'avatar', 'avatar_id');
@@ -169,13 +173,13 @@ class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return array
 	 */
 	public function getList($avatar_type = null, $avatar_display = null) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria = new CriteriaCompo();
 		if (isset($avatar_type)) {
 			$avatar_type = ($avatar_type == 'C')?'C':'S';
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('avatar_type', $avatar_type));
+			$criteria->add(new CriteriaItem('avatar_type', $avatar_type));
 		}
 		if (isset($avatar_display)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('avatar_display', (int) $avatar_display));
+			$criteria->add(new CriteriaItem('avatar_display', (int) $avatar_display));
 		}
 		$avatars = & $this->getObjects($criteria, true);
 		$ret = array('blank.gif' => _NONE);
@@ -191,12 +195,12 @@ class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @param   string	$avatar_dir name of the directory to scan for files,
 	 * @return  array	 $avatars	list of avatars in the directory
 	 */
-	static public function getListFromDir($avatar_dir = "") {
-		$avatars = array();
-		if ($avatar_dir != "") {
-			$avatars = \ImpressCMS\Core\Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $avatar_dir . "/", $avatar_dir . "/", array('gif', 'jpg', 'png'));
+	public static function getListFromDir($avatar_dir = '') {
+		$avatars = [];
+		if ($avatar_dir) {
+			$avatars = Filesystem::getFileList(ICMS_ROOT_PATH . '/images/avatar/' . $avatar_dir . '/', $avatar_dir . '/', ['gif', 'jpg', 'png']);
 		} else {
-			$avatars = \ImpressCMS\Core\Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/", '', array('gif', 'jpg', 'png'));
+			$avatars = Filesystem::getFileList(ICMS_ROOT_PATH . '/images/avatar/', '', ['gif', 'jpg', 'png']);
 		}
 		return $avatars;
 	}
@@ -206,13 +210,12 @@ class AvatarHandler extends \ImpressCMS\Core\IPF\Handler {
 	 *
 	 * @return  mixed	 $avatars|false  list of avatar files in the directory or false if no avatars
 	 */
-	static public function getAllFromDir() {
+	public static function getAllFromDir() {
 		$avatars = array();
-		$dirlist = array();
-		$dirlist = \ImpressCMS\Core\Filesystem::getDirList(ICMS_ROOT_PATH . "/images/avatar/");
+		$dirlist = Filesystem::getDirList(ICMS_ROOT_PATH . '/images/avatar/');
 		if (count($dirlist) > 0) {
 			foreach ($dirlist as $dir) {
-				$avatars[$dir] = & \ImpressCMS\Core\Filesystem::getFileList(ICMS_ROOT_PATH . "/images/avatar/" . $dir . "/", $dir . "/", array('gif', 'jpg', 'png'));
+				$avatars[$dir] = & Filesystem::getFileList(ICMS_ROOT_PATH . '/images/avatar/' . $dir . '/', $dir . '/', ['gif', 'jpg', 'png']);
 			}
 		} else {
 			return false;

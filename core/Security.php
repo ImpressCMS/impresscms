@@ -51,17 +51,10 @@ class Security {
 	public $errors = array();
 
 	/**
-	 * Constructor
-	 *
-	 */
-	public function __construct() {
-	}
-
-	/**
 	 * Check if there is a valid token in $_REQUEST[$name . '_REQUEST'] - can be expanded for more wide use, later (Mith)
 	 *
 	 * @param bool   $clearIfValid whether to clear the token after validation
-	 * @param string $token token to validate
+	 * @param string|false $token token to validate
 	 * @param string $name session name
 	 *
 	 * @return bool
@@ -83,7 +76,7 @@ class Security {
 		$token = ($token !== false)?$token:(isset($_REQUEST[$name . '_REQUEST'])?$_REQUEST[$name . '_REQUEST']:'');
 
 		/**
-		 * @var Aura\Session\Session $session
+		 * @var \Aura\Session\Session $session
 		 */
 		$session = \icms::getInstance()->get('session');
 
@@ -144,7 +137,7 @@ class Security {
 		}
 
 		/**
-		 * @var Aura\Session\Session $session
+		 * @var \Aura\Session\Session $session
 		 */
 		$session = \icms::getInstance()->get('session');
 
@@ -216,14 +209,12 @@ class Security {
 		global $icmsConfig;
 		if ($icmsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
 			foreach ($icmsConfig['bad_ips'] as $bi) {
-				if (!empty($bi) && preg_match("/" . $bi . "/", $_SERVER['REMOTE_ADDR'])) {
+				if (!empty($bi) && preg_match('/' . $bi . '/', $_SERVER['REMOTE_ADDR'])) {
 					exit();
 				}
 			}
 		}
-		unset($bi);
-		unset($bad_ips);
-		unset($icmsConfig['badips']);
+		unset($bi, $bad_ips, $icmsConfig['badips']);
 	}
 
 	/**
@@ -234,7 +225,7 @@ class Security {
 	 * @return string
 	 */
 	public function getTokenHTML($name = _CORE_TOKEN) {
-		$token = new HiddentokenElement($name);
+		$token = new HiddenTokenElement($name);
 		return $token->render();
 	}
 

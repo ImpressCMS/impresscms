@@ -74,11 +74,11 @@ class PageNav {
 	 * @param   string  $start_name	 Name for "start" or "offset"
 	 * @param   string  $extra_arg	  Additional arguments to pass in the URL
 	 */
-	public function __construct($total_items, $items_perpage, $current_start, $start_name = "start", $extra_arg = "") {
+	public function __construct($total_items, $items_perpage, $current_start, $start_name = 'start', $extra_arg = '') {
 		$this->total = (int) ($total_items);
 		$this->perpage = (int) ($items_perpage);
 		$this->current = (int) ($current_start);
-		if ($extra_arg != '' && (substr($extra_arg, -5) != '&amp;' || substr($extra_arg, -1) != '&')) {
+		if ($extra_arg && (substr($extra_arg, -5) !== '&amp;' || substr($extra_arg, -1) !== '&')) {
 			$extra_arg .= '&amp;';
 		}
 		$this->url = $_SERVER['PHP_SELF'] . '?' . $extra_arg . trim($start_name) . '=';
@@ -103,25 +103,25 @@ class PageNav {
 		if ($this->total <= $this->perpage) {
 			return $ret;
 		}
-		$total_pages = ceil($this->total / $this->perpage);
+		$total_pages = (int)ceil($this->total / $this->perpage);
 		if ($total_pages > 1) {
 			$prev = $this->current - $this->perpage;
 			if ($prev >= 0) {
-				$ret .= '<a href="' . $this->url . $prev . '">' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?"&#9658; ":"&#9668; ") . '' . _PREV . '</a> ';
+				$ret .= '<a href="' . $this->url . $prev . '">' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)? '&#9658; ' : '&#9668; ') . '' . _PREV . '</a> ';
 			} else {
-				$ret .= '<span class="disabled"><strong>' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?"&#9658; ":"&#9668; ") . '' . _PREV . '</strong></span> ';
+				$ret .= '<span class="disabled"><strong>' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)? '&#9658; ' : '&#9668; ') . '' . _PREV . '</strong></span> ';
 			}
 			$counter = 1;
 			$current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
 			while ($counter <= $total_pages) {
-				if ($counter == $current_page) {
-					$ret .= '<span class="current"><strong>' . (($style == 'default')?'(':'') . icms_conv_nr2local($counter) . (($style == 'default')?')':'') . '</strong></span> ';
-				} elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
-					if ($counter == $total_pages && $current_page < $total_pages - $offset) {
+				if ($counter === $current_page) {
+					$ret .= '<span class="current"><strong>' . (($style === 'default')?'(':'') . icms_conv_nr2local($counter) . (($style === 'default')?')':'') . '</strong></span> ';
+				} elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter === 1 || $counter === $total_pages) {
+					if ($counter === $total_pages && $current_page < $total_pages - $offset) {
 						$ret .= '... ';
 					}
 					$ret .= '<a href="' . $this->url . (($counter - 1) * $this->perpage) . '">' . icms_conv_nr2local($counter) . '</a> ';
-					if ($counter == 1 && $current_page > 1 + $offset) {
+					if ($counter === 1 && $current_page > 1 + $offset) {
 						$ret .= '... ';
 					}
 				}
@@ -129,9 +129,9 @@ class PageNav {
 			}
 			$next = $this->current + $this->perpage;
 			if ($this->total > $next) {
-				$ret .= '<a href="' . $this->url . $next . '">' . _NEXT . '' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?" &#9668;":" &#9658;") . '</a> ';
+				$ret .= '<a href="' . $this->url . $next . '">' . _NEXT . '' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)? ' &#9668;' : ' &#9658;') . '</a> ';
 			} else {
-				$ret .= '<span class="disabled"><strong>' . _NEXT . '' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)?" &#9668;":" &#9658;") . '</strong></span> ';
+				$ret .= '<span class="disabled"><strong>' . _NEXT . '' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)? ' &#9668;' : ' &#9658;') . '</strong></span> ';
 			}
 		}
 		return '<div class="pagination ' . $style . '">' . $ret . '</div>';
@@ -147,7 +147,7 @@ class PageNav {
 		if ($this->total < $this->perpage) {
 			return;
 		}
-		$total_pages = ceil($this->total / $this->perpage);
+		$total_pages = (int)ceil($this->total / $this->perpage);
 		$ret = '';
 		if ($total_pages > 1) {
 			$ret = '<form name="pagenavform">';
@@ -155,7 +155,7 @@ class PageNav {
 			$counter = 1;
 			$current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
 			while ($counter <= $total_pages) {
-				if ($counter == $current_page) {
+				if ($counter === $current_page) {
 					$ret .= '<option value="' . $this->url . (($counter - 1) * $this->perpage) . '" selected="selected">' . icms_conv_nr2local($counter) . '</option>';
 				} else {
 					$ret .= '<option value="' . $this->url . (($counter - 1) * $this->perpage) . '">' . icms_conv_nr2local($counter) . '</option>';
@@ -181,7 +181,7 @@ class PageNav {
 		if ($this->total < $this->perpage) {
 			return;
 		}
-		$total_pages = ceil($this->total / $this->perpage);
+		$total_pages = (int)ceil($this->total / $this->perpage);
 		$ret = '';
 		if ($total_pages > 1) {
 			$ret = '<table><tr>';
@@ -194,14 +194,14 @@ class PageNav {
 			$counter = 1;
 			$current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
 			while ($counter <= $total_pages) {
-				if ($counter == $current_page) {
+				if ($counter === $current_page) {
 					$ret .= '<td class="pagact"><strong>' . $counter . '</strong></td>';
-				} elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
-					if ($counter == $total_pages && $current_page < $total_pages - $offset) {
+				} elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter === 1 || $counter === $total_pages) {
+					if ($counter === $total_pages && $current_page < $total_pages - $offset) {
 						$ret .= '<td class="paginact">...</td>';
 					}
 					$ret .= '<td class="paginact"><a href="' . $this->url . (($counter - 1) * $this->perpage) . '">' . $counter . '</a></td>';
-					if ($counter == 1 && $current_page > 1 + $offset) {
+					if ($counter === 1 && $current_page > 1 + $offset) {
 						$ret .= '<td class="paginact">...</td>';
 					}
 				}

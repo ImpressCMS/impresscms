@@ -67,7 +67,7 @@ class TarDownloader extends Downloader {
 		if (isset($newfilename)) {
 			// dirty, but no other way
 			for ($i = 0; $i < $this->archiver->numFiles; $i++) {
-				if ($this->archiver->files[$i]['name'] == $filepath) {
+				if ($this->archiver->files[$i]['name'] === $filepath) {
 					$this->archiver->files[$i]['name'] = trim($newfilename);
 					break;
 				}
@@ -86,7 +86,7 @@ class TarDownloader extends Downloader {
 		if (isset($newfilename)) {
 			// dirty, but no other way
 			for ($i = 0; $i < $this->archiver->numFiles; $i++) {
-				if ($this->archiver->files[$i]['name'] == $filepath) {
+				if ($this->archiver->files[$i]['name'] === $filepath) {
 					$this->archiver->files[$i]['name'] = trim($newfilename);
 					break;
 				}
@@ -111,7 +111,7 @@ class TarDownloader extends Downloader {
 
 		// dirty, but no other way
 		for ($i = 0; $i < $this->archiver->numFiles; $i++) {
-			if ($this->archiver->files[$i]['name'] == $dummyfile) {
+			if ($this->archiver->files[$i]['name'] === $dummyfile) {
 				$this->archiver->files[$i]['name'] = $filename;
 				if ($time != 0) {
 					$this->archiver->files[$i]['time'] = $time;
@@ -138,7 +138,7 @@ class TarDownloader extends Downloader {
 
 		// dirty, but no other way
 		for ($i = 0; $i < $this->archiver->numFiles; $i++) {
-			if ($this->archiver->files[$i]['name'] == $dummyfile) {
+			if ($this->archiver->files[$i]['name'] === $dummyfile) {
 				$this->archiver->files[$i]['name'] = $filename;
 				if ($time != 0) {
 					$this->archiver->files[$i]['time'] = $time;

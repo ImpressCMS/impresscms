@@ -71,7 +71,7 @@ class RadioElement extends AbstractFormElement {
 	 * @param	string	$name		"name" attribute
 	 * @param	string	$value		Pre-selected value
 	 */
-	public function __construct($caption, $name, $value = null, $delimeter = "") {
+	public function __construct($caption, $name, $value = null, $delimeter = '') {
 		$this->setCaption($caption);
 		$this->setName($name);
 		if (isset($value)) {
@@ -107,8 +107,8 @@ class RadioElement extends AbstractFormElement {
 	 * @param	string	$value	"value" attribute - This gets submitted as form-data.
 	 * @param	string	$name	"name" attribute - This is displayed. If empty, we use the "value" instead.
 	 */
-	public function addOption($value, $name = "") {
-		if ($name != "") {
+	public function addOption($value, $name = '') {
+		if ($name) {
 			$this->_options[$value] = $name;
 		} else {
 			$this->_options[$value] = $value;
@@ -131,7 +131,7 @@ class RadioElement extends AbstractFormElement {
 	/**
 	 * Get an array with all the options
 	 *
-	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
+	 * @param	int|false     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
 	 * @return	array   Associative array of value->name pairs
 	 */
 	function getOptions($encode = false) {
@@ -162,7 +162,7 @@ class RadioElement extends AbstractFormElement {
 	 * @return	string	HTML
 	 */
 	public function render() {
-		$ret = "";
+		$ret = '';
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue();
 		$ele_options = $this->getOptions();
@@ -170,10 +170,10 @@ class RadioElement extends AbstractFormElement {
 		$ele_delimeter = $this->getDelimeter();
 		foreach ($ele_options as $value => $name) {
 			$ret .= "<input type='radio' name='" . $ele_name . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
-			if ($value == $ele_value) {
+			if ((string)$value === (string)$ele_value) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $ele_extra . " />" . $name . $ele_delimeter . "\n";
+			$ret .= $ele_extra . ' />' . $name . $ele_delimeter . "\n";
 		}
 		return $ret;
 	}

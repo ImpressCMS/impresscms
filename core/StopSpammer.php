@@ -52,7 +52,7 @@ class StopSpammer {
 			$output .= curl_exec($ch);
 			curl_close($ch);
 
-			if (preg_match("#<appears>(.*)</appears>#i", $output, $out)) {
+			if (preg_match('#<appears>(.*)</appears>#i', $output, $out)) {
 				$spam = $out[1];
 			}
 		} else {
@@ -63,7 +63,7 @@ class StopSpammer {
 			}
 			while (!feof($file)) {
 				$line = fgets($file, 1024);
-				if (preg_match("#<appears>(.*)</appears>#i", $line, $out)) {
+				if (preg_match('#<appears>(.*)</appears>#i', $line, $out)) {
 					$spam = $out[1];
 					break;
 				}

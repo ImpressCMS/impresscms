@@ -63,7 +63,7 @@ class Category extends AbstractSEOModel {
 	 */
 	public function getVar($key, $format = 's') {
 		if ($format == 's' && in_array($key, array('description', 'image'))) {
-			return call_user_func(array($this, $key));
+			return $this->$key();
 		}
 		return parent::getVar($key, $format);
 	}
@@ -127,7 +127,7 @@ class Category extends AbstractSEOModel {
 					exit;
 				}
 				$parentid = $parentObj->getVar('parentid');
-				$ret = $parentObj->getCategoryPath($withAllLink, $currentCategory) . " > " . $ret;
+				$ret = $parentObj->getCategoryPath($withAllLink, $currentCategory) . ' > ' . $ret;
 			}
 			$this->_categoryPath = $ret;
 		}

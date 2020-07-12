@@ -10,7 +10,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Facades\str;
+use ImpressCMS\Core\IPF\AbstractModel;
 
 /**
  * Ranks to assign members
@@ -24,7 +24,7 @@ use ImpressCMS\Core\Facades\str;
  * @property int    $rank_special  Is this rank special?
  * @property string $rank_image    Image
  */
-class UserRank extends \ImpressCMS\Core\IPF\AbstractModel {
+class UserRank extends AbstractModel {
 
 	/** */
 	public $content = false;
@@ -52,39 +52,26 @@ class UserRank extends \ImpressCMS\Core\IPF\AbstractModel {
 	}
 
 	/**
-	 * @inheritDoc
-	 */
-	public function getVar($key, $format = 's') {
-		if ($format == "s" && in_array($key, array())) {
-			return call_user_func(array($this, $key));
-		}
-		return parent::getVar($key, $format);
-	}
-
-	/**
 	 * Create a link for cloning the object
-	 * @return	str
+	 * @return	string
 	 */
 	public function getCloneLink() {
-		$ret = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=userrank&amp;op=clone&amp;rank_id=' . $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' . _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
-		return $ret;
+		return '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=userrank&amp;op=clone&amp;rank_id=' . $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' . _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
 	}
 
 	/**
 	 * Create a link to the image for the rank
-	 * @return	str
+	 * @return string
 	 */
 	public function getRankPicture() {
-		$ret = '<img src="' . $this->handler->getImageUrl() . $this->getVar("rank_image") . '" />';
-		return $ret;
+		return '<img src="' . $this->handler->getImageUrl() . $this->getVar('rank_image') . '" />';
 	}
 
 	/**
 	 * Accessor for the rank_title property
-	 * @return	str
+	 * @return	string
 	 */
 	public function getRankTitle() {
-		$ret = $this->getVar("rank_title");
-		return $ret;
+		return $this->getVar('rank_title');
 	}
 }

@@ -36,6 +36,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * A Notification
  *
@@ -51,7 +53,7 @@ namespace ImpressCMS\Core\Models;
  * @property int    $not_uid       User ID who receives this notification
  * @property int    $not_mode      How this notification should be received?
  */
-class Notification extends \ImpressCMS\Core\IPF\AbstractModel {
+class Notification extends AbstractModel {
 
 	/**
 	 * Constructor
@@ -135,12 +137,12 @@ class Notification extends \ImpressCMS\Core\IPF\AbstractModel {
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 		$notification_handler = \icms::handler('icms_data_notification');
 
-		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
+		if ($this->getVar('not_mode') === XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
 			$notification_handler->delete($this);
 			return $success;
 		}
 
-		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
+		if ($this->getVar('not_mode') === XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
 			$this->setVar('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN);
 			$notification_handler->insert($this);
 		}

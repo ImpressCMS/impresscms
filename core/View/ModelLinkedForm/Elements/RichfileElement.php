@@ -28,7 +28,7 @@ class RichfileElement extends TrayElement {
 		$module_handler = icms::handler('icms_module');
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
-		if ($fileObj->getVar('url') != '') {
+		if ($fileObj->getVar('url')) {
 			$this->addElement(new LabelElement('', _CO_ICMS_CURRENT_FILE . $fileObj->render() . '<br /><br />'));
 		}
 

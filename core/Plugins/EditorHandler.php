@@ -29,6 +29,8 @@
 // ------------------------------------------------------------------------- //
 namespace ImpressCMS\Core\Plugins;
 
+use Exception;
+
 /**
  * Editor framework
  *
@@ -78,7 +80,7 @@ class EditorHandler {
 	 * @static
 	 * @staticvar   object
 	 */
-	static public function &getInstance($type = 'content')
+	public static function &getInstance($type = 'content')
 	{
 		static $instances = array();
 		if (empty($type)) {
@@ -141,10 +143,10 @@ class EditorHandler {
 			'order' => []
 		];
 		/**
-		 * @var \icms\plugins\EditorInterface $editor
+		 * @var EditorInterface $editor
 		 */
 		foreach (\icms::getInstance()->get('editor.' . $this->_type) as $editor) {
-			if (!($editor instanceof \icms\plugins\EditorInterface)) {
+			if (!($editor instanceof EditorInterface)) {
 				continue;
 			}
 			$name = \icms::getInstance()->getServiceDefinition(get_class($editor))->getAlias();
@@ -199,7 +201,7 @@ class EditorHandler {
 	 * Loads the editor
 	 *
 	 * @param string $name Name of the editor to load
-	 * @return  \icms\plugins\EditorInterface                The loaded Editor object
+	 * @return  EditorInterface                The loaded Editor object
 	 *
 	 */
 	public function _loadEditor($name)
@@ -209,16 +211,17 @@ class EditorHandler {
 		}
 
 		/**
-		 * @var \icms\plugins\EditorInterface $editor
+		 * @var EditorInterface $editor
 		 */
 		$editor = \icms::getInstance()->get($name);
-		return ($editor instanceof \icms\plugins\EditorInterface) ? $editor : null;
+		return ($editor instanceof EditorInterface) ? $editor : null;
 	}
 
 	/**
 	 * Retrieve a list of the available editors, by type
 	 * @param string $type
 	 * @return    array    Available editors
+	 * @throws Exception
 	 */
 	public static function getListByType($type = 'content')
 	{

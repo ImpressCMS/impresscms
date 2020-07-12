@@ -38,7 +38,7 @@ class Autoloader {
 	 * Initialize the autoloader, and register its autoload method
 	 * @return void
 	 */
-	static public function setup() {
+	public static function setup() {
 		if (!self::$initialized) {
 			self::$initialized = true;
 		}
@@ -52,15 +52,15 @@ class Autoloader {
 	 * @param string $class
 	 * @return array
 	 */
-	static public function split($class) {
+	public static function split($class) {
 		if (false === ($pos = strrpos($class, "\\"))) {
-			$pos = strrpos($class, "_");
+			$pos = strrpos($class, '_');
 		}
 		if ($pos) {
 			$ns = substr($class, 0, $pos);
 			$local = substr($class, $pos + 1);
 		} else {
-			$ns = "";
+			$ns = '';
 			$local = $class;
 		}
 		return array($ns, $local);
@@ -75,9 +75,9 @@ class Autoloader {
 	 * @param string $namespace If specified, all classes of the repository belong to this namespace
 	 * @return void
 	 */
-	static public function register($path, $namespace = "") {
+	public static function register($path, $namespace = '') {
 		if ($namespace) {
-			self::$localRepositories[$namespace] = array(strlen($namespace), $path);
+			self::$localRepositories[$namespace] = [strlen($namespace), $path];
 		} else {
 			self::$globalRepositories[] = $path;
 		}
@@ -93,17 +93,17 @@ class Autoloader {
 	 * @param bool $required Whether to throw an exception or not if the namespace file is not found
 	 * @return bool
 	 */
-	static public function import($namespace, $required = true) {
+	public static function import($namespace, $required = true) {
 		if (!isset(self::$imported[$namespace])) {
-			$nspath = self::classPath($namespace, true, DIRECTORY_SEPARATOR . "namespace.php");
+			$nspath = self::classPath($namespace, true, DIRECTORY_SEPARATOR . 'namespace.php');
 			if ($nspath) {
-				include_once $nspath . DIRECTORY_SEPARATOR . "namespace.php";
+				include_once $nspath . DIRECTORY_SEPARATOR . 'namespace.php';
 				return self::$imported[$namespace] = true;
 			}
 			self::$imported[$namespace] = false;
 		}
 		if (!self::$imported[$namespace] && $required) {
-			throw new RuntimeException("No namespace file for namespace '$namespace'.");
+			throw new \RuntimeException("No namespace file for namespace '$namespace'.");
 		}
 		return self::$imported[$namespace];
 	}
@@ -114,7 +114,7 @@ class Autoloader {
 	 * @param string $class
 	 * @return bool
 	 */
-	static public function autoload($class) {
+	public static function autoload($class) {
 		if ($path = self::classPath($class)) {
 			list($ns, $local) = self::split($class);
 			include_once "$path.php";
@@ -128,14 +128,15 @@ class Autoloader {
 	 *
 	 * @param string $class Name of the class to find
 	 * @param bool $useIncludePath If to search include paths too
+	 * @return bool|string
 	 */
-	static public function classPath($class, $useIncludePath = false, $ext = ".php") {
-		$classPath = str_replace(array("\\", "_"), DIRECTORY_SEPARATOR, $class);
+	public static function classPath($class, $useIncludePath = false, $ext = '.php') {
+		$classPath = str_replace(["\\", '_'], DIRECTORY_SEPARATOR, $class);
 		// First, try local repositories
-		if (strpos($class, "\\") || strpos($class, "_")) {
+		if (strpos($class, "\\") || strpos($class, '_')) {
 			foreach (self::$localRepositories as $name => $info) {
 				list($len, $path) = $info;
-				if (!strncmp($name . "\\", $class, $len + 1) || !strncmp($name . "_", $class, $len + 1)) {
+				if (!strncmp($name . "\\", $class, $len + 1) || !strncmp($name . '_', $class, $len + 1)) {
 					$localPath = substr($classPath, $len + 1);
 					if (file_exists($path . DIRECTORY_SEPARATOR . $localPath . $ext)) {
 						return $path . DIRECTORY_SEPARATOR . $localPath;
@@ -155,7 +156,7 @@ class Autoloader {
 		if ($useIncludePath) {
 			foreach (explode(PATH_SEPARATOR, get_include_path()) as $path) {
 				if (file_exists($path . DIRECTORY_SEPARATOR . $classPath . $ext)) {
-					return (DIRECTORY_SEPARATOR != "/"? str_replace("/", DIRECTORY_SEPARATOR, $path):$path) . DIRECTORY_SEPARATOR . $classPath;
+					return (DIRECTORY_SEPARATOR != '/' ? str_replace('/', DIRECTORY_SEPARATOR, $path):$path) . DIRECTORY_SEPARATOR . $classPath;
 				}
 			}
 		}
@@ -169,69 +170,69 @@ class Autoloader {
 	 */
 	static public function registerLegacy($class) {
 		$class = strtolower($class);
-		$legacyClassPath = array(
-			"database" 						=> "/class/database/database.php",
-			"icmsdatabase" 					=> "/class/database/database.php",
-			"xoopsdatabase" 				=> "/class/database/database.php",
-			"mytextsanitizer" 				=> "/class/module.textsanitizer.php",
-			"xoopsmodule" 					=> "/kernel/module.php",
-			"xoopsmodulehandler"			=> "/kernel/module.php",
-			"xoopsmemberhandler"			=> "/kernel/member.php",
-			"icmspreloadhandler"			=> "/kernel/icmspreloadhandler.php",
-			"icmspreloaditem" 				=> "/kernel/icmspreloadhandler.php",
-			"icmskernel" 					=> "/kernel/icmskernel.php",
-			"icmssecurity" 					=> "/class/xoopssecurity.php",
-			"xoopssecurity" 				=> "/class/xoopssecurity.php",
-			"xoopslogger" 					=> "/class/logger.php",
-			"xoopsdatabasefactory" 			=> "/class/database/databasefactory.php",
-			"icmsdatabasefactory" 			=> "/class/database/databasefactory.php",
-			"xoopsobject" 					=> "/kernel/object.php",
-			"xoopsobjecthandler" 			=> "/kernel/object.php",
-			"xoopslists" 					=> "/class/xoopslists.php",
-			"icmslists" 					=> "/class/xoopslists.php",
-			"xoopsthemeform"				=> "/class/xoopsform/themeform.php",
-			"xoopsformhidden"		 		=> "/class/xoopsform/formhidden.php",
-			"xoopsformtext" 		 	 	=> "/class/xoopsform/formtext.php",
-			"xoopsformelement"				=> "/class/xoopsform/formelement.php",
-			"xoopsform"						=> "/class/xoopsform/form.php",
-			"xoopsformlabel"				=> "/class/xoopsform/formlabel.php",
-			"xoopsformselect"				=> "/class/xoopsform/formselect.php",
-			"xoopsformpassword"				=> "/class/xoopsform/formpassword.php",
-			"xoopsformbutton"				=> "/class/xoopsform/formbutton.php",
-			"xoopsformcheckbox"				=> "/class/xoopsform/formcheckbox.php",
-			"xoopsformfile"					=> "/class/xoopsform/formfile.php",
-			"xoopsformradio"				=> "/class/xoopsform/formradio.php",
-			"xoopsformradioyn"				=> "/class/xoopsform/formradioyn.php",
-			"xoopsformselectcountry"		=> "/class/xoopsform/formselectcountry.php",
-			"xoopsformselecttimezone"		=> "/class/xoopsform/formselecttimezone.php",
-			"xoopsformselectlang"			=> "/class/xoopsform/formselectlang.php",
-			"xoopsformselectgroup"			=> "/class/xoopsform/formselectgroup.php",
-			"xoopsformselectuser"			=> "/class/xoopsform/formselectuser.php",
-			"xoopsformselecttheme"			=> "/class/xoopsform/formselecttheme.php",
-			"xoopsformselectmatchoption"	=> "/class/xoopsform/formselectmatchoption.php",
-			"xoopsformtextarea"				=> "/class/xoopsform/formtextarea.php",
-			"xoopsformdhtmltextarea"		=> "/class/xoopsform/formdhtmltextarea.php",
-			"xoopsformelementtray"			=> "/class/xoopsform/formelementtray.php",
-			"xoopssimpleform"				=> "/class/xoopsform/simpleform.php",
-			"xoopsformtextdateselect"		=> "/class/xoopsform/formtextdateselect.php",
-			"xoopsformdatetime"				=> "/class/xoopsform/formdatetime.php",
-			"xoopsformhiddentoken"			=> "/class/xoopsform/formhiddentoken.php",
-			"xoopsformcolorpicker"			=> "/class/xoopsform/formcolorpicker.php",
-			"xoopsformselecteditor"			=> "/class/xoopsform/formselecteditor.php",
-			"xoopsformcaptcha"				=> "/class/xoopsform/formcaptcha.php",
-			"icmsformcaptcha"				=> "/class/xoopsform/formcaptcha.php",
-			"criteriacompo"                 => "/class/criteria.php",
-			"criteria"                      => "/class/criteria.php",
-			"criteriaelement"               => "/class/criteria.php",
-			"icmspersistableobjecthandler"	=> "/kernel/icmspersistableobjecthandler.php",
-			"icmspersistableobject"			=> "/kernel/icmspersistableobject.php",
-			"icmspersistableregistry"		=> "/kernel/icmspersistableregistry.php",
-			"icmspersistablecolumn"			=> "/kernel/icmspersistabletable.php",
-			"icmspersistabletable"			=> "/kernel/icmspersistabletable.php",
-			"errorhandler"					=> "/class/module.errorhandler.php",
-			"icmsmetagen"					=> "/kernel/icmsmetagen.php",
-		);
-		if (in_array($class, array_keys($legacyClassPath))) {
+		$legacyClassPath = [
+			'database' => '/class/database/database.php',
+			'icmsdatabase' => '/class/database/database.php',
+			'xoopsdatabase' => '/class/database/database.php',
+			'mytextsanitizer' => '/class/module.textsanitizer.php',
+			'xoopsmodule' => '/kernel/module.php',
+			'xoopsmodulehandler' => '/kernel/module.php',
+			'xoopsmemberhandler' => '/kernel/member.php',
+			'icmspreloadhandler' => '/kernel/icmspreloadhandler.php',
+			'icmspreloaditem' => '/kernel/icmspreloadhandler.php',
+			'icmskernel' => '/kernel/icmskernel.php',
+			'icmssecurity' => '/class/xoopssecurity.php',
+			'xoopssecurity' => '/class/xoopssecurity.php',
+			'xoopslogger' => '/class/logger.php',
+			'xoopsdatabasefactory' => '/class/database/databasefactory.php',
+			'icmsdatabasefactory' => '/class/database/databasefactory.php',
+			'xoopsobject' => '/kernel/object.php',
+			'xoopsobjecthandler' => '/kernel/object.php',
+			'xoopslists' => '/class/xoopslists.php',
+			'icmslists' => '/class/xoopslists.php',
+			'xoopsthemeform' => '/class/xoopsform/themeform.php',
+			'xoopsformhidden' => '/class/xoopsform/formhidden.php',
+			'xoopsformtext' => '/class/xoopsform/formtext.php',
+			'xoopsformelement' => '/class/xoopsform/formelement.php',
+			'xoopsform' => '/class/xoopsform/form.php',
+			'xoopsformlabel' => '/class/xoopsform/formlabel.php',
+			'xoopsformselect' => '/class/xoopsform/formselect.php',
+			'xoopsformpassword' => '/class/xoopsform/formpassword.php',
+			'xoopsformbutton' => '/class/xoopsform/formbutton.php',
+			'xoopsformcheckbox' => '/class/xoopsform/formcheckbox.php',
+			'xoopsformfile' => '/class/xoopsform/formfile.php',
+			'xoopsformradio' => '/class/xoopsform/formradio.php',
+			'xoopsformradioyn' => '/class/xoopsform/formradioyn.php',
+			'xoopsformselectcountry' => '/class/xoopsform/formselectcountry.php',
+			'xoopsformselecttimezone' => '/class/xoopsform/formselecttimezone.php',
+			'xoopsformselectlang' => '/class/xoopsform/formselectlang.php',
+			'xoopsformselectgroup' => '/class/xoopsform/formselectgroup.php',
+			'xoopsformselectuser' => '/class/xoopsform/formselectuser.php',
+			'xoopsformselecttheme' => '/class/xoopsform/formselecttheme.php',
+			'xoopsformselectmatchoption' => '/class/xoopsform/formselectmatchoption.php',
+			'xoopsformtextarea' => '/class/xoopsform/formtextarea.php',
+			'xoopsformdhtmltextarea' => '/class/xoopsform/formdhtmltextarea.php',
+			'xoopsformelementtray' => '/class/xoopsform/formelementtray.php',
+			'xoopssimpleform' => '/class/xoopsform/simpleform.php',
+			'xoopsformtextdateselect' => '/class/xoopsform/formtextdateselect.php',
+			'xoopsformdatetime' => '/class/xoopsform/formdatetime.php',
+			'xoopsformhiddentoken' => '/class/xoopsform/formhiddentoken.php',
+			'xoopsformcolorpicker' => '/class/xoopsform/formcolorpicker.php',
+			'xoopsformselecteditor' => '/class/xoopsform/formselecteditor.php',
+			'xoopsformcaptcha' => '/class/xoopsform/formcaptcha.php',
+			'icmsformcaptcha' => '/class/xoopsform/formcaptcha.php',
+			'criteriacompo' => '/class/criteria.php',
+			'criteria' => '/class/criteria.php',
+			'criteriaelement' => '/class/criteria.php',
+			'icmspersistableobjecthandler' => '/kernel/icmspersistableobjecthandler.php',
+			'icmspersistableobject' => '/kernel/icmspersistableobject.php',
+			'icmspersistableregistry' => '/kernel/icmspersistableregistry.php',
+			'icmspersistablecolumn' => '/kernel/icmspersistabletable.php',
+			'icmspersistabletable' => '/kernel/icmspersistabletable.php',
+			'errorhandler' => '/class/module.errorhandler.php',
+			'icmsmetagen' => '/kernel/icmsmetagen.php',
+		];
+		if (array_key_exists($class, $legacyClassPath)) {
 			include_once ICMS_ROOT_PATH . $legacyClassPath[$class];
 		}
 	}

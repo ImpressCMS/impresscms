@@ -30,6 +30,10 @@
 
 namespace ImpressCMS\Core\View;
 
+use ImpressCMS\Core\Database\DatabaseConnectionFactory;
+use ImpressCMS\Core\DataFilter;
+use RuntimeException;
+
 /**
  * Handles all tree functions within ImpressCMS
  *
@@ -62,7 +66,7 @@ class ViewTree {
 	 * @param $pid_name Name of the parent id field in the table
 	 */
 	public function __construct($table_name, $id_name, $pid_name) {
-		$this->db = & \ImpressCMS\Core\Database\DatabaseConnectionFactory::instance();
+		$this->db = & DatabaseConnectionFactory::instance();
 		$this->table = $table_name;
 		$this->id = $id_name;
 		$this->pid = $pid_name;
@@ -95,12 +99,12 @@ class ViewTree {
 		$sel_id = (int) $sel_id;
 		$arr = array();
 		$sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';
-		if ($order != '') {
+		if ($order) {
 			$sql .= ' ORDER BY ' . $order;
 		}
 		$result = $this->db->query($sql);
 		$count = $this->db->getRowsNum($result);
-		if ($count == 0) {
+		if ((int)$count === 0) {
 			return $arr;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
@@ -116,14 +120,14 @@ class ViewTree {
 	 */
 	public function getFirstChildId($sel_id) {
 		$sel_id = (int) $sel_id;
-		$idarray = array();
+		$idarray = [];
 		$result = $this->db->query('SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"');
 		$count = $this->db->getRowsNum($result);
-		if ($count == 0) {
+		if ((int)$count === 0) {
 			return $idarray;
 		}
 		while (list($id) = $this->db->fetchRow($result)) {
-			array_push($idarray, $id);
+			$idarray[] = $id;
 		}
 		return $idarray;
 	}
@@ -135,19 +139,19 @@ class ViewTree {
 	 * @param array $idarray
 	 * @return array $idarray
 	 */
-	public function getAllChildId($sel_id, $order = '', $idarray = array()) {
+	public function getAllChildId($sel_id, $order = '', $idarray = []) {
 		$sel_id = (int) $sel_id;
 		$sql = 'SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';
-		if ($order != '') {
+		if ($order) {
 			$sql .= ' ORDER BY ' . $order;
 		}
 		$result = $this->db->query($sql);
 		$count = $this->db->getRowsNum($result);
-		if ($count == 0) {
+		if ((int)$count === 0) {
 			return $idarray;
 		}
 		while (list($r_id) = $this->db->fetchRow($result)) {
-			array_push($idarray, $r_id);
+			$idarray[] = $r_id;
 			$idarray = $this->getAllChildId($r_id, $order, $idarray);
 		}
 		return $idarray;
@@ -160,18 +164,18 @@ class ViewTree {
 	 * @param array $idarray
 	 * @return array $idarray
 	 */
-	public function getAllParentId($sel_id, $order = '', $idarray = array()) {
+	public function getAllParentId($sel_id, $order = '', $idarray = []) {
 		$sel_id = (int) $sel_id;
 		$sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"';
-		if ($order != '') {
+		if ($order) {
 			$sql .= ' ORDER BY ' . $order;
 		}
 		$result = $this->db->query($sql);
 		list($r_id) = $this->db->fetchRow($result);
-		if ($r_id == 0) {
+		if ((int)$r_id === 0) {
 			return $idarray;
 		}
-		array_push($idarray, $r_id);
+		$idarray[] = $r_id;
 		$idarray = $this->getAllParentId($r_id, $order, $idarray);
 		return $idarray;
 	}
@@ -187,13 +191,13 @@ class ViewTree {
 	public function getPathFromId($sel_id, $title, $path = '') {
 		$sel_id = (int) $sel_id;
 		$result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"');
-		if ($this->db->getRowsNum($result) == 0) {
+		if ((int)$this->db->getRowsNum($result) === 0) {
 			return $path;
 		}
 		list($parentid, $name) = $this->db->fetchRow($result);
-		$name = \ImpressCMS\Core\DataFilter::htmlSpecialChars($name);
+		$name = DataFilter::htmlSpecialChars($name);
 		$path = '/' . $name . $path . '';
-		if ($parentid == 0) {
+		if ((int)$parentid === 0) {
 			return $path;
 		}
 		$path = $this->getPathFromId($parentid, $title, $path);
@@ -209,17 +213,17 @@ class ViewTree {
 	 * @param string $sel_name Name of the select element
 	 * @param string $onchange	Action to take when the selection is changed
 	 */
-	public function makeMySelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = "") {
-		if ($sel_name == "") {
+	public function makeMySelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = '') {
+		if (empty($sel_name)) {
 			$sel_name = $this->id;
 		}
 		echo "<select name = '" . $sel_name . "'";
-		if ($onchange != "") {
+		if ($onchange) {
 			echo " onchange='" . $onchange . "'";
 		}
 		echo ">\n";
-		$sql = "SELECT " . $this->id . ", " . $title . " FROM " . $this->table . " WHERE " . $this->pid . "='0'";
-		if ($order != "") {
+		$sql = 'SELECT ' . $this->id . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->pid . "='0'";
+		if ($order) {
 			$sql .= " ORDER BY $order";
 		}
 		$result = $this->db->query($sql);
@@ -227,21 +231,21 @@ class ViewTree {
 			echo "<option value='0'>----</option>\n";
 		}
 		while (list($catid, $name) = $this->db->fetchRow($result)) {
-			$sel = "";
+			$sel = '';
 			if ($catid == $preset_id) {
 				$sel = " selected='selected'";
 			}
 			echo "<option value='$catid'$sel>$name</option>\n";
-			$sel = "";
+			$sel = '';
 			$arr = $this->getChildTreeArray($catid, $order);
 			foreach ($arr as $option) {
-				$option['prefix'] = str_replace(".", "--", $option['prefix']);
-				$catpath = $option['prefix'] . "&nbsp;" . \ImpressCMS\Core\DataFilter::htmlSpecialChars($option[$title]);
+				$option['prefix'] = str_replace('.', '--', $option['prefix']);
+				$catpath = $option['prefix'] . '&nbsp;' . DataFilter::htmlSpecialChars($option[$title]);
 				if ($option[$this->id] == $preset_id) {
 					$sel = " selected='selected'";
 				}
 				echo "<option value='" . $option[$this->id] . "'$sel>$catpath</option>\n";
-				$sel = "";
+				$sel = '';
 			}
 		}
 		echo "</select>\n";
@@ -249,25 +253,27 @@ class ViewTree {
 
 	/**
 	 * Generates nicely formatted linked path from the root id to a given id
+	 *
 	 * @param integer $sel_id
 	 * @param string $title
 	 * @param string $funcURL
 	 * @param string $path
 	 * @param string $separator Allows custom designation of separator in linked path
-	 * $return string $path
+	 *
+	 * @return string
 	 */
 	public function getNicePathFromId($sel_id, $title, $funcURL, $path = '', $separator = _BRDCRMB_SEP) {
 		$path = !empty($path)?$separator . $path:$path;
 		$sel_id = (int) $sel_id;
 		$sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"';
 		$result = $this->db->query($sql);
-		if ($this->db->getRowsNum($result) == 0) {
+		if ((int)$this->db->getRowsNum($result) === 0) {
 			return $path;
 		}
 		list($parentid, $name) = $this->db->fetchRow($result);
-		$name = \ImpressCMS\Core\DataFilter::htmlSpecialChars($name);
-		$path = '<a href="' . $funcURL . '&amp;' . $this->id . '=' . $sel_id . '">' . $name . '</a>' . $path . "";
-		if ($parentid == 0) {
+		$name = DataFilter::htmlSpecialChars($name);
+		$path = '<a href="' . $funcURL . '&amp;' . $this->id . '=' . $sel_id . '">' . $name . '</a>' . $path . '';
+		if ((int)$parentid === 0) {
 			return $path;
 		}
 		$path = $this->getNicePathFromId($parentid, $title, $funcURL, $path, $separator);
@@ -281,15 +287,15 @@ class ViewTree {
 	 * @param string $path
 	 * @return string $path
 	 */
-	public function getIdPathFromId($sel_id, $path = "") {
+	public function getIdPathFromId($sel_id, $path = '') {
 		$sel_id = (int) $sel_id;
 		$result = $this->db->query('SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"');
-		if ($this->db->getRowsNum($result) == 0) {
+		if ((int)$this->db->getRowsNum($result) === 0) {
 			return $path;
 		}
 		list($parentid) = $this->db->fetchRow($result);
 		$path = '/' . $sel_id . $path . '';
-		if ($parentid == 0) {
+		if ((int)$parentid === 0) {
 			return $path;
 		}
 		$path = $this->getIdPathFromId($parentid, $path);
@@ -302,19 +308,19 @@ class ViewTree {
 	 * @param array $parray
 	 * @return array $parray
 	 */
-	public function getAllChild($sel_id = 0, $order = '', $parray = array()) {
+	public function getAllChild($sel_id = 0, $order = '', $parray = []) {
 		$sel_id = (int) $sel_id;
 		$sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';
-		if ($order != '') {
+		if ($order) {
 			$sql .= ' ORDER BY ' . $order;
 		}
 		$result = $this->db->query($sql);
 		$count = $this->db->getRowsNum($result);
-		if ($count == 0) {
+		if ((int)$count === 0) {
 			return $parray;
 		}
 		while ($row = $this->db->fetchArray($result)) {
-			array_push($parray, $row);
+			$parray[] = $row;
 			$parray = $this->getAllChild($row[$this->id], $order, $parray);
 		}
 		return $parray;
@@ -327,20 +333,20 @@ class ViewTree {
 	 * @param string $r_prefix
 	 * @return array $parray
 	 */
-	public function getChildTreeArray($sel_id = 0, $order = '', $parray = array(), $r_prefix = '') {
+	public function getChildTreeArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '') {
 		$sel_id = (int) $sel_id;
 		$sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';
-		if ($order != '') {
+		if ($order) {
 			$sql .= ' ORDER BY ' . $order;
 		}
 		$result = $this->db->query($sql);
 		$count = $this->db->getRowsNum($result);
-		if ($count == 0) {
+		if ((int)$count === 0) {
 			return $parray;
 		}
 		while ($row = $this->db->fetchArray($result)) {
 			$row['prefix'] = $r_prefix . '.';
-			array_push($parray, $row);
+			$parray[] = $row;
 			$parray = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
 		}
 		return $parray;

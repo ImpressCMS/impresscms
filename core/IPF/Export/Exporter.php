@@ -113,7 +113,7 @@ class Exporter {
 		foreach ($objects as $object) {
 			$row = array();
 			foreach ($object->getVars() as $key=>$var) {
-				if ((!$this->fields || in_array($key, $this->fields)) && !in_array($key, $this->notDisplayFields)) {
+				if ((!$this->fields || in_array($key, $this->fields, true)) && !in_array($key, $this->notDisplayFields, true)) {
 					if ($this->outputMethods && (isset($this->outputMethods[$key])) && (method_exists($object, $this->outputMethods[$key]))) {
 						$method = $this->outputMethods[$key];
 						$row[$key] = $object->$method();

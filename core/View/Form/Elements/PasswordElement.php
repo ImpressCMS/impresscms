@@ -157,14 +157,13 @@ class PasswordElement extends AbstractFormElement {
 	 * @return	string	HTML
 	 */
 	public function render() {
-		global $icmsConfigUser;
 		$ele_name = $this->getName();
 		return "<input class='" . $this->getClassName()
 			. "' type='password' name='" . $ele_name
 			. "' id='" . $ele_name
 			. "' size='" . $this->getSize()
 			. "' maxlength='" . $this->getMaxlength()
-			. "' value='" . $this->getValue() . "'" . $this->getExtra() . " " . ($this->autoComplete?"":"autocomplete='off' ")
-			. "/>";
+			. "' value='" . $this->getValue() . "'" . $this->getExtra() . ' ' . ($this->autoComplete? '' :"autocomplete='off' ")
+			. '/>';
 	}
 }

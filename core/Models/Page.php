@@ -11,6 +11,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * ImpressCMS page class.
  *
@@ -22,7 +24,7 @@ namespace ImpressCMS\Core\Models;
  *
  * @package	ICMS\Data\Page
  */
-class Page extends \ImpressCMS\Core\IPF\AbstractModel {
+class Page extends AbstractModel {
 
 	public function __construct(& $handler, $data = array()) {
 			$this->initVar('page_id', self::DTYPE_INTEGER);
@@ -40,7 +42,7 @@ class Page extends \ImpressCMS\Core\IPF\AbstractModel {
 		 * @return string
 		 */
 		public function getURL() {
-			return (substr($this->getVar('page_url'), 0, 7) == 'http://')
+			return (strpos($this->getVar('page_url'), 'http://') === 0)
 				?$this->getVar('page_url'):ICMS_URL . '/' . $this->getVar('page_url');
 		}
 }

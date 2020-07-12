@@ -34,6 +34,8 @@
 namespace ImpressCMS\Core\View\Theme;
 
 use ImpressCMS\Core\View\PageBuilder;
+use ImpressCMS\Core\View\Template;
+use SmartyException;
 
 /**
  * Builds the theme components
@@ -88,33 +90,33 @@ class ThemeComponent {
 	public $renderCount = 0;
 	/**
 	 * Pointer to the theme template engine
-	 * @var \ImpressCMS\Core\View\Template
+	 * @var Template
 	 */
 	public $template = false;
 
 	/**
 	 * Array containing the document meta-information
 	 */
-	public $metas = array(
-		'head' => array(),
-		'module' => array(),
-		'foot' => array(),
-	);
+	public $metas = [
+		'head' => [],
+		'module' => [],
+		'foot' => [],
+	];
 	/**
 	 * Array of meta types - their order in the array determines their rendering sequence
 	 */
-	public $types = array('http', 'meta', 'link', 'stylesheet', 'script');
+	public $types = ['http', 'meta', 'link', 'stylesheet', 'script'];
 
 	/**
 	 * Array of strings to be inserted in the head tag of HTML documents
 	 * @public array
 	 */
-	public $htmlHeadStrings = array();
+	public $htmlHeadStrings = [];
 	/**
 	 * Custom publiciables that will always be assigned to the template
 	 * @public array
 	 */
-	public $templateVars = array();
+	public $templateVars = [];
 
 	/**
 	 * User extra information for cache id, like language, user groups
@@ -137,7 +139,7 @@ class ThemeComponent {
 	 * @param array $options
 	 * @return bool
 	 */
-	public function xoInit($options = array()) {
+	public function xoInit($options = []) {
 		global $xoops;
 
 		$this->path = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName))
@@ -147,7 +149,7 @@ class ThemeComponent {
 			? ICMS_MODULES_URL . '/system/themes/' . $this->folderName
 			: ICMS_THEME_URL . '/' . $this->folderName;
 
-		$this->template = new \ImpressCMS\Core\View\Template();
+		$this->template = new Template();
 		$this->template->currentTheme = $this;
 		$this->template->assignByRef('xoTheme', $this);
 
@@ -204,12 +206,12 @@ class ThemeComponent {
 		}
 		// Meta tags
 		foreach ($icmsConfigMetaFooter as $name => $value) {
-			if (substr($name, 0, 5) == 'meta_') {
+			if (strpos($name, 'meta_') === 0) {
 				/* see line 317 */
 				$this->addMeta('meta', substr($name, 5), $value);
-			} elseif (substr($name, 0, 6) == 'footer') {
+			} elseif (strpos($name, 'footer') === 0) {
 				$values = $value;
-							if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
+							if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics']) {
 					$values = $value . "<script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -293,12 +295,13 @@ class ThemeComponent {
 	/**
 	 * Checks cache for a changed version of the template and renders template
 	 * @return  bool
+	 * @throws SmartyException
 	 */
 	public function checkCache() {
 		global $xoopsModule, $icmsModule;
 
 		if ($_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime) {
-			$template = $this->contentTemplate?$this->contentTemplate:'db:system_dummy.html';
+			$template = $this->contentTemplate?:'db:system_dummy.html';
 			$dirname = $icmsModule->dirname;
 
 			$this->template->caching = 2;
@@ -306,7 +309,7 @@ class ThemeComponent {
 			$uri = str_replace(ICMS_URL, '', $_SERVER['REQUEST_URI']);
 			// Clean uri by removing session id
 			if (defined('SID') && SID && strpos($uri, SID)) {
-				$uri = preg_replace("/([\?&])(" . SID . "$|" . SID . "&)/", "\\1", $uri);
+				$uri = preg_replace("/([\?&])(" . SID . '$|' . SID . '&)/', "\\1", $uri);
 			}
 			$this->contentCacheId = $this->generateCacheId($dirname . '|' . $uri);
 
@@ -333,6 +336,7 @@ class ThemeComponent {
 	 * @param string $contentTpl The content template
 	 * @param array $vars Template variables to send to the template engine
 	 * @return bool
+	 * @throws SmartyException
 	 */
 	public function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = array()) {
 		global $xoops, $xoopsOption;
@@ -343,9 +347,9 @@ class ThemeComponent {
 		\icms::$logger->startTime('Page rendering');
 
 		// @internal: Lame fix to ensure the metas specified in the xoops config page don't appear twice. See line 184
-		$old = array('robots', 'keywords', 'description', 'rating', 'author', 'copyright');
+		$old = ['robots', 'keywords', 'description', 'rating', 'author', 'copyright'];
 		foreach ($this->metas['module']['meta'] as $name => $value) {
-			if (in_array($name, $old)) {
+			if (in_array($name, $old, true)) {
 				$this->template->assign("xoops_meta_$name", htmlspecialchars($value['value'], ENT_QUOTES, _CHARSET));
 				$this->template->assign("icms_meta_$name", htmlspecialchars($value['value'], ENT_QUOTES, _CHARSET));
 				unset($this->metas['module']['meta'][$name]);
@@ -380,7 +384,7 @@ class ThemeComponent {
 
 		/* create template vars for the new meta zones */
 		foreach ($this->metas as $zone => $value) {
-			$this->template->assign($zone, "<!-- " . ucfirst($zone) . " section-->\n" . $this->renderMetas(null, true, $zone));
+			$this->template->assign($zone, '<!-- ' . ucfirst($zone) . " section-->\n" . $this->renderMetas(null, true, $zone));
 		}
 
 		$pagetitle = empty($xoopsOption['icms_pagetitle'])
@@ -427,13 +431,12 @@ class ThemeComponent {
 	 * @param string $src path to an external script file
 	 * @param array $attributes hash of attributes to add to the <script> tag
 	 * @param string $content Code snippet to output within the <script> tag
-	 * @param	str	$zone	Area of the HTML page to place the script
+	 * @param	string	$zone	Area of the HTML page to place the script
 	 * @param 	int	$weight	Sort factor - lower weights are loaded first
 	 *
 	 * @return void
 	 */
-	public function addScript($src = '', $attributes = array(), $content = '', $zone = 'module', $weight = 0) {
-		global $xoops;
+	public function addScript($src = '', $attributes = [], $content = '', $zone = 'module', $weight = 0) {
 		if (empty($attributes)) {
 			$attributes = array();
 		}
@@ -454,13 +457,12 @@ class ThemeComponent {
 	 * @param string $src path to .css file
 	 * @param array $attributes name => value paired array of attributes such as title
 	 * @param string $content CSS code to output between the <style> tags (in case $src is empty)
-	 * @param	str	$zone	Area of the HTML page to place the stylesheet
+	 * @param	string	$zone	Area of the HTML page to place the stylesheet
 	 * @param 	int	$weight	Sort factor - lower weights are loaded first
 	 *
 	 * @return void
 	 */
-	public function addStylesheet($src = '', $attributes = array(), $content = '', $zone = 'module', $weight = 0) {
-		global $xoops;
+	public function addStylesheet($src = '', $attributes = [], $content = '', $zone = 'module', $weight = 0) {
 		if (empty($attributes)) {
 			$attributes = array();
 		}
@@ -481,14 +483,12 @@ class ThemeComponent {
 	 * @param string	$rel		Relationship from the current doc to the anchored one
 	 * @param string	$href		URI of the anchored document
 	 * @param array		$attributes	Additional attributes to add to the <link> element
-	 * @param	str	$zone	Area of the HTML page to place the link
+	 * @param	string	$zone	Area of the HTML page to place the link
 	 * @param 	int	$weight	Sort factor - lower weights are loaded first
 	 */
-	public function addLink($rel, $href = '', $attributes = array(), $zone = 'module', $weight = 0) {
-		global $xoops;
-
+	public function addLink($rel, $href = '', $attributes = [], $zone = 'module', $weight = 0) {
 		if (empty($attributes)) {
-			$attributes = array();
+			$attributes = [];
 		}
 		if (!empty($href)) {
 			$attributes['href'] = $href;
@@ -498,8 +498,11 @@ class ThemeComponent {
 
 	/**
 	 * Set a meta http-equiv value
-	 * @param	str	$zone	Area of the HTML page to place the http meta
-	 * @param 	int	$weight	Sort factor - lower weights are loaded first
+	 * @param string $name Meta name
+	 * @param null|string $value Value of meta
+	 * @param string $zone Area of the HTML page to place the http meta
+	 * @param int $weight Sort factor - lower weights are loaded first
+	 * @return string
 	 */
 	public function addHttpMeta($name, $value = null, $zone = 'module', $weight = 0) {
 		if (isset($value)) {
@@ -511,21 +514,22 @@ class ThemeComponent {
 	/**
 	 * Change output page meta-information
 	 *
-	 * @param	str	$type	Type of meta tag: script, link, stylesheet, http
-	 * @param	str	$name	Name
-	 * @param	str	$value
-	 * @param	str	$zone	Area of the HTML page to place the meta
-	 * @param 	int	$weight	Sort factor - lower weights are loaded first
+	 * @param string $type Type of meta tag: script, link, stylesheet, http
+	 * @param string $name Name
+	 * @param string $value
+	 * @param string $zone Area of the HTML page to place the meta
+	 * @param int $weight Sort factor - lower weights are loaded first
+	 * @return string
 	 */
-	function addMeta($type = 'meta', $name = '', $value = '', $zone = 'module', $weight = 0) {
+	public function addMeta($type = 'meta', $name = '', $value = '', $zone = 'module', $weight = 0) {
 		!empty($zone) || $zone = 'module';
 		if (!isset($this->metas[$zone][$type])) {
-			$this->metas[$zone][$type] = array();
+			$this->metas[$zone][$type] = [];
 		}
 		if (!empty($name)) {
-			$this->metas[$zone][$type][$name] = array('value' => $value, 'weight' => $weight);
+			$this->metas[$zone][$type][$name] = ['value' => $value, 'weight' => $weight];
 		} else {
-			$this->metas[$zone][$type][] = array('value' => $value, 'weight' => $weight);
+			$this->metas[$zone][$type][] = ['value' => $value, 'weight' => $weight];
 		}
 
 		return $value;
@@ -548,8 +552,9 @@ class ThemeComponent {
 	/**
 	 * Render the meta content in the metas array (carefull Recursive!)
 	 *
-	 * @param   string  $type     what type of metacontent is it
-	 * @param   string  $return   will we return to the calling function (just default setting)
+	 * @param string $type what type of metacontent is it
+	 * @param string|false $return will we return to the calling function (just default setting)
+	 * @param string $zone
 	 * @return  bool
 	 */
 	public function renderMetas($type = null, $return = false, $zone = 'module') {
@@ -560,8 +565,8 @@ class ThemeComponent {
 			}
 			$types = $this->types;
 			$usedTypes = array_keys($this->metas[$zone]);
-			foreach (array_intersect($types, $usedTypes) as $type) {
-				$str .= $this->renderMetas($type, true, $zone);
+			foreach (array_intersect($types, $usedTypes) as $type2) {
+				$str .= $this->renderMetas($type2, true, $zone);
 			}
 			$str .= implode("\n", $this->htmlHeadStrings);
 		} else {
@@ -633,9 +638,9 @@ class ThemeComponent {
 	/**
 	 * Legacy method to render all the zones as a single zone
 	 *
-	 * @param	str		$type
+	 * @param	string		$type
 	 * @param	bool	$return
-	 * @return	str		string of the old metas
+	 * @return	string		string of the old metas
 	 */
 	public function renderOldMetas($type = null, $return = true) {
 		$str = '';
@@ -681,8 +686,7 @@ class ThemeComponent {
 	 * @return string
 	 */
 	public function resourcePath($path) {
-		global $xoops;
-		if (substr($path, 0, 1) == '/') {
+		if (strpos($path, '/') === 0) {
 			$path = substr($path, 1);
 		}
 		if (file_exists("$this->path/$path")) {

@@ -36,7 +36,10 @@
  */
 namespace ImpressCMS\Core\Models;
 
+use Exception;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\IPF\Handler;
 use ImpressCMS\Core\StopSpammer;
 
@@ -63,7 +66,7 @@ class UserHandler
 			icms_loadLanguageFile('core', 'notification');
 			icms_loadLanguageFile('core', 'global');
 
-			$objName = ($module == 'icms')?'member_user':'user';
+			$objName = ($module === 'icms')?'member_user':'user';
 			parent::__construct($db, $objName, 'uid', 'uname', 'email', $module, 'users');
 		}
 
@@ -108,11 +111,11 @@ class UserHandler
 	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria
 	 * @return bool FALSE if deletion failed
 	 * @TODO we need to also delete the private messages of the user when we delete them! how do we determine which users were deleted from the criteria????
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function deleteAll($criteria = null, $quick = false) {
 			if ($quick) {
-							throw new \Exception('quick variable not supported!');
+							throw new Exception('quick variable not supported!');
 			}
 			$sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), substr(md5(time()), 0, 8));
 			if ($criteria instanceof CriteriaElement) {
@@ -157,8 +160,8 @@ class UserHandler
 		}
 
 		// check email
-		if ((is_object($thisUser) && $thisUser->getVar('email', 'e') != $email && $email !== false) || !is_object($thisUser)) {
-			if (!\ImpressCMS\Core\DataFilter::checkVar($email, 'email', 0, 1)) {
+		if ((is_object($thisUser) && $thisUser->getVar('email', 'e') !== $email && $email !== false) || !is_object($thisUser)) {
+			if (!DataFilter::checkVar($email, 'email', 0, 1)) {
 				$stop .= _US_INVALIDMAIL . '<br />';
 			}
 			$count = $this->getCount(icms_buildCriteria(array('email' => addslashes($email))));
@@ -168,8 +171,8 @@ class UserHandler
 		}
 
 		// check login_name
-		$login_name = \ImpressCMS\Core\DataFilter::icms_trim($login_name);
-		if ((is_object($thisUser) && $thisUser->getVar('login_name', 'e') != $login_name && $login_name !== false) || !is_object($thisUser)) {
+		$login_name = DataFilter::icms_trim($login_name);
+		if ((is_object($thisUser) && $thisUser->getVar('login_name', 'e') !== $login_name && $login_name !== false) || !is_object($thisUser)) {
 			if (empty($login_name) || preg_match($restriction, $login_name)) {
 				$stop .= _US_INVALIDNICKNAME . '<br />';
 			}
@@ -195,7 +198,7 @@ class UserHandler
 		}
 
 		// check uname
-		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') != $uname && $uname !== false) || !is_object($thisUser)) {
+		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') !== $uname && $uname !== false) || !is_object($thisUser)) {
 			$count = $this->getCount(icms_buildCriteria(array('uname' => addslashes($uname))));
 			if ($count > 0) {
 				$stop .= _US_NICKNAMETAKEN . '<br />';
@@ -207,12 +210,12 @@ class UserHandler
 			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') {
 				$stop .= _US_ENTERPWD . '<br />';
 			}
-			if ((isset($pass)) && ($pass != $vpass)) {
+			if ((isset($pass)) && ($pass !== $vpass)) {
 				$stop .= _US_PASSNOTSAME . '<br />';
-			} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
+			} elseif ($pass && (strlen($pass) < $icmsConfigUser['minpass'])) {
 				$stop .= sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']) . '<br />';
 			}
-			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == \ImpressCMS\Core\DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)) {
+			if (isset($pass, $login_name) && ($pass === $login_name || $pass === DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)) {
 				$stop .= _US_BADPWD . '<br />';
 			}
 		}
@@ -228,13 +231,14 @@ class UserHandler
 	/**
 	 * Return a linked username or full name for a specific $userid
 	 *
-	 * @param	integer	$uid	uid of the related user
-	 * @param	boolean	$name	TRUE to return the fullname, FALSE to use the username; if TRUE and the user does not have fullname, username will be used instead
-	 * @param	array	$users	array already containing \ImpressCMS\Core\Member\UserModel objects in which case we will save a query
-	 * @param	boolean	$withContact TRUE if we want contact details to be added in the value returned (PM and email links)
-	 * @param	boolean	$isAuthor	Set this to TRUE if you want the rel='author' attribute added to the link
+	 * @param integer $uid uid of the related user
+	 * @param boolean $name TRUE to return the fullname, FALSE to use the username; if TRUE and the user does not have fullname, username will be used instead
+	 * @param array $users array already containing \ImpressCMS\Core\Member\UserModel objects in which case we will save a query
+	 * @param boolean $withContact TRUE if we want contact details to be added in the value returned (PM and email links)
+	 * @param boolean $isAuthor Set this to TRUE if you want the rel='author' attribute added to the link
+	 * @return int|string
 	 */
-	static public function getUserLink($uid, $name = false, $users = array(), $withContact = false, $isAuthor = false) {
+	public static function getUserLink($uid, $name = false, $users = array(), $withContact = false, $isAuthor = false) {
 		global $icmsConfig;
 
 		if (!is_numeric($uid)) {
@@ -242,18 +246,18 @@ class UserHandler
 		}
 		$uid = (int) $uid;
 		if ($uid > 0) {
-			if ($users == array()) {
-				$member_handler = \icms::handler("icms_member");
+			if ($users == []) {
+				$member_handler = \icms::handler('icms_member');
 				$user = $member_handler->getUser($uid);
 			} else {
 				if (!isset($users[$uid])) {
-					return $icmsConfig["anonymous"];
+					return $icmsConfig['anonymous'];
 				}
 				$user = $users[$uid];
 			}
 
 			if (is_object($user)) {
-				$author = $isAuthor?" rel='author'":"";
+				$author = $isAuthor?" rel='author'": '';
 				$fullname = '';
 				$linkeduser = '';
 
@@ -263,12 +267,12 @@ class UserHandler
 					$fullname = $user->getVar('name');
 				}
 				if (!empty($fullname)) {
-					$linkeduser = $fullname . "[";
+					$linkeduser = $fullname . '[';
 				}
 				$linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $uid . '"' . $author . '>';
-				$linkeduser .= \ImpressCMS\Core\DataFilter::htmlSpecialChars($username) . "</a>";
+				$linkeduser .= DataFilter::htmlSpecialChars($username) . '</a>';
 				if (!empty($fullname)) {
-					$linkeduser .= "]";
+					$linkeduser .= ']';
 				}
 
 				if ($withContact) {
@@ -286,7 +290,7 @@ class UserHandler
 				return $linkeduser;
 			}
 		}
-		return $icmsConfig["anonymous"];
+		return $icmsConfig['anonymous'];
 	}
 
 	/**
@@ -295,10 +299,10 @@ class UserHandler
 	 * @param	string	$email Email address for a user
 	 * @return	string	A username matching the provided email address
 	 */
-	static public function getUnameFromEmail($email = '') {
+	public static function getUnameFromEmail($email = '') {
 				$handler = \icms::handler('icms_member_user');
 		if ($email !== '') {
-			$sql = $handler->db->query("SELECT uname, email FROM " . $handler->table
+			$sql = $handler->db->query('SELECT uname, email FROM ' . $handler->table
 				. " WHERE email = '" . (!empty($email)?htmlspecialchars($email, ENT_QUOTES, _CHARSET):'')
 				. "'");
 			list($uname, $email) = $handler->db->fetchRow($sql);
@@ -326,7 +330,7 @@ class UserHandler
 							   );
 			list($name) = $this->db->fetchRow($sql);
 						if ($name) {
-							return \ImpressCMS\Core\DataFilter::htmlSpecialChars($name);
+							return DataFilter::htmlSpecialChars($name);
 						}
 		}
 		return $GLOBALS['icmsConfig']['anonymous'];
@@ -335,13 +339,13 @@ class UserHandler
 	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 				if ($limit > 0) {
 					if ($criteria === null) {
-						$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+						$criteria = new CriteriaCompo();
 					}
 					$criteria->setLimit($limit);
 				}
 				if ($start > 0) {
 					if ($criteria === null) {
-						$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+						$criteria = new CriteriaCompo();
 					}
 					$criteria->setLimit($start);
 				}

@@ -59,10 +59,10 @@ class Debug {
 		array_shift($trace);
 		$level = $msg = $message = '';
 		$pre = '<strong><em>(' . _CORE_DEPRECATED . ')</em></strong> - ';
-		if ($trace[0]['function'] != 'include'
-			&& $trace[0]['function'] != 'include_once'
-			&& $trace[0]['function'] != 'require'
-			&& $trace[0]['function'] != 'require_once'
+		if ($trace[0]['function'] !== 'include'
+			&& $trace[0]['function'] !== 'include_once'
+			&& $trace[0]['function'] !== 'require'
+			&& $trace[0]['function'] !== 'require_once'
 		) {
 			$pre .= $trace[0]['function'] . ': ';
 		}

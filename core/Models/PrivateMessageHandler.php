@@ -36,6 +36,9 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\IPF\Handler;
 use ImpressCMS\Core\Models\PrivateMessage\PrivateMessageModel;
 
 /**
@@ -48,7 +51,7 @@ use ImpressCMS\Core\Models\PrivateMessage\PrivateMessageModel;
  * @copyright    copyright (c) 2000-2007 XOOPS.org
  * @package    ICMS\Data\Privmessage
  */
-class PrivateMessageHandler extends \ImpressCMS\Core\IPF\Handler
+class PrivateMessageHandler extends Handler
 {
 
 	public function __construct(&$db)
@@ -77,18 +80,18 @@ class PrivateMessageHandler extends \ImpressCMS\Core\IPF\Handler
 	/**
 	 * Gets message count for user
 	 *
-	 * @param \ImpressCMS\Core\Models\User|null $user User for whom get message count
+	 * @param User|null $user User for whom get message count
 	 *
 	 * @return int
 	 */
-	public function getCountForUser(\ImpressCMS\Core\Models\User $user = null): int {
+	public function getCountForUser(User $user = null): int {
 		static $msgCount = [];
 		if ($user === null) {
 			$user = \icms::$user;
 		}
 		if (!isset($msgCount[$user->uid])) {
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('read_msg', 0));
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('to_userid', $user->uid));
+			$criteria = new CriteriaCompo(new CriteriaItem('read_msg', 0));
+			$criteria->add(new CriteriaItem('to_userid', $user->uid));
 			$msgCount[$user->uid] = (int)$this->getCount($criteria);
 		}
 		return $msgCount[$user->uid];

@@ -1,17 +1,20 @@
 <?php
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\DatabaseConnectionInterface;
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Image body storing class
  *
  * @package	ICMS\Image\Body
  */
-class ImageBodyHandler extends \ImpressCMS\Core\IPF\Handler {
+class ImageBodyHandler extends Handler {
 
 		/**
 		 * Constructor
 		 *
-		 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db              Database connection
+		 * @param DatabaseConnectionInterface $db              Database connection
 		 */
 		public function __construct(&$db) {
 				parent::__construct($db, 'image_body', 'image_id', '', '', 'icms', 'imagebody');

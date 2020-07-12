@@ -52,7 +52,7 @@ class TableForm extends AbstractForm {
 	 * @param	string	$class	CSS class name for <td> tag
 	 */
 	public function insertBreak($extra = '', $class = '') {
-		$class = ($class != '')?" class='$class'":'';
+		$class = $class?" class='$class'":'';
 		//Fix for $extra tag not showing
 		if ($extra) {
 			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
@@ -81,7 +81,7 @@ class TableForm extends AbstractForm {
 				if ($ele_desc = $ele->getDescription()) {
 					$ret .= '<br /><br /><span style="font-weight: normal;">' . $ele_desc . '</span>';
 				}
-				$ret .= "</td><td>" . $ele->render() . "</td></tr>";
+				$ret .= '</td><td>' . $ele->render() . '</td></tr>';
 			} else {
 				$hidden .= $ele->render() . "\n";
 			}

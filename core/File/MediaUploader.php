@@ -215,26 +215,27 @@ class MediaUploader {
 		icms_loadLanguageFile('core', 'uploader');
 	}
 
-		/**
-		 * Do same as fetchMedia but from URL
-		 *
-		 * @param string $url
-		 */
+	/**
+	 * Do same as fetchMedia but from URL
+	 *
+	 * @param string $url
+	 * @return bool
+	 */
 		public function fetchFromURL($url) {
 			if (empty($this->extensionToMime)) {
 				self::setErrors(_ER_UP_MIMETYPELOAD);
 				return false;
 			}
 			//header('Content-Type: text/plain');
-			if (substr($url, 0, 5) == 'data:') {
+			if (strpos($url, 'data:') === 0) {
 				$fp   = fopen($url, 'r');
 				$meta = stream_get_meta_data($fp);
 				$content = stream_get_contents($fp);
 				$headers = array(
-					'content-type' => isset($meta['mediatype'])?$meta['mediatype']:'text/plain',
-					'base64' => isset($meta['base64'])?$meta['base64']:true,
+					'content-type' => $meta['mediatype'] ?? 'text/plain',
+					'base64' => $meta['base64'] ?? true,
 					'content-length' => strlen($content),
-					'charset' => isset($meta['charset'])?$meta['charset']:'US-ASCII',
+					'charset' => $meta['charset'] ?? 'US-ASCII',
 				);
 				fclose($fp);
 			} else {
@@ -311,7 +312,7 @@ class MediaUploader {
 			$this->mediaSize = (int) $headers['content-length'];
 			$this->mediaTmpName = tempnam(sys_get_temp_dir(), 'icms_media');
 			$this->mediaError = 0;
-			$this->mediaRealType = isset($this->extensionToMime[$ext])?$this->extensionToMime[$ext]:$this->mediaType;
+			$this->mediaRealType = $this->extensionToMime[$ext] ?? $this->mediaType;
 			$fp = fopen($this->mediaTmpName, 'w+');
 			fwrite($fp, $content);
 			fclose($fp);
@@ -355,7 +356,6 @@ class MediaUploader {
 			$this->mediaError = !empty($_FILES[$media_name]['error'][$index])?$_FILES[$media_name]['error'][$index]:0;
 		} else {
 			$media_name = & $_FILES[$media_name];
-			$this->mediaName = (get_magic_quotes_gpc())? stripslashes($media_name['name']):$media_name['name'];
 			$this->mediaName = $media_name['name'];
 			$this->mediaType = $media_name['type'];
 			$this->mediaSize = $media_name['size'];
@@ -437,13 +437,13 @@ class MediaUploader {
 			if (!isset($unique) || (isset($unique) && $unique !== true)) {
 				$this->prefix = (string) trim($value);
 			} elseif (isset($unique) && $unique == true) {
-				$this->prefix = (string) (trim($value)) . '_' . uniqid(rand(0, 32767));
+				$this->prefix = (string) (trim($value)) . '_' . uniqid(rand(0, 32767), true);
 			}
 		} elseif (!isset($value) || $value == '') {
 			if (!isset($unique) || (isset($unique) && $unique !== true)) {
 				$this->prefix = '';
 			} elseif (isset($unique) && $unique == true) {
-				$this->prefix = uniqid(rand(0, 32767));
+				$this->prefix = uniqid(rand(0, 32767), true);
 			}
 		}
 	}
@@ -663,8 +663,8 @@ class MediaUploader {
 		if (empty($this->checkImageType)) {
 			return true;
 		}
-		if (("image" == substr($this->mediaType, 0, strpos($this->mediaType, "/")))
-				|| (!empty($this->mediaRealType) && "image" == substr($this->mediaRealType, 0, strpos($this->mediaRealType, "/")))
+		if (('image' === substr($this->mediaType, 0, strpos($this->mediaType, '/')))
+				|| (!empty($this->mediaRealType) && 'image' === substr($this->mediaRealType, 0, strpos($this->mediaRealType, '/')))
 			) {
 			if (!($info = @ getimagesize($this->mediaTmpName))) {
 				self::setErrors(_ER_UP_INVALIDIMAGEFILE);
@@ -685,7 +685,7 @@ class MediaUploader {
 		$replaces = array();
 		foreach ($this->extensionsToBeSanitized as $ext) {
 			$patterns[] = "/\." . preg_quote($ext) . "\./i";
-			$replaces[] = "_" . $ext . ".";
+			$replaces[] = '_' . $ext . '.';
 		}
 		$this->mediaName = preg_replace($patterns, $replaces, $this->mediaName);
 	}

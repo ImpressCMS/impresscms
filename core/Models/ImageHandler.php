@@ -35,8 +35,11 @@
  */
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Database\DatabaseConnectionInterface;
+use ImpressCMS\Core\IPF\Handler;
 
 /**
  * Image handler class.
@@ -48,7 +51,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaItem;
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
+class ImageHandler extends Handler {
 
 	/**
 	 * Handler for image bodies
@@ -61,7 +64,7 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Constructor
 	 *
-	 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db              Database connection
+	 * @param DatabaseConnectionInterface $db              Database connection
 	 */
 		public function __construct(&$db) {
 			$this->imagebody_handler = \icms::handler('icms_image_body');
@@ -140,7 +143,7 @@ class ImageHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @todo Do better fix here for declaration compatibility
 	 */
 	public function getList($imgcat_id = null, $image_display = 0, $notinuse = 0, $debug = false) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria = new CriteriaCompo();
 		if ($imgcat_id !== null) {
 			$criteria->add(
 				new CriteriaItem('imgcat_id', (int) ($imgcat_id))

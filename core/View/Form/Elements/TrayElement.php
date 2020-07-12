@@ -73,7 +73,7 @@ class TrayElement extends AbstractFormElement {
 	 * @param    string $delimeter HTML to separate the elements
 	 * @param 	 string $name Name of tray
 	 */
-	public function __construct($caption, $delimeter = "&nbsp;", $name = "") {
+	public function __construct($caption, $delimeter = '&nbsp;', $name = '') {
 		$this->setName($name);
 		$this->setCaption($caption);
 		$this->_delimeter = $delimeter;
@@ -174,13 +174,13 @@ class TrayElement extends AbstractFormElement {
 	 */
 	public function render() {
 		$count = 0;
-		$ret = "";
+		$ret = '';
 		foreach ($this->getElements() as $ele) {
 			if ($count > 0) {
 				$ret .= $this->getDelimeter();
 			}
-			if ($ele->getCaption() != '') {
-				$ret .= $ele->getCaption() . "&nbsp;";
+			if ($ele->getCaption()) {
+				$ret .= $ele->getCaption() . '&nbsp;';
 			}
 			$ret .= $ele->render() . "\n";
 			if (!$ele->isHidden()) {

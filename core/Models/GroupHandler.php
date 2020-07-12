@@ -37,6 +37,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Group handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -45,7 +47,7 @@ namespace ImpressCMS\Core\Models;
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @package	ICMS\Member\Group
  */
-class GroupHandler extends \ImpressCMS\Core\IPF\Handler {
+class GroupHandler extends Handler {
 
         public function __construct(&$db) {
             parent::__construct($db, 'member_group', 'groupid', 'name', 'description', 'icms', 'groups', 'groupid');

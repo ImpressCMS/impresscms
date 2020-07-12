@@ -38,6 +38,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Avatar class
  *
@@ -54,7 +56,7 @@ namespace ImpressCMS\Core\Models;
  * @property int        $avatar_weight     Weight (used for sorting avatars for user)
  * @property string     $avatar_type       Type
  */
-class Avatar extends \ImpressCMS\Core\IPF\AbstractModel {
+class Avatar extends AbstractModel {
 	/** @var integer */
 	private $_userCount;
 

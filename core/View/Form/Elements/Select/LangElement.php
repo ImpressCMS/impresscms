@@ -58,6 +58,6 @@ class LangElement extends SelectElement {
 	 */
 	public function __construct($caption, $name, $value = null, $size = 1) {
 		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(Filesystem::getDirList(ICMS_ROOT_PATH . "/language/"));
+		$this->addOptionArray(Filesystem::getDirList(ICMS_ROOT_PATH . '/language/'));
 	}
 }

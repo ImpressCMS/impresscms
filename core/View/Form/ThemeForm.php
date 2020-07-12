@@ -52,7 +52,7 @@ class ThemeForm extends AbstractForm {
 	 * @param	string	$class	CSS class name for <td> tag
 	 */
 	public function insertBreak($extra = '', $class = '') {
-		$class = ($class != '')?" class='$class'":'';
+		$class = $class?" class='$class'":'';
 		//Fix for $extra tag not showing
 		if ($extra) {
 			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
@@ -77,8 +77,8 @@ class ThemeForm extends AbstractForm {
 				. "' onsubmit='return xoopsFormValidate_" . $ele_name . "();'" . $this->getExtra() . ">
 			<div class='xo-theme-form'>
 			<table width='100%' class='outer table' cellspacing='1'>
-			<tr><th colspan='2'>" . $this->getTitle() . "</th></tr>
-		";
+			<tr><th colspan='2'>" . $this->getTitle() . '</th></tr>
+		';
 		$hidden = '';
 		$class = 'even';
 		foreach ($this->getElements() as $ele) {
@@ -86,15 +86,14 @@ class ThemeForm extends AbstractForm {
 				$ret .= $ele;
 			} elseif (!$ele->isHidden()) {
 				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>";
-				if (($caption = $ele->getCaption()) != '') {
+				if ($caption = $ele->getCaption()) {
 					$ret .=
-						"<div class='xoops-form-element-caption" . ($ele->isRequired()?"-required":"") . "'>"
+						"<div class='xoops-form-element-caption" . ($ele->isRequired()? '-required' : '') . "'>"
 						. "<span class='caption-text'>{$caption}</span>";
-						if (($desc = $ele->getDescription()) != '') {
+						if ($desc = $ele->getDescription()) {
 							$ret .= "<div class='xoops-form-element-help'>{$desc}</div>";
 						}
-					$ret .= "<span class='caption-marker'> *</span>"
-						. "</div>";
+					$ret .= "<span class='caption-marker'> *</span></div>";
 				}
 
 				$ret .= "</td><td class='$class'>" . $ele->render() . "</td></tr>\n";

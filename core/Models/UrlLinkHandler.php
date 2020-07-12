@@ -2,6 +2,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * UrlLink Handler
  *
@@ -12,13 +14,13 @@ namespace ImpressCMS\Core\Models;
  * @author	Phoenyx
  */
 
-class UrlLinkHandler extends \ImpressCMS\Core\IPF\Handler {
+class UrlLinkHandler extends Handler {
 	/**
 	 * constrcutor
 	 *
 	 * @param object $db database connection
 	 */
 	public function __construct(&$db) {
-		parent::__construct($db, "data_urllink", "urllinkid", "caption", "desc", "icms");
+		parent::__construct($db, 'data_urllink', 'urllinkid', 'caption', 'desc', 'icms');
 	}
 }

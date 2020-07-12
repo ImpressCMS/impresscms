@@ -10,6 +10,9 @@
 
 namespace ImpressCMS\Core\Feeds;
 
+use FeedWriter\Feed;
+use FeedWriter\Item;
+
 /**
  * Generates the data necessary for an RSS feed and assigns it to a smarty template
  *
@@ -82,7 +85,7 @@ class Rss {
 			'lastBuildDate' => $this->lastbuild
 		]);
 		if ($this->image['url']) {
-			$feed->setChannelElement('image', [
+			$feed->setChannelElement('image', '', [
 				'url' => $this->image['url'],
 				'title' => $this->title,
 				'link' => $this->url,
@@ -107,12 +110,12 @@ class Rss {
 	/**
 	 * Converts feed item from array to real item
 	 *
-	 * @param \FeedWriter\Feed $feed Feed
+	 * @param Feed $feed Feed
 	 * @param array $item Feed item data
 	 *
-	 * @return \FeedWriter\Item
+	 * @return Item
 	 */
-	protected function convertFeedItem(\FeedWriter\Feed &$feed, array $item) {
+	protected function convertFeedItem(Feed &$feed, array $item) {
 		$feed_item = $feed->createNewItem();
 		$feed_item->setAuthor($item['author']);
 		$feed_item->setDate($item['pubdate']);

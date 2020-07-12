@@ -108,7 +108,7 @@ class ModuleHandler
 	 * @return    array    List of active modules
 	 * @since    1.3
 	 */
-	static public function getActive()
+	public static function getActive()
 	{
 		$module_handler = new self(icms::$xoopsDB);
 		$criteria = new CriteriaItem('isactive', 1);
@@ -121,7 +121,7 @@ class ModuleHandler
 	 * @param bool $inAdmin
 	 * @return bool
 	 */
-	static public function checkModuleAccess($module, $inAdmin = false)
+	public static function checkModuleAccess($module, $inAdmin = false)
 	{
 		if ($inAdmin && !icms::$user) {
 			return false;

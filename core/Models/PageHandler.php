@@ -11,6 +11,10 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * ImpressCMS page handler class.
  *
@@ -18,7 +22,7 @@ namespace ImpressCMS\Core\Models;
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  * @package	ICMS\Data\Page
  */
-class PageHandler extends \ImpressCMS\Core\IPF\Handler {
+class PageHandler extends Handler {
 
 	public function __construct(& $db) {
 		parent::__construct($db, 'page', 'page_id', 'page_title', '', 'icms');
@@ -40,14 +44,14 @@ class PageHandler extends \ImpressCMS\Core\IPF\Handler {
 			$value = array($value);
 		}
 		$module_handler = \icms::handler('icms_module');
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('hasmain', 1));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1));
+		$criteria = new CriteriaCompo(new CriteriaItem('hasmain', 1));
+		$criteria->add(new CriteriaItem('isactive', 1));
 		$module_list = & $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module) {
 			$mods .= '<optgroup label="' . $module->getVar('name') . '">';
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_moduleid', $module->getVar('mid')));
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_status', 1));
+			$criteria = new CriteriaCompo(new CriteriaItem('page_moduleid', $module->getVar('mid')));
+			$criteria->add(new CriteriaItem('page_status', 1));
 			$pages = & $this->getObjects($criteria);
 			$sel = '';
 			if (in_array($module->getVar('mid') . '-0', $value)) {
@@ -68,8 +72,8 @@ class PageHandler extends \ImpressCMS\Core\IPF\Handler {
 		}
 
 		$module = $module_handler->get(1);
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_moduleid', 1));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_status', 1));
+		$criteria = new CriteriaCompo(new CriteriaItem('page_moduleid', 1));
+		$criteria->add(new CriteriaItem('page_status', 1));
 		$pages = & $this->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0) {

@@ -143,7 +143,7 @@ class CriteriaCompo extends CriteriaElement {
 				} elseif (strtoupper($cond) == 'OR') {
 					$op = '|';
 				}
-				$retval = "(" . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ")";
+				$retval = '(' . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ')';
 			}
 		}
 		return $retval;

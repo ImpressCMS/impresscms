@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Richfile Handler
  *
@@ -11,14 +13,14 @@ namespace ImpressCMS\Core\Models;
  * @author	Phoenyx
  */
 
-class FileHandler extends \ImpressCMS\Core\IPF\Handler {
+class FileHandler extends Handler {
 	/**
 	 * constrcutor
 	 *
 	 * @param object $db database connection
 	 */
 	public function __construct(&$db) {
-		parent::__construct($db, "data_file", "fileid", "caption", "desc", "icms");
+		parent::__construct($db, 'data_file', 'fileid', 'caption', 'desc', 'icms');
 	}
 
 	/**
@@ -30,8 +32,8 @@ class FileHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return bool TRUE
 	 */
 	protected function afterDelete(&$obj) {
-		$imgUrl = $obj->getVar("url");
-		if (strstr($imgUrl, ICMS_URL) !== false) {
+		$imgUrl = $obj->getVar('url');
+		if (strpos($imgUrl, ICMS_URL) !== false) {
 			$imgPath = str_replace(ICMS_URL, ICMS_ROOT_PATH, $imgUrl);
 			if (is_file($imgPath)) {
 				unlink($imgPath);

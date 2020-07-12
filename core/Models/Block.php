@@ -38,6 +38,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\IPF\AbstractModel;
 use ImpressCMS\Core\Textsanitizer;
 
 /**
@@ -68,62 +70,62 @@ use ImpressCMS\Core\Textsanitizer;
  * @property int $last_modified  When it was last modified?
  * @property string $options        Options
  */
-class Block extends \ImpressCMS\Core\IPF\AbstractModel
+class Block extends AbstractModel
 {
 
 	/**
 	 * System block
 	 */
-	const BLOCK_TYPE_SYSTEM = 'S';
+	public const BLOCK_TYPE_SYSTEM = 'S';
 
 	/**
 	 * Block from a Module (other than system)
 	 */
-	const BLOCK_TYPE_MODULE = 'M';
+	public const BLOCK_TYPE_MODULE = 'M';
 
 	/**
 	 * Custom block
 	 */
-	const BLOCK_TYPE_CUSTOM = 'C';
+	public const BLOCK_TYPE_CUSTOM = 'C';
 
 	/**
 	 * Block cloned from another block
 	 */
-	const BLOCK_TYPE_DUPLICATED = 'K';
+	public const BLOCK_TYPE_DUPLICATED = 'K';
 
 	/**
 	 * Block cloned from another block
 	 *
 	 * @deprecated will be removed in 2.1. Use BLOCK_TYPE_DUPLICATED
 	 */
-	const BLOCK_TYPE_LEGACY_DUPLICATED = 'D';
+	public const BLOCK_TYPE_LEGACY_DUPLICATED = 'D';
 
 	/**
 	 * Custom block
 	 *
 	 * @deprecated will be removed in 2.1. Use BLOCK_TYPE_CUSTOM
 	 */
-	const BLOCK_TYPE_LEGACY_CUSTOM = 'E';
+	public const BLOCK_TYPE_LEGACY_CUSTOM = 'E';
 
 	/**
 	 * Block uses HTML for displaying content
 	 */
-	const CONTENT_TYPE_HTML = 'H';
+	public const CONTENT_TYPE_HTML = 'H';
 
 	/**
 	 * Block uses PHP for displaying content
 	 */
-	const CONTENT_TYPE_PHP = 'P';
+	public const CONTENT_TYPE_PHP = 'P';
 
 	/**
 	 * Block uses Auto Format (smilies and HTML enabled)
 	 */
-	const CONTENT_TYPE_AUTO_FORMAT = 'S';
+	public const CONTENT_TYPE_AUTO_FORMAT = 'S';
 
 	/**
 	 * Block uses no Auto Format (smilies and HTML disabled)
 	 */
-	const CONTENT_TYPE_NO_AUTO_FORMAT = 'T';
+	public const CONTENT_TYPE_NO_AUTO_FORMAT = 'T';
 
 	/**
 	 * Visible areas for block
@@ -135,6 +137,7 @@ class Block extends \ImpressCMS\Core\IPF\AbstractModel
 	/**
 	 * Constructor for the block object
 	 * @param $handler
+	 * @param array $data
 	 */
 	public function __construct(&$handler, $data = array())
 	{
@@ -209,7 +212,7 @@ class Block extends \ImpressCMS\Core\IPF\AbstractModel
 	 */
 	public function getVar($name, $format = 's')
 	{
-		if ($name == 'visiblein') {
+		if ($name === 'visiblein') {
 			return $this->visiblein;
 		} else {
 			return parent::getVar($name, $format);
@@ -235,7 +238,7 @@ class Block extends \ImpressCMS\Core\IPF\AbstractModel
 			return false;
 		}
 
-		$block_template_file = ICMS_ROOT_PATH . "/modules/" . $this->dirname . "/blocks/" . $this->func_file;
+		$block_template_file = ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/blocks/' . $this->func_file;
 		if (!file_exists($block_template_file)) {
 			return false;
 		}
@@ -244,7 +247,7 @@ class Block extends \ImpressCMS\Core\IPF\AbstractModel
 		global $icmsConfig, $xoopsOption;
 		/** @noinspection PhpIncludeInspection */
 		include_once $block_template_file;
-		$options = explode("|", $this->getVar("options"));
+		$options = explode('|', $this->getVar('options'));
 		if (!function_exists($this->show_func)) {
 			return false;
 		}
@@ -267,7 +270,7 @@ class Block extends \ImpressCMS\Core\IPF\AbstractModel
 	 */
 	public function isCustom()
 	{
-		return ($this->block_type == static::BLOCK_TYPE_CUSTOM || $this->block_type == static::BLOCK_TYPE_LEGACY_CUSTOM);
+		return ($this->block_type === static::BLOCK_TYPE_CUSTOM || $this->block_type === static::BLOCK_TYPE_LEGACY_CUSTOM);
 	}
 
 	/**
@@ -282,26 +285,24 @@ class Block extends \ImpressCMS\Core\IPF\AbstractModel
 	{
 		switch ($format) {
 			case self::BLOCK_TYPE_SYSTEM:
-				if ($c_type == static::CONTENT_TYPE_HTML) {
+				if ($c_type === static::CONTENT_TYPE_HTML) {
 					$content = $this->content;
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-					$content = str_replace(env('DB_SALT'), '', $content);
+					$content = str_replace(['{X_SITEURL}', env('DB_SALT')], [ICMS_URL . '/', ''], $content);
 					return $content;
-				} elseif ($c_type == static::CONTENT_TYPE_PHP) {
+				} elseif ($c_type === static::CONTENT_TYPE_PHP) {
 					ob_start();
-					echo eval(\ImpressCMS\Core\DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
+					echo eval(DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
 					$content = ob_get_contents();
 					ob_end_clean();
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-					$content = str_replace(env('DB_SALT'), '', $content);
+					$content = str_replace(['{X_SITEURL}', env('DB_SALT')], [ICMS_URL . '/', ''], $content);
 					return $content;
-				} elseif ($c_type == static::CONTENT_TYPE_AUTO_FORMAT) {
+				} elseif ($c_type === static::CONTENT_TYPE_AUTO_FORMAT) {
 					$myts = Textsanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
 					return $myts->displayTarea($content, 1, 1);
 				} else {
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
-					return \ImpressCMS\Core\DataFilter::checkVar($content, 'text', 'output');
+					return DataFilter::checkVar($content, 'text', 'output');
 				}
 				break;
 

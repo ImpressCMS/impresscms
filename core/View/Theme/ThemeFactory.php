@@ -34,6 +34,9 @@
 
 namespace ImpressCMS\Core\View\Theme;
 
+use Aura\Session\Session;
+use icms;
+
 /**
  * Theme Factory
  *
@@ -86,12 +89,12 @@ class ThemeFactory {
 	 * Gets list of themes folder from themes directory, excluding any directories that do not have theme.html
 	 * @return	array
 	 */
-	static public function getThemesList() {
+	public static function getThemesList() {
 		$dirlist = [];
-		$fs = \icms::getInstance()->get('filesystem');
+		$fs = icms::getInstance()->get('filesystem');
 		foreach ($fs->listContents('themes://') as $fileInfo) {
 			$file = $fileInfo['basename'];
-			if (substr($file, 0, 1) == '.' || $fs->has('themes://' . $file . '/theme.html') === false) {
+			if (strpos($file, '.') === 0 || $fs->has('themes://' . $file . '/theme.html') === false) {
 				continue;
 			}
 			$dirlist[$file] = $file;
@@ -103,12 +106,12 @@ class ThemeFactory {
 	 * Gets list of administration themes folder from themes directory, excluding any directories that do not have theme_admin.html
 	 * @return	array
 	 */
-	static public function getAdminThemesList() {
+	public static function getAdminThemesList() {
 		$items = [];
-		$fs = \icms::getInstance()->get('filesystem');
+		$fs = icms::getInstance()->get('filesystem');
 		foreach ($fs->listContents('themes://') as $fileInfo) {
 			$file = $fileInfo['basename'];
-			if (substr($file, 0, 1) == '.' || $fs->has('themes://' . $file . '/theme_admin.html') === false) {
+			if (strpos($file, '.') === 0 || $fs->has('themes://' . $file . '/theme_admin.html') === false) {
 				continue;
 			}
 			$items[$file] = $file;
@@ -116,7 +119,7 @@ class ThemeFactory {
 
 		foreach ($fs->listContents('modules://system/themes') as $fileInfo) {
 			$file = $fileInfo['basename'];
-			if (substr($file, 0, 1) == '.' || $fs->has('modules://system/themes/' . $file . '/theme.html') === false) {
+			if (strpos($file, '.') === 0 || $fs->has('modules://system/themes/' . $file . '/theme.html') === false) {
 				continue;
 			}
 			$items[$file] = $file;
@@ -127,17 +130,20 @@ class ThemeFactory {
 
 	/**
 	 * Instanciate the specified theme
+	 * @param array $options
+	 * @param array $initArgs
+	 * @return ThemeComponent
 	 */
-	public function &createInstance($options = array(), $initArgs = array())
+	public function &createInstance($options = [], $initArgs = [])
 	{
 		// Grab the theme folder from request vars if present
 		if (!isset($options['folderName']) || empty($options['folderName'])) {
 			// xoops_theme_select still exists to keep compatibilitie ...
 
 			/**
-			 * @var Aura\Session\Session $session
+			 * @var Session $session
 			 */
-			$session = \icms::getInstance()->get('session');
+			$session = icms::getInstance()->get('session');
 			$xoBundleSection = $session->getSegment($this->xoBundleIdentifier);
 
 			if ((!empty($_REQUEST['theme_select'])) && $this->isThemeAllowed($_REQUEST['theme_select'])) {
@@ -168,7 +174,7 @@ class ThemeFactory {
 	 */
 	public function isThemeAllowed($name)
 	{
-		return (empty($this->allowedThemes) || in_array($name, $this->allowedThemes));
+		return (empty($this->allowedThemes) || in_array($name, $this->allowedThemes, true));
 	}
 
 }

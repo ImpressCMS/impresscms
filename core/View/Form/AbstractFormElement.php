@@ -106,7 +106,7 @@ abstract class AbstractFormElement {
 	 * description of the field
 	 * @var	string
 	 */
-	private $_description = "";
+	private $_description = '';
 	/**#@-*/
 
 	/**
@@ -142,8 +142,8 @@ abstract class AbstractFormElement {
 	 * @return  string  "name" attribute
 	 */
 	public function getName($encode = true) {
-		if (false != $encode) {
-			return str_replace("&amp;", "&", htmlspecialchars($this->_name, ENT_QUOTES, _CHARSET));
+		if (false !== $encode) {
+			return str_replace('&amp;', '&', htmlspecialchars($this->_name, ENT_QUOTES, _CHARSET));
 		}
 		return $this->_name;
 	}
@@ -308,13 +308,13 @@ abstract class AbstractFormElement {
 	 */
 	public function getExtra($encode = false) {
 		if (!$encode) {
-			return " " . implode(' ', $this->_extra);
+			return ' ' . implode(' ', $this->_extra);
 		}
 		$value = array();
 		foreach ($this->_extra as $val) {
-			$value[] = str_replace('>', '&gt;', str_replace('<', '&lt;', $val));
+			$value[] = str_replace(array('<', '>'), array('&lt;', '&gt;'), $val);
 		}
-		return empty($value)?"":" " . implode(' ', $value);
+		return empty($value)? '' : ' ' . implode(' ', $value);
 	}
 
 	/**

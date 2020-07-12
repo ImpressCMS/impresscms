@@ -89,7 +89,7 @@ class HTMLFilter extends DataFilter {
 			$fileList = array_values($fileList);
 
 			foreach ($fileList as &$val) {
-				$val = "HTMLPurifier_Filter_" . substr($val, 0, strrpos($val, '.'));
+				$val = 'HTMLPurifier_Filter_' . substr($val, 0, strrpos($val, '.'));
 				$newObject = new $val;
 				$filterList[] = $newObject;
 			}

@@ -36,8 +36,10 @@
 
 namespace ImpressCMS\Core\Messaging;
 
+use icms;
 use ImpressCMS\Core\Models\Group;
 use ImpressCMS\Core\Models\User;
+use PHPMailer\PHPMailer\Exception;
 
 /**
  * Class for sending messages.
@@ -372,10 +374,11 @@ class MailHandler {
 	/**
 	 * Send email
 	 *
-	 * @param	string
-	 * @param	string
-	 * @param	string
-	 * @return	boolean	FALSE on error.
+	 * @param string
+	 * @param string
+	 * @param string
+	 * @return    boolean    FALSE on error.
+	 * @throws Exception
 	 */
 	public function sendMail($email, $subject, $body, $headers) {
 		$subject = $this->multimailer->encodeSubject($subject);
@@ -406,10 +409,10 @@ class MailHandler {
 
 	public function sendPM($uid, $subject, $body)
 	{
-		$pm_handler = \icms::handler('icms_data_privmessage');
+		$pm_handler = icms::handler('icms_data_privmessage');
 		$pm = &$pm_handler->create();
 		$pm->setVar('subject', $subject);
-		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : \icms::$user->getVar('uid'));
+		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : icms::$user->getVar('uid'));
 		$pm->setVar('msg_text', $body);
 		$pm->setVar('to_userid', $uid);
 		if (!$pm_handler->insert($pm)) {
@@ -455,7 +458,7 @@ class MailHandler {
 	public function setToEmails($email) {
 		if (!is_array($email)) {
 			if (preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $email)) {
-				array_push($this->toEmails, $email);
+				$this->toEmails[] = $email;
 			}
 		} else {
 			foreach ($email as $e) {
@@ -467,7 +470,7 @@ class MailHandler {
 	public function setToGroups($group) {
 		if (!is_array($group)) {
 			if (get_class($group) === Group::class) {
-				$member_handler = \icms::handler('icms_member');
+				$member_handler = icms::handler('icms_member');
 				$this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
 			}
 		} else {

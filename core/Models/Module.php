@@ -37,6 +37,7 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Autoloader;
+use ImpressCMS\Core\IPF\AbstractModel;
 
 /**
  * A Module
@@ -63,7 +64,7 @@ use ImpressCMS\Core\Autoloader;
  * @property int    $ipf               Is this module IPF based?
  */
 class Module
-	extends \ImpressCMS\Core\IPF\AbstractModel {
+	extends AbstractModel {
 	/**
 	 * Module configuration
 	 * @var array
@@ -144,7 +145,7 @@ class Module
 		}
 
 		// check if module is active (only if applicable)
-		if ($isactive !== null && $this->getVar("isactive") != (int)$isactive) {
+		if ($isactive !== null && $this->getVar("isactive") !== (int)$isactive) {
 			return;
 		}
 
@@ -247,7 +248,6 @@ class Module
 	 */
 	public function loadAdminMenu() {
 		if ($this->getInfo('adminmenu')
-			&& $this->getInfo('adminmenu') != ''
 			&& file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))
 		) {
 			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
@@ -329,12 +329,13 @@ class Module
 	/**
 	 * Displays the (good old) adminmenu
 	 *
-	 * @param int  $currentoption  The current option of the admin menu
-	 * @param string  $breadcrumb  The breadcrumb trail
-	 * @param bool  $submenus  Show the submenus!
-	 * @param int  $currentsub  The current submenu
+	 * @param int $currentoption The current option of the admin menu
+	 * @param string $breadcrumb The breadcrumb trail
+	 * @param bool $submenus Show the submenus!
+	 * @param int $currentsub The current submenu
 	 *
 	 * @return datatype  description
+	 * @throws \SmartyException
 	 */
 	public function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1) {
 		global $icmsModule, $icmsConfig;
@@ -400,14 +401,15 @@ class Module
 	/**
 	 * Modules Message Function
 	 *
+	 * @param string $msg The Error Message
+	 * @param string $title The Error Message title
+	 * @param bool $render Whether to echo (render) or return the HTML string
+	 *
+	 * @return string
 	 * @since ImpressCMS 1.2
+	 * @todo Make this work with templates ;)
 	 * @author Sina Asghari (aka stranger) <stranger@impresscms.org>
 	 *
-	 * @param string $msg	The Error Message
-	 * @param string $title	The Error Message title
-	 * @param	bool	$render	Whether to echo (render) or return the HTML string
-	 *
-	 * @todo Make this work with templates ;)
 	 */
 	public function setMessage($msg, $title = '', $render = false) {
 		$ret = '<div class="moduleMsg">';

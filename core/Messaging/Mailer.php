@@ -53,14 +53,14 @@ class Mailer extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $From = "";
+	public $From = '';
 
 	/**
 	 * "from" name
 	 * @var 	string
 	 * @access	private
 	 */
-	public $FromName = "";
+	public $FromName = '';
 
 	/**
 	 * Method to be used when sending the mail.
@@ -76,7 +76,7 @@ class Mailer extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $Mailer = "mail";
+	public $Mailer = 'mail';
 
 	/**
 	 * set if $Mailer is "sendmail"
@@ -86,7 +86,7 @@ class Mailer extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $Sendmail = "/usr/sbin/sendmail";
+	public $Sendmail = '/usr/sbin/sendmail';
 
 	/**
 	 * SMTP Host.
@@ -95,14 +95,14 @@ class Mailer extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $Host = "";
+	public $Host = '';
 
 	/**
 	 * Sets connection prefix.
 	 * Options are "", "ssl" or "tls"
 	 * @var string
 	 */
-	public $SMTPSecure = "";
+	public $SMTPSecure = '';
 
 	/**
 	 * Does your SMTP host require SMTPAuth authentication?
@@ -118,7 +118,7 @@ class Mailer extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $Username = "";
+	public $Username = '';
 
 	/**
 	 * Password for SMTPAuth.
@@ -127,7 +127,7 @@ class Mailer extends PHPMailer {
 	 * @var 	string
 	 * @access	private
 	 */
-	public $Password = "";
+	public $Password = '';
 
 	/**
 	 * Sets default SMTP Port to use?
@@ -147,13 +147,13 @@ class Mailer extends PHPMailer {
 	public function __construct() {
 		global $icmsConfig, $icmsConfigMailer;
 		$this->From = $icmsConfigMailer['from'];
-		if ($this->From == '') {
+		if (empty($this->From)) {
 			$this->From = $icmsConfig['adminmail'];
 		}
 		$this->Sender = $this->From;
 
-		if ($icmsConfigMailer["mailmethod"] == "smtpauth") {
-			$this->Mailer = "smtp";
+		if ($icmsConfigMailer['mailmethod'] === 'smtpauth') {
+			$this->Mailer = 'smtp';
 			$this->SMTPAuth = true;
 			$this->SMTPSecure = $icmsConfigMailer['smtpsecure'];
 			// TODO: change value type of icmsConfigMailer "smtphost" from array to text

@@ -38,6 +38,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Comment handler class.
  *
@@ -50,7 +52,7 @@ namespace ImpressCMS\Core\Models;
  * 				You should have received a copy of XOOPS_copyrights.txt with
  * 				this file. If not, you may obtain a copy from xoops.org
  */
-class CommentHandler extends \ImpressCMS\Core\IPF\Handler {
+class CommentHandler extends Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'data_comment', 'com_id', 'com_title', 'com_text', 'icms', 'xoopscomments', 'com_id');

@@ -80,24 +80,24 @@ class CheckboxElement extends \ImpressCMS\Core\View\Form\Elements\CheckboxElemen
 		$ele_options = $this->getOptions();
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
-		if (count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]") {
-			$ele_name = $ele_name . "[]";
+		if (count($ele_options) > 1 && substr($ele_name, -2, 2) !== '[]') {
+			$ele_name .= '[]';
 			$this->setName($ele_name);
 		}
 		foreach ($ele_options as $value => $name) {
 			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name
-				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
-			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
+				. "' id='" . $ele_name . '_item_' . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
+			if (count($ele_value) > 0 && in_array($value, $ele_value, false)) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . "</label></span>" . $ele_delimeter;
+			$ret .= $ele_extra . " /><label for='" . $ele_name . '_item_' . $value . "'>" . $name . '</label></span>' . $ele_delimeter;
 		}
 		if (count($ele_options) > 1) {
 			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
 				. $ele_name . "_checkemall' class='checkemall' /><label for='"
 				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
 		}
-		$ret .= "</div>";
+		$ret .= '</div>';
 		return $ret;
 	}
 
@@ -106,13 +106,13 @@ class CheckboxElement extends \ImpressCMS\Core\View\Form\Elements\CheckboxElemen
 	 * @return	string    $js   the constructed javascript
 	 */
 	public function renderValidationJS() {
-		$js = "";
-		$js .= "var hasSelections = false;";
+		$js = '';
+		$js .= 'var hasSelections = false;';
 		$eltname = $this->getName();
 		$eltmsg = empty($eltcaption)? sprintf(_FORM_ENTER, $eltname):sprintf(_FORM_ENTER, $eltcaption);
 		$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
 		if (strpos($eltname, '[') === false) {
-			$eltname = $eltname . "[]";
+			$eltname .= '[]';
 		}
 		$js .=
 		"for (var i = 0; i < myform['" . $eltname . "'].length; i++) {

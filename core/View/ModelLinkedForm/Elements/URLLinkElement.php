@@ -5,6 +5,7 @@ use icms;
 use ImpressCMS\Core\IPF\AbstractModel;
 use ImpressCMS\Core\View\Form\Elements\HiddenElement;
 use ImpressCMS\Core\View\Form\Elements\LabelElement;
+use ImpressCMS\Core\View\Form\Elements\RadioElement;
 use ImpressCMS\Core\View\Form\Elements\TrayElement;
 
 /**
@@ -37,7 +38,7 @@ class URLLinkElement extends TrayElement {
 		$this->addElement(new LabelElement('', '<br/>' . _CO_ICMS_URLLINK_TARGET));
 		$this->addElement(new HiddenElement('mid_' . $key, $module->getVar('mid')));
 		$targ_val = $urllinkObj->getVar('target');
-		$targetRadio = new \ImpressCMS\Core\View\Form\Elements\RadioElement('', 'target_' . $key, $targ_val !== '' ?$targ_val: '_blank');
+		$targetRadio = new RadioElement('', 'target_' . $key, $targ_val !== '' ?$targ_val: '_blank');
 		$control = $urllinkObj->getControl('target');
 		$targetRadio->addOptionArray($control['options']);
 		$this->addElement($targetRadio);

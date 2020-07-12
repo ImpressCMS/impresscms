@@ -104,12 +104,12 @@ abstract class AbstractForm {
 	 * @param string  $method "method" attribute for the <form> tag
 	 * @param bool    $addtoken whether to add a security token to the form
 	 */
-	public function __construct($title, $name, $action, $method = "post", $addtoken = false) {
+	public function __construct($title, $name, $action, $method = 'post', $addtoken = false) {
 		$this->_title = $title;
 		$this->_name = $name;
 		$this->_action = $action;
 		$this->_method = $method;
-		if ($addtoken != false) {
+		if ($addtoken) {
 			$this->addElement(new HiddenTokenElement());
 		}
 	}
@@ -151,7 +151,7 @@ abstract class AbstractForm {
 	 * @return	string
 	 */
 	public function getMethod() {
-		return (strtolower($this->_method) == "get")?"get":"post";
+		return (strtolower($this->_method) === 'get')? 'get' : 'post';
 	}
 
 	/**
@@ -216,7 +216,7 @@ abstract class AbstractForm {
 	 * @return	array   array of form element names
 	 */
 	public function getElementNames() {
-		$ret = array();
+		$ret = [];
 		$elements = & $this->getElements(true);
 		$count = count($elements);
 		for ($i = 0; $i < $count; $i++) {
@@ -236,7 +236,7 @@ abstract class AbstractForm {
 		$elements = $this->getElements(true);
 		$count = count($elements);
 		for ($i = 0; $i < $count; $i++) {
-			if ($name == $elements[$i]->getName(false)) {
+			if ($name === $elements[$i]->getName(false)) {
 				return $elements[$i];
 			}
 		}
@@ -328,7 +328,7 @@ abstract class AbstractForm {
 	 * @return	string $extra
 	 */
 	public function &getExtra() {
-		$extra = empty($this->_extra)?"":" " . implode(" ", $this->_extra);
+		$extra = empty($this->_extra)? '' : ' ' . implode(' ', $this->_extra);
 		return $extra;
 	}
 
@@ -396,7 +396,8 @@ abstract class AbstractForm {
 	 * }
 	 * </code>
 	 *
-	 * @param		boolean  $withtags	Include the < javascript > tags in the returned string
+	 * @param boolean $withtags Include the < javascript > tags in the returned string
+	 * @return string
 	 */
 	public function renderValidationJS($withtags = true) {
 		$js = "";
@@ -436,13 +437,13 @@ abstract class AbstractForm {
 			}
 			$ele_name = $ele->getName();
 			$ele_description = $ele->getDescription();
-			$n = $ele_name?$ele_name:$i;
+			$n = $ele_name?:$i;
 			$elements[$n]['name']       = $ele_name;
 			$elements[$n]['caption']    = $ele->getCaption();
 			$elements[$n]['body']       = $ele->render();
 			$elements[$n]['hidden']     = $ele->isHidden();
 			$elements[$n]['required']   = $ele->isRequired();
-			if ($ele_description != '') {
+			if ($ele_description) {
 				$elements[$n]['description'] = $ele_description;
 			}
 		}

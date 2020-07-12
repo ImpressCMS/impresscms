@@ -839,7 +839,7 @@ class Handler extends ObjectHandler {
 	 */
 	public function getIdentifierName($withprefix = true) {
 		if ($withprefix) {
-			return $this->_itemname . "." . $this->identifierName;
+			return $this->_itemname . '.' . $this->identifierName;
 		} else {
 			return $this->identifierName;
 		}

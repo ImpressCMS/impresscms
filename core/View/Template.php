@@ -37,7 +37,11 @@
 
 namespace ImpressCMS\Core\View;
 
+use icms;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException;
 use SmartyBC;
+use SmartyException;
 
 /**
  * Template engine
@@ -65,7 +69,7 @@ class Template extends SmartyBC
 		global $icmsConfig, $icmsModule;
 
 		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
-		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
+		$this->compile_check = ( (int)$icmsConfig['theme_fromfile'] === 1 );
 
 		parent::__construct();
 
@@ -73,10 +77,10 @@ class Template extends SmartyBC
 
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
-			$groups = (is_object(\icms::$user))? \icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+			$groups = (is_object(icms::$user))? icms::$user->getGroups(): [ICMS_GROUP_ANONYMOUS];
 			$moduleid = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->getVar('mid'):1;
-			$gperm_handler = \icms::handler('icms_member_groupperm');
-			if ($icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
+			$gperm_handler = icms::handler('icms_member_groupperm');
+			if ((int)$icmsConfig['debug_mode'] === 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
 			}
 		}
@@ -85,7 +89,7 @@ class Template extends SmartyBC
 		}
 
 		$this->assign(
-			array(
+			[
 			'icms_url' => ICMS_URL,
 			'icms_rootpath' => ICMS_ROOT_PATH,
 			'modules_url' => ICMS_MODULES_URL,
@@ -102,28 +106,29 @@ class Template extends SmartyBC
 			'xoops_version' => ICMS_VERSION_NAME,
 			'xoops_upload_url' => ICMS_UPLOAD_URL,
 			'globals' => $GLOBALS
-			)
+			]
 		);
 
-		$this->registerObject('icms',\icms::getInstance(),null,false);
+		$this->registerObject('icms', icms::getInstance(),null,false);
 	}
 
 	/**
 	 * Renders output from template data
 	 *
-	 * @param   string  $tplSource		The template to render
-	 * @param	bool	$display	If rendered text should be output or returned
-	 * @return  string  			Rendered output if $display was false
+	 * @param string $tplSource The template to render
+	 * @param bool $display If rendered text should be output or returned
+	 * @return  string            Rendered output if $display was false
+	 * @throws SmartyException
 	 */
 	public function fetchFromData($tplSource, $display = false, $vars = null) {
 		if (isset($vars)) {
 			$oldVars = $this->_tpl_vars;
 			$this->assign($vars);
-			$out = smarty_function_eval(array('var' => $tplSource), $this);
+			$out = $this->fetch('eval:' . $tplSource);
 			$this->_tpl_vars = $oldVars;
 			return $out;
 		}
-		return smarty_function_eval(array('var' => $tplSource), $this);
+		return $this->fetch('eval:' . $tplSource);
 	}
 
 	/**
@@ -143,10 +148,10 @@ class Template extends SmartyBC
 	 * @param string $tpl_id
 	 *
 	 * @return  boolean
-	 * @throws \Psr\Cache\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public static function template_touch($tpl_id) {
-		$tplFileHandler = & \icms::handler('icms_view_template_file');
+		$tplFileHandler = & icms::handler('icms_view_template_file');
 		$tplFile = & $tplFileHandler->get($tpl_id);
 
 		if (!is_object($tplFile)) {
@@ -156,9 +161,9 @@ class Template extends SmartyBC
 		$file = $tplFile->tpl_file;
 
 		/**
-		 * @var \Psr\Cache\CacheItemPoolInterface $cache
+		 * @var CacheItemPoolInterface $cache
 		 */
-		$cache = \icms::getInstance()->get('cache');
+		$cache = icms::getInstance()->get('cache');
 		$cache->deleteItem('tpl_db_' . base64_encode($file));
 
 		$tpl = new Template();
@@ -174,7 +179,7 @@ class Template extends SmartyBC
 	 * @param   int $mid    Module ID
 	 */
 	public static function template_clear_module_cache($mid) {
-		$icms_block_handler = \icms::handler('icms_view_block');
+		$icms_block_handler = icms::handler('icms_view_block');
 		$block_arr = $icms_block_handler->getByModule($mid);
 		$count = count($block_arr);
 		if ($count > 0) {

@@ -112,7 +112,7 @@ class Member extends AbstractFacade {
 	/**
 	 * delete a group
 	 *
-	 * @param GroupModel $group reference to the group to delete
+	 * @param Group $group reference to the group to delete
 	 * @return bool
 	 */
 	public function deleteGroup(&$group) {
@@ -137,7 +137,7 @@ class Member extends AbstractFacade {
 	/**
 	 * insert a group into the database
 	 *
-	 * @param GroupModel $group reference to the group to insert
+	 * @param Group $group reference to the group to insert
 	 * @return bool
 	 */
 	public function insertGroup(&$group) {
@@ -147,10 +147,10 @@ class Member extends AbstractFacade {
 	/**
 	 * retrieve groups from the database
 	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria
+	 * @param CriteriaElement $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 *
-	 * @return GroupModel[]
+	 * @return Group[]
 	 */
 	public function &getGroups($criteria = null, $id_as_key = false) {
 		return $this->_gHandler->getObjects($criteria, $id_as_key);
@@ -159,7 +159,7 @@ class Member extends AbstractFacade {
 	/**
 	 * retrieve users from the database
 	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria
+	 * @param CriteriaElement $criteria Criteria
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 *
 	 * @return User[]
@@ -171,7 +171,7 @@ class Member extends AbstractFacade {
 	/**
 	 * get a list of groupnames and their IDs
 	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria object
+	 * @param CriteriaElement $criteria Criteria object
 	 *
 	 * @return array associative array of group-IDs and names
 	 */
@@ -189,7 +189,7 @@ class Member extends AbstractFacade {
 	 *
 	 * @deprecated	This isn't really a membership method, but for the user handler
 	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria object
+	 * @param CriteriaElement $criteria Criteria object
 	 * @return array associative array of user-IDs and names
 	 */
 	public function getUserList($criteria = null) {
@@ -267,7 +267,7 @@ class Member extends AbstractFacade {
 	 * retrieve a user
 	 *
 	 * @param int $id ID for the user
-	 * @return User \ImpressCMS\Core\Member\UserModel reference to the user
+	 * @return User|null
 	 */
 	public function &getUser($id)
 	{
@@ -287,7 +287,7 @@ class Member extends AbstractFacade {
 
 		$icmspass = new Password();
 
-		if (strstr($uname, '@')) {
+		if (strpos($uname, '@') !== false) {
 			$uname = self::icms_getLoginFromUserEmail($uname);
 		}
 
@@ -321,10 +321,10 @@ class Member extends AbstractFacade {
 
 		if ($email !== '') {
 			if ($table->fieldExists('loginname')) {
-				$sql = \icms::$xoopsDB->query("SELECT loginname, email FROM " . \icms::$xoopsDB->prefix('users')
+				$sql = \icms::$xoopsDB->query('SELECT loginname, email FROM ' . \icms::$xoopsDB->prefix('users')
 					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
 			} elseif ($table->fieldExists('login_name')) {
-				$sql = \icms::$xoopsDB->query("SELECT login_name, email FROM " . \icms::$xoopsDB->prefix('users')
+				$sql = \icms::$xoopsDB->query('SELECT login_name, email FROM ' . \icms::$xoopsDB->prefix('users')
 					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
 			}
 			list($uname, $email) = \icms::$xoopsDB->fetchRow($sql);
@@ -337,7 +337,7 @@ class Member extends AbstractFacade {
 	/**
 	 * count users matching certain conditions
 	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria object
+	 * @param CriteriaElement $criteria Criteria object
 	 * @return int
 	 */
 	public function getUserCount($criteria = null) {
@@ -384,7 +384,7 @@ class Member extends AbstractFacade {
 	 *
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria object
+	 * @param CriteriaElement $criteria Criteria object
 	 * @return bool TRUE if success or unchanged, FALSE on failure
 	 */
 	public function updateUsersByField($fieldName, $fieldValue, $criteria = null) {
@@ -503,12 +503,12 @@ class Member extends AbstractFacade {
 		}
 
 		$groups = $this->getGroupsByUser($uid);
-		if (in_array(ICMS_GROUP_ADMIN, $groups)) {
+		if (in_array(ICMS_GROUP_ADMIN, $groups, true)) {
 			$ret = ICMS_GROUP_ADMIN;
 		} else {
 			foreach ($groups as $group) {
 				$sql = 'SELECT COUNT(gperm_id) as total FROM '
-					. \icms::$xoopsDB->prefix("group_permission")
+					. \icms::$xoopsDB->prefix('group_permission')
 					. ' WHERE gperm_groupid=' . $group;
 				if (!$result = \icms::$xoopsDB->query($sql)) {
 					return $ret;
@@ -553,7 +553,7 @@ class Member extends AbstractFacade {
 	 *
 	 * @param int $id ID for the group
 	 *
-	 * @return GroupModel|null
+	 * @return Group|null
 	 */
 	public function &getGroup($id)
 	{

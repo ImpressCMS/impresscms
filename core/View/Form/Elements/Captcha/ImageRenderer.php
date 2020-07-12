@@ -2,6 +2,7 @@
 namespace ImpressCMS\Core\View\Form\Elements\Captcha;
 
 use Aura\Session\Segment;
+use Aura\Session\Session;
 use icms;
 use ImpressCMS\Core\Filesystem;
 
@@ -59,7 +60,7 @@ class ImageRenderer {
 	 */
 	public function __construct() {
 		/**
-		 * @var \Aura\Session\Session $session
+		 * @var Session $session
 		 */
 		$session = icms::getInstance()->get('session');
 		$this->captchaSection = $session->getSegment(Image::class);
@@ -76,7 +77,7 @@ class ImageRenderer {
 				'imagecreatetruecolor',
 				'imagecolorallocate',
 				'imagefilledrectangle',
-				'imagejpeg',
+				'imagepng',
 				'imagedestroy',
 				'imageftbbox'
 			];

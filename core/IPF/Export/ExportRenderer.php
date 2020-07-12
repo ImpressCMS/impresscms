@@ -107,10 +107,10 @@ class ExportRenderer {
 	/**
 	 *
 	 *
-	 * @param str $val
-	 * @param str $separator
-	 * @param str $trimFunction
-	 * @return str|string|string[]
+	 * @param string $val
+	 * @param string $separator
+	 * @param string $trimFunction
+	 * @return string|string[]
 	 */
 	public function valToCsvHelper($val, $separator, $trimFunction) {
 		if (is_callable($trimFunction)) {
@@ -148,7 +148,7 @@ class ExportRenderer {
 
 		switch ($this->format) {
 			case 'csv':
-				$separator = isset($this->options['separator'])?$this->options['separator']:';';
+				$separator = $this->options['separator'] ?? ';';
 				$firstRow = implode($separator, $this->data['columnsHeaders']);
 				$exportFileData .= $firstRow . "\r\n";
 

@@ -145,8 +145,8 @@ class SelectElement extends AbstractFormElement {
 	 * @param	string  $value  "value" attribute
 	 * @param	string  $name   "name" attribute
 	 */
-	public function addOption($value, $name = "") {
-		if ($name != "") {
+	public function addOption($value, $name = '') {
+		if ($name) {
 			$this->_options[$value] = $name;
 		} else {
 			$this->_options[$value] = $value;
@@ -171,7 +171,7 @@ class SelectElement extends AbstractFormElement {
 	 *
 	 * Note: both name and value should be sanitized. However for backward compatibility, only value is sanitized for now.
 	 *
-	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
+	 * @param	int|false    $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
 	 * @return	array   Associative array of value->name pairs
 	 */
 	public function getOptions($encode = false) {
@@ -196,19 +196,19 @@ class SelectElement extends AbstractFormElement {
 		$ele_value = $this->getValue();
 		$ele_options = $this->getOptions();
 		$ret = "<select class='form-control' size='" . $this->getSize() . "'" . $this->getExtra();
-		if ($this->isMultiple() != false) {
+		if ($this->isMultiple()) {
 			$ret .= " name='" . $ele_name . "[]' id='" . $ele_name . "[]' multiple='multiple'>\n";
 		} else {
 			$ret .= " name='" . $ele_name . "' id='" . $ele_name . "'>\n";
 		}
 		foreach ($ele_options as $value => $name) {
 			$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
-			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
+			if (count($ele_value) > 0 && in_array($value, $ele_value, false)) {
 				$ret .= " selected='selected'";
 			}
-			$ret .= ">" . $name . "</option>\n";
+			$ret .= '>' . $name . "</option>\n";
 		}
-		$ret .= "</select>";
+		$ret .= '</select>';
 		return $ret;
 	}
 }

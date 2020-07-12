@@ -1,6 +1,8 @@
 <?php
 namespace ImpressCMS\Core\Feeds;
 
+use SimplePie;
+
 /**
  * Class handling RSS feeds, using SimplePie class
  *
@@ -14,7 +16,7 @@ namespace ImpressCMS\Core\Feeds;
  * @author	malanciault <marcan@impresscms.org)
  * @package	ICMS\Feeds
  */
-class Simplerss extends \SimplePie {
+class Simplerss extends SimplePie {
 
 	/**
 	 * The Simplerss class contains feed level data and options

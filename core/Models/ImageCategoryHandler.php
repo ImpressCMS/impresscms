@@ -35,7 +35,11 @@
  */
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Database\DatabaseConnectionInterface;
+use ImpressCMS\Core\IPF\Handler;
 
 /**
  * Image caetgory handler class.
@@ -46,12 +50,12 @@ use ImpressCMS\Core\Database\Criteria\CriteriaElement;
  * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
+class ImageCategoryHandler extends Handler {
 
 		/**
 		 * Constructor
 		 *
-		 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db              Database connection
+		 * @param DatabaseConnectionInterface $db              Database connection
 		 */
 		public function __construct(&$db) {
 				parent::__construct($db, 'image_category', 'imgcat_id', 'imgcat_name', '', 'icms', 'imagecategory');
@@ -69,8 +73,8 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 			$this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
 			. $this->db->prefix('group_permission') . ' l ON l.gperm_itemid=c.imgcat_id';
 
-			$criteria_main = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-			$criteria_main->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
+			$criteria_main = new CriteriaCompo();
+			$criteria_main->add(new CriteriaItem('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
 			$criteria_main->setSort('imgcat_weight, imgcat_id');
 			$criteria_main->setOrder('ASC');
 
@@ -92,8 +96,8 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 			. $this->db->prefix('group_permission') . ' l ON l.gperm_itemid=i.imgcat_id';
 
 
-			$criteria_main = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-			$criteria_main->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
+			$criteria_main = new CriteriaCompo();
+			$criteria_main->add(new CriteriaItem('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
 
 			if ($criteria !== null) {
 				$criteria_main->add($criteria);
@@ -113,23 +117,23 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 		 * @return ImageCategory[]
 		 */
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria = new CriteriaCompo();
 		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$criteriaTray = new CriteriaCompo();
 			foreach ($groups as $gid) {
-				$criteriaTray->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', $gid), 'OR');
+				$criteriaTray->add(new CriteriaItem('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
-			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $perm));
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', 1));
+			if ($perm === 'imgcat_read' || $perm === 'imgcat_write') {
+				$criteria->add(new CriteriaItem('gperm_name', $perm));
+				$criteria->add(new CriteriaItem('gperm_modid', 1));
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_display', (int) ($display)));
+			$criteria->add(new CriteriaItem('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_storetype', $storetype));
+			$criteria->add(new CriteriaItem('imgcat_storetype', $storetype));
 		}
 		$categories = $this->getObjects($criteria, true);
 		$ret = array();
@@ -151,28 +155,28 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return array  list of categories
 	 */
 		public function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id = null) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria = new CriteriaCompo();
 		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$criteriaTray = new CriteriaCompo();
 			foreach ($groups as $gid) {
-				$criteriaTray->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', $gid), 'OR');
+				$criteriaTray->add(new CriteriaItem('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
 			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $perm));
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', 1));
+				$criteria->add(new CriteriaItem('gperm_name', $perm));
+				$criteria->add(new CriteriaItem('gperm_modid', 1));
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_display', (int) ($display)));
+			$criteria->add(new CriteriaItem('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_storetype', $storetype));
+			$criteria->add(new CriteriaItem('imgcat_storetype', $storetype));
 		}
 		if ($imgcat_id === null) {
 					$imgcat_id = 0;
 				}
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('imgcat_pid', $imgcat_id));
+		$criteria->add(new CriteriaItem('imgcat_pid', $imgcat_id));
 		$categories = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($categories) as $i) {
@@ -195,7 +199,7 @@ class ImageCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
 	 *
 	 * @return string - full folder path or url
 	 */
-	public function getCategFolder(\ImpressCMS\Core\Models\ImageCategory &$imgcat, $full = true, $type = 'path') {
+	public function getCategFolder(ImageCategory $imgcat, $full = true, $type = 'path') {
 		if ($imgcat->imgcat_pid != 0) {
 			$sup = $this->get($imgcat->imgcat_pid);
 			$supcateg = $this->getCategFolder($sup, false, $type);

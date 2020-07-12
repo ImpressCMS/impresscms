@@ -11,6 +11,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * File object
  *
@@ -22,17 +24,17 @@ namespace ImpressCMS\Core\Models;
  *
  * @package	ICMS\Data\File
  */
-class File extends \ImpressCMS\Core\IPF\AbstractModel {
+class File extends AbstractModel {
 
 	/**
 	 * constructor
 	 */
 	public function __construct(&$handler, $data = array()) {
-		$this->initVar("fileid", self::DTYPE_INTEGER, 0, true);
-		$this->initVar("mid", self::DTYPE_INTEGER, 0, true);
-		$this->initVar("caption", self::DTYPE_STRING, '', false, 255);
-		$this->initVar("description", self::DTYPE_STRING, '', false, 255);
-		$this->initVar("url", self::DTYPE_STRING, '', false, 255);
+		$this->initVar('fileid', self::DTYPE_INTEGER, 0, true);
+		$this->initVar('mid', self::DTYPE_INTEGER, 0, true);
+		$this->initVar('caption', self::DTYPE_STRING, '', false, 255);
+		$this->initVar('description', self::DTYPE_STRING, '', false, 255);
+		$this->initVar('url', self::DTYPE_STRING, '', false, 255);
 
 		parent::__construct($handler, $data);
 	}
@@ -44,24 +46,24 @@ class File extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * @param string $format format
 	 * @return mixed value
 	 */
-	public function getVar($key, $format = "e") {
-		if (substr($key, 0, 4) == "url_") {
-			return parent::getVar("url", $format);
-		} elseif (substr($key, 0, 4) == "mid_") {
-			return parent::getVar("mid", $format);
-		} elseif (substr($key, 0, 8) == "caption_") {
-			return parent::getVar("caption", $format);
-		} elseif (substr($key, 0, 5) == "desc_") {
-			return parent::getVar("description", $format);
+	public function getVar($key, $format = 'e') {
+		if (strpos($key, 'url_') === 0) {
+			return parent::getVar('url', $format);
+		} elseif (strpos($key, 'mid_') === 0) {
+			return parent::getVar('mid', $format);
+		} elseif (strpos($key, 'caption_') === 0) {
+			return parent::getVar('caption', $format);
+		} elseif (strpos($key, 'desc_') === 0) {
+			return parent::getVar('description', $format);
 		} else {
 			return parent::getVar($key, $format);
 		}
 	}
 
 	public function render() {
-		$url = str_replace("{ICMS_URL}", ICMS_URL, $this->getVar("url"));
-		$caption = $this->getVar("caption") != ""?$this->getVar("caption"):$url;
-		return "<a href='" . $url . "' title='" . $this->getVar("description") . "' target='_blank'>" . $caption . "</a>";
+		$url = str_replace('{ICMS_URL}', ICMS_URL, $this->getVar('url'));
+		$caption = $this->getVar('caption') ?:$url;
+		return "<a href='" . $url . "' title='" . $this->getVar('description') . "' target='_blank'>" . $caption . '</a>';
 	}
 
 }

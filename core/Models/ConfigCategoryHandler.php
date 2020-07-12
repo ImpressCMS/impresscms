@@ -37,6 +37,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Configuration category handler class.
  *
@@ -47,7 +49,7 @@ namespace ImpressCMS\Core\Models;
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @package	ICMS\Config\Category
  */
-class ConfigCategoryHandler extends \ImpressCMS\Core\IPF\Handler {
+class ConfigCategoryHandler extends Handler {
 
         public function __construct(&$db) {
             parent::__construct($db, 'config_category', 'confcat_id', 'confcat_name', 'confcat_order', 'icms', 'configcategory', 'confcat_id');

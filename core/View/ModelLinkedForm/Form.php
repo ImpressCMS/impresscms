@@ -2,8 +2,6 @@
 namespace ImpressCMS\Core\View\ModelLinkedForm;
 
 use icms;
-use ImpressCMS\Core\View\ModelLinkedForm\Elements\FormSectionElement;
-use ImpressCMS\Core\View\ModelLinkedForm\Elements\SelectMultiElement;
 use ImpressCMS\Core\View\Form\AbstractFormElement;
 use ImpressCMS\Core\View\Form\Elements\ButtonElement;
 use ImpressCMS\Core\View\Form\Elements\CheckboxElement;
@@ -21,6 +19,8 @@ use ImpressCMS\Core\View\Form\Elements\SelectElement;
 use ImpressCMS\Core\View\Form\Elements\TextAreaElement;
 use ImpressCMS\Core\View\Form\Elements\TrayElement;
 use ImpressCMS\Core\View\Form\ThemeForm;
+use ImpressCMS\Core\View\ModelLinkedForm\Elements\FormSectionElement;
+use ImpressCMS\Core\View\ModelLinkedForm\Elements\SelectMultiElement;
 use ImpressCMS\Core\View\Theme\ThemeFactory;
 use Smarty;
 
@@ -106,12 +106,12 @@ class Form extends ThemeForm {
 	/**
 	 * Add an element to the form
 	 *
-	 * @param	AbstractFormElement  &$formElement   reference
+	 * @param	AbstractFormElement  $formElement   reference
 	 * @param	string|false  $key            encrypted key string for the form
 	 * @param	string|false  $var            some form variables?
 	 * @param	bool|string    $required       is this a "required" element?
 	 */
-	public function addElement(&$formElement, $key = false, $var = false, $required = 'notset') {
+	public function addElement($formElement, $key = false, $var = false, $required = 'notset') {
 		if ($key) {
 			if ($this->targetObject->getVarInfo($key, 'readonly')) {
 				$formElement->setExtra('disabled="disabled"');

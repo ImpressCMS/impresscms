@@ -19,6 +19,7 @@
  */
 namespace ImpressCMS\Core\View\Form\Elements\Captcha;
 
+use Aura\Session\Session;
 use icms;
 
 /**
@@ -72,7 +73,7 @@ class Image {
 		} else {
 			$required_functions = array(
 				'imagecreatetruecolor', 'imagecolorallocate', 'imagefilledrectangle',
-				'imagejpeg', 'imagedestroy', 'imageftbbox'
+				'imagepng', 'imagedestroy', 'imageftbbox'
 			);
 			foreach ($required_functions as $func) {
 				if (!function_exists($func)) {
@@ -105,7 +106,7 @@ class Image {
 	 */
 	public function setConfig($name, $val)
 	{
-		if ($name == "mode") {
+		if ($name === 'mode') {
 			$this->setMode($val);
 		} elseif (isset($this->$name)) {
 			$this->$name = $val;
@@ -143,7 +144,7 @@ class Image {
 		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
 			$this->active = false;
-		} elseif ($icmsConfigCaptcha['captcha_mode'] == 'none') {
+		} elseif ($icmsConfigCaptcha['captcha_mode'] === 'none') {
 			$this->active = false;
 		}
 	}
@@ -154,10 +155,10 @@ class Image {
 	 * @return bool
 	 */
 	public function verify($skipMember = null) {
-		global $icmsConfig, $icmsConfigCaptcha;
+		global $icmsConfigCaptcha;
 
 		/**
-		 * @var \Aura\Session\Session $session
+		 * @var Session $session
 		 */
 		$session = icms::getInstance()->get('session');
 		$captchaSection = $session->getSegment(__CLASS__);
@@ -204,7 +205,7 @@ class Image {
 	 * @return bool True if destroying succeeded
 	 */
 	public function destroyGarbage($clearSession = false) {
-		$class = ($this->mode == 'image') ? ImageMode::class : TextMode::class;
+		$class = ($this->mode === 'image') ? ImageMode::class : TextMode::class;
 		$captcha_handler = new $class();
 		if (method_exists($captcha_handler, 'destroyGarbage')) {
 			$captcha_handler->loadConfig($this->config);
@@ -213,7 +214,7 @@ class Image {
 
 		if ($clearSession) {
 			/**
-			 * @var \Aura\Session\Session $session
+			 * @var Session $session
 			 */
 			$session = icms::getInstance()->get('session');
 			$captchaSection = $session->getSegment(__CLASS__);
@@ -258,7 +259,7 @@ class Image {
 		}
 
 		/**
-		 * @var \Aura\Session\Session $session
+		 * @var Session $session
 		 */
 		$session = icms::getInstance()->get('session');
 		$captchaSection = $session->getSegment(__CLASS__);
@@ -289,7 +290,7 @@ class Image {
 	 * @return string	The Loaded Captcha Form
 	 */
 	public function loadForm() {
-		$class = ($this->mode == 'image') ? ImageMode::class : TextMode::class;
+		$class = ($this->mode === 'image') ? ImageMode::class : TextMode::class;
 		$captcha_handler = new $class();
 		$captcha_handler->loadConfig($this->config);
 

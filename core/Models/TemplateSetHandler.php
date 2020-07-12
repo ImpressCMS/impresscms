@@ -36,6 +36,9 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Template set handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -45,7 +48,7 @@ namespace ImpressCMS\Core\Models;
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\View\Template\Set
  */
-class TemplateSetHandler extends \ImpressCMS\Core\IPF\Handler {
+class TemplateSetHandler extends Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'view_template_set', 'tplset_id', 'tplset_name', 'tplset_name', 'icms', 'tplset', 'tplset_id');
@@ -59,7 +62,7 @@ class TemplateSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	 *@see TemplateSet
 	 */
 	public function &getByName($tplset_name) {
-				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('tplset_name', trim($tplset_name));
+				$criteria = new CriteriaItem('tplset_name', trim($tplset_name));
 				$criteria->setLimit(1);
 				$objs = $this->getObjects($criteria);
 				return isset($objs[0])?$objs[0]:null;

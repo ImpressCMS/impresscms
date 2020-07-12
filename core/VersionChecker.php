@@ -61,7 +61,7 @@ class VersionChecker {
 	 *
 	 * @return	object
 	 */
-	static public function &getInstance() {
+	public static function &getInstance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new self();
@@ -97,7 +97,7 @@ class VersionChecker {
 		$this->latest_version_name = $data['name'];
 		$this->latest_changelog = $this->render($data['body']);
 
-		if (substr($data['tag_name'], 0, 1) == 'v') {
+		if (strpos($data['tag_name'], 'v') === 0) {
 			$data['tag_name'] = substr($data['tag_name'], 1);
 		}
 
@@ -119,15 +119,15 @@ class VersionChecker {
 	public function getErrors($ashtml = true) {
 		if (!$ashtml) {
 			return $this->errors;
-		} else {
-			$ret = '';
-			if (count($this->errors) > 0) {
-				foreach ($this->errors as $error) {
-					$ret .= $error . '<br />';
-				}
-			}
-			return $ret;
 		}
+
+		$ret = '';
+		if (count($this->errors) > 0) {
+			foreach ($this->errors as $error) {
+				$ret .= $error . '<br />';
+			}
+		}
+		return $ret;
 	}
 
 	/**
@@ -138,7 +138,7 @@ class VersionChecker {
 	 * @return string
 	 */
 	private function render($code) {
-		$p = new Parsedown();
+		$p = new \Parsedown();
 		return $p->text($code);
 	}
 }

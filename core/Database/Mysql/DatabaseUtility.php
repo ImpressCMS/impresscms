@@ -24,7 +24,7 @@ abstract class DatabaseUtility implements DatabaseUtilityInterface {
 	 * @param   string  $prefix prefix to add to all table names
 	 * @return  mixed   FALSE on failure
 	 */
-	static public function prefixQuery($query, $prefix) {
+	public static function prefixQuery($query, $prefix) {
 		$pattern = "/^(INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
 
@@ -66,7 +66,7 @@ abstract class DatabaseUtility implements DatabaseUtilityInterface {
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
 	 */
-	static public function splitSqlFile(&$ret, $sql) {}
+	public static function splitSqlFile(&$ret, $sql) {}
 
 
 	/**
@@ -75,6 +75,6 @@ abstract class DatabaseUtility implements DatabaseUtilityInterface {
 	 * @param string $sql
 	 * @return bool	TRUE if the string is safe
 	 */
-	static public function checkSQL($sql) {}
+	public static function checkSQL($sql) {}
 
 }

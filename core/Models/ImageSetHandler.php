@@ -43,6 +43,8 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\Database\DatabaseConnectionInterface;
+use ImpressCMS\Core\IPF\Handler;
 
 /**
  * XOOPS imageset handler class.
@@ -53,12 +55,12 @@ use ImpressCMS\Core\Database\Criteria\CriteriaElement;
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
+class ImageSetHandler extends Handler {
 
 		/**
 		 * Constructor
 		 *
-		 * @param \ImpressCMS\Core\Database\DatabaseConnectionInterface $db              Database connection
+		 * @param DatabaseConnectionInterface $db              Database connection
 		 */
 		public function __construct(&$db) {
 				parent::__construct($db, 'image_set', 'imgset_id', 'imgset_name', '', 'icms', 'imgset');
@@ -80,7 +82,7 @@ class ImageSetHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Retrieve array of images meeting certain conditions
 	 *
-	 * @param \ImpressCMS\Core\Database\Criteria\CriteriaElement $criteria Criteria with conditions for the imagesets
+	 * @param CriteriaElement $criteria Criteria with conditions for the imagesets
 	 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
 	 *
 	 * @return ImageSet[]

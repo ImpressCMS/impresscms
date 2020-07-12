@@ -123,7 +123,7 @@ interface LegacyDatabaseConnectionInterface {
 	/**
 	 * Quotes a string for use in a query using mysql_real_escape_string.
 	 *
-	 * @param string $str unescaped string text
+	 * @param string $string unescaped string text
 	 * @return string escaped string text using mysql_real_escape_string
 	 */
 	public function quote($string);

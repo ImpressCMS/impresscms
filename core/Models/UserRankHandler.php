@@ -10,12 +10,16 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Handler for the user ranks object
  *
  * @package	ICMS\Member\Rank
  */
-class UserRankHandler extends \ImpressCMS\Core\IPF\Handler {
+class UserRankHandler extends Handler {
 
 	/** */
 	public $objects = false;
@@ -46,26 +50,26 @@ class UserRankHandler extends \ImpressCMS\Core\IPF\Handler {
 		$rank_id = (int) $rank_id;
 		$posts = (int) $posts;
 
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria = new CriteriaCompo();
 		if ($rank_id != 0) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem("rank_id", $rank_id));
+			$criteria->add(new CriteriaItem('rank_id', $rank_id));
 		} else {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem("rank_min", $posts, "<="));
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem("rank_max", $posts, ">="));
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem("rank_special", "0"));
+			$criteria->add(new CriteriaItem('rank_min', $posts, '<='));
+			$criteria->add(new CriteriaItem('rank_max', $posts, '>='));
+			$criteria->add(new CriteriaItem('rank_special', '0'));
 		}
 
 		$ranks = $this->getObjects($criteria);
 		if (count($ranks) != 1) {
 			$rank = array(
-				"id" => 0,
-				"title" => "",
-				"image" => ICMS_UPLOAD_URL . "blank.gif");
+				'id' => 0,
+				'title' => '',
+				'image' => ICMS_UPLOAD_URL . 'blank.gif');
 		} else {
 			$rank = array(
-				"id" => $rank_id,
-				"title" => $ranks[0]->getVar("rank_title"),
-				"image" => $this->getImageUrl() . $ranks[0]->getVar("rank_image"));
+				'id' => $rank_id,
+				'title' => $ranks[0]->getVar('rank_title'),
+				'image' => $this->getImageUrl() . $ranks[0]->getVar('rank_image'));
 		}
 
 		return $rank;
@@ -76,12 +80,12 @@ class UserRankHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @return	bool
 	 */
 	public function MoveAllRanksImagesToProperPath() {
-		$sql = "SELECT rank_image FROM " . $this->table;
+		$sql = 'SELECT rank_image FROM ' . $this->table;
 		$Query = $this->query($sql, false);
 		foreach ($Query as $qpart) {
-			$file_orig = ICMS_UPLOAD_PATH . "/" . $qpart["rank_image"];
+			$file_orig = ICMS_UPLOAD_PATH . '/' . $qpart['rank_image'];
 			if (file_exists($file_orig)) {
-				\ImpressCMS\Core\Filesystem::copyRecursive($file_orig, $this->getImagePath() . $qpart["rank_image"]);
+				\ImpressCMS\Core\Filesystem::copyRecursive($file_orig, $this->getImagePath() . $qpart['rank_image']);
 			}
 		}
 

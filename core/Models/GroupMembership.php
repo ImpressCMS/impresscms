@@ -9,6 +9,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * membership of a user in a group
  *
@@ -19,7 +21,7 @@ namespace ImpressCMS\Core\Models;
  * @property int $groupid       Group ID
  * @property int $uid           User ID
  */
-class GroupMembership extends \ImpressCMS\Core\IPF\AbstractModel {
+class GroupMembership extends AbstractModel {
 	/**
 	 * constructor
 	 */

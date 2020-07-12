@@ -130,7 +130,7 @@ class GroupPermissionElement extends AbstractFormElement {
 		}
 		$checkallbtn_id = $ele_name . '[checkallbtn][' . $this->_groupId . ']';
 		$option_ids_str = implode(', ', $option_ids);
-		$ret .= _ALL . " <input id=\"" . $checkallbtn_id . "\" type=\"checkbox\" value=\"\" onclick=\"var optionids = new Array(" . $option_ids_str . "); xoopsCheckAllElements(optionids, '" . $checkallbtn_id . "');\" />";
+		$ret .= _ALL . ' <input id="' . $checkallbtn_id . '" type="checkbox" value="" onclick="var optionids = new Array(' . $option_ids_str . "); xoopsCheckAllElements(optionids, '" . $checkallbtn_id . "');\" />";
 		$ret .= '</td></tr></table>';
 		return $ret;
 	}
@@ -146,7 +146,7 @@ class GroupPermissionElement extends AbstractFormElement {
 	 */
 	function _renderOptionTree(& $tree, $option, $prefix, $parentIds = array()) {
 		$ele_name = $this->getName();
-		$tree .= $prefix . "<input type=\"checkbox\" name=\"" . $ele_name . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" id=\"" . $ele_name . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" onclick=\"";
+		$tree .= $prefix . '<input type="checkbox" name="' . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . ']" id="' . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . ']" onclick="';
 		// If there are parent elements, add javascript that will
 		// make them selecteded when this element is checked to make
 		// sure permissions to parent items are added as well.
@@ -163,13 +163,13 @@ class GroupPermissionElement extends AbstractFormElement {
 			$tree .= "var ele = xoopsGetElementById('" . $child_ele . "'); if(this.checked != true) {ele.checked = false;}";
 		}
 		$tree .= '" value="1"';
-		if (in_array($option['id'], $this->_value)) {
+		if (in_array($option['id'], $this->_value, false)) {
 			$tree .= ' checked="checked"';
 		}
-		$tree .= " />" . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . "[parents][" . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . "[itemname][" . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br />\n";
+		$tree .= ' />' . $option['name'] . '<input type="hidden" name="' . $ele_name . "[parents][" . $option['id'] . ']" value="' . implode(':', $parentIds) . '" /><input type="hidden" name="' . $ele_name . '[itemname][' . $option['id'] . ']" value="' . htmlspecialchars($option['name']) . "\" /><br />\n";
 		if (isset ($option['children'])) {
 			foreach ($option['children'] as $child) {
-				array_push($parentIds, $option['id']);
+				$parentIds[] = $option['id'];
 				$this->_renderOptionTree($tree, $this->_optionTree[$child], $prefix . '&nbsp;-', $parentIds);
 			}
 		}

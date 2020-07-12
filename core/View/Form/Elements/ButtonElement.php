@@ -70,7 +70,7 @@ class ButtonElement extends AbstractFormElement {
 	 * @param	string  $type       Type of the button.
 	 * This could be either "button", "submit", or "reset"
 	 */
-	public function __construct($caption, $name, $value = "", $type = "button") {
+	public function __construct($caption, $name, $value = '', $type = 'button') {
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_type = $type;
@@ -102,7 +102,7 @@ class ButtonElement extends AbstractFormElement {
 	 * @return	string
 	 */
 	public function getType() {
-		return in_array(strtolower($this->_type), array("button", "submit", "reset"))?$this->_type:"button";
+		return in_array(strtolower($this->_type), ['button', 'submit', 'reset'])?$this->_type: 'button';
 	}
 
 	/**
@@ -111,6 +111,6 @@ class ButtonElement extends AbstractFormElement {
 	 * @return	string
 	 */
 	public function render() {
-		return "<input type='" . $this->getType() . "' class='btn btn-primary formButton' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "'" . $this->getExtra() . " />";
+		return "<input type='" . $this->getType() . "' class='btn btn-primary formButton' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "'" . $this->getExtra() . ' />';
 	}
 }

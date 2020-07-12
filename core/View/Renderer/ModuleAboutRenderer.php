@@ -170,7 +170,7 @@ class ModuleAboutRenderer {
 		/**
 		 * Template
 		 *
-		 * @var \ImpressCMS\Core\View\Template|null
+		 * @var Template|null
 		 */
 	public $_tpl;
 

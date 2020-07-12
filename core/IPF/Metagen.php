@@ -145,9 +145,9 @@ class Metagen {
 		$rep_pat = array("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o");
 		$title   = preg_replace($pattern, $rep_pat, $title);
 
-		$tableau = explode("-", $title); // Transforme la chaine de caract�res en tableau
-		$tableau = array_filter($tableau, array($this, "emptyString")); // Supprime les chaines vides du tableau
-		$title   = implode("-", $tableau); // Transforme un tableau en chaine de caract�res s�par� par un tiret
+		$tableau = explode('-', $title); // Transforme la chaine de caract�res en tableau
+		$tableau = array_filter($tableau, [$this, 'emptyString']); // Supprime les chaines vides du tableau
+		$title   = implode('-', $tableau); // Transforme un tableau en chaine de caract�res s�par� par un tiret
 
 		if (count($title) > 0) {
 			if ($withExt) {
@@ -183,15 +183,13 @@ class Metagen {
 
 		$titleTag = array();
 
-		$show_mod_name_breadcrumb = isset($icmsModuleConfig['show_mod_name_breadcrumb'])
-				?$icmsModuleConfig['show_mod_name_breadcrumb']
-				: true;
+		$show_mod_name_breadcrumb = $icmsModuleConfig['show_mod_name_breadcrumb'] ?? true;
 
 		if ($moduleName && $show_mod_name_breadcrumb) {
 			$titleTag['module'] = $moduleName;
 		}
 
-		if (isset($this->_title) && ($this->_title != '') && (strtoupper($this->_title) != strtoupper($moduleName))) {
+		if (isset($this->_title) && ($this->_title != '') && (strtoupper($this->_title) !== strtoupper($moduleName))) {
 			$titleTag['title'] = $this->_title;
 		}
 
@@ -289,7 +287,7 @@ class Metagen {
 	 */
 	public function createMetaDescription($maxWords = 100) {
 		$words = array();
-		$words = explode(" ", $this->_description);
+		$words = explode(' ', $this->_description);
 
 		// Only keep $maxWords words
 		$newWords = array();
@@ -311,7 +309,7 @@ class Metagen {
 	 * @return array An array of keywords
 	 */
 	public function findMetaKeywords($text, $minChar) {
-		$keywords = array();
+		$keywords = [];
 
 		$text = $this->purifyText($text);
 		$text = $this->html2text($text);
@@ -327,7 +325,7 @@ class Metagen {
 			$secondRoundKeywords = explode("'", $originalKeyword);
 			foreach ($secondRoundKeywords as $secondRoundKeyword) {
 				if (strlen($secondRoundKeyword) >= $minChar) {
-					if (!in_array($secondRoundKeyword, $keywords)) {
+					if (!in_array($secondRoundKeyword, $keywords, false)) {
 						$keywords[] = trim($secondRoundKeyword);
 					}
 				}
@@ -342,9 +340,9 @@ class Metagen {
 	 */
 	public function createMetaKeywords() {
 		global $icmsModuleConfig;
-		$keywords = $this->findMetaKeywords($this->_original_title . " " . $this->_description, $this->_minChar);
-		if (isset($icmsModuleConfig) && isset($icmsModuleConfig['moduleMetaKeywords']) && $icmsModuleConfig['moduleMetaKeywords'] != '') {
-			$moduleKeywords = explode(",", $icmsModuleConfig['moduleMetaKeywords']);
+		$keywords = $this->findMetaKeywords($this->_original_title . ' ' . $this->_description, $this->_minChar);
+		if (isset($icmsModuleConfig, $icmsModuleConfig['moduleMetaKeywords']) && $icmsModuleConfig['moduleMetaKeywords']) {
+			$moduleKeywords = explode(',', $icmsModuleConfig['moduleMetaKeywords']);
 			$keywords = array_merge($keywords, $moduleKeywords);
 		}
 
@@ -397,7 +395,7 @@ class Metagen {
 	 */
 	public function createMetaTags() {
 		global $xoopsTpl, $xoTheme;
-		$this->_keywords = preg_replace("(<!--.*?-->)", '', $this->_keywords); // stops html comments appearing in meta key
+		$this->_keywords = preg_replace('(<!--.*?-->)', '', $this->_keywords); // stops html comments appearing in meta key
 
 		if (is_object($xoTheme)) {
 			$xoTheme->addMeta('meta', 'keywords', $this->_keywords);

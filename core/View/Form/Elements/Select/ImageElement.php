@@ -38,8 +38,8 @@ class ImageElement extends SelectElement {
 	 * @var array
 	 * @access	private
 	 */
-	private $_optgroups = array();
-	private $_optgroupsID = array();
+	private $_optgroups = [];
+	private $_optgroupsID = [];
 
 	/**
 	 * Construtor
@@ -84,9 +84,9 @@ class ImageElement extends SelectElement {
 	 * @return   string    $ret    The imagelist string
 	 */
 	public function getImageList($cat = null) {
-		$ret = array();
+		$ret = [];
 		if (!is_object(icms::$user)) {
-			$group = array(ICMS_GROUP_ANONYMOUS);
+			$group = [ICMS_GROUP_ANONYMOUS];
 		} else {
 			$group = & icms::$user->getGroups();
 		}
@@ -94,12 +94,12 @@ class ImageElement extends SelectElement {
 		$catlist = $imgcat_handler->getList($group, 'imgcat_read', 1);
 		if (is_array($cat) && count($catlist) > 0) {
 			foreach ($catlist as $k=>$v) {
-				if (!in_array($k, $cat)) {
+				if (!in_array($k, $cat, false)) {
 					unset($catlist[$k]);
 				}
 			}
 		} elseif (is_int($cat)) {
-			$catlist = array_key_exists($cat, $catlist)?array($cat=>$catlist[$cat]):array();
+			$catlist = array_key_exists($cat, $catlist)? [$cat=>$catlist[$cat]] : [];
 		}
 
 		$image_handler = icms::handler('icms_image');
@@ -111,23 +111,23 @@ class ImageElement extends SelectElement {
 			if ($total > 0) {
 				$imgcat = & $imgcat_handler->get($k);
 				$storetype = $imgcat->getVar('imgcat_storetype');
-				if ($storetype == 'db') {
+				if ($storetype === 'db') {
 					$images = & $image_handler->getObjects($criteria, false, true);
 				} else {
 					$images = & $image_handler->getObjects($criteria, false, false);
 				}
 				foreach ($images as $i) {
-					if ($storetype == "db") {
-						$ret[$v]["/image.php?id=" . $i->getVar('image_id')] = $i->getVar('image_nicename');
+					if ($storetype === 'db') {
+						$ret[$v]['/image.php?id=' . $i->getVar('image_id')] = $i->getVar('image_nicename');
 					} else {
 						$categ_path = $imgcat_handler->getCategFolder($imgcat);
 						$categ_path = str_replace(ICMS_ROOT_PATH, '', $categ_path);
-						$path = (substr($categ_path, -1) != '/')?$categ_path . '/':$categ_path;
+						$path = (substr($categ_path, -1) !== '/')?$categ_path . '/':$categ_path;
 						$ret[$v][$path . $i->getVar('image_name')] = $i->getVar('image_nicename');
 					}
 				}
 			} else {
-				$ret[$v] = "";
+				$ret[$v] = '';
 			}
 		}
 		return $ret;
@@ -166,9 +166,9 @@ class ImageElement extends SelectElement {
 		$catlist_total = count($catlist);
 		$optIds = $this->getOptGroupsID();
 		$ret = "<select onchange='if(this.options[this.selectedIndex].value != \"\"){ document.getElementById(\""
-			. $this->getName() . "_img\").src=\"" . ICMS_URL . "\"+this.options[this.selectedIndex].value;}else{document.getElementById(\"" . $this->getName() . "_img\").src=\""
+			. $this->getName() . '_img").src="' . ICMS_URL . '"+this.options[this.selectedIndex].value;}else{document.getElementById("' . $this->getName() . '_img").src="'
 			. ICMS_URL . "/images/blank.gif\";}'  size='" . $this->getSize() . "'" . $this->getExtra() . "";
-		if ($this->isMultiple() != false) {
+		if ($this->isMultiple()) {
 			$ret .= " name='" . $this->getName() . "[]' id='" . $this->getName() . "[]' multiple='multiple'>\n";
 		} else {
 			$ret .= " name='" . $this->getName() . "' id='" . $this->getName() . "'>\n";
@@ -179,21 +179,21 @@ class ImageElement extends SelectElement {
 			if (is_array($valores)) {
 				foreach ($valores as $value => $name) {
 					$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
-					if (count($this->getValue()) > 0 && in_array($value, $this->getValue())) {
+					if (count($this->getValue()) > 0 && in_array($value, $this->getValue(), false)) {
 						$ret .= " selected='selected'";
 						$imagem = $value;
 					}
-					$ret .= ">" . $name . "</option>\n";
+					$ret .= '>' . $name . "</option>\n";
 				}
 			}
 			$ret .= '</optgroup>\n';
 		}
-		$browse_url = ICMS_URL . "/modules/system/admin/images/browser.php";
-		$ret .= "</select>";
+		$browse_url = ICMS_URL . '/modules/system/admin/images/browser.php';
+		$ret .= '</select>';
 		$ret .= ($catlist_total > 0)
 			?" <input type='button' value='" . _ADDIMAGE . "' onclick=\"window.open('$browse_url?target=" . $this->getName() . "','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">"
-			: "";
-		$ret .= "<br /><img id='" . $this->getName() . "_img' src='" . ((!empty($imagem))? ICMS_URL.$imagem:ICMS_URL . "/images/blank.gif") . "'>";
+			: '';
+		$ret .= "<br /><img id='" . $this->getName() . "_img' src='" . ((!empty($imagem))? ICMS_URL.$imagem:ICMS_URL . '/images/blank.gif') . "'>";
 		return $ret;
 	}
 }

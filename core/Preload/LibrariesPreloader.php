@@ -52,7 +52,7 @@ class LibrariesPreloader {
 	 *
 	 * @return	object
 	 */
-	static public function &getInstance() {
+	public static function &getInstance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new self();
@@ -89,8 +89,7 @@ class LibrariesPreloader {
 	 * @return	string path of the boot file of the specified library
 	 */
 	public function getLibraryBootFilePath($library) {
-		$ret = ICMS_LIBRARIES_PATH . '/' . $library . '/icms.library.' . $library . '.php';
-		return $ret;
+		return ICMS_LIBRARIES_PATH . '/' . $library . '/icms.library.' . $library . '.php';
 	}
 
 	/**
@@ -101,8 +100,7 @@ class LibrariesPreloader {
 	 * @return	string name of the function
 	 */
 	public function getFunctionName($event, $library) {
-		$ret = 'icmsLibrary' . ucfirst($library) . '_' . $event;
-		return $ret;
+		return 'icmsLibrary' . ucfirst($library) . '_' . $event;
 	}
 }
 

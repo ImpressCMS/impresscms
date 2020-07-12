@@ -1,6 +1,10 @@
 <?php
 namespace ImpressCMS\Core\Plugins;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Filesystem;
+
 /**
  * Handler for plugins
  *
@@ -43,20 +47,20 @@ class PluginHandler {
 	public function getPluginsArray($path) {
 
 		$module_handler = \icms::handler('icms_module');
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('isactive', 1));
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('isactive', 1));
 		$tempModulesObj = $module_handler->getObjects($criteria);
 		$modulesObj = array();
 		foreach ($tempModulesObj as $moduleObj) {
 			$modulesObj[$moduleObj->getVar('dirname')] = $moduleObj;
 		}
 
-		$aFiles = str_replace('.php', '', \ImpressCMS\Core\Filesystem::getFileList(ICMS_PLUGINS_PATH . '/' . $path . '/', '', array('php')));
+		$aFiles = str_replace('.php', '', Filesystem::getFileList(ICMS_PLUGINS_PATH . '/' . $path . '/', '', array('php')));
 		$ret = array();
 		foreach ($aFiles as $pluginName) {
 			$module_xoops_version_file = ICMS_MODULES_PATH . "/$pluginName/xoops_version.php";
 			$module_icms_version_file = ICMS_MODULES_PATH . "/$pluginName/icms_version.php";
-			if ((file_exists($module_xoops_version_file) || file_exists($module_icms_version_file)) && isset($modulesObj[$pluginName])) {
+			if (isset($modulesObj[$pluginName]) && (file_exists($module_xoops_version_file) || file_exists($module_icms_version_file))) {
 				$ret[$pluginName] = $modulesObj[$pluginName]->getVar('name');
 			}
 		}

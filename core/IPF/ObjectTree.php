@@ -78,14 +78,14 @@ class ObjectTree {
 		/**
 		 * Array of objects
 		 *
-		 * @var \ImpressCMS\Core\AbstractModel
+		 * @var AbstractModel
 		 */
 	private $_objects = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param   \ImpressCMS\Core\AbstractModel	$objectArr  Array of objects
+	 * @param   AbstractModel	$objectArr  Array of objects
 	 * @param   string	$myId       field name of object ID
 	 * @param   string	$parentId   field name of parent object ID
 	 * @param   string	$rootId     field name of root object ID
@@ -183,7 +183,7 @@ class ObjectTree {
 	 * @return  array   Array of parent nodes.
 	 */
 	public function getAllParent($key, $ret = array(), $uplevel = 1) {
-		if (isset ($this->_tree[$key]['parent']) && isset ($this->_tree[$this->_tree[$key]['parent']]['obj'])) {
+		if (isset($this->_tree[$key]['parent'], $this->_tree[$this->_tree[$key]['parent']]['obj'])) {
 			$ret[$uplevel] = & $this->_tree[$this->_tree[$key]['parent']]['obj'];
 			$parents = & $this->getAllParent($this->_tree[$key]['parent'], $ret, $uplevel + 1);
 			foreach (array_keys($parents) as $newkey) {
@@ -211,7 +211,7 @@ class ObjectTree {
 		if ($key > 0) {
 			$value = $this->_tree[$key]['obj']->getVar($this->_myId);
 			$ret .= '<option value="' . $value . '"';
-			if ($value == $selected) {
+			if ($value === $selected) {
 				$ret .= ' selected="selected"';
 			}
 			$ret .= '>' . $prefix_curr . $this->_tree[$key]['obj']->getVar($fieldName) . '</option>';

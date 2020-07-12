@@ -48,7 +48,7 @@ class TableTree extends Table {
 	 * @return AbstractModel[]
 	 */
 	public function getChildrenOf($category_pid = 0) {
-		return isset($this->_objects[$category_pid])?$this->_objects[$category_pid]:false;
+		return $this->_objects[$category_pid] ?? false;
 	}
 
 	/**
@@ -70,12 +70,12 @@ class TableTree extends Table {
 
 			$aColumn = array();
 
-			if ($i == 0) {
-				$class = "head";
+			if ($i === 0) {
+				$class = 'head';
 			} elseif ($i % 2 == 0) {
-				$class = "even";
+				$class = 'even';
 			} else {
-				$class = "odd";
+				$class = 'odd';
 			}
 
 			if ($column->_customMethodForValue && method_exists($object, $column->_customMethodForValue)) {
@@ -85,7 +85,7 @@ class TableTree extends Table {
 				/**
 				 * If the column is the identifier, then put a link on it
 				 */
-				if ($column->getKeyName() == $this->_objectHandler->identifierName) {
+				if ($column->getKeyName() === $this->_objectHandler->identifierName) {
 					$value = $object->getItemLink();
 				} else {
 					$value = $object->getVar($column->getKeyName());
@@ -93,13 +93,13 @@ class TableTree extends Table {
 			}
 
 			$space = '';
-			if ($column->getKeyName() == $this->_objectHandler->identifierName) {
+			if ($column->getKeyName() === $this->_objectHandler->identifierName) {
 				for ($i = 0; $i < $level; $i++) {
-					$space = $space . '--';
+					$space .= '--';
 				}
 			}
 
-			if ($space != '') {
+			if ($space) {
 				$space .= '&nbsp;';
 			}
 
@@ -115,7 +115,7 @@ class TableTree extends Table {
 
 		$aObject['columns'] = $aColumns;
 
-		$class = $class == 'even'?'odd':'even';
+		$class = $class === 'even'?'odd':'even';
 		$aObject['class'] = $class;
 
 		$actions = array();
@@ -129,10 +129,10 @@ class TableTree extends Table {
 
 		$controller = new Controller($this->_objectHandler);
 
-		if (in_array('edit', $this->_actions)) {
+		if (in_array('edit', $this->_actions, true)) {
 			$actions[] = $controller->getEditItemLink($object, false, true);
 		}
-		if (in_array('delete', $this->_actions)) {
+		if (in_array('delete', $this->_actions, true)) {
 			$actions[] = $controller->getDeleteItemLink($object, false, true);
 		}
 		$aObject['actions'] = $actions;
@@ -180,8 +180,6 @@ class TableTree extends Table {
 	 * @see Table::fetchObjects()
 	 */
 	public function fetchObjects() {
-		$ret = $this->_objectHandler->getObjects($this->_criteria, 'parentid');
-		return $ret;
-
+		return $this->_objectHandler->getObjects($this->_criteria, 'parentid');
 	}
 }

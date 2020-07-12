@@ -54,7 +54,7 @@ class PermissionsDecorator {
 			$groups[$gperm_name][$id] = $allowedgroups;
 		}
 		//Return the permission array
-		return isset($groups[$gperm_name][$id])?$groups[$gperm_name][$id]:array();
+		return $groups[$gperm_name][$id] ?? array();
 	}
 
 	/**
@@ -96,9 +96,9 @@ class PermissionsDecorator {
 
 		//Return the permission array
 		if ($gperm_name) {
-			return isset($groups[$gperm_name])?$groups[$gperm_name]:array();
+			return $groups[$gperm_name] ?? array();
 		} else {
-			return isset($groups)?$groups:array();
+			return $groups ?? array();
 		}
 	}
 
@@ -113,7 +113,7 @@ class PermissionsDecorator {
 	public function getGrantedItems($gperm_name, $id = null) {
 		static $permissions;
 
-		if (!isset($permissions[$gperm_name]) || ($id != null && !isset($permissions[$gperm_name][$id]))) {
+		if (!isset($permissions[$gperm_name]) || ($id !== null && !isset($permissions[$gperm_name][$id]))) {
 
 			$icmsModule = $this->handler->getModuleInfo();
 
@@ -131,7 +131,7 @@ class PermissionsDecorator {
 			}
 		}
 		//Return the permission array
-		return isset($permissions[$gperm_name])?$permissions[$gperm_name]:array();
+		return $permissions[$gperm_name] ?? array();
 	}
 
 	/**

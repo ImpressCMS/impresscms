@@ -12,6 +12,7 @@
 namespace ImpressCMS\Core\Database\Legacy\Updater;
 
 use ImpressCMS\Core\AbstractModel;
+use ImpressCMS\Core\Database\DatabaseConnection;
 use ImpressCMS\Core\IPF\AbstractSEOModel;
 use ImpressCMS\Core\Properties\AbstractProperties;
 
@@ -32,22 +33,22 @@ global $icmsConfigPersona;
 class DatabaseUpdater {
 
 	/**
-	 * @var \ImpressCMS\Core\Database\DatabaseConnection
+	 * @var DatabaseConnection
 	 */
-	var $_db;
+	public $_db;
 
 	/**
-	 * @var \ImpressCMS\Core\Database\DatabaseConnection
+	 * @var DatabaseConnection
 	 */
-	var $db;
+	public $db;
 
 	/**
 	 *
 	 * @var array of messages
 	 */
-	var $_messages = array();
+	public $_messages = [];
 
-	function __construct() {
+	public function __construct() {
 		icms_loadLanguageFile('core', 'databaseupdater');
 		// backward compat
 		$this->_db = \icms::getInstance()->get('db');
@@ -60,12 +61,11 @@ class DatabaseUpdater {
 	 * @param string $query query that will be executed
 	 * @param string $goodmsg message displayed on success
 	 * @param string $badmsg message displayed on error
-	 * @param bool 	$force force the query even in a GET process
+	 * @param bool $force force the query even in a GET process
 	 *
 	 * @return bool true if success, false if an error occured
-	 *
 	 */
-	function runQuery($query, $goodmsg, $badmsg, $force = false) {
+	public function runQuery($query, $goodmsg, $badmsg, $force = false) {
 		if ($force) {
 			$ret = $this->_db->queryF($query);
 		} else {
@@ -198,7 +198,7 @@ class DatabaseUpdater {
 
 		$dbVersion = $module->getDbversion();
 
-		$newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
+		$newDbVersion = constant(strtoupper($dirname . '_db_version')) ?: 0;
 		$textcurrentversion = sprintf(_DATABASEUPDATER_CURRENTVER, $dbVersion);
 		$textlatestversion = sprintf(_DATABASEUPDATER_LATESTVER, $newDbVersion);
 		$this->_messages[] = $textcurrentversion;
@@ -327,16 +327,16 @@ class DatabaseUpdater {
 				}
 			}
 			$ModKeyNames = $module_handler->keyName;
-			$structure .= "PRIMARY KEY  (";
+			$structure .= 'PRIMARY KEY  (';
 			if (is_array($ModKeyNames)) {
-				$structure .= "`" . $ModKeyNames[0] . "`";
+				$structure .= '`' . $ModKeyNames[0] . '`';
 				foreach ($ModKeyNames as $ModKeyName) {
-					$structure .= ($ModKeyName != $ModKeyNames[0])?", `" . $ModKeyName . "`":"";
+					$structure .= ($ModKeyName != $ModKeyNames[0])? ', `' . $ModKeyName . '`' : '';
 				}
 			} else {
-				$structure .= "`" . $ModKeyNames . "`";
+				$structure .= '`' . $ModKeyNames . '`';
 			}
-			$structure .= ")";
+			$structure .= ')';
 			$table->setStructure($structure);
 			if (!$this->updateTable($table)) {
 				/**
@@ -506,11 +506,11 @@ class DatabaseUpdater {
 	/**
 	 * Use to update a table
 	 *
-	 * @param \ImpressCMS\Core\Database\Legacy\Updater\TableUpdater $table Table that will be updated
+	 * @param TableUpdater $table Table that will be updated
 	 * @param bool $force force the query even in a GET process
 	 *
 	 * @return bool true if success, false if an error occurred
-	 *@see TableUpdater
+	 * @see TableUpdater
 	 *
 	 */
 	function updateTable($table, $force = false)

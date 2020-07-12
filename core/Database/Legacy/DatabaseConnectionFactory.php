@@ -37,6 +37,7 @@
 
 namespace ImpressCMS\Core\Database\Legacy;
 
+use icms;
 use ImpressCMS\Core\Database\DatabaseConnectionFactory as CurrentDatabaseConnectionFactory;
 use ImpressCMS\Core\Database\Legacy\Updater\DatabaseUpdater;
 
@@ -67,8 +68,8 @@ class DatabaseConnectionFactory extends CurrentDatabaseConnectionFactory {
 	 * @staticvar   object  The only instance of database class
 	 * @return      object  Reference to the only instance of database class
 	 */
-	static public function &instance() {
-		return \icms::getInstance()->get('db');
+	public static function &instance() {
+		return icms::getInstance()->get('db');
 	}
 
 	/**
@@ -79,8 +80,8 @@ class DatabaseConnectionFactory extends CurrentDatabaseConnectionFactory {
 	 * @staticvar   object  The only instance of database class
 	 * @return      object  Reference to the only instance of database class
 	 */
-	static public function &getDatabase() {
-		return \icms::getInstance()->get('db');
+	public static function &getDatabase() {
+		return icms::getInstance()->get('db');
 	}
 
 	/**
@@ -91,7 +92,7 @@ class DatabaseConnectionFactory extends CurrentDatabaseConnectionFactory {
 	 * @return	DatabaseUpdater  Updater handler
 	 * @static
 	 */
-	static public function getDatabaseUpdater() {
+	public static function getDatabaseUpdater() {
 		return new DatabaseUpdater();
 	}
 }

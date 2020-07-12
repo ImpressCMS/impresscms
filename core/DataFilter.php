@@ -289,19 +289,19 @@ class DataFilter {
 	 *
 	 * @author        vaughan montgomery (vaughan@impresscms.org)
 	 */
-	static public function checkVar($data, $type, $options1 = '', $options2 = '') {
+	public static function checkVar($data, $type, $options1 = '', $options2 = '') {
 		if (!$data || !$type) {
 			return false;
 		}
 
-		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'special', 'html', 'text');
-		if (!in_array($type, $valid_types)) {
+		$valid_types = ['url', 'email', 'ip', 'str', 'int', 'special', 'html', 'text'];
+		if (!in_array($type, $valid_types, false)) {
 			return false;
 		} else {
 			switch ($type) {
 				case 'url':
-					$valid_options1 = array('scheme', 'path', 'host', 'query');
-					$valid_options2 = array(0, 1);
+					$valid_options1 = ['scheme', 'path', 'host', 'query'];
+					$valid_options2 = [0, 1];
 					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
 						$options1 = '';
 					}
@@ -313,8 +313,8 @@ class DataFilter {
 				break;
 
 				case 'email':
-					$valid_options1 = array(0, 1);
-					$valid_options2 = array(0, 1);
+					$valid_options1 = [0, 1];
+					$valid_options2 = [0, 1];
 					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
 						$options1 = 0;
 					} else {

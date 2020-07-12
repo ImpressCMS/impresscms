@@ -39,6 +39,7 @@ namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\IPF\Handler;
 
 /**
  * Group permission handler class.
@@ -51,7 +52,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaItem;
  * @author    Kazumi Ono  <onokazu@xoops.org>
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler
+class GroupPermHandler extends Handler
 {
 
 	public function __construct(&$db)

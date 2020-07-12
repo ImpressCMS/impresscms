@@ -72,7 +72,7 @@ class TextAreaElement extends AbstractFormElement {
 	 * @param	int     $rows       number of rows
 	 * @param	int     $cols       number of columns
 	 */
-	public function __construct($caption, $name, $value = "", $rows = 5, $cols = 50) {
+	public function __construct($caption, $name, $value = '', $rows = 5, $cols = 50) {
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_rows = (int) $rows;
@@ -127,9 +127,9 @@ class TextAreaElement extends AbstractFormElement {
 			. "' id='" . $this->getName() . '_tarea'
 			. "' rows='" . $this->getRows()
 			. "' cols='" . $this->getCols()
-			. "'" . $this->getExtra() . ">"
+			. "'" . $this->getExtra() . '>'
 			. $this->getValue()
-			. "</textarea>";
+			. '</textarea>';
 	}
 }
 

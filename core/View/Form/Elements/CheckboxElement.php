@@ -71,7 +71,7 @@ class CheckboxElement extends AbstractFormElement {
 	 * @param	string  $name
 	 * @param	mixed   $value  Either one value as a string or an array of them.
 	 */
-	public function __construct($caption, $name, $value = null, $delimeter = "&nbsp;") {
+	public function __construct($caption, $name, $value = null, $delimeter = '&nbsp;') {
 		$this->setCaption($caption);
 		$this->setName($name);
 		if (isset($value)) {
@@ -119,8 +119,8 @@ class CheckboxElement extends AbstractFormElement {
 	 * @param	string  $value
 	 * @param	string  $name
 	 */
-	public function addOption($value, $name = "") {
-		if ($name != "") {
+	public function addOption($value, $name = '') {
+		if ($name) {
 			$this->_options[$value] = $name;
 		} else {
 			$this->_options[$value] = $value;
@@ -186,24 +186,24 @@ class CheckboxElement extends AbstractFormElement {
 		$ele_options = $this->getOptions();
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
-		if (count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]") {
-			$ele_name = $ele_name . "[]";
+		if (count($ele_options) > 1 && substr($ele_name, -2, 2) !== '[]') {
+			$ele_name = $ele_name . '[]';
 			$this->setName($ele_name);
 		}
 		foreach ($ele_options as $value => $name) {
 			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name
 				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
-			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
+			if (count($ele_value) > 0 && in_array($value, $ele_value, false)) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . "</label></span>" . $ele_delimeter;
+			$ret .= $ele_extra . " /><label for='" . $ele_name . '_item_' . $value . "'>" . $name . '</label></span>' . $ele_delimeter;
 		}
 		if (count($ele_options) > 1) {
 			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
 				. $ele_name . "_checkemall' class='checkemall' /><label for='"
 				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
 		}
-		$ret .= "</div>";
+		$ret .= '</div>';
 		return $ret;
 	}
 }

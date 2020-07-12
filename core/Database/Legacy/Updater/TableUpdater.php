@@ -10,7 +10,9 @@
 
 namespace ImpressCMS\Core\Database\Legacy\Updater;
 
+use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
+use ImpressCMS\Core\Database\LegacyDatabaseConnectionInterface;
 
 /**
  * \ImpressCMS\Core\Database\Legacy\Updater\TableUpdater class
@@ -79,7 +81,7 @@ class TableUpdater {
 	/**
 	 * xoopsDB database object
 	 *
-	 * @var \ImpressCMS\Core\Database\LegacyDatabaseConnectionInterface
+	 * @var LegacyDatabaseConnectionInterface
 	 */
 	var $db;
 
@@ -95,9 +97,9 @@ class TableUpdater {
 	 *
 	 */
 	function __construct($name) {
-		$this->db = \icms::$xoopsDB;
+		$this->db = icms::$xoopsDB;
 		/** For backward compat */
-		$this->_db = \icms::$xoopsDB;
+		$this->_db = icms::$xoopsDB;
 
 		$this->_name = $name;
 		$this->_data = array();
@@ -114,9 +116,9 @@ class TableUpdater {
 	 */
 	function exists() {
 		$bRetVal = false;
-		$ret = $this->_db->queryF("SHOW TABLES FROM `" . env('DB_NAME') . "` LIKE '" . $this->name() . "'");
+		$ret = $this->_db->queryF('SHOW TABLES FROM `' . env('DB_NAME') . "` LIKE '" . $this->name() . "'");
 		list ($m_table) = $this->_db->fetchRow($ret);
-		if ($m_table == strtolower($this->name())) {
+		if ($m_table === strtolower($this->name())) {
 			$bRetVal = true;
 		}
 		return $bRetVal;
@@ -151,15 +153,15 @@ class TableUpdater {
 	 */
 
 	function getExistingFieldsArray() {
-		$sql = "SHOW COLUMNS FROM " . $this->name();
+		$sql = 'SHOW COLUMNS FROM ' . $this->name();
 		$result = $this->_db->queryF($sql);
 		while ($existing_field = $this->_db->fetchArray($result)) {
 			$fields[$existing_field['Field']] = $existing_field['Type'];
-			if ($existing_field['Null'] != "YES") {
-				$fields[$existing_field['Field']] .= " NOT NULL";
+			if ($existing_field['Null'] !== 'YES') {
+				$fields[$existing_field['Field']] .= ' NOT NULL';
 			}
 			if ($existing_field['Extra']) {
-				$fields[$existing_field['Field']] .= " " . $existing_field['Extra'];
+				$fields[$existing_field['Field']] .= ' ' . $existing_field['Extra'];
 			}
 			if (!($existing_field['Default'] === null) && ($existing_field['Default'] || $existing_field['Default'] == '' || $existing_field['Default'] == 0)) {
 				$fields[$existing_field['Field']] .= " default '" . $existing_field['Default'] . "'";
@@ -184,9 +186,9 @@ class TableUpdater {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name());
 		} else {
-			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name());
 		}
 		return $ret;
 	}
@@ -295,7 +297,7 @@ class TableUpdater {
 	 */
 	function createTable() {
 		$query = $this->getStructure();
-		$query = "CREATE TABLE `" . $this->name() . "` (" . $query . ")";
+		$query = 'CREATE TABLE `' . $this->name() . '` (' . $query . ')';
 
 		if ($this->force) {
 			$ret = $this->_db->queryF($query);
@@ -303,10 +305,10 @@ class TableUpdater {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error() . ")";
+			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE_ERR, $this->name()) . ' (' . $this->_db->error() . ')';
 
 		} else {
-			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE, $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE, $this->name());
 		}
 		return $ret;
 	}
@@ -351,17 +353,17 @@ class TableUpdater {
 	 *
 	 */
 	function dropTable() {
-		$query = sprintf("DROP TABLE %s", $this->name());
+		$query = sprintf('DROP TABLE %s', $this->name());
 		if ($this->force) {
 			$ret = $this->_db->queryF($query);
 		} else {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE_ERR, $this->name()) . " (" . $this->_db->error() . ")";
+			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE_ERR, $this->name()) . ' (' . $this->_db->error() . ')';
 			return false;
 		} else {
-			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE, $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE, $this->name());
 			return true;
 		}
 	}
@@ -390,9 +392,9 @@ class TableUpdater {
 
 		if ($alteredField['showerror']) {
 			if (!$ret) {
-				$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()) . " (" . $this->_db->error() . ")";
+				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()) . ' (' . $this->_db->error() . ')';
 			} else {
-				$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD, $alteredField['name'], $this->name());
+				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_CHGFIELD, $alteredField['name'], $this->name());
 			}
 		}
 
@@ -430,9 +432,9 @@ class TableUpdater {
 		}
 
 		if (!$ret) {
-			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name());
 		} else {
-			$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name());
 		}
 		return $ret;
 	}
@@ -478,7 +480,7 @@ class TableUpdater {
 				$ret = $this->_db->query($sql);
 			}
 			if (!$ret) {
-				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error() . ")";
+				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . ' (' . $this->_db->error() . ')';
 			} else {
 				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name());
 			}
@@ -505,7 +507,7 @@ class TableUpdater {
 	function deleteAll() {
 		$ret = true;
 		foreach ($this->getDeleteAll() as $item) {
-			$criteria = isset($item['criteria'])?$item['criteria']:null;
+			$criteria = $item['criteria'] ?? null;
 			if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 				$sql = 'DELETE FROM ' . $this->table;
 				$sql .= ' ' . $criteria->renderWhere();
@@ -553,9 +555,9 @@ class TableUpdater {
 			}
 
 			if (!$ret) {
-				$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $str, $this->name()) . " (" . $this->_db->error() . ")";
+				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $str, $this->name()) . ' (' . $this->_db->error() . ')';
 			} else {
-				$this->_messages[] = "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $str, $this->name());
+				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $str, $this->name());
 			}
 		return $ret;
 	}

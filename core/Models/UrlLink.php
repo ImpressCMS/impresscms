@@ -10,6 +10,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * Url Link object
  *
@@ -22,20 +24,20 @@ namespace ImpressCMS\Core\Models;
  *
  * @package	ICMS\Data\UrlLink
  */
-class UrlLink extends \ImpressCMS\Core\IPF\AbstractModel {
+class UrlLink extends AbstractModel {
 	/**
 	 * constructor
 	 */
 	public function __construct(&$handler, $data = array()) {
-		$this->initVar("urllinkid", self::DTYPE_INTEGER, 0, true);
-		$this->initVar("mid", self::DTYPE_INTEGER, 0, true, 5);
-		$this->initVar("caption", self::DTYPE_STRING, '', false, 255);
-		$this->initVar("description", self::DTYPE_STRING, '', false, 255);
-		$this->initVar("url", self::DTYPE_STRING, '', false, 255);
-		$this->initVar("target", self::DTYPE_STRING, '', true, 6);
+		$this->initVar('urllinkid', self::DTYPE_INTEGER, 0, true);
+		$this->initVar('mid', self::DTYPE_INTEGER, 0, true, 5);
+		$this->initVar('caption', self::DTYPE_STRING, '', false, 255);
+		$this->initVar('description', self::DTYPE_STRING, '', false, 255);
+		$this->initVar('url', self::DTYPE_STRING, '', false, 255);
+		$this->initVar('target', self::DTYPE_STRING, '', true, 6);
 
-		$this->setControl("target", array("options" => array("_self" => _CO_ICMS_URLLINK_SELF,
-			"_blank" => _CO_ICMS_URLLINK_BLANK)));
+		$this->setControl('target', ['options' => ['_self' => _CO_ICMS_URLLINK_SELF,
+			'_blank' => _CO_ICMS_URLLINK_BLANK]]);
 
                 parent::__construct($handler, $data);
 	}
@@ -47,15 +49,15 @@ class UrlLink extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * @param string $format format
 	 * @return mixed value
 	 */
-	public function getVar($key, $format = "e") {
-		if (substr($key, 0, 4) == "url_") {
-			return parent::getVar("url", $format);
-		} elseif (substr($key, 0, 4) == "mid_") {
-			return parent::getVar("mid", $format);
-		} elseif (substr($key, 0, 8) == "caption_") {
-			return parent::getVar("caption", $format);
-		} elseif (substr($key, 0, 5) == "desc_") {
-			return parent::getVar("description", $format);
+	public function getVar($key, $format = 'e') {
+		if (strpos($key, 'url_') === 0) {
+			return parent::getVar('url', $format);
+		} elseif (strpos($key, 'mid_') === 0) {
+			return parent::getVar('mid', $format);
+		} elseif (strpos($key, 'caption_') === 0) {
+			return parent::getVar('caption', $format);
+		} elseif (strpos($key, 'desc_') === 0) {
+			return parent::getVar('description', $format);
 		} else {
 			return parent::getVar($key, $format);
 		}
@@ -67,9 +69,9 @@ class UrlLink extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * @return string html
 	 */
 	public function render() {
-		$ret  = "<a href='" . $this->getVar("url") . "' target='" . $this->getVar("target") . "' ";
-		$ret .= "title='" . $this->getVar("description") . "'>";
-		$ret .= $this->getVar("caption") . "</a>";
+		$ret  = "<a href='" . $this->getVar('url') . "' target='" . $this->getVar('target') . "' ";
+		$ret .= "title='" . $this->getVar('description') . "'>";
+		$ret .= $this->getVar('caption') . "</a>";
 		return $ret;
 	}
 }

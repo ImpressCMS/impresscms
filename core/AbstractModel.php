@@ -64,14 +64,14 @@ class AbstractModel extends Properties\AbstractProperties {
 	 * @var array
 	 * @access private
 	 */
-	private $_errors = array();
+	private $_errors = [];
 
 	/**
 	 * additional filters registered dynamically by a child class object
 	 *
 	 * @access private
 	 */
-	private $_filters = array();
+	private $_filters = [];
 
 	/**
 	 * constructor
@@ -106,7 +106,7 @@ class AbstractModel extends Properties\AbstractProperties {
 	 * @param mixed
 	 * @param bool $required  require html form input?
 	 * @param int $maxlength  for self::DTYPE_STRING, self::DTYPE_INTERGER types only
-	 * @param string $option  does this data have any select options?
+	 * @param string $options  does this data have any select options?
 	 */
 	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
 		parent::initVar($key, $data_type, $value, $required, array(
@@ -132,7 +132,7 @@ class AbstractModel extends Properties\AbstractProperties {
 	public function setFormVars($var_arr = null, $pref = 'xo_', $not_gpc = false) {
 		$len = strlen($pref);
 		foreach ($var_arr as $key => $value) {
-			if ($pref == substr($key, 0, $len)) {
+			if (strpos($key, $pref) === 0) {
 				$this->setVar(substr($key, $len), $value, $not_gpc);
 			}
 		}
@@ -228,7 +228,7 @@ class AbstractModel extends Properties\AbstractProperties {
 			}
 		} else {
 			if ($prefix) {
-				$err_str = "[" . $prefix . "] " . $err_str;
+				$err_str = '[' . $prefix . '] ' . $err_str;
 			}
 			$this->_errors[] = trim($err_str);
 		}

@@ -57,7 +57,7 @@ class LabelElement extends AbstractFormElement {
 	 * @param	string	$caption	Caption
 	 * @param	string	$value		Text
 	 */
-	public function __construct($caption = "", $value = "", $name = "") {
+	public function __construct($caption = '', $value = '', $name = '') {
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_value = $value;

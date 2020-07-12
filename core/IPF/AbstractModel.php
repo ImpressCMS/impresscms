@@ -14,11 +14,11 @@ use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\View\ModelLinkedForm\Form;
-use ImpressCMS\Core\View\ModelLinkedForm\SecureForm;
 use ImpressCMS\Core\Models\File;
 use ImpressCMS\Core\Models\UrlLink;
 use ImpressCMS\Core\Textsanitizer;
+use ImpressCMS\Core\View\ModelLinkedForm\Form;
+use ImpressCMS\Core\View\ModelLinkedForm\SecureForm;
 use ImpressCMS\Core\View\Renderer\ModelViewRenderer;
 use ImpressCMS\Core\View\Table\Row;
 
@@ -148,7 +148,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 */
 	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $multilingual = false, $form_caption = '', $form_dsc = '', $sortby = false, $persistent = true, $displayOnForm = true) {
 		// url_ is reserved for files.
-		if (substr($key, 0, 4) == 'url_') {
+		if (strpos($key, 'url_') === 0) {
 			return trigger_error("Cannot use variable starting with 'url_'.");
 		}
 
@@ -174,7 +174,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	}
 
 	public function getVarInfo($key = null, $info = null, $default = null) {
-		if ($key == null) {
+		if ($key === null) {
 			$ret = parent::getVarInfo($key, $info, $default);
 			foreach ($ret as $key => $value) {
 				$ret[$key]['form_caption'] = $this->getFormCaption($key, $value['form_caption']);
@@ -184,8 +184,8 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 		} else {
 			$ret = parent::getVarInfo($key, $info, $default);
 			if ($info == null) {
-				$ret['form_caption'] = $this->getFormCaption($key, isset($ret['form_caption'])?$ret['form_caption']:null);
-				$ret['form_dsc'] = $this->getFormDescription($key, isset($ret['form_dsc'])?$ret['form_dsc']:null);
+				$ret['form_caption'] = $this->getFormCaption($key, $ret['form_caption'] ?? null);
+				$ret['form_dsc'] = $this->getFormDescription($key, $ret['form_dsc'] ?? null);
 			} else {
 				switch ($info) {
 					case 'form_caption':

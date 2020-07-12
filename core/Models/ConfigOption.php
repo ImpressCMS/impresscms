@@ -34,6 +34,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * A Config-Option
  *
@@ -46,7 +48,7 @@ namespace ImpressCMS\Core\Models;
  * @property string     $confop_value  Value
  * @property int        $conf_id       Config ID
  */
-class ConfigOption extends \ImpressCMS\Core\IPF\AbstractModel {
+class ConfigOption extends AbstractModel {
 	/**
 	 * Constructor
 	 */

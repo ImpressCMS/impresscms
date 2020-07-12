@@ -1,6 +1,7 @@
 <?php
 namespace ImpressCMS\Core\View\Form\Elements\Captcha;
 
+use Aura\Session\Session;
 use icms;
 
 /**
@@ -56,12 +57,12 @@ class TextMode {
 	public function render() {
 		global $icmsConfigCaptcha;
 		$form = $this->loadText()
-			. "&nbsp;&nbsp; <input type='text' name='" . $this->config["name"]
-			."' id='" . $this->config["name"]
+			. "&nbsp;&nbsp; <input type='text' name='" . $this->config['name']
+			."' id='" . $this->config['name']
 			. "' size='" . $icmsConfigCaptcha['captcha_num_chars']
 			. "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars']
 			. "' value='' />";
-		$rule = constant("ICMS_CAPTCHA_RULE_TEXT");
+		$rule = constant('ICMS_CAPTCHA_RULE_TEXT');
 		if (!empty($rule)) {
 			$form .= "&nbsp;&nbsp;<small>{$rule}</small>";
 		}
@@ -95,10 +96,10 @@ class TextMode {
 	public function setCode()
 	{
 		/**
-		 * @var Aura\Session\Session $session
+		 * @var Session $session
 		 */
 		$session = icms::getInstance()->get('session');
-		$session->getSegment(Image::class)->set('session_code', strval($this->code));
+		$session->getSegment(Image::class)->set('session_code', (string)$this->code);
 	}
 
 }

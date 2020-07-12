@@ -61,8 +61,8 @@ class EditorElement extends TextAreaElement {
 	 * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
 	 * @param	string  $OnFailure editor to be used if current one failed
 	 */
-	function __construct($caption, $name, $editor_configs = null, $noHtml = false, $OnFailure = "") {
-		parent::__construct($caption, $editor_configs["name"]);
+	public function __construct($caption, $name, $editor_configs = null, $noHtml = false, $OnFailure = '') {
+		parent::__construct($caption, $editor_configs['name']);
 		$editor_handler = EditorHandler::getInstance();
 		$this->editor = & $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
 	}

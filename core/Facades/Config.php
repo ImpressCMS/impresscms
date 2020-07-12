@@ -60,72 +60,72 @@ class Config extends AbstractFacade {
 		/**
 		 * Main (default) category
 		 */
-		const CATEGORY_MAIN = 1;
+		public const CATEGORY_MAIN = 1;
 
 		/**
 		 * User category
 		 */
-		const CATEGORY_USER = 2;
+		public const CATEGORY_USER = 2;
 
 		/**
 		 * Meta & footer category
 		 */
-		const CATEGORY_METAFOOTER = 3;
+		public const CATEGORY_METAFOOTER = 3;
 
 		/**
 		 * Censorship category
 		 */
-		const CATEGORY_CENSOR = 4;
+		public const CATEGORY_CENSOR = 4;
 
 		/**
 		 * Search catageory
 		 */
-		const CATEGORY_SEARCH = 5;
+		public const CATEGORY_SEARCH = 5;
 
 		/**
 		 * Mailer category
 		 */
-		const CATEGORY_MAILER = 6;
+		public const CATEGORY_MAILER = 6;
 
 		/**
 		 * Authentification category
 		 */
-		const CATEGORY_AUTH = 7;
+		public const CATEGORY_AUTH = 7;
 
 		/**
 		 * Multilanguage configuration
 		 */
-		const CATEGORY_MULILANGUAGE = 8;
+		public const CATEGORY_MULILANGUAGE = 8;
 
 		/**
 		 * Content category
 		 */
-		const CATEGORY_CONTENT = 9;
+		public const CATEGORY_CONTENT = 9;
 
 		/**
 		 * Persona category
 		 */
-		const CATEGORY_PERSONA = 10;
+		public const CATEGORY_PERSONA = 10;
 
 		/**
 		 * Captcha category
 		 */
-		const CATEGORY_CAPTCHA = 11;
+		public const CATEGORY_CAPTCHA = 11;
 
 		/**
 		 * Plugins category
 		 */
-		const CATEGORY_PLUGINS = 12;
+		public const CATEGORY_PLUGINS = 12;
 
 		/**
 		 * Autotasks category
 		 */
-		const CATEGORY_AUTOTASKS = 13;
+		public const CATEGORY_AUTOTASKS = 13;
 
 		/**
 		 * Purifier category
 		 */
-		const CATEGORY_PURIFIER = 14;
+		public const CATEGORY_PURIFIER = 14;
 
 	/**
 	 * holds reference to config item handler(DAO) class

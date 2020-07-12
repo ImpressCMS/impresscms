@@ -30,6 +30,8 @@
 
 namespace ImpressCMS\Core\Database;
 
+use icms;
+
 /**
  * Establishes database class and connection
  *
@@ -61,9 +63,9 @@ class DatabaseConnectionFactory
 	 * @static
 	 * @return      object  Reference to the only instance of database class
 	 */
-	static public function instance()
+	public static function instance()
 	{
-		return \icms::getInstance()->get('db');
+		return icms::getInstance()->get('db');
 	}
 
 	/**
@@ -73,7 +75,7 @@ class DatabaseConnectionFactory
 	 *
 	 * @throws RuntimeException
 	 */
-	static public function pdoInstance() {
-		return \icms::getInstance()->get('db');
+	public static function pdoInstance() {
+		return icms::getInstance()->get('db');
 	}
 }

@@ -135,7 +135,7 @@ class TextElement extends AbstractFormElement {
 			. "' size='" . $this->getSize()
 			. "' maxlength='" . $this->getMaxlength()
 			. "' value='" . $this->getValue() . "'" . $this->getExtra()
-			. " />";
+			. ' />';
 	}
 }
 

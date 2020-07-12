@@ -35,6 +35,8 @@
  */
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * A handler for Private Messages
  *
@@ -51,7 +53,7 @@ namespace ImpressCMS\Core\Models;
  * @property string $msg_text     Text (content)
  * @property int    $read_msg     Is this message read?
  */
-class PrivateMessage extends \ImpressCMS\Core\IPF\AbstractModel {
+class PrivateMessage extends AbstractModel {
 
 	/**
 	 * constructor

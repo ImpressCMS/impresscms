@@ -37,6 +37,10 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * ImpressCMS Core Block Object Handler Class
  *
@@ -46,7 +50,7 @@ namespace ImpressCMS\Core\Models;
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
+class BlockHandler extends Handler {
 
 	private $block_positions;
 	private $modules_name;
@@ -101,8 +105,8 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	public function getByModule($mid, $asObject = true) {
 		$mid = (int) $mid;
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('mid', $mid));
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('mid', $mid));
 		$ret = $this->getObjects($criteria, false, $asObject);
 		return $ret;
 	}
@@ -120,7 +124,7 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 	 * @todo Implement IPF for block_positions.
 	 * @todo Rewrite all the core to dont use any more this method.
 	 */
-	public function getAllBlocks($rettype = "object", $side = null, $visible = null, $orderby = "side, weight, bid", $isactive = 1) {
+	public function getAllBlocks($rettype = 'object', $side = null, $visible = null, $orderby = 'side, weight, bid', $isactive = 1) {
 		$ret = array();
 		$where_query = " WHERE isactive='" . (int) $isactive . "'";
 
@@ -128,10 +132,10 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 			// get both sides in sidebox? (some themes need this)
 			$tp = ($side == -2)?'L':($side == -6)?'C':'';
 			if ($tp != '') {
-			 	$q_side = "";
+			 	$q_side = '';
 				$icms_blockposition_handler = \icms::handler('icms_view_block_position');
-				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('block_type', $tp));
+				$criteria = new CriteriaCompo();
+				$criteria->add(new CriteriaItem('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach ($blockpositions as $bp) {
 					$q_side .= "side='" . (int) $bp->getVar('id') . "' OR ";
@@ -140,7 +144,7 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 			} else {
 				$q_side = "side='" . (int) $side . "'";
 			}
-			$where_query .= " AND " . $q_side;
+			$where_query .= ' AND ' . $q_side;
 		}
 
 		if (isset($visible)) {
@@ -148,8 +152,8 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 		}
 		$where_query .= " ORDER BY $orderby";
 		switch ($rettype) {
-			case "object":
-				$sql = "SELECT * FROM " . $this->db->prefix("newblocks") . "" . $where_query;
+			case 'object':
+				$sql = 'SELECT * FROM ' . $this->db->prefix("newblocks") . "" . $where_query;
 				$result = $this->db->query($sql);
 				while ($myrow = $this->db->fetchArray($result)) {
 					// @todo this is causing to many SQL queries. In case this section is still needed,
@@ -158,26 +162,26 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 				}
 				break;
 
-			case "list":
-				$sql = "SELECT * FROM " . $this->db->prefix("newblocks") . "" . $where_query;
+			case 'list':
+				$sql = 'SELECT * FROM ' . $this->db->prefix('newblocks') . $where_query;
 				$result = $this->db->query($sql);
 				if ($this->db->getRowsNum($result) > 0) {
 					$blockids = array();
 					while ($myrow = $this->db->fetchArray($result)) {
 						$blockids[] = $myrow['bid'];
 					}
-					$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-					$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+					$criteria = new CriteriaCompo();
+					$criteria->add(new CriteriaItem('bid', '(' . implode(',', $blockids) . ')', 'IN'));
 					$blocks = $this->getObjects($criteria, true, true);
 					foreach ($blocks as $block) {
-						$ret[$block->getVar("bid")] = $block->getVar("title");
+						$ret[$block->getVar('bid')] = $block->getVar('title');
 					}
 					unset($blockids, $blocks);
 				}
 				break;
 
-			case "id":
-				$sql = "SELECT bid FROM " . $this->db->prefix("newblocks") . "" . $where_query;
+			case 'id':
+				$sql = 'SELECT bid FROM ' . $this->db->prefix('newblocks') . $where_query;
 				$result = $this->db->query($sql);
 				while ($myrow = $this->db->fetchArray($result)) {
 					$ret[] = $myrow['bid'];
@@ -193,7 +197,7 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 	public function &get($id, $as_object = true, $debug = false, $criteria = false)
 	{
 		$obj = parent::get($id, $as_object, $debug, $criteria);
-		$sql = "SELECT module_id, page_id FROM " . $this->db->prefix('block_module_link')
+		$sql = 'SELECT module_id, page_id FROM ' . $this->db->prefix('block_module_link')
 			. " WHERE block_id='" . (int)$obj->getVar('bid') . "'";
 		$result = $this->db->query($sql);
 		$modules = $bcustomp = array();
@@ -222,11 +226,11 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 
 		$isactive = (int) $isactive;
 		$ret = array();
-		$sql = "SELECT DISTINCT gperm_itemid FROM " . $this->db->prefix('group_permission')
+		$sql = 'SELECT DISTINCT gperm_itemid FROM ' . $this->db->prefix('group_permission')
 			. " WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
 		if (is_array($groupid)) {
 			$gid = array_map('intval', $groupid);
-			$sql .= " AND gperm_groupid IN (" . implode(',', $gid) . ")";
+			$sql .= ' AND gperm_groupid IN (' . implode(',', $gid) . ')';
 		} else {
 			if ((int) $groupid > 0) {
 				$sql .= " AND gperm_groupid='" . (int) $groupid . "'";
@@ -239,8 +243,8 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 		}
 
 		if (!empty($blockids)) {
-			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks') . " b, " . $this->db->prefix('block_module_link')
-				. " m WHERE m.block_id=b.bid";
+			$sql = 'SELECT b.* FROM ' . $this->db->prefix('newblocks') . ' b, ' . $this->db->prefix('block_module_link')
+				. ' m WHERE m.block_id=b.bid';
 			$sql .= " AND b.isactive='" . $isactive . "'";
 			if (isset($visible)) {
 				$sql .= " AND b.visible='" . (int) ($visible) . "'";
@@ -269,8 +273,8 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 				}
 			}
 
-			$sql .= " AND b.bid IN (" . implode(',', $blockids) . ")";
-			$sql .= " ORDER BY " . $orderby;
+			$sql .= ' AND b.bid IN (' . implode(',', $blockids) . ')';
+			$sql .= ' ORDER BY ' . $orderby;
 			$result = $this->db->query($sql);
 
 			// old method of gathering block data. Since this could result in a whole bunch of queries, a new method was introduced
@@ -297,16 +301,17 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 	 *
 	 * @param array $blockids
 	 *
+	 * @return array
 	 * @todo can be removed together with getAllByGroupModule and getNonGroupedBlocks. (used in theme_blocks)
 	 */
 	private function &getMultiple($blockids)
 	{
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+		$criteria = new CriteriaCompo();
+		$criteria->add(new CriteriaItem('bid', '(' . implode(',', $blockids) . ')', 'IN'));
 		$criteria->setSort('weight');
 		$ret = $this->getObjects($criteria, true, true);
-		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link')
-			. " WHERE block_id IN (" . implode(',', array_keys($ret)) . ") ORDER BY block_id";
+		$sql = 'SELECT block_id, module_id, page_id FROM ' . $this->db->prefix('block_module_link')
+			. ' WHERE block_id IN (' . implode(',', array_keys($ret)) . ') ORDER BY block_id';
 		$result = $this->db->query($sql);
 		$modules = array();
 		$last_block_id = 0;
@@ -336,13 +341,13 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 	public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
 		$ret = array();
 		$bids = array();
-		$sql = "SELECT DISTINCT(bid) from " . $this->db->prefix('newblocks');
+		$sql = 'SELECT DISTINCT(bid) from ' . $this->db->prefix('newblocks');
 		if ($result = $this->db->query($sql)) {
 			while ($myrow = $this->db->fetchArray($result)) {
 				$bids[] = $myrow['bid'];
 			}
 		}
-		$sql = "SELECT DISTINCT(p.gperm_itemid) from " . $this->db->prefix('group_permission') . " p, "
+		$sql = 'SELECT DISTINCT(p.gperm_itemid) from ' . $this->db->prefix('group_permission') . ' p, '
 			. $this->db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
 		$grouped = array();
 		if ($result = $this->db->query($sql)) {
@@ -352,8 +357,8 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 		}
 		$non_grouped = array_diff($bids, $grouped);
 		if (!empty($non_grouped)) {
-			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks') . " b, "
-				. $this->db->prefix('block_module_link') . " m WHERE m.block_id=b.bid";
+			$sql = 'SELECT b.* FROM ' . $this->db->prefix('newblocks') . ' b, '
+				. $this->db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
 			$sql .= " AND b.isactive='" . (int) $isactive . "'";
 			if (isset($visible)) {
 				$sql .= " AND b.visible='" . (int) $visible . "'";
@@ -364,7 +369,7 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 				if ($toponlyblock) {
 					$sql .= ",'-1'";
 				}
-				$sql .= ")";
+				$sql .= ')';
 			} else {
 				if ($toponlyblock) {
 					$sql .= " AND m.module_id IN ('0', '-1')";
@@ -372,8 +377,8 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 					$sql .= " AND m.module_id='0'";
 				}
 			}
-			$sql .= " AND b.bid IN (" . implode(',', $non_grouped) . ")";
-			$sql .= " ORDER BY " . $orderby;
+			$sql .= ' AND b.bid IN (' . implode(',', $non_grouped) . ')';
+			$sql .= ' ORDER BY ' . $orderby;
 			$result = $this->db->query($sql);
 
 			// old method of gathering block data. Since this could result in a whole bunch of queries, a new method was introduced
@@ -467,7 +472,7 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 				$page = explode('-', $obj->getVar('visiblein', 'e'));
 				$mid = $page[0];
 				$pageid = $page[1];
-				$sql = "INSERT INTO " . $this->db->prefix('block_module_link') . " (block_id, module_id, page_id) VALUES ('"
+				$sql = 'INSERT INTO ' . $this->db->prefix('block_module_link') . " (block_id, module_id, page_id) VALUES ('"
 					. (int) $obj->getVar("bid") . "', '"
 					. (int) $mid . "', '"
 					. (int) $pageid . "')";
@@ -488,18 +493,17 @@ class BlockHandler extends \ImpressCMS\Core\IPF\Handler {
 		if ($funcNum < 1 || $moduleId < 1) {
 			return 0;
 		}
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+		$criteria = new CriteriaCompo();
 		if (isset($showFunc)) {
 			// showFunc is set for more strict comparison
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('mid', $moduleId));
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('func_num', $funcNum));
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('show_func', $showFunc));
+			$criteria->add(new CriteriaItem('mid', $moduleId));
+			$criteria->add(new CriteriaItem('func_num', $funcNum));
+			$criteria->add(new CriteriaItem('show_func', $showFunc));
 		} else {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('mid', $moduleId));
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('func_num', $funcNum));
+			$criteria->add(new CriteriaItem('mid', $moduleId));
+			$criteria->add(new CriteriaItem('func_num', $funcNum));
 		}
-		$count = $this->handler->getCount($criteria);
-		return $count;
+		return $this->handler->getCount($criteria);
 
 	}
 

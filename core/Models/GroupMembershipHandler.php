@@ -37,6 +37,9 @@
 
 namespace ImpressCMS\Core\Models;
 
+use icms;
+use ImpressCMS\Core\IPF\Handler;
+
 /**
  * Group membership handler class. (Singleton)
  *
@@ -46,7 +49,7 @@ namespace ImpressCMS\Core\Models;
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @package	ICMS\Member\Group\Membership
  */
-class GroupMembershipHandler extends \ImpressCMS\Core\IPF\Handler {
+class GroupMembershipHandler extends Handler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'member_group_membership', 'linkid', 'groupid', 'uid', 'icms', 'groups_users_link', 'linkid');
@@ -60,13 +63,13 @@ class GroupMembershipHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	public function getGroupsByUser($uid) {
 		$ret = array();
-		$sql = "SELECT groupid FROM " . \icms::$xoopsDB->prefix('groups_users_link')
+		$sql = 'SELECT groupid FROM ' . icms::$xoopsDB->prefix('groups_users_link')
 			. " WHERE uid='" . (int) $uid . "'";
-		$result = \icms::$xoopsDB->query($sql);
+		$result = icms::$xoopsDB->query($sql);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
+		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			$ret[] = $myrow['groupid'];
 		}
 		return $ret;
@@ -82,13 +85,13 @@ class GroupMembershipHandler extends \ImpressCMS\Core\IPF\Handler {
 	 */
 	public function getUsersByGroup($groupid, $limit = 0, $start = 0) {
 		$ret = array();
-		$sql = "SELECT uid FROM " . \icms::$xoopsDB->prefix('groups_users_link')
+		$sql = 'SELECT uid FROM ' . icms::$xoopsDB->prefix('groups_users_link')
 			. " WHERE groupid='" . (int) $groupid . "'";
-		$result = \icms::$xoopsDB->query($sql, $limit, $start);
+		$result = icms::$xoopsDB->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
+		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
 			$ret[] = $myrow['uid'];
 		}
 		return $ret;

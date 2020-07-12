@@ -38,6 +38,8 @@
 
 namespace ImpressCMS\Core\Models;
 
+use ImpressCMS\Core\IPF\AbstractModel;
+
 /**
  * An Image Object
  *
@@ -55,7 +57,7 @@ namespace ImpressCMS\Core\Models;
  * @property string $image_body        Image contents
  * @property int    $imgcat_id         Image category ID
  */
-class Image extends \ImpressCMS\Core\IPF\AbstractModel {
+class Image extends AbstractModel {
 
 	/**
 	 * Info of Image file (width, height, bits, mimetype)
@@ -102,12 +104,8 @@ class Image extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * @return array            The array of image information
 	 */
 	public function getInfo($path, $type = 'url', $ret = false) {
-		$path = (substr($path, -1) != '/')?$path . '/':$path;
-		if ($type == 'url') {
-			$img = $path . $this->getVar('image_name');
-		} else {
-			$img = $path;
-		}
+		$path = (substr($path, -1) !== '/')?$path . '/':$path;
+		$img = ($type === 'url') ? ($path . $this->getVar('image_name')) : $path;
 		$get_size = getimagesize($img);
 		$this->image_info = array(
 			'width' => $get_size[0],
@@ -143,11 +141,7 @@ class Image extends \ImpressCMS\Core\IPF\AbstractModel {
 		 * @return mixed
 		 */
 		public function getVar($name, $format = 's') {
-			if ($name == 'image_body') {
-				return $this->image_body;
-			} else {
-				return parent::getVar($name, $format);
-			}
+			return ($name === 'image_body') ? $this->image_body : parent::getVar($name, $format);
 		}
 
 	/**
@@ -158,7 +152,7 @@ class Image extends \ImpressCMS\Core\IPF\AbstractModel {
 	 * @param array $options    Options to apply when settings values
 	 */
 		public function setVar($name, $value, $options = null) {
-			if ($name == 'image_body') {
+			if ($name === 'image_body') {
 				$this->image_body = $value;
 			} else {
 				parent::setVar($name, $value, $options);

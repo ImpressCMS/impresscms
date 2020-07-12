@@ -1,6 +1,7 @@
 <?php
 namespace ImpressCMS\Core\Database;
 
+use Aura\Sql\ExtendedPdo;
 use ImpressCMS\Core\Event;
 use PDOStatement;
 
@@ -11,7 +12,7 @@ use PDOStatement;
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package    ICMS\Database
  */
-class DatabaseConnection extends \Aura\Sql\ExtendedPdo implements DatabaseConnectionInterface, LegacyDatabaseConnectionInterface
+class DatabaseConnection extends ExtendedPdo implements DatabaseConnectionInterface, LegacyDatabaseConnectionInterface
 {
 	/**
 	 * Database prefix
@@ -183,7 +184,7 @@ class DatabaseConnection extends \Aura\Sql\ExtendedPdo implements DatabaseConnec
 	 */
 	public function freeRecordSet($result)
 	{
-		return ($result instanceof \PDOStatement) && $result->closeCursor();
+		return ($result instanceof PDOStatement) && $result->closeCursor();
 	}
 
 	/**

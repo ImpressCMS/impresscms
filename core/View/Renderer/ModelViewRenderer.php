@@ -10,8 +10,7 @@
 
 namespace ImpressCMS\Core\View\Renderer;
 
-use ImpressCMS\Core\View\Table\Exception;
-use ImpressCMS\Core\View\Table\unknown_type;
+use Exception;
 use ImpressCMS\Core\View\Template;
 
 /**
@@ -103,10 +102,10 @@ class ModelViewRenderer {
 			}
 		}
 		$action_row = '';
-		if (in_array('edit', $this->_actions)) {
+		if (in_array('edit', $this->_actions, true)) {
 			$action_row .= $this->_object->getEditItemLink(false, true, $this->_userSide);
 		}
-		if (in_array('delete', $this->_actions)) {
+		if (in_array('delete', $this->_actions, true)) {
 			$action_row .= $this->_object->getDeleteItemLink(false, true, $this->_userSide);
 		}
 		if ($action_row) {
