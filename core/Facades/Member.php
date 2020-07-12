@@ -41,6 +41,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Database\Legacy\Updater\TableUpdater;
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Models\Group;
 use ImpressCMS\Core\Models\GroupHandler;
 use ImpressCMS\Core\Models\GroupMembershipHandler;
@@ -557,5 +558,92 @@ class Member extends AbstractFacade {
 	public function &getGroup($id)
 	{
 		return $this->_gHandler->get($id);
+	}
+
+	/**
+	 * Generates an array of usernames
+	 *
+	 * @param string $email email of user
+	 * @param string $name name of user
+	 * @param int $count number of names to generate
+	 * @return array $names
+	 * @author xHelp Team
+	 */
+	public function genUserNames($email, $count = 20) {
+		$name = substr($email, 0, strpos($email, '@')); //Take the email address without domain as username
+
+		$names = array();
+		$userid   = explode('@', $email);
+
+		$basename = '';
+		$hasbasename = false;
+		$emailname = $userid[0];
+
+		$names[] = $emailname;
+
+		if (strlen($name) > 0) {
+			$name = explode(' ', trim($name));
+			if (count($name) > 1) {
+				$basename = strtolower(substr($name[0], 0, 1) . $name[count($name) - 1]);
+			} else {
+				$basename = strtolower($name[0]);
+			}
+			$basename = DataFilter::icms_substr($basename, 0, 60, '');
+			//Prevent Duplication of Email Username and Name
+			if (!in_array($basename, $names)) {
+				$names[] = $basename;
+				$hasbasename = true;
+			}
+		}
+
+		$i = count($names);
+		$onbasename = 1;
+		while ($i < $count) {
+			$num = $this->genRandNumber();
+			if ($onbasename < 0 && $hasbasename) {
+				$names[] = DataFilter::icms_substr($basename, 0, 58, '') . $num;
+
+			} else {
+				$names[] = DataFilter::icms_substr($emailname, 0, 58, '') . $num;
+			}
+			$i = count($names);
+			$onbasename = ~ $onbasename;
+			$num = '';
+		}
+
+		return $names;
+
+	}
+
+	/**
+	 * Creates a random number with a specified number of $digits
+	 *
+	 * @param int $digits number of digits
+	 * @return return int random number
+	 * @author xHelp Team
+	 */
+	public function genRandNumber($digits = 2) {
+		$this->initRand();
+		$tmp = array();
+
+		for ($i = 0; $i < $digits; $i++) {
+			$tmp[$i] = (rand() % 9);
+		}
+		return implode('', $tmp);
+	}
+
+	/**
+	 * Gives the random number generator a seed to start from
+	 *
+	 * @return void
+	 *
+	 * @access public
+	 */
+	public function initRand() {
+		static $randCalled = false;
+		if (!$randCalled) {
+			srand((double) microtime() * 1000000);
+			$randCalled = true;
+		}
 	}
 }
