@@ -11,7 +11,6 @@
 namespace ImpressCMS\Core\Models;
 
 use icms;
-use ImpressCMS\Core\AbstractModel;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\DataFilter;

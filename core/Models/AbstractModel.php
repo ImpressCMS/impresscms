@@ -36,7 +36,9 @@
  * @package	ICMS\Core
  */
 
-namespace ImpressCMS\Core;
+namespace ImpressCMS\Core\Models;
+
+use ImpressCMS\Core\Properties\AbstractProperties;
 
 /**
  * Base class for all objects in the kernel (and beyond)
@@ -48,7 +50,7 @@ namespace ImpressCMS\Core;
  * @since	XOOPS
  * @author	Kazumi Ono (AKA onokazu)
  * */
-class AbstractModel extends Properties\AbstractProperties {
+class AbstractModel extends AbstractProperties {
 
 	/**
 	 * is it a newly created object?

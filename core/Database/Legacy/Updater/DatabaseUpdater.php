@@ -11,9 +11,9 @@
  */
 namespace ImpressCMS\Core\Database\Legacy\Updater;
 
-use ImpressCMS\Core\AbstractModel;
 use ImpressCMS\Core\Database\DatabaseConnection;
 use ImpressCMS\Core\Models\AbstractExtendedModel;
+use ImpressCMS\Core\Models\AbstractModel;
 use ImpressCMS\Core\Models\AbstractSEOExtendedModel;
 use ImpressCMS\Core\Properties\AbstractProperties;
 

@@ -18,7 +18,6 @@
 namespace ImpressCMS\Core\Models;
 
 use icms;
-use ImpressCMS\Core\AbstractHandler;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;

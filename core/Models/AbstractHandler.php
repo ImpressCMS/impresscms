@@ -35,7 +35,7 @@
  * @package	ICMS\Core
  */
 
-namespace ImpressCMS\Core;
+namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\DatabaseConnectionInterface;
 
