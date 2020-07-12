@@ -9,9 +9,8 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-namespace ImpressCMS\Core\View\ViewRenderer;
+namespace ImpressCMS\Core\View\Renderer;
 
-use ImpressCMS\Core\View\field_type;
 use ImpressCMS\Core\View\Template;
 
 /**
@@ -81,7 +80,7 @@ class PrinterFriendlyViewRenderer {
 	 * @param	false|string	$pagetitle
 	 * @param	int		$width		The width of the page, in pixels
 	 */
-	static public function generate($content, $title = false, $description = false, $pagetitle = false, $width = 680) {
+	public static function generate($content, $title = false, $description = false, $pagetitle = false, $width = 680) {
 		$PrintDataBuilder = new self($content, $title, $description);
 		$PrintDataBuilder->setPageTitle($pagetitle);
 		$PrintDataBuilder->setWidth($width);

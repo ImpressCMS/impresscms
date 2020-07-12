@@ -8,7 +8,7 @@
  * @author		marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\View\ViewRenderer;
+namespace ImpressCMS\Core\View\Renderer;
 
 use icms;
 use ImpressCMS\Core\DataFilter;

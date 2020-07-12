@@ -7,7 +7,7 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\View\ViewRenderer;
+namespace ImpressCMS\Core\View\Renderer;
 
 use ImpressCMS\Core\View\Template;
 

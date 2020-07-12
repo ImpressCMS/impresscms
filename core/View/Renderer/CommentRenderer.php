@@ -34,8 +34,9 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  */
 
-namespace ImpressCMS\Core\View;
+namespace ImpressCMS\Core\View\Renderer;
 
+use ImpressCMS\Core\IPF\ObjectTree;
 use ImpressCMS\Core\Models\Comment;
 
 /**
@@ -140,7 +141,7 @@ class CommentRenderer {
 	 */
 	public function renderThreadView($comment_id = 0, $admin_view = false, $show_nav = true) {
 		// construct comment tree
-		$xot = new \ImpressCMS\Core\IPF\ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree = & $xot->getTree();
 
 		if (false != $this->_useIcons) {
@@ -176,7 +177,7 @@ class CommentRenderer {
 		}
 		$replies = array();
 		$this->_renderThreadReplies($tree, $comment_id, $replies, '&nbsp;&nbsp;', $admin_view);
-		$show_replies = (count($replies) > 0)? true : false;
+		$show_replies = count($replies) > 0;
 		$this->_tpl->append('comments',
 			array('pid' => $tree[$comment_id]['obj']->getVar('com_pid'),
 				'id' => $tree[$comment_id]['obj']->getVar('com_id'),
@@ -251,7 +252,7 @@ class CommentRenderer {
 	 * @param boolean $admin_view
 	 */
 	public function renderNestView($comment_id = 0, $admin_view = false) {
-		$xot = new \ImpressCMS\Core\IPF\ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree = & $xot->getTree();
 		if (false != $this->_useIcons) {
 			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');

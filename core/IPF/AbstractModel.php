@@ -19,8 +19,8 @@ use ImpressCMS\Core\IPF\Form\SecureForm;
 use ImpressCMS\Core\Models\File;
 use ImpressCMS\Core\Models\UrlLink;
 use ImpressCMS\Core\Textsanitizer;
+use ImpressCMS\Core\View\Renderer\ModelViewRenderer;
 use ImpressCMS\Core\View\Table\Row;
-use ImpressCMS\Core\View\ViewRenderer\ModelViewRenderer;
 
 /**
  * \ImpressCMS\Core\IPF\AbstractModel base class

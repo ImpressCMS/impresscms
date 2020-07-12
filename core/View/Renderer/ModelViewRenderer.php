@@ -8,7 +8,7 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\View\ViewRenderer;
+namespace ImpressCMS\Core\View\Renderer;
 
 use ImpressCMS\Core\View\Table\Exception;
 use ImpressCMS\Core\View\Table\unknown_type;
@@ -33,6 +33,11 @@ class ModelViewRenderer {
 
 	/**
 	 * Constructor
+	 *
+	 * @param $object
+	 * @param bool $userSide
+	 * @param array $actions
+	 * @param bool $headerAsRow
 	 */
 	public function __construct(&$object, $userSide = false, $actions = array(), $headerAsRow = true) {
 		$this->_object = $object;
@@ -121,7 +126,7 @@ class ModelViewRenderer {
 
 	/**
 	 *
-	 * @param unknown_type $debug
+	 * @param bool $debug
 	 * @return string
 	 * @throws \SmartyException
 	 */
