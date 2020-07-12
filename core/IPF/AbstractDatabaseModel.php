@@ -31,7 +31,7 @@ use ImpressCMS\Core\View\Table\Row;
  * @author marcan <marcan@smartfactory.ca>
  * @todo Properly identify and declare the visibility of vars and functions
  */
-abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
+abstract class AbstractDatabaseModel extends \ImpressCMS\Core\AbstractModel {
 
 	/**
 	 * Image path
@@ -71,7 +71,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	/**
 	 * Reference to the handler managing this object
 	 *
-	 * @var Handler
+	 * @var AbstractDatabaseHandler
 	 */
 	public $handler;
 
@@ -176,14 +176,14 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	public function getVarInfo($key = null, $info = null, $default = null) {
 		if ($key === null) {
 			$ret = parent::getVarInfo($key, $info, $default);
-			foreach ($ret as $key => $value) {
-				$ret[$key]['form_caption'] = $this->getFormCaption($key, $value['form_caption']);
-				$ret[$key]['form_dsc'] = $this->getFormDescription($key, $value['form_dsc']);
+			foreach ($ret as $key2 => $value) {
+				$ret[$key2]['form_caption'] = $this->getFormCaption($key2, $value['form_caption']);
+				$ret[$key2]['form_dsc'] = $this->getFormDescription($key2, $value['form_dsc']);
 			}
 			return $ret;
 		} else {
 			$ret = parent::getVarInfo($key, $info, $default);
-			if ($info == null) {
+			if ($info === null) {
 				$ret['form_caption'] = $this->getFormCaption($key, $ret['form_caption'] ?? null);
 				$ret['form_dsc'] = $this->getFormDescription($key, $ret['form_dsc'] ?? null);
 			} else {
@@ -1116,7 +1116,7 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	/**
 	 * Constructor
 	 *
-	 * @param Handler $handler Handler that linked to this object
+	 * @param AbstractDatabaseHandler $handler Handler that linked to this object
 	 * @param array $data Data used when loading/creating object
 	 */
 	public function __construct(&$handler, $data = array()) {

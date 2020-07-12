@@ -2,8 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use ImpressCMS\Core\IPF\AbstractModel;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
 * @backupGlobals disabled
@@ -17,14 +17,14 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
         foreach ([
-                'icms_image_category_Handler' => Handler::class,
-                'icms_image_category_Object' => AbstractModel::class,
-                'icms_image_set_Handler' => Handler::class,
-                'icms_image_set_Object' => AbstractModel::class,
-                'icms_image_Handler' => Handler::class,
-                'icms_image_Object' => AbstractModel::class,
-                'icms_image_body_Handler' => Handler::class,
-                'icms_image_body_Object' => AbstractModel::class
+                'icms_image_category_Handler' => AbstractDatabaseHandler::class,
+                'icms_image_category_Object' => AbstractDatabaseModel::class,
+                'icms_image_set_Handler' => AbstractDatabaseHandler::class,
+                'icms_image_set_Object' => AbstractDatabaseModel::class,
+                'icms_image_Handler' => AbstractDatabaseHandler::class,
+                'icms_image_Object' => AbstractDatabaseModel::class,
+                'icms_image_body_Handler' => AbstractDatabaseHandler::class,
+                'icms_image_body_Object' => AbstractDatabaseModel::class
             ] as $class => $must_be_instance_of) {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {

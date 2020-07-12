@@ -39,7 +39,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Database\DatabaseConnectionInterface;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Image caetgory handler class.
@@ -50,7 +50,7 @@ use ImpressCMS\Core\IPF\Handler;
  * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class ImageCategoryHandler extends Handler {
+class ImageCategoryHandler extends AbstractDatabaseHandler {
 
 		/**
 		 * Constructor

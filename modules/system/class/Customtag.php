@@ -30,7 +30,7 @@ defined('ICMS_CUSTOMTAG_TYPE_PHP') || define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
  * @property int    $doxcode
  * @property int    $dosmiley
  */
-class mod_system_Customtag extends \ImpressCMS\Core\IPF\AbstractModel {
+class mod_system_Customtag extends \ImpressCMS\Core\IPF\AbstractDatabaseModel {
 	public $content = false;
 	public $evaluated = false;
 

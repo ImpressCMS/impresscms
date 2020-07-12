@@ -41,7 +41,7 @@
  */
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * An imageset
@@ -56,7 +56,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @property string $imgset_name    Name
  * @property int    $imgset_refid
  */
-class ImageSet extends AbstractModel {
+class ImageSet extends AbstractDatabaseModel {
 
 	/**
 	 * Constructor

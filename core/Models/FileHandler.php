@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Richfile Handler
@@ -13,7 +13,7 @@ use ImpressCMS\Core\IPF\Handler;
  * @author	Phoenyx
  */
 
-class FileHandler extends Handler {
+class FileHandler extends AbstractDatabaseHandler {
 	/**
 	 * constrcutor
 	 *

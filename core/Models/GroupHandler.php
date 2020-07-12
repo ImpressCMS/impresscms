@@ -37,7 +37,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Group handler class.
@@ -47,7 +47,7 @@ use ImpressCMS\Core\IPF\Handler;
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @package	ICMS\Member\Group
  */
-class GroupHandler extends Handler {
+class GroupHandler extends AbstractDatabaseHandler {
 
         public function __construct(&$db) {
             parent::__construct($db, 'member_group', 'groupid', 'name', 'description', 'icms', 'groups', 'groupid');

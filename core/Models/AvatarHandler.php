@@ -41,7 +41,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Filesystem;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Avatar handler class.
@@ -53,7 +53,7 @@ use ImpressCMS\Core\IPF\Handler;
  *
  * @package	ICMS\Data\Avatar
  */
-class AvatarHandler extends Handler {
+class AvatarHandler extends AbstractDatabaseHandler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'data_avatar', 'avatar_id', 'avatar_name', 'avatar_file', 'icms', 'avatar', 'avatar_id');

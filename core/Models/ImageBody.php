@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * Image body
@@ -9,7 +9,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @property int    $image_id       Image ID
  * @property string $image_body     Image body
  */
-class ImageBody extends AbstractModel {
+class ImageBody extends AbstractDatabaseModel {
 
 	/**
 	 * Constructor

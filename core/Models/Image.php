@@ -38,7 +38,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * An Image Object
@@ -57,7 +57,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @property string $image_body        Image contents
  * @property int    $imgcat_id         Image category ID
  */
-class Image extends AbstractModel {
+class Image extends AbstractDatabaseModel {
 
 	/**
 	 * Info of Image file (width, height, bits, mimetype)

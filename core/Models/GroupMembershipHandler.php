@@ -38,7 +38,7 @@
 namespace ImpressCMS\Core\Models;
 
 use icms;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Group membership handler class. (Singleton)
@@ -49,7 +49,7 @@ use ImpressCMS\Core\IPF\Handler;
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @package	ICMS\Member\Group\Membership
  */
-class GroupMembershipHandler extends Handler {
+class GroupMembershipHandler extends AbstractDatabaseHandler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'member_group_membership', 'linkid', 'groupid', 'uid', 'icms', 'groups_users_link', 'linkid');

@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 use ImpressCMS\Core\View\Form\Elements\CheckboxElement;
 use ImpressCMS\Core\View\Form\Elements\LabelElement;
 use ImpressCMS\Core\View\Form\Elements\TextElement;
@@ -20,7 +20,7 @@ use ImpressCMS\Core\View\Form\Elements\TrayElement;
 class ImageElement extends TrayElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to targetobject
+	 * @param	AbstractDatabaseModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

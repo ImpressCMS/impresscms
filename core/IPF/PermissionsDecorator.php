@@ -20,16 +20,16 @@ class PermissionsDecorator {
 
 	/**
 	 *
-	 * @var Handler
+	 * @var AbstractDatabaseHandler
 	 */
 	public $handler;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Handler $handler
+	 * @param AbstractDatabaseHandler $handler
 	 */
-	public function __construct(Handler $handler) {
+	public function __construct(AbstractDatabaseHandler $handler) {
 		$this->handler = $handler;
 	}
 

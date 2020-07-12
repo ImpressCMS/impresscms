@@ -27,7 +27,7 @@ icms_loadLanguageFile("system", "autotasks", true);
  * @property string $sat_type           Type (custom or module)
  * @property int    $sat_addon_id       Module ID
  */
-class mod_system_Autotasks extends \ImpressCMS\Core\IPF\AbstractModel {
+class mod_system_Autotasks extends \ImpressCMS\Core\IPF\AbstractDatabaseModel {
 
 	public $content = false;
 
@@ -221,7 +221,7 @@ class mod_system_Autotasks extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * Custom form generation for autotasks
-	 * @see \ImpressCMS\Core\IPF\AbstractModel::getForm()
+	 * @see \ImpressCMS\Core\IPF\AbstractDatabaseModel::getForm()
 	 */
 	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
 		if ($this->getType(0) == 'addon') {

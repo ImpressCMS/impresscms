@@ -78,14 +78,14 @@ class ObjectTree {
 		/**
 		 * Array of objects
 		 *
-		 * @var AbstractModel
+		 * @var AbstractDatabaseModel
 		 */
 	private $_objects = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param   AbstractModel	$objectArr  Array of objects
+	 * @param   AbstractDatabaseModel	$objectArr  Array of objects
 	 * @param   string	$myId       field name of object ID
 	 * @param   string	$parentId   field name of parent object ID
 	 * @param   string	$rootId     field name of root object ID
@@ -131,7 +131,7 @@ class ObjectTree {
 	 * returns an object from the tree specified by its id
 	 *
 	 * @param   string  $key    ID of the object to retrieve
-	 * @return  AbstractModel  Object within the tree
+	 * @return  AbstractDatabaseModel  Object within the tree
 	 */
 	public function & getByKey($key) {
 		return $this->_tree[$key]['obj'];

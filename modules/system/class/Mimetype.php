@@ -23,7 +23,7 @@ icms_loadLanguageFile('system', 'mimetype', true);
  * @property string     $name          Name
  * @property string[]   $dirname       Modules allowed to use this mimetype
  */
-class mod_system_Mimetype extends \ImpressCMS\Core\IPF\AbstractModel {
+class mod_system_Mimetype extends \ImpressCMS\Core\IPF\AbstractDatabaseModel {
 	public $content = false;
 
 	/**
@@ -48,8 +48,8 @@ class mod_system_Mimetype extends \ImpressCMS\Core\IPF\AbstractModel {
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \ImpressCMS\Core\IPF\AbstractModel::getVar()
 	 * @return	mixed	Value of the selected property
+     *@see \ImpressCMS\Core\IPF\AbstractDatabaseModel::getVar()
 	 */
 	public function getVar($key, $format = 's') {
 		if ($format == 's' && in_array($key, array())) {

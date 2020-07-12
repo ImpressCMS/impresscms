@@ -291,7 +291,7 @@ class Controller {
 		 */
 
 		// if handler is the Multilanguage handler, we will need to treat this for multilanguage
-		if (is_subclass_of($this->handler, Handler::class)) {
+		if (is_subclass_of($this->handler, AbstractDatabaseHandler::class)) {
 
 			if ($icmsObj->isNew()) {
 				// This is a new object. We need to store the meta data and then the language data
@@ -441,7 +441,7 @@ class Controller {
 	/**
 	 * Retrieve the object admin side link for a page
 	 *
-	 * @param	AbstractModel	$icmsObj	reference to the object from which we want the user side link
+	 * @param	AbstractDatabaseModel	$icmsObj	reference to the object from which we want the user side link
 	 * @param	bool	$onlyUrl	whether or not to return a simple URL or a full <a> link
 	 * @param	bool	$withimage	return a linked image instead of linked text
 	 * @return	string	admin side link to the object
@@ -467,7 +467,7 @@ class Controller {
 	/**
 	 * Retrieve the object user side link
 	 *
-	 * @param AbstractModel $icmsObj reference to the object from which we want the user side link
+	 * @param AbstractDatabaseModel $icmsObj reference to the object from which we want the user side link
 	 * @param bool $onlyUrl wether or not to return a simple URL or a full <a> link
 	 * @return string user side link to the object
 	 */
@@ -503,7 +503,7 @@ class Controller {
 	/**
 	 * This method returns a view link of the Object
 	 *
-	 * @param AbstractModel $icmsObj
+	 * @param AbstractDatabaseModel $icmsObj
 	 * @param boolean $onlyUrl
 	 * @param boolean $withimage
 	 * @param boolean $userSide
@@ -533,7 +533,7 @@ class Controller {
 
 	/**
 	 *
-	 * @param	AbstractModel	$icmsObj
+	 * @param	AbstractDatabaseModel	$icmsObj
 	 * @param	bool	$onlyUrl
 	 * @param	bool	$withimage
 	 */

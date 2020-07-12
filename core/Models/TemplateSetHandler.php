@@ -37,7 +37,7 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Template set handler class.
@@ -48,7 +48,7 @@ use ImpressCMS\Core\IPF\Handler;
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\View\Template\Set
  */
-class TemplateSetHandler extends Handler {
+class TemplateSetHandler extends AbstractDatabaseHandler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'view_template_set', 'tplset_id', 'tplset_name', 'tplset_name', 'icms', 'tplset', 'tplset_id');

@@ -14,14 +14,14 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * BlockPositionHandler
  *
  * @package	ICMS\View\Block\Position
  */
-class BlockPositionHandler extends Handler {
+class BlockPositionHandler extends AbstractDatabaseHandler {
 
 	/**
 	 * Constructor

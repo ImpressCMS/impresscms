@@ -35,7 +35,7 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * Config item
@@ -55,7 +55,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @property string     $conf_valuetype     Type of value
  * @property int        $conf_order         Order (used to sorting fields before displaying on form)
  */
-class ConfigItem extends AbstractModel {
+class ConfigItem extends AbstractDatabaseModel {
 	/**
 	 * Config options
 	 *

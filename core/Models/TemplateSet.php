@@ -36,7 +36,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * Base class for all template sets
@@ -51,7 +51,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @property string $tplset_credits Credits
  * @property int    $tplset_created When it was created?
  * */
-class TemplateSet extends AbstractModel {
+class TemplateSet extends AbstractDatabaseModel {
 
 	/**
 	 * constructor

@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 use ImpressCMS\Core\View\Form\AbstractFormElement;
 
 /**
@@ -30,7 +30,7 @@ class FormSectionElement extends AbstractFormElement {
 	/**
 	 * Constructor
 	 *
-	 * @param	AbstractModel	$object	reference to targetobject
+	 * @param	AbstractDatabaseModel	$object	reference to targetobject
 	 * @param	string			$key	name of the form section
 	 */
 	public function __construct($object, $key) {

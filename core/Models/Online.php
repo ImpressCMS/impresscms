@@ -4,7 +4,7 @@
 namespace ImpressCMS\Core\Models;
 
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * Describes online user data
@@ -17,7 +17,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @property string $online_uname Username
  * @property int $online_module User last visited module
  */
-class Online extends AbstractModel
+class Online extends AbstractDatabaseModel
 {
 
 	/**

@@ -11,7 +11,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * File object
@@ -24,7 +24,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  *
  * @package	ICMS\Data\File
  */
-class File extends AbstractModel {
+class File extends AbstractDatabaseModel {
 
 	/**
 	 * constructor

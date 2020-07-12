@@ -41,7 +41,7 @@ use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Aura;
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 use ImpressCMS\Core\Messaging\MailHandler;
 
 /**
@@ -82,7 +82,7 @@ use ImpressCMS\Core\Messaging\MailHandler;
  * @property bool   $pass_expired      Is password expired?
  * @property string $login_name        Login name
  */
-class User extends AbstractModel {
+class User extends AbstractDatabaseModel {
 
 	/**
 	 * @var bool is the user admin?

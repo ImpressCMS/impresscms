@@ -34,7 +34,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Configuration option handler class.
@@ -45,7 +45,7 @@ use ImpressCMS\Core\IPF\Handler;
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @package	ICMS\Config\Option
  */
-class ConfigOptionHandler extends Handler {
+class ConfigOptionHandler extends AbstractDatabaseHandler {
 
         public function __construct(&$db) {
             parent::__construct($db, 'config_option', 'confop_id', 'confop_name', 'confop_value', 'icms', 'configoption', 'confop_id');

@@ -39,7 +39,7 @@ namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * ImpressCMS Core Block Object Handler Class
@@ -50,7 +50,7 @@ use ImpressCMS\Core\IPF\Handler;
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class BlockHandler extends Handler {
+class BlockHandler extends AbstractDatabaseHandler {
 
 	private $block_positions;
 	private $modules_name;

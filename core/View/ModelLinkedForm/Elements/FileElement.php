@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * Form control creating an advanced file upload element
@@ -18,7 +18,7 @@ class FileElement extends \ImpressCMS\Core\View\Form\Elements\FileElement {
 
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to targetobject
+	 * @param	AbstractDatabaseModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

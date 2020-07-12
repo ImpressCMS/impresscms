@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
 use icms;
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 use ImpressCMS\Core\View\Form\Elements\HiddenElement;
 use ImpressCMS\Core\View\Form\Elements\LabelElement;
 use ImpressCMS\Core\View\Form\Elements\TrayElement;
@@ -19,7 +19,7 @@ use ImpressCMS\Core\View\Form\Elements\TrayElement;
 class RichfileElement extends TrayElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel	$object	target object
+	 * @param	AbstractDatabaseModel	$object	target object
 	 * @param	string			$key	the key
 	 */
 	public function __construct($object, $key) {

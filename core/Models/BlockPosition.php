@@ -9,7 +9,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * Block position
@@ -23,7 +23,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @property int    $block_default Is default?
  * @property string $block_type    Type
  */
-class BlockPosition extends AbstractModel {
+class BlockPosition extends AbstractDatabaseModel {
 
 	/**
 	 * Constructor

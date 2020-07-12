@@ -10,7 +10,7 @@
 
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 use ImpressCMS\Core\View\Theme\ThemeComponent;
 
 /**
@@ -40,7 +40,7 @@ class AutocompleteElement extends \ImpressCMS\Core\View\Form\Elements\TextElemen
 
 	/**
 	 * Constructor
-	 * @param	AbstractModel	$object	reference to targetobject
+	 * @param	AbstractDatabaseModel	$object	reference to targetobject
 	 * @param	string			$key	the form name
 	 */
 	public function __construct($object, $key) {

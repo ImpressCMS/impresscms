@@ -12,14 +12,14 @@ namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Handler for the user ranks object
  *
  * @package	ICMS\Member\Rank
  */
-class UserRankHandler extends Handler {
+class UserRankHandler extends AbstractDatabaseHandler {
 
 	/** */
 	public $objects = false;

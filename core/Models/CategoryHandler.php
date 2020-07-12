@@ -10,7 +10,7 @@
  */
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Provides data access mechanisms to the Category object
@@ -20,7 +20,7 @@ use ImpressCMS\Core\IPF\Handler;
  * @package	ICMS\IPF\Category
  * @since 	1.1
  */
-class CategoryHandler extends Handler {
+class CategoryHandler extends AbstractDatabaseHandler {
 	/** */
 	public $allCategoriesObj = false;
 	/** */

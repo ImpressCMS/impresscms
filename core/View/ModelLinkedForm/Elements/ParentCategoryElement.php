@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 use ImpressCMS\Core\IPF\ObjectTree;
 
 /**
@@ -17,7 +17,7 @@ use ImpressCMS\Core\IPF\ObjectTree;
 class ParentCategoryElement extends \ImpressCMS\Core\View\Form\Elements\SelectElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to target object
+	 * @param	AbstractDatabaseModel    $object   reference to target object
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

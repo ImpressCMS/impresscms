@@ -14,7 +14,7 @@
  * @todo	Convert to OOP
  * @package     ImpressCMS\Modules\System\Class\Smiles
  */
-class mod_system_SmiliesHandler extends \ImpressCMS\Core\IPF\Handler {
+class mod_system_SmiliesHandler extends \ImpressCMS\Core\IPF\AbstractDatabaseHandler {
 
 	/**
 	 * Construct the handler

@@ -10,7 +10,7 @@
  */
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractSEOModel;
+use ImpressCMS\Core\IPF\AbstractSEODatabaseModel;
 use ImpressCMS\Core\IPF\Controller;
 
 /**
@@ -24,7 +24,7 @@ use ImpressCMS\Core\IPF\Controller;
  *
  * @package	ICMS\IPF\Category
  */
-class Category extends AbstractSEOModel {
+class Category extends AbstractSEODatabaseModel {
 
 	/** Path that corresponds to the category */
 	private $_categoryPath;
@@ -69,8 +69,8 @@ class Category extends AbstractSEOModel {
 	}
 	/**
 	 * Returns the description for the category
-	 * @see 	AbstractModel::getValueFor()
-	 * @return 	string	Text to display as the description
+	 * @return    string    Text to display as the description
+	 *@see 	AbstractDatabaseModel::getValueFor()
 	 */
 	public function description() {
 		return $this->getValueFor('description', false);

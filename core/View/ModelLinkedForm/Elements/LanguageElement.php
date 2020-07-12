@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 use ImpressCMS\Core\View\Form\Elements\Select\LangElement;
 
 /**
@@ -16,7 +16,7 @@ use ImpressCMS\Core\View\Form\Elements\Select\LangElement;
 class LanguageElement extends LangElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to target object
+	 * @param	AbstractDatabaseModel    $object   reference to target object
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

@@ -51,7 +51,7 @@ class ObjectRegistry {
 	/**
 	 * Adding objects to the registry
 	 *
-	 * @param Handler $handler of the objects to add
+	 * @param AbstractDatabaseHandler $handler of the objects to add
 	 * @param CriteriaCompo|false $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
@@ -69,7 +69,7 @@ class ObjectRegistry {
 	/**
 	 * Adding objects as list to the registry
 	 *
-	 * @param Handler $handler of the objects to add
+	 * @param AbstractDatabaseHandler $handler of the objects to add
 	 * @param CriteriaCompo|false $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured

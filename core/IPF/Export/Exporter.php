@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\IPF\Export;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Class to easily export data from IcmsPersistables
@@ -19,7 +19,7 @@ class Exporter {
 	/**
 	 * Handler that can provide data
 	 *
-	 * @var Handler
+	 * @var AbstractDatabaseHandler
 	 */
 	public $handler;
 
@@ -82,7 +82,7 @@ class Exporter {
 	/**
 	 * Constructor
 	 *
-	 * @param Handler         $objectHandler  IcmsPersistableHandler handling the data we want to export
+	 * @param AbstractDatabaseHandler         $objectHandler  IcmsPersistableHandler handling the data we want to export
 	 * @param CriteriaElement $criteria       Containing the criteria of the query fetching the objects to be exported
 	 * @param array|false               $fields         Fields to be exported. If FALSE then all fields will be exported
 	 * @param false|string              $filename       Name of the file to be created

@@ -17,7 +17,7 @@ use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 use ImpressCMS\Core\View\PageNav;
 use ImpressCMS\Core\View\Template;
 
@@ -73,7 +73,7 @@ class Table {
 	/**
 	 * Constructor
 	 *
-	 * @param Handler $objectHandler Handler
+	 * @param AbstractDatabaseHandler $objectHandler Handler
 	 * @param false|CriteriaElement $criteria Criteria
 	 * @param string[] $actions array representing the actions to offer
 	 * @param bool $userSide For user side?

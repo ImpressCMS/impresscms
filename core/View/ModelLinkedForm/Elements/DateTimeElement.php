@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * Form control creating a DateTime Picker element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
@@ -15,7 +15,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
 class DateTimeElement extends \ImpressCMS\Core\View\Form\Elements\DateTimeElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to targetobject
+	 * @param	AbstractDatabaseModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

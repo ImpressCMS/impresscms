@@ -2,14 +2,14 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\DatabaseConnectionInterface;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 
 /**
  * Image body storing class
  *
  * @package	ICMS\Image\Body
  */
-class ImageBodyHandler extends Handler {
+class ImageBodyHandler extends AbstractDatabaseHandler {
 
 		/**
 		 * Constructor

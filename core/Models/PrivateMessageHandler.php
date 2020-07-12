@@ -38,7 +38,7 @@ namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 use ImpressCMS\Core\Models\PrivateMessage\PrivateMessageModel;
 
 /**
@@ -51,7 +51,7 @@ use ImpressCMS\Core\Models\PrivateMessage\PrivateMessageModel;
  * @copyright    copyright (c) 2000-2007 XOOPS.org
  * @package    ICMS\Data\Privmessage
  */
-class PrivateMessageHandler extends Handler
+class PrivateMessageHandler extends AbstractDatabaseHandler
 {
 
 	public function __construct(&$db)

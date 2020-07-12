@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
 use icms;
-use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
  * Form control creating a radio element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
@@ -19,7 +19,7 @@ class RadioElement extends \ImpressCMS\Core\View\Form\Elements\RadioElement {
 
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to target object
+	 * @param	AbstractDatabaseModel    $object   reference to target object
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

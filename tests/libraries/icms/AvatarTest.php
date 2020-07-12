@@ -2,8 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use ImpressCMS\Core\IPF\AbstractModel;
-use ImpressCMS\Core\IPF\Handler;
+use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
+use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 
 /**
 * @backupGlobals disabled
@@ -16,7 +16,7 @@ class AvatarTest extends \PHPUnit_Framework_TestCase {
      * Test if icms_core_DataFilter is available
      */
     public function testAvailability() {
-        foreach (['Handler' => Handler::class, 'Object' => AbstractModel::class] as $type => $instanecOfType) {
+        foreach (['Handler' => AbstractDatabaseHandler::class, 'Object' => AbstractDatabaseModel::class] as $type => $instanecOfType) {
                $class = 'icms_data_avatar_' . $type;
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 
