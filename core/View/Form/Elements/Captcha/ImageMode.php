@@ -90,7 +90,7 @@ class ImageMode {
 	protected function getBase64ImageUrl() {
 		ob_start ();
 
-		$image_handler = new \ImpressCMS\Core\View\Form\Elements\Captcha\ImageHandler();
+		$image_handler = new \ImpressCMS\Core\View\Form\Elements\Captcha\ImageRenderer();
 		$image_handler->sendHeader = false;
 		$image_handler->loadImage();
 

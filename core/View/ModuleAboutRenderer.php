@@ -8,11 +8,10 @@
  * @author		marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\IPF;
+namespace ImpressCMS\Core\View;
 
 use icms;
 use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\View\Template;
 
 /**
  * About
@@ -26,7 +25,7 @@ use ImpressCMS\Core\View\Template;
  * @todo	Properly set visibility of vars
  * @package	ICMS\IPF
  */
-class About {
+class ModuleAboutRenderer {
 
 	/**
 	 * Title
@@ -180,7 +179,7 @@ class About {
 	 * Initiate the object, based on $icmsModule
 	 *
 	 * @param string $aboutTitle text used in the extreme right caption of the menu
-	 * @return About
+	 * @return ModuleAboutRenderer
 	 */
 	public function __construct($aboutTitle = _MODABOUT_ABOUT) {
 		global $icmsModule, $icmsConfig;

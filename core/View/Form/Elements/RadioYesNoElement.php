@@ -28,7 +28,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form datatime object
+ * Creates a form radiobutton attribute
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -36,41 +36,28 @@
 namespace ImpressCMS\Core\View\Form\Elements;
 
 /**
- * Date and time selection field
+ * Yes/No radio buttons.
  *
- * This extends the \ImpressCMS\Core\Form\Elements\TrayElement class because this field actually contains
- * 2 different elements - the date and the time
+ * A pair of radio buttons labeled _YES and _NO with values 1 and 0
  *
  * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class DatetimeElement extends TrayElement {
-
+class RadioYesNoElement extends RadioElement {
 	/**
 	 * Constructor
-	 * @param	string  $caption    Caption of the element
-	 * @param	string  $name       Name of the element
-	 * @param	string  $size       Size of the element
-	 * @param	string  $value      Value of the element
+	 *
+	 * @param	string	$caption
+	 * @param	string	$name
+	 * @param	string	$value		Pre-selected value, can be "0" (No) or "1" (Yes)
+	 * @param	string	$yes		String for "Yes"
+	 * @param	string	$no			String for "No"
 	 */
-	public function __construct($caption, $name, $size = 15, $value = 0) {
-		parent::__construct($caption, '&nbsp;');
-		$value = (int) ($value);
-		$value = ($value > 0)?$value:time();
-		$datetime = getDate($value);
-		$this->addElement(new DateElement('', $name . '[date]', $size, $value));
-		$timearray = array();
-		for ($i = 0; $i < 24; $i++) {
-			for ($j = 0; $j < 60; $j = $j + 10) {
-				$key = ($i * 3600) + ($j * 60);
-				$timearray[$key] = ($j != 0)?$i . ':' . $j:$i . ':0' . $j;
-			}
-		}
-		ksort($timearray);
-		$timeselect = new SelectElement('', $name . '[time]', $datetime['hours'] * 3600 + 600 * ceil($datetime['minutes'] / 10));
-		$timeselect->addOptionArray($timearray);
-		$this->addElement($timeselect);
+	public function __construct($caption, $name, $value = null, $yes = _YES, $no = _NO) {
+		parent::__construct($caption, $name, $value);
+		$this->addOption(1, '&nbsp;' . $yes . '&nbsp;');
+		$this->addOption(0, '&nbsp;' . $no);
 	}
 }
 

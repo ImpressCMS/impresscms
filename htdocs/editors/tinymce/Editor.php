@@ -4,7 +4,7 @@
 namespace ImpressCMS\Editors\TinyMCE;
 
 use icms\plugins\EditorInterface;
-use ImpressCMS\Core\View\Form\Elements\TextareaElement;
+use ImpressCMS\Core\View\Form\Elements\TextAreaElement;
 
 /**
  * Defines TinyMCE editor
@@ -33,7 +33,7 @@ class Editor implements EditorInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function create(array $configs, $checkCompatible = false): TextareaElement
+	public function create(array $configs, $checkCompatible = false): TextAreaElement
 	{
 		require_once __DIR__ . '/formtinymce.php';
 		return new \XoopsFormTinymce($configs, $checkCompatible);

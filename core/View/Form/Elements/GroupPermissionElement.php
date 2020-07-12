@@ -43,7 +43,7 @@ use ImpressCMS\Core\View\Form\AbstractFormElement;
  * @author	Kazumi Ono <onokazu@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class GrouppermElement extends AbstractFormElement {
+class GroupPermissionElement extends AbstractFormElement {
 	/**
 	 * Pre-selected value(s)
 	 *

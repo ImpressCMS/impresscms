@@ -7,17 +7,17 @@ use ImpressCMS\Core\IPF\Form\Elements\SelectMultiElement;
 use ImpressCMS\Core\View\Form\AbstractFormElement;
 use ImpressCMS\Core\View\Form\Elements\ButtonElement;
 use ImpressCMS\Core\View\Form\Elements\CheckboxElement;
-use ImpressCMS\Core\View\Form\Elements\ColorpickerElement;
-use ImpressCMS\Core\View\Form\Elements\DhtmltextareaElement;
+use ImpressCMS\Core\View\Form\Elements\ColorPickerElement;
+use ImpressCMS\Core\View\Form\Elements\DHTMLTextAreaElement;
 use ImpressCMS\Core\View\Form\Elements\HiddenElement;
 use ImpressCMS\Core\View\Form\Elements\LabelElement;
 use ImpressCMS\Core\View\Form\Elements\PasswordElement;
 use ImpressCMS\Core\View\Form\Elements\Select\CountryElement;
 use ImpressCMS\Core\View\Form\Elements\Select\GroupElement;
-use ImpressCMS\Core\View\Form\Elements\Select\TimezoneElement;
+use ImpressCMS\Core\View\Form\Elements\Select\TimeZoneElement;
 use ImpressCMS\Core\View\Form\Elements\Select\UserElement;
 use ImpressCMS\Core\View\Form\Elements\SelectElement;
-use ImpressCMS\Core\View\Form\Elements\TextareaElement;
+use ImpressCMS\Core\View\Form\Elements\TextAreaElement;
 use ImpressCMS\Core\View\Form\Elements\TrayElement;
 use ImpressCMS\Core\View\Form\ThemeForm;
 use ImpressCMS\Core\View\Theme\ThemeFactory;
@@ -373,7 +373,7 @@ class Form extends ThemeForm {
 	/**
 	 * Gets a control from the targetobject (@param string $controlName name of the control element
 	 * @param string $key key of the form variables in the targetobject
-	 * @return ColorpickerElement|DhtmltextareaElement|LabelElement|PasswordElement|CountryElement|GroupElement|TimezoneElement|UserElement|SelectElement|TextareaElement
+	 * @return ColorPickerElement|DHTMLTextAreaElement|LabelElement|PasswordElement|CountryElement|GroupElement|TimeZoneElement|UserElement|SelectElement|TextAreaElement
 	 * @todo, which object will be passed here?)
 	 *
 	 */
@@ -381,7 +381,7 @@ class Form extends ThemeForm {
 		switch ($controlName) {
 			case 'color':
 				$control = $this->targetObject->getControl($key);
-				$controlObj = new ColorpickerElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
+				$controlObj = new ColorPickerElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
 				return $controlObj;
 				break;
 
@@ -394,7 +394,7 @@ class Form extends ThemeForm {
 				$form_rows = isset($this->targetObject->controls[$key]['rows'])?$this->targetObject->controls[$key]['rows']:5;
 				$form_cols = isset($this->targetObject->controls[$key]['cols'])?$this->targetObject->controls[$key]['cols']:60;
 
-				$editor = new TextareaElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
+				$editor = new TextAreaElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
 				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
 					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}
@@ -402,7 +402,7 @@ class Form extends ThemeForm {
 				break;
 
 			case 'dhtmltextarea' :
-				$editor = new DhtmltextareaElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), 15, 50);
+				$editor = new DHTMLTextAreaElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), 15, 50);
 				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
 					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}
@@ -418,7 +418,7 @@ class Form extends ThemeForm {
 				break;
 
 			case 'timezone':
-				return new TimezoneElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
+				return new TimeZoneElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
 				break;
 
 			case 'group':

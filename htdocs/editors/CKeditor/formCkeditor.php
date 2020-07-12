@@ -5,7 +5,7 @@
  */
 defined("ICMS_ROOT_PATH") || die("Root path not defined");
 
-class icmsFormCKEditor extends \ImpressCMS\Core\View\Form\Elements\TextareaElement {
+class icmsFormCKEditor extends \ImpressCMS\Core\View\Form\Elements\TextAreaElement {
 	var $rootpath = "";
 	var $_language = _LANGCODE;
 	var $_width = "100%";

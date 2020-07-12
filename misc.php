@@ -63,7 +63,7 @@ if (!empty($_POST)) {
 }
 
 if ($action === 'update-captcha') {
-	$image_handler = new \ImpressCMS\Core\View\Form\Elements\Captcha\ImageHandler();
+	$image_handler = new \ImpressCMS\Core\View\Form\Elements\Captcha\ImageRenderer();
 	$image_handler->clearAttempts();
 	$image_handler->loadImage();
 	exit(0);

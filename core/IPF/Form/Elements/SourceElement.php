@@ -3,7 +3,7 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
 
 use ImpressCMS\Core\IPF\AbstractModel;
 use ImpressCMS\Core\Plugins\EditorHandler;
-use ImpressCMS\Core\View\Form\Elements\TextareaElement;
+use ImpressCMS\Core\View\Form\Elements\TextAreaElement;
 
 /**
  * Form control creating a textbox for an object derived from \ImpressCMS\Core\IPF\AbstractModel
@@ -14,7 +14,7 @@ use ImpressCMS\Core\View\Form\Elements\TextareaElement;
  * @since	1.2
  * @author	MekDrop <mekdrop@gmail.com>
  */
-class SourceElement extends TextareaElement {
+class SourceElement extends TextAreaElement {
 	/*
 	 * Editor's class instance
 	 */

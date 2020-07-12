@@ -36,7 +36,7 @@
 namespace ImpressCMS\Core\View\Form;
 
 use ImpressCMS\Core\View\Form\Elements\ButtonElement;
-use ImpressCMS\Core\View\Form\Elements\GrouppermElement;
+use ImpressCMS\Core\View\Form\Elements\GroupPermissionElement;
 use ImpressCMS\Core\View\Form\Elements\HiddenElement;
 use ImpressCMS\Core\View\Form\Elements\TrayElement;
 
@@ -144,7 +144,7 @@ class GroupPermissionForm extends AbstractForm {
 		foreach (array_keys($glist) as $i) {
 			// get selected item id(s) for each group
 			$selected = $gperm_handler->getItemIds($this->_permName, $i, $this->_modid);
-			$ele = new GrouppermElement($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
+			$ele = new GroupPermissionElement($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
 			$ele->setOptionTree($this->_itemTree);
 			$this->addElement($ele);
 			unset ($ele);

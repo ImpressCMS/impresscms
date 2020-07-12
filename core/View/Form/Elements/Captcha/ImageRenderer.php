@@ -18,7 +18,7 @@ use ImpressCMS\Core\Filesystem;
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @package	ICMS\Form\Elements\Captcha
  */
-class ImageHandler {
+class ImageRenderer {
 	/**
 	 * Do we need to send headers?
 	 *

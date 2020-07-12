@@ -28,108 +28,49 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a textarea form attribut
+ * Creates a form datatime object
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 namespace ImpressCMS\Core\View\Form\Elements;
 
-use ImpressCMS\Core\View\Form\AbstractFormElement;
-
 /**
- * A textarea
+ * Date and time selection field
+ *
+ * This extends the \ImpressCMS\Core\Form\Elements\TrayElement class because this field actually contains
+ * 2 different elements - the date and the time
  *
  * @package	ICMS\Form\Elements
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class TextareaElement extends AbstractFormElement {
-	/**
-	 * number of columns
-	 * @var	int
-	 */
-	protected $_cols;
+class DateTimeElement extends TrayElement {
 
 	/**
-	 * number of rows
-	 * @var	int
+	 * Constructor
+	 * @param	string  $caption    Caption of the element
+	 * @param	string  $name       Name of the element
+	 * @param	string  $size       Size of the element
+	 * @param	string  $value      Value of the element
 	 */
-	protected $_rows;
-
-	/**
-	 * initial content
-	 * @var	string
-	 */
-	protected $_value;
-
-	/**
-	 * Constuctor
-	 *
-	 * @param	string  $caption    caption
-	 * @param	string  $name       name
-	 * @param	string  $value      initial content
-	 * @param	int     $rows       number of rows
-	 * @param	int     $cols       number of columns
-	 */
-	public function __construct($caption, $name, $value = "", $rows = 5, $cols = 50) {
-		$this->setCaption($caption);
-		$this->setName($name);
-		$this->_rows = (int) $rows;
-		$this->_cols = (int) $cols;
-		$this->setValue($value);
-	}
-
-	/**
-	 * get number of rows
-	 *
-	 * @return	int
-	 */
-	public function getRows() {
-		return $this->_rows;
-	}
-
-	/**
-	 * Get number of columns
-	 *
-	 * @return	int
-	 */
-	public function getCols() {
-		return $this->_cols;
-	}
-
-	/**
-	 * Get initial content
-	 *
-	 * @param	bool    $encode To sanitize the text? Default value should be "true"; however we have to set "false" for backward compatibility
-	 * @return	string
-	 */
-	public function getValue($encode = false) {
-		return $encode? htmlspecialchars($this->_value):$this->_value;
-	}
-
-	/**
-	 * Set initial content
-	 *
-	 * @param	$value	string
-	 */
-	public function setValue($value) {
-		$this->_value = $value;
-	}
-
-	/**
-	 * prepare HTML for output
-	 *
-	 * @return string HTML
-	 */
-	public function render() {
-		return "<textarea class='form-control' name='" . $this->getName()
-			. "' id='" . $this->getName() . '_tarea'
-			. "' rows='" . $this->getRows()
-			. "' cols='" . $this->getCols()
-			. "'" . $this->getExtra() . ">"
-			. $this->getValue()
-			. "</textarea>";
+	public function __construct($caption, $name, $size = 15, $value = 0) {
+		parent::__construct($caption, '&nbsp;');
+		$value = (int) ($value);
+		$value = ($value > 0)?$value:time();
+		$datetime = getDate($value);
+		$this->addElement(new DateElement('', $name . '[date]', $size, $value));
+		$timearray = array();
+		for ($i = 0; $i < 24; $i++) {
+			for ($j = 0; $j < 60; $j = $j + 10) {
+				$key = ($i * 3600) + ($j * 60);
+				$timearray[$key] = ($j != 0)?$i . ':' . $j:$i . ':0' . $j;
+			}
+		}
+		ksort($timearray);
+		$timeselect = new SelectElement('', $name . '[time]', $datetime['hours'] * 3600 + 600 * ceil($datetime['minutes'] / 10));
+		$timeselect->addOptionArray($timearray);
+		$this->addElement($timeselect);
 	}
 }
 

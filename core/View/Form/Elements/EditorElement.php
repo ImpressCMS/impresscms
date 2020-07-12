@@ -48,7 +48,7 @@ use ImpressCMS\Core\Plugins\EditorHandler;
  *
  * @todo	To be removed as this is not used anywhere in the core
  */
-class EditorElement extends TextareaElement {
+class EditorElement extends TextAreaElement {
 	var $editor;
 
 	/**

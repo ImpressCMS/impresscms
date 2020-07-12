@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
 use ImpressCMS\Core\IPF\AbstractModel;
-use ImpressCMS\Core\View\Form\Elements\RadioynElement;
+use ImpressCMS\Core\View\Form\Elements\RadioYesNoElement;
 
 /**
  * Form control creating a yesno radio button for an object derived from \ImpressCMS\Core\IPF\AbstractModel
@@ -13,7 +13,7 @@ use ImpressCMS\Core\View\Form\Elements\RadioynElement;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class YesNoElement extends RadioynElement {
+class YesNoElement extends RadioYesNoElement {
 	/**
 	 * Constructor
 	 * @param	AbstractModel    $object   reference to targetobject

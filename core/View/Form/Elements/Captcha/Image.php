@@ -213,7 +213,7 @@ class Image {
 
 		if ($clearSession) {
 			/**
-			 * @var Aura\Session\Session $session
+			 * @var \Aura\Session\Session $session
 			 */
 			$session = icms::getInstance()->get('session');
 			$captchaSection = $session->getSegment(__CLASS__);
@@ -251,14 +251,14 @@ class Image {
 	 */
 	public function render() {
 		global $icmsConfigCaptcha;
-		$form = "";
+		$form = '';
 
 		if (!$this->active || empty($this->config['name'])) {
 			return $form;
 		}
 
 		/**
-		 * @var Aura\Session\Session $session
+		 * @var \Aura\Session\Session $session
 		 */
 		$session = icms::getInstance()->get('session');
 		$captchaSection = $session->getSegment(__CLASS__);

@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form;
 
-use ImpressCMS\Core\View\Form\Elements\HiddentokenElement;
+use ImpressCMS\Core\View\Form\Elements\HiddenTokenElement;
 
 /**
  * Form control creating a secure form
@@ -26,6 +26,6 @@ class SecureForm extends Form {
 	 */
 	public function __construct(&$target, $form_name, $form_caption, $form_action, $form_fields = null, $submit_button_caption = false, $cancel_js_action = false, $captcha = false) {
 		parent::__construct($target, $form_name, $form_caption, $form_action, $form_fields, $submit_button_caption, $cancel_js_action, $captcha);
-		$this->addElement(new HiddentokenElement());
+		$this->addElement(new HiddenTokenElement());
 	}
 }

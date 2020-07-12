@@ -30,7 +30,7 @@
 
 namespace ImpressCMS\Core\View\Form;
 
-use ImpressCMS\Core\View\Form\Elements\HiddentokenElement;
+use ImpressCMS\Core\View\Form\Elements\HiddenTokenElement;
 
 /**
  * Creates a form object (Base Class)
@@ -110,7 +110,7 @@ abstract class AbstractForm {
 		$this->_action = $action;
 		$this->_method = $method;
 		if ($addtoken != false) {
-			$this->addElement(new HiddentokenElement());
+			$this->addElement(new HiddenTokenElement());
 		}
 	}
 
