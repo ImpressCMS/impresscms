@@ -12,7 +12,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @author	marcan <marcan@impresscms.org>
  * @package	ICMS\IPF\Form\Elements
  */
-class DateTimeElement extends \ImpressCMS\Core\Form\Elements\DatetimeElement {
+class DateTimeElement extends \ImpressCMS\Core\View\Form\Elements\DatetimeElement {
 	/**
 	 * Constructor
 	 * @param	AbstractModel    $object   reference to targetobject

@@ -2,10 +2,10 @@
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
 use icms;
-use ImpressCMS\Core\Form\Elements\HiddenElement;
-use ImpressCMS\Core\Form\Elements\LabelElement;
-use ImpressCMS\Core\Form\Elements\TrayElement;
 use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\View\Form\Elements\HiddenElement;
+use ImpressCMS\Core\View\Form\Elements\LabelElement;
+use ImpressCMS\Core\View\Form\Elements\TrayElement;
 
 /**
  * Form control creating a rich file element for an object derived from \ImpressCMS\Core\IPF\AbstractModel

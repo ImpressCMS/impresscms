@@ -1,9 +1,9 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
-use ImpressCMS\Core\Form\Elements\LabelElement;
-use ImpressCMS\Core\Form\Elements\TrayElement;
 use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\View\Form\Elements\LabelElement;
+use ImpressCMS\Core\View\Form\Elements\TrayElement;
 
 /**
  * Form control creating an hidden field for an object derived from \ImpressCMS\Core\IPF\AbstractModel
@@ -46,11 +46,11 @@ class ImageElement extends TrayElement {
 		if (!isset($control['nourl']) || !$control['nourl']) {
 			$this->addElement(new LabelElement('<div style="padding-top: 8px; font-size: 80%;">' . _CO_ICMS_URL_FILE_DSC . '</div>', ''));
 			$this->addElement(new LabelElement('', '<br />' . _CO_ICMS_URL_FILE));
-			$this->addElement(new \ImpressCMS\Core\Form\Elements\TextElement('', 'url_' . $key, 50, 500));
+			$this->addElement(new \ImpressCMS\Core\View\Form\Elements\TextElement('', 'url_' . $key, 50, 500));
 		}
 		if (!$object->isNew()) {
 			$this->addElement(new LabelElement('', '<br /><br />'));
-			$delete_check = new \ImpressCMS\Core\Form\Elements\CheckboxElement('', 'delete_' . $key);
+			$delete_check = new \ImpressCMS\Core\View\Form\Elements\CheckboxElement('', 'delete_' . $key);
 			$delete_check->addOption(1, '<span style="color:red;">' . _CO_ICMS_DELETE . '</span>');
 			$this->addElement($delete_check);
 		}

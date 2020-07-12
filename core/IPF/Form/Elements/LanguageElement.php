@@ -1,8 +1,8 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
-use ImpressCMS\Core\Form\Elements\Select\LangElement;
 use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\View\Form\Elements\Select\LangElement;
 
 /**
  * Form control creating an image upload element for an object derived from \ImpressCMS\Core\IPF\AbstractModel

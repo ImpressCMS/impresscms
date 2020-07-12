@@ -1,9 +1,9 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
-use ImpressCMS\Core\Form\Elements\LabelElement;
-use ImpressCMS\Core\Form\Elements\TrayElement;
 use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\View\Form\Elements\LabelElement;
+use ImpressCMS\Core\View\Form\Elements\TrayElement;
 
 /**
  * Form control creating the options of a block

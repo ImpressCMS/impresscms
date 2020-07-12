@@ -4,9 +4,9 @@ namespace ImpressCMS\Core\IPF\Form\Elements;
 use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\Form\Elements\LabelElement;
-use ImpressCMS\Core\Form\Elements\TrayElement;
 use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\View\Form\Elements\LabelElement;
+use ImpressCMS\Core\View\Form\Elements\TrayElement;
 
 /**
  * Form control creating a page element for an object derived from \ImpressCMS\Core\IPF\AbstractModel

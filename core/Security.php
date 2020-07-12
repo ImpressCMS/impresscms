@@ -36,7 +36,7 @@
 
 namespace ImpressCMS\Core;
 
-use ImpressCMS\Core\Form\Elements\HiddentokenElement;
+use ImpressCMS\Core\View\Form\Elements\HiddentokenElement;
 
 /**
  * Class for managing security aspects such as checking referers, applying tokens and checking global variables for contamination

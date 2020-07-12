@@ -12,7 +12,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class DateElement extends \ImpressCMS\Core\Form\Elements\DateElement {
+class DateElement extends \ImpressCMS\Core\View\Form\Elements\DateElement {
 	/**
 	 * Constructor
 	 * @param	AbstractModel    $object   reference to targetobject

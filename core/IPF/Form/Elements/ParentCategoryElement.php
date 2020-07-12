@@ -15,7 +15,7 @@ use ImpressCMS\Core\IPF\ObjectTree;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class ParentCategoryElement extends \ImpressCMS\Core\Form\Elements\SelectElement {
+class ParentCategoryElement extends \ImpressCMS\Core\View\Form\Elements\SelectElement {
 	/**
 	 * Constructor
 	 * @param	AbstractModel    $object   reference to targetobject

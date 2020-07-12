@@ -12,7 +12,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class TimeElement extends \ImpressCMS\Core\Form\Elements\SelectElement {
+class TimeElement extends \ImpressCMS\Core\View\Form\Elements\SelectElement {
 	/**
 	 * Constructor
 	 * @param	AbstractModel    $object   reference to targetobject

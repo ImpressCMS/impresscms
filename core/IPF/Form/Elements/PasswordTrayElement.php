@@ -1,9 +1,9 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
-use ImpressCMS\Core\Form\Elements\PasswordElement;
-use ImpressCMS\Core\Form\Elements\TrayElement;
 use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\View\Form\Elements\PasswordElement;
+use ImpressCMS\Core\View\Form\Elements\TrayElement;
 
 /**
  * Form control creating 2 password textboxes to allow the user to enter twice his password, for an object derived from \ImpressCMS\Core\IPF\AbstractModel

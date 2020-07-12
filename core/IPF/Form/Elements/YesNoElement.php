@@ -1,8 +1,8 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
-use ImpressCMS\Core\Form\Elements\RadioynElement;
 use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\View\Form\Elements\RadioynElement;
 
 /**
  * Form control creating a yesno radio button for an object derived from \ImpressCMS\Core\IPF\AbstractModel

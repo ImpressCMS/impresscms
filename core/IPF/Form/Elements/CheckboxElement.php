@@ -13,7 +13,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @author	marcan <marcan@impresscms.org>
  * @package	ICMS\IPF\Form\Elements
  */
-class CheckboxElement extends \ImpressCMS\Core\Form\Elements\CheckboxElement {
+class CheckboxElement extends \ImpressCMS\Core\View\Form\Elements\CheckboxElement {
 
 	private $_delimeter = "&nbsp;";
 

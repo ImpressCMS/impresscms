@@ -12,7 +12,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class TextElement extends \ImpressCMS\Core\Form\Elements\TextElement {
+class TextElement extends \ImpressCMS\Core\View\Form\Elements\TextElement {
 	/**
 	 * Constructor
 	 * @param	AbstractModel    $object   reference to targetobject

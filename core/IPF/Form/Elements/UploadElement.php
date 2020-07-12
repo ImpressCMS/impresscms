@@ -12,7 +12,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class UploadElement extends \ImpressCMS\Core\Form\Elements\FileElement {
+class UploadElement extends \ImpressCMS\Core\View\Form\Elements\FileElement {
 	/**
 	 * Constructor
 	 * @param	AbstractModel    $object   reference to targetobject

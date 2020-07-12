@@ -12,7 +12,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @author	marcan <marcan@impresscms.org>
  * @package	ICMS\IPF\Form\Elements
  */
-class FileElement extends \ImpressCMS\Core\Form\Elements\FileElement {
+class FileElement extends \ImpressCMS\Core\View\Form\Elements\FileElement {
 	private $_object;
 	private $_key;
 

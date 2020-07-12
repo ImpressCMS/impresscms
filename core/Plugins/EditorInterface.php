@@ -3,7 +3,7 @@
 
 namespace ImpressCMS\Core\Plugins;
 
-use ImpressCMS\Core\Form\Elements\TextareaElement;
+use ImpressCMS\Core\View\Form\Elements\TextareaElement;
 
 /**
  * If class implements this interface it means, that it is some kind editor

@@ -1,9 +1,9 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
-use ImpressCMS\Core\Form\Elements\TextareaElement;
 use ImpressCMS\Core\IPF\AbstractModel;
 use ImpressCMS\Core\Plugins\EditorHandler;
+use ImpressCMS\Core\View\Form\Elements\TextareaElement;
 
 /**
  * Form control creating a textbox for an object derived from \ImpressCMS\Core\IPF\AbstractModel

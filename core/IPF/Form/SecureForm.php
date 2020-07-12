@@ -1,7 +1,7 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form;
 
-use ImpressCMS\Core\Form\Elements\HiddentokenElement;
+use ImpressCMS\Core\View\Form\Elements\HiddentokenElement;
 
 /**
  * Form control creating a secure form

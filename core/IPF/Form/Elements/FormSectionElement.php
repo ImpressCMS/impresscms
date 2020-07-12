@@ -1,8 +1,8 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
-use ImpressCMS\Core\Form\AbstractFormElement;
 use ImpressCMS\Core\IPF\AbstractModel;
+use ImpressCMS\Core\View\Form\AbstractFormElement;
 
 /**
  * Form control creating a section in a form for an object derived from \ImpressCMS\Core\IPF\AbstractModel

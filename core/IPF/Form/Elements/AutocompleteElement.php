@@ -35,7 +35,7 @@ use ImpressCMS\Core\View\Theme\ThemeComponent;
  *
  * @package	ICMS\IPF\Form\Elements
  */
-class AutocompleteElement extends \ImpressCMS\Core\Form\Elements\TextElement {
+class AutocompleteElement extends \ImpressCMS\Core\View\Form\Elements\TextElement {
 	private $_file;
 
 	/**

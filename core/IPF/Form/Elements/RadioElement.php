@@ -13,7 +13,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class RadioElement extends \ImpressCMS\Core\Form\Elements\RadioElement {
+class RadioElement extends \ImpressCMS\Core\View\Form\Elements\RadioElement {
 
 	private $_delimeter = "&nbsp;";
 

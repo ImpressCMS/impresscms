@@ -13,7 +13,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class SelectElement extends \ImpressCMS\Core\Form\Elements\SelectElement {
+class SelectElement extends \ImpressCMS\Core\View\Form\Elements\SelectElement {
 	protected $_multiple = false;
 
 	/**

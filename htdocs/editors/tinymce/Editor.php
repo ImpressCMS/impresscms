@@ -4,7 +4,7 @@
 namespace ImpressCMS\Editors\TinyMCE;
 
 use icms\plugins\EditorInterface;
-use ImpressCMS\Core\Form\Elements\TextareaElement;
+use ImpressCMS\Core\View\Form\Elements\TextareaElement;
 
 /**
  * Defines TinyMCE editor
