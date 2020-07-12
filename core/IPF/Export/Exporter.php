@@ -2,7 +2,7 @@
 namespace ImpressCMS\Core\IPF\Export;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
-use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * Class to easily export data from IcmsPersistables

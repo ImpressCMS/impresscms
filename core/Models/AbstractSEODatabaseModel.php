@@ -8,7 +8,9 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\IPF;
+namespace ImpressCMS\Core\Models;
+
+use ImpressCMS\Core\Models\AbstractDatabaseModel;
 
 /**
  * \ImpressCMS\Core\IPF\AbstractModel base SEO-enabled class

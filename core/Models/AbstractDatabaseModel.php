@@ -8,12 +8,21 @@
  * @author marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\IPF;
+namespace ImpressCMS\Core\Models;
 
 use icms;
+use ImpressCMS\Core\AbstractModel;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\IPF\arr;
+use ImpressCMS\Core\IPF\content;
+use ImpressCMS\Core\IPF\Controller;
+use ImpressCMS\Core\IPF\Metagen;
+use ImpressCMS\Core\IPF\PermissionsDecorator;
+use ImpressCMS\Core\IPF\str;
+use ImpressCMS\Core\IPF\unknown_type;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 use ImpressCMS\Core\Models\File;
 use ImpressCMS\Core\Models\UrlLink;
 use ImpressCMS\Core\Textsanitizer;
@@ -31,7 +40,7 @@ use ImpressCMS\Core\View\Table\Row;
  * @author marcan <marcan@smartfactory.ca>
  * @todo Properly identify and declare the visibility of vars and functions
  */
-abstract class AbstractDatabaseModel extends \ImpressCMS\Core\AbstractModel {
+abstract class AbstractDatabaseModel extends AbstractModel {
 
 	/**
 	 * Image path

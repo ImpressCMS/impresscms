@@ -2,8 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
-use ImpressCMS\Core\IPF\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractDatabaseModel;
 
 /**
 * @backupGlobals disabled

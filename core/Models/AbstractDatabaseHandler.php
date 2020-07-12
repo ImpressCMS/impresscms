@@ -15,7 +15,7 @@
  * @todo	Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
 
-namespace ImpressCMS\Core\IPF;
+namespace ImpressCMS\Core\Models;
 
 use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
@@ -24,6 +24,13 @@ use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Database\DatabaseConnectionInterface;
 use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\Filesystem;
+use ImpressCMS\Core\Models\AbstractDatabaseModel;
+use ImpressCMS\Core\IPF\arr;
+use ImpressCMS\Core\IPF\Module;
+use ImpressCMS\Core\IPF\obj;
+use ImpressCMS\Core\IPF\PermissionsDecorator;
+use ImpressCMS\Core\IPF\str;
+use ImpressCMS\Core\IPF\unknown_type;
 use ImpressCMS\Core\Models\GroupPermHandler;
 use ImpressCMS\Core\ObjectHandler;
 use ImpressCMS\Core\Properties\AbstractProperties;

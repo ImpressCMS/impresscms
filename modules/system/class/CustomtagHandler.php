@@ -19,7 +19,7 @@ defined('ICMS_CUSTOMTAG_TYPE_PHP') || define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
  *
  * @package     ImpressCMS\Modules\System\Class\CustomTag
  */
-class mod_system_CustomtagHandler extends \ImpressCMS\Core\IPF\AbstractDatabaseHandler {
+class mod_system_CustomtagHandler extends \ImpressCMS\Core\Models\AbstractDatabaseHandler {
 	private $_objects = false;
 
 	/**

@@ -4,6 +4,8 @@ namespace ImpressCMS\Core\IPF;
 use icms;
 use ImpressCMS\Core\File\MediaUploader;
 use ImpressCMS\Core\Message;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractDatabaseModel;
 use ImpressCMS\Core\Properties\AbstractProperties;
 
 /**

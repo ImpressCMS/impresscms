@@ -4,6 +4,7 @@ namespace ImpressCMS\Core\IPF;
 use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * IcmsPermission

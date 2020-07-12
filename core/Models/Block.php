@@ -39,7 +39,7 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\IPF\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractDatabaseModel;
 use ImpressCMS\Core\Textsanitizer;
 
 /**

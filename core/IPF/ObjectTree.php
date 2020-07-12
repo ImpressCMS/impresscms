@@ -38,6 +38,8 @@
 
 namespace ImpressCMS\Core\IPF;
 
+use ImpressCMS\Core\Models\AbstractDatabaseModel;
+
 /**
  * A tree structures with objects as nodes
  *

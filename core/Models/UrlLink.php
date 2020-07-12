@@ -10,7 +10,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractDatabaseModel;
 
 /**
  * Url Link object

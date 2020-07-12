@@ -34,7 +34,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * Configuration option handler class.

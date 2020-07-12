@@ -41,7 +41,7 @@ use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Aura;
-use ImpressCMS\Core\IPF\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractDatabaseModel;
 use ImpressCMS\Core\Messaging\MailHandler;
 
 /**

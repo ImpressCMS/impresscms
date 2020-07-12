@@ -41,7 +41,7 @@ namespace ImpressCMS\Core\Models;
 // RMV-NOTIFY
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 

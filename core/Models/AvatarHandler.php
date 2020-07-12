@@ -41,7 +41,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Filesystem;
-use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * Avatar handler class.

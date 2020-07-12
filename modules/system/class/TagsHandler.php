@@ -14,7 +14,7 @@ icms_loadLanguageFile('system', 'tags', true);
  *
  * @package     ImpressCMS\Modules\System\Class\Tags
  */
-class mod_system_TagsHandler extends \ImpressCMS\Core\IPF\AbstractDatabaseHandler {
+class mod_system_TagsHandler extends \ImpressCMS\Core\Models\AbstractDatabaseHandler {
 
 	/**
 	 * Construct the tag handler

@@ -56,7 +56,7 @@ namespace ImpressCMS\Core\Models;
  * @property string $imgcat_type       Type
  * @property string $imgcat_storetype  Storing type
  */
-class ImageCategory extends \ImpressCMS\Core\IPF\AbstractDatabaseModel {
+class ImageCategory extends \ImpressCMS\Core\Models\AbstractDatabaseModel {
 
 		/**
 		 * Image count

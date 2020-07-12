@@ -11,6 +11,7 @@
 namespace ImpressCMS\Core\IPF;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * Registry of \ImpressCMS\Core\IPF\AbstractModel

@@ -9,7 +9,7 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractDatabaseModel;
 
 /**
  * membership of a user in a group

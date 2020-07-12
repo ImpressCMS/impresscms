@@ -13,8 +13,8 @@ namespace ImpressCMS\Core\Database\Legacy\Updater;
 
 use ImpressCMS\Core\AbstractModel;
 use ImpressCMS\Core\Database\DatabaseConnection;
-use ImpressCMS\Core\IPF\AbstractDatabaseModel;
-use ImpressCMS\Core\IPF\AbstractSEODatabaseModel;
+use ImpressCMS\Core\Models\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractSEODatabaseModel;
 use ImpressCMS\Core\Properties\AbstractProperties;
 
 /**

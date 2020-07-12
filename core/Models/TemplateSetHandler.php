@@ -37,7 +37,7 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * Template set handler class.

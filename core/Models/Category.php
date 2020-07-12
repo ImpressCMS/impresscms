@@ -10,7 +10,7 @@
  */
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\AbstractSEODatabaseModel;
+use ImpressCMS\Core\Models\AbstractSEODatabaseModel;
 use ImpressCMS\Core\IPF\Controller;
 
 /**

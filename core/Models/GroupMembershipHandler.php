@@ -38,7 +38,7 @@
 namespace ImpressCMS\Core\Models;
 
 use icms;
-use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * Group membership handler class. (Singleton)

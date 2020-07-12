@@ -44,7 +44,7 @@ use ImpressCMS\Core\Database\Legacy\Updater\TableUpdater;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Member;
 use ImpressCMS\Core\Filesystem;
-use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\View\Template;

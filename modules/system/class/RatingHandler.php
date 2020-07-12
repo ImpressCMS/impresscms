@@ -13,7 +13,7 @@
  *
  * @package     ImpressCMS\Modules\System\Class\Rating
  */
-class mod_system_RatingHandler extends \ImpressCMS\Core\IPF\AbstractDatabaseHandler {
+class mod_system_RatingHandler extends \ImpressCMS\Core\Models\AbstractDatabaseHandler {
 
 	public $_rateOptions = array();
 	public $_moduleList = false;

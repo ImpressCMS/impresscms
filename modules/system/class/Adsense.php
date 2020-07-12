@@ -26,7 +26,7 @@
  * @property string $color_text         Text color
  * @property string $style              Styles
  */
-class mod_system_Adsense extends \ImpressCMS\Core\IPF\AbstractDatabaseModel {
+class mod_system_Adsense extends \ImpressCMS\Core\Models\AbstractDatabaseModel {
 	public $content = false;
 
 	/**
