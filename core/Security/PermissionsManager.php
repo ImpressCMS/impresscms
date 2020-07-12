@@ -1,9 +1,11 @@
 <?php
-namespace ImpressCMS\Core\IPF;
+namespace ImpressCMS\Core\Security;
 
 use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\IPF\arr;
+use ImpressCMS\Core\IPF\str;
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 
 /**
@@ -17,7 +19,7 @@ use ImpressCMS\Core\Models\AbstractExtendedHandler;
  * @author	marcan <marcan@impresscms.org>
  * @package	ICMS\IPF\Permission
  */
-class PermissionsDecorator {
+class PermissionsManager {
 
 	/**
 	 *

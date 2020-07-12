@@ -7,6 +7,7 @@ use ImpressCMS\Core\Message;
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 use ImpressCMS\Core\Models\AbstractExtendedModel;
 use ImpressCMS\Core\Properties\AbstractProperties;
+use ImpressCMS\Core\Security\PermissionsManager;
 
 /**
  * This class is responsible for providing operations to an object for managing the object's manipulation
@@ -241,7 +242,7 @@ class Controller {
 
 		if ($storeResult) {
 			if ($this->handler->getPermissions()) {
-				$icmspermissions_handler = new PermissionsDecorator($this->handler);
+				$icmspermissions_handler = new PermissionsManager($this->handler);
 				$icmspermissions_handler->storeAllPermissionsForId($icmsObj->id());
 			}
 		}

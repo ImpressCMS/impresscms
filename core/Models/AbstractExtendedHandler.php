@@ -27,10 +27,10 @@ use ImpressCMS\Core\Filesystem;
 use ImpressCMS\Core\IPF\arr;
 use ImpressCMS\Core\IPF\Module;
 use ImpressCMS\Core\IPF\obj;
-use ImpressCMS\Core\IPF\PermissionsDecorator;
 use ImpressCMS\Core\IPF\str;
 use ImpressCMS\Core\IPF\unknown_type;
 use ImpressCMS\Core\Properties\AbstractProperties;
+use ImpressCMS\Core\Security\PermissionsManager;
 
 /**
  * Persistable Object Handlder
@@ -305,7 +305,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @return bool
 	 */
 	public function setGrantedObjectsCriteria(&$criteria, $perm_name) {
-		$icmspermissions_handler = new PermissionsDecorator($this);
+		$icmspermissions_handler = new PermissionsManager($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
 			$criteria->add(new CriteriaItem($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));

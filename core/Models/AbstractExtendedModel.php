@@ -18,9 +18,9 @@ use ImpressCMS\Core\IPF\arr;
 use ImpressCMS\Core\IPF\content;
 use ImpressCMS\Core\IPF\Controller;
 use ImpressCMS\Core\IPF\Metagen;
-use ImpressCMS\Core\IPF\PermissionsDecorator;
 use ImpressCMS\Core\IPF\str;
 use ImpressCMS\Core\IPF\unknown_type;
+use ImpressCMS\Core\Security\PermissionsManager;
 use ImpressCMS\Core\Textsanitizer;
 use ImpressCMS\Core\View\ModelLinkedForm\Form;
 use ImpressCMS\Core\View\ModelLinkedForm\SecureForm;
@@ -110,7 +110,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 *
 	 */
 	public function accessGranted($perm_name) {
-		$icmspermissions_handler = new PermissionsDecorator($this->handler);
+		$icmspermissions_handler = new PermissionsManager($this->handler);
 		return $icmspermissions_handler->accessGranted($perm_name, $this->id());
 	}
 
@@ -606,7 +606,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 			return false;
 		}
 
-		$icmspermissions_handler = new PermissionsDecorator($this->handler);
+		$icmspermissions_handler = new PermissionsManager($this->handler);
 		$ret = $icmspermissions_handler->getGrantedGroups($group_perm, $this->id());
 
 		if (count($ret) == 0) {
