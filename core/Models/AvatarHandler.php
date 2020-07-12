@@ -60,7 +60,7 @@ class AvatarHandler extends AbstractExtendedHandler {
 
 	/**
 	 * Deletes an avatar
-	 * @see ObjectHandler#delete($object)
+	 * @see AbstractHandler#delete($object)
 	 *
 	 * @param Avatar   $avatar Avatar to delete
 	 * @param bool                      $force  Force deletion?

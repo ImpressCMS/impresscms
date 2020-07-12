@@ -55,7 +55,7 @@ use ImpressCMS\Core\Database\DatabaseConnectionInterface;
  *
  * @abstract
  */
-abstract class ObjectHandler {
+abstract class AbstractHandler {
 
 	/**
 	 * holds referenced

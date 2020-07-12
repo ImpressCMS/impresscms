@@ -18,6 +18,7 @@
 namespace ImpressCMS\Core\Models;
 
 use icms;
+use ImpressCMS\Core\AbstractHandler;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
@@ -30,7 +31,6 @@ use ImpressCMS\Core\IPF\obj;
 use ImpressCMS\Core\IPF\PermissionsDecorator;
 use ImpressCMS\Core\IPF\str;
 use ImpressCMS\Core\IPF\unknown_type;
-use ImpressCMS\Core\ObjectHandler;
 use ImpressCMS\Core\Properties\AbstractProperties;
 
 /**
@@ -40,7 +40,7 @@ use ImpressCMS\Core\Properties\AbstractProperties;
  * @since	1.1
  * @todo	Properly name the vars using the naming conventions
  */
-class AbstractExtendedHandler extends ObjectHandler {
+class AbstractExtendedHandler extends AbstractHandler {
 
 	/**
 	 * Loaded items cache
