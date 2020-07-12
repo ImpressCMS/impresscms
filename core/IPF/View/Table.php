@@ -32,7 +32,7 @@ use ImpressCMS\Core\View\Template;
  * @author	marcan <marcan@impresscms.org>
  * @todo	Properly declare all protected s with their visibility (private, protected, public) and follow naming convention
  */
-class ViewTable {
+class Table {
 
 	protected  $_id;
 	protected  $_objectHandler;
@@ -241,7 +241,7 @@ class ViewTable {
 	 * @param $actions
 	 */
 	public function addWithSelectedActions($actions = array()) {
-		$this->addColumn(new ViewColumn('checked', 'center', 20, false, false, '&nbsp;'));
+		$this->addColumn(new Column('checked', 'center', 20, false, false, '&nbsp;'));
 		$this->_withSelectedActions = $actions;
 	}
 

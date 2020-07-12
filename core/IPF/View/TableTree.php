@@ -26,7 +26,7 @@ use ImpressCMS\Core\IPF\Handler;
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  */
-class ViewTree extends ViewTable {
+class TableTree extends Table {
 
 	/**
 	 * Construct the tree object
@@ -156,7 +156,7 @@ class ViewTree extends ViewTable {
 	/**
 	 * Create all the rows
 	 *
-	 * @see ViewTable::createTableRows()
+	 * @see Table::createTableRows()
 	 */
 	public function createTableRows() {
 		$this->_aObjects = array();
@@ -177,7 +177,7 @@ class ViewTree extends ViewTable {
 	/**
 	 * Get all the objects, using parentid as the key
 	 *
-	 * @see ViewTable::fetchObjects()
+	 * @see Table::fetchObjects()
 	 */
 	public function fetchObjects() {
 		$ret = $this->_objectHandler->getObjects($this->_criteria, 'parentid');

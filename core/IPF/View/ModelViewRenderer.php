@@ -20,7 +20,7 @@ use ImpressCMS\Core\View\Template;
  * @package	ICMS\IPF\View
  * @author      marcan <marcan@smartfactory.ca>
  */
-class ViewSingleObject {
+class ModelViewRenderer {
 
 	protected $_object;
 	protected $_userSide;

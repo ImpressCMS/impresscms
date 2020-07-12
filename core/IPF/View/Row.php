@@ -16,7 +16,7 @@ namespace ImpressCMS\Core\IPF\View;
  * @author	marcan <marcan@smartfactory.ca>
  * @todo	Properly determine visibility of vars and methods and follow naming convention
  */
-class ViewRow {
+class Row {
 
 	/**
 	 * Keyname

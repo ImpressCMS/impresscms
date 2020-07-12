@@ -16,8 +16,8 @@ use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\IPF\Form\Form;
 use ImpressCMS\Core\IPF\Form\SecureForm;
-use ImpressCMS\Core\IPF\View\ViewRow;
-use ImpressCMS\Core\IPF\View\ViewSingleObject;
+use ImpressCMS\Core\IPF\View\ModelViewRenderer;
+use ImpressCMS\Core\IPF\View\Row;
 use ImpressCMS\Core\Models\File;
 use ImpressCMS\Core\Models\UrlLink;
 use ImpressCMS\Core\Textsanitizer;
@@ -936,12 +936,12 @@ abstract class AbstractModel extends \ImpressCMS\Core\AbstractModel {
 	 * @return content of the template if $fetchOnly or nothing if !$fetchOnly
 	 */
 	public function displaySingleObject($fetchOnly = false, $userSide = false, $actions = array(), $headerAsRow = true) {
-		$singleview = new ViewSingleObject($this, $userSide, $actions, $headerAsRow);
+		$singleview = new ModelViewRenderer($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
 		foreach ($this->_vars as $key => $var) {
 			if ($key != $this->handler->keyName && $var['displayOnSingleView']) {
 				$is_header = ($key == $this->handler->identifierName);
-				$singleview->addRow(new ViewRow($key, false, $is_header));
+				$singleview->addRow(new Row($key, false, $is_header));
 			}
 		}
 
