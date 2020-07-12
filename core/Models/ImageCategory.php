@@ -66,8 +66,7 @@ class ImageCategory extends \ImpressCMS\Core\Models\AbstractExtendedModel {
 	private $_imageCount;
 
 	/**
-	 * Constructor
-	 *
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = []) {
 		$this->initVar('imgcat_id', self::DTYPE_INTEGER, null, false);

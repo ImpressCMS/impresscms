@@ -47,9 +47,9 @@ namespace ImpressCMS\Core\Models;
  * @property int    $confcat_order     Category display order
  */
 class ConfigCategory extends AbstractExtendedModel {
+
 	/**
-	 * Constructor
-	 *
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('confcat_id', self::DTYPE_INTEGER, null);

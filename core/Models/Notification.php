@@ -54,7 +54,7 @@ namespace ImpressCMS\Core\Models;
 class Notification extends AbstractExtendedModel {
 
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('not_id', self::DTYPE_INTEGER, null, false);

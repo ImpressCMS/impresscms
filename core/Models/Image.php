@@ -72,7 +72,7 @@ class Image extends AbstractExtendedModel {
 		public $image_body;
 
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('image_id', self::DTYPE_INTEGER, null, false);

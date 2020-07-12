@@ -93,7 +93,7 @@ class Module
 	public $messages;
 
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('mid', self::DTYPE_INTEGER, null, false);

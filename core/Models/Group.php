@@ -49,8 +49,9 @@ namespace ImpressCMS\Core\Models;
  * @property string  $group_type     Type
  */
 class Group extends AbstractExtendedModel {
+
 	/**
-	 * constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('groupid', self::DTYPE_INTEGER, null, false);

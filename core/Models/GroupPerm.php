@@ -53,9 +53,9 @@ namespace ImpressCMS\Core\Models;
  * @property string $gperm_name    Name
  */
 class GroupPerm extends AbstractExtendedModel {
+
 	/**
-	 * Constructor
-	 *
+	 * @inheritDoc
 	 */
 	function __construct(&$handler, $data = array()) {
 

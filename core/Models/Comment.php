@@ -67,7 +67,7 @@ namespace ImpressCMS\Core\Models;
 class Comment extends AbstractExtendedModel {
 
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('com_id', self::DTYPE_INTEGER, null, false);

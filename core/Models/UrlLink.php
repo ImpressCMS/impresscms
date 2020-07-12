@@ -23,8 +23,9 @@ namespace ImpressCMS\Core\Models;
  * @package	ICMS\Data\UrlLink
  */
 class UrlLink extends AbstractExtendedModel {
+
 	/**
-	 * constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('urllinkid', self::DTYPE_INTEGER, 0, true);

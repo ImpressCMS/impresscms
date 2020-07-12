@@ -28,11 +28,9 @@ class UserRank extends AbstractExtendedModel {
 	public $content = false;
 
 	/**
-	 * Create a new instance of the userrank object
-	 *
-	 * @param object $handler
+	 * @inheritDoc
 	 */
-	public function __construct(&$handler) {
+	public function __construct(&$handler, array $data = []) {
 		icms_loadLanguageFile('system', 'common');
 		icms_loadLanguageFile('system', 'userrank', true);
 
@@ -43,7 +41,7 @@ class UserRank extends AbstractExtendedModel {
 		$this->initVar('rank_special', self::DTYPE_INTEGER, 0, true, 1, null, null, _CO_ICMS_USERRANK_RANK_SPECIAL, _CO_ICMS_USERRANK_RANK_SPECIAL_DSC);
 		$this->initVar('rank_image', self::DTYPE_STRING, '', true, 255, null, null, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
 
-		parent::__construct($handler);
+		parent::__construct($handler, $data);
 
 		$this->setControl('rank_special', 'yesno');
 		$this->setControl('rank_image', 'image');

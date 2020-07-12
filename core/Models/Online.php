@@ -19,7 +19,7 @@ class Online extends AbstractExtendedModel
 {
 
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('online_uid', self::DTYPE_INTEGER, null, false);

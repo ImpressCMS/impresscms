@@ -20,8 +20,9 @@ namespace ImpressCMS\Core\Models;
  * @property int $uid           User ID
  */
 class GroupMembership extends AbstractExtendedModel {
+
 	/**
-	 * constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('linkid', self::DTYPE_INTEGER, null, false);

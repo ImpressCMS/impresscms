@@ -24,9 +24,7 @@ namespace ImpressCMS\Core\Models;
 class BlockPosition extends AbstractExtendedModel {
 
 	/**
-	 * Constructor
-	 *
-	 * @param BlockPositionHandler $handler
+	 * @inheritDoc
 	 */
 	public function __construct(& $handler) {
 

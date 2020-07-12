@@ -24,6 +24,9 @@ namespace ImpressCMS\Core\Models;
  */
 class Page extends AbstractExtendedModel {
 
+	/**
+	 * @inheritDoc
+	 */
 	public function __construct(& $handler, $data = array()) {
 			$this->initVar('page_id', self::DTYPE_INTEGER);
 			$this->initVar('page_moduleid', self::DTYPE_INTEGER, 0, true, 8);

@@ -134,9 +134,7 @@ class Block extends AbstractExtendedModel
 	public $visiblein = [];
 
 	/**
-	 * Constructor for the block object
-	 * @param $handler
-	 * @param array $data
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array())
 	{

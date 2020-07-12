@@ -29,9 +29,9 @@ class Category extends AbstractSEOExtendedModel {
 	private $_categoryPath;
 
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 */
-	public function __construct() {
+	public function __construct(&$handler, array $data = []) {
 		$this->initVar('categoryid', self::DTYPE_INTEGER, '', true);
 		$this->initVar('parentid', self::DTYPE_INTEGER, '', false, null, '', false, _CO_ICMS_CATEGORY_PARENTID, _CO_ICMS_CATEGORY_PARENTID_DSC);
 		$this->initVar('name', self::DTYPE_STRING, '', false, 255, '', false, _CO_ICMS_CATEGORY_NAME, _CO_ICMS_CATEGORY_NAME_DSC);
@@ -40,16 +40,16 @@ class Category extends AbstractSEOExtendedModel {
 
 		$this->initCommonVar('doxcode');
 
-		$this->setControl('image', array('name' => 'image'));
-		$this->setControl('parentid', array('name' => 'parentcategory'));
-		$this->setControl('description', array('name' => 'textarea',
+		$this->setControl('image', ['name' => 'image']);
+		$this->setControl('parentid', ['name' => 'parentcategory']);
+		$this->setControl('description', ['name' => 'textarea',
 											'itemHandler' => false,
 											'method' => false,
 											'module' => false,
-											'form_editor' => 'default'));
+											'form_editor' => 'default']);
 
 		// call parent constructor to get SEO fields initiated
-		parent::__construct();
+		parent::__construct($handler, $data);
 	}
 
 	/**

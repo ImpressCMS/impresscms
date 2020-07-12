@@ -58,7 +58,7 @@ class TemplateFile extends AbstractExtendedModel {
 	public $tpl_source = false;
 
 	/**
-	 * constructor
+	 * @inheritDoc
 	 *
 	 * @todo: move here tpl_source
 	 */

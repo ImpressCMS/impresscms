@@ -24,8 +24,11 @@ namespace ImpressCMS\Core\Models;
 abstract class AbstractSEOExtendedModel extends AbstractExtendedModel
 {
 
-	public function __construct(&$handler) {
-		parent::__construct($handler);
+	/**
+	 * @inheritDoc
+	 */
+	public function __construct(&$handler, array $data = []) {
+		parent::__construct($handler, $data);
 		$this->initiateSEO();
 	}
 

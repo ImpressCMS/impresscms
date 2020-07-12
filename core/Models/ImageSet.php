@@ -57,7 +57,7 @@ namespace ImpressCMS\Core\Models;
 class ImageSet extends AbstractExtendedModel {
 
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = []) {
 		$this->initVar('imgset_id', self::DTYPE_INTEGER, null, false);

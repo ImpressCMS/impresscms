@@ -48,7 +48,7 @@ namespace ImpressCMS\Core\Models;
  */
 class ConfigOption extends AbstractExtendedModel {
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('confop_id', self::DTYPE_INTEGER, null);

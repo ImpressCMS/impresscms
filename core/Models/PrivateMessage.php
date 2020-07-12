@@ -54,7 +54,7 @@ namespace ImpressCMS\Core\Models;
 class PrivateMessage extends AbstractExtendedModel {
 
 	/**
-	 * constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('msg_id', self::DTYPE_INTEGER, null, false);

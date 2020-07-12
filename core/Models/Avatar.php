@@ -59,8 +59,7 @@ class Avatar extends AbstractExtendedModel {
 	private $_userCount;
 
 	/**
-	 * Constructor for avatar class, initializing all the properties of the class object
-	 *
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('avatar_id', self::DTYPE_INTEGER, null, false);

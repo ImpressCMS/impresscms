@@ -103,10 +103,7 @@ class User extends AbstractExtendedModel {
 	private $_isOnline = null;
 
 	/**
-	 * constructor
-	 * @param array $id Array of key-value-pairs to be assigned to the user. (for backward compatibility only)
-	 * @param int $id ID of the user to be loaded from the database.
-	 * @param array $data Data to load into this object
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		//parent::__construct($handler, $data);

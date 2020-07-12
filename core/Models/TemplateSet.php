@@ -52,7 +52,7 @@ namespace ImpressCMS\Core\Models;
 class TemplateSet extends AbstractExtendedModel {
 
 	/**
-	 * constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('tplset_id', self::DTYPE_INTEGER, null, false);

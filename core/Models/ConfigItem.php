@@ -72,7 +72,7 @@ class ConfigItem extends AbstractExtendedModel {
 		protected $_isNewConfig = false;
 
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 *
 	 * @todo	Cannot set the data type of the conf_value on instantiation - the data type must be retrieved from the db.
 	 */

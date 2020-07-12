@@ -25,7 +25,7 @@ namespace ImpressCMS\Core\Models;
 class File extends AbstractExtendedModel {
 
 	/**
-	 * constructor
+	 * @inheritDoc
 	 */
 	public function __construct(&$handler, $data = array()) {
 		$this->initVar('fileid', self::DTYPE_INTEGER, 0, true);
