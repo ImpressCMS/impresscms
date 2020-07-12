@@ -24,11 +24,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Database\DatabaseConnectionInterface;
 use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\Filesystem;
-use ImpressCMS\Core\IPF\arr;
 use ImpressCMS\Core\IPF\Module;
-use ImpressCMS\Core\IPF\obj;
-use ImpressCMS\Core\IPF\str;
-use ImpressCMS\Core\IPF\unknown_type;
 use ImpressCMS\Core\Properties\AbstractProperties;
 use ImpressCMS\Core\Security\PermissionsManager;
 
@@ -173,26 +169,26 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @var array
 	 */
-	public $highlightFields = array();
+	public $highlightFields = [];
 	/**
 	 * What columns should be viisble.
 	 * Empty array means all.
 	 *
 	 * @var array
 	 */
-	public $visibleColumns = array();
+	public $visibleColumns = [];
 	/**
 	 * Array containing the events name and functions
 	 *
 	 * @var array
 	 */
-	public $eventArray = array();
+	public $eventArray = [];
 	/**
 	 * Array containing the permissions that this handler will manage on the objects
 	 *
 	 * @var array
 	 */
-	public $permissionsArray = array();
+	public $permissionsArray = [];
 	/**
 	 * Some SQL that will be used as base for all operations for this handler
 	 *
@@ -204,13 +200,13 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @var array
 	 */
-	public $_eventHooks = array();
+	public $_eventHooks = [];
 	/**
 	 * Disabled events
 	 *
 	 * @var array
 	 */
-	public $_disabledEvents = array();
+	public $_disabledEvents = [];
 	/**
 	 * Is debug mode?
 	 *
@@ -265,17 +261,17 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$this->className = $classname;
 		$this->identifierName = $idenfierName;
 		$this->summaryName = $summaryName;
-		$this->_page = $itemname . ".php";
-		$this->_modulePath = ICMS_ROOT_PATH . "/modules/" . $this->_moduleName . "/";
-		$this->_moduleUrl = ICMS_URL . "/modules/" . $this->_moduleName . "/";
-		$this->_uploadPath = ICMS_UPLOAD_PATH . "/" . $this->_moduleName . "/";
-		$this->_uploadUrl = ICMS_UPLOAD_URL . "/" . $this->_moduleName . "/";
+		$this->_page = $itemname . '.php';
+		$this->_modulePath = ICMS_ROOT_PATH . '/modules/' . $this->_moduleName . '/';
+		$this->_moduleUrl = ICMS_URL . '/modules/' . $this->_moduleName . '/';
+		$this->_uploadPath = ICMS_UPLOAD_PATH . '/' . $this->_moduleName . '/';
+		$this->_uploadUrl = ICMS_UPLOAD_URL . '/' . $this->_moduleName . '/';
 	}
 
 	/**
 	 *
-	 * @param str $event
-	 * @param str $method
+	 * @param string $event
+	 * @param string $method
 	 */
 	public function addEventHook($event, $method) {
 		$this->_eventHooks[$event] = $method;
@@ -288,20 +284,20 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @param string $perm_name name of the permission
 	 * @param string $caption caption of the control that will be displayed in the form
-	 * @param string $description description of the control that will be displayed in the form
+	 * @param string|false $description description of the control that will be displayed in the form
 	 */
 	public function addPermission($perm_name, $caption, $description = false) {
-		$this->permissionsArray[] = array(
+		$this->permissionsArray[] = [
 			'perm_name' => $perm_name,
 			'caption' => $caption,
 			'description' => $description
-		);
+		];
 	}
 
 	/**
 	 *
-	 * @param obj $criteria
-	 * @param str $perm_name
+	 * @param CriteriaItem $criteria
+	 * @param string $perm_name
 	 * @return bool
 	 */
 	public function setGrantedObjectsCriteria(&$criteria, $perm_name) {
@@ -341,7 +337,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
 			}
-			if ($criteria->getSort() != '') {
+			if ($criteria->getSort()) {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 		}
@@ -356,9 +352,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 			return null;
 		}
 
-		$myrow = $this->db->fetchArray($result);
-
-		return $myrow;
+		return $this->db->fetchArray($result);
 	}
 
 	/**
@@ -413,9 +407,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 
 		$result = $this->db->query($sql, $limit, $start);
 
-		$ret = (!$result)? [] :$this->convertResultSet($result, $id_as_key, $as_object);
-
-		return $ret;
+		return (!$result)? [] :$this->convertResultSet($result, $id_as_key, $as_object);
 	}
 
 	/**
@@ -429,20 +421,18 @@ class AbstractExtendedHandler extends AbstractHandler {
 	protected function getFields($getcurrent = true, $forSQL = false) {
 		if (!empty($this->visibleColumns) && $getcurrent) {
 					$ret = $this->visibleColumns;
-		} else {
-			if (!isset(self::$cached_fields[$this->className])) {
-				$obj = new $this->className($this, array());
-				$ret = array();
-				foreach ($obj->getVars() as $key => $var) {
-					if (isset($var['persistent']) && !$var['persistent']) {
-						continue;
-					}
-					$ret[] = $key;
+		} else if (!isset(self::$cached_fields[$this->className])) {
+			$obj = new $this->className($this, []);
+			$ret = array();
+			foreach ($obj->getVars() as $key => $var) {
+				if (isset($var['persistent']) && !$var['persistent']) {
+					continue;
 				}
-				self::$cached_fields[$this->className] = $ret;
-			} else {
-				$ret = self::$cached_fields[$this->className];
+				$ret[] = $key;
 			}
+			self::$cached_fields[$this->className] = $ret;
+		} else {
+			$ret = self::$cached_fields[$this->className];
 		}
 		if ($forSQL) {
 			return '`' . implode('`, `', $ret) . '`';
@@ -474,8 +464,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	}
 
 	protected function convertResultSet_RAWWithKey($result, $key) {
-		$ret = array();
-		if ($this->keyName == $key) {
+		$ret = [];
+		if ($this->keyName === $key) {
 			while ($myrow = $this->db->fetchArray($result)) {
 				$ret[$key] = $myrow;
 			}
@@ -488,7 +478,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	}
 
 	protected function convertResultSet_RAW($result) {
-		$ret = array();
+		$ret = [];
 		while ($myrow = $this->db->fetchArray($result)) {
 			$ret[] = $myrow;
 		}
@@ -609,7 +599,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		if (!file_exists($dir)) {
 			Filesystem::mkdir($dir);
 		}
-		return $dir . "/";
+		return $dir . '/';
 	}
 
 	protected function convertResultSet_Object($result, $as_object) {
@@ -670,8 +660,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param bool $as_object whether to return an object or an array
 	 *
 	 * @return AbstractExtendedModel|false
-	 *@deprecated Use get() instead. Since 2.0
 	 *
+	 * @deprecated Use get() instead. Since 2.0
 	 */
 	public function &getD($id, $as_object = true)
 	{
@@ -725,7 +715,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 			$obj_array[0]->unsetNew();
 		}
 
-		if (count($obj_array) != 1) {
+		if (count($obj_array) !== 1) {
 			$obj = $this->create();
 			return $obj;
 		}
@@ -787,7 +777,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	/**
 	 * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
 	 *
-	 * @param string $keyName  Key name
+	 * @param string|string[] $keyName  Key name
 	 * @param string $keyValue Key value
 	 * @param CriteriaElement $criteria Criteria conditions to be met
 	 * @param int   $limit     Max number of objects to fetch
@@ -839,7 +829,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 
 	/**
 	 *
-	 * @param    bool $withprefix
+	 * @param bool $withprefix
+	 * @return string
 	 */
 	public function getIdentifierName($withprefix = true) {
 		if ($withprefix) {
@@ -853,10 +844,12 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @deprecated Use save() instead. Since 2.0
 	 *
-	 * @param    obj $obj
+	 * @param    object $obj
 	 * @param    bool $force
 	 * @param    bool $checkObject
 	 * @param    bool $debug
+	 *
+	 * @return bool
 	 */
 	public function insertD(&$obj, $force = false, $checkObject = true, $debug = false) {
 		trigger_error('Use save() instead', E_USER_DEPRECATED);
@@ -1131,8 +1124,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 
 			$sql = 'UPDATE ' . $this->table . ' SET';
 			foreach ($fieldsToStoreInDB as $key => $value) {
-				if ((!is_array($this->keyName) && $key == $this->keyName)
-						|| (is_array($this->keyName) && in_array($key, $this->keyName))) {
+				if ((!is_array($this->keyName) && $key === $this->keyName)
+						|| (is_array($this->keyName) && in_array($key, $this->keyName, true))) {
 					continue;
 				}
 				if (isset($notfirst)) {
@@ -1285,7 +1278,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 
 	/**
 	 *
-	 * @param arr|str $event
+	 * @param string[]|string $event
 	 */
 	public function disableEvent($event) {
 		if (is_array($event)) {
@@ -1492,10 +1485,10 @@ class AbstractExtendedHandler extends AbstractHandler {
 
 	/**
 	 *
-	 * @param unknown_type $allowedMimeTypes
-	 * @param unknown_type $maxFileSize
-	 * @param unknown_type $maxWidth
-	 * @param unknown_type $maxHeight
+	 * @param false|string[] $allowedMimeTypes
+	 * @param false|int $maxFileSize
+	 * @param false|int $maxWidth
+	 * @param false|int $maxHeight
 	 */
 	public function enableUpload($allowedMimeTypes = false, $maxFileSize = false, $maxWidth = false, $maxHeight = false) {
 		$this->uploadEnabled = true;

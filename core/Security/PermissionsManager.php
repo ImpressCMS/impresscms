@@ -4,8 +4,6 @@ namespace ImpressCMS\Core\Security;
 use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\IPF\arr;
-use ImpressCMS\Core\IPF\str;
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 
 /**
@@ -39,8 +37,8 @@ class PermissionsManager {
 	/**
 	 * Returns permissions for a certain type
 	 *
-	 * @param string $type "global", "forum" or "topic" (should perhaps have "post" as well - but I don't know)
-	 * @param int $id id of the item (forum, topic or possibly post) to get permissions for
+	 * @param string $gperm_name "global", "forum" or "topic" (should perhaps have "post" as well - but I don't know)
+	 * @param int|null $id id of the item (forum, topic or possibly post) to get permissions for
 	 *
 	 * @return array
 	 */
@@ -62,8 +60,8 @@ class PermissionsManager {
 
 	/**
 	 *
-	 * @param arr $item_ids_array
-	 * @param str $gperm_name
+	 * @param array $item_ids_array
+	 * @param string|false $gperm_name
 	 * @return array|mixed
 	 */
 	public function getGrantedGroupsForIds($item_ids_array, $gperm_name = false) {
