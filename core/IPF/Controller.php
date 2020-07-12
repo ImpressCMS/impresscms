@@ -4,8 +4,8 @@ namespace ImpressCMS\Core\IPF;
 use icms;
 use ImpressCMS\Core\File\MediaUploader;
 use ImpressCMS\Core\Message;
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
 use ImpressCMS\Core\Properties\AbstractProperties;
 
 /**
@@ -293,7 +293,7 @@ class Controller {
 		 */
 
 		// if handler is the Multilanguage handler, we will need to treat this for multilanguage
-		if (is_subclass_of($this->handler, AbstractDatabaseHandler::class)) {
+		if (is_subclass_of($this->handler, AbstractExtendedHandler::class)) {
 
 			if ($icmsObj->isNew()) {
 				// This is a new object. We need to store the meta data and then the language data
@@ -443,7 +443,7 @@ class Controller {
 	/**
 	 * Retrieve the object admin side link for a page
 	 *
-	 * @param	AbstractDatabaseModel	$icmsObj	reference to the object from which we want the user side link
+	 * @param	AbstractExtendedModel	$icmsObj	reference to the object from which we want the user side link
 	 * @param	bool	$onlyUrl	whether or not to return a simple URL or a full <a> link
 	 * @param	bool	$withimage	return a linked image instead of linked text
 	 * @return	string	admin side link to the object
@@ -469,7 +469,7 @@ class Controller {
 	/**
 	 * Retrieve the object user side link
 	 *
-	 * @param AbstractDatabaseModel $icmsObj reference to the object from which we want the user side link
+	 * @param AbstractExtendedModel $icmsObj reference to the object from which we want the user side link
 	 * @param bool $onlyUrl wether or not to return a simple URL or a full <a> link
 	 * @return string user side link to the object
 	 */
@@ -505,7 +505,7 @@ class Controller {
 	/**
 	 * This method returns a view link of the Object
 	 *
-	 * @param AbstractDatabaseModel $icmsObj
+	 * @param AbstractExtendedModel $icmsObj
 	 * @param boolean $onlyUrl
 	 * @param boolean $withimage
 	 * @param boolean $userSide
@@ -535,7 +535,7 @@ class Controller {
 
 	/**
 	 *
-	 * @param	AbstractDatabaseModel	$icmsObj
+	 * @param	AbstractExtendedModel	$icmsObj
 	 * @param	bool	$onlyUrl
 	 * @param	bool	$withimage
 	 */

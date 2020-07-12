@@ -36,8 +36,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * a group of users
  *
@@ -50,7 +48,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  * @property string  $description    Description
  * @property string  $group_type     Type
  */
-class Group extends AbstractDatabaseModel {
+class Group extends AbstractExtendedModel {
 	/**
 	 * constructor
 	 */

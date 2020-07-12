@@ -34,8 +34,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * A Config-Option
  *
@@ -48,7 +46,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  * @property string     $confop_value  Value
  * @property int        $conf_id       Config ID
  */
-class ConfigOption extends AbstractDatabaseModel {
+class ConfigOption extends AbstractExtendedModel {
 	/**
 	 * Constructor
 	 */

@@ -2,8 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
 
 /**
 * @backupGlobals disabled
@@ -25,14 +25,14 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             'icms_view_Breadcrumb' => null,
             'icms_view_theme_Object' => null,
             'icms_view_theme_Factory' => null,
-            'icms_view_template_set_Handler' => [AbstractDatabaseHandler::class],
-            'icms_view_template_set_Object' => [AbstractDatabaseModel::class],
-            'icms_view_template_file_Object' => [AbstractDatabaseModel::class],
-            'icms_view_template_file_Handler' => [AbstractDatabaseHandler::class],
-            'icms_view_block_Object' => [AbstractDatabaseModel::class],
-            'icms_view_block_Handler' => [AbstractDatabaseHandler::class],
-            'icms_view_block_position_Handler' => [AbstractDatabaseHandler::class],
-            'icms_view_block_position_Object' => [AbstractDatabaseModel::class]
+            'icms_view_template_set_Handler' => [AbstractExtendedHandler::class],
+            'icms_view_template_set_Object' => [AbstractExtendedModel::class],
+            'icms_view_template_file_Object' => [AbstractExtendedModel::class],
+            'icms_view_template_file_Handler' => [AbstractExtendedHandler::class],
+            'icms_view_block_Object' => [AbstractExtendedModel::class],
+            'icms_view_block_Handler' => [AbstractExtendedHandler::class],
+            'icms_view_block_position_Handler' => [AbstractExtendedHandler::class],
+            'icms_view_block_position_Object' => [AbstractExtendedModel::class]
         ] as $class => $must_be_instances_of) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
             if ($must_be_instances_of === null) {

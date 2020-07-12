@@ -10,8 +10,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * \ImpressCMS\Core\IPF\AbstractModel base SEO-enabled class
  *
@@ -23,7 +21,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  *
  * @package	ICMS\IPF\SEO
  */
-abstract class AbstractSEODatabaseModel extends AbstractDatabaseModel
+abstract class AbstractSEOExtendedModel extends AbstractExtendedModel
 {
 
 	public function __construct(&$handler) {

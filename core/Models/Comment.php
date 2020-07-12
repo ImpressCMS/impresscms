@@ -37,8 +37,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * A Comment
  *
@@ -66,7 +64,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  * @property int    $doimage       Show images?
  * @property int    $dobr          Do line breaks?
  */
-class Comment extends AbstractDatabaseModel {
+class Comment extends AbstractExtendedModel {
 
 	/**
 	 * Constructor

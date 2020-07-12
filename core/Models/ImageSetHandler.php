@@ -44,7 +44,6 @@ namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\DatabaseConnectionInterface;
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * XOOPS imageset handler class.
@@ -55,7 +54,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseHandler;
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class ImageSetHandler extends AbstractDatabaseHandler {
+class ImageSetHandler extends AbstractExtendedHandler {
 
 		/**
 		 * Constructor

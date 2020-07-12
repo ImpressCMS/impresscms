@@ -39,7 +39,6 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
 use ImpressCMS\Core\Textsanitizer;
 
 /**
@@ -70,7 +69,7 @@ use ImpressCMS\Core\Textsanitizer;
  * @property int $last_modified  When it was last modified?
  * @property string $options        Options
  */
-class Block extends AbstractDatabaseModel
+class Block extends AbstractExtendedModel
 {
 
 	/**

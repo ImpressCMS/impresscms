@@ -35,8 +35,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * A category of configs
  *
@@ -48,7 +46,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  * @property string $confcat_name      Category name
  * @property int    $confcat_order     Category display order
  */
-class ConfigCategory extends AbstractDatabaseModel {
+class ConfigCategory extends AbstractExtendedModel {
 	/**
 	 * Constructor
 	 *

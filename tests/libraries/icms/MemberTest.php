@@ -2,8 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
 
 /**
 * @backupGlobals disabled
@@ -18,16 +18,16 @@ class MemberTest extends \PHPUnit_Framework_TestCase {
     public function testAvailability() {
         foreach ([
                 'icms_member_Handler' => null,
-                'icms_member_user_Handler' => AbstractDatabaseHandler::class,
-                'icms_member_user_Object' => AbstractDatabaseModel::class,
-                'icms_member_rank_Handler' => AbstractDatabaseHandler::class,
-                'icms_member_rank_Object' => AbstractDatabaseModel::class,
-                'icms_member_groupperm_Handler' => AbstractDatabaseHandler::class,
-                'icms_member_groupperm_Object' => AbstractDatabaseModel::class,
-                'icms_member_group_Object' => AbstractDatabaseModel::class,
-                'icms_member_group_Handler' => AbstractDatabaseHandler::class,
-                'icms_member_group_membership_Handler' => AbstractDatabaseHandler::class,
-                'icms_member_group_membership_Object' => AbstractDatabaseModel::class
+                'icms_member_user_Handler' => AbstractExtendedHandler::class,
+                'icms_member_user_Object' => AbstractExtendedModel::class,
+                'icms_member_rank_Handler' => AbstractExtendedHandler::class,
+                'icms_member_rank_Object' => AbstractExtendedModel::class,
+                'icms_member_groupperm_Handler' => AbstractExtendedHandler::class,
+                'icms_member_groupperm_Object' => AbstractExtendedModel::class,
+                'icms_member_group_Object' => AbstractExtendedModel::class,
+                'icms_member_group_Handler' => AbstractExtendedHandler::class,
+                'icms_member_group_membership_Handler' => AbstractExtendedHandler::class,
+                'icms_member_group_membership_Object' => AbstractExtendedModel::class
             ] as $class => $must_be_instance_of) {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {

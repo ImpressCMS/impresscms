@@ -24,14 +24,12 @@ use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Database\DatabaseConnectionInterface;
 use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\Filesystem;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
 use ImpressCMS\Core\IPF\arr;
 use ImpressCMS\Core\IPF\Module;
 use ImpressCMS\Core\IPF\obj;
 use ImpressCMS\Core\IPF\PermissionsDecorator;
 use ImpressCMS\Core\IPF\str;
 use ImpressCMS\Core\IPF\unknown_type;
-use ImpressCMS\Core\Models\GroupPermHandler;
 use ImpressCMS\Core\ObjectHandler;
 use ImpressCMS\Core\Properties\AbstractProperties;
 
@@ -42,7 +40,7 @@ use ImpressCMS\Core\Properties\AbstractProperties;
  * @since	1.1
  * @todo	Properly name the vars using the naming conventions
  */
-class AbstractDatabaseHandler extends ObjectHandler {
+class AbstractExtendedHandler extends ObjectHandler {
 
 	/**
 	 * Loaded items cache
@@ -672,7 +670,7 @@ class AbstractDatabaseHandler extends ObjectHandler {
 	 * @param string|float|int $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
 	 *
-	 * @return AbstractDatabaseModel|false
+	 * @return AbstractExtendedModel|false
 	 *@deprecated Use get() instead. Since 2.0
 	 *
 	 */
@@ -689,7 +687,7 @@ class AbstractDatabaseHandler extends ObjectHandler {
 	 * @param string|int|float $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
 	 *
-	 * @return AbstractDatabaseModel|false
+	 * @return AbstractExtendedModel|false
 	 */
 	public function &get($id, $as_object = true, $debug = false, $criteria = false)
 	{
@@ -741,7 +739,7 @@ class AbstractDatabaseHandler extends ObjectHandler {
 	 *
 	 * @param bool $isNew Flag the new objects as "new"?
 	 *
-	 * @return AbstractDatabaseModel
+	 * @return AbstractExtendedModel
 	 */
 	public function &create($isNew = true)
 	{
@@ -1303,7 +1301,7 @@ class AbstractDatabaseHandler extends ObjectHandler {
 	/**
 	 * Build an array containing all the ids of an array of objects as array
 	 *
-	 * @param AbstractDatabaseModel[] $objectsAsArray array of \ImpressCMS\Core\IPF\AbstractModel
+	 * @param AbstractExtendedModel[] $objectsAsArray array of \ImpressCMS\Core\IPF\AbstractModel
 	 * @return array
 	 */
 	public function getIdsFromObjectsAsArray($objectsAsArray) {

@@ -72,7 +72,7 @@ abstract class ObjectHandler {
 	 * @param DatabaseConnectionInterface $db reference to db
 	 * @access protected
 	 */
-	function __construct(&$db) {
+	public function __construct(&$db) {
 		$this->db = & $db;
 	}
 
@@ -81,7 +81,7 @@ abstract class ObjectHandler {
 	 *
 	 * @abstract
 	 */
-	abstract function &create();
+	abstract public function &create();
 
 	/**
 	 * gets a value object
@@ -89,7 +89,7 @@ abstract class ObjectHandler {
 	 * @param int $int_id
 	 * @abstract
 	 */
-	abstract function &get($int_id);
+	abstract public function &get($int_id);
 
 	/**
 	 * insert/update object
@@ -97,7 +97,7 @@ abstract class ObjectHandler {
 	 * @param object $object
 	 * @abstract
 	 */
-	abstract function insert(&$object);
+	abstract public function insert(&$object);
 
 	/**
 	 * delete object from database
@@ -105,6 +105,6 @@ abstract class ObjectHandler {
 	 * @param object $object
 	 * @abstract
 	 */
-	abstract function delete(&$object);
+	abstract public function delete(&$object);
 
 }

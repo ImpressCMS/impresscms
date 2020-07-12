@@ -36,8 +36,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * A Notification
  *
@@ -53,7 +51,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  * @property int    $not_uid       User ID who receives this notification
  * @property int    $not_mode      How this notification should be received?
  */
-class Notification extends AbstractDatabaseModel {
+class Notification extends AbstractExtendedModel {
 
 	/**
 	 * Constructor

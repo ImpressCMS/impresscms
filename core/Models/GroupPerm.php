@@ -37,8 +37,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * A group permission
  *
@@ -54,7 +52,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  * @property int    $gperm_modid   Linked module ID
  * @property string $gperm_name    Name
  */
-class GroupPerm extends AbstractDatabaseModel {
+class GroupPerm extends AbstractExtendedModel {
 	/**
 	 * Constructor
 	 *

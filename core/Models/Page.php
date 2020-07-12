@@ -11,8 +11,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * ImpressCMS page class.
  *
@@ -24,7 +22,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  *
  * @package	ICMS\Data\Page
  */
-class Page extends AbstractDatabaseModel {
+class Page extends AbstractExtendedModel {
 
 	public function __construct(& $handler, $data = array()) {
 			$this->initVar('page_id', self::DTYPE_INTEGER);

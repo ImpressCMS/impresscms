@@ -2,8 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
 
 /**
 * @backupGlobals disabled
@@ -16,7 +16,7 @@ class PageTest extends \PHPUnit_Framework_TestCase {
      * Test if icms_core_DataFilter is available
      */
     public function testAvailability() {
-        foreach (['Handler' => AbstractDatabaseHandler::class, 'Object' => AbstractDatabaseModel::class] as $type => $instanecOfType) {
+        foreach (['Handler' => AbstractExtendedHandler::class, 'Object' => AbstractExtendedModel::class] as $type => $instanecOfType) {
                $class = 'icms_data_page_' . $type;
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 

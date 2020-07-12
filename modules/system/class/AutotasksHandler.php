@@ -11,7 +11,7 @@
  *
  * @package ImpressCMS\Modules\System\Class\Autotasks
  */
-class mod_system_AutotasksHandler extends \ImpressCMS\Core\Models\AbstractDatabaseHandler
+class mod_system_AutotasksHandler extends \ImpressCMS\Core\Models\AbstractExtendedHandler
 {
 
 	private $_use_virtual_config = false;

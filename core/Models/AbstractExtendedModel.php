@@ -22,9 +22,6 @@ use ImpressCMS\Core\IPF\Metagen;
 use ImpressCMS\Core\IPF\PermissionsDecorator;
 use ImpressCMS\Core\IPF\str;
 use ImpressCMS\Core\IPF\unknown_type;
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
-use ImpressCMS\Core\Models\File;
-use ImpressCMS\Core\Models\UrlLink;
 use ImpressCMS\Core\Textsanitizer;
 use ImpressCMS\Core\View\ModelLinkedForm\Form;
 use ImpressCMS\Core\View\ModelLinkedForm\SecureForm;
@@ -40,7 +37,7 @@ use ImpressCMS\Core\View\Table\Row;
  * @author marcan <marcan@smartfactory.ca>
  * @todo Properly identify and declare the visibility of vars and functions
  */
-abstract class AbstractDatabaseModel extends AbstractModel {
+abstract class AbstractExtendedModel extends AbstractModel {
 
 	/**
 	 * Image path
@@ -80,7 +77,7 @@ abstract class AbstractDatabaseModel extends AbstractModel {
 	/**
 	 * Reference to the handler managing this object
 	 *
-	 * @var AbstractDatabaseHandler
+	 * @var AbstractExtendedHandler
 	 */
 	public $handler;
 
@@ -1125,10 +1122,10 @@ abstract class AbstractDatabaseModel extends AbstractModel {
 	/**
 	 * Constructor
 	 *
-	 * @param AbstractDatabaseHandler $handler Handler that linked to this object
+	 * @param AbstractExtendedHandler $handler Handler that linked to this object
 	 * @param array $data Data used when loading/creating object
 	 */
-	public function __construct(&$handler, $data = array()) {
+	public function __construct(&$handler, array $data = []) {
 		icms_loadLanguageFile('system', 'common');
 
 		$this->handler = $handler;

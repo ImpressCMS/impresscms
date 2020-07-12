@@ -37,8 +37,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
-
 /**
  * Configuration handler class.
  *
@@ -49,7 +47,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseHandler;
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @package	ICMS\Config\Item
  */
-class ConfigItemHandler extends AbstractDatabaseHandler {
+class ConfigItemHandler extends AbstractExtendedHandler {
 
 	public function __construct(&$db) {
 			parent::__construct($db, 'config_item', 'conf_id', 'conf_name', 'conf_value', 'icms', 'config', 'conf_id');

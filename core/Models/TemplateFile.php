@@ -36,8 +36,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * Base class for all templates
  *
@@ -55,7 +53,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  * @property string $tpl_module        Module
  * @property string $tpl_type          Type
  * */
-class TemplateFile extends AbstractDatabaseModel {
+class TemplateFile extends AbstractExtendedModel {
 
 	public $tpl_source = false;
 

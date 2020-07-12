@@ -35,8 +35,6 @@
  */
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * A handler for Private Messages
  *
@@ -53,7 +51,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  * @property string $msg_text     Text (content)
  * @property int    $read_msg     Is this message read?
  */
-class PrivateMessage extends AbstractDatabaseModel {
+class PrivateMessage extends AbstractExtendedModel {
 
 	/**
 	 * constructor

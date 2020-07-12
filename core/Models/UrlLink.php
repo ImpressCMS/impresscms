@@ -10,8 +10,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * Url Link object
  *
@@ -24,7 +22,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  *
  * @package	ICMS\Data\UrlLink
  */
-class UrlLink extends AbstractDatabaseModel {
+class UrlLink extends AbstractExtendedModel {
 	/**
 	 * constructor
 	 */

@@ -10,8 +10,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * Ranks to assign members
  *
@@ -24,7 +22,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  * @property int    $rank_special  Is this rank special?
  * @property string $rank_image    Image
  */
-class UserRank extends AbstractDatabaseModel {
+class UserRank extends AbstractExtendedModel {
 
 	/** */
 	public $content = false;

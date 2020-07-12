@@ -2,8 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
 
 /**
 * @backupGlobals disabled
@@ -17,8 +17,8 @@ class ModuleTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
         foreach ([
-                'icms_module_Handler' => AbstractDatabaseHandler::class,
-                'icms_module_Object' => AbstractDatabaseModel::class
+                'icms_module_Handler' => AbstractExtendedHandler::class,
+                'icms_module_Object' => AbstractExtendedModel::class
             ] as $class => $must_be_instance_of) {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {

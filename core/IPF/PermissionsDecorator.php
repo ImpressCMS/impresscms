@@ -4,7 +4,7 @@ namespace ImpressCMS\Core\IPF;
 use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
 
 /**
  * IcmsPermission
@@ -21,16 +21,16 @@ class PermissionsDecorator {
 
 	/**
 	 *
-	 * @var AbstractDatabaseHandler
+	 * @var AbstractExtendedHandler
 	 */
 	public $handler;
 
 	/**
 	 * Constructor
 	 *
-	 * @param AbstractDatabaseHandler $handler
+	 * @param AbstractExtendedHandler $handler
 	 */
-	public function __construct(AbstractDatabaseHandler $handler) {
+	public function __construct(AbstractExtendedHandler $handler) {
 		$this->handler = $handler;
 	}
 

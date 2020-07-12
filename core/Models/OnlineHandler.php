@@ -7,14 +7,13 @@ namespace ImpressCMS\Core\Models;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * Handles online data
  *
  * @package ImpressCMS\Core\Models
  */
-class OnlineHandler extends AbstractDatabaseHandler
+class OnlineHandler extends AbstractExtendedHandler
 {
 
 	/**

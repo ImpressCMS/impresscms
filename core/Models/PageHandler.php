@@ -13,7 +13,6 @@ namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * ImpressCMS page handler class.
@@ -22,7 +21,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseHandler;
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  * @package	ICMS\Data\Page
  */
-class PageHandler extends AbstractDatabaseHandler {
+class PageHandler extends AbstractExtendedHandler {
 
 	public function __construct(& $db) {
 		parent::__construct($db, 'page', 'page_id', 'page_title', '', 'icms');

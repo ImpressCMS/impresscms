@@ -37,7 +37,6 @@
 namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Autoloader;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
 
 /**
  * A Module
@@ -64,7 +63,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseModel;
  * @property int    $ipf               Is this module IPF based?
  */
 class Module
-	extends AbstractDatabaseModel {
+	extends AbstractExtendedModel {
 	/**
 	 * Module configuration
 	 * @var array

@@ -38,7 +38,6 @@ namespace ImpressCMS\Core\Models;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 /**
  * Template file handler class.
@@ -49,7 +48,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseHandler;
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class TemplateFileHandler extends AbstractDatabaseHandler {
+class TemplateFileHandler extends AbstractExtendedHandler {
 	private $_prefetch_cache = array();
 
 	public function __construct(&$db) {

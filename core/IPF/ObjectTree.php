@@ -38,7 +38,7 @@
 
 namespace ImpressCMS\Core\IPF;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
 
 /**
  * A tree structures with objects as nodes
@@ -80,14 +80,14 @@ class ObjectTree {
 		/**
 		 * Array of objects
 		 *
-		 * @var AbstractDatabaseModel
+		 * @var AbstractExtendedModel
 		 */
 	private $_objects = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param   AbstractDatabaseModel	$objectArr  Array of objects
+	 * @param   AbstractExtendedModel	$objectArr  Array of objects
 	 * @param   string	$myId       field name of object ID
 	 * @param   string	$parentId   field name of parent object ID
 	 * @param   string	$rootId     field name of root object ID
@@ -133,7 +133,7 @@ class ObjectTree {
 	 * returns an object from the tree specified by its id
 	 *
 	 * @param   string  $key    ID of the object to retrieve
-	 * @return  AbstractDatabaseModel  Object within the tree
+	 * @return  AbstractExtendedModel  Object within the tree
 	 */
 	public function & getByKey($key) {
 		return $this->_tree[$key]['obj'];

@@ -2,8 +2,6 @@
 
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
-
 /**
  * UrlLink Handler
  *
@@ -14,7 +12,7 @@ use ImpressCMS\Core\Models\AbstractDatabaseHandler;
  * @author	Phoenyx
  */
 
-class UrlLinkHandler extends AbstractDatabaseHandler {
+class UrlLinkHandler extends AbstractExtendedHandler {
 	/**
 	 * constrcutor
 	 *

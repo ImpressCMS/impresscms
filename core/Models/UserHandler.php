@@ -40,7 +40,6 @@ use Exception;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 use ImpressCMS\Core\StopSpammer;
 
 include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
@@ -55,7 +54,7 @@ include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
  * @package	ICMS\Member\User
  */
 class UserHandler
-	extends AbstractDatabaseHandler {
+	extends AbstractExtendedHandler {
 
 		public function __construct(&$db, $module = 'icms') {
 			if (!$module) {

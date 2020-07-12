@@ -2,8 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
 
 /**
 * @backupGlobals disabled
@@ -18,10 +18,10 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
     public function testAvailability() {
         foreach ([
             'icms_ipf_Tree' => null,
-            AbstractDatabaseModel::class => ['icms_core_Object'],
+            AbstractExtendedModel::class => ['icms_core_Object'],
             'icms_ipf_Metagen' => null,
             'icms_ipf_Highlighter' => null,
-            AbstractDatabaseHandler::class => ['icms_core_ObjectHandler'],
+            AbstractExtendedHandler::class => ['icms_core_ObjectHandler'],
             'icms_ipf_Controller' => null,
             'icms_ipf_About' => null,
             'icms_ipf_view_Column' => null,
@@ -29,7 +29,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_view_Single' => null,
             'icms_ipf_view_Table' => null,
             'icms_ipf_view_Tree' => ['icms_ipf_view_Table'],
-            'icms_ipf_seo_Object' => [AbstractDatabaseModel::class],
+            'icms_ipf_seo_Object' => [AbstractExtendedModel::class],
             'icms_ipf_registry_Handler' => null,
             'icms_ipf_permission_Handler' => null,
             'icms_ipf_member_Handler' => ['icms_member_Handler'],
@@ -64,7 +64,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_export_Renderer' => null,
             'icms_ipf_export_Handler' => null,
             'icms_ipf_category_Object' => ['icms_ipf_seo_Object'],
-            'icms_ipf_category_Handler' => [AbstractDatabaseHandler::class]
+            'icms_ipf_category_Handler' => [AbstractExtendedHandler::class]
         ] as $class => $must_be_instances_of) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
             if ($must_be_instances_of === null) {
@@ -104,7 +104,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'getAllParent',
                 'makeSelBox'
             ],
-            AbstractDatabaseModel::class => [
+            AbstractExtendedModel::class => [
                 'isLoadedOnCreation',
                 'accessGranted',
                 'openFormSection',
@@ -182,7 +182,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 'buildAutoMetaTags',
                 'createMetaTags'
             ],
-            AbstractDatabaseHandler::class => [
+            AbstractExtendedHandler::class => [
                 'addEventHook',
                 'addPermission',
                 'setGrantedObjectsCriteria',
@@ -398,7 +398,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
                 '_myId' => 'string',
                 '_tree'    => 'array'
             ],
-            AbstractDatabaseModel::class => [
+            AbstractExtendedModel::class => [
                 '_image_path' => 'string',
                 '_image_url' => 'string',
                 'seoEnabled' => 'bool',
@@ -420,7 +420,7 @@ class IPFTest extends \PHPUnit_Framework_TestCase {
             'icms_ipf_Highlighter' => [
                 'content' => 'string'
             ],
-            AbstractDatabaseHandler::class => [
+            AbstractExtendedHandler::class => [
                 '_itemname' => 'string',
                 'table' => 'string',
                 'keyName' => 'string',

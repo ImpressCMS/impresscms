@@ -17,7 +17,7 @@ icms_loadLanguageFile("system", "userrank", true);
  * @package		System
  * @subpackage	Users
  */
-class mod_system_Userrank extends \ImpressCMS\Core\Models\AbstractDatabaseModel {
+class mod_system_Userrank extends \ImpressCMS\Core\Models\AbstractExtendedModel {
 
 	/** */
 	public $content = false;

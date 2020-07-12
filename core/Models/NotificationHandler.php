@@ -41,7 +41,6 @@ namespace ImpressCMS\Core\Models;
 // RMV-NOTIFY
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
 
 include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 
@@ -55,7 +54,7 @@ include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  * @package	ICMS\Data\Notification
  */
-class NotificationHandler extends AbstractDatabaseHandler {
+class NotificationHandler extends AbstractExtendedHandler {
 
 		public function __construct(&$db) {
 			parent::__construct($db, 'data_notification', 'not_id', 'not_event', 'not_itemid', 'icms', 'xoopsnotifications', 'not_id');

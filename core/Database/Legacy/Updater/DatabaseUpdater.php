@@ -13,8 +13,8 @@ namespace ImpressCMS\Core\Database\Legacy\Updater;
 
 use ImpressCMS\Core\AbstractModel;
 use ImpressCMS\Core\Database\DatabaseConnection;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-use ImpressCMS\Core\Models\AbstractSEODatabaseModel;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
+use ImpressCMS\Core\Models\AbstractSEOExtendedModel;
 use ImpressCMS\Core\Properties\AbstractProperties;
 
 /**
@@ -128,7 +128,7 @@ class DatabaseUpdater {
 		$class = new ReflectionClass($object);
 		//$isExtention = false;
 		if ($pclass = $class->getParentClass()) {
-			if ($pclass->isInstantiable() && !in_array($pclass->getName(), [AbstractModel::class, AbstractDatabaseModel::class], true)) {
+			if ($pclass->isInstantiable() && !in_array($pclass->getName(), [AbstractModel::class, AbstractExtendedModel::class], true)) {
 				$pclass_instance = $pclass->newInstanceArgs(array(&$module_handler));
 				$parentObjectVars = $pclass_instance->getVars();
 				unset($pclass_instance);
@@ -281,7 +281,7 @@ class DatabaseUpdater {
 		$class = new ReflectionClass($object);
 		$isExtention = false;
 		if ($pclass = $class->getParentClass()) {
-			if ($pclass->isInstantiable() && !in_array($pclass->getName(), [AbstractModel::class, AbstractDatabaseModel::class, AbstractSEODatabaseModel::class], true)) {
+			if ($pclass->isInstantiable() && !in_array($pclass->getName(), [AbstractModel::class, AbstractExtendedModel::class, AbstractSEOExtendedModel::class], true)) {
 				$pclass_instance = $pclass->newInstanceArgs(array(&$module_handler));
 				$parentObjectVars = $pclass_instance->getVars();
 				unset($pclass_instance);

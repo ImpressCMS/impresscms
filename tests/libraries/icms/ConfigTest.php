@@ -2,8 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
 use ImpressCMS\Core\Providers\ConfigServiceProvider;
 use League\Container\Container;
 
@@ -19,7 +19,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
        foreach (['category', 'Item', 'option'] as $name) {
-           foreach (['Handler' => AbstractDatabaseHandler::class, 'Object' => AbstractDatabaseModel::class] as $type => $instanecOfType) {
+           foreach (['Handler' => AbstractExtendedHandler::class, 'Object' => AbstractExtendedModel::class] as $type => $instanecOfType) {
                $class = 'icms_config_' . $name . '_' . $type;
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 

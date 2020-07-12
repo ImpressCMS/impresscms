@@ -1,15 +1,13 @@
 <?php
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\Models\AbstractDatabaseModel;
-
 /**
  * Image body
  *
  * @property int    $image_id       Image ID
  * @property string $image_body     Image body
  */
-class ImageBody extends AbstractDatabaseModel {
+class ImageBody extends AbstractExtendedModel {
 
 	/**
 	 * Constructor

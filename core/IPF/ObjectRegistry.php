@@ -11,7 +11,7 @@
 namespace ImpressCMS\Core\IPF;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
-use ImpressCMS\Core\Models\AbstractDatabaseHandler;
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
 
 /**
  * Registry of \ImpressCMS\Core\IPF\AbstractModel
@@ -52,7 +52,7 @@ class ObjectRegistry {
 	/**
 	 * Adding objects to the registry
 	 *
-	 * @param AbstractDatabaseHandler $handler of the objects to add
+	 * @param AbstractExtendedHandler $handler of the objects to add
 	 * @param CriteriaCompo|false $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
@@ -70,7 +70,7 @@ class ObjectRegistry {
 	/**
 	 * Adding objects as list to the registry
 	 *
-	 * @param AbstractDatabaseHandler $handler of the objects to add
+	 * @param AbstractExtendedHandler $handler of the objects to add
 	 * @param CriteriaCompo|false $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
