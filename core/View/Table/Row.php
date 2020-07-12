@@ -5,7 +5,7 @@
  * @license		LICENSE.txt
  */
 
-namespace ImpressCMS\Core\IPF\View;
+namespace ImpressCMS\Core\View\Table;
 
 /**
  * \ImpressCMS\Core\IPF\View\ViewRow class

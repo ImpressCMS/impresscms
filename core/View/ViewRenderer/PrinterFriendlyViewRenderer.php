@@ -9,7 +9,10 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-namespace ImpressCMS\Core\View;
+namespace ImpressCMS\Core\View\ViewRenderer;
+
+use ImpressCMS\Core\View\field_type;
+use ImpressCMS\Core\View\Template;
 
 /**
  * Class to manage a printer friendly page
@@ -17,7 +20,7 @@ namespace ImpressCMS\Core\View;
  * @package	ICMS\View
  * @link       The IcmsFactory <www.smartfactory.ca>
  */
-class PrinterFriendlyView {
+class PrinterFriendlyViewRenderer {
 
 	public $_title;
 	public $_dsc;
@@ -29,7 +32,9 @@ class PrinterFriendlyView {
 	/**
 	 * Constructor
 	 *
-	 * @param field_type bare_field_name
+	 * @param string $content
+	 * @param false|string $title
+	 * @param false|string $dsc
 	 */
 	public function __construct($content, $title = false, $dsc = false) {
 		$this->_title = $title;
@@ -53,7 +58,7 @@ class PrinterFriendlyView {
 
 		$this->_tpl = new Template();
 
-		$this->_tpl->assign('icms_print_pageTitle', $this->_pageTitle?$this->_pageTitle:$this->_title);
+		$this->_tpl->assign('icms_print_pageTitle', $this->_pageTitle?:$this->_title);
 		$this->_tpl->assign('icms_print_title', $this->_title);
 		$this->_tpl->assign('icms_print_dsc', $this->_dsc);
 		$this->_tpl->assign('icms_print_content', $this->_content);
@@ -71,9 +76,9 @@ class PrinterFriendlyView {
 	 * Generates a printer friendly version of a page
 	 *
 	 * @param	string	$content	The HTML content of the page
-	 * @param	string	$title		The title of the page
-	 * @param	string	$description	The description of the page
-	 * @param	string	$pagetitle
+	 * @param	false|string	$title		The title of the page
+	 * @param	false|string	$description	The description of the page
+	 * @param	false|string	$pagetitle
 	 * @param	int		$width		The width of the page, in pixels
 	 */
 	static public function generate($content, $title = false, $description = false, $pagetitle = false, $width = 680) {

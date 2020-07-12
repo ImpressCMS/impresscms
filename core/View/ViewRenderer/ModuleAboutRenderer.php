@@ -8,10 +8,11 @@
  * @author		marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\View;
+namespace ImpressCMS\Core\View\ViewRenderer;
 
 use icms;
 use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\View\Template;
 
 /**
  * About
@@ -179,7 +180,6 @@ class ModuleAboutRenderer {
 	 * Initiate the object, based on $icmsModule
 	 *
 	 * @param string $aboutTitle text used in the extreme right caption of the menu
-	 * @return ModuleAboutRenderer
 	 */
 	public function __construct($aboutTitle = _MODABOUT_ABOUT) {
 		global $icmsModule, $icmsConfig;
@@ -229,19 +229,19 @@ class ModuleAboutRenderer {
 		$module_handler = icms::handler('icms_module');
 		$versioninfo = & $module_handler->get($icmsModule->getVar('mid'));
 
-		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . " " . $versioninfo->getInfo('name'));
+		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . ' ' . $versioninfo->getInfo('name'));
 
 		$this->_tpl = new Template();
 
-		$this->_tpl->assign('module_url', ICMS_URL . "/modules/" . $icmsModule->getVar('dirname') . "/");
+		$this->_tpl->assign('module_url', ICMS_URL . '/modules/' . $icmsModule->getVar('dirname') . '/');
 		$this->_tpl->assign('module_image', $versioninfo->getInfo('image'));
 		$this->_tpl->assign('module_name', $versioninfo->getInfo('name'));
 		$this->_tpl->assign('module_version', $versioninfo->getInfo('version'));
 		$this->_tpl->assign('module_status_version', $versioninfo->getInfo('status_version'));
 
 		// Left headings...
-		if ($versioninfo->getInfo('author_realname') != '') {
-			$author_name = $versioninfo->getInfo('author') . " (" . $versioninfo->getInfo('author_realname') . ")";
+		if ($versioninfo->getInfo('author_realname')) {
+			$author_name = $versioninfo->getInfo('author') . ' (' . $versioninfo->getInfo('author_realname') . ')';
 		} else {
 			$author_name = $versioninfo->getInfo('author');
 		}

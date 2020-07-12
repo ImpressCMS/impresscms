@@ -7,7 +7,9 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\View;
+namespace ImpressCMS\Core\View\ViewRenderer;
+
+use ImpressCMS\Core\View\Template;
 
 /**
  * Breadcrumb
@@ -19,7 +21,7 @@ namespace ImpressCMS\Core\View;
  * @author	marcan <marcan@impresscms.org>
  * @package	ICMS\View
  */
-class BreadcrumbView {
+class BreadcrumbRenderer {
 
 	private $_tpl;
 	private $items;
@@ -38,6 +40,7 @@ class BreadcrumbView {
 	 * @param boolean $fetchOnly Whether to display the breadcrumbs, or not
 	 *
 	 * @return string|null
+	 * @throws \SmartyException
 	 */
 	public function render($fetchOnly = false) {
 

@@ -36,6 +36,8 @@
 
 namespace ImpressCMS\Core\View;
 
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Models\Module;
 
 /**
@@ -109,7 +111,7 @@ class PageBuilder {
 		foreach ($block_arr as $block) {
 			$side = $oldzones[$block->side];
 			if ($var = $this->buildBlock($block, $template)) {
-				$this->blocks[$side][$var["id"]] = $var;
+				$this->blocks[$side][$var['id']] = $var;
 			}
 		}
 		if ($this->theme) {
@@ -139,7 +141,7 @@ class PageBuilder {
 			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 		}
 
-		$startMod = ($icmsConfig['startpage'] == '--')?'system':$icmsConfig['startpage'];
+		$startMod = ($icmsConfig['startpage'] === '--')?'system':$icmsConfig['startpage'];
 
 		// setting the full and relative url of the actual page
 		$clean_request = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
@@ -147,9 +149,9 @@ class PageBuilder {
 		$url = substr(str_replace(ICMS_URL, '', $fullurl), 1);
 
 		$icms_page_handler = \icms::handler('icms_data_page');
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_url', $fullurl));
+		$criteria = new CriteriaCompo(new CriteriaItem('page_url', $fullurl));
 		if (!empty($url)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_url', $url), 'OR');
+			$criteria->add(new CriteriaItem('page_url', $url), 'OR');
 		}
 		$pages = $icms_page_handler->getCount($criteria);
 
@@ -163,13 +165,13 @@ class PageBuilder {
 			$module_handler = \icms::handler('icms_module');
 			$module = $module_handler->get($mid);
 			$dirname = $module->getVar('dirname');
-			$isStart = ($startMod == $mid . '-' . $pid);
+			$isStart = ($startMod === $mid . '-' . $pid);
 		} else {
 			// we don't have a sym-link for this page
 			if (is_object($icmsModule)) {
 				$mid = (int) $icmsModule->getVar('mid');
 				$dirname = $icmsModule->getVar('dirname');
-				$isStart = (substr($_SERVER['PHP_SELF'], -9) == 'index.php' && $startMod == $dirname);
+				$isStart = (substr($_SERVER['PHP_SELF'], -9) === 'index.php' && $startMod === $dirname);
 			} else {
 				$mid = 1;
 				$dirname = 'system';
@@ -181,19 +183,19 @@ class PageBuilder {
 		if ($isStart) {
 			self::$modid = array('module' => 0, 'page' => 1, 'isStart' => $isStart);
 		} else {
-			$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('page_status', 1));
+			$criteria = new CriteriaCompo(new CriteriaItem('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$pid = 0;
 			foreach ($pages as $page) {
 				$purl = filter_var($page->getVar('page_url'), FILTER_SANITIZE_URL);
 				if (substr($purl, -1) == '*') {
 					$purl = substr($purl, 0, -1);
-					if (substr($url, 0, strlen($purl)) == $purl || substr($fullurl, 0, strlen($purl)) == $purl) {
+					if (strpos($url, $purl) === 0 || strpos($fullurl, $purl) === 0) {
 						$pid = $page->getVar('page_id');
 						break;
 					}
 				} else {
-					if ($purl == $url || $purl == $fullurl) {
+					if ($purl === $url || $purl === $fullurl) {
 						$pid = $page->getVar('page_id');
 						break;
 					}
@@ -216,20 +218,20 @@ class PageBuilder {
 	public function buildBlock($xobject, &$template) {
 		global $icmsConfigPersona;
 		$bid = $xobject->getVar('bid');
-		if ($icmsConfigPersona['editre_block'] == true) {
+		if ($icmsConfigPersona['editre_block'] === true) {
 			if (\icms::$user && count($this->uagroups) > 0) {
 				$url = base64_encode(str_replace(ICMS_URL, '', \icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
 				$titlebtns = '&nbsp;<span id="edit_block" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"><span class="glyphicon glyphicon-cog" style="font-size: 16px;"></span></a>'
 					. '<ul id="ed_block_' . $bid . '" class="dropdown-menu add-arrow">'
-					. "<li><a>" . _EDIT . " " . _BLOCK_ID . " " . $bid . "</a></li>"
+					. '<li><a>' . _EDIT . ' ' . _BLOCK_ID . ' ' . $bid . "</a></li>"
 					. "<li class='divider'></li>"
-					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=visible&amp;bid=" . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-eye-close'></span> " . _INVISIBLE . "</a></li>"
-					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=clone&amp;bid=" . $bid . "'> <span class='glyphicon glyphicon-new-window'></span> " . _CLONE . "</a></li>"
-					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=mod&amp;bid=" . $bid . "'> <span class='glyphicon glyphicon-edit'></span> " . _EDIT . "</a></li>"
-					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=up&amp;bid=" . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-arrow-up'></span> " . _UP . "</a></li>"
-					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=down&amp;bid=" . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-arrow-down'></span> " . _DOWN . "</a></li>";
+					. "<li><a href='" . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&amp;op=visible&amp;bid=' . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-eye-close'></span> " . _INVISIBLE . "</a></li>"
+					. "<li><a href='" . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&amp;op=clone&amp;bid=' . $bid . "'> <span class='glyphicon glyphicon-new-window'></span> " . _CLONE . "</a></li>"
+					. "<li><a href='" . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&amp;op=mod&amp;bid=' . $bid . "'> <span class='glyphicon glyphicon-edit'></span> " . _EDIT . "</a></li>"
+					. "<li><a href='" . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&amp;op=up&amp;bid=' . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-arrow-up'></span> " . _UP . "</a></li>"
+					. "<li><a href='" . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&amp;op=down&amp;bid=' . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-arrow-down'></span> " . _DOWN . "</a></li>";
 				if ($xobject->getVar('dirname') == '') {
-					$titlebtns .= "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=del&amp;bid=" . $bid . "'> <span class='glyphicon glyphicon-remove'></span> " . _DELETE . "</a></li>";
+					$titlebtns .= "<li><a href='" . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&amp;op=del&amp;bid=' . $bid . "'> <span class='glyphicon glyphicon-remove'></span> " . _DELETE . "</a></li>";
 				}
 				$titlebtns .= '</ul></span>';
 			} else {
@@ -255,7 +257,7 @@ class PageBuilder {
 			$template->caching = 2;
 			$template->cache_lifetime = $bcachetime;
 		}
-		$tplName = ($tplName = $xobject->getVar('template'))?"db:$tplName":"db:system_block_dummy.html";
+		$tplName = ($tplName = $xobject->getVar('template'))?"db:$tplName": 'db:system_block_dummy.html';
 		$cacheid = $this->generateCacheId(
 			'blk_' . $xobject->dirname . '_'
 			. $bid

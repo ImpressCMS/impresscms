@@ -8,8 +8,10 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\IPF\View;
+namespace ImpressCMS\Core\View\ViewRenderer;
 
+use ImpressCMS\Core\View\Table\Exception;
+use ImpressCMS\Core\View\Table\unknown_type;
 use ImpressCMS\Core\View\Template;
 
 /**
@@ -69,6 +71,8 @@ class ModelViewRenderer {
 	 *
 	 * @param $fetchOnly
 	 * @param $debug
+	 * @return string
+	 * @throws \SmartyException
 	 */
 	public function render($fetchOnly = false, $debug = false) {
 
@@ -118,6 +122,8 @@ class ModelViewRenderer {
 	/**
 	 *
 	 * @param unknown_type $debug
+	 * @return string
+	 * @throws \SmartyException
 	 */
 	public function fetch($debug = false) {
 		return $this->render(true, $debug);

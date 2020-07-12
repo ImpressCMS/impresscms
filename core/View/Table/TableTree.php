@@ -8,7 +8,7 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\IPF\View;
+namespace ImpressCMS\Core\View\Table;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\IPF\AbstractModel;

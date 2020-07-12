@@ -10,7 +10,7 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\IPF\View;
+namespace ImpressCMS\Core\View\Table;
 
 use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
