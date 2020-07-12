@@ -40,6 +40,7 @@ use icms;
 use ImpressCMS\Core\Models\Group;
 use ImpressCMS\Core\Models\User;
 use PHPMailer\PHPMailer\Exception;
+use XoopsMailerLocal;
 
 /**
  * Class for sending messages.
@@ -158,9 +159,9 @@ class MailHandler {
 		icms_loadLanguageFile('core', 'xoopsmailerlocal');
 		icms_loadLanguageFile('core', 'mail');
 		if (class_exists('XoopsMailerLocal')) {
-			$this->multimailer = new \XoopsMailerLocal();
+			$this->multimailer = new XoopsMailerLocal();
 		} else {
-			$this->multimailer = new \MailHandler();
+			$this->multimailer = new MailHandler();
 		}
 		$this->reset();
 	}
