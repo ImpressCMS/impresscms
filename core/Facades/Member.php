@@ -47,7 +47,7 @@ use ImpressCMS\Core\Models\GroupHandler;
 use ImpressCMS\Core\Models\GroupMembershipHandler;
 use ImpressCMS\Core\Models\User;
 use ImpressCMS\Core\Models\UserHandler;
-use ImpressCMS\Core\Password;
+use ImpressCMS\Core\Security\Password;
 
 /**
  * Member handler class.

@@ -1,7 +1,8 @@
 <?php
-namespace ImpressCMS\Core;
+namespace ImpressCMS\Core\Security;
 
 use ImpressCMS\Core\Database\Legacy\Updater\TableUpdater;
+use ImpressCMS\Core\Hash;
 
 /**
  * Class to encrypt User Passwords.

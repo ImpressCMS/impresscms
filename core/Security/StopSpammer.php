@@ -1,5 +1,7 @@
 <?php
-namespace ImpressCMS\Core;
+namespace ImpressCMS\Core\Security;
+
+use ImpressCMS\Core\Debug;
 
 /**
  * StopSpammer object

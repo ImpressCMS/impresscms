@@ -34,9 +34,11 @@
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
-namespace ImpressCMS\Core;
+namespace ImpressCMS\Core\Security;
 
-use ImpressCMS\Core\View\Form\Elements\HiddentokenElement;
+use Aura\Session\Session;
+use icms;
+use ImpressCMS\Core\View\Form\Elements\HiddenTokenElement;
 
 /**
  * Class for managing security aspects such as checking referers, applying tokens and checking global variables for contamination
@@ -46,7 +48,7 @@ use ImpressCMS\Core\View\Form\Elements\HiddentokenElement;
  * @author	Jan Pedersen <mithrandir@xoops.org>
  * @copyright	(c) 2000-2005 The Xoops Project - www.xoops.org
  */
-class Security {
+class RequestSecurity {
 
 	public $errors = array();
 
@@ -73,16 +75,16 @@ class Security {
 	 * @return bool
 	 */
 	public function validateToken($token = false, $clearIfValid = true, $name = _CORE_TOKEN) {
-		$token = ($token !== false)?$token:(isset($_REQUEST[$name . '_REQUEST'])?$_REQUEST[$name . '_REQUEST']:'');
+		$token = ($token !== false)?$token:($_REQUEST[$name . '_REQUEST'] ?? '');
 
 		/**
-		 * @var \Aura\Session\Session $session
+		 * @var Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = icms::getInstance()->get('session');
 
 		$tokenData = $session->getCsrfToken();
 		if (!$tokenData->isValid($token)) {
-			\icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
+			icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
 			return false;
 		}
 		if ($clearIfValid) {
@@ -137,9 +139,9 @@ class Security {
 		}
 
 		/**
-		 * @var \Aura\Session\Session $session
+		 * @var Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = icms::getInstance()->get('session');
 
 		return $session->getCsrfToken()->getValue();
 	}
@@ -207,7 +209,7 @@ class Security {
 	 */
 	public function checkBadips() {
 		global $icmsConfig;
-		if ($icmsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
+		if ((int)$icmsConfig['enable_badips'] === 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR']) {
 			foreach ($icmsConfig['bad_ips'] as $bi) {
 				if (!empty($bi) && preg_match('/' . $bi . '/', $_SERVER['REMOTE_ADDR'])) {
 					exit();

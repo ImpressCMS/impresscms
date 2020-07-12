@@ -31,6 +31,7 @@
 namespace ImpressCMS\Core;
 
 use ImpressCMS\Core\Facades\Config;
+use ImpressCMS\Core\Security\StopSpammer;
 
 /**
  * Class to filter Data
