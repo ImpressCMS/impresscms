@@ -12,6 +12,7 @@ use ImpressCMS\Core\View\Form\Elements\DHTMLTextAreaElement;
 use ImpressCMS\Core\View\Form\Elements\HiddenElement;
 use ImpressCMS\Core\View\Form\Elements\LabelElement;
 use ImpressCMS\Core\View\Form\Elements\PasswordElement;
+use ImpressCMS\Core\View\Form\Elements\RadioElement;
 use ImpressCMS\Core\View\Form\Elements\Select\CountryElement;
 use ImpressCMS\Core\View\Form\Elements\Select\GroupElement;
 use ImpressCMS\Core\View\Form\Elements\Select\TimeZoneElement;
@@ -125,7 +126,7 @@ class Form extends ThemeForm {
 			if (isset($this->targetObject->controls[$key]['onSelect'])) {
 				$hidden = new HiddenElement('changedField', false);
 				$this->addElement($hidden);
-				$otherExtra = isset($var['form_extra'])?$var['form_extra']:'';
+				$otherExtra = $var['form_extra'] ?? '';
 				$onchangedString = "this.form.elements.changedField.value='$key'; this.form.elements.op.value='changedField'; submit()";
 				$formElement->setExtra('onchange="' . $onchangedString . '"' . ' ' . $otherExtra);
 			} else {
@@ -177,7 +178,7 @@ class Form extends ThemeForm {
 								}
 
 								if ($controls[$key] === null) {
-									$elementToAdd = new HiddenElement($key, isset($var['value'])?$var['value']:null);
+									$elementToAdd = new HiddenElement($key, $var['value'] ?? null);
 									$this->addElement($elementToAdd, $key, $var, false);
 									unset($elementToAdd);
 									continue;
@@ -391,8 +392,8 @@ class Form extends ThemeForm {
 
 			case 'textarea' :
 
-				$form_rows = isset($this->targetObject->controls[$key]['rows'])?$this->targetObject->controls[$key]['rows']:5;
-				$form_cols = isset($this->targetObject->controls[$key]['cols'])?$this->targetObject->controls[$key]['cols']:60;
+				$form_rows = $this->targetObject->controls[$key]['rows'] ?? 5;
+				$form_cols = $this->targetObject->controls[$key]['cols'] ?? 60;
 
 				$editor = new TextAreaElement($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
 				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
@@ -465,9 +466,10 @@ class Form extends ThemeForm {
 	/**
 	 * Get information for the theme select box
 	 *
-	 * @param	string  $key        key of the variables in the targetobject
-	 * @param	string  $var        key of the variables in the targetobject
-	 * @param	bool    $multiple   will you need a form element which shows multiple items
+	 * @param string $key key of the variables in the targetobject
+	 * @param string $var key of the variables in the targetobject
+	 * @param bool $multiple will you need a form element which shows multiple items
+	 * @return SelectElement
 	 */
 	private function getThemeSelect($key, $var, $multiple = false) {
 		$size = $multiple?5:1;
@@ -483,17 +485,17 @@ class Form extends ThemeForm {
 	/**
 	 * Gets reference to the object for each key in the variables of the targetobject
 	 *
-	 * @param	string  $keyname  name of the key
-	 * @param	mixed   $ret      Object if the returned object is set, FALSE if no object called (if getname is not equal to the passed keyname)
+	 * @param string $keyname name of the key
+	 * @return false|AbstractFormElement
 	 */
 	public function &getElementById($keyname) {
 		foreach ($this->_elements as $eleObj) {
-			if ($eleObj->getName() == $keyname) {
+			if ((string)$eleObj->getName() === (string)$keyname) {
 				$ret = & $eleObj;
 				break;
 			}
 		}
-		return isset($ret)?$ret:false;
+		return $ret ?? false;
 	}
 
 	/**
@@ -506,21 +508,21 @@ class Form extends ThemeForm {
 		$ret = "
 			<form name='".$this->getName() . "_dorga' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "' onsubmit='return xoopsFormValidate_" . $this->getName() . "(this);'" . $this->getExtra() . ">
 			<table width='100%' class='outer table' cellspacing='1'>
-			<tr><th colspan='2'>".$this->getTitle() . "</th></tr>
-		";
+			<tr><th colspan='2'>".$this->getTitle() . '</th></tr>
+		';
 		$hidden = '';
 		$class = 'even';
 		foreach ($this->getElements() as $ele) {
 			if (!is_object($ele)) {
 				$ret .= $ele;
 			} elseif (!$ele->isHidden()) {
-				if (get_class($ele) == FormSectionElement::class && !$ele->isClosingSection()) {
+				if ((get_class($ele) === FormSectionElement::class) && !$ele->isClosingSection()) {
 					$ret .= '<tr><th colspan="2">' . $ele->render() . '</th></tr>';
-				} elseif (get_class($ele) == FormSectionElement::class && $ele->isClosingSection()) {
+				} elseif ((get_class($ele) === FormSectionElement::class) && $ele->isClosingSection()) {
 					$ret .= '<tr><td class="even" colspan="2">&nbsp;</td></tr>';
 				} else {
 					$ret .= "<tr id='" . $ele->getName() . "_row' valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>" . $ele->getCaption();
-					if ($ele->getDescription() != '') {
+					if ($ele->getDescription()) {
 						$ret .= '<br /><br /><span style="font-weight: normal;">' . $ele->getDescription() . '</span>';
 					}
 					$ret .= "</td><td class='$class'>" . $ele->render() . "</td></tr>\n";
@@ -544,17 +546,17 @@ class Form extends ThemeForm {
 		$i = 0;
 		$elements = array();
 		foreach ($this->getElements() as $ele) {
-			$n = ($ele->getName() != "")?$ele->getName():$i;
+			$n = $ele->getName()?:$i;
 			$elements[$n]['name'] = $ele->getName();
 			$elements[$n]['caption'] = $ele->getCaption();
 			$elements[$n]['body'] = $ele->render();
 			$elements[$n]['hidden'] = $ele->isHidden();
 			$elements[$n]['required'] = $ele->isRequired();
-			$elements[$n]['section'] = get_class($ele) == FormSectionElement::class && !$ele->isClosingSection();
-			$elements[$n]['section_close'] = get_class($ele) == FormSectionElement::class && $ele->isClosingSection();
-			$elements[$n]['hide'] = ($i == $n)?false:$this->targetObject->getVarInfo($n, 'hide', false);
+			$elements[$n]['section'] = get_class($ele) === FormSectionElement::class && !$ele->isClosingSection();
+			$elements[$n]['section_close'] = get_class($ele) === FormSectionElement::class && $ele->isClosingSection();
+			$elements[$n]['hide'] = ($i === $n)?false:$this->targetObject->getVarInfo($n, 'hide', false);
 
-			if ($ele->getDescription() != '') {
+			if ($ele->getDescription()) {
 				$elements[$n]['description'] = $ele->getDescription();
 			}
 			$i++;
@@ -587,8 +589,8 @@ class Form extends ThemeForm {
 			$eltcaption = trim($elt->getCaption());
 			$eltmsg = empty($eltcaption)? sprintf(_FORM_ENTER, $eltname):sprintf(_FORM_ENTER, $eltcaption);
 			$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
-			if (strtolower(get_class($elt)) == '\ImpressCMS\Core\Form\Elements\RadioElement') {
-				$js .= "var myOption = -1;";
+			if (get_class($elt) === RadioElement::class) {
+				$js .= 'var myOption = -1;';
 				$js .= "for (i=myform.{$eltname}.length-1; i > -1; i--) {
 					if (myform.{$eltname}[i].checked) {
 						myOption = i; i = -1;
@@ -600,8 +602,8 @@ class Form extends ThemeForm {
 			/**
 			 * @todo remove icmsformselect_multielement in 1.4
 			 */
-			} elseif (strtolower(get_class($elt)) == SelectMultiElement::class) {
-				$js .= "var hasSelections = FALSE;";
+			} elseif (get_class($elt) === SelectMultiElement::class) {
+				$js .= 'var hasSelections = FALSE;';
 				$js .= "for(var i = 0; i < myform['{$eltname}[]'].length; i++){
 					if (myform['{$eltname}[]'].options[i].selected) {
 						hasSelections = TRUE;
@@ -611,8 +613,8 @@ class Form extends ThemeForm {
 				if (hasSelections == FALSE) {
 					window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'].options[0].focus(); return false; }\n";
 
-			} elseif (strtolower(get_class($elt)) == CheckboxElement::class) {
-				$js .= "var hasSelections = FALSE;";
+			} elseif (get_class($elt) === CheckboxElement::class) {
+				$js .= 'var hasSelections = FALSE;';
 				//sometimes, there is an implicit '[]', sometimes not
 				if (strpos($eltname, '[') === false) {
 					$js .= "for(var i = 0; i < myform['{$eltname}[]'].length; i++){
@@ -642,7 +644,7 @@ class Form extends ThemeForm {
 		// Now, handle custom validation code
 		$elements = $this->getElements(true);
 		foreach ($elements as $elt) {
-			if (method_exists($elt, 'renderValidationJS') && strtolower(get_class($elt)) != '\ImpressCMS\Core\Form\Elements\CheckboxElement') {
+			if (method_exists($elt, 'renderValidationJS') && get_class($elt) !== CheckboxElement::class) {
 				if ($eltjs = $elt->renderValidationJS()) {
 					$js .= $eltjs . "\n";
 				}
@@ -656,10 +658,10 @@ class Form extends ThemeForm {
 	}
 
 	/**
+	 * @param bool $withtags
 	 * @todo what should we do with this function?
 	 *
 	 * @global <type> $xoTheme
-	 * @param <type> $withtags
 	 */
 	public function renderValidationJS2($withtags = true) {
 		global $xoTheme;
@@ -667,11 +669,11 @@ class Form extends ThemeForm {
 		$elements = $this->getRequired();
 		foreach ($elements as $elt) {
 			if (!empty($rules)) {
-						$rules .= ",";
+						$rules .= ',';
 			}
 			$rules .= '\'' . $elt->getName() . '\': { required: TRUE }';
 			if (!empty($titles)) {
-						$titles .= ",";
+						$titles .= ',';
 			}
 			$titles .= $elt->getName() . ': "' . _REQUIRED . '"';
 		}

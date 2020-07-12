@@ -1,7 +1,6 @@
 <?php
 namespace ImpressCMS\Core\IPF\Form\Elements;
 
-use;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\IPF\AbstractModel;
 use ImpressCMS\Core\IPF\ObjectTree;
@@ -18,23 +17,23 @@ use ImpressCMS\Core\IPF\ObjectTree;
 class ParentCategoryElement extends \ImpressCMS\Core\View\Form\Elements\SelectElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to target object
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
 		$category_title_field = $object->handler->identifierName;
 
-		$addNoParent = isset($object->controls[$key]['addNoParent'])?$object->controls[$key]['addNoParent']:true;
+		$addNoParent = $object->controls[$key]['addNoParent'] ?? true;
 		$criteria = new CriteriaCompo();
-		$criteria->setSort("weight, " . $category_title_field);
+		$criteria->setSort('weight, ' . $category_title_field);
 		$category_handler = icms_getModuleHandler('category', $object->handler->_moduleName);
 		$categories = $category_handler->getObjects($criteria);
 
-		$mytree = new ObjectTree($categories, "category_id", "category_pid");
+		$mytree = new ObjectTree($categories, 'category_id', 'category_pid');
 		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVar($key, 'e'));
 
 		$ret = array();
-		$options = $this->getOptionArray($mytree, $category_title_field, 0, $ret, "");
+		$options = $this->getOptionArray($mytree, $category_title_field, 0, $ret, '');
 		if ($addNoParent) {
 			$newOptions = array('0' => '----');
 			foreach ($options as $k => $v) {
@@ -56,11 +55,11 @@ class ParentCategoryElement extends \ImpressCMS\Core\View\Form\Elements\SelectEl
 	 *
 	 * @return array  $ret          the constructed option array
 	 */
-	private function getOptionArray($tree, $fieldName, $key, &$ret, $prefix_curr = "") {
+	private function getOptionArray($tree, $fieldName, $key, &$ret, $prefix_curr = '') {
 		if ($key > 0) {
 			$value = $tree->_tree[$key]['obj']->getVar($tree->_myId);
 			$ret[$key] = $prefix_curr . $tree->_tree[$key]['obj']->getVar($fieldName);
-			$prefix_curr .= "-";
+			$prefix_curr .= '-';
 		}
 
 		if (isset($tree->_tree[$key]['child']) && !empty($tree->_tree[$key]['child'])) {

@@ -183,24 +183,6 @@ class PermissionsDecorator {
 	 */
 
 	/**
-	 * @todo not completed....
-	 */
-	/*	function deletePermissions($itemid, $gperm_name)
-	 {
-		global $icmsModule;
-
-		$icmsModule =& smartsection_getModuleInfo();
-
-		$result = true;
-		$module_id = $icmsModule->getVar('mid')   ;
-		$gperm_handler = ('icms_member_groupperm');
-
-		$gperm_handler->deleteByModule($module_id, $gperm_name, $itemid);
-
-		return $result;
-		}
-		*/
-	/**
 	 * Checks if the user has access to a specific permission on a given object
 	 *
 	 * @param string $gperm_name name of the permission to test

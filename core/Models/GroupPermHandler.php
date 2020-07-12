@@ -30,12 +30,15 @@
 /**
  * Manage group permissions
  *
- * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license	LICENSE.txt
- * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
+ * @copyright    The ImpressCMS Project <http://www.impresscms.org/>
+ * @license    LICENSE.txt
+ * @author    Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  */
 
 namespace ImpressCMS\Core\Models;
+
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 
 /**
  * Group permission handler class.
@@ -43,29 +46,32 @@ namespace ImpressCMS\Core\Models;
  * This class is responsible for providing data access mechanisms to the data source
  * of group permission class objects.
  *
- * @package	ICMS\Member\GroupPermission
+ * @package    ICMS\Member\GroupPermission
  * @see        GroupPerm
- * @author	Kazumi Ono  <onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
+ * @author    Kazumi Ono  <onokazu@xoops.org>
+ * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
+class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler
+{
 
-		public function __construct(&$db) {
-			parent::__construct($db, 'member_groupperm', 'gperm_id', 'gperm_itemid', 'gperm_name', 'icms', 'group_permission', array('gperm_id', array('gperm_name', 'gperm_itemid', 'gperm_modid')));
-		}
+	public function __construct(&$db)
+	{
+		parent::__construct($db, 'member_groupperm', 'gperm_id', 'gperm_itemid', 'gperm_name', 'icms', 'group_permission', array('gperm_id', array('gperm_name', 'gperm_itemid', 'gperm_modid')));
+	}
 
 	/**
 	 * Delete all module specific permissions assigned for a group
 	 *
-	 * @param	int  $gperm_groupid ID of a group
-	 * @param	int  $gperm_modid ID of a module
+	 * @param int $gperm_groupid ID of a group
+	 * @param int $gperm_modid ID of a module
 	 *
-	 * @return	bool TRUE on success
+	 * @return    bool TRUE on success
 	 */
-	public function deleteByGroup($gperm_groupid, $gperm_modid = null) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', (int) ($gperm_groupid)));
+	public function deleteByGroup($gperm_groupid, $gperm_modid = null)
+	{
+		$criteria = new CriteriaCompo(new CriteriaItem('gperm_groupid', (int)($gperm_groupid)));
 		if (isset($gperm_modid)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', (int) $gperm_modid));
+			$criteria->add(new CriteriaItem('gperm_modid', (int)$gperm_modid));
 		}
 		return $this->deleteAll($criteria);
 	}
@@ -73,18 +79,19 @@ class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Delete all module specific permissions
 	 *
-	 * @param	int  $gperm_modid ID of a module
-	 * @param	string  $gperm_name Name of a module permission
-	 * @param	int  $gperm_itemid ID of a module item
+	 * @param int $gperm_modid ID of a module
+	 * @param string $gperm_name Name of a module permission
+	 * @param int $gperm_itemid ID of a module item
 	 *
-	 * @return	bool TRUE on success
+	 * @return    bool TRUE on success
 	 */
-	public function deleteByModule($gperm_modid, $gperm_name = null, $gperm_itemid = null) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', (int) $gperm_modid));
+	public function deleteByModule($gperm_modid, $gperm_name = null, $gperm_itemid = null)
+	{
+		$criteria = new CriteriaCompo(new CriteriaItem('gperm_modid', (int)$gperm_modid));
 		if (isset($gperm_name)) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $gperm_name));
+			$criteria->add(new CriteriaItem('gperm_name', $gperm_name));
 			if (isset($gperm_itemid)) {
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_itemid', (int) $gperm_itemid));
+				$criteria->add(new CriteriaItem('gperm_itemid', (int)$gperm_itemid));
 			}
 		}
 		return $this->deleteAll($criteria);
@@ -94,35 +101,36 @@ class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Check permission
 	 *
-	 * @param	string    $gperm_name       Name of permission
-	 * @param	int       $gperm_itemid     ID of an item
-	 * @param	int/array $gperm_groupid    A group ID or an array of group IDs
-	 * @param	int       $gperm_modid      ID of a module
-	 * @param	bool	  $webmasterAlwaysTrue	If true, then Webmasters will always return true, if false, a real check will be made
+	 * @param string $gperm_name Name of permission
+	 * @param int $gperm_itemid ID of an item
+	 * @param int/array $gperm_groupid    A group ID or an array of group IDs
+	 * @param int $gperm_modid ID of a module
+	 * @param bool $webmasterAlwaysTrue If true, then Webmasters will always return true, if false, a real check will be made
 	 *
-	 * @return	bool    TRUE if permission is enabled
+	 * @return    bool    TRUE if permission is enabled
 	 */
-	public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $webmasterAlwaysTrue = true) {
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', $gperm_modid));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $gperm_name));
-		$gperm_itemid = (int) $gperm_itemid;
+	public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $webmasterAlwaysTrue = true)
+	{
+		$criteria = new CriteriaCompo(new CriteriaItem('gperm_modid', $gperm_modid));
+		$criteria->add(new CriteriaItem('gperm_name', $gperm_name));
+		$gperm_itemid = (int)$gperm_itemid;
 		if ($gperm_itemid > 0) {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_itemid', $gperm_itemid));
+			$criteria->add(new CriteriaItem('gperm_itemid', $gperm_itemid));
 		}
 		if (is_array($gperm_groupid)) {
 			if ($webmasterAlwaysTrue && in_array(ICMS_GROUP_ADMIN, $gperm_groupid)) {
 				return true;
 			}
-			$criteria2 = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$criteria2 = new CriteriaCompo();
 			foreach ($gperm_groupid as $gid) {
-				$criteria2->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', $gid), 'OR');
+				$criteria2->add(new CriteriaItem('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteria2);
 		} else {
 			if ($webmasterAlwaysTrue && ICMS_GROUP_ADMIN == $gperm_groupid) {
 				return true;
 			}
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', $gperm_groupid));
+			$criteria->add(new CriteriaItem('gperm_groupid', $gperm_groupid));
 		}
 		if ($this->getCount($criteria) > 0) {
 			return true;
@@ -133,15 +141,16 @@ class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Add a permission
 	 *
-	 * @param	string  $gperm_name       Name of permission
-	 * @param	int     $gperm_itemid     ID of an item
-	 * @param	int     $gperm_groupid    ID of a group
-	 * @param	int     $gperm_modid      ID of a module
+	 * @param string $gperm_name Name of permission
+	 * @param int $gperm_itemid ID of an item
+	 * @param int $gperm_groupid ID of a group
+	 * @param int $gperm_modid ID of a module
 	 *
-	 * @return	bool    TRUE if success
+	 * @return    bool    TRUE if success
 	 */
-	public function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1) {
-		$perm = & $this->create();
+	public function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1)
+	{
+		$perm = &$this->create();
 		$perm->setVar('gperm_name', $gperm_name);
 		$perm->setVar('gperm_groupid', $gperm_groupid);
 		$perm->setVar('gperm_itemid', $gperm_itemid);
@@ -152,24 +161,25 @@ class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Get all item IDs that a group is assigned a specific permission
 	 *
-	 * @param	string    $gperm_name       Name of permission
-	 * @param	int/array $gperm_groupid    A group ID or an array of group IDs
-	 * @param	int       $gperm_modid      ID of a module
+	 * @param string $gperm_name Name of permission
+	 * @param int/array $gperm_groupid    A group ID or an array of group IDs
+	 * @param int $gperm_modid ID of a module
 	 *
 	 * @return  array   array of item IDs
 	 */
-	public function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1) {
+	public function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1)
+	{
 		$ret = array();
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $gperm_name));
-		$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', (int) $gperm_modid));
+		$criteria = new CriteriaCompo(new CriteriaItem('gperm_name', $gperm_name));
+		$criteria->add(new CriteriaItem('gperm_modid', (int)$gperm_modid));
 		if (is_array($gperm_groupid)) {
-			$criteria2 = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo();
+			$criteria2 = new CriteriaCompo();
 			foreach ($gperm_groupid as $gid) {
-				$criteria2->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', $gid), 'OR');
+				$criteria2->add(new CriteriaItem('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteria2);
 		} else {
-			$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_groupid', (int) $gperm_groupid));
+			$criteria->add(new CriteriaItem('gperm_groupid', (int)$gperm_groupid));
 		}
 		$perms = $this->getObjects($criteria, true);
 		foreach (array_keys($perms) as $i) {
@@ -181,18 +191,19 @@ class GroupPermHandler extends \ImpressCMS\Core\IPF\Handler {
 	/**
 	 * Get all group IDs assigned a specific permission for a particular item
 	 *
-	 * @param	string  $gperm_name       Name of permission
-	 * @param	int     $gperm_itemid     ID of an item
-	 * @param	int     $gperm_modid      ID of a module
+	 * @param string $gperm_name Name of permission
+	 * @param int $gperm_itemid ID of an item
+	 * @param int $gperm_modid ID of a module
 	 *
 	 * @return  array   array of group IDs
 	 */
-	public function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1) {
-				$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaCompo(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_name', $gperm_name));
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_itemid', (int) $gperm_itemid));
-				$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem('gperm_modid', (int) $gperm_modid));
-				$perms = $this->getObjects($criteria, true);
-				$ret = array();
+	public function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1)
+	{
+		$criteria = new CriteriaCompo(new CriteriaItem('gperm_name', $gperm_name));
+		$criteria->add(new CriteriaItem('gperm_itemid', (int)$gperm_itemid));
+		$criteria->add(new CriteriaItem('gperm_modid', (int)$gperm_modid));
+		$perms = $this->getObjects($criteria, true);
+		$ret = array();
 		foreach (array_keys($perms) as $i) {
 			$ret[] = $perms[$i]->getVar('gperm_groupid');
 		}

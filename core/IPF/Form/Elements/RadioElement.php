@@ -15,11 +15,11 @@ use ImpressCMS\Core\IPF\AbstractModel;
  */
 class RadioElement extends \ImpressCMS\Core\View\Form\Elements\RadioElement {
 
-	private $_delimeter = "&nbsp;";
+	private $_delimeter = '&nbsp;';
 
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to target object
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

@@ -23,34 +23,34 @@ class RichfileElement extends TrayElement {
 	 * @param	string			$key	the key
 	 */
 	public function __construct($object, $key) {
-		parent::__construct($object->getVarInfo($key, 'form_caption'), "&nbsp;");
+		parent::__construct($object->getVarInfo($key, 'form_caption'), '&nbsp;');
 		$fileObj = $object->getFileObj($key);
-		$module_handler = icms::handler("icms_module");
+		$module_handler = icms::handler('icms_module');
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
-		if ($fileObj->getVar("url") != "") {
-			$this->addElement(new LabelElement("", _CO_ICMS_CURRENT_FILE . $fileObj->render() . "<br /><br />"));
+		if ($fileObj->getVar('url') != '') {
+			$this->addElement(new LabelElement('', _CO_ICMS_CURRENT_FILE . $fileObj->render() . '<br /><br />'));
 		}
 
 		if ($fileObj->isNew()) {
 			$this->addElement(new FileUploadElement($fileObj, $key));
-			$this->addElement(new LabelElement("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
-			$this->addElement(new LabelElement("", "<br />" . _CO_ICMS_URL_FILE));
-			$this->addElement(new TextElement($fileObj, "url_" . $key));
+			$this->addElement(new LabelElement('', '<br /><br /><small>' . _CO_ICMS_URL_FILE_DSC . '</small>'));
+			$this->addElement(new LabelElement('', '<br />' . _CO_ICMS_URL_FILE));
+			$this->addElement(new TextElement($fileObj, 'url_' . $key));
 		}
 
-		$this->addElement(new HiddenElement("mid_" . $key, $module->getVar("mid")));
-		$this->addElement(new LabelElement("", "<br />" . _CO_ICMS_CAPTION));
-		$this->addElement(new TextElement($fileObj, "caption_" . $key));
-		$this->addElement(new LabelElement("", "<br />" . _CO_ICMS_DESC));
-		$this->addElement(new TextElement($fileObj, "desc_" . $key));
+		$this->addElement(new HiddenElement('mid_' . $key, $module->getVar('mid')));
+		$this->addElement(new LabelElement('', '<br />' . _CO_ICMS_CAPTION));
+		$this->addElement(new TextElement($fileObj, 'caption_' . $key));
+		$this->addElement(new LabelElement('', '<br />' . _CO_ICMS_DESC));
+		$this->addElement(new TextElement($fileObj, 'desc_' . $key));
 
 		if (!$fileObj->isNew()) {
-			$this->addElement(new LabelElement("", "<br />" . _CO_ICMS_CHANGE_FILE));
+			$this->addElement(new LabelElement('', '<br />' . _CO_ICMS_CHANGE_FILE));
 			$this->addElement(new FileUploadElement($fileObj, $key));
-			$this->addElement(new LabelElement("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
-			$this->addElement(new LabelElement("", "<br />" . _CO_ICMS_URL_FILE));
-			$this->addElement(new TextElement($fileObj, "url_" . $key));
+			$this->addElement(new LabelElement('', '<br /><br /><small>' . _CO_ICMS_URL_FILE_DSC . '</small>'));
+			$this->addElement(new LabelElement('', '<br />' . _CO_ICMS_URL_FILE));
+			$this->addElement(new TextElement($fileObj, 'url_' . $key));
 		}
 	}
 }

@@ -15,7 +15,7 @@ use ImpressCMS\Core\IPF\AbstractModel;
 class TextElement extends \ImpressCMS\Core\View\Form\Elements\TextElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to target object
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -23,14 +23,14 @@ class TextElement extends \ImpressCMS\Core\View\Form\Elements\TextElement {
 
 		if (isset($object->controls[$key])) {
 			$control = $object->controls[$key];
-			$form_maxlength = isset($control['maxlength'])?$control['maxlength']:(isset($var['maxlength'])?$var['maxlength']:255);
-			$form_size = isset($control['size'])?$control['size']:50;
+			$form_maxlength = $control['maxlength'] ?? $var['maxlength'] ?? 255;
+			$form_size = $control['size'] ?? 50;
 		} else {
 			$form_maxlength = 255;
 			$form_size = 50;
 		}
 
-		parent::__construct(isset($var['form_caption'])?$var['form_caption']:"", $key,
+		parent::__construct($var['form_caption'] ?? '', $key,
 			$form_size, $form_maxlength, $object->getVar($key, 'e'));
 	}
 }

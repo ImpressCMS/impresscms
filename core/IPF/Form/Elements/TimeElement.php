@@ -15,16 +15,16 @@ use ImpressCMS\Core\IPF\AbstractModel;
 class TimeElement extends \ImpressCMS\Core\View\Form\Elements\SelectElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to target object
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
 		$var = $object->getVarInfo($key);
-		$timearray = array();
+		$timearray = [];
 		for ($i = 0; $i < 24; $i++) {
-			for ($j = 0; $j < 60; $j = $j + 10) {
+			for ($j = 0; $j < 60; $j += 10) {
 				$key_t = ($i * 3600) + ($j * 60);
-				$timearray[$key_t] = ($j != 0)?$i . ':' . $j:$i . ':0' . $j;
+				$timearray[$key_t] = ($j !== 0)?$i . ':' . $j:$i . ':0' . $j;
 			}
 		}
 		ksort($timearray);

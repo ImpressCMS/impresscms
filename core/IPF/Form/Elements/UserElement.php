@@ -23,7 +23,7 @@ class UserElement extends \ImpressCMS\Core\View\Form\Elements\Select\UserElement
 	 */
 	public function __construct($object, $key) {
 		$var = $object->getVarInfo($key);
-		$size = isset($var['size'])?$var['size']:($this->_multiple?5:1);
+		$size = $var['size'] ?? $this->_multiple ? 5 : 1;
 
 		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'), $size, $this->_multiple);
 

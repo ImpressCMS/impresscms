@@ -16,7 +16,7 @@ use ImpressCMS\Core\View\Form\Elements\Select\LangElement;
 class LanguageElement extends LangElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to target object
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {

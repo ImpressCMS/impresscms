@@ -24,8 +24,8 @@ class FileElement extends \ImpressCMS\Core\View\Form\Elements\FileElement {
 	public function __construct($object, $key) {
 		$this->_object = $object;
 		$this->_key = $key;
-		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, isset($object->getVarInfo($key)['form_maxfilesize'])?$object->getVarInfo($key)['form_maxfilesize']:0);
-		$this->setExtra(" size=30");
+		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVarInfo($key)['form_maxfilesize'] ?? 0);
+		$this->setExtra(' size=30');
 	}
 
 	/**
@@ -35,10 +35,10 @@ class FileElement extends \ImpressCMS\Core\View\Form\Elements\FileElement {
 	 */
 	public function render() {
 		$ret = '';
-		if ($this->_object->getVar($this->_key) != '') {
-			$ret .= "<div>" . _CO_ICMS_CURRENT_FILE
-				. "<a href='" . $this->_object->getUploadDir() . $this->_object->getVar($this->_key)
-				. "' target='_blank' >" . $this->_object->getVar($this->_key) . "</a></div>";
+		if ($value = $this->_object->getVar($this->_key)) {
+			$ret .= '<div>' . _CO_ICMS_CURRENT_FILE
+				. "<a href='" . $this->_object->getUploadDir() . $value
+				. "' target='_blank' >" . $this->_object->getVar($this->_key) . '</a></div>';
 		}
 
 		$ret .= "<div><input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />

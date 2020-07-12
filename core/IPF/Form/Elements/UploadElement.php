@@ -15,12 +15,12 @@ use ImpressCMS\Core\IPF\AbstractModel;
 class UploadElement extends \ImpressCMS\Core\View\Form\Elements\FileElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to target object
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, isset($object->getVarInfo($key)['form_maxfilesize'])?$object->getVarInfo($key)['form_maxfilesize']:0);
-		$this->setExtra(" size=30");
+		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVarInfo($key)['form_maxfilesize'] ?? 0);
+		$this->setExtra(' size=30');
 	}
 
 	/**

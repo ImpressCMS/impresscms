@@ -52,13 +52,13 @@ class PageElement extends TrayElement {
 			$criteria->add(new CriteriaItem('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$sel = '';
-			if (in_array($module->getVar('mid') . '-0', $value)) {
+			if (in_array($module->getVar('mid') . '-0', $value, false)) {
 				$sel = ' selected=selected';
 			}
 			$mods .= '<option value="' . $module->getVar('mid') . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
 			foreach ($pages as $page) {
 				$sel = '';
-				if (in_array($module->getVar('mid') . '-' . $page->getVar('page_id'), $value)) {
+				if (in_array($module->getVar('mid') . '-' . $page->getVar('page_id'), $value, false)) {
 					$sel = ' selected=selected';
 				}
 				$mods .= '<option value="' . $module->getVar('mid') . '-' . $page->getVar('page_id') . '"' . $sel . '>';
@@ -75,13 +75,13 @@ class PageElement extends TrayElement {
 		if (count($pages) > 0) {
 			$cont = '<optgroup label="' . $module->getVar('name') . '">';
 			$sel = '';
-			if (in_array($module->getVar('mid') . '-0', $value)) {
+			if (in_array($module->getVar('mid') . '-0', $value, false)) {
 				$sel = ' selected=selected';
 			}
 			$cont .= '<option value="' . $module->getVar('mid') . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
 			foreach ($pages as $page) {
 				$sel = '';
-				if (in_array($module->getVar('mid') . '-' . $page->getVar('page_id'), $value)) {
+				if (in_array($module->getVar('mid') . '-' . $page->getVar('page_id'), $value, false)) {
 					$sel = ' selected=selected';
 				}
 				$cont .= '<option value="' . $module->getVar('mid') . '-' . $page->getVar('page_id') . '"' . $sel . '>';
@@ -90,10 +90,10 @@ class PageElement extends TrayElement {
 			$cont .= '</optgroup>';
 		}
 		$sel = $sel1 = '';
-		if (in_array('0-1', $value)) {
+		if (in_array('0-1', $value, false)) {
 			$sel = ' selected=selected';
 		}
-		if (in_array('0-0', $value)) {
+		if (in_array('0-0', $value, false)) {
 			$sel1 = ' selected=selected';
 		}
 		$ret = '<option value="0-1"' . $sel . '>' . _AM_TOPPAGE . '</option>';

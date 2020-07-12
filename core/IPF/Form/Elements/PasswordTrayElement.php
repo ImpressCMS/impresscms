@@ -29,7 +29,7 @@ class PasswordTrayElement extends TrayElement {
 		icms_loadLanguageFile('core', 'user');
 		parent::__construct($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
 
-		$password_box1 = new PasswordElement('', $key . '1', 10, 32, '', false, "password_adv");
+		$password_box1 = new PasswordElement('', $key . '1', 10, 32, '', false, 'password_adv');
 		$this->addElement($password_box1);
 
 		$this->_key = $key;

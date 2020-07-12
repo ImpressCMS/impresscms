@@ -32,7 +32,7 @@ class ImageElement extends TrayElement {
 			$objectArray['image'] = str_replace('{ICMS_URL}', ICMS_URL, $objectArray['image']);
 		}
 
-		if ($object->getVar($key, 'e') != '' && (substr($object->getVar($key, 'e'), 0, 4) == 'http' || substr($object->getVar($key, 'e'), 0, 10) == '{ICMS_URL}')) {
+		if ($object->getVar($key, 'e') != '' && (strpos($object->getVar($key, 'e'), 'http') === 0 || strpos($object->getVar($key, 'e'), '{ICMS_URL}') === 0)) {
 			$this->addElement(new LabelElement('', "<img src='" . str_replace('{ICMS_URL}', ICMS_URL, $object->getVar($key, 'e')) . "' alt='' /><br/><br/>"));
 		} elseif ($object->getVar($key, 'e') != '') {
 			$this->addElement(new LabelElement('', "<a rel='lightbox' title='" . $object_imageurl . $object->getVar($key, 'e')

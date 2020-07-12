@@ -38,7 +38,7 @@ class FormSectionElement extends AbstractFormElement {
 
 		$this->setName($key);
 		$this->_value = $object->getVarInfo($key)['value'];
-		$this->_close = isset($control['close'])?$control['close']:false;
+		$this->_close = $control['close'] ?? false;
 	}
 
 	/**

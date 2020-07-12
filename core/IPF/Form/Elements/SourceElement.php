@@ -36,10 +36,10 @@ class SourceElement extends TextAreaElement {
 		$this->_editor = &$editor_handler->get($icmsConfig['sourceeditor_default'],
 			array('name' => $key,
 				'value' => $object->getVar($key, 'e'),
-				'language' => isset($control['language'])?$control['language']:_LANGCODE,
-				'width' => isset($control['width'])?$control['width']:'100%',
-				'height' => isset($control['height'])?$control['height']:'400px',
-				'syntax' => isset($control['syntax'])?$control['syntax']:'php'));
+				'language' => $control['language'] ?? _LANGCODE,
+				'width' => $control['width'] ?? '100%',
+				'height' => $control['height'] ?? '400px',
+				'syntax' => $control['syntax'] ?? 'php'));
 	}
 
 	/**
@@ -47,10 +47,6 @@ class SourceElement extends TextAreaElement {
 	 * @return	string  the constructed html string for the editor
 	 */
 	public function render() {
-		if ($this->_editor) {
-			return $this->_editor->render();
-		} else {
-			return parent::render();
-		}
+		return $this->_editor ? $this->_editor->render() : parent::render();
 	}
 }

@@ -26,7 +26,7 @@ class BlockOptionsElement extends TrayElement {
 		parent::__construct($var['form_caption'], ' ', 'options_tray');
 		$func = $object->getVar('edit_func');
 
-		require_once ICMS_ROOT_PATH . "/modules/" . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . "/blocks/" . $object->getVar('func_file');
+		require_once ICMS_ROOT_PATH . '/modules/' . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . '/blocks/' . $object->getVar('func_file');
 		icms_loadLanguageFile($object->handler->getModuleDirname($object->getVar('mid', 'e')), 'blocks');
 
 		if (!function_exists($func)) {

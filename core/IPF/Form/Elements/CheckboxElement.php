@@ -15,11 +15,11 @@ use ImpressCMS\Core\IPF\AbstractModel;
  */
 class CheckboxElement extends \ImpressCMS\Core\View\Form\Elements\CheckboxElement {
 
-	private $_delimeter = "&nbsp;";
+	private $_delimeter = '&nbsp;';
 
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to targetobject
+	 * @param	AbstractModel    $object   reference to target object
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -58,7 +58,7 @@ class CheckboxElement extends \ImpressCMS\Core\View\Form\Elements\CheckboxElemen
 				// Checking if the specified method exists
 				if (method_exists($control_handler, $control['method'])) {
 					$option_array = call_user_func_array(array($control_handler, $control['method']),
-						isset($control['params'])?$control['params']:array());
+						$control['params'] ?? array());
 					if (is_array($option_array) && count($option_array) > 0) {
 						// Adding the options array to the select element
 						$this->addOptionArray($option_array);
