@@ -1,5 +1,5 @@
 <?php
-namespace ImpressCMS\Core\IPF\Form\Elements;
+namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
 use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;

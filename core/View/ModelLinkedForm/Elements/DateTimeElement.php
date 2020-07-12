@@ -1,18 +1,18 @@
 <?php
-namespace ImpressCMS\Core\IPF\Form\Elements;
+namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
 use ImpressCMS\Core\IPF\AbstractModel;
 
 /**
- * Form control creating a Date Picker element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
+ * Form control creating a DateTime Picker element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	ICMS\IPF\Form\Elements
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
+ * @package	ICMS\IPF\Form\Elements
  */
-class DateElement extends \ImpressCMS\Core\View\Form\Elements\DateElement {
+class DateTimeElement extends \ImpressCMS\Core\View\Form\Elements\DateTimeElement {
 	/**
 	 * Constructor
 	 * @param	AbstractModel    $object   reference to targetobject

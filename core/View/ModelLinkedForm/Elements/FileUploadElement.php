@@ -1,26 +1,27 @@
 <?php
-namespace ImpressCMS\Core\IPF\Form\Elements;
+namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
 use ImpressCMS\Core\IPF\AbstractModel;
 
 /**
- * Form control creating a simple file upload element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
+ * Form control creating a file upload element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	ICMS\IPF\Form\Elements
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
+ * @package	ICMS\IPF\Form\Elements
  */
-class UploadElement extends \ImpressCMS\Core\View\Form\Elements\FileElement {
+class FileUploadElement extends UploadElement {
 	/**
 	 * Constructor
-	 * @param	AbstractModel    $object   reference to target object
+	 * @param	AbstractModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVarInfo($key)['form_maxfilesize'] ?? 0);
-		$this->setExtra(' size=30');
+		parent::__construct($object, $key);
+		// Override name for upload purposes
+		$this->setName('upload_' . $key);
 	}
 
 	/**

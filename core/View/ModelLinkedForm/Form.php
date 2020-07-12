@@ -1,9 +1,9 @@
 <?php
-namespace ImpressCMS\Core\IPF\Form;
+namespace ImpressCMS\Core\View\ModelLinkedForm;
 
 use icms;
-use ImpressCMS\Core\IPF\Form\Elements\FormSectionElement;
-use ImpressCMS\Core\IPF\Form\Elements\SelectMultiElement;
+use ImpressCMS\Core\View\ModelLinkedForm\Elements\FormSectionElement;
+use ImpressCMS\Core\View\ModelLinkedForm\Elements\SelectMultiElement;
 use ImpressCMS\Core\View\Form\AbstractFormElement;
 use ImpressCMS\Core\View\Form\Elements\ButtonElement;
 use ImpressCMS\Core\View\Form\Elements\CheckboxElement;

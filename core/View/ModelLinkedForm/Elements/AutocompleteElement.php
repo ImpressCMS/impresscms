@@ -8,7 +8,7 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\IPF\Form\Elements;
+namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
 use ImpressCMS\Core\IPF\AbstractModel;
 use ImpressCMS\Core\View\Theme\ThemeComponent;

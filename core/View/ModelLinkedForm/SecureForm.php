@@ -1,5 +1,5 @@
 <?php
-namespace ImpressCMS\Core\IPF\Form;
+namespace ImpressCMS\Core\View\ModelLinkedForm;
 
 use ImpressCMS\Core\View\Form\Elements\HiddenTokenElement;
 

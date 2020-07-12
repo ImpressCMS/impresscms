@@ -1,5 +1,5 @@
 <?php
-namespace ImpressCMS\Core\IPF\Form\Elements;
+namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
 use ImpressCMS\Core\IPF\AbstractModel;
 use ImpressCMS\Core\View\Form\Elements\DHTMLTextAreaElement;

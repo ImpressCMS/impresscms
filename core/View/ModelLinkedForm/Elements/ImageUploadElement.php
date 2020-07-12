@@ -1,5 +1,5 @@
 <?php
-namespace ImpressCMS\Core\IPF\Form\Elements;
+namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
 /**
  * Form control creating an image upload element for an object derived from \ImpressCMS\Core\IPF\AbstractModel
