@@ -4,7 +4,7 @@ namespace ImpressCMS\Core\View\Form\Elements\Captcha;
 use Aura\Session\Segment;
 use Aura\Session\Session;
 use icms;
-use ImpressCMS\Core\Filesystem;
+use ImpressCMS\Core\File\Filesystem;
 
 /**
  * Image Creation script

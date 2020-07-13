@@ -101,7 +101,7 @@ class ObjectRegistry {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->getVar("dirname");
+				$modulename = $icmsModule->getVar('dirname');
 			}
 		}
 		$object_handler = icms_getModuleHandler($item, $modulename);

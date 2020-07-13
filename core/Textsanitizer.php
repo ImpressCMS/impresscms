@@ -83,7 +83,7 @@ class Textsanitizer {
 	 * @static
 	 * @staticvar   object
 	 */
-	static public function &getInstance() {
+	public static function &getInstance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new Textsanitizer();
@@ -98,11 +98,7 @@ class Textsanitizer {
 	 * @return  string
 	 */
 	public function _filterImgUrl($matches) {
-		if ($this->checkUrlString($matches[2])) {
-			return $matches[0];
-		} else {
-			return '';
-		}
+		return $this->checkUrlString($matches[2]) ? $matches[0] : '';
 	}
 
 	/**

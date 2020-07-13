@@ -600,7 +600,7 @@ class ThemeComponent {
 						/* all local files will be a path, all remote files will have scheme:// */
 						$filepath = array_flip(str_replace(ICMS_URL, "", array_keys($this->metas[$zone][$type])));
 						/* combineFiles($filearray, $filetype, $minimize, $replace, $maxage, $location) */
-						$filesrc = \ImpressCMS\Core\Filesystem::combineFiles($filepath, "css", true);
+						$filesrc = \ImpressCMS\Core\File\Filesystem::combineFiles($filepath, "css", true);
 						/* only render a link if the result is not FALSE */
 						if ($filepath !== false) {
 							$str .= '<link href="' . str_replace(ICMS_ROOT_PATH, ICMS_URL, $filesrc) . '" rel="stylesheet" type="text/css">';

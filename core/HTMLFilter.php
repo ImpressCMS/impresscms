@@ -3,6 +3,7 @@ namespace ImpressCMS\Core;
 
 use HTMLPurifier;
 use ImpressCMS\Core\Facades\Config;
+use ImpressCMS\Core\File\Filesystem;
 
 /**
  * Class to Clean & Filter HTML for various uses.
@@ -44,7 +45,7 @@ class HTMLFilter extends DataFilter {
 	 *			HTMLPurifier, HTMLLawed etc, for now we just have HTMLPurifier.
 	 * @return   string
 	 */
-	static public function filterHTML($html) {
+	public static function filterHTML($html) {
 		$icmsConfigPurifier = \icms::$config->getConfigsByCat(Config::CATEGORY_PURIFIER);
 
 		$fcomment = '<!-- filtered with htmlpurifier -->';
@@ -77,7 +78,7 @@ class HTMLFilter extends DataFilter {
 	 *
 	 * @return	object	array list of filter objects
 	 */
-	static private function getCustomFilterList() {
+	private static function getCustomFilterList() {
 		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
 		$test = new \HTMLPurifier();
 		$icmsConfigPurifier = \icms::$config->getConfigsByCat(Config::CATEGORY_PURIFIER);
@@ -104,7 +105,7 @@ class HTMLFilter extends DataFilter {
 	 * Gets Custom Purifier configurations ** this function will improve in time **
 	 * @return  array    $icmsPurifierConf
 	 */
-	static protected function getHTMLFilterConfig() {
+	protected static function getHTMLFilterConfig() {
 		$icmsConfigPurifier = \icms::$config->getConfigsByCat(Config::CATEGORY_PURIFIER);
 
 		$IframeRegExp = $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'];

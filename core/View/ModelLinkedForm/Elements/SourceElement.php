@@ -1,8 +1,8 @@
 <?php
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
+use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 use ImpressCMS\Core\IPF\AbstractDatabaseModel;
-use ImpressCMS\Core\Plugins\EditorHandler;
 use ImpressCMS\Core\View\Form\Elements\TextAreaElement;
 
 /**
@@ -32,7 +32,7 @@ class SourceElement extends TextAreaElement {
 
 		$control = $object->getControl($key);
 
-		$editor_handler = EditorHandler::getInstance('source');
+		$editor_handler = EditorsRegistry::getInstance('source');
 		$this->_editor = &$editor_handler->get($icmsConfig['sourceeditor_default'],
 			array('name' => $key,
 				'value' => $object->getVar($key, 'e'),

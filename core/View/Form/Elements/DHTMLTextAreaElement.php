@@ -36,7 +36,7 @@
 namespace ImpressCMS\Core\View\Form\Elements;
 
 use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\Plugins\EditorHandler;
+use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 
 /**
  * A textarea with bbcode formatting and smilie buttons
@@ -91,7 +91,7 @@ class DHTMLTextAreaElement extends TextAreaElement {
 		}
 
 		$gperm_handler = \icms::handler('icms_member_groupperm');
-		$editorHandler = EditorHandler::getInstance('content');
+		$editorHandler = EditorsRegistry::getInstance('content');
 		if ($editorHandler->has($editor_default) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)) {
 			$this->htmlEditor = $editorHandler->get($editor_default);
 		} else {

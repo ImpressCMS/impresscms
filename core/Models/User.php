@@ -41,7 +41,7 @@ use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Aura;
-use ImpressCMS\Core\Messaging\MailHandler;
+use ImpressCMS\Core\Messaging\MessageSender;
 
 /**
  * Class for users
@@ -249,7 +249,7 @@ class User extends AbstractExtendedModel {
 					return true;
 		}
 
-        $mailer = new MailHandler();
+        $mailer = new MessageSender();
         $mailer->useMail();
         $mailer->setBody($icmsConfigUser['welcome_msg_content']);
         $mailer->assign('UNAME', $this->getVar('uname'));
@@ -280,7 +280,7 @@ class User extends AbstractExtendedModel {
 
         if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
             $member_handler = icms::handler('icms_member');
-            $mailer = new MailHandler();
+            $mailer = new MessageSender();
             $mailer->useMail();
             $mailer->setTemplate('newuser_notify.tpl');
             $mailer->assign('UNAME', $this->getVar('uname'));

@@ -42,10 +42,10 @@ use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Database\Legacy\Updater\TableUpdater;
 use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
+use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\Facades\Member;
-use ImpressCMS\Core\Filesystem;
-use ImpressCMS\Core\SetupSteps\OutputDecorator;
-use ImpressCMS\Core\SetupSteps\SetupStepInterface;
+use ImpressCMS\Core\File\Filesystem;
 use ImpressCMS\Core\View\Template;
 
 /**

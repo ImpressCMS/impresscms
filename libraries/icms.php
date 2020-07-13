@@ -302,9 +302,9 @@ final class icms extends Container {
 	/**
 	 * Loads composer definitions
 	 *
-	 * @param \ImpressCMS\Core\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition Composer definition class
+	 * @param \ImpressCMS\Core\Extensions\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition Composer definition class
 	 */
-	protected function loadComposerDefinition(\ImpressCMS\Core\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition)
+	protected function loadComposerDefinition(\ImpressCMS\Core\Extensions\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition)
 	{
 		$composerJsonPath = dirname(__DIR__);
 
@@ -326,10 +326,10 @@ final class icms extends Container {
 	public function boot(bool $registerCommonServices = true)
 	{
 		$this->loadComposerDefinition(
-			new \ImpressCMS\Core\ComposerDefinitions\ProvidersComposerDefinition()
+			new \ImpressCMS\Core\Extensions\ComposerDefinitions\ProvidersComposerDefinition()
 		);
 		$this->loadComposerDefinition(
-			new \ImpressCMS\Core\ComposerDefinitions\ServicesComposerDefinition()
+			new \ImpressCMS\Core\Extensions\ComposerDefinitions\ServicesComposerDefinition()
 		);
 
 		// register links for compatibility
@@ -353,7 +353,7 @@ final class icms extends Container {
 		self::$config = $this->get('config');
 		self::$session = $this->get('session');
 		self::$logger = $this->get('logger');
-		self::$preload = $this->get(\ImpressCMS\Core\Preload\EventsPreloader::class);
+		self::$preload = $this->get(\ImpressCMS\Core\Extensions\Preload\EventsPreloader::class);
 		self::$security = $this->get('security');
 	}
 

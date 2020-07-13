@@ -11,7 +11,7 @@
 * @author		TheRplima <therplima@impresscms.org>
 */
 
-$style_list = \ImpressCMS\Core\Filesystem::getFileList(ICMS_LIBRARIES_PATH . '/paginationstyles/css/', '', ['css'], TRUE);
+$style_list = \ImpressCMS\Core\File\Filesystem::getFileList(ICMS_LIBRARIES_PATH . '/paginationstyles/css/', '', ['css'], TRUE);
 
 foreach ($style_list as $filename) {
 	$filename = str_ireplace('.css', '', $filename);

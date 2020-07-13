@@ -1,4 +1,5 @@
 <?php
+
 namespace ImpressCMS\Core\IPF;
 
 use icms;
@@ -12,15 +13,16 @@ use ImpressCMS\Core\Security\PermissionsManager;
 /**
  * This class is responsible for providing operations to an object for managing the object's manipulation
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since	1.1
- * @author	Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
- * @author	marcan <marcan@impresscms.org>
- * @todo	Use language constants for messages
- * @package	ICMS\IPF
+ * @copyright    The ImpressCMS Project http://www.impresscms.org/
+ * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since    1.1
+ * @author    Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
+ * @author    marcan <marcan@impresscms.org>
+ * @todo    Use language constants for messages
+ * @package    ICMS\IPF
  */
-class Controller {
+class Controller
+{
 
 	/** */
 	public $handler;
@@ -29,30 +31,32 @@ class Controller {
 	 *
 	 * @param $handler
 	 */
-	public function __construct($handler) {
+	public function __construct($handler)
+	{
 		$this->handler = $handler;
 	}
 
 	/**
 	 *
-	 * @param	obj		$icmsObj
+	 * @param obj $icmsObj
 	 */
-	public function postDataToObject(&$icmsObj) {
+	public function postDataToObject(&$icmsObj)
+	{
 		foreach ($icmsObj->getVarNames() as $key) {
 			// do not post data if control is a label
 			$control = $icmsObj->getControl($key);
-			if (is_array($control) && isset($control['name']) && $control['name'] == "label") {
+			if (is_array($control) && isset($control['name']) && $control['name'] === 'label') {
 				continue;
 			}
 
 			$data_type = $icmsObj->getVarInfo($key, AbstractProperties::VARCFG_DEP_DATA_TYPE);
 			if (!$data_type) {
-							$data_type = $icmsObj->getVarInfo($key, AbstractProperties::VARCFG_TYPE);
+				$data_type = $icmsObj->getVarInfo($key, AbstractProperties::VARCFG_TYPE);
 			}
 
 			switch ($data_type) {
 				case AbstractProperties::DTYPE_DEP_IMAGE:
-					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key] != '') {
+					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key]) {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 						if (!$eventResult) {
 							$icmsObj->setErrors('An error occured during the beforeFileUnlink event');
@@ -67,7 +71,7 @@ class Controller {
 							$icmsObj->setErrors('An error occured during the afterFileUnlink event');
 						}
 					}
-					if (isset($_POST['delete_' . $key]) && $_POST['delete_' . $key] == '1') {
+					if (isset($_POST['delete_' . $key]) && (string)$_POST['delete_' . $key] === '1') {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 						if (!$eventResult) {
 							$icmsObj->setErrors('An error occured during the beforeFileUnlink event');
@@ -91,7 +95,7 @@ class Controller {
 					$linkObj->setVar('description', $_POST['desc_' . $key]);
 					$linkObj->setVar('target', $_POST['target_' . $key]);
 					$linkObj->setVar('url', $_POST['url_' . $key]);
-					if ($linkObj->getVar('url') != '') {
+					if ($linkObj->getVar('url')) {
 						$icmsObj->storeUrlLinkObj($linkObj);
 					}
 					//@todo: catch errors
@@ -123,9 +127,9 @@ class Controller {
 					// check if this field's value is available in the POST array
 					if (is_array($_POST[$key]) && isset($_POST[$key]['date'])) {
 						$value = strtotime($_POST[$key]['date']) + $_POST[$key]['time'];
-					// in case the field is hidden, it's not formated so we can simply take the value and store it
+						// in case the field is hidden, it's not formated so we can simply take the value and store it
 					} elseif (filter_var($_POST[$key], FILTER_VALIDATE_INT) == $_POST[$key]) {
-						$value = (int) $_POST[$key];
+						$value = (int)$_POST[$key];
 					} else {
 						$value = strtotime($_POST[$key]);
 					}
@@ -145,7 +149,7 @@ class Controller {
 					break;
 
 				default:
-										$icmsObj->setVar($key, isset($_POST[$key])?$_POST[$key]:null);
+					$icmsObj->setVar($key, $_POST[$key] ?? null);
 					break;
 			}
 		}
@@ -161,7 +165,8 @@ class Controller {
 	 * @param bool $debug Whether to display debug information, or not
 	 * @return obj
 	 */
-	public function &doStoreFromDefaultForm(&$icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page = false, $debug = false) {
+	public function &doStoreFromDefaultForm(&$icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page = false, $debug = false)
+	{
 		$this->postDataToObject($icmsObj);
 
 		if ($icmsObj->isNew()) {
@@ -174,10 +179,10 @@ class Controller {
 		$uploaderResult = true;
 		if (isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file'])) {
 			$uploaderObj = new MediaUploader($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
-			foreach ($_FILES as $name=>$file_array) {
-				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), $icmsObj->getVarNames())) {
+			foreach ($_FILES as $name => $file_array) {
+				if (isset ($file_array['name']) && $file_array['name'] && in_array(str_replace('upload_', '', $name), $icmsObj->getVarNames(), false)) {
 					if ($uploaderObj->fetchMedia($name)) {
-						$uploaderObj->setTargetFileName(time() . "_" . $uploaderObj->getMediaName());
+						$uploaderObj->setTargetFileName(time() . '_' . $uploaderObj->getMediaName());
 						if ($uploaderObj->upload()) {
 							$uploaderResult = $uploaderResult && true;
 							// Find the related field in the \ImpressCMS\Core\IPF\AbstractModel
@@ -186,9 +191,9 @@ class Controller {
 							// if it's a richfile
 							$var_type = $icmsObj->getVarInfo($related_field, AbstractProperties::VARCFG_DEP_DATA_TYPE);
 							if (!$var_type) {
-															$var_type = $icmsObj->getVarInfo($related_field, AbstractProperties::VARCFG_TYPE);
+								$var_type = $icmsObj->getVarInfo($related_field, AbstractProperties::VARCFG_TYPE);
 							}
-							if ($var_type == AbstractProperties::DTYPE_DEP_FILE) {
+							if ($var_type === AbstractProperties::DTYPE_DEP_FILE) {
 								$object_fileurl = $icmsObj->getUploadDir();
 								$fileObj = $icmsObj->getFileObj($related_field);
 								$fileObj->setVar('url', $object_fileurl . $uploaderObj->getSavedFileName());
@@ -200,7 +205,7 @@ class Controller {
 							} else {
 								$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 								if (!$eventResult) {
-									$icmsObj->setErrors("An error occured during the beforeFileUnlink event");
+									$icmsObj->setErrors('An error occured during the beforeFileUnlink event');
 									$uploaderResult = $uploaderResult && false;
 								}
 
@@ -253,7 +258,7 @@ class Controller {
 			if (!$storeResult) {
 				redirect_header(icms::$urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
 			} else {
-				$redirect_page = $redirect_page?$redirect_page:icms_get_page_before_form();
+				$redirect_page = $redirect_page ?: icms_get_page_before_form();
 				redirect_header($redirect_page, 2, $redirect_msg);
 			}
 		}
@@ -270,10 +275,11 @@ class Controller {
 	 * @param bool $exit if set to TRUE then the script ends
 	 * @return bool
 	 */
-	public function &storeFromDefaultForm($created_success_msg, $modified_success_msg, $redirect_page = false, $debug = false, $x_param = false) {
+	public function &storeFromDefaultForm($created_success_msg, $modified_success_msg, $redirect_page = false, $debug = false, $x_param = false)
+	{
 		$objectid = (isset($_POST[$this->handler->keyName]))
-				?(int) $_POST[$this->handler->keyName]
-				: 0;
+			? (int)$_POST[$this->handler->keyName]
+			: 0;
 		if ($debug) {
 			if ($x_param) {
 				$icmsObj = $this->handler->getD($objectid, true, $x_param);
@@ -300,7 +306,7 @@ class Controller {
 				// This is a new object. We need to store the meta data and then the language data
 				// First, we will get rid of the multilanguage data to only store the meta data
 				$icmsObj->stripMultilanguageFields();
-				$newObject = & $this->doStoreFromDefaultForm($icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page, $debug);
+				$newObject = &$this->doStoreFromDefaultForm($icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page, $debug);
 				/**
 				 * @todo we need to trap potential errors here
 				 */
@@ -313,7 +319,7 @@ class Controller {
 
 				$icmsObj->setVar($this->handler->keyName, $newObject->getVar($this->handler->keyName));
 				$this->handler->changeTableNameForML();
-				$ret = & $this->doStoreFromDefaultForm($icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page, $debug);
+				$ret = &$this->doStoreFromDefaultForm($icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page, $debug);
 
 				return $ret;
 			}
@@ -325,7 +331,8 @@ class Controller {
 	/**
 	 * Stores an object and shows debug information
 	 */
-	public function &storeicms_ipf_ObjectD() {
+	public function &storeicms_ipf_ObjectD()
+	{
 		return $this->storeicms_ipf_Object(true);
 	}
 
@@ -336,8 +343,9 @@ class Controller {
 	 * @return bool
 	 * @see        storeFromDefaultForm
 	 */
-	public function &storeicms_ipf_Object($debug = false, $xparam = false) {
-		$ret = & $this->storeFromDefaultForm('', '', null, $debug, $xparam);
+	public function &storeicms_ipf_Object($debug = false, $xparam = false)
+	{
+		$ret = &$this->storeFromDefaultForm('', '', null, $debug, $xparam);
 
 		return $ret;
 	}
@@ -350,16 +358,17 @@ class Controller {
 	 * @param bool $userSide
 	 * @return void
 	 */
-	public function handleObjectDeletion($confirm_msg = false, $op = 'del', $userSide = false) {
-		$objectid = (isset($_REQUEST[$this->handler->keyName]))?(int) $_REQUEST[$this->handler->keyName]:0;
+	public function handleObjectDeletion($confirm_msg = false, $op = 'del', $userSide = false)
+	{
+		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int)$_REQUEST[$this->handler->keyName] : 0;
 		$icmsObj = $this->handler->get($objectid);
 
 		if ($icmsObj->isNew()) {
-			redirect_header("javascript:history.go(-1)", 3, _CO_ICMS_NOT_SELECTED);
+			redirect_header('javascript:history.go(-1)', 3, _CO_ICMS_NOT_SELECTED);
 			exit();
 		}
 
-		$confirm = (isset($_POST['confirm']))?$_POST['confirm']:0;
+		$confirm = $_POST['confirm'] ?? 0;
 		if ($confirm) {
 			if (!$this->handler->delete($icmsObj)) {
 				redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_ERROR . $icmsObj->getHtmlErrors());
@@ -378,13 +387,13 @@ class Controller {
 			}
 
 			$hiddens = array(
-						'op' => $op,
-						$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
-						'confirm' => 1,
-						'redirect_page' => icms::$urls['previouspage']
+				'op' => $op,
+				$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
+				'confirm' => 1,
+				'redirect_page' => icms::$urls['previouspage']
 			);
 			if ($this->handler->_moduleName == 'system') {
-				$hiddens['fct'] = isset($_GET['fct'])?$_GET['fct']:false;
+				$hiddens['fct'] = $_GET['fct'] ?? false;
 			}
 			Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg, $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
@@ -396,21 +405,22 @@ class Controller {
 
 	/**
 	 *
-	 * @param	bool	$confirm_msg
-	 * @param	string	$op
+	 * @param bool $confirm_msg
+	 * @param string $op
 	 */
-	public function handleObjectDeletionFromUserSide($confirm_msg = false, $op = 'del') {
+	public function handleObjectDeletionFromUserSide($confirm_msg = false, $op = 'del')
+	{
 		global $icmsTpl;
 
-		$objectid = (isset($_REQUEST[$this->handler->keyName]))?(int) ($_REQUEST[$this->handler->keyName]):0;
+		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int)($_REQUEST[$this->handler->keyName]) : 0;
 		$icmsObj = $this->handler->get($objectid);
 
 		if ($icmsObj->isNew()) {
-			redirect_header("javascript:history.go(-1)", 3, _CO_ICMS_NOT_SELECTED);
+			redirect_header('javascript:history.go(-1)', 3, _CO_ICMS_NOT_SELECTED);
 			exit();
 		}
 
-		$confirm = (isset($_POST['confirm']))?$_POST['confirm']:0;
+		$confirm = $_POST['confirm'] ?? 0;
 		if ($confirm) {
 			if (!$this->handler->delete($icmsObj)) {
 				redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_ERROR . $icmsObj->getHtmlErrors());
@@ -433,7 +443,7 @@ class Controller {
 				'redirect_page' => icms::$urls['previouspage']),
 				xoops_getenv('SCRIPT_NAME'),
 				sprintf($confirm_msg,
-				$icmsObj->getVar($this->handler->identifierName)),
+					$icmsObj->getVar($this->handler->identifierName)),
 				_CO_ICMS_DELETE
 			);
 			$icmspersistable_delete_confirm = ob_get_clean();
@@ -444,12 +454,13 @@ class Controller {
 	/**
 	 * Retrieve the object admin side link for a page
 	 *
-	 * @param	AbstractExtendedModel	$icmsObj	reference to the object from which we want the user side link
-	 * @param	bool	$onlyUrl	whether or not to return a simple URL or a full <a> link
-	 * @param	bool	$withimage	return a linked image instead of linked text
-	 * @return	string	admin side link to the object
+	 * @param AbstractExtendedModel $icmsObj reference to the object from which we want the user side link
+	 * @param bool $onlyUrl whether or not to return a simple URL or a full <a> link
+	 * @param bool $withimage return a linked image instead of linked text
+	 * @return    string    admin side link to the object
 	 */
-	public function getAdminViewItemLink($icmsObj, $onlyUrl = false, $withimage = false) {
+	public function getAdminViewItemLink($icmsObj, $onlyUrl = false, $withimage = false)
+	{
 		$ret = $this->handler->_moduleUrl . "admin/"
 			. $this->handler->_page . "?op=view&amp;"
 			. $this->handler->keyName . "="
@@ -459,12 +470,12 @@ class Controller {
 		} elseif ($withimage) {
 			return "<a href='" . $ret . "'>
 					<img src='" . ICMS_IMAGES_SET_URL
-					. "/actions/viewmag.png' style='vertical-align: middle;' alt='"
-					. _CO_ICMS_ADMIN_VIEW . "'  title='"
-					. _CO_ICMS_ADMIN_VIEW . "'/></a>";
+				. "/actions/viewmag.png' style='vertical-align: middle;' alt='"
+				. _CO_ICMS_ADMIN_VIEW . "'  title='"
+				. _CO_ICMS_ADMIN_VIEW . "'/></a>";
 		}
 
-		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
+		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . '</a>';
 	}
 
 	/**
@@ -474,7 +485,8 @@ class Controller {
 	 * @param bool $onlyUrl wether or not to return a simple URL or a full <a> link
 	 * @return string user side link to the object
 	 */
-	public function getItemLink(&$icmsObj, $onlyUrl = false) {
+	public function getItemLink(&$icmsObj, $onlyUrl = false)
+	{
 		/**
 		 * @todo URL Rewrite feature is not finished yet...
 		 */
@@ -494,11 +506,12 @@ class Controller {
 			} else if ($seoMode == 'pathinfo') {
 			$ret = SMARTOBJECT_URL . 'seo.php/' . $seoModuleName . '.' . $this->handler->_itemname . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
 			} else {
-			*/	$ret = $this->handler->_moduleUrl . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+			*/
+		$ret = $this->handler->_moduleUrl . $this->handler->_page . '?' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
 		//}
 
 		if (!$onlyUrl) {
-			$ret = "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
+			$ret = "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . '</a>';
 		}
 		return $ret;
 	}
@@ -512,15 +525,16 @@ class Controller {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getViewItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
-		if ($this->handler->_moduleName != 'system') {
-			$admin_side = $userSide?'':'admin/';
-			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+	public function getViewItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false)
+	{
+		if ($this->handler->_moduleName !== 'system') {
+			$admin_side = $userSide ? '' : 'admin/';
+			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . '?' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
 		} else {
 			$admin_side = '';
 			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct='
-				. $this->handler->_itemname . "&amp;op=view&amp;"
-				. $this->handler->keyName . "="
+				. $this->handler->_itemname . '&amp;op=view&amp;'
+				. $this->handler->keyName . '='
 				. $icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {
@@ -531,20 +545,21 @@ class Controller {
 				. _PREVIEW . "'  title='" . _PREVIEW . "'/></a>";
 		}
 
-		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
+		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . '</a>';
 	}
 
 	/**
 	 *
-	 * @param	AbstractExtendedModel	$icmsObj
-	 * @param	bool	$onlyUrl
-	 * @param	bool	$withimage
+	 * @param AbstractExtendedModel $icmsObj
+	 * @param bool $onlyUrl
+	 * @param bool $withimage
 	 */
-	public function getEditLanguageLink($icmsObj, $onlyUrl = false, $withimage = true) {
-		$ret = $this->handler->_moduleUrl . "admin/"
+	public function getEditLanguageLink($icmsObj, $onlyUrl = false, $withimage = true)
+	{
+		$ret = $this->handler->_moduleUrl . 'admin/'
 			. $this->handler->_page
-			. "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName)
-			. "&amp;language=" . $icmsObj->getVar('language');
+			. '?op=mod&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName)
+			. '&amp;language=' . $icmsObj->getVar('language');
 		if ($onlyUrl) {
 			return $ret;
 		} elseif ($withimage) {
@@ -558,16 +573,17 @@ class Controller {
 
 	/**
 	 *
-	 * @param	obj		$icmsObj
-	 * @param	bool	$onlyUrl
-	 * @param	bool	$withimage
-	 * @param	bool	$userSide
+	 * @param obj $icmsObj
+	 * @param bool $onlyUrl
+	 * @param bool $withimage
+	 * @param bool $userSide
 	 */
-	public function getEditItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
+	public function getEditItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false)
+	{
 		if ($this->handler->_moduleName != 'system') {
-			$admin_side = $userSide?'':'admin/';
+			$admin_side = $userSide ? '' : 'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
-				. "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+				. '?op=mod&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
 		} else {
 			/**
 			 * @todo: to be implemented...
@@ -576,7 +592,7 @@ class Controller {
 			$admin_side = '';
 			$ret = $this->handler->_moduleUrl . $admin_side
 				. 'admin.php?fct=' . $this->handler->_itemname
-				. "&amp;op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+				. '&amp;op=mod&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {
 			return $ret;
@@ -586,21 +602,22 @@ class Controller {
 				. _CO_ICMS_MODIFY . "'  title='" . _CO_ICMS_MODIFY . "'/></a>";
 		}
 
-		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
+		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . '</a>';
 	}
 
 	/**
 	 *
-	 * @param	obj		$icmsObj
-	 * @param	bool	$onlyUrl
-	 * @param	bool	$withimage
-	 * @param	bool	$userSide
+	 * @param obj $icmsObj
+	 * @param bool $onlyUrl
+	 * @param bool $withimage
+	 * @param bool $userSide
 	 */
-	public function getDeleteItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
+	public function getDeleteItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false)
+	{
 		if ($this->handler->_moduleName != 'system') {
-			$admin_side = $userSide?'':'admin/';
+			$admin_side = $userSide ? '' : 'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
-				. "?op=del&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+				. '?op=del&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
 		} else {
 			/**
 			 * @todo: to be implemented...
@@ -609,7 +626,7 @@ class Controller {
 			$admin_side = '';
 			$ret = $this->handler->_moduleUrl . $admin_side
 				. 'admin.php?fct=' . $this->handler->_itemname
-				. "&amp;op=del&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+				. '&amp;op=del&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {
 			return $ret;
@@ -619,15 +636,16 @@ class Controller {
 				. _CO_ICMS_DELETE . "'  title='" . _CO_ICMS_DELETE . "'/></a>";
 		}
 
-		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
+		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . '</a>';
 	}
 
 	/**
 	 *
-	 * @param	obj		$icmsObj
-	 * @todo	Needs to be completed
+	 * @param obj $icmsObj
+	 * @todo    Needs to be completed
 	 */
-	public function getPrintAndMailLink($icmsObj) {
+	public function getPrintAndMailLink($icmsObj)
+	{
 		global $icmsConfig;
 
 		$ret = '';
@@ -648,9 +666,9 @@ class Controller {
 	/**
 	 * Creates a string from the object's module name and item name
 	 */
-	public function getModuleItemString() {
-		$ret = $this->handler->_moduleName . '_' . $this->handler->_itemname;
-		return $ret;
+	public function getModuleItemString()
+	{
+		return $this->handler->_moduleName . '_' . $this->handler->_itemname;
 	}
 }
 

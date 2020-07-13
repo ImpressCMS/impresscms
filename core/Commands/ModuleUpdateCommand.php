@@ -43,7 +43,7 @@ class ModuleUpdateCommand extends Command
 		$module_handler = \icms::handler('icms_module');
 		if ($module_handler->update(
 			$input->getArgument('module'),
-			new \ImpressCMS\Core\SetupSteps\OutputDecorator($output)
+			new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($output)
 		)) {
 			$output->writeln('Module updated successfully');
 		} else {

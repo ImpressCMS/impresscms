@@ -4,10 +4,10 @@
  *
  * Containing the class to manage meta informations of \ImpressCMS\Core\IPF\AbstractModel
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since	1.1
- * @author	marcan <marcan@impresscms.org>
+ * @copyright    The ImpressCMS Project http://www.impresscms.org/
+ * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since    1.1
+ * @author    marcan <marcan@impresscms.org>
  */
 
 namespace ImpressCMS\Core\IPF;
@@ -18,16 +18,17 @@ use ImpressCMS\Core\Textsanitizer;
 /**
  * Generates META tags
  *
- * @package	ICMS\IPF
- * @todo	Properly set visibility of variables - in version 2.0
+ * @package    ICMS\IPF
+ * @todo    Properly set visibility of variables - in version 2.0
  */
-class Metagen {
+class Metagen
+{
 
-		/**
-		 * Instance of Textsanitizer
-		 *
-		 * @var Textsanitizer
-		 */
+	/**
+	 * Instance of Textsanitizer
+	 *
+	 * @var Textsanitizer
+	 */
 	public $_myts;
 
 	/**
@@ -87,7 +88,8 @@ class Metagen {
 	 * @param bool $description Meta description
 	 * @param bool $categoryPath Category path
 	 */
-	public function __construct($title, $keywords = false, $description = false, $categoryPath = false) {
+	public function __construct($title, $keywords = false, $description = false, $categoryPath = false)
+	{
 		$this->_myts = Textsanitizer::GetInstance();
 		$this->setCategoryPath($categoryPath);
 		$this->setTitle($title);
@@ -110,25 +112,27 @@ class Metagen {
 	/**
 	 * Return true if the string is length > 0
 	 *
+	 * @return boolean
+	 * @var string String to test
 	 * @author psylove
 	 *
-	 * @var string String to test
-	 * @return boolean
 	 */
-	public function emptyString($var) {
+	public function emptyString($var)
+	{
 		return strlen($var) > 0;
 	}
 
 	/**
 	 * Create a title for the short_url field of an article
 	 *
-	 * @author psylove
-	 *
+	 * @return string sort_url for the article
 	 * @var string $title title of the article
 	 * @var string $withExt do we add an html extension or not
-	 * @return string sort_url for the article
+	 * @author psylove
+	 *
 	 */
-	public function generateSeoTitle($title = '', $withExt = true) {
+	public function generateSeoTitle($title = '', $withExt = true)
+	{
 		// Transformation de la chaine en minuscule
 		// Codage de la chaine afin d'�viter les erreurs 500 en cas de caract�res impr�vus
 		$title = rawurlencode(strtolower($title));
@@ -137,17 +141,17 @@ class Metagen {
 		//                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .
 		$pattern = array("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./");
 		$rep_pat = array("-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-", "-", "-", "-", "-", "-", "-", "-", "-");
-		$title   = preg_replace($pattern, $rep_pat, $title);
+		$title = preg_replace($pattern, $rep_pat, $title);
 
 		// Transformation des caract�res accentu�s
 		//                  �        �        �        �        �        �        �        �        �        �        �        �        �        �        �        �
 		$pattern = array("/%B0/", "/%E8/", "/%E9/", "/%EA/", "/%EB/", "/%E7/", "/%E0/", "/%E2/", "/%E4/", "/%EE/", "/%EF/", "/%F9/", "/%FC/", "/%FB/", "/%F4/", "/%F6/");
 		$rep_pat = array("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o");
-		$title   = preg_replace($pattern, $rep_pat, $title);
+		$title = preg_replace($pattern, $rep_pat, $title);
 
 		$tableau = explode('-', $title); // Transforme la chaine de caract�res en tableau
 		$tableau = array_filter($tableau, [$this, 'emptyString']); // Supprime les chaines vides du tableau
-		$title   = implode('-', $tableau); // Transforme un tableau en chaine de caract�res s�par� par un tiret
+		$title = implode('-', $tableau); // Transforme un tableau en chaine de caract�res s�par� par un tiret
 
 		if (count($title) > 0) {
 			if ($withExt) {
@@ -155,7 +159,7 @@ class Metagen {
 			}
 			return $title;
 		} else {
-				return '';
+			return '';
 		}
 	}
 
@@ -164,7 +168,8 @@ class Metagen {
 	 * @param $document
 	 * @return string Converted text
 	 */
-	public function html2text($document) {
+	public function html2text($document)
+	{
 		return icms_html2text($document);
 	}
 
@@ -173,7 +178,8 @@ class Metagen {
 	 * @param string $title
 	 *
 	 */
-	public function setTitle($title) {
+	public function setTitle($title)
+	{
 		global $icmsModule, $icmsModuleConfig;
 		$this->_title = $this->html2text($title);
 		$this->_title = $this->purifyText($this->_title);
@@ -197,7 +203,7 @@ class Metagen {
 			$titleTag['category'] = $this->_categoryPath;
 		}
 
-		$ret = isset($titleTag['title'])?$titleTag['title']:'';
+		$ret = isset($titleTag['title']) ? $titleTag['title'] : '';
 
 		if (isset($titleTag['category']) && $titleTag['category'] != '') {
 			if ($ret != '') {
@@ -220,7 +226,8 @@ class Metagen {
 	 * @param string $keywords
 	 *
 	 */
-	public function setKeywords($keywords) {
+	public function setKeywords($keywords)
+	{
 		$this->_keywords = $keywords;
 	}
 
@@ -230,7 +237,8 @@ class Metagen {
 	 * @param string $categoryPath
 	 *
 	 */
-	public function setCategoryPath($categoryPath) {
+	public function setCategoryPath($categoryPath)
+	{
 		$categoryPath = $this->html2text($categoryPath);
 		$this->_categoryPath = $categoryPath;
 	}
@@ -240,7 +248,8 @@ class Metagen {
 	 * @param string $description
 	 *
 	 */
-	public function setDescription($description) {
+	public function setDescription($description)
+	{
 		if (!$description) {
 			global $icmsModuleConfig;
 			if (isset($icmsModuleConfig['module_meta_description'])) {
@@ -265,18 +274,20 @@ class Metagen {
 	 * An empty function
 	 *
 	 */
-	public function createTitleTag() {
+	public function createTitleTag()
+	{
 
 	}
 
 	/**
 	 * Cleans the provided text, a wrapper for icms_purifyText
-	 * @see icms_purifyText
 	 * @param string $text Text to be cleaned
 	 * @param boolean $keyword Whether the provided string is a keyword, or not
 	 * @return string The purified text
+	 * @see icms_purifyText
 	 */
-	public function purifyText($text, $keyword = false) {
+	public function purifyText($text, $keyword = false)
+	{
 		return icms_purifyText($text, $keyword);
 	}
 
@@ -285,7 +296,8 @@ class Metagen {
 	 * @param int $maxWords Maximum number of words for the description
 	 * @return string
 	 */
-	public function createMetaDescription($maxWords = 100) {
+	public function createMetaDescription($maxWords = 100)
+	{
 		$words = array();
 		$words = explode(' ', $this->_description);
 
@@ -308,7 +320,8 @@ class Metagen {
 	 * @param int $minChar Minimum word length for the keywords
 	 * @return array An array of keywords
 	 */
-	public function findMetaKeywords($text, $minChar) {
+	public function findMetaKeywords($text, $minChar)
+	{
 		$keywords = [];
 
 		$text = $this->purifyText($text);
@@ -338,7 +351,8 @@ class Metagen {
 	 * Creates a string of keywords
 	 * @return string
 	 */
-	public function createMetaKeywords() {
+	public function createMetaKeywords()
+	{
 		global $icmsModuleConfig;
 		$keywords = $this->findMetaKeywords($this->_original_title . ' ' . $this->_description, $this->_minChar);
 		if (isset($icmsModuleConfig, $icmsModuleConfig['moduleMetaKeywords']) && $icmsModuleConfig['moduleMetaKeywords']) {
@@ -372,7 +386,8 @@ class Metagen {
 	 * An empty function
 	 *
 	 */
-	public function autoBuildMeta_keywords() {
+	public function autoBuildMeta_keywords()
+	{
 
 	}
 
@@ -380,7 +395,8 @@ class Metagen {
 	 * Generates keywords, description and title, setting the associated properties
 	 *
 	 */
-	public function buildAutoMetaTags() {
+	public function buildAutoMetaTags()
+	{
 		global $icmsModule, $icmsModuleConfig;
 
 		$this->_keywords = $this->createMetaKeywords();
@@ -393,7 +409,8 @@ class Metagen {
 	 * Assigns the meta tags to the template
 	 *
 	 */
-	public function createMetaTags() {
+	public function createMetaTags()
+	{
 		global $xoopsTpl, $xoTheme;
 		$this->_keywords = preg_replace('(<!--.*?-->)', '', $this->_keywords); // stops html comments appearing in meta key
 

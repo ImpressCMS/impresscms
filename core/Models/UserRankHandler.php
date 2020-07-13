@@ -84,7 +84,7 @@ class UserRankHandler extends AbstractExtendedHandler {
 		foreach ($Query as $qpart) {
 			$file_orig = ICMS_UPLOAD_PATH . '/' . $qpart['rank_image'];
 			if (file_exists($file_orig)) {
-				\ImpressCMS\Core\Filesystem::copyRecursive($file_orig, $this->getImagePath() . $qpart['rank_image']);
+				\ImpressCMS\Core\File\Filesystem::copyRecursive($file_orig, $this->getImagePath() . $qpart['rank_image']);
 			}
 		}
 

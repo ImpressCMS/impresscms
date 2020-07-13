@@ -82,7 +82,6 @@ class Member extends AbstractFacade {
 
 	/**
 	 * constructor
-	 *
 	 */
 	public function __construct(&$db) {
 		$this->_gHandler = new GroupHandler($db);

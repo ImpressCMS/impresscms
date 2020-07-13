@@ -30,7 +30,7 @@
 
 namespace ImpressCMS\Core\View\Form\Elements\Select;
 
-use ImpressCMS\Core\Plugins\EditorHandler;
+use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 use ImpressCMS\Core\View\Form\Elements\SelectElement;
 use ImpressCMS\Core\View\Form\Elements\TrayElement;
 
@@ -60,7 +60,7 @@ class EditorElement extends TrayElement {
 		}
 
 		parent::__construct(_SELECT);
-		$edtlist = EditorHandler::getListByType();
+		$edtlist = EditorsRegistry::getListByType();
 		$option_select = new SelectElement('', $name, $value);
 		$querys = preg_replace('/editor=(.*?)&/', '', $_SERVER['QUERY_STRING']);
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){

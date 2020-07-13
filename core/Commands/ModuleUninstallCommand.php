@@ -49,7 +49,7 @@ class ModuleUninstallCommand extends Command
 		$module_handler = \icms::handler('icms_module');
 		if ($module_handler->uninstall(
 			$modName,
-			new \ImpressCMS\Core\SetupSteps\OutputDecorator($output)
+			new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($output)
 		)) {
 			$output->writeln('Module uninstalled successfully');
 		} else {

@@ -1,4 +1,5 @@
 <?php
+
 namespace ImpressCMS\Core\IPF\Export;
 
 /**
@@ -6,10 +7,11 @@ namespace ImpressCMS\Core\IPF\Export;
  *
  * Class that renders a set of data into a specific export format
  *
- * @author	marcan <marcan@smartfactory.ca>
- * @package	ICMS\IPF\Export
+ * @author    marcan <marcan@smartfactory.ca>
+ * @package    ICMS\IPF\Export
  */
-class ExportRenderer {
+class ExportRenderer
+{
 
 	/**
 	 * Contains the data to be exported
@@ -18,44 +20,45 @@ class ExportRenderer {
 	 */
 	public $data = array();
 
-		/**
-		 * Format of the ouputed export. Currently only supports CSV
-		 *
-		 * @var string
-		 */
+	/**
+	 * Format of the ouputed export. Currently only supports CSV
+	 *
+	 * @var string
+	 */
 	public $format = 'csv';
 
-		/**
-		 * Name of the file in which the exported data will be saved
-		 *
-		 * @var string
-		 */
+	/**
+	 * Name of the file in which the exported data will be saved
+	 *
+	 * @var string
+	 */
 	public $filename = '';
 
-		/**
-		 * Path where the file will be saved
-		 *
-		 * @var string
-		 */
+	/**
+	 * Path where the file will be saved
+	 *
+	 * @var string
+	 */
 	public $filepath = '';
 
-		/**
-		 * Options of the format to be exported in
-		 *
-		 * @var array
-		 */
+	/**
+	 * Options of the format to be exported in
+	 *
+	 * @var array
+	 */
 	public $options = array();
 
 	/**
 	 * Constructor
 	 *
-	 * @param array     $data       Contains the data to be exported
-	 * @param string    $format     Format of the ouputed export. Currently only supports CSV
-	 * @param false|string    $filename   Name of the file in which the exported data will be saved
-	 * @param false|string    $filepath   Path where the file will be saved
-	 * @param array     $options    Options of the format to be exported in
+	 * @param array $data Contains the data to be exported
+	 * @param string $format Format of the ouputed export. Currently only supports CSV
+	 * @param false|string $filename Name of the file in which the exported data will be saved
+	 * @param false|string $filepath Path where the file will be saved
+	 * @param array $options Options of the format to be exported in
 	 */
-	public function __construct($data, $filename = false, $filepath = false, $format = 'csv', $options = array('separator'=>';')) {
+	public function __construct($data, $filename = false, $filepath = false, $format = 'csv', $options = array('separator' => ';'))
+	{
 		$this->data = $data;
 		$this->format = $format;
 		$this->filename = $filename;
@@ -74,9 +77,10 @@ class ExportRenderer {
 	 *
 	 * @return string
 	 */
-	public function arrayToCsvString($dataArray, $separator, $trim = 'both', $removeEmptyLines = true) {
+	public function arrayToCsvString($dataArray, $separator, $trim = 'both', $removeEmptyLines = true)
+	{
 		if (!is_array($dataArray) || empty ($dataArray)) {
-				return '';
+			return '';
 		}
 		switch ($trim) {
 			case 'none' :
@@ -96,7 +100,7 @@ class ExportRenderer {
 				break;
 		}
 		$ret = array();
-		foreach ($dataArray as $key=>$field) {
+		foreach ($dataArray as $key => $field) {
 			$ret[$key] = $this->valToCsvHelper($field, $separator, $trimFunction);
 		}
 
@@ -112,9 +116,10 @@ class ExportRenderer {
 	 * @param string $trimFunction
 	 * @return string|string[]
 	 */
-	public function valToCsvHelper($val, $separator, $trimFunction) {
+	public function valToCsvHelper($val, $separator, $trimFunction)
+	{
 		if (is_callable($trimFunction)) {
-				$val = $trimFunction($val);
+			$val = $trimFunction($val);
 		}
 		//If there is a separator (;) or a quote (") or a linebreak in the string, we need to quote it.
 		$needQuote = false;
@@ -143,7 +148,8 @@ class ExportRenderer {
 	/**
 	 *
 	 */
-	public function execute() {
+	public function execute()
+	{
 		$exportFileData = '';
 
 		switch ($this->format) {
@@ -168,7 +174,8 @@ class ExportRenderer {
 	 *
 	 * @param str $content
 	 */
-	public function saveExportFile($content) {
+	public function saveExportFile($content)
+	{
 		switch ($this->format) {
 			case 'csv':
 				$this->saveCsv($content);
@@ -184,7 +191,8 @@ class ExportRenderer {
 	 *
 	 * @param str $content
 	 */
-	public function saveCsv($content) {
+	public function saveCsv($content)
+	{
 		if (!$this->filepath) {
 			$this->filepath = ICMS_UPLOAD_PATH . '/';
 		}
@@ -224,7 +232,7 @@ class ExportRenderer {
 
 			header('Content-Disposition: attachment; filename=' . $file_name);
 
-			if (isset($mimeType) && strstr($mimeType, 'text/')) {
+			if (isset($mimeType) && strpos($mimeType, 'text/') !== false) {
 				$fp = fopen($fullFileName, 'rb');
 			} else {
 				$fp = fopen($fullFileName, 'rb');

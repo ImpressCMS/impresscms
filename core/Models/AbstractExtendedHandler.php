@@ -23,7 +23,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Database\DatabaseConnectionInterface;
 use ImpressCMS\Core\Debug;
-use ImpressCMS\Core\Filesystem;
+use ImpressCMS\Core\File\Filesystem;
 use ImpressCMS\Core\IPF\Module;
 use ImpressCMS\Core\Properties\AbstractProperties;
 use ImpressCMS\Core\Security\PermissionsManager;

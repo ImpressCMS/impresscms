@@ -107,7 +107,7 @@ if (!empty($op) && $op == 'cancel') {
 		@unlink ( $orig_img_path );
 	}
 
-	$plugins_arr = \ImpressCMS\Core\Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
+	$plugins_arr = \ImpressCMS\Core\File\Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
 	foreach ( $plugins_arr as $plugin_folder ) {
 		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php' )) {
 			$arr = explode ( '/', $image_path );
@@ -266,7 +266,7 @@ $img ['ori_size'] = icms_convert_size ( filesize ( ICMS_IMANAGER_FOLDER_PATH . '
 $icmsTpl->assign ( 'image', $img );
 
 #Getting the plugins for the editor
-$plugins_arr = \ImpressCMS\Core\Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
+$plugins_arr = \ImpressCMS\Core\File\Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
 foreach ( $plugins_arr as $plugin_folder ) {
 	if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php' )) {
 		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/language/' . $icmsConfig ['language'] . '/main.php' )) {

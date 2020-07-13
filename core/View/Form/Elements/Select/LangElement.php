@@ -36,7 +36,7 @@
 
 namespace ImpressCMS\Core\View\Form\Elements\Select;
 
-use ImpressCMS\Core\Filesystem;
+use ImpressCMS\Core\File\Filesystem;
 use ImpressCMS\Core\View\Form\Elements\SelectElement;
 
 /**
