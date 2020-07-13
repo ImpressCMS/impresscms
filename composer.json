@@ -193,132 +193,132 @@
           "console.command"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Install\\AutotasksSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\AutotasksSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Install\\BlockSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\BlockSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Install\\ConfigSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\ConfigSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Install\\ScriptSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\ScriptSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Install\\TablesSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\TablesSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Install\\ViewTemplateSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\ViewTemplateSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Install\\CopyAssetsSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\CopyAssetsSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Update\\AutotasksSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\AutotasksSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Update\\BlocksSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\BlocksSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Update\\ConfigSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\ConfigSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Update\\ScriptSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\ScriptSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Update\\ViewTemplateSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\ViewTemplateSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Update\\CopyAssetsSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\CopyAssetsSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\AutotasksSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\AutotasksSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\BlockSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\BlockSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\CommentsSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\CommentsSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\ConfigSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\ConfigSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\DataPageSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\DataPageSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\FilesSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\FilesSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\GroupPermissionsSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\GroupPermissionsSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\NotificationsSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\NotificationsSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\ScriptSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\ScriptSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\TablesSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\TablesSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\UrlLinksSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\UrlLinksSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\CopyAssetsSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\CopyAssetsSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "'\\ImpressCMS\\Core\\SetupSteps\\Extensions\\Module\\Uninstall\\ViewTemplateSetupStep": {
+      "'\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\ViewTemplateSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
