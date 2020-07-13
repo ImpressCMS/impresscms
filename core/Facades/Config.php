@@ -26,10 +26,10 @@
 /**
  * Manage configuration items
  *
- * @copyright	Copyright (c) 2000 XOOPS.org
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @author		Kazumi Ono (aka onokazo)
+ * @copyright    Copyright (c) 2000 XOOPS.org
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author        Kazumi Ono (aka onokazo)
  */
 
 namespace ImpressCMS\Core\Facades;
@@ -47,99 +47,100 @@ use ImpressCMS\Core\Models\ConfigOptionHandler;
  * This class acts as an interface for handling general configurations
  * and its modules.
  *
- * @package	ICMS\Config
- * @author	Kazumi Ono <webmaster@myweb.ne.jp>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @todo	Tests that need to be made:
+ * @package    ICMS\Config
+ * @author    Kazumi Ono <webmaster@myweb.ne.jp>
+ * @copyright    copyright (c) 2000-2003 XOOPS.org
+ * @todo    Tests that need to be made:
  *                  - error handling
- * @access	public
+ * @access    public
  */
-class Config extends AbstractFacade {
+class Config extends AbstractFacade
+{
 	static protected $instance;
 
-		/**
-		 * Main (default) category
-		 */
-		public const CATEGORY_MAIN = 1;
+	/**
+	 * Main (default) category
+	 */
+	public const CATEGORY_MAIN = 1;
 
-		/**
-		 * User category
-		 */
-		public const CATEGORY_USER = 2;
+	/**
+	 * User category
+	 */
+	public const CATEGORY_USER = 2;
 
-		/**
-		 * Meta & footer category
-		 */
-		public const CATEGORY_METAFOOTER = 3;
+	/**
+	 * Meta & footer category
+	 */
+	public const CATEGORY_METAFOOTER = 3;
 
-		/**
-		 * Censorship category
-		 */
-		public const CATEGORY_CENSOR = 4;
+	/**
+	 * Censorship category
+	 */
+	public const CATEGORY_CENSOR = 4;
 
-		/**
-		 * Search catageory
-		 */
-		public const CATEGORY_SEARCH = 5;
+	/**
+	 * Search catageory
+	 */
+	public const CATEGORY_SEARCH = 5;
 
-		/**
-		 * Mailer category
-		 */
-		public const CATEGORY_MAILER = 6;
+	/**
+	 * Mailer category
+	 */
+	public const CATEGORY_MAILER = 6;
 
-		/**
-		 * Authentification category
-		 */
-		public const CATEGORY_AUTH = 7;
+	/**
+	 * Authentification category
+	 */
+	public const CATEGORY_AUTH = 7;
 
-		/**
-		 * Multilanguage configuration
-		 */
-		public const CATEGORY_MULILANGUAGE = 8;
+	/**
+	 * Multilanguage configuration
+	 */
+	public const CATEGORY_MULILANGUAGE = 8;
 
-		/**
-		 * Content category
-		 */
-		public const CATEGORY_CONTENT = 9;
+	/**
+	 * Content category
+	 */
+	public const CATEGORY_CONTENT = 9;
 
-		/**
-		 * Persona category
-		 */
-		public const CATEGORY_PERSONA = 10;
+	/**
+	 * Persona category
+	 */
+	public const CATEGORY_PERSONA = 10;
 
-		/**
-		 * Captcha category
-		 */
-		public const CATEGORY_CAPTCHA = 11;
+	/**
+	 * Captcha category
+	 */
+	public const CATEGORY_CAPTCHA = 11;
 
-		/**
-		 * Plugins category
-		 */
-		public const CATEGORY_PLUGINS = 12;
+	/**
+	 * Plugins category
+	 */
+	public const CATEGORY_PLUGINS = 12;
 
-		/**
-		 * Autotasks category
-		 */
-		public const CATEGORY_AUTOTASKS = 13;
+	/**
+	 * Autotasks category
+	 */
+	public const CATEGORY_AUTOTASKS = 13;
 
-		/**
-		 * Purifier category
-		 */
-		public const CATEGORY_PURIFIER = 14;
+	/**
+	 * Purifier category
+	 */
+	public const CATEGORY_PURIFIER = 14;
 
 	/**
 	 * holds reference to config item handler(DAO) class
 	 *
 	 * @var     object
-	 * @access	private
+	 * @access    private
 	 */
 	private $_cHandler;
 
 	/**
 	 * holds reference to config option handler(DAO) class
 	 *
-	 * @var	    object
-	 * @access	private
+	 * @var        object
+	 * @access    private
 	 */
 	private $_oHandler;
 
@@ -155,9 +156,10 @@ class Config extends AbstractFacade {
 	/**
 	 * Constructor
 	 *
-	 * @param	object  &$db    reference to database object
+	 * @param object  &$db reference to database object
 	 */
-	public function __construct(&$db) {
+	public function __construct(&$db)
+	{
 		$this->_cHandler = new ConfigItemHandler($db);
 		$this->_oHandler = new ConfigOptionHandler($db);
 	}
@@ -165,23 +167,25 @@ class Config extends AbstractFacade {
 	/**
 	 * Create a config
 	 *
-	 * @see     ConfigItemHandler
 	 * @return ConfigItem
+	 * @see     ConfigItemHandler
 	 */
-	public function &createConfig() {
+	public function &createConfig()
+	{
 		return $this->_cHandler->create();
 	}
 
 	/**
 	 * Get a config
 	 *
-	 * @param	int     $id             ID of the config
-	 * @param	bool    $withoptions    load the config's options now?
-	 * @return	ConfigItem
+	 * @param int $id ID of the config
+	 * @param bool $withoptions load the config's options now?
+	 * @return    ConfigItem
 	 */
-	public function &getConfig($id, $withoptions = false) {
-		$config = & $this->_cHandler->get($id);
-		if ($withoptions == true) {
+	public function &getConfig($id, $withoptions = false)
+	{
+		$config = &$this->_cHandler->get($id);
+		if ($withoptions) {
 			$config->setConfOptions($this->getConfigOptions(new CriteriaItem('conf_id', $id)));
 		}
 		return $config;
@@ -190,14 +194,15 @@ class Config extends AbstractFacade {
 	/**
 	 * insert a new config in the database
 	 *
-	 * @param	ConfigItem  &$config    reference
-	 * @return	true|false if inserting config succeeded or not
+	 * @param ConfigItem  &$config reference
+	 * @return    true|false if inserting config succeeded or not
 	 */
-	public function insertConfig(&$config) {
+	public function insertConfig(&$config)
+	{
 		if (!$this->_cHandler->insert($config)) {
 			return false;
 		}
-		$options = & $config->getConfOptions();
+		$options = &$config->getConfOptions();
 		$count = count($options);
 		$conf_id = $config->getVar('conf_id');
 		for ($i = 0; $i < $count; $i++) {
@@ -218,16 +223,17 @@ class Config extends AbstractFacade {
 	/**
 	 * Delete a config from the database
 	 *
-	 * @param	ConfigItem  &$config    refence
-	 * @return	bool if deleting config item succeeded or not
+	 * @param ConfigItem  &$config refence
+	 * @return    bool if deleting config item succeeded or not
 	 */
-	public function deleteConfig(&$config) {
+	public function deleteConfig(&$config)
+	{
 		if (!$this->_cHandler->delete($config)) {
 			return false;
 		}
-		$options = & $config->getConfOptions();
+		$options = &$config->getConfOptions();
 		$count = count($options);
-		if ($count == 0) {
+		if ($count === 0) {
 			$options = $this->getConfigOptions(new CriteriaItem('conf_id', $config->getVar('conf_id')));
 			$count = count($options);
 		}
@@ -245,37 +251,40 @@ class Config extends AbstractFacade {
 	/**
 	 * get one or more Configs
 	 *
-	 * @param	CriteriaElement  $criteria      Criteria
-	 * @param	bool    $id_as_key      Use the configs' ID as keys?
-	 * @param	bool    $with_options   get the options now?
+	 * @param CriteriaElement $criteria Criteria
+	 * @param bool $id_as_key Use the configs' ID as keys?
+	 * @param bool $with_options get the options now?
 	 *
-	 * @return	ConfigItem[]
+	 * @return    ConfigItem[]
 	 */
-	public function getConfigs($criteria = null, $id_as_key = false, $with_options = false) {
+	public function getConfigs($criteria = null, $id_as_key = false, $with_options = false)
+	{
 		return $this->_cHandler->getObjects($criteria, $id_as_key);
 	}
 
 	/**
 	 * Count some configs
 	 *
-	 * @param	CriteriaElement  $criteria   Criteria
-	 * @return	int count result
+	 * @param CriteriaElement $criteria Criteria
+	 * @return    int count result
 	 */
-	public function getConfigCount($criteria = null) {
+	public function getConfigCount($criteria = null)
+	{
 		return $this->_cHandler->getCount($criteria);
 	}
 
 	/**
 	 * Get configs from a certain category
 	 *
-	 * @param	int $category   ID of a category
-	 * @param	int $module     ID of a module
+	 * @param int $category ID of a category
+	 * @param int $module ID of a module
 	 *
-	 * @return	ConfigItem[]
+	 * @return    ConfigItem[]
 	 */
-	public function &getConfigsByCat($category, $module = 0) {
+	public function &getConfigsByCat($category, $module = 0)
+	{
 		if (is_array($category)) {
-			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int) $module));
+			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int)$module));
 			$criteria->add(new CriteriaItem('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
@@ -292,9 +301,9 @@ class Config extends AbstractFacade {
 				return $this->_cachedConfigs[$module][$category];
 			}
 
-			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int) $module));
+			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int)$module));
 			if (!empty($category)) {
-				$criteria->add(new CriteriaItem('conf_catid', (int) $category));
+				$criteria->add(new CriteriaItem('conf_catid', (int)$category));
 			}
 			$ret = array();
 			$configs = $this->getConfigs($criteria, true);
@@ -311,55 +320,60 @@ class Config extends AbstractFacade {
 	/**
 	 * Make a new
 	 *
-	 * @return	ConfigOption
+	 * @return    ConfigOption
 	 */
-	public function &createConfigOption() {
+	public function &createConfigOption()
+	{
 		return $this->_oHandler->create();
 	}
 
 	/**
 	 * Get a option by id
 	 *
-	 * @param	int $id ID of the config option
+	 * @param int $id ID of the config option
 	 *
-	 * @return	ConfigOption
+	 * @return    ConfigOption
 	 */
-	public function &getConfigOption($id) {
+	public function &getConfigOption($id)
+	{
 		return $this->_oHandler->get($id);
 	}
 
 	/**
 	 * Get one or more object(s)
 	 *
-	 * @param	CriteriaElement  $criteria   Criteria
-	 * @param	bool    $id_as_key  Use IDs as keys in the array?
+	 * @param CriteriaElement $criteria Criteria
+	 * @param bool $id_as_key Use IDs as keys in the array?
 	 *
-	 * @return	ConfigOption[]
+	 * @return    ConfigOption[]
 	 */
-	public function getConfigOptions($criteria = null, $id_as_key = false) {
+	public function getConfigOptions($criteria = null, $id_as_key = false)
+	{
 		return $this->_oHandler->getObjects($criteria, $id_as_key);
 	}
 
 	/**
 	 * Count
 	 *
-	 * @param	CriteriaElement|null  $criteria   Criteria or null if none criteria should be used
+	 * @param CriteriaElement|null $criteria Criteria or null if none criteria should be used
 	 *
-	 * @return	int
+	 * @return    int
 	 */
-	public function getConfigOptionsCount($criteria = null) {
+	public function getConfigOptionsCount($criteria = null)
+	{
 		return $this->_oHandler->getCount($criteria);
 	}
 
 	/**
 	 * Get a list of configs
 	 *
-	 * @param	int $conf_modid ID of the modules
-	 * @param	int $conf_catid ID of the category
+	 * @param int $conf_modid ID of the modules
+	 * @param int $conf_catid ID of the category
 	 *
-	 * @return	array   Associative array of name=>value pairs.
+	 * @return    array   Associative array of name=>value pairs.
 	 */
-	public function getConfigList($conf_modid, $conf_catid = 0) {
+	public function getConfigList($conf_modid, $conf_catid = 0)
+	{
 		if (!empty($this->_cachedConfigs[$conf_modid][$conf_catid])) {
 			return $this->_cachedConfigs[$conf_modid][$conf_catid];
 		} else {
@@ -367,13 +381,13 @@ class Config extends AbstractFacade {
 			if (empty($conf_catid)) {
 				$criteria->add(new CriteriaItem('conf_catid', $conf_catid));
 			}
-			$configs = & $this->_cHandler->getObjects($criteria);
+			$configs = &$this->_cHandler->getObjects($criteria);
 			$confcount = count($configs);
 			$ret = array();
 			for ($i = 0; $i < $confcount; $i++) {
 				$ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
 			}
-			$this->_cachedConfigs[$conf_modid][$conf_catid] = & $ret;
+			$this->_cachedConfigs[$conf_modid][$conf_catid] = &$ret;
 			return $ret;
 		}
 	}

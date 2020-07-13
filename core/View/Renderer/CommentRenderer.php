@@ -36,8 +36,8 @@
 
 namespace ImpressCMS\Core\View\Renderer;
 
-use ImpressCMS\Core\IPF\ObjectTree;
 use ImpressCMS\Core\Models\Comment;
+use ImpressCMS\Core\ObjectTree;
 
 /**
  * Display comments

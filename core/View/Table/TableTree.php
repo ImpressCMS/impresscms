@@ -13,7 +13,7 @@ namespace ImpressCMS\Core\View\Table;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\IPF\AbstractDatabaseHandler;
 use ImpressCMS\Core\IPF\AbstractDatabaseModel;
-use ImpressCMS\Core\IPF\Controller;
+use ImpressCMS\Core\ModelController;
 
 /**
  * ViewTree base class
@@ -127,7 +127,7 @@ class TableTree extends Table {
 			}
 		}
 
-		$controller = new Controller($this->_objectHandler);
+		$controller = new ModelController($this->_objectHandler);
 
 		if (in_array('edit', $this->_actions, true)) {
 			$actions[] = $controller->getEditItemLink($object, false, true);

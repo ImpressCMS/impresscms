@@ -296,7 +296,7 @@ class MediaUploader {
 									$headers['content-type'] = 'application/octet-stream';
 				}
 			}
-			if (empty($headers['content-disposition']['filename']) === false) {
+			if (is_string($headers['content-disposition']['filename']) && $headers['content-disposition']['filename'] !== '') {
 				$this->mediaName = $headers['content-disposition']['filename'];
 				$ext = pathinfo($this->mediaName, PATHINFO_EXTENSION);
 			} else {
@@ -321,7 +321,7 @@ class MediaUploader {
 				self::setErrors(_ER_UP_INVALIDFILESIZE);
 				return false;
 			}
-			if ($this->mediaName == '') {
+			if (!is_string($this->mediaName) || $this->mediaName === '') {
 				self::setErrors(_ER_UP_FILENAMEEMPTY);
 				return false;
 			}

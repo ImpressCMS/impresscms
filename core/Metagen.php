@@ -10,10 +10,7 @@
  * @author    marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\IPF;
-
-use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\Textsanitizer;
+namespace ImpressCMS\Core;
 
 /**
  * Generates META tags
@@ -99,12 +96,6 @@ class Metagen
 			$keywords = $this->createMetaKeywords();
 		}
 
-		/*		$myts = Textsanitizer::getInstance();
-		 if (method_exists($myts, 'formatForML')) {
-			$keywords = $myts->formatForML($keywords);
-			$description = $myts->formatForML($description);
-			}
-			*/
 		$this->setKeywords($keywords);
 
 	}
@@ -139,21 +130,110 @@ class Metagen
 
 		// Transformation des ponctuations
 		//                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .
-		$pattern = array("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./");
-		$rep_pat = array("-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-", "-", "-", "-", "-", "-", "-", "-", "-");
+		$pattern = [
+			'/%09/',
+			'/%20/',
+			'/%21/',
+			'/%22/',
+			'/%23/',
+			'/%25/',
+			'/%26/',
+			'/%27/',
+			'/%28/',
+			'/%29/',
+			'/%2C/',
+			'/%2F/',
+			'/%3A/',
+			'/%3B/',
+			'/%3C/',
+			'/%3D/',
+			'/%3E/',
+			'/%3F/',
+			'/%40/',
+			'/%5B/',
+			'/%5C/',
+			'/%5D/',
+			'/%5E/',
+			'/%7B/',
+			'/%7C/',
+			'/%7D/',
+			'/%7E/',
+			"/\./"
+		];
+		$rep_pat = [
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-100',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-at-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-',
+			'-'];
 		$title = preg_replace($pattern, $rep_pat, $title);
 
 		// Transformation des caract�res accentu�s
 		//                  �        �        �        �        �        �        �        �        �        �        �        �        �        �        �        �
-		$pattern = array("/%B0/", "/%E8/", "/%E9/", "/%EA/", "/%EB/", "/%E7/", "/%E0/", "/%E2/", "/%E4/", "/%EE/", "/%EF/", "/%F9/", "/%FC/", "/%FB/", "/%F4/", "/%F6/");
-		$rep_pat = array("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o");
+		$pattern = [
+			'/%B0/',
+			'/%E8/',
+			'/%E9/',
+			'/%EA/',
+			'/%EB/',
+			'/%E7/',
+			'/%E0/',
+			'/%E2/',
+			'/%E4/',
+			'/%EE/',
+			'/%EF/',
+			'/%F9/',
+			'/%FC/',
+			'/%FB/',
+			'/%F4/',
+			'/%F6/'];
+		$rep_pat = [
+			'-',
+			'e',
+			'e',
+			'e',
+			'e',
+			'c',
+			'a',
+			'a',
+			'a',
+			'i',
+			'i',
+			'u',
+			'u',
+			'u',
+			'o',
+			'o'];
 		$title = preg_replace($pattern, $rep_pat, $title);
 
 		$tableau = explode('-', $title); // Transforme la chaine de caract�res en tableau
 		$tableau = array_filter($tableau, [$this, 'emptyString']); // Supprime les chaines vides du tableau
 		$title = implode('-', $tableau); // Transforme un tableau en chaine de caract�res s�par� par un tiret
 
-		if (count($title) > 0) {
+		if (strlen($title) > 0) {
 			if ($withExt) {
 				$title .= '.html';
 			}
@@ -195,24 +275,24 @@ class Metagen
 			$titleTag['module'] = $moduleName;
 		}
 
-		if (isset($this->_title) && ($this->_title != '') && (strtoupper($this->_title) !== strtoupper($moduleName))) {
+		if (isset($this->_title) && $this->_title && (strtoupper($this->_title) !== strtoupper($moduleName))) {
 			$titleTag['title'] = $this->_title;
 		}
 
-		if (isset($this->_categoryPath) && ($this->_categoryPath != '')) {
+		if (isset($this->_categoryPath) && ($this->_categoryPath)) {
 			$titleTag['category'] = $this->_categoryPath;
 		}
 
-		$ret = isset($titleTag['title']) ? $titleTag['title'] : '';
+		$ret = $titleTag['title'] ?? '';
 
-		if (isset($titleTag['category']) && $titleTag['category'] != '') {
-			if ($ret != '') {
+		if (isset($titleTag['category']) && $titleTag['category']) {
+			if ($ret) {
 				$ret .= ' - ';
 			}
 			$ret .= $titleTag['category'];
 		}
-		if (isset($titleTag['module']) && $titleTag['module'] != '') {
-			if ($ret != '') {
+		if (isset($titleTag['module']) && $titleTag['module']) {
+			if ($ret) {
 				$ret .= ' - ';
 			}
 			$ret .= $titleTag['module'];
@@ -262,7 +342,7 @@ class Metagen
 
 		$description = preg_replace("/([^\r\n])\r\n([^\r\n])/", "\\1 \\2", $description);
 		$description = preg_replace("/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $description);
-		$description = preg_replace("/[ ]* [ ]*/", ' ', $description);
+		$description = preg_replace('/[ ]* [ ]*/', ' ', $description);
 		$description = DataFilter::stripSlashesGPC($description);
 
 		$this->_description = $description;
@@ -298,25 +378,22 @@ class Metagen
 	 */
 	public function createMetaDescription($maxWords = 100)
 	{
-		$words = array();
 		$words = explode(' ', $this->_description);
 
 		// Only keep $maxWords words
-		$newWords = array();
+		$newWords = [];
 		$i = 0;
 
 		while ($i < $maxWords - 1 && $i < count($words)) {
 			$newWords[] = $words[$i];
 			$i++;
 		}
-		$ret = implode(' ', $newWords);
-
-		return $ret;
+		return implode(' ', $newWords);
 	}
 
 	/**
 	 * Generates a list of keywords from the provided text
-	 * @param steing $text Text to parse
+	 * @param string $text Text to parse
 	 * @param int $minChar Minimum word length for the keywords
 	 * @return array An array of keywords
 	 */
@@ -329,7 +406,7 @@ class Metagen
 
 		$text = preg_replace("/([^\r\n])\r\n([^\r\n])/", "\\1 \\2", $text);
 		$text = preg_replace("/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $text);
-		$text = preg_replace("/[ ]* [ ]*/", ' ', $text);
+		$text = preg_replace('/[ ]* [ ]*/', ' ', $text);
 		$text = DataFilter::stripSlashesGPC($text);
 
 		$originalKeywords = preg_split('/[^a-zA-Z\'"-]+/', $text, -1, PREG_SPLIT_NO_EMPTY);
@@ -337,10 +414,8 @@ class Metagen
 		foreach ($originalKeywords as $originalKeyword) {
 			$secondRoundKeywords = explode("'", $originalKeyword);
 			foreach ($secondRoundKeywords as $secondRoundKeyword) {
-				if (strlen($secondRoundKeyword) >= $minChar) {
-					if (!in_array($secondRoundKeyword, $keywords, false)) {
-						$keywords[] = trim($secondRoundKeyword);
-					}
+				if ((strlen($secondRoundKeyword) >= $minChar) && !in_array($secondRoundKeyword, $keywords, false)) {
+					$keywords[] = trim($secondRoundKeyword);
 				}
 			}
 		}
@@ -360,16 +435,6 @@ class Metagen
 			$keywords = array_merge($keywords, $moduleKeywords);
 		}
 
-		/* Commenting this out as it may cause problem on ImpressCMS ML websites
-		 $return_keywords = array();
-
-		 // Cleaning for duplicate keywords
-		 foreach ($keywords as $keyword) {
-			if (!in_array($keyword, $keywords)) {
-			$return_keywords[] = trim($keyword);
-			}
-			}*/
-
 		// Only take the first 90 keywords
 		$newKeywords = array();
 		$i = 0;
@@ -377,9 +442,7 @@ class Metagen
 			$newKeywords[] = $keywords[$i];
 			$i++;
 		}
-		$ret = implode(', ', $newKeywords);
-
-		return $ret;
+		return implode(', ', $newKeywords);
 	}
 
 	/**

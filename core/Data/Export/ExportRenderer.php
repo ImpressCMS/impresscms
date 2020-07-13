@@ -1,6 +1,8 @@
 <?php
 
-namespace ImpressCMS\Core\IPF\Export;
+namespace ImpressCMS\Core\Data\Export;
+
+use ImpressCMS\Core\IPF\Export\str;
 
 /**
  * ExportRenderer class

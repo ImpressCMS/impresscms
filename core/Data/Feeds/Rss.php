@@ -8,7 +8,7 @@
  * @author	Ignacio Segura, "Nachenko"
  */
 
-namespace ImpressCMS\Core\Feeds;
+namespace ImpressCMS\Core\Data\Feeds;
 
 use FeedWriter\Feed;
 use FeedWriter\Item;

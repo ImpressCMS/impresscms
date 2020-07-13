@@ -1,6 +1,6 @@
 <?php
 
-namespace ImpressCMS\Core\IPF\Export;
+namespace ImpressCMS\Core\Data\Export;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
@@ -65,7 +65,7 @@ class Exporter
 	 *
 	 * @var array
 	 */
-	public $options = array();
+	public $options = [];
 
 	/**
 	 * Output methods used for formating exported data
@@ -104,6 +104,7 @@ class Exporter
 
 	/**
 	 * Renders the export
+	 * @param string $filename
 	 */
 	public function render($filename)
 	{

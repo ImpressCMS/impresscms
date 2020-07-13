@@ -38,7 +38,9 @@
 
 namespace ImpressCMS\Core\Models;
 
+use icms;
 use ImpressCMS\Core\Properties\AbstractProperties;
+use RuntimeException;
 
 /**
  * Base class for all objects in the kernel (and beyond)
@@ -74,6 +76,31 @@ class AbstractModel extends AbstractProperties {
 	 * @access private
 	 */
 	private $_filters = [];
+
+	/**
+	 * This method is used as proxy for handler methods
+	 *
+	 * @param string $name Method name in handler
+	 * @param array $arguments Method arguments
+	 *
+	 * @return mixed
+	 */
+	public static function __callStatic($name, $arguments)
+	{
+		static $handlerInstance = null;
+		if ($handlerInstance === null && class_exists($handlerClass = static::class . 'Handler')) {
+			$handlerInstance = new $handlerClass(
+				icms::getInstance()->get('xoopsDB')
+			);
+		}
+		if ($handlerInstance === null) {
+			throw new RuntimeException('Handler not found');
+		}
+		if (method_exists($handlerInstance, $name)) {
+			return call_user_func_array([$handlerInstance, $name], $arguments);
+		}
+		throw new RuntimeException('Method not found');
+	}
 
 	/**
 	 * constructor

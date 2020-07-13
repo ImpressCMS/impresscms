@@ -16,10 +16,10 @@ use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\IPF\arr;
 use ImpressCMS\Core\IPF\content;
-use ImpressCMS\Core\IPF\Controller;
-use ImpressCMS\Core\IPF\Metagen;
 use ImpressCMS\Core\IPF\str;
 use ImpressCMS\Core\IPF\unknown_type;
+use ImpressCMS\Core\Metagen;
+use ImpressCMS\Core\ModelController;
 use ImpressCMS\Core\Security\PermissionsManager;
 use ImpressCMS\Core\Textsanitizer;
 use ImpressCMS\Core\View\ModelLinkedForm\Form;
@@ -495,8 +495,8 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		if ($this->isPartial()) {
 			$ret = array_intersect_key($ret, array_flip($this->handler->visibleColumns));
 		}
-		if ($this->handler->identifierName != "") {
-			$controller = new Controller($this->handler);
+		if ($this->handler->identifierName !== '') {
+			$controller = new ModelController($this->handler);
 			/**
 			 * Addition of some automatic value
 			 */
@@ -648,7 +648,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 * @return string user side link to the object
 	 */
 	public function getAdminViewItemLink($onlyUrl = false) {
-		$controller = new Controller($this->handler);
+		$controller = new ModelController($this->handler);
 		return $controller->getAdminViewItemLink($this, $onlyUrl);
 	}
 
@@ -660,7 +660,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 * @return string user side link to the object
 	 */
 	public function getItemLink($onlyUrl = false) {
-		$controller = new Controller($this->handler);
+		$controller = new ModelController($this->handler);
 		return $controller->getItemLink($this, $onlyUrl);
 	}
 
@@ -674,7 +674,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 *        $userSide
 	 */
 	public function getViewItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		$controller = new Controller($this->handler);
+		$controller = new ModelController($this->handler);
 		return $controller->getViewItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
@@ -685,7 +685,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 * @param bool $userSide
 	 */
 	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		$controller = new Controller($this->handler);
+		$controller = new ModelController($this->handler);
 		return $controller->getEditItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
@@ -696,14 +696,14 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 * @param bool $userSide
 	 */
 	public function getDeleteItemLink($onlyUrl = false, $withimage = false, $userSide = false) {
-		$controller = new Controller($this->handler);
+		$controller = new ModelController($this->handler);
 		return $controller->getDeleteItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
 	/**
 	 */
 	public function getPrintAndMailLink() {
-		$controller = new Controller($this->handler);
+		$controller = new ModelController($this->handler);
 		return $controller->getPrintAndMailLink($this);
 	}
 

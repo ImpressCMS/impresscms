@@ -1,5 +1,5 @@
 <?php
-namespace ImpressCMS\Core\Feeds;
+namespace ImpressCMS\Core\Data\Feeds;
 
 use SimplePie;
 

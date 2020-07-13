@@ -1,10 +1,10 @@
 <?php
 
-namespace ImpressCMS\Core\IPF;
+namespace ImpressCMS\Core;
 
 use icms;
 use ImpressCMS\Core\File\MediaUploader;
-use ImpressCMS\Core\Message;
+use ImpressCMS\Core\IPF\obj;
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 use ImpressCMS\Core\Models\AbstractExtendedModel;
 use ImpressCMS\Core\Properties\AbstractProperties;
@@ -21,7 +21,7 @@ use ImpressCMS\Core\Security\PermissionsManager;
  * @todo    Use language constants for messages
  * @package    ICMS\IPF
  */
-class Controller
+class ModelController
 {
 
 	/** */
@@ -38,7 +38,7 @@ class Controller
 
 	/**
 	 *
-	 * @param obj $icmsObj
+	 * @param object $icmsObj
 	 */
 	public function postDataToObject(&$icmsObj)
 	{

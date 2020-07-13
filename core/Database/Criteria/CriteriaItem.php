@@ -105,7 +105,7 @@ class CriteriaItem extends CriteriaElement {
 	 * @return  string
 	 */
 	public function render() {
-		$clause = (!empty($this->prefix)?"{$this->prefix}.":"") . $this->column;
+		$clause = (!empty($this->prefix)?"{$this->prefix}.": '') . $this->column;
 		if (!empty($this->function)) {
 			$clause = sprintf($this->function, $clause);
 		}
@@ -122,14 +122,14 @@ class CriteriaItem extends CriteriaElement {
 							} else {
 								$value = '()';
 							}
-						} else if (is_null($this->value)) {
+						} else if ($this->value === null) {
 							$value = 'NULL';
 						} else {
 							if ('' === ($value = trim($this->value))) {
 				return '';
 							}
 							if (!in_array(strtoupper($this->operator), array('IN', 'NOT IN'))) {
-									if ((substr($value, 0, 1) != '`') && (substr($value, -1) != '`')) {
+									if ((strpos($value, '`') !== 0) && (substr($value, -1) !== '`')) {
 											$value = "'$value'";
 									} elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
 											$value = '``';
@@ -150,28 +150,27 @@ class CriteriaItem extends CriteriaElement {
 	 * @author Nathan Dial ndial@trillion21.com, improved by Pierre-Eric MENUET pemen@sourceforge.net
 	 */
 	public function renderLdap() {
-		if ($this->operator == '>') {
+		if ($this->operator === '>') {
 			$this->operator = '>=';
 		}
-		if ($this->operator == '<') {
+		if ($this->operator === '<') {
 			$this->operator = '<=';
 		}
 
-		if ($this->operator == '!=' || $this->operator == '<>') {
+		if ($this->operator === '!=' || $this->operator === '<>') {
 			$operator = '=';
-			$clause = "(!(" . $this->column . $operator . $this->value . "))";
-		} else {
-			if ($this->operator == 'IN') {
-				$newvalue = str_replace(array('(', ')'), '', $this->value);
-				$tab = explode(',', $newvalue);
-				foreach ($tab as $uid) {
-					$clause .= '(' . $this->column . '=' . $uid
-					.')';
-				}
-				$clause = '(|' . $clause . ')';
-			} else {
-				$clause = "(" . $this->column . $this->operator . $this->value . ")";
+			$clause = '(!(' . $this->column . $operator . $this->value . '))';
+		} else if ($this->operator === 'IN') {
+			$newvalue = str_replace(array('(', ')'), '', $this->value);
+			$tab = explode(',', $newvalue);
+			$clause = '';
+			foreach ($tab as $uid) {
+				$clause .= '(' . $this->column . '=' . $uid
+				.')';
 			}
+			$clause = '(|' . $clause . ')';
+		} else {
+			$clause = '(' . $this->column . $this->operator . $this->value . ')';
 		}
 		return $clause;
 	}
@@ -183,7 +182,7 @@ class CriteriaItem extends CriteriaElement {
 	 */
 	public function renderWhere() {
 		$cond = $this->render();
-		return empty($cond)?'':"where $cond";
+		return ($cond === false || $cond === null || trim($cond) === '')?'':"where $cond";
 	}
 }
 

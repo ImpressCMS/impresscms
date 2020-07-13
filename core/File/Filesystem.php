@@ -254,7 +254,7 @@ class Filesystem {
 	 * @todo use language constants for error messages
 	 */
 	public static function writeIndexFile($path = '') {
-		if (empty($path)) {
+		if (!is_string($path) || ($path === '')) {
 			return false;
 		}
 		$path = (substr($path, -1) === '/') ? substr($path, 0, -1):$path;
@@ -402,7 +402,7 @@ class Filesystem {
 	 * @param	bool	$hideDot	Hide files starting with a dot?
 	 * @return	array	$fileList	A list of files in a directory
 	 */
-	public static function getFileList($dirname, $prefix = '', array $extension = array(), $hideDot = false) {
+	public static function getFileList($dirname, $prefix = '', array $extension = [], $hideDot = false) {
 		if (!is_dir($dirname)) {
 			return array();
 		}
@@ -446,7 +446,7 @@ class Filesystem {
 	 * @return	boolean				TRUE, if the operation was successful, FALSE if it fails
 	 */
 	public static function writeFile($contents, $filename, $extension = '', $location = ICMS_ROOT_PATH, $overwrite = true) {
-		if (empty($extension)) {
+		if (!is_string($extension) || ($extension === '')) {
 			$extension = 'php';
 		}
 		if (DIRECTORY_SEPARATOR !== '/') {
@@ -573,7 +573,7 @@ class Filesystem {
 		if (!$overwrite && file_exists($newname)) {
 			return false;
 		}
-		if (empty($newname)) {
+		if (!is_string($newname) && $newname === '') {
 			return false;
 		}
 

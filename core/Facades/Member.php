@@ -429,7 +429,7 @@ class Member extends AbstractFacade {
 		$limit = $start = 0;
 		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql_criteria = $criteria->render();
-			if ($criteria->getSort() != '') {
+			if (in_array(strtolower((string)$criteria->getSort()), ['asc', 'desc'], true)) {
 				$sql_criteria .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
@@ -438,7 +438,7 @@ class Member extends AbstractFacade {
 				$sql[] = $sql_criteria;
 			}
 		}
-		$sql_string = implode(" AND ", array_filter($sql));
+		$sql_string = implode(' AND ', array_filter($sql));
 		if (!$result = \icms::$xoopsDB->query($sql_string, $limit, $start)) {
 			return $ret;
 		}

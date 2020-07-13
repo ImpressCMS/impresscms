@@ -36,7 +36,7 @@
  * @author    marcan aka Marc-André Lanciault <marcan@smartfactory.ca>
  */
 
-namespace ImpressCMS\Core\IPF;
+namespace ImpressCMS\Core;
 
 use ImpressCMS\Core\Models\AbstractExtendedModel;
 

@@ -83,7 +83,7 @@ class EditorsRegistry {
 	public static function &getInstance($type = 'content')
 	{
 		static $instances = array();
-		if (empty($type)) {
+		if (!$type) {
 			$type = 'content';
 		}
 		if (!isset($instances[$type])) {
@@ -114,7 +114,7 @@ class EditorsRegistry {
 	 */
 	public function &get($name = '', $options = null, $noHtml = false, $OnFailure = '')
 	{
-		if (empty($options)) {
+		if (!is_array($options)) {
 			$options = [];
 		}
 		if ($editor = $this->_loadEditor($name, $options)) {
@@ -206,7 +206,7 @@ class EditorsRegistry {
 	 */
 	public function _loadEditor($name)
 	{
-		if (empty($name)) {
+		if (!$name) {
 			return null;
 		}
 

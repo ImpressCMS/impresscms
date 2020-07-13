@@ -3,7 +3,7 @@ namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\IPF\AbstractDatabaseModel;
-use ImpressCMS\Core\IPF\ObjectTree;
+use ImpressCMS\Core\ObjectTree;
 
 /**
  * Form control creating a parent category selectbox for an object derived from \ImpressCMS\Core\IPF\AbstractModel

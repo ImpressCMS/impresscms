@@ -63,7 +63,7 @@ class DatabaseConnection extends ExtendedPdo implements DatabaseConnectionInterf
 	 */
 	public function queryF($sql, $limit = 0, $start = 0)
 	{
-		if (!empty($limit)) {
+		if (!empty($limit) && is_numeric($limit)) {
 			$sql .= ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
 		}
 		$result = $this->perform($sql);

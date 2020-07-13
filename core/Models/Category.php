@@ -10,7 +10,7 @@
  */
 namespace ImpressCMS\Core\Models;
 
-use ImpressCMS\Core\IPF\Controller;
+use ImpressCMS\Core\ModelController;
 
 /**
  * Persistble category object
@@ -110,7 +110,7 @@ class Category extends AbstractSEOExtendedModel {
 	 */
 	public function getCategoryPath($withAllLink = true, $currentCategory = false) {
 
-		$controller = new Controller($this->handler);
+		$controller = new ModelController($this->handler);
 
 		if (!$this->_categoryPath) {
 			if ($withAllLink && !$currentCategory) {

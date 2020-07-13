@@ -8,9 +8,11 @@
  * @author	marcan <marcan@impresscms.org>
  */
 
-namespace ImpressCMS\Core\IPF;
+namespace ImpressCMS\Core;
 
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\IPF\the;
+use ImpressCMS\Core\IPF\unknown_type;
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 
 /**
