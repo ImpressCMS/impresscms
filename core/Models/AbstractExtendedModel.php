@@ -12,12 +12,9 @@ namespace ImpressCMS\Core\Models;
 
 use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\IPF\arr;
-use ImpressCMS\Core\IPF\content;
-use ImpressCMS\Core\IPF\str;
-use ImpressCMS\Core\IPF\unknown_type;
 use ImpressCMS\Core\Metagen;
 use ImpressCMS\Core\ModelController;
 use ImpressCMS\Core\Security\PermissionsManager;
@@ -26,6 +23,7 @@ use ImpressCMS\Core\View\ModelLinkedForm\Form;
 use ImpressCMS\Core\View\ModelLinkedForm\SecureForm;
 use ImpressCMS\Core\View\Renderer\ModelViewRenderer;
 use ImpressCMS\Core\View\Table\Row;
+use SmartyException;
 
 /**
  * \ImpressCMS\Core\IPF\AbstractModel base class
@@ -126,7 +124,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	/**
 	 * open a new form section to seperate form elements
 	 *
-	 * @param str $section_name
+	 * @param string $section_name
 	 * @param bool $value
 	 */
 	public function openFormSection($section_name, $value = false) {
@@ -172,7 +170,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	/**
 	 * close a form section
 	 *
-	 * @param str $section_name
+	 * @param string $section_name
 	 */
 	public function closeFormSection($section_name) {
 		$this->initVar('close_section_' . $section_name, self::DTYPE_FORM_SECTION_CLOSE, '', false, null, '', false, '', '', false, false, true);
@@ -237,8 +235,8 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 *
 	 * @param 		$key
 	 * @param 		$data_type
-	 * @param str 	$itemName
-	 * @param str 	$form_caption
+	 * @param string 	$itemName
+	 * @param string 	$form_caption
 	 * @param 		$sortby
 	 * @param 		$value
 	 * @param bool	$displayOnForm
@@ -630,7 +628,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	/**
 	 *
-	 * @param str $path
+	 * @param string $path
 	 */
 	public function getUploadDir($path = false) {
 		if ($path) {
@@ -795,8 +793,8 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	/**
 	 *
-	 * @param unknown_type $key
-	 * @param unknown_type $editor
+	 * @param string $key
+	 * @param string $editor
 	 * @return bool|mixed|string|string[]
 	 */
 	public function getValueFor($key, $editor = true) {
@@ -805,8 +803,8 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		$ret = $this->getVar($key, 'n');
 		$myts = Textsanitizer::getInstance();
 
-		$control = isset($this->controls[$key])?$this->controls[$key]:false;
-		$form_editor = isset($control['form_editor'])?$control['form_editor']:'textarea';
+		$control = $this->controls[$key] ?? false;
+		$form_editor = $control['form_editor'] ?? 'textarea';
 
 		$html = isset($this->_vars['dohtml'])?$this->getVar('dohtml'):true;
 		$smiley = true;
@@ -817,12 +815,12 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 		if ($form_editor == 'default') {
 			global $icmsModuleConfig;
-			$form_editor = isset($icmsModuleConfig['default_editor'])?$icmsModuleConfig['default_editor']:'textarea';
+			$form_editor = $icmsModuleConfig['default_editor'] ?? 'textarea';
 		}
 
 		if ($editor) {
-			if (defined('XOOPS_EDITOR_IS_HTML') && !(in_array($form_editor, array('formtextarea', 'textarea', 'dhtmltextarea'
-			)))) {
+			if (defined('XOOPS_EDITOR_IS_HTML') && !(in_array($form_editor, ['formtextarea', 'textarea', 'dhtmltextarea'
+				]))) {
 				$br = false;
 				$formatML = !$editor;
 			} else {
@@ -832,19 +830,17 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 		if (method_exists($myts, 'formatForML')) {
 			return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br, $formatML);
+		} else if ($html) {
+			return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
 		} else {
-			if ($html) {
-				return $myts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
-			} else {
-				return DataFilter::checkVar($ret, 'text', 'output');
-			}
+			return DataFilter::checkVar($ret, 'text', 'output');
 		}
 	}
 
 	/**
 	 * Returns criteria for selecting this element by id
 	 *
-	 * @return \ImpressCMS\Core\Database\Criteria\CriteriaItem
+	 * @return CriteriaElement
 	 */
 	public function getCriteriaForSelectByID() {
 		$criteria = new CriteriaCompo();
@@ -861,7 +857,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	/**
 	 *
-	 * @param str|arr $key
+	 * @param string|array $key
 	 */
 	public function makeFieldReadOnly($key) {
 		if (is_array($key)) {
@@ -875,7 +871,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	/**
 	 *
-	 * @param str $key
+	 * @param string $key
 	 */
 	public function doMakeFieldreadOnly($key) {
 		if (isset($this->_vars[$key])) {
@@ -901,7 +897,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	/**
 	 *
-	 * @param str $key
+	 * @param string $key
 	 */
 	public function doHideFieldFromForm($key) {
 		$this->setVarInfo($key, 'displayOnForm', false);
@@ -909,8 +905,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	/**
 	 *
-	 * @param
-	 *        $key
+	 * @param string|string[] $key
 	 */
 	public function hideFieldFromSingleView($key) {
 		if (is_array($key)) {
@@ -938,21 +933,21 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 *        if set to TRUE, then the content will be return, if set to FALSE, the content will be outputed
 	 * @param bool $userSide
 	 *        for futur use, to do something different on the user side
-	 * @return content of the template if $fetchOnly or nothing if !$fetchOnly
+	 * @return string|void
+	 * @throws SmartyException
 	 */
 	public function displaySingleObject($fetchOnly = false, $userSide = false, $actions = array(), $headerAsRow = true) {
 		$singleview = new ModelViewRenderer($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
 		foreach ($this->_vars as $key => $var) {
-			if ($key != $this->handler->keyName && $var['displayOnSingleView']) {
-				$is_header = ($key == $this->handler->identifierName);
+			if ($key !== $this->handler->keyName && $var['displayOnSingleView']) {
+				$is_header = ($key === $this->handler->identifierName);
 				$singleview->addRow(new Row($key, false, $is_header));
 			}
 		}
 
 		if ($fetchOnly) {
-			$ret = $singleview->render($fetchOnly);
-			return $ret;
+			return $singleview->render($fetchOnly);
 		} else {
 			$singleview->render($fetchOnly);
 		}
@@ -960,7 +955,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	/**
 	 *
-	 * @param unknown_type $key
+	 * @param string|string[] $key
 	 */
 	public function showFieldOnForm($key) {
 		if (is_array($key)) {
@@ -974,7 +969,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	/**
 	 *
-	 * @param unknown_type $key
+	 * @param string $key
 	 */
 	public function doShowFieldOnForm($key) {
 		if (isset($this->_vars[$key])) {
@@ -1009,7 +1004,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	/**
 	 *
-	 * @param unknown_type $key
+	 * @param string $key
 	 */
 	public function doDisplayFieldOnSingleView($key) {
 		if (isset($this->_vars[$key])) {

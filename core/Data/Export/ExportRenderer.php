@@ -2,8 +2,6 @@
 
 namespace ImpressCMS\Core\Data\Export;
 
-use ImpressCMS\Core\IPF\Export\str;
-
 /**
  * ExportRenderer class
  *
@@ -174,7 +172,7 @@ class ExportRenderer
 	/**
 	 *
 	 *
-	 * @param str $content
+	 * @param string $content
 	 */
 	public function saveExportFile($content)
 	{
@@ -191,7 +189,7 @@ class ExportRenderer
 	/**
 	 *
 	 *
-	 * @param str $content
+	 * @param string $content
 	 */
 	public function saveCsv($content)
 	{
@@ -213,7 +211,7 @@ class ExportRenderer
 			$mimeType = 'text/csv';
 			$file = strrev($this->filename);
 			$temp_name = strtolower(strrev(substr($file, 0, strpos($file, '--'))));
-			if ($temp_name == '') {
+			if (!is_string($temp_name) || $temp_name === '') {
 				$file_name = $this->filename;
 			} else {
 				$file_name = $temp_name;
