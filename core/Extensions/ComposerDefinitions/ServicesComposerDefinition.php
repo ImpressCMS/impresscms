@@ -108,7 +108,9 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 	 */
 	protected function implementsContainerAwareInterface(string $class): bool
 	{
-		$reflect = new ReflectionClass($class);
+		$reflect = new ReflectionClass(
+			(strpos($class, '\\') === 0) ? substr($class, 1): $class
+		);
 		return $reflect->implementsInterface(ContainerAwareInterface::class);
 	}
 
