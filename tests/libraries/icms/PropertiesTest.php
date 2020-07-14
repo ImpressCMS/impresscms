@@ -16,8 +16,8 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
      * Does AbstractProperties exists and it's usable?
      */
     public function testExists() {
-        $this->assertTrue(class_exists('AbstractProperties', false), 'AbstractProperties class doesn exist');
-        $mock = $this->getMockForAbstractClass('AbstractProperties');
+        $this->assertTrue(class_exists('\\ImpressCMS\\Core\\Properties\\AbstractProperties', false), 'AbstractProperties class doesn exist');
+        $mock = $this->getMockForAbstractClass('\\ImpressCMS\\Core\\Properties\\AbstractProperties');
         $this->assertInstanceOf(AbstractProperties::class, $mock, 'Can\'t extend AbstractProperties with class');
     }
 
@@ -25,7 +25,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
      * Tests that all needed public methods exists
      */
     public function testNeededPublicMethods() {
-        $mock = $this->getMockForAbstractClass('AbstractProperties');
+        $mock = $this->getMockForAbstractClass('\\ImpressCMS\\Core\\Properties\\AbstractProperties');
         foreach ([
                 'getVar' => null,
                 'setVar' => null,
@@ -54,11 +54,12 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
-    /**
-     * Tests if initVars works
-     */
+	/**
+	 * Tests if initVars works
+	 * @throws \ReflectionException
+	 */
     public function testInitVars() {
-        $mock = $this->getMockForAbstractClass('AbstractProperties');
+        $mock = $this->getMockForAbstractClass('\\ImpressCMS\\Core\\Properties\\AbstractProperties');
 
         $reflection_method = new ReflectionMethod($mock, 'initVar');
         $this->assertInternalType('object', $reflection_method, 'initVar method doesn\'t exists');
@@ -204,7 +205,7 @@ class PropertiesTest extends \PHPUnit_Framework_TestCase {
 	 * @throws \ReflectionException
 	 */
     private function createMockWithInitVar($key, $dataType, $defaultValue = null, $required = false, $otherCfg = null) {
-        $mock = $this->getMockForAbstractClass('AbstractProperties');
+        $mock = $this->getMockForAbstractClass('\\ImpressCMS\\Core\\Properties\\AbstractProperties');
         $reflection_method = new ReflectionMethod($mock, 'initVar');
         $reflection_method->setAccessible(true);
         $reflection_method->invoke($mock, $key, $dataType, $defaultValue, $required, $otherCfg);

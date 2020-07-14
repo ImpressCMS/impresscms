@@ -13,7 +13,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
      * Test if icms_core_DataFilter is available
      */
     public function testAvailability() {
-        $this->assertTrue(class_exists('Event', true), "icms_Event class doesn't exist");
+        $this->assertTrue(class_exists('\\ImpressCMS\\Core\\Event', true), "Event class doesn't exist");
     }
 
     /**
@@ -21,7 +21,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
      */
     public function testStaticMethodsAvailability() {
          foreach ([ 'current', 'attach', 'detach', 'trigger' ] as $method) {
-             $this->assertTrue(method_exists('Event', $method), $method . ' doesn\'t exists for icms_Event');
+             $this->assertTrue(method_exists('Event', $method), $method . ' doesn\'t exists for Event');
          }
     }
 
