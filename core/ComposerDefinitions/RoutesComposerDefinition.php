@@ -61,6 +61,10 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			$this->getOldStyleRoutes(),
 			$data['routes'] ?? []
 		);
+		$prefixOfRoute = dirname($_SERVER['SCRIPT_NAME']);
+		if (substr($prefixOfRoute, -1) === '/') {
+			$prefixOfRoute = substr($prefixOfRoute, 0, -1);
+		}
 		foreach ($routes as $definition) {
 			foreach ($this->generateDefinitionVariants($definition) as $parsedDefinition) {
 				$hasPort = isset($parsedDefinition['port']);
@@ -73,7 +77,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$ret[] = sprintf(
 					'    ->map(%s, %s, %s)%s',
 					var_export($parsedDefinition['method'], true),
-					var_export($parsedDefinition['path'], true),
+					var_export($prefixOfRoute . $parsedDefinition['path'], true),
 					var_export($parsedDefinition['handler'], true),
 					$hasExtraConfig ? '' : ';'
 				);
@@ -136,6 +140,9 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			$paths[] = ICMS_MODULES_PATH . '/' . $moduleName;
 		}
 		$ret = [];
+		/**
+		 * @var \SplFileInfo $fileInfo
+		 */
 		foreach (new \FilesystemIterator(ICMS_ROOT_PATH, \FilesystemIterator::CURRENT_AS_FILEINFO |
 			\FilesystemIterator::SKIP_DOTS) as $fileInfo) {
 			if ($fileInfo->isDir()) {
@@ -161,7 +168,6 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$ret[] = $route;
 			}
 		}
-
 		return $ret;
 	}
 
@@ -188,13 +194,15 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		 * @var \SplFileInfo $fileInfo
 		 */
 		foreach ($directoryIterator as $fileInfo) {
+			$path = str_replace(ICMS_ROOT_PATH, '', $fileInfo->getPath()) . '/' . $fileInfo->getFilename();
 			if ($fileInfo->isDir()) {
 				continue;
 			}
-			$path = str_replace(ICMS_ROOT_PATH, '', $fileInfo->getPath()) . '/' . $fileInfo->getFilename();
-			foreach (['language', 'migrations', 'templates', 'class', 'blocks'] as $badPath) {
-				if (strpos($path, '/' . $badPath . '/') !== false) {
-					continue 2;
+			if (in_array(strtolower($fileInfo->getExtension()), ['php', 'html', 'htm', 'txt'])) {
+				foreach (['language', 'migrations', 'templates', 'class', 'blocks'] as $badPath) {
+					if (strpos($path, '/' . $badPath . '/') !== false) {
+						continue 2;
+					}
 				}
 			}
 			if ($fileInfo->getFilename() === 'icms_version.php') {

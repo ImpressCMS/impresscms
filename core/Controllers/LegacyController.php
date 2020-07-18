@@ -24,7 +24,12 @@ class LegacyController
 	 */
 	public function proxy(ServerRequestInterface $request): ResponseInterface
 	{
-		$path = ICMS_ROOT_PATH . $request->getUri()->getPath();
+		$prefixOfRoute = dirname($_SERVER['SCRIPT_NAME']);
+		$filePath = $prefixOfRoute ? mb_substr($request->getUri()->getPath(), mb_strlen($prefixOfRoute)) : $request->getUri()->getPath();
+		if (substr($filePath, -1) === '/') {
+			$filePath = substr($prefixOfRoute, 0, -1);
+		}
+		$path = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $filePath;
 		if (pathinfo($path, PATHINFO_EXTENSION) === 'php') {
 			global $icmsTpl, $xoopsTpl, $xoopsOption, $icmsAdminTpl, $icms_admin_handler;
 			ob_start();
