@@ -49,18 +49,6 @@ final class icms extends Container {
 	public static $user;
 
 	/**
-	 * Finalizes all processes as the script exits
-	 */
-	static public function shutdown() {
-		// Ensure the session service can write data before the DB connection is closed
-		if (session_id()) {
-			session_write_close();
-		}
-		// Ensure the logger can decorate output before objects are destroyed
-		while (@ob_end_flush());
-	}
-
-	/**
 	 * Creates an object instance from an object definition.
 	 * The factory parameter can be:
 	 * - A fully qualified class name starting with '\': \MyClass or on PHP 5.3+ \ns\sub\MyClass
@@ -209,7 +197,6 @@ final class icms extends Container {
 		// Initialize the autoloader
 		require_once __DIR__ . '/icms/Autoloader.php';
 		icms_Autoloader::setup();
-		register_shutdown_function(array(__CLASS__, 'shutdown'));
 		$this->buildRelevantUrls();
 
 		return $this;
@@ -330,7 +317,7 @@ final class icms extends Container {
 			$this->registerCommonServiceVariables();
 		}
 
-		if (!defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE) {
+		if (!(defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE)) {
 			$this->loadComposerDefinition(
 				new \ImpressCMS\Core\ComposerDefinitions\RoutesComposerDefinition()
 			);

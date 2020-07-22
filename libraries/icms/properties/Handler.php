@@ -428,6 +428,12 @@ abstract class icms_properties_Handler implements Serializable {
 							'mimetype' => $this->getFileMimeType($value),
 						);
 					}
+					if (file_exists(ICMS_UPLOAD_PATH . DIRECTORY_SEPARATOR . $value)) {
+						return array(
+							'filename' => $value,
+							'mimetype' => $this->getFileMimeType(ICMS_UPLOAD_PATH . DIRECTORY_SEPARATOR . $value),
+						);
+					}
 					$uploader = new icms_file_MediaUploadHandler($this->_vars[$key][self::VARCFG_PATH], $this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES], $this->_vars[$key][self::VARCFG_MAX_FILESIZE], $this->_vars[$key][self::VARCFG_MAX_WIDTH], $this->_vars[$key][self::VARCFG_MAX_HEIGHT]);
 					if ($uploader->fetchFromURL($value)) {
 						if (!empty($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
@@ -765,7 +771,7 @@ abstract class icms_properties_Handler implements Serializable {
 	 * @deprecated use setVarInfo with self::VARCFG_TYPE option instead. Since 2.0
 	 */
 	public function setType($key, $type) {
-		trigger_error('use setVarInfo with self::VARCFG_TYPE option instead', E_USER_DEPRECATED);
+	//	trigger_error('use setVarInfo with self::VARCFG_TYPE option instead', E_USER_DEPRECATED);
 
 		$this->setVarInfo($key, self::VARCFG_TYPE, $type);
 	}
@@ -779,7 +785,7 @@ abstract class icms_properties_Handler implements Serializable {
 	 * @deprecated use setVarInfo with required option instead. Since 2.0
 	 */
 	public function doSetFieldAsRequired($key, $is_required = true) {
-		trigger_error('use setVarInfo with required option instead', E_USER_DEPRECATED);
+		//trigger_error('use setVarInfo with required option instead', E_USER_DEPRECATED);
 
 		$this->setVarInfo($key, self::VARCFG_REQUIRED, $is_required);
 	}
@@ -792,7 +798,7 @@ abstract class icms_properties_Handler implements Serializable {
 	 * @deprecated use toArray instead!. Since 2.0
 	 */
 	public function cleanVars() {
-		trigger_error('use toArray instead!', E_USER_DEPRECATED);
+		//trigger_error('use toArray instead!', E_USER_DEPRECATED);
 
 		return $this->toArray();
 	}
@@ -1002,11 +1008,11 @@ abstract class icms_properties_Handler implements Serializable {
 				if (isset($this->_vars[$name])) {
 					return $this->_vars[$name][self::VARCFG_VALUE];
 				} else {
-					icms_core_Debug::setDeprecated('getVars()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+				//	icms_core_Debug::setDeprecated('getVars()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
 					return $this->_vars;
 				}
 			case 'cleanVars':
-				icms_core_Debug::setDeprecated('toArray()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+				//icms_core_Debug::setDeprecated('toArray()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
 				return $this->toArray();
 			default:
 				if (!isset($this->_vars[$name])) {

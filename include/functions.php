@@ -1675,13 +1675,15 @@ if (!function_exists('icms_getModuleHandler')) {
 			$name = (!isset($name)) ? $module_dir : trim($name);
 			$class = 'mod_' . $module_dir . '_' . ucfirst($name) . 'Handler';
 			if (class_exists($class)) {
-				$instance = new $class($container->get('xoopsDB'));
+				$db = $container->get('xoopsDB');
+				$instance = new $class($db);
 			} elseif (file_exists($hnd_file = ICMS_MODULES_PATH . "/{$module_dir}/class/" . ucfirst($name) . "Handler.php")) {
 				include_once $hnd_file;
 				include_once ICMS_MODULES_PATH . "/{$module_dir}/class/" . ucfirst($name) . ".php";
 				$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
 				if (class_exists($class)) {
-					$instance = new $class($container->get('xoopsDB'));
+					$db = $container->get('xoopsDB');
+					$instance = new $class($db);
 				}
 			} else {
 				$hnd_file = ICMS_MODULES_PATH . "/{$module_dir}/class/{$name}.php";
@@ -1690,7 +1692,8 @@ if (!function_exists('icms_getModuleHandler')) {
 				}
 				$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
 				if (class_exists($class)) {
-					$instance = new $class($container->get('xoopsDB'));
+					$db = $container->get('xoopsDB');
+					$instance = new $class($db);
 				}
 			}
 			$container->add($class, $instance);
