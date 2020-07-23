@@ -6,7 +6,6 @@ namespace ImpressCMS\Core\Response;
 use GuzzleHttp\Psr7\MessageTrait;
 use ImpressCMS\Core\Exceptions\ResponseCodeUnsupportedException;
 use Psr\Http\Message\ResponseInterface;
-use function GuzzleHttp\Psr7\stream_for;
 
 /**
  * Response that renders template
@@ -88,7 +87,6 @@ class ViewResponse implements ResponseInterface
 		$this->includeNotificationsSelection();
 
 		$this->setHeaders($headers + ['Content-Type' => 'text/html']);
-		$this->withBody(stream_for('aaaa'));
 	}
 
 	/**
