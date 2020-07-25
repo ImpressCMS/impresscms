@@ -25,13 +25,6 @@ use League\Container\Container;
 final class icms extends Container {
 
 	/**
-	 * Current response
-	 *
-	 * @var \icms_response_Text
-	 */
-	static public $response;
-
-	/**
 	 * ImpressCMS paths locations
 	 *
 	 * @var array
@@ -54,18 +47,6 @@ final class icms extends Container {
 	 * @var icms_member_user_Object|null
 	 */
 	public static $user;
-
-	/**
-	 * Finalizes all processes as the script exits
-	 */
-	static public function shutdown() {
-		// Ensure the session service can write data before the DB connection is closed
-		if (session_id()) {
-			session_write_close();
-		}
-		// Ensure the logger can decorate output before objects are destroyed
-		while (@ob_end_flush());
-	}
 
 	/**
 	 * Creates an object instance from an object definition.
@@ -216,7 +197,6 @@ final class icms extends Container {
 		// Initialize the autoloader
 		require_once __DIR__ . '/icms/Autoloader.php';
 		icms_Autoloader::setup();
-		register_shutdown_function(array(__CLASS__, 'shutdown'));
 		$this->buildRelevantUrls();
 
 		return $this;
@@ -335,6 +315,12 @@ final class icms extends Container {
 		// register links for compatibility
 		if ($registerCommonServices) {
 			$this->registerCommonServiceVariables();
+		}
+
+		if (!(defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE)) {
+			$this->loadComposerDefinition(
+				new \ImpressCMS\Core\ComposerDefinitions\RoutesComposerDefinition()
+			);
 		}
 
 		//Cant do this here until common.php 100% refactored

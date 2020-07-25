@@ -1,20 +1,27 @@
 <?php
 
+
+namespace ImpressCMS\Core\Response;
+
+use GuzzleHttp\Psr7\MessageTrait;
+use ImpressCMS\Core\Exceptions\ResponseCodeUnsupportedException;
+use Psr\Http\Message\ResponseInterface;
+
 /**
- * Creates response of HTML type
+ * Response that renders template
  *
- * @author      Raimondas Rimkevičius <mekdrop@impresscms.org>
- * @package	ICMS\Response
+ * @package ImpressCMS\Core\Response
  *
  * @method assign(string $name, mixed $value)   Assigns var to template
  */
-class icms_response_HTML extends icms_response_Text {
+class ViewResponse implements ResponseInterface
+{
+	use MessageTrait;
 
 	/**
-	 * Mimetype for this response
+	 * @var string
 	 */
-	const CONTENT_TYPE = 'text/html';
-
+	protected $reasonPhrase;
 	/**
 	 * Instance of current theme
 	 *
@@ -25,12 +32,13 @@ class icms_response_HTML extends icms_response_Text {
 	/**
 	 * Constructor
 	 *
-	 * @global  object  $icmsModule     Current loaded module
-	 * @param   array   $config         Configuration
-	 * @param   int     $http_status    HTTP Status code
-	 * @param   array   $headers        Headers array
+	 * @param array $config Configuration
+	 * @param int $http_status HTTP Status code
+	 * @param array $headers Headers array
+	 * @global  object $icmsModule Current loaded module
 	 */
-	public function __construct($config = array(), $http_status = null, $headers = array()) {
+	public function __construct($config = [], $http_status = null, $headers = [])
+	{
 
 		$this->setThemeFromConfig($config);
 		$this->setGoogleMeta();
@@ -42,7 +50,8 @@ class icms_response_HTML extends icms_response_Text {
 
 		if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
 			if (\icms::$user === null) {
-				return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, false);
+				redirect_header(ICMS_URL . '/user.php', 3, _NOPERM, false);
+				return;
 			}
 			$this->addAdminMetas();
 			$this->loadAdminMenu();
@@ -64,10 +73,10 @@ class icms_response_HTML extends icms_response_Text {
 			$this->addRedirectMessageScripts($redirect_message);
 		}
 
-        if (isset($this->theme->plugins['icms_view_PageBuilder']) && is_object($this->theme->plugins['icms_view_PageBuilder'])) {
+		if (isset($this->theme->plugins['icms_view_PageBuilder']) && is_object($this->theme->plugins['icms_view_PageBuilder'])) {
 			$this->theme->template->assignByRef('xoBlocks', $this->theme->plugins['icms_view_PageBuilder']->blocks);
-        }
-        $this->updateCacheTime();
+		}
+		$this->updateCacheTime();
 
 		global $icmsConfig;
 		$this->theme->template->assign('icmsLang', $icmsConfig['language']);
@@ -77,7 +86,7 @@ class icms_response_HTML extends icms_response_Text {
 
 		$this->includeNotificationsSelection();
 
-		parent::__construct(null, $http_status, $headers);
+		$this->setHeaders($headers + ['Content-Type' => 'text/html']);
 	}
 
 	/**
@@ -85,7 +94,7 @@ class icms_response_HTML extends icms_response_Text {
 	 *
 	 * @param array $config Current configuration
 	 */
-	private function setThemeFromConfig(array &$config)
+	private function setThemeFromConfig(&$config)
 	{
 
 		if (isset($config['template_main']) && is_string($config['template_main'])) {
@@ -285,21 +294,22 @@ class icms_response_HTML extends icms_response_Text {
 	/**
 	 * Loading admin dropdown menus
 	 */
-	private function loadAdminMenu() {
+	private function loadAdminMenu()
+	{
 		global $icmsConfig;
 
-		$cache = icms::getInstance()->get('cache');
+		$cache = \icms::getInstance()->get('cache');
 		$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
 
 		if (!$cached_menu->isHit()) {
-			xoops_module_write_admin_menu(impresscms_get_adminmenu());
+			\xoops_module_write_admin_menu(\impresscms_get_adminmenu());
 			$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
 		}
 
 		$admin_menu = $cached_menu->get();
 
-		$moduleperm_handler = icms::handler('icms_member_groupperm');
-		$module_handler = icms::handler('icms_module');
+		$moduleperm_handler = \icms::handler('icms_member_groupperm');
+		$module_handler = \icms::handler('icms_module');
 		$groups = \icms::$user->getGroups();
 		foreach ($admin_menu as $k => $navitem) {
 			//Getting array of allowed modules to use in admin home
@@ -308,8 +318,8 @@ class icms_response_HTML extends icms_response_Text {
 				foreach ($navitem ['menu'] as $item) {
 					$module = $module_handler->getByDirname($item['dir']);
 					if (
-							($item['dir'] != 'system') &&
-							$moduleperm_handler->checkRight('module_admin', $module->mid, $groups)
+						($item['dir'] != 'system') &&
+						$moduleperm_handler->checkRight('module_admin', $module->mid, $groups)
 					) {
 						$perm_itens[] = $item;
 					}
@@ -320,8 +330,8 @@ class icms_response_HTML extends icms_response_Text {
 			if ($navitem['id'] == 'opsystem') {
 				$all_ok = false;
 				if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
-					$sysperm_handler = icms::handler('icms_member_groupperm');
-					$ok_syscats = & $sysperm_handler->getItemIds('system_admin', $groups);
+					$sysperm_handler = \icms::handler('icms_member_groupperm');
+					$ok_syscats = &$sysperm_handler->getItemIds('system_admin', $groups);
 				} else {
 					$all_ok = true;
 					$ok_syscats = [];
@@ -376,8 +386,8 @@ class icms_response_HTML extends icms_response_Text {
 		}
 
 		// $icmsAdminTpl
-		$this->theme->template->assign('systemadm', empty($sysprefs)?0:1);
-		$this->theme->template->assign('modulesadm', empty($mods)?0:1);
+		$this->theme->template->assign('systemadm', empty($sysprefs) ? 0 : 1);
+		$this->theme->template->assign('modulesadm', empty($mods) ? 0 : 1);
 
 		/**
 		 * Loading options of the current module.
@@ -400,10 +410,10 @@ class icms_response_HTML extends icms_response_Text {
 					}
 					foreach ($reversed_sysprefs as $k) {
 						$this->theme->template->append(
-								'mod_options', array(
-							'title' => $k ['title'], 'link' => $k ['link'],
-							'icon' => (isset($k['icon']) && $k['icon'] != ''?$k['icon']:'')
-								)
+							'mod_options', array(
+								'title' => $k ['title'], 'link' => $k ['link'],
+								'icon' => (isset($k['icon']) && $k['icon'] != '' ? $k['icon'] : '')
+							)
 						);
 					}
 				}
@@ -422,11 +432,11 @@ class icms_response_HTML extends icms_response_Text {
 					}
 					foreach ($reversed_module_admin_menu as $k) {
 						$this->theme->template->append(
-								'mod_options', [
-									'title' => $k['title'],
-									'link' => $k ['link'],
-									'icon' => (isset($k['icon']) && $k['icon'] != ''?$k['icon']:'')
-								]
+							'mod_options', [
+								'title' => $k['title'],
+								'link' => $k ['link'],
+								'icon' => (isset($k['icon']) && $k['icon'] != '' ? $k['icon'] : '')
+							]
 						);
 					}
 				}
@@ -496,7 +506,8 @@ class icms_response_HTML extends icms_response_Text {
 	 *
 	 * @global object $icmsModule
 	 */
-	private function includeNotificationsSelection() {
+	private function includeNotificationsSelection()
+	{
 		global $icmsModule;
 		// RMV-NOTIFY
 		if (($icmsModule instanceof \icms_module_Object) && ($icmsModule->hasnotification == 1) && is_object(\icms::$user)) {
@@ -506,6 +517,17 @@ class icms_response_HTML extends icms_response_Text {
 			$xoTheme = &$this->theme;
 			require_once ICMS_INCLUDE_PATH . '/notification_select.php';
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getBody()
+	{
+		if (!$this->theme->checkCache()) {
+			return $this->theme->fetch();
+		}
+		return '';
 	}
 
 	/**
@@ -522,14 +544,32 @@ class icms_response_HTML extends icms_response_Text {
 	}
 
 	/**
-	 * Renders response
+	 * @inheritDoc
 	 */
-	public function render()
+	public function getStatusCode()
 	{
-		/* check if the module is cached and retrieve it, otherwise, render the page */
-		if (!$this->theme->checkCache()) {
-			$this->theme->render();
-		}
+		return 302;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public function withStatus($code, $reasonPhrase = '')
+	{
+		if ($code !== 302) {
+			throw new ResponseCodeUnsupportedException();
+		}
+
+		$this->reasonPhrase = $reasonPhrase;
+
+		return $this;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getReasonPhrase()
+	{
+		return $this->reasonPhrase;
+	}
 }

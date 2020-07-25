@@ -75,6 +75,8 @@ if (!function_exists('icms_cp_header')) {
 	 *
 	 * @author rowd (from the XOOPS Community)
 	 * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
+	 *
+	 * @deprecated Use ViewResponse with isAdminSide param
 	 */
 	function icms_cp_header()
 	{
@@ -84,7 +86,7 @@ if (!function_exists('icms_cp_header')) {
 		global $xoopsOption;
 
 		$xoopsOption['isAdminSide'] = true;
-		\icms::$response = new \icms_response_HTML($xoopsOption);
+		$xoopsOption['response'] = new \ImpressCMS\Core\Response\ViewResponse($xoopsOption);
 
 		// ################# Preload Trigger startOutputInit ##############
 		\icms::$preload->triggerEvent('adminHeader');
@@ -98,6 +100,8 @@ if (!function_exists('icms_cp_footer')) {
 	 * @since ImpressCMS 1.2
 	 * @author rowd (from XOOPS Community)
 	 * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+	 *
+	 * @deprecated Use ViewResponse with isAdminSide param
 	 */
 	function icms_cp_footer()
 	{
@@ -105,9 +109,13 @@ if (!function_exists('icms_cp_footer')) {
 		\icms::$logger->stopTime('XOOPS output init');
 		\icms::$logger->startTime('Module display');
 
-		\icms::$response->render();
+		global $xoopsOption;
+
+		$response = $xoopsOption['response']->getBody();
 
 		\icms::$logger->stopTime();
+
+		echo $response;
 	}
 }
 

@@ -8,8 +8,6 @@
  * @todo        Remove this file in the future
  */
 
-(\icms::$response instanceof \icms_response_Text) || die('There are no unused response (Maybe you are trying to include footer.php twice?');
-
 $_SESSION['ad_sess_regen'] = false;
 /**
  * @var \Aura\Session\Session $session
@@ -27,7 +25,10 @@ if (isset($_SESSION['sess_regen']) && $_SESSION['sess_regen']) {
 
 \icms::$logger->stopTime('Module display');
 
-\icms::$response->render();
-\icms::$response = null;
+global $xoopsOption;
+
+$response = $xoopsOption['response']->getBody();
 
 \icms::$logger->stopTime();
+
+echo $response;
