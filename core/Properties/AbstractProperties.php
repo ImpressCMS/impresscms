@@ -1,6 +1,7 @@
 <?php
 namespace ImpressCMS\Core\Properties;
 
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\File\MediaUploader;
 use ImpressCMS\Core\Textsanitizer;
@@ -435,6 +436,12 @@ abstract class AbstractProperties implements Serializable {
 							'mimetype' => $this->getFileMimeType($value),
 						);
 					}
+					if (file_exists(ICMS_UPLOAD_PATH . DIRECTORY_SEPARATOR . $value)) {
+						return array(
+							'filename' => $value,
+							'mimetype' => $this->getFileMimeType(ICMS_UPLOAD_PATH . DIRECTORY_SEPARATOR . $value),
+						);
+					}
 					$uploader = new MediaUploader($this->_vars[$key][self::VARCFG_PATH], $this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES], $this->_vars[$key][self::VARCFG_MAX_FILESIZE], $this->_vars[$key][self::VARCFG_MAX_WIDTH], $this->_vars[$key][self::VARCFG_MAX_HEIGHT]);
 					if ($uploader->fetchFromURL($value)) {
 						if (!empty($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
@@ -485,7 +492,7 @@ abstract class AbstractProperties implements Serializable {
 			case self::DTYPE_STRING:
 			default:
 				if (!is_string($value)) {
-					$value = strval($value);
+					$value = (string)$value;
 				}
 				if (isset($this->_vars[$key][self::VARCFG_NOT_GPC]) && !$this->_vars[$key][self::VARCFG_NOT_GPC] && get_magic_quotes_gpc()) {
 					$value = stripslashes($value);
@@ -494,7 +501,7 @@ abstract class AbstractProperties implements Serializable {
 					if (!preg_match($this->_vars[$key][self::VARCFG_VALIDATE_RULE], $value)) {
 						trigger_error(sprintf('Bad format for %s var (%s)', $key, $value), E_USER_ERROR);
 					} elseif (!isset($this->_vars[$key][self::VARCFG_SOURCE_FORMATING]) || empty($this->_vars[$key][self::VARCFG_SOURCE_FORMATING])) {
-						$value = \ImpressCMS\Core\DataFilter::censorString($value);
+						$value = DataFilter::censorString($value);
 					}
 				}
 				if (isset($this->_vars[$key][self::VARCFG_MAX_LENGTH]) && ($this->_vars[$key][self::VARCFG_MAX_LENGTH] > 0) && (mb_strlen($value) > $this->_vars[$key][self::VARCFG_MAX_LENGTH])) {
@@ -772,7 +779,7 @@ abstract class AbstractProperties implements Serializable {
 	 * @deprecated use setVarInfo with self::VARCFG_TYPE option instead. Since 2.0
 	 */
 	public function setType($key, $type) {
-		trigger_error('use setVarInfo with self::VARCFG_TYPE option instead', E_USER_DEPRECATED);
+	//	trigger_error('use setVarInfo with self::VARCFG_TYPE option instead', E_USER_DEPRECATED);
 
 		$this->setVarInfo($key, self::VARCFG_TYPE, $type);
 	}
@@ -786,7 +793,7 @@ abstract class AbstractProperties implements Serializable {
 	 * @deprecated use setVarInfo with required option instead. Since 2.0
 	 */
 	public function doSetFieldAsRequired($key, $is_required = true) {
-		trigger_error('use setVarInfo with required option instead', E_USER_DEPRECATED);
+		//trigger_error('use setVarInfo with required option instead', E_USER_DEPRECATED);
 
 		$this->setVarInfo($key, self::VARCFG_REQUIRED, $is_required);
 	}
@@ -799,7 +806,7 @@ abstract class AbstractProperties implements Serializable {
 	 * @deprecated use toArray instead!. Since 2.0
 	 */
 	public function cleanVars() {
-		trigger_error('use toArray instead!', E_USER_DEPRECATED);
+		//trigger_error('use toArray instead!', E_USER_DEPRECATED);
 
 		return $this->toArray();
 	}
@@ -1009,11 +1016,11 @@ abstract class AbstractProperties implements Serializable {
 				if (isset($this->_vars[$name])) {
 					return $this->_vars[$name][self::VARCFG_VALUE];
 				} else {
-					Debug::setDeprecated('getVars()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+					//Debug::setDeprecated('getVars()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
 					return $this->_vars;
 				}
 			case 'cleanVars':
-				Debug::setDeprecated('toArray()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
+				//Debug::setDeprecated('toArray()', sprintf(_CORE_REMOVE_IN_VERSION, '2.1'));
 				return $this->toArray();
 			default:
 				if (!isset($this->_vars[$name])) {

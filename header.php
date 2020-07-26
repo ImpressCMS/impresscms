@@ -27,7 +27,7 @@
  * This file is used as header for all places where content is generated not in object way
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
  * @package     ImpressCMS/Core
  *
  * @todo        Remove this file in the future
@@ -37,8 +37,8 @@
 
 global $xoopsOption;
 $xoopsOption['theme_use_smarty'] = 1;
-
-\icms::$response = new \icms_response_HTML($xoopsOption);
+$xoopsOption['response'] = new \ImpressCMS\Core\Response\ViewResponse($xoopsOption);
+global $icmsTpl, $xoopsTpl;
 
 \icms::$logger->stopTime('ICMS output init');
 \icms::$logger->startTime('Module display');

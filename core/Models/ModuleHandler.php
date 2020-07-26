@@ -104,7 +104,7 @@ class ModuleHandler
 	 *
 	 * This method is necessary to be able to use a static method
 	 *
-	 * @return    array    List of active modules
+	 * @return    string[]    List of active modules
 	 * @since    1.3
 	 */
 	public static function getActive()

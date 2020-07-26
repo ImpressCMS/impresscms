@@ -11,6 +11,12 @@
  * @internal    for convenience, as we are not targetting php 5.3+ yet
  */
 
+use ImpressCMS\Core\Autoloader;
+use ImpressCMS\Core\Extensions\ComposerDefinitions\RoutesComposerDefinition;
+use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\Extensions\ComposerDefinitions\ProvidersComposerDefinition;
+use ImpressCMS\Core\Extensions\ComposerDefinitions\ServicesComposerDefinition;
+use ImpressCMS\Core\Extensions\Preload\EventsPreloader;
 use League\Container\Container;
 
 /**
@@ -23,13 +29,6 @@ use League\Container\Container;
  * @since    1.3
  */
 final class icms extends Container {
-
-	/**
-	 * Current response
-	 *
-	 * @var \icms_response_Text
-	 */
-	static public $response;
 
 	/**
 	 * ImpressCMS paths locations
@@ -54,18 +53,6 @@ final class icms extends Container {
 	 * @var \ImpressCMS\Core\Models\User|null
 	 */
 	public static $user;
-
-	/**
-	 * Finalizes all processes as the script exits
-	 */
-	static public function shutdown() {
-		// Ensure the session service can write data before the DB connection is closed
-		if (session_id()) {
-			session_write_close();
-		}
-		// Ensure the logger can decorate output before objects are destroyed
-		while (@ob_end_flush());
-	}
 
 	/**
 	 * Creates an object instance from an object definition.
@@ -215,8 +202,7 @@ final class icms extends Container {
 		self::$paths['themes'] = array(ICMS_THEME_PATH, ICMS_THEME_URL);
 		// Initialize the autoloader
 		require_once dirname(__DIR__) . '/core/Autoloader.php';
-		\ImpressCMS\Core\Autoloader::setup();
-		register_shutdown_function(array(__CLASS__, 'shutdown'));
+		Autoloader::setup();
 		$this->buildRelevantUrls();
 
 		return $this;
@@ -240,7 +226,7 @@ final class icms extends Container {
 				'HTTP_REFERER' => 'url',
 			);
 
-			$clean_SERVER = \ImpressCMS\Core\DataFilter::checkVarArray($_SERVER, $filters, false);
+			$clean_SERVER = DataFilter::checkVarArray($_SERVER, $filters, false);
 
 			$phpself = $clean_SERVER['SCRIPT_NAME'];
 			$httphost = $clean_SERVER['HTTP_HOST'];
@@ -290,6 +276,7 @@ final class icms extends Container {
 				if (!in_array($package->getType(), ['impresscms-module'])) {
 					continue;
 				}
+				/** @noinspection SlowArrayOperationsInLoopInspection */
 				$extras = array_merge_recursive($extras, $package->getExtra());
 			}
 
@@ -326,15 +313,21 @@ final class icms extends Container {
 	public function boot(bool $registerCommonServices = true)
 	{
 		$this->loadComposerDefinition(
-			new \ImpressCMS\Core\Extensions\ComposerDefinitions\ProvidersComposerDefinition()
+			new ProvidersComposerDefinition()
 		);
 		$this->loadComposerDefinition(
-			new \ImpressCMS\Core\Extensions\ComposerDefinitions\ServicesComposerDefinition()
+			new ServicesComposerDefinition()
 		);
 
 		// register links for compatibility
 		if ($registerCommonServices) {
 			$this->registerCommonServiceVariables();
+		}
+
+		if (!(defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE)) {
+			$this->loadComposerDefinition(
+				new RoutesComposerDefinition()
+			);
 		}
 
 		//Cant do this here until common.php 100% refactored
@@ -353,7 +346,7 @@ final class icms extends Container {
 		self::$config = $this->get('config');
 		self::$session = $this->get('session');
 		self::$logger = $this->get('logger');
-		self::$preload = $this->get(\ImpressCMS\Core\Extensions\Preload\EventsPreloader::class);
+		self::$preload = $this->get(EventsPreloader::class);
 		self::$security = $this->get('security');
 	}
 
