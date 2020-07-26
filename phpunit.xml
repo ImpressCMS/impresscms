@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<phpunit bootstrap="bootstrap.php"
+<phpunit bootstrap="mainfile.php"
 		 colors="true"
 		 convertErrorsToExceptions="true"
 		 convertNoticesToExceptions="true"
@@ -11,20 +11,23 @@
 		 stopOnFailure="false">
 	<testsuites>
 		<testsuite name="All">
-			<directory suffix="Test.php">libraries/</directory>
-			<directory suffix="Test.php">core/</directory>
+			<directory suffix="Test.php">tests/libraries/</directory>
+			<directory suffix="Test.php">tests/core/</directory>
 		</testsuite>
 	</testsuites>
 	<filter>
 		<whitelist addUncoveredFilesFromWhitelist="true">
-			<directory>../core</directory>
-			<directory>../htdocs</directory>
-			<directory>../include</directory>
-			<directory>../libraries</directory>
-			<directory>../plugins</directory>
+			<directory>core</directory>
+			<directory>htdocs</directory>
+			<directory>include</directory>
+			<directory>libraries</directory>
+			<directory>plugins</directory>
 		</whitelist>
 	</filter>
 	<logging>
-		<log type="coverage-clover" target="../storage/log/clover.xml"/>
+		<log type="coverage-clover" target="storage/log/clover.xml"/>
 	</logging>
+	<php>
+		<server name="REMOTE_ADDR" value="0.0.0.0"/>
+	</php>
 </phpunit>

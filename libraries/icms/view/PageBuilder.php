@@ -262,7 +262,7 @@ class icms_view_PageBuilder {
 				return false;
 			}
 			$template->assign('block', $bresult);
-			$block['content'] = $bresult['content'] ? $bresult['content'] : $template->fetch($tplName, $cacheid);
+			$block['content'] = (isset($bresult['content']) && !empty($bresult['content'])) ? $bresult['content'] : $template->fetch($tplName, $cacheid);
 		} else {
 			icms::$logger->addBlock($xobject->getVar('name'), true, $bcachetime);
 			$block['content'] = $template->fetch($tplName, $cacheid);

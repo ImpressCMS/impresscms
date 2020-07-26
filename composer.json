@@ -55,13 +55,16 @@
     "erusev/parsedown": "^1.7.0",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
+    "http-interop/http-factory-guzzle": "^1.0",
     "ircmaxell/random-lib": "^1.2",
     "keo/iso-639": "^1.0",
     "league/container": "^3.2",
     "league/flysystem": "^1.0.51",
+    "league/route": "^4.3",
     "lulco/phoenix": "^1.1",
     "mibe/feedwriter": "^1.1",
     "monolog/monolog": "^2.0",
+    "narrowspark/http-emitter": "^1.0",
     "old-xoops-libraries/php-downloader": "1.*",
     "php-console/php-console": "^3.1",
     "phpexperts/laravel-env-polyfill": "^1.0",
@@ -350,8 +353,41 @@
         "tags": [
           "editor.source"
         ]
+      },
+      "router": {
+        "class": "\\League\\Route\\Router",
+        "methods": {
+          "setStrategy": "\\League\\Route\\Strategy\\ApplicationStrategy"
+        }
+      },
+      "container": {
+        "class": "\\icms"
+      },
+      "\\League\\Route\\Strategy\\ApplicationStrategy": {
+        "methods": {
+          "setContainer": "container"
+        }
+      },
+      "\\Http\\Factory\\Guzzle\\ResponseFactory": {},
+      "\\League\\Route\\Strategy\\JsonStrategy": {
+        "arguments": [
+          "\\Http\\Factory\\Guzzle\\ResponseFactory"
+        ]
+      },
+      "sapi-emitter": {
+        "class": "\\Narrowspark\\HttpEmitter\\SapiEmitter"
       }
-    }
+    },
+    "routes": [
+      {
+        "path": "/",
+        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex"
+      },
+      {
+        "path": "/error.php",
+        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getError"
+      }
+    ]
   },
   "config": {
     "optimize-autoloader": true,
