@@ -36,6 +36,8 @@
 
 namespace ImpressCMS\Core\View;
 use icms;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 
 /**
  * icms_view_PageBuilder main class
@@ -145,9 +147,9 @@ class PageBuilder {
 		$url = substr(str_replace(ICMS_URL, '', $fullurl), 1);
 
 		$icms_page_handler = icms::handler('icms_data_page');
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_url', $fullurl));
+		$criteria = new CriteriaCompo(new CriteriaItem('page_url', $fullurl));
 		if (!empty($url)) {
-			$criteria->add(new icms_db_criteria_Item('page_url', $url), 'OR');
+			$criteria->add(new CriteriaItem('page_url', $url), 'OR');
 		}
 		$pages = $icms_page_handler->getCount($criteria);
 
@@ -179,7 +181,7 @@ class PageBuilder {
 		if ($isStart) {
 			self::$modid = array('module' => 0, 'page' => 1, 'isStart' => $isStart);
 		} else {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_status', 1));
+			$criteria = new CriteriaCompo(new CriteriaItem('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$pid = 0;
 			foreach ($pages as $page) {

@@ -3,7 +3,6 @@
 
 namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 
-use ImpressCMS\Core\ComposerDefinitions\ComposerDefinitionInterface;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use League\Container\Container;
