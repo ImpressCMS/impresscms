@@ -6,6 +6,7 @@ namespace ImpressCMS\Core\ComposerDefinitions;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use League\Container\Container;
+use League\Route\RouteGroup;
 use League\Route\Strategy\ApplicationStrategy;
 use League\Route\Strategy\JsonStrategy;
 
@@ -65,16 +66,34 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		if (substr($prefixOfRoute, -1) === '/') {
 			$prefixOfRoute = substr($prefixOfRoute, 0, -1);
 		}
+		$variantsByGroup = [];
 		foreach ($routes as $definition) {
+			$group = $definition['group'] ?? '';
 			foreach ($this->generateDefinitionVariants($definition) as $parsedDefinition) {
+				if (!isset($variantsByGroup[$group])) {
+					$variantsByGroup[$group] = [];
+				}
+				$variantsByGroup[$group][$parsedDefinition['path'] . ':' . $parsedDefinition['method']] = $parsedDefinition;
+			}
+		}
+		krsort($variantsByGroup);
+		foreach($variantsByGroup as $group => $parsedDefinitions) {
+			if ($group !== '') {
+				$ret[] = '$router->group(' . var_export($group, true) . ', function(\\'.RouteGroup::class.' $group) {';
+				$linePrefix = '    ';
+			} else {
+				$linePrefix = '';
+			}
+			krsort($parsedDefinitions);
+			foreach($parsedDefinitions as $parsedDefinition) {
 				$hasPort = isset($parsedDefinition['port']);
 				$hasHost = isset($parsedDefinition['host']);
 				$hasScheme = isset($parsedDefinition['scheme']);
 				$hasStrategy = ($parsedDefinition['strategy'] !== ApplicationStrategy::class);
 				$hasMiddlewares = isset($parsedDefinition['middlewares']);
 				$hasExtraConfig = $hasHost || $hasPort || $hasScheme || $hasStrategy || $hasMiddlewares;
-				$ret[] = '$router';
-				$ret[] = sprintf(
+				$ret[] = ($group !== '') ? $linePrefix . '$group' : '$router';
+				$ret[] = $linePrefix . sprintf(
 					'    ->map(%s, %s, %s)%s',
 					var_export($parsedDefinition['method'], true),
 					var_export($prefixOfRoute . $parsedDefinition['path'], true),
@@ -83,9 +102,9 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				);
 				if ($hasStrategy) {
 					$hasExtraConfig = $hasHost || $hasPort || $hasScheme || $hasMiddlewares;
-					$ret[] = '    ->setStrategy(';
-					$ret[] = sprintf('        $container->get(%s)', var_export($parsedDefinition['strategy'], true));
-					$ret[] = '    )' . ($hasExtraConfig ? '' : ';');
+					$ret[] = $linePrefix .'    ->setStrategy(';
+					$ret[] = $linePrefix .sprintf('        $container->get(%s)', var_export($parsedDefinition['strategy'], true));
+					$ret[] = $linePrefix .'    )' . ($hasExtraConfig ? '' : ';');
 				}
 				if ($hasMiddlewares) {
 					$hasExtraConfig = $hasHost || $hasPort || $hasScheme;
@@ -93,32 +112,35 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 					for ($i = 0; $i < $mCount; $i++) {
 						$middleware = $parsedDefinition['middlewares'][$i];
 						$isLast = $i === ($mCount - 1);
-						$ret[] = '    ->middleware(';
-						$ret[] = sprintf('        $container->get(%s)', var_export($middleware, true));
-						$ret[] = '    )' . (($hasExtraConfig || !$isLast) ? '' : ';');
+						$ret[] = $linePrefix .'    ->middleware(';
+						$ret[] = $linePrefix .sprintf('        $container->get(%s)', var_export($middleware, true));
+						$ret[] = $linePrefix .'    )' . (($hasExtraConfig || !$isLast) ? '' : ';');
 					}
 				}
 				if ($hasScheme) {
 					$hasExtraConfig = $hasPort || $hasHost;
-					$ret[] = sprintf(
+					$ret[] = $linePrefix .sprintf(
 						'    ->setScheme(%s)%s',
 						var_export($parsedDefinition['scheme'], true),
 						$hasExtraConfig ? '' : ';'
 					);
 				}
 				if ($hasHost) {
-					$ret[] = sprintf(
+					$ret[] = $linePrefix .sprintf(
 						'    ->setHost(%s)%s',
 						var_export($parsedDefinition['host'], true),
 						$hasPort ? '' : ';'
 					);
 				}
 				if ($hasPort) {
-					$ret[] = sprintf(
+					$ret[] = $linePrefix .sprintf(
 						'    ->setPort(%s);',
 						var_export($parsedDefinition['port'], true)
 					);
 				}
+			}
+			if ($group !== '') {
+				$ret[] = '});';
 			}
 		}
 
@@ -188,6 +210,8 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				\FilesystemIterator::SKIP_DOTS
 			)
 		);
+		$group =  str_replace(ICMS_ROOT_PATH, '', $path);
+		$groupLen = mb_strlen($group);
 
 		$handler = LegacyController::class . '::proxy';
 		/**
@@ -195,11 +219,12 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		 */
 		foreach ($directoryIterator as $fileInfo) {
 			$path = str_replace(ICMS_ROOT_PATH, '', $fileInfo->getPath()) . '/' . $fileInfo->getFilename();
+			$path = mb_substr($path,$groupLen);
 			if ($fileInfo->isDir()) {
 				continue;
 			}
 			if (in_array(strtolower($fileInfo->getExtension()), ['php', 'html', 'htm', 'txt'])) {
-				foreach (['language', 'migrations', 'templates', 'class', 'blocks'] as $badPath) {
+				foreach (['language', 'migrations', 'templates', 'class', 'blocks', 'index.html'] as $badPath) {
 					if (strpos($path, '/' . $badPath . '/') !== false) {
 						continue 2;
 					}
@@ -209,7 +234,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				continue;
 			}
 			$method = ($fileInfo->getExtension() === 'php') ? ['GET', 'POST'] : 'GET';
-			$ret[] = compact('method', 'handler', 'path');
+			$ret[] = compact('method', 'handler', 'path', 'group');
 		}
 		return $ret;
 	}
@@ -266,7 +291,6 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$ret[$i]['middlewares'] = (array)$v;
 			}
 		}
-
 		return $ret;
 	}
 
