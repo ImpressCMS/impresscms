@@ -20,7 +20,7 @@ class icms_core_Message {
 
 	/**
 	 * Replaces xoops_warning() and icms_warning_msg()
-	 * Given either an array of messages or a string, and an optional title, create a formatted warning 
+	 * Given either an array of messages or a string, and an optional title, create a formatted warning
 	 * message
 	 *
 	 * @author		XOOPS - include/functions.php :: xoops_warning()
@@ -55,7 +55,7 @@ class icms_core_Message {
 
 	/**
 	 * Replaces icms_error_msg()
-	 * 
+	 *
 	 * @author	XOOPS - include/functions.php :: xoops_error()
 	 * @param	string $msg
 	 * @param	string $title
@@ -120,29 +120,31 @@ class icms_core_Message {
 	 * @return	void
 	 */
 	static public function confirm($hiddens, $action, $msg, $submit = '', $addtoken = true) {
-	$submit = ($submit != '')? trim($submit):_SUBMIT;
-	echo '<div class="confirmMsg alert alert-success" role="alert">
-			<h4>' . $msg . '</h4>
-			<form method="post" action="' . $action . '">';
-	foreach ($hiddens as $name => $value) {
-		if (is_array($value)) {
-			foreach ($value as $caption => $newvalue) {
-				echo '<input type="radio" name="' . $name . '" value="'
-					. htmlspecialchars($newvalue) . '" /> ' . $caption;
+		$submit = $submit ? trim($submit) : _SUBMIT;
+		$form = new \icms_form_Theme('<div style="text-align: center">' . $msg . '</div>', '', $action, 'post', $addtoken);
+		$form->setExtra('class="confirmMsg alert" role="alert"');
+		foreach ($hiddens as $name => $value) {
+			if (is_array($value)) {
+				foreach ($value as $caption => $newvalue) {
+					$form->addElement(
+						new \icms_form_elements_Radio($caption, $name, $newvalue)
+					);
+				}
+			} else {
+				$form->addElement(
+					new \icms_form_elements_Hidden($name, $value)
+				);
 			}
-			echo '<br />';
-		} else {
-			echo '<input type="hidden" name="' . $name . '" value="'
-				. htmlspecialchars($value) . '" />';
 		}
-	}
-	if ($addtoken !== false) {
-		echo icms::$security->getTokenHTML();
-	}
-	echo '<input class="btn btn-primary" type="submit" name="confirm_submit" value="' . $submit
-		. '" /> <input class="btn btn-danger" type="button" name="confirm_back" value="' . _CANCEL
-		.'" onclick="javascript:history.go(-1);" />
-	</form></div>';
-
+		$buttonsTray = new \icms_form_elements_Tray(null);
+		$buttonsTray->setExtra('style="text-align: center;"');
+		$buttonsTray->addElement(
+			new \icms_form_elements_Button('', 'confirm_submit', $submit, 'submit')
+		);
+		$backButton = new \icms_form_elements_Button('', 'confirm_back', _CANCEL, 'button');
+		$backButton->setExtra('onclick="history.go(-1); return false;"');
+		$buttonsTray->addElement($backButton);
+		$form->addElement($buttonsTray);
+		echo $form->render();
 	}
 }

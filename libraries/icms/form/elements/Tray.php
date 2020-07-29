@@ -171,6 +171,9 @@ class icms_form_elements_Tray extends icms_form_Element {
 	public function render() {
 		$count = 0;
 		$ret = "";
+		if ($this->getExtra()) {
+			$ret .= '<div ' . $this->getExtra() . '>';
+		}
 		foreach ($this->getElements() as $ele) {
 			if ($count > 0) {
 				$ret .= $this->getDelimeter();
@@ -182,6 +185,9 @@ class icms_form_elements_Tray extends icms_form_Element {
 			if (!$ele->isHidden()) {
 				$count++;
 			}
+		}
+		if ($this->getExtra()) {
+			$ret .= '</div>';
 		}
 		return $ret;
 	}

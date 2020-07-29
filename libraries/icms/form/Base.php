@@ -152,10 +152,10 @@ abstract class icms_form_Base {
 	/**
 	 * Add an element to the form
 	 *
-	 * @param	icms_form_Element  &$formElement   Form element
+	 * @param	icms_form_Element  $formElement   Form element
 	 * @param	bool    $required       is this a "required" element?
 	 */
-	public function addElement(&$formElement, $required = false) {
+	public function addElement($formElement, $required = false) {
 		if (is_string($formElement)) {
 			$this->_elements[] = $formElement;
 		} elseif (is_subclass_of($formElement, 'icms_form_Element')) {
