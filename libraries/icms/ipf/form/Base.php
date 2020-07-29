@@ -81,12 +81,12 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	/**
 	 * Add an element to the form
 	 *
-	 * @param	\icms_form_Element  &$formElement   reference
+	 * @param	\icms_form_Element  $formElement   reference
 	 * @param	string|false  $key            encrypted key string for the form
 	 * @param	string|false  $var            some form variables?
 	 * @param	bool|string    $required       is this a "required" element?
 	 */
-	public function addElement(&$formElement, $key = false, $var = false, $required = 'notset') {
+	public function addElement($formElement, $key = false, $var = false, $required = 'notset') {
 		if ($key) {
 			if ($this->targetObject->getVarInfo($key, 'readonly')) {
 				$formElement->setExtra('disabled="disabled"');
