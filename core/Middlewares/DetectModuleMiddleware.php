@@ -19,14 +19,14 @@ use Psr\Http\Server\RequestHandlerInterface;
 class DetectModuleMiddleware implements MiddlewareInterface
 {
 
-    /**
-     * @inheritDoc
-     */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
-    	$stack = $handler->getMiddlewareStack();
+	/**
+	 * @inheritDoc
+	 */
+	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+	{
+		$stack = $handler->getMiddlewareStack();
 		$moduleName = null;
-    	if (!empty($stack)) {
+		if (!empty($stack)) {
 			$route = end($stack);
 			if ($route instanceof Route) {
 				list($controller, $method) = $route->getCallable();
@@ -41,12 +41,12 @@ class DetectModuleMiddleware implements MiddlewareInterface
 			}
 		}
 
-    	$module = null;
-    	if ($moduleName !== null) {
+		$module = null;
+		if ($moduleName !== null) {
 			/**
 			 * @var icms_module_Object $module
 			 */
-    		$module = icms::handler('icms_module')->getByDirname($moduleName, true);
+			$module = icms::handler('icms_module')->getByDirname($moduleName, true);
 			$module->launch();
 		}
 
@@ -59,8 +59,8 @@ class DetectModuleMiddleware implements MiddlewareInterface
 		icms::$module = &$module;
 		$icmsModule = &$module;
 
-    	$request->withAttribute('module', $module);
+		$request->withAttribute('module', $module);
 
-        return $handler->handle($request);
-    }
+		return $handler->handle($request);
+	}
 }
