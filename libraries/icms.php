@@ -319,7 +319,7 @@ final class icms extends Container {
 
 		if (!(defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE)) {
 			$this->loadComposerDefinition(
-				new \ImpressCMS\Core\ComposerDefinitions\RoutesComposerDefinition()
+				new \ImpressCMS\Core\ComposerDefinitions\RoutesComposerDefinition($this)
 			);
 		}
 

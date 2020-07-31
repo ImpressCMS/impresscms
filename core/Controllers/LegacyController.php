@@ -3,6 +3,10 @@
 
 namespace ImpressCMS\Core\Controllers;
 
+use icms;
+use icms_module_Handler as ModuleHandler;
+use icms_module_Object;
+use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use function GuzzleHttp\Psr7\mimetype_from_filename;
@@ -21,6 +25,7 @@ class LegacyController
 	 * @param ServerRequestInterface $request Request
 	 *
 	 * @return ResponseInterface
+	 * @throws NotFoundException
 	 */
 	public function proxy(ServerRequestInterface $request): ResponseInterface
 	{
@@ -31,6 +36,26 @@ class LegacyController
 		}
 		$path = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $filePath;
 		if (pathinfo($path, PATHINFO_EXTENSION) === 'php') {
+			$inAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
+			$module = $request->getAttribute('module');
+
+			if (!ModuleHandler::checkModuleAccess($module, $inAdmin)) {
+				return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
+			}
+
+			$module_handler = icms::handler('icms_module');
+			try {
+				$modules = $module_handler->getObjects();
+				/**
+				 * @var icms_module_Object $module
+				 */
+				foreach ($modules as $module) {
+					$module->registerClassPath(TRUE);
+				}
+			} catch (\Exception $exception) {
+
+			}
+
 			global $icmsTpl, $xoopsTpl, $xoopsOption, $icmsAdminTpl, $icms_admin_handler;
 			ob_start();
 			require $path;
