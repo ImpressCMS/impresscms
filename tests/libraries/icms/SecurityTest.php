@@ -1,6 +1,7 @@
 <?php
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
+use Aura\Session\SessionFactory;
 use ImpressCMS\Core\Providers\SecurityServiceProvider;
 use League\Container\Container;
 
@@ -46,9 +47,20 @@ class SecurityTest extends \PHPUnit_Framework_TestCase {
     public function testToken() {
 		$container = new Container();
 		$container->addServiceProvider(SecurityServiceProvider::class);
+		/**
+		 * @var \icms_core_Security $instance
+		 */
 		$instance = $container->get('security');
         $new_token = $instance->createToken();
+
         $this->assertInternalType('string', $new_token, 'Generated token is not type of string');
         $this->assertTrue($instance->validateToken($new_token), 'Can\'t validate correct token');
     }
+
+	protected function setUp()
+	{
+		\icms::$session = (new SessionFactory())->newInstance([]);
+
+		parent::setUp();
+	}
 }
