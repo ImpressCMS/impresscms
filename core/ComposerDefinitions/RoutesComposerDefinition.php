@@ -3,6 +3,7 @@
 
 namespace ImpressCMS\Core\ComposerDefinitions;
 
+use Http\Factory\Guzzle\ResponseFactory;
 use icms;
 use icms_config_Handler;
 use ImpressCMS\Core\Controllers\LegacyController;
@@ -10,6 +11,8 @@ use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use League\Container\Container;
 use League\Route\Strategy\ApplicationStrategy;
 use League\Route\Strategy\JsonStrategy;
+use Middlewares\ClientIp;
+use Middlewares\Firewall;
 
 /**
  * let register routes in composer.json
@@ -66,6 +69,19 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\GzipEncoder\');';
 			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\DeflateEncoder\');';
 		}
+
+		if ($mainConfig['enable_badips']) {
+			$ret[] = '$router->middleware(new \\'.ClientIp::class.'());';
+			$ret[] = '$router->middleware(';
+			$ret[] = '    (new \\'.Firewall::class.'(';
+			$ret[] = '        null,';
+			$ret[] = '        $container->get('.var_export('\\'.ResponseFactory::class, true).')';
+			$ret[] = '    ))->blacklist(';
+			$ret[] = '        ' . json_encode($mainConfig['bad_ips']);
+			$ret[] = '    )->ipAttribute(\'client-ip\')';
+			$ret[] = ');';
+		}
+
 	}
 
 	/**
