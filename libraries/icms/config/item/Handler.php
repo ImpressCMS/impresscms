@@ -111,4 +111,17 @@ class icms_config_item_Handler extends icms_ipf_Handler {
 	public function __construct(&$db) {
 			parent::__construct($db, 'config_item', 'conf_id', 'conf_name', 'conf_value', 'icms', 'config', 'conf_id');
 		}
+
+	/**
+	 * This event is executed when saving
+	 *
+	 * @param icms_config_item_Object $obj        Saving object
+	 *
+	 * @return  boolean
+	 */
+	protected function afterSave(&$obj) {
+		icms::getInstance()->get('cache')->clear();
+
+		return true;
+	}
 }
