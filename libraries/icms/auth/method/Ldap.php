@@ -145,7 +145,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 			/**
 			 * @var \Aura\Session\Session $session
 			 */
-			$session = icms::getInstance()->get('session');
+			$session = &icms::$session;
 			if ($authenticated) {
 				//icms::$session->securityLevel = 3;
 				//icms::$session->check_ip_blocks = 2;

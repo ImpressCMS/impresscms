@@ -424,7 +424,7 @@ class icms_member_user_Object extends icms_ipf_Object {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$userSegment = $session->getSegment(icms_member_user_Object::class);
 		foreach ($data as $key => $value) {
 			$userSegment->set($key, $value);
@@ -439,7 +439,7 @@ class icms_member_user_Object extends icms_ipf_Object {
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::getInstance()->get('session');
+			$session = \icms::$session;
 			$userSegment = $session->getSegment(icms_member_user_Object::class);
 			$userSegment->set($name, parent::getVar($name));
 		}
@@ -480,7 +480,7 @@ class icms_member_user_Object extends icms_ipf_Object {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$userSegment = $session->getSegment(icms_member_user_Object::class);
 
 		if ($userid = $userSegment->get('userid')) {

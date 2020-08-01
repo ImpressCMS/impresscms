@@ -7,7 +7,7 @@ function smarty_function_xoInboxCount( $params, &$smarty ) {
 	/**
 	 * @var \Aura\Session\Session $session
 	 */
-	$session = \icms::getInstance()->get('session');
+	$session = \icms::$session;
 	$inboxCounterSegment = $session->getSegment('inbox');
 	if ( (int)$inboxCounterSegment->get('expire', 0) > $time) {
 		$count = (int)$inboxCounterSegment->get('count', 0);

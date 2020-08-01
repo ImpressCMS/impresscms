@@ -35,7 +35,7 @@ class icms_form_elements_captcha_ImageHandler {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$this->captchaSection = $session->getSegment(icms_form_elements_captcha_Object::class);
 
 		if (!$this->captchaSection->get('name')) {

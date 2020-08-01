@@ -155,7 +155,7 @@ class icms_form_elements_captcha_Object {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$captchaSection = $session->getSegment(icms_form_elements_captcha_Object::class);
 
 		$sessionName = $captchaSection->get('name');
@@ -211,7 +211,7 @@ class icms_form_elements_captcha_Object {
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::getInstance()->get('session');
+			$session = \icms::$session;
 			$captchaSection = $session->getSegment(icms_form_elements_captcha_Object::class);
 
 			$captchaSection->set('name', null);
@@ -256,7 +256,7 @@ class icms_form_elements_captcha_Object {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$captchaSection = $session->getSegment(icms_form_elements_captcha_Object::class);
 
 		$captchaSection->set('name', $this->config["name"]);

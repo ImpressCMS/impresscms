@@ -90,11 +90,7 @@ class icms_form_elements_captcha_Text {
 	 */
 	public function setCode()
 	{
-		/**
-		 * @var Aura\Session\Session $session
-		 */
-		$session = \icms::getInstance()->get('session');
-		$session->getSegment(icms_form_elements_captcha_Object::class)->set('session_code', strval($this->code));
+		\icms::$session->getSegment(icms_form_elements_captcha_Object::class)->set('session_code', strval($this->code));
 	}
 
 }

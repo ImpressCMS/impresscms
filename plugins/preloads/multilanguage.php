@@ -38,7 +38,7 @@ class icms_MultilanguageEventHandler {
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::getInstance()->get('session');
+			$session = \icms::$session;
 			$userSegment = $session->getSegment(icms_member_user_Object::class);
 
 			$easiestml_langpaths = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/");

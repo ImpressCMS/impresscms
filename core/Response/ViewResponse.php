@@ -65,8 +65,7 @@ class ViewResponse implements ResponseInterface
 		global $icmsTheme;
 		$GLOBALS['icmsTheme'] = $icmsTheme = &$this->theme;
 
-		$redirect_message = \icms::getInstance()
-			->get('session')
+		$redirect_message = \icms::$session
 			->getSegment(\icms::class)
 			->getFlash('redirect_message');
 		if ($redirect_message) {

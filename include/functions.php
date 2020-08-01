@@ -210,7 +210,7 @@ if (!function_exists('redirect_header')) {
 		$theme = $icmsConfig['theme_set'];
 		// if the user selected a theme in the theme block, let's use this theme
 
-		$session = \icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$userSegment = $session->getSegment(icms_member_user_Object::class);
 		$userTheme = $userSegment->get('theme');
 		if ($userTheme && in_array($userTheme, $icmsConfig['theme_set_allowed'])) {
@@ -258,8 +258,7 @@ if (!function_exists('redirect_header')) {
 			/**
 			 * @var \Aura\Session\Session $session
 			 */
-			$session = \icms::getInstance()
-				->get('session');
+			$session = \icms::$session;
 
 			$session
 				->getSegment(\icms::class)

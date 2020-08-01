@@ -7,9 +7,13 @@ use icms;
 use icms_config_Handler;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
+use ImpressCMS\Core\Middlewares\ChangeThemeMiddleware;
+use ImpressCMS\Core\Middlewares\SetSessionCookieConfigMiddleware;
+use ImpressCMS\Core\Middlewares\UserMiddleware;
 use League\Container\Container;
 use League\Route\Strategy\ApplicationStrategy;
 use League\Route\Strategy\JsonStrategy;
+use Middlewares\AuraSession;
 
 /**
  * let register routes in composer.json
@@ -61,6 +65,31 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		 */
 		$configHandler = icms::handler('icms_config');
 		$mainConfig = $configHandler->getConfigsByCat(icms_config_Handler::CATEGORY_MAIN);
+
+		$sessionName = ($mainConfig['use_mysession'] && $mainConfig['session_name']) ? $mainConfig['session_name'] : 'ICMSSESSION';
+		$ret[] = '$router->middleware(';
+		$ret[] = '    (new \\' . AuraSession::class . '())->name(' . var_export($sessionName, true) . ')';
+		$ret[] = ');';
+
+		$ret[] = '$router->middleware(';
+		$ret[] = sprintf(
+			"    new \\%s(%d, %s, %s)",
+			SetSessionCookieConfigMiddleware::class,
+			60 * $mainConfig['session_expire'],
+			var_export(parse_url(ICMS_URL, PHP_URL_HOST), true),
+			json_encode(strpos(ICMS_URL, 'https') === 0)
+		);
+		$ret[] = ');';
+
+		$ret[] = '$router->middleware(';
+		$ret[] = sprintf(
+			"    new \\%s(%s)",
+			ChangeThemeMiddleware::class,
+			json_encode($mainConfig['theme_set_allowed'])
+		);
+		$ret[] = ');';
+
+		$ret[] = '$router->middleware(new \\' . UserMiddleware::class .'());';
 
 		if ($mainConfig['gzip_compression']) {
 			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\GzipEncoder\');';

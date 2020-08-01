@@ -147,7 +147,7 @@ if (false != $user) {
 	/**
 	 * @var Aura\Session\Session $session
 	 */
-	$session = \icms::getInstance()->get('session');
+	$session = \icms::$session;
 	$session->resume();
 	$session->regenerateId();
 	$session->clear();

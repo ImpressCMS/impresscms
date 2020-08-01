@@ -80,7 +80,7 @@ class icms_core_Security {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = \icms::$session;
 
 		$tokenData = $session->getCsrfToken();
 		if (!$tokenData->isValid($token)) {
@@ -138,12 +138,7 @@ class icms_core_Security {
 			trigger_error('$name parameter for createToken is deprecated. Right now does nothing', E_USER_DEPRECATED);
 		}
 
-		/**
-		 * @var Aura\Session\Session $session
-		 */
-		$session = \icms::getInstance()->get('session');
-
-		return $session->getCsrfToken()->getValue();
+		return \icms::$session->getCsrfToken()->getValue();
 	}
 
 	/**

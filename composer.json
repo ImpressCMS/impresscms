@@ -63,6 +63,7 @@
     "league/route": "^4.3",
     "lulco/phoenix": "^1.1",
     "mibe/feedwriter": "^1.1",
+    "middlewares/aura-session": "^1.1",
     "middlewares/encoder": "^2.1",
     "monolog/monolog": "^2.0",
     "narrowspark/http-emitter": "^1.0",
@@ -115,7 +116,6 @@
       "\\ImpressCMS\\Core\\Providers\\DatabaseServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\SecurityServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ConfigServiceProvider",
-      "\\ImpressCMS\\Core\\Providers\\SessionServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ModuleServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider"
     ],
@@ -392,8 +392,14 @@
     },
     "routes": [
       {
+        "path": "/index.php",
+        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex",
+        "method": ["GET", "POST"]
+      },
+      {
         "path": "/",
-        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex"
+        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex",
+        "method": ["GET", "POST"]
       },
       {
         "path": "/error.php",

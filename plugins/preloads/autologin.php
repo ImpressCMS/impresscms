@@ -10,7 +10,7 @@ class icms_AutologinEventHandler {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$userSegment = $session->getSegment(icms_member_user_Object::class);
 
 		// Autologin if correct cookie present.
@@ -23,7 +23,7 @@ class icms_AutologinEventHandler {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$autologinSegment = $session->getSegment('autologin');
 
 		if (!empty($_POST)) {
@@ -71,7 +71,7 @@ class icms_AutologinEventHandler {
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::getInstance()->get('session');
+			$session = \icms::$session;
 			$userSegment = $session->getSegment(icms_member_user_Object::class);
 
 			$userSegment->set('userid', $user->getVar('uid'));

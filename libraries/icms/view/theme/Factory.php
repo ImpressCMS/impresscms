@@ -137,7 +137,7 @@ class icms_view_theme_Factory {
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::getInstance()->get('session');
+			$session = \icms::$session;
 			$xoBundleSection = $session->getSegment($this->xoBundleIdentifier);
 
 			if ((!empty($_REQUEST['theme_select'])) && $this->isThemeAllowed($_REQUEST['theme_select'])) {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1073256ccc05c4002fa3b2a3f1f18f24",
+    "content-hash": "1ebd198cc77e539ef1ec38f143a78cfe",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -1542,6 +1542,55 @@
                 "rss2"
             ],
             "time": "2016-11-19T20:47:44+00:00"
+        },
+        {
+            "name": "middlewares/aura-session",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/aura-session.git",
+                "reference": "ed1720a16c0767866d67607dea7cb7018d6d5c2d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/aura-session/zipball/ed1720a16c0767866d67607dea7cb7018d6d5c2d",
+                "reference": "ed1720a16c0767866d67607dea7cb7018d6d5c2d",
+                "shasum": ""
+            },
+            "require": {
+                "aura/session": "^2.1",
+                "php": "^7.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "middlewares/utils": "^2.1",
+                "phpunit/phpunit": "^6.0|^7.0",
+                "squizlabs/php_codesniffer": "^3.0",
+                "zendframework/zend-diactoros": "^1.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to manage sessions using Aura.Session",
+            "homepage": "https://github.com/middlewares/aura-session",
+            "keywords": [
+                "aura.session",
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "server",
+                "session"
+            ],
+            "time": "2018-08-04T10:41:45+00:00"
         },
         {
             "name": "middlewares/encoder",
