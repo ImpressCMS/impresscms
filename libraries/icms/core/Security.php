@@ -197,26 +197,6 @@ class icms_core_Security {
 	}
 
 	/**
-	 * Check if visitor's IP address is banned
-	 * @todo : Should be changed to return bool and let the action be up to the calling script
-	 *
-	 * @return void
-	 */
-	public function checkBadips() {
-		global $icmsConfig;
-		if ($icmsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
-			foreach ($icmsConfig['bad_ips'] as $bi) {
-				if (!empty($bi) && preg_match("/" . $bi . "/", $_SERVER['REMOTE_ADDR'])) {
-					exit();
-				}
-			}
-		}
-		unset($bi);
-		unset($bad_ips);
-		unset($icmsConfig['badips']);
-	}
-
-	/**
 	 * Get the HTML code for a token
 	 *
 	 * @param string $name Token field name
