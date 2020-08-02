@@ -58,7 +58,7 @@ class ChangeThemeMiddleware implements \Psr\Http\Server\MiddlewareInterface
 
         return $handler->handle(
 			$request->withAttribute(
-				'theme_set',
+				'theme-set',
 				$icmsConfig['theme_set']
 			)
 		);

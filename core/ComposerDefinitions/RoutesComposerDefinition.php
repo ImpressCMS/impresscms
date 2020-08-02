@@ -9,6 +9,7 @@ use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use ImpressCMS\Core\Middlewares\ChangeThemeMiddleware;
 use ImpressCMS\Core\Middlewares\SetSessionCookieConfigMiddleware;
+use ImpressCMS\Core\Middlewares\SiteClosedMiddleware;
 use ImpressCMS\Core\Middlewares\UserMiddleware;
 use League\Container\Container;
 use League\Route\Strategy\ApplicationStrategy;
@@ -90,6 +91,17 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		$ret[] = ');';
 
 		$ret[] = '$router->middleware(new \\' . UserMiddleware::class .'());';
+
+		if ($mainConfig['closesite']) {
+			$ret[] = '$router->middleware(';
+			$ret[] = '    new \\' . SiteClosedMiddleware::class .'(';
+			$ret[] = '        ' . json_encode($mainConfig['closesite_okgrp']) . ',';
+			$ret[] = '        ' . json_encode($mainConfig['closesite_text']) . ',';
+			$ret[] = '        ' . json_encode($mainConfig['sitename']) . ',';
+			$ret[] = '        ' . json_encode($mainConfig['slogan']);
+			$ret[] = '    )';
+			$ret[] = ');';
+		}
 
 		if ($mainConfig['gzip_compression']) {
 			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\GzipEncoder\');';
