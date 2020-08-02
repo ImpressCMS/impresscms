@@ -65,7 +65,7 @@
     "mibe/feedwriter": "^1.1",
     "middlewares/client-ip": "^2.0",
     "middlewares/encoder": "^2.1",
-    "middlewares/firewall": "^2.0",
+    "middlewares/firewall": "^2.0.1",
     "monolog/monolog": "^2.0",
     "narrowspark/http-emitter": "^1.0",
     "old-xoops-libraries/php-downloader": "1.*",
