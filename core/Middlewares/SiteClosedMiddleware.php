@@ -63,7 +63,7 @@ class SiteClosedMiddleware implements MiddlewareInterface
 			return $handler->handle($request);
 		}
 
-		return $this->makeSiteClosedResponse(
+		return $this->makeSiteClosedViewResponse(
 			$request->getAttribute('theme-set'),
 			$request->getAttribute('module', null),
 			$request->getUri()->getPath()
@@ -79,11 +79,11 @@ class SiteClosedMiddleware implements MiddlewareInterface
 	 *
 	 * @return ViewResponse
 	 */
-	protected function makeSiteClosedResponse(string $themeSet, ?\icms_module_Object $module, string $requestUri): ViewResponse
+	protected function makeSiteClosedViewResponse(string $themeSet, ?\icms_module_Object $module, string $requestUri): ViewResponse
 	{
 		$response = new ViewResponse([
-			'template_canvas' => 'db:system_siteclosed.html'
-		]);
+			'template_canvas' => 'db:system_siteclosed.html',
+		], 503);
 		$response->assign('icms_theme', $themeSet);
 		$response->assign('icms_imageurl', ICMS_THEME_URL . '/' . $themeSet. '/');
 		$response->assign('icms_themecss', xoops_getcss($themeSet) );
