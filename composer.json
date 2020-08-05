@@ -347,6 +347,11 @@
       "stopwatch": {
         "class": "\\Tuupola\\Middleware\\ServerTiming\\Stopwatch"
       },
+      "\\Tuupola\\Middleware\\ServerTimingMiddleware": {
+        "arguments": [
+          "stopwatch"
+        ]
+      },
       "codemirror": {
         "class": "\\ImpressCMS\\Plugins\\SourceEditors\\CodeMirror\\Editor",
         "tags": [

@@ -79,6 +79,10 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 
 		$this->addMiddlewaresDependingOnConfig($ret);
 
+		$ret[] = 'if (env(\'LOGGING_ENABLED\', false)) {';
+		$ret[] = '    $router->lazyMiddleware(\'\\\\Tuupola\\\\Middleware\\\\ServerTimingMiddleware\');';
+		$ret[] = '}';
+
 		$routes = array_merge(
 			$this->getOldStyleRoutes(),
 			$data['routes'] ?? []
