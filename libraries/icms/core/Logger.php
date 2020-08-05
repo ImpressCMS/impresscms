@@ -7,20 +7,13 @@ use Monolog\Handler\PHPConsoleHandler;
 use Monolog\Handler\ProcessableHandlerInterface;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use Tuupola\Middleware\ServerTiming\Stopwatch;
 
 /**
  * Proxy logger class to add some compatibility stuff with older ICMS versions
  */
 class icms_core_Logger extends Logger
 {
-
-	/**
-	 * Started timers list
-	 *
-	 * @var array
-	 */
-	public $timers = [];
-
 	/**
 	 * Get a instance for default logger
 	 *
@@ -135,13 +128,24 @@ class icms_core_Logger extends Logger
 	}
 
 	/**
+	 * Gets StopWatch instance
+	 *
+	 * @return Stopwatch
+	 */
+	protected function getStopWatch(): Stopwatch {
+		return icms::getInstance()->get('stopwatch');
+	}
+
+	/**
 	 * Start a timer
 	 *
 	 * @param string $name name of the timers
 	 */
 	public function startTime($name = 'ICMS')
 	{
-		$this->timers[$name] = microtime(true);
+		if (env('LOGGING_ENABLED', false)) {
+			$this->getStopWatch()->start($name);
+		}
 	}
 
 	/**
@@ -151,13 +155,9 @@ class icms_core_Logger extends Logger
 	 */
 	public function stopTime($name = 'ICMS')
 	{
-		if (isset($this->timers[$name])) {
-			return;
+		if (env('LOGGING_ENABLED', false)) {
+			$this->getStopWatch()->stop($name);
 		}
-		$this->info(
-			sprintf('%s took %d', $name, microtime(true) - $this->timers[$name])
-		);
-		unset($this->timers[$name]);
 	}
 
 	/**
