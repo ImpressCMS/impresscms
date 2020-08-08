@@ -4,6 +4,7 @@
 namespace ImpressCMS\Core\Commands;
 
 use ImpressCMS\Core\Models\ModuleHandler;
+use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -49,5 +50,7 @@ class ModuleUpdateCommand extends Command
 		} else {
 			$output->writeln('There were some problems updating module');
 		}
+
+		return 0;
 	}
 }

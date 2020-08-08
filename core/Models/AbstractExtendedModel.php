@@ -740,34 +740,33 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	/**
 	 * Returns array with changed vars
 	 *
+	 * @param bool $only_changed Return only changed properties?
+	 *
 	 * @return array
 	 */
-	public function getVarsForSQL($only_changed) {
+	public function getVarsForQuery($only_changed)
+	{
 		$fieldsToStoreInDB = array();
 
 		$db = &$this->handler->db;
 
-		$vars = $only_changed?$this->getChangedVars():array_keys($this->_vars);
+		$vars = $only_changed ? $this->getChangedVars() : array_keys($this->_vars);
 
 		foreach ($vars as $k) {
-			if ($this->handler->keyName == $k && !$this->_vars[$k][self::VARCFG_VALUE]) {
+			if ($this->handler->keyName === $k && !$this->_vars[$k][self::VARCFG_VALUE]) {
 				continue; // Skipping ID
 			}
 			if ($this->_vars[$k]['persistent'] === true || $this->_vars[$k]['persistent'] === null) {
 				switch ($this->_vars[$k][self::VARCFG_TYPE]) {
-					case self::DTYPE_FLOAT:
-						$fieldsToStoreInDB[$k] = (float) $this->_vars[$k][self::VARCFG_VALUE];
-						break;
 					case self::DTYPE_DATETIME:
-						$fieldsToStoreInDB[$k] = 'FROM_UNIXTIME(' . intval($this->_vars[$k][self::VARCFG_VALUE]) . ')';
+						$fieldsToStoreInDB[$k] = date('Y-m-d H:i:s', (int)$this->_vars[$k][self::VARCFG_VALUE]);
 						break;
 					case self::DTYPE_BOOLEAN:
-					case self::DTYPE_INTEGER:
-						$fieldsToStoreInDB[$k] = (int) $this->_vars[$k][self::VARCFG_VALUE];
+						$fieldsToStoreInDB[$k] = (int)$this->_vars[$k][self::VARCFG_VALUE];
 						break;
 					case self::DTYPE_ARRAY:
 						$value = json_encode($this->_vars[$k][self::VARCFG_VALUE]);
-						$fieldsToStoreInDB[$k] = $db->quoteString($value);
+						$fieldsToStoreInDB[$k] = $value;
 						break;
 					case self::DTYPE_LIST:
 						$separator = $this->_vars[$k][self::VARCFG_SEPARATOR];
@@ -778,13 +777,12 @@ abstract class AbstractExtendedModel extends AbstractModel {
 							$value = $this->_vars[$k][self::VARCFG_VALUE];
 						}
 						if (!is_string($value)) {
-							$value = strval($value);
+							$value = (string)$value;
 						}
-						$fieldsToStoreInDB[$k] = $db->quoteString($value);
+						$fieldsToStoreInDB[$k] = $value;
 						break;
 					default:
-						// var_dump(array($k, $this->getVar($k, 'n')));
-						$fieldsToStoreInDB[$k] = $db->quoteString($this->_vars[$k][self::VARCFG_VALUE]);
+						$fieldsToStoreInDB[$k] = $this->_vars[$k][self::VARCFG_VALUE];
 				}
 			}
 		}
@@ -797,7 +795,8 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 * @param string $editor
 	 * @return bool|mixed|string|string[]
 	 */
-	public function getValueFor($key, $editor = true) {
+	public function getValueFor($key, $editor = true)
+	{
 		global $icmsModuleConfig;
 
 		$ret = $this->getVar($key, 'n');
@@ -806,11 +805,11 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		$control = $this->controls[$key] ?? false;
 		$form_editor = $control['form_editor'] ?? 'textarea';
 
-		$html = isset($this->_vars['dohtml'])?$this->getVar('dohtml'):true;
+		$html = isset($this->_vars['dohtml']) ? $this->getVar('dohtml') : true;
 		$smiley = true;
 		$xcode = true;
 		$image = true;
-		$br = isset($this->_vars['dobr'])?$this->getVar('dobr'):true;
+		$br = isset($this->_vars['dobr']) ? $this->getVar('dobr') : true;
 		$formatML = true;
 
 		if ($form_editor == 'default') {

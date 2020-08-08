@@ -285,7 +285,7 @@ class Config extends AbstractFacade
 	{
 		if (is_array($category)) {
 			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int)$module));
-			$criteria->add(new CriteriaItem('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
+			$criteria->add(new CriteriaItem('conf_catid', $category, 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach (array_keys($configs) as $i) {

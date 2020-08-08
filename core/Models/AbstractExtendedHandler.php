@@ -5,14 +5,14 @@
  * This class is responsible for providing data access mechanisms to the data source
  * of derived class objects as well as some basic operations inherant to objects manipulation
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since	1.1
- * @author	marcan <marcan@impresscms.org>
- * @author	This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
- * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @todo	Use language constants for messages
- * @todo	Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
+ * @copyright    The ImpressCMS Project http://www.impresscms.org/
+ * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since    1.1
+ * @author    marcan <marcan@impresscms.org>
+ * @author    This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
+ * @author    Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ * @todo    Use language constants for messages
+ * @todo    Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
 
 namespace ImpressCMS\Core\Models;
@@ -31,9 +31,9 @@ use ImpressCMS\Core\Security\PermissionsManager;
 /**
  * Persistable Object Handlder
  *
- * @package	ICMS\IPF
- * @since	1.1
- * @todo	Properly name the vars using the naming conventions
+ * @package    ICMS\IPF
+ * @since    1.1
+ * @todo    Properly name the vars using the naming conventions
  */
 class AbstractExtendedHandler extends AbstractHandler {
 
@@ -48,7 +48,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * The name of the IPF object
 	 *
 	 * @var string
-	 * @todo	Rename using the proper naming convention (this is a public var)
+	 * @todo    Rename using the proper naming convention (this is a public var)
 	 */
 	public $_itemname = '';
 	/**
@@ -96,7 +96,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * For example category.php - we will deduct smartsection/category.php as well as smartsection/admin/category.php
 	 * @todo this could probably be automatically deducted from the class name - for example, the class SmartsectionCategory will have "category.php" as it's managing page
-	 * @todo	Rename using the proper naming convention - this is a public var
+	 * @todo    Rename using the proper naming convention - this is a public var
 	 *
 	 * @var string
 	 */
@@ -119,7 +119,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * The name of the module for the object
 	 * @var string
-	 * @todo	Rename using the proper naming convention (This is a public var)
+	 * @todo    Rename using the proper naming convention (This is a public var)
 	 */
 	public $_moduleName = '';
 	/**
@@ -226,7 +226,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param null|string $table Table to use for this handler
 	 * @param bool $cacheHandler Cache handler
 	 */
-	public function __construct(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename = null, $table = null, $cacheHandler = false) {
+	public function __construct(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename = null, $table = null, $cacheHandler = false)
+	{
 
 		parent::__construct($db);
 
@@ -242,7 +243,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		} else {
 			$this->_moduleName = $modulename;
 			$classname = substr(get_class($this), 0, -7);
-			if ($table == null) {
+			if ($table === null) {
 				$table = $this->_moduleName . '_' . $itemname;
 			}
 		}
@@ -273,7 +274,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param string $event
 	 * @param string $method
 	 */
-	public function addEventHook($event, $method) {
+	public function addEventHook($event, $method)
+	{
 		$this->_eventHooks[$event] = $method;
 	}
 
@@ -332,27 +334,30 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$sql = substr($sql, 0, -2);
 		$sql .= ' FROM ' . $this->table;
 
-		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
-			$sql .= ' ' . $criteria->renderWhere();
+		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+			$sql .= ' ' . $criteria->renderWhere(true);
+			$args = $criteria->getBindData();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
 			}
-			if ($criteria->getSort()) {
+			if ($criteria->getSort() !== '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
+		} else {
+			$args = [];
 		}
 
 		if ($debug) {
 			Debug::message($sql);
 		}
 
-		$result = $this->db->query($sql);
+		$result = $this->db->perform($sql, $args);
 
 		if (!$result) {
 			return null;
 		}
 
-		return $this->db->fetchArray($result);
+		return $result->fetch(PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -361,14 +366,14 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param CriteriaElement $criteria Criteria conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
-	 *
+	 * @param bool|string $sql Extra SQL to use in query
 	 * @return array
-	 *@deprecated Use getObjects() instead. Since 2.0
+	 *
+	 * @deprecated Use getObjects() instead. Since 2.0
 	 *
 	 */
-	public function getObjectsD($criteria = null, $id_as_key = false, $as_object = true, $sql = false) {
-		trigger_error('Use getObjects() instead', E_USER_DEPRECATED);
-
+	public function getObjectsD($criteria = null, $id_as_key = false, $as_object = true, $sql = false)
+	{
 		return $this->getObjects($criteria, $id_as_key, $as_object, $sql, true);
 	}
 
@@ -378,36 +383,44 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param CriteriaElement $criteria Criteria conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
-	 * @param bool $sql
-	 * @param bool $debug
+	 * @param false|string $sql Extra sql to use in query?
+	 * @param bool $debug Do we need to debug
 	 *
 	 * @return array
 	 */
-	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
+	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false)
+	{
 		$limit = $start = 0;
 
 		if ($this->generalSQL) {
 			$sql = $this->generalSQL;
 		} elseif (!$sql) {
-			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM ' . $this->table . ' AS ' . $this->_itemname;
+			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM `' . $this->table . '` AS ' . $this->_itemname;
 		}
 
-		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
-			$sql .= ' ' . $criteria->renderWhere();
-			if ($criteria->getSort()) {
+		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+			$sql .= ' ' . $criteria->renderWhere(true);
+			$args = $criteria->getBindData();
+			if ($criteria->getSort() !== '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
+		} else {
+			$args = [];
 		}
 
 		if ($debug) {
 			Debug::message($sql);
 		}
 
-		$result = $this->db->query($sql, $limit, $start);
+		if (!empty($limit)) {
+			$sql .= ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
+		}
 
-		return (!$result)? [] :$this->convertResultSet($result, $id_as_key, $as_object);
+		$result = $this->db->perform($sql, $args);
+
+		return (!$result) ? [] : $this->convertResultSet($result, $id_as_key, $as_object);
 	}
 
 	/**
@@ -418,21 +431,24 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @return string
 	 */
-	protected function getFields($getcurrent = true, $forSQL = false) {
+	protected function getFields($getcurrent = true, $forSQL = false)
+	{
 		if (!empty($this->visibleColumns) && $getcurrent) {
-					$ret = $this->visibleColumns;
-		} else if (!isset(self::$cached_fields[$this->className])) {
-			$obj = new $this->className($this, []);
-			$ret = array();
-			foreach ($obj->getVars() as $key => $var) {
-				if (isset($var['persistent']) && !$var['persistent']) {
-					continue;
-				}
-				$ret[] = $key;
-			}
-			self::$cached_fields[$this->className] = $ret;
+			$ret = $this->visibleColumns;
 		} else {
-			$ret = self::$cached_fields[$this->className];
+			if (!isset(self::$cached_fields[$this->className])) {
+				$obj = new $this->className($this, array());
+				$ret = array();
+				foreach ($obj->getVars() as $key => $var) {
+					if (isset($var['persistent']) && !$var['persistent']) {
+						continue;
+					}
+					$ret[] = $key;
+				}
+				self::$cached_fields[$this->className] = $ret;
+			} else {
+				$ret = self::$cached_fields[$this->className];
+			}
 		}
 		if ($forSQL) {
 			return '`' . implode('`, `', $ret) . '`';
@@ -449,7 +465,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @return array
 	 */
-	public function convertResultSet($result, $id_as_key = false, $as_object = true) {
+	public function convertResultSet($result, $id_as_key = false, $as_object = true)
+	{
 		if ($id_as_key === true) {
 			$id_as_key = $this->keyName;
 		} elseif (($id_as_key == 'parent_id') && isset($this->parentName)) {
@@ -457,40 +474,43 @@ class AbstractExtendedHandler extends AbstractHandler {
 		}
 
 		if ($as_object === null) {
-			return ($id_as_key !== false)?$this->convertResultSet_RAWWithKey($result, $id_as_key):$this->convertResultSet_RAW($result);
+			return ($id_as_key !== false) ? $this->convertResultSet_RAWWithKey($result, $id_as_key) : $this->convertResultSet_RAW($result);
 		} else {
-			return ($id_as_key !== false)?$this->convertResultSet_ObjectWithKey($result, $id_as_key, $as_object):$this->convertResultSet_Object($result, $as_object);
+			return ($id_as_key !== false) ? $this->convertResultSet_ObjectWithKey($result, $id_as_key, $as_object) : $this->convertResultSet_Object($result, $as_object);
 		}
 	}
 
-	protected function convertResultSet_RAWWithKey($result, $key) {
-		$ret = [];
+	protected function convertResultSet_RAWWithKey($result, $key)
+	{
+		$ret = array();
 		if ($this->keyName === $key) {
-			while ($myrow = $this->db->fetchArray($result)) {
+			while ($myrow = $result->fetch(PDO::FETCH_ASSOC)) {
 				$ret[$key] = $myrow;
 			}
 		} else {
-			while ($myrow = $this->db->fetchArray($result)) {
+			while ($myrow = $result->fetch(PDO::FETCH_ASSOC)) {
 				$ret[$myrow[$key]][$myrow[$this->keyName]] = $myrow;
 			}
 		}
 		return $ret;
 	}
 
-	protected function convertResultSet_RAW($result) {
-		$ret = [];
-		while ($myrow = $this->db->fetchArray($result)) {
+	protected function convertResultSet_RAW($result)
+	{
+		$ret = array();
+		while ($myrow = $result->fetch(PDO::FETCH_ASSOC)) {
 			$ret[] = $myrow;
 		}
 		return $ret;
 	}
 
-	protected function convertResultSet_ObjectWithKey(\PDOStatement $result, $key, $as_object) {
+	protected function convertResultSet_ObjectWithKey($result, $key, $as_object)
+	{
 		$fields_sk = $this->getSkipKeys();
 		$se = count($fields_sk) === 0;
-		$ret = [];
+		$ret = array();
 		if ($this->keyName === $key) {
-			while ($myrow = $this->db->fetchArray($result)) {
+			while ($myrow = $result->fetch(PDO::FETCH_ASSOC)) {
 				$kname = $myrow[$this->keyName];
 				if (isset(self::$_loadedItems[$this->className][$kname])) {
 					$iname = self::$_loadedItems[$this->className][$kname]->getVar($this->keyName);
@@ -524,11 +544,11 @@ class AbstractExtendedHandler extends AbstractHandler {
 						$ret[$obj->getVar($this->keyName)] = $obj->toArray();
 					}
 				} else {
-					$ret[$obj->getVar($this->keyName)] = $as_object?$obj:$obj->toArray();
+					$ret[$obj->getVar($this->keyName)] = $as_object ? $obj : $obj->toArray();
 				}
 			}
 		} else {
-			while ($myrow = $this->db->fetchArray($result)) {
+			while ($myrow = $result->fetch(PDO::FETCH_ASSOC)) {
 				$kname = $myrow[$this->keyName];
 				if (isset(self::$_loadedItems[$this->className][$kname])) {
 					$iname = self::$_loadedItems[$this->className][$kname]->getVar($this->keyName);
@@ -563,7 +583,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 						$ret[$obj->getVar($key, 'e')][$obj->getVar($this->keyName)] = $obj->toArray();
 					}
 				} else {
-					$ret[$obj->getVar($key, 'e')][$obj->getVar($this->keyName)] = $as_object?$obj:$obj->toArray();
+					$ret[$obj->getVar($key, 'e')][$obj->getVar($this->keyName)] = $as_object ? $obj : $obj->toArray();
 				}
 			}
 		}
@@ -575,7 +595,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @return array
 	 */
-	public function getSkipKeys() {
+	public function getSkipKeys()
+	{
 		if (!empty($this->visibleColumns)) {
 			$fields_sk = $this->getFields(false, false);
 			return array_diff($fields_sk, $this->visibleColumns);
@@ -587,14 +608,16 @@ class AbstractExtendedHandler extends AbstractHandler {
 	/**
 	 *
 	 */
-	public function getImageUrl() {
+	public function getImageUrl()
+	{
 		return $this->_uploadUrl . $this->_itemname . '/';
 	}
 
 	/**
 	 *
 	 */
-	public function getImagePath() {
+	public function getImagePath()
+	{
 		$dir = $this->_uploadPath . $this->_itemname;
 		if (!file_exists($dir)) {
 			Filesystem::mkdir($dir);
@@ -602,11 +625,12 @@ class AbstractExtendedHandler extends AbstractHandler {
 		return $dir . '/';
 	}
 
-	protected function convertResultSet_Object($result, $as_object) {
+	protected function convertResultSet_Object($result, $as_object)
+	{
 		$fields_sk = $this->getSkipKeys();
 		$se = count($fields_sk) === 0;
-		$ret = [];
-		while ($myrow = $this->db->fetchArray($result)) {
+		$ret = array();
+		while ($myrow = $result->fetch(PDO::FETCH_ASSOC)) {
 			$kname = $myrow[$this->keyName];
 
 			if (isset(self::$_loadedItems[$this->className][$kname])) {
@@ -645,7 +669,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 					$ret[] = $obj->toArray();
 				}
 			} else {
-				$ret[] = $as_object?$obj:$obj->toArray();
+				$ret[] = $as_object ? $obj : $obj->toArray();
 			}
 
 
@@ -665,8 +689,6 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 */
 	public function &getD($id, $as_object = true)
 	{
-		trigger_error('Use get() instead', E_USER_DEPRECATED);
-
 		return $this->get($id, $as_object, true);
 	}
 
@@ -748,16 +770,15 @@ class AbstractExtendedHandler extends AbstractHandler {
 
 	/**
 	 *
-	 * @deprecated Use getList() instead. Since 2.0
-	 *
 	 * @param object $criteria
 	 * @param int $limit
 	 * @param int $start
 	 * @return array
+	 * @deprecated Use getList() instead. Since 2.0
+	 *
 	 */
-	public function getListD($criteria = null, $limit = 0, $start = 0) {
-		trigger_error('Use getList() instead', E_USER_DEPRECATED);
-
+	public function getListD($criteria = null, $limit = 0, $start = 0)
+	{
 		return $this->getList($criteria, $limit, $start, true);
 	}
 
@@ -770,7 +791,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @return array
 	 */
-	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
+	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false)
+	{
 		return $this->getCustomList($this->keyName, $this->getIdentifierName(false), $criteria, $limit, $start, $debug);
 	}
 
@@ -786,42 +808,51 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @return array
 	 */
-	public function getCustomList($keyName, $keyValue, $criteria = null, $limit = 0, $start = 0, $debug = false) {
+	public function getCustomList($keyName, $keyValue, $criteria = null, $limit = 0, $start = 0, $debug = false)
+	{
 		$ret = array();
-		if (!$criteria) {
-			$criteria = new CriteriaCompo();
+		if ($criteria === null) {
+			$criteria = new icms_db_criteria_Compo();
 		}
 
-		if (!$criteria->getSort()) {
+		if ($criteria->getSort() === '') {
 			$criteria->setSort($keyValue);
 		}
 
-		$sql = 'SELECT ' . (is_array($keyName)? implode(', ', $keyName):$keyName);
+		$sql = 'SELECT ' . (is_array($keyName) ? implode(', ', $keyName) : $keyName);
 		if (!empty($keyValue)) {
 			$sql .= ', ' . $keyValue;
 		}
 		$sql .= ' FROM ' . $this->table . ' AS ' . $this->_itemname;
-		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
-			$sql .= ' ' . $criteria->renderWhere();
-			if ($criteria->getSort()) {
+		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+			$sql .= ' ' . $criteria->renderWhere(true);
+			$args = $criteria->getBindData();
+			if ($criteria->getSort() !== '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
+		} else {
+			$args = [];
 		}
 
 		if ($debug) {
 			Debug::message($sql);
 		}
 
-		$result = $this->db->query($sql, $limit, $start);
+		if (!empty($limit)) {
+			$sql .= ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
+		}
+
+		var_dump($sql, $args);
+		$result = $this->db->perform($sql, $args);
 		if (!$result) {
 			return $ret;
 		}
 
-		while ($myrow = $this->db->fetchArray($result)) {
+		while ($myrow = $result->fetch(PDO::FETCH_ASSOC)) {
 			//identifiers should be textboxes, so sanitize them like that
-			$ret[$myrow[$keyName]] = empty($keyValue)?1:htmlentities($myrow[$keyValue]);
+			$ret[$myrow[$keyName]] = empty($keyValue) ? 1 : htmlentities($myrow[$keyValue]);
 		}
 
 		return $ret;
@@ -832,7 +863,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param bool $withprefix
 	 * @return string
 	 */
-	public function getIdentifierName($withprefix = true) {
+	public function getIdentifierName($withprefix = true)
+	{
 		if ($withprefix) {
 			return $this->_itemname . '.' . $this->identifierName;
 		} else {
@@ -851,7 +883,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @return bool
 	 */
-	public function insertD(&$obj, $force = false, $checkObject = true, $debug = false) {
+	public function insertD(&$obj, $force = false, $checkObject = true, $debug = false)
+	{
 		trigger_error('Use save() instead', E_USER_DEPRECATED);
 
 		return $this->save($obj, $force);
@@ -865,7 +898,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @return bool
 	 */
-	public function save($obj_instances, $force = false) {
+	public function save($obj_instances, $force = false)
+	{
 		if (is_array($obj_instances)) {
 			$data = &$obj_instances;
 		} else {
@@ -911,23 +945,16 @@ class AbstractExtendedHandler extends AbstractHandler {
 
 				//$this->db->query('LOCK TABLES ' . $this->table . ' WRITE;');
 
-				$sql = $this->generateInsertSQL($for_insert[0]);
-				if ($this->debugMode) {
-					Debug::message($sql);
-				}
-				$result = $force?$this->db->queryF($sql):$this->db->query($sql);
+				$this->db->beginTransaction();
+				$result = $this->doInsert($for_insert[0]);
 				if ($result) {
-					$insert_id = $this->db->getInsertId();
+					$insert_id = $this->db->lastInsertId();
 					$id = $insert_id;
 					$for_insert[0]->setVar($this->keyName, $id++);
 					$for_insert[0]->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
 
 					$for_insert = array_slice($for_insert, 1);
-					$sql = $this->generateInsertSQL($for_insert);
-					if ($this->debugMode) {
-						Debug::message($sql);
-					}
-					$result = $force?$this->db->queryF($sql):$this->db->query($sql);
+					$result = $this->doInsert($for_insert);
 					if ($result) {
 						foreach ($for_insert as $i => $obj) {
 							$for_insert[$i]->setVar($this->keyName, $id++);
@@ -938,41 +965,28 @@ class AbstractExtendedHandler extends AbstractHandler {
 								continue;
 							}
 						}
-						$scount += $this->db->getAffectedRows();
+						$scount += $result->rowCount();
 					}
 				}
+				$this->db->commit();
 
 				//$this->db->query('UNLOCK TABLES;');
 			} else {
-				$sql = $this->generateInsertSQL($for_insert);
-				if ($this->debugMode) {
-					Debug::message($sql);
-				}
+				$this->doInsert($for_insert);
 
-				if ($force) {
-					$this->db->queryF($sql);
-				} else {
-					$this->db->query($sql);
-				}
-				$id = $this->db->getInsertId();
+				$id = $this->db->lastInsertId();
 				$for_insert[0]->setVar($this->keyName, $id);
 				$for_insert[0]->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
 				$for_insert[0]->unsetNew();
-				$scount = (int) $this->executeEvent('afterInsert', $for_insert[0]);
+				$scount = (int)$this->executeEvent('afterInsert', $for_insert[0]);
 			}
 		}
 
 		if (($count = count($for_update)) > 0) {
-			$sql = ($count === 1)?$this->generateUpdateSQL($for_update[0]):$this->generateUpdateSQL($for_update);
+			$result = $this->doUpdate(($count === 1) ? $for_update[0] : $for_update);
+			if ($result !== false) {
 
-			if ($sql !== null) {
-
-				if ($this->debugMode === true) {
-					Debug::message($sql);
-				}
-
-				$force?$this->db->queryF($sql):$this->db->query($sql);
-				$scount += $this->db->getAffectedRows();
+				$scount += $result->rowCount();
 
 				foreach ($for_update as $i => $obj) {
 					$for_update[$i]->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
@@ -981,7 +995,6 @@ class AbstractExtendedHandler extends AbstractHandler {
 						continue;
 					}
 				}
-
 			}
 		}
 
@@ -997,11 +1010,12 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * This method will check if the function is available
 	 *
 	 * @param string $event name of the event
-	 * @param object $obj $object on which is performed the event
+	 * @param object $executeEventObj $object on which is performed the event
 	 * @return mixed result of the execution of the function or FALSE if the function was not executed
 	 */
-	public function executeEvent($event, &$executeEventObj) {
-		if (!in_array($event, $this->_disabledEvents)) {
+	public function executeEvent($event, &$executeEventObj)
+	{
+		if (!in_array($event, $this->_disabledEvents, true)) {
 			if (method_exists($this, $event)) {
 				$ret = $this->$event($executeEventObj);
 				if (!$ret) {
@@ -1024,59 +1038,74 @@ class AbstractExtendedHandler extends AbstractHandler {
 	}
 
 	/**
-	 * Generate insert SQL by data
+	 * Generate insert SQL and bind params by data
 	 *
 	 * @param array/object $data
 	 *
-	 * @return string
+	 * @return PDOStatement
 	 */
-	protected function generateInsertSQL($data) {
+	protected function doInsert($data)
+	{
 		if (!is_array($data)) {
 			$data = array($data);
 		}
-		$sql = 'INSERT INTO ' . $this->table . ' (`';
+		$sql = 'INSERT INTO `' . $this->table . '` (`';
 
+		$params = [];
 		foreach ($data as $i => $obj) {
-			$fieldsToStoreInDB = $obj->getVarsForSQL(false);
-			if ($i == 0) {
+			$fieldsToStoreInDB = $obj->getVarsForQuery(false);
+			if ($i === 0) {
 				$sql .= implode('`,`', array_keys($fieldsToStoreInDB)) . '`) VALUES';
 			} else {
 				$sql .= ', ';
 			}
-			$sql .= '(' . implode(',', array_values($fieldsToStoreInDB)) . ')';
+			$bindKeys = [];
+			foreach ($fieldsToStoreInDB as $k => $v) {
+				$params[$k] = $v;
+				$bindKeys[] = ':' . $k;
+			}
+			$sql .= '(' . implode(',', $bindKeys) . ')';
 		}
-		return $sql;
+		return $this->db->perform($sql, $params);
 	}
 
 	/**
-	 * Generates update SQL
+	 * Runs update command
 	 *
-	 * @param array/object $data	Objects to process
+	 * @param array/object $data    Objects to process
 	 *
-	 * @return string|null
+	 * @return PDOStatement|null|false
 	 */
-	protected function generateUpdateSQL($data) {
+	protected function doUpdate($data)
+	{
+		$params = [];
+		$bindFieldName = 'field_';
+		$bindFieldSuffixId = 0;
 		if (is_array($data)) {
-			$sql = 'UPDATE ' . $this->table . ' SET ' . "\r\n";
+			$sql = 'UPDATE `' . $this->table . '` SET ' . "\r\n";
 			if (is_array($this->keyName)) {
-				$case = '  CASE ' . implode(', ', $this->keyName) . "\r\n";
-				$when = [];
-				$criteria = new CriteriaCompo();
+				$case = '  CASE `' . implode('`, `', $this->keyName) . "`\r\n";
+				$when = array();
+				$criteria = new icms_db_criteria_Compo();
 				foreach ($data as $i => $obj) {
-					$fieldsToStoreInDB = $obj->getVarsForSQL(true);
+					$fieldsToStoreInDB = $obj->getVarsForQuery(true);
+					/**
+					 * @var icms_db_criteria_Element $cr
+					 */
 					$cr = $obj->getCriteriaForSelectByID();
 					$criteria->add($cr, 'OR');
-					$rendered_criteria = $cr->render();
+					$rendered_criteria = $cr->render(true);
+					$params = $cr->getBindData();
 					foreach ($fieldsToStoreInDB as $key => $value) {
-						if (in_array($key, $this->keyName, false)) {
+						if (in_array($key, $this->keyName, true)) {
 							continue;
 						}
 						$when[$key][$i] = '    WHEN ' . $rendered_criteria . ' THEN ' . $value;
 					}
 				}
-		if (empty($when)) {
-			return null;
-		}
+				if (empty($when)) {
+					return null;
+				}
 				$first = true;
 				foreach (array_keys($when) as $wdata) {
 					if (!$first) {
@@ -1086,25 +1115,27 @@ class AbstractExtendedHandler extends AbstractHandler {
 					}
 					$sql .= '`' . $wdata . '` = ' . $case . implode("\r", $when[$wdata]) . ' END ' . "\r";
 				}
-				$sql .= ' ' . $criteria->renderWhere();
+				$sql .= ' ' . $criteria->renderWhere(true);
+				$params = array_merge($params, $criteria->getBindData());
 			} else {
 				$case = '  CASE `' . $this->keyName . "` \r\n";
 				$when = array();
 				$ids = array();
 				foreach ($data as $i => $obj) {
-					$fieldsToStoreInDB = $obj->getVarsForSQL(true);
+					$fieldsToStoreInDB = $obj->getVarsForQuery(true);
 					$id = $obj->id();
 					foreach ($fieldsToStoreInDB as $key => $value) {
-						if ($key == $this->keyName) {
+						if ($key === $this->keyName) {
 							continue;
 						}
-						$when[$key][$i] = '    WHEN ' . $id . ' THEN ' . $value;
+						$when[$key][$i] = '    WHEN ' . $id . ' THEN :' . $bindFieldName . (++$bindFieldSuffixId);
+						$params[$bindFieldName . $bindFieldSuffixId] = $value;
 					}
 					$ids[] = $id;
 				}
-		if (empty($when)) {
-			return null;
-		}
+				if (empty($when)) {
+					return null;
+				}
 				$first = true;
 				foreach (array_keys($when) as $wdata) {
 					if (!$first) {
@@ -1114,44 +1145,51 @@ class AbstractExtendedHandler extends AbstractHandler {
 					}
 					$sql .= '`' . $wdata . '` = ' . $case . implode("\r", $when[$wdata]) . ' END ' . "\r";
 				}
-				$sql .= ' WHERE ' . $this->keyName . ' IN (' . implode(',', $ids) . ')';
+				$criteria = new icms_db_criteria_Item($this->keyName, $ids, 'IN');
+				$sql .= $criteria->renderWhere(true);
+				$params = array_merge($params, $criteria->getBindData());
 			}
 		} else {
-			$fieldsToStoreInDB = $data->getVarsForSQL(true);
-		if (empty($fieldsToStoreInDB)) {
-		return null;
-		}
+			$fieldsToStoreInDB = $data->getVarsForQuery(true);
+			if (empty($fieldsToStoreInDB)) {
+				return null;
+			}
 
-			$sql = 'UPDATE ' . $this->table . ' SET';
+			$sql = 'UPDATE `' . $this->table . '` SET';
 			foreach ($fieldsToStoreInDB as $key => $value) {
 				if ((!is_array($this->keyName) && $key === $this->keyName)
-						|| (is_array($this->keyName) && in_array($key, $this->keyName, true))) {
+					|| (is_array($this->keyName) && in_array($key, $this->keyName, true))) {
 					continue;
 				}
 				if (isset($notfirst)) {
 					$sql .= ',';
 				}
-				$sql .= ' `' . $key . '` = ' . $value;
+				$sql .= ' `' . $key . '` = :' . $bindFieldName . (++$bindFieldSuffixId);
+				$params[$bindFieldName . $bindFieldSuffixId] = $value;
 				$notfirst = true;
 			}
-			$sql .= ' ' . $data->getCriteriaForSelectByID()->renderWhere();
+			$criteria = $data->getCriteriaForSelectByID();
+			$sql .= ' ' . $criteria->renderWhere(true);
+			$params = array_merge($params, $criteria->getBindData());
 		}
-		return $sql;
+		if (!$sql) {
+			return false;
+		}
+		return $this->db->perform($sql, $params);
 	}
 
 	/**
 	 * insert a new object in the database
 	 *
-	 * @deprecated Use save() instead. Since 2.0
-	 *
 	 * @param object $obj reference to the object
 	 * @param bool $force whether to force the query execution despite security settings
 	 * @param bool $checkObject check if the object is dirty and clean the attributes
 	 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
+	 * @deprecated Use save() instead. Since 2.0
+	 *
 	 */
-	public function insert(&$obj, $force = false, $checkObject = true, $debug = false) {
-		trigger_error('Use save() instead', E_USER_DEPRECATED);
-
+	public function insert(&$obj, $force = false, $checkObject = true, $debug = false)
+	{
 		return $this->save(array(&$obj), $force);
 	}
 
@@ -1160,16 +1198,13 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param array $arrayObjects
 	 * @return array|bool
 	 */
-	public function getObjectsAsArray($arrayObjects) {
+	public function getObjectsAsArray($arrayObjects)
+	{
 		$ret = array();
 		foreach ($arrayObjects as $key => $object) {
 			$ret[$key] = $object->toArray();
 		}
-		if (count($ret > 0)) {
-			return $ret;
-		} else {
-			return false;
-		}
+		return count($ret) > 0 ? $ret : false;
 	}
 
 	/**
@@ -1183,7 +1218,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param bool $debug
 	 * @return array
 	 */
-	public function doFastChange($id, $field, $value = 1, $math_func = '+', $force = false, $debug = false) {
+	public function doFastChange($id, $field, $value = 1, $math_func = '+', $force = false, $debug = false)
+	{
 		return $this->query('UPDATE `' . $this->keyName . '` SET `' . $field . '` = `' . $field . '` ' . $math_func . ' ' . $value, null, $force, $debug);
 	}
 
@@ -1191,43 +1227,39 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * query the database with the constructed $criteria object
 	 *
 	 * @param string $sql The SQL Query
-	 * @param CriteriaElement $criteria Criteria conditions to be met
-	 * @param bool $force Force the query?
-	 * @param bool $debug Turn Debug on?
+	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
+	 * @param bool $force Force the query? (DEPRECATED: Do not use this - does nothing)
+	 * @param bool $debug Turn Debug on? (DEPRECATED: Do not use this)
 	 *
 	 * @return array
 	 */
-	public function query($sql, $criteria, $force = false, $debug = false) {
+	public function query($sql, $criteria, $force = false, $debug = false)
+	{
 		$ret = array();
 
-		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
-			$sql .= ' ' . $criteria->renderWhere();
+		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+			$sql .= ' ' . $criteria->renderWhere(true);
+			$args = $criteria->getBindData();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
 			}
-			if ($criteria->getSort()) {
+			if ($criteria->getSort() !== '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
+		} else {
+			$args = [];
 		}
 		if ($debug) {
 			Debug::message($sql);
 		}
 
-		if ($force) {
-			$result = $this->db->queryF($sql);
-		} else {
-			$result = $this->db->query($sql);
-		}
+		$result = $this->db->perform($sql, $args);
 
 		if (!$result) {
 			return $ret;
 		}
 
-		while ($myrow = $this->db->fetchArray($result)) {
-			$ret[] = $myrow;
-		}
-
-		return $ret;
+		return $result->fetchAll(PDO::FETCH_NUM);
 	}
 
 	/**
@@ -1236,12 +1268,15 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param CriteriaElement $criteria Criteria to match
 	 * @return int count of objects
 	 */
-	public function getCount($criteria = null) {
+	public function getCount($criteria = null)
+	{
 		$field = '';
 		$groupby = false;
-		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class) && $criteria->groupby) {
-			$groupby = true;
-			$field = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
+		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+			if ($criteria->groupby !== '') {
+				$groupby = true;
+				$field = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
+			}
 		}
 		/**
 		 * if we have a generalSQL, lets used this one.
@@ -1253,23 +1288,26 @@ class AbstractExtendedHandler extends AbstractHandler {
 		} else {
 			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->_itemname;
 		}
-		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
-			$sql .= ' ' . $criteria->renderWhere();
-			if ($criteria->groupby != "") {
+		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+			$sql .= ' ' . $criteria->renderWhere(true);
+			$args = $criteria->getBindData();
+			if ($criteria->groupby !== '') {
 				$sql .= $criteria->getGroupby();
 			}
+		} else {
+			$args = [];
 		}
 
-		$result = $this->db->query($sql);
+		$result = $this->db->perform($sql, $args);
 		if (!$result) {
 			return 0;
 		}
-		if ($groupby == false) {
-			list($ret) = $this->db->fetchRow($result);
+		if ($groupby === false) {
+			list($ret) = $result->fetch(PDO::FETCH_NUM);
 		} else {
 			$ret = array();
-			while (list($id, $count) = $this->db->fetchRow($result)) {
-				$ret[$id] = (int) $count;
+			while (list($id, $count) = $result->fetch(PDO::FETCH_NUM)) {
+				$ret[$id] = (int)$count;
 			}
 		}
 
@@ -1280,7 +1318,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @param string[]|string $event
 	 */
-	public function disableEvent($event) {
+	public function disableEvent($event)
+	{
 		if (is_array($event)) {
 			foreach ($event as $v) {
 				$this->_disabledEvents[] = $v;
@@ -1296,7 +1335,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param AbstractExtendedModel[] $objectsAsArray array of \ImpressCMS\Core\IPF\AbstractModel
 	 * @return array
 	 */
-	public function getIdsFromObjectsAsArray($objectsAsArray) {
+	public function getIdsFromObjectsAsArray($objectsAsArray)
+	{
 		$ret = array();
 		foreach ($objectsAsArray as $array) {
 			$ret[] = $array[$this->keyName];
@@ -1313,24 +1353,21 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @return  bool
 	 * */
-	public function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false) {
-		$set_clause = $fieldname . ' = ';
-		if (is_numeric($fieldvalue)) {
-			$set_clause .= $fieldvalue;
-		} elseif (is_array($fieldvalue)) {
-			$set_clause .= $this->db->quoteString(implode(',', $fieldvalue));
+	public function updateAll($fieldname, $fieldvalue, $criteria = null)
+	{
+		$sql = 'UPDATE `' . $this->table . '` SET `' . $fieldname . '`=:fieldvalue';
+		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+			$sql .= ' ' . $criteria->renderWhere(true);
+			$args = $criteria->getBindData();
 		} else {
-			$set_clause .= $this->db->quoteString($fieldvalue);
+			$args = [];
 		}
-		$sql = 'UPDATE ' . $this->table . ' SET ' . $set_clause;
-		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
-			$sql .= ' ' . $criteria->renderWhere();
-		}
-		if (false != $force) {
-			$result = $this->db->queryF($sql);
+		if (is_array($fieldvalue)) {
+			$args['fieldvalue'] = implode(',', $fieldvalue);
 		} else {
-			$result = $this->db->query($sql);
+			$args['fieldvalue'] = $fieldvalue;
 		}
+		$result = $this->db->perform($sql, $args);
 		if (!$result) {
 			return false;
 		}
@@ -1345,17 +1382,20 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @return bool
 	 */
-	public function deleteAll($criteria = null, $quick = false) {
+	public function deleteAll($criteria = null, $quick = false)
+	{
 		if (!$criteria) {
 			return false;
 		}
 		if ($quick) {
 			$sql = 'DELETE FROM `' . $this->table . '` ';
 			if ($criteria) {
-				$sql .= $criteria->renderWhere();
+				$sql .= $criteria->renderWhere(true);
+				$args = $criteria->getBindData();
+			} else {
+				$args = [];
 			}
-			$this->db->query($sql);
-			$rows = $this->db->getAffectedRows();
+			$rows = $this->db->perform($sql, $args)->rowCount();
 		} else {
 			$rows = 0;
 			$objects = $this->getObjects($criteria);
@@ -1365,23 +1405,28 @@ class AbstractExtendedHandler extends AbstractHandler {
 				}
 			}
 		}
-		return $rows > 0?$rows:true;
+		return $rows > 0 ? $rows : true;
 	}
 
 	/**
 	 * delete an object from the database
 	 *
 	 * @param object $obj reference to the object to delete
-	 * @param bool $force
+	 *
 	 * @return bool FALSE if failed.
 	 */
-	public function delete(&$obj, $force = false) {
+	public function delete(&$obj)
+	{
 		if (!$this->executeEvent('beforeDelete', $obj)) {
 			return false;
 		}
 
-		$sql = 'DELETE FROM ' . $this->table . ' ' . $obj->getCriteriaForSelectByID()->renderWhere();
-		$result = ($force)?$this->db->queryF($sql):$this->db->query($sql);
+		/**
+		 * @var $criteria icms_db_criteria_Element
+		 */
+		$criteria = $obj->getCriteriaForSelectByID();
+		$sql = 'DELETE FROM `' . $this->table . '` ' . $criteria->renderWhere(true);
+		$result = $this->db->perform($sql, $criteria->getBindData());
 		if (!$result) {
 			return false;
 		}
@@ -1389,22 +1434,22 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$url_links = array();
 		$url_files = array();
 		foreach ($obj->getVars() as $key => $var) {
-			if (isset($var[AbstractProperties::VARCFG_DEP_DATA_TYPE])) {
-				if ($var[AbstractProperties::VARCFG_DEP_DATA_TYPE] === AbstractProperties::DTYPE_DEP_URLLINK) {
+			if (isset($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE])) {
+				if ($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE] === icms_properties_Handler::DTYPE_DEP_URLLINK) {
 					$url_links[] = $obj->getVar($key, 'n');
-				} elseif ($var[AbstractProperties::VARCFG_DEP_DATA_TYPE] === AbstractProperties::DTYPE_DEP_FILE) {
+				} elseif ($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE] === icms_properties_Handler::DTYPE_DEP_FILE) {
 					$url_files[] = $obj->getVar($key, 'n');
 				}
 			}
 		}
 		if (!empty($url_links)) {
 			$urllink_handler = icms::handler('icms_data_urllink');
-			$urllink_handler->deleteAll(new CriteriaItem($urllink_handler->keyName, $url_links, ' IN '));
+			$urllink_handler->deleteAll(new icms_db_criteria_Item($urllink_handler->keyName, $url_links, ' IN '));
 			unset($urllink_handler);
 		}
 		if (!empty($url_files)) {
 			$urllink_handler = icms::handler('icms_data_file');
-			$urllink_handler->deleteAll(new CriteriaItem($urllink_handler->keyName, $url_files, ' IN '));
+			$urllink_handler->deleteAll(new icms_db_criteria_Item($urllink_handler->keyName, $url_files, ' IN '));
 			unset($urllink_handler);
 		}
 
@@ -1416,7 +1461,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	/**
 	 * delete granted permssions for an object
 	 *
-	 * @param    object $obj optional
+	 * @param object $obj optional
 	 * @return    bool    TRUE
 	 */
 	private function deleteGrantedPermissions($obj = null) {
@@ -1434,7 +1479,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		}
 		foreach ($permissions as $permission) {
 			$gperm_handler->deleteByModule(
-				$module->getVar('mid'),
+				$module->mid,
 				$permission['perm_name'],
 				$obj === null ? null : $obj->id()
 			);
@@ -1445,21 +1490,24 @@ class AbstractExtendedHandler extends AbstractHandler {
 	/**
 	 * Accessor for the permissions array property
 	 */
-	public function getPermissions() {
+	public function getPermissions()
+	{
 		return $this->permissionsArray;
 	}
 
 	/**
 	 *
 	 */
-	public function getModuleInfo() {
+	public function getModuleInfo()
+	{
 		return icms_getModuleInfo($this->_moduleName);
 	}
 
 	/**
 	 *
 	 */
-	public function getModuleConfig() {
+	public function getModuleConfig()
+	{
 		return icms_getModuleConfig($this->_moduleName);
 	}
 
@@ -1474,23 +1522,29 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * @param $object
 	 */
-	public function updateCounter($object) {
+	public function updateCounter($object)
+	{
 		if (isset($object->counter)) {
-			$new_counter = $object->getVar('counter') + 1;
-			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
-					. ' WHERE ' . $this->keyName . '=' . $object->id();
-			$this->query($sql, null, true);
+			$this->db->perform(
+				sprintf('UPDATE `%s` SET counter=:counter WHERE `%s`=:id', $this->table, $this->keyName),
+				[
+					'counter' => $object->counter + 1,
+					'id' => $object->id()
+				]
+			);
 		}
 	}
 
 	/**
+	 * Enabled upload for item
 	 *
-	 * @param false|string[] $allowedMimeTypes
-	 * @param false|int $maxFileSize
-	 * @param false|int $maxWidth
-	 * @param false|int $maxHeight
+	 * @param bool|array $allowedMimeTypes Allowed mime types array
+	 * @param bool|int $maxFileSize Max file size
+	 * @param bool|int $maxWidth Max width for image
+	 * @param bool|int $maxHeight Max height for image
 	 */
-	public function enableUpload($allowedMimeTypes = false, $maxFileSize = false, $maxWidth = false, $maxHeight = false) {
+	public function enableUpload($allowedMimeTypes = false, $maxFileSize = false, $maxWidth = false, $maxHeight = false)
+	{
 		$this->uploadEnabled = true;
 		$this->_allowedMimeTypes = $allowedMimeTypes?:$this->_allowedMimeTypes;
 		$this->_maxFileSize = $maxFileSize?:$this->_maxFileSize;

@@ -7,15 +7,19 @@ namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Install;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\Models\Module;
-use League\Flysystem\MountManager;
+use icms_module_Object;
+use League\Container\ContainerAwareInterface;
+use League\Container\ContainerAwareTrait;
+use League\Flysystem\Filesystem;
 
 /**
  * Copies module assets to public path
  *
  * @package ImpressCMS\Core\SetupSteps\Module\Install
  */
-class CopyAssetsSetupStep implements SetupStepInterface
+class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 {
+	use ContainerAwareTrait;
 
 	/**
 	 * @inheritDoc
@@ -23,15 +27,20 @@ class CopyAssetsSetupStep implements SetupStepInterface
 	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		/**
-		 * @var MountManager $mm
+		 * @var Filesystem $mm
 		 */
-		$mm = \icms::getInstance()->get('filesystem');
+		$mm = $this->container->get('filesystem.public');
 		$output->info(_MD_AM_COPY_ASSETS_INFO);
 		$output->incrIndent();
 		$output->msg(_MD_AM_COPY_ASSETS_DELETE_OLD);
-		$mm->deleteDir('public://modules/' . $module->dirname);
-		$mm->createDir('public://modules/' . $module->dirname);
-		foreach ($mm->listContents('modules://' . $module->dirname, true) as $fileSystemItem) {
+		$mm->deleteDir('modules/' . $module->dirname);
+		$mm->createDir('modules/' . $module->dirname);
+
+		/**
+		 * @var Filesystem $mf
+		 */
+		$mf = $this->container->get('filesystem.modules');
+		foreach ($mf->listContents( $module->dirname, true) as $fileSystemItem) {
 			if ($fileSystemItem['type'] !== 'file') {
 				continue;
 			}
@@ -46,7 +55,10 @@ class CopyAssetsSetupStep implements SetupStepInterface
 				(strpos($fileSystemItem['path'], $module->dirname . '/themes/') === 0)
 			) {
 				$output->msg(_MD_AM_COPY_ASSETS_COPYING, $fileSystemItem['path']);
-				$mm->copy('modules://' . $fileSystemItem['path'], 'public://modules/' . $fileSystemItem['path']);
+				$mm->writeStream(
+					'modules/' . $fileSystemItem['path'],
+					$mf->readStream($fileSystemItem['path'])
+				);
 			}
 		}
 		$output->decrIndent();

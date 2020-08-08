@@ -85,22 +85,36 @@ abstract class CriteriaElement {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {}
+	public function __construct()
+	{
+	}
 
 	/**
 	 * Render the criteria element
+	 *
+	 * @param bool $withBindVariables Render with bind variables
+	 *
+	 * @return string
 	 */
-	abstract public function render();
+	abstract public function render(bool $withBindVariables = false);
 
 	/**
-	 * @param	string  $sort
+	 * Gets data for rendered query for binding
+	 *
+	 * @return array
 	 */
-	public function setSort($sort) {
+	abstract public function getBindData(): array;
+
+	/**
+	 * @param string $sort
+	 */
+	public function setSort($sort)
+	{
 		$this->sort = $sort;
 	}
 
 	/**
-	 * @return	string
+	 * @return    string
 	 */
 	public function getSort() {
 		return $this->sort;
@@ -154,15 +168,30 @@ abstract class CriteriaElement {
 	/**
 	 * @param	string  $group
 	 */
-	public function setGroupby($group) {
+	public function setGroupby($group)
+	{
 		$this->groupby = $group;
 	}
 
 	/**
-	 * @return	string
+	 * @return    string
 	 */
-	public function getGroupby() {
+	public function getGroupby()
+	{
 		return ' GROUP BY ' . $this->groupby;
+	}
+
+	/**
+	 * Make a SQL "WHERE" clause
+	 *
+	 * @param bool $withBindVariables Render with bind variables
+	 *
+	 * @return    string
+	 */
+	public function renderWhere(bool $withBindVariables = false)
+	{
+		$cond = $this->render($withBindVariables);
+		return empty($cond) ? '' : "WHERE $cond";
 	}
 }
 
