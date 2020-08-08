@@ -346,9 +346,6 @@ class FormTest extends \PHPUnit_Framework_TestCase {
                 'config' => 'array',
                 'code' => 'null'
             ],
-            'icms_form_elements_Dhtmltextarea' => [
-                'htmlEditor' => 'array'
-            ],
             'icms_form_elements_Text' => [
                 'autocomplete' => 'bool'
             ],
