@@ -23,6 +23,7 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 		'filesystem.themes',
 		'filesystem.public',
 		'filesystem.compiled',
+		'filesystem.temp',
 	];
 
 	/**
@@ -63,6 +64,13 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 		$this->getContainer()->add('filesystem.compiled', function () {
 			return new Filesystem(
 				new Local(ICMS_COMPILE_PATH)
+			);
+		});
+		$this->getContainer()->add('filesystem.temp', function () {
+			return new Filesystem(
+				new Local(
+					sys_get_temp_dir()
+				)
 			);
 		});
 	}

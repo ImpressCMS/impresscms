@@ -99,7 +99,6 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 	protected function fetchTimestamp($name)
 	{
 		if (!$tpl = $this->tplinfo($name)) {
-			var_dump($tpl);
 			return 0;
 		}
 		if (is_object($tpl)) {

@@ -54,6 +54,8 @@
  }
  */
 
+use League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap;
+
 /**
  * Upload Media files
  * Example of usage:
@@ -141,9 +143,6 @@ class icms_file_MediaUploadHandler {
 	/** @var string Saved Filename after upload */
 	private $savedFileName;
 
-	/** @var array */
-	private $extensionToMime = array();
-
 	/** @var bool Would you like to check the image type? */
 	private $checkImageType = true;
 
@@ -191,11 +190,6 @@ class icms_file_MediaUploadHandler {
 	 * @param   int     $maxHeight
 	 */
 	public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
-		$this->extensionToMime = icms_Utils::mimetypes();
-		if (!is_array($this->extensionToMime)) {
-			$this->extensionToMime = array();
-			return false;
-		}
 		if (is_array($allowedMimeTypes)) {
 			$this->allowedMimeTypes = & $allowedMimeTypes;
 		}
@@ -217,20 +211,16 @@ class icms_file_MediaUploadHandler {
 		 * @param string $url
 		 */
 		public function fetchFromURL($url) {
-			if (empty($this->extensionToMime)) {
-				self::setErrors(_ER_UP_MIMETYPELOAD);
-				return false;
-			}
 			//header('Content-Type: text/plain');
-			if (substr($url, 0, 5) == 'data:') {
+			if (strpos($url, 'data:') === 0) {
 				$fp   = fopen($url, 'r');
 				$meta = stream_get_meta_data($fp);
 				$content = stream_get_contents($fp);
 				$headers = array(
-					'content-type' => isset($meta['mediatype'])?$meta['mediatype']:'text/plain',
-					'base64' => isset($meta['base64'])?$meta['base64']:true,
+					'content-type' => $meta['mediatype'] ?? 'text/plain',
+					'base64' => $meta['base64'] ?? true,
 					'content-length' => strlen($content),
-					'charset' => isset($meta['charset'])?$meta['charset']:'US-ASCII',
+					'charset' => $meta['charset'] ?? 'US-ASCII',
 				);
 				fclose($fp);
 			} else {
@@ -256,35 +246,32 @@ class icms_file_MediaUploadHandler {
 					$line = trim($line);
 					$i = strpos($line, ':');
 					if (!$i) {
-						if (substr($line, 0, 5) == 'HTTP/') {
+						if (strpos($line, 'HTTP/') === 0) {
 												   $hdrs['http'] = explode(' ', substr($line, 5));
-						} elseif (trim($line) != '') {
+						} elseif (trim($line) !== '') {
 													$hdrs['unknown-header'][] = $line;
 						}
 					} else {
 						$name = strtolower(trim(substr($line, 0, $i)));
 						$value = trim(substr($line, $i + 1));
-						switch ($name) {
-							case 'content-disposition':
-								preg_match_all('/([^;]+);\ *filename=(".+"|.+)/Ui', $value, $matches, PREG_SET_ORDER);
-								if (mb_substr($matches[0][2], 0, 1) == '"') {
-																	$matches[0][2] = mb_substr($matches[0][2], 1, -1);
-								}
-								$hdrs[$name] = array(
-									 'type'     => $matches[0][1],
-									 'filename' => $matches[0][2],
-								);
-							break;
-							default:
-								$hdrs[$name] = $value;
-							break;
+						if ($name == 'content-disposition') {
+							preg_match_all('/([^;]+);\ *filename=(".+"|.+)/Ui', $value, $matches, PREG_SET_ORDER);
+							if (mb_strpos($matches[0][2], '"') === 0) {
+								$matches[0][2] = mb_substr($matches[0][2], 1, -1);
+							}
+							$hdrs[$name] = array(
+								'type' => $matches[0][1],
+								'filename' => $matches[0][2],
+							);
+						} else {
+							$hdrs[$name] = $value;
 						}
 						unset($name, $value);
 					}
 				}
 				$headers = $hdrs;
 				unset($hdrs);
-				if (!isset($headers['http'][1]) || ($headers['http'][1] != 200)) {
+				if (!isset($headers['http'][1]) || ((int)$headers['http'][1] !== 200)) {
 									return false;
 				}
 				if (!isset($headers['content-type'])) {
@@ -307,7 +294,7 @@ class icms_file_MediaUploadHandler {
 			$this->mediaSize = (int) $headers['content-length'];
 			$this->mediaTmpName = tempnam(sys_get_temp_dir(), 'icms_media');
 			$this->mediaError = 0;
-			$this->mediaRealType = isset($this->extensionToMime[$ext])?$this->extensionToMime[$ext]:$this->mediaType;
+			$this->mediaRealType = (new GeneratedExtensionToMimeTypeMap())->lookupMimeType($ext) ?: $this->mediaType;
 			$fp = fopen($this->mediaTmpName, 'w+');
 			fwrite($fp, $content);
 			fclose($fp);
@@ -329,29 +316,23 @@ class icms_file_MediaUploadHandler {
 
 	/**
 	 * Fetch the uploaded file
-	 * @todo	Remote get_magic_quotes_gpd - is is deprecated and will always return FALSE in PHP 5.4
 	 * @param   string  $media_name Name of the file field
 	 * @param   int     $index      Index of the file (if more than one uploaded under that name)
 	 * @return  bool
 	 */
 	public function fetchMedia($media_name, $index = null) {
-		if (empty($this->extensionToMime)) {
-			self::setErrors(_ER_UP_MIMETYPELOAD);
-			return false;
-		}
 		if (!isset($_FILES[$media_name])) {
 			self::setErrors(_ER_UP_FILENOTFOUND);
 			return false;
 		} elseif (is_array($_FILES[$media_name]['name']) && isset($index)) {
 			$index = (int) ($index);
-			$this->mediaName = (get_magic_quotes_gpc())? stripslashes($_FILES[$media_name]['name'][$index]):$_FILES[$media_name]['name'][$index];
+			$this->mediaName = $_FILES[$media_name]['name'][$index];
 			$this->mediaType = $_FILES[$media_name]['type'][$index];
 			$this->mediaSize = $_FILES[$media_name]['size'][$index];
 			$this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
 			$this->mediaError = !empty($_FILES[$media_name]['error'][$index])?$_FILES[$media_name]['error'][$index]:0;
 		} else {
 			$media_name = & $_FILES[$media_name];
-			$this->mediaName = (get_magic_quotes_gpc())? stripslashes($media_name['name']):$media_name['name'];
 			$this->mediaName = $media_name['name'];
 			$this->mediaType = $media_name['type'];
 			$this->mediaSize = $media_name['size'];
@@ -360,8 +341,8 @@ class icms_file_MediaUploadHandler {
 		}
 		if (($ext = strrpos($this->mediaName, '.')) !== false) {
 			$ext = strtolower(substr($this->mediaName, $ext + 1));
-			if (isset($this->extensionToMime[$ext])) {
-				$this->mediaRealType = $this->extensionToMime[$ext];
+			if ($detectedMimeType = (new GeneratedExtensionToMimeTypeMap())->lookupMimeType($ext)) {
+				$this->mediaRealType = $detectedMimeType;
 			}
 		}
 		$this->errors = array();
@@ -433,13 +414,13 @@ class icms_file_MediaUploadHandler {
 			if (!isset($unique) || (isset($unique) && $unique !== true)) {
 				$this->prefix = (string) trim($value);
 			} elseif (isset($unique) && $unique == true) {
-				$this->prefix = (string) (trim($value)) . '_' . uniqid(rand(0, 32767));
+				$this->prefix = (string) (trim($value)) . '_' . uniqid(rand(0, 32767), true);
 			}
 		} elseif (!isset($value) || $value == '') {
 			if (!isset($unique) || (isset($unique) && $unique !== true)) {
 				$this->prefix = '';
 			} elseif (isset($unique) && $unique == true) {
-				$this->prefix = uniqid(rand(0, 32767));
+				$this->prefix = uniqid(rand(0, 32767), true);
 			}
 		}
 	}
@@ -680,7 +661,7 @@ class icms_file_MediaUploadHandler {
 		$patterns = array();
 		$replaces = array();
 		foreach ($this->extensionsToBeSanitized as $ext) {
-			$patterns[] = "/\." . preg_quote($ext) . "\./i";
+			$patterns[] = "/\." . preg_quote($ext, '/') . "\./i";
 			$replaces[] = "_" . $ext . ".";
 		}
 		$this->mediaName = preg_replace($patterns, $replaces, $this->mediaName);
