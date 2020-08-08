@@ -815,11 +815,11 @@ class icms_core_DataFilter {
 	 *
 	 * @param	 string	$name	 Name of the extension to load
 	 * @return	bool
+	 *
+	 * @deprecated Does nothing will be removed in 2.1
 	 */
 	static public function loadExtension($name) {
-		if (empty($name) || !include_once ICMS_PLUGINS_PATH . "/textsanitizer/{$name}/{$name}.php") {
-			return false;
-		}
+
 	}
 
 	/**

@@ -330,12 +330,6 @@
           "editor.content"
         ]
       },
-      "dhtmltextarea": {
-        "class": "\\ImpressCMS\\Editors\\DHTMLTextArea\\Editor",
-        "tags": [
-          "editor.content"
-        ]
-      },
       "tinymce": {
         "class": "\\ImpressCMS\\Editors\\TinyMCE\\Editor",
         "tags": [
