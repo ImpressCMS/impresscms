@@ -76,7 +76,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 		}
 		$module = $tplobj[0]->getVar('tpl_module', 'n');
 		$type = $tplobj[0]->getVar('tpl_type', 'n');
-		$blockpath = ($type == 'block') ? 'blocks/' : '';
+		$blockpath = ($type === 'block') ? 'blocks/' : '';
 		// First, check for an overloaded version within the theme folder
 		$filepath = ICMS_THEME_PATH . "/$theme/modules/$module/$blockpath$tpl_name";
 		if (!file_exists($filepath)) {
@@ -99,7 +99,6 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 	protected function fetchTimestamp($name)
 	{
 		if (!$tpl = $this->tplinfo($name)) {
-			var_dump($tpl);
 			return 0;
 		}
 		if (is_object($tpl)) {

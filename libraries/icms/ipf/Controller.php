@@ -12,7 +12,9 @@
  */
 class icms_ipf_Controller {
 
-	/** */
+	/**
+	 * @var \icms_ipf_Handler
+	 */
 	public $handler;
 
 	/**
@@ -369,7 +371,7 @@ class icms_ipf_Controller {
 						'confirm' => 1,
 						'redirect_page' => \icms::$urls['previouspage']
 			);
-			if ($this->handler->_moduleName == 'system') {
+			if ($this->handler->moduleName == 'system') {
 				$hiddens['fct'] = isset($_GET['fct'])?$_GET['fct']:false;
 			}
 			icms_core_Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg, $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
@@ -499,7 +501,7 @@ class icms_ipf_Controller {
 	 * @return string
 	 */
 	public function getViewItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
-		if ($this->handler->_moduleName != 'system') {
+		if ($this->handler->moduleName !== 'system') {
 			$admin_side = $userSide?'':'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		} else {
@@ -550,7 +552,7 @@ class icms_ipf_Controller {
 	 * @param	bool	$userSide
 	 */
 	public function getEditItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
-		if ($this->handler->_moduleName != 'system') {
+		if ($this->handler->moduleName !== 'system') {
 			$admin_side = $userSide?'':'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
 				. "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
@@ -583,7 +585,7 @@ class icms_ipf_Controller {
 	 * @param	bool	$userSide
 	 */
 	public function getDeleteItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
-		if ($this->handler->_moduleName != 'system') {
+		if ($this->handler->moduleName !== 'system') {
 			$admin_side = $userSide?'':'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
 				. "?op=del&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
@@ -635,8 +637,7 @@ class icms_ipf_Controller {
 	 * Creates a string from the object's module name and item name
 	 */
 	public function getModuleItemString() {
-		$ret = $this->handler->_moduleName . '_' . $this->handler->_itemname;
-		return $ret;
+		return $this->handler->moduleName . '_' . $this->handler->_itemname;
 	}
 }
 

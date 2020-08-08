@@ -107,9 +107,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 	 *
 	 * The name of the module for the object
 	 * @var string
-	 * @todo    Rename using the proper naming convention (This is a public var)
 	 */
-	public $_moduleName = '';
+	public $moduleName = '';
 	/**
 	 * Is upload enabled?
 	 *
@@ -221,16 +220,16 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 
 		// Todo: Autodect module
 		if ($modulename === null || $modulename === 'icms') {
-			$this->_moduleName = 'icms';
-			$classname = $this->_moduleName . '_' . $itemname . '_Object';
+			$this->moduleName = 'icms';
+			$classname = $this->moduleName . '_' . $itemname . '_Object';
 			if ($table === null) {
 				$table = $itemname;
 			}
 		} else {
-			$this->_moduleName = $modulename;
+			$this->moduleName = $modulename;
 			$classname = substr(get_class($this), 0, -7);
 			if ($table === null) {
-				$table = $this->_moduleName . '_' . $itemname;
+				$table = $this->moduleName . '_' . $itemname;
 			}
 		}
 
@@ -239,7 +238,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 		 * to be evaluated...
 		 */
 		if (!class_exists($classname)) {
-			$classname = ucfirst($this->_moduleName) . ucfirst($itemname);
+			$classname = ucfirst($this->moduleName) . ucfirst($itemname);
 		}
 
 		$this->table = $db->prefix($table);
@@ -249,10 +248,25 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 		$this->identifierName = $idenfierName;
 		$this->summaryName = $summaryName;
 		$this->_page = $itemname . '.php';
-		$this->_modulePath = ICMS_MODULES_PATH . '/' . $this->_moduleName . '/';
-		$this->_moduleUrl = ICMS_MODULES_URL . '/' . $this->_moduleName . '/';
-		$this->_uploadPath = ICMS_UPLOAD_PATH . '/' . $this->_moduleName . '/';
-		$this->_uploadUrl = ICMS_UPLOAD_URL . '/' . $this->_moduleName . '/';
+		$this->_modulePath = ICMS_MODULES_PATH . '/' . $this->moduleName . '/';
+		$this->_moduleUrl = ICMS_MODULES_URL . '/' . $this->moduleName . '/';
+		$this->_uploadPath = ICMS_UPLOAD_PATH . '/' . $this->moduleName . '/';
+		$this->_uploadUrl = ICMS_UPLOAD_URL . '/' . $this->moduleName . '/';
+	}
+
+	/**
+	 * Gets property
+	 *
+	 * @param string $name Property name
+	 *
+	 * @return string
+	 */
+	public function __get($name)
+	{
+		switch ($name) {
+			case '_moduleName':
+				return $this->moduleName;
+		}
 	}
 
 	/**
@@ -834,7 +848,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 			$sql .= ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
 		}
 
-		var_dump($sql, $args);
 		$result = $this->db->perform($sql, $args);
 		if (!$result) {
 			return $ret;
@@ -1504,7 +1517,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 	 */
 	public function getModuleItemString()
 	{
-		$ret = $this->_moduleName . '_' . $this->_itemname;
+		$ret = $this->moduleName . '_' . $this->_itemname;
 		return $ret;
 	}
 
