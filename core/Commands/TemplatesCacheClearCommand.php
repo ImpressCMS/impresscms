@@ -4,7 +4,8 @@
 namespace ImpressCMS\Core\Commands;
 
 
-use League\Flysystem\Adapter\Local;
+use League\Container\ContainerAwareInterface;
+use League\Container\ContainerAwareTrait;
 use League\Flysystem\Filesystem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,8 +16,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @package ImpressCMS\Core\Commands
  */
-class TemplatesCacheClearCommand extends Command
+class TemplatesCacheClearCommand extends Command implements ContainerAwareInterface
 {
+	use ContainerAwareTrait;
 
 	/**
 	 * @inheritDoc
@@ -32,9 +34,10 @@ class TemplatesCacheClearCommand extends Command
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$fs = new Filesystem(
-			new Local(ICMS_COMPILE_PATH)
-		);
+		/**
+		 * @var Filesystem $fs
+		 */
+		$fs = $this->container->get('filesystem.compiled');
 		foreach ($fs->listContents('', true) as $file) {
 			if (($file['type'] !== 'file') || ($file['extension'] !== 'php')) {
 				continue;
@@ -42,5 +45,7 @@ class TemplatesCacheClearCommand extends Command
 			$fs->delete($file['path']);
 		}
 		$output->writeln('Templates cache cleared successfully');
+
+		return 0;
 	}
 }

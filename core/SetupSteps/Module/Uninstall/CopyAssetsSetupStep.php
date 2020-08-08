@@ -5,15 +5,18 @@ namespace ImpressCMS\Core\SetupSteps\Module\Uninstall;
 use icms_module_Object;
 use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\SetupSteps\SetupStepInterface;
-use League\Flysystem\MountManager;
+use League\Container\ContainerAwareInterface;
+use League\Container\ContainerAwareTrait;
+use League\Flysystem\Filesystem;
 
 /**
  * Deletes all module assets
  *
  * @package ImpressCMS\Core\SetupSteps\Module\Uninstall
  */
-class CopyAssetsSetupStep implements SetupStepInterface
+class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 {
+	use ContainerAwareTrait;
 
 	/**
 	 * @inheritDoc
@@ -21,11 +24,11 @@ class CopyAssetsSetupStep implements SetupStepInterface
 	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
 	{
 		/**
-		 * @var MountManager $mm
+		 * @var Filesystem $fs
 		 */
-		$mm = \icms::getInstance()->get('filesystem');
+		$fs = $this->container->get('filesystem.public');
 		$output->info(_MD_AM_COPY_ASSETS_DELETING);
-		$mm->deleteDir('public://modules/' . $module->dirname);
+		$fs->deleteDir('modules/' . $module->dirname);
 
 		return true;
 	}

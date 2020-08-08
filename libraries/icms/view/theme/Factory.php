@@ -86,12 +86,15 @@ class icms_view_theme_Factory {
 	 * Gets list of themes folder from themes directory, excluding any directories that do not have theme.html
 	 * @return	array
 	 */
-	static public function getThemesList() {
+	public static function getThemesList() {
 		$dirlist = [];
-		$fs = icms::getInstance()->get('filesystem');
-		foreach ($fs->listContents('themes://') as $fileInfo) {
+		/**
+		 * @var \League\Flysystem\Filesystem $fs
+		 */
+		$fs = icms::getInstance()->get('filesystem.themes');
+		foreach ($fs->listContents() as $fileInfo) {
 			$file = $fileInfo['basename'];
-			if (substr($file, 0, 1) == '.' || $fs->has('themes://' . $file . '/theme.html') === false) {
+			if (strpos($file, '.') === 0 || $fs->has($file . '/theme.html') === false) {
 				continue;
 			}
 			$dirlist[$file] = $file;
@@ -103,20 +106,27 @@ class icms_view_theme_Factory {
 	 * Gets list of administration themes folder from themes directory, excluding any directories that do not have theme_admin.html
 	 * @return	array
 	 */
-	static public function getAdminThemesList() {
+	public static function getAdminThemesList() {
 		$items = [];
-		$fs = icms::getInstance()->get('filesystem');
-		foreach ($fs->listContents('themes://') as $fileInfo) {
+		/**
+		 * @var \League\Flysystem\Filesystem $fs
+		 */
+		$fs = icms::getInstance()->get('filesystem.themes');
+		foreach ($fs->listContents() as $fileInfo) {
 			$file = $fileInfo['basename'];
-			if (substr($file, 0, 1) == '.' || $fs->has('themes://' . $file . '/theme_admin.html') === false) {
+			if (strpos($file, '.') === 0 || $fs->has( $file . '/theme_admin.html') === false) {
 				continue;
 			}
 			$items[$file] = $file;
 		}
 
-		foreach ($fs->listContents('modules://system/themes') as $fileInfo) {
+		/**
+		 * @var \League\Flysystem\Filesystem $fm
+		 */
+		$fm = icms::getInstance()->get('filesystem.modules');
+		foreach ($fm->listContents('system/themes') as $fileInfo) {
 			$file = $fileInfo['basename'];
-			if (substr($file, 0, 1) == '.' || $fs->has('modules://system/themes/' . $file . '/theme.html') === false) {
+			if (strpos($file, '.') === 0 || $fm->has('system/themes/' . $file . '/theme.html') === false) {
 				continue;
 			}
 			$items[$file] = $file;
