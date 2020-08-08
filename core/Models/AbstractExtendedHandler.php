@@ -27,6 +27,7 @@ use ImpressCMS\Core\File\Filesystem;
 use ImpressCMS\Core\IPF\Module;
 use ImpressCMS\Core\Properties\AbstractProperties;
 use ImpressCMS\Core\Security\PermissionsManager;
+use PDO;
 
 /**
  * Persistable Object Handlder
@@ -844,7 +845,6 @@ class AbstractExtendedHandler extends AbstractHandler {
 			$sql .= ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
 		}
 
-		var_dump($sql, $args);
 		$result = $this->db->perform($sql, $args);
 		if (!$result) {
 			return $ret;
@@ -1434,10 +1434,10 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$url_links = array();
 		$url_files = array();
 		foreach ($obj->getVars() as $key => $var) {
-			if (isset($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE])) {
-				if ($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE] === icms_properties_Handler::DTYPE_DEP_URLLINK) {
+			if (isset($var[AbstractProperties::VARCFG_DEP_DATA_TYPE])) {
+				if ($var[AbstractProperties::VARCFG_DEP_DATA_TYPE] === AbstractProperties::DTYPE_DEP_URLLINK) {
 					$url_links[] = $obj->getVar($key, 'n');
-				} elseif ($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE] === icms_properties_Handler::DTYPE_DEP_FILE) {
+				} elseif ($var[AbstractProperties::VARCFG_DEP_DATA_TYPE] === AbstractProperties::DTYPE_DEP_FILE) {
 					$url_files[] = $obj->getVar($key, 'n');
 				}
 			}
