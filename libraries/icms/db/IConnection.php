@@ -3,8 +3,10 @@
  * icms_db_IConnection interface definition
  *
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
+
+use Aura\Sql\ExtendedPdoInterface;
 
 /**
  * Interface for database adapters.
@@ -12,9 +14,10 @@
  * All the methods in this class are PDO methods, with the exception of escape, which is a legacy method
  *
  * @since 1.4
- * @package	ICMS\Database
+ * @package    ICMS\Database
  */
-interface icms_db_IConnection {
+interface icms_db_IConnection extends ExtendedPdoInterface
+{
 
 	/**
 	 * Set the value of a database connection attribute.
@@ -81,7 +84,7 @@ interface icms_db_IConnection {
 	 * Prepares an SQL statement
 	 * @param string $sql
 	 * @param array $options
-	 * @return icms_db_Statement
+	 * @return \PDOStatement
 	 */
 	public function prepare($sql, $options = array());
 
@@ -94,8 +97,9 @@ interface icms_db_IConnection {
 
 	/**
 	 * Executes an SQL statement and returns a result set as a IStatement object.
-	 * @param string $sql
-	 * @return icms_db_Statement
+	 * @param string $statement Statement to execute
+	 * @param array $fetch Fetch modes
+	 * @return \PDOStatement
 	 */
 	public function query($statement, ...$fetch);
 
