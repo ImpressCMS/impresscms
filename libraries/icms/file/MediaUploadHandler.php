@@ -615,17 +615,13 @@ class icms_file_MediaUploadHandler {
 	 * @return  bool
 	 */
 	public function checkMimeType() {
-		global $icmsModule;
-		$mimetypeHandler = icms_getModulehandler('mimetype', 'system');
-		$modulename = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->getVar('dirname'):'system';
 		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
 			self::setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
 			return false;
 		}
-		$AllowedMimeTypes = $mimetypeHandler->AllowedModules($this->mediaRealType, $modulename);
-		if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes))
-				|| (!empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes))
-				|| (empty($this->allowedMimeTypes) && !$AllowedMimeTypes)) {
+		if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes, false))
+				|| (!empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes, false))
+		) {
 			self::setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
 			return false;
 		}
