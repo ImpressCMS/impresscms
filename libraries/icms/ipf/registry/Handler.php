@@ -54,7 +54,7 @@ class icms_ipf_registry_Handler {
 	public function addObjectsFromHandler(&$handler, $criteria = false) {
 		if (method_exists($handler, 'getObjects')) {
 			$objects = $handler->getObjects($criteria, true);
-			$this->_registryArray['objects'][$handler->_moduleName][$handler->_itemname] = $objects;
+			$this->_registryArray['objects'][$handler->_moduleName][$handler->itemName] = $objects;
 			return $objects;
 		} else {
 			return false;
@@ -72,7 +72,7 @@ class icms_ipf_registry_Handler {
 	public function addListFromHandler(&$handler, $criteria = false) {
 		if (method_exists($handler, 'getList')) {
 			$list = $handler->getList($criteria);
-			$this->_registryArray['list'][$handler->_moduleName][$handler->_itemname] = $list;
+			$this->_registryArray['list'][$handler->_moduleName][$handler->itemName] = $list;
 			return $list;
 		} else {
 			return false;

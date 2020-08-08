@@ -36,9 +36,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 	 * The name of the IPF object
 	 *
 	 * @var string
-	 * @todo    Rename using the proper naming convention (this is a public var)
 	 */
-	public $_itemname = '';
+	public $itemName = '';
 	/**
 	 * Name of the table use to store objects linked with this handler
 	 *
@@ -243,7 +242,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 		}
 
 		$this->table = $db->prefix($table);
-		$this->_itemname = $itemname;
+		$this->itemName = $itemname;
 		$this->keyName = $keyname;
 		$this->className = $classname;
 		$this->identifierName = $idenfierName;
@@ -253,6 +252,21 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 		$this->_moduleUrl = ICMS_MODULES_URL . '/' . $this->_moduleName . '/';
 		$this->_uploadPath = ICMS_UPLOAD_PATH . '/' . $this->_moduleName . '/';
 		$this->_uploadUrl = ICMS_UPLOAD_URL . '/' . $this->_moduleName . '/';
+	}
+
+	/**
+	 * Gets property
+	 *
+	 * @param string $name Property name
+	 *
+	 * @return string
+	 */
+	public function __get($name)
+	{
+		switch ($name) {
+			case '_itemname':
+				return $this->itemName;
+		}
 	}
 
 	/**
@@ -384,7 +398,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 		if ($this->generalSQL) {
 			$sql = $this->generalSQL;
 		} elseif (!$sql) {
-			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM `' . $this->table . '` AS ' . $this->_itemname;
+			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM `' . $this->table . '` AS ' . $this->itemName;
 		}
 
 		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
@@ -599,7 +613,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 	 */
 	public function getImageUrl()
 	{
-		return $this->_uploadUrl . $this->_itemname . '/';
+		return $this->_uploadUrl . $this->itemName . '/';
 	}
 
 	/**
@@ -607,7 +621,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 	 */
 	public function getImagePath()
 	{
-		$dir = $this->_uploadPath . $this->_itemname;
+		$dir = $this->_uploadPath . $this->itemName;
 		if (!file_exists($dir)) {
 			icms_core_Filesystem::mkdir($dir);
 		}
@@ -701,7 +715,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
 				//$criteria->add(new icms_db_criteria_Item($keyName, ($id[$i]), '=', $this->_itemname));
-				$criteria->add(new icms_db_criteria_Item($keyName, $id[$i], '=', $this->_itemname));
+				$criteria->add(new icms_db_criteria_Item($keyName, $id[$i], '=', $this->itemName));
 			}
 		} else {
 			if (!$criteria) {
@@ -712,7 +726,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 				 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
-				$criteria->add(new icms_db_criteria_Item($this->keyName, $id, '=', $this->_itemname));
+				$criteria->add(new icms_db_criteria_Item($this->keyName, $id, '=', $this->itemName));
 			}
 		}
 
@@ -813,7 +827,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 		if (!empty($keyValue)) {
 			$sql .= ', ' . $keyValue;
 		}
-		$sql .= ' FROM ' . $this->table . ' AS ' . $this->_itemname;
+		$sql .= ' FROM ' . $this->table . ' AS ' . $this->itemName;
 		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
 			$sql .= ' ' . $criteria->renderWhere(true);
 			$args = $criteria->getBindData();
@@ -855,7 +869,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 	public function getIdentifierName($withprefix = true)
 	{
 		if ($withprefix) {
-			return $this->_itemname . "." . $this->identifierName;
+			return $this->itemName . "." . $this->identifierName;
 		} else {
 			return $this->identifierName;
 		}
@@ -1273,7 +1287,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 			$sql = $this->generalSQL;
 			$sql = str_replace('SELECT *', 'SELECT COUNT(*)', $sql);
 		} else {
-			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->_itemname;
+			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->itemName;
 		}
 		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
 			$sql .= ' ' . $criteria->renderWhere(true);
@@ -1504,7 +1518,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 	 */
 	public function getModuleItemString()
 	{
-		$ret = $this->_moduleName . '_' . $this->_itemname;
+		$ret = $this->_moduleName . '_' . $this->itemName;
 		return $ret;
 	}
 

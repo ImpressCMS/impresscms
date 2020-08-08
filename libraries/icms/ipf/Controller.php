@@ -476,9 +476,9 @@ class icms_ipf_Controller {
 		$seoIncludeId = true;
 
 		/*if ($seoMode == 'rewrite') {
-			$ret = ICMS_URL . '/' . $seoModuleName . '.' . $this->handler->_itemname . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
+			$ret = ICMS_URL . '/' . $seoModuleName . '.' . $this->handler->itemName . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
 			} else if ($seoMode == 'pathinfo') {
-			$ret = SMARTOBJECT_URL . 'seo.php/' . $seoModuleName . '.' . $this->handler->_itemname . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
+			$ret = SMARTOBJECT_URL . 'seo.php/' . $seoModuleName . '.' . $this->handler->itemName . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
 			} else {
 			*/	$ret = $this->handler->_moduleUrl . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		//}
@@ -505,7 +505,7 @@ class icms_ipf_Controller {
 		} else {
 			$admin_side = '';
 			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct='
-				. $this->handler->_itemname . "&amp;op=view&amp;"
+				. $this->handler->itemName . "&amp;op=view&amp;"
 				. $this->handler->keyName . "="
 				. $icmsObj->getVar($this->handler->keyName);
 		}

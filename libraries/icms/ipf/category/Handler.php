@@ -85,7 +85,7 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 
 			$ret = array();
 			$sql = 'SELECT categoryid, parentid FROM ' . $this->table
-				. " AS " . $this->_itemname . ' ORDER BY parentid';
+				. " AS " . $this->itemName . ' ORDER BY parentid';
 
 			$result = $this->db->query($sql);
 
