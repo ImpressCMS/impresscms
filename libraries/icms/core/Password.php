@@ -21,7 +21,7 @@ final class icms_core_Password {
 	 * Constructor for the Password class
 	 */
 	public function __construct() {
-		$this->mainSalt = env('APP_KEY');
+		$this->mainSalt = env('DB_SALT', env('APP_KEY'));
 	}
 
 	/**

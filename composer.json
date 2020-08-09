@@ -52,6 +52,7 @@
     "aura/sqlschema": "^2.0",
     "cerdic/css-tidy": "^1.5",
     "composer/composer": "^1.10",
+    "defuse/php-encryption": "^2.2",
     "erusev/parsedown": "^1.7.0",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
@@ -167,6 +168,11 @@
       "\\IcmsPreloadUserInfo": {
         "tags": [
           "preload"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Commands\\GenerateAppKeyCommand": {
+        "tags": [
+          "console.command"
         ]
       },
       "\\ImpressCMS\\Core\\Commands\\CacheClearCommand": {
