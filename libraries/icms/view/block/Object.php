@@ -281,7 +281,7 @@ class icms_view_block_Object extends icms_ipf_Object
 				if ($c_type == static::CONTENT_TYPE_HTML) {
 					$content = $this->content;
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-					$content = str_replace(env('DB_SALT'), '', $content);
+					$content = str_replace(env('APP_KEY'), '', $content);
 					return $content;
 				} elseif ($c_type == static::CONTENT_TYPE_PHP) {
 					ob_start();
@@ -289,7 +289,7 @@ class icms_view_block_Object extends icms_ipf_Object
 					$content = ob_get_contents();
 					ob_end_clean();
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-					$content = str_replace(env('DB_SALT'), '', $content);
+					$content = str_replace(env('APP_KEY'), '', $content);
 					return $content;
 				} elseif ($c_type == static::CONTENT_TYPE_AUTO_FORMAT) {
 					$myts = icms_core_Textsanitizer::getInstance();

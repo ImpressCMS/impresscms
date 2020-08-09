@@ -1,4 +1,8 @@
 <?php
+
+use RandomLib\Factory;
+use SecurityLib\Strength;
+
 /**
  * Class to encrypt User Passwords.
  *
@@ -17,7 +21,7 @@ final class icms_core_Password {
 	 * Constructor for the Password class
 	 */
 	public function __construct() {
-		$this->mainSalt = env('DB_SALT');
+		$this->mainSalt = env('APP_KEY');
 	}
 
 	/**
@@ -29,7 +33,7 @@ final class icms_core_Password {
 	static public function getInstance() {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_core_Password();
+			$instance = new self();
 		}
 		return $instance;
 	}
@@ -64,18 +68,16 @@ final class icms_core_Password {
 	 * @since    1.1
 	 * @param    string $slength The length of the key to produce
 	 * @return   string  returns the generated random key.
+	 *
+	 * @deprecated Use ircmaxell/random-lib functionality. Will be removed in 2.1
 	 */
 	static public function createSalt($slength = 64)
 	{
-		$salt = '';
-		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$microtime = function_exists('microtime') ? microtime() : time();
-		mt_srand((double)$microtime * 1000000);
-		for ($i = 0; $i <= $slength; $i++) {
-			$salt .= substr($base, mt_rand(0, $slength) % strlen($base), 1);
-		}
-
-		return $salt;
+		return (new Factory())
+			->getGenerator(
+				new Strength(Strength::MEDIUM)
+			)
+			->generateString($slength,'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 	}
 
 	/**

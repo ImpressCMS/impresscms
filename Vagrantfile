@@ -74,7 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 					DB_CHARSET=utf8
 					DB_COLLATION=utf8_general_ci
 					DB_PREFIX=icms
-					DB_SALT=homestead
+					APP_KEY=homestead
 					URL=http://impresscms.test
 				CONTENT
 			end

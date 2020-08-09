@@ -78,7 +78,9 @@ if (empty($getuser)) {
 
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
 	if ($code != '' && $areyou == $code) {
-		$newpass = $icmspass->createSalt(8);
+		$newpass = (new \RandomLib\Factory())->->getGenerator(
+			new \SecurityLib\Strength(\SecurityLib\Strength::MEDIUM)
+		)->generateString(8,'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 		$pass = $icmspass->encryptPass($newpass);
 		$mailer = new icms_messaging_Handler();
 		$mailer->useMail();
