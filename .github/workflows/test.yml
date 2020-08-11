@@ -33,6 +33,11 @@ jobs:
         include:
           - operating-system: ubuntu-latest
             php-versions: 8.0
+            database-system: mysql:5.6
+            experimental: true
+          - operating-system: ubuntu-latest
+            php-versions: 8.0
+            database-system: mariadb:10.1
             experimental: true
     name: PHP ${{ matrix.php-versions }} with ${{ matrix.database-system }} test on ${{ matrix.operating-system }}
     services:
