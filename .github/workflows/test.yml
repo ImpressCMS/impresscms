@@ -15,6 +15,7 @@ on:
 jobs:
   run:
     runs-on: ${{ matrix.operating-system }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       max-parallel: 3
       matrix:
