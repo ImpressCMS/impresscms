@@ -85,6 +85,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
+        continue-on-error: ${{ matrix.experimental }}
       - name: Installing ImpressCMS
         env:
           URL: http://localhost
@@ -107,8 +108,10 @@ jobs:
         run: |
           chmod -R 777 ./storage
           ./bin/phoenix migrate -vvv
+        continue-on-error: ${{ matrix.experimental }}
       - name: Prepare CodeClimate
         run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter before-build
+        if: ${{ success() }}
       - name: Testing with PHPUnit
         env:
           URL: http://localhost
@@ -127,5 +130,7 @@ jobs:
           ls tests/ -la
           phpunit
           mv ./storage/log/clover.xml ./clover.xml
+        continue-on-error: ${{ matrix.experimental }}
       - name: Commiting CodeClimate data
         run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover -r ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
+        if: ${{ success() }}
