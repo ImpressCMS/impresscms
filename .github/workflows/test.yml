@@ -40,7 +40,7 @@ jobs:
             php-versions: 8.0
             database-system: mariadb:10.1
             experimental: true
-    name: PHP ${{ matrix.php-versions }} with ${{ matrix.database-system }} test on ${{ matrix.operating-system }}
+    name: PHP ${{ matrix.php-versions }} with ${{ matrix.database-system }} test on ${{ matrix.operating-system }} [${{ matrix.experimental }}]
     services:
       mysql:
         image: ${{ matrix.database-system }}
