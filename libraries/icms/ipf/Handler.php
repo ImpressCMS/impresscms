@@ -508,7 +508,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 					} else {
 						$ret[$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
 					}
-					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 					continue;
 				}
 				$obj = new $this->className($this, $myrow);
@@ -547,7 +546,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 					} else {
 						$ret[$cname][$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
 					}
-					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 					continue;
 				}
 				$obj = new $this->className($this, $myrow);
@@ -628,9 +626,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 					$ret[] = &self::$_loadedItems[$this->className][$kname];
 				} else {
 					$ret[] = self::$_loadedItems[$this->className][$kname]->toArray();
-				}
-				if (isset(icms::$logger)) {
-					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 				}
 				continue;
 			}
