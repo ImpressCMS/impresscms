@@ -118,6 +118,7 @@
       "\\ImpressCMS\\Core\\Providers\\DatabaseServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\SecurityServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ConfigServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\SessionServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ModuleServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider"
     ],
