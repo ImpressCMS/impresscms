@@ -56,16 +56,17 @@ abstract class icms_core_ObjectHandler {
 	/**
 	 * holds referenced
 	 *
-	 * @var icms_db_legacy_Database
+	 * @var icms_db_Connection
 	 * @access public
 	 */
 	public $db;
 
 	//
+
 	/**
 	 * called from child classes only
 	 *
-	 * @param icms_db_legacy_Database $db reference to db
+	 * @param icms_db_Connection $db reference to db
 	 * @access protected
 	 */
 	function __construct(&$db) {

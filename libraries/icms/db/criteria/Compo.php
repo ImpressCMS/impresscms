@@ -84,24 +84,24 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	 *
 	 * @return  object  reference to this collection
 	 */
-	public function &add($criteriaElement, $condition = 'AND') {
-		$this->criteriaElements[] = & $criteriaElement;
+	public function &add($criteriaElement, $condition = 'AND')
+	{
+		$this->criteriaElements[] = &$criteriaElement;
 		$this->conditions[] = $condition;
 		return $this;
 	}
 
 	/**
-	 * Make the criteria into a query string
-	 *
-	 * @return	string
+	 * @inheritDoc
 	 */
-	public function render() {
+	public function render(bool $withBindVariables = false)
+	{
 		$ret = '';
 		$count = count($this->criteriaElements);
 		if ($count > 0) {
-			$ret = '(' . $this->criteriaElements[0]->render();
+			$ret = '(' . $this->criteriaElements[0]->render($withBindVariables);
 			for ($i = 1; $i < $count; $i++) {
-				$query = $this->criteriaElements[$i]->render();
+				$query = $this->criteriaElements[$i]->render($withBindVariables);
 				if (!$query) {
 					continue;
 				}
@@ -109,17 +109,6 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 			}
 			$ret .= ')';
 		}
-		return $ret;
-	}
-
-	/**
-	 * Make the criteria into a SQL "WHERE" clause
-	 *
-	 * @return	string
-	 */
-	public function renderWhere() {
-		$ret = $this->render();
-		$ret = ($ret != '')?'WHERE ' . $ret:$ret;
 		return $ret;
 	}
 
@@ -140,11 +129,27 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 					$op = '&';
 				} elseif (strtoupper($cond) == 'OR') {
 					$op = '|';
+				} else {
+					$op = '';
 				}
-				$retval = "(" . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ")";
+				$retval = '(' . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ')';
 			}
 		}
 		return $retval;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getBindData(): array
+	{
+		$ret = [];
+		foreach ($this->criteriaElements as $i => $element) {
+			foreach ($element->getBindData() as $k => $v) {
+				$ret[$k] = $v;
+			}
+		}
+		return $ret;
 	}
 }
 
