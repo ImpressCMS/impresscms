@@ -520,7 +520,6 @@ class AbstractExtendedHandler extends AbstractHandler {
 					} else {
 						$ret[$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
 					}
-					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 					continue;
 				}
 				$obj = new $this->className($this, $myrow);
@@ -559,7 +558,6 @@ class AbstractExtendedHandler extends AbstractHandler {
 					} else {
 						$ret[$cname][$iname] = self::$_loadedItems[$this->className][$kname]->toArray();
 					}
-					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 					continue;
 				}
 				$obj = new $this->className($this, $myrow);
@@ -640,9 +638,6 @@ class AbstractExtendedHandler extends AbstractHandler {
 					$ret[] = &self::$_loadedItems[$this->className][$kname];
 				} else {
 					$ret[] = self::$_loadedItems[$this->className][$kname]->toArray();
-				}
-				if (isset(icms::$logger)) {
-					icms::$logger->addExtra('Objects cache', sprintf('Loaded %s (%s) from cache', $this->className, $kname));
 				}
 				continue;
 			}
