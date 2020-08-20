@@ -104,7 +104,8 @@
     ]
   },
   "require-dev": {
-    "phpunit/phpunit": "5.7.27"
+    "phpunit/phpunit": "5.7.27",
+    "roave/security-advisories": "dev-master"
   },
   "extra": {
     "providers": [
