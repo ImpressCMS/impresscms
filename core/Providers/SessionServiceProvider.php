@@ -45,6 +45,10 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 	protected function getSessionInstance()
 	{
 		global $icmsConfig;
+		if (empty($icmsConfig)) {
+			// hack to load config if not loaded before
+			$this->getContainer()->get('config');
+		}
 
 		$factory = new SessionFactory();
 		$session = $factory->newInstance($_COOKIE);
@@ -52,7 +56,6 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 			'secure' => substr(ICMS_URL, 0, 5) == 'https',
 			'httponly' => true,
 			'domain' => parse_url(ICMS_URL, PHP_URL_HOST),
-			'path' => parse_url(ICMS_URL, PHP_URL_PATH),
 			'lifetime' => 60 * $icmsConfig['session_expire']
 		]);
 		// $sslpost_name = isset($_POST[$icmsConfig['sslpost_name']]) ? $_POST[$icmsConfig['sslpost_name']] : "";
@@ -82,7 +85,6 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 				icms::$user = $user;
 			}
 		}
-
 		return $session;
 	}
 }

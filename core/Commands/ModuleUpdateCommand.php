@@ -3,6 +3,7 @@
 
 namespace ImpressCMS\Core\Commands;
 
+use ImpressCMS\Core\SetupSteps\OutputDecorator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -42,11 +43,13 @@ class ModuleUpdateCommand extends Command
 		$module_handler = \icms::handler('icms_module');
 		if ($module_handler->update(
 			$input->getArgument('module'),
-			new \ImpressCMS\Core\SetupSteps\OutputDecorator($output)
+			new OutputDecorator($output)
 		)) {
 			$output->writeln('Module updated successfully');
 		} else {
 			$output->writeln('There were some problems updating module');
 		}
+
+		return 0;
 	}
 }
