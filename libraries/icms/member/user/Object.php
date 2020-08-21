@@ -185,7 +185,6 @@ class icms_member_user_Object extends icms_ipf_Object {
 		$this->setControl('language', 'language');
 		$this->setControl('uname', 'text');
 		$this->setControl('login_name', 'text');
-		$this->setControl('user_aim', 'text');
 		$this->setControl('actkey', 'text');
 		$this->setControl('name', 'text');
 		$this->setControl('url', 'text');
