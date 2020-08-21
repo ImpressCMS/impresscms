@@ -10,6 +10,7 @@
  * @since		1.2
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
  */
+
 use WideImage\WideImage;
 
 $xoopsOption ['nodebug'] = 1;
@@ -169,12 +170,12 @@ if (!empty($op) && $op == 'save') {
 		$ext = substr ( $simage->getVar ( 'image_name' ), strlen ( $simage->getVar ( 'image_name' ) ) - 3, 3 );
 		$imgname = 'img' . icms_random_str ( 12 ) . '.' . $ext;
 		$newimg = & $image_handler->create ();
-		$newimg->setVar ( 'image_name', $imgname );
-		$newimg->setVar ( 'image_nicename', $simage_name );
+		$newimg->image_name = $imgname;
+		$newimg->image_nicename = $simage_name;
 		$newimg->setVar ( 'image_mimetype', $simage->getVar ( 'image_mimetype' ) );
-		$newimg->setVar ( 'image_created', time () );
-		$newimg->setVar ( 'image_display', $simage_display );
-		$newimg->setVar ( 'image_weight', $simage_weight );
+		$newimg->image_created = time();
+		$newimg->image_display = $simage_display;
+		$newimg->image_weight = $simage_weight;
 		$newimg->setVar ( 'imgcat_id', $simage->getVar ( 'imgcat_id' ) );
 		if ($imagecategory->getVar ( 'imgcat_storetype' ) == 'db') {
 			$fp = @fopen ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $simage_temp, 'rb' );

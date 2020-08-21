@@ -166,7 +166,7 @@ switch ($op) {
 			$newuser->setVar('uorder', $icmsConfig['com_order'], true);
 			$newuser->setVar('umode', $icmsConfig['com_mode'], true);
 			$newuser->setVar('user_mailok', $user_mailok, true);
-			$newuser->setVar('notify_method', 2);
+			$newuser->notify_method = 2;
 			if ($valid_actkey || $icmsConfigUser['activation_type'] == 1) {
 				$newuser->setVar('level', 1, true);
 			}

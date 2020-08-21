@@ -38,7 +38,7 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 		$password = substr(md5(uniqid(mt_rand(), 1)), 0, 6);
 
 		}
-		$userObj->setVar('pass', md5($password));
+		$userObj->pass = md5($password);
 
 		// if no username is set, let's generate one
 		$unamecount = 20;
@@ -85,15 +85,15 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 		$aInfoMessages[] = sprintf(_NL_MA_NEW_USER_ADMIN_ACT, $user_email);
 		}
 
-		$userObj->setVar('uname',$usernames[$i]);
-		$userObj->setVar('user_avatar','blank.gif');
-		$userObj->setVar('user_regdate', time());
-		$userObj->setVar('timezone_offset', $icmsConfig['default_TZ']);
+		$userObj->uname = $usernames[$i];
+		$userObj->user_avatar = 'blank.gif';
+		$userObj->user_regdate = time();
+		$userObj->timezone_offset = $icmsConfig['default_TZ'];
 		$actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
-		$userObj->setVar('actkey', $actkey);
-		$userObj->setVar('email',$email);
-		$userObj->setVar('notify_method', 2);
-		$userObj->setVar('level', $userObj);
+		$userObj->actkey = $actkey;
+		$userObj->email = $email;
+		$userObj->notify_method = 2;
+		$userObj->level = $userObj;
 
 		if ($this->insertUser($userObj)) {
 

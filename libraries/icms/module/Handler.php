@@ -134,7 +134,7 @@ class icms_module_Handler
 
 	public function beforeSave(icms_module_Object &$module)
 	{
-		$module->setVar('last_update', time());
+		$module->last_update = time();
 		return true;
 	}
 
@@ -159,7 +159,7 @@ class icms_module_Handler
 		$module = &$this->create();
 		$module->loadInfoAsVar($dirname);
 		$module->registerClassPath();
-		$module->setVar('weight', 1);
+		$module->weight = 1;
 
 		$output->info(_MD_AM_INSTALLING . $module->getInfo('name'));
 		$output->writeln(_VERSION . ': ' . icms_conv_nr2local($module->getInfo('version')));
@@ -443,7 +443,7 @@ class icms_module_Handler
 		// we dont want to change the module name set by admin
 		$temp_name = $module->name;
 		$module->loadInfoAsVar($dirname);
-		$module->setVar('name', $temp_name);
+		$module->name = $temp_name;
 
 		/*
 		 * ensure to only update those fields that are currently available in the database
@@ -492,7 +492,7 @@ class icms_module_Handler
 	{
 		$module = $this->get($mid);
 		icms_view_Tpl::template_clear_module_cache($module->mid);
-		$module->setVar('isactive', 1);
+		$module->isactive = 1;
 		if (!$module->store()) {
 			$output->fatal(_MD_AM_FAILACT . ' ' . _MD_AM_ERRORSC);
 			$output->msg(
@@ -504,7 +504,7 @@ class icms_module_Handler
 		$blocks = &$icms_block_handler->getByModule($module->mid);
 		$bcount = count($blocks);
 		for ($i = 0; $i < $bcount; $i++) {
-			$blocks[$i]->setVar('isactive', 1);
+			$blocks[$i]->isactive = 1;
 			$blocks[$i]->store();
 		}
 		$output->success(_MD_AM_OKACT, $module->name);
@@ -544,7 +544,7 @@ class icms_module_Handler
 
 		$module = $this->get($mid);
 		icms_view_Tpl::template_clear_module_cache($mid);
-		$module->setVar('isactive', 0);
+		$module->isactive = 0;
 		if ($module->dirname == "system") {
 			$output->fatal(
 				_MD_AM_FAILDEACT
@@ -599,7 +599,7 @@ class icms_module_Handler
 			$blocks = &$icms_block_handler->getByModule($module->mid);
 			$bcount = count($blocks);
 			for ($i = 0; $i < $bcount; $i++) {
-				$blocks[$i]->setVar('isactive', false);
+				$blocks[$i]->isactive = false;
 				$icms_block_handler->insert($blocks[$i]);
 			}
 			$output->success(_MD_AM_OKDEACT, $module->name);
@@ -620,8 +620,8 @@ class icms_module_Handler
 	public function change($mid, $weight, $name, OutputDecorator $output)
 	{
 		$module = $this->get($mid);
-		$module->setVar('weight', $weight);
-		$module->setVar('name', $name);
+		$module->weight = $weight;
+		$module->name = $name;
 		if (!$module->store()) {
 			$output->fatal(
 				_MD_AM_FAILORDER

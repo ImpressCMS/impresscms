@@ -192,7 +192,7 @@ class icms_config_Handler {
 		$count = count($options);
 		$conf_id = $config->getVar('conf_id');
 		for ($i = 0; $i < $count; $i++) {
-			$options[$i]->setVar('conf_id', $conf_id);
+			$options[$i]->conf_id = $conf_id;
 			if (!$this->_oHandler->insert($options[$i])) {
 				foreach ($options[$i]->getErrors() as $msg) {
 					$config->setErrors($msg);

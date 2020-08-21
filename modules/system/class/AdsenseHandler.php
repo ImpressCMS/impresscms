@@ -131,7 +131,7 @@ class mod_system_AdsenseHandler extends icms_ipf_Handler {
 	 */
 	protected function beforeSave(&$obj) {
 		if ($obj->getVar('tag') == '') {
-			$obj->setVar('tag', $title = $obj->generateTag());
+			$obj->tag = $title = $obj->generateTag();
 		}
 		$obj->setVar("color_border", str_replace("#", "", $obj->getVar("color_border")));
 		$obj->setVar("color_background", str_replace("#", "", $obj->getVar("color_background")));

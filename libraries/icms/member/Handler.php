@@ -201,8 +201,8 @@ class icms_member_Handler {
 	 */
 	public function addUserToGroup($group_id, $user_id) {
 		$mship = & $this->_mHandler->create();
-		$mship->setVar('groupid', $group_id);
-		$mship->setVar('uid', $user_id);
+		$mship->groupid = $group_id;
+		$mship->uid = $user_id;
 		return $this->_mHandler->insert($mship);
 	}
 
@@ -389,7 +389,7 @@ class icms_member_Handler {
 		if ($user->getVar('level') != 0) {
 			return true;
 		}
-		$user->setVar('level', 1);
+		$user->level = 1;
 		return $this->_uHandler->insert($user, true);
 	}
 

@@ -44,7 +44,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
         $image->image_body = $test_var;
         $this->assertSame($test_var, $image->getVar('image_body'), 'getVar for icms_image_Object doesn\'t work as expected (I)');
         $image->image_body = null;
-        $image->setVar('image_body', $test_var);
+        $image->image_body = $test_var;
         $this->assertSame($test_var, $image->getVar('image_body'), 'getVar for icms_image_Object doesn\'t work as expected (II)');
     }
 

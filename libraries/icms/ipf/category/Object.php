@@ -89,7 +89,7 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 * @return 	array An array of the category's properties
 	 */
 	public function toArray() {
-		$this->setVar('doxcode', true);
+		$this->doxcode = true;
 		global $myts;
 		$objectArray = parent::toArray();
 		if ($objectArray['image']) {

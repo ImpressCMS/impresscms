@@ -260,11 +260,11 @@ class icms_ipf_Object extends icms_core_Object {
 		$icms_metagen = new icms_ipf_Metagen($this->title(), $this->getVar('meta_keywords'), $this->summary());
 
 		if (empty($this->meta_keywords)) {
-			$this->setVar('meta_keywords', $icms_metagen->_keywords);
+			$this->meta_keywords = $icms_metagen->_keywords;
 		}
 
 		if (empty($this->meta_description)) {
-			$this->setVar('meta_description', $icms_metagen->_meta_description);
+			$this->meta_description = $icms_metagen->_meta_description;
 		}
 
 		// Auto create short_url if empty

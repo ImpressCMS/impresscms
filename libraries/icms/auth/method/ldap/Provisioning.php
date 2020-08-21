@@ -99,16 +99,16 @@ class icms_auth_method_ldap_Provisioning {
 		$member_handler = icms::handler('icms_member');
 		// Create ImpressCMS Database User
 		$newuser = $member_handler->createUser();
-		$newuser->setVar('uname', $uname);
-		$newuser->setVar('pass', md5(stripslashes($pwd)));
-		//$newuser->setVar('name', utf8_decode($datas[$this->ldap_givenname_attr][0]) . ' ' . utf8_decode($datas[$this->ldap_surname_attr][0]));
-		//$newuser->setVar('email', $datas[$this->ldap_mail_attr][0]);
-		$newuser->setVar('rank', 0);
-		$newuser->setVar('level', 1);
-		$newuser->setVar('timezone_offset', $this->default_TZ);
-		$newuser->setVar('theme', $this->theme_set);
-		$newuser->setVar('umode', $this->com_mode);
-		$newuser->setVar('uorder', $this->com_order);
+		$newuser->uname = $uname;
+		$newuser->pass = md5(stripslashes($pwd));
+		//$newuser->name = utf8_decode($datas[$this->ldap_givenname_attr][0] . ' ' . utf8_decode($datas[$this->ldap_surname_attr][0]));
+		//$newuser->email = $datas[$this->ldap_mail_attr][0];
+		$newuser->rank = 0;
+		$newuser->level = 1;
+		$newuser->timezone_offset = $this->default_TZ;
+		$newuser->theme = $this->theme_set;
+		$newuser->umode = $this->com_mode;
+		$newuser->uorder = $this->com_order;
 		$tab_mapping = explode('|', $this->ldap_field_mapping);
 		foreach ($tab_mapping as $mapping) {
 			$fields = explode('=', trim($mapping));
@@ -139,7 +139,7 @@ class icms_auth_method_ldap_Provisioning {
 	public function change(&$icmsUser, $datas, $uname, $pwd = null) {
 		$ret = false;
 		$member_handler = icms::handler('icms_member');
-		$icmsUser->setVar('pass', md5(stripslashes($pwd)));
+		$icmsUser->pass = md5(stripslashes($pwd));
 		$tab_mapping = explode('|', $this->ldap_field_mapping);
 		foreach ($tab_mapping as $mapping) {
 			$fields = explode('=', trim($mapping));

@@ -54,12 +54,12 @@ if ($pluginObj) {
 if (isset($_POST['icms_rating_submit'])) {
 	// The rating form has just been posted. Let's save the info
 	$ratingObj = $icms_rating_handler->create();
-	$ratingObj->setVar('dirname', $module_dirname);
-	$ratingObj->setVar('item', $rating_item);
-	$ratingObj->setVar('itemid', $rating_itemid);
+	$ratingObj->dirname = $module_dirname;
+	$ratingObj->item = $rating_item;
+	$ratingObj->itemid = $rating_itemid;
 	$ratingObj->setVar('uid', icms::$user->getVar('uid'));
-	$ratingObj->setVar('date', time());
-	$ratingObj->setVar('rate', $_POST['icms_rating_value']);
+	$ratingObj->date = time();
+	$ratingObj->rate = $_POST['icms_rating_value'];
 	if (!$icms_rating_handler->insert($ratingObj)) {
 		if (icms::$xoopsDB->errno() == 1062) {
 			$message = _CO_ICMS_RATING_DUPLICATE_ENTRY;

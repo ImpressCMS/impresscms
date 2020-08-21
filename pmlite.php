@@ -113,9 +113,9 @@ if (!icms::$user) {
 		} else {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm = & $pm_handler->create();
-			$pm->setVar("subject", $subject);
-			$pm->setVar("msg_text", $message);
-			$pm->setVar("to_userid", $to_userid);
+			$pm->subject = $subject;
+			$pm->msg_text = $message;
+			$pm->to_userid = $to_userid;
 			$pm->setVar("from_userid", (int) (icms::$user->getVar("uid")));
 			if (!$pm_handler->insert($pm)) {
 				redirect_header(icms_getPreviousPage(), 5, $pm->getHtmlErrors());

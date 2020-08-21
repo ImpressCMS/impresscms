@@ -147,12 +147,12 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 				}
 			} else {
 				$notification = & $this->create();
-				$notification->setVar('not_modid', $module_id);
-				$notification->setVar('not_category', $category);
-				$notification->setVar('not_itemid', $item_id);
-				$notification->setVar('not_uid', $user_id);
-				$notification->setVar('not_event', $event);
-				$notification->setVar('not_mode', $mode);
+				$notification->not_modid = $module_id;
+				$notification->not_category = $category;
+				$notification->not_itemid =  $item_id;
+				$notification->not_uid = $user_id;
+				$notification->not_event = $event;
+				$notification->not_mode = $mode;
 				$this->insert($notification);
 			}
 		}

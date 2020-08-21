@@ -76,11 +76,11 @@ class icms_ipf_Controller {
 
 				case icms_properties_Handler::DTYPE_DEP_URLLINK:
 					$linkObj = $icmsObj->getUrlLinkObj($key);
-					$linkObj->setVar('mid', $_POST['mid_' . $key]);
-					$linkObj->setVar('caption', $_POST['caption_' . $key]);
-					$linkObj->setVar('description', $_POST['desc_' . $key]);
-					$linkObj->setVar('target', $_POST['target_' . $key]);
-					$linkObj->setVar('url', $_POST['url_' . $key]);
+					$linkObj->mid = $_POST['mid_' . $key];
+					$linkObj->caption = $_POST['caption_' . $key];
+					$linkObj->description = $_POST['desc_' . $key];
+					$linkObj->target = $_POST['target_' . $key];
+					$linkObj->url = $_POST['url_' . $key];
 					if ($linkObj->getVar('url') != '') {
 						$icmsObj->storeUrlLinkObj($linkObj);
 					}
@@ -91,10 +91,10 @@ class icms_ipf_Controller {
 				case icms_properties_Handler::DTYPE_DEP_FILE:
 					if (!isset($_FILES['upload_' . $key]['name']) || $_FILES['upload_' . $key]['name'] == '') {
 						$fileObj = $icmsObj->getFileObj($key);
-						$fileObj->setVar('mid', $_POST['mid_' . $key]);
-						$fileObj->setVar('caption', $_POST['caption_' . $key]);
-						$fileObj->setVar('description', $_POST['desc_' . $key]);
-						$fileObj->setVar('url', $_POST['url_' . $key]);
+						$fileObj->mid = $_POST['mid_' . $key];
+						$fileObj->caption = $_POST['caption_' . $key];
+						$fileObj->description = $_POST['desc_' . $key];
+						$fileObj->url = $_POST['url_' . $key];
 						if (!($fileObj->getVar('url') == '' && $fileObj->getVar('url') == '' && $fileObj->getVar('url') == '')) {
 							$res = $icmsObj->storeFileObj($fileObj);
 							if ($res) {
@@ -180,10 +180,10 @@ class icms_ipf_Controller {
 							if ($var_type == icms_properties_Handler::DTYPE_DEP_FILE) {
 								$object_fileurl = $icmsObj->getUploadDir();
 								$fileObj = $icmsObj->getFileObj($related_field);
-								$fileObj->setVar('url', $object_fileurl . $uploaderObj->getSavedFileName());
-								$fileObj->setVar('mid', $_POST['mid_' . $related_field]);
-								$fileObj->setVar('caption', $_POST['caption_' . $related_field]);
-								$fileObj->setVar('description', $_POST['desc_' . $related_field]);
+								$fileObj->url = $object_fileurl . $uploaderObj->getSavedFileName();
+								$fileObj->mid = $_POST['mid_' . $related_field];
+								$fileObj->caption = $_POST['caption_' . $related_field];
+								$fileObj->description = $_POST['desc_' . $related_field];
 								$icmsObj->storeFileObj($fileObj);
 								$icmsObj->setVar($related_field, $fileObj->getVar('fileid'));
 							} else {

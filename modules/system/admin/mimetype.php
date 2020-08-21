@@ -40,8 +40,8 @@ function editmimetype($showmenu = false, $mimetypeid = 0) {
 		$icmsAdminTpl->assign('icms_mimetype_title', _CO_ICMS_MIMETYPE_EDIT_INFO);
 		$icmsAdminTpl->display('db:admin/mimetype/system_adm_mimetype.html');
 	} else {
-		$mimetypeObj->setVar('mimetypeid', 0);
-		$mimetypeObj->setVar('extension', '');
+		$mimetypeObj->mimetypeid = 0;
+		$mimetypeObj->extension = '';
 
 		$sform = $mimetypeObj->getForm(_CO_ICMS_MIMETYPE_CREATE, 'addmimetype');
 		$sform->assign($icmsAdminTpl);

@@ -46,26 +46,26 @@ class BlockSetupStep implements SetupStepInterface
 				 * @var icms_view_block_Object $newBlock
 				 */
 				$newBlock = $handler->create();
-				$newBlock->setVar('name', trim($block['name']));
-				$newBlock->setVar('mid', $newmid);
-				$newBlock->setVar('func_num', $blockkey);
-				$newBlock->setVar('options', $options);
-				$newBlock->setVar('name', $block['name']);
-				$newBlock->setVar('title', $block['name']);
-				$newBlock->setVar('content', '');
-				$newBlock->setVar('side', 1);
-				$newBlock->setVar('weight', 0);
-				$newBlock->setVar('visible', 0);
-				$newBlock->setVar('block_type', 'M');
-				$newBlock->setVar('c_type', 'H');
-				$newBlock->setVar('isactive', 1);
-				$newBlock->setVar('dirname', $dirname);
-				$newBlock->setVar('func_file', $block['file']);
-				$newBlock->setVar('show_func', $block['show_func']);
-				$newBlock->setVar('edit_func', isset($block['edit_func']) ? trim($block['edit_func']) : '');
-				$newBlock->setVar('template', $template);
-				$newBlock->setVar('bcachetime', 0);
-				$newBlock->setVar('last_modified', time());
+				$newBlock->name = trim($block['name']);
+				$newBlock->mid = $newmid;
+				$newBlock->func_num = $blockkey;
+				$newBlock->options = $options;
+				$newBlock->name = $block['name'];
+				$newBlock->title = $block['name'];
+				$newBlock->content = '';
+				$newBlock->side = 1;
+				$newBlock->weight = 0;
+				$newBlock->visible = 0;
+				$newBlock->block_type = 'M';
+				$newBlock->c_type = 'H';
+				$newBlock->isactive = 1;
+				$newBlock->dirname = $dirname;
+				$newBlock->func_file = $block['file'];
+				$newBlock->show_func = $block['show_func'];
+				$newBlock->edit_func = isset($block['edit_func']) ? trim($block['edit_func']) : '';
+				$newBlock->template = $template;
+				$newBlock->bcachetime = 0;
+				$newBlock->last_modified = time();
 
 				if (!$newBlock->store()) {
 					$output->error(_MD_AM_BLOCKS_ADD_FAIL, $block['name']);
@@ -85,15 +85,15 @@ class BlockSetupStep implements SetupStepInterface
 						 * @var icms_view_template_file_Object $tplfile
 						 */
 						$tplfile = icms::handler('icms_view_template_file')->create();
-						$tplfile->setVar('tpl_refid', $newbid);
+						$tplfile->tpl_refid = $newbid;
 						$tplfile->setVar('tpl_source', $content, true);
-						$tplfile->setVar('tpl_tplset', 'default');
-						$tplfile->setVar('tpl_file', $block['template']);
-						$tplfile->setVar('tpl_module', $dirname);
-						$tplfile->setVar('tpl_type', 'block');
+						$tplfile->tpl_tplset = 'default';
+						$tplfile->tpl_file = $block['template'];
+						$tplfile->tpl_module = $dirname;
+						$tplfile->tpl_type = 'block';
 						$tplfile->setVar('tpl_desc', isset($block['description']) ? $block['description'] : '', true);
-						$tplfile->setVar('tpl_lastimported', 0);
-						$tplfile->setVar('tpl_lastmodified', time());
+						$tplfile->tpl_lastimported = 0;
+						$tplfile->tpl_lastmodified = time();
 						if (!$tplfile->store()) {
 							$output->error(_MD_AM_TEMPLATE_INSERT_FAIL, $block['template']);
 						} else {
@@ -154,10 +154,10 @@ class BlockSetupStep implements SetupStepInterface
 		foreach ($groups as $mygroup) {
 			if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
 				$mperm = &$gperm_handler->create();
-				$mperm->setVar('gperm_groupid', $mygroup);
-				$mperm->setVar('gperm_itemid', $newmid);
-				$mperm->setVar('gperm_name', 'module_admin');
-				$mperm->setVar('gperm_modid', 1);
+				$mperm->gperm_groupid = $mygroup;
+				$mperm->gperm_itemid = $newmid;
+				$mperm->gperm_name = 'module_admin';
+				$mperm->gperm_modid = 1;
 				if (!$mperm->store()) {
 					$output->error(_MD_AM_ADMIN_PERM_ADD_FAIL, icms_conv_nr2local($mygroup));
 				} else {
@@ -166,10 +166,10 @@ class BlockSetupStep implements SetupStepInterface
 				unset($mperm);
 			}
 			$mperm = &$gperm_handler->create();
-			$mperm->setVar('gperm_groupid', $mygroup);
-			$mperm->setVar('gperm_itemid', $newmid);
-			$mperm->setVar('gperm_name', 'module_read');
-			$mperm->setVar('gperm_modid', 1);
+			$mperm->gperm_groupid = $mygroup;
+			$mperm->gperm_itemid = $newmid;
+			$mperm->gperm_name = 'module_read';
+			$mperm->gperm_modid = 1;
 			if (!$mperm->store()) {
 				$output->error(_MD_AM_USER_PERM_ADD_FAIL, icms_conv_nr2local($mygroup));
 			} else {
@@ -178,10 +178,10 @@ class BlockSetupStep implements SetupStepInterface
 			unset($mperm);
 			foreach ($blocks as $blc) {
 				$bperm = &$gperm_handler->create();
-				$bperm->setVar('gperm_groupid', $mygroup);
-				$bperm->setVar('gperm_itemid', $blc);
-				$bperm->setVar('gperm_name', 'block_read');
-				$bperm->setVar('gperm_modid', 1);
+				$bperm->gperm_groupid = $mygroup;
+				$bperm->gperm_itemid = $blc;
+				$bperm->gperm_name = 'block_read';
+				$bperm->gperm_modid = 1;
 				if (!$bperm->store()) {
 					$output->error(_MD_AM_BLOCK_ACCESS_FAIL, icms_conv_nr2local($blc), icms_conv_nr2local($mygroup));
 				} else {

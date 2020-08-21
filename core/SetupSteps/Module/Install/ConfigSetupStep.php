@@ -41,14 +41,14 @@ class ConfigSetupStep implements SetupStepInterface
 				 */
 				$confobj = &$config_handler->createConfig();
 				$confobj->setVar('conf_modid', $module->getVar('mid'));
-				$confobj->setVar('conf_catid', 0);
-				$confobj->setVar('conf_name', $config['name']);
+				$confobj->conf_catid = 0;
+				$confobj->conf_name = $config['name'];
 				$confobj->setVar('conf_title', $config['title'], true);
 				$confobj->setVar('conf_desc', $config['description'], true);
-				$confobj->setVar('conf_formtype', $config['formtype']);
-				$confobj->setVar('conf_valuetype', $config['valuetype']);
+				$confobj->conf_formtype = $config['formtype'];
+				$confobj->conf_valuetype = $config['valuetype'];
 				$confobj->setConfValueForInput($config['default'], true);
-				$confobj->setVar('conf_order', $order);
+				$confobj->conf_order = $order;
 				$confop_msgs = [];
 				if (isset($config['options']) && is_array($config['options'])) {
 					foreach ($config['options'] as $key => $value) {

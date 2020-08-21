@@ -140,10 +140,10 @@ class icms_member_groupperm_Handler extends icms_ipf_Handler {
 	 */
 	public function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1) {
 		$perm = & $this->create();
-		$perm->setVar('gperm_name', $gperm_name);
-		$perm->setVar('gperm_groupid', $gperm_groupid);
-		$perm->setVar('gperm_itemid', $gperm_itemid);
-		$perm->setVar('gperm_modid', $gperm_modid);
+		$perm->gperm_name = $gperm_name;
+		$perm->gperm_groupid = $gperm_groupid;
+		$perm->gperm_itemid = $gperm_itemid;
+		$perm->gperm_modid = $gperm_modid;
 		return $this->insert($perm);
 	}
 

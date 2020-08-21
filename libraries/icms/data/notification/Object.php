@@ -139,7 +139,7 @@ class icms_data_notification_Object extends icms_ipf_Object {
 		}
 
 		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
-			$this->setVar('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN);
+			$this->not_mode = XOOPS_NOTIFICATION_MODE_WAITFORLOGIN;
 			$notification_handler->insert($this);
 		}
 		return $success;

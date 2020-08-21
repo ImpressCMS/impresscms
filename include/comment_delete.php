@@ -176,7 +176,7 @@ switch ($op) {
 		$new_pid = $comment->getVar('com_pid');
 		$errs = array();
 		foreach (array_keys($child_comments) as $i) {
-			$child_comments[$i]->setVar('com_pid', $new_pid);
+			$child_comments[$i]->com_pid = $new_pid;
 			// if the deleted comment is a root comment, need to change root id to own id
 			if (false != $comment->isRoot()) {
 				$new_rootid = $child_comments[$i]->getVar('com_id');
@@ -188,7 +188,7 @@ switch ($op) {
 					$c_child_comments = & $xot->getAllChild($new_rootid);
 					$cc_count = count($c_child_comments);
 					foreach (array_keys($c_child_comments) as $j) {
-						$c_child_comments[$j]->setVar('com_rootid', $new_rootid);
+						$c_child_comments[$j]->com_rootid = $new_rootid;
 						if (!$comment_handler->insert($c_child_comments[$j])) {
 							$errs[] = sprintf(_CM_COULDNOTCHANGEROOTID, icms_conv_nr2local($com_id), icms_conv_nr2local($new_rootid));
 						}

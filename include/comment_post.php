@@ -178,7 +178,7 @@ switch ($op) {
 					|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
 						if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
 							$old_com_status = $comment->getVar('com_status');
-							$comment->setVar('com_status', $com_status);
+							$comment->com_status = $com_status;
 							// if changing status from pending state, increment user post
 							if (XOOPS_COMMENT_PENDING == $old_com_status) {
 								$add_userpost = true;
@@ -212,16 +212,16 @@ switch ($op) {
 				}
 			} else {
 				$comment = $comment_handler->create();
-				$comment->setVar('com_created', time());
-				$comment->setVar('com_pid', $com_pid);
-				$comment->setVar('com_itemid', $com_itemid);
-				$comment->setVar('com_rootid', $com_rootid);
-				$comment->setVar('com_ip', xoops_getenv('REMOTE_ADDR'));
+				$comment->com_created = time();
+				$comment->com_pid = $com_pid;
+				$comment->com_itemid = $com_itemid;
+				$comment->com_rootid = $com_rootid;
+				$comment->com_ip = xoops_getenv('REMOTE_ADDR');
 				if (is_object(icms::$user)) {
 					$sysperm_handler = icms::handler('icms_member_groupperm');
 					if (icms::$user->isAdmin($com_modid)
 					|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
-						$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
+						$comment->com_status = XOOPS_COMMENT_ACTIVE;
 						$add_userpost = true;
 						$call_approvefunc = true;
 						$call_updatefunc = true;
@@ -232,7 +232,7 @@ switch ($op) {
 						switch ($icmsModuleConfig['com_rule']) {
 							case XOOPS_COMMENT_APPROVEALL:
 							case XOOPS_COMMENT_APPROVEUSER:
-								$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
+								$comment->com_status = XOOPS_COMMENT_ACTIVE;
 								$add_userpost = true;
 								$call_approvefunc = true;
 								$call_updatefunc = true;
@@ -242,7 +242,7 @@ switch ($op) {
 
 							case XOOPS_COMMENT_APPROVEADMIN:
 							default:
-								$comment->setVar('com_status', XOOPS_COMMENT_PENDING);
+								$comment->com_status = XOOPS_COMMENT_PENDING;
 								$notify_event = 'comment_submit';
 								break;
 						}
@@ -264,7 +264,7 @@ switch ($op) {
 			if ($uid == 0) {
 				switch ($icmsModuleConfig['com_rule']) {
 					case XOOPS_COMMENT_APPROVEALL:
-						$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
+						$comment->com_status = XOOPS_COMMENT_ACTIVE;
 						$add_userpost = true;
 						$call_approvefunc = true;
 						$call_updatefunc = true;
@@ -275,29 +275,29 @@ switch ($op) {
 					case XOOPS_COMMENT_APPROVEADMIN:
 					case XOOPS_COMMENT_APPROVEUSER:
 					default:
-						$comment->setVar('com_status', XOOPS_COMMENT_PENDING);
+						$comment->com_status = XOOPS_COMMENT_PENDING;
 						// RMV-NOTIFY
 						$notify_event = 'comment_submit';
 					break;
 				}
 			}
-			$comment->setVar('com_uid', $uid);
+			$comment->com_uid = $uid;
 		}
 
 		$com_title = icms_core_DataFilter::icms_trim($_POST['com_title']);
 		$com_title = ($com_title == '')? _NOTITLE : $com_title;
-		$comment->setVar('com_title', $com_title);
-		$comment->setVar('com_text', $_POST['com_text']);
-		$comment->setVar('dohtml', $dohtml);
-		$comment->setVar('dosmiley', $dosmiley);
-		$comment->setVar('doxcode', $doxcode);
-		$comment->setVar('doimage', $doimage);
-		$comment->setVar('dobr', $dobr);
-		$comment->setVar('com_icon', $com_icon);
-		$comment->setVar('com_modified', time());
-		$comment->setVar('com_modid', $com_modid);
+		$comment->com_title = $com_title;
+		$comment->com_text = $_POST['com_text'];
+		$comment->dohtml = $dohtml;
+		$comment->dosmiley = $dosmiley;
+		$comment->doxcode = $doxcode;
+		$comment->doimage = $doimage;
+		$comment->dobr = $dobr;
+		$comment->com_icon = $com_icon;
+		$comment->com_modified = time();
+		$comment->com_modid = $com_modid;
 		if (isset($extra_params)) {
-			$comment->setVar('com_exparams', $extra_params);
+			$comment->com_exparams = $extra_params;
 		}
 		if (false != $comment_handler->insert($comment)) {
 			$newcid = $comment->getVar('com_id');
