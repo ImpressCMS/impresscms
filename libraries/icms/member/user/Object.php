@@ -196,7 +196,6 @@ class icms_member_user_Object extends icms_ipf_Object {
 		$this->setControl('user_regdate', 'date');
 		$this->setControl('notify_method', 'notify_method');
 		$this->setControl('pass_expired', 'yesno');
-		$this->setControl('user_viewoid', 'yesno');
 		$this->setControl('user_mailok', 'yesno');
 		$this->setControl('attachsig', 'yesno');
 		$this->setControl('rank', array(
@@ -491,22 +490,4 @@ class icms_member_user_Object extends icms_ipf_Object {
 		}
 		$session->clear();
 	}
-
-	/*  /**
-    * Converts user to array
-     *
-    * @return array
-    */
-	/*  public function toArray() {
-      $data = parent::toArray();
-      if ($this->isSameAsLoggedInUser()) {
-      if (!$data['user_viewoid'])
-      unset($data['pass_expired'], $data['login_name'], $data['pass']);
-      foreach (array_keys($data) as $key) {
-      if ($key == 'uid')
-      continue;
-      }
-      }
-      return $data;
-      } */
 }

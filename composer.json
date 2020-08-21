@@ -79,7 +79,7 @@
   },
   "suggest": {
     "ext-xml": "Faster way then with PHP scripts to handle XML documents",
-    "ext-openssl": "Without it OpenID will not work",
+    "ext-openssl": "Extension used for data encryption",
     "ext-bcmath": "Better precisions in math operations"
   },
   "autoload": {
