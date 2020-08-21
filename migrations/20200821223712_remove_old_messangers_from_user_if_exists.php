@@ -7,16 +7,16 @@ class RemoveOldMessangersFromUserIfExists extends AbstractMigration
     protected function up(): void
     {
 		if ($this->tableColumnExists($this->prefix('users'), 'user_msnm')) {
-			$this->getTable($this->prefix('users'))->removeColumn('user_msnm');
+			$this->table($this->prefix('users'))->dropColumn('user_msnm')->save();
 		}
 		if ($this->tableColumnExists($this->prefix('users'), 'user_yim')) {
-			$this->getTable($this->prefix('users'))->removeColumn('user_yim');
+			$this->table($this->prefix('users'))->dropColumn('user_yim')->save();
 		}
 		if ($this->tableColumnExists($this->prefix('users'), 'user_aim')) {
-			$this->getTable($this->prefix('users'))->removeColumn('user_aim');
+			$this->table($this->prefix('users'))->dropColumn('user_aim')->save();
 		}
 		if ($this->tableColumnExists($this->prefix('users'), 'user_icq')) {
-			$this->getTable($this->prefix('users'))->removeColumn('user_icq');
+			$this->table($this->prefix('users'))->dropColumn('user_icq')->save();
 		}
     }
 
