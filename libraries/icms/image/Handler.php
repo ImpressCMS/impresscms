@@ -149,7 +149,7 @@ class icms_image_Handler extends \icms_ipf_Handler {
 		$images = & $this->getObjects($criteria, false, true, false, true);
 		$ret = array();
 		foreach (array_keys($images) as $i) {
-			$ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');
+			$ret[$images[$i]->image_name] = $images[$i]->image_nicename;
 		}
 		return $ret;
 	}

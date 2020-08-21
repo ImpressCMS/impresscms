@@ -118,7 +118,7 @@ class icms_auth_method_ldap_Provisioning {
 		}
 		if ($member_handler->insertUser($newuser)) {
 			foreach ($this->ldap_provisionning_group as $groupid) {
-				$member_handler->addUserToGroup($groupid, $newuser->getVar('uid'));
+				$member_handler->addUserToGroup($groupid, $newuser->uid);
 			}
 			$newuser->unsetNew();
 			return $newuser;

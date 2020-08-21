@@ -26,13 +26,13 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 	// This function here below needs some changes to work under 1.2 Final. it's temporarily disabled.
 	/*	function addAndActivateUser(&$userObj, $groups=false, $notifyUser=true, &$password=false)
 	 {
-	 $email = $userObj->getVar('email');
-	 if (!$userObj->getVar('email') || $email == '') {
+	 $email = $userObj->email;
+	 if (!$userObj->email || $email == '') {
 	 $userObj->setErrors(_CO_ICMS_USER_NEED_EMAIL);
 	 return false;
 	 }
 
-		$password = $userObj->getVar('pass');
+		$password = $userObj->pass;
 		// randomly generating the password if not already set
 		if (strlen($password) == 0) {
 		$password = substr(md5(uniqid(mt_rand(), 1)), 0, 6);
@@ -42,7 +42,7 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 
 		// if no username is set, let's generate one
 		$unamecount = 20;
-		$uname = $userObj->getVar('uname');
+		$uname = $userObj->uname;
 		if (!$uname || $uname == '') {
 		$usernames = $this->genUserNames($email, $unamecount);
 		$newuser = false;
@@ -99,10 +99,10 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 
 		// if $groups=false, Add the user to Registered Users group
 		if (!$groups) {
-		$this->addUserToGroup(ICMS_GROUP_USERS, $userObj->getVar('uid'));
+		$this->addUserToGroup(ICMS_GROUP_USERS, $userObj->uid);
 		} else {
 		foreach ($groups as $groupid) {
-		$this->addUserToGroup($groupid, $userObj->getVar('uid'));
+		$this->addUserToGroup($groupid, $userObj->uid);
 		}
 		}
 		} else {
@@ -119,8 +119,8 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 		$mailer->assign('SITENAME', $icmsConfig['sitename']);
 		$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 		$mailer->assign('SITEURL', ICMS_URL . "/");
-		$mailer->assign('NAME', $userObj->getVar('name'));
-		$mailer->assign('UNAME', $userObj->getVar('uname'));
+		$mailer->assign('NAME', $userObj->name);
+		$mailer->assign('UNAME', $userObj->uname);
 		$mailer->setToUsers($userObj);
 		$mailer->setFromEmail($icmsConfig['adminmail']);
 		$mailer->setFromName($icmsConfig['sitename']);

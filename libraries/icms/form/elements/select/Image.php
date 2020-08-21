@@ -103,7 +103,7 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 			$total = $image_handler->getCount($criteria);
 			if ($total > 0) {
 				$imgcat = & $imgcat_handler->get($k);
-				$storetype = $imgcat->getVar('imgcat_storetype');
+				$storetype = $imgcat->imgcat_storetype;
 				if ($storetype == 'db') {
 					$images = & $image_handler->getObjects($criteria, false, true);
 				} else {
@@ -111,12 +111,12 @@ class icms_form_elements_select_Image extends icms_form_elements_Select {
 				}
 				foreach ($images as $i) {
 					if ($storetype == "db") {
-						$ret[$v]["/image.php?id=" . $i->getVar('image_id')] = $i->getVar('image_nicename');
+						$ret[$v]["/image.php?id=" . $i->image_id] = $i->image_nicename;
 					} else {
 						$categ_path = $imgcat_handler->getCategFolder($imgcat);
 						$categ_path = str_replace(ICMS_ROOT_PATH, '', $categ_path);
 						$path = (substr($categ_path, -1) != '/')?$categ_path . '/':$categ_path;
-						$ret[$v][$path . $i->getVar('image_name')] = $i->getVar('image_nicename');
+						$ret[$v][$path . $i->image_name] = $i->image_nicename;
 					}
 				}
 			} else {

@@ -39,9 +39,9 @@ if (!$allowed) {
 		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, _CHARSET),
 		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET),
 		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
-		'icms_dirname' => @$icmsModule?$icmsModule->getVar('dirname'):'system',
+		'icms_dirname' => @$icmsModule?$icmsModule->dirname:'system',
 		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
-			?$icmsModule->getVar('name')
+			?$icmsModule->name
 			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
 		'lang_login' => _LOGIN,
 		'lang_username' => _USERNAME,

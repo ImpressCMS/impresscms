@@ -72,7 +72,7 @@ class mod_system_Mimetype extends icms_ipf_Object {
 	 * @return	string
 	 */
 	public function getMimetypeName() {
-		$ret = $this->getVar('name');
+		$ret = $this->name;
 		return $ret;
 	}
 
@@ -81,7 +81,7 @@ class mod_system_Mimetype extends icms_ipf_Object {
 	 * @return	string
 	 */
 	public function getMimetypeType() {
-		$ret = $this->getVar('types');
+		$ret = $this->types;
 		return $ret;
 	}
 
@@ -90,7 +90,7 @@ class mod_system_Mimetype extends icms_ipf_Object {
 	 * @return	int
 	 */
 	public function getMimetypeId() {
-		$ret = (int) $this->getVar('mimetypeid');
+		$ret = (int) $this->mimetypeid;
 		return $ret;
 	}
 }

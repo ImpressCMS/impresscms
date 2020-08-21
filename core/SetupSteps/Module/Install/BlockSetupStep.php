@@ -25,8 +25,8 @@ class BlockSetupStep implements SetupStepInterface
 		if ($blocks !== false) {
 			$output->info(_MD_AM_BLOCKS_ADDING);
 			$output->incrIndent();
-			$dirname = $module->getVar('dirname');
-			$newmid = $module->getVar('mid');
+			$dirname = $module->dirname;
+			$newmid = $module->mid;
 			$handler = icms::handler('icms_view_block');
 			foreach ($blocks as $blockkey => $block) {
 				if (!isset($block['file']) || !isset($block['show_func'])) {
@@ -97,7 +97,7 @@ class BlockSetupStep implements SetupStepInterface
 						if (!$tplfile->store()) {
 							$output->error(_MD_AM_TEMPLATE_INSERT_FAIL, $block['template']);
 						} else {
-							$newtplid = $tplfile->getVar('tpl_id');
+							$newtplid = $tplfile->tpl_id;
 							$output->success(_MD_AM_TEMPLATE_INSERTED, $block['template'], icms_conv_nr2local($newtplid));
 							// generate compiled file
 							if (!icms_view_Tpl::template_touch($newtplid)) {
@@ -146,7 +146,7 @@ class BlockSetupStep implements SetupStepInterface
 	{
 		$groups = $module->getInfo('hasMain') ? [ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS] : [ICMS_GROUP_ADMIN];
 		$icms_block_handler = icms::handler('icms_view_block');
-		$newmid = $module->getVar('mid');
+		$newmid = $module->mid;
 		$blocks = &$icms_block_handler->getByModule($newmid, false);
 		$output->info(_MD_AM_PERMS_ADDING);
 		$output->incrIndent();

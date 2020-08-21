@@ -148,7 +148,7 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 		}
 
 		$sql = "SELECT user_id FROM " . $this->db->prefix('avatar_user_link')
-			. " WHERE avatar_id='" . (int) $avatar->getVar('avatar_id') . "'";
+			. " WHERE avatar_id='" . (int) $avatar->avatar_id . "'";
 		if (!$result = $this->db->query($sql)) {
 			return $ret;
 		}
@@ -176,7 +176,7 @@ class icms_data_avatar_Handler extends icms_ipf_Handler {
 		$avatars = & $this->getObjects($criteria, true);
 		$ret = array('blank.gif' => _NONE);
 		foreach (array_keys($avatars) as $i) {
-			$ret[$avatars[$i]->getVar('avatar_file')] = $avatars[$i]->getVar('avatar_name');
+			$ret[$avatars[$i]->avatar_file] = $avatars[$i]->avatar_name;
 		}
 		return $ret;
 	}

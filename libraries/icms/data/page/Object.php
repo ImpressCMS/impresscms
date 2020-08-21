@@ -38,8 +38,8 @@ class icms_data_page_Object extends icms_ipf_Object {
 		 * @return string
 		 */
 		public function getURL() {
-			return (substr($this->getVar('page_url'), 0, 7) == 'http://')
-				?$this->getVar('page_url'):ICMS_URL . '/' . $this->getVar('page_url');
+			return (substr($this->page_url, 0, 7) == 'http://')
+				?$this->page_url:ICMS_URL . '/' . $this->page_url;
 		}
 }
 

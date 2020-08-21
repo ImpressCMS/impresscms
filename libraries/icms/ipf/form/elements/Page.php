@@ -17,7 +17,7 @@ class icms_ipf_form_elements_Page extends icms_form_elements_Tray {
 	public function __construct($object, $key) {
 		icms_loadLanguageFile('system', 'blocks', true);
 		parent::__construct(_AM_VISIBLEIN, ' ', $key . '_visiblein_tray');
-		$visible_label = new icms_form_elements_Label('', '<select class="form-control" name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->getVar('visiblein')) . '</select>');
+		$visible_label = new icms_form_elements_Label('', '<select class="form-control" name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->visiblein) . '</select>');
 		$this->addElement($visible_label);
 	}
 
@@ -38,22 +38,22 @@ class icms_ipf_form_elements_Page extends icms_form_elements_Tray {
 		$module_list = $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module) {
-			$mods .= '<optgroup label="' . $module->getVar('name') . '">';
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_moduleid', $module->getVar('mid')));
+			$mods .= '<optgroup label="' . $module->name . '">';
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_moduleid', $module->mid));
 			$criteria->add(new icms_db_criteria_Item('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$sel = '';
-			if (in_array($module->getVar('mid') . '-0', $value)) {
+			if (in_array($module->mid . '-0', $value)) {
 				$sel = ' selected=selected';
 			}
-			$mods .= '<option value="' . $module->getVar('mid') . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
+			$mods .= '<option value="' . $module->mid . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
 			foreach ($pages as $page) {
 				$sel = '';
-				if (in_array($module->getVar('mid') . '-' . $page->getVar('page_id'), $value)) {
+				if (in_array($module->mid . '-' . $page->page_id, $value)) {
 					$sel = ' selected=selected';
 				}
-				$mods .= '<option value="' . $module->getVar('mid') . '-' . $page->getVar('page_id') . '"' . $sel . '>';
-				$mods .= $page->getVar('page_title') . '</option>';
+				$mods .= '<option value="' . $module->mid . '-' . $page->page_id . '"' . $sel . '>';
+				$mods .= $page->page_title . '</option>';
 			}
 			$mods .= '</optgroup>';
 		}
@@ -64,19 +64,19 @@ class icms_ipf_form_elements_Page extends icms_form_elements_Tray {
 		$pages = $icms_page_handler->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0) {
-			$cont = '<optgroup label="' . $module->getVar('name') . '">';
+			$cont = '<optgroup label="' . $module->name . '">';
 			$sel = '';
-			if (in_array($module->getVar('mid') . '-0', $value)) {
+			if (in_array($module->mid . '-0', $value)) {
 				$sel = ' selected=selected';
 			}
-			$cont .= '<option value="' . $module->getVar('mid') . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
+			$cont .= '<option value="' . $module->mid . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
 			foreach ($pages as $page) {
 				$sel = '';
-				if (in_array($module->getVar('mid') . '-' . $page->getVar('page_id'), $value)) {
+				if (in_array($module->mid . '-' . $page->page_id, $value)) {
 					$sel = ' selected=selected';
 				}
-				$cont .= '<option value="' . $module->getVar('mid') . '-' . $page->getVar('page_id') . '"' . $sel . '>';
-				$cont .= $page->getVar('page_title') . '</option>';
+				$cont .= '<option value="' . $module->mid . '-' . $page->page_id . '"' . $sel . '>';
+				$cont .= $page->page_title . '</option>';
 			}
 			$cont .= '</optgroup>';
 		}

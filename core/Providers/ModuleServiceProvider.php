@@ -48,7 +48,7 @@ class ModuleServiceProvider extends AbstractServiceProvider
 				if ($inAdmin || file_exists($path . '/xoops_version.php') || file_exists($path . '/icms_version.php')) {
 					/* @var $module icms_module_Object */
 					$module = icms::handler("icms_module")->getByDirname($matches[1], TRUE);
-					if (!$inAdmin && (!$module || !$module->getVar('isactive'))) {
+					if (!$inAdmin && (!$module || !$module->isactive)) {
 						include_once ICMS_ROOT_PATH . '/header.php';
 						echo "<h4>" . _MODULENOEXIST . "</h4>";
 						include_once ICMS_ROOT_PATH . '/footer.php';

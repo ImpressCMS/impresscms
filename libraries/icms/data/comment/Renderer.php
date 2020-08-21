@@ -106,22 +106,22 @@ class icms_data_comment_Renderer {
 		$count = count($this->_comments);
 		for ($i = 0; $i < $count; $i++) {
 			if (false != $this->_useIcons) {
-				$title = $this->_getTitleIcon($this->_comments[$i]->getVar('com_icon')) . '&nbsp;' . $this->_comments[$i]->getVar('com_title');
+				$title = $this->_getTitleIcon($this->_comments[$i]->com_icon) . '&nbsp;' . $this->_comments[$i]->com_title;
 			} else {
-				$title = $this->_comments[$i]->getVar('com_title');
+				$title = $this->_comments[$i]->com_title;
 			}
-			$poster = $this->_getPosterArray($this->_comments[$i]->getVar('com_uid'));
+			$poster = $this->_getPosterArray($this->_comments[$i]->com_uid);
 			if (false != $admin_view) {
-				$text = $this->_comments[$i]->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$this->_comments[$i]->getVar('com_status')] . '<br />IP: <span style="font-weight: bold;">' . $this->_comments[$i]->getVar('com_ip') . '</span></div>';
+				$text = $this->_comments[$i]->com_text . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$this->_comments[$i]->com_status] . '<br />IP: <span style="font-weight: bold;">' . $this->_comments[$i]->com_ip . '</span></div>';
 			} else {
 				// hide comments that are not active
-				if (XOOPS_COMMENT_ACTIVE != $this->_comments[$i]->getVar('com_status')) {
+				if (XOOPS_COMMENT_ACTIVE != $this->_comments[$i]->com_status) {
 					continue;
 				} else {
-					$text = $this->_comments[$i]->getVar('com_text');
+					$text = $this->_comments[$i]->com_text;
 				}
 			}
-			$this->_tpl->append('comments', array('id' => $this->_comments[$i]->getVar('com_id'), 'title' => $title, 'text' => $text, 'date_posted' => formatTimestamp($this->_comments[$i]->getVar('com_created'), 'm'), 'date_modified' => formatTimestamp($this->_comments[$i]->getVar('com_modified'), 'm'), 'poster' => $poster));
+			$this->_tpl->append('comments', array('id' => $this->_comments[$i]->com_id, 'title' => $title, 'text' => $text, 'date_posted' => formatTimestamp($this->_comments[$i]->com_created, 'm'), 'date_modified' => formatTimestamp($this->_comments[$i]->com_modified, 'm'), 'poster' => $poster));
 		}
 	}
 
@@ -140,11 +140,11 @@ class icms_data_comment_Renderer {
 		$tree = & $xot->getTree();
 
 		if (false != $this->_useIcons) {
-			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');
+			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->com_icon) . '&nbsp;' . $tree[$comment_id]['obj']->com_title;
 		} else {
-			$title = $tree[$comment_id]['obj']->getVar('com_title');
+			$title = $tree[$comment_id]['obj']->com_title;
 		}
-		if (false != $show_nav && $tree[$comment_id]['obj']->getVar('com_pid') != 0) {
+		if (false != $show_nav && $tree[$comment_id]['obj']->com_pid != 0) {
 			$this->_tpl->assign('lang_top', _CM_TOP);
 			$this->_tpl->assign('lang_parent', _CM_PARENT);
 			$this->_tpl->assign('show_threadnav', true);
@@ -153,12 +153,12 @@ class icms_data_comment_Renderer {
 		}
 		if (false != $admin_view) {
 			// admins can see all
-			$text = $tree[$comment_id]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'
-				. _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->getVar('com_status')]
-				. '<br />IP: <span style="font-weight: bold;">' . $tree[$comment_id]['obj']->getVar('com_ip') . '</span></div>';
+			$text = $tree[$comment_id]['obj']->com_text . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'
+				. _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->com_status]
+				. '<br />IP: <span style="font-weight: bold;">' . $tree[$comment_id]['obj']->com_ip . '</span></div>';
 		} else {
 			// hide comments that are not active
-			if (XOOPS_COMMENT_ACTIVE != $tree[$comment_id]['obj']->getVar('com_status')) {
+			if (XOOPS_COMMENT_ACTIVE != $tree[$comment_id]['obj']->com_status) {
 				// if there are any child comments, display them as root comments
 				if (isset($tree[$comment_id]['child']) && !empty($tree[$comment_id]['child'])) {
 					foreach ($tree[$comment_id]['child'] as $child_id) {
@@ -167,22 +167,22 @@ class icms_data_comment_Renderer {
 				}
 				return;
 			} else {
-				$text = $tree[$comment_id]['obj']->getVar('com_text');
+				$text = $tree[$comment_id]['obj']->com_text;
 			}
 		}
 		$replies = array();
 		$this->_renderThreadReplies($tree, $comment_id, $replies, '&nbsp;&nbsp;', $admin_view);
 		$show_replies = (count($replies) > 0)? true : false;
 		$this->_tpl->append('comments',
-			array('pid' => $tree[$comment_id]['obj']->getVar('com_pid'),
-				'id' => $tree[$comment_id]['obj']->getVar('com_id'),
-				'itemid' => $tree[$comment_id]['obj']->getVar('com_itemid'),
-				'rootid' => $tree[$comment_id]['obj']->getVar('com_rootid'),
+			array('pid' => $tree[$comment_id]['obj']->com_pid,
+				'id' => $tree[$comment_id]['obj']->com_id,
+				'itemid' => $tree[$comment_id]['obj']->com_itemid,
+				'rootid' => $tree[$comment_id]['obj']->com_rootid,
 				'title' => $title,
 				'text' => $text,
-				'date_posted' => formatTimestamp($tree[$comment_id]['obj']->getVar('com_created'), 'm'),
-				'date_modified' => formatTimestamp($tree[$comment_id]['obj']->getVar('com_modified'), 'm'),
-				'poster' => $this->_getPosterArray($tree[$comment_id]['obj']->getVar('com_uid')),
+				'date_posted' => formatTimestamp($tree[$comment_id]['obj']->com_created, 'm'),
+				'date_modified' => formatTimestamp($tree[$comment_id]['obj']->com_modified, 'm'),
+				'poster' => $this->_getPosterArray($tree[$comment_id]['obj']->com_uid),
 				'replies' => $replies,
 				'show_replies' => $show_replies
 			)
@@ -202,29 +202,29 @@ class icms_data_comment_Renderer {
 	 */
 	private function _renderThreadReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0, $current_prefix = '') {
 		if ($depth > 0) {
-			$simple_title = $thread[$key]['obj']->getVar('com_title');
+			$simple_title = $thread[$key]['obj']->com_title;
 			if (false != $this->_useIcons) {
-				$title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')) . '&nbsp;' . $thread[$key]['obj']->getVar('com_title');
+				$title = $this->_getTitleIcon($thread[$key]['obj']->com_icon) . '&nbsp;' . $thread[$key]['obj']->com_title;
 			} else {
-				$title = $thread[$key]['obj']->getVar('com_title');
+				$title = $thread[$key]['obj']->com_title;
 			}
-			$title = (false != $admin_view)?$title . ' ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')]:$title;
+			$title = (false != $admin_view)?$title . ' ' . $this->_statusText[$thread[$key]['obj']->com_status]:$title;
 			$replies[] = array(
 				'id' => $key,
 				'prefix' => $current_prefix,
-				'date_posted' => formatTimestamp($thread[$key]['obj']->getVar('com_created'), 'm'),
+				'date_posted' => formatTimestamp($thread[$key]['obj']->com_created, 'm'),
 				'simple_title' => $simple_title,
 				'title' => $title,
-				'root_id' => $thread[$key]['obj']->getVar('com_rootid'),
-				'status' => $this->_statusText[$thread[$key]['obj']->getVar('com_status')],
-				'poster' => $this->_getPosterName($thread[$key]['obj']->getVar('com_uid'))
+				'root_id' => $thread[$key]['obj']->com_rootid,
+				'status' => $this->_statusText[$thread[$key]['obj']->com_status],
+				'poster' => $this->_getPosterName($thread[$key]['obj']->com_uid)
 			);
 			$current_prefix .= $prefix;
 		}
 		if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
 			$depth++;
 			foreach ($thread[$key]['child'] as $childkey) {
-				if (!$admin_view && $thread[$childkey]['obj']->getVar('com_status') != XOOPS_COMMENT_ACTIVE) {
+				if (!$admin_view && $thread[$childkey]['obj']->com_status != XOOPS_COMMENT_ACTIVE) {
 					// skip this comment if it is not active and continue on processing its child comments instead
 					if (isset($thread[$childkey]['child']) && !empty($thread[$childkey]['child'])) {
 						foreach ($thread[$childkey]['child'] as $childchildkey) {
@@ -250,17 +250,17 @@ class icms_data_comment_Renderer {
 		$xot = new icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree = & $xot->getTree();
 		if (false != $this->_useIcons) {
-			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');
+			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->com_icon) . '&nbsp;' . $tree[$comment_id]['obj']->com_title;
 		} else {
-			$title = $tree[$comment_id]['obj']->getVar('com_title');
+			$title = $tree[$comment_id]['obj']->com_title;
 		}
 		if (false != $admin_view) {
-			$text = $tree[$comment_id]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'
-				. _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->getVar('com_status')]
-				. '<br />IP: <span style="font-weight: bold;">' . $tree[$comment_id]['obj']->getVar('com_ip') . '</span></div>';
+			$text = $tree[$comment_id]['obj']->com_text . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'
+				. _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->com_status]
+				. '<br />IP: <span style="font-weight: bold;">' . $tree[$comment_id]['obj']->com_ip . '</span></div>';
 		} else {
 			// skip this comment if it is not active and continue on processing its child comments instead
-			if (XOOPS_COMMENT_ACTIVE != $tree[$comment_id]['obj']->getVar('com_status')) {
+			if (XOOPS_COMMENT_ACTIVE != $tree[$comment_id]['obj']->com_status) {
 				// if there are any child comments, display them as root comments
 				if (isset($tree[$comment_id]['child']) && !empty($tree[$comment_id]['child'])) {
 					foreach ($tree[$comment_id]['child'] as $child_id) {
@@ -269,22 +269,22 @@ class icms_data_comment_Renderer {
 				}
 				return;
 			} else {
-				$text = $tree[$comment_id]['obj']->getVar('com_text');
+				$text = $tree[$comment_id]['obj']->com_text;
 			}
 		}
 		$replies = array();
 		$this->_renderNestReplies($tree, $comment_id, $replies, 25, $admin_view);
 		$this->_tpl->append('comments',
 			array(
-				'pid' => $tree[$comment_id]['obj']->getVar('com_pid'),
-				'id' => $tree[$comment_id]['obj']->getVar('com_id'),
-				'itemid' => $tree[$comment_id]['obj']->getVar('com_itemid'),
-				'rootid' => $tree[$comment_id]['obj']->getVar('com_rootid'),
+				'pid' => $tree[$comment_id]['obj']->com_pid,
+				'id' => $tree[$comment_id]['obj']->com_id,
+				'itemid' => $tree[$comment_id]['obj']->com_itemid,
+				'rootid' => $tree[$comment_id]['obj']->com_rootid,
 				'title' => $title,
 				'text' => $text,
-				'date_posted' => formatTimestamp($tree[$comment_id]['obj']->getVar('com_created'), 'm'),
-				'date_modified' => formatTimestamp($tree[$comment_id]['obj']->getVar('com_modified'), 'm'),
-				'poster' => $this->_getPosterArray($tree[$comment_id]['obj']->getVar('com_uid')),
+				'date_posted' => formatTimestamp($tree[$comment_id]['obj']->com_created, 'm'),
+				'date_modified' => formatTimestamp($tree[$comment_id]['obj']->com_modified, 'm'),
+				'poster' => $this->_getPosterArray($tree[$comment_id]['obj']->com_uid),
 				'replies' => $replies
 			)
 		);
@@ -303,22 +303,22 @@ class icms_data_comment_Renderer {
 	private function _renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0) {
 		if ($depth > 0) {
 			if (false != $this->_useIcons) {
-				$title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')) . '&nbsp;' . $thread[$key]['obj']->getVar('com_title');
+				$title = $this->_getTitleIcon($thread[$key]['obj']->com_icon) . '&nbsp;' . $thread[$key]['obj']->com_title;
 			} else {
-				$title = $thread[$key]['obj']->getVar('com_title');
+				$title = $thread[$key]['obj']->com_title;
 			}
-			$text = (false != $admin_view)?$thread[$key]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')] . '<br />IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_ip') . '</span></div>':$thread[$key]['obj']->getVar('com_text');
+			$text = (false != $admin_view)?$thread[$key]['obj']->com_text . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->com_status] . '<br />IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->com_ip . '</span></div>':$thread[$key]['obj']->com_text;
 			$replies[] = array(
 				'id' => $key,
 				'prefix' => $prefix,
-				'pid' => $thread[$key]['obj']->getVar('com_pid'),
-				'itemid' => $thread[$key]['obj']->getVar('com_itemid'),
-				'rootid' => $thread[$key]['obj']->getVar('com_rootid'),
+				'pid' => $thread[$key]['obj']->com_pid,
+				'itemid' => $thread[$key]['obj']->com_itemid,
+				'rootid' => $thread[$key]['obj']->com_rootid,
 				'title' => $title,
 				'text' => $text,
-				'date_posted' => formatTimestamp($thread[$key]['obj']->getVar('com_created'), 'm'),
-				'date_modified' => formatTimestamp($thread[$key]['obj']->getVar('com_modified'), 'm'),
-				'poster' => $this->_getPosterArray($thread[$key]['obj']->getVar('com_uid'))
+				'date_posted' => formatTimestamp($thread[$key]['obj']->com_created, 'm'),
+				'date_modified' => formatTimestamp($thread[$key]['obj']->com_modified, 'm'),
+				'poster' => $this->_getPosterArray($thread[$key]['obj']->com_uid)
 			);
 
 			$prefix = $prefix + 25;
@@ -326,7 +326,7 @@ class icms_data_comment_Renderer {
 		if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
 			$depth++;
 			foreach ($thread[$key]['child'] as $childkey) {
-				if (!$admin_view && $thread[$childkey]['obj']->getVar('com_status') != XOOPS_COMMENT_ACTIVE) {
+				if (!$admin_view && $thread[$childkey]['obj']->com_status != XOOPS_COMMENT_ACTIVE) {
 					// skip this comment if it is not active and continue on processing its child comments instead
 					if (isset($thread[$childkey]['child']) && !empty($thread[$childkey]['child'])) {
 						foreach ($thread[$childkey]['child'] as $childchildkey) {
@@ -352,7 +352,7 @@ class icms_data_comment_Renderer {
 		if ($poster['id'] > 0) {
 			$com_poster = & $this->_memberHandler->getUser($poster_id);
 			if (is_object($com_poster)) {
-				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->getVar('uname') . '</a>';
+				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->uname . '</a>';
 				return $poster;
 			}
 		}
@@ -372,14 +372,14 @@ class icms_data_comment_Renderer {
 		if ($poster['id'] > 0) {
 			$com_poster = & $this->_memberHandler->getUser($poster['id']);
 			if (is_object($com_poster)) {
-				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->getVar('uname') . '</a>';
+				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->uname . '</a>';
 				$poster_rank = $com_poster->rank();
 				$poster['rank_image'] = $poster_rank['image'];
 				$poster['rank_title'] = $poster_rank['title'];
 				$poster['avatar'] = $com_poster->gravatar();
-				$poster['regdate'] = formatTimestamp($com_poster->getVar('user_regdate'), 's');
-				$poster['from'] = $com_poster->getVar('user_from');
-				$poster['postnum'] = $com_poster->getVar('posts');
+				$poster['regdate'] = formatTimestamp($com_poster->user_regdate, 's');
+				$poster['from'] = $com_poster->user_from;
+				$poster['postnum'] = $com_poster->posts;
 				$poster['status'] = $com_poster->isOnline()? _CM_ONLINE : '';
 				return $poster;
 			}

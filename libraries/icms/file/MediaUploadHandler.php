@@ -636,7 +636,7 @@ class icms_file_MediaUploadHandler {
 	public function checkMimeType() {
 		global $icmsModule;
 		$mimetypeHandler = icms_getModulehandler('mimetype', 'system');
-		$modulename = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->getVar('dirname'):'system';
+		$modulename = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->dirname:'system';
 		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
 			self::setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
 			return false;

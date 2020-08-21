@@ -62,8 +62,8 @@ class icms_member_rank_Handler extends icms_ipf_Handler {
 		} else {
 			$rank = array(
 				"id" => $rank_id,
-				"title" => $ranks[0]->getVar("rank_title"),
-				"image" => $this->getImageUrl() . $ranks[0]->getVar("rank_image"));
+				"title" => $ranks[0]->rank_title,
+				"image" => $this->getImageUrl() . $ranks[0]->rank_image);
 		}
 
 		return $rank;

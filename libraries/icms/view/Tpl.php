@@ -66,7 +66,7 @@ class icms_view_Tpl extends SmartyBC
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
 			$groups = (is_object(icms::$user))? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
-			$moduleid = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->getVar('mid'):1;
+			$moduleid = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->mid:1;
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			if ($icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
@@ -173,8 +173,8 @@ class icms_view_Tpl extends SmartyBC
 			$tpl = new self();
 			$tpl->caching = 2;
 			for ($i = 0; $i < $count; $i++) {
-				if ($block_arr[$i]->getVar('template') != '') {
-					$tpl->clear_cache('db:' . $block_arr[$i]->getVar('template'), 'blk_' . $block_arr[$i]->getVar('bid'));
+				if ($block_arr[$i]->template != '') {
+					$tpl->clear_cache('db:' . $block_arr[$i]->template, 'blk_' . $block_arr[$i]->bid);
 				}
 			}
 		}

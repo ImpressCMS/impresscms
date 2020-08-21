@@ -190,7 +190,7 @@ class icms_config_Handler {
 		}
 		$options = & $config->getConfOptions();
 		$count = count($options);
-		$conf_id = $config->getVar('conf_id');
+		$conf_id = $config->conf_id;
 		for ($i = 0; $i < $count; $i++) {
 			$options[$i]->setVar('conf_id', $conf_id);
 			if (!$this->_oHandler->insert($options[$i])) {
@@ -200,8 +200,8 @@ class icms_config_Handler {
 			}
 		}
 
-		if (!empty($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')])) {
-			unset($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')]);
+		if (!empty($this->_cachedConfigs[$config->conf_modid][$config->conf_catid])) {
+			unset($this->_cachedConfigs[$config->conf_modid][$config->conf_catid]);
 		}
 		return true;
 	}
@@ -219,7 +219,7 @@ class icms_config_Handler {
 		$options = & $config->getConfOptions();
 		$count = count($options);
 		if ($count == 0) {
-			$options = $this->getConfigOptions(new icms_db_criteria_Item('conf_id', $config->getVar('conf_id')));
+			$options = $this->getConfigOptions(new icms_db_criteria_Item('conf_id', $config->conf_id));
 			$count = count($options);
 		}
 		if (is_array($options) && $count > 0) {
@@ -227,8 +227,8 @@ class icms_config_Handler {
 				$this->_oHandler->delete($options[$i]);
 			}
 		}
-		if (!empty($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')])) {
-			unset($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')]);
+		if (!empty($this->_cachedConfigs[$config->conf_modid][$config->conf_catid])) {
+			unset($this->_cachedConfigs[$config->conf_modid][$config->conf_catid]);
 		}
 		return true;
 	}
@@ -271,7 +271,7 @@ class icms_config_Handler {
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach (array_keys($configs) as $i) {
-					$ret[$configs[$i]->getVar('conf_catid')][$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
+					$ret[$configs[$i]->conf_catid][$configs[$i]->conf_name] = $configs[$i]->getConfValueForOutput();
 				}
 				foreach ($ret as $key => $value) {
 					$this->_cachedConfigs[$module][$key] = $value;
@@ -291,7 +291,7 @@ class icms_config_Handler {
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach (array_keys($configs) as $i) {
-					$ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
+					$ret[$configs[$i]->conf_name] = $configs[$i]->getConfValueForOutput();
 				}
 			}
 			$this->_cachedConfigs[$module][$category] = $ret;
@@ -364,7 +364,7 @@ class icms_config_Handler {
 			$confcount = count($configs);
 			$ret = array();
 			for ($i = 0; $i < $confcount; $i++) {
-				$ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
+				$ret[$configs[$i]->conf_name] = $configs[$i]->getConfValueForOutput();
 			}
 			$this->_cachedConfigs[$conf_modid][$conf_catid] = & $ret;
 			return $ret;

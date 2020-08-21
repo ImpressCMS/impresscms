@@ -28,7 +28,7 @@ class icms_data_file_Handler extends icms_ipf_Handler {
 	 * @return bool TRUE
 	 */
 	protected function afterDelete(&$obj) {
-		$imgUrl = $obj->getVar("url");
+		$imgUrl = $obj->url;
 		if (strstr($imgUrl, ICMS_URL) !== false) {
 			$imgPath = str_replace(ICMS_URL, ICMS_ROOT_PATH, $imgUrl);
 			if (is_file($imgPath)) {

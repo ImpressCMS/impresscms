@@ -41,7 +41,7 @@ function mentions($text, $prefix) {
 	if (!$userId) {
 		return $prefix . "@" . $text;
 	}
-	$ret = $prefix . "<a href='" . sprintf(MENTIONS_LINK, $userId[0]->getVar('uid')) . "' title='" . sprintf(_US_ALLABOUT, $text) . "'>@" . $text . "</a>";
+	$ret = $prefix . "<a href='" . sprintf(MENTIONS_LINK, $userId[0]->uid) . "' title='" . sprintf(_US_ALLABOUT, $text) . "'>@" . $text . "</a>";
 	return $ret;
 }
 

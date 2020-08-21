@@ -60,7 +60,7 @@ class TablesSetupStep implements SetupStepInterface
 		if (substr(env('DB_TYPE'), 0, 4) == 'pdo.') {
 			$driver = substr(env('DB_TYPE'), 4);
 		}
-		$sql_file_path = ICMS_MODULES_PATH . '/' . $module->getVar('dirname') . '/' . $sqlfile[$driver];
+		$sql_file_path = ICMS_MODULES_PATH . '/' . $module->dirname . '/' . $sqlfile[$driver];
 		if (!file_exists($sql_file_path)) {
 			$output->error(_MD_AM_SQL_NOT_FOUND, $sql_file_path);
 			return false;

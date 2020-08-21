@@ -63,7 +63,7 @@ class icms_data_privmessage_Handler extends icms_ipf_Handler
 			return false;
 		}
 
-		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->table, (int)$pm->getVar('msg_id'));
+		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->table, (int)$pm->msg_id);
 		if (!$this->db->queryF($sql)) {
 			return false;
 		}

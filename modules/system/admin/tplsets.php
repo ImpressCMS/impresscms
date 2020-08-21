@@ -78,7 +78,7 @@ switch ($op) {
 		icms_cp_header();
 		$module_handler = icms::handler('icms_module');
 		$module = & $module_handler->getByDirname($moddir);
-		$modname = $module->getVar('name');
+		$modname = $module->name;
 		echo '<div class="CPbigTitle" style="background-image: url('
 			. ICMS_MODULES_URL . '/system/admin/tplsets/images/tplsets_big.png)">'
 			. '<a href="admin.php?fct=tplsets">' . _MD_TPLMAIN
@@ -108,14 +108,14 @@ switch ($op) {
 			} else {
 				$class = 'odd';
 			}
-			$last_modified = $templates[$i]->getVar('tpl_lastmodified');
-			$last_imported = $templates[$i]->getVar('tpl_lastimported');
+			$last_modified = $templates[$i]->tpl_lastmodified;
+			$last_imported = $templates[$i]->tpl_lastimported;
 			$last_imported_f = ($last_imported > 0)? formatTimestamp($last_imported, 'l'):'';
 			echo  '<tr class="' . $class . '"><td class="head">'
-				. $templates[$i]->getVar('tpl_file')
-				. '<br /><br /><span style="font-weight:normal;">' . $templates[$i]->getVar('tpl_desc') . '</span></td><td style="vertical-align: middle;">'
+				. $templates[$i]->tpl_file
+				. '<br /><br /><span style="font-weight:normal;">' . $templates[$i]->tpl_desc . '</span></td><td style="vertical-align: middle;">'
 				. formatTimestamp($last_modified, 'l') . '</td>';
-			$filename = $templates[$i]->getVar('tpl_file');
+			$filename = $templates[$i]->tpl_file;
 			if ($tplset != 'default') {
 				$physical_file = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $moddir . '/' . $filename;
 				if (file_exists($physical_file)) {
@@ -128,7 +128,7 @@ switch ($op) {
 						}
 						echo '<td style="background-color:' . $bg . ';">' . $last_imported_f
 							. ' [<a href="admin.php?fct=tplsets&amp;tplset=' . $tplset_enc . '&amp;moddir=' . $moddir
-							. '&amp;op=importtpl&amp;id=' . $templates[$i]->getVar('tpl_id') . '">'
+							. '&amp;op=importtpl&amp;id=' . $templates[$i]->tpl_id . '">'
 							. _MD_IMPORT . '</a>]';
 					} else {
 						echo '<td style="vertical-align: middle;">' . $last_imported_f;
@@ -137,14 +137,14 @@ switch ($op) {
 					echo '<td style="vertical-align: middle;">' . $last_imported_f;
 				}
 				echo '</td><td style="vertical-align: middle;">'
-					. '<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $templates[$i]->getVar('tpl_id') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a>'
-					. ' <a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id=' . $templates[$i]->getVar('tpl_id') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a>'
-					. ' <a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id=' . $templates[$i]->getVar('tpl_id') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a>'
+					. '<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $templates[$i]->tpl_id . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a>'
+					. ' <a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id=' . $templates[$i]->tpl_id . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a>'
+					. ' <a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id=' . $templates[$i]->tpl_id . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a>'
 					. '</td><td style="vertical-align: middle;" align="' . _GLOBAL_RIGHT . '"><input type="file" name="' . $filename . '" id="' . $filename . '" />'
 					. '<input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="' . $filename . '" />'
-					. '<input type="hidden" name="old_template[' . $filename . ']" value="' . $templates[$i]->getVar('tpl_id') . '" /></td>';
+					. '<input type="hidden" name="old_template[' . $filename . ']" value="' . $templates[$i]->tpl_id . '" /></td>';
 			} else {
-				echo '<td style="vertical-align: middle;"><a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $templates[$i]->getVar('tpl_id') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" alt="' . _MD_VIEW . '" title="' . _MD_VIEW . '" /></a>&nbsp;<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id=' . $templates[$i]->getVar('tpl_id') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a></td>';
+				echo '<td style="vertical-align: middle;"><a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $templates[$i]->tpl_id . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" alt="' . _MD_VIEW . '" title="' . _MD_VIEW . '" /></a>&nbsp;<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id=' . $templates[$i]->tpl_id . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a></td>';
 			}
 			echo '</tr>' . "\n";
 			$inst_files[] = $filename;
@@ -183,18 +183,18 @@ switch ($op) {
 		$binst_files = array();
 		$btcount = count($btemplates);
 		for ($j = 0; $j < $btcount; $j++) {
-			$last_imported = $btemplates[$j]->getVar('tpl_lastimported');
+			$last_imported = $btemplates[$j]->tpl_lastimported;
 			$last_imported_f = ($last_imported > 0)? formatTimestamp($last_imported, 'l'):'';
-			$last_modified = $btemplates[$j]->getVar('tpl_lastmodified');
+			$last_modified = $btemplates[$j]->tpl_lastmodified;
 			if ($j % 2 == 0) {
 				$class = 'even';
 			} else {
 				$class = 'odd';
 			}
 			echo  '<tr class="' . $class . '"><td class="head"><span style="font-weight:bold;">'
-				. $btemplates[$j]->getVar('tpl_file') . '</span><br /><br /><span style="font-weight:normal;">'
-				. $btemplates[$j]->getVar('tpl_desc') . '</span></td><td style="vertical-align: middle;">' . formatTimestamp($last_modified, 'l') . '</td>';
-			$filename = $btemplates[$j]->getVar('tpl_file');
+				. $btemplates[$j]->tpl_file . '</span><br /><br /><span style="font-weight:normal;">'
+				. $btemplates[$j]->tpl_desc . '</span></td><td style="vertical-align: middle;">' . formatTimestamp($last_modified, 'l') . '</td>';
+			$filename = $btemplates[$j]->tpl_file;
 			$physical_file = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $moddir . '/blocks/' . $filename;
 			if ($tplset != 'default') {
 				if (file_exists($physical_file)) {
@@ -205,7 +205,7 @@ switch ($op) {
 						} elseif ($mtime > $last_imported) {
 							$bg = '#99ff99';
 						}
-						echo '<td style="background-color:' . $bg . ';">' . $last_imported_f . ' <a href="admin.php?fct=tplsets&amp;tplset=' . $tplset . '&amp;op=importtpl&amp;moddir=' . $moddir . '&amp;id=' . $btemplates[$j]->getVar('tpl_id') . '">' . _MD_IMPORT . '</a>]';
+						echo '<td style="background-color:' . $bg . ';">' . $last_imported_f . ' <a href="admin.php?fct=tplsets&amp;tplset=' . $tplset . '&amp;op=importtpl&amp;moddir=' . $moddir . '&amp;id=' . $btemplates[$j]->tpl_id . '">' . _MD_IMPORT . '</a>]';
 					} else {
 						echo '<td>' . $last_imported_f;
 					}
@@ -213,15 +213,15 @@ switch ($op) {
 					echo '<td>' . $last_imported_f;
 				}
 				echo '</td><td style="vertical-align: middle;">'
-					. '<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplates[$j]->getVar('tpl_id') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a>'
-					. ' <a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id=' . $btemplates[$j]->getVar('tpl_id') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a>'
-					. ' <a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id=' . $btemplates[$j]->getVar('tpl_id') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a>'
+					. '<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplates[$j]->tpl_id . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/edit.png" alt="' . _EDIT . '" title="' . _EDIT . '" /></a>'
+					. ' <a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id=' . $btemplates[$j]->tpl_id . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a>'
+					. ' <a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id=' . $btemplates[$j]->tpl_id . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editdelete.png" alt="' . _DELETE . '" title="' . _DELETE . '" /></a>'
 					. '</td><td style="vertical-align: middle;" align="' . _GLOBAL_RIGHT . '"><input type="file" name="' . $filename . '" id="' . $filename . '" />'
 					. '<input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="' . $filename . '" />'
-					. '<input type="hidden" name="old_template[' . $filename . ']" value="' . $btemplates[$j]->getVar('tpl_id') . '" /></td>';
+					. '<input type="hidden" name="old_template[' . $filename . ']" value="' . $btemplates[$j]->tpl_id . '" /></td>';
 			} else {
-				echo '<td><a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplates[$j]->getVar('tpl_id') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" alt="' . _MD_VIEW . '" title="' . _MD_VIEW . '" /></a>&nbsp;
-				<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id=' . $btemplates[$j]->getVar('tpl_id') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a></td>';
+				echo '<td><a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplates[$j]->tpl_id . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" alt="' . _MD_VIEW . '" title="' . _MD_VIEW . '" /></a>&nbsp;
+				<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id=' . $btemplates[$j]->tpl_id . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesave2.png" alt="' . _MD_DOWNLOAD . '" title="' . _MD_DOWNLOAD . '" /></a></td>';
 			}
 			echo '</tr>' . "\n";
 			$binst_files[] = $filename;
@@ -269,20 +269,20 @@ switch ($op) {
 		$tpltpl_handler = &icms::handler('icms_view_template_file');
 		$tplfile = &$tpltpl_handler->get($id, true);
 		if (is_object($tplfile)) {
-			$tplset = $tplfile->getVar('tpl_tplset');
+			$tplset = $tplfile->tpl_tplset;
 			$tform = array(
 				'tpl_tplset' => $tplset,
 				'tpl_id' => $id,
-				'tpl_file' => $tplfile->getVar('tpl_file'),
-				'tpl_desc' => $tplfile->getVar('tpl_desc'),
-				'tpl_lastmodified' => $tplfile->getVar('tpl_lastmodified'),
+				'tpl_file' => $tplfile->tpl_file,
+				'tpl_desc' => $tplfile->tpl_desc,
+				'tpl_lastmodified' => $tplfile->tpl_lastmodified,
 				'tpl_source' => $tplfile->getVar('tpl_source', 'E'),
-				'tpl_module' => $tplfile->getVar('tpl_module'));
+				'tpl_module' => $tplfile->tpl_module);
 			include_once ICMS_MODULES_PATH . '/system/admin/tplsets/tplform.php';
 			icms_cp_header();
 			echo '<a href="admin.php?fct=tplsets">' . _MD_TPLMAIN . '</a>'
 				. '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'
-				. '<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir=' . $tplfile->getVar('tpl_module') . '&amp;tplset=' . $tplset . '">'
+				. '<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir=' . $tplfile->tpl_module . '&amp;tplset=' . $tplset . '">'
 				. $tplset . '</a>'
 				. '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'
 				. $tform['tpl_module'] . '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'
@@ -312,19 +312,19 @@ switch ($op) {
 		if (!is_object($tplfile)) {
 			$err[] = sprintf(_MD_TPLSET_TEMPLATE_NOTEXIST, $id);
 		} else {
-			if ($tplfile->getVar('tpl_tplset') != 'default') {
+			if ($tplfile->tpl_tplset != 'default') {
 				$tplfile->setVar('tpl_source', $html);
 				$tplfile->setVar('tpl_lastmodified', time());
 
 				if (!$tpltpl_handler->insert($tplfile)) {
-					$err[] = sprintf(_MD_TPLSET_INSERT_FAILED, $tplfile->getVar('tpl_file'));
+					$err[] = sprintf(_MD_TPLSET_INSERT_FAILED, $tplfile->tpl_file);
 				} else {
 					$xoopsTpl = new icms_view_Tpl();
-					if ($xoopsTpl->is_cached('db:' . $tplfile->getVar('tpl_file'))) {
-						if (!$xoopsTpl->clear_cache('db:' . $tplfile->getVar('tpl_file'))) {
+					if ($xoopsTpl->is_cached('db:' . $tplfile->tpl_file)) {
+						if (!$xoopsTpl->clear_cache('db:' . $tplfile->tpl_file)) {
 						}
 					}
-					if ($tplfile->getVar('tpl_tplset') == $icmsConfig['template_set']) {
+					if ($tplfile->tpl_tplset == $icmsConfig['template_set']) {
 						icms_view_Tpl::template_touch($id);
 					}
 				}
@@ -335,9 +335,9 @@ switch ($op) {
 
 		if (count($err) == 0) {
 			if (!empty($moddir)) {
-				redirect_header('admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $tplfile->getVar('tpl_id'), 2, _MD_AM_DBUPDATED);
+				redirect_header('admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $tplfile->tpl_id, 2, _MD_AM_DBUPDATED);
 			} elseif (isset($redirect)) {
-				redirect_header('admin.php?fct=tplsets&amp;tplset=' . $tplfile->getVar('tpl_tplset') . '&amp;op=' . trim($redirect), 2, _MD_AM_DBUPDATED);
+				redirect_header('admin.php?fct=tplsets&amp;tplset=' . $tplfile->tpl_tplset . '&amp;op=' . trim($redirect), 2, _MD_AM_DBUPDATED);
 			} else {
 				redirect_header('admin.php?fct=tplsets', 2, _MD_AM_DBUPDATED);
 			}
@@ -367,15 +367,15 @@ switch ($op) {
 		if (!is_object($tplfile)) {
 			$err[] = sprintf(_MD_TPLSET_TEMPLATE_NOTEXIST, $id);
 		} else {
-			if ($tplfile->getVar('tpl_tplset') != 'default') {
+			if ($tplfile->tpl_tplset != 'default') {
 				if (!$tpltpl_handler->delete($tplfile)) {
-					$err[] = sprintf(_MD_TPLSET_DELETE_FAIL, $tplfile->getVar('tpl_file'));
+					$err[] = sprintf(_MD_TPLSET_DELETE_FAIL, $tplfile->tpl_file);
 				} else {
 					// need to compile default template
-					if ($tplfile->getVar('tpl_tplset') == $icmsConfig['template_set']) {
-						$defaulttpl = & $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), null, $tplfile->getVar('tpl_file'));
+					if ($tplfile->tpl_tplset == $icmsConfig['template_set']) {
+						$defaulttpl = & $tpltpl_handler->find('default', $tplfile->tpl_type, $tplfile->tpl_refid, null, $tplfile->tpl_file);
 						if (count($defaulttpl) > 0) {
-							icms_view_Tpl::template_touch($defaulttpl[0]->getVar('tpl_id'));
+							icms_view_Tpl::template_touch($defaulttpl[0]->tpl_id);
 						}
 					}
 				}
@@ -386,8 +386,8 @@ switch ($op) {
 
 		if (count($err) == 0) {
 			redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='
-				. $tplfile->getVar('tpl_module') . '&amp;tplset='
-				. urlencode($tplfile->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
+				. $tplfile->tpl_module . '&amp;tplset='
+				. urlencode($tplfile->tpl_tplset), 2, _MD_AM_DBUPDATED);
 		}
 		icms_cp_header();
 		icms_core_Message::error($err);
@@ -418,11 +418,11 @@ switch ($op) {
 				for ($i = 0; $i < $tcount; $i++) {
 					if (!$tpltpl_handler->delete($templates[$i])) {
 						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">'
-							. _ERROR . ': ' . sprintf(_MD_TPLSET_DELETE_FAIL, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>')
-							. 'ID: ' . '<strong>' . $templates[$i]->getVar('tpl_id') . '</strong></span>';
+							. _ERROR . ': ' . sprintf(_MD_TPLSET_DELETE_FAIL, '<strong>' . $templates[$i]->tpl_file . '</strong>')
+							. 'ID: ' . '<strong>' . $templates[$i]->tpl_id . '</strong></span>';
 					} else {
-						$msgs[] = '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_DELETE_OK, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>')
-						. 'ID: <strong>' . $templates[$i]->getVar('tpl_id') . '</strong>';
+						$msgs[] = '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_DELETE_OK, '<strong>' . $templates[$i]->tpl_file . '</strong>')
+						. 'ID: <strong>' . $templates[$i]->tpl_id . '</strong>';
 					}
 				}
 			}
@@ -488,7 +488,7 @@ switch ($op) {
 			if (!$tplset_handler->insert($tplsetobj)) {
 				$msgs[] = '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_CREATE_FAILED, '<strong>' . $newtheme . '</strong>') . '</span><br />';
 			} else {
-				$tplsetid = $tplsetobj->getVar('tplset_id');
+				$tplsetid = $tplsetobj->tplset_id;
 				$templates = &$tpltpl_handler->getObjects(new icms_db_criteria_Item('tpl_tplset', $tplset), false);
 				$tcount = count($templates);
 				if ($tcount > 0) {
@@ -500,11 +500,11 @@ switch ($op) {
 						$newtpl->setVar('tpl_lastimported', 0);
 						$newtpl->setVar('tpl_lastmodified', time());
 						if (!$tpltpl_handler->insert($newtpl)) {
-							$msgs[] = '&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_COPY_FAILED, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>')
-								. 'ID: <strong>' . $templates[$i]->getVar('tpl_id') . '</strong>' . '</span>';
+							$msgs[] = '&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_COPY_FAILED, '<strong>' . $templates[$i]->tpl_file . '</strong>')
+								. 'ID: <strong>' . $templates[$i]->tpl_id . '</strong>' . '</span>';
 						} else {
-							$msgs[] = '&nbsp;' . sprintf(_MD_TPLSET_COPY_OK, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>')
-							. ' ID: <strong>' . $newtpl->getVar('tpl_id') . '</strong>';
+							$msgs[] = '&nbsp;' . sprintf(_MD_TPLSET_COPY_OK, '<strong>' . $templates[$i]->tpl_file . '</strong>')
+							. ' ID: <strong>' . $newtpl->tpl_id . '</strong>';
 						}
 						unset($newtpl);
 					}
@@ -527,7 +527,7 @@ switch ($op) {
 		 */
 		$tpltpl_handler = &icms::handler('icms_view_template_file');
 		$tplfile = &$tpltpl_handler->get($id);
-		$default = &$tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), null, $tplfile->getVar('tpl_file'));
+		$default = &$tpltpl_handler->find('default', $tplfile->tpl_type, $tplfile->tpl_refid, null, $tplfile->tpl_file);
 		echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
 		echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE
 			. '"><head><meta http-equiv="content-type" content="text/html; charset=' . _CHARSET
@@ -541,12 +541,12 @@ switch ($op) {
 
 		if (is_object($default[0])) {
 			$tpltpl_handler->loadSource($default[0]);
-			$last_modified = $default[0]->getVar('tpl_lastmodified');
-			$last_imported = $default[0]->getVar('tpl_lastimported');
-			if ($default[0]->getVar('tpl_type') == 'block') {
-				$path = ICMS_MODULES_PATH . '/' . $default[0]->getVar('tpl_module') . '/blocks/' . $default[0]->getVar('tpl_file');
+			$last_modified = $default[0]->tpl_lastmodified;
+			$last_imported = $default[0]->tpl_lastimported;
+			if ($default[0]->tpl_type == 'block') {
+				$path = ICMS_MODULES_PATH . '/' . $default[0]->tpl_module . '/blocks/' . $default[0]->tpl_file;
 			} else {
-				$path = ICMS_MODULES_PATH . '/' . $default[0]->getVar('tpl_module') . '/' . $default[0]->getVar('tpl_file');
+				$path = ICMS_MODULES_PATH . '/' . $default[0]->tpl_module . '/' . $default[0]->tpl_file;
 			}
 			$colorchange = '';
 			if (!file_exists($path)) {
@@ -561,7 +561,7 @@ switch ($op) {
 				$lastimported_date = formatTimestamp($last_imported, 'l');
 			}
 			$form = new icms_form_Theme(_MD_VIEWDEFAULT, 'template_form', 'admin.php');
-			$form->addElement(new icms_form_elements_Textarea(_MD_FILEHTML, 'html', $default[0]->getVar('tpl_source'), 25));
+			$form->addElement(new icms_form_elements_Textarea(_MD_FILEHTML, 'html', $default[0]->tpl_source, 25));
 			$form->display();
 		} else {
 			echo _MD_TPLSET_FILE_NOTEXIST;
@@ -576,15 +576,15 @@ switch ($op) {
 		$tpltpl_handler = &icms::handler('icms_view_template_file');
 		$tpl = &$tpltpl_handler->get((int)($id), true);
 		if (is_object($tpl)) {
-			$output = $tpl->getVar('tpl_source');
+			$output = $tpl->tpl_source;
 			strlen($output);
 			header('Cache-Control: no-cache, must-revalidate');
 			header('Pragma: no-cache');
 			header('Content-Type: application/force-download');
 			if (preg_match("/MSIE 5.5/", $_SERVER['HTTP_USER_AGENT'])) {
-				header('Content-Disposition: filename=' . $tpl->getVar('tpl_file'));
+				header('Content-Disposition: filename=' . $tpl->tpl_file);
 			} else {
-				header('Content-Disposition: attachment; filename=' . $tpl->getVar('tpl_file'));
+				header('Content-Disposition: attachment; filename=' . $tpl->tpl_file);
 			}
 			header('Content-length: ' . strlen($output));
 			echo $output;
@@ -604,7 +604,7 @@ switch ($op) {
 					}
 				}
 				$tplsetobj = &$tplset_handler->getByName($tplset);
-				$xml = "<" . "?xml version=\"1.0\"?" . ">\r\n<tplset>\r\n  <name>" . $tplset . "</name>\r\n  <dateCreated>" . $tplsetobj->getVar('tplset_created') . "</dateCreated>\r\n  <credits>\r\n" . $tplsetobj->getVar('tplset_credits') . "\r\n  </credits>\r\n  <generator>" . ICMS_VERSION_NAME . "</generator>\r\n  <templates>";
+				$xml = "<" . "?xml version=\"1.0\"?" . ">\r\n<tplset>\r\n  <name>" . $tplset . "</name>\r\n  <dateCreated>" . $tplsetobj->tplset_created . "</dateCreated>\r\n  <credits>\r\n" . $tplsetobj->tplset_credits . "\r\n  </credits>\r\n  <generator>" . ICMS_VERSION_NAME . "</generator>\r\n  <templates>";
 				/**
 				 * @var icms_view_template_file_Handler $tpltpl_handler
 				 */
@@ -613,14 +613,14 @@ switch ($op) {
 				$fcount = count($files);
 				if ($fcount > 0) {
 					for ($i = 0; $i < $fcount; $i++) {
-						if ($files[$i]->getVar('tpl_type') == 'block') {
-							$path = $tplset . '/templates/' . $files[$i]->getVar('tpl_module') . '/blocks/' . $files[$i]->getVar('tpl_file');
-							$xml .= "\r\n    <template name=\"" . $files[$i]->getVar('tpl_file') . "\">\r\n      <module>" . $files[$i]->getVar('tpl_module') . "</module>\r\n      <type>block</type>\r\n      <lastModified>" . $files[$i]->getVar('tpl_lastmodified') . "</lastModified>\r\n    </template>";
-						} elseif ($files[$i]->getVar('tpl_type') == 'module') {
-							$path = $tplset . '/templates/' . $files[$i]->getVar('tpl_module') . '/' . $files[$i]->getVar('tpl_file');
-							$xml .= "\r\n    <template name=\"" . $files[$i]->getVar('tpl_file') . "\">\r\n      <module>" . $files[$i]->getVar('tpl_module') . "</module>\r\n      <type>module</type>\r\n      <lastModified>" . $files[$i]->getVar('tpl_lastmodified') . "</lastModified>\r\n    </template>";
+						if ($files[$i]->tpl_type == 'block') {
+							$path = $tplset . '/templates/' . $files[$i]->tpl_module . '/blocks/' . $files[$i]->tpl_file;
+							$xml .= "\r\n    <template name=\"" . $files[$i]->tpl_file . "\">\r\n      <module>" . $files[$i]->tpl_module . "</module>\r\n      <type>block</type>\r\n      <lastModified>" . $files[$i]->tpl_lastmodified . "</lastModified>\r\n    </template>";
+						} elseif ($files[$i]->tpl_type == 'module') {
+							$path = $tplset . '/templates/' . $files[$i]->tpl_module . '/' . $files[$i]->tpl_file;
+							$xml .= "\r\n    <template name=\"" . $files[$i]->tpl_file . "\">\r\n      <module>" . $files[$i]->tpl_module . "</module>\r\n      <type>module</type>\r\n      <lastModified>" . $files[$i]->tpl_lastmodified . "</lastModified>\r\n    </template>";
 						}
-						$downloader->addFileData($files[$i]->getVar('tpl_source'), $path, $files[$i]->getVar('tpl_lastmodified'));
+						$downloader->addFileData($files[$i]->tpl_source, $path, $files[$i]->tpl_lastmodified);
 					}
 
 					$xml .= "\r\n  </templates>";
@@ -660,18 +660,18 @@ switch ($op) {
 			$newtpl->setVar('tpl_lastmodified', time());
 			$newtpl->setVar('tpl_lastimported', 0);
 			if (!$tpltpl_handler->insert($newtpl)) {
-				$err = _ERROR . ': ' . sprintf(_MD_TPLSET_INSERT_FAILED, '<strong>' . $tplfile[0]->getVar('tpl_file') . '</strong>');
+				$err = _ERROR . ': ' . sprintf(_MD_TPLSET_INSERT_FAILED, '<strong>' . $tplfile[0]->tpl_file . '</strong>');
 			} else {
 				if ($tplset == $icmsConfig['template_set']) {
 
-					icms_view_Tpl::template_touch($newtpl->getVar('tpl_id'));
+					icms_view_Tpl::template_touch($newtpl->tpl_id);
 				}
 			}
 		} else {
 			$err = _MD_TPLSET_FILE_NOTEXIST;
 		}
 		if (!isset($err)) {
-			redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir=' . $newtpl->getVar('tpl_module') . '&amp;tplset=' . urlencode($newtpl->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
+			redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir=' . $newtpl->tpl_module . '&amp;tplset=' . urlencode($newtpl->tpl_tplset), 2, _MD_AM_DBUPDATED);
 		}
 		icms_cp_header();
 		icms_core_Message::error($err);
@@ -711,9 +711,9 @@ switch ($op) {
 					. _ERROR . ': ' . sprintf(_MD_TPLSET_INSERT_FAILED, '<strong>' . $file . '</strong>') . '</span><br />';
 				} else {
 					if ($tplset == $icmsConfig['template_set']) {
-						icms_view_Tpl::template_touch($newtpl->getVar('tpl_id'));
+						icms_view_Tpl::template_touch($newtpl->tpl_id);
 					}
-					echo '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_INSERT_OK, '<strong>' . $tplfiles[$i]->getVar('tpl_file') . '</strong>') . '<br />';
+					echo '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_INSERT_OK, '<strong>' . $tplfiles[$i]->tpl_file . '</strong>') . '<br />';
 				}
 			}
 			flush();
@@ -732,14 +732,14 @@ switch ($op) {
 				$newtpl->setVar('tpl_lastimported', 0);
 				if (!$tpltpl_handler->insert($newtpl)) {
 					echo '&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff0000;">'
-						. _ERROR . ': ' . sprintf(_MD_TPLSET_BLOCK_INSERT_FAILED, '<strong>' . $tplfiles[$i]->getVar('tpl_file') . '</strong>')
+						. _ERROR . ': ' . sprintf(_MD_TPLSET_BLOCK_INSERT_FAILED, '<strong>' . $tplfiles[$i]->tpl_file . '</strong>')
 						. '</span><br />';
 					echo $newtpl->getHtmlErrors();
 				} else {
 					if ($tplset == $icmsConfig['template_set']) {
-						icms_view_Tpl::template_touch($newtpl->getVar('tpl_id'));
+						icms_view_Tpl::template_touch($newtpl->tpl_id);
 					}
-					echo '&nbsp;&nbsp;&nbsp;&nbsp;' . sprintf(_MD_TPLSET_BLOCK_INSERT_OK, '<strong>' . $tplfiles[$i]->getVar('tpl_file') . '</strong>') . '<br />';
+					echo '&nbsp;&nbsp;&nbsp;&nbsp;' . sprintf(_MD_TPLSET_BLOCK_INSERT_OK, '<strong>' . $tplfiles[$i]->tpl_file . '</strong>') . '<br />';
 				}
 			}
 			flush();
@@ -804,7 +804,7 @@ switch ($op) {
 						if (!$tplset_handler->insert($tplset)) {
 							echo '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_CREATE_FAILED, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES, _CHARSET) . '</strong>') . '</span><br />';
 						} else {
-							$tplsetid = $tplset->getVar('tplset_id');
+							$tplsetid = $tplset->tplset_id;
 							echo sprintf(_MD_TPLSET_CREATE_OK, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES, _CHARSET) . '</strong>')
 								. '(ID: <strong>' . $tplsetid . '</strong>)</span><br />';
 							/**
@@ -861,7 +861,7 @@ switch ($op) {
 								if (!$imageset_handler->insert($imgset)) {
 									echo '&nbsp;&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . _MD_TPLSET_IMGSET_CREATE_FAILED . '</span><br />';
 								} else {
-									$newimgsetid = $imgset->getVar('imgset_id');
+									$newimgsetid = $imgset->imgset_id;
 									echo '&nbsp;&nbsp;' . sprintf(_MD_TPLSET_IMGSET_CREATED, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES, _CHARSET) . '</strong>')
 										. '(ID: <strong>' . $newimgsetid . '</strong>)<br />';
 									if (!$imageset_handler->linktplset($newimgsetid, $tplset_name)) {
@@ -911,13 +911,13 @@ switch ($op) {
 			$csscount = count($css);
 
 			for ($i = 0; $i < $csscount; $i++) {
-				$dummylayout .= "\n" . $css[$i]->getVar('tpl_source');
+				$dummylayout .= "\n" . $css[$i]->tpl_source;
 			}
 
 			$dummylayout .= "\n" . '</style></head><body><div id="xo-canvas"><{$content}></div></body></html>';
-			if ($tplfile->getVar('tpl_type') == 'block') {
+			if ($tplfile->tpl_type == 'block') {
 
-				$block = new icms_view_block_Object($tplfile->getVar('tpl_refid'));
+				$block = new icms_view_block_Object($tplfile->tpl_refid);
 				$xoopsTpl->assign('block', $block->buildBlock());
 			}
 
@@ -932,8 +932,8 @@ switch ($op) {
 			$fp = fopen(ICMS_CACHE_PATH . '/' . $dummyfile, 'w');
 			fwrite($fp, $dummylayout);
 			fclose($fp);
-			$tplset = $tplfile->getVar('tpl_tplset');
-			$tform = array('tpl_tplset' => $tplset, 'tpl_id' => $id, 'tpl_file' => $tplfile->getVar('tpl_file'), 'tpl_desc' => $tplfile->getVar('tpl_desc'), 'tpl_lastmodified' => $tplfile->getVar('tpl_lastmodified'), 'tpl_source' => htmlspecialchars($html, ENT_QUOTES, _CHARSET), 'tpl_module' => $moddir);
+			$tplset = $tplfile->tpl_tplset;
+			$tform = array('tpl_tplset' => $tplset, 'tpl_id' => $id, 'tpl_file' => $tplfile->tpl_file, 'tpl_desc' => $tplfile->tpl_desc, 'tpl_lastmodified' => $tplfile->tpl_lastmodified, 'tpl_source' => htmlspecialchars($html, ENT_QUOTES, _CHARSET), 'tpl_module' => $moddir);
 			include_once ICMS_MODULES_PATH . '/system/admin/tplsets/tplform.php';
 			icms_cp_header();
 			echo '<a href="admin.php?fct=tplsets">' . _MD_TPLMAIN . '</a>'
@@ -1006,7 +1006,7 @@ switch ($op) {
 						$msg[] = sprintf(_MD_TPLSET_UPDATED, '<strong>' . $upload_file . '</strong>');
 						if ($tplset == $icmsConfig['template_set']) {
 
-							if (icms_view_Tpl::template_touch($tpl->getVar('tpl_id'))) {
+							if (icms_view_Tpl::template_touch($tpl->tpl_id)) {
 								$msg[] = sprintf(_MD_TPLSET_COMPILED, '<strong>' . $upload_file . '</strong>');
 							}
 						}
@@ -1057,12 +1057,12 @@ switch ($op) {
 
 		$error = true;
 		if (is_object($tplfile)) {
-			switch ($tplfile->getVar('tpl_type')) {
+			switch ($tplfile->tpl_type) {
 				case 'module':
-					$filepath = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $tplfile->getVar('tpl_module') . '/' . $tplfile->getVar('tpl_file');
+					$filepath = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $tplfile->tpl_module . '/' . $tplfile->tpl_file;
 					break;
 				case 'block':
-					$filepath = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $tplfile->getVar('tpl_module') . '/blocks/' . $tplfile->getVar('tpl_file');
+					$filepath = ICMS_THEME_PATH . '/' . $tplset . '/templates/' . $tplfile->tpl_module . '/blocks/' . $tplfile->tpl_file;
 					break;
 				default:
 					break;
@@ -1091,7 +1091,7 @@ switch ($op) {
 			icms_cp_footer();
 			exit();
 		}
-		redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir=' . $tplfile->getVar('tpl_module') . '&amp;tplset=' . urlencode($tplfile->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
+		redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir=' . $tplfile->tpl_module . '&amp;tplset=' . urlencode($tplfile->tpl_tplset), 2, _MD_AM_DBUPDATED);
 		break;
 
 	case 'list':
@@ -1116,13 +1116,13 @@ switch ($op) {
 		. '</th><th>' . _MD_TPLSET_ACTIONS . '</th><th>' . _MD_TPLSET_STATUS . '</th></tr>';
 	$class = 'even';
 		for ($i = 0; $i < $tcount; $i++) {
-			$tplsetname = $tplsets[$i]->getVar('tplset_name');
+			$tplsetname = $tplsets[$i]->tplset_name;
 			$installed_themes[] = $tplsetname;
 			$class = ($class == 'even')?'odd':'even';
 			echo '<tr class="' . $class . '" align="center"><td  style="vertical-align: middle;" class="head">'
 				. $tplsetname . '<br /><br /><span style="font-weight:normal;">'
-				. $tplsets[$i]->getVar('tplset_desc') . '</span></td><td style="vertical-align: middle;">'
-				. formatTimestamp($tplsets[$i]->getVar('tplset_created'), 's')
+				. $tplsets[$i]->tplset_desc . '</span></td><td style="vertical-align: middle;">'
+				. formatTimestamp($tplsets[$i]->tplset_created, 's')
 				. '</td><td align="' . _GLOBAL_LEFT . '"><ul>';
 			$tplstats = $tpltpl_handler->getModuleTplCount($tplsetname);
 			if (count($tplstats) > 0) {
@@ -1134,7 +1134,7 @@ switch ($op) {
 						if ($installed_mods[$moddir] > $filecount) {
 							$filecount = '<span style="color:#ff0000;">' . $filecount . '</span>';
 						}
-						echo '<li>' . $module->getVar('name')
+						echo '<li>' . $module->name
 							. ' [<a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset=' . $tplsetname
 							. '&amp;moddir=' . $moddir . '">' . _LIST . '</a> (<strong>'
 							. icms_conv_nr2local($filecount) . '</strong>)]</li>';
@@ -1147,7 +1147,7 @@ switch ($op) {
 			}
 			foreach ($not_installed as $ni) {
 				$module = & $module_handler->getByDirname($ni);
-				echo '<li>' . $module->getVar('name')
+				echo '<li>' . $module->name
 					. ' <a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset=' . $tplsetname
 					. '&amp;moddir=' . $ni . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/view_choose.png" alt="' . _LIST . '" title="' . _LIST . '" /></a> (<span style="color:#ff0000; font-weight: bold;">0</span>)'
 					. ' <a href="admin.php?fct=tplsets&amp;op=generatemod&amp;tplset=' . $tplsetname

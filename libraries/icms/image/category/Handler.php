@@ -131,7 +131,7 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 		$categories = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($categories) as $i) {
-			$ret[$i] = $categories[$i]->getVar('imgcat_name');
+			$ret[$i] = $categories[$i]->imgcat_name;
 		}
 		return $ret;
 	}
@@ -173,8 +173,8 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 		$categories = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($categories) as $i) {
-			$ret[$i] = $categories[$i]->getVar('imgcat_name');
-			$subcategories = $this->getCategList($groups, $perm, $display, $storetype, $categories[$i]->getVar('imgcat_id'));
+			$ret[$i] = $categories[$i]->imgcat_name;
+			$subcategories = $this->getCategList($groups, $perm, $display, $storetype, $categories[$i]->imgcat_id);
 			foreach (array_keys($subcategories) as $j) {
 				$ret[$j] = '-' . $subcategories[$j];
 			}
@@ -206,6 +206,6 @@ class icms_image_category_Handler extends \icms_ipf_Handler {
 					: ICMS_IMANAGER_FOLDER_URL . '/' . $folder;
 		}
 
-		return $folder . $imgcat->getVar('imgcat_foldername');
+		return $folder . $imgcat->imgcat_foldername;
 	}
 }

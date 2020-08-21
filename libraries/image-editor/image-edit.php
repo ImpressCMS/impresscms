@@ -10,6 +10,7 @@
  * @since		1.2
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
  */
+
 use WideImage\WideImage;
 
 $xoopsOption ['nodebug'] = 1;
@@ -194,7 +195,7 @@ if (!empty($op) && $op == 'save') {
 	}
 
 	if (isset ( $_SESSION ['icms_imanager'] )) { //Image Editor open by some editor
-		$params = '?op=save_edit_ok&amp;imgcat_id=' . (int) $simage->getVar('imgcat_id') . '&amp;msg=' . urlencode($msg);
+		$params = '?op=save_edit_ok&amp;imgcat_id=' . (int) $simage->imgcat_id . '&amp;msg=' . urlencode($msg);
 		if (isset ( $_SESSION ['icms_imanager'] ['imedit_target'] )) {
 			$params .= '&target=' . $_SESSION ['icms_imanager'] ['imedit_target'];
 		}
@@ -203,7 +204,7 @@ if (!empty($op) && $op == 'save') {
 		}
 		unset ( $_SESSION ['icms_imanager'] );
 	} else { //Image Editor used inside the Image Manager
-		$params = '?fct=images&op=save_edit_ok&amp;imgcat_id=' . (int) $simage->getVar('imgcat_id') . '&amp;msg=' . urlencode($msg);
+		$params = '?fct=images&op=save_edit_ok&amp;imgcat_id=' . (int) $simage->imgcat_id . '&amp;msg=' . urlencode($msg);
 	}
 	echo 'cancel_edit();';
 	echo 'var url = getOpenerUrl()+"' . $params . '";';

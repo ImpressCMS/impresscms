@@ -330,12 +330,12 @@ class icms_module_Handler
 		if ($module->config !== null) {
 			return true;
 		}
-		icms_loadLanguageFile($module->getVar("dirname"), "main");
-		if ($module->getVar("hasconfig") == 1
-			|| $module->getVar("hascomments") == 1
-			|| $module->getVar("hasnotification") == 1
+		icms_loadLanguageFile($module->dirname, "main");
+		if ($module->hasconfig == 1
+			|| $module->hascomments == 1
+			|| $module->hasnotification == 1
 		) {
-			$module->config = icms::$config->getConfigsByCat(0, $module->getVar("mid"));
+			$module->config = icms::$config->getConfigsByCat(0, $module->mid);
 		}
 		return true;
 	}

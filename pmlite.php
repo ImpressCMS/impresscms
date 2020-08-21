@@ -116,7 +116,7 @@ if (!icms::$user) {
 			$pm->setVar("subject", $subject);
 			$pm->setVar("msg_text", $message);
 			$pm->setVar("to_userid", $to_userid);
-			$pm->setVar("from_userid", (int) (icms::$user->getVar("uid")));
+			$pm->setVar("from_userid", icms::$user->uid);
 			if (!$pm_handler->insert($pm)) {
 				redirect_header(icms_getPreviousPage(), 5, $pm->getHtmlErrors());
 			} else {
@@ -124,13 +124,13 @@ if (!icms::$user) {
 				$userHandler = icms::handler('icms_member_user');
 				$toUser = & $userHandler->get($to_userid);
 				// Only send email notif if notification method is mail
-				if ($toUser->getVar('notify_method') == 2) {
+				if ($toUser->notify_method == 2) {
 					$mailer = new icms_messaging_Handler();
 					$mailer->useMail();
-					$mailer->setToEmails($toUser->getVar('email'));
-					if (icms::$user->getVar('user_viewemail')) {
-						$mailer->setFromEmail(icms::$user->getVar('email'));
-						$mailer->setFromName(icms::$user->getVar('uname'));
+					$mailer->setToEmails($toUser->email);
+					if (icms::$user->user_viewemail) {
+						$mailer->setFromEmail(icms::$user->email);
+						$mailer->setFromName(icms::$user->uname);
 					} else {
 						$mailer->setFromEmail($icmsConfig['adminmail']);
 						$mailer->setFromName($icmsConfig['sitename']);
@@ -139,8 +139,8 @@ if (!icms::$user) {
 					$mailer->assign('X_SITENAME', $icmsConfig['sitename']);
 					$mailer->assign('X_SITEURL', ICMS_URL . "/");
 					$mailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
-					$mailer->assign('X_UNAME', $toUser->getVar('uname'));
-					$mailer->assign('X_FROMUNAME', icms::$user->getVar('uname'));
+					$mailer->assign('X_UNAME', $toUser->uname);
+					$mailer->assign('X_FROMUNAME', icms::$user->uname);
 					$mailer->assign('X_SUBJECT', icms_core_DataFilter::stripSlashesGPC($subject));
 					$mailer->assign('X_MESSAGE', icms_core_DataFilter::stripSlashesGPC($message));
 					$mailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
@@ -163,8 +163,8 @@ if (!icms::$user) {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm = & $pm_handler->get($msg_id);
 
-			if ($pm->getVar("to_userid") == (int) (icms::$user->getVar('uid'))) {
-				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
+			if ($pm->to_userid == (int) (icms::$user->uid)) {
+				$pm_uname = icms_member_user_Object::getUnameFromId($pm->from_userid);
 				$message  = "[quote]\n"
 					. sprintf(_PM_USERWROTE, $pm_uname)
 					. "\n" . $pm->getVar("msg_text", "E") . "\n[/quote]";
@@ -178,7 +178,7 @@ if (!icms::$user) {
 				$subject = 'Re: ' . $subject;
 			}
 
-			$userID = $pm->getVar("from_userid");
+			$userID = $pm->from_userid;
 		} elseif ($send2 != 0) {
 			/* we are sending directly to a member */
 			$userID = $to_userid;

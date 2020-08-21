@@ -284,33 +284,33 @@ class icms_messaging_Handler {
 		// receives (potentially) a different message
 		foreach ($this->toUsers as $user) {
 			// set some user specific variables
-			$subject = str_replace("{X_UNAME}", $user->getVar("uname"), $this->subject);
-			$text = str_replace("{X_USERLOGINNAME}", $user->getVar("login_name"), $this->body);
-			$text = str_replace("{X_UID}", $user->getVar("uid"), $text);
-			$text = str_replace("{X_UEMAIL}", $user->getVar("email"), $text);
-			$text = str_replace("{X_UNAME}", $user->getVar("uname"), $text);
-			$text = str_replace("{X_UACTLINK}", ICMS_URL . "/user.php?op=actv&id=" . $user->getVar("uid") . "&actkey=" . $user->getVar('actkey'), $text);
+			$subject = str_replace("{X_UNAME}", $user->uname, $this->subject);
+			$text = str_replace("{X_USERLOGINNAME}", $user->login_name, $this->body);
+			$text = str_replace("{X_UID}", $user->uid, $text);
+			$text = str_replace("{X_UEMAIL}", $user->email, $text);
+			$text = str_replace("{X_UNAME}", $user->uname, $text);
+			$text = str_replace("{X_UACTLINK}", ICMS_URL . "/user.php?op=actv&id=" . $user->uid . "&actkey=" . $user->actkey, $text);
 			// send mail
 			if ($this->isMail) {
-				if (!$this->sendMail($user->getVar("email"), $subject, $text, $headers)) {
+				if (!$this->sendMail($user->email, $subject, $text, $headers)) {
 					if ($debug) {
-						$this->errors[] = sprintf(_MAIL_SENDMAILNG, $user->getVar("uname"));
+						$this->errors[] = sprintf(_MAIL_SENDMAILNG, $user->uname);
 					}
 				} else {
 					if ($debug) {
-						$this->success[] = sprintf(_MAIL_MAILGOOD, $user->getVar("uname"));
+						$this->success[] = sprintf(_MAIL_MAILGOOD, $user->uname);
 					}
 				}
 			}
 			// send private message
 			if ($this->isPM) {
-				if (!$this->sendPM($user->getVar("uid"), $subject, $text)) {
+				if (!$this->sendPM($user->uid, $subject, $text)) {
 					if ($debug) {
-						$this->errors[] = sprintf(_MAIL_SENDPMNG, $user->getVar("uname"));
+						$this->errors[] = sprintf(_MAIL_SENDPMNG, $user->uname);
 					}
 				} else {
 					if ($debug) {
-						$this->success[] = sprintf(_MAIL_PMGOOD, $user->getVar("uname"));
+						$this->success[] = sprintf(_MAIL_PMGOOD, $user->uname);
 					}
 				}
 			}
@@ -384,7 +384,7 @@ class icms_messaging_Handler {
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$pm = &$pm_handler->create();
 		$pm->setVar("subject", $subject);
-		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : icms::$user->getVar('uid'));
+		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->uid : icms::$user->uid);
 		$pm->setVar("msg_text", $body);
 		$pm->setVar("to_userid", $uid);
 		if (!$pm_handler->insert($pm)) {
@@ -443,7 +443,7 @@ class icms_messaging_Handler {
 		if (!is_array($group)) {
 			if (get_class($group) == "icms_member_group_Object") {
 				$member_handler = icms::handler('icms_member');
-				$this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
+				$this->setToUsers($member_handler->getUsersByGroup($group->groupid, true));
 			}
 		} else {
 			foreach ($group as $g) {

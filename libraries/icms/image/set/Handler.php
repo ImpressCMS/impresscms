@@ -172,7 +172,7 @@ class icms_image_set_Handler extends \icms_ipf_Handler {
 		$imgsets = & $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($imgsets) as $i) {
-			$ret[$i] = $imgsets[$i]->getVar('imgset_name');
+			$ret[$i] = $imgsets[$i]->imgset_name;
 		}
 		return $ret;
 	}

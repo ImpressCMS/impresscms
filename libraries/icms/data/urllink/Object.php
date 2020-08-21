@@ -65,9 +65,9 @@ class icms_data_urllink_Object extends icms_ipf_Object {
 	 * @return string html
 	 */
 	public function render() {
-		$ret  = "<a href='" . $this->getVar("url") . "' target='" . $this->getVar("target") . "' ";
-		$ret .= "title='" . $this->getVar("description") . "'>";
-		$ret .= $this->getVar("caption") . "</a>";
+		$ret  = "<a href='" . $this->url . "' target='" . $this->target . "' ";
+		$ret .= "title='" . $this->description . "'>";
+		$ret .= $this->caption . "</a>";
 		return $ret;
 	}
 }

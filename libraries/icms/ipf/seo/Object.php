@@ -39,7 +39,7 @@ class icms_ipf_seo_Object extends icms_ipf_Object {
 	 * @return string
 	 */
 	public function short_url() {
-		return $this->getVar('short_url');
+		return $this->short_url;
 	}
 
 	/**
@@ -48,7 +48,7 @@ class icms_ipf_seo_Object extends icms_ipf_Object {
 	 * @return string
 	 */
 	public function meta_keywords() {
-		return $this->getVar('meta_keywords');
+		return $this->meta_keywords;
 	}
 
 	/**
@@ -57,7 +57,7 @@ class icms_ipf_seo_Object extends icms_ipf_Object {
 	 * @return string
 	 */
 	public function meta_description() {
-		return $this->getVar('meta_description');
+		return $this->meta_description;
 	}
 }
 

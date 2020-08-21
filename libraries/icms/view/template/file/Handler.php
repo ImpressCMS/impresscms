@@ -58,9 +58,9 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 * @return bool TRUE on success, FALSE if fail
 	 */
 	public function loadSource(icms_view_template_file_Object &$tplfile) {
-		if (!$tplfile->getVar('tpl_source')) {
+		if (!$tplfile->tpl_source) {
 			$sql = "SELECT tpl_source FROM " . $this->table
-				. " WHERE tpl_id='" . $tplfile->getVar('tpl_id') . "'";
+				. " WHERE tpl_id='" . $tplfile->tpl_id . "'";
 			if (!$result = $this->db->query($sql)) {
 				return false;
 			}
@@ -234,7 +234,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 	 */
 	public function getPrefetchedBlock($tplset, $tpl_name) {
 		foreach ($this->_prefetch_cache as $block) {
-			if ($block->getVar("tpl_tplset") == $tplset && $block->getVar("tpl_file") == $tpl_name) {
+			if ($block->tpl_tplset == $tplset && $block->tpl_file == $tpl_name) {
 				return array($block);
 			}
 		}
@@ -245,7 +245,7 @@ class icms_view_template_file_Handler extends icms_ipf_Handler {
 		 */
 		if ($tplset != 'default') {
 			foreach ($this->_prefetch_cache as $block) {
-				if ($block->getVar("tpl_tplset") == "default" && $block->getVar("tpl_file") == $tpl_name) {
+				if ($block->tpl_tplset == "default" && $block->tpl_file == $tpl_name) {
 					return array($block);
 				}
 			}

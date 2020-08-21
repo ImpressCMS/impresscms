@@ -57,9 +57,9 @@ class icms_data_file_Object extends icms_ipf_Object {
 	}
 
 	public function render() {
-		$url = str_replace("{ICMS_URL}", ICMS_URL, $this->getVar("url"));
-		$caption = $this->getVar("caption") != ""?$this->getVar("caption"):$url;
-		return "<a href='" . $url . "' title='" . $this->getVar("description") . "' target='_blank'>" . $caption . "</a>";
+		$url = str_replace("{ICMS_URL}", ICMS_URL, $this->url);
+		$caption = $this->caption != ""?$this->caption:$url;
+		return "<a href='" . $url . "' title='" . $this->description . "' target='_blank'>" . $caption . "</a>";
 	}
 
 }

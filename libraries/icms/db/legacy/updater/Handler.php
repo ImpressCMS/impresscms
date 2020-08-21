@@ -187,7 +187,7 @@ class icms_db_legacy_updater_Handler {
 
 	function moduleUpgrade(&$module, $tables_first = false)
 	{
-		$dirname = $module->getVar('dirname');
+		$dirname = $module->dirname;
 
 		//		ob_start();
 

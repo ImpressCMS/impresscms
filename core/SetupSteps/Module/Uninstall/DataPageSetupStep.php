@@ -23,7 +23,7 @@ class DataPageSetupStep implements SetupStepInterface
 		 */
 		$page_handler = icms::handler('icms_data_page');
 		$criteria = new icms_db_criteria_Compo(
-			new icms_db_criteria_Item('page_moduleid', $module->getVar('mid'))
+			new icms_db_criteria_Item('page_moduleid', $module->mid)
 		);
 		$pages = (int)$page_handler->getCount($criteria);
 		if ($pages === 0) {
@@ -35,9 +35,9 @@ class DataPageSetupStep implements SetupStepInterface
 		$output->incrIndent();
 		foreach ($pages as $page) {
 			if ($page_handler->delete($page)) {
-				$output->success(_MD_AM_SYMLINK_DELETED, $page->getVar('page_title'), $page->getVar('page_id'));
+				$output->success(_MD_AM_SYMLINK_DELETED, $page->page_title, $page->page_id);
 			} else {
-				$output->error(_MD_AM_SYMLINK_DELETE_FAIL, $page->getVar('page_title'), $page->getVar('page_id'));
+				$output->error(_MD_AM_SYMLINK_DELETE_FAIL, $page->page_title, $page->page_id);
 			}
 		}
 		$output->resetIndent();

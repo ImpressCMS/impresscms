@@ -80,7 +80,7 @@ class icms_view_template_file_Object extends icms_ipf_Object {
 	 */
 	public function getSource() {
 		$sql = "SELECT tpl_source FROM " . $this->handler->db->prefix('tplsource')
-				. " WHERE tpl_id='" . $this->getVar('tpl_id') . "'";
+				. " WHERE tpl_id='" . $this->tpl_id . "'";
 		if (!$result = $this->handler->db->query($sql)) {
 					return false;
 		}
@@ -119,7 +119,7 @@ class icms_view_template_file_Object extends icms_ipf_Object {
 	 * Gets Last Modified timestamp
 	 */
 	public function getLastModified() {
-		return $this->getVar('tpl_lastmodified');
+		return $this->tpl_lastmodified;
 	}
 }
 

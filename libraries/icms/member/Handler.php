@@ -105,7 +105,7 @@ class icms_member_Handler {
 	 */
 	public function deleteGroup(&$group) {
 		$this->_gHandler->delete($group);
-		$this->_mHandler->deleteAll(new icms_db_criteria_Item('groupid', $group->getVar('groupid')));
+		$this->_mHandler->deleteAll(new icms_db_criteria_Item('groupid', $group->groupid));
 		return true;
 	}
 
@@ -118,7 +118,7 @@ class icms_member_Handler {
 	 */
 	public function deleteUser(&$user) {
 		$this->_uHandler->delete($user);
-		$this->_mHandler->deleteAll(new icms_db_criteria_Item('uid', $user->getVar('uid')));
+		$this->_mHandler->deleteAll(new icms_db_criteria_Item('uid', $user->uid));
 		return true;
 	}
 
@@ -167,7 +167,7 @@ class icms_member_Handler {
 		$groups = $this->_gHandler->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($groups) as $i) {
-			$ret[$i] = $groups[$i]->getVar('name');
+			$ret[$i] = $groups[$i]->name;
 		}
 		return $ret;
 	}
@@ -186,7 +186,7 @@ class icms_member_Handler {
 		$users = $this->_uHandler->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($users) as $i) {
-			$ret[$i] = $users[$i]->getVar('uname');
+			$ret[$i] = $users[$i]->uname;
 		}
 		return $ret;
 	}
@@ -386,7 +386,7 @@ class icms_member_Handler {
 	 * @return bool successful?
 	 */
 	public function activateUser(&$user) {
-		if ($user->getVar('level') != 0) {
+		if ($user->level != 0) {
 			return true;
 		}
 		$user->setVar('level', 1);

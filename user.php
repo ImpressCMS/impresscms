@@ -93,7 +93,7 @@ switch ($op) {
 			header('Location: ' . $redirect);
 			exit();
 		} else {
-			header('Location: ' . ICMS_URL . '/userinfo.php?uid=' . (int)icms::$user->getVar('uid'));
+			header('Location: ' . ICMS_URL . '/userinfo.php?uid=' . (int)icms::$user->uid);
 			exit();
 		}
 		exit();
@@ -120,10 +120,10 @@ switch ($op) {
 		if (!is_object($thisuser)) {
 			exit();
 		}
-		if ($thisuser->getVar('actkey') != $actkey) {
+		if ($thisuser->actkey != $actkey) {
 			redirect_header('index.php', 5, _US_ACTKEYNOT);
 		} else {
-			if ($thisuser->getVar('level') > 0) {
+			if ($thisuser->level > 0) {
 				redirect_header('user.php', 5, _US_ACONTACT, false);
 			} else {
 				if (false !== $member_handler->activateUser($thisuser)) {
@@ -140,9 +140,9 @@ switch ($op) {
 						$icmsMailer->setSubject(sprintf(_US_YOURACCOUNT, $icmsConfig['sitename']));
 						include 'header.php';
 						if (!$icmsMailer->send()) {
-							printf(_US_ACTVMAILNG, $thisuser->getVar('uname'));
+							printf(_US_ACTVMAILNG, $thisuser->uname);
 						} else {
-							printf(_US_ACTVMAILOK, $thisuser->getVar('uname'));
+							printf(_US_ACTVMAILOK, $thisuser->uname);
 						}
 						include 'footer.php';
 					} else {
@@ -171,7 +171,7 @@ switch ($op) {
 				icms_core_Message::confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);
 				include 'footer.php';
 			} else {
-				$del_uid = (int)icms::$user->getVar('uid');
+				$del_uid = (int)icms::$user->uid;
 				$member_handler = icms::handler('icms_member');
 				if (false != $member_handler->deleteUser(icms::$user)) {
 					$online_handler = icms::handler('icms_core_Online');
@@ -213,7 +213,7 @@ switch ($op) {
 			header('Location: ' . $redirect);
 			exit();
 		} else {
-			header('Location: ' . ICMS_URL . '/userinfo.php?uid=' . (int)icms::$user->getVar('uid'));
+			header('Location: ' . ICMS_URL . '/userinfo.php?uid=' . (int)icms::$user->uid);
 			exit();
 		}
 		exit();

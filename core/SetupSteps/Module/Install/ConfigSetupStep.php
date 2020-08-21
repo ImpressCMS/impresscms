@@ -19,11 +19,11 @@ class ConfigSetupStep implements SetupStepInterface
 	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
 	{
 		$configs = (array)$module->getInfo('config');
-		if ($module->getVar('hascomments') != 0) {
+		if ($module->hascomments != 0) {
 			$this->includeCommentsConfig($configs);
 		}
 
-		if ($module->getVar('hasnotification') != 0) {
+		if ($module->hasnotification != 0) {
 			$this->includeNotificationsConfig($module, $configs);
 		}
 
@@ -40,7 +40,7 @@ class ConfigSetupStep implements SetupStepInterface
 				 * @var icms_config_item_Object $confobj
 				 */
 				$confobj = &$config_handler->createConfig();
-				$confobj->setVar('conf_modid', $module->getVar('mid'));
+				$confobj->setVar('conf_modid', $module->mid);
 				$confobj->setVar('conf_catid', 0);
 				$confobj->setVar('conf_name', $config['name']);
 				$confobj->setVar('conf_title', $config['title'], true);
@@ -134,9 +134,9 @@ class ConfigSetupStep implements SetupStepInterface
 		// Event-specific notification options
 		$options = [];
 		$notification_handler = icms::handler('icms_data_notification');
-		$categories = &$notification_handler->categoryInfo('', $module->getVar('mid'));
+		$categories = &$notification_handler->categoryInfo('', $module->mid);
 		foreach ($categories as $category) {
-			$events = &$notification_handler->categoryEvents($category['name'], false, $module->getVar('mid'));
+			$events = &$notification_handler->categoryEvents($category['name'], false, $module->mid);
 			foreach ($events as $event) {
 				if (!empty($event['invisible'])) {
 					continue;

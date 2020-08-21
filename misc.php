@@ -174,7 +174,7 @@ if ($action == 'showpopups') {
 					$closebutton = 0;
 				} elseif ($op == 'sendsite') {
 					if (icms::$user) {
-						$ymail = icms::$user->getVar('email');
+						$ymail = icms::$user->email;
 					} else {
 						$ymail = isset($ymail)? icms_core_DataFilter::stripSlashesGPC(trim($ymail)):'';
 					}
@@ -234,12 +234,12 @@ if ($action == 'showpopups') {
 					$class = ($class == 'odd')?'even':'odd';
 					echo '<tr valign="middle" align="center" class="' . $class . '">';
 					if (is_object($onlineUsers[$i]['user'])) {
-						$avatar = $onlineUsers[$i]['user']->getVar('user_avatar')
-							?'<img src="' . ICMS_UPLOAD_URL . '/' . $onlineUsers[$i]['user']->getVar('user_avatar') . '" alt="" />':'&nbsp;';
+						$avatar = $onlineUsers[$i]['user']->user_avatar
+							?'<img src="' . ICMS_UPLOAD_URL . '/' . $onlineUsers[$i]['user']->user_avatar . '" alt="" />':'&nbsp;';
 						echo '<td>' . $avatar . "</td><td>
 							<a href=\"javascript:window.opener.location='".ICMS_URL . "/userinfo.php?uid="
-							. $onlineUsers[$i]['user']->getVar('uid') . "';window.close();\">"
-							. $onlineUsers[$i]['user']->getVar('uname') . "</a>";
+							. $onlineUsers[$i]['user']->uid . "';window.close();\">"
+							. $onlineUsers[$i]['user']->uname . "</a>";
 					} else {
 						echo '<td>&nbsp;</td><td>' . $icmsConfig['anonymous'];
 					}
@@ -257,7 +257,7 @@ if ($action == 'showpopups') {
 			case 'ssllogin':
 				if ($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && is_object(icms::$user)) {
 					icms_loadLanguageFile('core', 'user');
-					echo sprintf(_US_LOGGINGU, icms::$user->getVar('uname'));
+					echo sprintf(_US_LOGGINGU, icms::$user->uname);
 					echo '<div style="text-align:center;">
 						<input class="formButton" value="'._CLOSE . '" type="button" onclick="window.opener.location.reload();window.close();" />
 						</div>';

@@ -174,7 +174,7 @@ class icms_ipf_Metagen {
 		$this->_title = $this->purifyText($this->_title);
 		$this->_original_title = $this->_title;
 
-		$moduleName = $icmsModule->getVar('name');
+		$moduleName = $icmsModule->name;
 
 		$titleTag = array();
 

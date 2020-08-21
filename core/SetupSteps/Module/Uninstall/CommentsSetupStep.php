@@ -17,13 +17,13 @@ class CommentsSetupStep implements SetupStepInterface
 	 */
 	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
 	{
-		if (!$module->getVar('hascomments')) {
+		if (!$module->hascomments) {
 			return true;
 		}
 		$output->info(_MD_AM_COMMENTS_DELETE);
 		$output->incrIndent();
 		$comment_handler = icms::handler('icms_data_comment');
-		if (!$comment_handler->deleteByModule($module->getVar('mid'))) {
+		if (!$comment_handler->deleteByModule($module->mid)) {
 			$output->error(_MD_AM_COMMENT_DELETE_FAIL);
 		} else {
 			$output->success(_MD_AM_COMMENT_DELETED);

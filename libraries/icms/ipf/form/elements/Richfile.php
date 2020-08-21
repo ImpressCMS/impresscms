@@ -20,7 +20,7 @@ class icms_ipf_form_elements_Richfile extends icms_form_elements_Tray {
 		$module_handler = icms::handler("icms_module");
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
-		if ($fileObj->getVar("url") != "") {
+		if ($fileObj->url != "") {
 			$this->addElement(new icms_form_elements_Label("", _CO_ICMS_CURRENT_FILE . $fileObj->render() . "<br /><br />"));
 		}
 
@@ -31,7 +31,7 @@ class icms_ipf_form_elements_Richfile extends icms_form_elements_Tray {
 			$this->addElement(new icms_ipf_form_elements_Text($fileObj, "url_" . $key));
 		}
 
-		$this->addElement(new icms_form_elements_Hidden("mid_" . $key, $module->getVar("mid")));
+		$this->addElement(new icms_form_elements_Hidden("mid_" . $key, $module->mid));
 		$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_CAPTION));
 		$this->addElement(new icms_ipf_form_elements_Text($fileObj, "caption_" . $key));
 		$this->addElement(new icms_form_elements_Label("", "<br />" . _CO_ICMS_DESC));

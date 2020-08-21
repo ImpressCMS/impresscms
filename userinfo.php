@@ -66,7 +66,7 @@ $groups = is_object(icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
 $isAdmin = $gperm_handler->checkRight('system_admin', ICMS_SYSTEM_USER, $groups);
 
 if (is_object(icms::$user)) {
-	if ($uid == icms::$user->getVar('uid')) {
+	if ($uid == icms::$user->uid) {
 		$xoopsOption['template_main'] = 'system_userinfo.html';
 		include ICMS_ROOT_PATH . '/header.php';
 		$icmsTpl->assign('user_ownpage', true);
@@ -104,72 +104,72 @@ if (is_object(icms::$user) && $isAdmin) {
 	icms_makeSmarty(array(
 		'lang_editprofile' => _US_EDITPROFILE,
 		'lang_deleteaccount' => _US_DELACCOUNT,
-		'user_uid' => (int) $thisUser->getVar('uid')
+		'user_uid' => (int) $thisUser->uid
 	));
 }
 
 $userrank = $thisUser->rank();
-$date = $thisUser->getVar('last_login');
+$date = $thisUser->last_login;
 icms_makeSmarty(array(
 	'user_avatarurl' => $icmsConfigUser['avatar_allow_gravatar'] == true
 		?$thisUser->gravatar('G', $icmsConfigUser['avatar_width'])
-		: ICMS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar'),
+		: ICMS_UPLOAD_URL . '/' . $thisUser->user_avatar,
 	'user_websiteurl' => ($thisUser->getVar('url', 'E') == '')?''
-		: '<a href="' . $thisUser->getVar('url', 'E') . '" rel="external">' . $thisUser->getVar('url') . '</a>',
+		: '<a href="' . $thisUser->getVar('url', 'E') . '" rel="external">' . $thisUser->url . '</a>',
 	'lang_website' => _US_WEBSITE,
-	'user_realname' => $thisUser->getVar('name'),
+	'user_realname' => $thisUser->name,
 	'lang_realname' => _US_REALNAME,
 	'lang_avatar' => _US_AVATAR,
-	'lang_allaboutuser' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
+	'lang_allaboutuser' => sprintf(_US_ALLABOUT, $thisUser->uname),
 	'lang_email' => _US_EMAIL,
 	'lang_privmsg' => _US_PM,
 	'lang_icq' => _US_ICQ,
-	'user_icq' => $thisUser->getVar('user_icq'),
+	'user_icq' => $thisUser->user_icq,
 	'lang_aim' => _US_AIM,
-	'user_aim' => $thisUser->getVar('user_aim'),
+	'user_aim' => $thisUser->user_aim,
 	'lang_yim' => _US_YIM,
-	'user_yim' => $thisUser->getVar('user_yim'),
+	'user_yim' => $thisUser->user_yim,
 	'lang_msnm' => _US_MSNM,
-	'user_msnm' => $thisUser->getVar('user_msnm'),
+	'user_msnm' => $thisUser->user_msnm,
 	'lang_location' => _US_LOCATION,
-	'user_location' => $thisUser->getVar('user_from'),
+	'user_location' => $thisUser->user_from,
 	'lang_occupation' => _US_OCCUPATION,
-	'user_occupation' => $thisUser->getVar('user_occ'),
+	'user_occupation' => $thisUser->user_occ,
 	'lang_interest' => _US_INTEREST,
-	'user_interest' => $thisUser->getVar('user_intrest'),
+	'user_interest' => $thisUser->user_intrest,
 	'lang_extrainfo' => _US_EXTRAINFO,
 	'user_extrainfo' => icms_core_DataFilter::checkVar($thisUser->bio, 'text', 'output'),
 	'lang_statistics' => _US_STATISTICS,
 	'lang_membersince' => _US_MEMBERSINCE,
-	'user_joindate' => formatTimestamp($thisUser->getVar('user_regdate'), 's'),
+	'user_joindate' => formatTimestamp($thisUser->user_regdate, 's'),
 	'lang_rank' => _US_RANK,
 	'lang_posts' => _US_POSTS,
 	'lang_basicInfo' => _US_BASICINFO,
 	'lang_more' => _US_MOREABOUT,
 	'lang_myinfo' => _US_MYINFO,
-	'user_posts' => icms_conv_nr2local($thisUser->getVar('posts')),
+	'user_posts' => icms_conv_nr2local($thisUser->posts),
 	'lang_lastlogin' => _US_LASTLOGIN,
 	'lang_notregistered' => _US_NOTREGISTERED,
 	'user_pmlink' => is_object(icms::$user)
-		?"<a class='cboxElement' href='" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . (int) $thisUser->getVar('uid') . "'>
-		<input type='button' class='formButton' value='" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "' /></a>"
+		?"<a class='cboxElement' href='" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . (int) $thisUser->uid . "'>
+		<input type='button' class='formButton' value='" . sprintf(_SENDPMTO, $thisUser->uname) . "' /></a>"
 		: '',
 	'user_rankimage' => $userrank['image']?
 		'<img src="' . $userrank['image'] . '" alt="' . $userrank['title'] . '" />':'',
 	'user_ranktitle' => $userrank['title'],
-	'user_lastlogin' => !empty($date)? formatTimestamp($thisUser->getVar('last_login'), 'm'):'',
-	'icms_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
-	'user_email' => ($thisUser->getVar('user_viewemail') == true
+	'user_lastlogin' => !empty($date)? formatTimestamp($thisUser->last_login, 'm'):'',
+	'icms_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->uname),
+	'user_email' => ($thisUser->user_viewemail == true
 			|| (is_object(icms::$user)
 			&& (icms::$user->isAdmin()
-			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid')))))
+			|| (icms::$user->uid == $thisUser->uid))))
 		?$thisUser->getVar('email', 'E')
 		: '&nbsp;',
 	'user_openid' => ($icmsConfigAuth['auth_openid'] == true
-			&& ($thisUser->getVar('user_viewoid') == true
+			&& ($thisUser->user_viewoid == true
 			|| (is_object(icms::$user)
 			&& (icms::$user->isAdmin()
-			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid'))))))
+			|| (icms::$user->uid == $thisUser->uid)))))
 		?$thisUser->getVar('openid', 'E')
 		: '&nbsp;'
 ));
@@ -190,18 +190,18 @@ $mids = array_keys($module_handler->getList($criteria));
 foreach ($mids as $mid) {
 	if ($gperm_handler->checkRight('module_read', $mid, $groups)) {
 		$module = $module_handler->get($mid);
-		$results = $module->search('', '', 5, 0, (int) $thisUser->getVar('uid'));
+		$results = $module->search('', '', 5, 0, (int) $thisUser->uid);
 		$count = count($results);
 		if (is_array($results) && $count > 0) {
 			for ($i = 0; $i < $count; $i++) {
 				if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
-					$results[$i]['image'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
+					$results[$i]['image'] = 'modules/' . $module->dirname . '/' . $results[$i]['image'];
 				} else {
 					$results[$i]['image'] = 'images/icons/' . $icmsConfig['language'] . '/posticon2.gif';
 				}
 				if (isset($results[$i]['link']) && $results[$i]['link'] != '') {
 					if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-						$results[$i]['link'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['link'];
+						$results[$i]['link'] = "modules/" . $module->dirname . "/" . $results[$i]['link'];
 					}
 				}
 				$results[$i]['title'] = icms_core_DataFilter::htmlSpecialChars($results[$i]['title']);
@@ -209,11 +209,11 @@ foreach ($mids as $mid) {
 			}
 			if ($count == 5) {
 				$showall_link = '<a href="search.php?action=showallbyuser&amp;mid=' . (int) $mid .
-					'&amp;uid=' . (int) $thisUser->getVar('uid') . '">' . _US_SHOWALL . '</a>';
+					'&amp;uid=' . (int) $thisUser->uid . '">' . _US_SHOWALL . '</a>';
 			} else {
 				$showall_link = '';
 			}
-			$icmsTpl->append('modules', array('name' => $module->getVar('name'),
+			$icmsTpl->append('modules', array('name' => $module->name,
 												'results' => $results,
 												'showall_link' => $showall_link
 												));

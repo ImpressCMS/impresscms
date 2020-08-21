@@ -88,11 +88,11 @@ class icms_data_notification_Object extends icms_ipf_Object {
 		// Check the user's notification preference.
 
 		$member_handler = icms::handler('icms_member');
-		$user = & $member_handler->getUser($this->getVar('not_uid'));
+		$user = & $member_handler->getUser($this->not_uid);
 		if (!is_object($user)) {
 			return true;
 		}
-		$method = $user->getVar('notify_method');
+		$method = $user->notify_method;
 
 		$mailer = new icms_messaging_Handler();
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
@@ -133,12 +133,12 @@ class icms_data_notification_Object extends icms_ipf_Object {
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 		$notification_handler = icms::handler('icms_data_notification');
 
-		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
+		if ($this->not_mode == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
 			$notification_handler->delete($this);
 			return $success;
 		}
 
-		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
+		if ($this->not_mode == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
 			$this->setVar('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN);
 			$notification_handler->insert($this);
 		}

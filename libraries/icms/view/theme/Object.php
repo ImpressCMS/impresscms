@@ -164,9 +164,9 @@ class icms_view_theme_Object
 				'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, _CHARSET),
 				'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET),
 				'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
-				'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
+				'icms_dirname' => @$icmsModule ? $icmsModule->dirname : 'system',
 				'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
-					? $icmsModule->getVar('name')
+					? $icmsModule->name
 					: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET)
 			)
 		);
@@ -184,12 +184,12 @@ class icms_view_theme_Object
 		if (isset(icms::$user) && is_object(icms::$user)) {
 			$this->template->assign(array(
 					'icms_isuser' => true,
-					'icms_userid' => icms::$user->getVar('uid'),
-					'icms_uname' => icms::$user->getVar('uname'),
+					'icms_userid' => icms::$user->uid,
+					'icms_uname' => icms::$user->uname,
 					'icms_isadmin' => icms::$user->isAdmin(),
 					'xoops_isuser' => true,
-					'xoops_userid' => icms::$user->getVar('uid'),
-					'xoops_uname' => icms::$user->getVar('uname'),
+					'xoops_userid' => icms::$user->uid,
+					'xoops_uname' => icms::$user->uname,
 					'xoops_isadmin' => icms::$user->isAdmin(),
 				)
 			);
