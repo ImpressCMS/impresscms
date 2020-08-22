@@ -30,11 +30,15 @@ function b_system_waiting_show($options) {
 	icms_loadLanguageFile('system', 'plugins');
 
 	$plugins_path = ICMS_PLUGINS_PATH . "/waiting";
+	/**
+	 * @var icms_module_Handler $module_handler
+	 */
 	$module_handler = icms::handler('icms_module');
 	$block = array();
 
 	// get module's list installed
-	$mod_lists = $module_handler->getList(new icms_db_criteria_Item(1, 1), true);
+	$mod_lists = $module_handler->getCustomList('dirname', 'name');
+
 	foreach ($mod_lists as $dirname => $name) {
 
 		$plugin_info = system_get_plugin_info($dirname, $icmsConfig['language']);
@@ -88,6 +92,36 @@ function b_system_waiting_show($options) {
 		// if (count($block["modules"][$dirname]) > 0) {
 		if (!empty($block["modules"][$dirname])) {
 			$block["modules"][$dirname]["name"] = $name;
+		}
+	}
+
+	/**
+	 * @var \ImpressCMS\Modules\System\Extensions\WaitingInfoGetterInterface $waitingInfoGetter
+	 */
+	foreach (\icms::getInstance()->get('module.system.waiting-info-getter') as $waitingInfoGetter) {
+		$count = $waitingInfoGetter->getCount();
+		if (($options[0] > 0) || ($count > 0)) {
+			$dirname = strstr(
+				mb_substr(
+					dirname(
+						(new \ReflectionClass($waitingInfoGetter))->getFileName()
+					),
+					mb_strlen(ICMS_MODULES_PATH) + 1
+				),
+				DIRECTORY_SEPARATOR,
+				true
+			);
+			if (!isset($block["modules"][$dirname])) {
+				$block["modules"][$dirname] = [
+					'name' => $mod_lists[$dirname],
+					'pending' => [],
+				];
+			}
+			$block['modules'][$dirname]["pending"][] = [
+				'pendingnum' => $count,
+				'lang_linkname' => $waitingInfoGetter->getLinkTitle(),
+				'adminlink' => $waitingInfoGetter->getLinkUrl()
+			];
 		}
 	}
 
