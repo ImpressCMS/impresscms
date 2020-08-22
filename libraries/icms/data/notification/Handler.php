@@ -316,7 +316,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 		$tags = array();
 		if (!empty($not_config)) {
 			if (!empty($not_config['tags_file'])) {
-				$tags_file = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/' . $not_config['tags_file'];
+				$tags_file = ICMS_MODULES_PATH . '/' . $module->getVar('dirname') . '/' . $not_config['tags_file'];
 				if (file_exists($tags_file)) {
 					include_once $tags_file;
 					if (!empty($not_config['tags_func'])) {
@@ -329,7 +329,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 			}
 			// RMV-NEW
 			if (!empty($not_config['lookup_file'])) {
-				$lookup_file = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/' . $not_config['lookup_file'];
+				$lookup_file = ICMS_MODULES_PATH . '/' . $module->getVar('dirname') . '/' . $not_config['lookup_file'];
 				if (file_exists($lookup_file)) {
 					include_once $lookup_file;
 					if (!empty($not_config['lookup_func'])) {
@@ -346,7 +346,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 		$tags['X_ITEM_URL']  = !empty($item_info['url'])?$item_info['url']:'[' . _NOT_ITEMURLNOTAVAILABLE . ']';
 		$tags['X_ITEM_TYPE'] = !empty($category_info['item_name'])?$category_info['title']:'[' . _NOT_ITEMTYPENOTAVAILABLE . ']';
 		$tags['X_MODULE'] = $module->getVar('name');
-		$tags['X_MODULE_URL'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/';
+		$tags['X_MODULE_URL'] = ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/';
 		$tags['X_NOTIFY_CATEGORY'] = $category;
 		$tags['X_NOTIFY_EVENT'] = $event;
 
@@ -617,7 +617,7 @@ class icms_data_notification_Handler extends icms_ipf_Handler {
 
 		foreach ($not_config['event'] as $event) {
 			if ($event['category'] == $category_name) {
-				$event['mail_template_dir'] = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/language/' . $icmsConfig['language'] . '/mail_template/';
+				$event['mail_template_dir'] = ICMS_MODULES_PATH . '/' . $module->getVar('dirname') . '/language/' . $icmsConfig['language'] . '/mail_template/';
 				if (!$enabled_only || self::eventEnabled($category, $event, $module)) {
 					$event_array[] = $event;
 				}

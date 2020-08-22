@@ -114,7 +114,7 @@ if (in_array($op, $valid_op)) {
 					$not_config = $module->getInfo('notification');
 					$lookup_func = '';
 					if (!empty($not_config['lookup_file'])) {
-						$lookup_file = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/' . $not_config['lookup_file'];
+						$lookup_file = ICMS_MODULES_PATH . '/' . $module->getVar('dirname') . '/' . $not_config['lookup_file'];
 						if (file_exists($lookup_file)) {
 							include_once $lookup_file;
 							if (!empty($not_config['lookup_func']) && function_exists($not_config['lookup_func'])) {

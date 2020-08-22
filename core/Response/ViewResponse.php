@@ -441,7 +441,7 @@ class ViewResponse implements ResponseInterface
 					}
 				}
 			}
-			$this->theme->template->assign('modpath', ICMS_URL . '/modules/' . \icms::$module->getVar('dirname'));
+			$this->theme->template->assign('modpath', ICMS_MODULES_URL . '/' . \icms::$module->getVar('dirname'));
 			$this->theme->template->assign('modname', \icms::$module->getVar('name'));
 			$this->theme->template->assign('modid', \icms::$module->getVar('mid'));
 			$this->theme->template->assign('moddir', \icms::$module->getVar('dirname'));

@@ -217,7 +217,7 @@ class icms_module_Object
 	 */
 	public function mainLink() {
 		if ($this->getVar('hasmain') == 1) {
-			$ret = '<a href="' . ICMS_URL . '/modules/' . $this->getVar('dirname') . '/">' . $this->getVar('name') . '</a>';
+			$ret = '<a href="' . ICMS_MODULES_URL . '/' . $this->getVar('dirname') . '/">' . $this->getVar('name') . '</a>';
 			return $ret;
 		}
 		return false;
@@ -244,9 +244,9 @@ class icms_module_Object
 	public function loadAdminMenu() {
 		if ($this->getInfo('adminmenu')
 			&& $this->getInfo('adminmenu') != ''
-			&& file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))
+			&& file_exists(ICMS_MODULES_PATH . '/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))
 		) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
+			include_once ICMS_MODULES_PATH . '/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
 			if (isset($headermenu)) {$this->adminheadermenu = & $headermenu; }
 		}
@@ -282,10 +282,10 @@ class icms_module_Object
 	public function loadInfo($dirname, $verbose = true) {
 		global $icmsConfig;
 		icms_loadLanguageFile($dirname, 'modinfo');
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php')) {
-			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php')) {
-			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php';
+		if (file_exists(ICMS_MODULES_PATH . '/' . $dirname . '/icms_version.php')) {
+			include ICMS_MODULES_PATH . '/' . $dirname . '/icms_version.php';
+		} elseif (file_exists(ICMS_MODULES_PATH . '/' . $dirname . '/xoops_version.php')) {
+			include ICMS_MODULES_PATH . '/' . $dirname . '/xoops_version.php';
 		} else {
 			if (false != $verbose) {echo "Module File for $dirname Not Found!"; }
 			return false;
@@ -310,8 +310,8 @@ class icms_module_Object
 		if ($this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
 			return false;
 		}
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $search['file'])) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $search['file'];
+		if (file_exists(ICMS_MODULES_PATH . '/' . $this->getVar('dirname') . '/' . $search['file'])) {
+			include_once ICMS_MODULES_PATH . '/' . $this->getVar('dirname') . '/' . $search['file'];
 		} else {
 			return false;
 		}

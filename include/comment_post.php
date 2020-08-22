@@ -405,7 +405,7 @@ switch ($op) {
 					$comment_url .= $com_config['itemName'];
 				}
 				$comment_tags['X_COMMENT_URL'] =
-				ICMS_URL . '/modules/' . $not_module->getVar('dirname') . '/' . $comment_url . '=' . $com_itemid
+					ICMS_MODULES_URL . '/' . $not_module->getVar('dirname') . '/' . $comment_url . '=' . $com_itemid
 				. '&amp;com_id=' . $newcid . '&amp;com_rootid=' . $com_rootid . '&amp;com_mode=' . $com_mode
 				. '&amp;com_order=' . $com_order . '#comment' . $newcid;
 				$notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);

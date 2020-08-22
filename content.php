@@ -10,8 +10,8 @@
  */
 
 define("CONTENT_DIRNAME", 'content');
-define("CONTENT_URL", ICMS_URL . '/modules/' . CONTENT_DIRNAME . '/');
-define("CONTENT_ROOT_PATH", ICMS_ROOT_PATH . '/modules/' . CONTENT_DIRNAME . '/');
+define("CONTENT_URL", ICMS_MODULES_URL . '/' . CONTENT_DIRNAME . '/');
+define("CONTENT_ROOT_PATH", ICMS_MODULES_PATH . '/' . CONTENT_DIRNAME . '/');
 define("CONTENT_IMAGES_URL", CONTENT_URL . 'images/');
 define("CONTENT_ADMIN_URL", CONTENT_URL . 'admin/');
 

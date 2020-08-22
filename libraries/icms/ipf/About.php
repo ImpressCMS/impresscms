@@ -228,7 +228,7 @@ class icms_ipf_About {
 
 		$this->_tpl = new icms_view_Tpl();
 
-		$this->_tpl->assign('module_url', ICMS_URL . "/modules/" . $icmsModule->getVar('dirname') . "/");
+		$this->_tpl->assign('module_url', ICMS_MODULES_URL . '/' . $icmsModule->getVar('dirname') . "/");
 		$this->_tpl->assign('module_image', $versioninfo->getInfo('image'));
 		$this->_tpl->assign('module_name', $versioninfo->getInfo('name'));
 		$this->_tpl->assign('module_version', $versioninfo->getInfo('version'));
@@ -303,7 +303,7 @@ class icms_ipf_About {
 
 		// For changelog thanks to 3Dev
 		//global $icmsModule;
-		$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/changelog.txt';
+		$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/changelog.txt';
 		if (is_file($filename)) {
 
 			$filesize = filesize($filename);
@@ -312,7 +312,7 @@ class icms_ipf_About {
 			fclose($handle);
 		}
 
-		$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/changelog.txt';
+		$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/docs/changelog.txt';
 		if (is_file($filename)) {
 
 			$filesize = filesize($filename);
@@ -322,16 +322,16 @@ class icms_ipf_About {
 		}
 
 		// For license thanks to 3Dev
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt')) {
-			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt')) {
-			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt')) {
-			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt')) {
-			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt')) {
-			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
+		if (file_exists(ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/docs/license.txt')) {
+			$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/docs/license.txt';
+		} elseif (file_exists(ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt')) {
+			$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt';
+		} elseif (file_exists(ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license.txt')) {
+			$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license.txt';
+		} elseif (file_exists(ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt')) {
+			$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt';
+		} elseif (file_exists(ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license.txt')) {
+			$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license.txt';
 		}
 		if (is_file($filename)) {
 			$filesize = filesize($filename);
