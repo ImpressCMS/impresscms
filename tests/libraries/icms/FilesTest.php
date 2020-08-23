@@ -22,18 +22,19 @@ class FilesTest extends \PHPUnit_Framework_TestCase {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {
                 $instance = $this->getClassInstance($class);
-                $this->assertTrue( $instance instanceof $must_be_instance_of, $class . " is not instanceof " . $must_be_instance_of);
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' is not instanceof ' . $must_be_instance_of);
             }
         }
     }
 
-    /**
-     * Gets instance of class from classname
-     *
-     * @param string $class     ClassName
-     *
-     * @return object
-     */
+	/**
+	 * Gets instance of class from classname
+	 *
+	 * @param string $class ClassName
+	 *
+	 * @return object
+	 * @throws \ReflectionException
+	 */
     private function getClassInstance($class) {
         $reflection = new \ReflectionClass($class);
         if ($reflection->isAbstract()) {

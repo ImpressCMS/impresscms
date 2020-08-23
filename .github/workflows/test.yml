@@ -11,6 +11,8 @@ on:
       - .github/workflows/test.yml
       - '**.js'
       - '**.php'
+      - composer.lock
+      - composer.json
 
 jobs:
   run:

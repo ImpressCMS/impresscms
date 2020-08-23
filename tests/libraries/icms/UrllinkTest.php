@@ -2,6 +2,9 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
@@ -13,13 +16,13 @@ class UrllinkTest extends \PHPUnit_Framework_TestCase {
      * Test if icms_core_DataFilter is available
      */
     public function testAvailability() {
-        foreach (['Handler' => 'icms_ipf_Handler', 'Object' => 'icms_ipf_Object'] as $type => $instanecOfType) {
+        foreach (['Handler' => AbstractExtendedHandler::class, 'Object' => AbstractExtendedModel::class] as $type => $instanecOfType) {
                $class = 'icms_data_urllink_' . $type;
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 
                $instance = $this->getInstanceWithoutConstructor($class);
-               $this->assertInternalType('object', $instance, $class. " is not an object");
-               $this->assertTrue($instance instanceof $instanecOfType, $class . ' doesn\'t extend ' . $instanecOfType);
+               $this->assertInternalType('object', $instance, $class. ' is not an object');
+               $this->assertInstanceOf($instanecOfType, $instance, $class . ' doesn\'t extend ' . $instanecOfType);
         }
     }
 
