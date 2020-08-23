@@ -11,6 +11,12 @@
  * @internal    for convenience, as we are not targetting php 5.3+ yet
  */
 
+use ImpressCMS\Core\Autoloader;
+use ImpressCMS\Core\Extensions\ComposerDefinitions\RoutesComposerDefinition;
+use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\Extensions\ComposerDefinitions\ProvidersComposerDefinition;
+use ImpressCMS\Core\Extensions\ComposerDefinitions\ServicesComposerDefinition;
+use ImpressCMS\Core\Extensions\Preload\EventsPreloader;
 use League\Container\Container;
 
 /**
@@ -44,7 +50,7 @@ final class icms extends Container {
 	/**
 	 * Current logged in user
 	 *
-	 * @var icms_member_user_Object|null
+	 * @var \ImpressCMS\Core\Models\User|null
 	 */
 	public static $user;
 
@@ -82,7 +88,7 @@ final class icms extends Container {
 	 */
 	static public function url($url)
 	{
-		return (false !== strpos($url, '://') ? $url : icms::getInstance()->path($url, true));
+		return (false !== strpos($url, '://') ? $url : \icms::getInstance()->path($url, true));
 	}
 
 	/**
@@ -150,14 +156,14 @@ final class icms extends Container {
 	 * @param bool $optional Is the handler optional?
 	 * @return        object        $inst        The instance of the object that was created
 	 */
-	static public function &handler($name, $optional = false)
+	public static function &handler($name, $optional = false)
 	{
 		$instance = static::getInstance();
 		$real_name = $name . '_handler';
 		if (!$instance->has($real_name)) {
-			$class = $name . "Handler";
+			$class = $name . 'Handler';
 			if (!class_exists($class)) {
-				$class = $name . "_Handler";
+				$class = $name . '_Handler';
 				if (!class_exists($class)) {
 					// Try old style handler loading (should be removed later, in favor of the
 					// lookup table present in xoops_gethandler)
@@ -179,7 +185,7 @@ final class icms extends Container {
 		$handler = $instance->get($real_name);
 		if (!$handler && !$optional) {
 			//trigger_error(sprintf("Handler <b>%s</b> does not exist", $name), E_USER_ERROR);
-			throw new RuntimeException(sprintf("Handler <b>%s</b> does not exist", $name));
+			throw new RuntimeException(sprintf('Handler <b>%s</b> does not exist', $name));
 		}
 		return $handler;
 	}
@@ -195,8 +201,8 @@ final class icms extends Container {
 		self::$paths['modules'] = array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
 		self::$paths['themes'] = array(ICMS_THEME_PATH, ICMS_THEME_URL);
 		// Initialize the autoloader
-		require_once __DIR__ . '/icms/Autoloader.php';
-		icms_Autoloader::setup();
+		require_once dirname(__DIR__) . '/core/Autoloader.php';
+		Autoloader::setup();
 		$this->buildRelevantUrls();
 
 		return $this;
@@ -220,7 +226,7 @@ final class icms extends Container {
 				'HTTP_REFERER' => 'url',
 			);
 
-			$clean_SERVER = icms_core_DataFilter::checkVarArray($_SERVER, $filters, false);
+			$clean_SERVER = DataFilter::checkVarArray($_SERVER, $filters, false);
 
 			$phpself = $clean_SERVER['SCRIPT_NAME'];
 			$httphost = $clean_SERVER['HTTP_HOST'];
@@ -270,6 +276,7 @@ final class icms extends Container {
 				if (!in_array($package->getType(), ['impresscms-module'])) {
 					continue;
 				}
+				/** @noinspection SlowArrayOperationsInLoopInspection */
 				$extras = array_merge_recursive($extras, $package->getExtra());
 			}
 
@@ -282,9 +289,9 @@ final class icms extends Container {
 	/**
 	 * Loads composer definitions
 	 *
-	 * @param \ImpressCMS\Core\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition Composer definition class
+	 * @param \ImpressCMS\Core\Extensions\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition Composer definition class
 	 */
-	protected function loadComposerDefinition(\ImpressCMS\Core\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition)
+	protected function loadComposerDefinition(\ImpressCMS\Core\Extensions\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition)
 	{
 		$composerJsonPath = dirname(__DIR__);
 
@@ -306,10 +313,10 @@ final class icms extends Container {
 	public function boot(bool $registerCommonServices = true)
 	{
 		$this->loadComposerDefinition(
-			new \ImpressCMS\Core\ComposerDefinitions\ProvidersComposerDefinition()
+			new ProvidersComposerDefinition()
 		);
 		$this->loadComposerDefinition(
-			new \ImpressCMS\Core\ComposerDefinitions\ServicesComposerDefinition()
+			new ServicesComposerDefinition()
 		);
 
 		// register links for compatibility
@@ -319,7 +326,7 @@ final class icms extends Container {
 
 		if (!(defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE)) {
 			$this->loadComposerDefinition(
-				new \ImpressCMS\Core\ComposerDefinitions\RoutesComposerDefinition($this)
+				new RoutesComposerDefinition()
 			);
 		}
 
@@ -339,7 +346,7 @@ final class icms extends Container {
 		self::$config = $this->get('config');
 		self::$session = $this->get('session');
 		self::$logger = $this->get('logger');
-		self::$preload = $this->get(icms_preload_Handler::class);
+		self::$preload = $this->get(EventsPreloader::class);
 		self::$security = $this->get('security');
 	}
 

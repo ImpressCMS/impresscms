@@ -124,7 +124,7 @@ switch ($op) {
 		$ret = array();
 		$write = false;
 		$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
-		$output = new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer);
+		$output = new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer);
 		/**
 		 * @var icms_module_Handler $module_handler
 		 */
@@ -191,12 +191,12 @@ switch ($op) {
 			$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
 			$module_handler->install(
 				$module,
-				new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
+				new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer)
 			);
 			if ($from_112) {
 				$module_handler->update(
 					$module,
-					new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
+					new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer)
 				);
 			}
 			$ret[] = nl2br(
@@ -237,7 +237,7 @@ switch ($op) {
 			$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
 			$module_handler->uninstall(
 				$module,
-				new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
+				new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer)
 			);
 			$ret[] = nl2br(
 				$buffer->fetch()
@@ -283,7 +283,7 @@ switch ($op) {
 			$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
 			$module_handler->update(
 				$module,
-				new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
+				new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer)
 			);
 			$ret[] = nl2br(
 				$buffer->fetch()
