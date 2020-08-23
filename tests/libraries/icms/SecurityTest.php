@@ -25,7 +25,7 @@ class SecurityTest extends \PHPUnit_Framework_TestCase {
 		$container = new Container();
 		$container->addServiceProvider(SecurityServiceProvider::class);
 		$instance = $container->get('security');
-		$this->assertTrue($instance instanceof \icms_core_Security, 'service method doesn\'t return instanceod icms_core_Security type');
+		$this->assertInstanceOf(\icms_core_Security::class, $instance, 'service method doesn\'t return instanceod icms_core_Security type');
     }
 
     /**
