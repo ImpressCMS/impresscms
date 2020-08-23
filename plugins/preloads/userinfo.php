@@ -25,7 +25,7 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 		if (is_object(icms::$user)) {
 
 			$userSection = \icms::$session
-				->getSegment(\icms_member_user_Object::class);
+				->getSegment(\ImpressCMS\Core\Models\User::class);
 			foreach (icms::$user->vars as $key => $value) {
 				$user[$key] = $value;
 			}

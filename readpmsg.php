@@ -35,6 +35,8 @@
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+use ImpressCMS\Core\Facades\Member;
+
 $xoopsOption['pagetype'] = "pmsg";
 
 /* check access permissions */
@@ -101,7 +103,9 @@ $pm_arr = $pm_handler->getObjects($criteria);
 if (!$pm_handler->setRead($pm_arr[0])) {
 /* echo "failed"; */ }
 
-$poster = new icms_member_user_Object((int) $pm_arr[0]->getVar("from_userid"));
+$poster = Member::getUser(
+	(int) $pm_arr[0]->getVar('from_userid')
+);
 
 if (!$poster->isActive()) {
 	$poster = false;
@@ -111,8 +115,8 @@ if (is_object($poster) == true) {
 // no need to do this for deleted users
 	$icmsTpl->assign(
 			array(
-				'uname' =>  $poster->getVar("uname"),
-				'poster_id' =>  $poster->getVar("uid"),
+				'uname' =>  $poster->getVar('uname'),
+				'poster_id' =>  $poster->getVar('uid'),
 				'gravatar' =>  $poster->gravatar('G', $GLOBALS['icmsConfigUser']['avatar_width']),
 				'online' =>  $poster->isOnline()
 			)
@@ -146,17 +150,17 @@ $icmsTpl->assign(
 		array(
 			'total_messages' => $total_messages,
 			'messages' => $pm_arr,
-			'uid' => icms::$user->getVar("uid"),
-			'subject' => $pm_arr[0]->getVar("subject"),
+			'uid' => icms::$user->getVar('uid'),
+			'subject' => $pm_arr[0]->getVar('subject'),
 			'poster' => $poster,
-			'image' => $pm_arr[0]->getVar("msg_image", "E"),
-			'sent_time' => formatTimestamp($pm_arr[0]->getVar("msg_time")),
+			'image' => $pm_arr[0]->getVar('msg_image', 'E'),
+			'sent_time' => formatTimestamp($pm_arr[0]->getVar('msg_time')),
 			'message_body' => icms_core_DataFilter::checkVar($var, $filterType, 'output'),
-			'msg_id' => $pm_arr[0]->getVar("msg_id"),
+			'msg_id' => $pm_arr[0]->getVar('msg_id'),
 			'form' => $form->render(),
 			'previous' => $previous,
 			'next' => $next
 		)
 );
 
-require "footer.php";
+require 'footer.php';
