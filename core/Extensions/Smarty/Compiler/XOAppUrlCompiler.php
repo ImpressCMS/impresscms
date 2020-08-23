@@ -54,7 +54,7 @@ class XOAppUrlCompiler implements SmartyCompilerExtensionInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute($args, &$compiler)
+	public function execute($args, \Smarty_Internal_SmartyTemplateCompiler &$compiler)
 	{
 		$url = trim($args[0]);
 		$params = array_slice($args, 1);

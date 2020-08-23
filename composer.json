@@ -184,6 +184,11 @@
           "smarty.compiler"
         ]
       },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\ForeachqCloseCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
       "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\IncludeqCompiler": {
         "tags": [
           "smarty.compiler"

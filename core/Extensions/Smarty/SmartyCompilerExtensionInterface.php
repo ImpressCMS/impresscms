@@ -14,10 +14,10 @@ interface SmartyCompilerExtensionInterface extends SmartyExtensionInterface
 	 * Execute compiler
 	 *
 	 * @param $args
-	 * @param $compiler
+	 * @param \Smarty_Internal_SmartyTemplateCompiler $compiler
 	 *
 	 * @return string|void
 	 */
-	public function execute($args, &$compiler);
+	public function execute($args, \Smarty_Internal_SmartyTemplateCompiler &$compiler);
 
 }
