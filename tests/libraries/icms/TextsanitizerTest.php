@@ -21,7 +21,7 @@ class TextsanitizerTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetInstance() {
         $this->assertTrue(method_exists('icms_core_Textsanitizer', 'getInstance'), 'static method getInstance doesn\'t exists for icms_core_Textsanitizer');
-        $this->assertTrue(\icms_core_Textsanitizer::getInstance() instanceof \icms_core_Textsanitizer, 'service method doesn\'t return instanceod icms_core_Textsanitizer type');
+        $this->assertInstanceOf(\icms_core_Textsanitizer::class, \icms_core_Textsanitizer::getInstance(), 'service method doesn\'t return instanceod icms_core_Textsanitizer type');
     }
 
     /**

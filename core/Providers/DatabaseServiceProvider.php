@@ -3,6 +3,8 @@
 namespace ImpressCMS\Core\Providers;
 
 use Aura\Sql\ExtendedPdoInterface;
+use ImpressCMS\Core\Database\DatabaseConnection;
+use ImpressCMS\Core\Logger;
 use League\Container\Container;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
@@ -118,7 +120,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 			\PDO::ATTR_PERSISTENT => (bool)$persistentConnection,
 		];
 
-		$connection = new \icms_db_Connection(
+		$connection = new DatabaseConnection(
 			$dsn,
 			$user,
 			$pass,
@@ -136,7 +138,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 		}
 
 		$enabled = (bool)env('LOGGING_ENABLED', false);
-		$logger = new \icms_core_Logger(
+		$logger = new Logger(
 			'DB',
 			[
 				new \Monolog\Handler\RotatingFileHandler(
