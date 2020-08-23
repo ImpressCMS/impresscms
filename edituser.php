@@ -266,7 +266,7 @@ switch ($op) {
 					 * @var Aura\Session\Session $session
 					 */
 					$session = \icms::getInstance()->get('session');
-					$userSegment = $session->getSegment(icms_member_user_Object::class);
+					$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
 					$userSegment->set('theme', $theme_selected);
 					$icmsConfig['theme_set'] = $theme_selected;
 				} else {
