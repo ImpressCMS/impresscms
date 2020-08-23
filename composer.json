@@ -52,7 +52,7 @@
     "aura/sqlschema": "^2.0",
     "cerdic/css-tidy": "^1.5",
     "composer/composer": "^1.10",
-    "erusev/parsedown": "^1.7.0",
+    "erusev/parsedown": "^1.7",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
     "http-interop/http-factory-guzzle": "^1.0",
@@ -75,6 +75,7 @@
     "symfony/console": ">5.0",
     "symfony/polyfill-iconv": "^1.12",
     "tecnickcom/tcpdf": "^6.2",
+    "typo3/class-alias-loader": "^1.1",
     "vlucas/phpdotenv": "^3.3.3"
   },
   "suggest": {
@@ -99,6 +100,7 @@
     "files": [
       "include/version.php",
       "include/constants.php",
+      "include/deprecated_constants.php",
       "include/functions.php",
       "include/cp_functions.php"
     ]
@@ -113,8 +115,8 @@
       "\\ImpressCMS\\Core\\Providers\\FilesystemServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\DatabaseServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\SecurityServiceProvider",
-      "\\ImpressCMS\\Core\\Providers\\SessionServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ConfigServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\SessionServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ModuleServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider"
     ],
@@ -194,132 +196,132 @@
           "console.command"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\AutotasksSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\AutotasksSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\BlockSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\BlockSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\ConfigSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\ConfigSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\ScriptSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\ScriptSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\TablesSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\TablesSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\ViewTemplateSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\ViewTemplateSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\CopyAssetsSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\CopyAssetsSetupStep": {
         "tags": [
           "setup_step.module.install"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\AutotasksSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\AutotasksSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\BlocksSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\BlocksSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\ConfigSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\ConfigSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\ScriptSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\ScriptSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\ViewTemplateSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\ViewTemplateSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\CopyAssetsSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\CopyAssetsSetupStep": {
         "tags": [
           "setup_step.module.update"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\AutotasksSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\AutotasksSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\BlockSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\BlockSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\CommentsSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\CommentsSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\ConfigSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\ConfigSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\DataPageSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\DataPageSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\FilesSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\FilesSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\GroupPermissionsSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\GroupPermissionsSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\NotificationsSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\NotificationsSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\ScriptSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\ScriptSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\TablesSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\TablesSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\UrlLinksSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\UrlLinksSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\CopyAssetsSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\CopyAssetsSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\ViewTemplateSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\ViewTemplateSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ]
@@ -381,7 +383,13 @@
         "path": "/error.php",
         "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getError"
       }
-    ]
+    ],
+    "typo3/class-alias-loader": {
+      "class-alias-maps": [
+        "include/deprecated_class_aliases.php"
+      ],
+      "always-add-alias-loader": true
+    }
   },
   "config": {
     "optimize-autoloader": true,

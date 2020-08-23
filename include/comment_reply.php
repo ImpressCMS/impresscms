@@ -73,7 +73,7 @@ if (!isset($_GET['com_order'])) {
 }
 $comment_handler = icms::handler('icms_data_comment');
 $comment = & $comment_handler->get($com_id);
-$r_name = icms_member_user_Object::getUnameFromId($comment->getVar('com_uid'));
+$r_name = \ImpressCMS\Core\Models\User::getUnameFromId($comment->getVar('com_uid'));
 $r_text = _CM_POSTER . ': <strong>' . $r_name . '</strong>&nbsp;&nbsp;' . _CM_POSTED . ': <strong>' . formatTimestamp($comment->getVar('com_created')) . '</strong><br /><br />' . $comment->getVar('com_text');
 $com_title = $comment->getVar('com_title', 'E');
 if (!preg_match("/^(Re|" . _CM_RE . "):/i", $com_title)) {

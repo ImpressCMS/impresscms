@@ -9,6 +9,7 @@
  * @package core
  * @since 1.2
  */
+
 use WideImage\WideImage;
 
 $xoopsOption['nodebug'] = 1;
@@ -27,7 +28,7 @@ if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) =
 
 /* compare URL to ICMS_URL - it should be a full URL and within the domain, without traversal */
 $submitted_url = parse_url($image_url);
-$base_url = parse_url(ICMS_URL); // icms::$urls not available?
+$base_url = parse_url(ICMS_URL); // \icms::$urls not available?
 if ($submitted_url['scheme'] != $base_url['scheme']) $image_url = null;
 if ($submitted_url['host'] != $base_url['host']) $image_url = null;
 if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . basename($image_path), PHP_URL_PATH)) $image_url = null;
