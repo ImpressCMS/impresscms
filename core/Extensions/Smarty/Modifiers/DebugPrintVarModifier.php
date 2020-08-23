@@ -5,6 +5,9 @@
  * @subpackage plugins
  */
 
+namespace ImpressCMS\Core\Extensions\Smarty\Modifiers;
+use ImpressCMS\Core\Extensions\Smarty\SmartyModifierExtensionInterface;
+
 /**
  * Smarty debug_print_var modifier plugin
  *
@@ -23,19 +26,8 @@
  * @param integer
  * @return string
  */
-class DebugPrintVarModifier
+class DebugPrintVarModifier implements SmartyModifierExtensionInterface
 {
-	/**
-	 * Name of modifier in smarty
-	 */
-	const NAME = 'debug_print_var';
-
-	/**
-	 * Disabled constructor.
-	 */
-	private function __construct()
-	{
-	}
 
 	/**
 	 * Magic method to invoke this class as function
@@ -45,7 +37,7 @@ class DebugPrintVarModifier
 	 * @param int $length
 	 * @return string|void
 	 */
-	public function __invoke($var, $depth = 0, $length = 40)
+	public function execute($var, $depth = 0, $length = 40)
 	{
 		$_replace = ["\n" => '<i>&#92;n</i>', "\r" => '<i>&#92;r</i>', "\t" => '<i>&#92;t</i>'];
 		if (is_array($var)) {
@@ -79,5 +71,13 @@ class DebugPrintVarModifier
 			$results = strtr($results, $_replace);
 		}
 		return $results;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getName(): string
+	{
+		return 'debug_print_var';
 	}
 }

@@ -9,29 +9,16 @@
 	url="viewcat.php?cid=`$entity.cid`&orderby=`$sort_order`&offset=%s"
 */
 
-class xoPageNavFunction
+namespace ImpressCMS\Core\Extensions\Smarty\Functions;
+use icms;
+use ImpressCMS\Core\Extensions\Smarty\SmartyFunctionExtensionInterface;
+
+class XOPageNavFunction implements SmartyFunctionExtensionInterface
 {
-
 	/**
-	 * Name of function in smarty
+	 * @inheritDoc
 	 */
-	const NAME = 'xoPageNav';
-
-	/**
-	 * Disabled constructor.
-	 */
-	private function __construct()
-	{
-	}
-
-	/**
-	 * Magic method to use class as function
-	 *
-	 * @param $params
-	 * @param $smarty
-	 * @return string
-	 */
-	public function __invoke($params, &$smarty)
+	public function execute($params, &$smarty)
 	{
 		$pageSize = isset($params['pageSize']) ? (int)$params['pageSize'] : 10;
 		$itemsCount = isset($params['itemsCount']) ? (int)$params['itemsCount'] : 10;
@@ -67,6 +54,14 @@ class xoPageNavFunction
 
 		$str = "<div class='$class'>$str</div>";
 		return $str;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getName(): string
+	{
+		return 'xoPageNav';
 	}
 }
 

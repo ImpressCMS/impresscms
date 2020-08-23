@@ -7,11 +7,15 @@
  *
  * @copyright   The XOOPS project http://www.xoops.org/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Skalpa Keo <skalpa@xoops.org>
- * @package		xos_opal
- * @subpackage	xos_opal_Smarty
+ * @author        Skalpa Keo <skalpa@xoops.org>
+ * @package        xos_opal
+ * @subpackage    xos_opal_Smarty
  * @since       2.0.14
  */
+
+namespace ImpressCMS\Core\Extensions\Smarty\Compiler;
+use icms;
+use ImpressCMS\Core\Extensions\Smarty\SmartyCompilerExtensionInterface;
 
 /**
  * Inserts the URL of an application page
@@ -45,28 +49,12 @@
  * ([xoAppUrl "modules/something/yourpage.php?order=`$sortby`"])
  * </code>
  */
-class XOAppUrlCompiler
+class XOAppUrlCompiler implements SmartyCompilerExtensionInterface
 {
 	/**
-	 * Name of function in smarty
+	 * @inheritDoc
 	 */
-	const NAME = 'xoAppUrl';
-
-	/**
-	 * Disabled constructor.
-	 */
-	private function __construct()
-	{
-	}
-
-	/**
-	 * Magic method to invoke this class as function
-	 *
-	 * @param $args
-	 * @param $compiler
-	 * @return string|void
-	 */
-	public function __invoke($args, &$compiler)
+	public function execute($args, &$compiler)
 	{
 		$url = trim($args[0]);
 		$params = array_slice($args, 1);
@@ -103,4 +91,11 @@ class XOAppUrlCompiler
 		return "<?php echo htmlspecialchars( $str ); ?" . '>';
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public function getName(): string
+	{
+		return 'xoAppUrl';
+	}
 }

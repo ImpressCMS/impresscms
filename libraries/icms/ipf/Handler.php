@@ -829,7 +829,6 @@ class icms_ipf_Handler extends icms_core_ObjectHandler
 			$sql .= ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
 		}
 
-		var_dump($sql, $args);
 		$result = $this->db->perform($sql, $args);
 		if (!$result) {
 			return $ret;

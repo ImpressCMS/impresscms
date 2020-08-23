@@ -1,29 +1,20 @@
 <?php
 
+namespace ImpressCMS\Core\Extensions\Smarty\Functions;
+
 use Aura\Session\Session;
+use icms;
+use icms_db_criteria_Compo;
+use icms_db_criteria_Item;
+use ImpressCMS\Core\Extensions\Smarty\SmartyFunctionExtensionInterface;
 
-class XOInboxCountFunction
+class XOInboxCountFunction implements SmartyFunctionExtensionInterface
 {
-	/**
-	 * Name of function in smarty
-	 */
-	const NAME = 'xoInboxCount';
 
 	/**
-	 * Disabled constructor.
+	 * @inheritDoc
 	 */
-	private function __construct()
-	{
-	}
-
-	/**
-	 * Magic method to invoke this class as function
-	 *
-	 * @param $params
-	 * @param $smarty
-	 * @return string|void
-	 */
-	public function __invoke($params, &$smarty)
+	public function execute($params, &$smarty)
 	{
 		if (!isset(icms::$user) || !is_object(icms::$user)) {
 			return;
@@ -49,5 +40,13 @@ class XOInboxCountFunction
 		} else {
 			echo $count;
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getName(): string
+	{
+		return 'xoInboxCount';
 	}
 }

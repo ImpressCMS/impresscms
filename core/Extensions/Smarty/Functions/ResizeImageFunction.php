@@ -5,6 +5,12 @@
  * @subpackage plugins
  */
 
+namespace ImpressCMS\Core\Extensions\Smarty\Functions;
+
+use ImpressCMS\Core\Extensions\Smarty\SmartyFunctionExtensionInterface;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException;
+use Smarty;
 use WideImage\WideImage;
 
 /**
@@ -33,36 +39,36 @@ use WideImage\WideImage;
  * @param array
  * @param Smarty
  * @return string
- * @throws \Psr\Cache\InvalidArgumentException
+ * @throws InvalidArgumentException
  * @author Ignacio Segura <nacho at pensamientosdivergentes.net>
  * Based on work by Monte Ohrt <monte at ohrt dot com> and Duda <duda@big.hu>
  * @uses smarty_function_escape_special_chars()
  * @uses WideImage library
  * @version  1.11
  */
-class ResizeImageFunction
+class ResizeImageFunction implements SmartyFunctionExtensionInterface
 {
 	/**
-	 * Name of function in smarty
+	 * @var CacheItemPoolInterface
 	 */
-	const NAME = 'resized_image';
+	private $cache;
 
 	/**
-	 * Disabled constructor.
+	 * ResizeImageFunction constructor.
+	 *
+	 * @param CacheItemPoolInterface $cache
 	 */
-	private function __construct()
+	public function __construct(CacheItemPoolInterface $cache)
 	{
+		$this->cache = $cache;
 	}
 
 	/**
-	 * Magic method to invoke this class as function
+	 * @inheritDoc
 	 *
-	 * @param $params
-	 * @param $smarty
-	 * @return string|void
-	 * @throws \Psr\Cache\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
-	public function __invoke($params, &$smarty)
+	public function execute($params, &$smarty)
 	{
 		require_once $smarty->_get_plugin_filepath('shared', 'escape_special_chars');
 
@@ -191,11 +197,7 @@ class ResizeImageFunction
 			. '-' . $resized['width'] . 'x' . $resized['height']
 			. substr($resized['path'], strrpos($resized['path'], '.')); // build path + file name
 
-		/**
-		 * @var \Psr\Cache\CacheItemPoolInterface $cache
-		 */
-		$cache = icms::getInstance()->get('cache');
-		$cached_image = $cache->getItem('resized-file-' . $resized['path']);
+		$cached_image = $this->cache->getItem('resized-file-' . $resized['path']);
 
 		if (!$cached_image->isHit()) {
 			$resized_img = WideImage::load($original['path']);
@@ -205,6 +207,7 @@ class ResizeImageFunction
 			$cached_image->set(
 				$resized['url'] = 'data:image/png;base64,' . base64_encode($image_data)
 			);
+			$this->cache->save($cached_image);
 		} else {
 			$resized['url'] = $cached_image->get();
 		}
@@ -216,4 +219,11 @@ class ResizeImageFunction
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public function getName(): string
+	{
+		return 'resized_image';
+	}
 }

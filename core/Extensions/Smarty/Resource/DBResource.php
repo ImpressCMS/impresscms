@@ -3,6 +3,7 @@
 namespace ImpressCMS\Core\Extensions\Smarty\Resource;
 
 use icms;
+use ImpressCMS\Core\Extensions\Smarty\SmartyExtensionInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Smarty_Resource_Custom;
@@ -12,7 +13,7 @@ use Smarty_Resource_Custom;
  *
  * @package ImpressCMS\Core\Extensions\Smarty\Resource
  */
-class DBResource extends Smarty_Resource_Custom
+class DBResource extends Smarty_Resource_Custom implements SmartyExtensionInterface
 {
 	/**
 	 * @var CacheItemPoolInterface
@@ -120,4 +121,11 @@ class DBResource extends Smarty_Resource_Custom
 		return filemtime($tpl);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public function getName(): string
+	{
+		return 'db';
+	}
 }

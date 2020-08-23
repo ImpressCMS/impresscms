@@ -46,29 +46,17 @@
  *				ICMS_URL/modules/MODULENAME/viewcat.php?cid=5&orderby=titleA
  * -------------------------------------------------------------
  */
+namespace ImpressCMS\Core\Extensions\Smarty\Functions;
 
-class XoopsLinkFunction
+use ImpressCMS\Core\Extensions\Smarty\SmartyFunctionExtensionInterface;
+
+class XoopsLinkFunction implements SmartyFunctionExtensionInterface
 {
-	/**
-	 * Name of function in smarty
-	 */
-	const NAME = 'xoops_link';
 
 	/**
-	 * Disabled constructor.
+	 * @inheritDoc
 	 */
-	private function __construct()
-	{
-	}
-
-	/**
-	 * Magic method to use class as function
-	 *
-	 * @param $params
-	 * @param $smarty
-	 * @return string
-	 */
-	public function __invoke($params, $smarty)
+	public function execute($params, &$smarty)
 	{
 		$urlStr = '';
 		if (isset($params['urlvars'])) {
@@ -112,4 +100,11 @@ class XoopsLinkFunction
 		}
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public function getName(): string
+	{
+		return 'xoops_link';
+	}
 }

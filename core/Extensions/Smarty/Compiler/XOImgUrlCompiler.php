@@ -7,11 +7,15 @@
  *
  * @copyright   The XOOPS project http://www.xoops.org/
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Skalpa Keo <skalpa@xoops.org>
- * @package		xos_opal
- * @subpackage	xos_opal_Smarty
+ * @author        Skalpa Keo <skalpa@xoops.org>
+ * @package        xos_opal
+ * @subpackage    xos_opal_Smarty
  * @since       2.0.14
  */
+
+namespace ImpressCMS\Core\Extensions\Smarty\Compiler;
+use icms;
+use ImpressCMS\Core\Extensions\Smarty\SmartyCompilerExtensionInterface;
 
 /**
  * Inserts the URL of a file resource customizable by themes
@@ -29,28 +33,12 @@
  * on your themes configuration. Because of this, the use of the dynamic syntax with this plug-in
  * is not possible right now.
  */
-class XOImgUrlCompiler
+class XOImgUrlCompiler implements SmartyCompilerExtensionInterface
 {
 	/**
-	 * Name of function in smarty
+	 * @inheritDoc
 	 */
-	const NAME = 'xoImgUrl';
-
-	/**
-	 * Disabled constructor.
-	 */
-	private function __construct()
-	{
-	}
-
-	/**
-	 * Magic method to invoke this class as function
-	 *
-	 * @param $args
-	 * @param Smarty $smarty
-	 * @return string|void
-	 */
-	public function __invoke($args, Smarty &$smarty)
+	public function execute($args, &$compiler)
 	{
 		global $xoTheme;
 
@@ -59,4 +47,11 @@ class XOImgUrlCompiler
 		return addslashes(icms::url($path));
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public function getName(): string
+	{
+		return 'xoImgUrl';
+	}
 }

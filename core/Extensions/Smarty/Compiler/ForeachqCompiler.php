@@ -1,6 +1,7 @@
 <?php
 
 namespace ImpressCMS\Core\Extensions\Smarty\Compiler;
+use ImpressCMS\Core\Extensions\Smarty\SmartyExtensionInterface;
 use Smarty_Internal_Compile_Foreach;
 
 /**
@@ -9,7 +10,14 @@ use Smarty_Internal_Compile_Foreach;
  *
  * @deprecated
  */
-class ForeachqCompiler extends Smarty_Internal_Compile_Foreach
+class ForeachqCompiler extends Smarty_Internal_Compile_Foreach implements SmartyExtensionInterface
 {
 
+	/**
+	 * @inheritDoc
+	 */
+	public function getName(): string
+	{
+		return 'foreachq';
+	}
 }
