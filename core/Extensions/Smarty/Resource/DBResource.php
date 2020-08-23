@@ -1,16 +1,33 @@
 <?php
-/*
- * Smarty plugin
- * -------------------------------------------------------------
- * File:     resource.db.php
- * Type:     resource
- * Name:     db
- * Purpose:  Fetches templates from a database
- * -------------------------------------------------------------
- */
 
-class Smarty_Resource_Db extends Smarty_Resource_Custom
+namespace ImpressCMS\Core\Extensions\Smarty\Resource;
+
+use icms;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException;
+use Smarty_Resource_Custom;
+
+/**
+ * Smarty plugin to fetch resource from database
+ *
+ * @package ImpressCMS\Core\Extensions\Smarty\Resource
+ */
+class DBResource extends Smarty_Resource_Custom
 {
+	/**
+	 * @var CacheItemPoolInterface
+	 */
+	private $cache;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param CacheItemPoolInterface $cacheItemPool
+	 */
+	public function __construct(CacheItemPoolInterface $cacheItemPool)
+	{
+		$this->cache = $cacheItemPool;
+	}
 
 	/**
 	 * @inheritDoc
@@ -37,17 +54,13 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 	 * @param string $tpl_name Template name
 	 *
 	 * @return bool|mixed|string
-	 * @throws \Psr\Cache\InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	protected function tplinfo($tpl_name)
 	{
 		global $icmsConfig;
 
-		/**
-		 * @var \Psr\Cache\CacheItemPoolInterface $cache
-		 */
-		$cache = \icms::getInstance()->get('cache');
-		$cachedTemplate = $cache->getItem('tpl_db_' . base64_encode($tpl_name));
+		$cachedTemplate = $this->cache->getItem('tpl_db_' . base64_encode($tpl_name));
 
 		if ($cachedTemplate->isHit()) {
 			return $cachedTemplate->get();
@@ -62,7 +75,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 			$tplobj = $tplfile_handler->getPrefetchedBlock($tplset, $tpl_name);
 			if (count($tplobj)) {
 				$cachedTemplate->set($tplobj[0]);
-				$cache->save($cachedTemplate);
+				$this->cache->save($cachedTemplate);
 				return $cachedTemplate->get();
 			}
 		}
@@ -71,7 +84,7 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 
 		if (!count($tplobj)) {
 			$cachedTemplate->set(false);
-			$cache->save($cachedTemplate);
+			$this->cache->save($cachedTemplate);
 			return $cachedTemplate->get();
 		}
 		$module = $tplobj[0]->getVar('tpl_module', 'n');
@@ -84,12 +97,12 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 			$filepath = ICMS_ROOT_PATH . "/modules/$module/templates/$blockpath$tpl_name";
 			if (!file_exists($filepath)) {
 				$cachedTemplate->set($tplobj[0]);
-				$cache->save($cachedTemplate);
+				$this->cache->save($cachedTemplate);
 				return $cachedTemplate->get();
 			}
 		}
 		$cachedTemplate->set($filepath);
-		$cache->save($cachedTemplate);
+		$this->cache->save($cachedTemplate);
 		return $cachedTemplate->get();
 	}
 
@@ -99,7 +112,6 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 	protected function fetchTimestamp($name)
 	{
 		if (!$tpl = $this->tplinfo($name)) {
-			var_dump($tpl);
 			return 0;
 		}
 		if (is_object($tpl)) {

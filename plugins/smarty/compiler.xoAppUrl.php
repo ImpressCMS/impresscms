@@ -45,40 +45,62 @@
  * ([xoAppUrl "modules/something/yourpage.php?order=`$sortby`"])
  * </code>
  */
-function smarty_compiler_xoAppUrl($args, &$compiler)
+class XOAppUrlCompiler
 {
-	$url = trim($args[0]);
-	$params = array_slice($args, 1);
+	/**
+	 * Name of function in smarty
+	 */
+	const NAME = 'xoAppUrl';
 
-	if (strpos($url, '/') === 0) {
-		$url = 'www' . $url;
+	/**
+	 * Disabled constructor.
+	 */
+	private function __construct()
+	{
 	}
-	// Static URL generation
-	if ($url !== '.' && strpos($url[0], '$') === false) {
-		if ( isset($params) ) {
-			foreach ( $params as $k => $v ) {
-				if ( in_array( substr( $v, 0, 1 ), array( '"', "'" ) ) ) {
-					$params[$k] = substr( $v, 1, -1 );
+
+	/**
+	 * Magic method to invoke this class as function
+	 *
+	 * @param $args
+	 * @param $compiler
+	 * @return string|void
+	 */
+	public function __invoke($args, &$compiler)
+	{
+		$url = trim($args[0]);
+		$params = array_slice($args, 1);
+
+		if (strpos($url, '/') === 0) {
+			$url = 'www' . $url;
+		}
+		// Static URL generation
+		if ($url !== '.' && strpos($url[0], '$') === false) {
+			if (isset($params)) {
+				foreach ($params as $k => $v) {
+					if (in_array(substr($v, 0, 1), array('"', "'"))) {
+						$params[$k] = substr($v, 1, -1);
+					}
 				}
+				$url = \icms::buildUrl($url, $params);
 			}
-			$url = \icms::buildUrl( $url, $params );
+			$url = icms::path($url, true);
+			return htmlspecialchars($url);
 		}
-		$url = icms::path( $url, true );
-		return htmlspecialchars($url);
-	}
-	// Dynamic URL generation
-	if ( $url == '.' ) {
-		$str = "\$_SERVER['REQUEST_URI']";
-	} else {
-		$str = "\\icms::path( '$url', true )";
-	}
-	if ( isset($params) ) {
-		$str = "\\icms::buildUrl( $str, array(\n";
-		foreach ( $params as $k => $v ) {
-			$str .= var_export( $k, true ) . " => $v,\n";
+		// Dynamic URL generation
+		if ($url == '.') {
+			$str = "\$_SERVER['REQUEST_URI']";
+		} else {
+			$str = "\\icms::path( '$url', true )";
 		}
-		$str .= ') )';
+		if (isset($params)) {
+			$str = "\\icms::buildUrl( $str, array(\n";
+			foreach ($params as $k => $v) {
+				$str .= var_export($k, true) . " => $v,\n";
+			}
+			$str .= ') )';
+		}
+		return "<?php echo htmlspecialchars( $str ); ?" . '>';
 	}
-	return "<?php echo htmlspecialchars( $str ); ?" . '>';
-}
 
+}

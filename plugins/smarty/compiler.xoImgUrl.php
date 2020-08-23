@@ -29,13 +29,34 @@
  * on your themes configuration. Because of this, the use of the dynamic syntax with this plug-in
  * is not possible right now.
  */
-function smarty_compiler_xoImgUrl($args, Smarty &$smarty)
+class XOImgUrlCompiler
 {
-	global $xoTheme;
+	/**
+	 * Name of function in smarty
+	 */
+	const NAME = 'xoImgUrl';
 
-	$argStr = trim($args[0]);
-	$path = ( isset($xoTheme) && is_object( $xoTheme ) ) ? $xoTheme->resourcePath( $argStr ) : $argStr;
-	return addslashes(icms::url($path));
+	/**
+	 * Disabled constructor.
+	 */
+	private function __construct()
+	{
+	}
+
+	/**
+	 * Magic method to invoke this class as function
+	 *
+	 * @param $args
+	 * @param Smarty $smarty
+	 * @return string|void
+	 */
+	public function __invoke($args, Smarty &$smarty)
+	{
+		global $xoTheme;
+
+		$argStr = trim($args[0]);
+		$path = (isset($xoTheme) && is_object($xoTheme)) ? $xoTheme->resourcePath($argStr) : $argStr;
+		return addslashes(icms::url($path));
+	}
+
 }
-
-

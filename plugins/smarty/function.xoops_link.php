@@ -47,46 +47,69 @@
  * -------------------------------------------------------------
  */
 
-function smarty_function_xoops_link($params, $smarty) {
-	$urlStr='';
-	if (isset($params['urlvars'])) {
-		$szvars=explode( '&', $params['urlvars'] );
-		$vars=array();
-		// Split the string making an array from the ('name','value') pairs
-		foreach ($szvars as $szvar) {
-			$pos=strpos($szvar,'=');
-			if ( $pos !== false ) {			// If a value is specified, use it
-				$vars[] = array( 'name' => substr($szvar,0,$pos), 'value' => substr($szvar,$pos+1) );
-			} else {						// Otherwise use current one (if any)
-				if ( isset($_POST[$szvar]) ) {
-					$vars[] = array( 'name' => $szvar, 'value' => $_POST[$szvar] );
-				} elseif ( isset($_GET[$szvar]) ) {
-					$vars[] = array( 'name' => $szvar, 'value' => $_GET[$szvar] );
+class XoopsLinkFunction
+{
+	/**
+	 * Name of function in smarty
+	 */
+	const NAME = 'xoops_link';
+
+	/**
+	 * Disabled constructor.
+	 */
+	private function __construct()
+	{
+	}
+
+	/**
+	 * Magic method to use class as function
+	 *
+	 * @param $params
+	 * @param $smarty
+	 * @return string
+	 */
+	public function __invoke($params, $smarty)
+	{
+		$urlStr = '';
+		if (isset($params['urlvars'])) {
+			$szvars = explode('&', $params['urlvars']);
+			$vars = array();
+			// Split the string making an array from the ('name','value') pairs
+			foreach ($szvars as $szvar) {
+				$pos = strpos($szvar, '=');
+				if ($pos !== false) {            // If a value is specified, use it
+					$vars[] = array('name' => substr($szvar, 0, $pos), 'value' => substr($szvar, $pos + 1));
+				} else {                        // Otherwise use current one (if any)
+					if (isset($_POST[$szvar])) {
+						$vars[] = array('name' => $szvar, 'value' => $_POST[$szvar]);
+					} elseif (isset($_GET[$szvar])) {
+						$vars[] = array('name' => $szvar, 'value' => $_GET[$szvar]);
+					}
 				}
 			}
+			// Now reconstruct query string from specified variables
+			foreach ($vars as $var) {
+				$urlStr = "$urlStr&{$var['name']}={$var['value']}";
+			}
+			if ($urlStr !== '') {
+				$urlStr = '?' . substr($urlStr, 1);
+			}
 		}
-		// Now reconstruct query string from specified variables
-		foreach ($vars as $var) {
-			$urlStr = "$urlStr&{$var['name']}={$var['value']}";
+
+		// Get default module/page from current ones if necessary
+		$module = $params['module'] ?? \icms::getInstance()->get('module')->getVar('dirname');
+		if (!isset($params['page'])) {
+			$cur = $_SERVER['PHP_SELF'];
+			$page = substr($cur, strrpos($cur, '/') + 1);
+		} else {
+			$page = $params['page'];
 		}
-		if ($urlStr !== '') {
-			$urlStr = '?' . substr( $urlStr, 1 );
+		// Now, return entire link URL :-)
+		if (empty($module)) {
+			echo ICMS_URL . "/$page" . $urlStr;
+		} else {
+			echo ICMS_URL . "/modules/$module/$page" . $urlStr;
 		}
 	}
 
-	// Get default module/page from current ones if necessary
-	$module = $params['module'] ?? \icms::getInstance()->get('module')->getVar('dirname');
-	if ( !isset($params['page']) ) {
-		$cur = $_SERVER['PHP_SELF'];
-		$page = substr( $cur, strrpos( $cur, '/' ) + 1 );
-	} else {
-		$page = $params['page'];
-	}
-	// Now, return entire link URL :-)
-	if ( empty($module) ) {
-		echo ICMS_URL . "/$page" . $urlStr;
-	} else {
-		echo ICMS_URL . "/modules/$module/$page" . $urlStr;
-	}
 }
-
