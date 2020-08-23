@@ -21,7 +21,7 @@ class VersionCheckerTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetInstance() {
         $this->assertTrue(method_exists('icms_core_Versionchecker', 'getInstance'), 'static method getInstance doesn\'t exists for icms_core_Versionchecker');
-        $this->assertTrue(\icms_core_Versionchecker::getInstance() instanceof \icms_core_Versionchecker, 'service method doesn\'t return instanceod icms_core_Versionchecker type');
+        $this->assertInstanceOf(\icms_core_Versionchecker::class, \icms_core_Versionchecker::getInstance(), 'service method doesn\'t return instanceod icms_core_Versionchecker type');
     }
 
     /**
