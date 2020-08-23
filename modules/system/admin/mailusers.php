@@ -168,7 +168,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		if (!empty($_POST['mail_to_user'])) {
 			foreach ($_POST['mail_to_user'] as $to_user) {
 				if (!in_array($to_user, $added_id)) {
-					$added[] = new icms_member_user_Object($to_user);
+					$added[] =\icms::handler('icms_member')->getUser($to_user);
 					$added_id[] = $to_user;
 				}
 			}

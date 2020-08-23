@@ -2,6 +2,9 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
@@ -13,13 +16,13 @@ class CommentTest extends \PHPUnit_Framework_TestCase {
      * Test if icms_core_DataFilter is available
      */
     public function testAvailability() {
-        foreach (['Handler' => 'icms_ipf_Handler', 'Object' => 'icms_ipf_Object'] as $type => $instanecOfType) {
+        foreach (['Handler' => AbstractExtendedHandler::class, 'Object' => AbstractExtendedModel::class] as $type => $instanecOfType) {
                $class = 'icms_data_comment_' . $type;
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 
                $instance = $this->getInstanceWithoutConstructor($class);
-               $this->assertInternalType('object', $instance, $class. " is not an object");
-               $this->assertTrue($instance instanceof $instanecOfType, $class . ' doesn\'t extend ' . $instanecOfType);
+               $this->assertInternalType('object', $instance, $class. ' is not an object');
+               $this->assertInstanceOf($instanecOfType, $instance, $class . ' doesn\'t extend ' . $instanecOfType);
         }
         $this->assertTrue(class_exists('icms_data_comment_Renderer', true), "icms_data_comment_Renderer class doesn't exist");
     }
@@ -69,7 +72,7 @@ class CommentTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(method_exists('icms_data_comment_Renderer', 'instance'), "icms_data_comment_Renderer doesn\'t have static method 'instance'");
         $tpl = null;
         $instance = \icms_data_comment_Renderer::instance($tpl);
-        $this->assertTrue($instance instanceof \icms_data_comment_Renderer, 'instance() returns object that is not \icms_data_comment_Renderer');
+        $this->assertInstanceOf(\icms_data_comment_Renderer::class, $instance, 'instance() returns object that is not \icms_data_comment_Renderer');
         foreach (['setComments', 'renderFlatView', 'renderThreadView', 'renderNestView'] as $method) {
             $this->assertTrue(method_exists($instance, $method), $method . ' doesn\'t exists for icms_data_comment_Renderer');
         }
