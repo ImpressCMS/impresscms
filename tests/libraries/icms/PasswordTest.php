@@ -30,7 +30,7 @@ class PasswordTest extends \PHPUnit_Framework_TestCase {
      */
     public function testReturnCorrectResult() {
         $mock = \icms_core_Password::getInstance();
-        $this->assertTrue($mock instanceof \icms_core_Password, 'getInstance static method returns not \icms_core_Password instance');
+        $this->assertInstanceOf(\icms_core_Password::class, $mock, 'getInstance static method returns not \icms_core_Password instance');
     }
 
     /**

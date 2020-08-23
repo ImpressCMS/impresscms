@@ -51,13 +51,13 @@ if (!function_exists('xoops_header')) {
 	{
 		trigger_error('xoops_header was deprecached from 2.0 use icms_response_* classes instead!', E_USER_DEPRECATED);
 
-		global $icmsConfig;
+		global $icmsConfig, $xoopsOption;
 
-		\icms::$response = new \icms_response_HTML([
+		$xoopsOption['response'] = new \ImpressCMS\Core\Response\ViewResponse([
 			'template_canvas' => 'db:system_blank.html'
 		]);
 
-		ob_start(function ($buffer) {
+		ob_start(function ($buffer) use ($xoopsOption) {
 			$i = mb_strpos(strtoupper($buffer), '</HEAD>');
 			if ($i !== false) {
 				$head = mb_substr($buffer, 0, $i);
@@ -82,21 +82,20 @@ if (!function_exists('xoops_header')) {
 					}
 				}
 				$head .= '<script type="text/javascript">' . PHP_EOL;
-				$head .= "function icms_updateBody() {
+				$head .= sprintf("function icms_updateBody() {
                         if (!jQuery) {
                             return;
                         }
                         clearInterval(icms_updateBody.interval);
-                        alert('a');
-                        jQuery('body').attr(" . json_encode($attributes) . ");
+                        jQuery('body').attr(%s);
                         delete icms_updateBody;
                     }
                     icms_updateBody.interval = setInterval(icms_updateBody, 500);
-                    " . PHP_EOL;
+                    %s", json_encode($attributes), PHP_EOL);
 				$head .= '</script>';
 			}
 			if (!empty($head)) {
-				\icms::$response->assign('icms_module_header', \icms::$response->get_template_vars('icms_module_header') . $head);
+				$xoopsOption['response']->assign('icms_module_header', $xoopsOption['response']->get_template_vars('icms_module_header') . $head);
 			}
 			return $buffer;
 		});
@@ -113,11 +112,9 @@ if (!function_exists('xoops_footer')) {
 	 */
 	function xoops_footer()
 	{
-		trigger_error('xoops_footer was deprecached from 2.0 use icms_response_* classes instead!', E_USER_DEPRECATED);
-		global $icmsConfigMetaFooter;
-		ob_end_flush();
+		global $icmsConfigMetaFooter, $xoopsOption;
+		echo $xoopsOption['response']->getBody();
 		echo htmlspecialchars($icmsConfigMetaFooter['google_analytics']);
-		\icms::$response->render();
 	}
 }
 
@@ -214,7 +211,7 @@ if (!function_exists('redirect_header')) {
 		// if the user selected a theme in the theme block, let's use this theme
 
 		$session = \icms::getInstance()->get('session');
-		$userSegment = $session->getSegment(icms_member_user_Object::class);
+		$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
 		$userTheme = $userSegment->get('theme');
 		if ($userTheme && in_array($userTheme, $icmsConfig['theme_set_allowed'])) {
 			$theme = $userTheme;
@@ -1670,7 +1667,7 @@ if (!function_exists('icms_getModuleHandler')) {
 			$module_dir = trim($module_dir);
 		}
 
-		$realname = sprintf('ImpressCMS/Modules/%s/%s', ucfirst(($module_basename === null) ? $module_dir : $module_basename), $name);
+		$realname = sprintf('ImpressCMS/Modules/%s/%s', ucfirst($module_basename ?? $module_dir), $name);
 		$container = icms::getInstance();
 		if (!$container->has($realname)) {
 			$module_basename = isset($module_basename) ? trim($module_basename) : $module_dir;
@@ -1678,13 +1675,15 @@ if (!function_exists('icms_getModuleHandler')) {
 			$name = (!isset($name)) ? $module_dir : trim($name);
 			$class = 'mod_' . $module_dir . '_' . ucfirst($name) . 'Handler';
 			if (class_exists($class)) {
-				$instance = new $class($container->get('xoopsDB'));
-			} elseif (file_exists($hnd_file = ICMS_MODULES_PATH . "/{$module_dir}/class/" . ucfirst($name) . "Handler.php")) {
+				$db = $container->get('xoopsDB');
+				$instance = new $class($db);
+			} elseif (file_exists($hnd_file = ICMS_MODULES_PATH . "/{$module_dir}/class/" . ucfirst($name) . 'Handler.php')) {
 				include_once $hnd_file;
-				include_once ICMS_MODULES_PATH . "/{$module_dir}/class/" . ucfirst($name) . ".php";
+				include_once ICMS_MODULES_PATH . "/{$module_dir}/class/" . ucfirst($name) . '.php';
 				$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
 				if (class_exists($class)) {
-					$instance = new $class($container->get('xoopsDB'));
+					$db = $container->get('xoopsDB');
+					$instance = new $class($db);
 				}
 			} else {
 				$hnd_file = ICMS_MODULES_PATH . "/{$module_dir}/class/{$name}.php";
@@ -1693,7 +1692,8 @@ if (!function_exists('icms_getModuleHandler')) {
 				}
 				$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
 				if (class_exists($class)) {
-					$instance = new $class($container->get('xoopsDB'));
+					$db = $container->get('xoopsDB');
+					$instance = new $class($db);
 				}
 			}
 			$container->add($class, $instance);
@@ -2140,12 +2140,14 @@ if (!function_exists('icms_makeSmarty')) {
 	 */
 	function icms_makeSmarty(array $items)
 	{
+		global $icmsTpl, $icmsAdminTpl;
 		trigger_error('Use icms_response_* classes instead', E_USER_DEPRECATED);
-		if (!isset(\icms::$response)) {
-			return false;
+		if ($icmsAdminTpl) {
+			$icmsAdminTpl->assign($items);
 		} else {
-			\icms::$response->assign($items);
+			$icmsTpl->assign($items);
 		}
+
 		return true;
 	}
 }
