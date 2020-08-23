@@ -66,7 +66,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 
 	/**
 	 * Creates custom accessors for properties
-	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
+	 * @see htdocs/libraries/icms/ipf/\ImpressCMS\Core\IPF\AbstractModel::getVar()
 	 */
 	public function getVar($key, $format = 's') {
 		if ($format == 's' && in_array($key, array('visible', 'mid', 'side'))) {
@@ -168,7 +168,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 
 	/**
 	 * Overrides parent method
-	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getAdminViewItemLink()
+	 * @see htdocs/libraries/icms/ipf/\ImpressCMS\Core\IPF\AbstractModel::getAdminViewItemLink()
 	 */
 	public function getAdminViewItemLink($onlyUrl = false) {
 		$rtn = $this->getVar('title');
@@ -219,7 +219,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 *
 	 * @return icms_form_Base
 	 *
-	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
+	 * @see \ImpressCMS\Core\IPF\AbstractModelForm::\ImpressCMS\Core\IPF\AbstractModelForm()
 	 */
 	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
 		if (!$this->isNew() && $this->getVar('block_type') != 'C') {

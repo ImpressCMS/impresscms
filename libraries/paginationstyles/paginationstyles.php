@@ -11,10 +11,10 @@
 * @author		TheRplima <therplima@impresscms.org>
 */
 
-$style_list = icms_core_Filesystem::getFileList(ICMS_LIBRARIES_PATH . "/paginationstyles/css/", "", array("css"), TRUE);
+$style_list = \ImpressCMS\Core\File\Filesystem::getFileList(ICMS_LIBRARIES_PATH . '/paginationstyles/css/', '', ['css'], TRUE);
 
 foreach ($style_list as $filename) {
-	$filename = str_ireplace(".css", "", $filename);
+	$filename = str_ireplace('.css', '', $filename);
 	$styles[] = array(
 		'name' => ucfirst($filename),
 		'fcss' => $filename,
