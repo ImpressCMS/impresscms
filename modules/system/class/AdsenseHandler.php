@@ -13,7 +13,7 @@
  *
  * @package ImpressCMS\Modules\System\Class\Adsense
  */
-class mod_system_AdsenseHandler extends icms_ipf_Handler {
+class mod_system_AdsenseHandler extends \ImpressCMS\Core\Models\AbstractExtendedHandler {
 	public $adFormats = array();
 	private $_adFormatsList = array();
 	private $_objects = false;

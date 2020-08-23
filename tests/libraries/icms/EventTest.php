@@ -2,6 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\Event;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
@@ -13,7 +15,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
      * Test if icms_core_DataFilter is available
      */
     public function testAvailability() {
-        $this->assertTrue(class_exists('icms_Event', true), "icms_Event class doesn't exist");
+        $this->assertTrue(class_exists('\\ImpressCMS\\Core\\Event', true), "Event class doesn't exist");
     }
 
     /**
@@ -21,7 +23,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
      */
     public function testStaticMethodsAvailability() {
          foreach ([ 'current', 'attach', 'detach', 'trigger' ] as $method) {
-             $this->assertTrue(method_exists('icms_Event', $method), $method . ' doesn\'t exists for icms_Event');
+             $this->assertTrue(method_exists('\\ImpressCMS\\Core\\Event', $method), $method . ' doesn\'t exists for Event');
          }
     }
 
@@ -29,7 +31,7 @@ class EventTest extends \PHPUnit_Framework_TestCase {
      * Checks if all required variables are available
      */
     public function testVariables() {
-        $instance = new \icms_Event('test', 'test', $this);
+        $instance = new Event('test', 'test', $this);
         $this->assertInternalType('string', $instance->namespace, 'namespace must be string');
         $this->assertInternalType('string', $instance->name, 'name must be string');
         $this->assertInternalType('object', $instance->source, 'source must be object');

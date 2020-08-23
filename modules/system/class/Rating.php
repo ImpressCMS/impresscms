@@ -8,6 +8,8 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+use ImpressCMS\Core\Models\UserHandler;
+
 /**
  * Rating object
  *
@@ -23,7 +25,7 @@
  *
  * @property string $name       Name
  */
-class mod_system_Rating extends icms_ipf_Object {
+class mod_system_Rating extends \ImpressCMS\Core\Models\AbstractExtendedModel {
 
 	/** */
 	public $_modulePlugin = false;
@@ -118,7 +120,7 @@ class mod_system_Rating extends icms_ipf_Object {
 	 * Create a link to the user profile associated with the rating
 	 *
 	 * @return	string
-	 * @see	icms_member_user_Handler::getUserLink
+	 * @see	UserHandler::getUserLink
 	 */
 	public function getUnameValue() {
 		return icms_member_user_Handler::getUserLink($this->getVar('uid'));
