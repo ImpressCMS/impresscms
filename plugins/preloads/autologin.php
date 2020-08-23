@@ -3,15 +3,15 @@
 class icms_AutologinEventHandler {
 
 	static public function setup() {
-		icms_Event::attach('icms_core_Session', 'sessionStart', array(__CLASS__, 'onSessionStart'));
-		icms_Event::attach('icms_core_Session', 'sessionClose', array(__CLASS__, 'onSessionClose'));
+		\ImpressCMS\Core\Event::attach('icms_core_Session', 'sessionStart', array(__CLASS__, 'onSessionStart'));
+		\ImpressCMS\Core\Event::attach('icms_core_Session', 'sessionClose', array(__CLASS__, 'onSessionClose'));
 	}
 	static public function onSessionStart() {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
 		$session = \icms::getInstance()->get('session');
-		$userSegment = $session->getSegment(icms_member_user_Object::class);
+		$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
 
 		// Autologin if correct cookie present.
 		if ($userSegment->get('userid') && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass'])) {
@@ -72,7 +72,7 @@ class icms_AutologinEventHandler {
 			 * @var Aura\Session\Session $session
 			 */
 			$session = \icms::getInstance()->get('session');
-			$userSegment = $session->getSegment(icms_member_user_Object::class);
+			$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
 
 			$userSegment->set('userid', $user->getVar('uid'));
 			$userSegment->set('groups', $user->getGroups());

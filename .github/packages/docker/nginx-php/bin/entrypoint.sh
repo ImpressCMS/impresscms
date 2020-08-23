@@ -6,7 +6,6 @@ if [ -f /usr/local/bin/do-custom-vars-tasks.sh ]; then
   . /usr/local/bin/do-custom-vars-tasks.sh
 fi;
 
-. random-file-env-var.sh "$APP_KEY" APP_KEY 32
 . random-file-env-var.sh "$DB_PREFIX" DB_PREFIX 4
 
 . validate-if-not-empty-env-var.sh DB_TYPE "$DB_TYPE" pdo.mysql 0

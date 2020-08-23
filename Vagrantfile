@@ -17,6 +17,8 @@ recommendation_to_install = []
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+    config.ssh.insert_key = false
+
 	if Vagrant.has_plugin?('vagrant-notify')
 	    config.vm.provision :shell, inline: <<-EOM
         	sudo DEBIAN_FRONTEND=noninteractive apt-get update -q -y
@@ -74,7 +76,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 					DB_CHARSET=utf8
 					DB_COLLATION=utf8_general_ci
 					DB_PREFIX=icms
-					APP_KEY=homestead
+					DB_SALT=homestead
 					URL=http://impresscms.test
 				CONTENT
 			end

@@ -246,7 +246,7 @@ if (@empty ($vars ['DB_NAME'])) {
 			'DB_CHARSET' => 'utf8',
 			'DB_COLLATION' => '',
 			'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8),
-			'APP_KEY' => (new \RandomLib\Factory())->getGenerator(new \SecurityLib\Strength(\SecurityLib\Strength::MEDIUM))->generateString(64,'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+			'APP_KEY' => \Defuse\Crypto\Key::createNewRandomKey()->saveToAsciiSafeString(),
 	]);
 }
 
