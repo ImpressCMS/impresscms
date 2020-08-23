@@ -42,7 +42,6 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use SmartyBC;
 use SmartyException;
-use ImpressCMS\Core\Extensions\Smarty\SmartyCompilerExtensionInterface;
 
 /**
  * Template engine
@@ -86,13 +85,6 @@ class Template extends SmartyBC
 					 'compiler' => 'register_compiler_function',
 				 ] as $type => $function) {
 			foreach (\icms::getInstance()->get('smarty.' . $type) as $plugin) {
-				if ($type === 'compiler' && !($plugin instanceof SmartyCompilerExtensionInterface)) {
-					$this->$function(
-						$plugin->getName(),
-						[$plugin, 'compile']
-					);
-					continue;
-				}
 				$this->$function(
 					$plugin->getName(),
 					[$plugin, 'execute']
