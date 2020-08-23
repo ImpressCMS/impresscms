@@ -3,6 +3,9 @@
 
 namespace ImpressCMS\Console {
 
+	use Composer\Factory;
+	use Composer\IO\NullIO;
+	use icms;
 	use League\Container\Exception\NotFoundException;
 	use Symfony\Component\Console\Application;
 	use Symfony\Component\Console\Input\ArgvInput;
@@ -14,13 +17,13 @@ namespace ImpressCMS\Console {
 		'nocommon' => 1
 	];
 	require dirname(__DIR__) . '/mainfile.php';
-	\icms::getInstance()->boot(false);
+	icms::getInstance()->boot(false);
 
 	$cd = getcwd();
 	chdir(dirname(__DIR__));
 
-	$composer = \Composer\Factory::create(
-		new \Composer\IO\NullIO()
+	$composer = Factory::create(
+		new NullIO()
 	);
 
 	$version = $composer->getPackage()->getVersion();
@@ -30,7 +33,7 @@ namespace ImpressCMS\Console {
 	$application = new Application('ImpressCMS Console', $version);
 	try {
 		$application->addCommands(
-			\icms::getInstance()->get('console.command')
+			icms::getInstance()->get('console.command')
 		);
 	} catch (NotFoundException $exception) {
 

@@ -26,7 +26,7 @@ class mod_system_PositionsHandler extends icms_view_block_position_Handler {
 	 * @param IcmsDatabase $db
 	 */
 	public function __construct(& $db) {
-		icms_ipf_Handler::__construct($db, 'positions', 'id', 'title', 'description', 'system');
+		\ImpressCMS\Core\Models\AbstractExtendedHandler::__construct($db, 'positions', 'id', 'title', 'description', 'system');
 		$this->table = $this->db->prefix('block_positions');
 	}
 }

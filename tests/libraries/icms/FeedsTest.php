@@ -57,7 +57,7 @@ class FeedsTest extends \PHPUnit_Framework_TestCase {
      */
     public function testMethodsAvailabilitySimpleRSS() {
         $instance = new \icms_feeds_Simplerss();
-        $this->assertTrue($instance instanceof \SimplePie, 'icms_feeds_Simplerss is not extended from SimplePie');
+        $this->assertInstanceOf(\SimplePie::class, $instance, 'icms_feeds_Simplerss is not extended from SimplePie');
     }
 
 }
