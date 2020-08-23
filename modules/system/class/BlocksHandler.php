@@ -26,7 +26,7 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 	private $modules_name;
 
 	public function __construct(& $db) {
-		icms_ipf_Handler::__construct($db, 'blocks', 'bid', 'title', 'content', 'system');
+		\ImpressCMS\Core\Models\AbstractExtendedHandler::__construct($db, 'blocks', 'bid', 'title', 'content', 'system');
 		$this->table = $this->db->prefix('newblocks');
 
 		$this->addPermission('block_read', _CO_SYSTEM_BLOCKS_BLOCKRIGHTS, _CO_SYSTEM_BLOCKS_BLOCKRIGHTS_DSC);

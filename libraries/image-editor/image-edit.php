@@ -15,13 +15,13 @@ use WideImage\WideImage;
 
 $xoopsOption ['nodebug'] = 1;
 
-if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGroups())) {
+if (!is_object(\icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, \icms::$user->getGroups())) {
 	exit(_NOPERM);
 }
 
 icms_loadLanguageFile('system', 'images', true);
 
-$icmsTpl = new icms_view_Tpl();
+$icmsTpl = new \ImpressCMS\Core\View\Template();
 
 /* set get and post filters, if not strings */
 $filter_get = array(
@@ -51,11 +51,11 @@ $filter_post = array(
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	$clean_GET = \ImpressCMS\Core\DataFilter::checkVarArray($_GET, $filter_get, FALSE);
 	extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	$clean_POST = \ImpressCMS\Core\DataFilter::checkVarArray($_POST, $filter_post, FALSE);
 	extract($clean_POST);
 }
 
@@ -107,7 +107,7 @@ if (!empty($op) && $op == 'cancel') {
 		@unlink ( $orig_img_path );
 	}
 
-	$plugins_arr = icms_core_Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
+	$plugins_arr = \ImpressCMS\Core\File\Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
 	foreach ( $plugins_arr as $plugin_folder ) {
 		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php' )) {
 			$arr = explode ( '/', $image_path );
@@ -130,9 +130,9 @@ if (!empty($op) && $op == 'save') {
 	$simage_temp = $image_temp;
 	$soverwrite = $overwrite;
 
-	$image_handler = icms::handler('icms_image');
+	$image_handler = \icms::handler('icms_image');
 	$simage = & $image_handler->get($simage_id);
-	$imgcat_handler = icms::handler('icms_image_category');
+	$imgcat_handler = \icms::handler('icms_image_category');
 	$imagecategory = & $imgcat_handler->get ( $simage->getVar ( 'imgcat_id' ) );
 
 	$categ_path = $imgcat_handler->getCategFolder ( $imagecategory );
@@ -214,13 +214,13 @@ if (!empty($op) && $op == 'save') {
 	exit ();
 }
 
-$image_handler = icms::handler('icms_image');
+$image_handler = \icms::handler('icms_image');
 $original_image = & $image_handler->get ( $image_id );
 if (! is_object ( $original_image )) {
 	die ( _ERROR );
 }
 
-$imgcat_handler = icms::handler('icms_image_category');
+$imgcat_handler = \icms::handler('icms_image_category');
 $imagecategory = & $imgcat_handler->get ( $original_image->getVar ( 'imgcat_id' ) );
 if (! is_object ( $imagecategory )) {
 	die ( _ERROR );
@@ -266,7 +266,7 @@ $img ['ori_size'] = icms_convert_size ( filesize ( ICMS_IMANAGER_FOLDER_PATH . '
 $icmsTpl->assign ( 'image', $img );
 
 #Getting the plugins for the editor
-$plugins_arr = icms_core_Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
+$plugins_arr = \ImpressCMS\Core\File\Filesystem::getDirList ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
 foreach ( $plugins_arr as $plugin_folder ) {
 	if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php' )) {
 		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/language/' . $icmsConfig ['language'] . '/main.php' )) {

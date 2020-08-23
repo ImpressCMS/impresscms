@@ -2,7 +2,7 @@
 
 namespace ImpressCMS\Core\Providers;
 
-use icms_preload_Handler as PreloadHandler;
+use ImpressCMS\Core\Extensions\Preload\EventsPreloader as PreloadHandler;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 

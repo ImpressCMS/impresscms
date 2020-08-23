@@ -2,6 +2,9 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
@@ -14,21 +17,21 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
         foreach ([
-                'icms_image_category_Handler' => 'icms_ipf_Handler',
-                'icms_image_category_Object' => 'icms_ipf_Object',
-                'icms_image_set_Handler' => 'icms_ipf_Handler',
-                'icms_image_set_Object' => 'icms_ipf_Object',
-                'icms_image_Handler' => 'icms_ipf_Handler',
-                'icms_image_Object' => 'icms_ipf_Object',
-                'icms_image_body_Handler' => 'icms_ipf_Handler',
-                'icms_image_body_Object' => 'icms_ipf_Object'
+                'icms_image_category_Handler' => AbstractExtendedHandler::class,
+                'icms_image_category_Object' => AbstractExtendedModel::class,
+                'icms_image_set_Handler' => AbstractExtendedHandler::class,
+                'icms_image_set_Object' => AbstractExtendedModel::class,
+                'icms_image_Handler' => AbstractExtendedHandler::class,
+                'icms_image_Object' => AbstractExtendedModel::class,
+                'icms_image_body_Handler' => AbstractExtendedHandler::class,
+                'icms_image_body_Object' => AbstractExtendedModel::class
             ] as $class => $must_be_instance_of) {
                 $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
             if ($must_be_instance_of !== null) {
                 $instance = $this->getMockBuilder($class)
                     ->disableOriginalConstructor()
                     ->getMock();
-                $this->assertTrue( $instance instanceof $must_be_instance_of, $class . " is not instanceof " . $must_be_instance_of);
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' is not instanceof ' . $must_be_instance_of);
             }
         }
     }

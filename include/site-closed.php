@@ -61,7 +61,7 @@ if (!$allowed) {
 	$icmsTpl->caching = 0;
 
 	icms_loadLanguageFile("system", "customtag", true);
-	icms_Autoloader::register(ICMS_MODULES_PATH . "/system/class", "mod_system");
+	Autoloader::register(ICMS_MODULES_PATH . "/system/class", "mod_system");
 	$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 	$customtags_array = array();
 	if (is_object($icmsTpl)) {

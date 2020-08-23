@@ -35,6 +35,8 @@
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+use ImpressCMS\Core\DataFilter;
+
 icms_loadLanguageFile('core', 'misc');
 /* set filter types, if not strings */
 $filter_post = array(
@@ -48,16 +50,23 @@ $filter_get = array(
 );
 
 /* set default values for variables */
-$action = $type = "";
+$action = $type = '';
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	$clean_GET = DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
+}
+
+if ($action === 'update-captcha') {
+	$image_handler = new \ImpressCMS\Core\View\Form\Elements\Captcha\ImageRenderer();
+	$image_handler->clearAttempts();
+	$image_handler->loadImage();
+	exit(0);
 }
 
 if ($action == 'showpopups') {
@@ -190,6 +199,8 @@ if ($action == 'showpopups') {
 						$errormessage = _MSC_INVALIDEMAIL1 . '<br />' . _MSC_INVALIDEMAIL2 . '';
 						redirect_header(ICMS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, $errormessage);
 					}
+					global $icmsConfig;
+
 					$mailer = new icms_messaging_Handler();
 					$mailer->setTemplate('tellfriend.tpl');
 					$mailer->assign('SITENAME', $icmsConfig['sitename']);
@@ -223,7 +234,7 @@ if ($action == 'showpopups') {
 					if ($onlines[$i]['online_uid'] == 0) {
 						$onlineUsers[$i]['user'] = '';
 					} else {
-						$onlineUsers[$i]['user'] = new icms_member_user_Object($onlines[$i]['online_uid']);
+						$onlineUsers[$i]['user'] = new \ImpressCMS\Core\Models\User($onlines[$i]['online_uid']);
 					}
 					$onlineUsers[$i]['ip'] = $onlines[$i]['online_ip'];
 					$onlineUsers[$i]['updated'] = $onlines[$i]['online_updated'];

@@ -30,7 +30,7 @@ defined('ICMS_CUSTOMTAG_TYPE_PHP') || define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
  * @property int    $doxcode
  * @property int    $dosmiley
  */
-class mod_system_Customtag extends icms_ipf_Object {
+class mod_system_Customtag extends \ImpressCMS\Core\Models\AbstractExtendedModel {
 	public $content = false;
 	public $evaluated = false;
 
@@ -60,7 +60,7 @@ class mod_system_Customtag extends icms_ipf_Object {
 
 	/**
 	 * Override accessors for properties
-	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
+	 * @see htdocs/libraries/icms/ipf/\ImpressCMS\Core\IPF\AbstractModel::getVar()
 	 */
 	public function getVar($key, $format = 's') {
 		if ($format == 's' && in_array($key, array())) {

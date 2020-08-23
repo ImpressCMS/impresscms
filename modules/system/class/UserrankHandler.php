@@ -17,7 +17,7 @@ icms_loadLanguageFile("system", "userrank", true);
  * @package		System
  * @subpackage	Users
  */
-class mod_system_UserrankHandler extends icms_ipf_Handler {
+class mod_system_UserrankHandler extends \ImpressCMS\Core\Models\AbstractExtendedHandler {
 
 	/** */
 	public $objects = false;

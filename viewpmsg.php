@@ -103,7 +103,7 @@ $pm_arr = & $pm_handler->getObjects($criteria);
 /* get and properly treat the values of each of the objects' properties */
 foreach ($pm_arr as $id => $message) {
 	$message_list[$id] = $message->getValues();
-	$message_list[$id]['sender'] = icms_member_user_Object::getUnameFromId($message_list[$id]['from_userid']);
+	$message_list[$id]['sender'] = \ImpressCMS\Core\Models\User::getUnameFromId($message_list[$id]['from_userid']);
 	$message_list[$id]['sent_time'] = formatTimestamp($message_list[$id]['msg_time']);
 }
 

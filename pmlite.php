@@ -164,7 +164,7 @@ if (!icms::$user) {
 			$pm = & $pm_handler->get($msg_id);
 
 			if ($pm->to_userid == (int) (icms::$user->uid)) {
-				$pm_uname = icms_member_user_Object::getUnameFromId($pm->from_userid);
+				$pm_uname = \ImpressCMS\Core\Models\User::getUnameFromId($pm->from_userid);
 				$message  = "[quote]\n"
 					. sprintf(_PM_USERWROTE, $pm_uname)
 					. "\n" . $pm->getVar("msg_text", "E") . "\n[/quote]";

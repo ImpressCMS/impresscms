@@ -35,6 +35,8 @@
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+use ImpressCMS\Core\Facades\Member;
+
 $xoopsOption['pagetype'] = "pmsg";
 
 /* check access permissions */
@@ -101,7 +103,9 @@ $pm_arr = $pm_handler->getObjects($criteria);
 if (!$pm_handler->setRead($pm_arr[0])) {
 /* echo "failed"; */ }
 
-$poster = new icms_member_user_Object((int) $pm_arr[0]->from_userid);
+$poster = Member::getUser(
+	(int) $pm_arr[0]->getVar('from_userid')
+);
 
 if (!$poster->isActive()) {
 	$poster = false;
@@ -159,4 +163,4 @@ $icmsTpl->assign(
 		)
 );
 
-require "footer.php";
+require 'footer.php';

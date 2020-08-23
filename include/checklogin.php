@@ -41,6 +41,7 @@
  * @subpackage	Users
  * @since		XOOPS
  */
+
 icms_loadLanguageFile('core', 'user');
 $uname = !isset($_POST['uname'])?'':trim($_POST['uname']);
 $pass = !isset($_POST['pass'])?'':trim($_POST['pass']);
@@ -76,6 +77,9 @@ if ($pos !== false) {
 	}
 }
 
+/**
+ * @var \ImpressCMS\Core\Facades\Member $member_handler
+ */
 $member_handler = icms::handler('icms_member');
 
 icms_loadLanguageFile('core', 'auth');
@@ -83,6 +87,7 @@ $icmsAuth = & icms_auth_Factory::getAuthConnection(icms_core_DataFilter::addSlas
 
 $uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($uname));
 $pass4sql = icms_core_DataFilter::stripSlashesGPC($pass);
+
 
 /* Check to see if being access by a user - if not, attempt to authenticate */
 if (empty($user) || !is_object($user)) {
@@ -128,7 +133,7 @@ if (false != $user) {
 	if ($icmsConfig['closesite'] == 1) {
 		$allowed = false;
 		foreach ($user->getGroups() as $group) {
-			if (in_array($group, $icmsConfig['closesite_okgrp']) || ICMS_GROUP_ADMIN == $group) {
+			if (ICMS_GROUP_ADMIN === $group || in_array($group, $icmsConfig['closesite_okgrp'], true)) {
 				$allowed = true;
 				break;
 			}
@@ -152,7 +157,7 @@ if (false != $user) {
 	$session->regenerateId();
 	$session->clear();
 
-	$userSegment = $session->getSegment(icms_member_user_Object::class);
+	$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
 	$userSegment->set('userid', $user->uid);
 	$userSegment->set('groups', $user->getGroups());
 	$userSegment->set('last_login', $user->last_login);
