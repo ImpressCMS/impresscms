@@ -34,18 +34,19 @@ class DBTest extends \PHPUnit_Framework_TestCase {
             }
             $instance = $this->getClassInstance($class);
             foreach ($must_be_instances_of as $must_be_instance_of) {
-                $this->assertTrue($instance instanceof $must_be_instance_of, $class . ' must be instance of ' . $must_be_instance_of . ' but is not');
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' must be instance of ' . $must_be_instance_of . ' but is not');
             }
         }
     }
 
-    /**
-     * Gets instance of class from classname
-     *
-     * @param string $class     ClassName
-     *
-     * @return object
-     */
+	/**
+	 * Gets instance of class from classname
+	 *
+	 * @param string $class ClassName
+	 *
+	 * @return object
+	 * @throws \ReflectionException
+	 */
     private function getClassInstance($class) {
         $reflection = new \ReflectionClass($class);
         if ($reflection->isAbstract()) {
@@ -226,7 +227,7 @@ class DBTest extends \PHPUnit_Framework_TestCase {
         $item = new \icms_db_criteria_Item($column, $value);
         foreach (['render', 'renderLdap', 'renderWhere'] as $method) {
             $rendered = $item->$method();
-            $this->assertNotSame(null, $rendered, 'Rendered with '.$method.' criteria result must be not null');
+            $this->assertNotNull($rendered, 'Rendered with ' . $method . ' criteria result must be not null');
             $this->assertNotSame('', $rendered, 'Rendered with '.$method.' criteria result must be not empty');
             $this->assertInternaltype('string', $rendered, 'Rendered with '.$method.' criteria result must be string');
         }
