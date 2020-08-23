@@ -4,6 +4,7 @@
 namespace ImpressCMS\Editors\CKeditor;
 
 use icms\plugins\EditorInterface;
+use ImpressCMS\Core\View\Form\Elements\TextAreaElement;
 
 /**
  * Defines CKEditor
@@ -32,7 +33,7 @@ class Editor implements EditorInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function create(array $configs, $checkCompatible = false): \icms_form_elements_Textarea
+	public function create(array $configs, $checkCompatible = false): TextAreaElement
 	{
 		require_once __DIR__ . '/formCkeditor.php';
 		return new \icmsFormCKEditor($configs, $checkCompatible);

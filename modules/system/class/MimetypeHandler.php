@@ -17,7 +17,7 @@ icms_loadLanguageFile('system', 'mimetype', true);
  *
  * @package     ImpressCMS\Modules\System\Class\Mimetype
  */
-class mod_system_MimetypeHandler extends icms_ipf_Handler {
+class mod_system_MimetypeHandler extends \ImpressCMS\Core\Models\AbstractExtendedHandler {
 
 	public $objects = false;
 

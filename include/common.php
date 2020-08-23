@@ -75,7 +75,7 @@ defined("XOOPS_USE_MULTIBYTES") or define("XOOPS_USE_MULTIBYTES", 0);
  * @var Aura\Session\Session $session
  */
 $session = \icms::getInstance()->get('session');
-$userSegment = $session->getSegment(icms_member_user_Object::class);
+$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
 
 if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $icmsConfig['theme_set_allowed'])) {
 	$icmsConfig['theme_set'] = $_POST['xoops_theme_select'];
