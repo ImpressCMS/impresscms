@@ -8,7 +8,6 @@ use Monolog\Handler\FirePHPHandler;
 use Monolog\Handler\PHPConsoleHandler;
 use Monolog\Handler\ProcessableHandlerInterface;
 use Monolog\Handler\RotatingFileHandler;
-use Monolog\Logger;
 use Tuupola\Middleware\ServerTiming\Stopwatch;
 
 /**
