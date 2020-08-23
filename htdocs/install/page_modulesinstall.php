@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$module_handler = icms::handler('icms_module');
 
 		$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
-		$output = new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer);
+		$output = new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer);
 
 		$module_handler->update('system', $output);
 
