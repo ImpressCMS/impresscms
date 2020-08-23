@@ -3,7 +3,8 @@
 namespace ImpressCMS\Core\Providers;
 
 use icms;
-use icms_module_Handler as ModuleHandler;
+use ImpressCMS\Core\Models\Module;
+use ImpressCMS\Core\Models\ModuleHandler;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 /**
@@ -24,7 +25,7 @@ class ModuleServiceProvider extends AbstractServiceProvider
 	public function register()
 	{
 		$this->getContainer()->add('module', function () {
-			$module_handler = icms::handler("icms_module");
+			$module_handler = icms::handler('icms_module');
 			try {
 				$modules = $module_handler->getObjects();
 				foreach ($modules as $module) {
@@ -46,8 +47,8 @@ class ModuleServiceProvider extends AbstractServiceProvider
 					exit();
 				}
 				if ($inAdmin || file_exists($path . '/xoops_version.php') || file_exists($path . '/icms_version.php')) {
-					/* @var $module icms_module_Object */
-					$module = icms::handler("icms_module")->getByDirname($matches[1], TRUE);
+					/* @var $module Module */
+					$module = icms::handler('icms_module')->getByDirname($matches[1], TRUE);
 					if (!$inAdmin && (!$module || !$module->getVar('isactive'))) {
 						include_once ICMS_ROOT_PATH . '/header.php';
 						echo "<h4>" . _MODULENOEXIST . "</h4>";

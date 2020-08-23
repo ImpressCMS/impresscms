@@ -238,7 +238,7 @@ switch ($action) {
 						if ($icmsConfigSearch['search_user_date']) {
 							$results[$i]['uid'] = @ (int) $results[$i]['uid'];
 							if (!empty($results[$i]['uid'])) {
-								$uname = icms_member_user_Object::getUnameFromId($results[$i]['uid']);
+								$uname = \ImpressCMS\Core\Models\User::getUnameFromId($results[$i]['uid']);
 								$results[$i]['processed_user_name'] = $uname;
 								$results[$i]['processed_user_url'] = ICMS_URL . "/userinfo.php?uid=" . $results[$i]['uid'];
 							}
@@ -302,9 +302,9 @@ switch ($action) {
 				if ($icmsConfigSearch['search_user_date']) {
 					$results[$i]['uid'] = @ (int) $results[$i]['uid'];
 					if (!empty($results[$i]['uid'])) {
-						$uname = icms_member_user_Object::getUnameFromId($results[$i]['uid']);
+						$uname = \ImpressCMS\Core\Models\User::getUnameFromId($results[$i]['uid']);
 						$results[$i]['processed_user_name'] = $uname;
-						$results[$i]['processed_user_url'] = ICMS_URL . "/userinfo.php?uid=" . $results[$i]['uid'];
+						$results[$i]['processed_user_url'] = ICMS_URL . '/userinfo.php?uid=' . $results[$i]['uid'];
 					}
 					$results[$i]['processed_time'] = !empty($results[$i]['time'])?" (" . formatTimestamp((int) $results[$i]['time']) . ")":"";
 				}
