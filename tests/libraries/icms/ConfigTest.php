@@ -2,6 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
 use ImpressCMS\Core\Providers\ConfigServiceProvider;
 use League\Container\Container;
 
@@ -17,15 +19,15 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
      */
     public function testAvailability() {
        foreach (['category', 'Item', 'option'] as $name) {
-           foreach (['Handler' => 'icms_ipf_Handler', 'Object' => 'icms_ipf_Object'] as $type => $instanecOfType) {
+           foreach (['Handler' => AbstractExtendedHandler::class, 'Object' => AbstractExtendedModel::class] as $type => $instanecOfType) {
                $class = 'icms_config_' . $name . '_' . $type;
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 
                $instance = $this->getMockBuilder($class)
                        ->disableOriginalConstructor()
                        ->getMock();
-               $this->assertInternalType('object', $instance, $class. " is not an object");
-               $this->assertTrue($instance instanceof $instanecOfType, $class . ' doesn\'t extend ' . $instanecOfType);
+               $this->assertInternalType('object', $instance, $class. ' is not an object');
+               $this->assertInstanceOf($instanecOfType, $instance, $class . ' doesn\'t extend ' . $instanecOfType);
            }
        }
 
@@ -43,7 +45,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 		$container = new Container();
 		$container->addServiceProvider(ConfigServiceProvider::class);
 		$service = $container->get('config');
-        $this->assertTrue($service instanceof \icms_config_Handler, 'service method can\'t create good instance');
+        $this->assertInstanceOf(\icms_config_Handler::class, $service, 'service method can\'t create good instance');
         foreach ([ 'createConfig', 'getConfig', 'insertConfig', 'deleteConfig', 'getConfigs', 'getConfigCount', 'getConfigsByCat', 'createConfigOption', 'getConfigOption', 'getConfigOptions', 'getConfigOptionsCount', 'getConfigList' ] as $method) {
             $this->assertTrue(method_exists($service, $method), $method . ' doesm\'t exists');
         }
@@ -56,7 +58,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
         $class = new \ReflectionClass('icms_config_Handler');
         $cat_constants_count = 0;
         foreach ($class->getConstants() as $name => $value) {
-            if (substr($name, 0, 9) != 'CATEGORY_') {
+            if (substr($name, 0, 9) !== 'CATEGORY_') {
                 continue;
             }
             $cat_constants_count++;
