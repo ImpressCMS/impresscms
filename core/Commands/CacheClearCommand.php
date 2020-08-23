@@ -39,5 +39,7 @@ class CacheClearCommand extends Command implements ContainerAwareInterface
 		$cache = $this->container->get('cache');
 		$cache->clear();
 		$output->writeln('Cached cleared successfully');
+
+		return 0;
 	}
 }

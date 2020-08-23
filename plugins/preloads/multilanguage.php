@@ -22,7 +22,7 @@ class icms_MultilanguageEventHandler {
 	 *
 	 */
 	static public function setup() {
-		icms_Event::attach('icms', 'loadService-session', array(__CLASS__, 'initMultilang'));
+		\ImpressCMS\Core\Event::attach('icms', 'loadService-session', array(__CLASS__, 'initMultilang'));
 	}
 
 	/**
@@ -39,9 +39,9 @@ class icms_MultilanguageEventHandler {
 			 * @var Aura\Session\Session $session
 			 */
 			$session = \icms::$session;
-			$userSegment = $session->getSegment(icms_member_user_Object::class);
+			$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
 
-			$easiestml_langpaths = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/");
+			$easiestml_langpaths = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . '/language/');
 			$langs = array_combine($easiestml_langs, explode(',', $icmsConfigMultilang['ml_names']));
 
 			if ($icmsConfigMultilang['ml_autoselect_enabled']
