@@ -10,11 +10,11 @@
  * Handler for modules
  *
  * There is nothing here, for now. There is no smilie class - it is all procedural
- * 
+ *
  * @todo	Convert to OOP
  * @package     ImpressCMS\Modules\System\Class\Smiles
  */
-class mod_system_SmiliesHandler extends icms_ipf_Handler {
+class mod_system_SmiliesHandler extends \ImpressCMS\Core\Models\AbstractExtendedHandler {
 
 	/**
 	 * Construct the handler
