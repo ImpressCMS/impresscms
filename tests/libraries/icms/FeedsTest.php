@@ -26,7 +26,6 @@ class FeedsTest extends \PHPUnit_Framework_TestCase {
             'title',
             'url',
             'description',
-            'category',
             'pubDate',
             'copyright',
             'lastbuild',
