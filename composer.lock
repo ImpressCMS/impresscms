@@ -3802,16 +3802,16 @@
         },
         {
             "name": "typo3/class-alias-loader",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TYPO3/class-alias-loader.git",
-                "reference": "ead04a4d7bc215ca1faa895977c5ea349f0b7383"
+                "reference": "575f59581541f299f3a86a95b1db001ee6e1d2e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TYPO3/class-alias-loader/zipball/ead04a4d7bc215ca1faa895977c5ea349f0b7383",
-                "reference": "ead04a4d7bc215ca1faa895977c5ea349f0b7383",
+                "url": "https://api.github.com/repos/TYPO3/class-alias-loader/zipball/575f59581541f299f3a86a95b1db001ee6e1d2e0",
+                "reference": "575f59581541f299f3a86a95b1db001ee6e1d2e0",
                 "shasum": ""
             },
             "require": {
@@ -3856,7 +3856,7 @@
                 "classloader",
                 "composer"
             ],
-            "time": "2020-05-07T12:46:20+00:00"
+            "time": "2020-05-24T13:03:22+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
