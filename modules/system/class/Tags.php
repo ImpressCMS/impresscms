@@ -38,7 +38,7 @@ class mod_system_Tags extends icms_ipf_seo_Object {
 	}
 
    /**
-    * Overriding the icms_ipf_Object::getVar method to assign a custom method on some
+    * Overriding the \ImpressCMS\Core\IPF\AbstractModel::getVar method to assign a custom method on some
     * specific fields to handle the value before returning it
     *
     * @param str $key key of the field

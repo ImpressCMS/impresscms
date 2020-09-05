@@ -143,6 +143,9 @@ switch ($op) {
 		}
 
 		if (empty($stop)) {
+			/**
+			 * @var \ImpressCMS\Core\Facades\Member $member_handler
+			 */
 			$member_handler = icms::handler('icms_member');
 			$newuser = & $member_handler->createUser();
 			$newuser->setVar('user_viewemail', $user_viewemail, true);
@@ -170,14 +173,14 @@ switch ($op) {
 			if ($valid_actkey || $icmsConfigUser['activation_type'] == 1) {
 				$newuser->setVar('level', 1, true);
 			}
-			if (!$member_handler->insertUser($newuser)) {
-				echo "<div id='registerng'>" . _US_REGISTERNG . "</div>";
+			if (!$newuser->store()) {
+				echo "<div id='registerng'>" . _US_REGISTERNG . '</div>';
 				include 'footer.php';
 				exit();
 			}
 			$newid = (int) $newuser->getVar('uid');
 			if (!$member_handler->addUserToGroup(ICMS_GROUP_USERS, $newid)) {
-				echo "<div id='registerng'>" . _US_REGISTERNG . "</div>";
+				echo "<div id='registerng'>" . _US_REGISTERNG . '</div>';
 				include 'footer.php';
 				exit();
 			}
@@ -196,14 +199,14 @@ switch ($op) {
 				exit();
 			}
 
-			$thisuser = new icms_member_user_Object($newid);
+			$thisuser = \icms::handler('icms_member')->getUser($newid);
 
 			// Activation by user
 			if ($icmsConfigUser['activation_type'] == 0) {
 				$mailer = new icms_messaging_Handler();
 				$mailer->useMail();
 				$mailer->setTemplate('register.tpl');
-				$mailer->setToUsers(new icms_member_user_Object($newid));
+				$mailer->setToUsers(\icms::handler('icms_member')->getUser($newid));
 				$mailer->setFromEmail($icmsConfig['adminmail']);
 				$mailer->setFromName($icmsConfig['sitename']);
 				$mailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
