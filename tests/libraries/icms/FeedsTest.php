@@ -26,19 +26,10 @@ class FeedsTest extends \PHPUnit_Framework_TestCase {
             'title',
             'url',
             'description',
-            'language',
-            'charset',
-            'category',
             'pubDate',
-            'webMaster',
-            'generator',
             'copyright',
             'lastbuild',
-            'channelEditor',
-            'width',
-            'height',
             'ttl',
-            'image'
         ] as $var) {
             $this->assertTrue(property_exists($instance, $var), "icms_feeds_Rss doesn't have $" . $var);
         }
