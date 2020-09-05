@@ -52,6 +52,7 @@
     "aura/sqlschema": "^2.0",
     "cerdic/css-tidy": "^1.5",
     "composer/composer": "^1.10",
+    "dompdf/dompdf": "^0.8.5",
     "erusev/parsedown": "^1.7",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
@@ -74,7 +75,6 @@
     "suin/php-rss-writer": "^1.6",
     "symfony/console": ">5.0",
     "symfony/polyfill-iconv": "^1.12",
-    "tecnickcom/tcpdf": "^6.2",
     "typo3/class-alias-loader": "^1.1",
     "vlucas/phpdotenv": "^3.3.3"
   },
