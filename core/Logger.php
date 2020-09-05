@@ -9,6 +9,7 @@ use Monolog\Handler\PHPConsoleHandler;
 use Monolog\Handler\ProcessableHandlerInterface;
 use Monolog\Handler\RotatingFileHandler;
 use Tuupola\Middleware\ServerTiming\Stopwatch;
+use icms;
 
 /**
  * Proxy logger class to add some compatibility stuff with older ICMS versions
@@ -288,11 +289,22 @@ class Logger extends \Monolog\Logger
 	 */
 	protected function sanitizePath($path)
 	{
+		static $realPath = null;
+		if ($realPath === null) {
+			$realPath = str_replace(
+				'\\',
+				'/',
+				realpath(ICMS_ROOT_PATH)
+			);
+		}
 		$path = str_replace(
-			array('\\', ICMS_ROOT_PATH, str_replace('\\', '/', realpath(ICMS_ROOT_PATH))),
-			array('/', '', ''),
+			['\\', ICMS_ROOT_PATH, $realPath],
+			['/', '', ''],
 			$path
 		);
+		if ($path{0} === '/') {
+			$path = substr($path, 1);
+		}
 		return $path;
 	}
 

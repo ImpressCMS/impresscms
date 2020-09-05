@@ -232,8 +232,6 @@ define("_ALCENTERCON","Enter the text to be aligned on the Center side.");
 define("_ALRIGHTCON","Enter the text to be aligned on the Right side.");
 
 define('_MODABOUT_ABOUT', 'About');
-// if you have troubles with this font on your language or it is not working, download tcpdf from: http://www.tecnick.com/public/code/cp_dpage.php?aiocp_dp=tcpdf and add the required font in libraries/tcpdf/fonts then write down the font name here. system will then load this font for your language.
-define('_PDF_LOCAL_FONT', '');
 define('_CALENDAR_TYPE',''); // this value is for the local calendar used in this system, if you're not sure about this leave this value as it is!
 define('_CALENDAR','Calendar');
 define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ

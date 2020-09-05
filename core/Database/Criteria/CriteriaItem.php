@@ -165,7 +165,7 @@ class CriteriaItem extends CriteriaElement {
 		} elseif (
 			!$withBindVariables ||
 			is_int($this->column) || // this is also for compatibility
-			(strpos($this->value, '(') === 0) // strpos is a hack to make old code still run
+			(is_string($this->value) && (strpos($this->value, '(') === 0)) // strpos is a hack to make old code still run
 		) {
 			if (is_bool($this->value)) {
 				$value = (int)$this->value;
@@ -207,7 +207,7 @@ class CriteriaItem extends CriteriaElement {
 	 */
 	public function getBindData(): array
 	{
-		if (strpos($this->value, '(') === 0) {
+		if (is_string($this->value) && strpos($this->value, '(') === 0) {
 			return [];
 		}
 		return [
