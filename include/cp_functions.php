@@ -274,7 +274,10 @@ if (!function_exists('impresscms_sort_adminmenu_modules')) {
 	{
 		$n1 = strtolower($a->name);
 		$n2 = strtolower($b->name);
-		return ($n1 == $n2) ? 0 : ($n1 < $n2) ? -1 : +1;
+		if ($n1 == $n2) {
+			return 0;
+		}
+		return ($n1 < $n2) ? -1 : +1;
 	}
 }
 

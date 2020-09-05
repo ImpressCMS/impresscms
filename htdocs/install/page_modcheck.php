@@ -190,6 +190,7 @@ if (empty($ext)) {
 			"../storage/log",
 			"../storage/cache",
 			"../storage/templates_c",
+			"../storage/composer",
 			"../.env"
 		);
 		foreach ($paths as $path) {
