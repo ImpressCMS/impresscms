@@ -11,7 +11,6 @@
  * @author    marcan <marcan@impresscms.org>
  * @author    This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author    Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @todo    Use language constants for messages
  * @todo    Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
 

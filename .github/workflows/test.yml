@@ -17,6 +17,7 @@ on:
 jobs:
   run:
     runs-on: ${{ matrix.operating-system }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       max-parallel: 3
       matrix:
@@ -31,7 +32,17 @@ jobs:
         database-system:
           - mysql:5.6
           - mariadb:10.1
-    name: PHP ${{ matrix.php-versions }} with ${{ matrix.database-system }} test on ${{ matrix.operating-system }}
+        experimental: [false]
+        include:
+          - operating-system: ubuntu-latest
+            php-versions: 8.0
+            database-system: mysql:5.6
+            experimental: true
+          - operating-system: ubuntu-latest
+            php-versions: 8.0
+            database-system: mariadb:10.1
+            experimental: true
+    name: PHP ${{ matrix.php-versions }} with ${{ matrix.database-system }} test on ${{ matrix.operating-system }} [${{ matrix.experimental }}]
     services:
       mysql:
         image: ${{ matrix.database-system }}
@@ -76,6 +87,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
+        continue-on-error: ${{ matrix.experimental }}
       - name: Installing ImpressCMS
         env:
           URL: http://localhost
@@ -98,8 +110,11 @@ jobs:
         run: |
           chmod -R 777 ./storage
           ./bin/phoenix migrate -vvv
+        continue-on-error: ${{ matrix.experimental }}
       - name: Prepare CodeClimate
         run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter before-build
+        if: ${{ success() }}
+        continue-on-error: ${{ matrix.experimental }}
       - name: Testing with PHPUnit
         env:
           URL: http://localhost
@@ -118,5 +133,8 @@ jobs:
           ls tests/ -la
           phpunit
           mv ./storage/log/clover.xml ./clover.xml
+        continue-on-error: ${{ matrix.experimental }}
       - name: Commiting CodeClimate data
         run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover -r ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
+        if: ${{ success() }}        
+        continue-on-error: ${{ matrix.experimental }}
