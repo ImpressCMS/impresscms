@@ -382,12 +382,12 @@
     },
     "routes": [
       {
-        "path": "/",
-        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex"
-      },
-      {
         "path": "/error.php",
         "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getError"
+      },
+      {
+        "path": "/",
+        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex"
       }
     ],
     "typo3/class-alias-loader": {
