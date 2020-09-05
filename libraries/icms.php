@@ -265,6 +265,7 @@ final class icms extends Container {
 
 		if ($extras === null) {
 			chdir($composerJsonPath);
+			putenv('COMPOSER_HOME=' . ICMS_STORAGE_PATH . '/composer');
 			$composer = \Composer\Factory::create(
 				new \Composer\IO\NullIO()
 			);
