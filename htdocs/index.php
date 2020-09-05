@@ -38,6 +38,11 @@
  * @author    Sina Asghari(aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+use GuzzleHttp\Psr7\ServerRequest;
+use ImpressCMS\Core\Controllers\DefaultController;
+use League\Route\Http\Exception as HttpException;
+use League\Route\Router;
+
 /** mainfile is required, if it doesn't exist - installation is needed */
 
 define('ICMS_PUBLIC_PATH', __DIR__);
@@ -63,18 +68,18 @@ if (is_dir('install') && strpos($_SERVER['REQUEST_URI'], '/install') === false) 
 }
 
 /**
- * @var \League\Route\Router $router
+ * @var Router $router
  */
 $router = \icms::getInstance()->get('router');
 
-$request = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
+$request = ServerRequest::fromGlobals();
 try {
 	$response = $router->dispatch($request);
-} catch (\Exception $exception) {
-	$defController = new \ImpressCMS\Core\Controllers\DefaultController();
-	$_GET['e'] = 404;
+} catch (HttpException $httpException) {
+	$defController = new DefaultController();
+	$_GET['e'] = $httpException->getStatusCode();
 	$response = $defController->getError(
-		(new \GuzzleHttp\Psr7\ServerRequest(
+		(new ServerRequest(
 			$request->getMethod(),
 			$request->getUri(),
 			$request->getHeaders(),
