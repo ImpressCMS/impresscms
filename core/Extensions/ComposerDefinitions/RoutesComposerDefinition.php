@@ -3,12 +3,19 @@
 
 namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 
+use FilesystemIterator;
+use icms_module_Handler;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
+use ImpressCMS\Core\Middlewares\HasGroupMiddleware;
+use ImpressCMS\Core\Middlewares\HasPermissionMiddleware;
 use League\Container\Container;
 use League\Route\RouteGroup;
 use League\Route\Strategy\ApplicationStrategy;
 use League\Route\Strategy\JsonStrategy;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
 
 /**
  * let register routes in composer.json
@@ -55,7 +62,14 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 	public function updateCache(array $data): void
 	{
 		$ret = [
-			'<?php'
+			'<?php',
+			'',
+			'/**',
+			' * @var \League\Route\Strategy\ApplicationStrategy $strategy',
+			' */',
+			'$strategy = $router->getStrategy();',
+			'$container = $strategy->getContainer();',
+			'',
 		];
 
 		$routes = array_merge(
@@ -90,7 +104,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$hasHost = isset($parsedDefinition['host']);
 				$hasScheme = isset($parsedDefinition['scheme']);
 				$hasStrategy = ($parsedDefinition['strategy'] !== ApplicationStrategy::class);
-				$hasMiddlewares = isset($parsedDefinition['middlewares']);
+				$hasMiddlewares = isset($parsedDefinition['middlewares']) && !empty($parsedDefinition['middlewares']);
 				$hasExtraConfig = $hasHost || $hasPort || $hasScheme || $hasStrategy || $hasMiddlewares;
 				$ret[] = ($group !== '') ? $linePrefix . '$group' : '$router';
 				$ret[] = $linePrefix . sprintf(
@@ -112,9 +126,21 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 					for ($i = 0; $i < $mCount; $i++) {
 						$middleware = $parsedDefinition['middlewares'][$i];
 						$isLast = $i === ($mCount - 1);
-						$ret[] = $linePrefix .'    ->middleware(';
-						$ret[] = $linePrefix .sprintf('        $container->get(%s)', var_export($middleware, true));
-						$ret[] = $linePrefix .'    )' . (($hasExtraConfig || !$isLast) ? '' : ';');
+						$ret[] = $linePrefix . '    ->middleware(';
+						if (is_array($middleware)) {
+							$ret[] = $linePrefix . '        new \\' . $middleware['name'] . '(' . implode(', ', array_map(
+									static function ($param) {
+										if (!is_string($param) || $param !== '$container') {
+											return var_export($param, true);
+										}
+										return $param;
+									},
+									$middleware['params']
+								)) . ')';
+						} else {
+							$ret[] = $linePrefix . '        new \\' . $middleware;
+						}
+						$ret[] = $linePrefix . '    )' . (($hasExtraConfig || !$isLast) ? '' : ';');
 					}
 				}
 				if ($hasScheme) {
@@ -158,15 +184,15 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			ICMS_LIBRARIES_PATH . '/image-editor',
 			ICMS_LIBRARIES_PATH . '/paginationstyles',
 		];
-		foreach (\icms_module_Handler::getActive() as $moduleName) {
+		foreach (icms_module_Handler::getActive() as $moduleName) {
 			$paths[] = ICMS_MODULES_PATH . '/' . $moduleName;
 		}
 		$ret = [];
 		/**
-		 * @var \SplFileInfo $fileInfo
+		 * @var SplFileInfo $fileInfo
 		 */
-		foreach (new \FilesystemIterator(ICMS_ROOT_PATH, \FilesystemIterator::CURRENT_AS_FILEINFO |
-			\FilesystemIterator::SKIP_DOTS) as $fileInfo) {
+		foreach (new FilesystemIterator(ICMS_ROOT_PATH, FilesystemIterator::CURRENT_AS_FILEINFO |
+			FilesystemIterator::SKIP_DOTS) as $fileInfo) {
 			if ($fileInfo->isDir()) {
 				continue;
 			}
@@ -203,11 +229,11 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 	protected function getOldStyleRoutesForPath(string $path): array
 	{
 		$ret = [];
-		$directoryIterator = new \RecursiveIteratorIterator(
-			new \RecursiveDirectoryIterator(
+		$directoryIterator = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator(
 				$path,
-				\FilesystemIterator::CURRENT_AS_FILEINFO |
-				\FilesystemIterator::SKIP_DOTS
+				FilesystemIterator::CURRENT_AS_FILEINFO |
+				FilesystemIterator::SKIP_DOTS
 			)
 		);
 		$group =  str_replace(ICMS_ROOT_PATH, '', $path);
@@ -215,7 +241,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 
 		$handler = LegacyController::class . '::proxy';
 		/**
-		 * @var \SplFileInfo $fileInfo
+		 * @var SplFileInfo $fileInfo
 		 */
 		foreach ($directoryIterator as $fileInfo) {
 			$path = str_replace(ICMS_ROOT_PATH, '', $fileInfo->getPath()) . '/' . $fileInfo->getFilename();
@@ -257,6 +283,41 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			throw new RoutePathUndefinedException();
 		}
 		$path = $definition['path'];
+		if (!isset($definition['middlewares'])) {
+			$middlewares = [];
+		} elseif (!is_array($definition['middlewares'])) {
+			$middlewares = array_filter((array)$definition['middlewares'], 'is_string');
+		}
+		if (isset($definition['has_group'])) {
+			$group = -1;
+			switch (strtolower($definition['has_group'])) {
+				case 'admin':
+					$group = ICMS_GROUP_ADMIN;
+					break;
+				case 'anonymous':
+					$group = ICMS_GROUP_ANONYMOUS;
+					break;
+				case 'registered':
+				case 'users':
+					$group = ICMS_GROUP_USERS;
+					break;
+			}
+			$middlewares[] = [
+				'name' => HasGroupMiddleware::class,
+				'params' => [
+					$group
+				]
+			];
+		}
+		if (isset($definition['has_permission'])) {
+			$middlewares[] = [
+				'name' => HasPermissionMiddleware::class,
+				'params' => [
+					$definition['has_permission'],
+					'$container'
+				]
+			];
+		}
 		if (isset($definition['strategy'])) {
 			switch (strtolower(trim($definition['strategy']))) {
 				case 'json':
@@ -274,7 +335,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			$strategy = ApplicationStrategy::class;
 		}
 		foreach ($methods as $method) {
-			$ret[] = compact('method', 'path', 'handler', 'strategy');
+			$ret[] = compact('method', 'path', 'handler', 'strategy', 'middlewares');
 		}
 		foreach (['port', 'host', 'scheme'] as $option) {
 			if (isset($definition[$option]) && !empty($definition[$option])) {
@@ -286,11 +347,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				}
 			}
 		}
-		if (isset($definition['middlewares']) && !empty($definition['middlewares'])) {
-			foreach ($ret as $i => $v) {
-				$ret[$i]['middlewares'] = (array)$v;
-			}
-		}
+
 		return $ret;
 	}
 
