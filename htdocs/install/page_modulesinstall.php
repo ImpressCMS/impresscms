@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		 * Automatically updating the system module before installing the selected modules
 		 * @since 1.3
 		 *
-		 * @var icms_module_Handler $module_handler
+		 * @var \ImpressCMS\Core\Models\ModuleHandler $module_handler
 		 */
 		$module_handler = icms::handler('icms_module');
 
