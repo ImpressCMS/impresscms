@@ -1,10 +1,11 @@
 <?php
 
-
 namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 
 use FilesystemIterator;
 use icms_module_Handler;
+use icms;
+use icms_config_Handler;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use ImpressCMS\Core\Middlewares\HasGroupMiddleware;
@@ -57,6 +58,24 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 	}
 
 	/**
+	 * Adds middlewares depending on config
+	 *
+	 * @param string[] $ret Cache file config
+	 */
+	protected function addMiddlewaresDependingOnConfig(array &$ret): void {
+		/**
+		 * @var icms_config_Handler $configHandler
+		 */
+		$configHandler = icms::handler('icms_config');
+		$mainConfig = $configHandler->getConfigsByCat(icms_config_Handler::CATEGORY_MAIN);
+
+		if ($mainConfig['gzip_compression']) {
+			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\GzipEncoder\');';
+			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\DeflateEncoder\');';
+		}
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function updateCache(array $data): void
@@ -71,6 +90,8 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			'$container = $strategy->getContainer();',
 			'',
 		];
+
+		$this->addMiddlewaresDependingOnConfig($ret);
 
 		$routes = array_merge(
 			$this->getOldStyleRoutes(),
