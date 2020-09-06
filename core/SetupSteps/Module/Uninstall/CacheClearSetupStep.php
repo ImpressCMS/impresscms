@@ -4,7 +4,7 @@
 namespace ImpressCMS\Core\SetupSteps\Module\Uninstall;
 
 use ImpressCMS\Core\SetupSteps\Module\Install\CacheClearSetupStep as OriginalCacheClearSetupStep;
-use ImpressCMS\Core\SetupSteps\SetupStepInterface;
+use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 
 /**
  * Clears cache
