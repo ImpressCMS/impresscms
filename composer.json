@@ -177,6 +177,16 @@
           "console.command"
         ]
       },
+      "\\ImpressCMS\\Core\\Extensions\\ExtensionDescriber\\Module\\ImpressCMSComposerModuleDescriber": {
+        "tags": [
+          "extension_describer.module"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\ExtensionDescriber\\Module\\ImpressCMSVersionModuleDescriber": {
+        "tags": [
+          "extension_describer.module"
+        ]
+      },
       "\\ImpressCMS\\Core\\Commands\\TemplatesCacheClearCommand": {
         "tags": [
           "console.command"

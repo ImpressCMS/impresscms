@@ -36,7 +36,10 @@
 
 namespace ImpressCMS\Core\Models;
 
+use icms;
 use ImpressCMS\Core\Autoloader;
+use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * A Module
@@ -284,15 +287,40 @@ class Module
 	 */
 	public function loadInfo($dirname, $verbose = true) {
 		global $icmsConfig;
-		icms_loadLanguageFile($dirname, 'modinfo');
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php')) {
-			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php')) {
-			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php';
+
+		$fullPath = ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . $dirname;
+
+		/**
+		 * @var CacheItemPoolInterface $cache
+		 */
+		$cache = icms::getInstance()->get('cache');
+		$cachedModuleInfo = $cache->getItem('module.' . $icmsConfig['language'] . '.' . $dirname);
+
+		if (!$cachedModuleInfo->isHit()) {
+			$modversion = [];
+			/**
+			 * @var ExtensionDescriberInterface $extensionDescriber
+			 */
+			foreach (icms::getInstance()->get('extension_describer.module') as $extensionDescriber) {
+				if (!$extensionDescriber->canDescribe($fullPath)) {
+					continue;
+				}
+				$modversion += $extensionDescriber->describe($fullPath);
+			}
+
+			$cachedModuleInfo->set($modversion);
+			$cache->save($cachedModuleInfo);
 		} else {
-			if (false != $verbose) {echo "Module File for $dirname Not Found!"; }
+			$modversion = $cachedModuleInfo->get();
+		}
+
+		if (empty($modversion)) {
+			if (false !== $verbose) {
+				echo "Module File for $dirname Not Found!";
+			}
 			return false;
 		}
+
 		$this->modinfo = & $modversion;
 		return true;
 	}
