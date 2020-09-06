@@ -4,9 +4,10 @@
 namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
 use Apix\Cache\PsrCache\Pool;
-use icms_module_Object;
-use ImpressCMS\Core\SetupSteps\OutputDecorator;
-use ImpressCMS\Core\SetupSteps\SetupStepInterface;
+
+use ImpressCMS\Core\Models\Module;
+use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
+use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 
 /**
  * Clears cache
@@ -28,7 +29,7 @@ class CacheClearSetupStep implements SetupStepInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(icms_module_Object $module, OutputDecorator $output, ...$params): bool
+	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$output->info(_MD_AM_CLEARING_CACHE);
 
