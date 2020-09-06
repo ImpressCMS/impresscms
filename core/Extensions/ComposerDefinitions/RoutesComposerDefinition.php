@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 
 use FilesystemIterator;
