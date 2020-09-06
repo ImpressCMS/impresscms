@@ -5,8 +5,8 @@ namespace ImpressCMS\Core\SetupSteps\Module\Install;
 
 use Apix\Cache\PsrCache\Pool;
 use icms_module_Object;
-use ImpressCMS\Core\SetupSteps\OutputDecorator;
-use ImpressCMS\Core\SetupSteps\SetupStepInterface;
+use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
+use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 
 /**
  * Clears cache
