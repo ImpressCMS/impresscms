@@ -1,13 +1,12 @@
 <?php
 
-
 namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 
 use FilesystemIterator;
 use icms_module_Handler;
-use Http\Factory\Guzzle\ResponseFactory;
 use icms;
 use icms_config_Handler;
+use Http\Factory\Guzzle\ResponseFactory;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use ImpressCMS\Core\Middlewares\HasGroupMiddleware;
