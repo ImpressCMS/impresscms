@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76631f4cdd6e3be21f2efeff670f868c",
+    "content-hash": "f2b0641042d98a70ddc2ce872c80efd1",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -1617,6 +1617,57 @@
             ],
             "description": "Community-contributed list of referrer spammers",
             "time": "2020-08-10T19:54:07+00:00"
+        },
+        {
+            "name": "middlewares/encoder",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/encoder.git",
+                "reference": "af8f0bb2efa1d6921938530acd02f478cf6eb8f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/encoder/zipball/af8f0bb2efa1d6921938530acd02f478cf6eb8f1",
+                "reference": "af8f0bb2efa1d6921938530acd02f478cf6eb8f1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zlib": "*",
+                "middlewares/utils": "^3.0",
+                "php": "^7.2",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "laminas/laminas-diactoros": "^2.2",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpunit/phpunit": "^8.1",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to encode the response body to gzip or deflate",
+            "homepage": "https://github.com/middlewares/encoder",
+            "keywords": [
+                "compression",
+                "deflate",
+                "encoding",
+                "gzip",
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7"
+            ],
+            "time": "2020-01-24T16:53:17+00:00"
         },
         {
             "name": "middlewares/referrer-spam",
