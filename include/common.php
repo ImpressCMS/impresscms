@@ -45,26 +45,6 @@ icms::getInstance()->setup()->boot();
 
 // -- Easiest ML by Gijoe (no longer needed here)
 
-// Disable gzip compression if PHP is run under CLI mode
-// To be refactored
-if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) == 'cli') {
-	$icmsConfig['gzip_compression'] = 0;
-}
-
-if ($icmsConfig['gzip_compression'] == 1
-	&& extension_loaded('zlib')
-	&& !ini_get('zlib.output_compression')
-	) {
-		ini_set('zlib.output_compression', true);
-		if (ini_get('zlib.output_compression_level') < 0) {
-			ini_set('zlib.output_compression_level', 6);
-		}
-		if (!zlib_get_coding_type()) {
-			ini_set('zlib.output_compression', false);
-			ob_start('ob_gzhandler');
-		}
-}
-
 /* This address the strict compliance for PHP 5.3/5.4, but the rest of our timezone handling
  * can be improved beyond this. ~skenow
  */
@@ -121,9 +101,6 @@ if (isset($xoopsOption['nodebug']) && $xoopsOption['nodebug']) {
 	$logger = icms::getInstance()->get('logger');
 	$logger->disableLogger();
 }
-//TODO: change this, because it is using deprecated notations
-icms::$module = icms::getInstance()->get('module');
-$icmsModule = &icms::$module;
 
 if ($icmsConfigPersona['multi_login']) {
 	if (is_object(icms::$user)) {
