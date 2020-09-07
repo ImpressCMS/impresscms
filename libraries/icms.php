@@ -12,9 +12,9 @@
  */
 
 use ImpressCMS\Core\Autoloader;
-use ImpressCMS\Core\Extensions\ComposerDefinitions\RoutesComposerDefinition;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Extensions\ComposerDefinitions\ProvidersComposerDefinition;
+use ImpressCMS\Core\Extensions\ComposerDefinitions\RoutesComposerDefinition;
 use ImpressCMS\Core\Extensions\ComposerDefinitions\ServicesComposerDefinition;
 use ImpressCMS\Core\Extensions\Preload\EventsPreloader;
 use League\Container\Container;
@@ -325,7 +325,7 @@ final class icms extends Container {
 			$this->registerCommonServiceVariables();
 		}
 
-		if (!(defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE)) {
+		if (!(defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE) && $registerCommonServices) {
 			$this->loadComposerDefinition(
 				new RoutesComposerDefinition($this)
 			);
