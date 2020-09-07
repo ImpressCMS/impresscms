@@ -4,6 +4,7 @@
 namespace ImpressCMS\Core\Models;
 
 
+use Exception;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
@@ -77,7 +78,7 @@ class OnlineHandler extends AbstractExtendedHandler
 	 * @param string $ip User's IP adress
 	 *
 	 * @return    bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function write($userId, $userName, $time, $moduleId, $ip) {
 
@@ -96,6 +97,7 @@ class OnlineHandler extends AbstractExtendedHandler
 			$item->online_ip = $ip;
 			$item->online_uid = $userId;
 			$item->online_uname = $userName;
+			$item->online_updated = $time;
 		} else {
 			$item = $items[0];
 		}

@@ -85,7 +85,7 @@ class XoopsLinkFunction implements SmartyFunctionExtensionInterface
 		}
 
 		// Get default module/page from current ones if necessary
-		$module = $params['module'] ?? \icms::getInstance()->get('module')->getVar('dirname');
+		$module = $params['module'] ?? \icms::$module->dirname;
 		if (!isset($params['page'])) {
 			$cur = $_SERVER['PHP_SELF'];
 			$page = substr($cur, strrpos($cur, '/') + 1);
