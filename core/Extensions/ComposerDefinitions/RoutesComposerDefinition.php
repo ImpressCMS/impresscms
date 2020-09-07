@@ -18,6 +18,7 @@ use League\Route\Strategy\JsonStrategy;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+use Psr\Container\ContainerInterface;
 use Middlewares\ClientIp;
 use Middlewares\Firewall;
 
@@ -28,6 +29,20 @@ use Middlewares\Firewall;
  */
 class RoutesComposerDefinition implements ComposerDefinitionInterface
 {
+	/**
+	 * @var ContainerInterface
+	 */
+	private $container;
+
+	/**
+	 * RoutesComposerDefinition constructor.
+	 *
+	 * @param ContainerInterface $container
+	 */
+	public function __construct(ContainerInterface $container)
+	{
+		$this->container = $container;
+	}
 
 	/**
 	 * @inheritDoc
@@ -108,6 +123,18 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		];
 
 		$this->addMiddlewaresDependingOnConfig($ret);
+
+		$ret[] = '$router->lazyMiddlewares(' .
+			json_encode(
+				array_map(
+					function ($service) {
+						return '\\' . get_class($service);
+					},
+					$this->container->get('middleware.global')
+				),
+				JSON_PRETTY_PRINT
+			) .
+			');';
 
 		$routes = array_merge(
 			$this->getOldStyleRoutes(),
