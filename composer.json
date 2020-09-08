@@ -191,6 +191,16 @@
           "extension_describer.module"
         ]
       },
+      "\\ImpressCMS\\Core\\Extensions\\ExtensionDescriber\\Theme\\ImpressCMSComposerThemeDescriber": {
+        "tags": [
+          "extension_describer.theme"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\ExtensionDescriber\\Theme\\ImpressCMSLegacyThemeDescriber": {
+        "tags": [
+          "extension_describer.theme"
+        ]
+      },
       "\\ImpressCMS\\Core\\Commands\\TemplatesCacheClearCommand": {
         "tags": [
           "console.command"
