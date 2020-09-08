@@ -118,10 +118,14 @@
       "\\ImpressCMS\\Core\\Providers\\SecurityServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ConfigServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\SessionServiceProvider",
-      "\\ImpressCMS\\Core\\Providers\\ModuleServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider"
     ],
     "services": {
+      "\\ImpressCMS\\Core\\Middlewares\\DetectModuleMiddleware": {
+        "tags": [
+          "middleware.global"
+        ]
+      },
       "\\IcmsAutoTasksAt": {
         "tags": [
           "autotasks.system"
@@ -335,6 +339,30 @@
       "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\ViewTemplateSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\CacheClearSetupStep": {
+        "tags": [
+          "setup_step.module.install"
+        ],
+        "arguments": [
+          "cache"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\CacheClearSetupStep": {
+        "tags": [
+          "setup_step.module.uninstall"
+        ],
+        "arguments": [
+          "cache"
+        ]
+      },
+      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\CacheClearSetupStep": {
+        "tags": [
+          "setup_step.module.update"
+        ],
+        "arguments": [
+          "cache"
         ]
       },
       "CKeditor": {
