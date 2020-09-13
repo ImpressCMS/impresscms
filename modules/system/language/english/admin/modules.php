@@ -166,3 +166,5 @@ define('_MD_AM_COPY_ASSETS_INFO', 'Updating assets...');
 define('_MD_AM_COPY_ASSETS_DELETE_OLD', 'Deleting old public assets content...');
 define('_MD_AM_COPY_ASSETS_COPYING', 'Copying \'%s\'...');
 define('_MD_AM_COPY_ASSETS_DELETING', 'Deleting assets...');
+
+define('_MD_AM_CLEARING_CACHE', 'Clearing cache...');

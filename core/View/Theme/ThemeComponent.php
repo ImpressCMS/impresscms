@@ -30,14 +30,15 @@
 /**
  * ThemeComponent component class file
  *
- * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license      https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  */
 
 namespace ImpressCMS\Core\View\Theme;
 
+use icms;
 use ImpressCMS\Core\File\Filesystem;
 use ImpressCMS\Core\View\PageBuilder;
-use icms;
+use ImpressCMS\Core\View\Template;
 
 /**
  * Builds the theme components
@@ -93,7 +94,7 @@ class ThemeComponent
 	public $renderCount = 0;
 	/**
 	 * Pointer to the theme template engine
-	 * @var \ImpressCMS\Core\View\Template
+	 * @var Template
 	 */
 	public $template = false;
 
@@ -153,7 +154,7 @@ class ThemeComponent
 			? ICMS_MODULES_URL . '/system/themes/' . $this->folderName
 			: ICMS_THEME_URL . '/' . $this->folderName;
 
-		$this->template = new \ImpressCMS\Core\View\Template();
+		$this->template = new Template();
 		$this->template->currentTheme = $this;
 		$this->template->assignByRef('xoTheme', $this);
 
