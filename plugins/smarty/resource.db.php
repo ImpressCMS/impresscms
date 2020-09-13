@@ -9,6 +9,8 @@
  * -------------------------------------------------------------
  */
 
+use Psr\Cache\CacheItemPoolInterface;
+
 class Smarty_Resource_Db extends Smarty_Resource_Custom
 {
 
@@ -44,9 +46,9 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 		global $icmsConfig;
 
 		/**
-		 * @var \Psr\Cache\CacheItemPoolInterface $cache
+		 * @var CacheItemPoolInterface $cache
 		 */
-		$cache = \icms::getInstance()->get('cache');
+		$cache = icms::getInstance()->get('cache');
 		$cachedTemplate = $cache->getItem('tpl_db_' . base64_encode($tpl_name));
 
 		if ($cachedTemplate->isHit()) {
@@ -54,6 +56,9 @@ class Smarty_Resource_Db extends Smarty_Resource_Custom
 		}
 
 		$tplset = $icmsConfig['template_set'];
+		if ($tplset === '1') {
+			$tplset = 'default';
+		}
 		$theme = $icmsConfig['theme_set'] ?? 'default';
 
 		$tplfile_handler = icms::handler('icms_view_template_file');

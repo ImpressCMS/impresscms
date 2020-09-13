@@ -16,6 +16,7 @@ use League\Container\Container;
 use League\Route\RouteGroup;
 use League\Route\Strategy\ApplicationStrategy;
 use League\Route\Strategy\JsonStrategy;
+use Psr\Container\ContainerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -27,6 +28,20 @@ use SplFileInfo;
  */
 class RoutesComposerDefinition implements ComposerDefinitionInterface
 {
+	/**
+	 * @var ContainerInterface
+	 */
+	private $container;
+
+	/**
+	 * RoutesComposerDefinition constructor.
+	 *
+	 * @param ContainerInterface $container
+	 */
+	public function __construct(ContainerInterface $container)
+	{
+		$this->container = $container;
+	}
 
 	/**
 	 * @inheritDoc
@@ -105,14 +120,23 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 
 		$this->addMiddlewaresDependingOnConfig($ret);
 
+		$ret[] = '$router->lazyMiddlewares(' .
+			json_encode(
+				array_map(
+					function ($service) {
+						return '\\' . get_class($service);
+					},
+					$this->container->get('middleware.global')
+				),
+				JSON_PRETTY_PRINT
+			) .
+			');';
+
+		$prefixOfRoute = $this->getPrefixPathOfRoute();
 		$routes = array_merge(
 			$this->getOldStyleRoutes(),
 			$data['routes'] ?? []
 		);
-		$prefixOfRoute = dirname($_SERVER['SCRIPT_NAME']);
-		if (substr($prefixOfRoute, -1) === '/') {
-			$prefixOfRoute = substr($prefixOfRoute, 0, -1);
-		}
 		$variantsByGroup = [];
 		foreach ($routes as $definition) {
 			$group = $definition['group'] ?? '';
@@ -143,7 +167,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$ret[] = $linePrefix . sprintf(
 					'    ->map(%s, %s, %s)%s',
 					var_export($parsedDefinition['method'], true),
-					var_export($prefixOfRoute . $parsedDefinition['path'], true),
+					var_export(($group === ''? $prefixOfRoute : '') . $parsedDefinition['path'], true),
 					var_export($parsedDefinition['handler'], true),
 					$hasExtraConfig ? '' : ';'
 				);
@@ -204,6 +228,15 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		}
 
 		file_put_contents($this->getCacheFilename(), implode(PHP_EOL, $ret), LOCK_EX);
+	}
+
+	/**
+	 * Gets prefix path of route
+	 *
+	 * @return string
+	 */
+	protected function getPrefixPathOfRoute() {
+		return rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 	}
 
 	/**
@@ -271,6 +304,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		);
 		$group =  str_replace(ICMS_ROOT_PATH, '', $path);
 		$groupLen = mb_strlen($group);
+		$group = $this->getPrefixPathOfRoute() . $group;
 
 		$handler = LegacyController::class . '::proxy';
 		/**

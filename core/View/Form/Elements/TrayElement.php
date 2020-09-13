@@ -174,7 +174,10 @@ class TrayElement extends AbstractFormElement {
 	 */
 	public function render() {
 		$count = 0;
-		$ret = '';
+		$ret = "";
+		if ($this->getExtra()) {
+			$ret .= '<div ' . $this->getExtra() . '>';
+		}
 		foreach ($this->getElements() as $ele) {
 			if ($count > 0) {
 				$ret .= $this->getDelimeter();
@@ -186,6 +189,9 @@ class TrayElement extends AbstractFormElement {
 			if (!$ele->isHidden()) {
 				$count++;
 			}
+		}
+		if ($this->getExtra()) {
+			$ret .= '</div>';
 		}
 		return $ret;
 	}
