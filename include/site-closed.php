@@ -3,7 +3,7 @@
  * Temporary solution for "site closed" status
  *
  * @copyright	The Xoops project http://www.xoops.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license		https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  * @author		phppp (infomax@gmail.com)
  * @since		Xoops 2.0.17
  * @package 	core
