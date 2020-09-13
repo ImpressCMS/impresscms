@@ -68,6 +68,9 @@ class DBResource extends Smarty_Resource_Custom implements SmartyExtensionInterf
 		}
 
 		$tplset = $icmsConfig['template_set'];
+		if ($tplset === '1') {
+			$tplset = 'default';
+		}
 		$theme = $icmsConfig['theme_set'] ?? 'default';
 
 		$tplfile_handler = icms::handler('icms_view_template_file');
