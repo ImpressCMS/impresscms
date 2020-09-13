@@ -29,7 +29,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license		https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  */
 
 namespace ImpressCMS\Core\View\Theme;
