@@ -3,10 +3,11 @@
 
 namespace ImpressCMS\Core\Controllers;
 
+use Exception;
+use GuzzleHttp\Psr7\Response;
 use icms;
-use icms_module_Handler as ModuleHandler;
-use icms_module_Object;
-use League\Route\Http\Exception\NotFoundException;
+use ImpressCMS\Core\Models\Module;
+use ImpressCMS\Core\Models\ModuleHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use function GuzzleHttp\Psr7\mimetype_from_filename;
@@ -25,11 +26,10 @@ class LegacyController
 	 * @param ServerRequestInterface $request Request
 	 *
 	 * @return ResponseInterface
-	 * @throws NotFoundException
 	 */
 	public function proxy(ServerRequestInterface $request): ResponseInterface
 	{
-		$prefixOfRoute = dirname($_SERVER['SCRIPT_NAME']);
+		$prefixOfRoute = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 		$filePath = $prefixOfRoute ? mb_substr($request->getUri()->getPath(), mb_strlen($prefixOfRoute)) : $request->getUri()->getPath();
 		if (substr($filePath, -1) === '/') {
 			$filePath = substr($prefixOfRoute, 0, -1);
@@ -47,26 +47,26 @@ class LegacyController
 			try {
 				$modules = $module_handler->getObjects();
 				/**
-				 * @var icms_module_Object $module
+				 * @var Module $module
 				 */
 				foreach ($modules as $module) {
 					$module->registerClassPath(TRUE);
 				}
-			} catch (\Exception $exception) {
+			} catch (Exception $exception) {
 
 			}
 
 			global $icmsTpl, $xoopsTpl, $xoopsOption, $icmsAdminTpl, $icms_admin_handler;
 			ob_start();
 			require $path;
-			return new \GuzzleHttp\Psr7\Response(
+			return new Response(
 				200,
 				[],
 				ob_get_clean()
 			);
 		}
 
-		return new \GuzzleHttp\Psr7\Response(
+		return new Response(
 			200,
 			[
 				'Content-Type' => mimetype_from_filename($path),
