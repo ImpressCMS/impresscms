@@ -3,9 +3,9 @@
 namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 
 use FilesystemIterator;
-use icms_module_Handler;
 use icms;
 use icms_config_Handler;
+use icms_module_Handler;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use ImpressCMS\Core\Middlewares\HasGroupMiddleware;
@@ -14,10 +14,10 @@ use League\Container\Container;
 use League\Route\RouteGroup;
 use League\Route\Strategy\ApplicationStrategy;
 use League\Route\Strategy\JsonStrategy;
+use Psr\Container\ContainerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
-use Psr\Container\ContainerInterface;
 
 /**
  * let register routes in composer.json
@@ -124,14 +124,11 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			) .
 			');';
 
+		$prefixOfRoute = $this->getPrefixPathOfRoute();
 		$routes = array_merge(
 			$this->getOldStyleRoutes(),
 			$data['routes'] ?? []
 		);
-		$prefixOfRoute = dirname($_SERVER['SCRIPT_NAME']);
-		if (substr($prefixOfRoute, -1) === '/') {
-			$prefixOfRoute = substr($prefixOfRoute, 0, -1);
-		}
 		$variantsByGroup = [];
 		foreach ($routes as $definition) {
 			$group = $definition['group'] ?? '';
@@ -162,7 +159,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$ret[] = $linePrefix . sprintf(
 					'    ->map(%s, %s, %s)%s',
 					var_export($parsedDefinition['method'], true),
-					var_export($prefixOfRoute . $parsedDefinition['path'], true),
+					var_export(($group === ''? $prefixOfRoute : '') . $parsedDefinition['path'], true),
 					var_export($parsedDefinition['handler'], true),
 					$hasExtraConfig ? '' : ';'
 				);
@@ -223,6 +220,15 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		}
 
 		file_put_contents($this->getCacheFilename(), implode(PHP_EOL, $ret), LOCK_EX);
+	}
+
+	/**
+	 * Gets prefix path of route
+	 *
+	 * @return string
+	 */
+	protected function getPrefixPathOfRoute() {
+		return rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 	}
 
 	/**
@@ -290,6 +296,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		);
 		$group =  str_replace(ICMS_ROOT_PATH, '', $path);
 		$groupLen = mb_strlen($group);
+		$group = $this->getPrefixPathOfRoute() . $group;
 
 		$handler = LegacyController::class . '::proxy';
 		/**
