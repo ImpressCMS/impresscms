@@ -10,4 +10,4 @@
 
 ## Reporting a Vulnerability
 
-To report a vulnerability please use [HackerOne](https://hackerone.com/impresscms). 
+To report a vulnerability please use [HackerOne](https://hackerone.com/impresscms).
