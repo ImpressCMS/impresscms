@@ -164,13 +164,13 @@ class XoopsInstallWizard {
 	}
 
 	function pageURI($page) {
-		if (!(int) $page{0}) {
-			if ($page{0} == '+') {
+		if (!(int) $page[0]) {
+			if ($page[0] === '+') {
 				$page = $this->currentPage + substr($page, 1);
-			} elseif ($page{0} == '-') {
+			} elseif ($page[0] === '-') {
 				$page = $this->currentPage - substr($page, 1);
 			} else {
-				$page = (int) array_search($page, $this->pages);
+				$page = (int)array_search($page, $this->pages, false);
 			}
 		}
 		$page = $this->pages[$page];
