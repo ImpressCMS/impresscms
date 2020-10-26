@@ -8,20 +8,20 @@
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpexpertsinc/composer-include-files.git",
-                "reference": "6776421c358c6a25b16eccb617de9478b7ae2019"
+                "url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
+                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/composer-include-files/zipball/6776421c358c6a25b16eccb617de9478b7ae2019",
-                "reference": "6776421c358c6a25b16eccb617de9478b7ae2019",
+                "url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
+                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0"
+                "composer-plugin-api": "^1.0 || ^2.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -38,12 +38,12 @@
             ],
             "authors": [
                 {
-                    "name": "Theodore R. Smith",
-                    "email": "theodore@phpexperts.pro"
-                },
-                {
                     "name": "Tim Robertson",
                     "email": "funkjedi@gmail.com"
+                },
+                {
+                    "name": "Theodore R. Smith",
+                    "email": "theodore@phpexperts.pro"
                 }
             ],
             "description": "Include files at a higher priority than autoload files. Useful for overriding Laravel helpers.",
@@ -52,7 +52,7 @@
                 "autoload",
                 "composer"
             ],
-            "time": "2019-05-09T08:06:44+00:00"
+            "time": "2020-07-09T12:26:27+00:00"
         },
         {
             "name": "apix/cache",
