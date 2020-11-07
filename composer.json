@@ -51,7 +51,7 @@
     "aura/sql": "^3.0",
     "aura/sqlschema": "^2.0",
     "cerdic/css-tidy": "^1.5",
-    "composer/composer": "^1.10",
+    "composer/composer": "^2.0",
     "dompdf/dompdf": "^0.8.5",
     "erusev/parsedown": "^1.7",
     "ezyang/htmlpurifier": "^4.10",
