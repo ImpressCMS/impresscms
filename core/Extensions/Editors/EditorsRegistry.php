@@ -108,8 +108,8 @@ class EditorsRegistry {
 	/**
 	 * @param string $name Editor name which is actually the folder name
 	 * @param array $options editor options: $key => $val
-	 * @param string $onFailure a pre-validated editor that will be used if the required editor is failed to create
 	 * @param bool $noHtml dohtml disabled
+	 * @param string $onFailure a pre-validated editor that will be used if the required editor is failed to create
 	 * @return object
 	 * @throws Exception
 	 */
