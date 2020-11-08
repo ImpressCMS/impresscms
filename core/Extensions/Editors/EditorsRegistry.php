@@ -113,7 +113,7 @@ class EditorsRegistry {
 	 * @return object
 	 * @throws Exception
 	 */
-	public function &get($name = '', $options = null, $noHtml = false, $OnFailure = '')
+	public function get($name = '', $options = null, $noHtml = false, $OnFailure = '')
 	{
 		if (!is_array($options)) {
 			$options = [];
@@ -143,10 +143,13 @@ class EditorsRegistry {
 			'titles' => [],
 			'order' => []
 		];
+		$container = icms::getInstance();
+		$tag = 'editor.' . $this->_type;
+		$editorsInstances = $container->has($tag) ? $container->get($tag) : [];
 		/**
 		 * @var EditorInterface $editor
 		 */
-		foreach (icms::getInstance()->get('editor.' . $this->_type) as $editor) {
+		foreach ($editorsInstances as $editor) {
 			if (!($editor instanceof EditorInterface)) {
 				continue;
 			}
