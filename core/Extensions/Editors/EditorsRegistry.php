@@ -118,7 +118,7 @@ class EditorsRegistry {
 		if (!is_array($options)) {
 			$options = [];
 		}
-		if ($editor = $this->_loadEditor($name, $options)) {
+		if ($editor = $this->_loadEditor($name)) {
 			return $editor->create($options);
 		}
 		$list = array_keys($this->getList($noHtml));
