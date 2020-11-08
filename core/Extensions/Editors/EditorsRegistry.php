@@ -108,12 +108,12 @@ class EditorsRegistry {
 	/**
 	 * @param string $name Editor name which is actually the folder name
 	 * @param array $options editor options: $key => $val
-	 * @param string $OnFailure a pre-validated editor that will be used if the required editor is failed to create
+	 * @param string $onFailure a pre-validated editor that will be used if the required editor is failed to create
 	 * @param bool $noHtml dohtml disabled
 	 * @return object
 	 * @throws Exception
 	 */
-	public function get($name = '', $options = null, $noHtml = false, $OnFailure = '')
+	public function get($name = '', $options = null, $noHtml = false, $onFailure = '')
 	{
 		if (!is_array($options)) {
 			$options = [];
@@ -122,11 +122,11 @@ class EditorsRegistry {
 			return $editor->create($options);
 		}
 		$list = array_keys($this->getList($noHtml));
-		if (empty($OnFailure) || !in_array($OnFailure, $list, true)) {
-			$OnFailure = $list[0];
+		if (empty($onFailure) || !in_array($onFailure, $list, true)) {
+			$onFailure = $list[0];
 		}
 
-		return $this->_loadEditor($OnFailure, $options)->create($options);
+		return $this->_loadEditor($onFailure, $options)->create($options);
 	}
 
 	/**
