@@ -126,7 +126,7 @@ class EditorsRegistry {
 			$onFailure = $list[0];
 		}
 
-		return $this->_loadEditor($onFailure, $options)->create($options);
+		return $this->_loadEditor($onFailure)->create($options);
 	}
 
 	/**
