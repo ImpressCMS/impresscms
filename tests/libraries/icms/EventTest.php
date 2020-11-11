@@ -3,13 +3,14 @@
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
 use ImpressCMS\Core\Event;
+use PHPUnit\Framework\TestCase;
 
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class EventTest extends \PHPUnit_Framework_TestCase {
+class EventTest extends TestCase {
 
     /**
      * Test if icms_core_DataFilter is available
@@ -32,12 +33,12 @@ class EventTest extends \PHPUnit_Framework_TestCase {
      */
     public function testVariables() {
         $instance = new Event('test', 'test', $this);
-        $this->assertInternalType('string', $instance->namespace, 'namespace must be string');
-        $this->assertInternalType('string', $instance->name, 'name must be string');
-        $this->assertInternalType('object', $instance->source, 'source must be object');
-        $this->assertInternalType('array', $instance->parameters, 'parameters must be array');
-        $this->assertInternalType('bool', $instance->canCancel, 'canCancel must be bool');
-        $this->assertInternalType('bool', $instance->canceled, 'canceled must be bool');
+        $this->$this->assertIsString( $instance->namespace, 'namespace must be string');
+        $this->$this->assertIsString( $instance->name, 'name must be string');
+        $this->assertIsObject( $instance->source, 'source must be object');
+        $this->$this->assertIsArray( $instance->parameters, 'parameters must be array');
+        $this->assertIsBool( $instance->canCancel, 'canCancel must be bool');
+        $this->$this->assertIsBool( $instance->canceled, 'canceled must be bool');
 
     }
 

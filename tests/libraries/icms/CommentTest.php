@@ -2,15 +2,17 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use icms_data_comment_Renderer;
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 use ImpressCMS\Core\Models\AbstractExtendedModel;
+use PHPUnit\Framework\TestCase;
 
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class CommentTest extends \PHPUnit_Framework_TestCase {
+class CommentTest extends TestCase {
 
     /**
      * Test if icms_core_DataFilter is available
@@ -21,7 +23,7 @@ class CommentTest extends \PHPUnit_Framework_TestCase {
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 
                $instance = $this->getInstanceWithoutConstructor($class);
-               $this->assertInternalType('object', $instance, $class. ' is not an object');
+               $this->assertIsObject($instance, $class. ' is not an object');
                $this->assertInstanceOf($instanecOfType, $instance, $class . ' doesn\'t extend ' . $instanecOfType);
         }
         $this->assertTrue(class_exists('icms_data_comment_Renderer', true), "icms_data_comment_Renderer class doesn't exist");
@@ -71,8 +73,8 @@ class CommentTest extends \PHPUnit_Framework_TestCase {
     public function testCommentRenderer() {
         $this->assertTrue(method_exists('icms_data_comment_Renderer', 'instance'), "icms_data_comment_Renderer doesn\'t have static method 'instance'");
         $tpl = null;
-        $instance = \icms_data_comment_Renderer::instance($tpl);
-        $this->assertInstanceOf(\icms_data_comment_Renderer::class, $instance, 'instance() returns object that is not \icms_data_comment_Renderer');
+        $instance = icms_data_comment_Renderer::instance($tpl);
+        $this->assertInstanceOf(icms_data_comment_Renderer::class, $instance, 'instance() returns object that is not \icms_data_comment_Renderer');
         foreach (['setComments', 'renderFlatView', 'renderThreadView', 'renderNestView'] as $method) {
             $this->assertTrue(method_exists($instance, $method), $method . ' doesn\'t exists for icms_data_comment_Renderer');
         }
