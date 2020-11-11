@@ -130,7 +130,7 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
         run: |
           ls tests/ -la
-          phpunit
+          phpunit --testdox
           mv ./storage/log/clover.xml ./clover.xml
         continue-on-error: ${{ matrix.experimental }}
       - name: Commiting CodeClimate data
