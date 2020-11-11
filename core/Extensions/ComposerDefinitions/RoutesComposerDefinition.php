@@ -103,7 +103,6 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			' */',
 			'$strategy = $router->getStrategy();',
 			'$container = $strategy->getContainer();',
-			'',
 		];
 
 		$this->addMiddlewaresDependingOnConfig($ret);
@@ -120,7 +119,6 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			) .
 			');';
 
-		$prefixOfRoute = $this->getPrefixPathOfRoute();
 		$routes = array_merge(
 			$this->getOldStyleRoutes(),
 			$data['routes'] ?? []
@@ -155,7 +153,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$ret[] = $linePrefix . sprintf(
 					'    ->map(%s, %s, %s)%s',
 					var_export($parsedDefinition['method'], true),
-					var_export(($group === ''? $prefixOfRoute : '') . $parsedDefinition['path'], true),
+					var_export( $parsedDefinition['path'], true),
 					var_export($parsedDefinition['handler'], true),
 					$hasExtraConfig ? '' : ';'
 				);
@@ -216,15 +214,6 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		}
 
 		file_put_contents($this->getCacheFilename(), implode(PHP_EOL, $ret), LOCK_EX);
-	}
-
-	/**
-	 * Gets prefix path of route
-	 *
-	 * @return string
-	 */
-	protected function getPrefixPathOfRoute() {
-		return rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 	}
 
 	/**
@@ -292,7 +281,6 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		);
 		$group =  str_replace(ICMS_ROOT_PATH, '', $path);
 		$groupLen = mb_strlen($group);
-		$group = $this->getPrefixPathOfRoute() . $group;
 
 		$handler = LegacyController::class . '::proxy';
 		/**
