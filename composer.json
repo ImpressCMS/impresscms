@@ -57,6 +57,7 @@
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
     "http-interop/http-factory-guzzle": "^1.0",
+    "imponeer/symfony-translations-constants-loader": "^1.0",
     "ircmaxell/random-lib": "^1.2",
     "keo/iso-639": "^1.0",
     "league/container": "^3.2",
@@ -119,7 +120,8 @@
       "\\ImpressCMS\\Core\\Providers\\SecurityServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ConfigServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\SessionServiceProvider",
-      "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider"
+      "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\TranslatorServiceProvider"
     ],
     "services": {
       "\\ImpressCMS\\Core\\Middlewares\\DetectModuleMiddleware": {
@@ -419,6 +421,12 @@
       },
       "sapi-emitter": {
         "class": "\\Narrowspark\\HttpEmitter\\SapiEmitter"
+      },
+      "\\Imponeer\\SymfonyTranslationsConstantsLoader\\PHPFileLoader": {
+        "class": "\\Imponeer\\SymfonyTranslationsConstantsLoader\\PHPFileLoader",
+        "tags": [
+          "translation.loader"
+        ]
       }
     },
     "routes": [

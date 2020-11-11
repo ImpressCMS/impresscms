@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "068547dfa6d1ec31d58d4dfbf1ef705c",
+    "content-hash": "be00ee8ad720e2d9ef5676bd8a94e618",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -1056,6 +1056,60 @@
                 "psr-7"
             ],
             "time": "2018-07-31T19:32:56+00:00"
+        },
+        {
+            "name": "imponeer/symfony-translations-constants-loader",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/symfony-translations-constants-loader.git",
+                "reference": "136edc0de6aeba3bf2d36dc27b8f25e34a9bd0c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/136edc0de6aeba3bf2d36dc27b8f25e34a9bd0c5",
+                "reference": "136edc0de6aeba3bf2d36dc27b8f25e34a9bd0c5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 || ^8.0",
+                "symfony/translation": "^5.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^9.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\SymfonyTranslationsConstantsLoader\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "symfony/translation extension to load PHP files that are defined all translations as constants",
+            "keywords": [
+                "constants",
+                "loader",
+                "symfony",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/imponeer/symfony-translations-constants-loader/issues",
+                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.0"
+            },
+            "time": "2020-11-11T01:06:42+00:00"
         },
         {
             "name": "ircmaxell/random-lib",
