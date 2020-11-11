@@ -27,8 +27,8 @@ class FilterTest extends TestCase {
      * Tests if static variables has correct values
      */
     public function testStaticVariables() {
-        $this->$this->assertIsArray( icms_core_DataFilter::$allSmileys, '$allSmileys must be an array');
-        $this->$this->assertIsArray( icms_core_DataFilter::$displaySmileys, '$displaySmileys must be an array');
+        $this->assertIsArray( icms_core_DataFilter::$allSmileys, '$allSmileys must be an array');
+        $this->assertIsArray( icms_core_DataFilter::$displaySmileys, '$displaySmileys must be an array');
     }
 
     /**

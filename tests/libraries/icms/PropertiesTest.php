@@ -46,7 +46,7 @@ class PropertiesTest extends TestCase {
                 'getVarInfo' => null,
                 'getVarNames' => null,
                 'getVars' => 'assertIsArray',
-                'isChanged' => 'bool',
+                'isChanged' => 'assertIsBool',
                 'serialize' => 'assertIsString',
                 'setVarInfo' => null,
                 'toArray' => 'assertIsArray',
@@ -82,8 +82,8 @@ class PropertiesTest extends TestCase {
 
         $this->assertTrue(isset($mock->var_array), 'Can\'t use fast property access (withou calling function)');
 
-        $this->$this->assertIsArray( $mock->getVar('var_array'), 'When tried to read just cread var wrong data returned');
-        $this->$this->assertIsArray( $mock->var_array, 'When tried to read just cread var wrong data returned');
+        $this->assertIsArray( $mock->getVar('var_array'), 'When tried to read just cread var wrong data returned');
+        $this->assertIsArray( $mock->var_array, 'When tried to read just cread var wrong data returned');
     }
 
     /**
@@ -174,7 +174,8 @@ class PropertiesTest extends TestCase {
 			if ($mock->v === null) {
 				continue;
 			}
-            $this->assertInternalType($itype, $mock->v, $name . ' must convert all data to ' . $itype);
+			$func = 'assertIs' . ucfirst(strtolower($itype));
+            $this->$func($mock->v, $name . ' must convert all data to ' . $itype);
         }
     }
 
@@ -188,7 +189,7 @@ class PropertiesTest extends TestCase {
 
         foreach ([[52], [59 => 'aaa'], true, 1, 1.0, -9, 'test', [], new stdClass(), function () {}] as $v) {
             $mock->v = $v;
-            $this->$this->assertIsArray( $mock->v, 'DTYPE_ARRAY must convert all data');
+            $this->assertIsArray( $mock->v, 'DTYPE_ARRAY must convert all data');
             if (is_array($v)) {
                 $this->assertSame($v, $mock->v, 'Array must be unchanged');
             } else {

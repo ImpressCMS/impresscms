@@ -359,7 +359,7 @@ class FormTest extends TestCase {
             ]
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
-            foreach ($variables as $variable => $type) {
+            foreach ($variables as $variable => $func) {
                 $this->$func($instance->$variable, '$' . $variable . ' is not of correct type ');
             }
         }

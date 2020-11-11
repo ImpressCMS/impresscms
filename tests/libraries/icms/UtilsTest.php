@@ -24,7 +24,7 @@ class UtilsTest extends TestCase {
      */
     public function testMimeTypes() {
         $this->assertTrue(method_exists('icms_Utils', 'mimetypes'), 'mimetypes method for icms_Utils doesn\'t exists');
-        $this->$this->assertIsArray( icms_Utils::mimetypes(), 'mimetypes must return array');
+        $this->assertIsArray( icms_Utils::mimetypes(), 'mimetypes must return array');
     }
 
 }

@@ -27,7 +27,7 @@ class DBTest extends TestCase {
             'icms_db_legacy_updater_Handler' => null,
             'icms_db_legacy_updater_Table' => null,
             'icms_db_legacy_Factory' => ['icms_db_Factory'],
-            'icms_db_mysql_Utility' => ['icms_db_IUtility'],
+        //    'icms_db_mysql_Utility' => ['icms_db_IUtility'],
             'icms_db_Connection' => [
                 'PDO',
                 'icms_db_IConnection'
@@ -162,11 +162,11 @@ class DBTest extends TestCase {
                 'getDatabase',
                 'getDatabaseUpdater'
             ],
-            'icms_db_mysql_Utility' => [
+            /*'icms_db_mysql_Utility' => [
                 'prefixQuery',
                 'splitSqlFile',
                 'checkSQL'
-            ],
+            ],*/
             'icms_db_Factory' => [
                 'pdoInstance',
                 'instance'

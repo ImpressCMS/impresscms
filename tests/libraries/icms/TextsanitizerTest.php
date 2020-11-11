@@ -42,8 +42,8 @@ class TextsanitizerTest extends TestCase {
      */
     public function testVariables() {
         $instance = icms_core_Textsanitizer::getInstance();
-        $this->$this->assertIsArray( $instance->displaySmileys, 'displaySmileys must be array');
-        $this->$this->assertIsArray( $instance->allSmileys, 'allSmileys must be array');
+        $this->assertIsArray( $instance->displaySmileys, 'displaySmileys must be array');
+        $this->assertIsArray( $instance->allSmileys, 'allSmileys must be array');
     }
 
 }

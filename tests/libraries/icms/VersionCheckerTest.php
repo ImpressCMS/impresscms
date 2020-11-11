@@ -43,10 +43,10 @@ class VersionCheckerTest extends TestCase {
     public function testVariables() {
         $instance = icms_core_Versionchecker::getInstance();
         $this->assertIsArray( $instance->errors, '$errors must be array');
-        $this->$this->assertIsString( $instance->latest_version_name, '$latest_version_name must be string');
-        $this->$this->assertIsString( $instance->installed_version_name, '$installed_version_name must be string');
-        $this->$this->assertIsString( $instance->latest_url, '$latest_url must be string');
-        $this->$this->assertIsString( $instance->latest_changelog, '$latest_changelog must be string');
+        $this->assertIsString( $instance->latest_version_name, '$latest_version_name must be string');
+        $this->assertIsString( $instance->installed_version_name, '$installed_version_name must be string');
+        $this->assertIsString( $instance->latest_url, '$latest_url must be string');
+        $this->assertIsString( $instance->latest_changelog, '$latest_changelog must be string');
     }
 
 }

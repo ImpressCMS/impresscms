@@ -33,12 +33,12 @@ class EventTest extends TestCase {
      */
     public function testVariables() {
         $instance = new Event('test', 'test', $this);
-        $this->$this->assertIsString( $instance->namespace, 'namespace must be string');
-        $this->$this->assertIsString( $instance->name, 'name must be string');
+        $this->assertIsString( $instance->namespace, 'namespace must be string');
+        $this->assertIsString( $instance->name, 'name must be string');
         $this->assertIsObject( $instance->source, 'source must be object');
-        $this->$this->assertIsArray( $instance->parameters, 'parameters must be array');
+        $this->assertIsArray( $instance->parameters, 'parameters must be array');
         $this->assertIsBool( $instance->canCancel, 'canCancel must be bool');
-        $this->$this->assertIsBool( $instance->canceled, 'canceled must be bool');
+        $this->assertIsBool( $instance->canceled, 'canceled must be bool');
 
     }
 
