@@ -27,7 +27,7 @@ class SecurityServiceProvider extends AbstractServiceProvider
 		$this->getContainer()->add('security', function () {
 			$instance = new RequestSecurity();
 			$instance->checkSuperglobals();
-			if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] != 'POST' || !$instance->checkReferer(XOOPS_DB_CHKREF))) {
+			if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] != 'POST')) {
 				define('XOOPS_DB_PROXY', 1);
 			}
 			Event::attach('icms', 'loadService-config', array($instance, 'checkBadips'));
