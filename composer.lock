@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "content-hash": "3b479bacb61dd5cb8f05c4a1f77b3eef",
+
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -1613,6 +1614,57 @@
                 "status"
             ],
             "time": "2020-04-16T13:19:50+00:00"
+        },
+        {
+            "name": "middlewares/base-path",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/base-path.git",
+                "reference": "1427d8a4976eed887626a6b99b1758e4b7b8e8fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/base-path/zipball/1427d8a4976eed887626a6b99b1758e4b7b8e8fc",
+                "reference": "1427d8a4976eed887626a6b99b1758e4b7b8e8fc",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "middlewares/utils": "^3.0",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpunit/phpunit": "^8.1",
+                "squizlabs/php_codesniffer": "^3.0",
+                "zendframework/zend-diactoros": "^2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to remove the prefix from the uri path of the request.",
+            "homepage": "https://github.com/middlewares/base-path",
+            "keywords": [
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "server"
+            ],
+            "support": {
+                "issues": "https://github.com/middlewares/base-path/issues",
+                "source": "https://github.com/middlewares/base-path/tree/v2.0.0"
+            },
+            "time": "2019-11-30T01:50:59+00:00"
         },
         {
             "name": "middlewares/encoder",
@@ -5981,6 +6033,7 @@
             "time": "2020-10-26T13:18:59+00:00"
         },
         {
+
             "name": "sebastian/version",
             "version": "3.0.2",
             "source": {
@@ -6036,6 +6089,9 @@
         {
             "name": "theseer/tokenizer",
             "version": "1.2.0",
+
+            "name": "symfony/yaml",
+            "version": "v4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theseer/tokenizer.git",
