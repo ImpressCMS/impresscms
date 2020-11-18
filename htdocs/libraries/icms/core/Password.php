@@ -95,7 +95,7 @@ final class icms_core_Password {
 	 * @return   bool     returns true if password is expired, false if password is not expired.
 	 */
 	public function passExpired($uname = '') {
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
+		if (!isset($uname) || (isset($uname) && $uname === '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -112,7 +112,7 @@ final class icms_core_Password {
 	 * To be removed in future versions
 	 */
 	public function getUserSalt($uname = '') {
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
+		if (!isset($uname) || (isset($uname) && $uname === '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -129,7 +129,7 @@ final class icms_core_Password {
 	 * to be removed in future versions
 	 */
 	public function getUserEncType($uname = '') {
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
+		if (!isset($uname) || (isset($uname) && $uname === '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -271,7 +271,7 @@ final class icms_core_Password {
 	 * @return   string  returns the Password hash of the user.
 	 */
 	private function _getUserHash($uname) {
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
+		if (!isset($uname) || (isset($uname) && $uname === '')) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -307,7 +307,7 @@ final class icms_core_Password {
 	 * To be removed in future versions, use _encryptPassword() instead
 	 */
 	private function _encryptPass($pass, $salt, $enc_type) {
-		if ($enc_type == 0) {
+		if ($enc_type === 0) {
 			return md5($pass);
 		} else {
 			$pass = $salt . md5($pass) . $this->mainSalt;
@@ -417,13 +417,13 @@ final class icms_core_Password {
 			$iterations = (int) $matches[4][0];
 			$userSalt = $matches[6][0];
 
-			if (self::_encryptPassword($pass, $userSalt, $encType, $iterations) == $userHash) {
+			if (self::_encryptPassword($pass, $userSalt, $encType, $iterations) === $userHash) {
 				return $userHash;
 			}
 		} else { // to be removed in future versions
 			$encType = self::_getUserEncType($uname);
 
-			if (self::_encryptPass($pass, $userSalt, $encType) == $userHash) {
+			if (self::_encryptPass($pass, $userSalt, $encType) === $userHash) {
 				return $userHash;
 			}
 		}
