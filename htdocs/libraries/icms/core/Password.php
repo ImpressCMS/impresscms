@@ -95,7 +95,7 @@ final class icms_core_Password {
 	 * @return   bool     returns true if password is expired, false if password is not expired.
 	 */
 	public function passExpired($uname = '') {
-		if (!isset($uname) || (isset($uname) && $uname === '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -112,7 +112,7 @@ final class icms_core_Password {
 	 * To be removed in future versions
 	 */
 	public function getUserSalt($uname = '') {
-		if (!isset($uname) || (isset($uname) && $uname === '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -129,7 +129,7 @@ final class icms_core_Password {
 	 * to be removed in future versions
 	 */
 	public function getUserEncType($uname = '') {
-		if (!isset($uname) || (isset($uname) && $uname === '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -271,7 +271,7 @@ final class icms_core_Password {
 	 * @return   string  returns the Password hash of the user.
 	 */
 	private function _getUserHash($uname) {
-		if (!isset($uname) || (isset($uname) && $uname === '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
