@@ -38,12 +38,12 @@ switch ($vars['DB_TYPE']) {
 	case 'pdo.mysql':
 		try {
 			$link = new PDO('mysql:host=' . $vars['DB_HOST'],
-				$vars['DB_USER'],
-				$vars['DB_PASS'],
-				array(
-					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-					PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
-				));
+					$vars['DB_USER'],
+					$vars['DB_PASS'],
+					array(
+							PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+							PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
+					));
 		} catch (PDOException $ex) {
 			$error = ERR_NO_DBCONNECTION;
 		}
@@ -236,11 +236,11 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 	if (empty ($error)) {
 		if (!select_db($vars ['DB_NAME'], $link)) {
 			// Database not here: try to create it
-			$result = exec_query("CREATE DATABASE `" . $vars ['DB_NAME'] . '`', $link);
+			$result = exec_query("CREATE DATABASE `" . quote_sql($vars ['DB_NAME']) . '`', $link);
 			if (!$result) {
 				$error = ERR_NO_DATABASE;
 			} else {
-				$error = sprintf(DATABASE_CREATED, $vars ['DB_NAME']);
+				$error = sprintf(DATABASE_CREATED, quote_sql($vars ['DB_NAME']));
 				$db_exist = true;
 			}
 		} else {
@@ -248,7 +248,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 		}
 		if ($db_exist && $vars['DB_CHARSET']) {
 			/* Attempt to set the character set and collation to the selected */
-			$sql = "ALTER DATABASE `" . $vars ['DB_NAME'] . "` DEFAULT CHARACTER SET " . quote_sql($vars ['DB_CHARSET']) . ($vars ['DB_COLLATION']?" COLLATE " . quote_sql($vars ['DB_COLLATION']):"");
+			$sql = "ALTER DATABASE `" . quote_sql($vars ['DB_NAME']) . "` DEFAULT CHARACTER SET " . quote_sql($vars ['DB_CHARSET']) . (quote_sql($vars ['DB_COLLATION'])?" COLLATE " . quote_sql($vars ['DB_COLLATION']):"");
 			if (!exec_query($sql, $link)) {
 				/* if the alter statement fails, set the constants to match existing */
 				$sql = "USE " . quote_sql($vars["DB_NAME"]);
@@ -261,8 +261,8 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 					$character_sets[$row["Variable_name"]] = $row["Value"];
 				}
 				$vars["DB_CHARSET"] = $character_sets["character_set_database"]
-					?$character_sets["character_set_database"]
-					: $character_sets["character_set_server"];
+						?$character_sets["character_set_database"]
+						: $character_sets["character_set_server"];
 
 				/* get the collation for the current database */
 				$sql = "SHOW VARIABLES LIKE 'collation%'";
@@ -271,8 +271,8 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 					$collations[$row["Variable_name"]] = $row["Value"];
 				}
 				$vars["DB_COLLATION"] = $collations["collation_database"]
-					?$collations["collation_database"]
-					: $collations["collation_server"];
+						?$collations["collation_database"]
+						: $collations["collation_server"];
 			}
 		}
 	}
@@ -353,10 +353,10 @@ if (!empty ($error)) {
 				document.getElementById(id).style.display='display';
 			}
 			new Ajax.Updater(
-				id, '<?php
-					echo $_SERVER ['PHP_SELF'];
-					?>',
-				{ method:'get',parameters:'action=updateCollation&charset='+val }
+					id, '<?php
+							echo $_SERVER ['PHP_SELF'];
+							?>',
+					{ method:'get',parameters:'action=updateCollation&charset='+val }
 			);
 		}
 	</script>
