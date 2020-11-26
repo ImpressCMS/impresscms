@@ -236,7 +236,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 	if (empty ($error)) {
 		if (!select_db($vars ['DB_NAME'], $link)) {
 			// Database not here: try to create it
-			$result = exec_query("CREATE DATABASE `" . quote_sql($vars ['DB_NAME']) . '`', $link);
+			$result = exec_query("CREATE DATABASE " . quote_sql($vars ['DB_NAME']) , $link);
 			if (!$result) {
 				$error = ERR_NO_DATABASE;
 			} else {
@@ -248,7 +248,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 		}
 		if ($db_exist && $vars['DB_CHARSET']) {
 			/* Attempt to set the character set and collation to the selected */
-			$sql = "ALTER DATABASE `" . quote_sql($vars ['DB_NAME']) . "` DEFAULT CHARACTER SET " . quote_sql($vars ['DB_CHARSET']) . (quote_sql($vars ['DB_COLLATION'])?" COLLATE " . quote_sql($vars ['DB_COLLATION']):"");
+			$sql = "ALTER DATABASE " . quote_sql($vars ['DB_NAME']) . " DEFAULT CHARACTER SET " . $vars ['DB_CHARSET'] . ($vars ['DB_COLLATION']?" COLLATE " . $vars ['DB_COLLATION']:"");
 			if (!exec_query($sql, $link)) {
 				/* if the alter statement fails, set the constants to match existing */
 				$sql = "USE " . quote_sql($vars["DB_NAME"]);
