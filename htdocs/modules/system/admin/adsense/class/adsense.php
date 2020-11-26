@@ -13,8 +13,8 @@
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
- * AdSense object - Google AdSense 
- *  
+ * AdSense object - Google AdSense
+ *
  * @package		Administration
  * @subpackage	AdSense
  */
@@ -23,7 +23,7 @@ class SystemAdsense extends icms_ipf_Object {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param object $handler
 	 */
 	public function __construct(&$handler) {
@@ -52,7 +52,7 @@ class SystemAdsense extends icms_ipf_Object {
 
 	/**
 	 * Override accessor for several properties
-	 * 
+	 *
 	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
 	 */
 	public function getVar($key, $format = 's') {
@@ -117,25 +117,25 @@ class SystemAdsense extends icms_ipf_Object {
 	 * @return	string
 	 */
 	public function render() {
-		if ($this->getVar('style', 'n') != '') {
+		if ($this->getVar('style', 'n')) {
 			$ret = '<div style="' . $this->getVar('style', 'n') . '">';
 		} else {
 			$ret = '<div>';
 		}
 
 		$ret .= '<script type="text/javascript">'
-			. 'google_ad_client = "' . $this->getVar('client_id', 'n') . '";'
-			. 'google_ad_slot = "' . $this->getVar("slot", "n") . '";'
+			. 'google_ad_client = ' . json_encode($this->getVar('client_id', 'n')). ';'
+			. 'google_ad_slot = ' . json_encode($this->getVar('slot', 'n')) . ';'
 			. 'google_ad_width = ' . $this->handler->adFormats[$this->getVar('format', 'n')]['width'] . ';'
 			. 'google_ad_height = ' . $this->handler->adFormats[$this->getVar('format', 'n')]['height'] . ';'
-			. 'google_ad_format = "' . $this->getVar('format', 'n') . '";'
+			. 'google_ad_format = ' . json_encode($this->getVar('format', 'n')) . ';'
 			. 'google_ad_type = "text";'
 			. 'google_ad_channel ="";'
-			. 'google_color_border = "' . $this->getVar('color_border', 'n') . '";'
-			. 'google_color_bg = "' . $this->getVar('color_background', 'n') . '";'
-			. 'google_color_link = "' . $this->getVar('color_link', 'n') . '";'
-			. 'google_color_url = "' . $this->getVar('color_url', 'n') . '";'
-			. 'google_color_text = "' . $this->getVar('color_text', 'n') . '";'
+			. 'google_color_border = ' . json_encode($this->getVar('color_border', 'n') ). ';'
+			. 'google_color_bg = ' . json_encode($this->getVar('color_background', 'n') ). ';'
+			. 'google_color_link = ' . json_encode($this->getVar('color_link', 'n')) . ';'
+			. 'google_color_url = ' . json_encode($this->getVar('color_url', 'n')) . ';'
+			. 'google_color_text = ' . json_encode($this->getVar('color_text', 'n')) . ';'
 			. '</script>'
 			. '<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">'
 			. '</script>'
@@ -149,17 +149,17 @@ class SystemAdsense extends icms_ipf_Object {
 	 * @return	string
 	 */
 	public function getXoopsCode() {
-		$ret = '[adsense]' . $this->getVar('tag', 'n') . '[/adsense]';
+		$ret = '[adsense]' . $this->getVar('tag', 's') . '[/adsense]';
 		return $ret;
 	}
 
 	/**
 	 * Generate the link HTML to clone a unit
-	 * @return	string 
+	 * @return	string
 	 */
 	public function getCloneLink() {
-		$ret = '<a href="' . ICMS_URL . '/modules/system/admin.php?fct=adsense&amp;op=clone&amp;adsenseid=' 
-			. $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' 
+		$ret = '<a href="' . ICMS_URL . '/modules/system/admin.php?fct=adsense&amp;op=clone&amp;adsenseid='
+			. $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="'
 			. _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
 		return $ret;
 	}
@@ -309,7 +309,7 @@ class SystemAdsenseHandler extends icms_ipf_Handler {
 
 	/**
 	 * Accessor for the list of formats
-	 * @return	array 
+	 * @return	array
 	 */
 	public function getFormats() {
 		return $this->_adFormatsList;
@@ -335,7 +335,7 @@ class SystemAdsenseHandler extends icms_ipf_Handler {
 
 	/**
 	 * Retrieve an AdSense unit by its tag
-	 * @return	array	Object array 
+	 * @return	array	Object array
 	 */
 	public function getAdsensesByTag() {
 		if (!$this->_objects) {
