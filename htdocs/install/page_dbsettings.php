@@ -78,6 +78,16 @@ function fetch_assoc($result) {
 	}
 }
 
+/**
+ * Sanitize a database name by removing all non-alphanumerical characters
+ *
+ * @param $database_name
+ * @return string|string[]|null
+ */
+function sanitize_database($database_name) {
+	return preg_replace('/[^A-Za-z0-9_]+/', '', $database_name);
+}
+
 function quote_sql($sql) {
 	global $link;
 	if ($link instanceof PDO) {
@@ -234,24 +244,27 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 	$error = validateDbCharset($link, $vars ['DB_CHARSET'], $vars ['DB_COLLATION']);
 	$db_exist = false;
 	if (empty ($error)) {
-		if (!select_db($vars ['DB_NAME'], $link)) {
+		if (!select_db(sanitize_database($vars ['DB_NAME']), $link)) {
 			// Database not here: try to create it
-			$result = exec_query("CREATE DATABASE " . quote_sql($vars ['DB_NAME']) , $link);
+			$result = exec_query("CREATE DATABASE " . sanitize_database( $vars ['DB_NAME'] ), $link);
 			if (!$result) {
 				$error = ERR_NO_DATABASE;
 			} else {
-				$error = sprintf(DATABASE_CREATED, quote_sql($vars ['DB_NAME']));
+				$error = sprintf(DATABASE_CREATED, sanitize_database($vars ['DB_NAME']));
 				$db_exist = true;
+
 			}
 		} else {
 			$db_exist = true;
 		}
 		if ($db_exist && $vars['DB_CHARSET']) {
 			/* Attempt to set the character set and collation to the selected */
-			$sql = "ALTER DATABASE " . quote_sql($vars ['DB_NAME']) . " DEFAULT CHARACTER SET " . $vars ['DB_CHARSET'] . ($vars ['DB_COLLATION']?" COLLATE " . $vars ['DB_COLLATION']:"");
+
+			$sql = "ALTER DATABASE " . sanitize_database( $vars ['DB_NAME']) . " DEFAULT CHARACTER SET " . quote_sql($vars ['DB_CHARSET']) . ($vars ['DB_COLLATION']?" COLLATE " . quote_sql($vars ['DB_COLLATION']):"");
+			echo $sql;
 			if (!exec_query($sql, $link)) {
 				/* if the alter statement fails, set the constants to match existing */
-				$sql = "USE " . quote_sql($vars["DB_NAME"]);
+				$sql = "USE " . sanitize_database($vars["DB_NAME"]);
 				$result = exec_query($sql, $link);
 
 				/* get the character set variables for the current database */
@@ -364,7 +377,7 @@ if (!empty ($error)) {
 		<fieldset>
 			<h3><?php echo LEGEND_DATABASE; ?></h3>
 			<?php
-			echo xoFormField('DB_NAME', $vars ['DB_NAME'], DB_NAME_LABEL, 255, DB_NAME_HELP);
+			echo xoFormField('DB_NAME', sanitize_database($vars ['DB_NAME']), DB_NAME_LABEL, 255, DB_NAME_HELP);
 			?> <?php
 			echo xoFormField('DB_PREFIX', $vars ['DB_PREFIX'], DB_PREFIX_LABEL, 10, DB_PREFIX_HELP);
 			?> <?php
