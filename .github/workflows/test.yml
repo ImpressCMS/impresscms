@@ -63,7 +63,7 @@ jobs:
           extensions: curl, gd, pdo_mysql, json, mbstring, pcre, session
           ini-values: post_max_size=256M
           coverage: xdebug
-          tools: phpunit:9.4.3, composer:v${{ matrix.composer }}
+          tools: composer:v${{ matrix.composer }}
       - name: Check PHP Version
         run: php -v
       - name: Verify MySQL connection
@@ -128,7 +128,7 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
         run: |
           ls tests/ -la
-          phpunit --testdox
+          ./bin/phpunit --testdox
           mv ./storage/log/clover.xml ./clover.xml
         continue-on-error: ${{ matrix.experimental }}
       - name: Commiting CodeClimate data
