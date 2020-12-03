@@ -39,7 +39,7 @@ jobs:
             php: 8.0
             database: mysql:5.6
             experimental: true
-    name: Test - php:${{ matrix.php }}; ${{ matrix.database }}; ${{ matrix.os }}; composer:${{ matrix.os }}
+    name: Test - php:${{ matrix.php }}; ${{ matrix.database }}; ${{ matrix.os }}; composer:${{ matrix.composer }}
     services:
       mysql:
         image: ${{ matrix.database }}
