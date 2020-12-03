@@ -62,7 +62,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: curl, gd, pdo_mysql, json, mbstring, pcre, session
           ini-values: post_max_size=256M
-          #coverage: xdebug
+          coverage: none
           tools: composer:v${{ matrix.composer }}
       - name: Check PHP Version
         run: php -v
