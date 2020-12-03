@@ -129,7 +129,7 @@ jobs:
         run: |
           ls tests/ -la
           ./bin/phpunit --testdox
-          mv ./storage/log/clover.xml ./clover.xml
+        #  mv ./storage/log/clover.xml ./clover.xml
         continue-on-error: ${{ matrix.experimental }}
       - name: Install Composer dependencies (without dev)
         run: composer install --no-progress --no-dev --no-suggest --prefer-dist --optimize-autoloader
