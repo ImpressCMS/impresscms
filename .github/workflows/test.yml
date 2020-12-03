@@ -82,8 +82,8 @@ jobs:
           # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
+      - name: Install Composer dependencies (with dev)
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
         continue-on-error: ${{ matrix.experimental }}
       - name: Installing ImpressCMS
         env:
@@ -130,6 +130,9 @@ jobs:
           ls tests/ -la
           ./bin/phpunit --testdox
           mv ./storage/log/clover.xml ./clover.xml
+        continue-on-error: ${{ matrix.experimental }}
+      - name: Install Composer dependencies (without dev)
+        run: composer install --no-progress --no-dev --no-suggest --prefer-dist --optimize-autoloader
         continue-on-error: ${{ matrix.experimental }}
       - name: Commiting CodeClimate data
         run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover -r ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
