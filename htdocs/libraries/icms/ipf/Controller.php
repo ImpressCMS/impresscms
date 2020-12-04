@@ -51,6 +51,7 @@ class icms_ipf_Controller {
 			switch ($icmsObj->vars[$key]['data_type']) {
 				case XOBJ_DTYPE_IMAGE:
 					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key] !='') {
+						$_POST['url_' . $key] = preg_replace('|[\.]+\/|', './', $_POST['url_' . $key]);
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 						if (!$eventResult) {
 							$icmsObj->setErrors("An error occured during the beforeFileUnlink event");
@@ -98,7 +99,7 @@ class icms_ipf_Controller {
 						$fileObj->setVar('mid', $_POST['mid_' . $key]);
 						$fileObj->setVar('caption', $_POST['caption_' . $key]);
 						$fileObj->setVar('description', $_POST['desc_' . $key]);
-						$fileObj->setVar('url', $_POST['url_' . $key]);
+						$fileObj->setVar('url', preg_replace('|[\.]+\/|', './', $_POST['url_' . $key]));
 						if (!($fileObj->getVar('url') == '' && $fileObj->getVar('url') == '' && $fileObj->getVar('url') == '')) {
 							$res = $icmsObj->storeFileObj($fileObj);
 							if ($res) {
