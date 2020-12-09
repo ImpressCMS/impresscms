@@ -30,11 +30,12 @@
 namespace ImpressCMS\Core\Extensions\Editors;
 
 use Exception;
+use icms;
 
 /**
  * Editor framework
  *
- * @license	http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license	https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @package	ICMS\Plugins
@@ -145,11 +146,11 @@ class EditorsRegistry {
 		/**
 		 * @var EditorInterface $editor
 		 */
-		foreach (\icms::getInstance()->get('editor.' . $this->_type) as $editor) {
+		foreach (icms::getInstance()->get('editor.' . $this->_type) as $editor) {
 			if (!($editor instanceof EditorInterface)) {
 				continue;
 			}
-			$name = \icms::getInstance()->getServiceDefinition(get_class($editor))->getAlias();
+			$name = icms::getInstance()->getServiceDefinition(get_class($editor))->getAlias();
 			if (!empty($this->allowed_editors) && !in_array($name, $this->allowed_editors, true)) {
 				continue;
 			}
@@ -213,7 +214,7 @@ class EditorsRegistry {
 		/**
 		 * @var EditorInterface $editor
 		 */
-		$editor = \icms::getInstance()->get($name);
+		$editor = icms::getInstance()->get($name);
 		return ($editor instanceof EditorInterface) ? $editor : null;
 	}
 

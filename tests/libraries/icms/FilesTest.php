@@ -2,12 +2,16 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionException;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class FilesTest extends \PHPUnit_Framework_TestCase {
+class FilesTest extends TestCase {
 
     /**
      * Test if is available
@@ -33,10 +37,10 @@ class FilesTest extends \PHPUnit_Framework_TestCase {
 	 * @param string $class ClassName
 	 *
 	 * @return object
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     private function getClassInstance($class) {
-        $reflection = new \ReflectionClass($class);
+        $reflection = new ReflectionClass($class);
         if ($reflection->isAbstract()) {
             $instance = $this->getMockForAbstractClass($class);
         } else {
