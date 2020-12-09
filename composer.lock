@@ -1630,8 +1630,10 @@
             },
             "require": {
                 "aura/session": "^2.1",
-                "php": "^7.0",
-
+                "php": "^7.0"
+			}
+		},
+		{
             "name": "matomo/referrer-spam-blacklist",
             "version": "4.0.0",
             "source": {
@@ -1775,7 +1777,9 @@
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2",
+                "php": "^7.2"
+			}
+		},{
             "name": "middlewares/referrer-spam",
             "version": "v2.0.1",
             "source": {
