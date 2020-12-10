@@ -2,12 +2,14 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use PHPUnit\Framework\TestCase;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class PreloadTest extends \PHPUnit_Framework_TestCase {
+class PreloadTest extends TestCase {
 
     /**
      * Test if is available
@@ -83,12 +85,12 @@ class PreloadTest extends \PHPUnit_Framework_TestCase {
     public function testVariables() {
         foreach ([
             'icms_preload_LibrariesHandler' => [
-                '_librariesArray' => 'array'
+                '_librariesArray' => 'assertIsArray'
             ]
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
-            foreach ($variables as $variable => $type) {
-                $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+            foreach ($variables as $variable => $func) {
+                $this->$func($instance->$variable, '$' . $variable . ' is not of correct type');
             }
         }
     }
