@@ -2,12 +2,14 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use PHPUnit\Framework\TestCase;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class PluginsTest extends \PHPUnit_Framework_TestCase {
+class PluginsTest extends TestCase {
 
     /**
      * Test if is available
@@ -78,19 +80,19 @@ class PluginsTest extends \PHPUnit_Framework_TestCase {
     public function testVariables() {
         foreach ([
             'icms_plugins_EditorHandler' => [
-                'nohtml' => 'bool',
-                'allowed_editors' => 'array'
+                'nohtml' => 'assertIsBool',
+                'allowed_editors' => 'assertIsArray'
             ],
             'icms_plugins_Handler' => [
-                'pluginPatterns' => 'bool'
+                'pluginPatterns' => 'assertIsBool'
             ],
             'icms_plugins_Object' => [
-                '_infoArray' => 'array'
+                '_infoArray' => 'assertIsArray'
             ]
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
-            foreach ($variables as $variable => $type) {
-                $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+            foreach ($variables as $variable => $func) {
+                $this->$func($instance->$variable, '$' . $variable . ' is not of correct type ');
             }
         }
     }

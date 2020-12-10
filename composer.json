@@ -66,6 +66,7 @@
     "middlewares/client-ip": "^2.0",
     "middlewares/encoder": "^2.1",
     "middlewares/firewall": "^2.0.1",
+
     "monolog/monolog": "^2.0",
     "narrowspark/http-emitter": "^1.0",
     "old-xoops-libraries/php-downloader": "1.*",
@@ -79,12 +80,14 @@
     "symfony/console": ">5.0",
     "symfony/polyfill-iconv": "^1.12",
     "typo3/class-alias-loader": "^1.1",
+    "true/punycode": "^2.1",
     "vlucas/phpdotenv": "^3.3.3"
   },
   "suggest": {
     "ext-xml": "Faster way then with PHP scripts to handle XML documents",
     "ext-openssl": "Without it OpenID will not work",
-    "ext-bcmath": "Better precisions in math operations"
+    "ext-bcmath": "Better precisions in math operations",
+    "ext-intl": "Faster international strings operations"
   },
   "autoload": {
     "psr-0": {
@@ -109,7 +112,7 @@
     ]
   },
   "require-dev": {
-    "phpunit/phpunit": "5.7.27"
+    "phpunit/phpunit": "^9.4"
   },
   "extra": {
     "providers": [
@@ -124,6 +127,15 @@
     ],
     "services": {
       "\\ImpressCMS\\Core\\Middlewares\\DetectModuleMiddleware": {
+        "tags": [
+          "middleware.global"
+        ]
+      },
+      "\\Middlewares\\ReferrerSpam": {
+        "arguments": [
+          null,
+          "\\Http\\Factory\\Guzzle\\ResponseFactory"
+        ],
         "tags": [
           "middleware.global"
         ]
@@ -442,7 +454,10 @@
   "config": {
     "optimize-autoloader": true,
     "sort-packages": true,
-    "bin-dir": "bin"
+    "bin-dir": "bin",
+    "platform": {
+      "php": "7.3.0"
+    }
   },
   "scripts": {
     "test": "phpunit -c tests/configuration.xml"
