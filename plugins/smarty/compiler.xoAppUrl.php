@@ -3,10 +3,10 @@
  * xoAppUrl Smarty compiler plug-in
  *
  * See the enclosed file LICENSE for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * @copyright   The XOOPS project http://www.xoops.org/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @package		xos_opal
  * @subpackage	xos_opal_Smarty
@@ -61,7 +61,7 @@ function smarty_compiler_xoAppUrl($args, &$compiler)
 					$params[$k] = substr( $v, 1, -1 );
 				}
 			}
-			$url = \icms::buildUrl( $url, $params );
+			$url = icms::buildUrl( $url, $params );
 		}
 		$url = icms::path( $url, true );
 		return htmlspecialchars($url);
