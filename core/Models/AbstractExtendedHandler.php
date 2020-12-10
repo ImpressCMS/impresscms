@@ -11,7 +11,6 @@
  * @author    marcan <marcan@impresscms.org>
  * @author    This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author    Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @todo    Use language constants for messages
  * @todo    Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
 
@@ -335,7 +334,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$sql = substr($sql, 0, -2);
 		$sql .= ' FROM ' . $this->table;
 
-		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+		if (isset($criteria) && $criteria instanceof CriteriaElement) {
 			$sql .= ' ' . $criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 			if ($criteria->groupby) {
@@ -399,7 +398,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM `' . $this->table . '` AS ' . $this->_itemname;
 		}
 
-		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+		if (isset($criteria) && $criteria instanceof CriteriaElement) {
 			$sql .= ' ' . $criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 			if ($criteria->getSort() !== '') {
@@ -808,7 +807,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	{
 		$ret = array();
 		if ($criteria === null) {
-			$criteria = new icms_db_criteria_Compo();
+			$criteria = new CriteriaCompo();
 		}
 
 		if ($criteria->getSort() === '') {
@@ -820,7 +819,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 			$sql .= ', ' . $keyValue;
 		}
 		$sql .= ' FROM ' . $this->table . ' AS ' . $this->_itemname;
-		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+		if (isset($criteria) && $criteria instanceof CriteriaElement) {
 			$sql .= ' ' . $criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 			if ($criteria->getSort() !== '') {
@@ -1081,11 +1080,11 @@ class AbstractExtendedHandler extends AbstractHandler {
 			if (is_array($this->keyName)) {
 				$case = '  CASE `' . implode('`, `', $this->keyName) . "`\r\n";
 				$when = array();
-				$criteria = new icms_db_criteria_Compo();
+				$criteria = new CriteriaCompo();
 				foreach ($data as $i => $obj) {
 					$fieldsToStoreInDB = $obj->getVarsForQuery(true);
 					/**
-					 * @var icms_db_criteria_Element $cr
+					 * @var CriteriaElement $cr
 					 */
 					$cr = $obj->getCriteriaForSelectByID();
 					$criteria->add($cr, 'OR');
@@ -1140,7 +1139,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 					}
 					$sql .= '`' . $wdata . '` = ' . $case . implode("\r", $when[$wdata]) . ' END ' . "\r";
 				}
-				$criteria = new icms_db_criteria_Item($this->keyName, $ids, 'IN');
+				$criteria = new CriteriaItem($this->keyName, $ids, 'IN');
 				$sql .= $criteria->renderWhere(true);
 				$params = array_merge($params, $criteria->getBindData());
 			}
@@ -1222,7 +1221,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * query the database with the constructed $criteria object
 	 *
 	 * @param string $sql The SQL Query
-	 * @param \icms_db_criteria_Element $criteria Criteria conditions to be met
+	 * @param CriteriaElement $criteria Criteria conditions to be met
 	 * @param bool $force Force the query? (DEPRECATED: Do not use this - does nothing)
 	 * @param bool $debug Turn Debug on? (DEPRECATED: Do not use this)
 	 *
@@ -1232,7 +1231,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	{
 		$ret = array();
 
-		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+		if (isset($criteria) && $criteria instanceof CriteriaElement) {
 			$sql .= ' ' . $criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 			if ($criteria->groupby) {
@@ -1267,7 +1266,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	{
 		$field = '';
 		$groupby = false;
-		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+		if (isset($criteria) && $criteria instanceof CriteriaElement) {
 			if ($criteria->groupby !== '') {
 				$groupby = true;
 				$field = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
@@ -1283,7 +1282,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		} else {
 			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->_itemname;
 		}
-		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+		if (isset($criteria) && $criteria instanceof CriteriaElement) {
 			$sql .= ' ' . $criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 			if ($criteria->groupby !== '') {
@@ -1351,7 +1350,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	public function updateAll($fieldname, $fieldvalue, $criteria = null)
 	{
 		$sql = 'UPDATE `' . $this->table . '` SET `' . $fieldname . '`=:fieldvalue';
-		if (isset($criteria) && $criteria instanceof \icms_db_criteria_Element) {
+		if (isset($criteria) && $criteria instanceof CriteriaElement) {
 			$sql .= ' ' . $criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 		} else {
@@ -1417,7 +1416,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		}
 
 		/**
-		 * @var $criteria icms_db_criteria_Element
+		 * @var $criteria CriteriaElement
 		 */
 		$criteria = $obj->getCriteriaForSelectByID();
 		$sql = 'DELETE FROM `' . $this->table . '` ' . $criteria->renderWhere(true);
@@ -1439,12 +1438,12 @@ class AbstractExtendedHandler extends AbstractHandler {
 		}
 		if (!empty($url_links)) {
 			$urllink_handler = icms::handler('icms_data_urllink');
-			$urllink_handler->deleteAll(new icms_db_criteria_Item($urllink_handler->keyName, $url_links, ' IN '));
+			$urllink_handler->deleteAll(new CriteriaItem($urllink_handler->keyName, $url_links, ' IN '));
 			unset($urllink_handler);
 		}
 		if (!empty($url_files)) {
 			$urllink_handler = icms::handler('icms_data_file');
-			$urllink_handler->deleteAll(new icms_db_criteria_Item($urllink_handler->keyName, $url_files, ' IN '));
+			$urllink_handler->deleteAll(new CriteriaItem($urllink_handler->keyName, $url_files, ' IN '));
 			unset($urllink_handler);
 		}
 

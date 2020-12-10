@@ -30,6 +30,7 @@ $content .= '
 	<li>../storage/cache</li>
 	<li>../storage/log</li>
 	<li>../storage/htmlpurifier</li>
+	<li>../storage/composer</li>
 	<li>../modules/</li>
 </ul>
 	<li>Make the file ../.env writable (chmod 666 depending on server).</li>
