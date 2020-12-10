@@ -2,15 +2,17 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use icms;
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 use ImpressCMS\Core\Models\AbstractExtendedModel;
+use PHPUnit\Framework\TestCase;
 
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class ImageTest extends \PHPUnit_Framework_TestCase {
+class ImageTest extends TestCase {
 
     /**
      * Test if is available
@@ -40,7 +42,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
      * Tests image body functionality
      */
     public function testImageBody() {
-        $image_handler = \icms::handler('icms_image');
+        $image_handler = icms::handler('icms_image');
         $image = $image_handler->create();
         $this->assertTrue(property_exists($image, 'image_body'), 'icms_image_Object doesn\'t have image_body property');
         $test_var = sha1(microtime(true));

@@ -31,7 +31,7 @@
  * icms_view_PageBuilder component class file
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license     https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  */
 
 namespace ImpressCMS\Core\View;
@@ -92,7 +92,7 @@ class PageBuilder {
 			$template = & $this->theme->template;
 			$backup = array($template->caching, $template->cache_lifetime);
 		} else {
-			$template = new \ImpressCMS\Core\View\Template();
+			$template = new Template();
 		}
 
 		/** moved here from buildBlocks to reduce redundant calls */

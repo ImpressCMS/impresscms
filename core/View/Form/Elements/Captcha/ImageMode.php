@@ -8,7 +8,7 @@ namespace ImpressCMS\Core\View\Form\Elements\Captcha;
  * based on Frameworks::captcha by Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  *
  * @copyright	The XOOPS project http://www.xoops.org/
- * @license 	http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license 	https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since	XOOPS
  * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
@@ -90,7 +90,7 @@ class ImageMode {
 	protected function getBase64ImageUrl() {
 		ob_start ();
 
-		$image_handler = new \ImpressCMS\Core\View\Form\Elements\Captcha\ImageRenderer();
+		$image_handler = new ImageRenderer();
 		$image_handler->sendHeader = false;
 		$image_handler->loadImage();
 

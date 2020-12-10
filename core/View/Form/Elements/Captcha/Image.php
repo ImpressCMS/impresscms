@@ -12,7 +12,7 @@
  * 3 Else, take "text"
  *
  * @copyright	The XOOPS project http://www.xoops.org/
- * @license 	http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license 	https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since	XOOPS
  * @package	ICMS\Form\Elements\Captcha
