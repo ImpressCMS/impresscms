@@ -300,7 +300,7 @@ switch ($op) {
 		break;
 
 	case 'edittpl_go':
-		if ($id <= 0 | !icms::$security->check()) {
+		if ($id <= 0 || !icms::$security->check()) {
 			redirect_header('admin.php?fct=tplsets', 3, implode('<br />', icms::$security->getErrors()));
 		}
 		/**
@@ -355,7 +355,7 @@ switch ($op) {
 		break;
 
 	case 'deletetpl_go':
-		if ($id <= 0 | !icms::$security->check()) {
+		if ($id <= 0 || !icms::$security->check()) {
 			redirect_header('admin.php?fct=tplsets', 1, implode('<br />', icms::$security->getErrors()));
 		}
 		/**
