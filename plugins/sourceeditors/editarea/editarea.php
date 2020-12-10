@@ -3,7 +3,7 @@
  * EditArea adapter for ImpressCMS
  *
  * @copyright	ImpressCMS http://www.impresscms.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license		https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  * @author		MekDrop <mekdrop@gmail.com>
  * @since		1.2
  * @package		sourceeditor
@@ -82,7 +82,7 @@ editAreaLoader.init({
 	fullscreen: ' . (!isset($this->config['fullscreen'])?'false':($this->config['fullscreen']?'true':'false')) . ',
 	is_editable: ' . (!isset($this->config['is_editable'])?'true':($this->config['is_editable']?'true':'false')) . ',
 	autocompletion: ' . (!isset($this->config['autocompletion'])?'true':($this->config['autocompletion']?'true':'false')) . '
-});
+})
 </script>';
 
 		return $ret;
