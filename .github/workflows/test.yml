@@ -121,7 +121,7 @@ jobs:
         #  mv ./storage/log/clover.xml ./clover.xml
         continue-on-error: ${{ matrix.experimental }}
       - name: Deleting vendor/
-        run: rm -ff vendor/
+        run: rm -rf vendor/
         continue-on-error: ${{ matrix.experimental }}
       - name: Install Composer dependencies (without dev)
         run: composer install --no-progress --no-dev --no-suggest --prefer-dist --optimize-autoloader
