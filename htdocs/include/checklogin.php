@@ -48,7 +48,7 @@ defined('ICMS_ROOT_PATH') || exit();
 
 icms_loadLanguageFile('core', 'user');
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
-$pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
+$pass = !isset($_POST['pass']) ? '' : substr(trim($_POST['pass']), 0, 99);
 
 /* make sure redirect stays within domain and isn't open to exploit */
 if (!isset($redirect)) {
