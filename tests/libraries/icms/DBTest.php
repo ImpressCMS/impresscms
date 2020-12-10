@@ -2,12 +2,17 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use icms_db_criteria_Item;
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionException;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class DBTest extends \PHPUnit_Framework_TestCase {
+class DBTest extends TestCase {
 
     /**
      * Test if is available
@@ -22,7 +27,7 @@ class DBTest extends \PHPUnit_Framework_TestCase {
             'icms_db_legacy_updater_Handler' => null,
             'icms_db_legacy_updater_Table' => null,
             'icms_db_legacy_Factory' => ['icms_db_Factory'],
-            'icms_db_mysql_Utility' => ['icms_db_IUtility'],
+        //    'icms_db_mysql_Utility' => ['icms_db_IUtility'],
             'icms_db_Connection' => [
                 'PDO',
                 'icms_db_IConnection'
@@ -45,10 +50,10 @@ class DBTest extends \PHPUnit_Framework_TestCase {
 	 * @param string $class ClassName
 	 *
 	 * @return object
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     private function getClassInstance($class) {
-        $reflection = new \ReflectionClass($class);
+        $reflection = new ReflectionClass($class);
         if ($reflection->isAbstract()) {
             $instance = $this->getMockForAbstractClass($class);
         } else {
@@ -157,11 +162,11 @@ class DBTest extends \PHPUnit_Framework_TestCase {
                 'getDatabase',
                 'getDatabaseUpdater'
             ],
-            'icms_db_mysql_Utility' => [
+            /*'icms_db_mysql_Utility' => [
                 'prefixQuery',
                 'splitSqlFile',
                 'checkSQL'
-            ],
+            ],*/
             'icms_db_Factory' => [
                 'pdoInstance',
                 'instance'
@@ -180,37 +185,37 @@ class DBTest extends \PHPUnit_Framework_TestCase {
     public function testVariables() {
         foreach ([
             'icms_db_criteria_Compo' => [
-                'criteriaElements' => 'array',
-                'conditions' => 'array'
+                'criteriaElements' => 'assertIsArray',
+                'conditions' => 'assertIsArray'
             ],
             'icms_db_criteria_Item' => [
-                'prefix' => 'string',
-                'function' => 'string',
-                'column' => 'string',
-                'operator' => 'string',
+                'prefix' => 'assertIsString',
+                'function' => 'assertIsString',
+                'column' => 'assertIsString',
+                'operator' => 'assertIsString',
                 'value' => 'mixed'
             ],
             'icms_db_criteria_Element' => [
-                'order' => 'string',
-                'sort' => 'string',
-                'limit' => 'int',
-                'start' => 'int',
-                'groupby' => 'string'
+                'order' => 'assertIsString',
+                'sort' => 'assertIsString',
+                'limit' => 'assertIsInt',
+                'start' => 'assertIsInt',
+                'groupby' => 'assertIsString'
             ],
             'icms_db_legacy_updater_Handler' => [
-                'db' => 'null'
+                'db' => 'assertNull'
             ],
             'icms_db_legacy_updater_Table' => [
-                'force' => 'bool',
-                'db' => 'null'
+                'force' => 'assertIsBool',
+                'db' => 'assertNull'
             ],
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
-            foreach ($variables as $variable => $type) {
-                if ($type == 'mixed') {
+            foreach ($variables as $variable => $func) {
+                if ($func === 'mixed') {
                     $this->assertTrue(property_exists($instance, $variable), '$' . $variable . ' is not defined in instance of ' . $class);
                 } else {
-                    $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+                    $this->$func($instance->$variable, '$' . $variable . ' is not of correct type');
                 }
             }
         }
@@ -224,12 +229,12 @@ class DBTest extends \PHPUnit_Framework_TestCase {
         $value = sha1(mt_rand(0, PHP_INT_MAX));
         $group_by = sha1(mt_rand(0, PHP_INT_MAX));
         $sort_by = sha1(mt_rand(0, PHP_INT_MAX));
-        $item = new \icms_db_criteria_Item($column, $value);
+        $item = new icms_db_criteria_Item($column, $value);
         foreach (['render', 'renderLdap', 'renderWhere'] as $method) {
             $rendered = $item->$method();
             $this->assertNotNull($rendered, 'Rendered with ' . $method . ' criteria result must be not null');
             $this->assertNotSame('', $rendered, 'Rendered with '.$method.' criteria result must be not empty');
-            $this->assertInternaltype('string', $rendered, 'Rendered with '.$method.' criteria result must be string');
+            $this->assertIsString( $rendered, 'Rendered with '.$method.' criteria result must be string');
         }
         $item->setGroupby($group_by);
         $this->assertSame($item->groupby, $group_by, 'When set with setGroupBy function result is not modified groupby variable as should be');

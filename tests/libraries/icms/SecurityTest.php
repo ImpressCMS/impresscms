@@ -1,15 +1,17 @@
 <?php
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
+use icms_core_Security;
 use ImpressCMS\Core\Providers\SecurityServiceProvider;
 use League\Container\Container;
+use PHPUnit\Framework\TestCase;
 
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class SecurityTest extends \PHPUnit_Framework_TestCase {
+class SecurityTest extends TestCase {
 
     /**
      * Test if icms_core_DataFilter is available
@@ -25,7 +27,7 @@ class SecurityTest extends \PHPUnit_Framework_TestCase {
 		$container = new Container();
 		$container->addServiceProvider(SecurityServiceProvider::class);
 		$instance = $container->get('security');
-		$this->assertInstanceOf(\icms_core_Security::class, $instance, 'service method doesn\'t return instanceod icms_core_Security type');
+		$this->assertInstanceOf(icms_core_Security::class, $instance, 'service method doesn\'t return instanceod icms_core_Security type');
     }
 
     /**
@@ -48,7 +50,7 @@ class SecurityTest extends \PHPUnit_Framework_TestCase {
 		$container->addServiceProvider(SecurityServiceProvider::class);
 		$instance = $container->get('security');
         $new_token = $instance->createToken();
-        $this->assertInternalType('string', $new_token, 'Generated token is not type of string');
+        $this->assertIsString( $new_token, 'Generated token is not type of string');
         $this->assertTrue($instance->validateToken($new_token), 'Can\'t validate correct token');
     }
 }
