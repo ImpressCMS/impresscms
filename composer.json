@@ -63,11 +63,11 @@
     "league/flysystem": "^1.0.51",
     "league/route": "^4.3",
     "lulco/phoenix": "^1.1",
+    "middlewares/base-path": "^2.0",
     "middlewares/client-ip": "^2.0",
-    "middlewares/referrer-spam": "^2.0",
     "middlewares/encoder": "^2.1",
     "middlewares/firewall": "^2.0.1",
-
+    "middlewares/referrer-spam": "^2.0",
     "monolog/monolog": "^2.0",
     "narrowspark/http-emitter": "^1.0",
     "old-xoops-libraries/php-downloader": "1.*",
@@ -80,8 +80,8 @@
     "suin/php-rss-writer": "^1.6",
     "symfony/console": ">5.0",
     "symfony/polyfill-iconv": "^1.12",
-    "typo3/class-alias-loader": "^1.1",
     "true/punycode": "^2.1",
+    "typo3/class-alias-loader": "^1.1",
     "vlucas/phpdotenv": "^3.3.3"
   },
   "suggest": {

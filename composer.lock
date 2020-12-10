@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f42c27a7d0680cf6c3cb2987eee2804",
+    "content-hash": "101ee09a8064edf270821eb7910306b3",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -1662,6 +1662,80 @@
             "time": "2019-10-15T08:29:16+00:00"
         },
         {
+            "name": "matomo/referrer-spam-blacklist",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matomo-org/referrer-spam-list.git",
+                "reference": "afe4c1ea107ee7a8915a0d5eb0031cf0366608a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matomo-org/referrer-spam-list/zipball/afe4c1ea107ee7a8915a0d5eb0031cf0366608a8",
+                "reference": "afe4c1ea107ee7a8915a0d5eb0031cf0366608a8",
+                "shasum": ""
+            },
+            "replace": {
+                "matomo/referrer-spam-blacklist": "*",
+                "piwik/referrer-spam-blacklist": "*"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC0-1.0"
+            ],
+            "description": "Community-contributed list of referrer spammers",
+            "time": "2020-08-10T19:54:07+00:00"
+        },
+        {
+            "name": "middlewares/base-path",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/base-path.git",
+                "reference": "a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/base-path/zipball/a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5",
+                "reference": "a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "laminas/laminas-diactoros": "^2.3",
+                "middlewares/utils": "^3.0",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8|^9",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to remove the prefix from the uri path of the request.",
+            "homepage": "https://github.com/middlewares/base-path",
+            "keywords": [
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "server"
+            ],
+            "time": "2020-12-02T00:05:17+00:00"
+        },
+        {
             "name": "middlewares/client-ip",
             "version": "v2.0.0",
             "source": {
@@ -1697,7 +1771,6 @@
             "license": [
                 "MIT"
             ],
-
             "description": "Middleware to detect the client ip and save it as a request attribute",
             "homepage": "https://github.com/middlewares/client-ip",
             "keywords": [
@@ -1762,7 +1835,6 @@
             "time": "2020-01-24T16:53:17+00:00"
         },
         {
-
             "name": "middlewares/firewall",
             "version": "v2.0.1",
             "source": {
@@ -1779,20 +1851,15 @@
             "require": {
                 "m6web/firewall": "^1.0",
                 "middlewares/utils": "^3.0",
-
                 "php": "^7.2",
                 "psr/http-server-middleware": "^1.0"
             },
             "require-dev": {
-                "laminas/laminas-diactoros": "^2.2",
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "laminas/laminas-diactoros": "^2.3",
                 "oscarotero/php-cs-fixer-config": "^1.0",
                 "phpunit/phpunit": "^8.1",
-                "squizlabs/php_codesniffer": "^3.0",
-                "true/punycode": "^2.1"
-            },
-            "suggest": {
-                "ext-intl": "*",
-                "true/punycode": "~2.0"
+                "squizlabs/php_codesniffer": "^3.0"
             },
             "type": "library",
             "autoload": {
@@ -1818,6 +1885,63 @@
                 "server"
             ],
             "time": "2020-08-02T19:07:34+00:00"
+        },
+        {
+            "name": "middlewares/referrer-spam",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/referrer-spam.git",
+                "reference": "276a343d0d958bb1d693107f6905a33608983372"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/referrer-spam/zipball/276a343d0d958bb1d693107f6905a33608983372",
+                "reference": "276a343d0d958bb1d693107f6905a33608983372",
+                "shasum": ""
+            },
+            "require": {
+                "matomo/referrer-spam-blacklist": "*",
+                "middlewares/utils": "^3.0",
+                "php": "^7.2 || ^8.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "laminas/laminas-diactoros": "^2.2",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8|^9",
+                "squizlabs/php_codesniffer": "^3.0",
+                "true/punycode": "^2.1"
+            },
+            "suggest": {
+                "ext-intl": "*",
+                "true/punycode": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to block referrer spammers",
+            "homepage": "https://github.com/middlewares/referrer-spam",
+            "keywords": [
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "referer",
+                "referrer",
+                "security",
+                "spam"
+            ],
+            "time": "2020-12-04T00:35:11+00:00"
         },
         {
             "name": "middlewares/utils",
@@ -1876,47 +2000,6 @@
                 "psr-7"
             ],
             "time": "2020-11-30T20:07:15+00:00"
-        },
-        {
-            "name": "mindplay/composer-locator",
-            "version": "2.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mindplay-dk/composer-locator.git",
-                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mindplay-dk/composer-locator/zipball/629988d5305cd8ef11adbd6bb485660219c599fc",
-                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1",
-                "php": ">= 5.4"
-            },
-            "require-dev": {
-                "composer/composer": "^1",
-                "mindplay/testies": "^0.3.0",
-                "symfony/filesystem": "^2.7 || ^3.0",
-                "symfony/process": "^2.7 || ^3.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "mindplay\\composer_locator\\Plugin"
-            },
-            "autoload": {
-                "classmap": [
-                    "src/ComposerLocator.php",
-                    "src/Plugin.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Locates Composer package root folders by package name",
-            "time": "2017-05-08T12:12:31+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4443,6 +4526,47 @@
             "time": "2020-11-10T18:47:58+00:00"
         },
         {
+            "name": "mindplay/composer-locator",
+            "version": "2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mindplay-dk/composer-locator.git",
+                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mindplay-dk/composer-locator/zipball/629988d5305cd8ef11adbd6bb485660219c599fc",
+                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1",
+                "php": ">= 5.4"
+            },
+            "require-dev": {
+                "composer/composer": "^1",
+                "mindplay/testies": "^0.3.0",
+                "symfony/filesystem": "^2.7 || ^3.0",
+                "symfony/process": "^2.7 || ^3.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "mindplay\\composer_locator\\Plugin"
+            },
+            "autoload": {
+                "classmap": [
+                    "src/ComposerLocator.php",
+                    "src/Plugin.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Locates Composer package root folders by package name",
+            "time": "2017-05-08T12:12:31+00:00"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.10.2",
             "source": {
@@ -6328,5 +6452,8 @@
         "ext-session": "*"
     },
     "platform-dev": [],
+    "platform-overrides": {
+        "php": "7.3.0"
+    },
     "plugin-api-version": "1.1.0"
 }
