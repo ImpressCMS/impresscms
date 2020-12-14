@@ -48,7 +48,7 @@ defined('ICMS_ROOT_PATH') || exit();
 
 icms_loadLanguageFile('core', 'user');
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
-$pass = !isset($_POST['pass']) ? '' : substr(trim($_POST['pass']), 0, 99);
+$pass = !isset($_POST['pass']) ? '' : substr(trim($_POST['pass']), 0, 32);
 
 /* make sure redirect stays within domain and isn't open to exploit */
 if (!isset($redirect)) {
@@ -58,7 +58,7 @@ if (!isset($redirect)) {
 		: isset($_POST['xoops_redirect'])
 			? $_POST['xoops_redirect']
 			: ICMS_URL;
-	
+
 		$redirect = htmlspecialchars(trim($redirect));
 		if ($redirect !== htmlspecialchars($_SERVER['REQUEST_URI'])) $redirect = ICMS_URL;
 }
@@ -107,7 +107,7 @@ if (FALSE != $user) {
 		redirect_header(ICMS_URL . '/', 5, _US_NOACTTPADM);
 		exit();
 	}
-	
+
 	/* Check to see if logins from multiple locations is permitted.
 	 * If it is not, check for existing login and redirect if detected
 	 */
@@ -122,7 +122,7 @@ if (FALSE != $user) {
 					redirect_header(ICMS_URL . '/', 3, _US_MULTLOGIN);
 				}
 			}
-			
+
 			if (is_object($user)) {
 				$online_handler->write(
 					$user->getVar('uid'),
@@ -134,7 +134,7 @@ if (FALSE != $user) {
 			}
 		}
 	}
-	
+
 	/* Check if site is closed and verify user's group can access if it is */
 	if ($icmsConfig['closesite'] == 1) {
 		$allowed = FALSE;
@@ -144,7 +144,7 @@ if (FALSE != $user) {
 				break;
 			}
 		}
-		
+
 		if (!$allowed) {
 			redirect_header(ICMS_URL . '/', 1, _NOPERM);
 			exit();
@@ -159,17 +159,17 @@ if (FALSE != $user) {
 	$_SESSION = array();
 	$_SESSION['xoopsUserId'] = $user->getVar('uid');
 	$_SESSION['xoopsUserGroups'] = $user->getGroups();
-	
+
 	if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
 		setcookie($icmsConfig['session_name'], session_id(), time()+(60 * $icmsConfig['session_expire']), '/',  '', 0);
 	}
-	
+
 	$_SESSION['xoopsUserLastLogin'] = $user->getVar('last_login');
-	
+
 	if (!$member_handler->updateUserByField($user, 'last_login', time())) {}
-	
+
 	$user_theme = $user->getVar('theme');
-	
+
 	if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
 		$_SESSION['xoopsUserTheme'] = $user_theme;
 	}
@@ -178,9 +178,9 @@ if (FALSE != $user) {
 	$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
 	$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH :
 	preg_replace( '?http://[^/]+(/.*)$?' , "$1" , ICMS_URL );
-	
+
 	if ($icms_cookie_path == ICMS_URL) $icms_cookie_path = '/';
-	
+
 	if (!empty($_POST['rememberme'])) {
 		$expire = time() + (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800) ; // 1 week default
 		setcookie('autologin_uname', $user->getVar('login_name'), $expire, $icms_cookie_path, '', $secure, 0);
