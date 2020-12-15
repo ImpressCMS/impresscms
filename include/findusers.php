@@ -6,7 +6,7 @@
  * @todo: plugins for external applications, including but not limited: sending massive emails/PMs, membership edit
  *
  * @copyright	The XOOPS project http://www.xoops.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license		https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		Xoops 1.00
  * @package core
@@ -45,10 +45,6 @@ $items_match = array(
 				"uname"		=> _MA_USER_UNAME,
 				"name"		=> _MA_USER_REALNAME,
 				"email"		=> _MA_USER_EMAIL,
-				"user_icq"	=> _MA_USER_ICQ,
-				"user_aim"	=> _MA_USER_AIM,
-				"user_yim"	=> _MA_USER_YIM,
-				"user_msnm"	=> _MA_USER_MSNM
 );
 
 $items_range = array(
@@ -386,7 +382,7 @@ if (empty($_POST["user_submit"])) {
 		$hiddenform .= "</form>";
 
 		echo "<div>" . $hiddenform;
-		echo "<a href='#' onclick='javascript:document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
+		echo "<a href='#' onclick='document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
 		echo "</div>";
 	} elseif ($start < $total) {
 		if (!empty($total)) {
@@ -470,7 +466,7 @@ if (empty($_POST["user_submit"])) {
 		if (!isset($total) || ($totalpages = ceil($total / $limit)) > 1) {
 			$prev = $start - $limit;
 			if ($start - $limit >= 0) {
-				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _MA_USER_PREVIOUS . "</a>&nbsp;\n";
+				$hiddenform .= "<a href='#0' onclick='document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _MA_USER_PREVIOUS . "</a>&nbsp;\n";
 			}
 			$counter = 1;
 			$currentpage = ($start + $limit) / $limit;
@@ -481,7 +477,7 @@ if (empty($_POST["user_submit"])) {
 					if ($counter == $currentpage) {
 						$hiddenform .= "<strong>" . $counter . "</strong> ";
 					} elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1) {
-						$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+						$hiddenform .= "<a href='#" . $counter . "' onclick='document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 						if ($counter == 1 && $currentpage > 5) {
 							$hiddenform .= "... ";
 						}
@@ -498,7 +494,7 @@ if (empty($_POST["user_submit"])) {
 						if ($counter == $totalpages && $currentpage < $totalpages - 4) {
 							$hiddenform .= "... ";
 						}
-						$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+						$hiddenform .= "<a href='#" . $counter . "' onclick='document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 						if ($counter == 1 && $currentpage > 5) {
 							$hiddenform .= "... ";
 						}
@@ -509,7 +505,7 @@ if (empty($_POST["user_submit"])) {
 
 			$next = $start + $limit;
 			if ((isset($total) && $total > $next) || (!isset($total) && count($foundusers) >= $limit)) {
-				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _MA_USER_NEXT . "</a>\n";
+				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _MA_USER_NEXT . "</a>\n";
 			}
 		}
 		$hiddenform .= "</form>";
@@ -518,7 +514,7 @@ if (empty($_POST["user_submit"])) {
 		if (isset($total)) {
 			echo "<br />" . sprintf(_MA_USER_USERSFOUND, $total) . "&nbsp;";
 		}
-		echo "<a href='#' onclick='javascript:document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
+		echo "<a href='#' onclick='document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
 		echo "</div>";
 	}
 }

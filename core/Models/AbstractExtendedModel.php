@@ -208,6 +208,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 			return $form_caption;
 		}
 		$dyn_form_caption = strtoupper('_CO_' . $this->handler->moduleName . '_' . $this->handler->_itemname . '_' . $key);
+
 		if (defined($dyn_form_caption)) {
 					$form_caption = constant($dyn_form_caption);
 		} else {
@@ -222,6 +223,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 			return $form_dsc;
 		}
 		$dyn_form_dsc = strtoupper('_CO_' . $this->handler->moduleName . '_' . $this->handler->_itemname . '_' . $key);
+
 		if (defined($dyn_form_dsc)) {
 			$form_dsc = constant($dyn_form_dsc);
 		} else {
@@ -1097,7 +1099,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		 $data = array('vars' => parent::getValues(),
 					   'handler' => array(
 						   'module' => $this->handler->_moduleName,
-						   'itemname' => $this->handler->_itemname
+						   'itemname' => $this->handler->itemName
 					   ));
 		return serialize($data);
 	}

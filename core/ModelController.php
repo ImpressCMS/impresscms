@@ -64,7 +64,7 @@ class ModelController
 							$icmsObj->setErrors('An error occured during the beforeFileUnlink event');
 						}
 						$oldFile = $icmsObj->getUploadDir(true) . $icmsObj->getVar($key, 'e');
-						$icmsObj->setVar($key, $_POST['url_' . $key]);
+						$icmsObj->setVar($key, preg_replace('|[\.]+\/|', './', $_POST['url_' . $key]));
 						if (is_file($oldFile)) {
 							unlink($oldFile);
 						}
@@ -110,7 +110,7 @@ class ModelController
 						$fileObj->setVar('mid', $_POST['mid_' . $key]);
 						$fileObj->setVar('caption', $_POST['caption_' . $key]);
 						$fileObj->setVar('description', $_POST['desc_' . $key]);
-						$fileObj->setVar('url', $_POST['url_' . $key]);
+						$fileObj->setVar('url', preg_replace('|[\.]+\/|', './', $_POST['url_' . $key]));
 						if (!($fileObj->getVar('url') == '' && $fileObj->getVar('url') == '' && $fileObj->getVar('url') == '')) {
 							$res = $icmsObj->storeFileObj($fileObj);
 							if ($res) {
@@ -504,9 +504,9 @@ class ModelController
 		$seoIncludeId = true;
 
 		/*if ($seoMode == 'rewrite') {
-			$ret = ICMS_URL . '/' . $seoModuleName . '.' . $this->handler->_itemname . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
+			$ret = ICMS_URL . '/' . $seoModuleName . '.' . $this->handler->itemName . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
 			} else if ($seoMode == 'pathinfo') {
-			$ret = SMARTOBJECT_URL . 'seo.php/' . $seoModuleName . '.' . $this->handler->_itemname . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
+			$ret = SMARTOBJECT_URL . 'seo.php/' . $seoModuleName . '.' . $this->handler->itemName . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
 			} else {
 			*/
 		$ret = $this->handler->_moduleUrl . $this->handler->_page . '?' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
@@ -534,8 +534,8 @@ class ModelController
 		} else {
 			$admin_side = '';
 			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct='
-				. $this->handler->_itemname . '&amp;op=view&amp;'
-				. $this->handler->keyName . '='
+				. $this->handler->itemName . "&amp;op=view&amp;"
+				. $this->handler->keyName . "="
 				. $icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {

@@ -190,7 +190,6 @@ class User extends AbstractExtendedModel {
 		$this->setControl('language', 'language');
 		$this->setControl('uname', 'text');
 		$this->setControl('login_name', 'text');
-		$this->setControl('user_aim', 'text');
 		$this->setControl('actkey', 'text');
 		$this->setControl('name', 'text');
 		$this->setControl('url', 'text');

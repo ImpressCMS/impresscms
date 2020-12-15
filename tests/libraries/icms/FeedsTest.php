@@ -2,12 +2,17 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use icms_feeds_Rss;
+use icms_feeds_Simplerss;
+use PHPUnit\Framework\TestCase;
+use SimplePie;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class FeedsTest extends \PHPUnit_Framework_TestCase {
+class FeedsTest extends TestCase {
 
     /**
      * Test if is available
@@ -21,24 +26,15 @@ class FeedsTest extends \PHPUnit_Framework_TestCase {
      * Test RSS vars
      */
     public function testIfVarExistsForRSS() {
-        $instance = new \icms_feeds_Rss();
+        $instance = new icms_feeds_Rss();
         foreach ([
             'title',
             'url',
             'description',
-            'language',
-            'charset',
-            'category',
             'pubDate',
-            'webMaster',
-            'generator',
             'copyright',
             'lastbuild',
-            'channelEditor',
-            'width',
-            'height',
             'ttl',
-            'image'
         ] as $var) {
             $this->assertTrue(property_exists($instance, $var), "icms_feeds_Rss doesn't have $" . $var);
         }
@@ -48,7 +44,7 @@ class FeedsTest extends \PHPUnit_Framework_TestCase {
      * Test if some public methods for RSS exists
      */
     public function testMethodsAvailabiliryRSS() {
-        $instance = new \icms_feeds_Rss();
+        $instance = new icms_feeds_Rss();
         $this->assertTrue(method_exists($instance, 'render'), 'render doesn\'t exists');
     }
 
@@ -56,8 +52,8 @@ class FeedsTest extends \PHPUnit_Framework_TestCase {
      * Tests SimpleRSS methods
      */
     public function testMethodsAvailabilitySimpleRSS() {
-        $instance = new \icms_feeds_Simplerss();
-        $this->assertInstanceOf(\SimplePie::class, $instance, 'icms_feeds_Simplerss is not extended from SimplePie');
+        $instance = new icms_feeds_Simplerss();
+        $this->assertInstanceOf(SimplePie::class, $instance, 'icms_feeds_Simplerss is not extended from SimplePie');
     }
 
 }

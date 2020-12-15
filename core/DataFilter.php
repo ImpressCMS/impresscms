@@ -846,16 +846,15 @@ class DataFilter
 	/**
 	 * loads the textsanitizer plugins
 	 *
-	 * @param string $name Name of the extension to load
-	 * @return    bool
-	 * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+	 * @copyright	(c) 2007-2010 The ImpressCMS Project - www.impresscms.org
 	 *
+	 * @param	 string	$name	 Name of the extension to load
+	 * @return	bool
+	 *
+	 * @deprecated Does nothing will be removed in 2.1
 	 */
-	public static function loadExtension($name)
-	{
-		if (empty($name) || !include_once ICMS_PLUGINS_PATH . "/textsanitizer/{$name}/{$name}.php") {
-			return false;
-		}
+	static public function loadExtension($name) {
+
 	}
 
 	/**
