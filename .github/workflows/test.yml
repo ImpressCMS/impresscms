@@ -16,36 +16,33 @@ on:
 
 jobs:
   run:
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       max-parallel: 3
       matrix:
-        operating-system:
+        os:
           - ubuntu-latest
           #- windows-latest # Todo: make it work also for windows
           #- macOS-latest # Todo: make it work also for macos
-        php-versions:
-          - 7.2
+        php:
           - 7.3
           - 7.4
-        database-system:
+        database:
           - mysql:5.6
           - mariadb:10.1
+        composer:
+          - 1
         experimental: [false]
         include:
-          - operating-system: ubuntu-latest
-            php-versions: 8.0
-            database-system: mysql:5.6
+          - os: ubuntu-latest
+            php: 8.0
+            database: mysql:5.6
             experimental: true
-          - operating-system: ubuntu-latest
-            php-versions: 8.0
-            database-system: mariadb:10.1
-            experimental: true
-    name: PHP ${{ matrix.php-versions }} with ${{ matrix.database-system }} test on ${{ matrix.operating-system }} [${{ matrix.experimental }}]
+    name: Test - php:${{ matrix.php }}; ${{ matrix.database }}; ${{ matrix.os }}; composer:${{ matrix.composer }}
     services:
       mysql:
-        image: ${{ matrix.database-system }}
+        image: ${{ matrix.database }}
         env:
           MYSQL_ROOT_PASSWORD: icms
           MYSQL_DATABASE: icms
@@ -62,11 +59,11 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@master
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php }}
           extensions: curl, gd, pdo_mysql, json, mbstring, pcre, session
           ini-values: post_max_size=256M
-          coverage: xdebug
-          tools: phpunit:5.7.27
+          coverage: none
+          tools: composer:v${{ matrix.composer }}
       - name: Check PHP Version
         run: php -v
       - name: Verify MySQL connection
@@ -74,19 +71,8 @@ jobs:
           sudo apt-get update -q -y
           sudo apt-get install -y mysql-client
           mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -picms -e "SHOW DATABASES"
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer dependencies
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          # Use composer.json for key, if composer.lock is not committed.
-          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --no-dev --prefer-dist --optimize-autoloader
+      - name: Install Composer dependencies (with dev)
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
         continue-on-error: ${{ matrix.experimental }}
       - name: Installing ImpressCMS
         env:
@@ -130,10 +116,16 @@ jobs:
         run: |
           export APP_KEY=`php ./bin/console generate:app:key`
           ls tests/ -la
-          phpunit
-          mv ./storage/log/clover.xml ./clover.xml
+          ./bin/phpunit --testdox
+        #  mv ./storage/log/clover.xml ./clover.xml
         continue-on-error: ${{ matrix.experimental }}
-      - name: Commiting CodeClimate data
-        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover -r ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
-        if: ${{ success() }}        
+      - name: Deleting vendor/
+        run: rm -rf vendor/
         continue-on-error: ${{ matrix.experimental }}
+      - name: Install Composer dependencies (without dev)
+        run: composer install --no-progress --no-dev --no-suggest --prefer-dist --optimize-autoloader
+        continue-on-error: ${{ matrix.experimental }}
+#      - name: Commiting CodeClimate data
+#        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover -r ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
+#        if: ${{ success() }}
+#        continue-on-error: ${{ matrix.experimental }}

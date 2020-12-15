@@ -4,13 +4,14 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 use ImpressCMS\Core\Models\AbstractExtendedModel;
+use PHPUnit\Framework\TestCase;
 
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class DataFileTest extends \PHPUnit_Framework_TestCase {
+class DataFileTest extends TestCase {
 
     /**
      * Test if icms_core_DataFilter is available
@@ -21,7 +22,7 @@ class DataFileTest extends \PHPUnit_Framework_TestCase {
                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
 
                $instance = $this->getInstanceWithoutConstructor($class);
-               $this->assertInternalType('object', $instance, $class. ' is not an object');
+               $this->assertIsObject( $instance, $class. ' is not an object');
                $this->assertInstanceOf($instanecOfType, $instance, $class . ' doesn\'t extend ' . $instanecOfType);
         }
     }

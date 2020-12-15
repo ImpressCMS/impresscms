@@ -8,6 +8,8 @@ use Defuse\Crypto\Key;
 use Ellipse\Cookies\EncryptCookiesMiddleware;
 use icms;
 use icms_config_Handler;
+use icms_module_Handler;
+use Http\Factory\Guzzle\ResponseFactory;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use ImpressCMS\Core\Middlewares\HasGroupMiddleware;
@@ -20,6 +22,8 @@ use Psr\Container\ContainerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+use Middlewares\ClientIp;
+use Middlewares\Firewall;
 
 /**
  * let register routes in composer.json
@@ -100,6 +104,19 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\GzipEncoder\');';
 			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\DeflateEncoder\');';
 		}
+
+		if ($mainConfig['enable_badips']) {
+			$ret[] = '$router->middleware(new \\'.ClientIp::class.'());';
+			$ret[] = '$router->middleware(';
+			$ret[] = '    (new \\'.Firewall::class.'(';
+			$ret[] = '        null,';
+			$ret[] = '        $container->get('.var_export('\\'.ResponseFactory::class, true).')';
+			$ret[] = '    ))->blacklist(';
+			$ret[] = '        ' . json_encode($mainConfig['bad_ips']);
+			$ret[] = '    )->ipAttribute(\'client-ip\')';
+			$ret[] = ');';
+		}
+
 	}
 
 	/**
@@ -115,10 +132,13 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			' */',
 			'$strategy = $router->getStrategy();',
 			'$container = $strategy->getContainer();',
-			'',
 		];
 
 		$this->addMiddlewaresDependingOnConfig($ret);
+
+		$ret[] = 'if (env(\'LOGGING_ENABLED\', false)) {';
+		$ret[] = '    $router->lazyMiddleware(\'\\\\Tuupola\\\\Middleware\\\\ServerTimingMiddleware\');';
+		$ret[] = '}';
 
 		$ret[] = '$router->lazyMiddlewares(' .
 			json_encode(
@@ -132,7 +152,6 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			) .
 			');';
 
-		$prefixOfRoute = $this->getPrefixPathOfRoute();
 		$routes = array_merge(
 			$this->getOldStyleRoutes(),
 			$data['routes'] ?? []
@@ -167,7 +186,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$ret[] = $linePrefix . sprintf(
 					'    ->map(%s, %s, %s)%s',
 					var_export($parsedDefinition['method'], true),
-					var_export(($group === ''? $prefixOfRoute : '') . $parsedDefinition['path'], true),
+					var_export( $parsedDefinition['path'], true),
 					var_export($parsedDefinition['handler'], true),
 					$hasExtraConfig ? '' : ';'
 				);
@@ -228,15 +247,6 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		}
 
 		file_put_contents($this->getCacheFilename(), implode(PHP_EOL, $ret), LOCK_EX);
-	}
-
-	/**
-	 * Gets prefix path of route
-	 *
-	 * @return string
-	 */
-	protected function getPrefixPathOfRoute() {
-		return rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 	}
 
 	/**
@@ -304,7 +314,6 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		);
 		$group =  str_replace(ICMS_ROOT_PATH, '', $path);
 		$groupLen = mb_strlen($group);
-		$group = $this->getPrefixPathOfRoute() . $group;
 
 		$handler = LegacyController::class . '::proxy';
 		/**
