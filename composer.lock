@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2cdf799e34956728c9d199b7f4bd4bda",
+    "content-hash": "101ee09a8064edf270821eb7910306b3",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -1678,6 +1678,53 @@
             "time": "2020-04-16T13:19:50+00:00"
         },
         {
+            "name": "m6web/firewall",
+            "version": "v1.0.3",
+            "target-dir": "M6Web/Component/Firewall",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/M6Web/Firewall.git",
+                "reference": "3ba2b48788176c8b25288bc5320a75c94d6c0b36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/M6Web/Firewall/zipball/3ba2b48788176c8b25288bc5320a75c94d6c0b36",
+                "reference": "3ba2b48788176c8b25288bc5320a75c94d6c0b36",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "atoum/atoum": "^2.8|^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "M6Web\\Component\\Firewall": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "M6Web",
+                    "email": "opensource@m6web.fr",
+                    "homepage": "http://tech.m6web.fr/"
+                }
+            ],
+            "description": "Library providing IP filtering features",
+            "keywords": [
+                "IP",
+                "filtering",
+                "firewall"
+            ],
+            "time": "2019-10-15T08:29:16+00:00"
+        },
+        {
             "name": "matomo/referrer-spam-blacklist",
             "version": "4.0.0",
             "source": {
@@ -1705,16 +1752,64 @@
         },
         {
             "name": "middlewares/base-path",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/middlewares/base-path.git",
-                "reference": "1427d8a4976eed887626a6b99b1758e4b7b8e8fc"
+                "reference": "a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/base-path/zipball/1427d8a4976eed887626a6b99b1758e4b7b8e8fc",
-                "reference": "1427d8a4976eed887626a6b99b1758e4b7b8e8fc",
+                "url": "https://api.github.com/repos/middlewares/base-path/zipball/a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5",
+                "reference": "a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "laminas/laminas-diactoros": "^2.3",
+                "middlewares/utils": "^3.0",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8|^9",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to remove the prefix from the uri path of the request.",
+            "homepage": "https://github.com/middlewares/base-path",
+            "keywords": [
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "server"
+            ],
+            "time": "2020-12-02T00:05:17+00:00"
+        },
+        {
+            "name": "middlewares/client-ip",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/client-ip.git",
+                "reference": "26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/client-ip/zipball/26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f",
+                "reference": "26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f",
                 "shasum": ""
             },
             "require": {
@@ -1739,16 +1834,17 @@
             "license": [
                 "MIT"
             ],
-            "description": "Middleware to remove the prefix from the uri path of the request.",
-            "homepage": "https://github.com/middlewares/base-path",
+            "description": "Middleware to detect the client ip and save it as a request attribute",
+            "homepage": "https://github.com/middlewares/client-ip",
             "keywords": [
+                "IP",
                 "http",
                 "middleware",
                 "psr-15",
                 "psr-7",
                 "server"
             ],
-            "time": "2019-11-30T01:50:59+00:00"
+            "time": "2019-12-03T00:18:25+00:00"
         },
         {
             "name": "middlewares/encoder",
@@ -1802,31 +1898,83 @@
             "time": "2020-01-24T16:53:17+00:00"
         },
         {
-            "name": "middlewares/referrer-spam",
+            "name": "middlewares/firewall",
             "version": "v2.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/middlewares/referrer-spam.git",
-                "reference": "29de3090af44722817ce0bdce0fa841217b010bd"
+                "url": "https://github.com/middlewares/firewall.git",
+                "reference": "5e51989947bc6adb9e85be1edeff3f1300f5b23e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/referrer-spam/zipball/29de3090af44722817ce0bdce0fa841217b010bd",
-                "reference": "29de3090af44722817ce0bdce0fa841217b010bd",
+                "url": "https://api.github.com/repos/middlewares/firewall/zipball/5e51989947bc6adb9e85be1edeff3f1300f5b23e",
+                "reference": "5e51989947bc6adb9e85be1edeff3f1300f5b23e",
+                "shasum": ""
+            },
+            "require": {
+                "m6web/firewall": "^1.0",
+                "middlewares/utils": "^3.0",
+                "php": "^7.2",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "laminas/laminas-diactoros": "^2.3",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpunit/phpunit": "^8.1",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to provide IP filtering",
+            "homepage": "https://github.com/middlewares/firewall",
+            "keywords": [
+                "IP",
+                "filter",
+                "firewall",
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "security",
+                "server"
+            ],
+            "time": "2020-08-02T19:07:34+00:00"
+        },
+        {
+            "name": "middlewares/referrer-spam",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/referrer-spam.git",
+                "reference": "276a343d0d958bb1d693107f6905a33608983372"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/referrer-spam/zipball/276a343d0d958bb1d693107f6905a33608983372",
+                "reference": "276a343d0d958bb1d693107f6905a33608983372",
                 "shasum": ""
             },
             "require": {
                 "matomo/referrer-spam-blacklist": "*",
                 "middlewares/utils": "^3.0",
-                "mindplay/composer-locator": "^2.1",
-                "php": "^7.2",
+                "php": "^7.2 || ^8.0",
                 "psr/http-server-middleware": "^1.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.0",
                 "laminas/laminas-diactoros": "^2.2",
                 "oscarotero/php-cs-fixer-config": "^1.0",
-                "phpunit/phpunit": "^8.1",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8|^9",
                 "squizlabs/php_codesniffer": "^3.0",
                 "true/punycode": "^2.1"
             },
@@ -1856,7 +2004,7 @@
                 "security",
                 "spam"
             ],
-            "time": "2020-10-13T17:45:53+00:00"
+            "time": "2020-12-04T00:35:11+00:00"
         },
         {
             "name": "middlewares/utils",
@@ -1915,47 +2063,6 @@
                 "psr-7"
             ],
             "time": "2020-11-30T20:07:15+00:00"
-        },
-        {
-            "name": "mindplay/composer-locator",
-            "version": "2.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mindplay-dk/composer-locator.git",
-                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mindplay-dk/composer-locator/zipball/629988d5305cd8ef11adbd6bb485660219c599fc",
-                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1",
-                "php": ">= 5.4"
-            },
-            "require-dev": {
-                "composer/composer": "^1",
-                "mindplay/testies": "^0.3.0",
-                "symfony/filesystem": "^2.7 || ^3.0",
-                "symfony/process": "^2.7 || ^3.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "mindplay\\composer_locator\\Plugin"
-            },
-            "autoload": {
-                "classmap": [
-                    "src/ComposerLocator.php",
-                    "src/Plugin.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Locates Composer package root folders by package name",
-            "time": "2017-05-08T12:12:31+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4527,6 +4634,47 @@
             "time": "2020-11-10T18:47:58+00:00"
         },
         {
+            "name": "mindplay/composer-locator",
+            "version": "2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mindplay-dk/composer-locator.git",
+                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mindplay-dk/composer-locator/zipball/629988d5305cd8ef11adbd6bb485660219c599fc",
+                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1",
+                "php": ">= 5.4"
+            },
+            "require-dev": {
+                "composer/composer": "^1",
+                "mindplay/testies": "^0.3.0",
+                "symfony/filesystem": "^2.7 || ^3.0",
+                "symfony/process": "^2.7 || ^3.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "mindplay\\composer_locator\\Plugin"
+            },
+            "autoload": {
+                "classmap": [
+                    "src/ComposerLocator.php",
+                    "src/Plugin.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Locates Composer package root folders by package name",
+            "time": "2017-05-08T12:12:31+00:00"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.10.2",
             "source": {
@@ -6412,5 +6560,8 @@
         "ext-session": "*"
     },
     "platform-dev": [],
+    "platform-overrides": {
+        "php": "7.3.0"
+    },
     "plugin-api-version": "1.1.0"
 }

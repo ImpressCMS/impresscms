@@ -37,7 +37,8 @@ class SecurityTest extends TestCase {
 		$container = new Container();
 		$container->addServiceProvider(SecurityServiceProvider::class);
 		$instance = $container->get('security');
-        foreach ([ 'check', 'createToken', 'validateToken', 'clearTokens', 'filterToken', 'garbageCollection', 'checkReferer', 'checkBadips', 'getTokenHTML', 'setErrors', 'getErrors' ] as $method) {
+
+        foreach ([ 'check', 'createToken', 'validateToken', 'clearTokens', 'filterToken', 'garbageCollection', 'checkReferer', 'checkSuperglobals', 'getTokenHTML', 'setErrors', 'getErrors' ] as $method) {
             $this->assertTrue(method_exists($instance, $method), $method . ' doesn\'t exists');
         }
     }
