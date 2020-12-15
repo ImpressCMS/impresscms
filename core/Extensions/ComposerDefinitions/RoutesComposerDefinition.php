@@ -8,7 +8,6 @@ use Defuse\Crypto\Key;
 use Ellipse\Cookies\EncryptCookiesMiddleware;
 use icms;
 use icms_config_Handler;
-use icms_module_Handler;
 use Http\Factory\Guzzle\ResponseFactory;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
