@@ -3,9 +3,11 @@
 namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 
 use FilesystemIterator;
+use icms_module_Handler;
+use Defuse\Crypto\Key;
+use Ellipse\Cookies\EncryptCookiesMiddleware;
 use icms;
 use icms_config_Handler;
-use icms_module_Handler;
 use Http\Factory\Guzzle\ResponseFactory;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
@@ -86,6 +88,16 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		 */
 		$configHandler = icms::handler('icms_config');
 		$mainConfig = $configHandler->getConfigsByCat(icms_config_Handler::CATEGORY_MAIN);
+
+		if ($mainConfig['encrypt_cookies']) {
+			$ret[] = '$router->middleware(';
+			$ret[] = '    new \\' . EncryptCookiesMiddleware::class.'(';
+			$ret[] = '        \\' . Key::class . '::loadFromAsciiSafeString(';
+			$ret[] = '             env(\'APP_KEY\')';
+			$ret[] = '        )';
+			$ret[] = '    )';
+			$ret[] = ');';
+		}
 
 		if ($mainConfig['gzip_compression']) {
 			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\GzipEncoder\');';

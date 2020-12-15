@@ -684,3 +684,6 @@ define("_MD_AM_ENC_RIPEMD256", "RIPEMD 256");
 define("_MD_AM_ENC_RIPEMD320", "RIPEMD 320");
 define("_MD_AM_ENC_SNEFRU256", "Snefru 256");
 define("_MD_AM_ENC_GOST", "Gost");
+// added in 2.0 alphas
+define('_MD_AM_ENCRYPT_COOKIES', 'Encrypt cookies');
+define('_MD_AM_ENCRYPT_COOKIESDSC', 'Cookies will be automatically encrypted/decrypted with APP_KEY. Warning: some older module can not work correctly if this setting is on');

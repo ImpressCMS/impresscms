@@ -54,6 +54,7 @@
     "composer/composer": "^1.10",
     "dompdf/dompdf": "^0.8.5",
     "erusev/parsedown": "^1.7",
+    "ellipse/cookie-encryption": "^1.0",
     "defuse/php-encryption": "^2.2",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",

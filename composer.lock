@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+    "content-hash": "c07c096a93d6a74550c3f288f3d8a4a8",
 
-    "content-hash": "1ceb4f3b59deba29c823f0651274b80a",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -797,6 +797,60 @@
             "time": "2018-07-24T23:27:56+00:00"
         },
         {
+
+            "name": "dflydev/fig-cookies",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-fig-cookies.git",
+                "reference": "883233c159d00d39e940bd12cfe42c0d23420c1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-fig-cookies/zipball/883233c159d00d39e940bd12cfe42c0d23420c1c",
+                "reference": "883233c159d00d39e940bd12cfe42c0d23420c1c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "psr/http-message": "~1.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "~0.1@dev",
+                "phpunit/phpunit": "~4.5",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dflydev\\FigCookies\\": "src/Dflydev/FigCookies"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com"
+                }
+            ],
+            "description": "Cookies for PSR-7 HTTP Message Interface.",
+            "keywords": [
+                "cookies",
+                "psr-7",
+                "psr7"
+            ],
+            "time": "2016-03-28T09:10:18+00:00"
+        },
+        {
+
             "name": "dompdf/dompdf",
             "version": "v0.8.6",
             "source": {
@@ -863,6 +917,60 @@
             "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
             "homepage": "https://github.com/dompdf/dompdf",
             "time": "2020-08-30T22:54:22+00:00"
+        },
+        {
+            "name": "ellipse/cookie-encryption",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ellipsephp/cookie-encryption.git",
+                "reference": "cf47e50e818dcd75cfcc4bf176bc614625c9e54e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ellipsephp/cookie-encryption/zipball/cf47e50e818dcd75cfcc4bf176bc614625c9e54e",
+                "reference": "cf47e50e818dcd75cfcc4bf176bc614625c9e54e",
+                "shasum": ""
+            },
+            "require": {
+                "defuse/php-encryption": "^2.1",
+                "dflydev/fig-cookies": "^1.0",
+                "php": ">=7.1",
+                "psr/http-message": "^1.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "eloquent/phony-kahlan": "^1.0",
+                "kahlan/kahlan": "^4.0",
+                "zendframework/zend-diactoros": "^1.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ellipse\\Cookies\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "pmall",
+                    "email": "pierre.mallinjoud@gmail.com"
+                }
+            ],
+            "description": "Psr-15 middleware allowing to encrypt cookies using defuse/php-encryption",
+            "homepage": "https://github.com/ellipsephp/cookie-encryption",
+            "keywords": [
+                "cookie",
+                "encryption",
+                "middleware",
+                "psr-15",
+                "psr-7"
+            ],
+            "time": "2018-01-23T10:51:09+00:00"
         },
         {
             "name": "erusev/parsedown",
