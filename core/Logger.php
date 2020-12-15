@@ -302,7 +302,7 @@ class Logger extends \Monolog\Logger
 			['/', '', ''],
 			$path
 		);
-		if ($path{0} === '/') {
+		if ($path[0] === '/') {
 			$path = substr($path, 1);
 		}
 		return $path;
