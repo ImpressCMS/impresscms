@@ -277,23 +277,10 @@ class AbstractExtendedHandler extends AbstractHandler {
 	public function __get($name)
 	{
 		switch ($name) {
-			case '_moduleName':
-				return $this->moduleName;
-		}
-	}
-
-	/**
-	 * Gets property
-	 *
-	 * @param string $name Property name
-	 *
-	 * @return string
-	 */
-	public function __get($name)
-	{
-		switch ($name) {
 			case '_itemname':
 				return $this->itemName;
+			case '_moduleName':
+				return $this->moduleName;
 		}
 	}
 
