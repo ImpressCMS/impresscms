@@ -62,7 +62,7 @@ class ModelController
 							$icmsObj->setErrors('An error occured during the beforeFileUnlink event');
 						}
 						$oldFile = $icmsObj->getUploadDir(true) . $icmsObj->getVar($key, 'e');
-						$icmsObj->setVar($key, $_POST['url_' . $key]);
+						$icmsObj->setVar($key, preg_replace('|[\.]+\/|', './', $_POST['url_' . $key]));
 						if (is_file($oldFile)) {
 							unlink($oldFile);
 						}
@@ -108,7 +108,7 @@ class ModelController
 						$fileObj->setVar('mid', $_POST['mid_' . $key]);
 						$fileObj->setVar('caption', $_POST['caption_' . $key]);
 						$fileObj->setVar('description', $_POST['desc_' . $key]);
-						$fileObj->setVar('url', $_POST['url_' . $key]);
+						$fileObj->setVar('url', preg_replace('|[\.]+\/|', './', $_POST['url_' . $key]));
 						if (!($fileObj->getVar('url') == '' && $fileObj->getVar('url') == '' && $fileObj->getVar('url') == '')) {
 							$res = $icmsObj->storeFileObj($fileObj);
 							if ($res) {
