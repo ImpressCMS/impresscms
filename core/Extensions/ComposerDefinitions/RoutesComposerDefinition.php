@@ -123,6 +123,10 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 
 		$this->addMiddlewaresDependingOnConfig($ret);
 
+		$ret[] = 'if (env(\'LOGGING_ENABLED\', false)) {';
+		$ret[] = '    $router->lazyMiddleware(\'\\\\Tuupola\\\\Middleware\\\\ServerTimingMiddleware\');';
+		$ret[] = '}';
+
 		$ret[] = '$router->lazyMiddlewares(' .
 			json_encode(
 				array_map(

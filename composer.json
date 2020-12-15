@@ -81,6 +81,7 @@
     "suin/php-rss-writer": "^1.6",
     "symfony/console": ">5.0",
     "symfony/polyfill-iconv": "^1.12",
+    "tuupola/server-timing-middleware": "^0.8.2",
     "true/punycode": "^2.1",
     "typo3/class-alias-loader": "^1.1",
     "vlucas/phpdotenv": "^3.3.3"
@@ -386,6 +387,14 @@
         "class": "\\ImpressCMS\\Editors\\TinyMCE\\Editor",
         "tags": [
           "editor.content"
+        ]
+      },
+      "stopwatch": {
+        "class": "\\Tuupola\\Middleware\\ServerTiming\\Stopwatch"
+      },
+      "\\Tuupola\\Middleware\\ServerTimingMiddleware": {
+        "arguments": [
+          "stopwatch"
         ]
       },
       "codemirror": {
