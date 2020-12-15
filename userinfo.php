@@ -157,13 +157,6 @@ icms_makeSmarty(array(
 			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid')))))
 		?$thisUser->getVar('email', 'E')
 		: '&nbsp;',
-	'user_openid' => ($icmsConfigAuth['auth_openid'] == true
-			&& ($thisUser->getVar('user_viewoid') == true
-			|| (is_object(icms::$user)
-			&& (icms::$user->isAdmin()
-			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid'))))))
-		?$thisUser->getVar('openid', 'E')
-		: '&nbsp;'
 ));
 
 if ($icmsConfigUser['allwshow_sig'] == true && strlen(trim($thisUser->user_sig)) > 0) {
