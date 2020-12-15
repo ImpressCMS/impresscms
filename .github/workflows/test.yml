@@ -97,7 +97,6 @@ jobs:
           DB_CHARSET: utf8
           DB_COLLATION: utf8_general_ci
           DB_PREFIX: icms
-          DB_SALT: icms
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           INSTALL_ADMIN_PASS: test
           INSTALL_ADMIN_LOGIN: test
@@ -124,9 +123,9 @@ jobs:
           DB_CHARSET: utf8
           DB_COLLATION: utf8_general_ci
           DB_PREFIX: icms
-          DB_SALT: icms
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
         run: |
+          export APP_KEY=`php ./bin/console generate:app:key`
           ls tests/ -la
           ./bin/phpunit --testdox
         #  mv ./storage/log/clover.xml ./clover.xml
