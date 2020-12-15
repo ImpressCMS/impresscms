@@ -60,12 +60,8 @@ $op = '';
 	'vpass'=> 'str',
 	'name'=> 'str',
 	'url' => 'url',
-	'user_icq'=> 'str',
 	'user_from'=> 'str',
 	'user_viewemail' => 'int',
-	'user_aim'=> 'str',
-	'user_yim'=> 'str',
-	'user_msnm'=> 'str',
 	'attachsig' => 'int',
 	'timezone_offset'=> 'str',
 	'uorder'=> 'str',
@@ -225,7 +221,6 @@ switch ($op) {
 				}
 
 				$edituser->setVar('url', formatURL($url));
-				$edituser->setVar('user_icq', $user_icq);
 				$edituser->setVar('user_from', $user_from);
 				if ($icmsConfigUser['allwshow_sig'] == 1) {
 					if ($icmsConfigUser['allow_htsig'] == 0) {
@@ -239,9 +234,6 @@ switch ($op) {
 
 				$user_viewemail = (!empty($user_viewemail))?1:0;
 				$edituser->setVar('user_viewemail', $user_viewemail);
-				$edituser->setVar('user_aim', $user_aim);
-				$edituser->setVar('user_yim', $user_yim);
-				$edituser->setVar('user_msnm', $user_msnm);
 				if ($password != '') {
 					$icmspass = new icms_core_Password();
 					$pass = $icmspass->encryptPass($password);
@@ -334,10 +326,6 @@ switch ($op) {
 			$form->addElement($url_text);
 
 			$timezone_select = new icms_form_elements_select_Timezone(_US_TIMEZONE, 'timezone_offset', icms::$user->getVar('timezone_offset'));
-			$icq_text = new icms_form_elements_Text(_US_ICQ, 'user_icq', 15, 15, icms::$user->getVar('user_icq', 'E'));
-			$aim_text = new icms_form_elements_Text(_US_AIM, 'user_aim', 18, 18, icms::$user->getVar('user_aim', 'E'));
-			$yim_text = new icms_form_elements_Text(_US_YIM, 'user_yim', 25, 25, icms::$user->getVar('user_yim', 'E'));
-			$msnm_text = new icms_form_elements_Text(_US_MSNM, 'user_msnm', 30, 100, icms::$user->getVar('user_msnm', 'E'));
 			$location_text = new icms_form_elements_Text(_US_LOCATION, 'user_from', 30, 100, icms::$user->getVar('user_from', 'E'));
 			$occupation_text = new icms_form_elements_Text(_US_OCCUPATION, 'user_occ', 30, 100, icms::$user->getVar('user_occ', 'E'));
 			$interest_text = new icms_form_elements_Text(_US_INTEREST, 'user_intrest', 30, 150, icms::$user->getVar('user_intrest', 'E'));
@@ -397,10 +385,6 @@ switch ($op) {
 			$submit_button = new icms_form_elements_Button('', 'submit', _US_SAVECHANGES, 'submit');
 
 			$form->addElement($timezone_select);
-			$form->addElement($icq_text);
-			$form->addElement($aim_text);
-			$form->addElement($yim_text);
-			$form->addElement($msnm_text);
 			$form->addElement($location_text);
 			$form->addElement($occupation_text);
 			$form->addElement($interest_text);

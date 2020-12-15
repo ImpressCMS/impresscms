@@ -48,9 +48,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * The name of the IPF object
 	 *
 	 * @var string
-	 * @todo    Rename using the proper naming convention (this is a public var)
 	 */
-	public $_itemname = '';
+	public $itemName = '';
 	/**
 	 * Name of the table use to store objects linked with this handler
 	 *
@@ -257,7 +256,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		}
 
 		$this->table = $db->prefix($table);
-		$this->_itemname = $itemname;
+		$this->itemName = $itemname;
 		$this->keyName = $keyname;
 		$this->className = $classname;
 		$this->identifierName = $idenfierName;
@@ -267,6 +266,21 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$this->_moduleUrl = ICMS_URL . '/modules/' . $this->_moduleName . '/';
 		$this->_uploadPath = ICMS_UPLOAD_PATH . '/' . $this->_moduleName . '/';
 		$this->_uploadUrl = ICMS_UPLOAD_URL . '/' . $this->_moduleName . '/';
+	}
+
+	/**
+	 * Gets property
+	 *
+	 * @param string $name Property name
+	 *
+	 * @return string
+	 */
+	public function __get($name)
+	{
+		switch ($name) {
+			case '_itemname':
+				return $this->itemName;
+		}
 	}
 
 	/**
@@ -395,7 +409,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		if ($this->generalSQL) {
 			$sql = $this->generalSQL;
 		} elseif (!$sql) {
-			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM `' . $this->table . '` AS ' . $this->_itemname;
+			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM `' . $this->table . '` AS ' . $this->itemName;
 		}
 
 		if (isset($criteria) && $criteria instanceof CriteriaElement) {
@@ -608,7 +622,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 */
 	public function getImageUrl()
 	{
-		return $this->_uploadUrl . $this->_itemname . '/';
+		return $this->_uploadUrl . $this->itemName . '/';
 	}
 
 	/**
@@ -616,7 +630,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 */
 	public function getImagePath()
 	{
-		$dir = $this->_uploadPath . $this->_itemname;
+		$dir = $this->_uploadPath . $this->itemName;
 		if (!file_exists($dir)) {
 			Filesystem::mkdir($dir);
 		}
@@ -707,7 +721,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
 				//$criteria->add(new \ImpressCMS\Core\Database\Criteria\CriteriaItem($keyName, ($id[$i]), '=', $this->_itemname));
-				$criteria->add(new CriteriaItem($keyName, $id[$i], '=', $this->_itemname));
+				$criteria->add(new CriteriaItem($keyName, $id[$i], '=', $this->itemName));
 			}
 		} else {
 			if (!$criteria) {
@@ -718,7 +732,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 				 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
-				$criteria->add(new CriteriaItem($this->keyName, $id, '=', $this->_itemname));
+				$criteria->add(new CriteriaItem($this->keyName, $id, '=', $this->itemName));
 			}
 		}
 
@@ -818,7 +832,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		if (!empty($keyValue)) {
 			$sql .= ', ' . $keyValue;
 		}
-		$sql .= ' FROM ' . $this->table . ' AS ' . $this->_itemname;
+		$sql .= ' FROM ' . $this->table . ' AS ' . $this->itemName;
 		if (isset($criteria) && $criteria instanceof CriteriaElement) {
 			$sql .= ' ' . $criteria->renderWhere(true);
 			$args = $criteria->getBindData();
@@ -860,7 +874,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	public function getIdentifierName($withprefix = true)
 	{
 		if ($withprefix) {
-			return $this->_itemname . '.' . $this->identifierName;
+			return $this->itemName . "." . $this->identifierName;
 		} else {
 			return $this->identifierName;
 		}
@@ -1280,7 +1294,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 			$sql = $this->generalSQL;
 			$sql = str_replace('SELECT *', 'SELECT COUNT(*)', $sql);
 		} else {
-			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->_itemname;
+			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->itemName;
 		}
 		if (isset($criteria) && $criteria instanceof CriteriaElement) {
 			$sql .= ' ' . $criteria->renderWhere(true);
@@ -1508,8 +1522,10 @@ class AbstractExtendedHandler extends AbstractHandler {
 	/**
 	 *
 	 */
-	public function getModuleItemString() {
-		return $this->_moduleName . '_' . $this->_itemname;
+	public function getModuleItemString()
+	{
+		$ret = $this->_moduleName . '_' . $this->itemName;
+		return $ret;
 	}
 
 	/**
