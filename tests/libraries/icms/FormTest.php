@@ -2,12 +2,14 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use PHPUnit\Framework\TestCase;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class FormTest extends \PHPUnit_Framework_TestCase {
+class FormTest extends TestCase {
 
     /**
      * Test if is available
@@ -334,31 +336,28 @@ class FormTest extends \PHPUnit_Framework_TestCase {
     public function testVariables() {
         foreach ([
             'icms_form_elements_captcha_ImageHandler' => [
-                'invalid' => 'bool'
+                'invalid' => 'assertIsBool'
             ],
             'icms_form_elements_captcha_Object' => [
-                'active' => 'bool',
-                'mode' => 'string',
-                'config' => 'array',
-                'message' => 'array'
+                'active' => 'assertIsBool',
+                'mode' => 'assertIsString',
+                'config' => 'assertIsArray',
+                'message' => 'assertIsArray'
             ],
             'icms_form_elements_captcha_Text' => [
-                'config' => 'array',
-                'code' => 'null'
-            ],
-            'icms_form_elements_Dhtmltextarea' => [
-                'htmlEditor' => 'array'
+                'config' => 'assertIsArray',
+                'code' => 'assertNull'
             ],
             'icms_form_elements_Text' => [
-                'autocomplete' => 'bool'
+                'autocomplete' => 'assertIsBool'
             ],
             'icms_form_Element' => [
-                'customValidationCode' => 'array'
+                'customValidationCode' => 'assertIsArray'
             ]
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
-            foreach ($variables as $variable => $type) {
-                $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+            foreach ($variables as $variable => $func) {
+                $this->$func($instance->$variable, '$' . $variable . ' is not of correct type ');
             }
         }
     }
