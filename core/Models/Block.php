@@ -284,14 +284,16 @@ class Block extends AbstractExtendedModel
 			case self::BLOCK_TYPE_SYSTEM:
 				if ($c_type === static::CONTENT_TYPE_HTML) {
 					$content = $this->content;
-					$content = str_replace(['{X_SITEURL}', env('DB_SALT')], [ICMS_URL . '/', ''], $content);
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+					$content = str_replace(env('APP_KEY'), '', $content);
 					return $content;
 				} elseif ($c_type === static::CONTENT_TYPE_PHP) {
 					ob_start();
 					echo eval(DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
 					$content = ob_get_contents();
 					ob_end_clean();
-					$content = str_replace(['{X_SITEURL}', env('DB_SALT')], [ICMS_URL . '/', ''], $content);
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+					$content = str_replace(env('APP_KEY'), '', $content);
 					return $content;
 				} elseif ($c_type === static::CONTENT_TYPE_AUTO_FORMAT) {
 					$myts = Textsanitizer::getInstance();

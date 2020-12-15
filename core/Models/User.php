@@ -190,7 +190,6 @@ class User extends AbstractExtendedModel {
 		$this->setControl('language', 'language');
 		$this->setControl('uname', 'text');
 		$this->setControl('login_name', 'text');
-		$this->setControl('user_aim', 'text');
 		$this->setControl('actkey', 'text');
 		$this->setControl('name', 'text');
 		$this->setControl('url', 'text');
@@ -201,7 +200,6 @@ class User extends AbstractExtendedModel {
 		$this->setControl('user_regdate', 'date');
 		$this->setControl('notify_method', 'notify_method');
 		$this->setControl('pass_expired', 'yesno');
-		$this->setControl('user_viewoid', 'yesno');
 		$this->setControl('user_mailok', 'yesno');
 		$this->setControl('attachsig', 'yesno');
 		$this->setControl('rank', [

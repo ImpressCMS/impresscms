@@ -91,17 +91,7 @@ if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 }
 $r_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
-$ed_mod_checkbox = new icms_form_elements_Checkbox(_AM_EDPERM, "useeditor_mids[]", $ed_mod_value);
 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
-
-/* criteria added to see where the active user can use the wysiwyg editors (use_wysiwygeditor)
- * administrators don't have explicit entries for this, do not filter
- */
-if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
-	$ed_mod = $gperm_handler->getItemIds('use_wysiwygeditor', $groups);
-	$criteria->add(new icms_db_criteria_Item('mid', '(' . implode(',', $ed_mod) . ')', 'IN'));
-}
-$ed_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
 $debug_mod_checkbox = new icms_form_elements_Checkbox(_AM_DEBUG_PERM, "enabledebug_mids[]", $debug_mod_value);
 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
@@ -166,9 +156,6 @@ if (!isset($g_id) || ($g_id != ICMS_GROUP_ADMIN && $g_id != ICMS_GROUP_ANONYMOUS
 }
 $form->addElement($a_mod_checkbox);
 $form->addElement($r_mod_checkbox);
-if (!isset($g_id) || $g_id != ICMS_GROUP_ANONYMOUS) {
-	$form->addElement($ed_mod_checkbox);
-}
 
 if (!isset($g_id) || $g_id != ICMS_GROUP_ADMIN) {
 	$form->addElement($debug_mod_checkbox);

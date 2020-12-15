@@ -180,21 +180,26 @@ class RequestSecurity {
 	}
 
 	/**
-	 * Check if visitor's IP address is banned
-	 * @todo : Should be changed to return bool and let the action be up to the calling script
+
+	 * Check superglobals for contamination
 	 *
 	 * @return void
 	 */
-	public function checkBadips() {
-		global $icmsConfig;
-		if ((int)$icmsConfig['enable_badips'] === 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR']) {
-			foreach ($icmsConfig['bad_ips'] as $bi) {
-				if (!empty($bi) && preg_match('/' . $bi . '/', $_SERVER['REMOTE_ADDR'])) {
-					exit();
-				}
+	public function checkSuperglobals() {
+		foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS',
+						'_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS',
+						'_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES',
+						'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin',
+						'icmsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri',
+						'xoopsConfig', 'icmsOption', 'icmsConfigUser', 'icmsConfigMetaFooter', 'icmsConfigMailer',
+						'icmsConfigAuth', 'icmsConfigMultilang', 'icmsConfigPersona', 'icmsConfigPlugins',
+						'icmsConfigCaptcha', 'icmsConfigSearch',
+		) as $bad_global) {
+			if (isset($_REQUEST[$bad_global])) {
+				header('Location: ' . ICMS_URL);
+				exit();
 			}
 		}
-		unset($bi, $bad_ips, $icmsConfig['badips']);
 	}
 
 	/**

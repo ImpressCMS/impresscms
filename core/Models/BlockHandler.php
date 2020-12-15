@@ -37,6 +37,7 @@
 
 namespace ImpressCMS\Core\Models;
 
+use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 
@@ -69,7 +70,7 @@ class BlockHandler extends AbstractExtendedHandler {
 	public function getBlockPositions($full = false) {
 		if (empty($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
-			$icms_blockposition_handler = \icms::handler('icms_view_block_position');
+			$icms_blockposition_handler = icms::handler('icms_view_block_position');
 			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
 			//			$result = $this->db->query($sql);
 			//			while ($row = $this->db->fetchArray($result)) {
@@ -129,10 +130,10 @@ class BlockHandler extends AbstractExtendedHandler {
 
 		if (isset($side)) {
 			// get both sides in sidebox? (some themes need this)
-			$tp = ($side == -2)?'L':($side == -6)?'C':'';
+			$tp = ($side == -2)?'L':(($side == -6)?'C':'');
 			if ($tp != '') {
 			 	$q_side = '';
-				$icms_blockposition_handler = \icms::handler('icms_view_block_position');
+				$icms_blockposition_handler = icms::handler('icms_view_block_position');
 				$criteria = new CriteriaCompo();
 				$criteria->add(new CriteriaItem('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);

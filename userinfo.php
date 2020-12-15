@@ -123,14 +123,6 @@ icms_makeSmarty(array(
 	'lang_allaboutuser' => sprintf(_US_ALLABOUT, $thisUser->uname),
 	'lang_email' => _US_EMAIL,
 	'lang_privmsg' => _US_PM,
-	'lang_icq' => _US_ICQ,
-	'user_icq' => $thisUser->user_icq,
-	'lang_aim' => _US_AIM,
-	'user_aim' => $thisUser->user_aim,
-	'lang_yim' => _US_YIM,
-	'user_yim' => $thisUser->user_yim,
-	'lang_msnm' => _US_MSNM,
-	'user_msnm' => $thisUser->user_msnm,
 	'lang_location' => _US_LOCATION,
 	'user_location' => $thisUser->user_from,
 	'lang_occupation' => _US_OCCUPATION,
@@ -165,13 +157,6 @@ icms_makeSmarty(array(
 			|| (icms::$user->uid == $thisUser->uid))))
 		?$thisUser->getVar('email', 'E')
 		: '&nbsp;',
-	'user_openid' => ($icmsConfigAuth['auth_openid'] == true
-			&& ($thisUser->user_viewoid == true
-			|| (is_object(icms::$user)
-			&& (icms::$user->isAdmin()
-			|| (icms::$user->uid == $thisUser->uid)))))
-		?$thisUser->getVar('openid', 'E')
-		: '&nbsp;'
 ));
 
 if ($icmsConfigUser['allwshow_sig'] == true && strlen(trim($thisUser->user_sig)) > 0) {

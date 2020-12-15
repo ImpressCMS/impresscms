@@ -45,10 +45,6 @@ $items_match = array(
 				"uname"		=> _MA_USER_UNAME,
 				"name"		=> _MA_USER_REALNAME,
 				"email"		=> _MA_USER_EMAIL,
-				"user_icq"	=> _MA_USER_ICQ,
-				"user_aim"	=> _MA_USER_AIM,
-				"user_yim"	=> _MA_USER_YIM,
-				"user_msnm"	=> _MA_USER_MSNM
 );
 
 $items_range = array(
