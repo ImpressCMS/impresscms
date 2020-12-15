@@ -71,7 +71,6 @@ function displayGroups() {
 	$s_cat_value = '';
 	$a_mod_value = array();
 	$r_mod_value = array();
-	$ed_mod_value = array();
 	$group_manager_value = array();
 	$debug_mod_value = array();
 	$r_block_value = array();
@@ -115,7 +114,6 @@ function modifyGroup($g_id) {
 	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	$a_mod_value = $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
 	$r_mod_value = $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
-	$ed_mod_value = $moduleperm_handler->getItemIds('use_wysiwygeditor', $thisgroup->getVar('groupid'));
 	$debug_mod_value = $moduleperm_handler->getItemIds('enable_debug', $thisgroup->getVar('groupid'));
 	$group_manager_value = $moduleperm_handler->getItemIds('group_manager', $thisgroup->getVar('groupid'));
 

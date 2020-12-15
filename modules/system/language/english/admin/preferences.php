@@ -292,9 +292,6 @@ define("_MD_AM_EXT_DATEDSC", "Note: by activating this option, ImpressCMS will u
 define("_MD_AM_EDITOR_DEFAULT", "Default Editor");
 define("_MD_AM_EDITOR_DEFAULT_DESC", "Select the default Editor for all the site.");
 
-define("_MD_AM_EDITOR_ENABLED_LIST", "Enabled Editors");
-define("_MD_AM_EDITOR_ENABLED_LIST_DESC", "Select the selectable editors by the modules (If the module has a configuration to select the editor.)");
-
 define("_MD_AM_ML_AUTOSELECT_ENABLED", "Autoselect the language depending the browser configuration");
 
 define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE", "Allow anonymous users to see user profiles.");
@@ -455,8 +452,6 @@ define("_MD_AM_STARTPAGEDSC", "Select the desired Module or Page for your start 
 define("_MD_AM_DELUSRES", "Removing inactive users");
 define("_MD_AM_DELUSRESDSC", "This Option will remove users who have registered but have not activated their accounts for X days.<br />Please enter an amount of days.");
 define("_MD_AM_PLUGINS", "Plugins Manager");
-define("_MD_AM_SELECTSPLUGINS", "Select allowed plugins to be used");
-define("_MD_AM_SELECTSPLUGINS_DESC", "You can hereby select which plugins are used to sanitize your texts.");
 define("_MD_AM_GESHI_DEFAULT", "Select plugin to be used for geshi");
 define("_MD_AM_GESHI_DEFAULT_DESC", "GeSHi (Generic Syntax Hilighter) is a syntax highlighter for your codes.");
 define("_MD_AM_SELECTSHIGHLIGHT", "Select type of highlighter for the codes");
