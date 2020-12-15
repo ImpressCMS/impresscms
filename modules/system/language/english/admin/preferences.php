@@ -467,8 +467,6 @@ define('_MD_AM_NUMMDLSRCHRESULTS', "Number of search results per page:");
 define('_MD_AM_NUMMDLSRCHRESULTSDSC', "This determines how many hits per page are shown after drilling down into a particular module's search results.");
 define('_MD_AM_ADMIN_DTHEME', 'Admin Theme');
 define('_MD_AM_ADMIN_DTHEME_DESC', '');
-define('_MD_AM_CUSTOMRED', 'Use Ajaxed redirection method?');
-define('_MD_AM_CUSTOMREDDSC', '');
 define('_MD_AM_DTHEMEDSC', 'Default theme used to show your site.');
 
 // Added in 1.2

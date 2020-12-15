@@ -345,11 +345,6 @@ $modversion['templates'][] = array(
 	);
 
 $modversion['templates'][] = array(
-	'file' => 'system_redirect.html',
-	'description' => ''
-	);
-
-$modversion['templates'][] = array(
 	'file' => 'system_dummy.html',
 	'description' => ''
 	);

@@ -186,7 +186,7 @@ if (!function_exists('redirect_header')) {
 	 * Function to redirect a user to certain pages
 	 *
 	 * @param string $url The URL to redirect to
-	 * @param int $time The time it takes to redirect to the URL
+	 * @param int $time DEPRECATED: does nothing
 	 * @param string $message The message to show while redirecting
 	 * @param bool $addredirect Add a link to the redirect URL?
 	 * @param string $allowExternalLink Allow external links
@@ -194,10 +194,8 @@ if (!function_exists('redirect_header')) {
 	function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 	{
 		global $icmsConfig, $icmsConfigPersona;
-		if (preg_match("/[\\0-\\31]|about:|script:/i", $url)) {
-			if (preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
-				$url = ICMS_URL;
-			}
+		if (preg_match("/[\\0-\\31]|about:|script:/i", $url) && preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
+			$url = ICMS_URL;
 		}
 		if (!$allowExternalLink && $pos = strpos($url, '://')) {
 			$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
@@ -207,28 +205,8 @@ if (!function_exists('redirect_header')) {
 				$url = ICMS_URL;
 			}
 		}
-		$theme = $icmsConfig['theme_set'];
 		// if the user selected a theme in the theme block, let's use this theme
 
-		$session = \icms::getInstance()->get('session');
-		$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
-		$userTheme = $userSegment->get('theme');
-		if ($userTheme && in_array($userTheme, $icmsConfig['theme_set_allowed'])) {
-			$theme = $userTheme;
-		}
-
-		$xoopsThemeFactory = new icms_view_theme_Factory();
-		$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
-		$xoopsThemeFactory->defaultTheme = $theme;
-		$icmsTheme = $xoTheme = &$xoopsThemeFactory->createInstance(array("plugins" => array()));
-		$xoopsTpl = $icmsTpl = &$xoTheme->template;
-
-		if ($icmsConfig['debug_mode'] == 2 && icms::$user->isAdmin()) {
-			$xoopsTpl->assign('time', 300);
-			$xoopsTpl->assign('xoops_logdump', icms::$logger->dump());
-		} else {
-			$xoopsTpl->assign('time', (int)($time));
-		}
 		if (!empty($_SERVER['REQUEST_URI']) && $addredirect && strstr($url, 'user.php')) {
 			if (!strstr($url, '?')) {
 				$url .= '?xoops_redirect=' . urlencode($_SERVER['REQUEST_URI']);
@@ -244,40 +222,27 @@ if (!function_exists('redirect_header')) {
 			}
 		}
 		$url = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES, _CHARSET));
-		$xoopsTpl->assign('url', $url);
 		$message = trim($message) != '' ? $message : _TAKINGBACK;
-		$xoopsTpl->assign('message', $message);
-		$xoopsTpl->assign('lang_ifnotreload', sprintf(_IFNOTRELOAD, $url));
 		// GIJ start
 
 		if (empty($url)) {
 			$url = './';
 		}
 
-		if (!headers_sent() && $icmsConfigPersona['use_custom_redirection'] == 1) {
-			/**
-			 * @var \Aura\Session\Session $session
-			 */
-			$session = \icms::getInstance()
-				->get('session');
+		/**
+		 * @var \Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()
+			->get('session');
 
-			$session
-				->getSegment(\icms::class)
-				->setFlash('redirect_message', $message);
+		$session
+			->getSegment(\icms::class)
+			->setFlash('redirect_message', $message);
 
-			header("Location: " . preg_replace("/[&]amp;/i", '&', $url));
-			exit();
-		}
+		$session->commit();
 
-		$xoopsTpl->display('db:system_redirect.html');
-		if (defined('XOOPS_CPFUNC_LOADED')) {
-			icms_cp_footer();
-		} else {
-			require ICMS_ROOT_PATH . '/footer.php';
-		}
-
+		header("Location: " . preg_replace("/[&]amp;/i", '&', $url));
 		exit();
-		// GIJ end
 	}
 }
 
