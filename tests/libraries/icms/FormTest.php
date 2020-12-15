@@ -348,9 +348,6 @@ class FormTest extends TestCase {
                 'config' => 'assertIsArray',
                 'code' => 'assertNull'
             ],
-            'icms_form_elements_Dhtmltextarea' => [
-                'htmlEditor' => 'assertIsArray'
-            ],
             'icms_form_elements_Text' => [
                 'autocomplete' => 'assertIsBool'
             ],

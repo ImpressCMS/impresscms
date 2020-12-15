@@ -54,6 +54,8 @@
     "composer/composer": "^1.10",
     "dompdf/dompdf": "^0.8.5",
     "erusev/parsedown": "^1.7",
+    "ellipse/cookie-encryption": "^1.0",
+    "defuse/php-encryption": "^2.2",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
     "http-interop/http-factory-guzzle": "^1.0",
@@ -64,7 +66,9 @@
     "league/route": "^4.3",
     "lulco/phoenix": "^1.1",
     "middlewares/base-path": "^2.0",
+    "middlewares/client-ip": "^2.0",
     "middlewares/encoder": "^2.1",
+    "middlewares/firewall": "^2.0.1",
     "middlewares/referrer-spam": "^2.0",
     "monolog/monolog": "^2.0",
     "narrowspark/http-emitter": "^1.0",
@@ -78,8 +82,9 @@
     "suin/php-rss-writer": "^1.6",
     "symfony/console": ">5.0",
     "symfony/polyfill-iconv": "^1.12",
-    "typo3/class-alias-loader": "^1.1",
+    "tuupola/server-timing-middleware": "^0.8.2",
     "true/punycode": "^2.1",
+    "typo3/class-alias-loader": "^1.1",
     "vlucas/phpdotenv": "^3.3.3"
   },
   "suggest": {
@@ -187,6 +192,11 @@
       "\\IcmsPreloadUserInfo": {
         "tags": [
           "preload"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Commands\\GenerateAppKeyCommand": {
+        "tags": [
+          "console.command"
         ]
       },
       "\\ImpressCMS\\Core\\Commands\\CacheClearCommand": {
@@ -374,16 +384,18 @@
           "editor.content"
         ]
       },
-      "dhtmltextarea": {
-        "class": "\\ImpressCMS\\Editors\\DHTMLTextArea\\Editor",
-        "tags": [
-          "editor.content"
-        ]
-      },
       "tinymce": {
         "class": "\\ImpressCMS\\Editors\\TinyMCE\\Editor",
         "tags": [
           "editor.content"
+        ]
+      },
+      "stopwatch": {
+        "class": "\\Tuupola\\Middleware\\ServerTiming\\Stopwatch"
+      },
+      "\\Tuupola\\Middleware\\ServerTimingMiddleware": {
+        "arguments": [
+          "stopwatch"
         ]
       },
       "codemirror": {

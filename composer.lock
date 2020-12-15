@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4366317787e293773e4d19357932b93f",
+    "content-hash": "f293c818e61ff75bc383edd78c582720",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -733,6 +733,121 @@
             "time": "2020-08-19T10:27:58+00:00"
         },
         {
+            "name": "defuse/php-encryption",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/defuse/php-encryption.git",
+                "reference": "0f407c43b953d571421e0020ba92082ed5fb7620"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/defuse/php-encryption/zipball/0f407c43b953d571421e0020ba92082ed5fb7620",
+                "reference": "0f407c43b953d571421e0020ba92082ed5fb7620",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "paragonie/random_compat": ">= 2",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "nikic/php-parser": "^2.0|^3.0|^4.0",
+                "phpunit/phpunit": "^4|^5"
+            },
+            "bin": [
+                "bin/generate-defuse-key"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Defuse\\Crypto\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Hornby",
+                    "email": "taylor@defuse.ca",
+                    "homepage": "https://defuse.ca/"
+                },
+                {
+                    "name": "Scott Arciszewski",
+                    "email": "info@paragonie.com",
+                    "homepage": "https://paragonie.com"
+                }
+            ],
+            "description": "Secure PHP Encryption Library",
+            "keywords": [
+                "aes",
+                "authenticated encryption",
+                "cipher",
+                "crypto",
+                "cryptography",
+                "encrypt",
+                "encryption",
+                "openssl",
+                "security",
+                "symmetric key cryptography"
+            ],
+            "time": "2018-07-24T23:27:56+00:00"
+        },
+        {
+            "name": "dflydev/fig-cookies",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-fig-cookies.git",
+                "reference": "883233c159d00d39e940bd12cfe42c0d23420c1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-fig-cookies/zipball/883233c159d00d39e940bd12cfe42c0d23420c1c",
+                "reference": "883233c159d00d39e940bd12cfe42c0d23420c1c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "psr/http-message": "~1.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "~0.1@dev",
+                "phpunit/phpunit": "~4.5",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dflydev\\FigCookies\\": "src/Dflydev/FigCookies"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com"
+                }
+            ],
+            "description": "Cookies for PSR-7 HTTP Message Interface.",
+            "keywords": [
+                "cookies",
+                "psr-7",
+                "psr7"
+            ],
+            "time": "2016-03-28T09:10:18+00:00"
+        },
+        {
             "name": "dompdf/dompdf",
             "version": "v0.8.6",
             "source": {
@@ -799,6 +914,60 @@
             "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
             "homepage": "https://github.com/dompdf/dompdf",
             "time": "2020-08-30T22:54:22+00:00"
+        },
+        {
+            "name": "ellipse/cookie-encryption",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ellipsephp/cookie-encryption.git",
+                "reference": "cf47e50e818dcd75cfcc4bf176bc614625c9e54e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ellipsephp/cookie-encryption/zipball/cf47e50e818dcd75cfcc4bf176bc614625c9e54e",
+                "reference": "cf47e50e818dcd75cfcc4bf176bc614625c9e54e",
+                "shasum": ""
+            },
+            "require": {
+                "defuse/php-encryption": "^2.1",
+                "dflydev/fig-cookies": "^1.0",
+                "php": ">=7.1",
+                "psr/http-message": "^1.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "eloquent/phony-kahlan": "^1.0",
+                "kahlan/kahlan": "^4.0",
+                "zendframework/zend-diactoros": "^1.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ellipse\\Cookies\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "pmall",
+                    "email": "pierre.mallinjoud@gmail.com"
+                }
+            ],
+            "description": "Psr-15 middleware allowing to encrypt cookies using defuse/php-encryption",
+            "homepage": "https://github.com/ellipsephp/cookie-encryption",
+            "keywords": [
+                "cookie",
+                "encryption",
+                "middleware",
+                "psr-15",
+                "psr-7"
+            ],
+            "time": "2018-01-23T10:51:09+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -1615,6 +1784,53 @@
             "time": "2020-04-16T13:19:50+00:00"
         },
         {
+            "name": "m6web/firewall",
+            "version": "v1.0.3",
+            "target-dir": "M6Web/Component/Firewall",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/M6Web/Firewall.git",
+                "reference": "3ba2b48788176c8b25288bc5320a75c94d6c0b36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/M6Web/Firewall/zipball/3ba2b48788176c8b25288bc5320a75c94d6c0b36",
+                "reference": "3ba2b48788176c8b25288bc5320a75c94d6c0b36",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "atoum/atoum": "^2.8|^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "M6Web\\Component\\Firewall": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "M6Web",
+                    "email": "opensource@m6web.fr",
+                    "homepage": "http://tech.m6web.fr/"
+                }
+            ],
+            "description": "Library providing IP filtering features",
+            "keywords": [
+                "IP",
+                "filtering",
+                "firewall"
+            ],
+            "time": "2019-10-15T08:29:16+00:00"
+        },
+        {
             "name": "matomo/referrer-spam-blacklist",
             "version": "4.0.0",
             "source": {
@@ -1642,16 +1858,64 @@
         },
         {
             "name": "middlewares/base-path",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/middlewares/base-path.git",
-                "reference": "1427d8a4976eed887626a6b99b1758e4b7b8e8fc"
+                "reference": "a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/base-path/zipball/1427d8a4976eed887626a6b99b1758e4b7b8e8fc",
-                "reference": "1427d8a4976eed887626a6b99b1758e4b7b8e8fc",
+                "url": "https://api.github.com/repos/middlewares/base-path/zipball/a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5",
+                "reference": "a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "laminas/laminas-diactoros": "^2.3",
+                "middlewares/utils": "^3.0",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8|^9",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to remove the prefix from the uri path of the request.",
+            "homepage": "https://github.com/middlewares/base-path",
+            "keywords": [
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "server"
+            ],
+            "time": "2020-12-02T00:05:17+00:00"
+        },
+        {
+            "name": "middlewares/client-ip",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/client-ip.git",
+                "reference": "26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/client-ip/zipball/26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f",
+                "reference": "26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f",
                 "shasum": ""
             },
             "require": {
@@ -1676,16 +1940,17 @@
             "license": [
                 "MIT"
             ],
-            "description": "Middleware to remove the prefix from the uri path of the request.",
-            "homepage": "https://github.com/middlewares/base-path",
+            "description": "Middleware to detect the client ip and save it as a request attribute",
+            "homepage": "https://github.com/middlewares/client-ip",
             "keywords": [
+                "IP",
                 "http",
                 "middleware",
                 "psr-15",
                 "psr-7",
                 "server"
             ],
-            "time": "2019-11-30T01:50:59+00:00"
+            "time": "2019-12-03T00:18:25+00:00"
         },
         {
             "name": "middlewares/encoder",
@@ -1737,6 +2002,58 @@
                 "psr-7"
             ],
             "time": "2020-01-24T16:53:17+00:00"
+        },
+        {
+            "name": "middlewares/firewall",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/firewall.git",
+                "reference": "5e51989947bc6adb9e85be1edeff3f1300f5b23e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/firewall/zipball/5e51989947bc6adb9e85be1edeff3f1300f5b23e",
+                "reference": "5e51989947bc6adb9e85be1edeff3f1300f5b23e",
+                "shasum": ""
+            },
+            "require": {
+                "m6web/firewall": "^1.0",
+                "middlewares/utils": "^3.0",
+                "php": "^7.2",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "laminas/laminas-diactoros": "^2.3",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpunit/phpunit": "^8.1",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to provide IP filtering",
+            "homepage": "https://github.com/middlewares/firewall",
+            "keywords": [
+                "IP",
+                "filter",
+                "firewall",
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "security",
+                "server"
+            ],
+            "time": "2020-08-02T19:07:34+00:00"
         },
         {
             "name": "middlewares/referrer-spam",
@@ -2080,6 +2397,51 @@
             ],
             "description": "Some classes from php-downloader v1.0 by www.ipunkt.biz package that were used in Xoops but can't be found outside",
             "time": "2018-01-29T12:09:44+00:00"
+        },
+        {
+            "name": "paragonie/random_compat",
+            "version": "v9.99.99",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/random_compat.git",
+                "reference": "84b4dfb120c6f9b4ff7b3685f9b8f1aa365a0c95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/84b4dfb120c6f9b4ff7b3685f9b8f1aa365a0c95",
+                "reference": "84b4dfb120c6f9b4ff7b3685f9b8f1aa365a0c95",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*|5.*",
+                "vimeo/psalm": "^1"
+            },
+            "suggest": {
+                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "security@paragonie.com",
+                    "homepage": "https://paragonie.com"
+                }
+            ],
+            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+            "keywords": [
+                "csprng",
+                "polyfill",
+                "pseudorandom",
+                "random"
+            ],
+            "time": "2018-07-02T15:55:56+00:00"
         },
         {
             "name": "phenx/php-font-lib",
@@ -4054,6 +4416,69 @@
             "time": "2020-09-07T11:33:47+00:00"
         },
         {
+            "name": "symfony/stopwatch",
+            "version": "v3.4.44",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/stopwatch.git",
+                "reference": "a7a98f40dcc382a332c3729a6d04b298ffbb8f1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/a7a98f40dcc382a332c3729a6d04b298ffbb8f1f",
+                "reference": "a7a98f40dcc382a332c3729a6d04b298ffbb8f1f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Stopwatch\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Stopwatch Component",
+            "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-15T09:38:08+00:00"
+        },
+        {
             "name": "symfony/string",
             "version": "v5.2.0",
             "source": {
@@ -4178,6 +4603,125 @@
                 "punycode"
             ],
             "time": "2016-11-16T10:37:54+00:00"
+        },
+        {
+            "name": "tuupola/callable-handler",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tuupola/callable-handler.git",
+                "reference": "0bc7b88630ca753de9aba8f411046856f5ca6f8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tuupola/callable-handler/zipball/0bc7b88630ca753de9aba8f411046856f5ca6f8c",
+                "reference": "0bc7b88630ca753de9aba8f411046856f5ca6f8c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "overtrue/phplint": "^1.0",
+                "phpunit/phpunit": "^7.0|^8.0|^9.0",
+                "squizlabs/php_codesniffer": "^3.2",
+                "tuupola/http-factory": "^0.4.0|^1.0",
+                "zendframework/zend-diactoros": "^1.6.0|^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tuupola\\Middleware\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mika Tuupola",
+                    "email": "tuupola@appelsiini.net",
+                    "homepage": "https://appelsiini.net/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Compatibility layer for PSR-7 double pass and PSR-15 middlewares.",
+            "homepage": "https://github.com/tuupola/callable-handler",
+            "keywords": [
+                "middleware",
+                "psr-15",
+                "psr-7"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/tuupola",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-09-09T08:31:54+00:00"
+        },
+        {
+            "name": "tuupola/server-timing-middleware",
+            "version": "0.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tuupola/server-timing-middleware.git",
+                "reference": "8c8a2b14687b24dd904b1c2f20a4640f7b970f1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tuupola/server-timing-middleware/zipball/8c8a2b14687b24dd904b1c2f20a4640f7b970f1d",
+                "reference": "8c8a2b14687b24dd904b1c2f20a4640f7b970f1d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "psr/http-server-middleware": "^1.0",
+                "symfony/stopwatch": "^3.0",
+                "tuupola/callable-handler": "^0.3.0|^1.0"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^2.0",
+                "equip/dispatch": "^2.0",
+                "overtrue/phplint": "^0.2.0",
+                "phpstan/phpstan": "^0.9.2",
+                "phpunit/phpunit": "^6.5",
+                "psr/http-message": "^1.0.1",
+                "squizlabs/php_codesniffer": "^2.5",
+                "tuupola/http-factory": "^0.3.0|^0.4.0|^1.0",
+                "zendframework/zend-diactoros": "^1.0|^2.0"
+            },
+            "suggest": {
+                "doctrine/dbal": "If you want to use the DBAL query timer."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tuupola\\Middleware\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mika Tuupola",
+                    "email": "tuupola@appelsiini.net",
+                    "homepage": "https://appelsiini.net/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PSR-7 and PSR-15 server timing middleware",
+            "homepage": "https://github.com/tuupola/server-timing-middleware",
+            "keywords": [
+                "middleware",
+                "psr-15",
+                "psr-7"
+            ],
+            "time": "2018-10-23T11:47:38+00:00"
         },
         {
             "name": "typo3/class-alias-loader",

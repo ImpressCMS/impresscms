@@ -177,7 +177,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'GET' && isset ($_GET ['charset']) && @$_GET 
 }
 
 if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
-	$params = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT');
+	$params = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'APP_KEY');
 	foreach ($params as $name) {
 		$vars [$name] = isset ($_POST [$name]) ? $_POST [$name] : "";
 	}
@@ -241,7 +241,13 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 
 if (@empty ($vars ['DB_NAME'])) {
 	// Fill with default values
-	$vars = array_merge($vars, array('DB_NAME' => '', 'DB_CHARSET' => 'utf8', 'DB_COLLATION' => '', 'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8), 'DB_SALT' => icms_core_Password::createSalt()));
+	$vars = array_merge($vars, [
+			'DB_NAME' => '',
+			'DB_CHARSET' => 'utf8',
+			'DB_COLLATION' => '',
+			'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8),
+			'APP_KEY' => \Defuse\Crypto\Key::createNewRandomKey()->saveToAsciiSafeString(),
+	]);
 }
 
 function xoFormField($name, $value, $label, $maxlength, $help = '')
@@ -327,7 +333,7 @@ if (!empty ($error)) {
 			?> <?php
 			echo xoFormField('DB_PREFIX', $vars ['DB_PREFIX'], DB_PREFIX_LABEL, 10, DB_PREFIX_HELP);
 			?> <?php
-			echo xoFormField('DB_SALT', $vars ['DB_SALT'], DB_SALT_LABEL, 255, DB_SALT_HELP);
+			echo xoFormField('APP_KEY', $vars ['APP_KEY'], APP_KEY_LABEL, 255, APP_KEY_HELP);
 			?> <?php
 			echo xoFormFieldCharset('DB_CHARSET', $vars['DB_CHARSET'], DB_CHARSET_LABEL, DB_CHARSET_HELP);
 			?> <?php
