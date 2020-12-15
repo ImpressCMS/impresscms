@@ -54,6 +54,7 @@
     "composer/composer": "^1.10",
     "dompdf/dompdf": "^0.8.5",
     "erusev/parsedown": "^1.7",
+    "defuse/php-encryption": "^2.2",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
     "http-interop/http-factory-guzzle": "^1.0",
@@ -189,6 +190,11 @@
       "\\IcmsPreloadUserInfo": {
         "tags": [
           "preload"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Commands\\GenerateAppKeyCommand": {
+        "tags": [
+          "console.command"
         ]
       },
       "\\ImpressCMS\\Core\\Commands\\CacheClearCommand": {
@@ -372,12 +378,6 @@
       },
       "CKeditor": {
         "class": "\\ImpressCMS\\Editors\\CKeditor\\Editor",
-        "tags": [
-          "editor.content"
-        ]
-      },
-      "dhtmltextarea": {
-        "class": "\\ImpressCMS\\Editors\\DHTMLTextArea\\Editor",
         "tags": [
           "editor.content"
         ]

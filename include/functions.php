@@ -2346,24 +2346,9 @@ if (!function_exists("icms_need_do_br")) {
 	 */
 	function icms_need_do_br($moduleName = false)
 	{
-		global $icmsConfig, $icmsModule;
-
-		if (!$moduleName) {
-			global $icmsModule;
-			$theModule = $icmsModule;
-			$moduleName = $theModule->getVar('dirname');
-		} else {
-			$theModule = icms_getModuleInfo($moduleName);
-		}
-
-		$groups = icms::$user->getGroups();
+		global $icmsConfig;
 
 		$editor_default = $icmsConfig['editor_default'];
-		$gperm_handler = icms::handler('icms_member_groupperm');
-		if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $theModule->getVar('mid'), $groups)) {
-			return false;
-		} else {
-			return true;
-		}
+		return !file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php");
 	}
 }
