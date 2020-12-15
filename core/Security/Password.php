@@ -92,7 +92,7 @@ final class Password {
 	 */
 	public function passExpired($uname = '')
 	{
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -124,7 +124,7 @@ final class Password {
 			list($pass_expired) = \icms::$xoopsDB->fetchRow($sql);
 		}
 
-		if ($pass_expired == 1) {
+		if ($pass_expired === 1) {
 			return true;
 		} else {
 			return false;
@@ -142,7 +142,7 @@ final class Password {
 	 */
 	public function getUserSalt($uname = '')
 	{
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -190,7 +190,7 @@ final class Password {
 	 */
 	public function getUserEncType($uname = '')
 	{
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -369,7 +369,7 @@ final class Password {
 	 */
 	private function _getUserHash($uname)
 	{
-		if (!isset($uname) || (isset($uname) && $uname === '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 

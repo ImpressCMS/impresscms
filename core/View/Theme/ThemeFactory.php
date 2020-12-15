@@ -29,13 +29,14 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license		https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  */
 
 namespace ImpressCMS\Core\View\Theme;
 
 use Aura\Session\Session;
 use icms;
+use League\Flysystem\Filesystem;
 
 /**
  * Theme Factory
@@ -92,7 +93,7 @@ class ThemeFactory {
 	public static function getThemesList() {
 		$dirlist = [];
 		/**
-		 * @var \League\Flysystem\Filesystem $fs
+		 * @var Filesystem $fs
 		 */
 		$fs = icms::getInstance()->get('filesystem.themes');
 		foreach ($fs->listContents() as $fileInfo) {
@@ -112,7 +113,7 @@ class ThemeFactory {
 	public static function getAdminThemesList() {
 		$items = [];
 		/**
-		 * @var \League\Flysystem\Filesystem $fs
+		 * @var Filesystem $fs
 		 */
 		$fs = icms::getInstance()->get('filesystem.themes');
 		foreach ($fs->listContents() as $fileInfo) {
@@ -124,7 +125,7 @@ class ThemeFactory {
 		}
 
 		/**
-		 * @var \League\Flysystem\Filesystem $fm
+		 * @var Filesystem $fm
 		 */
 		$fm = icms::getInstance()->get('filesystem.modules');
 		foreach ($fm->listContents('system/themes') as $fileInfo) {

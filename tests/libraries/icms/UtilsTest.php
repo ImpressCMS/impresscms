@@ -2,12 +2,15 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use icms_Utils;
+use PHPUnit\Framework\TestCase;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class UtilsTest extends \PHPUnit_Framework_TestCase {
+class UtilsTest extends TestCase {
 
     /**
      * Test if is available
@@ -21,7 +24,7 @@ class UtilsTest extends \PHPUnit_Framework_TestCase {
      */
     public function testMimeTypes() {
         $this->assertTrue(method_exists('icms_Utils', 'mimetypes'), 'mimetypes method for icms_Utils doesn\'t exists');
-        $this->assertInternalType('array', \icms_Utils::mimetypes(), 'mimetypes must return array');
+        $this->assertIsArray( icms_Utils::mimetypes(), 'mimetypes must return array');
     }
 
 }

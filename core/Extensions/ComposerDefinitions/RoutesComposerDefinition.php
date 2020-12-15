@@ -3,9 +3,9 @@
 namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 
 use FilesystemIterator;
-use icms_module_Handler;
 use icms;
 use icms_config_Handler;
+use icms_module_Handler;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use ImpressCMS\Core\Middlewares\HasGroupMiddleware;
@@ -14,6 +14,7 @@ use League\Container\Container;
 use League\Route\RouteGroup;
 use League\Route\Strategy\ApplicationStrategy;
 use League\Route\Strategy\JsonStrategy;
+use Psr\Container\ContainerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -25,6 +26,20 @@ use SplFileInfo;
  */
 class RoutesComposerDefinition implements ComposerDefinitionInterface
 {
+	/**
+	 * @var ContainerInterface
+	 */
+	private $container;
+
+	/**
+	 * RoutesComposerDefinition constructor.
+	 *
+	 * @param ContainerInterface $container
+	 */
+	public function __construct(ContainerInterface $container)
+	{
+		$this->container = $container;
+	}
 
 	/**
 	 * @inheritDoc
@@ -88,19 +103,26 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			' */',
 			'$strategy = $router->getStrategy();',
 			'$container = $strategy->getContainer();',
-			'',
 		];
 
 		$this->addMiddlewaresDependingOnConfig($ret);
+
+		$ret[] = '$router->lazyMiddlewares(' .
+			json_encode(
+				array_map(
+					function ($service) {
+						return '\\' . get_class($service);
+					},
+					$this->container->get('middleware.global')
+				),
+				JSON_PRETTY_PRINT
+			) .
+			');';
 
 		$routes = array_merge(
 			$this->getOldStyleRoutes(),
 			$data['routes'] ?? []
 		);
-		$prefixOfRoute = dirname($_SERVER['SCRIPT_NAME']);
-		if (substr($prefixOfRoute, -1) === '/') {
-			$prefixOfRoute = substr($prefixOfRoute, 0, -1);
-		}
 		$variantsByGroup = [];
 		foreach ($routes as $definition) {
 			$group = $definition['group'] ?? '';
@@ -131,7 +153,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$ret[] = $linePrefix . sprintf(
 					'    ->map(%s, %s, %s)%s',
 					var_export($parsedDefinition['method'], true),
-					var_export($prefixOfRoute . $parsedDefinition['path'], true),
+					var_export( $parsedDefinition['path'], true),
 					var_export($parsedDefinition['handler'], true),
 					$hasExtraConfig ? '' : ';'
 				);
