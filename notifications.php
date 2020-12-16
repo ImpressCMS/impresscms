@@ -43,7 +43,7 @@ if (empty(icms::$user)) {
 	exit();
 }
 
-$uid = (int) icms::$user->getVar('uid');
+$uid = icms::$user->uid;
 $valid_op = array('cancel', 'list', 'delete', 'delete_ok', '', null);
 $op = 'list';
 
@@ -94,13 +94,13 @@ if (in_array($op, $valid_op)) {
 			$prev_category = -1;
 			$prev_item = -1;
 			foreach ($notifications as $n) {
-				$modid = $n->getVar('not_modid');
+				$modid = $n->not_modid;
 				if ($modid != $prev_modid) {
 					$prev_modid = $modid;
 					$prev_category = -1;
 					$prev_item = -1;
 					$module = & $module_handler->get($modid);
-					$modules[$modid] = array('id'=>$modid, 'name'=>$module->getVar('name'), 'categories'=>array());
+					$modules[$modid] = array('id'=>$modid, 'name'=>$module->name, 'categories'=>array());
 					// TODO: note, we could auto-generate the url from the id
 					// and category info... (except when category has multiple
 					// subscription scripts defined...)
@@ -114,7 +114,7 @@ if (in_array($op, $valid_op)) {
 					$not_config = $module->getInfo('notification');
 					$lookup_func = '';
 					if (!empty($not_config['lookup_file'])) {
-						$lookup_file = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/' . $not_config['lookup_file'];
+						$lookup_file = ICMS_ROOT_PATH . '/modules/' . $module->dirname . '/' . $not_config['lookup_file'];
 						if (file_exists($lookup_file)) {
 							include_once $lookup_file;
 							if (!empty($not_config['lookup_func']) && function_exists($not_config['lookup_func'])) {
@@ -123,14 +123,14 @@ if (in_array($op, $valid_op)) {
 						}
 					}
 				}
-				$category = $n->getVar('not_category');
+				$category = $n->not_category;
 				if ($category != $prev_category) {
 					$prev_category = $category;
 					$prev_item = -1;
 					$category_info = & $notification_handler->categoryInfo($category, $modid);
 					$modules[$modid]['categories'][$category] = array('name'=>$category, 'title'=>$category_info['title'], 'items'=>array());
 				}
-				$item = $n->getVar('not_itemid');
+				$item = $n->not_itemid;
 				if ($item != $prev_item) {
 					$prev_item = $item;
 					if (!empty($lookup_func)) {
@@ -144,22 +144,22 @@ if (in_array($op, $valid_op)) {
 																						'notifications' => array()
 																					);
 				}
-				$event_info = & $notification_handler->eventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
+				$event_info = & $notification_handler->eventInfo($category, $n->not_event, $n->not_modid);
 				$modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = array(
-					'id'=>$n->getVar('not_id'),
-					'module_id'=>$n->getVar('not_modid'),
-					'category'=>$n->getVar('not_category'),
+					'id'=>$n->not_id,
+					'module_id'=>$n->not_modid,
+					'category'=>$n->not_category,
 					'category_title'=>$category_info['title'],
-					'item_id'=>$n->getVar('not_itemid'),
-					'event'=>$n->getVar('not_event'),
+					'item_id'=>$n->not_itemid,
+					'event'=>$n->not_event,
 					'event_title'=>$event_info['title'],
-					'user_id'=>$n->getVar('not_uid')
+					'user_id'=>$n->not_uid
 				);
 			}
 			$xoopsOption['template_main'] = 'system_notification_list.html';
 			include ICMS_ROOT_PATH . '/header.php';
 			$xoopsTpl->assign('modules', $modules);
-			$user_info = array('uid' => icms::$user->getVar('uid'));
+			$user_info = array('uid' => icms::$user->uid);
 			$xoopsTpl->assign('user', $user_info);
 			$xoopsTpl->assign('lang_cancel', _CANCEL);
 			$xoopsTpl->assign('lang_clear', _NOT_CLEAR);
@@ -219,7 +219,7 @@ if (in_array($op, $valid_op)) {
 			foreach ($_POST['del_not'] as $n_array) {
 				foreach ($n_array as $n) {
 					$notification = & $notification_handler->get((int) $n);
-					if ($notification->getVar('not_uid') == $uid) {
+					if ($notification->not_uid == $uid) {
 						$notification_handler->delete($notification);
 					}
 				}

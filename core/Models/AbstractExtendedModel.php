@@ -276,7 +276,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	public function updateMetas() {
 		// Auto create meta tags if empty
-		$icms_metagen = new Metagen($this->title(), $this->getVar('meta_keywords'), $this->summary());
+		$icms_metagen = new Metagen($this->title(), $this->meta_keywords, $this->summary());
 
 		if (empty($this->meta_keywords)) {
 			$this->setVar('meta_keywords', $icms_metagen->_keywords);
@@ -807,11 +807,11 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		$control = $this->controls[$key] ?? false;
 		$form_editor = $control['form_editor'] ?? 'textarea';
 
-		$html = isset($this->_vars['dohtml']) ? $this->getVar('dohtml') : true;
+		$html = isset($this->_vars['dohtml']) ? $this->dohtml : true;
 		$smiley = true;
 		$xcode = true;
 		$image = true;
-		$br = isset($this->_vars['dobr']) ? $this->getVar('dobr') : true;
+		$br = isset($this->_vars['dobr']) ? $this->dobr : true;
 		$formatML = true;
 
 		if ($form_editor == 'default') {

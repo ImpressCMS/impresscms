@@ -35,7 +35,7 @@ if (!empty($_POST)) {
 
 global $icmsConfigUser;
 if ($password == '' || $password2 == '') {
-	redirect_header('user.php?op=resetpass', 3, sprintf(_US_SORRYMUSTENTERPASS, icms::$user->getVar('uname')), false);
+	redirect_header('user.php?op=resetpass', 3, sprintf(_US_SORRYMUSTENTERPASS, icms::$user->uname), false);
 }
 if ((isset($password)) && ($password !== $password2)) {
 	redirect_header('user.php?op=resetpass', 3, sprintf(_US_PASSNOTSAME, ''), false);
@@ -48,7 +48,7 @@ if (!icms::$user) {
 	} else {
 		$icmspass = new icms_core_Password();
 
-	if (!$icmspass->verifyPass($c_password, icms::$user->getVar('login_name'))) {
+	if (!$icmspass->verifyPass($c_password, icms::$user->login_name)) {
 		redirect_header('user.php?op=resetpass', 2, _US_SORRYINCORRECTPASS);
 		}
 
@@ -60,7 +60,7 @@ if (!icms::$user) {
 		$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 		$mailer->assign('SITEURL', ICMS_URL.'/');
 		$mailer->assign('IP', $_SERVER['REMOTE_ADDR']);
-	$mailer->setToUsers(icms::$user->getVar('uid'));
+	$mailer->setToUsers(icms::$user->uid);
 		$mailer->setFromEmail($icmsConfig['adminmail']);
 		$mailer->setFromName($icmsConfig['sitename']);
 		$mailer->setSubject(sprintf(_US_PWDRESET, ICMS_URL));
@@ -72,7 +72,7 @@ if (!icms::$user) {
 						icms::$xoopsDB->prefix('users'),
 						$pass,
 						0,
-					(int) icms::$user->getVar('uid')
+					(int) icms::$user->uid
 					);
 	if (!icms::$xoopsDB->query($sql)) {
 			include 'header.php';
@@ -81,5 +81,5 @@ if (!icms::$user) {
 			exit();
 		}
 		unset($pass);
-	redirect_header('user.php', 3, sprintf(_US_PWDRESET, icms::$user->getVar('uname')), false);
+	redirect_header('user.php', 3, sprintf(_US_PWDRESET, icms::$user->uname), false);
 }

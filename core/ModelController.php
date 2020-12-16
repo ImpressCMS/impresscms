@@ -97,11 +97,11 @@ class ModelController
 					$linkObj->setVar('description', $_POST['desc_' . $key]);
 					$linkObj->setVar('target', $_POST['target_' . $key]);
 					$linkObj->setVar('url', $_POST['url_' . $key]);
-					if ($linkObj->getVar('url')) {
+					if ($linkObj->url != '') {
 						$icmsObj->storeUrlLinkObj($linkObj);
 					}
 					//@todo: catch errors
-					$icmsObj->setVar($key, $linkObj->getVar('urllinkid'));
+					$icmsObj->setVar($key, $linkObj->urllinkid);
 					break;
 
 				case AbstractProperties::DTYPE_DEP_FILE:
@@ -114,7 +114,7 @@ class ModelController
 						if (!($fileObj->getVar('url') == '' && $fileObj->getVar('url') == '' && $fileObj->getVar('url') == '')) {
 							$res = $icmsObj->storeFileObj($fileObj);
 							if ($res) {
-								$icmsObj->setVar($key, $fileObj->getVar('fileid'));
+								$icmsObj->setVar($key, $fileObj->fileid);
 							} else {
 								//error setted, but no error message (to be improved)
 								$icmsObj->setErrors($fileObj->getErrors());
@@ -203,7 +203,7 @@ class ModelController
 								$fileObj->setVar('caption', $_POST['caption_' . $related_field]);
 								$fileObj->setVar('description', $_POST['desc_' . $related_field]);
 								$icmsObj->storeFileObj($fileObj);
-								$icmsObj->setVar($related_field, $fileObj->getVar('fileid'));
+								$icmsObj->setVar($related_field, $fileObj->fileid);
 							} else {
 								$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 								if (!$eventResult) {
@@ -559,8 +559,8 @@ class ModelController
 	{
 		$ret = $this->handler->_moduleUrl . 'admin/'
 			. $this->handler->_page
-			. '?op=mod&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName)
-			. '&amp;language=' . $icmsObj->getVar('language');
+			. "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName)
+			. "&amp;language=" . $icmsObj->language;
 		if ($onlyUrl) {
 			return $ret;
 		} elseif ($withimage) {
@@ -654,7 +654,7 @@ class ModelController
 
 		 $icmsModule = icms_getModuleInfo($icmsObj->handler->_moduleName);
 		 $link = \icms::$urls['full']();
-		 $mid = $icmsModule->getVar('mid');
+		 $mid = $icmsModule->mid;
 		 $friendlink = "<a href=\"javascript:openWithSelfMain('".SMARTOBJECT_URL."sendlink.php?link=" . $link . "&amp;mid=" . $mid . "', ',',',',',','sendmessage', 674, 500);\"><img src=\"".SMARTOBJECT_IMAGES_ACTIONS_URL . "mail_send.png\"  alt=\"" . _CO_ICMS_EMAIL . "\" title=\"" . _CO_ICMS_EMAIL . "\" style=\"vertical-align: middle;\"/></a>";
 
 		 $ret = '<span id="smartobject_print_button">' . $printlink . "&nbsp;</span>" . '<span id="smartobject_mail_button">' . $friendlink . '</span>';

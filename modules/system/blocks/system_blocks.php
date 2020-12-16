@@ -50,14 +50,14 @@ function b_system_online_show() {
 		$online_handler->gc(300);
 	}
 	if (is_object(icms::$user)) {
-		$uid = icms::$user->getVar('uid');
-		$uname = icms::$user->getVar('uname');
+		$uid = icms::$user->uid;
+		$uname = icms::$user->uname;
 	} else {
 		$uid = 0;
 		$uname = '';
 	}
 	if (is_object($icmsModule)) {
-		$online_handler->write($uid, $uname, time(), $icmsModule->getVar('mid'), $_SERVER['REMOTE_ADDR']);
+		$online_handler->write($uid, $uname, time(), $icmsModule->mid, $_SERVER['REMOTE_ADDR']);
 	} else {
 		$online_handler->write($uid, $uname, time(), 0, $_SERVER['REMOTE_ADDR']);
 	}
@@ -78,8 +78,8 @@ function b_system_online_show() {
 		}
 		$block['online_total'] = sprintf(_ONLINEPHRASE, $total);
 		if (is_object($icmsModule)) {
-			$mytotal = $online_handler->getCount(new icms_db_criteria_Item('online_module', $icmsModule->getVar('mid')));
-			$block['online_total'] .= ' (' . sprintf(_ONLINEPHRASEX, $mytotal, $icmsModule->getVar('name')) . ')';
+			$mytotal = $online_handler->getCount(new icms_db_criteria_Item('online_module', $icmsModule->mid));
+			$block['online_total'] .= ' (' . sprintf(_ONLINEPHRASEX, $mytotal, $icmsModule->name) . ')';
 		}
 		$block['lang_members'] = _MEMBERS;
 		$block['lang_guests'] = _GUESTS;
@@ -150,14 +150,14 @@ function b_system_main_show() {
 	$read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
 	foreach (array_keys($modules) as $i) {
 		if (in_array($i, $read_allowed)) {
-			$block['modules'][$i]['name'] = $modules[$i]->getVar('name');
-			$block['modules'][$i]['directory'] = $modules[$i]->getVar('dirname');
+			$block['modules'][$i]['name'] = $modules[$i]->name;
+			$block['modules'][$i]['directory'] = $modules[$i]->dirname;
 			$sublinks = $modules[$i]->subLink();
-			if ((count($sublinks) > 0) && (!empty($icmsModule)) && ($i == $icmsModule->getVar('mid'))) {
+			if ((count($sublinks) > 0) && (!empty($icmsModule)) && ($i == $icmsModule->mid)) {
 				foreach ($sublinks as $sublink) {
 					$block['modules'][$i]['sublinks'][] = array(
 						'name' => $sublink['name'],
-						'url' => ICMS_MODULES_URL . '/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']);
+						'url' => ICMS_MODULES_URL . '/' . $modules[$i]->dirname . '/' . $sublink['url']);
 				}
 			} else {
 				$block['modules'][$i]['sublinks'] = array();
@@ -192,20 +192,20 @@ function b_system_user_show($options) {
 		$block['lang_youraccount'] = _MB_SYSTEM_VACNT;
 		$block['lang_editaccount'] = _MB_SYSTEM_EACNT;
 		$block['lang_notifications'] = _MB_SYSTEM_NOTIF;
-		$block['uid'] = icms::$user->getVar('uid');
+		$block['uid'] = icms::$user->uid;
 		$block['lang_logout'] = _MB_SYSTEM_LOUT;
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('read_msg', 0));
-		$criteria->add(new icms_db_criteria_Item('to_userid', icms::$user->getVar('uid')));
+		$criteria->add(new icms_db_criteria_Item('to_userid', icms::$user->uid));
 		$block['new_messages'] = $pm_handler->getCount($criteria);
 		$block['lang_inbox'] = _MB_SYSTEM_INBOX;
 		$block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;
-		$block['name'] = icms::$user->getVar('uname');
+		$block['name'] = icms::$user->uname;
 		$block['user_avatar'] = '';
 		if ($options[0] == 1) {
 			if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['user_avatar'] = icms::$user->gravatar('G', $icmsConfigUser['avatar_width']);
-			} elseif (icms::$user->getVar('user_avatar') && icms::$user->getVar('user_avatar') != 'blank.gif' && icms::$user->getVar('user_avatar') != '') {
-				$block['user_avatar'] = ICMS_UPLOAD_URL . '/' . icms::$user->getVar('user_avatar');
+			} elseif (icms::$user->user_avatar && icms::$user->user_avatar != 'blank.gif' && icms::$user->user_avatar != '') {
+				$block['user_avatar'] = ICMS_UPLOAD_URL . '/' . icms::$user->user_avatar;
 			} else {
 				$block['user_avatar'] = '';
 			}
@@ -303,18 +303,18 @@ function b_system_newmembers_show($options) {
 		if ($options[1] == 1) {
 			if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['users'][$i]['avatar'] = $newmembers[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
-			} elseif ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != '') {
-				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $newmembers[$i]->getVar('user_avatar');
+			} elseif ($newmembers[$i]->user_avatar && $newmembers[$i]->user_avatar != 'blank.gif' && $newmembers[$i]->user_avatar != '') {
+				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $newmembers[$i]->user_avatar;
 			} else {
 				$block['users'][$i]['avatar'] = '';
 			}
 		} else {
 			$block['users'][$i]['avatar'] = '';
 		}
-		$block['users'][$i]['id'] = $newmembers[$i]->getVar('uid');
-		$block['users'][$i]['name'] = $newmembers[$i]->getVar('uname');
-		$block['users'][$i]['joindate'] = formatTimestamp($newmembers[$i]->getVar('user_regdate'), 's');
-		$block['users'][$i]['login_name'] = $newmembers[$i]->getVar('login_name');
+		$block['users'][$i]['id'] = $newmembers[$i]->uid;
+		$block['users'][$i]['name'] = $newmembers[$i]->uname;
+		$block['users'][$i]['joindate'] = formatTimestamp($newmembers[$i]->user_regdate, 's');
+		$block['users'][$i]['login_name'] = $newmembers[$i]->login_name;
 	}
 	if (!empty($options[2]) && $options[2] == 1) {
 		$block['index_enabled'] = true;
@@ -354,17 +354,17 @@ function b_system_topposters_show($options) {
 		if ($options[1] == 1) {
 			if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['users'][$i]['avatar'] = $topposters[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
-			} elseif ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != '') {
-				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $topposters[$i]->getVar('user_avatar');
+			} elseif ($topposters[$i]->user_avatar && $topposters[$i]->user_avatar != 'blank.gif' && $topposters[$i]->user_avatar != '') {
+				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $topposters[$i]->user_avatar;
 			} else {
 				$block['users'][$i]['avatar'] = '';
 			}
 		} else {
 			$block['users'][$i]['avatar'] = '';
 		}
-		$block['users'][$i]['id'] = $topposters[$i]->getVar('uid');
-		$block['users'][$i]['name'] = $topposters[$i]->getVar('uname');
-		$block['users'][$i]['posts'] = $topposters[$i]->getVar('posts');
+		$block['users'][$i]['id'] = $topposters[$i]->uid;
+		$block['users'][$i]['name'] = $topposters[$i]->uname;
+		$block['users'][$i]['posts'] = $topposters[$i]->posts;
 	}
 	return $block;
 }
@@ -392,7 +392,7 @@ function b_system_comments_show($options) {
 	$perms = $moduleperm_handler->getObjects($criteria1, true);
 	$modIds = array();
 	foreach ($perms as $item) {
-		$modIds[] = $item->getVar('gperm_itemid');
+		$modIds[] = $item->gperm_itemid;
 	}
 	if (count($modIds) > 0) {
 		$modIds = array_unique($modIds);
@@ -406,20 +406,20 @@ function b_system_comments_show($options) {
 	$modules = $module_handler->getObjects(new icms_db_criteria_Item('hascomments', 1), true);
 	$comment_config = array();
 	foreach (array_keys($comments) as $i) {
-		$mid = $comments[$i]->getVar('com_modid');
-		$com['module'] = '<a href="' . ICMS_MODULES_URL . '/' . $modules[$mid]->getVar('dirname') . '/">' . $modules[$mid]->getVar('name') . '</a>';
+		$mid = $comments[$i]->com_modid;
+		$com['module'] = '<a href="' . ICMS_MODULES_URL . '/' . $modules[$mid]->dirname . '/">' . $modules[$mid]->name . '</a>';
 		if (!isset($comment_config[$mid])) {
 			$comment_config[$mid] = $modules[$mid]->getInfo('comments');
 		}
 		$com['id'] = $i;
-		$com['title'] = '<a href="' . ICMS_MODULES_URL . '/' . $modules[$mid]->getVar('dirname') . '/' . $comment_config[$mid]['pageName'] . '?' . $comment_config[$mid]['itemName'] . '=' . $comments[$i]->getVar('com_itemid') . '&amp;com_id=' . $i . '&amp;com_rootid=' . $comments[$i]->getVar('com_rootid') . '&amp;' . htmlspecialchars($comments[$i]->getVar('com_exparams')) . '#comment' . $i . '">' . $comments[$i]->getVar('com_title') . '</a>';
-		$com['icon'] = htmlspecialchars($comments[$i]->getVar('com_icon'), ENT_QUOTES, _CHARSET);
+		$com['title'] = '<a href="' . ICMS_MODULES_URL . '/' . $modules[$mid]->dirname . '/' . $comment_config[$mid]['pageName'] . '?' . $comment_config[$mid]['itemName'] . '=' . $comments[$i]->com_itemid . '&amp;com_id=' . $i . '&amp;com_rootid=' . $comments[$i]->com_rootid . '&amp;' . htmlspecialchars($comments[$i]->com_exparams) . '#comment' . $i . '">' . $comments[$i]->com_title . '</a>';
+		$com['icon'] = htmlspecialchars($comments[$i]->com_icon, ENT_QUOTES, _CHARSET);
 		$com['icon'] = ($com['icon'] != '')?$com['icon']:'icon1.gif';
-		$com['time'] = formatTimestamp($comments[$i]->getVar('com_created'), 'm');
-		if ($comments[$i]->getVar('com_uid') > 0) {
-			$poster = & $member_handler->getUser($comments[$i]->getVar('com_uid'));
+		$com['time'] = formatTimestamp($comments[$i]->com_created, 'm');
+		if ($comments[$i]->com_uid > 0) {
+			$poster = & $member_handler->getUser($comments[$i]->com_uid);
 			if (is_object($poster)) {
-				$com['poster'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $comments[$i]->getVar('com_uid') . '">' . $poster->getVar('uname') . '</a>';
+				$com['poster'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $comments[$i]->com_uid . '">' . $poster->uname . '</a>';
 			} else {
 				$com['poster'] = $GLOBALS['icmsConfig']['anonymous'];
 			}
@@ -460,9 +460,9 @@ function b_system_notification_show() {
 		$section['description'] = $category['description'];
 		$section['itemid'] = $category['item_id'];
 		$section['events'] = array();
-		$subscribed_events = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], $icmsModule->getVar('mid'), icms::$user->getVar('uid'));
+		$subscribed_events = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], $icmsModule->mid, icms::$user->uid);
 		foreach ($notification_handler->categoryEvents($category['name'], true) as $event) {
-			if (!empty($event['admin_only']) && !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+			if (!empty($event['admin_only']) && !icms::$user->isAdmin($icmsModule->mid)) {
 				continue;
 			}
 			$subscribed = in_array($event['name'], $subscribed_events)?1:0;
@@ -661,7 +661,7 @@ function b_system_bookmarks_show() {
 	// Get an array of all notifications for the selected user
 
 	$notification_handler = icms::handler('icms_data_notification');
-	$notifications = & $notification_handler->getByUser(icms::$user->getVar('uid'));
+	$notifications = & $notification_handler->getByUser(icms::$user->uid);
 
 	// Generate the info for the template
 
@@ -671,18 +671,18 @@ function b_system_bookmarks_show() {
 
 	$prev_item = -1;
 	foreach ($notifications as $n) {
-		$modid = $n->getVar('not_modid');
+		$modid = $n->not_modid;
 		if ($modid != $prev_modid) {
 			$prev_modid = $modid;
 
 			$prev_item = -1;
 			$module = & $module_handler->get($modid);
-			$module_name = $module->getVar('name');
+			$module_name = $module->name;
 			// Get the lookup function, if exists
 			$not_config = $module->getInfo('notification');
 			$lookup_func = '';
 			if (!empty($not_config['lookup_file'])) {
-				$lookup_file = ICMS_MODULES_PATH . '/' . $module->getVar('dirname') . '/' . $not_config['lookup_file'];
+				$lookup_file = ICMS_MODULES_PATH . '/' . $module->dirname . '/' . $not_config['lookup_file'];
 				if (file_exists($lookup_file)) {
 					include_once $lookup_file;
 					if (!empty($not_config['lookup_func']) && function_exists($not_config['lookup_func'])) {
@@ -692,8 +692,8 @@ function b_system_bookmarks_show() {
 			}
 		}
 
-		$category = $n->getVar('not_category');
-		$item = $n->getVar('not_itemid');
+		$category = $n->not_category;
+		$item = $n->not_itemid;
 		if ($item != $prev_item) {
 			$prev_item = $item;
 			if (!empty($lookup_func)) {
@@ -703,7 +703,7 @@ function b_system_bookmarks_show() {
 			}
 		}
 
-		if ($n->getVar('not_event') == 'bookmark') {
+		if ($n->not_event == 'bookmark') {
 			$block[$module_name][] = array('name'=>$item_info['name'], 'url'=>$item_info['url']);
 		}
 	}

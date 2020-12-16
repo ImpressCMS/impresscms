@@ -95,14 +95,14 @@ switch ($op) {
 		$avatars = & $avt_handler->getObjects($criteria, true);
 		if ($type == 'S') {
 			foreach (array_keys($avatars) as $i) {
-				$id = $avatars[$i]->getVar('avatar_id');
-				$avatar[$i]['id'] = $avatars[$i]->getVar('avatar_id');
-				$avatar[$i]['file'] = $avatars[$i]->getVar('avatar_file');
+				$id = $avatars[$i]->avatar_id;
+				$avatar[$i]['id'] = $avatars[$i]->avatar_id;
+				$avatar[$i]['file'] = $avatars[$i]->avatar_file;
 				$avatar[$i]['name'] = $avatars[$i]->getVar('avatar_name', 'E');
-				$avatar[$i]['mimetype'] = $avatars[$i]->getVar('avatar_mimetype');
+				$avatar[$i]['mimetype'] = $avatars[$i]->avatar_mimetype;
 				$avatar[$i]['count'] = $avatars[$i]->getUserCount();
-				$avatar[$i]['weight'] = $avatars[$i]->getVar('avatar_weight');
-				if ($avatars[$i]->getVar('avatar_display') == 1) {
+				$avatar[$i]['weight'] = $avatars[$i]->avatar_weight;
+				if ($avatars[$i]->avatar_display == 1) {
 				$avatar[$i]['display'] = "1"; }
 			}
 			$icmsAdminTpl->assign("avatararray", $avatar);
@@ -110,10 +110,10 @@ switch ($op) {
 			foreach (array_keys($avatars) as $i) {
 				$userids = & $avt_handler->getUser($avatars[$i]);
 				$avatar[$i]['user'] = $userids[0];
-				$avatar[$i]['name'] = $avatars[$i]->getVar('avatar_name');
-				$avatar[$i]['file'] = $avatars[$i]->getVar('avatar_file');
-				$avatar[$i]['mimetype'] = $avatars[$i]->getVar('avatar_mimetype');
-				$avatar[$i]['id'] = $avatars[$i]->getVar('avatar_id');
+				$avatar[$i]['name'] = $avatars[$i]->avatar_name;
+				$avatar[$i]['file'] = $avatars[$i]->avatar_file;
+				$avatar[$i]['mimetype'] = $avatars[$i]->avatar_mimetype;
+				$avatar[$i]['id'] = $avatars[$i]->avatar_id;
 			}
 			$icmsAdminTpl->assign("avatararray", $avatar);
 		}
@@ -189,7 +189,7 @@ switch ($op) {
 				$avatar->setVar('avatar_weight', $avatar_weight);
 				$avatar->setVar('avatar_type', 'S');
 				if (!$avt_handler->insert($avatar)) {
-					$err[] = sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name'));
+					$err[] = sprintf(_FAILSAVEIMG, $avatar->avatar_name);
 				}
 			}
 		} else {
@@ -224,13 +224,13 @@ switch ($op) {
 		}
 		if (!$avt_handler->delete($avatar)) {
 			icms_cp_header();
-			icms_core_Message::error(sprintf(_MD_FAIL_DEL_AVATAR, $avatar->getVar('avatar_id')));
+			icms_core_Message::error(sprintf(_MD_FAIL_DEL_AVATAR, $avatar->avatar_id));
 			icms_cp_footer();
 			exit();
 		}
-		$file = $avatar->getVar('avatar_file');
+		$file = $avatar->avatar_file;
 		@unlink(ICMS_UPLOAD_PATH . '/' . $file);
-		if (isset($user_id) && $avatar->getVar('avatar_type') == 'C') {
+		if (isset($user_id) && $avatar->avatar_type == 'C') {
 			icms::$xoopsDB->query("UPDATE " . icms::$xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE uid='" . $user_id . "'");
 		} else {
 			icms::$xoopsDB->query("UPDATE " . icms::$xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE user_avatar='" . $file . "'");

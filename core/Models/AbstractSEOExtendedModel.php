@@ -45,7 +45,7 @@ abstract class AbstractSEOExtendedModel extends AbstractExtendedModel
 	 * @return string
 	 */
 	public function short_url() {
-		return $this->getVar('short_url');
+		return $this->short_url;
 	}
 
 	/**
@@ -54,7 +54,7 @@ abstract class AbstractSEOExtendedModel extends AbstractExtendedModel
 	 * @return string
 	 */
 	public function meta_keywords() {
-		return $this->getVar('meta_keywords');
+		return $this->meta_keywords;
 	}
 
 	/**
@@ -63,7 +63,7 @@ abstract class AbstractSEOExtendedModel extends AbstractExtendedModel
 	 * @return string
 	 */
 	public function meta_description() {
-		return $this->getVar('meta_description');
+		return $this->meta_description;
 	}
 }
 

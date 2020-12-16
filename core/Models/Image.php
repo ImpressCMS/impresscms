@@ -102,8 +102,12 @@ class Image extends AbstractExtendedModel {
 	 * @return array            The array of image information
 	 */
 	public function getInfo($path, $type = 'url', $ret = false) {
-		$path = (substr($path, -1) !== '/')?$path . '/':$path;
-		$img = ($type === 'url') ? ($path . $this->getVar('image_name')) : $path;
+		$path = (substr($path, -1) != '/')?$path . '/':$path;
+		if ($type == 'url') {
+			$img = $path . $this->image_name;
+		} else {
+			$img = $path;
+		}
 		$get_size = getimagesize($img);
 		$this->image_info = array(
 			'width' => $get_size[0],

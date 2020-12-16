@@ -66,7 +66,7 @@ class mod_system_Userrank extends \ImpressCMS\Core\Models\AbstractExtendedModel 
 	 * @return	str
 	 */
 	public function getRankPicture() {
-		$ret = '<img src="' . $this->handler->getImageUrl() . $this->getVar("rank_image") . '" />';
+		$ret = '<img src="' . $this->handler->getImageUrl() . $this->rank_image . '" />';
 		return $ret;
 	}
 
@@ -75,7 +75,7 @@ class mod_system_Userrank extends \ImpressCMS\Core\Models\AbstractExtendedModel 
 	 * @return	str
 	 */
 	public function getRankTitle() {
-		$ret = $this->getVar("rank_title");
+		$ret = $this->rank_title;
 		return $ret;
 	}
 }

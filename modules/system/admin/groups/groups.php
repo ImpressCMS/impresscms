@@ -37,7 +37,7 @@
  * @subpackage	Groups
  */
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->mid)) {
 	exit("Access Denied");
 }
 
@@ -53,7 +53,7 @@ function displayGroups() {
 	$gperm_handler = icms::handler('icms_member_groupperm');
 	$ugroups = (is_object(icms::$user))? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 	for ($i = 0; $i < $count; $i++) {
-		$id = $groups[$i]->getVar('groupid');
+		$id = $groups[$i]->groupid;
 		if ($gperm_handler->checkRight('group_manager', $id, $ugroups)) {
 			if (ICMS_GROUP_ADMIN == $id || ICMS_GROUP_USERS == $id || ICMS_GROUP_ANONYMOUS == $id) {
 				$grouparray[$i]['permissions'] = false;
@@ -61,8 +61,8 @@ function displayGroups() {
 				$grouparray[$i]['permissions'] = true;
 			}
 		}
-		$grouparray[$i]['name'] = $groups[$i]->getVar('name');
-		$grouparray[$i]['description'] = $groups[$i]->getVar('description');
+		$grouparray[$i]['name'] = $groups[$i]->name;
+		$grouparray[$i]['description'] = $groups[$i]->description;
 		$grouparray[$i]['id'] = (int) $id;
 		$icmsAdminTpl->assign("grouparray", $grouparray);
 	}
@@ -121,7 +121,7 @@ function modifyGroup($g_id) {
 	$r_block_value = $gperm_handler->getItemIds('block_read', $g_id);
 	$op_value = "update";
 	$submit_value = _AM_UPDATEADG;
-	$g_id_value = $thisgroup->getVar("groupid");
+	$g_id_value = $thisgroup->groupid;
 	$type_value = $thisgroup->getVar("group_type", "E");
 	$form_title = _AM_MODIFYADG;
 	if (ICMS_GROUP_ADMIN == $g_id) {
@@ -135,7 +135,7 @@ function modifyGroup($g_id) {
 	$membercount = $member_handler->getUserCountByGroup($g_id);
 	if ($usercount < 200 && $membercount < 200) {
 		$icmsAdminTpl->assign("usersless200", "1");
-		$icmsAdminTpl->assign("groupid", $thisgroup->getVar("groupid"));
+		$icmsAdminTpl->assign("groupid", $thisgroup->groupid);
 		// do the old way only when counts are small
 		$mlist = array();
 		$members = & $member_handler->getUsersByGroup($g_id, false);
@@ -172,7 +172,7 @@ function modifyGroup($g_id) {
 				$multiple[$m_id]['id'] = (int) $m_id;
 				$icmsAdminTpl->assign("multiple", $multiple);
 			}
-			$icmsAdminTpl->assign("groupid", $thisgroup->getVar("groupid"));
+			$icmsAdminTpl->assign("groupid", $thisgroup->groupid);
 			$icmsAdminTpl->assign("g_id", (int) $g_id);
 			$icmsAdminTpl->assign("memstart", $memstart);
 			$icmsAdminTpl->assign("nav", $nav->renderNav(4));
