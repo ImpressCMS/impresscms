@@ -45,8 +45,8 @@ class BlockPositionHandler extends AbstractExtendedHandler {
 	 * @return bool  the result of the insert action
 	 */
 	public function insert(& $obj, $force = false, $checkObject = true, $debug = false) {
-		$obj->setVar('block_default', 0);
-		$obj->setVar('block_type', 'L');
+		$obj->block_default = 0;
+		$obj->block_type = 'L';
 		return parent::insert($obj, $force, $checkObject, $debug);
 	}
 }

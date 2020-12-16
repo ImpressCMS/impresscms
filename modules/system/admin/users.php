@@ -191,20 +191,20 @@ switch ($op) {
 			} else {
 				$newuser = & $user_handler->create();
 				if (isset($user_viewemail)) {
-					$newuser->setVar('user_viewemail', $user_viewemail);
+					$newuser->user_viewemail = $user_viewemail;
 				}
 				if (isset($attachsig)) {
-					$newuser->setVar('attachsig', $attachsig);
+					$newuser->attachsig = $attachsig;
 				}
-				$newuser->setVar('name', $name);
-				$newuser->setVar('login_name', $login_name);
-				$newuser->setVar('uname', $username);
-				$newuser->setVar('email', $email);
-				$newuser->setVar('url', formatURL($url));
-				$newuser->setVar('user_avatar', 'blank.gif');
-				$newuser->setVar('user_regdate', date('U'));
-				$newuser->setVar('user_from', $user_from);
-				$newuser->setVar('user_sig', $user_sig);
+				$newuser->name = $name;
+				$newuser->login_name = $login_name;
+				$newuser->uname = $username;
+				$newuser->email = $email;
+				$newuser->url = formatURL($url);
+				$newuser->user_avatar = 'blank.gif';
+				$newuser->user_regdate = date('U');
+				$newuser->user_from = $user_from;
+				$newuser->user_sig = $user_sig;
 				if ($pass2 != '') {
 					if ($password != $pass2) {
 						icms_cp_header();
@@ -225,20 +225,20 @@ switch ($op) {
 
 					$icmspass = new icms_core_Password();
 					$password = $icmspass->encryptPass($password, $salt, $enc_type);
-					$newuser->setVar('pass', $password);
+					$newuser->pass = $password;
 				}
-				$newuser->setVar('timezone_offset', $timezone_offset);
-				$newuser->setVar('uorder', $uorder);
-				$newuser->setVar('umode', $umode);
-				$newuser->setVar('notify_method', $notify_method);
-				$newuser->setVar('notify_mode', $notify_mode);
-				$newuser->setVar('bio', $bio);
-				$newuser->setVar('rank', $rank);
-				$newuser->setVar('level', 1);
-				$newuser->setVar('user_occ', $user_occ);
-				$newuser->setVar('user_intrest', $user_intrest);
-				$newuser->setVar('user_mailok', $user_mailok);
-				$newuser->setVar('language', $language);
+				$newuser->timezone_offset = $timezone_offset;
+				$newuser->uorder = $uorder;
+				$newuser->umode = $umode;
+				$newuser->notify_method = $notify_method;
+				$newuser->notify_mode = $notify_mode;
+				$newuser->bio = $bio;
+				$newuser->rank = $rank;
+				$newuser->level = 1;
+				$newuser->user_occ = $user_occ;
+				$newuser->user_intrest = $user_intrest;
+				$newuser->user_mailok = $user_mailok;
+				$newuser->language = $language;
 
 					if (!$user_handler->insert($newuser)) {
 						$adduser_errormsg = _AM_CNRNU;
