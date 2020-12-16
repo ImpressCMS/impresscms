@@ -2,15 +2,17 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use icms;
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 use ImpressCMS\Core\Models\AbstractExtendedModel;
+use PHPUnit\Framework\TestCase;
 
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class ImageTest extends \PHPUnit_Framework_TestCase {
+class ImageTest extends TestCase {
 
     /**
      * Test if is available
@@ -40,15 +42,15 @@ class ImageTest extends \PHPUnit_Framework_TestCase {
      * Tests image body functionality
      */
     public function testImageBody() {
-        $image_handler = \icms::handler('icms_image');
+        $image_handler = icms::handler('icms_image');
         $image = $image_handler->create();
         $this->assertTrue(property_exists($image, 'image_body'), 'icms_image_Object doesn\'t have image_body property');
         $test_var = sha1(microtime(true));
         $image->image_body = $test_var;
-        $this->assertSame($test_var, $image->getVar('image_body'), 'getVar for icms_image_Object doesn\'t work as expected (I)');
+        $this->assertSame($test_var, $image->image_body, 'getVar for icms_image_Object doesn\'t work as expected (I)');
         $image->image_body = null;
         $image->setVar('image_body', $test_var);
-        $this->assertSame($test_var, $image->getVar('image_body'), 'getVar for icms_image_Object doesn\'t work as expected (II)');
+        $this->assertSame($test_var, $image->image_body, 'getVar for icms_image_Object doesn\'t work as expected (II)');
     }
 
 }

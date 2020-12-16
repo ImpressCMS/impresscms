@@ -39,7 +39,7 @@
 if (!is_object($icmsModule)) {
 	exit();
 }
-$com_modid = $icmsModule->getVar('mid');
+$com_modid = $icmsModule->mid;
 $cform = new icms_form_Theme(_CM_POSTCOMMENT, 'commentform', 'comment_post.php', 'post', true);
 if (isset($icmsModuleConfig['com_rule'])) {
 	include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
@@ -121,7 +121,7 @@ $cform->addElement(new icms_form_elements_Hidden('com_mode', $com_mode));
 
 // add module specific extra params
 
-if ('system' != $icmsModule->getVar('dirname')) {
+if ('system' != $icmsModule->dirname) {
 	$comment_config = $icmsModule->getInfo('comments');
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 		foreach ($comment_config['extraParams'] as $extra_param) {

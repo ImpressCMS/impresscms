@@ -64,10 +64,10 @@ class mod_system_Autotasks extends \ImpressCMS\Core\Models\AbstractExtendedModel
 	 * @return	string
 	 */
 	public function getLastRunTimeForDisplay() {
-		if ($this->getVar('sat_lastruntime') < 1) {
+		if ($this->sat_lastruntime < 1) {
 			return _CO_ICMS_AUTOTASKS_NOTYETRUNNED;
 		} else {
-			return formatTimestamp($this->getVar('sat_lastruntime'));
+			return formatTimestamp($this->sat_lastruntime);
 		}
 	}
 
@@ -76,10 +76,10 @@ class mod_system_Autotasks extends \ImpressCMS\Core\Models\AbstractExtendedModel
 	 * @return	string
 	 */
 	public function getRepeatForDisplay() {
-		if ($this->getVar('sat_repeat') < 1) {
+		if ($this->sat_repeat < 1) {
 			return _CO_ICMS_AUTOTASKS_FOREVER;
 		} else {
-			return $this->getVar('sat_repeat');
+			return $this->sat_repeat;
 		}
 	}
 
@@ -89,7 +89,7 @@ class mod_system_Autotasks extends \ImpressCMS\Core\Models\AbstractExtendedModel
 	 */
 	public function getIntervalForDisplay() {
 
-		$int = $this->getVar('sat_interval');
+		$int = $this->sat_interval;
 		$day = (int) ($int / 60 / 24);
 		$hou = (int) (($int - $day * 24 * 60) / 60);
 		$min = (int) (($int - $day * 24 * 60) - $hou * 60);
@@ -123,7 +123,7 @@ class mod_system_Autotasks extends \ImpressCMS\Core\Models\AbstractExtendedModel
 	 * @return	string
 	 */
 	public function getType($part = null) {
-		$type = $this->getVar('sat_type');
+		$type = $this->sat_type;
 		if ($type[0] == ':') {
 			$type = substr($type, 1);
 		}
@@ -147,7 +147,7 @@ class mod_system_Autotasks extends \ImpressCMS\Core\Models\AbstractExtendedModel
 	 * @return	string
 	 */
 	public function getEnableForDisplay() {
-		return ($this->getVar('sat_enabled') == 1)? _YES : _NO;
+		return ($this->sat_enabled == 1)? _YES : _NO;
 	}
 
 	/**
@@ -155,7 +155,7 @@ class mod_system_Autotasks extends \ImpressCMS\Core\Models\AbstractExtendedModel
 	 * @return	string
 	 */
 	public function getOnFinishForDisplay() {
-		return ($this->getVar('sat_onfinish') == 1)? _YES : _NO;
+		return ($this->sat_onfinish == 1)? _YES : _NO;
 	}
 
 	/**
@@ -164,23 +164,23 @@ class mod_system_Autotasks extends \ImpressCMS\Core\Models\AbstractExtendedModel
 	 * @return bool
 	 */
 	public function exec() {
-		if (!$this->getVar('sat_enabled')) {
+		if (!$this->sat_enabled) {
 			return false;
 		}
-		if (((int) $this->getVar('sat_lastruntime') + (int) $this->getVar('sat_interval') * 60) > time()) {
+		if (((int) $this->sat_lastruntime + (int) $this->sat_interval * 60) > time()) {
 			return false;
 		}
-		$code = $this->getVar('sat_code');
+		$code = $this->sat_code;
 		ignore_user_abort(true);
-		if (substr($this->getVar('sat_type'), 0, 6) == 'addon/') {
-			$dirname = substr($this->getVar('sat_type'), 6);
+		if (substr($this->sat_type, 0, 6) == 'addon/') {
+			$dirname = substr($this->sat_type, 6);
 			if ($dirname == '') {
 				return false;
 			}
 
 			// only execute autotasks for active modules
 			$module = icms::handler('icms_module')->getByDirname($dirname);
-			if ($module->getVar('isactive') != 1) {
+			if ($module->isactive != 1) {
 				return false;
 			}
 
@@ -199,10 +199,10 @@ class mod_system_Autotasks extends \ImpressCMS\Core\Models\AbstractExtendedModel
 			);
 			return false;
 		}
-		$count = $this->getVar('sat_repeat');
+		$count = $this->sat_repeat;
 		if ($count > 0) {
 			if ($count == 1) {
-				if ($this->getVar('sat_onfinish')) {
+				if ($this->sat_onfinish) {
 					// delete this task
 					$this->handler->delete($this);
 					return true;
@@ -254,7 +254,7 @@ class mod_system_Autotasks extends \ImpressCMS\Core\Models\AbstractExtendedModel
 	 * @return	string
 	 */
 	public function getNameForDisplay() {
-		return $this->getVar('sat_name');
+		return $this->sat_name;
 	}
 
 }

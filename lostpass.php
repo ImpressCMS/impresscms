@@ -76,9 +76,11 @@ if (empty($getuser)) {
 } else {
 	$icmspass = new icms_core_Password();
 
-	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
+	$areyou = substr($getuser[0]->pass, 0, 5);
 	if ($code != '' && $areyou == $code) {
-		$newpass = $icmspass->createSalt(8);
+		$newpass = (new \RandomLib\Factory())->->getGenerator(
+			new \SecurityLib\Strength(\SecurityLib\Strength::MEDIUM)
+		)->generateString(8,'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 		$pass = $icmspass->encryptPass($newpass);
 		$mailer = new icms_messaging_Handler();
 		$mailer->useMail();
@@ -98,7 +100,7 @@ if (empty($getuser)) {
 
 		// Next step: add the new password to the database
 		$sql = sprintf("UPDATE %s SET pass = '%s', pass_expired = '%u' WHERE uid = '%u'",
-						icms::$xoopsDB->prefix('users'), $pass, 1, (int) $getuser[0]->getVar('uid'));
+						icms::$xoopsDB->prefix('users'), $pass, 1, (int) $getuser[0]->uid);
 		if (!icms::$xoopsDB->queryF($sql)) {
 			/** Include header.php to start page rendering */
 			include 'header.php';
@@ -107,7 +109,7 @@ if (empty($getuser)) {
 			include 'footer.php';
 			exit();
 		}
-		redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), false);
+		redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->uname), false);
 		// If no Code, send it
 	} else {
 		$mailer = new icms_messaging_Handler();
@@ -128,7 +130,7 @@ if (empty($getuser)) {
 			echo $mailer->getErrors();
 		}
 		echo '<h4>';
-		printf(_US_CONFMAIL, $getuser[0]->getVar('uname'));
+		printf(_US_CONFMAIL, $getuser[0]->uname);
 		echo '</h4>';
 		/** Include footer.php to complete page rendering */
 		include 'footer.php';

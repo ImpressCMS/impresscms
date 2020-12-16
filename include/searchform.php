@@ -61,7 +61,7 @@ if (empty($modules)) {
 } else {
 	unset($module);
 	foreach (array_keys($modules) as $mid) {
-		$module_array[$mid] = $modules[$mid]->getVar('name');
+		$module_array[$mid] = $modules[$mid]->name;
 	}
 	$mods_checkbox->addOptionArray($module_array);
 }

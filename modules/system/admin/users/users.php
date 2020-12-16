@@ -39,7 +39,7 @@
 
 if (!is_object(icms::$user)
 	|| !is_object($icmsModule)
-	|| !icms::$user->isAdmin($icmsModule->getVar('mid'))
+	|| !icms::$user->isAdmin($icmsModule->mid)
 ) {
 	exit('Access Denied');
 }
@@ -161,46 +161,46 @@ function modifyUser($user) {
 	$user = & $user_handler->get($user);
 	if (is_object($user)) {
 		if (!$user->isActive()) {
-			icms_core_Message::confirm(array('fct' => 'users', 'op' => 'reactivate', 'uid' => $user->getVar('uid')), 'admin.php', _AM_NOTACTIVE);
+			icms_core_Message::confirm(array('fct' => 'users', 'op' => 'reactivate', 'uid' => $user->uid), 'admin.php', _AM_NOTACTIVE);
 			icms_cp_footer();
 			exit();
 		}
 
-		$uid_value = $user->getVar('uid');
+		$uid_value = $user->uid;
 		$uname_value = $user->getVar('uname', 'E');
 		$login_name_value = $user->getVar('login_name', 'E');
 		$name_value = $user->getVar('name', 'E');
 		$email_value = $user->getVar('email', 'E');
-		$email_cbox_value = $user->getVar('user_viewemail')?1:0;
+		$email_cbox_value = $user->user_viewemail?1:0;
 		$url_value = $user->getVar('url', 'E');
-		$temp = $user->getVar('theme');
-		$timezone_value = $user->getVar('timezone_offset');
+		$temp = $user->theme;
+		$timezone_value = $user->timezone_offset;
 		$location_value = $user->getVar('user_from', 'E');
 		$occ_value = $user->getVar('user_occ', 'E');
 		$interest_value = $user->getVar('user_intrest', 'E');
 		$sig_value = $user->getVar('user_sig', 'E');
-		$sig_cbox_value = ($user->getVar('attachsig') == 1)?1:0;
-		$umode_value = $user->getVar('umode');
-		$uorder_value = $user->getVar('uorder');
-		$notify_method_value = $user->getVar('notify_method');
-		$notify_mode_value = $user->getVar('notify_mode');
+		$sig_cbox_value = ($user->attachsig == 1)?1:0;
+		$umode_value = $user->umode;
+		$uorder_value = $user->uorder;
+		$notify_method_value = $user->notify_method;
+		$notify_mode_value = $user->notify_mode;
 		$bio_value = $user->getVar('bio', 'E');
 		$rank_value = $user->rank(false);
 		$mailok_value = $user->getVar('user_mailok', 'E');
-		$pass_expired_value = $user->getVar('pass_expired')?1:0;
+		$pass_expired_value = $user->pass_expired?1:0;
 		$op_value = 'updateUser';
-		$form_title = _AM_UPDATEUSER . ': ' . $user->getVar('uname');
-		$language_value = $user->getVar('language');
+		$form_title = _AM_UPDATEUSER . ': ' . $user->uname;
+		$language_value = $user->language;
 		$form_isedit = true;
 		$groups = array_values($user->getGroups());
 		include ICMS_MODULES_PATH . '/system/admin/users/userform.php';
 		echo "<br /><strong>" . _AM_USERPOST . "</strong><br /><br />\n"
 			. "<table>\n"
-			. "<tr><td>" . _AM_COMMENTS . "</td><td>" . icms_conv_nr2local($user->getVar('posts')) . "</td></tr>\n"
+			. "<tr><td>" . _AM_COMMENTS . "</td><td>" . icms_conv_nr2local($user->posts) . "</td></tr>\n"
 			. "</table>\n"
 			. "<br />" . _AM_PTBBTSDIYT . "<br />\n"
 			. "<form action=\"admin.php\" method=\"post\">\n"
-			. "<input type=\"hidden\" name=\"id\" value=\"" . $user->getVar('uid') . "\">"
+			. "<input type=\"hidden\" name=\"id\" value=\"" . $user->uid . "\">"
 			. "<input type=\"hidden\" name=\"type\" value=\"user\">\n"
 			. "<input type=\"hidden\" name=\"fct\" value=\"users\">\n"
 			. "<input type=\"hidden\" name=\"op\" value=\"synchronize\">\n"
@@ -275,7 +275,7 @@ function updateUser(
 ) {
 	global $icmsConfig, $icmsModule, $icmsConfigUser, $user_handler;
 	$edituser = & $user_handler->get($uid);
-	if ($edituser->getVar('uname') != $uname && $user_handler->getCount(new icms_db_criteria_Item('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $user_handler->getCount(new icms_db_criteria_Item('login_name', $login_name)) > 0) {
+	if ($edituser->uname != $uname && $user_handler->getCount(new icms_db_criteria_Item('uname', $uname)) > 0 || $edituser->login_name != $login_name && $user_handler->getCount(new icms_db_criteria_Item('login_name', $login_name)) > 0) {
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/users/images/users_big.png)">' . _MD_AM_USER . '</div><br />';
 		echo _AM_UNAME . ' ' . $uname . ' ' . _AM_ALREADY_EXISTS;
@@ -331,16 +331,16 @@ function updateUser(
 			if ($groups != array()) {
 				$oldgroups = $edituser->getGroups();
 				//If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
-				if ($edituser->getVar('uid') == icms::$user->getVar('uid') && (in_array(ICMS_GROUP_ADMIN, $oldgroups)) && !(in_array(ICMS_GROUP_ADMIN, $groups))) {
+				if ($edituser->uid == icms::$user->uid && (in_array(ICMS_GROUP_ADMIN, $oldgroups)) && !(in_array(ICMS_GROUP_ADMIN, $groups))) {
 					//Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
 					$groups[] = ICMS_GROUP_ADMIN;
 				}
 				$member_handler = icms::handler('icms_member');
 				foreach ($oldgroups as $groupid) {
-					$member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));
+					$member_handler->removeUsersFromGroup($groupid, array($edituser->uid));
 				}
 				foreach (
-					$groups as $groupid) {$member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));
+					$groups as $groupid) {$member_handler->addUserToGroup($groupid, $edituser->uid);
 				}
 			}
 			redirect_header('admin.php?fct=users', 1, _ICMS_DBUPDATED);

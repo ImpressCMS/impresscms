@@ -17,7 +17,7 @@ class ScriptSetupStep implements SetupStepInterface
 	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$install_script = $module->getInfo('onInstall');
-		$dirname = $module->getVar('dirname');
+		$dirname = $module->dirname;
 		$module_name = ($module->getInfo('modname') !== '') ? trim($module->getInfo('modname')) : $dirname;
 		if ($install_script === false || empty($install_script = trim($install_script))) {
 			return true;
