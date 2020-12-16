@@ -82,7 +82,7 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 			} else {
 				$user->setGroups($userSection->get('groups'));
 				if (!$userSection->get('language')) {
-					$userSection->set('language', $user->getVar('language'));
+					$userSection->set('language', $user->language);
 				}
 				icms::$user = $user;
 			}

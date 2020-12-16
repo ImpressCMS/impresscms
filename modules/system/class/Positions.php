@@ -40,7 +40,7 @@ class mod_system_Positions extends icms_view_block_position_Object {
 	 * @return string
 	 */
 	public function getCustomTitle() {
-		$rtn = defined($this->getVar('title'))? constant($this->getVar('title')):$this->getVar('title');
+		$rtn = defined($this->title)? constant($this->title):$this->title;
 		return $rtn;
 	}
 
@@ -55,7 +55,7 @@ class mod_system_Positions extends icms_view_block_position_Object {
 	 * @return string
 	 */
 	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		if ($this->getVar('block_default') == 1) {
+		if ($this->block_default == 1) {
 			return "";
 		}
 		return parent::getEditItemLink($onlyUrl, $withimage, $userSide);
@@ -72,7 +72,7 @@ class mod_system_Positions extends icms_view_block_position_Object {
 	 * @return string
 	 */
 	public function getDeleteItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		if ($this->getVar('block_default') == 1) {
+		if ($this->block_default == 1) {
 			return "";
 		}
 		return parent::getDeleteItemLink($onlyUrl, $withimage, $userSide);

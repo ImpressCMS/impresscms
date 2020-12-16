@@ -393,7 +393,7 @@ class ViewResponse implements ResponseInterface
 		 * Loading options of the current module.
 		 */
 		if (\icms::$module !== null) {
-			if (\icms::$module->getVar('dirname') == 'system') {
+			if (\icms::$module->dirname == 'system') {
 				if (isset($sysprefs) && count($sysprefs) > 0) {
 					// remove the grouping for the system module preferences (first layer)
 					$sysprefs_tmp = array();
@@ -419,7 +419,7 @@ class ViewResponse implements ResponseInterface
 				}
 			} else {
 				foreach ($mods as $mod) {
-					if ($mod['dir'] == \icms::$module->getVar('dirname')) {
+					if ($mod['dir'] == \icms::$module->dirname) {
 						$m = $mod; //Getting info of the current module
 						break;
 					}
@@ -441,10 +441,10 @@ class ViewResponse implements ResponseInterface
 					}
 				}
 			}
-			$this->theme->template->assign('modpath', ICMS_MODULES_URL . '/' . \icms::$module->getVar('dirname'));
-			$this->theme->template->assign('modname', \icms::$module->getVar('name'));
-			$this->theme->template->assign('modid', \icms::$module->getVar('mid'));
-			$this->theme->template->assign('moddir', \icms::$module->getVar('dirname'));
+			$this->theme->template->assign('modpath', ICMS_URL . '/modules/' . \icms::$module->dirname);
+			$this->theme->template->assign('modname', \icms::$module->name);
+			$this->theme->template->assign('modid', \icms::$module->mid);
+			$this->theme->template->assign('moddir', \icms::$module->dirname);
 			$this->theme->template->assign('lang_prefs', _PREFERENCES);
 		}
 	}

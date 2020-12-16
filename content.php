@@ -52,7 +52,7 @@ if (!empty($page)) {
 		$contentObj = $content;
 		break;
 	}
-	$clean_content_id = $contentObj->getVar('content_id');
+	$clean_content_id = $contentObj->content_id;
 }
 
 $xoopsOption['template_main'] = 'content_content.html';
@@ -74,7 +74,7 @@ if (is_object($contentObj) && $contentObj->accessGranted()) {
 	redirect_header(CONTENT_URL, 3, _NOPERM);
 }
 
-if ($contentConfig ['com_rule'] && $contentObj->getVar('content_cancomment')) {
+if ($contentConfig ['com_rule'] && $contentObj->content_cancomment) {
 	$icmsTpl->assign('content_content_comment', true);
 	include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 }
@@ -82,7 +82,7 @@ if ($contentConfig ['com_rule'] && $contentObj->getVar('content_cancomment')) {
 /**
  * Generating meta information for this page
  */
-$icms_metagen = new icms_ipf_Metagen($contentObj->getVar('content_title'), $contentObj->getVar('meta_keywords', 'n'), $contentObj->getVar('meta_description', 'n'));
+$icms_metagen = new icms_ipf_Metagen($contentObj->content_title, $contentObj->getVar('meta_keywords', 'n'), $contentObj->getVar('meta_description', 'n'));
 $icms_metagen->createMetaTags();
 
 $xoTheme->addStylesheet(ICMS_URL . '/modules/content/include/content.css');

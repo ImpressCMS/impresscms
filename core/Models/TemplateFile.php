@@ -81,8 +81,8 @@ class TemplateFile extends AbstractExtendedModel {
 	 * Gets Template Source
 	 */
 	public function getSource() {
-		$sql = 'SELECT tpl_source FROM ' . $this->handler->db->prefix('tplsource')
-				. " WHERE tpl_id='" . $this->getVar('tpl_id') . "'";
+		$sql = "SELECT tpl_source FROM " . $this->handler->db->prefix('tplsource')
+				. " WHERE tpl_id='" . $this->tpl_id . "'";
 		if (!$result = $this->handler->db->query($sql)) {
 					return false;
 		}
@@ -121,7 +121,7 @@ class TemplateFile extends AbstractExtendedModel {
 	 * Gets Last Modified timestamp
 	 */
 	public function getLastModified() {
-		return $this->getVar('tpl_lastmodified');
+		return $this->tpl_lastmodified;
 	}
 }
 

@@ -65,7 +65,7 @@ if (!empty($_POST)) {
 /* we do not have this module in our repository, nor is it on addons - unsupported? skenow 14 July 2014
 $module_handler = icms::handler('icms_module');
 $messenger_module = $module_handler->getByDirname('messenger');
-if ($messenger_module && $messenger_module->getVar('isactive')) {
+if ($messenger_module && $messenger_module->isactive) {
 	header('location: ./modules/messenger/msgbox.php');
 	exit();
 }
@@ -85,7 +85,7 @@ if (!empty($delete_messages) && isset($msg_id)) {
 	$size = count($msg_id);
 	for ($i = 0; $i < $size; $i++) {
 		$pm = & $pm_handler->get($msg_id[$i]);
-		if ($pm->getVar('to_userid') == icms::$user->getVar('uid')) {
+		if ($pm->to_userid == icms::$user->uid) {
 			$pm_handler->delete($pm);
 		}
 		unset($pm);
@@ -96,7 +96,7 @@ if (!empty($delete_messages) && isset($msg_id)) {
 $xoopsOption['template_main'] = 'system_viewmsgs.html';
 require ICMS_ROOT_PATH . '/header.php';
 
-$criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->getVar('uid')));
+$criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->uid));
 $criteria->setOrder('DESC');
 $pm_arr = & $pm_handler->getObjects($criteria);
 
@@ -109,7 +109,7 @@ foreach ($pm_arr as $id => $message) {
 
 $icmsTpl->assign(
 	array(
-		'uid' => icms::$user->getVar('uid'),
+		'uid' => icms::$user->uid,
 		'messages' => $message_list,
 		'token' => icms::$security->getTokenHTML(),
 	)

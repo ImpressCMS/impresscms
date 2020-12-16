@@ -184,7 +184,7 @@ class ModuleAboutRenderer {
 	public function __construct($aboutTitle = _MODABOUT_ABOUT) {
 		global $icmsModule, $icmsConfig;
 
-		icms_loadLanguageFile($icmsModule->getVar("dirname"), 'modinfo');
+		icms_loadLanguageFile($icmsModule->dirname, 'modinfo');
 		icms_loadLanguageFile('core', 'moduleabout');
 
 		$this->_aboutTitle = $aboutTitle;
@@ -227,13 +227,13 @@ class ModuleAboutRenderer {
 		icms_cp_header();
 
 		$module_handler = icms::handler('icms_module');
-		$versioninfo = & $module_handler->get($icmsModule->getVar('mid'));
+		$versioninfo = & $module_handler->get($icmsModule->mid);
 
 		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . ' ' . $versioninfo->getInfo('name'));
 
 		$this->_tpl = new Template();
 
-		$this->_tpl->assign('module_url', ICMS_MODULES_URL . '/' . $icmsModule->getVar('dirname') . "/");
+		$this->_tpl->assign('module_url', ICMS_URL . "/modules/" . $icmsModule->dirname . "/");
 		$this->_tpl->assign('module_image', $versioninfo->getInfo('image'));
 		$this->_tpl->assign('module_name', $versioninfo->getInfo('name'));
 		$this->_tpl->assign('module_version', $versioninfo->getInfo('version'));
@@ -308,7 +308,7 @@ class ModuleAboutRenderer {
 
 		// For changelog thanks to 3Dev
 		//global $icmsModule;
-		$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/changelog.txt';
+		$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/changelog.txt';
 		if (is_file($filename)) {
 
 			$filesize = filesize($filename);
@@ -317,7 +317,7 @@ class ModuleAboutRenderer {
 			fclose($handle);
 		}
 
-		$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/docs/changelog.txt';
+		$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/docs/changelog.txt';
 		if (is_file($filename)) {
 
 			$filesize = filesize($filename);
@@ -327,16 +327,16 @@ class ModuleAboutRenderer {
 		}
 
 		// For license thanks to 3Dev
-		if (file_exists(ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/docs/license.txt')) {
-			$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/docs/license.txt';
-		} elseif (file_exists(ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt')) {
-			$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt';
-		} elseif (file_exists(ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license.txt')) {
-			$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license.txt';
-		} elseif (file_exists(ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt')) {
-			$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt';
-		} elseif (file_exists(ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license.txt')) {
-			$filename = ICMS_MODULES_PATH . '/' . $icmsModule->getVar('dirname') . '/license.txt';
+		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/docs/license.txt')) {
+			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/docs/license.txt';
+		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/docs/' . $icmsConfig['language'] . '_license.txt')) {
+			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/docs/' . $icmsConfig['language'] . '_license.txt';
+		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license.txt')) {
+			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license.txt';
+		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license/' . $icmsConfig['language'] . '_license.txt')) {
+			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license/' . $icmsConfig['language'] . '_license.txt';
+		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license.txt')) {
+			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license.txt';
 		}
 		if (is_file($filename)) {
 			$filesize = filesize($filename);

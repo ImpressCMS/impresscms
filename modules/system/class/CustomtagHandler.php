@@ -62,7 +62,7 @@ class mod_system_CustomtagHandler extends \ImpressCMS\Core\Models\AbstractExtend
 				$criteria->add(new icms_db_criteria_Item('customtagid', '(' . implode(', ', $granted_ids) . ')', 'IN'));
 				$customtagsObj = $this->getObjects($criteria, true);
 				foreach ($customtagsObj as $customtagObj) {
-					$ret[$customtagObj->getVar('name')] = $customtagObj;
+					$ret[$customtagObj->name] = $customtagObj;
 				}
 			}
 			$this->_objects = $ret;
