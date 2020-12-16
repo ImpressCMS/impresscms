@@ -71,7 +71,7 @@
     "middlewares/client-ip": "^2.0",
     "middlewares/encoder": "^2.1",
     "middlewares/firewall": "^2.0.1",
-    "middlewares/referrer-spam": "^2.0",
+    "middlewares/referrer-spam": "^2.0.2",
     "monolog/monolog": "^2.0",
     "narrowspark/http-emitter": "^1.0",
     "old-xoops-libraries/php-downloader": "1.*",
