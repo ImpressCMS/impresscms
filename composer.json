@@ -123,7 +123,6 @@
     ]
   },
   "require-dev": {
-
     "roave/security-advisories": "dev-master",
     "phpunit/phpunit": "^9.4"
   },
@@ -207,6 +206,67 @@
       "\\ImpressCMS\\Core\\Commands\\GenerateAppKeyCommand": {
         "tags": [
           "console.command"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Resource\\DBResource": {
+        "arguments": [
+          "cache"
+        ],
+        "tags": [
+          "smarty.resource"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\ForeachqCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\ForeachqCloseCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\IncludeqCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\XOAppUrlCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\XOImgUrlCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Modifiers\\DebugPrintVarModifier": {
+        "tags": [
+          "smarty.modifier"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\ResizeImageFunction": {
+        "arguments": [
+          "cache"
+        ],
+        "tags": [
+          "smarty.function"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\XOInboxCountFunction": {
+        "tags": [
+          "smarty.function"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\XoopsLinkFunction": {
+        "tags": [
+          "smarty.function"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\XOPageNavFunction": {
+        "tags": [
+          "smarty.function"
         ]
       },
       "\\ImpressCMS\\Core\\Commands\\CacheClearCommand": {

@@ -73,7 +73,24 @@ class Template extends SmartyBC
 
 		parent::__construct();
 
-		$this->addPluginsDir(ICMS_PLUGINS_PATH . DIRECTORY_SEPARATOR . 'smarty');
+		foreach (\icms::getInstance()->get('smarty.resource') as $plugin) {
+			$this->registerResource(
+				$plugin->getName(),
+				$plugin
+			);
+		}
+		foreach ([
+					 'function' => 'register_function',
+					 'modifier' => 'register_modifier',
+					 'compiler' => 'register_compiler_function',
+				 ] as $type => $function) {
+			foreach (\icms::getInstance()->get('smarty.' . $type) as $plugin) {
+				$this->$function(
+					$plugin->getName(),
+					[$plugin, 'execute']
+				);
+			}
+		}
 
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
