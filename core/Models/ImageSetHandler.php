@@ -189,7 +189,7 @@ class ImageSetHandler extends AbstractExtendedHandler {
 		$imgsets = & $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($imgsets) as $i) {
-			$ret[$i] = $imgsets[$i]->getVar('imgset_name');
+			$ret[$i] = $imgsets[$i]->imgset_name;
 		}
 		return $ret;
 	}

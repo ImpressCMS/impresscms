@@ -60,7 +60,8 @@ class UserRank extends AbstractExtendedModel {
 	 * @return string
 	 */
 	public function getRankPicture() {
-		return '<img src="' . $this->handler->getImageUrl() . $this->getVar('rank_image') . '" />';
+		$ret = '<img src="' . $this->handler->getImageUrl() . $this->rank_image . '" />';
+		return $ret;
 	}
 
 	/**
@@ -68,6 +69,7 @@ class UserRank extends AbstractExtendedModel {
 	 * @return	string
 	 */
 	public function getRankTitle() {
-		return $this->getVar('rank_title');
+		$ret = $this->rank_title;
+		return $ret;
 	}
 }

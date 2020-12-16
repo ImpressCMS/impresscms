@@ -204,7 +204,7 @@ class Config extends AbstractFacade
 		}
 		$options = &$config->getConfOptions();
 		$count = count($options);
-		$conf_id = $config->getVar('conf_id');
+		$conf_id = $config->conf_id;
 		for ($i = 0; $i < $count; $i++) {
 			$options[$i]->setVar('conf_id', $conf_id);
 			if (!$this->_oHandler->insert($options[$i])) {
@@ -214,8 +214,8 @@ class Config extends AbstractFacade
 			}
 		}
 
-		if (!empty($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')])) {
-			unset($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')]);
+		if (!empty($this->_cachedConfigs[$config->conf_modid][$config->conf_catid])) {
+			unset($this->_cachedConfigs[$config->conf_modid][$config->conf_catid]);
 		}
 		return true;
 	}
@@ -242,8 +242,8 @@ class Config extends AbstractFacade
 				$this->_oHandler->delete($options[$i]);
 			}
 		}
-		if (!empty($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')])) {
-			unset($this->_cachedConfigs[$config->getVar('conf_modid')][$config->getVar('conf_catid')]);
+		if (!empty($this->_cachedConfigs[$config->conf_modid][$config->conf_catid])) {
+			unset($this->_cachedConfigs[$config->conf_modid][$config->conf_catid]);
 		}
 		return true;
 	}
@@ -289,7 +289,7 @@ class Config extends AbstractFacade
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach (array_keys($configs) as $i) {
-					$ret[$configs[$i]->getVar('conf_catid')][$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
+					$ret[$configs[$i]->conf_catid][$configs[$i]->conf_name] = $configs[$i]->getConfValueForOutput();
 				}
 				foreach ($ret as $key => $value) {
 					$this->_cachedConfigs[$module][$key] = $value;
@@ -309,7 +309,7 @@ class Config extends AbstractFacade
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach (array_keys($configs) as $i) {
-					$ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
+					$ret[$configs[$i]->conf_name] = $configs[$i]->getConfValueForOutput();
 				}
 			}
 			$this->_cachedConfigs[$module][$category] = $ret;
@@ -385,7 +385,7 @@ class Config extends AbstractFacade
 			$confcount = count($configs);
 			$ret = array();
 			for ($i = 0; $i < $confcount; $i++) {
-				$ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
+				$ret[$configs[$i]->conf_name] = $configs[$i]->getConfValueForOutput();
 			}
 			$this->_cachedConfigs[$conf_modid][$conf_catid] = &$ret;
 			return $ret;

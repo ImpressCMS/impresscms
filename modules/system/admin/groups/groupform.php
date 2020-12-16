@@ -110,8 +110,8 @@ $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1))
 $groups = $member_handler->getGroups();
 
 foreach ($groups as $group) {
-	if ($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), icms::$user->getGroups())) {
-		$group_manager_checkbox->addOption($group->getVar('groupid'), $group->getVar('name'));
+	if ($gperm_handler->checkRight('group_manager', $group->groupid, icms::$user->getGroups())) {
+		$group_manager_checkbox->addOption($group->groupid, $group->name);
 	}
 	}
 $icms_block_handler = icms::handler('icms_view_block');

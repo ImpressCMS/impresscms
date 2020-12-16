@@ -11,7 +11,7 @@
 
 if (!is_object(icms::$user)
 	|| !is_object(icms::$module)
-	|| !icms::$user->isAdmin(icms::$module->getVar('mid'))
+	|| !icms::$user->isAdmin(icms::$module->mid)
 ) {
 	exit("Access Denied");
 }

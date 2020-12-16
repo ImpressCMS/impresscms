@@ -38,7 +38,7 @@
  * @subpackage	Users
  */
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->mid)) {
 	exit("Access Denied");
 }
 /*
@@ -336,20 +336,20 @@ if ($op == "form") {
 		$ucount = 0;
 		foreach (array_keys($foundusers) as $j) {
 			$ucount++;
-			$fuser_avatar = $foundusers[$j]->getVar("user_avatar")?"<img src='" . ICMS_UPLOAD_URL . "/"
-				. $foundusers[$j]->getVar("user_avatar") . "' alt='' />":"&nbsp;";
-			$fuser_name = $foundusers[$j]->getVar("name")?$foundusers[$j]->getVar("name"):"&nbsp;";
-			$users[$j]['uid'] = $foundusers[$j]->getVar("uid");
-			$users[$j]['email'] = $foundusers[$j]->getVar("email");
-			$users[$j]['uname'] = $foundusers[$j]->getVar("uname");
+			$fuser_avatar = $foundusers[$j]->user_avatar?"<img src='" . ICMS_UPLOAD_URL . "/"
+				. $foundusers[$j]->user_avatar . "' alt='' />":"&nbsp;";
+			$fuser_name = $foundusers[$j]->name?$foundusers[$j]->name:"&nbsp;";
+			$users[$j]['uid'] = $foundusers[$j]->uid;
+			$users[$j]['email'] = $foundusers[$j]->email;
+			$users[$j]['uname'] = $foundusers[$j]->uname;
 			$users[$j]['uname_e'] = $foundusers[$j]->getVar("uname", "E");
-			$users[$j]['name'] = $foundusers[$j]->getVar("name")?$foundusers[$j]->getVar("name"):"&nbsp;";
-			$users[$j]['login_name'] = $foundusers[$j]->getVar("login_name");
+			$users[$j]['name'] = $foundusers[$j]->name?$foundusers[$j]->name:"&nbsp;";
+			$users[$j]['login_name'] = $foundusers[$j]->login_name;
 			$users[$j]['user_avatar'] = $fuser_avatar;
-			$users[$j]['user_regdate'] = formatTimeStamp($foundusers[$j]->getVar("user_regdate"), "s");
+			$users[$j]['user_regdate'] = formatTimeStamp($foundusers[$j]->user_regdate, "s");
 			$users[$j]['url'] = $foundusers[$j]->getVar("url", "E");
-			$users[$j]['posts'] = icms_conv_nr2local($foundusers[$j]->getVar("posts"));
-			$users[$j]['last_login_m'] = formatTimeStamp($foundusers[$j]->getVar("last_login"), "m");
+			$users[$j]['posts'] = icms_conv_nr2local($foundusers[$j]->posts);
+			$users[$j]['last_login_m'] = formatTimeStamp($foundusers[$j]->last_login, "m");
 
 			$icmsAdminTpl->assign("users", $users);
 		}
@@ -359,7 +359,7 @@ if ($op == "form") {
 		if ($group > 0) {
 			$member_handler = icms::handler('icms_member');
 			$add2group = & $member_handler->getGroup($group);
-			$icmsAdminTpl->assign("groupvalue_name", sprintf(_AM_ADD2GROUP, $add2group->getVar('name')));
+			$icmsAdminTpl->assign("groupvalue_name", sprintf(_AM_ADD2GROUP, $add2group->name));
 		}
 
 		$totalpages = ceil($total / $limit);
