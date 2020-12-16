@@ -14,7 +14,7 @@ function smarty_function_xoInboxCount( $params, &$smarty ) {
 	} else {
         $pm_handler = icms::handler('icms_data_privmessage');
         $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('read_msg', 0));
-        $criteria->add(new icms_db_criteria_Item('to_userid', icms::$user->getVar('uid')));
+        $criteria->add(new icms_db_criteria_Item('to_userid', icms::$user->uid));
         $count = (int)$pm_handler->getCount($criteria) ;
         $inboxCounterSegment->set('count', $count);
 		$inboxCounterSegment->set('expire',  $time + 60);

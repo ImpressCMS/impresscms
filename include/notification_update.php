@@ -78,8 +78,8 @@ if (!icms::$security->check()) {
 
 $update_list = $_POST['not_list'];
 
-$module_id = $icmsModule->getVar('mid');
-$user_id = is_object(icms::$user)? icms::$user->getVar('uid'):0;
+$module_id = $icmsModule->mid;
+$user_id = is_object(icms::$user)? icms::$user->uid:0;
 
 // For each event, update the notification depending on the status.
 // If status=1, subscribe to the event; otherwise, unsubscribe.

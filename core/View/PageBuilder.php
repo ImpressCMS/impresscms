@@ -135,7 +135,7 @@ class PageBuilder {
 		// getting the start module and page configured in the admin panel
 		if (is_array($icmsConfig['startpage'])) {
 			$member_handler = icms::handler('icms_member');
-			$group = $member_handler->getUserBestGroup((is_object(icms::$user)? icms::$user->getVar('uid'):0));
+			$group = $member_handler->getUserBestGroup((is_object(icms::$user)? icms::$user->uid:0));
 			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 		}
 
@@ -157,18 +157,18 @@ class PageBuilder {
 			// we have a sym-link defined for this page
 			$pages = $icms_page_handler->getObjects($criteria);
 			$page = $pages[0];
-			$purl = filter_var($page->getVar('page_url'), FILTER_SANITIZE_URL);
-			$mid = (int) $page->getVar('page_moduleid');
-			$pid = $page->getVar('page_id');
+			$purl = filter_var($page->page_url, FILTER_SANITIZE_URL);
+			$mid = (int) $page->page_moduleid;
+			$pid = $page->page_id;
 			$module_handler = icms::handler('icms_module');
 			$module = $module_handler->get($mid);
-			$dirname = $module->getVar('dirname');
+			$dirname = $module->dirname;
 			$isStart = ($startMod == $mid . '-' . $pid);
 		} else {
 			// we don't have a sym-link for this page
 			if (is_object($icmsModule)) {
-				$mid = (int) $icmsModule->getVar('mid');
-				$dirname = $icmsModule->getVar('dirname');
+				$mid = (int) $icmsModule->mid;
+				$dirname = $icmsModule->dirname;
 				$isStart = (substr($_SERVER['PHP_SELF'], -9) == 'index.php' && $startMod == $dirname);
 			} else {
 				$mid = 1;
@@ -185,16 +185,16 @@ class PageBuilder {
 			$pages = $icms_page_handler->getObjects($criteria);
 			$pid = 0;
 			foreach ($pages as $page) {
-				$purl = filter_var($page->getVar('page_url'), FILTER_SANITIZE_URL);
+				$purl = filter_var($page->page_url, FILTER_SANITIZE_URL);
 				if (substr($purl, -1) == '*') {
 					$purl = substr($purl, 0, -1);
 					if (substr($url, 0, strlen($purl)) == $purl || substr($fullurl, 0, strlen($purl)) == $purl) {
-						$pid = $page->getVar('page_id');
+						$pid = $page->page_id;
 						break;
 					}
 				} else {
 					if ($purl == $url || $purl == $fullurl) {
-						$pid = $page->getVar('page_id');
+						$pid = $page->page_id;
 						break;
 					}
 				}
@@ -215,7 +215,7 @@ class PageBuilder {
 	 */
 	public function buildBlock($xobject, &$template) {
 		global $icmsConfigPersona;
-		$bid = $xobject->getVar('bid');
+		$bid = $xobject->bid;
 		if ($icmsConfigPersona['editre_block'] == true) {
 			if (icms::$user && count($this->uagroups) > 0) {
 				$url = base64_encode(str_replace(ICMS_URL, '', icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
@@ -228,7 +228,7 @@ class PageBuilder {
 					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=mod&amp;bid=" . $bid . "'> <span class='glyphicon glyphicon-edit'></span> " . _EDIT . "</a></li>"
 					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=up&amp;bid=" . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-arrow-up'></span> " . _UP . "</a></li>"
 					. "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=down&amp;bid=" . $bid . "&amp;rtn=$url'> <span class='glyphicon glyphicon-arrow-down'></span> " . _DOWN . "</a></li>";
-				if ($xobject->getVar('dirname') == '') {
+				if ($xobject->dirname == '') {
 					$titlebtns .= "<li><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocks&amp;op=del&amp;bid=" . $bid . "'> <span class='glyphicon glyphicon-remove'></span> " . _DELETE . "</a></li>";
 				}
 				$titlebtns .= '</ul></span>';
@@ -241,13 +241,13 @@ class PageBuilder {
 
 		$block = array(
 			'id' => $bid,
-			'module' => $xobject->getVar('dirname'),
-			'title' => $xobject->getVar('title') . $titlebtns,
-			'weight' => $xobject->getVar('weight'),
-			'lastmod' => $xobject->getVar('last_modified')
+			'module' => $xobject->dirname,
+			'title' => $xobject->title . $titlebtns,
+			'weight' => $xobject->weight,
+			'lastmod' => $xobject->last_modified
 		);
 
-		$bcachetime = (int) ($xobject->getVar('bcachetime'));
+		$bcachetime = (int) ($xobject->bcachetime);
 		//$template = new \ImpressCMS\Core\View\Template();
 		if (empty($bcachetime)) {
 			$template->caching = 0;
@@ -255,21 +255,21 @@ class PageBuilder {
 			$template->caching = 2;
 			$template->cache_lifetime = $bcachetime;
 		}
-		$tplName = ($tplName = $xobject->getVar('template'))?"db:$tplName":"db:system_block_dummy.html";
+		$tplName = ($tplName = $xobject->template)?"db:$tplName":"db:system_block_dummy.html";
 		$cacheid = $this->generateCacheId(
 			'blk_' . $xobject->dirname . '_'
 			. $bid
 		);
 
 		if (!$bcachetime || !$template->is_cached($tplName, $cacheid)) {
-			icms::$logger->addBlock($xobject->getVar('name'));
+			icms::$logger->addBlock($xobject->name);
 			if (!($bresult = $xobject->buildBlock())) {
 				return false;
 			}
 			$template->assign('block', $bresult);
 			$block['content'] = (isset($bresult['content']) && !empty($bresult['content'])) ? $bresult['content'] : $template->fetch($tplName, $cacheid);
 		} else {
-			icms::$logger->addBlock($xobject->getVar('name'), true, $bcachetime);
+			icms::$logger->addBlock($xobject->name, true, $bcachetime);
 			$block['content'] = $template->fetch($tplName, $cacheid);
 		}
 		return $block;

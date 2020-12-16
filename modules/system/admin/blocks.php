@@ -74,15 +74,15 @@ function editblock($bid = 0, $clone = false) {
 		$controller->postDataToObject($blockObj);
 	}
 
-	if ($blockObj->getVar("c_type") == "H") {
+	if ($blockObj->c_type == "H") {
 		$blockObj->setControl("content", array("name" => "source", "syntax" => "html"));
-	} elseif ($blockObj->getVar("c_type") == "P") {
+	} elseif ($blockObj->c_type == "P") {
 		$blockObj->setControl("content", array("name" => "source", "syntax" => "php"));
 	} else {
 		$blockObj->setControl("content", "dhtmltextarea");
 	}
 
-	if (!$blockObj->isNew() && $blockObj->getVar('edit_func') != '') {
+	if (!$blockObj->isNew() && $blockObj->edit_func != '') {
 		$blockObj->showFieldOnForm('options');
 	}
 	if (!$clone && !$blockObj->isNew()) {
@@ -90,7 +90,7 @@ function editblock($bid = 0, $clone = false) {
 		$sform->assign($icmsAdminTpl);
 	} else {
 		if ($clone) {
-			if ($blockObj->getVar('block_type') != 'C') {
+			if ($blockObj->block_type != 'C') {
 				$blockObj->setVar('block_type', 'K');
 				$blockObj->hideFieldFromForm('content');
 				$blockObj->hideFieldFromForm('c_type');

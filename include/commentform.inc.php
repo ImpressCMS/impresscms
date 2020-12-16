@@ -56,7 +56,7 @@ if (icms::$user) {
 		$noname_checkbox->addOption(1, _POSTANON);
 		$option_tray->addElement($noname_checkbox);
 	}
-	if (icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+	if (icms::$user->isAdmin($icmsModule->mid)) {
 		$nohtml_checkbox = new icms_form_elements_Checkbox('', 'nohtml', $nohtml);
 		$nohtml_checkbox->addOption(1, _DISABLEHTML);
 		$option_tray->addElement($nohtml_checkbox);

@@ -120,7 +120,7 @@ class ConfigItem extends AbstractExtendedModel {
         * @return	string
         */
 	public function getConfValueForOutput() {
-		switch ($this->getVar('conf_valuetype')) {
+		switch ($this->conf_valuetype) {
 			case 'int':
 				return (int) ($this->conf_value);
 				break;
@@ -157,16 +157,16 @@ class ConfigItem extends AbstractExtendedModel {
 	 * @param	bool    $force_slash
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
-		if ($this->getVar('conf_formtype') === 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
-			$value = DataFilter::checkVar($value, 'html', 'input');
-		} elseif ($this->getVar('conf_formtype') === 'textsarea' && $this->getVar('conf_valuetype') !== 'array') {
-			$value = DataFilter::checkVar($value, 'text', 'input');
-		} elseif ($this->getVar('conf_formtype') === 'password') {
+		if ($this->conf_formtype == 'textarea' && $this->conf_valuetype !== 'array') {
+			$value = icms_core_DataFilter::checkVar($value, 'html', 'input');
+		} elseif ($this->conf_formtype == 'textsarea' && $this->conf_valuetype !== 'array') {
+			$value = icms_core_DataFilter::checkVar($value, 'text', 'input');
+		} elseif ($this->conf_formtype == 'password') {
 			$value = filter_var($value, FILTER_SANITIZE_URL);
 		} else {
 			$value = StopXSS($value);
 		}
-		switch ($this->getVar('conf_valuetype')) {
+		switch ($this->conf_valuetype) {
 			case 'array':
 				if (!is_array($value)) {
 					$value = explode('|', trim($value));
