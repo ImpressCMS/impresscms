@@ -57,22 +57,22 @@ if (!empty($_POST)) {
 
 }
 
-if ('system' == $icmsModule->getVar('dirname')) {
+if ('system' == $icmsModule->dirname) {
 	$comment_handler = icms::handler('icms_data_comment');
 	$comment = & $comment_handler->get($com_id);
 	$module_handler = icms::handler('icms_module');
-	$module = & $module_handler->get($comment->getVar('com_modid'));
+	$module = & $module_handler->get($comment->com_modid);
 	$comment_config = $module->getInfo('comments');
-	$com_modid = $module->getVar('mid');
+	$com_modid = $module->mid;
 	$redirect_page = ICMS_URL . '/modules/system/admin.php?fct=comments&amp;com_modid=' . $com_modid . '&amp;com_itemid';
-	$moddir = $module->getVar('dirname');
+	$moddir = $module->dirname;
 	unset($comment);
 } else {
 	if (XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule']) {
 		exit();
 	}
 	$comment_config = $icmsModule->getInfo('comments');
-	$com_modid = $icmsModule->getVar('mid');
+	$com_modid = $icmsModule->mid;
 	$redirect_page = $comment_config['pageName'] . '?';
 	$comment_confirm_extra = array();
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
@@ -91,7 +91,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 		}
 	}
 	$redirect_page .= $comment_config['itemName'];
-	$moddir = $icmsModule->getVar('dirname');
+	$moddir = $icmsModule->dirname;
 }
 
 $accesserror = false;
@@ -124,12 +124,12 @@ switch ($op) {
 		$comment = & $comment_handler->get($com_id);
 		if (!$comment_handler->delete($comment)) {
 			include ICMS_ROOT_PATH . '/header.php';
-			icms_core_Message::error(_CM_COMDELETENG . ' (ID: ' . $comment->getVar('com_id') . ')');
+			icms_core_Message::error(_CM_COMDELETENG . ' (ID: ' . $comment->com_id . ')');
 			include ICMS_ROOT_PATH . '/footer.php';
 			exit();
 		}
 
-		$com_itemid = $comment->getVar('com_itemid');
+		$com_itemid = $comment->com_itemid;
 
 		// execute updateStat callback function if set
 		if (isset($comment_config['callback']['update']) && trim($comment_config['callback']['update']) != '') {
@@ -157,30 +157,30 @@ switch ($op) {
 		}
 
 		// update user posts if its not an anonymous post
-		if ($comment->getVar('com_uid') != 0) {
+		if ($comment->com_uid != 0) {
 			$member_handler = icms::handler('icms_member');
-			$com_poster = & $member_handler->getUser($comment->getVar('com_uid'));
+			$com_poster = & $member_handler->getUser($comment->com_uid);
 			if (is_object($com_poster)) {
-				$member_handler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - 1);
+				$member_handler->updateUserByField($com_poster, 'posts', $com_poster->posts - 1);
 			}
 		}
 
 		// get all comments posted later within the same thread
-		$thread_comments = & $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
+		$thread_comments = & $comment_handler->getThread($comment->com_rootid, $com_id);
 
 		$xot = new icms_ipf_Tree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
 
 		$child_comments = & $xot->getFirstChild($com_id);
 
 		// now set new parent ID for direct child comments
-		$new_pid = $comment->getVar('com_pid');
+		$new_pid = $comment->com_pid;
 		$errs = array();
 		foreach (array_keys($child_comments) as $i) {
 			$child_comments[$i]->setVar('com_pid', $new_pid);
 			// if the deleted comment is a root comment, need to change root id to own id
 			if (false != $comment->isRoot()) {
-				$new_rootid = $child_comments[$i]->getVar('com_id');
-				$child_comments[$i]->setVar('com_rootid', $child_comments[$i]->getVar('com_id'));
+				$new_rootid = $child_comments[$i]->com_id;
+				$child_comments[$i]->setVar('com_rootid', $child_comments[$i]->com_id);
 				if (!$comment_handler->insert($child_comments[$i])) {
 					$errs[] = sprintf(_CM_COULDNOTCHANGEPIDTOID, icms_conv_nr2local($com_id), icms_conv_nr2local($new_pid), icms_conv_nr2local($new_rootid));
 				} else {
@@ -212,7 +212,7 @@ switch ($op) {
 	case 'delete_all':
 		$comment_handler = icms::handler('icms_data_comment');
 		$comment = & $comment_handler->get($com_id);
-		$com_rootid = $comment->getVar('com_rootid');
+		$com_rootid = $comment->com_rootid;
 
 		// get all comments posted later within the same thread
 		$thread_comments = & $comment_handler->getThread($com_rootid, $com_id);
@@ -227,11 +227,11 @@ switch ($op) {
 		$member_handler = icms::handler('icms_member');
 		foreach (array_keys($child_comments) as $i) {
 			if (!$comment_handler->delete($child_comments[$i])) {
-				$msgs[] = _CM_COMDELETENG . ' (ID: ' . icms_conv_nr2local($child_comments[$i]->getVar('com_id')) . ')';
+				$msgs[] = _CM_COMDELETENG . ' (ID: ' . icms_conv_nr2local($child_comments[$i]->com_id) . ')';
 			} else {
-				$msgs[] = _CM_COMDELETED . ' (ID: ' . icms_conv_nr2local($child_comments[$i]->getVar('com_id')) . ')';
+				$msgs[] = _CM_COMDELETED . ' (ID: ' . icms_conv_nr2local($child_comments[$i]->com_id) . ')';
 				// store poster ID and deleted post number into array for later use
-				$poster_id = $child_comments[$i]->getVar('com_uid');
+				$poster_id = $child_comments[$i]->com_uid;
 				if ($poster_id > 0) {
 					$deleted_num[$poster_id] = !isset($deleted_num[$poster_id])?1:($deleted_num[$poster_id] + 1);
 				}
@@ -241,11 +241,11 @@ switch ($op) {
 			// update user posts
 			$com_poster = $member_handler->getUser($user_id);
 			if (is_object($com_poster)) {
-				$member_handler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - $post_num);
+				$member_handler->updateUserByField($com_poster, 'posts', $com_poster->posts - $post_num);
 			}
 		}
 
-		$com_itemid = $comment->getVar('com_itemid');
+		$com_itemid = $comment->com_itemid;
 
 		// execute updateStat callback function if set
 		if (isset($comment_config['callback']['update']) && trim($comment_config['callback']['update']) != '') {

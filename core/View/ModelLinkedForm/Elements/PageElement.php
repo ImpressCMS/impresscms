@@ -52,17 +52,17 @@ class PageElement extends TrayElement {
 			$criteria->add(new CriteriaItem('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$sel = '';
-			if (in_array($module->getVar('mid') . '-0', $value, false)) {
+			if (in_array($module->mid . '-0', $value)) {
 				$sel = ' selected=selected';
 			}
-			$mods .= '<option value="' . $module->getVar('mid') . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
+			$mods .= '<option value="' . $module->mid . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
 			foreach ($pages as $page) {
 				$sel = '';
-				if (in_array($module->getVar('mid') . '-' . $page->getVar('page_id'), $value, false)) {
+				if (in_array($module->mid . '-' . $page->page_id, $value)) {
 					$sel = ' selected=selected';
 				}
-				$mods .= '<option value="' . $module->getVar('mid') . '-' . $page->getVar('page_id') . '"' . $sel . '>';
-				$mods .= $page->getVar('page_title') . '</option>';
+				$mods .= '<option value="' . $module->mid . '-' . $page->page_id . '"' . $sel . '>';
+				$mods .= $page->page_title . '</option>';
 			}
 			$mods .= '</optgroup>';
 		}
@@ -73,19 +73,19 @@ class PageElement extends TrayElement {
 		$pages = $icms_page_handler->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0) {
-			$cont = '<optgroup label="' . $module->getVar('name') . '">';
+			$cont = '<optgroup label="' . $module->name . '">';
 			$sel = '';
-			if (in_array($module->getVar('mid') . '-0', $value, false)) {
+			if (in_array($module->mid . '-0', $value)) {
 				$sel = ' selected=selected';
 			}
-			$cont .= '<option value="' . $module->getVar('mid') . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
+			$cont .= '<option value="' . $module->mid . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
 			foreach ($pages as $page) {
 				$sel = '';
-				if (in_array($module->getVar('mid') . '-' . $page->getVar('page_id'), $value, false)) {
+				if (in_array($module->mid . '-' . $page->page_id, $value)) {
 					$sel = ' selected=selected';
 				}
-				$cont .= '<option value="' . $module->getVar('mid') . '-' . $page->getVar('page_id') . '"' . $sel . '>';
-				$cont .= $page->getVar('page_title') . '</option>';
+				$cont .= '<option value="' . $module->mid . '-' . $page->page_id . '"' . $sel . '>';
+				$cont .= $page->page_title . '</option>';
 			}
 			$cont .= '</optgroup>';
 		}

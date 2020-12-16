@@ -18,7 +18,7 @@ class ConfigSetupStep implements SetupStepInterface
 	 */
 	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
-		if ($module->getVar('hasconfig') == 0 && $module->getVar('hascomments') == 0) {
+		if ($module->hasconfig == 0 && $module->hascomments == 0) {
 			return true;
 		}
 		$config_handler = icms::handler('icms_config');
@@ -31,9 +31,9 @@ class ConfigSetupStep implements SetupStepInterface
 		$output->incrIndent();
 		for ($i = 0; $i < $confcount; $i++) {
 			if (!$config_handler->deleteConfig($configs[$i])) {
-				$output->error(_MD_AM_CONFIGOPTION_DELETE_FAIL, icms_conv_nr2local($configs[$i]->getVar('conf_id')));
+				$output->error(_MD_AM_CONFIGOPTION_DELETE_FAIL, icms_conv_nr2local($configs[$i]->conf_id));
 			} else {
-				$output->success(_MD_AM_CONFIGOPTION_DELETED, icms_conv_nr2local($configs[$i]->getVar('conf_id')));
+				$output->success(_MD_AM_CONFIGOPTION_DELETED, icms_conv_nr2local($configs[$i]->conf_id));
 			}
 		}
 		$output->decrIndent();

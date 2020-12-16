@@ -42,7 +42,7 @@ switch ($op) {
 							(invite_code, from_id, invite_to, invite_date, extra_info) VALUES
 							(%s, %d, %s, %d, %s)',
 							icms::$xoopsDB->quoteString(addslashes($invite_code)),
-							is_object(icms::$user)? icms::$user->getVar('uid'):0,
+							is_object(icms::$user)? icms::$user->uid:0,
 							icms::$xoopsDB->quoteString(addslashes($email)),
 							time(),
 							icms::$xoopsDB->quoteString(addslashes(serialize(array())))
