@@ -207,7 +207,8 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		if ($form_caption) {
 			return $form_caption;
 		}
-		$dyn_form_caption = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->itemName . '_' . $key);
+		$dyn_form_caption = strtoupper('_CO_' . $this->handler->moduleName . '_' . $this->handler->_itemname . '_' . $key);
+
 		if (defined($dyn_form_caption)) {
 					$form_caption = constant($dyn_form_caption);
 		} else {
@@ -221,7 +222,8 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		if ($form_dsc) {
 			return $form_dsc;
 		}
-		$dyn_form_dsc = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->itemName . '_' . $key);
+		$dyn_form_dsc = strtoupper('_CO_' . $this->handler->moduleName . '_' . $this->handler->_itemname . '_' . $key);
+
 		if (defined($dyn_form_dsc)) {
 			$form_dsc = constant($dyn_form_dsc);
 		} else {

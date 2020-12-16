@@ -24,7 +24,9 @@ use ImpressCMS\Core\Security\PermissionsManager;
 class ModelController
 {
 
-	/** */
+	/**
+	 * @var \icms_ipf_Handler
+	 */
 	public $handler;
 
 	/**
@@ -392,8 +394,8 @@ class ModelController
 				'confirm' => 1,
 				'redirect_page' => icms::$urls['previouspage']
 			);
-			if ($this->handler->_moduleName == 'system') {
-				$hiddens['fct'] = $_GET['fct'] ?? false;
+			if ($this->handler->moduleName == 'system') {
+				$hiddens['fct'] = isset($_GET['fct'])?$_GET['fct']:false;
 			}
 			Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg, $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
@@ -525,11 +527,10 @@ class ModelController
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getViewItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false)
-	{
-		if ($this->handler->_moduleName !== 'system') {
-			$admin_side = $userSide ? '' : 'admin/';
-			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . '?' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
+	public function getViewItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
+		if ($this->handler->moduleName !== 'system') {
+			$admin_side = $userSide?'':'admin/';
+			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		} else {
 			$admin_side = '';
 			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct='
@@ -578,10 +579,9 @@ class ModelController
 	 * @param bool $withimage
 	 * @param bool $userSide
 	 */
-	public function getEditItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false)
-	{
-		if ($this->handler->_moduleName != 'system') {
-			$admin_side = $userSide ? '' : 'admin/';
+	public function getEditItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
+		if ($this->handler->moduleName !== 'system') {
+			$admin_side = $userSide?'':'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
 				. '?op=mod&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
 		} else {
@@ -612,10 +612,9 @@ class ModelController
 	 * @param bool $withimage
 	 * @param bool $userSide
 	 */
-	public function getDeleteItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false)
-	{
-		if ($this->handler->_moduleName != 'system') {
-			$admin_side = $userSide ? '' : 'admin/';
+	public function getDeleteItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
+		if ($this->handler->moduleName !== 'system') {
+			$admin_side = $userSide?'':'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
 				. '?op=del&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
 		} else {
@@ -666,9 +665,8 @@ class ModelController
 	/**
 	 * Creates a string from the object's module name and item name
 	 */
-	public function getModuleItemString()
-	{
-		return $this->handler->_moduleName . '_' . $this->handler->_itemname;
+	public function getModuleItemString() {
+		return $this->handler->moduleName . '_' . $this->handler->_itemname;
 	}
 }
 
