@@ -105,10 +105,14 @@
       "plugins/autotasks/",
       "plugins/preloads/"
     ],
+    "exclude-from-classmap": [
+      "modules/system/extensions/"
+    ],
     "psr-4": {
       "ImpressCMS\\Core\\": "core/",
       "ImpressCMS\\Editors\\": "htdocs/editors/",
-      "ImpressCMS\\Plugins\\": "plugins/"
+      "ImpressCMS\\Plugins\\": "plugins/",
+      "ImpressCMS\\Modules\\System\\Extensions\\": "modules/system/extensions/"
     },
     "files": [
       "include/version.php",
@@ -450,6 +454,23 @@
       "sapi-emitter": {
         "class": "\\Narrowspark\\HttpEmitter\\SapiEmitter"
       },
+      "\\ImpressCMS\\Modules\\System\\Extensions\\WaitingInfoGetter\\InactiveUsersWaitingInfoGetter": {
+        "arguments": [
+          "db"
+        ],
+        "tags": [
+          "module.system.waiting-info-getter"
+        ]
+      },
+      "\\ImpressCMS\\Modules\\System\\Extensions\\WaitingInfoGetter\\CommentsWaitingInfoGetter": {
+        "arguments": [
+          "db"
+        ],
+        "tags": [
+          "module.system.waiting-info-getter"
+          ]
+      },
+
       "\\Imponeer\\SymfonyTranslationsConstantsLoader\\PHPFileLoader": {
         "class": "\\Imponeer\\SymfonyTranslationsConstantsLoader\\PHPFileLoader",
         "tags": [
