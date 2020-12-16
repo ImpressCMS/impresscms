@@ -19,7 +19,7 @@ class BlockSetupStep implements SetupStepInterface
 	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$icms_block_handler = icms::handler('icms_view_block');
-		$block_arr = $icms_block_handler->getByModule($module->getVar('mid'));
+		$block_arr = $icms_block_handler->getByModule($module->mid);
 		if (!is_array($block_arr)) {
 			return true;
 		}
@@ -31,32 +31,32 @@ class BlockSetupStep implements SetupStepInterface
 			if (!$icms_block_handler->delete($block_arr[$i])) {
 				$output->error(
 					_MD_AM_BLOCK_DELETE_FAIL,
-					$block_arr[$i]->getVar('name'),
-					icms_conv_nr2local($block_arr[$i]->getVar('bid'))
+					$block_arr[$i]->name,
+					icms_conv_nr2local($block_arr[$i]->bid)
 				);
 			} else {
 				$output->success(
 					_MD_AM_BLOCK_DELETED,
-					$block_arr[$i]->getVar('name'),
-					icms_conv_nr2local($block_arr[$i]->getVar('bid'))
+					$block_arr[$i]->name,
+					icms_conv_nr2local($block_arr[$i]->bid)
 				);
 			}
-			if ($block_arr[$i]->getVar('template') != '') {
-				$templates = $tplfile_handler->find(null, 'block', $block_arr[$i]->getVar('bid'));
+			if ($block_arr[$i]->template != '') {
+				$templates = $tplfile_handler->find(null, 'block', $block_arr[$i]->bid);
 				$btcount = count($templates);
 				if ($btcount > 0) {
 					for ($j = 0; $j < $btcount; $j++) {
 						if (!$tplfile_handler->delete($templates[$j])) {
 							$output->error(
 								_MD_AM_BLOCK_TMPLT_DELETE_FAILED,
-								$templates[$j]->getVar('tpl_file'),
-								icms_conv_nr2local($templates[$j]->getVar('tpl_id'))
+								$templates[$j]->tpl_file,
+								icms_conv_nr2local($templates[$j]->tpl_id)
 							);
 						} else {
 							$output->success(
 								_MD_AM_BLOCK_TMPLT_DELETED,
-								$templates[$j]->getVar('tpl_file'),
-								icms_conv_nr2local($templates[$j]->getVar('tpl_id'))
+								$templates[$j]->tpl_file,
+								icms_conv_nr2local($templates[$j]->tpl_id)
 							);
 						}
 					}

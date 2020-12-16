@@ -24,15 +24,15 @@ class BlockOptionsElement extends TrayElement {
 	public function __construct($object, $key) {
 		$var = $object->getVarInfo($key);
 		parent::__construct($var['form_caption'], ' ', 'options_tray');
-		$func = $object->getVar('edit_func');
+		$func = $object->edit_func;
 
-		require_once ICMS_ROOT_PATH . '/modules/' . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . '/blocks/' . $object->getVar('func_file');
+		require_once ICMS_ROOT_PATH . "/modules/" . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . "/blocks/" . $object->func_file;
 		icms_loadLanguageFile($object->handler->getModuleDirname($object->getVar('mid', 'e')), 'blocks');
 
 		if (!function_exists($func)) {
 			return;
 		}
-		$visible_label = new LabelElement('', $func(explode('|', $object->getVar('options'))));
+		$visible_label = new LabelElement('', $func(explode('|', $object->options)));
 		$this->addElement($visible_label);
 	}
 }

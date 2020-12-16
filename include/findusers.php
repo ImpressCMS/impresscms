@@ -45,10 +45,6 @@ $items_match = array(
 				"uname"		=> _MA_USER_UNAME,
 				"name"		=> _MA_USER_REALNAME,
 				"email"		=> _MA_USER_EMAIL,
-				"user_icq"	=> _MA_USER_ICQ,
-				"user_aim"	=> _MA_USER_AIM,
-				"user_yim"	=> _MA_USER_YIM,
-				"user_msnm"	=> _MA_USER_MSNM
 );
 
 $items_range = array(
@@ -265,15 +261,15 @@ if (empty($_POST["user_submit"])) {
 
 		if (!empty($_POST['rank'])) {
 			$rank_obj = $rank_handler->get($_POST['rank']);
-			if ($rank_obj->getVar("rank_special")) {
+			if ($rank_obj->rank_special) {
 				$criteria->add(new icms_db_criteria_Item("rank", (int) ($_POST['rank'])));
 			} else {
-				if ($rank_obj->getVar("rank_min")) {
-					$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->getVar("rank_min"), '>='));
+				if ($rank_obj->rank_min) {
+					$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->rank_min, '>='));
 				}
 
-				if ($rank_obj->getVar("rank_max")) {
-					$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->getVar("rank_max"), '<='));
+				if ($rank_obj->rank_max) {
+					$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->rank_max, '<='));
 				}
 			}
 		}
@@ -416,22 +412,22 @@ if (empty($_POST["user_submit"])) {
 					$class = 'odd';
 				}
 				$ucount++;
-				$fuser_name = $foundusers[$j]->getVar("name")?$foundusers[$j]->getVar("name"):"&nbsp;";
+				$fuser_name = $foundusers[$j]->name?$foundusers[$j]->name:"&nbsp;";
 				echo "<tr class='$class'>
 				<td align='center'>";
 				if (!empty($_POST["multiple"])) {
-					echo "<input type='checkbox' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar("uid") . "' />";
-					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar("uname") . "' />";
+					echo "<input type='checkbox' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->uid . "' />";
+					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->uname . "' />";
 				} else {
-					echo "<input type='radio' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar("uid") . "' />";
-					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar("uname") . "' />";
+					echo "<input type='radio' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->uid . "' />";
+					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->uname . "' />";
 				}
 				echo "</td>
-				<td><a href='".ICMS_URL . "/userinfo.php?uid=" . $foundusers[$j]->getVar("uid") . "' target='_blank'>" . $foundusers[$j]->getVar("uname") . "</a></td>
+				<td><a href='".ICMS_URL . "/userinfo.php?uid=" . $foundusers[$j]->uid . "' target='_blank'>" . $foundusers[$j]->uname . "</a></td>
 				<td>".$fuser_name . "</td>
-				<td align='center'>".($foundusers[$j]->getVar("user_regdate")? date(_SHORTDATESTRING, $foundusers[$j]->getVar("user_regdate")):"") . "</td>
-				<td align='center'>".($foundusers[$j]->getVar("last_login")? date(_MEDIUMDATESTRING, $foundusers[$j]->getVar("last_login")):"") . "</td>
-				<td align='center'>".$foundusers[$j]->getVar("posts") . "</td>";
+				<td align='center'>".($foundusers[$j]->user_regdate? date(_SHORTDATESTRING, $foundusers[$j]->user_regdate):"") . "</td>
+				<td align='center'>".($foundusers[$j]->last_login? date(_MEDIUMDATESTRING, $foundusers[$j]->last_login):"") . "</td>
+				<td align='center'>".$foundusers[$j]->posts . "</td>";
 				echo "</tr>\n";
 			}
 			echo "<tr class='foot'><td colspan='6'>";

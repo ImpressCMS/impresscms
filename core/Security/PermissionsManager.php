@@ -51,7 +51,7 @@ class PermissionsManager {
 			$gperm_handler = icms::handler('icms_member_groupperm');
 
 			//Get groups allowed for an item id
-			$allowedgroups = $gperm_handler->getGroupIds($gperm_name, $id, $icmsModule->getVar('mid'));
+			$allowedgroups = $gperm_handler->getGroupIds($gperm_name, $id, $icmsModule->mid);
 			$groups[$gperm_name][$id] = $allowedgroups;
 		}
 		//Return the permission array
@@ -92,7 +92,7 @@ class PermissionsManager {
 		$permissionsObj = $gperm_handler->getObjects($criteria);
 
 		foreach ($permissionsObj as $permissionObj) {
-			$groups[$permissionObj->getVar('gperm_name')][$permissionObj->getVar('gperm_itemid')][] = $permissionObj->getVar('gperm_groupid');
+			$groups[$permissionObj->gperm_name][$permissionObj->gperm_itemid][] = $permissionObj->gperm_groupid;
 		}
 
 		//Return the permission array
@@ -127,7 +127,7 @@ class PermissionsManager {
 				$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 
 				//Get all allowed item ids in this module and for this user's groups
-				$userpermissions = $gperm_handler->getItemIds($gperm_name, $groups, $icmsModule->getVar('mid'));
+				$userpermissions = $gperm_handler->getItemIds($gperm_name, $groups, $icmsModule->mid);
 				$permissions[$gperm_name] = $userpermissions;
 			}
 		}
@@ -159,7 +159,7 @@ class PermissionsManager {
 		$icmsModule = & $this->handler->getModuleInfo();
 
 		$result = true;
-		$module_id = $icmsModule->getVar('mid');
+		$module_id = $icmsModule->mid;
 		$gperm_handler = icms::handler('icms_member_groupperm');
 
 		// First, if the permissions are already there, delete them
@@ -193,7 +193,7 @@ class PermissionsManager {
 	public function accessGranted($gperm_name, $gperm_itemid) {
 		$gperm_groupid = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
 		$icmsModule = & $this->handler->getModuleInfo();
-		$gperm_modid = $icmsModule->getVar('mid');
+		$gperm_modid = $icmsModule->mid;
 
 		//Get group permissions handler
 		$gperm_handler = icms::handler('icms_member_groupperm');

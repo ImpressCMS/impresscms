@@ -183,7 +183,7 @@ class GroupPermHandler extends AbstractExtendedHandler
 		}
 		$perms = $this->getObjects($criteria, true);
 		foreach (array_keys($perms) as $i) {
-			$ret[] = $perms[$i]->getVar('gperm_itemid');
+			$ret[] = $perms[$i]->gperm_itemid;
 		}
 		return array_unique($ret);
 	}
@@ -205,7 +205,7 @@ class GroupPermHandler extends AbstractExtendedHandler
 		$perms = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($perms) as $i) {
-			$ret[] = $perms[$i]->getVar('gperm_groupid');
+			$ret[] = $perms[$i]->gperm_groupid;
 		}
 		return $ret;
 	}

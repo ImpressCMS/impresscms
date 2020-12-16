@@ -62,7 +62,7 @@ class ObjectRegistry {
 	public function addObjectsFromHandler(&$handler, $criteria = false) {
 		if (method_exists($handler, 'getObjects')) {
 			$objects = $handler->getObjects($criteria, true);
-			$this->_registryArray['objects'][$handler->_moduleName][$handler->_itemname] = $objects;
+			$this->_registryArray['objects'][$handler->_moduleName][$handler->itemName] = $objects;
 			return $objects;
 		} else {
 			return false;
@@ -80,7 +80,7 @@ class ObjectRegistry {
 	public function addListFromHandler(&$handler, $criteria = false) {
 		if (method_exists($handler, 'getList')) {
 			$list = $handler->getList($criteria);
-			$this->_registryArray['list'][$handler->_moduleName][$handler->_itemname] = $list;
+			$this->_registryArray['list'][$handler->_moduleName][$handler->itemName] = $list;
 			return $list;
 		} else {
 			return false;
@@ -103,7 +103,7 @@ class ObjectRegistry {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->getVar('dirname');
+				$modulename = $icmsModule->dirname;
 			}
 		}
 		$object_handler = icms_getModuleHandler($item, $modulename);
@@ -126,7 +126,7 @@ class ObjectRegistry {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->getVar('dirname');
+				$modulename = $icmsModule->dirname;
 			}
 		}
 		$object_handler = icms_getModuleHandler($item, $modulename);
@@ -148,7 +148,7 @@ class ObjectRegistry {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->getVar('dirname');
+				$modulename = $icmsModule->dirname;
 			}
 		}
 		if (isset($this->_registryArray['objects'][$modulename][$itemname])) {
@@ -178,7 +178,7 @@ class ObjectRegistry {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->getVar('dirname');
+				$modulename = $icmsModule->dirname;
 			}
 		}
 		if (isset($this->_registryArray['list'][$modulename][$itemname])) {
@@ -208,7 +208,7 @@ class ObjectRegistry {
 			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $icmsModule->getVar('dirname');
+				$modulename = $icmsModule->dirname;
 			}
 		}
 		if (isset($this->_registryArray['objects'][$modulename][$itemname][$key])) {

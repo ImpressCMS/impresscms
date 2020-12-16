@@ -94,7 +94,7 @@ class Notification extends AbstractExtendedModel {
 		if (!is_object($user)) {
 			return true;
 		}
-		$method = $user->getVar('notify_method');
+		$method = $user->notify_method;
 
 		$mailer = new \ImpressCMS\Core\Messaging\MessageSender();
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
@@ -135,12 +135,12 @@ class Notification extends AbstractExtendedModel {
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 		$notification_handler = \icms::handler('icms_data_notification');
 
-		if ($this->getVar('not_mode') === XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
+		if ($this->not_mode == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
 			$notification_handler->delete($this);
 			return $success;
 		}
 
-		if ($this->getVar('not_mode') === XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
+		if ($this->not_mode == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
 			$this->setVar('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN);
 			$notification_handler->insert($this);
 		}

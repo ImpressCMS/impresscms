@@ -4,13 +4,14 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 use ImpressCMS\Core\Models\AbstractExtendedModel;
+use PHPUnit\Framework\TestCase;
 
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class ModuleTest extends \PHPUnit_Framework_TestCase {
+class ModuleTest extends TestCase {
 
     /**
      * Test if is available

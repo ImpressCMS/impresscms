@@ -87,7 +87,7 @@ $admintest = 0;
 
 if (is_object(icms::$user)) {
 	$icmsModule = icms::handler('icms_module')->getByDirname('system');
-	if (!icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+	if (!icms::$user->isAdmin($icmsModule->mid)) {
 		redirect_header(ICMS_URL . '/', 3, _NOPERM);
 	}
 	$admintest = 1;
@@ -107,7 +107,7 @@ if ($admintest != 0) {
 			if ($category > 0) {
 				$groups = & icms::$user->getGroups();
 				if (in_array(ICMS_GROUP_ADMIN, $groups)
-					|| false !== $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->getVar('mid'))
+					|| false !== $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->mid)
 				) {
 					if (file_exists(ICMS_MODULES_PATH . "/system/admin/" . $fct . ".php")) {
 						include_once ICMS_MODULES_PATH . "/system/admin/" . $fct . ".php";

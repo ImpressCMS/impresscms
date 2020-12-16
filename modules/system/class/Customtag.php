@@ -75,7 +75,7 @@ class mod_system_Customtag extends \ImpressCMS\Core\Models\AbstractExtendedModel
 	public function render() {
 		$myts = icms_core_Textsanitizer::getInstance();
 		if (!$this->content) {
-			switch ($this->getVar('customtag_type')) {
+			switch ($this->customtag_type) {
 				case ICMS_CUSTOMTAG_TYPE_XCODES:
 					$ret = $this->customtag_content;
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 1);
@@ -106,7 +106,7 @@ class mod_system_Customtag extends \ImpressCMS\Core\Models\AbstractExtendedModel
 			$ret = $this->customtag_content;
 
 			// check for PHP if we are not on admin side
-			if (!defined('XOOPS_CPFUNC_LOADED') && $this->getVar('customtag_type') == ICMS_CUSTOMTAG_TYPE_PHP) {
+			if (!defined('XOOPS_CPFUNC_LOADED') && $this->customtag_type == ICMS_CUSTOMTAG_TYPE_PHP) {
 				// we have PHP code, let's evaluate
 				ob_start();
 				echo eval($ret);
@@ -148,7 +148,7 @@ class mod_system_Customtag extends \ImpressCMS\Core\Models\AbstractExtendedModel
 	 * Accessor for the name property
 	 */
 	public function getCustomtagName() {
-		$ret = $this->getVar('name');
+		$ret = $this->name;
 		return $ret;
 	}
 }

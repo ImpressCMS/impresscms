@@ -117,16 +117,16 @@ class Category extends AbstractSEOExtendedModel {
 				$ret = $controller->getItemLink($this);
 			} else {
 				$currentCategory = false;
-				$ret = $this->getVar('name');
+				$ret = $this->name;
 			}
-			$parentid = $this->getVar('parentid');
+			$parentid = $this->parentid;
 			if ($parentid != 0) {
 				$parentObj = & $this->handler->get($parentid);
 				if ($parentObj->isNew()) {
 					exit;
 				}
-				$parentid = $parentObj->getVar('parentid');
-				$ret = $parentObj->getCategoryPath($withAllLink, $currentCategory) . ' > ' . $ret;
+				$parentid = $parentObj->parentid;
+				$ret = $parentObj->getCategoryPath($withAllLink, $currentCategory) . " > " . $ret;
 			}
 			$this->_categoryPath = $ret;
 		}

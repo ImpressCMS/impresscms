@@ -188,7 +188,7 @@ class Table {
 	 * @param $caption
 	 */
 	public function addDefaultIntroButton($caption) {
-		$this->addIntroButton($this->_objectHandler->_itemname, $this->_objectHandler->_page . '?op=mod', $caption);
+		$this->addIntroButton($this->_objectHandler->itemName, $this->_objectHandler->_page . "?op=mod", $caption);
 	}
 
 	/**
@@ -284,7 +284,7 @@ class Table {
 	 *
 	 */
 	public function setSortOrder() {
-		$this->_sortsel = $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] ?? $this->getDefaultSort();
+		$this->_sortsel = isset($_GET[$this->_objectHandler->itemName . '_' . 'sortsel'])?$_GET[$this->_objectHandler->itemName . '_' . 'sortsel']:$this->getDefaultSort();
 		//$this->_sortsel = isset($_POST['sortsel']) ? $_POST['sortsel'] : $this->_sortsel;
 
 		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_sortsel', $this->_sortsel);
@@ -293,10 +293,10 @@ class Table {
 		if ($this->_tempObject->getVarInfo($this->_sortsel, 'itemName')) {
 			$this->_criteria->setSort($this->_tempObject->getVarInfo($this->_sortsel, 'itemName') . '.' . $this->_sortsel);
 		} else {
-			$this->_criteria->setSort($this->_objectHandler->_itemname . '.' . $this->_sortsel);
+			$this->_criteria->setSort($this->_objectHandler->itemName . "." . $this->_sortsel);
 		}
 
-		$this->_ordersel = $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] ?? $this->getDefaultOrder();
+		$this->_ordersel = isset($_GET[$this->_objectHandler->itemName . '_' . 'ordersel'])?$_GET[$this->_objectHandler->itemName . '_' . 'ordersel']:$this->getDefaultOrder();
 		//$this->_ordersel = isset($_POST['ordersel']) ? $_POST['ordersel'] :$this->_ordersel;
 		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_ordersel', $this->_ordersel);
 		$ordersArray = $this->getOrdersArray();
@@ -760,8 +760,8 @@ class Table {
 				$aColumn['caption'] = $this->_tempObject->getVarInfo($column->getKeyName(), 'form_caption')?:$column->getKeyName();
 			}
 			// Are we doing a GET sort on this column ?
-			$getSort = (isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) && $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] === $column->getKeyName()) || ($this->_sortsel === $column->getKeyName());
-			$order = $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] ?? 'DESC';
+			$getSort = (isset($_GET[$this->_objectHandler->itemName . '_' . 'sortsel']) && $_GET[$this->_objectHandler->itemName . '_' . 'sortsel'] == $column->getKeyName()) || ($this->_sortsel == $column->getKeyName());
+			$order = isset($_GET[$this->_objectHandler->itemName . '_' . 'ordersel'])?$_GET[$this->_objectHandler->itemName . '_' . 'ordersel']:'DESC';
 
 			if (isset($_REQUEST['quicksearch_' . $this->_id]) && $_REQUEST['quicksearch_' . $this->_id]) {
 				$filter = isset($_POST['quicksearch_' . $this->_id])? INPUT_POST : INPUT_GET;
@@ -772,9 +772,9 @@ class Table {
 			if (!$this->_enableColumnsSorting || $column->_keyname === 'checked' || !$column->_sortable) {
 				$aColumn['caption'] = $aColumn['caption'];
 			} elseif ($getSort) {
-				$aColumn['caption'] = '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=' . $orderArray[$order]['neworder'] . $qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL . '/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';
+				$aColumn['caption'] = '<a href="' . $current_url . '?' . $this->_objectHandler->itemName . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->itemName . '_' . 'ordersel=' . $orderArray[$order]['neworder'] . $qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL . '/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';
 			} else {
-				$aColumn['caption'] = '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=ASC' . $qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . '</a>';
+				$aColumn['caption'] = '<a href="' . $current_url . '?' . $this->_objectHandler->itemName . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->itemName . '_' . 'ordersel=ASC' . $qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . '</a>';
 			}
 			$aColumns[] = $aColumn;
 		}

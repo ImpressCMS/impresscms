@@ -53,7 +53,7 @@ class PluginRegistry {
 		$tempModulesObj = $module_handler->getObjects($criteria);
 		$modulesObj = array();
 		foreach ($tempModulesObj as $moduleObj) {
-			$modulesObj[$moduleObj->getVar('dirname')] = $moduleObj;
+			$modulesObj[$moduleObj->dirname] = $moduleObj;
 		}
 
 		$aFiles = str_replace('.php', '', Filesystem::getFileList(ICMS_PLUGINS_PATH . '/' . $path . '/', '', array('php')));
@@ -61,8 +61,8 @@ class PluginRegistry {
 		foreach ($aFiles as $pluginName) {
 			$module_xoops_version_file = ICMS_MODULES_PATH . "/$pluginName/xoops_version.php";
 			$module_icms_version_file = ICMS_MODULES_PATH . "/$pluginName/icms_version.php";
-			if (isset($modulesObj[$pluginName]) && (file_exists($module_xoops_version_file) || file_exists($module_icms_version_file))) {
-				$ret[$pluginName] = $modulesObj[$pluginName]->getVar('name');
+			if ((file_exists($module_xoops_version_file) || file_exists($module_icms_version_file)) && isset($modulesObj[$pluginName])) {
+				$ret[$pluginName] = $modulesObj[$pluginName]->name;
 			}
 		}
 		return $ret;
