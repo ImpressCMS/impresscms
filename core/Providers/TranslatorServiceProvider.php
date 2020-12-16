@@ -4,6 +4,7 @@ namespace ImpressCMS\Core\Providers;
 
 use DirectoryIterator;
 use FilesystemIterator;
+use Generator;
 use ImpressCMS\Core\Models\ModuleHandler;
 use League\Container\Container;
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -83,18 +84,8 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 
 		$lines[] = '';
 
-		foreach ($this->getLanguageFolders() as $folder) {
-			foreach (new DirectoryIterator($folder) as $dirInfo) {
-				if ($dirInfo->isDot() || !$dirInfo->isDir()) {
-					continue;
-				}
-				foreach ($this->createTranslationFileIterator($dirInfo) as $fileInfo) {
-					if ($fileInfo->isDir()) {
-						continue;
-					}
-					$lines[] = $this->generateResourceLineForCache($fileInfo, $dirInfo);
-				}
-			}
+		foreach ($this->getLanguageFilesCachedLines() as $line) {
+			$lines[] = $line;
 		}
 
 		file_put_contents(
@@ -123,6 +114,27 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	}
 
 	/**
+	 * Gets language files cached lines
+	 *
+	 * @return Generator
+	 */
+	private function getLanguageFilesCachedLines() {
+		foreach ($this->getLanguageFolders() as $folder) {
+			foreach (new DirectoryIterator($folder) as $dirInfo) {
+				if ($dirInfo->isDot() || !$dirInfo->isDir()) {
+					continue;
+				}
+				foreach ($this->createTranslationFileIterator($dirInfo) as $fileInfo) {
+					if ($fileInfo->isDir()) {
+						continue;
+					}
+					yield $this->generateResourceLineForCache($fileInfo, $dirInfo);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Generates resource line for cache
 	 *
 	 * @param SplFileInfo $fileInfo File info object for language file
@@ -148,19 +160,7 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 				true
 			),
 			var_export(
-				ltrim(
-					str_replace(
-						['/', '\\'],
-						'.',
-						mb_substr(
-							$fileInfo->getPath(),
-							mb_strlen(
-								$dirInfo->getPath() . '/' . $dirInfo->getFilename()
-							)
-						). '/' . $fileInfo->getBaseName('.' . $fileInfo->getExtension())
-					),
-					'.'
-				),
+				$this->makeDomainFromFileName($fileInfo, $dirInfo),
 				true
 			)
 		);
@@ -211,12 +211,34 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	 *
 	 * @return string
 	 */
-	private function makeLoaderName(ReflectionClass $reflection): string
-	{
+	private function makeLoaderName(ReflectionClass $reflection): string {
 		$shortName = $reflection->getShortName();
 		if (substr($shortName, -strlen('FileLoader')) === 'FileLoader') {
 			return '.' . str_replace('FileLoader', '', $shortName);
 		}
 		return str_replace('Loader', '', $shortName);
+	}
+
+	/**
+	 * Makes translation domain name from filename
+	 *
+	 * @param SplFileInfo $fileInfo
+	 * @param SplFileInfo $dirInfo
+	 * @return string
+	 */
+	private function makeDomainFromFileName(SplFileInfo $fileInfo, SplFileInfo $dirInfo): string {
+		return ltrim(
+			str_replace(
+				['/', '\\'],
+				'.',
+				mb_substr(
+					$fileInfo->getPath(),
+					mb_strlen(
+						$dirInfo->getPath() . '/' . $dirInfo->getFilename()
+					)
+				). '/' . $fileInfo->getBaseName('.' . $fileInfo->getExtension())
+			),
+			'.'
+		);
 	}
 }
