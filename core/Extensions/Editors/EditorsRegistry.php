@@ -108,25 +108,25 @@ class EditorsRegistry {
 	/**
 	 * @param string $name Editor name which is actually the folder name
 	 * @param array $options editor options: $key => $val
-	 * @param string $OnFailure a pre-validated editor that will be used if the required editor is failed to create
 	 * @param bool $noHtml dohtml disabled
+	 * @param string $onFailure a pre-validated editor that will be used if the required editor is failed to create
 	 * @return object
 	 * @throws Exception
 	 */
-	public function &get($name = '', $options = null, $noHtml = false, $OnFailure = '')
+	public function get($name = '', $options = null, $noHtml = false, $onFailure = '')
 	{
 		if (!is_array($options)) {
 			$options = [];
 		}
-		if ($editor = $this->_loadEditor($name, $options)) {
+		if ($editor = $this->_loadEditor($name)) {
 			return $editor->create($options);
 		}
 		$list = array_keys($this->getList($noHtml));
-		if (empty($OnFailure) || !in_array($OnFailure, $list, true)) {
-			$OnFailure = $list[0];
+		if (empty($onFailure) || !in_array($onFailure, $list, true)) {
+			$onFailure = $list[0];
 		}
 
-		return $this->_loadEditor($OnFailure, $options)->create($options);
+		return $this->_loadEditor($onFailure)->create($options);
 	}
 
 	/**
@@ -143,10 +143,13 @@ class EditorsRegistry {
 			'titles' => [],
 			'order' => []
 		];
+		$container = icms::getInstance();
+		$tag = 'editor.' . $this->_type;
+		$editorsInstances = $container->has($tag) ? $container->get($tag) : [];
 		/**
 		 * @var EditorInterface $editor
 		 */
-		foreach (icms::getInstance()->get('editor.' . $this->_type) as $editor) {
+		foreach ($editorsInstances as $editor) {
 			if (!($editor instanceof EditorInterface)) {
 				continue;
 			}
