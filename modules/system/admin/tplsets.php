@@ -313,8 +313,8 @@ switch ($op) {
 			$err[] = sprintf(_MD_TPLSET_TEMPLATE_NOTEXIST, $id);
 		} else {
 			if ($tplfile->tpl_tplset != 'default') {
-				$tplfile->setVar('tpl_source', $html);
-				$tplfile->setVar('tpl_lastmodified', time());
+				$tplfile->tpl_source = $html;
+				$tplfile->tpl_lastmodified = time();
 
 				if (!$tpltpl_handler->insert($tplfile)) {
 					$err[] = sprintf(_MD_TPLSET_INSERT_FAILED, $tplfile->tpl_file);
@@ -483,8 +483,8 @@ switch ($op) {
 			icms_core_Message::error(sprintf(_MD_TPLSET_EXISTS, '<strong>' . $newtheme . '</strong>'));
 		} else {
 			$tplsetobj = &$tplset_handler->create();
-			$tplsetobj->setVar('tplset_name', $newtheme);
-			$tplsetobj->setVar('tplset_created', time());
+			$tplsetobj->tplset_name = $newtheme;
+			$tplsetobj->tplset_created = time();
 			if (!$tplset_handler->insert($tplsetobj)) {
 				$msgs[] = '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_CREATE_FAILED, '<strong>' . $newtheme . '</strong>') . '</span><br />';
 			} else {
@@ -495,10 +495,10 @@ switch ($op) {
 					$msgs[] = _MD_TPLSET_COPYING;
 					for ($i = 0; $i < $tcount; $i++) {
 						$newtpl = &$templates[$i]->xoopsClone();
-						$newtpl->setVar('tpl_tplset', $newtheme);
-						$newtpl->setVar('tpl_id', 0);
-						$newtpl->setVar('tpl_lastimported', 0);
-						$newtpl->setVar('tpl_lastmodified', time());
+						$newtpl->tpl_tplset = $newtheme;
+						$newtpl->tpl_id = 0;
+						$newtpl->tpl_lastimported = 0;
+						$newtpl->tpl_lastmodified = time();
 						if (!$tpltpl_handler->insert($newtpl)) {
 							$msgs[] = '&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_COPY_FAILED, '<strong>' . $templates[$i]->tpl_file . '</strong>')
 								. 'ID: <strong>' . $templates[$i]->tpl_id . '</strong>' . '</span>';
@@ -566,7 +566,7 @@ switch ($op) {
 		} else {
 			echo _MD_TPLSET_FILE_NOTEXIST;
 		}
-		echo '<div style="text-align:center;">[<a href="#" onclick="javascript:window.close();">' . _CLOSE . '</a>]</div></body></html>';
+		echo '<div style="text-align:center;">[<a href="#" onclick="window.close();">' . _CLOSE . '</a>]</div></body></html>';
 		break;
 
 	case 'downloadtpl':
@@ -655,10 +655,10 @@ switch ($op) {
 		$tplfile = &$tpltpl_handler->find('default', $type, null, $moddir, $file, true);
 		if (count($tplfile) > 0) {
 			$newtpl = &$tplfile[0]->xoopsClone();
-			$newtpl->setVar('tpl_id', 0);
-			$newtpl->setVar('tpl_tplset', $tplset);
-			$newtpl->setVar('tpl_lastmodified', time());
-			$newtpl->setVar('tpl_lastimported', 0);
+			$newtpl->tpl_id = 0;
+			$newtpl->tpl_tplset = $tplset;
+			$newtpl->tpl_lastmodified = time();
+			$newtpl->tpl_lastimported = 0;
 			if (!$tpltpl_handler->insert($newtpl)) {
 				$err = _ERROR . ': ' . sprintf(_MD_TPLSET_INSERT_FAILED, '<strong>' . $tplfile[0]->tpl_file . '</strong>');
 			} else {
@@ -702,10 +702,10 @@ switch ($op) {
 			echo sprintf(_MD_TPLSET_INSTALLING . $tplset) . '...<br />';
 			for ($i = 0; $i < $fcount; $i++) {
 				$newtpl = &$tplfiles[$i]->xoopsClone();
-				$newtpl->setVar('tpl_id', 0);
-				$newtpl->setVar('tpl_tplset', $tplset);
-				$newtpl->setVar('tpl_lastmodified', time());
-				$newtpl->setVar('tpl_lastimported', 0);
+				$newtpl->tpl_id = 0;
+				$newtpl->tpl_tplset = $tplset;
+				$newtpl->tpl_lastmodified = time();
+				$newtpl->tpl_lastimported = 0;
 				if (!$tpltpl_handler->insert($newtpl)) {
 					echo '&nbsp;&nbsp;<span style="color:#ff0000;">'
 					. _ERROR . ': ' . sprintf(_MD_TPLSET_INSERT_FAILED, '<strong>' . $file . '</strong>') . '</span><br />';
@@ -726,10 +726,10 @@ switch ($op) {
 			echo '&nbsp;&nbsp;' . _MD_TPLSET_INSTALLING_BLOCKS . '...<br />';
 			for ($i = 0; $i < $fcount; $i++) {
 				$newtpl = & $tplfiles[$i]->xoopsClone();
-				$newtpl->setVar('tpl_id', 0);
-				$newtpl->setVar('tpl_tplset', $tplset);
-				$newtpl->setVar('tpl_lastmodified', time());
-				$newtpl->setVar('tpl_lastimported', 0);
+				$newtpl->tpl_id = 0;
+				$newtpl->tpl_tplset = $tplset;
+				$newtpl->tpl_lastmodified = time();
+				$newtpl->tpl_lastimported = 0;
 				if (!$tpltpl_handler->insert($newtpl)) {
 					echo '&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff0000;">'
 						. _ERROR . ': ' . sprintf(_MD_TPLSET_BLOCK_INSERT_FAILED, '<strong>' . $tplfiles[$i]->tpl_file . '</strong>')
@@ -799,8 +799,8 @@ switch ($op) {
 						echo '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_EXISTS, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES, _CHARSET) . '</strong>') . '</span><br />';
 					} else {
 						$tplset = & $tplset_handler->create();
-						$tplset->setVar('tplset_name', $tplset_name);
-						$tplset->setVar('tplset_created', time());
+						$tplset->tplset_name = $tplset_name;
+						$tplset->tplset_created = time();
 						if (!$tplset_handler->insert($tplset)) {
 							echo '<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_CREATE_FAILED, '<strong>' . htmlspecialchars($tplset_name, ENT_QUOTES, _CHARSET) . '</strong>') . '</span><br />';
 						} else {
@@ -834,10 +834,10 @@ switch ($op) {
 
 								if (isset($default) && count($default) > 0) {
 									$newtpl = & $default[0]->xoopsClone();
-									$newtpl->setVar('tpl_id', 0);
-									$newtpl->setVar('tpl_tplset', $tplset_name);
+									$newtpl->tpl_id = 0;
+									$newtpl->tpl_tplset = $tplset_name;
 									$newtpl->setVar('tpl_source', $info['file'], true);
-									$newtpl->setVar('tpl_lastmodified', time());
+									$newtpl->tpl_lastmodified = time();
 									if (!$tpltpl_handler->insert($newtpl)) {
 										echo '&nbsp;&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . sprintf(_MD_TPLSET_INSERT_FAILED, '<strong>' . $info['name'] . '</strong>') . '</span><br />';
 									} else {
@@ -856,8 +856,8 @@ switch ($op) {
 							if ($icount > 0) {
 								$imageset_handler = icms::handler('icms_image_set');
 								$imgset = & $imageset_handler->create();
-								$imgset->setVar('imgset_name', $tplset_name);
-								$imgset->setVar('imgset_refid', 0);
+								$imgset->imgset_name = $tplset_name;
+								$imgset->imgset_refid = 0;
 								if (!$imageset_handler->insert($imgset)) {
 									echo '&nbsp;&nbsp;<span style="color:#ff0000;">' . _ERROR . ': ' . _MD_TPLSET_IMGSET_CREATE_FAILED . '</span><br />';
 								} else {
@@ -985,8 +985,8 @@ switch ($op) {
 						$tplfile = &$tpltpl_handler->find('default', null, null, $moddir, $upload_file);
 						if (count($tplfile) > 0) {
 							$tpl = &$tplfile[0]->xoopsClone();
-							$tpl->setVar('tpl_id', 0);
-							$tpl->setVar('tpl_tplset', $tplset);
+							$tpl->tpl_id = 0;
+							$tpl->tpl_tplset = $tplset;
 						} else {
 							$msg[] = sprintf(_MD_TPLSET_FILE_UNNECESSARY, '<strong>' . $upload_file . '</strong>');
 							continue;
@@ -994,7 +994,7 @@ switch ($op) {
 					} else {
 						$tpl = & $tpltpl_handler->get($old_template[$upload_file]);
 					}
-					$tpl->setVar('tpl_lastmodified', time());
+					$tpl->tpl_lastmodified = time();
 					$fp = @fopen($uploader->getSavedDestination(), 'r');
 					$fsource = @fread($fp, filesize($uploader->getSavedDestination()));
 					@fclose($fp);
@@ -1073,9 +1073,9 @@ switch ($op) {
 					$filesource = fread($fp, filesize($filepath));
 					fclose($fp);
 					$tplfile->setVar('tpl_source', $filesource, true);
-					$tplfile->setVar('tpl_tplset', $tplset);
-					$tplfile->setVar('tpl_lastmodified', time());
-					$tplfile->setVar('tpl_lastimported', time());
+					$tplfile->tpl_tplset = $tplset;
+					$tplfile->tpl_lastmodified = time();
+					$tplfile->tpl_lastimported = time();
 					if (!$tpltpl_handler->insert($tplfile)) {
 					} else {
 						$error = false;

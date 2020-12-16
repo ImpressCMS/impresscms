@@ -64,7 +64,7 @@ class icms_AutologinEventHandler {
 		}
 		if (false != $user && $user->level > 0) {
 			// update time of last login
-			$user->setVar('last_login', time());
+			$user->last_login = time();
 			if (!icms::handler('icms_member')->insertUser($user, true)) {
 			}
 

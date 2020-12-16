@@ -40,7 +40,7 @@ function editautotasks($showmenu = false, $autotasksid = 0, $clone = false) {
 		$sform->assign($icmsAdminTpl);
 		$icmsAdminTpl->display('db:admin/autotasks/system_adm_autotasks.html');
 	} else {
-		$autotasksObj->setVar('sat_id', 0);
+		$autotasksObj->sat_id = 0;
 		$sform = $autotasksObj->getForm(_CO_ICMS_AUTOTASKS_CREATE, 'addautotasks');
 		$sform->assign($icmsAdminTpl);
 		$icmsAdminTpl->display('db:admin/autotasks/system_adm_autotasks.html');

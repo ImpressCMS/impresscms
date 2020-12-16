@@ -37,6 +37,9 @@
  */
 
 /* this will set which language file will load for this page */
+
+use ImpressCMS\Core\Models\User;
+
 $xoopsOption['pagetype'] = "pmsg";
 
 /* set filter types, if not strings */
@@ -113,10 +116,10 @@ if (!icms::$user) {
 		} else {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm = & $pm_handler->create();
-			$pm->setVar("subject", $subject);
-			$pm->setVar("msg_text", $message);
-			$pm->setVar("to_userid", $to_userid);
-			$pm->setVar("from_userid", icms::$user->uid);
+			$pm->subject = $subject;
+			$pm->msg_text = $message;
+			$pm->to_userid = $to_userid;
+			$pm->from_userid = icms::$user->uid;
 			if (!$pm_handler->insert($pm)) {
 				redirect_header(icms_getPreviousPage(), 5, $pm->getHtmlErrors());
 			} else {
@@ -164,7 +167,7 @@ if (!icms::$user) {
 			$pm = & $pm_handler->get($msg_id);
 
 			if ($pm->to_userid == (int) (icms::$user->uid)) {
-				$pm_uname = \ImpressCMS\Core\Models\User::getUnameFromId($pm->from_userid);
+				$pm_uname = User::getUnameFromId($pm->from_userid);
 				$message  = "[quote]\n"
 					. sprintf(_PM_USERWROTE, $pm_uname)
 					. "\n" . $pm->getVar("msg_text", "E") . "\n[/quote]";

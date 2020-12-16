@@ -6,6 +6,7 @@ namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Update;
 
 use Exception;
 use icms;
+use ImpressCMS\Core\Database\DatabaseConnection;
 use ImpressCMS\Core\Extensions\SetupSteps\Module\Install\BlockSetupStep as InstallBlockSetupStep;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Models\Block;
@@ -35,7 +36,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 		$tplfile_handler = &icms::handler('icms_view_template_file');
 
 		/**
-		 * @var \ImpressCMS\Core\Database\DatabaseConnection $db
+		 * @var DatabaseConnection $db
 		 */
 		$db = icms::getInstance()->get('db');
 
@@ -104,18 +105,18 @@ class BlocksSetupStep extends InstallBlockSetupStep
 								$tplfile = $tplfile_handler->find('default', 'block', $fblock['bid']);
 								if (count($tplfile) == 0) {
 									$tplfile_new = &$tplfile_handler->create();
-									$tplfile_new->setVar('tpl_module', $module->dirname);
-									$tplfile_new->setVar('tpl_refid', (int)$fblock['bid']);
-									$tplfile_new->setVar('tpl_tplset', 'default');
+									$tplfile_new->tpl_module = $module->dirname;
+									$tplfile_new->tpl_refid = (int)$fblock['bid'];
+									$tplfile_new->tpl_tplset = 'default';
 									$tplfile_new->setVar('tpl_file', $block['template'], true);
-									$tplfile_new->setVar('tpl_type', 'block');
+									$tplfile_new->tpl_type = 'block';
 								} else {
 									$tplfile_new = $tplfile[0];
 								}
 								$tplfile_new->setVar('tpl_source', $content, true);
 								$tplfile_new->setVar('tpl_desc', $block['description'], true);
-								$tplfile_new->setVar('tpl_lastmodified', time());
-								$tplfile_new->setVar('tpl_lastimported', 0);
+								$tplfile_new->tpl_lastmodified = time();
+								$tplfile_new->tpl_lastimported = 0;
 								if (!$tplfile_handler->insert($tplfile_new)) {
 									$output->error(_MD_AM_TEMPLATE_UPDATE_FAIL, $block['template']);
 								} else {
@@ -165,10 +166,10 @@ class BlocksSetupStep extends InstallBlockSetupStep
 							$gperm_handler = icms::handler('icms_member_groupperm');
 							foreach ($groups as $mygroup) {
 								$bperm = &$gperm_handler->create();
-								$bperm->setVar('gperm_groupid', (int)$mygroup);
-								$bperm->setVar('gperm_itemid', (int)$newbid);
-								$bperm->setVar('gperm_name', 'block_read');
-								$bperm->setVar('gperm_modid', 1);
+								$bperm->gperm_groupid = $mygroup;
+								$bperm->gperm_itemid = $newbid;
+								$bperm->gperm_name = 'block_read';
+								$bperm->gperm_modid = 1;
 								if (!$gperm_handler->insert($bperm)) {
 									$output->error(_MD_AM_BLOCK_ACCESS_FAIL . ' ' . $newbid, $mygroup);
 								} else {
@@ -178,14 +179,14 @@ class BlocksSetupStep extends InstallBlockSetupStep
 
 							if ($template != '') {
 								$tplfile = &$tplfile_handler->create();
-								$tplfile->setVar('tpl_module', $module->dirname);
-								$tplfile->setVar('tpl_refid', (int)$newbid);
+								$tplfile->tpl_module = $module->dirname;
+								$tplfile->tpl_refid = (int)$newbid;
 								$tplfile->setVar('tpl_source', $content, true);
-								$tplfile->setVar('tpl_tplset', 'default');
+								$tplfile->tpl_tplset = 'default';
 								$tplfile->setVar('tpl_file', $block['template'], true);
-								$tplfile->setVar('tpl_type', 'block');
-								$tplfile->setVar('tpl_lastimported', 0);
-								$tplfile->setVar('tpl_lastmodified', time());
+								$tplfile->tpl_type = 'block';
+								$tplfile->tpl_lastimported = 0;
+								$tplfile->tpl_lastmodified = time();
 								$tplfile->setVar('tpl_desc', $block['description'], true);
 								if (!$tplfile_handler->insert($tplfile)) {
 									$output->error(_MD_AM_TEMPLATE_INSERT_FAIL, $block['template']);

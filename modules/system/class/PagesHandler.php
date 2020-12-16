@@ -6,6 +6,8 @@
  * @license	LICENSE.txt
  */
 
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+
 /**
  * Symlinks handler
  *
@@ -22,7 +24,7 @@ class mod_system_PagesHandler extends icms_data_page_Handler {
 	 * @param $db
 	 */
 	public function __construct(& $db) {
-		\ImpressCMS\Core\Models\AbstractExtendedHandler::__construct($db, 'pages', 'page_id', 'page_title', '', 'system');
+		AbstractExtendedHandler::__construct($db, 'pages', 'page_id', 'page_title', '', 'system');
 		$this->table = $db->prefix('icmspage');
 	}
 
@@ -60,7 +62,7 @@ class mod_system_PagesHandler extends icms_data_page_Handler {
 	 */
 	public function changeStatus($page_id) {
 		$page = $this->get($page_id);
-		$page->setVar('page_status', !$page->page_status);
+		$page->page_status = !$page->page_status;
 		return $this->insert($page, true);
 	}
 }

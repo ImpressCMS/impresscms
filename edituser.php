@@ -36,6 +36,8 @@
  * @author		skalpa <psk@psykaos.net>
  */
 
+use ImpressCMS\Core\Models\User;
+
 $xoopsOption['pagetype'] = 'user';
 if (icms_get_module_status('profile') && file_exists(ICMS_MODULES_PATH . '/profile/edituser.php')) {
 	header('Location: ' . ICMS_MODULES_URL . '/profile/edituser.php');
@@ -211,7 +213,7 @@ switch ($op) {
 			} else {
 				$member_handler = icms::handler('icms_member');
 				$edituser = & $member_handler->getUser($uid);
-				$edituser->setVar('name', $name);
+				$edituser->name = $name;
 				if ($icmsConfigUser['allow_chgmail'] == 1) {
 					$edituser->setVar('email', $email, true);
 				}
@@ -220,20 +222,20 @@ switch ($op) {
 					$edituser->setVar('uname', $uname, true);
 				}
 
-				$edituser->setVar('url', formatURL($url));
-				$edituser->setVar('user_from', $user_from);
+				$edituser->url = formatURL($url);
+				$edituser->user_from = $user_from;
 				if ($icmsConfigUser['allwshow_sig'] == 1) {
 					if ($icmsConfigUser['allow_htsig'] == 0) {
 						$signature = strip_tags(icms_core_DataFilter::checkVar($user_sig, 'text', 'input'));
-						$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
+						$edituser->user_sig = icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']);
 					} else {
 						$signature = icms_core_DataFilter::checkVar($user_sig, 'html', 'input');
-						$edituser->setVar('user_sig', $signature);
+						$edituser->user_sig = $signature;
 					}
 				}
 
 				$user_viewemail = (!empty($user_viewemail))?1:0;
-				$edituser->setVar('user_viewemail', $user_viewemail);
+				$edituser->user_viewemail = $user_viewemail;
 				if ($password != '') {
 					$icmspass = new icms_core_Password();
 					$pass = $icmspass->encryptPass($password);
@@ -241,28 +243,28 @@ switch ($op) {
 				}
 
 				$attachsig = !empty($attachsig)?1:0;
-				$edituser->setVar('attachsig', $attachsig);
-				$edituser->setVar('timezone_offset', $timezone_offset);
-				$edituser->setVar('uorder', $uorder);
-				$edituser->setVar('umode', $umode);
-				$edituser->setVar('notify_method', $notify_method);
-				$edituser->setVar('notify_mode', $notify_mode);
-				$edituser->setVar('bio', icms_core_DataFilter::icms_substr($bio, 0, 255));
-				$edituser->setVar('user_occ', $user_occ);
-				$edituser->setVar('user_intrest', $user_intrest);
-				$edituser->setVar('user_mailok', $user_mailok);
+				$edituser->attachsig = $attachsig;
+				$edituser->timezone_offset = $timezone_offset;
+				$edituser->uorder = $uorder;
+				$edituser->umode = $umode;
+				$edituser->notify_method = $notify_method;
+				$edituser->notify_mode = $notify_mode;
+				$edituser->bio = icms_core_DataFilter::icms_substr($bio, 0, 255);
+				$edituser->user_occ = $user_occ;
+				$edituser->user_intrest = $user_intrest;
+				$edituser->user_mailok = $user_mailok;
 				if (isset($theme_selected)) {
-					$edituser->setVar('theme', $theme_selected);
+					$edituser->theme = $theme_selected;
 
 					/**
 					 * @var Aura\Session\Session $session
 					 */
-					$session = \icms::getInstance()->get('session');
-					$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
+					$session = icms::getInstance()->get('session');
+					$userSegment = $session->getSegment(User::class);
 					$userSegment->set('theme', $theme_selected);
 					$icmsConfig['theme_set'] = $theme_selected;
 				} else {
-					$edituser->setVar('theme', $icmsConfig['theme_set']);
+					$edituser->theme = $icmsConfig['theme_set'];
 				}
 
 				if (!empty($usecookie)) {
@@ -486,11 +488,11 @@ switch ($op) {
 					if ($uploader->upload()) {
 						$avt_handler = icms::handler('icms_data_avatar');
 						$avatar = & $avt_handler->create();
-						$avatar->setVar('avatar_file', $uploader->getSavedFileName());
-						$avatar->setVar('avatar_name', icms::$user->uname);
-						$avatar->setVar('avatar_mimetype', $uploader->getMediaType());
-						$avatar->setVar('avatar_display', 1);
-						$avatar->setVar('avatar_type', 'C');
+						$avatar->avatar_file = $uploader->getSavedFileName();
+						$avatar->avatar_name = icms::$user->uname;
+						$avatar->avatar_mimetype = $uploader->getMediaType();
+						$avatar->avatar_display = 1;
+						$avatar->avatar_type = 'C';
 						if (!$avt_handler->insert($avatar)) {
 							@unlink($uploader->getSavedDestination());
 						} else {
@@ -552,7 +554,7 @@ switch ($op) {
 			$user_avatarpath = str_replace("\\", "/", realpath(ICMS_UPLOAD_PATH . '/' . $user_avatar));
 			if (0 === strpos($user_avatarpath, ICMS_UPLOAD_PATH) && is_file($user_avatarpath)) {
 				$oldavatar = icms::$user->user_avatar;
-				icms::$user->setVar('user_avatar', $user_avatar);
+				icms::$user->user_avatar = $user_avatar;
 				$member_handler = icms::handler('icms_member');
 				if (!$member_handler->insertUser(icms::$user)) {
 					/** Include the header that starts page rendering */
