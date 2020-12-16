@@ -108,7 +108,7 @@ switch ($op) {
 				redirect_header('index.php', 3, _US_NOEDITRIGHT . "<br />" . implode('<br />', icms::$security->getErrors()));
 			}
 
-			if (icms::$user->getVar('uid') != $uid) {
+			if (icms::$user->uid != $uid) {
 				redirect_header('index.php', 3, _US_NOEDITRIGHT);
 			}
 
@@ -177,7 +177,7 @@ switch ($op) {
 					: '';
 
 				$member_handler = icms::handler('icms_member');
-				$username = $member_handler->getUser($uid)->getVar('login_name');
+				$username = $member_handler->getUser($uid)->login_name;
 				if (!$member_handler->loginUser(addslashes($username), $oldpass)) {
 					$errors[] = _US_SORRYINCORRECTPASS;
 				}
@@ -266,7 +266,7 @@ switch ($op) {
 				}
 
 				if (!empty($usecookie)) {
-					setcookie($icmsConfig['usercookie'], icms::$user->getVar('login_name'), time() + 31536000);
+					setcookie($icmsConfig['usercookie'], icms::$user->login_name, time() + 31536000);
 				} else {
 					setcookie($icmsConfig['usercookie']);
 				}
@@ -293,21 +293,21 @@ switch ($op) {
 				icms_PasswordMeter();
 			}
 
-			echo '<a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;
+			echo '<a href="userinfo.php?uid=' .  icms::$user->uid . '">' . _US_PROFILE . '</a>&nbsp;
 			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br /><br />';
 			$form = new icms_form_Theme(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
-			$login_name_label = new icms_form_elements_Label(_US_LOGINNAME, icms::$user->getVar('login_name'));
+			$login_name_label = new icms_form_elements_Label(_US_LOGINNAME, icms::$user->login_name);
 			$form->addElement($login_name_label);
-			$form->addElement(new icms_form_elements_Hidden("uname", icms::$user->getVar('login_name')));
+			$form->addElement(new icms_form_elements_Hidden("uname", icms::$user->login_name));
 			$email_tray = new icms_form_elements_Tray(_US_EMAIL, '<br />');
 			if ($icmsConfigUser['allow_chgmail'] == 1) {
-				$email_text = new icms_form_elements_Text('', 'email', 30, 60, icms::$user->getVar('email'));
+				$email_text = new icms_form_elements_Text('', 'email', 30, 60, icms::$user->email);
 			} else {
-				$email_text = new icms_form_elements_Label('', icms::$user->getVar('email'));
+				$email_text = new icms_form_elements_Label('', icms::$user->email);
 			}
 
 			$email_tray->addElement($email_text);
-			$email_cbox_value = icms::$user->getVar('user_viewemail')?1:0;
+			$email_cbox_value = icms::$user->user_viewemail?1:0;
 			$email_cbox = new icms_form_elements_Checkbox('', 'user_viewemail', $email_cbox_value);
 			$email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
 			$email_tray->addElement($email_cbox);
@@ -316,7 +316,7 @@ switch ($op) {
 			if ($icmsConfigUser['allow_chguname'] == 1) {
 				$uname_label = new icms_form_elements_Text(_US_NICKNAME, 'uname', 30, 60, icms::$user->getVar('uname', 'E'));
 			} else {
-				$uname_label = new icms_form_elements_Label(_US_NICKNAME, icms::$user->getVar('uname'));
+				$uname_label = new icms_form_elements_Label(_US_NICKNAME, icms::$user->uname);
 			}
 
 			$form->addElement($uname_label);
@@ -325,7 +325,7 @@ switch ($op) {
 			$url_text = new icms_form_elements_Text(_US_WEBSITE, 'url', 30, 100, icms::$user->getVar('url', 'E'));
 			$form->addElement($url_text);
 
-			$timezone_select = new icms_form_elements_select_Timezone(_US_TIMEZONE, 'timezone_offset', icms::$user->getVar('timezone_offset'));
+			$timezone_select = new icms_form_elements_select_Timezone(_US_TIMEZONE, 'timezone_offset', icms::$user->timezone_offset);
 			$location_text = new icms_form_elements_Text(_US_LOCATION, 'user_from', 30, 100, icms::$user->getVar('user_from', 'E'));
 			$occupation_text = new icms_form_elements_Text(_US_OCCUPATION, 'user_occ', 30, 100, icms::$user->getVar('user_occ', 'E'));
 			$interest_text = new icms_form_elements_Text(_US_INTEREST, 'user_intrest', 30, 150, icms::$user->getVar('user_intrest', 'E'));
@@ -334,7 +334,7 @@ switch ($op) {
 					$sig_tray = new icms_form_elements_Tray(_US_SIGNATURE, '<br />');
 					$sig_tarea = new icms_form_elements_Textarea('', 'user_sig', icms::$user->getVar('user_sig', 'E'));
 					$sig_tray->addElement($sig_tarea);
-					$sig_cbox_value = icms::$user->getVar('attachsig')?1:0;
+					$sig_cbox_value = icms::$user->attachsig?1:0;
 					$sig_cbox = new icms_form_elements_Checkbox('', 'attachsig', $sig_cbox_value);
 					$sig_cbox->addOption(1, _US_SHOWSIG);
 					$sig_tray->addElement($sig_cbox);
@@ -342,23 +342,23 @@ switch ($op) {
 					$sig_tray = new icms_form_elements_Tray(_US_SIGNATURE, '<br />');
 					$sig_tarea = new icms_form_elements_Dhtmltextarea('', 'user_sig', icms::$user->getVar('user_sig', 'E'));
 					$sig_tray->addElement($sig_tarea);
-					$sig_cbox_value = icms::$user->getVar('attachsig')?1:0;
+					$sig_cbox_value = icms::$user->attachsig?1:0;
 					$sig_cbox = new icms_form_elements_Checkbox('', 'attachsig', $sig_cbox_value);
 					$sig_cbox->addOption(1, _US_SHOWSIG);
 					$sig_tray->addElement($sig_cbox);
 				}
 			}
 
-			$umode_select = new icms_form_elements_Select(_US_CDISPLAYMODE, 'umode', icms::$user->getVar('umode'));
+			$umode_select = new icms_form_elements_Select(_US_CDISPLAYMODE, 'umode', icms::$user->umode);
 			$umode_select->addOptionArray(array('nest'=>_NESTED, 'flat'=>_FLAT, 'thread'=>_THREADED));
-			$uorder_select = new icms_form_elements_Select(_US_CSORTORDER, 'uorder', icms::$user->getVar('uorder'));
+			$uorder_select = new icms_form_elements_Select(_US_CSORTORDER, 'uorder', icms::$user->uorder);
 			$uorder_select->addOptionArray(array(XOOPS_COMMENT_OLD1ST => _OLDESTFIRST, XOOPS_COMMENT_NEW1ST => _NEWESTFIRST));
-			$selected_theme = new icms_form_elements_Select(_US_SELECT_THEME, 'theme_selected', icms::$user->getVar('theme'));
+			$selected_theme = new icms_form_elements_Select(_US_SELECT_THEME, 'theme_selected', icms::$user->theme);
 			foreach ($icmsConfig['theme_set_allowed'] as $theme) {
 				$selected_theme->addOption($theme, $theme);
 			}
 
-			$selected_language = new icms_form_elements_Select(_US_SELECT_LANG, 'language_selected', icms::$user->getVar('language'));
+			$selected_language = new icms_form_elements_Select(_US_SELECT_LANG, 'language_selected', icms::$user->language);
 			foreach (icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . "/language/") as $language) {
 				$selected_language->addOption($language, $language);
 			}
@@ -366,9 +366,9 @@ switch ($op) {
 			// TODO: add this to admin user-edit functions...
 			icms_loadLanguageFile('core', 'notification');
 			include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
-			$notify_method_select = new icms_form_elements_Select(_NOT_NOTIFYMETHOD, 'notify_method', icms::$user->getVar('notify_method'));
+			$notify_method_select = new icms_form_elements_Select(_NOT_NOTIFYMETHOD, 'notify_method', icms::$user->notify_method);
 			$notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
-			$notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mode', icms::$user->getVar('notify_mode'));
+			$notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mode', icms::$user->notify_mode);
 			$notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
 			$bio_tarea = new icms_form_elements_Textarea(_US_EXTRAINFO, 'bio', icms::$user->getVar('bio', 'E'));
 			$cookie_radio_value = empty($_COOKIE[$icmsConfig['usercookie']])?0:1;
@@ -379,8 +379,8 @@ switch ($op) {
 			$pwd_tray->addElement($pwd_text);
 			$pwd_tray->addElement($pwd_text2);
 			$pwd_text_old = new icms_form_elements_Password(_US_OLD_PASSWORD, 'old_password', 10, 255);
-			$mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', (int) icms::$user->getVar('user_mailok'));
-			$uid_hidden = new icms_form_elements_Hidden('uid', (int) icms::$user->getVar('uid'));
+			$mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', icms::$user->user_mailok);
+			$uid_hidden = new icms_form_elements_Hidden('uid', (int) icms::$user->uid);
 			$op_hidden = new icms_form_elements_Hidden('op', 'saveuser');
 			$submit_button = new icms_form_elements_Button('', 'submit', _US_SAVECHANGES, 'submit');
 
@@ -424,38 +424,38 @@ switch ($op) {
 			/** Include the header that starts page rendering */
 			include ICMS_ROOT_PATH . '/header.php';
 			echo "<h4>" . _US_AVATAR . "</h4>";
-			echo '<p><a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>
+			echo '<p><a href="userinfo.php?uid=' . (int) icms::$user->uid . '">' . _US_PROFILE . '</a>
 			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '</p>';
-			$oldavatar = icms::$user->getVar('user_avatar');
+			$oldavatar = icms::$user->user_avatar;
 			if (!empty($oldavatar) && $oldavatar != 'blank.gif') {
 				echo '<div style="text-align:center;"><h4 style="color:#ff0000; font-weight:bold;">' . _US_OLDDELETED . '</h4>';
 				echo '<img src="' . ICMS_UPLOAD_URL . '/' . $oldavatar . '" alt="" /></div>';
 			}
 
-			if ($icmsConfigUser['avatar_allow_upload'] == 1 && icms::$user->getVar('posts') >= $icmsConfigUser['avatar_minposts']) {
+			if ($icmsConfigUser['avatar_allow_upload'] == 1 && icms::$user->posts >= $icmsConfigUser['avatar_minposts']) {
 				$form = new icms_form_Theme(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', true);
 				$form->setExtra('enctype="multipart/form-data"');
 				$form->addElement(new icms_form_elements_Label(_US_MAXPIXEL, icms_conv_nr2local($icmsConfigUser['avatar_width']) . ' x ' . icms_conv_nr2local($icmsConfigUser['avatar_height'])));
 				$form->addElement(new icms_form_elements_Label(_US_MAXIMGSZ, icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])));
 				$form->addElement(new icms_form_elements_File(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), true);
 				$form->addElement(new icms_form_elements_Hidden('op', 'avatarupload'));
-				$form->addElement(new icms_form_elements_Hidden('uid', (int) icms::$user->getVar('uid')));
+				$form->addElement(new icms_form_elements_Hidden('uid', icms::$user->uid));
 				$form->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
 				$form->display();
 			}
 			$avatar_handler = icms::handler('icms_data_avatar');
 			$form2 = new icms_form_Theme(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
-			$avatar_select = new icms_form_elements_Select('', 'user_avatar', icms::$user->getVar('user_avatar'));
+			$avatar_select = new icms_form_elements_Select('', 'user_avatar', icms::$user->user_avatar);
 			$avatar_select->addOptionArray($avatar_handler->getList('S'));
 			$avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"" . ICMS_URL . "\")'");
 			$avatar_tray = new icms_form_elements_Tray(_US_AVATAR, '&nbsp;');
 			$avatar_tray->addElement($avatar_select);
 			$avatar_tray->addElement(new icms_form_elements_Label('', "<img src='" . ICMS_UPLOAD_URL . "/" . icms::$user->getVar("user_avatar", "E") . "' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">" . _LIST . "</a>"));
-			if ($icmsConfigUser['avatar_allow_upload'] == 1 && icms::$user->getVar('posts') < $icmsConfigUser['avatar_minposts']) {
+			if ($icmsConfigUser['avatar_allow_upload'] == 1 && icms::$user->posts < $icmsConfigUser['avatar_minposts']) {
 				$form2->addElement(new icms_form_elements_Label(sprintf(_US_POSTSNOTENOUGH, icms_conv_nr2local($icmsConfigUser['avatar_minposts'])), _US_UNCHOOSEAVT));
 			}
 				$form2->addElement($avatar_tray);
-				$form2->addElement(new icms_form_elements_Hidden('uid', (int) icms::$user->getVar('uid')));
+				$form2->addElement(new icms_form_elements_Hidden('uid', icms::$user->uid));
 				$form2->addElement(new icms_form_elements_Hidden('op', 'avatarchoose'));
 				$form2->addElement(new icms_form_elements_Button('', 'submit2', _SUBMIT, 'submit'));
 				$form2->display();
@@ -476,10 +476,10 @@ switch ($op) {
 				$uid = (int) $uid;
 			}
 
-			if (empty($uid) || icms::$user->getVar('uid') != $uid) {
+			if (empty($uid) || icms::$user->uid != $uid) {
 				redirect_header('index.php', 3, _US_NOEDITRIGHT);
 			}
-			if ($icmsConfigUser['avatar_allow_upload'] == 1 && icms::$user->getVar('posts') >= $icmsConfigUser['avatar_minposts']) {
+			if ($icmsConfigUser['avatar_allow_upload'] == 1 && icms::$user->posts >= $icmsConfigUser['avatar_minposts']) {
 				$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $icmsConfigUser['avatar_maxsize'], $icmsConfigUser['avatar_width'], $icmsConfigUser['avatar_height']);
 				if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 					$uploader->setPrefix('cavt');
@@ -487,14 +487,14 @@ switch ($op) {
 						$avt_handler = icms::handler('icms_data_avatar');
 						$avatar = & $avt_handler->create();
 						$avatar->setVar('avatar_file', $uploader->getSavedFileName());
-						$avatar->setVar('avatar_name', icms::$user->getVar('uname'));
+						$avatar->setVar('avatar_name', icms::$user->uname);
 						$avatar->setVar('avatar_mimetype', $uploader->getMediaType());
 						$avatar->setVar('avatar_display', 1);
 						$avatar->setVar('avatar_type', 'C');
 						if (!$avt_handler->insert($avatar)) {
 							@unlink($uploader->getSavedDestination());
 						} else {
-							$oldavatar = icms::$user->getVar('user_avatar');
+							$oldavatar = icms::$user->user_avatar;
 							if (!empty($oldavatar) && preg_match("/^cavt/", strtolower($oldavatar))) {
 								$avatars = & $avt_handler->getObjects(new icms_db_criteria_Item('avatar_file', $oldavatar));
 								if (!empty($avatars) && count($avatars) == 1 && is_object($avatars[0])) {
@@ -508,11 +508,11 @@ switch ($op) {
 							$sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'",
 							 	icms::$xoopsDB->prefix('users'),
 							 	icms::$xoopsDB->quoteString($uploader->getSavedFileName()),
-							 	(int) icms::$user->getVar('uid')
+							 	(int) icms::$user->uid
 							);
 							icms::$xoopsDB->query($sql);
-							$avt_handler->addUser($avatar->getVar('avatar_id'), (int) icms::$user->getVar('uid'));
-							redirect_header('userinfo.php?t=' . time() . '&amp;uid=' . (int) icms::$user->getVar('uid'), 0, _US_PROFUPDATED);
+							$avt_handler->addUser($avatar->avatar_id, (int) icms::$user->uid);
+							redirect_header('userinfo.php?t=' . time() . '&amp;uid=' . (int) icms::$user->uid, 0, _US_PROFUPDATED);
 						}
 					}
 				}
@@ -533,7 +533,7 @@ switch ($op) {
 				$uid = (int) $uid;
 			}
 
-			if (empty($uid) || icms::$user->getVar('uid') != $uid) {
+			if (empty($uid) || icms::$user->uid != $uid) {
 				redirect_header('index.php', 3, _US_NOEDITRIGHT);
 			}
 
@@ -551,7 +551,7 @@ switch ($op) {
 
 			$user_avatarpath = str_replace("\\", "/", realpath(ICMS_UPLOAD_PATH . '/' . $user_avatar));
 			if (0 === strpos($user_avatarpath, ICMS_UPLOAD_PATH) && is_file($user_avatarpath)) {
-				$oldavatar = icms::$user->getVar('user_avatar');
+				$oldavatar = icms::$user->user_avatar;
 				icms::$user->setVar('user_avatar', $user_avatar);
 				$member_handler = icms::handler('icms_member');
 				if (!$member_handler->insertUser(icms::$user)) {
@@ -575,7 +575,7 @@ switch ($op) {
 				if ($user_avatar != 'blank.gif') {
 					$avatars = & $avt_handler->getObjects(new icms_db_criteria_Item('avatar_file', $user_avatar));
 					if (is_object($avatars[0])) {
-						$avt_handler->addUser($avatars[0]->getVar('avatar_id'), icms::$user->getVar('uid'));
+						$avt_handler->addUser($avatars[0]->avatar_id, icms::$user->uid);
 					}
 				}
 			}

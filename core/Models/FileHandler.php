@@ -30,8 +30,8 @@ class FileHandler extends AbstractExtendedHandler {
 	 * @return bool TRUE
 	 */
 	protected function afterDelete(&$obj) {
-		$imgUrl = $obj->getVar('url');
-		if (strpos($imgUrl, ICMS_URL) !== false) {
+		$imgUrl = $obj->url;
+		if (strstr($imgUrl, ICMS_URL) !== false) {
 			$imgPath = str_replace(ICMS_URL, ICMS_ROOT_PATH, $imgUrl);
 			if (is_file($imgPath)) {
 				unlink($imgPath);

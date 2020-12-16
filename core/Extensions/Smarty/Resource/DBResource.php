@@ -93,7 +93,7 @@ class DBResource extends Smarty_Resource_Custom implements SmartyExtensionInterf
 		}
 		$module = $tplobj[0]->getVar('tpl_module', 'n');
 		$type = $tplobj[0]->getVar('tpl_type', 'n');
-		$blockpath = ($type == 'block') ? 'blocks/' : '';
+		$blockpath = ($type === 'block') ? 'blocks/' : '';
 		// First, check for an overloaded version within the theme folder
 		$filepath = ICMS_THEME_PATH . "/$theme/modules/$module/$blockpath$tpl_name";
 		if (!file_exists($filepath)) {

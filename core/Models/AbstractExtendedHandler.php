@@ -118,9 +118,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 *
 	 * The name of the module for the object
 	 * @var string
-	 * @todo    Rename using the proper naming convention (This is a public var)
 	 */
-	public $_moduleName = '';
+	public $moduleName = '';
 	/**
 	 * Is upload enabled?
 	 *
@@ -232,18 +231,18 @@ class AbstractExtendedHandler extends AbstractHandler {
 
 		// Todo: Autodect module
 		if ($modulename === null || $modulename === 'icms') {
-			$this->_moduleName = 'icms';
+			$this->moduleName = 'icms';
 			if (!class_exists($classname = '\\ImpressCMS\\Core\\Models\\' . ucfirst($itemname))) {
-				$classname = $this->_moduleName . '_' . $itemname . '_Object';
+				$classname = $this->moduleName . '_' . $itemname . '_Object';
 			}
-			if ($table == null) {
+			if ($table === null) {
 				$table = $itemname;
 			}
 		} else {
-			$this->_moduleName = $modulename;
+			$this->moduleName = $modulename;
 			$classname = substr(get_class($this), 0, -7);
 			if ($table === null) {
-				$table = $this->_moduleName . '_' . $itemname;
+				$table = $this->moduleName . '_' . $itemname;
 			}
 		}
 
@@ -252,7 +251,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		 * to be evaluated...
 		 */
 		if (!class_exists($classname)) {
-			$classname = ucfirst($this->_moduleName) . ucfirst($itemname);
+			$classname = ucfirst($this->moduleName) . ucfirst($itemname);
 		}
 
 		$this->table = $db->prefix($table);
@@ -262,10 +261,10 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$this->identifierName = $idenfierName;
 		$this->summaryName = $summaryName;
 		$this->_page = $itemname . '.php';
-		$this->_modulePath = ICMS_ROOT_PATH . '/modules/' . $this->_moduleName . '/';
-		$this->_moduleUrl = ICMS_URL . '/modules/' . $this->_moduleName . '/';
-		$this->_uploadPath = ICMS_UPLOAD_PATH . '/' . $this->_moduleName . '/';
-		$this->_uploadUrl = ICMS_UPLOAD_URL . '/' . $this->_moduleName . '/';
+		$this->_modulePath = ICMS_MODULES_PATH . '/' . $this->moduleName . '/';
+		$this->_moduleUrl = ICMS_MODULES_URL . '/' . $this->moduleName . '/';
+		$this->_uploadPath = ICMS_UPLOAD_PATH . '/' . $this->moduleName . '/';
+		$this->_uploadUrl = ICMS_UPLOAD_URL . '/' . $this->moduleName . '/';
 	}
 
 	/**
@@ -280,6 +279,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 		switch ($name) {
 			case '_itemname':
 				return $this->itemName;
+			case '_moduleName':
+				return $this->moduleName;
 		}
 	}
 
@@ -1524,7 +1525,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 */
 	public function getModuleItemString()
 	{
-		$ret = $this->_moduleName . '_' . $this->itemName;
+		$ret = $this->moduleName . '_' . $this->_itemname;
 		return $ret;
 	}
 

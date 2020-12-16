@@ -41,7 +41,7 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
-if (('system' != $icmsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
+if (('system' != $icmsModule->dirname && XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
 	|| (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost'])
 	|| !is_object($icmsModule)
 ) {
@@ -68,7 +68,7 @@ if ($com_itemid > 0) {
 	$com_mode = isset($_GET['com_mode'])? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES, _CHARSET):'';
 	if ($com_mode == '') {
 		if (is_object(icms::$user)) {
-			$com_mode = icms::$user->getVar('umode');
+			$com_mode = icms::$user->umode;
 		} else {
 			$com_mode = $icmsConfig['com_mode'];
 		}
@@ -76,7 +76,7 @@ if ($com_itemid > 0) {
 
 	if (!isset($_GET['com_order'])) {
 		if (is_object(icms::$user)) {
-			$com_order = icms::$user->getVar('uorder');
+			$com_order = icms::$user->uorder;
 		} else {
 			$com_order = $icmsConfig['com_order'];
 		}

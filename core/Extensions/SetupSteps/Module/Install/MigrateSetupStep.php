@@ -15,7 +15,7 @@ class MigrateSetupStep implements SetupStepInterface
 	 */
 	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
-		$migrationsPath = ICMS_MODULES_PATH . '/' . $module->getVar('dirname') . '/migrations/';
+		$migrationsPath = ICMS_MODULES_PATH . '/' . $module->dirname . '/migrations/';
 		if (!file_exists($migrationsPath)) {
 			return true;
 		}
@@ -25,7 +25,7 @@ class MigrateSetupStep implements SetupStepInterface
 		$symfonyConsoleApplication->add(new \Phoenix\Command\MigrateCommand());
 		$symfonyConsoleApplication->run(new \Symfony\Component\Console\Input\ArrayInput([
 			'command' => 'migrate',
-			'--dir' => ['module/' . $module->getVar('dirname')],
+			'--dir' => ['module/' . $module->dirname],
 			'--config_type' => 'php',
 			'--config' => ICMS_ROOT_PATH . '/phoenix.php',
 		]), $output);

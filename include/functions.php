@@ -132,7 +132,7 @@ if (!function_exists('xoops_getUserTimestamp')) {
 		global $icmsConfig;
 		if ($timeoffset == '') {
 			if (icms::$user) {
-				$timeoffset = icms::$user->getVar('timezone_offset');
+				$timeoffset = icms::$user->timezone_offset;
 			} else {
 				$timeoffset = $icmsConfig['default_TZ'];
 			}
@@ -440,7 +440,7 @@ if (!function_exists('xoops_comment_delete')) {
 				for ($i = 0; $i < $count; $i++) {
 					if (false != $comment_handler->delete($comments[$i])) {
 						// store poster ID and deleted post number into array for later use
-						$poster_id = $comments[$i]->getVar('com_uid');
+						$poster_id = $comments[$i]->com_uid;
 						if ($poster_id != 0) {
 							$deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1 : ($deleted_num[$poster_id] + 1);
 						}
@@ -451,7 +451,7 @@ if (!function_exists('xoops_comment_delete')) {
 					// update user posts
 					$com_poster = $member_handler->getUser($user_id);
 					if (is_object($com_poster)) {
-						$member_handler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - $post_num);
+						$member_handler->updateUserByField($com_poster, 'posts', $com_poster->posts - $post_num);
 					}
 				}
 				return true;
@@ -534,12 +534,12 @@ if (!function_exists('icms_getModuleInfo')) {
 		global $icmsModule;
 		if (!$moduleName) {
 			if (isset($icmsModule) && is_object($icmsModule)) {
-				$icmsModules[$icmsModule->getVar('dirname')] = &$icmsModule;
-				return $icmsModules[$icmsModule->getVar('dirname')];
+				$icmsModules[$icmsModule->dirname] = &$icmsModule;
+				return $icmsModules[$icmsModule->dirname];
 			}
 		}
 		if (!isset($icmsModules[$moduleName])) {
-			if (isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {
+			if (isset($icmsModule) && is_object($icmsModule) && $icmsModule->dirname == $moduleName) {
 				$icmsModules[$moduleName] = &$icmsModule;
 			} else {
 				$hModule = icms::handler('icms_module');
@@ -572,8 +572,8 @@ if (!function_exists('icms_getModuleConfig')) {
 		global $icmsModule, $icmsModuleConfig;
 		if (!$moduleName) {
 			if (isset($icmsModule) && is_object($icmsModule)) {
-				$icmsConfigs[$icmsModule->getVar('dirname')] = &$icmsModuleConfig;
-				return $icmsConfigs[$icmsModule->getVar('dirname')];
+				$icmsConfigs[$icmsModule->dirname] = &$icmsModuleConfig;
+				return $icmsConfigs[$icmsModule->dirname];
 			}
 		}
 		// if we still did not found the icmsModule, this is because there is none
@@ -581,7 +581,7 @@ if (!function_exists('icms_getModuleConfig')) {
 			$ret = false;
 			return $ret;
 		}
-		if (isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {
+		if (isset($icmsModule) && is_object($icmsModule) && $icmsModule->dirname == $moduleName) {
 			$icmsConfigs[$moduleName] = &$icmsModuleConfig;
 		} else {
 			$module = &icms_getModuleInfo($moduleName);
@@ -590,7 +590,7 @@ if (!function_exists('icms_getModuleConfig')) {
 				return $ret;
 			}
 			$hModConfig = icms::handler('icms_config');
-			$icmsConfigs[$moduleName] = &$hModConfig->getConfigsByCat(0, $module->getVar('mid'));
+			$icmsConfigs[$moduleName] = &$hModConfig->getConfigsByCat(0, $module->mid);
 		}
 		return $icmsConfigs[$moduleName];
 	}
@@ -635,7 +635,7 @@ if (!function_exists('icms_getCurrentModuleName')) {
 	{
 		global $icmsModule;
 		if (is_object($icmsModule)) {
-			return $icmsModule->getVar('dirname');
+			return $icmsModule->dirname;
 		} else {
 			return false;
 		}
@@ -655,7 +655,7 @@ if (!function_exists('icms_userIsAdmin')) {
 		static $icms_isAdmin;
 		if (!$module) {
 			global $icmsModule;
-			$module = $icmsModule->getVar('dirname');
+			$module = $icmsModule->dirname;
 		}
 		if (isset ($icms_isAdmin[$module])) {
 			return $icms_isAdmin[$module];
@@ -669,7 +669,7 @@ if (!function_exists('icms_userIsAdmin')) {
 		if (!is_object($icmsModule)) {
 			return false;
 		}
-		$module_id = $icmsModule->getVar('mid');
+		$module_id = $icmsModule->mid;
 		$icms_isAdmin[$module] = icms::$user->isAdmin($module_id);
 		return $icms_isAdmin[$module];
 	}
@@ -1032,13 +1032,13 @@ if (!function_exists('showNav')) {
 				 */
 				$content_handler = &xoops_gethandler('content');
 				$cont = $content_handler->get($id);
-				if ($cont->getVar('content_id') > 0) {
+				if ($cont->content_id > 0) {
 					$seo = $content_handler->makeLink($cont);
-					$ret = "<a href='" . $url . "?page=" . $seo . "'>" . $cont->getVar('content_title') . "</a>";
-					if ($cont->getVar('content_supid') == 0) {
+					$ret = "<a href='" . $url . "?page=" . $seo . "'>" . $cont->content_title . "</a>";
+					if ($cont->content_supid == 0) {
 						return "<a href='" . ICMS_URL . "'>" . _CT_NAV . "</a> $separador " . $ret;
-					} elseif ($cont->getVar('content_supid') > 0) {
-						$ret = showNav($cont->getVar('content_supid'), $separador) . " $separador " . $ret;
+					} elseif ($cont->content_supid > 0) {
+						$ret = showNav($cont->content_supid, $separador) . " $separador " . $ret;
 					}
 				}
 			} else {
@@ -1624,7 +1624,7 @@ if (!function_exists('icms_getModuleHandler')) {
 		if (!isset($module_dir)) {
 			//if a module is loaded
 			if (isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {
-				$module_dir = $GLOBALS['icmsModule']->getVar('dirname');
+				$module_dir = $GLOBALS['icmsModule']->dirname;
 			} else {
 				trigger_error(_CORE_NOMODULE, E_USER_ERROR);
 			}
@@ -1706,7 +1706,7 @@ if (!function_exists('icms_getModuleAdminLink')) {
 	{
 		global $icmsModule;
 		if (!$moduleName && (isset ($icmsModule) && is_object($icmsModule))) {
-			$moduleName = $icmsModule->getVar('dirname');
+			$moduleName = $icmsModule->dirname;
 		}
 		$ret = '';
 		if ($moduleName) {
@@ -1803,7 +1803,7 @@ if (!function_exists('icms_getModuleName')) {
 	function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false)
 	{
 		if (!$moduleName) {
-			$moduleName = icms::$module->getVar('dirname');
+			$moduleName = icms::$module->dirname;
 		}
 		icms::$module = icms_getModuleInfo($moduleName);
 		$icmsModuleConfig = icms_getModuleConfig($moduleName);
@@ -1812,7 +1812,7 @@ if (!function_exists('icms_getModuleName')) {
 		}
 
 		if (!$withLink) {
-			return icms::$module->getVar('name');
+			return icms::$module->name;
 		} else {
 			$seoMode = icms_getModuleModeSEO($moduleName);
 			if ($seoMode == 'rewrite') {
@@ -1823,7 +1823,7 @@ if (!function_exists('icms_getModuleName')) {
 			} else {
 				$ret = ICMS_MODULES_URL . '/' . $moduleName . '/';
 			}
-			return '<a href="' . $ret . '">' . icms::$module->getVar('name') . '</a>';
+			return '<a href="' . $ret . '">' . icms::$module->name . '</a>';
 		}
 	}
 }
@@ -1880,7 +1880,7 @@ if (!function_exists('icms_adminMenu')) {
 	function icms_adminMenu($currentoption = 0, $breadcrumb = '')
 	{
 		global $icmsModule;
-		$icmsModule->displayAdminMenu($currentoption, $icmsModule->getVar('name') . ' | ' . $breadcrumb);
+		$icmsModule->displayAdminMenu($currentoption, $icmsModule->name . ' | ' . $breadcrumb);
 	}
 }
 
@@ -1990,7 +1990,7 @@ if (!function_exists('icms_get_module_status')) {
 	{
 		$module_handler = icms::handler('icms_module');
 		$this_module = $module_handler->getByDirname($module_name);
-		if ($this_module && $this_module->getVar('isactive')) {
+		if ($this_module && $this_module->isactive) {
 			return true;
 		}
 		return false;

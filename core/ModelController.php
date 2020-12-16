@@ -24,7 +24,9 @@ use ImpressCMS\Core\Security\PermissionsManager;
 class ModelController
 {
 
-	/** */
+	/**
+	 * @var \icms_ipf_Handler
+	 */
 	public $handler;
 
 	/**
@@ -95,11 +97,11 @@ class ModelController
 					$linkObj->setVar('description', $_POST['desc_' . $key]);
 					$linkObj->setVar('target', $_POST['target_' . $key]);
 					$linkObj->setVar('url', $_POST['url_' . $key]);
-					if ($linkObj->getVar('url')) {
+					if ($linkObj->url != '') {
 						$icmsObj->storeUrlLinkObj($linkObj);
 					}
 					//@todo: catch errors
-					$icmsObj->setVar($key, $linkObj->getVar('urllinkid'));
+					$icmsObj->setVar($key, $linkObj->urllinkid);
 					break;
 
 				case AbstractProperties::DTYPE_DEP_FILE:
@@ -112,7 +114,7 @@ class ModelController
 						if (!($fileObj->getVar('url') == '' && $fileObj->getVar('url') == '' && $fileObj->getVar('url') == '')) {
 							$res = $icmsObj->storeFileObj($fileObj);
 							if ($res) {
-								$icmsObj->setVar($key, $fileObj->getVar('fileid'));
+								$icmsObj->setVar($key, $fileObj->fileid);
 							} else {
 								//error setted, but no error message (to be improved)
 								$icmsObj->setErrors($fileObj->getErrors());
@@ -201,7 +203,7 @@ class ModelController
 								$fileObj->setVar('caption', $_POST['caption_' . $related_field]);
 								$fileObj->setVar('description', $_POST['desc_' . $related_field]);
 								$icmsObj->storeFileObj($fileObj);
-								$icmsObj->setVar($related_field, $fileObj->getVar('fileid'));
+								$icmsObj->setVar($related_field, $fileObj->fileid);
 							} else {
 								$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 								if (!$eventResult) {
@@ -392,8 +394,8 @@ class ModelController
 				'confirm' => 1,
 				'redirect_page' => icms::$urls['previouspage']
 			);
-			if ($this->handler->_moduleName == 'system') {
-				$hiddens['fct'] = $_GET['fct'] ?? false;
+			if ($this->handler->moduleName == 'system') {
+				$hiddens['fct'] = isset($_GET['fct'])?$_GET['fct']:false;
 			}
 			Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg, $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
@@ -525,11 +527,10 @@ class ModelController
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getViewItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false)
-	{
-		if ($this->handler->_moduleName !== 'system') {
-			$admin_side = $userSide ? '' : 'admin/';
-			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . '?' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
+	public function getViewItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
+		if ($this->handler->moduleName !== 'system') {
+			$admin_side = $userSide?'':'admin/';
+			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		} else {
 			$admin_side = '';
 			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct='
@@ -558,8 +559,8 @@ class ModelController
 	{
 		$ret = $this->handler->_moduleUrl . 'admin/'
 			. $this->handler->_page
-			. '?op=mod&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName)
-			. '&amp;language=' . $icmsObj->getVar('language');
+			. "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName)
+			. "&amp;language=" . $icmsObj->language;
 		if ($onlyUrl) {
 			return $ret;
 		} elseif ($withimage) {
@@ -578,10 +579,9 @@ class ModelController
 	 * @param bool $withimage
 	 * @param bool $userSide
 	 */
-	public function getEditItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false)
-	{
-		if ($this->handler->_moduleName != 'system') {
-			$admin_side = $userSide ? '' : 'admin/';
+	public function getEditItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
+		if ($this->handler->moduleName !== 'system') {
+			$admin_side = $userSide?'':'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
 				. '?op=mod&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
 		} else {
@@ -612,10 +612,9 @@ class ModelController
 	 * @param bool $withimage
 	 * @param bool $userSide
 	 */
-	public function getDeleteItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false)
-	{
-		if ($this->handler->_moduleName != 'system') {
-			$admin_side = $userSide ? '' : 'admin/';
+	public function getDeleteItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
+		if ($this->handler->moduleName !== 'system') {
+			$admin_side = $userSide?'':'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
 				. '?op=del&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
 		} else {
@@ -655,7 +654,7 @@ class ModelController
 
 		 $icmsModule = icms_getModuleInfo($icmsObj->handler->_moduleName);
 		 $link = \icms::$urls['full']();
-		 $mid = $icmsModule->getVar('mid');
+		 $mid = $icmsModule->mid;
 		 $friendlink = "<a href=\"javascript:openWithSelfMain('".SMARTOBJECT_URL."sendlink.php?link=" . $link . "&amp;mid=" . $mid . "', ',',',',',','sendmessage', 674, 500);\"><img src=\"".SMARTOBJECT_IMAGES_ACTIONS_URL . "mail_send.png\"  alt=\"" . _CO_ICMS_EMAIL . "\" title=\"" . _CO_ICMS_EMAIL . "\" style=\"vertical-align: middle;\"/></a>";
 
 		 $ret = '<span id="smartobject_print_button">' . $printlink . "&nbsp;</span>" . '<span id="smartobject_mail_button">' . $friendlink . '</span>';
@@ -666,9 +665,8 @@ class ModelController
 	/**
 	 * Creates a string from the object's module name and item name
 	 */
-	public function getModuleItemString()
-	{
-		return $this->handler->_moduleName . '_' . $this->handler->_itemname;
+	public function getModuleItemString() {
+		return $this->handler->moduleName . '_' . $this->handler->_itemname;
 	}
 }
 

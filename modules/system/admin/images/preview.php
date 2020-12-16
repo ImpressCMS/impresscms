@@ -40,13 +40,13 @@ $image_handler = icms::handler('icms_image');
 $imgcat_handler = icms::handler('icms_image_category');
 
 $image = & $image_handler->getObjects(new icms_db_criteria_Item('image_name', $file), false, true);
-$imagecategory = & $imgcat_handler->get($image[0]->getVar('imgcat_id'));
+$imagecategory = & $imgcat_handler->get($image[0]->imgcat_id);
 
 $categ_path = $imgcat_handler->getCategFolder($imagecategory);
 $categ_url  = $imgcat_handler->getCategFolder($imagecategory, 1, 'url');
 
-if ($imagecategory->getVar('imgcat_storetype') == 'db') {
-	$img = WideImage::loadFromString($image[0]->getVar('image_body'));
+if ($imagecategory->imgcat_storetype == 'db') {
+	$img = WideImage::loadFromString($image[0]->image_body);
 } else {
 	$path = (substr($categ_path, -1) != '/')?$categ_path . '/':$categ_path;
 	$img = WideImage::load($path . $file);

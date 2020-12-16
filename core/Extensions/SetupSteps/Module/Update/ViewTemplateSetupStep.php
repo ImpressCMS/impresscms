@@ -30,7 +30,7 @@ class ViewTemplateSetupStep extends InstallViewTemplateSetupStep
 			$dcount = count($deltpl);
 			for ($i = 0; $i < $dcount; $i++) {
 				if (!$tplfile_handler->delete($deltpl[$i])) {
-					$delng[] = $deltpl[$i]->getVar('tpl_file');
+					$delng[] = $deltpl[$i]->tpl_file;
 				}
 			}
 		}
@@ -60,7 +60,7 @@ class ViewTemplateSetupStep extends InstallViewTemplateSetupStep
 					if (!$tplfile_handler->insert($tplfile)) {
 						$output->error(_MD_AM_TEMPLATE_INSERT_FAIL, $tpl['file']);
 					} else {
-						$newid = $tplfile->getVar('tpl_id');
+						$newid = $tplfile->tpl_id;
 						$output->success(_MD_AM_TEMPLATE_INSERTED, $tpl['file'], $newid);
 						if ($icmsConfig['template_set'] == 'default') {
 							if (!Template::template_touch($newid)) {
