@@ -286,10 +286,10 @@ class Module
 	public function loadInfo($dirname, $verbose = true) {
 		global $icmsConfig;
 		icms_loadLanguageFile($dirname, 'modinfo');
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php')) {
-			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php')) {
-			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php';
+		if (file_exists(ICMS_MODULES_PATH . '/' . $dirname . '/icms_version.php')) {
+			include ICMS_MODULES_PATH . '/' . $dirname . '/icms_version.php';
+		} elseif (file_exists(ICMS_MODULES_PATH . '/' . $dirname . '/xoops_version.php')) {
+			include ICMS_MODULES_PATH . '/' . $dirname . '/xoops_version.php';
 		} else {
 			if (false != $verbose) {echo "Module File for $dirname Not Found!"; }
 			return false;
