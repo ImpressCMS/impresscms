@@ -13,6 +13,10 @@
  * @since       2.0.14
  */
 
+namespace ImpressCMS\Core\Extensions\Smarty\Compiler;
+use icms;
+use ImpressCMS\Core\Extensions\Smarty\SmartyCompilerExtensionInterface;
+
 /**
  * Inserts the URL of a file resource customizable by themes
  *
@@ -29,13 +33,25 @@
  * on your themes configuration. Because of this, the use of the dynamic syntax with this plug-in
  * is not possible right now.
  */
-function smarty_compiler_xoImgUrl($args, Smarty &$smarty)
+class XOImgUrlCompiler implements SmartyCompilerExtensionInterface
 {
-	global $xoTheme;
+	/**
+	 * @inheritDoc
+	 */
+	public function execute($args, \Smarty_Internal_SmartyTemplateCompiler &$compiler)
+	{
+		global $xoTheme;
 
-	$argStr = trim($args[0]);
-	$path = ( isset($xoTheme) && is_object( $xoTheme ) ) ? $xoTheme->resourcePath( $argStr ) : $argStr;
-	return addslashes(icms::url($path));
+		$argStr = trim($args[0]);
+		$path = (isset($xoTheme) && is_object($xoTheme)) ? $xoTheme->resourcePath($argStr) : $argStr;
+		return addslashes(icms::url($path));
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getName(): string
+	{
+		return 'xoImgUrl';
+	}
 }
-
-
