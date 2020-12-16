@@ -40,8 +40,8 @@ function editadsense($showmenu = false, $adsenseid = 0, $clone = false) {
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_EDIT_INFO);
 		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
 	} else {
-		$adsenseObj->setVar('adsenseid', 0);
-		$adsenseObj->setVar('tag', '');
+		$adsenseObj->adsenseid = 0;
+		$adsenseObj->tag = '';
 		$sform = $adsenseObj->getForm(_CO_ICMS_ADSENSES_CREATE, 'addadsense');
 		$sform->assign($icmsAdminTpl);
 

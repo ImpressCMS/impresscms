@@ -418,7 +418,7 @@ class User extends AbstractExtendedModel {
 	 * Logs in current user
 	 */
 	public function login() {
-		$this->setVar('last_login', time());
+		$this->last_login = time();
 		$this->store();
 		$data = $this->toArray();
 		$data['_rank'] = $this->rank();

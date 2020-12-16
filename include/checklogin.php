@@ -145,7 +145,7 @@ if (false != $user) {
 	}
 
 	/* Continue with login - all negative checks have been passed */
-	$user->setVar('last_login', time());
+	$user->last_login = time();
 	if (!$member_handler->insertUser($user)) {}
 	// Regenerate a new session id and destroy old session
 
