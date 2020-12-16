@@ -37,7 +37,7 @@ function editcustomtag($customtagid = 0, $clone = false) {
 		$controller = new icms_ipf_Controller($icms_admin_handler);
 		$controller->postDataToObject($customtagObj);
 	}
-	switch ($customtagObj->getVar("customtag_type")) {
+	switch ($customtagObj->customtag_type) {
 		case ICMS_CUSTOMTAG_TYPE_XCODES:
 			break;
 

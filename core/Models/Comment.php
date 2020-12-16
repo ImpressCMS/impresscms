@@ -100,6 +100,6 @@ class Comment extends AbstractExtendedModel {
 	 * @return  bool
 	 */
 	public function isRoot() {
-		return ($this->getVar('com_id') === $this->getVar('com_rootid'));
+		return ($this->com_id == $this->com_rootid);
 	}
 }

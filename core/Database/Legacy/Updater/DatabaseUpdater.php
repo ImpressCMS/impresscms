@@ -193,7 +193,7 @@ class DatabaseUpdater {
 
 	function moduleUpgrade(&$module, $tables_first = false)
 	{
-		$dirname = $module->getVar('dirname');
+		$dirname = $module->dirname;
 
 		//		ob_start();
 

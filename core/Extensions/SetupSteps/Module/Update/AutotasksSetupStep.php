@@ -29,14 +29,14 @@ class AutotasksSetupStep implements SetupStepInterface
 			$criteria->add(new CriteriaItem('sat_type', 'addon/' . $module->getInfo('dirname')));
 			$items_atasks = $atasks_handler->getObjects($criteria, false);
 			foreach ($items_atasks as $task) {
-				$taskID = (int)$task->getVar('sat_addon_id');
+				$taskID = (int)$task->sat_addon_id;
 				if (!isset($atasks[$taskID])) {
 					$atasks[$taskID] = [];
 				}
-				$atasks[$taskID]['enabled'] = $task->getVar('sat_enabled');
-				$atasks[$taskID]['repeat'] = $task->getVar('sat_repeat');
-				$atasks[$taskID]['interval'] = $task->getVar('sat_interval');
-				$atasks[$taskID]['name'] = $task->getVar('sat_name');
+				$atasks[$taskID]['enabled'] = $task->sat_enabled;
+				$atasks[$taskID]['repeat'] = $task->sat_repeat;
+				$atasks[$taskID]['interval'] = $task->sat_interval;
+				$atasks[$taskID]['name'] = $task->sat_name;
 			}
 			$atasks_handler->deleteAll($criteria);
 			if (is_array($atasks)) {

@@ -75,7 +75,7 @@ if ($modid <= 1 || !is_object(icms::$user) || !icms::$user->isAdmin($modid) || !
 $module_handler = icms::handler('icms_module');
 $module = & $module_handler->get($modid);
 
-if (!is_object($module) || !$module->getVar('isactive')) {
+if (!is_object($module) || !$module->isactive) {
 	redirect_header(ICMS_URL . '/admin.php', 1, _MODULENOEXIST);
 	exit();
 }
@@ -88,7 +88,7 @@ if (is_array($perms) && !empty($perms)) {
 	$gperm_handler = icms::handler('icms_member_groupperm');
 	foreach ($perms as $perm_name => $perm_data) {
 		if (false != $gperm_handler->deleteByModule($modid, $perm_name)) {
-			$msg[] = sprintf(_MD_AM_PERMRESETOK, $perm_name, $module->getVar('name'));
+			$msg[] = sprintf(_MD_AM_PERMRESETOK, $perm_name, $module->name);
 			foreach ($perm_data['groups'] as $group_id => $item_ids) {
 				foreach ($item_ids as $item_id => $selected) {
 					if ($selected == 1) {
@@ -122,16 +122,16 @@ if (is_array($perms) && !empty($perms)) {
 				}
 			}
 		} else {
-			$msg[] = sprintf(_MD_AM_PERMRESETNG, $module->getVar('name') . '(' . $perm_name . ')');
+			$msg[] = sprintf(_MD_AM_PERMRESETNG, $module->name . '(' . $perm_name . ')');
 		}
 	}
 }
 
 $backlink = xoops_getenv("HTTP_REFERER");
-if ($module->getVar('hasadmin')) {
+if ($module->hasadmin) {
 	$adminindex = ($redirect_url != "")?$redirect_url:$module->getInfo('adminindex');
 	if ($adminindex) {
-		$backlink = ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . $adminindex;
+		$backlink = ICMS_MODULES_URL . '/' . $module->dirname . '/' . $adminindex;
 	}
 }
 $backlink = $backlink?$backlink:ICMS_URL . '/admin.php';

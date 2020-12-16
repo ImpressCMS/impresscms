@@ -110,24 +110,24 @@ switch ($op) {
 		$icmsAdminTpl->assign("limitarray", $limit_array);
 		foreach (array_keys($comments) as $i) {
 			$poster_uname = $icmsConfig['anonymous'];
-			if ($comments[$i]->getVar('com_uid') > 0) {
-				$poster = & $member_handler->getUser($comments[$i]->getVar('com_uid'));
+			if ($comments[$i]->com_uid > 0) {
+				$poster = & $member_handler->getUser($comments[$i]->com_uid);
 				if (is_object($poster)) {
-					$poster_uname = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $comments[$i]->getVar('com_uid') . '">' . $poster->getVar('uname') . '</a>';
+					$poster_uname = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $comments[$i]->com_uid . '">' . $poster->uname . '</a>';
 				}
 			}
-			$icon = $comments[$i]->getVar('com_icon');
+			$icon = $comments[$i]->com_icon;
 			$icon = empty($icon)
 				?'/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/no_posticon.gif'
 				: ('/images/subject/' . htmlspecialchars($icon, ENT_QUOTES));
 			$icon = '<img src="' . ICMS_URL . $icon . '" alt="" />';
 			$comment[$i]['icon'] = $icon;
-			$comment[$i]['title'] = $comments[$i]->getVar('com_title');
-			$comment[$i]['date'] = formatTimestamp($comments[$i]->getVar('com_created'), 'm');
+			$comment[$i]['title'] = $comments[$i]->com_title;
+			$comment[$i]['date'] = formatTimestamp($comments[$i]->com_created, 'm');
 			$comment[$i]['poster'] = $poster_uname;
-			$comment[$i]['ip'] = icms_conv_nr2local($comments[$i]->getVar('com_ip'));
-			$comment[$i]['modid'] = $module_array[$comments[$i]->getVar('com_modid')];
-			$comment[$i]['status'] = $status_array2[$comments[$i]->getVar('com_status')];
+			$comment[$i]['ip'] = icms_conv_nr2local($comments[$i]->com_ip);
+			$comment[$i]['modid'] = $module_array[$comments[$i]->com_modid];
+			$comment[$i]['status'] = $status_array2[$comments[$i]->com_status];
 			$comment[$i]['id'] = $i;
 			$icmsAdminTpl->assign("commentsarray", $comment);
 		}
@@ -146,12 +146,12 @@ switch ($op) {
 			$comment = & $comment_handler->get($com_id);
 			if (is_object($comment)) {
 				$module_handler = icms::handler('icms_module');
-				$module = & $module_handler->get($comment->getVar('com_modid'));
+				$module = & $module_handler->get($comment->com_modid);
 				$comment_config = $module->getInfo('comments');
-				header('Location: ' . ICMS_MODULES_URL . '/' . $module->getVar('dirname') . '/' . $comment_config['pageName']
-					. '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id')
-					. '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', $comment->getVar('com_exparams')) . '#comment'
-					. $comment->getVar('com_id'));
+				header('Location: ' . ICMS_MODULES_URL . '/' . $module->dirname . '/' . $comment_config['pageName']
+					. '?' . $comment_config['itemName'] . '=' . $comment->com_itemid . '&com_id=' . $comment->com_id
+					. '&com_rootid=' . $comment->com_rootid . '&com_mode=thread&' . str_replace('&amp;', '&', $comment->com_exparams) . '#comment'
+					. $comment->com_id);
 				exit();
 			}
 		}

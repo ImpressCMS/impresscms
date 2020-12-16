@@ -37,8 +37,8 @@ class mod_system_PagesHandler extends icms_data_page_Handler {
 			$icms_module_handler = icms::handler('icms_module');
 			$installed_modules = $icms_module_handler->getObjects();
 			foreach ($installed_modules as $module) {
-				$this->modules_name[$module->getVar('mid')]['name'] = $module->getVar('name');
-				$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
+				$this->modules_name[$module->mid]['name'] = $module->name;
+				$this->modules_name[$module->mid]['dirname'] = $module->dirname;
 			}
 		}
 		$rtn = $this->modules_name;
@@ -60,7 +60,7 @@ class mod_system_PagesHandler extends icms_data_page_Handler {
 	 */
 	public function changeStatus($page_id) {
 		$page = $this->get($page_id);
-		$page->setVar('page_status', !$page->getVar('page_status'));
+		$page->setVar('page_status', !$page->page_status);
 		return $this->insert($page, true);
 	}
 }

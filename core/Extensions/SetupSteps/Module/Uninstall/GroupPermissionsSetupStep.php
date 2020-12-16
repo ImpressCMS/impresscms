@@ -21,7 +21,7 @@ class GroupPermissionsSetupStep implements SetupStepInterface
 		$output->info(_MD_AM_GROUPPERM_DELETE);
 		$output->incrIndent();
 		$gperm_handler = icms::handler('icms_member_groupperm');
-		if (!$gperm_handler->deleteByModule($module->getVar('mid'))) {
+		if (!$gperm_handler->deleteByModule($module->mid)) {
 			$output->error(_MD_AM_GROUPPERM_DELETE_FAIL);
 		} else {
 			$output->success(_MD_AM_GROUPPERM_DELETED);

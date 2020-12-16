@@ -19,13 +19,13 @@ class ViewTemplateSetupStep implements SetupStepInterface
 	 */
 	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
-		$newmid = $module->getVar('mid');
+		$newmid = $module->mid;
 		$templates = $module->getInfo('templates');
 		if ($templates === false) {
 			return true;
 		}
 		$output->info(_MD_AM_TEMPLATES_ADDING);
-		$dirname = $module->getVar('dirname');
+		$dirname = $module->dirname;
 		$handler = icms::handler('icms_view_template_file');
 		$output->incrIndent();
 		foreach ($templates as $tpl) {
@@ -45,7 +45,7 @@ class ViewTemplateSetupStep implements SetupStepInterface
 			$tplfile->setVar('tpl_lastimported', 0);
 			$tplfile->setVar('tpl_type', 'module');
 			if ($tplfile->store()) {
-				$newtplid = $tplfile->getVar('tpl_id');
+				$newtplid = $tplfile->tpl_id;
 				$output->success(_MD_AM_TEMPLATE_INSERTED, $tpl['file'], $newtplid);
 
 				if (Template::template_touch($newtplid)) {

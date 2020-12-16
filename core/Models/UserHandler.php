@@ -94,7 +94,7 @@ class UserHandler
 			"UPDATE %s SET level = '-1', pass = '%s' WHERE uid = '%u'",
 			$this->table,
 						substr(md5(time()), 0, 8),
-						(int) $user->getVar('uid')
+						(int) $user->uid
 		);
 		if (false != $force) {
 			$result = $this->db->queryF($sql);
@@ -260,10 +260,10 @@ class UserHandler
 				$fullname = '';
 				$linkeduser = '';
 
-				$username = $user->getVar('uname');
-				$fullname2 = $user->getVar('name');
+				$username = $user->uname;
+				$fullname2 = $user->name;
 				if (($name) && !empty($fullname2)) {
-					$fullname = $user->getVar('name');
+					$fullname = $user->name;
 				}
 				if (!empty($fullname)) {
 					$linkeduser = $fullname . '[';
@@ -275,7 +275,7 @@ class UserHandler
 				}
 
 				if ($withContact) {
-					$linkeduser .= '<a href="mailto:' . $user->getVar('email') . '">';
+					$linkeduser .= '<a href="mailto:' . $user->email . '">';
 					$linkeduser .= '<img style="vertical-align: middle;" src="' . ICMS_IMAGES_URL
 						. '/icons/' . $icmsConfig["language"] . '/email.gif' . '" alt="'
 						. _US_SEND_MAIL . '" title="' . _US_SEND_MAIL . '"/></a>';
@@ -351,7 +351,7 @@ class UserHandler
 		$users = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($users) as $i) {
-			$ret[$i] = $users[$i]->getVar('uname');
+			$ret[$i] = $users[$i]->uname;
 		}
 		return $ret;
 	}

@@ -99,11 +99,11 @@ class mod_system_Rating extends \ImpressCMS\Core\Models\AbstractExtendedModel {
 	public function getItemValue() {
 		$moduleUrl = ICMS_MODULES_URL . '/' . $this->dirname . '/';
 		$plugin = $this->getModulePlugin();
-		$pluginItemInfo = $plugin->getItemInfo($this->getVar('item'));
+		$pluginItemInfo = $plugin->getItemInfo($this->item);
 		if (!$pluginItemInfo) {
 			return '';
 		}
-		$itemPath = sprintf($pluginItemInfo['url'], $this->getVar('itemid'));
+		$itemPath = sprintf($pluginItemInfo['url'], $this->itemid);
 		$ret = '<a href="' . $moduleUrl . $itemPath . '">' . $pluginItemInfo['caption'] . '</a>';
 		return $ret;
 	}
@@ -113,7 +113,7 @@ class mod_system_Rating extends \ImpressCMS\Core\Models\AbstractExtendedModel {
 	 * @return	int
 	 */
 	public function getRateValue() {
-		return $this->getVar('rate');
+		return $this->rate;
 	}
 
 	/**
@@ -123,7 +123,7 @@ class mod_system_Rating extends \ImpressCMS\Core\Models\AbstractExtendedModel {
 	 * @see	UserHandler::getUserLink
 	 */
 	public function getUnameValue() {
-		return icms_member_user_Handler::getUserLink($this->getVar('uid'));
+		return icms_member_user_Handler::getUserLink($this->uid);
 	}
 
 	/**

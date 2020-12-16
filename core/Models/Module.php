@@ -135,8 +135,8 @@ class Module
 	 * @return void
 	 */
 	public function registerClassPath($isactive = null) {
-		//if ($this->getVar("dirname") == "system") return;
-		$class_path = ICMS_MODULES_PATH . '/' . $this->getVar('dirname') . '/class';
+		//if ($this->dirname == "system") return;
+		$class_path = ICMS_MODULES_PATH . '/' . $this->dirname . '/class';
 
 		// check if class path exists
 		if (!is_dir($class_path)) {
@@ -144,7 +144,7 @@ class Module
 		}
 
 		// check if module is active (only if applicable)
-		if ($isactive !== null && $this->getVar("isactive") !== (int)$isactive) {
+		if ($isactive !== null && $this->isactive != (int)$isactive) {
 			return;
 		}
 
@@ -195,7 +195,7 @@ class Module
 	 * @return  array|string|false	Array of module information.
 	 */
 	public function &getInfo($name = null) {
-		if (!isset($this->modinfo)) {$this->loadInfo($this->getVar('dirname')); }
+		if (!isset($this->modinfo)) {$this->loadInfo($this->dirname); }
 		if (isset($name)) {
 			if (isset($this->modinfo[$name])) {return $this->modinfo[$name]; }
 			$return = false;
@@ -210,7 +210,7 @@ class Module
 	 * @return int dbversion
 	 */
 	public function getDBVersion() {
-		$ret = $this->getVar('dbversion');
+		$ret = $this->dbversion;
 		return $ret;
 	}
 
@@ -220,8 +220,8 @@ class Module
 	 * @return	string $ret or FALSE on fail
 	 */
 	public function mainLink() {
-		if ($this->getVar('hasmain') == 1) {
-			$ret = '<a href="' . ICMS_URL . '/modules/' . $this->getVar('dirname') . '/">' . $this->getVar('name') . '</a>';
+		if ($this->hasmain == 1) {
+			$ret = '<a href="' . ICMS_URL . '/modules/' . $this->dirname . '/">' . $this->name . '</a>';
 			return $ret;
 		}
 		return false;
@@ -247,9 +247,10 @@ class Module
 	 */
 	public function loadAdminMenu() {
 		if ($this->getInfo('adminmenu')
-			&& file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))
+			&& $this->getInfo('adminmenu') != ''
+			&& file_exists(ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $this->getInfo('adminmenu'))
 		) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
+			include_once ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
 			if (isset($headermenu)) {$this->adminheadermenu = & $headermenu; }
 		}
@@ -308,13 +309,13 @@ class Module
 	 * @return  mixed   Search result or False if fail.
 	 */
 	public function search($term = '', $andor = 'AND', $limit = 0, $offset = 0, $userid = 0) {
-		if ($this->getVar('hassearch') != 1) {return false; }
+		if ($this->hassearch != 1) {return false; }
 		$search = & $this->getInfo('search');
-		if ($this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
+		if ($this->hassearch != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
 			return false;
 		}
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $search['file'])) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $search['file'];
+		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $search['file'])) {
+			include_once ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $search['file'];
 		} else {
 			return false;
 		}
@@ -366,7 +367,7 @@ class Module
 		$url = ICMS_MODULES_URL . DIRECTORY_SEPARATOR . $this->dirname . DIRECTORY_SEPARATOR;
 		$rtn = [
 			'link' => $url . (isset($inf['adminindex'])?$inf['adminindex']:''),
-			'title' => $this->getVar('name'),
+			'title' => $this->name,
 			'dir' => $this->dirname,
 			'absolute' => 1,
 			'subs' => []

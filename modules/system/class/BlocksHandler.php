@@ -70,8 +70,8 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 			$this->modules_name[0]['name'] = _NONE;
 			$this->modules_name[0]['dirname'] = '';
 			foreach ($installed_modules as $module) {
-				$this->modules_name[$module->getVar('mid')]['name'] = $module->getVar('name');
-				$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
+				$this->modules_name[$module->mid]['name'] = $module->name;
+				$this->modules_name[$module->mid]['dirname'] = $module->dirname;
 			}
 		}
 
@@ -105,12 +105,12 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 		$criteria->setLimit(1);
 		$criteria->setSort('weight');
 		$criteria->setOrder('DESC');
-		$criteria->add(new icms_db_criteria_Item('side', $blockObj->getVar('side')));
-		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->getVar('weight'), '<'));
+		$criteria->add(new icms_db_criteria_Item('side', $blockObj->side));
+		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->weight, '<'));
 		$sideBlocks = $this->getObjects($criteria);
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1)
-			?$sideBlocks[0]->getVar('weight') - 1
-			: $blockObj->getVar('weight') - 1;
+			?$sideBlocks[0]->weight - 1
+			: $blockObj->weight - 1;
 		if ($weight < 0) {
 			$weight = 0;
 		}
@@ -124,12 +124,12 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 		$criteria->setLimit(1);
 		$criteria->setSort('weight');
 		$criteria->setOrder('ASC');
-		$criteria->add(new icms_db_criteria_Item('side', $blockObj->getVar('side')));
-		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->getVar('weight'), '>'));
+		$criteria->add(new icms_db_criteria_Item('side', $blockObj->side));
+		$criteria->add(new icms_db_criteria_Item('weight', $blockObj->weight, '>'));
 		$sideBlocks = $this->getObjects($criteria);
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1)
-			?$sideBlocks[0]->getVar('weight') + 1
-			: $blockObj->getVar('weight') + 1;
+			?$sideBlocks[0]->weight + 1
+			: $blockObj->weight + 1;
 		$blockObj->setVar('weight', $weight);
 		$this->insert($blockObj, true);
 	}
