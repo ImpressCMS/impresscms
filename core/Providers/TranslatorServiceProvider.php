@@ -21,8 +21,7 @@ use Symfony\Component\Translation\Translator;
  *
  * @package ImpressCMS\Core\Providers
  */
-class TranslatorServiceProvider extends AbstractServiceProvider implements ServiceProviderInterface
-{
+class TranslatorServiceProvider extends AbstractServiceProvider implements ServiceProviderInterface {
 
 	/**
 	 * @inheritdoc
@@ -34,8 +33,7 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	/**
 	 * @inheritDoc
 	 */
-	public function register()
-	{
+	public function register() {
 		if (!file_exists($this->getCacheFilename())) {
 			$this->updateCache();
 		}
@@ -56,8 +54,7 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	 *
 	 * @return string
 	 */
-	protected function getCacheFilename(): string
-	{
+	protected function getCacheFilename(): string {
 		return ICMS_CACHE_PATH . '/translations.php';
 	}
 
@@ -66,8 +63,7 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	 *
 	 * @throws ReflectionException
 	 */
-	protected function updateCache()
-	{
+	protected function updateCache() {
 		$lines = [
 			'<?php',
 			'',
@@ -113,8 +109,7 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	 *
 	 * @return string[]
 	 */
-	protected function getLanguageFolders(): array
-	{
+	protected function getLanguageFolders(): array {
 		$folders = [
 			ICMS_ROOT_PATH . '/language/'
 		];
@@ -135,8 +130,7 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	 *
 	 * @return string
 	 */
-	private function generateResourceLineForCache(SplFileInfo $fileInfo, SplFileInfo $dirInfo): string
-	{
+	private function generateResourceLineForCache(SplFileInfo $fileInfo, SplFileInfo $dirInfo): string {
 		return sprintf(
 			'$translator->addResource(%s, %s, %s, %s);',
 			var_export(
@@ -181,15 +175,9 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	 *
 	 * @throws ReflectionException
 	 */
-	private function generateLoaderLineForCache($translationLoader): string
-	{
+	private function generateLoaderLineForCache($translationLoader): string {
 		$reflection = new ReflectionClass($translationLoader);
-		$shortName = $reflection->getShortName();
-		if (substr($shortName, -strlen('FileLoader')) === 'FileLoader') {
-			$loaderName = '.' . str_replace('FileLoader', '', $reflection->getShortName());
-		} else {
-			$loaderName = str_replace('Loader', '', $reflection->getShortName());
-		}
+		$loaderName = $this->makeLoaderName($reflection);
 		return sprintf(
 			'$translator->addLoader(%s, $container->get(\'\\\\\' .\\%s::class));',
 			var_export(
@@ -207,13 +195,28 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	 *
 	 * @return RecursiveIteratorIterator
 	 */
-	private function createTranslationFileIterator(DirectoryIterator $dirInfo): RecursiveIteratorIterator
-	{
+	private function createTranslationFileIterator(DirectoryIterator $dirInfo): RecursiveIteratorIterator {
 		return new RecursiveIteratorIterator(
 			new RecursiveDirectoryIterator(
 				$dirInfo->getPath(),
 				FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS
 			)
 		);
+	}
+
+	/**
+	 * Makes loader name from class short name
+	 *
+	 * @param ReflectionClass $reflection Current class reflection object
+	 *
+	 * @return string
+	 */
+	private function makeLoaderName(ReflectionClass $reflection): string
+	{
+		$shortName = $reflection->getShortName();
+		if (substr($shortName, -strlen('FileLoader')) === 'FileLoader') {
+			return '.' . str_replace('FileLoader', '', $shortName);
+		}
+		return str_replace('Loader', '', $shortName);
 	}
 }
