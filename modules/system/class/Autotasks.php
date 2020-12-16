@@ -208,13 +208,13 @@ class mod_system_Autotasks extends \ImpressCMS\Core\Models\AbstractExtendedModel
 					return true;
 				} else {
 					// disable this task
-					$this->setVar('sat_enabled', 0);
+					$this->sat_enabled = 0;
 				}
 			}
 			$count--;
-			$this->setVar('sat_repeat', $count);
+			$this->sat_repeat = $count;
 		}
-		$this->setVar('sat_lastruntime', time());
+		$this->sat_lastruntime = time();
 		$this->handler->insert($this, true);
 		return true;
 	}
