@@ -235,7 +235,7 @@ class TemplateFileHandler extends AbstractExtendedHandler {
 	 *
 	 * @param	string		$tplset		template set that's currently in use
 	 * @param	string		$tpl_name	name of the template
-	 * @return	array				array of templates (just one item)
+	 * @return	TemplateFile[]			array of templates (just one item)
 	 */
 	public function getPrefetchedBlock($tplset, $tpl_name) {
 		foreach ($this->_prefetch_cache as $block) {
