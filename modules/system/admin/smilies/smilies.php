@@ -37,7 +37,7 @@
  * @subpackage	Smilies
  * @todo		Extract HTML and CSS to a template
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->mid)) {
 	exit("Access Denied");
 }
 

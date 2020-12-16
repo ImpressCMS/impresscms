@@ -121,6 +121,7 @@ class XoopsInstallWizard {
 	}
 
 	function initLanguage($language) {
+		$language = preg_replace('/[^A-Za-z]+/', '', $language);
 		if (!file_exists("./language/$language/install.php")) {
 			$language = 'english';
 		}

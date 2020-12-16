@@ -84,7 +84,7 @@ class TemplateSetHandler extends AbstractExtendedHandler {
 		$sql = sprintf(
 			'DELETE FROM %s WHERE tplset_name = %s',
 			$this->db->prefix('imgset_tplset_link'),
-			$this->db->quoteString($tplset->getVar('tplset_name'))
+			$this->db->quoteString($tplset->tplset_name)
 		);
 		$this->db->query($sql);
 		return true;

@@ -12,4 +12,4 @@
 define('ICMS_IN_ADMIN', 1);
 
 // include the default language file for the admin interface
-icms_loadLanguageFile(icms::$module->getVar('dirname'), 'admin');
+icms_loadLanguageFile(icms::$module->dirname, 'admin');

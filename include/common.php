@@ -105,7 +105,7 @@ if (isset($xoopsOption['nodebug']) && $xoopsOption['nodebug']) {
 if ($icmsConfigPersona['multi_login']) {
 	if (is_object(icms::$user)) {
 		$online_handler = icms::handler('icms_core_Online');
-		$online_handler->write(icms::$user->getVar('uid'), icms::$user->getVar('uname'),
+		$online_handler->write(icms::$user->uid, icms::$user->uname,
 							   time(), 0, $_SERVER['REMOTE_ADDR']);
 	}
 }

@@ -32,11 +32,11 @@ class mod_system_Pages extends icms_data_page_Object {
 	 * @return	string
 	 */
 	public function getCustomPageStatus() {
-		if ($this->getVar('page_status') == 1) {
-			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=pages&amp;op=status&amp;page_id=' . $this->getVar('page_id')
+		if ($this->page_status == 1) {
+			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=pages&amp;op=status&amp;page_id=' . $this->page_id
 				. '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL . '/actions/button_ok.png" alt="' . _VISIBLE . '"/></a>';
 		} else {
-			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=pages&amp;op=status&amp;page_id=' . $this->getVar('page_id')
+			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=pages&amp;op=status&amp;page_id=' . $this->page_id
 				. '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL . '/actions/button_cancel.png" alt="' . _VISIBLE . '"/></a>';
 		}
 		return $rtn;
@@ -48,7 +48,7 @@ class mod_system_Pages extends icms_data_page_Object {
 	 */
 	public function getCustomPageModuleid() {
 		$modules = $this->handler->getModulesArray();
-		return $modules[$this->getVar('page_moduleid')];
+		return $modules[$this->page_moduleid];
 	}
 
 	/**
@@ -56,7 +56,7 @@ class mod_system_Pages extends icms_data_page_Object {
 	 * @return	string
 	 */
 	public function getAdminViewItemLink($onlyUrl = false) {
-		$rtn = $this->getVar('page_title');
+		$rtn = $this->page_title;
 		return $rtn;
 	}
 
