@@ -38,7 +38,7 @@ function editpage($page_id = 0, $clone = false) {
 		$sform->assign($icmsAdminTpl);
 
 	} else {
-		$pageObj->setVar('page_type', 'C');
+		$pageObj->page_type = 'C';
 		$sform = $pageObj->getForm(_AM_SYSTEM_PAGES_CREATE, 'addpage');
 		$sform->assign($icmsAdminTpl);
 

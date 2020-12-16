@@ -38,7 +38,7 @@ if ($pluginObj) {
 		} else {
 			$icmsTpl->assign('icms_rating_dirname', $module_dirname);
 			$icmsTpl->assign('icms_rating_itemid', $rating_itemid);
-			$icmsTpl->assign('icms_rating_current_page', \icms::$urls['full']);
+			$icmsTpl->assign('icms_rating_current_page', icms::$urls['full']);
 			/*			if (isset($xoTheme) && is_object($xoTheme)) {
 				$xoTheme->addStylesheet(ICMS_URL . '/module.css');
 				} else {
@@ -54,12 +54,12 @@ if ($pluginObj) {
 if (isset($_POST['icms_rating_submit'])) {
 	// The rating form has just been posted. Let's save the info
 	$ratingObj = $icms_rating_handler->create();
-	$ratingObj->setVar('dirname', $module_dirname);
-	$ratingObj->setVar('item', $rating_item);
-	$ratingObj->setVar('itemid', $rating_itemid);
-	$ratingObj->setVar('uid', icms::$user->uid);
-	$ratingObj->setVar('date', time());
-	$ratingObj->setVar('rate', $_POST['icms_rating_value']);
+	$ratingObj->dirname = $module_dirname;
+	$ratingObj->item = $rating_item;
+	$ratingObj->itemid = $rating_itemid;
+	$ratingObj->uid = icms::$user->uid;
+	$ratingObj->date = time();
+	$ratingObj->rate = $_POST['icms_rating_value'];
 	if (!$icms_rating_handler->insert($ratingObj)) {
 		if (icms::$xoopsDB->errno() == 1062) {
 			$message = _CO_ICMS_RATING_DUPLICATE_ENTRY;

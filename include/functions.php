@@ -692,7 +692,7 @@ if (!function_exists('icms_loadLanguageFile')) {
 		if ($module == 'core') {
 			$languagePath = ICMS_ROOT_PATH . '/language/';
 		} else {
-			$languagePath = ICMS_ROOT_PATH . '/modules/' . $module . '/language/';
+			$languagePath = ICMS_MODULES_PATH . '/' . $module . '/language/';
 		}
 		$extraPath = $admin ? 'admin/' : '';
 		$filename = $languagePath . $icmsConfig['language'] . '/' . $extraPath . $file . '.php';
