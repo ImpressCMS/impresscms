@@ -12,6 +12,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 use ReflectionException;
+use SplFileInfo;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\Translator;
 
@@ -81,21 +82,7 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 		];
 
 		foreach ($this->getContainer()->get('translation.loader') as $translationLoader) {
-			$reflection = new ReflectionClass($translationLoader);
-			$shortName = $reflection->getShortName();
-			if (substr($shortName, -strlen('FileLoader')) === 'FileLoader') {
-				$loaderName = '.' . str_replace('FileLoader', '', $reflection->getShortName());
-			} else {
-				$loaderName = str_replace('Loader', '', $reflection->getShortName());
-			}
-			$lines[] = sprintf(
-				'$translator->addLoader(%s, $container->get(\'\\\\\' .\\%s::class));',
-				var_export(
-					strtolower($loaderName),
-					true
-				),
-				$reflection->getName()
-			);
+			$lines[] = $this->generateLoaderLineForCache($translationLoader);
 		}
 
 		$lines[] = '';
@@ -105,49 +92,11 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 				if ($dirInfo->isDot() || !$dirInfo->isDir()) {
 					continue;
 				}
-				foreach (
-					new RecursiveIteratorIterator(
-						new RecursiveDirectoryIterator($dirInfo->getPath(), FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS)
-					)
-					as $fileInfo
-				) {
+				foreach ($this->createTranslationFileIterator($dirInfo) as $fileInfo) {
 					if ($fileInfo->isDir()) {
 						continue;
 					}
-					$lines[] = sprintf(
-						'$translator->addResource(%s, %s, %s, %s);',
-						var_export(
-							'.' . strtolower(
-								$fileInfo->getExtension()
-							),
-							true
-						),
-						var_export(
-							$fileInfo->getPath() . '/' .
-							$fileInfo->getFileName(),
-							true
-						),
-						var_export(
-							$dirInfo->getFilename(),
-							true
-						),
-						var_export(
-							ltrim(
-							str_replace(
-								['/', '\\'],
-								'.',
-								mb_substr(
-									$fileInfo->getPath(),
-									mb_strlen(
-										$dirInfo->getPath() . '/' . $dirInfo->getFilename()
-									)
-								). '/' . $fileInfo->getBaseName('.' . $fileInfo->getExtension())
-							),
-								'.'
-							),
-							true
-						)
-					);
+					$lines[] = $this->generateResourceLineForCache($fileInfo, $dirInfo);
 				}
 			}
 		}
@@ -164,7 +113,7 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	 *
 	 * @return string[]
 	 */
-	protected function getLanguageFolders()
+	protected function getLanguageFolders(): array
 	{
 		$folders = [
 			ICMS_ROOT_PATH . '/language/'
@@ -176,5 +125,95 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 			}
 		}
 		return $folders;
+	}
+
+	/**
+	 * Generates resource line for cache
+	 *
+	 * @param SplFileInfo $fileInfo File info object for language file
+	 * @param SplFileInfo $dirInfo Dir info for language file
+	 *
+	 * @return string
+	 */
+	private function generateResourceLineForCache(SplFileInfo $fileInfo, SplFileInfo $dirInfo): string
+	{
+		return sprintf(
+			'$translator->addResource(%s, %s, %s, %s);',
+			var_export(
+				'.' . strtolower(
+					$fileInfo->getExtension()
+				),
+				true
+			),
+			var_export(
+				$fileInfo->getPath() . '/' . $fileInfo->getFileName(),
+				true
+			),
+			var_export(
+				$dirInfo->getFilename(),
+				true
+			),
+			var_export(
+				ltrim(
+					str_replace(
+						['/', '\\'],
+						'.',
+						mb_substr(
+							$fileInfo->getPath(),
+							mb_strlen(
+								$dirInfo->getPath() . '/' . $dirInfo->getFilename()
+							)
+						). '/' . $fileInfo->getBaseName('.' . $fileInfo->getExtension())
+					),
+					'.'
+				),
+				true
+			)
+		);
+	}
+
+	/**
+	 * Generates loader line for cache
+	 *
+	 * @param object $translationLoader TranslationLoader
+	 *
+	 * @return string
+	 *
+	 * @throws ReflectionException
+	 */
+	private function generateLoaderLineForCache($translationLoader): string
+	{
+		$reflection = new ReflectionClass($translationLoader);
+		$shortName = $reflection->getShortName();
+		if (substr($shortName, -strlen('FileLoader')) === 'FileLoader') {
+			$loaderName = '.' . str_replace('FileLoader', '', $reflection->getShortName());
+		} else {
+			$loaderName = str_replace('Loader', '', $reflection->getShortName());
+		}
+		return sprintf(
+			'$translator->addLoader(%s, $container->get(\'\\\\\' .\\%s::class));',
+			var_export(
+				strtolower($loaderName),
+				true
+			),
+			$reflection->getName()
+		);
+	}
+
+	/**
+	 * Creates translation file iterator
+	 *
+	 * @param DirectoryIterator $dirInfo Current direct iterator
+	 *
+	 * @return RecursiveIteratorIterator
+	 */
+	private function createTranslationFileIterator(DirectoryIterator $dirInfo): RecursiveIteratorIterator
+	{
+		return new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator(
+				$dirInfo->getPath(),
+				FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::SKIP_DOTS
+			)
+		);
 	}
 }
