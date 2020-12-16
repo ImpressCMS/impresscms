@@ -631,9 +631,9 @@ function imanager_addfile() {
 				$image->image_mimetype = $uploader->getMediaType();
 				$image->image_created = time();
 				$image_display = empty($image_display)?0:1;
-				$image->setVar('image_display', $image_display);
-				$image->setVar('image_weight', $image_weight);
-				$image->setVar('imgcat_id', $imgcat_id);
+				$image->image_display = $image_display;
+				$image->image_weight = $image_weight;
+				$image->imgcat_id = $imgcat_id;
 				if ($imagecategory->imgcat_storetype == 'db') {
 					$fp = @fopen($uploader->getSavedDestination(), 'rb');
 					$fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
@@ -687,9 +687,9 @@ function imanager_updateimage() {
 				continue;
 			}
 			$image_display[$i] = empty($image_display[$i])?0:1;
-			$image->setVar('image_display', $image_display[$i]);
-			$image->setVar('image_weight', $image_weight[$i]);
-			$image->setVar('image_nicename', $image_nicename[$i]);
+			$image->image_display = $image_display[$i];
+			$image->image_weight = $image_weight[$i];
+			$image->image_nicename = $image_nicename[$i];
 			if ($image->imgcat_id != $imgcat_id[$i]) {
 				$changedCat = true;
 				$oldcat = (int) $image->imgcat_id;
@@ -798,13 +798,13 @@ function imanager_clone() {
 
 	$imgname = 'img' . icms_random_str(12) . '.' . $ext;
 	$newimg = & $image_handler->create();
-	$newimg->setVar('image_name', $imgname);
-	$newimg->setVar('image_nicename', $_POST['image_nicename']);
-	$newimg->setVar('image_mimetype', $image->image_mimetype);
-	$newimg->setVar('image_created', time());
-	$newimg->setVar('image_display', $_POST['image_display']);
-	$newimg->setVar('image_weight', $_POST['image_weight']);
-	$newimg->setVar('imgcat_id', $imgcat_id);
+	$newimg->image_name = $imgname;
+	$newimg->image_nicename = $_POST['image_nicename'];
+	$newimg->image_mimetype = $image->image_mimetype;
+	$newimg->image_created = time();
+	$newimg->image_display = $_POST['image_display'];
+	$newimg->image_weight = $_POST['image_weight'];
+	$newimg->imgcat_id = $imgcat_id;
 	if ($imagecategory->imgcat_storetype == 'db') {
 		$src = ICMS_MODULES_URL . "/system/admin/images/preview.php?file=" . $image->image_name . '&resize=0';
 		$img = WideImage::load($image->image_body)->saveToFile(ICMS_IMANAGER_FOLDER_PATH . '/' . $image->image_name);

@@ -11,6 +11,9 @@
  */
 
 /* This may be loaded by other modules - and not just through the cpanel */
+
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+
 icms_loadLanguageFile('system', 'blocks', true);
 
 /**
@@ -26,7 +29,7 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 	private $modules_name;
 
 	public function __construct(& $db) {
-		\ImpressCMS\Core\Models\AbstractExtendedHandler::__construct($db, 'blocks', 'bid', 'title', 'content', 'system');
+		AbstractExtendedHandler::__construct($db, 'blocks', 'bid', 'title', 'content', 'system');
 		$this->table = $this->db->prefix('newblocks');
 
 		$this->addPermission('block_read', _CO_SYSTEM_BLOCKS_BLOCKRIGHTS, _CO_SYSTEM_BLOCKS_BLOCKRIGHTS_DSC);
@@ -130,7 +133,7 @@ class mod_system_BlocksHandler extends icms_view_block_Handler {
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1)
 			?$sideBlocks[0]->weight + 1
 			: $blockObj->weight + 1;
-		$blockObj->setVar('weight', $weight);
+		$blockObj->weight = $weight;
 		$this->insert($blockObj, true);
 	}
 

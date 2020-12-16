@@ -180,7 +180,7 @@ switch ($op) {
 			// if the deleted comment is a root comment, need to change root id to own id
 			if (false != $comment->isRoot()) {
 				$new_rootid = $child_comments[$i]->com_id;
-				$child_comments[$i]->setVar('com_rootid', $child_comments[$i]->com_id);
+				$child_comments[$i]->com_rootid = $child_comments[$i]->com_id;
 				if (!$comment_handler->insert($child_comments[$i])) {
 					$errs[] = sprintf(_CM_COULDNOTCHANGEPIDTOID, icms_conv_nr2local($com_id), icms_conv_nr2local($new_pid), icms_conv_nr2local($new_rootid));
 				} else {

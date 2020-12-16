@@ -40,9 +40,9 @@ class ConfigSetupStep implements SetupStepInterface
 				 * @var ConfigItem $confobj
 				 */
 				$confobj = &$config_handler->createConfig();
-				$confobj->setVar('conf_modid', $module->mid);
-				$confobj->setVar('conf_catid', 0);
-				$confobj->setVar('conf_name', $config['name']);
+				$confobj->conf_modid = $module->mid;
+				$confobj->conf_catid = 0;
+				$confobj->conf_name = $config['name'];
 				$confobj->setVar('conf_title', $config['title'], true);
 				$confobj->setVar('conf_desc', $config['description'], true);
 				$confobj->conf_formtype = $config['formtype'];

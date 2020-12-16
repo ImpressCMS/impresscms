@@ -6,6 +6,7 @@ namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Update;
 
 use Exception;
 use icms;
+use ImpressCMS\Core\Database\DatabaseConnection;
 use ImpressCMS\Core\Extensions\SetupSteps\Module\Install\BlockSetupStep as InstallBlockSetupStep;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Models\Block;
@@ -35,7 +36,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 		$tplfile_handler = &icms::handler('icms_view_template_file');
 
 		/**
-		 * @var \ImpressCMS\Core\Database\DatabaseConnection $db
+		 * @var DatabaseConnection $db
 		 */
 		$db = icms::getInstance()->get('db');
 
@@ -179,7 +180,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 							if ($template != '') {
 								$tplfile = &$tplfile_handler->create();
 								$tplfile->tpl_module = $module->dirname;
-								$tplfile->setVar('tpl_refid', (int)$newbid);
+								$tplfile->tpl_refid = (int)$newbid;
 								$tplfile->setVar('tpl_source', $content, true);
 								$tplfile->tpl_tplset = 'default';
 								$tplfile->setVar('tpl_file', $block['template'], true);

@@ -6,6 +6,10 @@
  * @license	LICENSE.txt
  */
 
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Member\UserModel;
+use ImpressCMS\Core\Models\User;
+
 /**
  * Authentication provisioning class. This class is responsible to
  * provide synchronisation method to the user Database
@@ -20,7 +24,7 @@ class icms_auth_method_ldap_Provisioning {
 	/**
 	 * Gets instance
 	 * @param   object $auth_instance
-	 * @return  \icms_auth_method_ldap_Provisioning
+	 * @return  icms_auth_method_ldap_Provisioning
 	 */
 	static public function &getInstance(&$auth_instance) {
 		static $provis_instance;
@@ -32,7 +36,7 @@ class icms_auth_method_ldap_Provisioning {
 
 	/**
 	 * Authentication Service constructor
-	 * @param \icms_auth_method_ldap_Provisioning $auth_instance icms_auth_method_ldap_Provisioning instance
+	 * @param icms_auth_method_ldap_Provisioning $auth_instance icms_auth_method_ldap_Provisioning instance
 	 */
 	public function __construct(&$auth_instance) {
 		$this->_auth_instance = &$auth_instance;
@@ -49,11 +53,11 @@ class icms_auth_method_ldap_Provisioning {
 	/**
 	 * Return a User Object
 	 * @param   string $uname Username of the user
-	 * @return  \ImpressCMS\Core\Member\UserModel|false \ImpressCMS\Core\Member\UserModel or false if failed
+	 * @return  UserModel|false \ImpressCMS\Core\Member\UserModel or false if failed
 	 */
 	public function geticms_member_user_Object($uname) {
-		$member_handler = \icms::handler('icms_member');
-		$criteria = new \ImpressCMS\Core\Database\Criteria\CriteriaItem('uname', $uname);
+		$member_handler = icms::handler('icms_member');
+		$criteria = new CriteriaItem('uname', $uname);
 		$getuser = $member_handler->getUsers($criteria);
 		if (count($getuser) == 1) {
 			return $getuser[0];
@@ -67,7 +71,7 @@ class icms_auth_method_ldap_Provisioning {
 	 * @param array $datas Some Data
 	 * @param string $uname Username of the user
 	 * @param string $pwd Password of the user
-	 * @return \ImpressCMS\Core\Member\UserModel \ImpressCMS\Core\Member\UserModel
+	 * @return UserModel \ImpressCMS\Core\Member\UserModel
 	 */
 	public function sync($datas, $uname, $pwd = null) {
 		$icmsUser = $this->geticms_member_user_Object($uname);
@@ -96,7 +100,7 @@ class icms_auth_method_ldap_Provisioning {
 	 */
 	public function add($datas, $uname, $pwd = null) {
 		$ret = false;
-		$member_handler = \icms::handler('icms_member');
+		$member_handler = icms::handler('icms_member');
 		// Create ImpressCMS Database User
 		$newuser = $member_handler->createUser();
 		$newuser->uname = $uname;
@@ -130,16 +134,16 @@ class icms_auth_method_ldap_Provisioning {
 
 	/**
 	 * Modify user information
-	 * @param \ImpressCMS\Core\Models\User $icmsUser reference
+	 * @param User $icmsUser reference
 	 * @param array $datas Some Data
 	 * @param string $uname Username of the user
 	 * @param string $pwd Password of the user
-	 * @return \ImpressCMS\Core\Models\User
+	 * @return User
 	 */
 	public function change(&$icmsUser, $datas, $uname, $pwd = null) {
 		$ret = false;
-		$member_handler = \icms::handler('icms_member');
-		$icmsUser->setVar('pass', md5(stripslashes($pwd)));
+		$member_handler = icms::handler('icms_member');
+		$icmsUser->pass = md5(stripslashes($pwd));
 		$tab_mapping = explode('|', $this->ldap_field_mapping);
 		foreach ($tab_mapping as $mapping) {
 			$fields = explode('=', trim($mapping));

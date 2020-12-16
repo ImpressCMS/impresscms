@@ -91,7 +91,7 @@ function editblock($bid = 0, $clone = false) {
 	} else {
 		if ($clone) {
 			if ($blockObj->block_type != 'C') {
-				$blockObj->setVar('block_type', 'K');
+				$blockObj->block_type = 'K';
 				$blockObj->hideFieldFromForm('content');
 				$blockObj->hideFieldFromForm('c_type');
 			}

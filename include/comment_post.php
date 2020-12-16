@@ -178,7 +178,7 @@ switch ($op) {
 					|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
 						if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
 							$old_com_status = $comment->com_status;
-							$comment->setVar('com_status', $com_status);
+							$comment->com_status = $com_status;
 							// if changing status from pending state, increment user post
 							if (XOOPS_COMMENT_PENDING == $old_com_status) {
 								$add_userpost = true;

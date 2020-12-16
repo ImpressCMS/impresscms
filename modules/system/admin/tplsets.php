@@ -313,8 +313,8 @@ switch ($op) {
 			$err[] = sprintf(_MD_TPLSET_TEMPLATE_NOTEXIST, $id);
 		} else {
 			if ($tplfile->tpl_tplset != 'default') {
-				$tplfile->setVar('tpl_source', $html);
-				$tplfile->setVar('tpl_lastmodified', time());
+				$tplfile->tpl_source = $html;
+				$tplfile->tpl_lastmodified = time();
 
 				if (!$tpltpl_handler->insert($tplfile)) {
 					$err[] = sprintf(_MD_TPLSET_INSERT_FAILED, $tplfile->tpl_file);
@@ -566,7 +566,7 @@ switch ($op) {
 		} else {
 			echo _MD_TPLSET_FILE_NOTEXIST;
 		}
-		echo '<div style="text-align:center;">[<a href="#" onclick="javascript:window.close();">' . _CLOSE . '</a>]</div></body></html>';
+		echo '<div style="text-align:center;">[<a href="#" onclick="window.close();">' . _CLOSE . '</a>]</div></body></html>';
 		break;
 
 	case 'downloadtpl':

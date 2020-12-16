@@ -500,7 +500,7 @@ class ModuleHandler
 	{
 		$module = $this->get($mid);
 		Template::template_clear_module_cache($module->mid);
-		$module->setVar('isactive', 1);
+		$module->isactive = 1;
 		if (!$module->store()) {
 			$output->fatal(_MD_AM_FAILACT . ' ' . _MD_AM_ERRORSC);
 			$output->msg(
@@ -552,7 +552,7 @@ class ModuleHandler
 
 		$module = $this->get($mid);
 		Template::template_clear_module_cache($mid);
-		$module->setVar('isactive', 0);
+		$module->isactive = 0;
 		if ($module->dirname == "system") {
 			$output->fatal(
 				_MD_AM_FAILDEACT
