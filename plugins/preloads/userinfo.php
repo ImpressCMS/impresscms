@@ -26,7 +26,7 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 
 			$userSection = \icms::getInstance()
 				->get('session')
-				->getSegment(\icms_member_user_Object::class);
+				->getSegment(\ImpressCMS\Core\Models\User::class);
 			foreach (icms::$user->vars as $key => $value) {
 				$user[$key] = $value;
 			}
@@ -45,7 +45,7 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 			}
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('read_msg', 0));
-			$criteria->add(new icms_db_criteria_Item('to_userid', icms::$user->getVar('uid')));
+			$criteria->add(new icms_db_criteria_Item('to_userid', icms::$user->uid));
 			$user['new_messages'] = $pm_handler->getCount($criteria);
 
 			$xoopsTpl->assign('user', $user);

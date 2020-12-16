@@ -17,7 +17,7 @@ icms_loadLanguageFile("system", "userrank", true);
  * @package		System
  * @subpackage	Users
  */
-class mod_system_Userrank extends icms_ipf_Object {
+class mod_system_Userrank extends \ImpressCMS\Core\Models\AbstractExtendedModel {
 
 	/** */
 	public $content = false;
@@ -43,7 +43,7 @@ class mod_system_Userrank extends icms_ipf_Object {
 
 	/**
 	 * (non-PHPdoc)
-	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
+	 * @see htdocs/libraries/icms/ipf/\ImpressCMS\Core\IPF\AbstractModel::getVar()
 	 */
 	public function getVar($key, $format = "s") {
 		if ($format == "s" && in_array($key, array())) {
@@ -66,7 +66,7 @@ class mod_system_Userrank extends icms_ipf_Object {
 	 * @return	str
 	 */
 	public function getRankPicture() {
-		$ret = '<img src="' . $this->handler->getImageUrl() . $this->getVar("rank_image") . '" />';
+		$ret = '<img src="' . $this->handler->getImageUrl() . $this->rank_image . '" />';
 		return $ret;
 	}
 
@@ -75,7 +75,7 @@ class mod_system_Userrank extends icms_ipf_Object {
 	 * @return	str
 	 */
 	public function getRankTitle() {
-		$ret = $this->getVar("rank_title");
+		$ret = $this->rank_title;
 		return $ret;
 	}
 }

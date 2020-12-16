@@ -3,7 +3,7 @@
  * CodeMirror adapter for ImpressCMS
  *
  * @copyright	ImpressCMS http://www.impresscms.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license		https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  * @author		MekDrop <mekdrop@gmail.com>
  * @since		1.2
  * @package		sourceeditor
@@ -123,13 +123,13 @@ class IcmsSourceEditorCodeMirror extends icms_form_elements_Textarea {
 		  	width: "' . $this->_width . '",
     		height: "' . $this->_height . '",
     		parserfile: [' . implode(',', $js) . '],
-    		stylesheet: [' . implode(',', $css) . '],
-    		path: "' . ICMS_URL . $this->rootpath . '/editor/js/",
+    		[' . implode(',', $css) . '],
+    		"' . ICMS_URL . $this->rootpath . '/editor/js/",
 			lineNumbers: true,
 			continuousScanning: 500,
 			textWrapping: false,
 			readOnly: ' . $readonly . '
-  		});
+  		})
 		</script>
 		<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . $this->rootpath . '/css/editor.css" />';
 

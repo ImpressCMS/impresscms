@@ -2,12 +2,15 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use icms_properties_Handler;
+use PHPUnit\Framework\TestCase;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class ObjectTest extends \PHPUnit_Framework_TestCase {
+class ObjectTest extends TestCase {
 
     /**
      * Tests availability
@@ -15,7 +18,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
     public function testAvailability() {
         $this->assertTrue(class_exists('icms_core_Object', true), "icms_core_Object class doesn't exist");
         $mock = $this->getMockForAbstractClass('icms_core_Object');
-        $this->assertTrue($mock instanceof \icms_properties_Handler, "icms_core_Object doesn't extended from icms_properties_Handler");
+        $this->assertInstanceOf(icms_properties_Handler::class, $mock, "icms_core_Object doesn't extended from icms_properties_Handler");
     }
 
     /**

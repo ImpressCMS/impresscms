@@ -6,7 +6,7 @@
  * @todo: plugins for external applications, including but not limited: sending massive emails/PMs, membership edit
  *
  * @copyright	The XOOPS project http://www.xoops.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license		https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		Xoops 1.00
  * @package core
@@ -45,10 +45,6 @@ $items_match = array(
 				"uname"		=> _MA_USER_UNAME,
 				"name"		=> _MA_USER_REALNAME,
 				"email"		=> _MA_USER_EMAIL,
-				"user_icq"	=> _MA_USER_ICQ,
-				"user_aim"	=> _MA_USER_AIM,
-				"user_yim"	=> _MA_USER_YIM,
-				"user_msnm"	=> _MA_USER_MSNM
 );
 
 $items_range = array(
@@ -265,15 +261,15 @@ if (empty($_POST["user_submit"])) {
 
 		if (!empty($_POST['rank'])) {
 			$rank_obj = $rank_handler->get($_POST['rank']);
-			if ($rank_obj->getVar("rank_special")) {
+			if ($rank_obj->rank_special) {
 				$criteria->add(new icms_db_criteria_Item("rank", (int) ($_POST['rank'])));
 			} else {
-				if ($rank_obj->getVar("rank_min")) {
-					$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->getVar("rank_min"), '>='));
+				if ($rank_obj->rank_min) {
+					$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->rank_min, '>='));
 				}
 
-				if ($rank_obj->getVar("rank_max")) {
-					$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->getVar("rank_max"), '<='));
+				if ($rank_obj->rank_max) {
+					$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->rank_max, '<='));
 				}
 			}
 		}
@@ -386,7 +382,7 @@ if (empty($_POST["user_submit"])) {
 		$hiddenform .= "</form>";
 
 		echo "<div>" . $hiddenform;
-		echo "<a href='#' onclick='javascript:document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
+		echo "<a href='#' onclick='document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
 		echo "</div>";
 	} elseif ($start < $total) {
 		if (!empty($total)) {
@@ -416,22 +412,22 @@ if (empty($_POST["user_submit"])) {
 					$class = 'odd';
 				}
 				$ucount++;
-				$fuser_name = $foundusers[$j]->getVar("name")?$foundusers[$j]->getVar("name"):"&nbsp;";
+				$fuser_name = $foundusers[$j]->name?$foundusers[$j]->name:"&nbsp;";
 				echo "<tr class='$class'>
 				<td align='center'>";
 				if (!empty($_POST["multiple"])) {
-					echo "<input type='checkbox' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar("uid") . "' />";
-					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar("uname") . "' />";
+					echo "<input type='checkbox' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->uid . "' />";
+					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->uname . "' />";
 				} else {
-					echo "<input type='radio' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar("uid") . "' />";
-					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar("uname") . "' />";
+					echo "<input type='radio' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->uid . "' />";
+					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->uname . "' />";
 				}
 				echo "</td>
-				<td><a href='".ICMS_URL . "/userinfo.php?uid=" . $foundusers[$j]->getVar("uid") . "' target='_blank'>" . $foundusers[$j]->getVar("uname") . "</a></td>
+				<td><a href='".ICMS_URL . "/userinfo.php?uid=" . $foundusers[$j]->uid . "' target='_blank'>" . $foundusers[$j]->uname . "</a></td>
 				<td>".$fuser_name . "</td>
-				<td align='center'>".($foundusers[$j]->getVar("user_regdate")? date(_SHORTDATESTRING, $foundusers[$j]->getVar("user_regdate")):"") . "</td>
-				<td align='center'>".($foundusers[$j]->getVar("last_login")? date(_MEDIUMDATESTRING, $foundusers[$j]->getVar("last_login")):"") . "</td>
-				<td align='center'>".$foundusers[$j]->getVar("posts") . "</td>";
+				<td align='center'>".($foundusers[$j]->user_regdate? date(_SHORTDATESTRING, $foundusers[$j]->user_regdate):"") . "</td>
+				<td align='center'>".($foundusers[$j]->last_login? date(_MEDIUMDATESTRING, $foundusers[$j]->last_login):"") . "</td>
+				<td align='center'>".$foundusers[$j]->posts . "</td>";
 				echo "</tr>\n";
 			}
 			echo "<tr class='foot'><td colspan='6'>";
@@ -470,7 +466,7 @@ if (empty($_POST["user_submit"])) {
 		if (!isset($total) || ($totalpages = ceil($total / $limit)) > 1) {
 			$prev = $start - $limit;
 			if ($start - $limit >= 0) {
-				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _MA_USER_PREVIOUS . "</a>&nbsp;\n";
+				$hiddenform .= "<a href='#0' onclick='document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _MA_USER_PREVIOUS . "</a>&nbsp;\n";
 			}
 			$counter = 1;
 			$currentpage = ($start + $limit) / $limit;
@@ -481,7 +477,7 @@ if (empty($_POST["user_submit"])) {
 					if ($counter == $currentpage) {
 						$hiddenform .= "<strong>" . $counter . "</strong> ";
 					} elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1) {
-						$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+						$hiddenform .= "<a href='#" . $counter . "' onclick='document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 						if ($counter == 1 && $currentpage > 5) {
 							$hiddenform .= "... ";
 						}
@@ -498,7 +494,7 @@ if (empty($_POST["user_submit"])) {
 						if ($counter == $totalpages && $currentpage < $totalpages - 4) {
 							$hiddenform .= "... ";
 						}
-						$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+						$hiddenform .= "<a href='#" . $counter . "' onclick='document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 						if ($counter == 1 && $currentpage > 5) {
 							$hiddenform .= "... ";
 						}
@@ -509,7 +505,7 @@ if (empty($_POST["user_submit"])) {
 
 			$next = $start + $limit;
 			if ((isset($total) && $total > $next) || (!isset($total) && count($foundusers) >= $limit)) {
-				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _MA_USER_NEXT . "</a>\n";
+				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _MA_USER_NEXT . "</a>\n";
 			}
 		}
 		$hiddenform .= "</form>";
@@ -518,7 +514,7 @@ if (empty($_POST["user_submit"])) {
 		if (isset($total)) {
 			echo "<br />" . sprintf(_MA_USER_USERSFOUND, $total) . "&nbsp;";
 		}
-		echo "<a href='#' onclick='javascript:document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
+		echo "<a href='#' onclick='document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
 		echo "</div>";
 	}
 }

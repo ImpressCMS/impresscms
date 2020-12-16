@@ -211,8 +211,8 @@ switch ($action) {
 				$results = & $module->search($queries, $andor, $search_limiter, 0);
 				$xoopsTpl->assign("showing", sprintf(_SR_SHOWING, 1, $max_results_per_page));
 				$count = count($results);
-				$modname = $module->getVar('name');
-				$moddir = $module->getVar('dirname');
+				$modname = $module->name;
+				$moddir = $module->dirname;
 				$all_results_counts[$modname] = $count;
 
 				if (!is_array($results) || $count == 0) {
@@ -238,7 +238,7 @@ switch ($action) {
 						if ($icmsConfigSearch['search_user_date']) {
 							$results[$i]['uid'] = @ (int) $results[$i]['uid'];
 							if (!empty($results[$i]['uid'])) {
-								$uname = icms_member_user_Object::getUnameFromId($results[$i]['uid']);
+								$uname = \ImpressCMS\Core\Models\User::getUnameFromId($results[$i]['uid']);
 								$results[$i]['processed_user_name'] = $uname;
 								$results[$i]['processed_user_url'] = ICMS_URL . "/userinfo.php?uid=" . $results[$i]['uid'];
 							}
@@ -281,8 +281,8 @@ switch ($action) {
 		$results = & $module->search($queries, $andor, 0, $start, $uid);
 		//$xoopsTpl->assign("showing", sprintf(_SR_SHOWING, $start + 1, $start + 20));
 		$count = count($results);
-		$modname = $module->getVar('name');
-		$moddir = $module->getVar('dirname');
+		$modname = $module->name;
+		$moddir = $module->dirname;
 		$all_results_counts[$modname] = $count;
 		if (is_array($results) && $count > 0) {
 			(($count - $start) > $max_results_per_page)
@@ -302,9 +302,9 @@ switch ($action) {
 				if ($icmsConfigSearch['search_user_date']) {
 					$results[$i]['uid'] = @ (int) $results[$i]['uid'];
 					if (!empty($results[$i]['uid'])) {
-						$uname = icms_member_user_Object::getUnameFromId($results[$i]['uid']);
+						$uname = \ImpressCMS\Core\Models\User::getUnameFromId($results[$i]['uid']);
 						$results[$i]['processed_user_name'] = $uname;
-						$results[$i]['processed_user_url'] = ICMS_URL . "/userinfo.php?uid=" . $results[$i]['uid'];
+						$results[$i]['processed_user_url'] = ICMS_URL . '/userinfo.php?uid=' . $results[$i]['uid'];
 					}
 					$results[$i]['processed_time'] = !empty($results[$i]['time'])?" (" . formatTimestamp((int) $results[$i]['time']) . ")":"";
 				}

@@ -45,7 +45,7 @@ if (!is_object($icmsModule)) {
 }
 icms_loadLanguageFile('core', 'comment');
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
-if ('system' == $icmsModule->getVar('dirname')) {
+if ('system' == $icmsModule->dirname) {
 	$com_id = isset($_POST['com_id'])?(int) $_POST['com_id']:0;
 	if (empty($com_id)) {
 		exit();
@@ -53,12 +53,12 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	$comment_handler = icms::handler('icms_data_comment');
 	$comment = & $comment_handler->get($com_id);
 	$module_handler = icms::handler('icms_module');
-	$module = & $module_handler->get($comment->getVar('com_modid'));
+	$module = & $module_handler->get($comment->com_modid);
 	$comment_config = $module->getInfo('comments');
-	$com_modid = $module->getVar('mid');
+	$com_modid = $module->mid;
 	$redirect_page = ICMS_URL
 	. '/modules/system/admin.php?fct=comments&amp;com_modid=' . $com_modid . '&amp;com_itemid';
-	$moddir = $module->getVar('dirname');
+	$moddir = $module->dirname;
 	unset($comment);
 } else {
 	$com_id = isset($_POST['com_id'])?(int) $_POST['com_id']:0;
@@ -66,7 +66,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 		exit();
 	}
 	$comment_config = $icmsModule->getInfo('comments');
-	$com_modid = $icmsModule->getVar('mid');
+	$com_modid = $icmsModule->mid;
 	$redirect_page = $comment_config['pageName'] . '?';
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 		$extra_params = '';
@@ -79,7 +79,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	}
 	$redirect_page .= $comment_config['itemName'];
 	$comment_url = $redirect_page;
-	$moddir = $icmsModule->getVar('dirname');
+	$moddir = $icmsModule->dirname;
 }
 $op = '';
 if (!empty($_POST)) {
@@ -137,7 +137,7 @@ switch ($op) {
 			$p_comment = icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'input');
 			$noname = isset($noname)?(int) $noname:0;
 			$com_text = icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($_POST['com_text']));
-			if ($icmsModule->getVar('dirname') != 'system') {
+			if ($icmsModule->dirname != 'system') {
 				include ICMS_ROOT_PATH . '/header.php';
 				//themecenterposts($com_title, $p_comment);
 				echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $com_title . '</td></tr><tr><td><br />' . $p_comment . '<br /></td></tr></table>';
@@ -177,8 +177,8 @@ switch ($op) {
 					if (icms::$user->isAdmin($com_modid)
 					|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, icms::$user->getGroups())) {
 						if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
-							$old_com_status = $comment->getVar('com_status');
-							$comment->com_status = $com_status;
+							$old_com_status = $comment->com_status;
+							$comment->setVar('com_status', $com_status);
 							// if changing status from pending state, increment user post
 							if (XOOPS_COMMENT_PENDING == $old_com_status) {
 								$add_userpost = true;
@@ -198,7 +198,7 @@ switch ($op) {
 						}
 					} else {
 						$dohtml = 0;
-						if ($comment->getVar('com_uid') != icms::$user->getVar('uid')) {
+						if ($comment->com_uid != icms::$user->uid) {
 							$accesserror = true;
 						}
 					}
@@ -250,7 +250,7 @@ switch ($op) {
 				if (!empty($icmsModuleConfig['com_anonpost']) && !empty($noname)) {
 					$uid = 0;
 				} else {
-					$uid = icms::$user->getVar('uid');
+					$uid = icms::$user->uid;
 				}
 			} else {
 				$dohtml = 0;
@@ -300,7 +300,7 @@ switch ($op) {
 			$comment->com_exparams = $extra_params;
 		}
 		if (false != $comment_handler->insert($comment)) {
-			$newcid = $comment->getVar('com_id');
+			$newcid = $comment->com_id;
 
 			// set own id as root id if this is a top comment
 			if ($com_rootid == 0) {
@@ -356,17 +356,17 @@ switch ($op) {
 					$criteria->add(new icms_db_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 					$comment_count = $comment_handler->getCount($criteria);
 					$func = $comment_config['callback']['update'];
-					call_user_func_array($func, array($com_itemid, $comment_count, $comment->getVar('com_id')));
+					call_user_func_array($func, array($com_itemid, $comment_count, $comment->com_id));
 				}
 			}
 
 			// increment user post if needed
-			$uid = $comment->getVar('com_uid');
+			$uid = $comment->com_uid;
 			if ($uid > 0 && false != $add_userpost) {
 				$member_handler = icms::handler('icms_member');
 				$poster = & $member_handler->getUser($uid);
 				if (is_object($poster)) {
-					$member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
+					$member_handler->updateUserByField($poster, 'posts', $poster->posts + 1);
 				}
 			}
 
@@ -383,7 +383,7 @@ switch ($op) {
 				// point to a viewable page (i.e. not the system administration
 				// module).
 				$comment_tags = array();
-				if ('system' == $icmsModule->getVar('dirname')) {
+				if ('system' == $icmsModule->dirname) {
 					$module_handler = icms::handler('icms_module');
 					$not_module = & $module_handler->get($not_modid);
 				} else {
@@ -405,7 +405,7 @@ switch ($op) {
 					$comment_url .= $com_config['itemName'];
 				}
 				$comment_tags['X_COMMENT_URL'] =
-				ICMS_URL . '/modules/' . $not_module->getVar('dirname') . '/' . $comment_url . '=' . $com_itemid
+				ICMS_URL . '/modules/' . $not_module->dirname . '/' . $comment_url . '=' . $com_itemid
 				. '&amp;com_id=' . $newcid . '&amp;com_rootid=' . $com_rootid . '&amp;com_mode=' . $com_mode
 				. '&amp;com_order=' . $com_order . '#comment' . $newcid;
 				$notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
@@ -413,7 +413,7 @@ switch ($op) {
 
 			if (!isset($comment_post_results)) {
 				// if the comment is active, redirect to posted comment
-				if ($comment->getVar('com_status') == XOOPS_COMMENT_ACTIVE) {
+				if ($comment->com_status == XOOPS_COMMENT_ACTIVE) {
 					redirect_header($redirect_page . '=' . $com_itemid . '&amp;com_id=' . $newcid . '&amp;com_rootid='
 					. $com_rootid . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order . '#comment' . $newcid,
 					2, _CM_THANKSPOST);

@@ -2,12 +2,14 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use PHPUnit\Framework\TestCase;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class MessageTest extends \PHPUnit_Framework_TestCase {
+class MessageTest extends TestCase {
 
     /**
      * Tests availability

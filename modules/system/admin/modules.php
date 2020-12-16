@@ -124,7 +124,7 @@ switch ($op) {
 		$ret = array();
 		$write = false;
 		$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
-		$output = new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer);
+		$output = new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer);
 		/**
 		 * @var icms_module_Handler $module_handler
 		 */
@@ -172,9 +172,9 @@ switch ($op) {
 			$mod = &$module_handler->create();
 			$mod->loadInfoAsVar($module);
 			if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
-				$msgs = sprintf("<img src=\"%s/%s/%s\" alt=\"\" />", ICMS_MODULES_URL, $mod->getVar('dirname'), trim($mod->getInfo('image')));
+				$msgs = sprintf("<img src=\"%s/%s/%s\" alt=\"\" />", ICMS_MODULES_URL, $mod->dirname, trim($mod->getInfo('image')));
 			}
-			$msgs .= sprintf('<br /><span style="font-size:smaller;">%s</span><br /><br />%s', $mod->getVar('name'), _MD_AM_RUSUREINS);
+			$msgs .= sprintf('<br /><span style="font-size:smaller;">%s</span><br /><br />%s', $mod->name, _MD_AM_RUSUREINS);
 			if (empty($from_112)) {
 				$from_112 = false;
 			}
@@ -191,12 +191,12 @@ switch ($op) {
 			$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
 			$module_handler->install(
 				$module,
-				new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
+				new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer)
 			);
 			if ($from_112) {
 				$module_handler->update(
 					$module,
-					new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
+					new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer)
 				);
 			}
 			$ret[] = nl2br(
@@ -224,9 +224,9 @@ switch ($op) {
 			$mod->registerClassPath();
 
 			if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
-				$msgs = sprintf('<img src="%s/%s/%s" alt="" />', ICMS_MODULES_URL, $mod->getVar('dirname'), trim($mod->getInfo('image')));
+				$msgs = sprintf('<img src="%s/%s/%s" alt="" />', ICMS_MODULES_URL, $mod->dirname, trim($mod->getInfo('image')));
 			}
-			$msgs .= sprintf('<br /><span style="font-size:smaller;">%s</span><br /><br />%s', $mod->getVar('name'), _MD_AM_RUSUREUNINS);
+			$msgs .= sprintf('<br /><span style="font-size:smaller;">%s</span><br /><br />%s', $mod->name, _MD_AM_RUSUREUNINS);
 			icms_cp_header();
 			icms_core_Message::confirm(array('module' => $module, 'op' => 'uninstall_ok', 'fct' => 'modules'), 'admin.php', $msgs, _YES);
 			icms_cp_footer();
@@ -237,7 +237,7 @@ switch ($op) {
 			$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
 			$module_handler->uninstall(
 				$module,
-				new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
+				new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer)
 			);
 			$ret[] = nl2br(
 				$buffer->fetch()
@@ -262,9 +262,9 @@ switch ($op) {
 			$module_handler = icms::handler('icms_module');
 			$mod = &$module_handler->getByDirname($module);
 			if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
-				$msgs = sprintf('<img src="%s/%s/%s" alt="" />', ICMS_MODULES_URL, $mod->getVar('dirname'), trim($mod->getInfo('image')));
+				$msgs = sprintf('<img src="%s/%s/%s" alt="" />', ICMS_MODULES_URL, $mod->dirname, trim($mod->getInfo('image')));
 			}
-			$msgs .= sprintf('<br /><span style="font-size:smaller;">%s</span><br /><br />%s', $mod->getVar('name'), _MD_AM_RUSUREUPD);
+			$msgs .= sprintf('<br /><span style="font-size:smaller;">%s</span><br /><br />%s', $mod->name, _MD_AM_RUSUREUPD);
 			icms_cp_header();
 
 			if (icms_getModuleInfo('system')->getDBVersion() < 14 && (!is_writable(ICMS_PLUGINS_PATH) || !is_dir(ICMS_ROOT_PATH . '/plugins/preloads') || !is_writable(ICMS_ROOT_PATH . '/plugins/preloads'))) {
@@ -283,7 +283,7 @@ switch ($op) {
 			$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
 			$module_handler->update(
 				$module,
-				new \ImpressCMS\Core\SetupSteps\OutputDecorator($buffer)
+				new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer)
 			);
 			$ret[] = nl2br(
 				$buffer->fetch()

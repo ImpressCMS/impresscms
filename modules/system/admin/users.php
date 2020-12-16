@@ -91,8 +91,8 @@ switch ($op) {
 		$userdata = & $user_handler->get($uid);
 		icms_core_Message::confirm(array('fct' => 'users',
 											'op' => 'delUserConf',
-											'del_uid' => $userdata->getVar('uid')
-										), 'admin.php', sprintf(_AM_AYSYWTDU, $userdata->getVar('uname')));
+											'del_uid' => $userdata->uid
+										), 'admin.php', sprintf(_AM_AYSYWTDU, $userdata->uname));
 		icms_cp_footer();
 		break;
 
@@ -134,15 +134,15 @@ switch ($op) {
 			if (in_array(ICMS_GROUP_ADMIN, $delgroups)) {
 				$output .= sprintf(
 						_AM_ADMIN_CAN_NOT_BE_DELETEED . ' (' . _AM_NICKNAME . ': %s)',
-						$deluser->getVar('uname')
+						$deluser->uname
 					) . '<br />';
 			} else {
 				if (!$user_handler->delete($deluser)) {
-					$output .= _AM_COULD_NOT_DELETE . ' ' . $deluser->getVar('uname') . '<br />';
+					$output .= _AM_COULD_NOT_DELETE . ' ' . $deluser->uname . '<br />';
 				} else {
-					$output .= $deluser->getVar('uname') . ' ' . _AM_USERS_DELETEED . '<br />';
+					$output .= $deluser->uname . ' ' . _AM_USERS_DELETEED . '<br />';
 				}
-				xoops_notification_deletebyuser($deluser->getVar('uid'));
+				xoops_notification_deletebyuser($deluser->uid);
 			}
 		}
 		icms_cp_header();
@@ -159,11 +159,11 @@ switch ($op) {
 		$groups = $user->getGroups();
 		if (in_array(ICMS_GROUP_ADMIN, $groups)) {
 			icms_cp_header();
-			echo sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED . '.(' . _AM_NICKNAME . ': %s)', $user->getVar('uname'));
+			echo sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED . '.(' . _AM_NICKNAME . ': %s)', $user->uname);
 			icms_cp_footer();
 		} elseif (!$user_handler->delete($user)) {
 			icms_cp_header();
-			echo _AM_ADMIN_CAN_NOT_BE_DELETEED . $deluser->getVar('uname');
+			echo _AM_ADMIN_CAN_NOT_BE_DELETEED . $deluser->uname;
 			icms_cp_footer();
 		} else {
 			$online_handler = icms::handler('icms_core_Online');
@@ -248,7 +248,7 @@ switch ($op) {
 							$groups = array(ICMS_GROUP_ANONYMOUS);
 						}
 						foreach ($groups as $group) {
-							if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
+							if (!$member_handler->addUserToGroup($group, $newuser->uid)) {
 								$groups_failed[] = $group;
 							}
 						}

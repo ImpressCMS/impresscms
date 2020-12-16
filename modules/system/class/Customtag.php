@@ -30,7 +30,7 @@ defined('ICMS_CUSTOMTAG_TYPE_PHP') || define('ICMS_CUSTOMTAG_TYPE_PHP', 3);
  * @property int    $doxcode
  * @property int    $dosmiley
  */
-class mod_system_Customtag extends icms_ipf_Object {
+class mod_system_Customtag extends \ImpressCMS\Core\Models\AbstractExtendedModel {
 	public $content = false;
 	public $evaluated = false;
 
@@ -60,7 +60,7 @@ class mod_system_Customtag extends icms_ipf_Object {
 
 	/**
 	 * Override accessors for properties
-	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
+	 * @see htdocs/libraries/icms/ipf/\ImpressCMS\Core\IPF\AbstractModel::getVar()
 	 */
 	public function getVar($key, $format = 's') {
 		if ($format == 's' && in_array($key, array())) {
@@ -75,7 +75,7 @@ class mod_system_Customtag extends icms_ipf_Object {
 	public function render() {
 		$myts = icms_core_Textsanitizer::getInstance();
 		if (!$this->content) {
-			switch ($this->getVar('customtag_type')) {
+			switch ($this->customtag_type) {
 				case ICMS_CUSTOMTAG_TYPE_XCODES:
 					$ret = $this->customtag_content;
 					$ret = $myts->displayTarea($ret, 1, 1, 1, 1, 1);
@@ -106,7 +106,7 @@ class mod_system_Customtag extends icms_ipf_Object {
 			$ret = $this->customtag_content;
 
 			// check for PHP if we are not on admin side
-			if (!defined('XOOPS_CPFUNC_LOADED') && $this->getVar('customtag_type') == ICMS_CUSTOMTAG_TYPE_PHP) {
+			if (!defined('XOOPS_CPFUNC_LOADED') && $this->customtag_type == ICMS_CUSTOMTAG_TYPE_PHP) {
 				// we have PHP code, let's evaluate
 				ob_start();
 				echo eval($ret);
@@ -148,7 +148,7 @@ class mod_system_Customtag extends icms_ipf_Object {
 	 * Accessor for the name property
 	 */
 	public function getCustomtagName() {
-		$ret = $this->getVar('name');
+		$ret = $this->name;
 		return $ret;
 	}
 }

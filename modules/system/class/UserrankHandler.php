@@ -17,7 +17,7 @@ icms_loadLanguageFile("system", "userrank", true);
  * @package		System
  * @subpackage	Users
  */
-class mod_system_UserrankHandler extends icms_ipf_Handler {
+class mod_system_UserrankHandler extends \ImpressCMS\Core\Models\AbstractExtendedHandler {
 
 	/** */
 	public $objects = false;
@@ -63,8 +63,8 @@ class mod_system_UserrankHandler extends icms_ipf_Handler {
 		} else {
 			$rank = array(
 				"id" => $rank_id,
-				"title" => $ranks[0]->getVar("rank_title"),
-				"image" => $this->getImageUrl() . $ranks[0]->getVar("rank_image"));
+				"title" => $ranks[0]->rank_title,
+				"image" => $this->getImageUrl() . $ranks[0]->rank_image);
 		}
 
 		return $rank;

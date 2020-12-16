@@ -4,6 +4,8 @@ namespace ImpressCMS\Core\Providers;
 
 use Aura\Session\SessionFactory;
 use icms;
+use ImpressCMS\Core\Facades\Member;
+use ImpressCMS\Core\Models\User;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
@@ -65,10 +67,10 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 			$session->setName('ICMSSESSION');
 		}
 
-		$userSection = $session->getSegment(\icms_member_user_Object::class);
+		$userSection = $session->getSegment(User::class);
 		if ($userid = $userSection->get('userid')) {
 			/**
-			 * @var \icms_member_Handler $userHandler
+			 * @var Member $userHandler
 			 */
 			$userHandler = icms::handler('icms_member');
 			$user = $userHandler->getUser($userid);
@@ -80,7 +82,7 @@ class SessionServiceProvider extends AbstractServiceProvider implements Bootable
 			} else {
 				$user->setGroups($userSection->get('groups'));
 				if (!$userSection->get('language')) {
-					$userSection->set('language', $user->getVar('language'));
+					$userSection->set('language', $user->language);
 				}
 				icms::$user = $user;
 			}

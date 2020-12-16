@@ -10,10 +10,10 @@
 
 /**
  * Handler for the ratings object
- * 
+ *
  * @package     ImpressCMS\Modules\System\Class\Rating
  */
-class mod_system_RatingHandler extends icms_ipf_Handler {
+class mod_system_RatingHandler extends \ImpressCMS\Core\Models\AbstractExtendedHandler {
 
 	public $_rateOptions = array();
 	public $_moduleList = false;
@@ -26,7 +26,7 @@ class mod_system_RatingHandler extends icms_ipf_Handler {
 	 */
 	public function __construct(&$db) {
 		parent::__construct($db, 'rating', 'ratingid', 'rate', '', 'system');
-		$this->generalSQL = 'SELECT * FROM ' . $this->table . ' AS ' . $this->_itemname . ' INNER JOIN ' . $this->db->prefix('users') . ' AS user ON ' . $this->_itemname . '.uid=user.uid';
+		$this->generalSQL = 'SELECT * FROM ' . $this->table . ' AS ' . $this->itemName . ' INNER JOIN ' . $this->db->prefix('users') . ' AS user ON ' . $this->itemName . '.uid=user.uid';
 
 		$this->_rateOptions[1] = 1;
 		$this->_rateOptions[2] = 2;

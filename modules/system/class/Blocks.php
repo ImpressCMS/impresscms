@@ -66,7 +66,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 
 	/**
 	 * Creates custom accessors for properties
-	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
+	 * @see htdocs/libraries/icms/ipf/\ImpressCMS\Core\IPF\AbstractModel::getVar()
 	 */
 	public function getVar($key, $format = 's') {
 		if ($format == 's' && in_array($key, array('visible', 'mid', 'side'))) {
@@ -89,11 +89,11 @@ class mod_system_Blocks extends icms_view_block_Object {
 	private function visible() {
 		if ($this->visible == 1) {
 			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=visible&bid='
-				. $this->getVar('bid') . '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL
+				. $this->bid . '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL
 				. '/actions/button_ok.png" alt="' . _VISIBLE . '"/></a>';
 		} else {
 			$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=visible&bid='
-				. $this->getVar('bid') . '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL
+				. $this->bid . '" title="' . _VISIBLE . '" ><img src="' . ICMS_IMAGES_SET_URL
 				. '/actions/button_cancel.png" alt="' . _VISIBLE . '"/></a>';
 		}
 		return $rtn;
@@ -131,7 +131,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 */
 	public function getUpActionLink() {
 		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=up&bid='
-			. $this->getVar('bid') . '" title="' . _UP . '" ><img src="' . ICMS_IMAGES_SET_URL
+			. $this->bid . '" title="' . _UP . '" ><img src="' . ICMS_IMAGES_SET_URL
 			. '/actions/up.png" alt="' . _UP . '"/></a>';
 		return $rtn;
 	}
@@ -141,7 +141,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 */
 	public function getDownActionLink() {
 		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=down&bid='
-			. $this->getVar('bid') . '" title="' . _DOWN . '" ><img src="' . ICMS_IMAGES_SET_URL
+			. $this->bid . '" title="' . _DOWN . '" ><img src="' . ICMS_IMAGES_SET_URL
 			. '/actions/down.png" alt="' . _DOWN . '"/></a>';
 		return $rtn;
 	}
@@ -151,7 +151,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 */
 	public function getCloneActionLink() {
 		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=clone&bid='
-			. $this->getVar('bid') . '" title="' . _CLONE . '" ><img src="' . ICMS_IMAGES_SET_URL
+			. $this->bid . '" title="' . _CLONE . '" ><img src="' . ICMS_IMAGES_SET_URL
 			. '/actions/editcopy.png" alt="' . _CLONE . '"/></a>';
 		return $rtn;
 	}
@@ -161,17 +161,17 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 */
 	public function getEditActionLink() {
 		$rtn = '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=blocks&op=mod&bid='
-			. $this->getVar('bid') . '" title="' . _EDIT . '" ><img src="' . ICMS_IMAGES_SET_URL
+			. $this->bid . '" title="' . _EDIT . '" ><img src="' . ICMS_IMAGES_SET_URL
 			. '/actions/edit.png" alt="' . _EDIT . '"/></a>';
 		return $rtn;
 	}
 
 	/**
 	 * Overrides parent method
-	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getAdminViewItemLink()
+	 * @see htdocs/libraries/icms/ipf/\ImpressCMS\Core\IPF\AbstractModel::getAdminViewItemLink()
 	 */
 	public function getAdminViewItemLink($onlyUrl = false) {
-		$rtn = $this->getVar('title');
+		$rtn = $this->title;
 		return $rtn;
 	}
 
@@ -189,13 +189,13 @@ class mod_system_Blocks extends icms_view_block_Object {
 		$ret = ICMS_MODULES_URL . "/system/admin.php?fct=blocks&op=del&"
 			. $this->handler->keyName . "=" . $this->getVar($this->handler->keyName);
 		if ($onlyUrl) {
-			if ($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
+			if ($this->block_type != 'C' && $this->block_type != 'K') {
 				return "";
 			} else {
 				return $ret;
 			}
 		} elseif ($withimage) {
-			if ($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
+			if ($this->block_type != 'C' && $this->block_type != 'K') {
 				return "<img src='" . ICMS_IMAGES_URL . "/blank.gif' width='22' alt=''  title='' />";
 			} else {
 				return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL
@@ -219,10 +219,10 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 *
 	 * @return icms_form_Base
 	 *
-	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
+	 * @see \ImpressCMS\Core\IPF\AbstractModelForm::\ImpressCMS\Core\IPF\AbstractModelForm()
 	 */
 	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
-		if (!$this->isNew() && $this->getVar('block_type') != 'C') {
+		if (!$this->isNew() && $this->block_type != 'C') {
 			$this->hideFieldFromForm('content');
 			$this->hideFieldFromForm('c_type');
 		}

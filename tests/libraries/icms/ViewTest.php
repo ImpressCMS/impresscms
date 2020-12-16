@@ -2,12 +2,16 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+use ImpressCMS\Core\Models\AbstractExtendedModel;
+use PHPUnit\Framework\TestCase;
+
 /**
 * @backupGlobals disabled
 * @backupStaticAttributes disabled
 */
 
-class ViewTest extends \PHPUnit_Framework_TestCase {
+class ViewTest extends TestCase {
 
     /**
      * Test if is available
@@ -22,14 +26,14 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             'icms_view_Breadcrumb' => null,
             'icms_view_theme_Object' => null,
             'icms_view_theme_Factory' => null,
-            'icms_view_template_set_Handler' => ['icms_ipf_Handler'],
-            'icms_view_template_set_Object' => ['icms_ipf_Object'],
-            'icms_view_template_file_Object' => ['icms_ipf_Object'],
-            'icms_view_template_file_Handler' => ['icms_ipf_Handler'],
-            'icms_view_block_Object' => ['icms_ipf_Object'],
-            'icms_view_block_Handler' => ['icms_ipf_Handler'],
-            'icms_view_block_position_Handler' => ['icms_ipf_Handler'],
-            'icms_view_block_position_Object' => ['icms_ipf_Object']
+            'icms_view_template_set_Handler' => [AbstractExtendedHandler::class],
+            'icms_view_template_set_Object' => [AbstractExtendedModel::class],
+            'icms_view_template_file_Object' => [AbstractExtendedModel::class],
+            'icms_view_template_file_Handler' => [AbstractExtendedHandler::class],
+            'icms_view_block_Object' => [AbstractExtendedModel::class],
+            'icms_view_block_Handler' => [AbstractExtendedHandler::class],
+            'icms_view_block_position_Handler' => [AbstractExtendedHandler::class],
+            'icms_view_block_position_Object' => [AbstractExtendedModel::class]
         ] as $class => $must_be_instances_of) {
             $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
             if ($must_be_instances_of === null) {
@@ -37,7 +41,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             }
             $instance = $this->getClassInstance($class);
             foreach ($must_be_instances_of as $must_be_instance_of) {
-                $this->assertTrue($instance instanceof $must_be_instance_of, $class . ' must be instance of ' . $must_be_instance_of . ' but is not');
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' must be instance of ' . $must_be_instance_of . ' but is not');
             }
         }
     }
@@ -192,73 +196,73 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
     public function notestVariables() {
         foreach ([
             'icms_view_Tree' => [
-                //'table' => 'string',
-                'id'    => 'string',
-                'pid'   => 'string',
-                'order' => 'int',
-                'title' => 'string'
+                //'table' => 'assertIsString',
+                'id'    => 'assertIsString',
+                'pid'   => 'assertIsString',
+                'order' => 'assertIsInt',
+                'title' => 'assertIsString'
             ],
             'icms_view_Tpl' => [
-                'left_delimiter' => 'string',
-                'right_delimiter' => 'string',
-                'template_dir' => 'string',
-                'cache_dir' => 'string',
-                'compile_dir' => 'string',
+                'left_delimiter' => 'assertIsString',
+                'right_delimiter' => 'assertIsString',
+                'template_dir' => 'assertIsString',
+                'cache_dir' => 'assertIsString',
+                'compile_dir' => 'assertIsString',
             ],
             'icms_view_Printerfriendly' => [
-                '_title' => 'string',
-                '_dsc' => 'string',
-                '_content' => 'string',
-                '_tpl' => 'string',
-                '_pageTitle' => 'bool',
-                '_width' => 'int'
+                '_title' => 'assertIsString',
+                '_dsc' => 'assertIsString',
+                '_content' => 'assertIsString',
+                '_tpl' => 'assertIsString',
+                '_pageTitle' => 'assertIsBool',
+                '_width' => 'assertIsInt'
             ],
             'icms_view_PageNav' => [
-                'total' => 'int',
-                'perpage' => 'int',
-                'current' => 'int',
-                'url' => 'string'
+                'total' => 'assertIsInt',
+                'perpage' => 'assertIsInt',
+                'current' => 'assertIsInt',
+                'url' => 'assertIsString'
             ],
             'icms_view_PageBuilder' => [
-                'theme' => 'bool',
-                'blocks' => 'array',
-                'uagroups' => 'array'
+                'theme' => 'assertIsBool',
+                'blocks' => 'assertIsArray',
+                'uagroups' => 'assertIsArray'
             ],
             'icms_view_theme_Object' => [
-                'folderName' => 'string',
-                'path' => 'string',
-                'url' => 'string',
-                'bufferOutput' => 'bool',
-                'canvasTemplate' => 'string',
-                'contentTemplate' => 'string',
-                'contentCacheLifetime' => 'int',
-                'contentCacheId' => 'null',
-                'content' => 'string',
-                'plugins' => 'array',
-                'renderCount' => 'int',
-                'template' => 'bool',
-                'metas' => 'array',
-                'types' => 'array',
-                'htmlHeadStrings' => 'array',
-                'templateVars' => 'array',
-                'use_extra_cache_id' => 'bool'
+                'folderName' => 'assertIsString',
+                'path' => 'assertIsString',
+                'url' => 'assertIsString',
+                'bufferOutput' => 'assertIsBool',
+                'canvasTemplate' => 'assertIsString',
+                'contentTemplate' => 'assertIsString',
+                'contentCacheLifetime' => 'assertIsInt',
+                'contentCacheId' => 'assertNull',
+                'content' => 'assertIsString',
+                'plugins' => 'assertIsArray',
+                'renderCount' => 'assertIsInt',
+                'template' => 'assertIsBool',
+                'metas' => 'assertIsArray',
+                'types' => 'assertIsArray',
+                'htmlHeadStrings' => 'assertIsArray',
+                'templateVars' => 'assertIsArray',
+                'use_extra_cache_id' => 'assertIsBool'
             ],
             'icms_view_theme_Factory' => [
-                'xoBundleIdentifier' => 'string',
-                'allowedThemes' => 'array',
-                'defaultTheme' => 'string',
-                'allowUserSelection' => 'bool'
+                'xoBundleIdentifier' => 'assertIsString',
+                'allowedThemes' => 'assertIsArray',
+                'defaultTheme' => 'assertIsString',
+                'allowUserSelection' => 'assertIsBool'
             ],
             'icms_view_template_file_Object' => [
-                'tpl_source' => 'bool'
+                'tpl_source' => 'assertIsBool'
             ],
             'icms_view_block_Object' => [
-                'visiblein' => 'array'
+                'visiblein' => 'assertIsArray'
             ]
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
-            foreach ($variables as $variable => $type) {
-                $this->assertInternalType($type, $instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
+            foreach ($variables as $variable => $func) {
+                $this->$func($instance->$variable, '$' . $variable . ' is not of type ' . $type . ' in instance of ' . $class);
             }
         }
     }
