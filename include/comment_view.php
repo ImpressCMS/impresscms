@@ -94,7 +94,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 	if ($com_itemid > 0) {
 		if ($com_mode == '') {
 			if (is_object(icms::$user)) {
-				$com_mode = icms::$user->getVar('umode');
+				$com_mode = icms::$user->umode;
 			} else {
 				$com_mode = $icmsConfig['com_mode'];
 			}
@@ -102,7 +102,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		$xoopsTpl->assign('comment_mode', $com_mode);
 		if (!isset($_GET['com_order'])) {
 			if (is_object(icms::$user)) {
-				$com_order = icms::$user->getVar('uorder');
+				$com_order = icms::$user->uorder;
 			} else {
 				$com_order = $icmsConfig['com_order'];
 			}
@@ -115,7 +115,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			$com_dborder = 'ASC';
 		}
 		// admins can view all comments and IPs, others can only view approved(active) comments
-		if (is_object(icms::$user) && icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+		if (is_object(icms::$user) && icms::$user->isAdmin($icmsModule->mid)) {
 			$admin_view = true;
 		} else {
 			$admin_view = false;
@@ -124,7 +124,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		$comment_handler = icms::handler('icms_data_comment');
 		$renderer = & icms_data_comment_Renderer::instance($xoopsTpl);
 		if ($com_mode == 'flat') {
-			$comments = & $comment_handler->getByItemId($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
+			$comments = & $comment_handler->getByItemId($icmsModule->mid, $com_itemid, $com_dborder);
 			$renderer->setComments($comments);
 			$renderer->renderFlatView($admin_view);
 		} elseif ($com_mode == 'thread') {
@@ -157,17 +157,17 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			} else {
 				// Show all threads
 				$top_comments = & $comment_handler->getTopComments(
-					$icmsModule->getVar('mid'), $com_itemid, $com_dborder
+					$icmsModule->mid, $com_itemid, $com_dborder
 				);
 				$c_count = count($top_comments);
 				if ($c_count > 0) {
 					for ($i = 0; $i < $c_count; $i++) {
 						$comments = & $comment_handler->getThread(
-							$top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id')
+							$top_comments[$i]->com_rootid, $top_comments[$i]->com_id
 						);
 						if (false != $comments) {
 							$renderer->setComments($comments);
-							$renderer->renderThreadView($top_comments[$i]->getVar('com_id'), $admin_view);
+							$renderer->renderThreadView($top_comments[$i]->com_id, $admin_view);
 						}
 						unset($comments);
 					}
@@ -175,15 +175,15 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			}
 		} else {
 			// Show all threads
-			$top_comments = & $comment_handler->getTopComments($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
+			$top_comments = & $comment_handler->getTopComments($icmsModule->mid, $com_itemid, $com_dborder);
 			$c_count = count($top_comments);
 			if ($c_count > 0) {
 				for ($i = 0; $i < $c_count; $i++) {
 					$comments = & $comment_handler->getThread(
-						$top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id')
+						$top_comments[$i]->com_rootid, $top_comments[$i]->com_id
 					);
 					$renderer->setComments($comments);
-					$renderer->renderNestView($top_comments[$i]->getVar('com_id'), $admin_view);
+					$renderer->renderNestView($top_comments[$i]->com_id, $admin_view);
 				}
 			}
 		}

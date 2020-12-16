@@ -48,9 +48,9 @@ foreach ($dirlist as $file) {
 				$catcount = count($confcats);
 				if ($catcount > 0) {
 					for ($x = 0; $x < $catcount; $x++) {
-						$subs[$x]['title'] = constant($confcats[$x]->getVar('confcat_name'));
+						$subs[$x]['title'] = constant($confcats[$x]->confcat_name);
 						$subs[$x]['link'] = ICMS_URL . '/modules/system/admin.php?fct=preferences'
-							. '&amp;op=show&amp;confcat_id=' . $confcats[$x]->getVar('confcat_id');
+							. '&amp;op=show&amp;confcat_id=' . $confcats[$x]->confcat_id;
 					}
 					$adminmenu[$modversion['group']]['subs'][] = array(
 						'title'		=> $modversion['name'],
