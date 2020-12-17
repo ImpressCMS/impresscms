@@ -185,7 +185,7 @@ class icms_ipf_view_Table {
 	}
 
 	/**
-	 * @todo	change to dependency injection methods
+	 * get the default sorting
 	 */
 	public function getDefaultSort() {
 		return $this->getCookie(
@@ -578,7 +578,7 @@ class icms_ipf_view_Table {
 	 *
 	 * @return string
 	 */
-	protected function getCookie(string $fieldName, string $defaultValue = null) {
+	protected function getCookie($fieldName, $defaultValue = null) {
 		$name = 'tbl_' . str_replace('.', '_', $fieldName);
 
 		return $_COOKIE[$name] ?? $defaultValue;
@@ -590,7 +590,7 @@ class icms_ipf_view_Table {
 	 * @param string $fieldName
 	 * @param string $value
 	 */
-	protected function setCookie(string $fieldName, string $value) {
+	protected function setCookie($fieldName, $value) {
 		setcookie(
 			'tbl_' . $fieldName,
 			$value,
