@@ -581,7 +581,7 @@ class icms_ipf_view_Table {
 	protected function getCookie($fieldName, $defaultValue = null) {
 		$name = 'tbl_' . str_replace('.', '_', $fieldName);
 
-		return $_COOKIE[$name] ?? $defaultValue;
+		return isset($_COOKIE[$name]) ? $_COOKIE[$name] : $defaultValue;
 	}
 
 	/**
@@ -676,7 +676,7 @@ class icms_ipf_view_Table {
 
 		$this->setSortOrder();
 
-		$this->_limitsel = $_GET['limitsel'] ?? $this->getCookie('limitsel', '15');
+		$this->_limitsel = isset($_GET['limitsel'])  ? $_GET['limitsel'] :  $this->getCookie('limitsel', '15');
 
 		if ($this->_isTree) {
 			$this->_limitsel = 'all';
