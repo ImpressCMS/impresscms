@@ -418,8 +418,7 @@ class Table {
 	/**
 	 * Gets default filter
 	 */
-	public function getDefaultFilter()
-	{
+	public function getDefaultFilter() {
 		return $this->getCookie($this->_id . '_filtersel', $this->_filtersel ?: 'default');
 	}
 
