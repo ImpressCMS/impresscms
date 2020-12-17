@@ -206,7 +206,7 @@ class icms_ipf_view_Table {
 	/**
 	 * @return string the default order returned from a cookie
 	 */
-	public function getDefaultOrder(): string {
+	public function getDefaultOrder() {
 		return $this->getCookie($this->_id . '_ordersel', $this->_ordersel ?: 'ASC');
 	}
 
