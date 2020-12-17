@@ -188,12 +188,12 @@ class icms_ipf_view_Table {
 	 * @todo	change to dependency injection methods
 	 */
 	public function getDefaultSort() {
-		if ($this->_sortsel) {
-			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_sortsel', $this->_sortsel);
-		} else {
-			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_sortsel', $this->_objectHandler->identifierName);
-		}
+		return $this->getCookie(
+			$this->_id . '_sortsel',
+			$this->_sortsel ? : $this->_objectHandler->identifierName
+		);
 	}
+
 
 	/**
 	 *
@@ -204,14 +204,10 @@ class icms_ipf_view_Table {
 	}
 
 	/**
-	 * @todo	change to dependency injection methods
+	 * @return string the default order returned from a cookie
 	 */
-	public function getDefaultOrder() {
-		if ($this->_ordersel) {
-			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_ordersel', $this->_ordersel);
-		} else {
-			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_ordersel', 'ASC');
-		}
+	public function getDefaultOrder(): string {
+		return $this->getCookie($this->_id . '_ordersel', $this->_ordersel ?: 'ASC');
 	}
 
 	/**
@@ -265,7 +261,7 @@ class icms_ipf_view_Table {
 		$this->_sortsel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] : $this->getDefaultSort();
 		//$this->_sortsel = isset($_POST['sortsel']) ? $_POST['sortsel'] : $this->_sortsel;
 
-		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_sortsel', $this->_sortsel);
+		$this->setCookie($this->_id . '_sortsel', $this->_sortsel);
 		$fieldsForSorting = $this->_tempObject->getFieldsForSorting($this->_sortsel);
 
 		if (isset($this->_tempObject->vars[$this->_sortsel]['itemName'])) {
@@ -276,8 +272,8 @@ class icms_ipf_view_Table {
 
 		$this->_ordersel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] : $this->getDefaultOrder();
 		//$this->_ordersel = isset($_POST['ordersel']) ? $_POST['ordersel'] :$this->_ordersel;
-		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_ordersel', $this->_ordersel);
-		$ordersArray = $this->getOrdersArray();
+		$this->setCookie($this->_id . '_ordersel', $this->_ordersel);
+		$this->getOrdersArray();
 		$this->_criteria->setOrder($this->_ordersel);
 	}
 
@@ -410,11 +406,7 @@ class icms_ipf_view_Table {
 	 * @todo	change to dependency injection methods
 	 */
 	public function getDefaultFilter() {
-		if ($this->_filtersel) {
-			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_filtersel', $this->_filtersel);
-		} else {
-			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_filtersel', 'default');
-		}
+		return $this->getCookie($this->_id . '_filtersel', $this->_filtersel ?: 'default');
 	}
 
 	/**
@@ -459,11 +451,7 @@ class icms_ipf_view_Table {
 	 * @todo	change to dependency injection methods
 	 */
 	public function getDefaultFilter2() {
-		if ($this->_filtersel2) {
-			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_filtersel2', $this->_filtersel2);
-		} else {
-			return icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_filtersel2', 'default');
-		}
+		return $this->getCookie('filtersel2', $this->_filtersel2 ?: 'default');
 	}
 	 /**
 	  *
@@ -583,6 +571,38 @@ class icms_ipf_view_Table {
 	}
 
 	/**
+	 * Gets from cookie
+	 *
+	 * @param string $fieldName Field name read from cookie
+	 * @param string|null $defaultValue Default value
+	 *
+	 * @return string
+	 */
+	protected function getCookie(string $fieldName, string $defaultValue = null) {
+		$name = 'tbl_' . str_replace('.', '_', $fieldName);
+
+		return $_COOKIE[$name] ?? $defaultValue;
+	}
+
+	/**
+	 * Sets cookie
+	 *
+	 * @param string $fieldName
+	 * @param string $value
+	 */
+	protected function setCookie(string $fieldName, string $value) {
+		setcookie(
+			'tbl_' . $fieldName,
+			$value,
+			time() + 3600 * 24 * 365,
+			parse_url(ICMS_URL, PHP_URL_PATH),
+			parse_url(ICMS_URL, PHP_URL_HOST),
+			false,
+			true
+		);
+	}
+
+	/**
 	 * Render the table of records for an IPF object
 	 *
 	 * @todo	change to dependency injection methods
@@ -656,20 +676,20 @@ class icms_ipf_view_Table {
 
 		$this->setSortOrder();
 
-		$this->_limitsel = !empty($limitsel) ? $limitsel : icms_getCookieVar($script_name . '_limitsel', '15');
+		$this->_limitsel = $_GET['limitsel'] ?? $this->getCookie('limitsel', '15');
 
 		if ($this->_isTree) {
 			$this->_limitsel = 'all';
 		}
 
-		icms_setCookieVar($script_name . '_limitsel', $this->_limitsel);
+		$this->setCookie('limitsel', $this->_limitsel);
 
 		$limitsArray = $this->getLimitsArray();
 		$this->_criteria->setLimit($this->_limitsel);
 
 		$this->_filtersel = $filtersel;
 
-		icms_setCookieVar($script_name . '_' . $this->_id . '_filtersel', $this->_filtersel);
+		$this->setCookie($this->_id . '_filtersel', $this->_filtersel);
 		$filtersArray = $this->getFiltersArray();
 
 		if ($filtersArray) {
@@ -694,8 +714,8 @@ class icms_ipf_view_Table {
 					$filters2Array = $this->getFilters2Array();
 					$this->_tpl->assign('icms_optionssel_filters2Array', $filters2Array);
 
-					icms_setCookieVar($script_name . '_filtersel2', $this->_filtersel2);
-					if ($this->_filtersel2 != 'default') {
+					$this->setCookie('filtersel2', $this->_filtersel2);
+					if ($this->_filtersel2 !== 'default') {
 						$this->_criteria->add(new icms_db_criteria_Item($this->_filtersel, $this->_filtersel2));
 					}
 				}
