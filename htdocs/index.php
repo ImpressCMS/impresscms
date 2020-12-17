@@ -99,6 +99,8 @@ if ($basePath !== '/' && $basePath !== null) {
 		);
 	}
 	unset($path, $uri);
+} else {
+	$request = ServerRequest::fromGlobals();
 }
 unset($basePath);
 
