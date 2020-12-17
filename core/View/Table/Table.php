@@ -591,7 +591,7 @@ class Table {
 	 *
 	 * @return string
 	 */
-	protected function getCookie(string $fieldName, string $defaultValue = null) {
+	protected function getCookie(string $fieldName, ?string $defaultValue = null) {
 		$name = 'tbl_' . str_replace('.', '_', $fieldName);
 
 		return $_COOKIE[$name] ?? $defaultValue;
