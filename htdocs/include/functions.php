@@ -159,24 +159,6 @@ function userTimeToServerTime($timestamp, $userTZ=null)
 }
 
 /**
- * Checks if email is of correct formatting
- *
- * @deprecated	use icms_core_DataFilter::checkVar
- *
- * @param string     $email      The email address
- * @param string     $antispam   Generate an email address that is protected from spammers
- * @return string    $email      The generated email address
- * @todo Move to a static class method - text validation/formatting
- * new filter can use icms_core_DataFilter::checkVar($email, 'email', $antispam, $blacklist)
- */
-function checkEmail($email, $antispam = 0, $blacklist = 0)
-{
-	icms_core_Debug::setDeprecated('icms_core_DataFilter->checkVar - type = email, $options1 = true/false ($antispam),
-		$options2 = true/false ($blacklist)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::checkVar($email, 'email', $antispam, $blacklist);
-}
-
-/**
  * Format an URL
  *
  * @param string  $url  The URL to format
@@ -191,48 +173,6 @@ function formatURL($url)
 		if((!preg_match("/^http[s]*:\/\//i", $url)) && (!preg_match("/^ftp*:\/\//i", $url)) && (!preg_match("/^ed2k*:\/\//i", $url))) {$url = 'http://'.$url;}
 	}
 	return $url;
-}
-
-/**
- * Gets banner HTML for use in templates
- *
- * @deprecated		Moving to a separate module
- *
- * @return object  $bannerobject  The generated banner HTML string
- */
-function xoops_getbanner() {
-	global $icmsConfig;
-
-	$db = icms_db_Factory::instance();
-	$bresult = $db->query("SELECT * FROM ".$db->prefix('banner')." ORDER BY RAND()", 1);
-	if ($db->getRowsNum($bresult) > 0) {
-		list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
-		if ($icmsConfig['my_ip'] != $_SERVER['REMOTE_ADDR'])
-			$db->queryF(sprintf("UPDATE %s SET impmade = impmade+1 WHERE bid = '%u'", $db->prefix('banner'), (int)($bid)));
-		/* Check if this impression is the last one and print the banner */
-		if ($imptotal == $impmade && $imptotal != 0) {
-			$newid = $db->genId($db->prefix('bannerfinish').'_bid_seq');
-			$sql = sprintf("INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES ('%u', '%u', '%u', '%u', '%u', '%u')", $db->prefix('bannerfinish'), (int) ($newid), (int) ($cid), (int) ($impmade), (int) ($clicks), (int) ($date), time());
-			$db->queryF($sql);
-			$db->queryF(sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('banner'), (int)($bid)));
-		}
-		if ($htmlbanner) {
-			$bannerobject = icms_core_DataFilter::filterHTMLdisplay($htmlcode, 0, 0);
-		} else {
-			$bannerobject = '<div><a href="'.ICMS_URL.'/banners.php?op=click&amp;bid='.$bid.'" rel="external">';
-			if (stristr($imageurl, '.swf')) {
-				$bannerobject = $bannerobject
-				.'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
-				.'<param name="movie" value="'.$imageurl.'"></param>'
-				.'<param name="quality" value="high"></param>'
-				.'</object>';
-			} else {
-				$bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';
-			}
-			$bannerobject = $bannerobject.'</a></div>';
-		}
-		return $bannerobject;
-	}
 }
 
 /**
@@ -393,27 +333,6 @@ function &xoops_gethandler($name, $optional = false) {
 	return icms::handler(isset($lookup[$lower]) ? $lookup[$lower] : $name);
 }
 
-/**
- * Returns the portion of string specified by the start and length parameters.
- * If $trimmarker is supplied, it is appended to the return string.
- * This function works fine with multi-byte characters if mb_* functions exist on the server.
- *
- * @deprecated	use icms_core_DataFilter::icms_substr()
- *
- * @param	string	$str
- * @param	int	   $start
- * @param	int	   $length
- * @param	string	$trimmarker
- *
- * @return   string
- * @todo Move to a static class method - String
- */
-function icms_substr($str, $start, $length, $trimmarker = '...')
-{
-	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_substr', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::icms_substr($str, $start, $length, $trimmarker);
-}
-
 // RMV-NOTIFY
 // ################ Notification Helper Functions ##################
 /**
@@ -556,37 +475,6 @@ function xoops_utf8_encode(&$text)
  * @todo Move to a static class method - String
  */
 function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
-
-/**
- * Gets Username from UserID and creates a link to the userinfo (!) page
- * @deprecated	icms_member_user_Handler::getUserLink($userid, $name, $users, $withContact)
- *
- * @param	int	$userid	The User ID
- * @return	string	The linked username (from userID or "Anonymous")
- * @todo 	Remove in 1.4.3
- */
-function xoops_getLinkedUnameFromId($userid)
-{
-	icms_core_Debug::setDeprecated("icms_member_user_Handler::getUserLink", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
-	return icms_member_user_Handler::getUserLink($userid);
-
-}
-
-/**
- * Trims certain text
- *
- * @deprecated	use icms_core_DataFilter::icms_trim
- *
- * @param	string	$text	The Text to trim
- * @return	string	$text	The trimmed text
- * @todo Move to a static class method - String
- */
-function xoops_trim($text)
-{
-	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_trim', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::icms_trim($text);
-}
-
 
 /**
  * Get the icmsModule object of a specified module
@@ -1249,24 +1137,6 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
 }
 
 /**
- * Function to reverse given text with utf-8 character sets
- *
- * @deprecated	use icms_core_DataFilter::utf8_strrev
- *
- * credit for this function should goto lwc courtesy of php.net.
- *
- * @param string $str		The text to be reversed.
- * @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
- *				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
- * @return string
- */
-function icms_utf8_strrev($str, $reverse = false)
-{
-	icms_core_Debug::setDeprecated('icms_core_DataFilter::utf8_strrev', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::utf8_strrev($str, $reverse);
-}
-
-/**
  * Function to get a query from DB
  *
  * @param object $db	Reference to the database object
@@ -1736,24 +1606,6 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 	return $inst;
 }
 
-/**
- * Get URL of previous page
- *
- * @deprecated	use icms::$urls['previouspage']
- *
- * @param string $default default page if previous page is not found
- * @return string previous page URL
- * @todo Move to a static class method - HTTP or URI
- */
-function icms_getPreviousPage($default=false) {
-	if (isset(icms::$urls['previouspage'])) {
-		return icms::$urls['previouspage'];
-	} elseif($default) {
-		return $default;
-	} else {
-		return ICMS_URL;
-	}
-}
 
 /**
  * Get module admin link
@@ -1805,18 +1657,6 @@ function icms_getImageSize($url, & $width, & $height) {
 	} else {
 		return true;
 	}
-}
-
-/**
- * Gets all types of urls in one array
- *
- * @deprecated	use icms::$urls
- *
- * @return array The array of urls
- * @todo Move to a static class method - HTTP or URI
- */
-function icms_getCurrentUrls() {
-	return icms::$urls;
 }
 
 /**
@@ -1946,18 +1786,6 @@ function icms_loadCommonLanguageFile() {
 }
 
 /**
- * Gets current page
- *
- * @deprecated	use icms::$urls['full']
- *
- * @return string The URL of the current page
- * @todo Move to a static class method - HTTP or URI
- */
-function icms_getCurrentPage() {
-	return icms::$urls['full'];
-}
-
-/**
  * Gets module name in SEO format
  *
  * @param mixed $moduleName	Modulename if it is passed, otherwise false
@@ -2048,22 +1876,6 @@ function one_wordwrap($string,$width=false){
 		$new_string.="$v ";
 	}
 	return $new_string;
-}
-
-/**
- * Removes the content of a folder.
- *
- * @author	Steve Kenow (aka skenow) <skenow@impresscms.org>
- * @author	modified by Vaughan <vaughan@impresscms.org>
- * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @param	string	$path	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_COMPILE_PATH . "/");
- * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
- * @deprecated	Use icms_core_Filesystem::cleanFolders
- * @todo Move to static class Filesystem
- */
-function icms_clean_folders($dir, $remove_admin_cache=false) {
-	icms_core_Debug::setDeprecated('icms_core_Filesystem::cleanFolders', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::cleanFolders($dir, $remove_admin_cache);
 }
 
 /**
