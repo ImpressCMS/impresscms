@@ -57,7 +57,7 @@ class SecurityTest extends TestCase {
 		$instance = $container->get('security');
         $new_token = $instance->createToken();
 
-        $this->assertInternalType('string', $new_token, 'Generated token is not type of string');
+        $this->assertIsString($new_token, 'Generated token is not type of string');
         $this->assertTrue($instance->validateToken($new_token), 'Can\'t validate correct token');
     }
 
