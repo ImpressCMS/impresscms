@@ -207,7 +207,8 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		if ($form_caption) {
 			return $form_caption;
 		}
-		$dyn_form_caption = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key);
+		$dyn_form_caption = strtoupper('_CO_' . $this->handler->moduleName . '_' . $this->handler->_itemname . '_' . $key);
+
 		if (defined($dyn_form_caption)) {
 					$form_caption = constant($dyn_form_caption);
 		} else {
@@ -221,7 +222,8 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		if ($form_dsc) {
 			return $form_dsc;
 		}
-		$dyn_form_dsc = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key);
+		$dyn_form_dsc = strtoupper('_CO_' . $this->handler->moduleName . '_' . $this->handler->_itemname . '_' . $key);
+
 		if (defined($dyn_form_dsc)) {
 			$form_dsc = constant($dyn_form_dsc);
 		} else {
@@ -274,14 +276,14 @@ abstract class AbstractExtendedModel extends AbstractModel {
 
 	public function updateMetas() {
 		// Auto create meta tags if empty
-		$icms_metagen = new Metagen($this->title(), $this->getVar('meta_keywords'), $this->summary());
+		$icms_metagen = new Metagen($this->title(), $this->meta_keywords, $this->summary());
 
 		if (empty($this->meta_keywords)) {
-			$this->setVar('meta_keywords', $icms_metagen->_keywords);
+			$this->meta_keywords = $icms_metagen->_keywords;
 		}
 
 		if (empty($this->meta_description)) {
-			$this->setVar('meta_description', $icms_metagen->_meta_description);
+			$this->meta_description = $icms_metagen->_meta_description;
 		}
 
 		// Auto create short_url if empty
@@ -805,11 +807,11 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		$control = $this->controls[$key] ?? false;
 		$form_editor = $control['form_editor'] ?? 'textarea';
 
-		$html = isset($this->_vars['dohtml']) ? $this->getVar('dohtml') : true;
+		$html = isset($this->_vars['dohtml']) ? $this->dohtml : true;
 		$smiley = true;
 		$xcode = true;
 		$image = true;
-		$br = isset($this->_vars['dobr']) ? $this->getVar('dobr') : true;
+		$br = isset($this->_vars['dobr']) ? $this->dobr : true;
 		$formatML = true;
 
 		if ($form_editor == 'default') {
@@ -1097,7 +1099,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		 $data = array('vars' => parent::getValues(),
 					   'handler' => array(
 						   'module' => $this->handler->_moduleName,
-						   'itemname' => $this->handler->_itemname
+						   'itemname' => $this->handler->itemName
 					   ));
 		return serialize($data);
 	}

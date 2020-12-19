@@ -19,7 +19,7 @@ class ViewTemplateSetupStep implements SetupStepInterface
 	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$tplfile_handler = icms::handler('icms_view_template_file');
-		$templates = $tplfile_handler->find(null, 'module', $module->getVar('mid'));
+		$templates = $tplfile_handler->find(null, 'module', $module->mid);
 		$tcount = count($templates);
 		if ($tcount === 0) {
 			return true;
@@ -31,14 +31,14 @@ class ViewTemplateSetupStep implements SetupStepInterface
 			if (!$tplfile_handler->delete($templates[$i])) {
 				$output->error(
 					_MD_AM_TEMPLATE_DELETE_FAIL,
-					$templates[$i]->getVar('tpl_file'),
-					icms_conv_nr2local($templates[$i]->getVar('tpl_id'))
+					$templates[$i]->tpl_file,
+					icms_conv_nr2local($templates[$i]->tpl_id)
 				);
 			} else {
 				$output->success(
 					_MD_AM_TEMPLATE_DELETED,
-					icms_conv_nr2local($templates[$i]->getVar('tpl_file')),
-					icms_conv_nr2local($templates[$i]->getVar('tpl_id'))
+					icms_conv_nr2local($templates[$i]->tpl_file),
+					icms_conv_nr2local($templates[$i]->tpl_id)
 				);
 			}
 		}

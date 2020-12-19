@@ -54,19 +54,25 @@
     "composer/composer": "^1.10",
     "dompdf/dompdf": "^0.8.5",
     "erusev/parsedown": "^1.7",
+    "ellipse/cookie-encryption": "^1.0",
+    "defuse/php-encryption": "^2.2",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
     "http-interop/http-factory-guzzle": "^1.0",
+    "imponeer/symfony-translations-constants-loader": "^1.0",
     "ircmaxell/random-lib": "^1.2",
     "keo/iso-639": "^1.0",
     "league/container": "^3.2",
     "league/flysystem": "^1.0.51",
+    "league/mime-type-detection": "^1.3",
     "league/route": "^4.3",
     "lulco/phoenix": "^1.1",
     "middlewares/aura-session": "^1.1",
     "middlewares/base-path": "^2.0",
+    "middlewares/client-ip": "^2.0",
     "middlewares/encoder": "^2.1",
-    "middlewares/referrer-spam": "^2.0",
+    "middlewares/firewall": "^2.0.1",
+    "middlewares/referrer-spam": "^2.0.2",
     "monolog/monolog": "^2.0",
     "narrowspark/http-emitter": "^1.0",
     "old-xoops-libraries/php-downloader": "1.*",
@@ -79,13 +85,15 @@
     "suin/php-rss-writer": "^1.6",
     "symfony/console": ">5.0",
     "symfony/polyfill-iconv": "^1.12",
-    "typo3/class-alias-loader": "^1.1",
+    "symfony/translation": "^5.1",
+    "tuupola/server-timing-middleware": "^0.8.2",
     "true/punycode": "^2.1",
+    "typo3/class-alias-loader": "^1.1",
     "vlucas/phpdotenv": "^3.3.3"
   },
   "suggest": {
     "ext-xml": "Faster way then with PHP scripts to handle XML documents",
-    "ext-openssl": "Without it OpenID will not work",
+    "ext-openssl": "Extension used for data encryption",
     "ext-bcmath": "Better precisions in math operations",
     "ext-intl": "Faster international strings operations"
   },
@@ -98,10 +106,14 @@
       "plugins/autotasks/",
       "plugins/preloads/"
     ],
+    "exclude-from-classmap": [
+      "modules/system/extensions/"
+    ],
     "psr-4": {
       "ImpressCMS\\Core\\": "core/",
       "ImpressCMS\\Editors\\": "htdocs/editors/",
-      "ImpressCMS\\Plugins\\": "plugins/"
+      "ImpressCMS\\Plugins\\": "plugins/",
+      "ImpressCMS\\Modules\\System\\Extensions\\": "modules/system/extensions/"
     },
     "files": [
       "include/version.php",
@@ -112,6 +124,7 @@
     ]
   },
   "require-dev": {
+    "roave/security-advisories": "dev-master",
     "phpunit/phpunit": "^9.4"
   },
   "extra": {
@@ -124,7 +137,8 @@
       "\\ImpressCMS\\Core\\Providers\\ConfigServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ModuleServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\SessionServiceProvider",
-      "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider"
+      "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\TranslatorServiceProvider"
     ],
     "services": {
       "\\ImpressCMS\\Core\\Middlewares\\DetectModuleMiddleware": {
@@ -191,9 +205,96 @@
           "preload"
         ]
       },
+      "\\ImpressCMS\\Core\\Commands\\GenerateAppKeyCommand": {
+        "tags": [
+          "console.command"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Resource\\DBResource": {
+        "arguments": [
+          "cache"
+        ],
+        "tags": [
+          "smarty.resource"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\ForeachqCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\ForeachqCloseCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\IncludeqCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\XOAppUrlCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\XOImgUrlCompiler": {
+        "tags": [
+          "smarty.compiler"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Modifiers\\DebugPrintVarModifier": {
+        "tags": [
+          "smarty.modifier"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\ResizeImageFunction": {
+        "arguments": [
+          "cache"
+        ],
+        "tags": [
+          "smarty.function"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\XOInboxCountFunction": {
+        "tags": [
+          "smarty.function"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\XoopsLinkFunction": {
+        "tags": [
+          "smarty.function"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\XOPageNavFunction": {
+        "tags": [
+          "smarty.function"
+        ]
+      },
       "\\ImpressCMS\\Core\\Commands\\CacheClearCommand": {
         "tags": [
           "console.command"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\ExtensionDescriber\\Module\\ImpressCMSComposerModuleDescriber": {
+        "tags": [
+          "extension_describer.module"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\ExtensionDescriber\\Module\\ImpressCMSVersionModuleDescriber": {
+        "tags": [
+          "extension_describer.module"
+        ]
+      },
+
+      "\\ImpressCMS\\Core\\Extensions\\ExtensionDescriber\\Theme\\ImpressCMSComposerThemeDescriber": {
+        "tags": [
+          "extension_describer.theme"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\ExtensionDescriber\\Theme\\ImpressCMSLegacyThemeDescriber": {
+        "tags": [
+          "extension_describer.theme"
         ]
       },
       "\\ImpressCMS\\Core\\Commands\\TemplatesCacheClearCommand": {
@@ -376,16 +477,18 @@
           "editor.content"
         ]
       },
-      "dhtmltextarea": {
-        "class": "\\ImpressCMS\\Editors\\DHTMLTextArea\\Editor",
-        "tags": [
-          "editor.content"
-        ]
-      },
       "tinymce": {
         "class": "\\ImpressCMS\\Editors\\TinyMCE\\Editor",
         "tags": [
           "editor.content"
+        ]
+      },
+      "stopwatch": {
+        "class": "\\Tuupola\\Middleware\\ServerTiming\\Stopwatch"
+      },
+      "\\Tuupola\\Middleware\\ServerTimingMiddleware": {
+        "arguments": [
+          "stopwatch"
         ]
       },
       "codemirror": {
@@ -433,6 +536,29 @@
       },
       "sapi-emitter": {
         "class": "\\Narrowspark\\HttpEmitter\\SapiEmitter"
+      },
+      "\\ImpressCMS\\Modules\\System\\Extensions\\WaitingInfoGetter\\InactiveUsersWaitingInfoGetter": {
+        "arguments": [
+          "db"
+        ],
+        "tags": [
+          "module.system.waiting-info-getter"
+        ]
+      },
+      "\\ImpressCMS\\Modules\\System\\Extensions\\WaitingInfoGetter\\CommentsWaitingInfoGetter": {
+        "arguments": [
+          "db"
+        ],
+        "tags": [
+          "module.system.waiting-info-getter"
+          ]
+      },
+
+      "\\Imponeer\\SymfonyTranslationsConstantsLoader\\PHPFileLoader": {
+        "class": "\\Imponeer\\SymfonyTranslationsConstantsLoader\\PHPFileLoader",
+        "tags": [
+          "translation.loader"
+        ]
       }
     },
     "routes": [

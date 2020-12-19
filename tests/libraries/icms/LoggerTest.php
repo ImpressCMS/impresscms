@@ -21,22 +21,7 @@ class LoggerTest extends TestCase {
     }
 
     /**
-     * Tests timer
-     */
-    public function testTimer(): void
-	{
-        $logger = &icms_core_Logger::instance();
-        $logger->disableRendering();
-        $timer = sha1(microtime(true));
-        $count = count($logger->timers);
-        $this->assertCount($count, $logger->timers, 'Timer array should be not increased by one');
-		$logger->startTime($timer);
-        $this->assertCount($count + 1, $logger->timers, 'Timer array should be increased by one');
-        $logger->stopTime($timer);
-        $this->assertCount($count + 1, $logger->timers, 'Timer array should be increased by one');
-    }
 
-    /**
      * Tests how renders
      */
     public function testRender(): void

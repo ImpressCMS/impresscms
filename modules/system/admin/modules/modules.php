@@ -38,7 +38,7 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->mid)) {
 	exit("Access Denied");
 }
 
@@ -76,23 +76,23 @@ function xoops_module_list() {
 		$module->registerClassPath(false);
 		$module->getInfo();
 		$mod = array(
-			'mid' => $module->getVar('mid'),
-			'dirname' => $module->getVar('dirname'),
+			'mid' => $module->mid,
+			'dirname' => $module->dirname,
 			'name' => $module->getInfo('name'),
-			'title' => $module->getVar('name'),
+			'title' => $module->name,
 			'image' => $module->getInfo('image'),
 			'adminindex' => $module->getInfo('adminindex'),
-			'hasadmin' => $module->getVar('hasadmin'),
-			'hasmain' => $module->getVar('hasmain'),
-			'isactive' => $module->getVar('isactive'),
+			'hasadmin' => $module->hasadmin,
+			'hasmain' => $module->hasmain,
+			'isactive' => $module->isactive,
 			'version' => icms_conv_nr2local(round($module -> getVar('version') / 100, 2)),
 			'status' => ($module->getInfo('status'))?$module->getInfo('status'):'&nbsp;',
-			'last_update' => ($module->getVar('last_update') != 0)? formatTimestamp($module->getVar('last_update'), 'm'):'&nbsp;',
-			'weight' => $module->getVar('weight'),
+			'last_update' => ($module->last_update != 0)? formatTimestamp($module->last_update, 'm'):'&nbsp;',
+			'weight' => $module->weight,
 			'support_site_url' => $module->getInfo('support_site_url'),
 		);
 		$icmsAdminTpl->append('modules', $mod);
-		$listed_mods[] = $module->getVar('dirname');
+		$listed_mods[] = $module->dirname;
 	}
 
 	$dirlist = icms_module_Handler::getAvailable();

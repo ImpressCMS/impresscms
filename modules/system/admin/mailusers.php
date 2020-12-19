@@ -62,7 +62,7 @@
  * (str) mail_body
  *
  */
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->mid)) {
 	exit("Access Denied");
 } else {
 	$op = "form";
@@ -158,9 +158,9 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			$getusers = $member_handler->getUsersByGroupLink($groups, $criteria_object, TRUE);
 			$count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
 			foreach ($getusers as $getuser) {
-				if (!in_array($getuser->getVar("uid"), $added_id)) {
+				if (!in_array($getuser->uid, $added_id)) {
 					$added[] = $getuser;
-					$added_id[] = $getuser->getVar("uid");
+					$added_id[] = $getuser->uid;
 				}
 			}
 		}

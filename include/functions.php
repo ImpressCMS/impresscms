@@ -132,7 +132,7 @@ if (!function_exists('xoops_getUserTimestamp')) {
 		global $icmsConfig;
 		if ($timeoffset == '') {
 			if (icms::$user) {
-				$timeoffset = icms::$user->getVar('timezone_offset');
+				$timeoffset = icms::$user->timezone_offset;
 			} else {
 				$timeoffset = $icmsConfig['default_TZ'];
 			}
@@ -186,7 +186,7 @@ if (!function_exists('redirect_header')) {
 	 * Function to redirect a user to certain pages
 	 *
 	 * @param string $url The URL to redirect to
-	 * @param int $time The time it takes to redirect to the URL
+	 * @param int $time DEPRECATED: does nothing
 	 * @param string $message The message to show while redirecting
 	 * @param bool $addredirect Add a link to the redirect URL?
 	 * @param string $allowExternalLink Allow external links
@@ -194,10 +194,8 @@ if (!function_exists('redirect_header')) {
 	function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 	{
 		global $icmsConfig, $icmsConfigPersona;
-		if (preg_match("/[\\0-\\31]|about:|script:/i", $url)) {
-			if (preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
-				$url = ICMS_URL;
-			}
+		if (preg_match("/[\\0-\\31]|about:|script:/i", $url) && preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
+			$url = ICMS_URL;
 		}
 		if (!$allowExternalLink && $pos = strpos($url, '://')) {
 			$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
@@ -207,28 +205,8 @@ if (!function_exists('redirect_header')) {
 				$url = ICMS_URL;
 			}
 		}
-		$theme = $icmsConfig['theme_set'];
 		// if the user selected a theme in the theme block, let's use this theme
 
-		$session = \icms::$session;
-		$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
-		$userTheme = $userSegment->get('theme');
-		if ($userTheme && in_array($userTheme, $icmsConfig['theme_set_allowed'])) {
-			$theme = $userTheme;
-		}
-
-		$xoopsThemeFactory = new icms_view_theme_Factory();
-		$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
-		$xoopsThemeFactory->defaultTheme = $theme;
-		$icmsTheme = $xoTheme = &$xoopsThemeFactory->createInstance(array("plugins" => array()));
-		$xoopsTpl = $icmsTpl = &$xoTheme->template;
-
-		if ($icmsConfig['debug_mode'] == 2 && icms::$user->isAdmin()) {
-			$xoopsTpl->assign('time', 300);
-			$xoopsTpl->assign('xoops_logdump', icms::$logger->dump());
-		} else {
-			$xoopsTpl->assign('time', (int)($time));
-		}
 		if (!empty($_SERVER['REQUEST_URI']) && $addredirect && strstr($url, 'user.php')) {
 			if (!strstr($url, '?')) {
 				$url .= '?xoops_redirect=' . urlencode($_SERVER['REQUEST_URI']);
@@ -244,39 +222,27 @@ if (!function_exists('redirect_header')) {
 			}
 		}
 		$url = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES, _CHARSET));
-		$xoopsTpl->assign('url', $url);
 		$message = trim($message) != '' ? $message : _TAKINGBACK;
-		$xoopsTpl->assign('message', $message);
-		$xoopsTpl->assign('lang_ifnotreload', sprintf(_IFNOTRELOAD, $url));
 		// GIJ start
 
 		if (empty($url)) {
 			$url = './';
 		}
 
-		if (!headers_sent() && $icmsConfigPersona['use_custom_redirection'] == 1) {
-			/**
-			 * @var \Aura\Session\Session $session
-			 */
-			$session = \icms::$session;
+		/**
+		 * @var \Aura\Session\Session $session
+		 */
+		$session = \icms::getInstance()
+			->get('session');
 
-			$session
-				->getSegment(\icms::class)
-				->setFlash('redirect_message', $message);
+		$session
+			->getSegment(\icms::class)
+			->setFlash('redirect_message', $message);
 
-			header("Location: " . preg_replace("/[&]amp;/i", '&', $url));
-			exit();
-		}
+		$session->commit();
 
-		$xoopsTpl->display('db:system_redirect.html');
-		if (defined('XOOPS_CPFUNC_LOADED')) {
-			icms_cp_footer();
-		} else {
-			require ICMS_ROOT_PATH . '/footer.php';
-		}
-
+		header("Location: " . preg_replace("/[&]amp;/i", '&', $url));
 		exit();
-		// GIJ end
 	}
 }
 
@@ -474,7 +440,7 @@ if (!function_exists('xoops_comment_delete')) {
 				for ($i = 0; $i < $count; $i++) {
 					if (false != $comment_handler->delete($comments[$i])) {
 						// store poster ID and deleted post number into array for later use
-						$poster_id = $comments[$i]->getVar('com_uid');
+						$poster_id = $comments[$i]->com_uid;
 						if ($poster_id != 0) {
 							$deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1 : ($deleted_num[$poster_id] + 1);
 						}
@@ -485,7 +451,7 @@ if (!function_exists('xoops_comment_delete')) {
 					// update user posts
 					$com_poster = $member_handler->getUser($user_id);
 					if (is_object($com_poster)) {
-						$member_handler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - $post_num);
+						$member_handler->updateUserByField($com_poster, 'posts', $com_poster->posts - $post_num);
 					}
 				}
 				return true;
@@ -568,12 +534,12 @@ if (!function_exists('icms_getModuleInfo')) {
 		global $icmsModule;
 		if (!$moduleName) {
 			if (isset($icmsModule) && is_object($icmsModule)) {
-				$icmsModules[$icmsModule->getVar('dirname')] = &$icmsModule;
-				return $icmsModules[$icmsModule->getVar('dirname')];
+				$icmsModules[$icmsModule->dirname] = &$icmsModule;
+				return $icmsModules[$icmsModule->dirname];
 			}
 		}
 		if (!isset($icmsModules[$moduleName])) {
-			if (isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {
+			if (isset($icmsModule) && is_object($icmsModule) && $icmsModule->dirname == $moduleName) {
 				$icmsModules[$moduleName] = &$icmsModule;
 			} else {
 				$hModule = icms::handler('icms_module');
@@ -606,8 +572,8 @@ if (!function_exists('icms_getModuleConfig')) {
 		global $icmsModule, $icmsModuleConfig;
 		if (!$moduleName) {
 			if (isset($icmsModule) && is_object($icmsModule)) {
-				$icmsConfigs[$icmsModule->getVar('dirname')] = &$icmsModuleConfig;
-				return $icmsConfigs[$icmsModule->getVar('dirname')];
+				$icmsConfigs[$icmsModule->dirname] = &$icmsModuleConfig;
+				return $icmsConfigs[$icmsModule->dirname];
 			}
 		}
 		// if we still did not found the icmsModule, this is because there is none
@@ -615,7 +581,7 @@ if (!function_exists('icms_getModuleConfig')) {
 			$ret = false;
 			return $ret;
 		}
-		if (isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {
+		if (isset($icmsModule) && is_object($icmsModule) && $icmsModule->dirname == $moduleName) {
 			$icmsConfigs[$moduleName] = &$icmsModuleConfig;
 		} else {
 			$module = &icms_getModuleInfo($moduleName);
@@ -624,7 +590,7 @@ if (!function_exists('icms_getModuleConfig')) {
 				return $ret;
 			}
 			$hModConfig = icms::handler('icms_config');
-			$icmsConfigs[$moduleName] = &$hModConfig->getConfigsByCat(0, $module->getVar('mid'));
+			$icmsConfigs[$moduleName] = &$hModConfig->getConfigsByCat(0, $module->mid);
 		}
 		return $icmsConfigs[$moduleName];
 	}
@@ -669,7 +635,7 @@ if (!function_exists('icms_getCurrentModuleName')) {
 	{
 		global $icmsModule;
 		if (is_object($icmsModule)) {
-			return $icmsModule->getVar('dirname');
+			return $icmsModule->dirname;
 		} else {
 			return false;
 		}
@@ -689,7 +655,7 @@ if (!function_exists('icms_userIsAdmin')) {
 		static $icms_isAdmin;
 		if (!$module) {
 			global $icmsModule;
-			$module = $icmsModule->getVar('dirname');
+			$module = $icmsModule->dirname;
 		}
 		if (isset ($icms_isAdmin[$module])) {
 			return $icms_isAdmin[$module];
@@ -703,7 +669,7 @@ if (!function_exists('icms_userIsAdmin')) {
 		if (!is_object($icmsModule)) {
 			return false;
 		}
-		$module_id = $icmsModule->getVar('mid');
+		$module_id = $icmsModule->mid;
 		$icms_isAdmin[$module] = icms::$user->isAdmin($module_id);
 		return $icms_isAdmin[$module];
 	}
@@ -726,7 +692,7 @@ if (!function_exists('icms_loadLanguageFile')) {
 		if ($module == 'core') {
 			$languagePath = ICMS_ROOT_PATH . '/language/';
 		} else {
-			$languagePath = ICMS_ROOT_PATH . '/modules/' . $module . '/language/';
+			$languagePath = ICMS_MODULES_PATH . '/' . $module . '/language/';
 		}
 		$extraPath = $admin ? 'admin/' : '';
 		$filename = $languagePath . $icmsConfig['language'] . '/' . $extraPath . $file . '.php';
@@ -1066,13 +1032,13 @@ if (!function_exists('showNav')) {
 				 */
 				$content_handler = &xoops_gethandler('content');
 				$cont = $content_handler->get($id);
-				if ($cont->getVar('content_id') > 0) {
+				if ($cont->content_id > 0) {
 					$seo = $content_handler->makeLink($cont);
-					$ret = "<a href='" . $url . "?page=" . $seo . "'>" . $cont->getVar('content_title') . "</a>";
-					if ($cont->getVar('content_supid') == 0) {
+					$ret = "<a href='" . $url . "?page=" . $seo . "'>" . $cont->content_title . "</a>";
+					if ($cont->content_supid == 0) {
 						return "<a href='" . ICMS_URL . "'>" . _CT_NAV . "</a> $separador " . $ret;
-					} elseif ($cont->getVar('content_supid') > 0) {
-						$ret = showNav($cont->getVar('content_supid'), $separador) . " $separador " . $ret;
+					} elseif ($cont->content_supid > 0) {
+						$ret = showNav($cont->content_supid, $separador) . " $separador " . $ret;
 					}
 				}
 			} else {
@@ -1658,7 +1624,7 @@ if (!function_exists('icms_getModuleHandler')) {
 		if (!isset($module_dir)) {
 			//if a module is loaded
 			if (isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {
-				$module_dir = $GLOBALS['icmsModule']->getVar('dirname');
+				$module_dir = $GLOBALS['icmsModule']->dirname;
 			} else {
 				trigger_error(_CORE_NOMODULE, E_USER_ERROR);
 			}
@@ -1740,7 +1706,7 @@ if (!function_exists('icms_getModuleAdminLink')) {
 	{
 		global $icmsModule;
 		if (!$moduleName && (isset ($icmsModule) && is_object($icmsModule))) {
-			$moduleName = $icmsModule->getVar('dirname');
+			$moduleName = $icmsModule->dirname;
 		}
 		$ret = '';
 		if ($moduleName) {
@@ -1837,7 +1803,7 @@ if (!function_exists('icms_getModuleName')) {
 	function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false)
 	{
 		if (!$moduleName) {
-			$moduleName = icms::$module->getVar('dirname');
+			$moduleName = icms::$module->dirname;
 		}
 		icms::$module = icms_getModuleInfo($moduleName);
 		$icmsModuleConfig = icms_getModuleConfig($moduleName);
@@ -1846,7 +1812,7 @@ if (!function_exists('icms_getModuleName')) {
 		}
 
 		if (!$withLink) {
-			return icms::$module->getVar('name');
+			return icms::$module->name;
 		} else {
 			$seoMode = icms_getModuleModeSEO($moduleName);
 			if ($seoMode == 'rewrite') {
@@ -1857,7 +1823,7 @@ if (!function_exists('icms_getModuleName')) {
 			} else {
 				$ret = ICMS_MODULES_URL . '/' . $moduleName . '/';
 			}
-			return '<a href="' . $ret . '">' . icms::$module->getVar('name') . '</a>';
+			return '<a href="' . $ret . '">' . icms::$module->name . '</a>';
 		}
 	}
 }
@@ -1914,7 +1880,7 @@ if (!function_exists('icms_adminMenu')) {
 	function icms_adminMenu($currentoption = 0, $breadcrumb = '')
 	{
 		global $icmsModule;
-		$icmsModule->displayAdminMenu($currentoption, $icmsModule->getVar('name') . ' | ' . $breadcrumb);
+		$icmsModule->displayAdminMenu($currentoption, $icmsModule->name . ' | ' . $breadcrumb);
 	}
 }
 
@@ -2024,7 +1990,7 @@ if (!function_exists('icms_get_module_status')) {
 	{
 		$module_handler = icms::handler('icms_module');
 		$this_module = $module_handler->getByDirname($module_name);
-		if ($this_module && $this_module->getVar('isactive')) {
+		if ($this_module && $this_module->isactive) {
 			return true;
 		}
 		return false;
@@ -2345,24 +2311,9 @@ if (!function_exists("icms_need_do_br")) {
 	 */
 	function icms_need_do_br($moduleName = false)
 	{
-		global $icmsConfig, $icmsModule;
-
-		if (!$moduleName) {
-			global $icmsModule;
-			$theModule = $icmsModule;
-			$moduleName = $theModule->getVar('dirname');
-		} else {
-			$theModule = icms_getModuleInfo($moduleName);
-		}
-
-		$groups = icms::$user->getGroups();
+		global $icmsConfig;
 
 		$editor_default = $icmsConfig['editor_default'];
-		$gperm_handler = icms::handler('icms_member_groupperm');
-		if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $theModule->getVar('mid'), $groups)) {
-			return false;
-		} else {
-			return true;
-		}
+		return !file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php");
 	}
 }

@@ -97,8 +97,8 @@ if (empty($user) || !is_object($user)) {
 /* User exists: check to see if the user has been activated.
  * If not, redirect with 'no permission' message
  */
-if ($user) {
-	if (0 === $user->getVar('level')) {
+if (false != $user) {
+	if (0 == $user->level) {
 		redirect_header(ICMS_URL . '/', 5, _US_NOACTTPADM);
 		exit();
 	}
@@ -112,15 +112,15 @@ if ($user) {
 			$online_handler->gc(300);
 			$onlines = & $online_handler->getAll();
 			foreach ($onlines as $online) {
-				if ($online['online_uid'] == $user->getVar('uid')) {
+				if ($online['online_uid'] == $user->uid) {
 					$user = false;
 					redirect_header(ICMS_URL . '/', 3, _US_MULTLOGIN);
 				}
 			}
 			if (is_object($user)) {
 				$online_handler->write(
-					$user->getVar('uid'),
-					$user->getVar('uname'),
+					$user->uid,
+					$user->uname,
 					time(),
 					0,
 					$_SERVER['REMOTE_ADDR']
@@ -145,7 +145,7 @@ if ($user) {
 	}
 
 	/* Continue with login - all negative checks have been passed */
-	$user->setVar('last_login', time());
+	$user->last_login = time();
 	if (!$member_handler->insertUser($user)) {}
 	// Regenerate a new session id and destroy old session
 
@@ -158,12 +158,12 @@ if ($user) {
 	$session->clear();
 
 	$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
-	$userSegment->set('userid', $user->getVar('uid'));
+	$userSegment->set('userid', $user->uid);
 	$userSegment->set('groups', $user->getGroups());
-	$userSegment->set('last_login', $user->getVar('last_login'));
+	$userSegment->set('last_login', $user->last_login);
 
 	if (!$member_handler->updateUserByField($user, 'last_login', time())) {}
-	$user_theme = $user->getVar('theme');
+	$user_theme = $user->theme;
 	if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
 		$session->getSegment(icms_view_theme_Object::class)->set('name', $user_theme);
 	}
@@ -177,23 +177,23 @@ if ($user) {
 	}
 	if (!empty($_POST['rememberme'])) {
 		$expire = time() + (defined('ICMS_AUTOLOGIN_LIFETIME')? ICMS_AUTOLOGIN_LIFETIME : 604800); // 1 week default
-		setcookie('autologin_uname', $user->getVar('login_name'), $expire, $icms_cookie_path, '', $secure, 0);
+		setcookie('autologin_uname', $user->login_name, $expire, $icms_cookie_path, '', $secure, 0);
 		$Ynj = date('Y-n-j');
-		setcookie('autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
+		setcookie('autologin_pass', $Ynj . ':' . md5($user->pass . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
 		$expire, $icms_cookie_path, '', $secure, 0);
 	}
 	// end of autologin hack V3.1 GIJ
 
 	// Perform some maintenance of notification records
 	$notification_handler = icms::handler('icms_data_notification');
-	$notification_handler->doLoginMaintenance($user->getVar('uid'));
+	$notification_handler->doLoginMaintenance($user->uid);
 
 	/* check if user's password has expired and send to reset password page if it has */
-	$is_expired = $user->getVar('pass_expired');
+	$is_expired = $user->pass_expired;
 	if ($is_expired == 1) {
 		redirect_header(ICMS_URL . '/user.php?op=resetpass', 5, _US_PASSEXPIRED, false);
 	} else {
-		redirect_header($redirect, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
+		redirect_header($redirect, 1, sprintf(_US_LOGGINGU, $user->uname), false);
 	}
 
 } elseif (!isset($_POST['xoops_redirect']) && !isset($_GET['xoops_redirect'])) {

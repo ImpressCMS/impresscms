@@ -22,7 +22,7 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 		'filesystem.uploads',
 		'filesystem.themes',
 		'filesystem.public',
-		'filesystem.compiled',
+		'filesystem.compiled'
 	];
 
 	/**

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bae9e51d0e20e20146ebdfa94f9108f5",
+    "content-hash": "daa04abd6d561579b3af39ab1ba513b1",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -733,6 +733,121 @@
             "time": "2020-08-19T10:27:58+00:00"
         },
         {
+            "name": "defuse/php-encryption",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/defuse/php-encryption.git",
+                "reference": "0f407c43b953d571421e0020ba92082ed5fb7620"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/defuse/php-encryption/zipball/0f407c43b953d571421e0020ba92082ed5fb7620",
+                "reference": "0f407c43b953d571421e0020ba92082ed5fb7620",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "paragonie/random_compat": ">= 2",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "nikic/php-parser": "^2.0|^3.0|^4.0",
+                "phpunit/phpunit": "^4|^5"
+            },
+            "bin": [
+                "bin/generate-defuse-key"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Defuse\\Crypto\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Hornby",
+                    "email": "taylor@defuse.ca",
+                    "homepage": "https://defuse.ca/"
+                },
+                {
+                    "name": "Scott Arciszewski",
+                    "email": "info@paragonie.com",
+                    "homepage": "https://paragonie.com"
+                }
+            ],
+            "description": "Secure PHP Encryption Library",
+            "keywords": [
+                "aes",
+                "authenticated encryption",
+                "cipher",
+                "crypto",
+                "cryptography",
+                "encrypt",
+                "encryption",
+                "openssl",
+                "security",
+                "symmetric key cryptography"
+            ],
+            "time": "2018-07-24T23:27:56+00:00"
+        },
+        {
+            "name": "dflydev/fig-cookies",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-fig-cookies.git",
+                "reference": "883233c159d00d39e940bd12cfe42c0d23420c1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-fig-cookies/zipball/883233c159d00d39e940bd12cfe42c0d23420c1c",
+                "reference": "883233c159d00d39e940bd12cfe42c0d23420c1c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "psr/http-message": "~1.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "~0.1@dev",
+                "phpunit/phpunit": "~4.5",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dflydev\\FigCookies\\": "src/Dflydev/FigCookies"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com"
+                }
+            ],
+            "description": "Cookies for PSR-7 HTTP Message Interface.",
+            "keywords": [
+                "cookies",
+                "psr-7",
+                "psr7"
+            ],
+            "time": "2016-03-28T09:10:18+00:00"
+        },
+        {
             "name": "dompdf/dompdf",
             "version": "v0.8.6",
             "source": {
@@ -799,6 +914,60 @@
             "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
             "homepage": "https://github.com/dompdf/dompdf",
             "time": "2020-08-30T22:54:22+00:00"
+        },
+        {
+            "name": "ellipse/cookie-encryption",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ellipsephp/cookie-encryption.git",
+                "reference": "cf47e50e818dcd75cfcc4bf176bc614625c9e54e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ellipsephp/cookie-encryption/zipball/cf47e50e818dcd75cfcc4bf176bc614625c9e54e",
+                "reference": "cf47e50e818dcd75cfcc4bf176bc614625c9e54e",
+                "shasum": ""
+            },
+            "require": {
+                "defuse/php-encryption": "^2.1",
+                "dflydev/fig-cookies": "^1.0",
+                "php": ">=7.1",
+                "psr/http-message": "^1.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "eloquent/phony-kahlan": "^1.0",
+                "kahlan/kahlan": "^4.0",
+                "zendframework/zend-diactoros": "^1.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ellipse\\Cookies\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "pmall",
+                    "email": "pierre.mallinjoud@gmail.com"
+                }
+            ],
+            "description": "Psr-15 middleware allowing to encrypt cookies using defuse/php-encryption",
+            "homepage": "https://github.com/ellipsephp/cookie-encryption",
+            "keywords": [
+                "cookie",
+                "encryption",
+                "middleware",
+                "psr-15",
+                "psr-7"
+            ],
+            "time": "2018-01-23T10:51:09+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -1056,6 +1225,56 @@
                 "psr-7"
             ],
             "time": "2018-07-31T19:32:56+00:00"
+        },
+        {
+            "name": "imponeer/symfony-translations-constants-loader",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/symfony-translations-constants-loader.git",
+                "reference": "136edc0de6aeba3bf2d36dc27b8f25e34a9bd0c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/136edc0de6aeba3bf2d36dc27b8f25e34a9bd0c5",
+                "reference": "136edc0de6aeba3bf2d36dc27b8f25e34a9bd0c5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 || ^8.0",
+                "symfony/translation": "^5.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^9.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\SymfonyTranslationsConstantsLoader\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "symfony/translation extension to load PHP files that are defined all translations as constants",
+            "keywords": [
+                "constants",
+                "loader",
+                "symfony",
+                "translation"
+            ],
+            "time": "2020-11-11T01:06:42+00:00"
         },
         {
             "name": "ircmaxell/random-lib",
@@ -1615,25 +1834,53 @@
             "time": "2020-04-16T13:19:50+00:00"
         },
         {
-            "name": "middlewares/aura-session",
-            "version": "v1.1.0",
+            "name": "m6web/firewall",
+            "version": "v1.0.3",
+            "target-dir": "M6Web/Component/Firewall",
             "source": {
                 "type": "git",
-                "url": "https://github.com/middlewares/aura-session.git",
-                "reference": "ed1720a16c0767866d67607dea7cb7018d6d5c2d"
+                "url": "https://github.com/M6Web/Firewall.git",
+                "reference": "3ba2b48788176c8b25288bc5320a75c94d6c0b36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/aura-session/zipball/ed1720a16c0767866d67607dea7cb7018d6d5c2d",
-                "reference": "ed1720a16c0767866d67607dea7cb7018d6d5c2d",
+                "url": "https://api.github.com/repos/M6Web/Firewall/zipball/3ba2b48788176c8b25288bc5320a75c94d6c0b36",
+                "reference": "3ba2b48788176c8b25288bc5320a75c94d6c0b36",
                 "shasum": ""
             },
             "require": {
-                "aura/session": "^2.1",
-                "php": "^7.0"
-			}
-		},
-		{
+                "ext-bcmath": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "atoum/atoum": "^2.8|^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "M6Web\\Component\\Firewall": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "M6Web",
+                    "email": "opensource@m6web.fr",
+                    "homepage": "http://tech.m6web.fr/"
+                }
+            ],
+            "description": "Library providing IP filtering features",
+            "keywords": [
+                "IP",
+                "filtering",
+                "firewall"
+            ],
+            "time": "2019-10-15T08:29:16+00:00"
+        },
+        {
             "name": "matomo/referrer-spam-blacklist",
             "version": "4.0.0",
             "source": {
@@ -1660,22 +1907,118 @@
             "time": "2020-08-10T19:54:07+00:00"
         },
         {
-            "name": "middlewares/base-path",
-            "version": "v2.0.0",
+            "name": "middlewares/aura-session",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/middlewares/base-path.git",
-                "reference": "1427d8a4976eed887626a6b99b1758e4b7b8e8fc"
+                "url": "https://github.com/middlewares/aura-session.git",
+                "reference": "ed1720a16c0767866d67607dea7cb7018d6d5c2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/base-path/zipball/1427d8a4976eed887626a6b99b1758e4b7b8e8fc",
-                "reference": "1427d8a4976eed887626a6b99b1758e4b7b8e8fc",
+                "url": "https://api.github.com/repos/middlewares/aura-session/zipball/ed1720a16c0767866d67607dea7cb7018d6d5c2d",
+                "reference": "ed1720a16c0767866d67607dea7cb7018d6d5c2d",
+                "shasum": ""
+            },
+            "require": {
+                "aura/session": "^2.1",
+                "php": "^7.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "middlewares/utils": "^2.1",
+                "phpunit/phpunit": "^6.0|^7.0",
+                "squizlabs/php_codesniffer": "^3.0",
+                "zendframework/zend-diactoros": "^1.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to manage sessions using Aura.Session",
+            "homepage": "https://github.com/middlewares/aura-session",
+            "keywords": [
+                "aura.session",
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "server",
+                "session"
+            ],
+            "time": "2018-08-04T10:41:45+00:00"
+        },
+        {
+            "name": "middlewares/base-path",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/base-path.git",
+                "reference": "a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/base-path/zipball/a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5",
+                "reference": "a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "laminas/laminas-diactoros": "^2.3",
+                "middlewares/utils": "^3.0",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8|^9",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to remove the prefix from the uri path of the request.",
+            "homepage": "https://github.com/middlewares/base-path",
+            "keywords": [
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "server"
+            ],
+            "time": "2020-12-02T00:05:17+00:00"
+        },
+        {
+            "name": "middlewares/client-ip",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/client-ip.git",
+                "reference": "26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/client-ip/zipball/26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f",
+                "reference": "26259e0fd591fc1cd3180c0abaa9d1e22e3fed5f",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2",
-
                 "psr/http-server-middleware": "^1.0"
             },
             "require-dev": {
@@ -1696,19 +2039,17 @@
             "license": [
                 "MIT"
             ],
-
-            "description": "Middleware to manage sessions using Aura.Session",
-            "homepage": "https://github.com/middlewares/aura-session",
+            "description": "Middleware to detect the client ip and save it as a request attribute",
+            "homepage": "https://github.com/middlewares/client-ip",
             "keywords": [
-                "aura.session",
+                "IP",
                 "http",
                 "middleware",
                 "psr-15",
                 "psr-7",
-                "server",
-                "session"
+                "server"
             ],
-            "time": "2018-08-04T10:41:45+00:00"
+            "time": "2019-12-03T00:18:25+00:00"
         },
         {
             "name": "middlewares/encoder",
@@ -1762,49 +2103,83 @@
             "time": "2020-01-24T16:53:17+00:00"
         },
         {
-
-            "name": "middlewares/utils",
-            "version": "v3.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/middlewares/utils.git",
-                "reference": "13689487e8f3bba10b6cc66ed206efc8b874163e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/utils/zipball/13689487e8f3bba10b6cc66ed206efc8b874163e",
-                "reference": "13689487e8f3bba10b6cc66ed206efc8b874163e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2"
-			}
-		},{
-            "name": "middlewares/referrer-spam",
+            "name": "middlewares/firewall",
             "version": "v2.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/middlewares/referrer-spam.git",
-                "reference": "29de3090af44722817ce0bdce0fa841217b010bd"
+                "url": "https://github.com/middlewares/firewall.git",
+                "reference": "5e51989947bc6adb9e85be1edeff3f1300f5b23e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/referrer-spam/zipball/29de3090af44722817ce0bdce0fa841217b010bd",
-                "reference": "29de3090af44722817ce0bdce0fa841217b010bd",
+                "url": "https://api.github.com/repos/middlewares/firewall/zipball/5e51989947bc6adb9e85be1edeff3f1300f5b23e",
+                "reference": "5e51989947bc6adb9e85be1edeff3f1300f5b23e",
+                "shasum": ""
+            },
+            "require": {
+                "m6web/firewall": "^1.0",
+                "middlewares/utils": "^3.0",
+                "php": "^7.2",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "laminas/laminas-diactoros": "^2.3",
+                "oscarotero/php-cs-fixer-config": "^1.0",
+                "phpunit/phpunit": "^8.1",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Middlewares\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Middleware to provide IP filtering",
+            "homepage": "https://github.com/middlewares/firewall",
+            "keywords": [
+                "IP",
+                "filter",
+                "firewall",
+                "http",
+                "middleware",
+                "psr-15",
+                "psr-7",
+                "security",
+                "server"
+            ],
+            "time": "2020-08-02T19:07:34+00:00"
+        },
+        {
+            "name": "middlewares/referrer-spam",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/middlewares/referrer-spam.git",
+                "reference": "276a343d0d958bb1d693107f6905a33608983372"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/middlewares/referrer-spam/zipball/276a343d0d958bb1d693107f6905a33608983372",
+                "reference": "276a343d0d958bb1d693107f6905a33608983372",
                 "shasum": ""
             },
             "require": {
                 "matomo/referrer-spam-blacklist": "*",
                 "middlewares/utils": "^3.0",
-                "mindplay/composer-locator": "^2.1",
-                "php": "^7.2",
+                "php": "^7.2 || ^8.0",
                 "psr/http-server-middleware": "^1.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.0",
                 "laminas/laminas-diactoros": "^2.2",
                 "oscarotero/php-cs-fixer-config": "^1.0",
-                "phpunit/phpunit": "^8.1",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8|^9",
                 "squizlabs/php_codesniffer": "^3.0",
                 "true/punycode": "^2.1"
             },
@@ -1834,7 +2209,7 @@
                 "security",
                 "spam"
             ],
-            "time": "2020-10-13T17:45:53+00:00"
+            "time": "2020-12-04T00:35:11+00:00"
         },
         {
             "name": "middlewares/utils",
@@ -1892,49 +2267,7 @@
                 "psr-17",
                 "psr-7"
             ],
-
             "time": "2020-11-30T20:07:15+00:00"
-        },
-        {
-            "name": "mindplay/composer-locator",
-            "version": "2.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mindplay-dk/composer-locator.git",
-                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mindplay-dk/composer-locator/zipball/629988d5305cd8ef11adbd6bb485660219c599fc",
-                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1",
-                "php": ">= 5.4"
-            },
-            "require-dev": {
-                "composer/composer": "^1",
-                "mindplay/testies": "^0.3.0",
-                "symfony/filesystem": "^2.7 || ^3.0",
-                "symfony/process": "^2.7 || ^3.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "mindplay\\composer_locator\\Plugin"
-            },
-            "autoload": {
-                "classmap": [
-                    "src/ComposerLocator.php",
-                    "src/Plugin.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Locates Composer package root folders by package name",
-            "time": "2017-05-08T12:12:31+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2163,6 +2496,51 @@
             ],
             "description": "Some classes from php-downloader v1.0 by www.ipunkt.biz package that were used in Xoops but can't be found outside",
             "time": "2018-01-29T12:09:44+00:00"
+        },
+        {
+            "name": "paragonie/random_compat",
+            "version": "v9.99.99",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/random_compat.git",
+                "reference": "84b4dfb120c6f9b4ff7b3685f9b8f1aa365a0c95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/84b4dfb120c6f9b4ff7b3685f9b8f1aa365a0c95",
+                "reference": "84b4dfb120c6f9b4ff7b3685f9b8f1aa365a0c95",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*|5.*",
+                "vimeo/psalm": "^1"
+            },
+            "suggest": {
+                "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "security@paragonie.com",
+                    "homepage": "https://paragonie.com"
+                }
+            ],
+            "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+            "keywords": [
+                "csprng",
+                "polyfill",
+                "pseudorandom",
+                "random"
+            ],
+            "time": "2018-07-02T15:55:56+00:00"
         },
         {
             "name": "phenx/php-font-lib",
@@ -4137,6 +4515,69 @@
             "time": "2020-09-07T11:33:47+00:00"
         },
         {
+            "name": "symfony/stopwatch",
+            "version": "v3.4.44",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/stopwatch.git",
+                "reference": "a7a98f40dcc382a332c3729a6d04b298ffbb8f1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/a7a98f40dcc382a332c3729a6d04b298ffbb8f1f",
+                "reference": "a7a98f40dcc382a332c3729a6d04b298ffbb8f1f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Stopwatch\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Stopwatch Component",
+            "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-03-15T09:38:08+00:00"
+        },
+        {
             "name": "symfony/string",
             "version": "v5.2.0",
             "source": {
@@ -4217,6 +4658,171 @@
             "time": "2020-10-24T12:08:07+00:00"
         },
         {
+            "name": "symfony/translation",
+            "version": "v5.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/translation.git",
+                "reference": "52f486a707510884450df461b5a6429dd7a67379"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/52f486a707510884450df461b5a6429dd7a67379",
+                "reference": "52f486a707510884450df461b5a6429dd7a67379",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php80": "^1.15",
+                "symfony/translation-contracts": "^2.3"
+            },
+            "conflict": {
+                "symfony/config": "<4.4",
+                "symfony/dependency-injection": "<5.0",
+                "symfony/http-kernel": "<5.0",
+                "symfony/twig-bundle": "<5.0",
+                "symfony/yaml": "<4.4"
+            },
+            "provide": {
+                "symfony/translation-implementation": "2.0"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/config": "^4.4|^5.0",
+                "symfony/console": "^4.4|^5.0",
+                "symfony/dependency-injection": "^5.0",
+                "symfony/finder": "^4.4|^5.0",
+                "symfony/http-kernel": "^5.0",
+                "symfony/intl": "^4.4|^5.0",
+                "symfony/service-contracts": "^1.1.2|^2",
+                "symfony/yaml": "^4.4|^5.0"
+            },
+            "suggest": {
+                "psr/log-implementation": "To use logging capability in translator",
+                "symfony/config": "",
+                "symfony/yaml": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Resources/functions.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Component\\Translation\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Translation Component",
+            "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-11-28T11:24:18+00:00"
+        },
+        {
+            "name": "symfony/translation-contracts",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/translation-contracts.git",
+                "reference": "e2eaa60b558f26a4b0354e1bbb25636efaaad105"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/e2eaa60b558f26a4b0354e1bbb25636efaaad105",
+                "reference": "e2eaa60b558f26a4b0354e1bbb25636efaaad105",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5"
+            },
+            "suggest": {
+                "symfony/translation-implementation": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                },
+                "thanks": {
+                    "name": "symfony/contracts",
+                    "url": "https://github.com/symfony/contracts"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Contracts\\Translation\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Generic abstractions related to translation",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "abstractions",
+                "contracts",
+                "decoupling",
+                "interfaces",
+                "interoperability",
+                "standards"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-09-28T13:05:58+00:00"
+        },
+        {
             "name": "true/punycode",
             "version": "v2.1.1",
             "source": {
@@ -4261,6 +4867,125 @@
                 "punycode"
             ],
             "time": "2016-11-16T10:37:54+00:00"
+        },
+        {
+            "name": "tuupola/callable-handler",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tuupola/callable-handler.git",
+                "reference": "0bc7b88630ca753de9aba8f411046856f5ca6f8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tuupola/callable-handler/zipball/0bc7b88630ca753de9aba8f411046856f5ca6f8c",
+                "reference": "0bc7b88630ca753de9aba8f411046856f5ca6f8c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0",
+                "psr/http-server-middleware": "^1.0"
+            },
+            "require-dev": {
+                "overtrue/phplint": "^1.0",
+                "phpunit/phpunit": "^7.0|^8.0|^9.0",
+                "squizlabs/php_codesniffer": "^3.2",
+                "tuupola/http-factory": "^0.4.0|^1.0",
+                "zendframework/zend-diactoros": "^1.6.0|^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tuupola\\Middleware\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mika Tuupola",
+                    "email": "tuupola@appelsiini.net",
+                    "homepage": "https://appelsiini.net/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Compatibility layer for PSR-7 double pass and PSR-15 middlewares.",
+            "homepage": "https://github.com/tuupola/callable-handler",
+            "keywords": [
+                "middleware",
+                "psr-15",
+                "psr-7"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/tuupola",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-09-09T08:31:54+00:00"
+        },
+        {
+            "name": "tuupola/server-timing-middleware",
+            "version": "0.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tuupola/server-timing-middleware.git",
+                "reference": "8c8a2b14687b24dd904b1c2f20a4640f7b970f1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tuupola/server-timing-middleware/zipball/8c8a2b14687b24dd904b1c2f20a4640f7b970f1d",
+                "reference": "8c8a2b14687b24dd904b1c2f20a4640f7b970f1d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "psr/http-server-middleware": "^1.0",
+                "symfony/stopwatch": "^3.0",
+                "tuupola/callable-handler": "^0.3.0|^1.0"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^2.0",
+                "equip/dispatch": "^2.0",
+                "overtrue/phplint": "^0.2.0",
+                "phpstan/phpstan": "^0.9.2",
+                "phpunit/phpunit": "^6.5",
+                "psr/http-message": "^1.0.1",
+                "squizlabs/php_codesniffer": "^2.5",
+                "tuupola/http-factory": "^0.3.0|^0.4.0|^1.0",
+                "zendframework/zend-diactoros": "^1.0|^2.0"
+            },
+            "suggest": {
+                "doctrine/dbal": "If you want to use the DBAL query timer."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tuupola\\Middleware\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mika Tuupola",
+                    "email": "tuupola@appelsiini.net",
+                    "homepage": "https://appelsiini.net/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PSR-7 and PSR-15 server timing middleware",
+            "homepage": "https://github.com/tuupola/server-timing-middleware",
+            "keywords": [
+                "middleware",
+                "psr-15",
+                "psr-7"
+            ],
+            "time": "2018-10-23T11:47:38+00:00"
         },
         {
             "name": "typo3/class-alias-loader",
@@ -4459,6 +5184,47 @@
                 }
             ],
             "time": "2020-11-10T18:47:58+00:00"
+        },
+        {
+            "name": "mindplay/composer-locator",
+            "version": "2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mindplay-dk/composer-locator.git",
+                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mindplay-dk/composer-locator/zipball/629988d5305cd8ef11adbd6bb485660219c599fc",
+                "reference": "629988d5305cd8ef11adbd6bb485660219c599fc",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1",
+                "php": ">= 5.4"
+            },
+            "require-dev": {
+                "composer/composer": "^1",
+                "mindplay/testies": "^0.3.0",
+                "symfony/filesystem": "^2.7 || ^3.0",
+                "symfony/process": "^2.7 || ^3.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "mindplay\\composer_locator\\Plugin"
+            },
+            "autoload": {
+                "classmap": [
+                    "src/ComposerLocator.php",
+                    "src/Plugin.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Locates Composer package root folders by package name",
+            "time": "2017-05-08T12:12:31+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -5274,6 +6040,306 @@
                 }
             ],
             "time": "2020-12-01T04:58:47+00:00"
+        },
+        {
+            "name": "roave/security-advisories",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Roave/SecurityAdvisories.git",
+                "reference": "5ae6aa6482b72946bc0d279c3b54dc1dbeae68d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/5ae6aa6482b72946bc0d279c3b54dc1dbeae68d8",
+                "reference": "5ae6aa6482b72946bc0d279c3b54dc1dbeae68d8",
+                "shasum": ""
+            },
+            "conflict": {
+                "3f/pygmentize": "<1.2",
+                "adodb/adodb-php": "<5.20.12",
+                "alterphp/easyadmin-extension-bundle": ">=1.2,<1.2.11|>=1.3,<1.3.1",
+                "amphp/artax": "<1.0.6|>=2,<2.0.6",
+                "amphp/http": "<1.0.1",
+                "amphp/http-client": ">=4,<4.4",
+                "api-platform/core": ">=2.2,<2.2.10|>=2.3,<2.3.6",
+                "asymmetricrypt/asymmetricrypt": ">=0,<9.9.99",
+                "aws/aws-sdk-php": ">=3,<3.2.1",
+                "bagisto/bagisto": "<0.1.5",
+                "barrelstrength/sprout-base-email": "<1.2.7",
+                "barrelstrength/sprout-forms": "<3.9",
+                "baserproject/basercms": ">=4,<=4.3.6",
+                "bolt/bolt": "<3.7.1",
+                "brightlocal/phpwhois": "<=4.2.5",
+                "buddypress/buddypress": "<5.1.2",
+                "bugsnag/bugsnag-laravel": ">=2,<2.0.2",
+                "cakephp/cakephp": ">=1.3,<1.3.18|>=2,<2.4.99|>=2.5,<2.5.99|>=2.6,<2.6.12|>=2.7,<2.7.6|>=3,<3.5.18|>=3.6,<3.6.15|>=3.7,<3.7.7",
+                "cart2quote/module-quotation": ">=4.1.6,<=4.4.5|>=5,<5.4.4",
+                "cartalyst/sentry": "<=2.1.6",
+                "centreon/centreon": "<18.10.8|>=19,<19.4.5",
+                "cesnet/simplesamlphp-module-proxystatistics": "<3.1",
+                "codeigniter/framework": "<=3.0.6",
+                "composer/composer": "<=1-alpha.11",
+                "contao-components/mediaelement": ">=2.14.2,<2.21.1",
+                "contao/core": ">=2,<3.5.39",
+                "contao/core-bundle": ">=4,<4.4.46|>=4.5,<4.8.6",
+                "contao/listing-bundle": ">=4,<4.4.8",
+                "datadog/dd-trace": ">=0.30,<0.30.2",
+                "david-garcia/phpwhois": "<=4.3.1",
+                "derhansen/sf_event_mgt": "<4.3.1|>=5,<5.1.1",
+                "doctrine/annotations": ">=1,<1.2.7",
+                "doctrine/cache": ">=1,<1.3.2|>=1.4,<1.4.2",
+                "doctrine/common": ">=2,<2.4.3|>=2.5,<2.5.1",
+                "doctrine/dbal": ">=2,<2.0.8|>=2.1,<2.1.2",
+                "doctrine/doctrine-bundle": "<1.5.2",
+                "doctrine/doctrine-module": "<=0.7.1",
+                "doctrine/mongodb-odm": ">=1,<1.0.2",
+                "doctrine/mongodb-odm-bundle": ">=2,<3.0.1",
+                "doctrine/orm": ">=2,<2.4.8|>=2.5,<2.5.1",
+                "dolibarr/dolibarr": "<11.0.4",
+                "dompdf/dompdf": ">=0.6,<0.6.2",
+                "drupal/core": ">=7,<7.72|>=8,<8.8.8|>=8.9,<8.9.1|>=9,<9.0.1",
+                "drupal/drupal": ">=7,<7.72|>=8,<8.8.8|>=8.9,<8.9.1|>=9,<9.0.1",
+                "endroid/qr-code-bundle": "<3.4.2",
+                "enshrined/svg-sanitize": "<0.13.1",
+                "erusev/parsedown": "<1.7.2",
+                "ezsystems/demobundle": ">=5.4,<5.4.6.1",
+                "ezsystems/ezdemo-ls-extension": ">=5.4,<5.4.2.1",
+                "ezsystems/ezfind-ls": ">=5.3,<5.3.6.1|>=5.4,<5.4.11.1|>=2017.12,<2017.12.0.1",
+                "ezsystems/ezplatform": ">=1.7,<1.7.9.1|>=1.13,<1.13.5.1|>=2.5,<2.5.4",
+                "ezsystems/ezplatform-admin-ui": ">=1.3,<1.3.5|>=1.4,<1.4.6",
+                "ezsystems/ezplatform-admin-ui-assets": ">=4,<4.2.1|>=5,<5.0.1|>=5.1,<5.1.1",
+                "ezsystems/ezplatform-kernel": ">=1,<1.0.2.1",
+                "ezsystems/ezplatform-user": ">=1,<1.0.1",
+                "ezsystems/ezpublish-kernel": ">=5.3,<5.3.12.1|>=5.4,<5.4.14.2|>=6,<6.7.9.1|>=6.8,<6.13.6.3|>=7,<7.2.4.1|>=7.3,<7.3.2.1|>=7.5,<7.5.7.1",
+                "ezsystems/ezpublish-legacy": ">=5.3,<5.3.12.6|>=5.4,<5.4.14.1|>=2011,<2017.12.7.2|>=2018.6,<2018.6.1.4|>=2018.9,<2018.9.1.3|>=2019.3,<2019.3.4.2",
+                "ezsystems/platform-ui-assets-bundle": ">=4.2,<4.2.3",
+                "ezsystems/repository-forms": ">=2.3,<2.3.2.1",
+                "ezyang/htmlpurifier": "<4.1.1",
+                "firebase/php-jwt": "<2",
+                "fooman/tcpdf": "<6.2.22",
+                "fossar/tcpdf-parser": "<6.2.22",
+                "friendsofsymfony/oauth2-php": "<1.3",
+                "friendsofsymfony/rest-bundle": ">=1.2,<1.2.2",
+                "friendsofsymfony/user-bundle": ">=1.2,<1.3.5",
+                "friendsoftypo3/mediace": ">=7.6.2,<7.6.5",
+                "fuel/core": "<1.8.1",
+                "getgrav/grav": "<1.7-beta.8",
+                "gos/web-socket-bundle": "<1.10.4|>=2,<2.6.1|>=3,<3.3",
+                "gree/jose": "<=2.2",
+                "gregwar/rst": "<1.0.3",
+                "guzzlehttp/guzzle": ">=4-rc.2,<4.2.4|>=5,<5.3.1|>=6,<6.2.1",
+                "illuminate/auth": ">=4,<4.0.99|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.10",
+                "illuminate/cookie": ">=4,<=4.0.11|>=4.1,<=4.1.99999|>=4.2,<=4.2.99999|>=5,<=5.0.99999|>=5.1,<=5.1.99999|>=5.2,<=5.2.99999|>=5.3,<=5.3.99999|>=5.4,<=5.4.99999|>=5.5,<=5.5.49|>=5.6,<=5.6.99999|>=5.7,<=5.7.99999|>=5.8,<=5.8.99999|>=6,<6.18.31|>=7,<7.22.4",
+                "illuminate/database": ">=4,<4.0.99|>=4.1,<4.1.29|>=5.5,<=5.5.44|>=6,<6.18.34|>=7,<7.23.2",
+                "illuminate/encryption": ">=4,<=4.0.11|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.40|>=5.6,<5.6.15",
+                "illuminate/view": ">=7,<7.1.2",
+                "ivankristianto/phpwhois": "<=4.3",
+                "james-heinrich/getid3": "<1.9.9",
+                "joomla/session": "<1.3.1",
+                "jsmitty12/phpwhois": "<5.1",
+                "kazist/phpwhois": "<=4.2.6",
+                "kitodo/presentation": "<3.1.2",
+                "kreait/firebase-php": ">=3.2,<3.8.1",
+                "la-haute-societe/tcpdf": "<6.2.22",
+                "laravel/framework": ">=4,<4.0.99|>=4.1,<=4.1.99999|>=4.2,<=4.2.99999|>=5,<=5.0.99999|>=5.1,<=5.1.99999|>=5.2,<=5.2.99999|>=5.3,<=5.3.99999|>=5.4,<=5.4.99999|>=5.5,<=5.5.49|>=5.6,<=5.6.99999|>=5.7,<=5.7.99999|>=5.8,<=5.8.99999|>=6,<6.18.34|>=7,<7.23.2",
+                "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
+                "league/commonmark": "<0.18.3",
+                "librenms/librenms": "<1.53",
+                "magento/community-edition": ">=2,<2.2.10|>=2.3,<2.3.3",
+                "magento/magento1ce": "<1.9.4.3",
+                "magento/magento1ee": ">=1,<1.14.4.3",
+                "magento/product-community-edition": ">=2,<2.2.10|>=2.3,<2.3.2-p.2",
+                "marcwillmann/turn": "<0.3.3",
+                "mittwald/typo3_forum": "<1.2.1",
+                "monolog/monolog": ">=1.8,<1.12",
+                "namshi/jose": "<2.2",
+                "nystudio107/craft-seomatic": "<3.3",
+                "nzo/url-encryptor-bundle": ">=4,<4.3.2|>=5,<5.0.1",
+                "october/backend": ">=1.0.319,<1.0.467",
+                "october/cms": ">=1.0.319,<1.0.466",
+                "october/october": ">=1.0.319,<1.0.466",
+                "october/rain": ">=1.0.319,<1.0.468",
+                "onelogin/php-saml": "<2.10.4",
+                "oneup/uploader-bundle": "<1.9.3|>=2,<2.1.5",
+                "openid/php-openid": "<2.3",
+                "openmage/magento-lts": "<19.4.6|>=20,<20.0.2",
+                "oro/crm": ">=1.7,<1.7.4",
+                "oro/platform": ">=1.7,<1.7.4",
+                "padraic/humbug_get_contents": "<1.1.2",
+                "pagarme/pagarme-php": ">=0,<3",
+                "paragonie/random_compat": "<2",
+                "paypal/merchant-sdk-php": "<3.12",
+                "pear/archive_tar": "<1.4.4",
+                "personnummer/personnummer": "<3.0.2",
+                "phpfastcache/phpfastcache": ">=5,<5.0.13",
+                "phpmailer/phpmailer": "<6.1.6",
+                "phpmussel/phpmussel": ">=1,<1.6",
+                "phpmyadmin/phpmyadmin": "<4.9.2",
+                "phpoffice/phpexcel": "<1.8.2",
+                "phpoffice/phpspreadsheet": "<1.8",
+                "phpunit/phpunit": ">=4.8.19,<4.8.28|>=5.0.10,<5.6.3",
+                "phpwhois/phpwhois": "<=4.2.5",
+                "phpxmlrpc/extras": "<0.6.1",
+                "pimcore/pimcore": "<6.3",
+                "prestashop/autoupgrade": ">=4,<4.10.1",
+                "prestashop/gamification": "<2.3.2",
+                "prestashop/ps_facetedsearch": "<3.4.1",
+                "privatebin/privatebin": "<1.2.2|>=1.3,<1.3.2",
+                "propel/propel": ">=2-alpha.1,<=2-alpha.7",
+                "propel/propel1": ">=1,<=1.7.1",
+                "pusher/pusher-php-server": "<2.2.1",
+                "rainlab/debugbar-plugin": "<3.1",
+                "robrichards/xmlseclibs": "<3.0.4",
+                "sabre/dav": ">=1.6,<1.6.99|>=1.7,<1.7.11|>=1.8,<1.8.9",
+                "scheb/two-factor-bundle": ">=0,<3.26|>=4,<4.11",
+                "sensiolabs/connect": "<4.2.3",
+                "serluck/phpwhois": "<=4.2.6",
+                "shopware/shopware": "<5.3.7",
+                "silverstripe/admin": ">=1.0.3,<1.0.4|>=1.1,<1.1.1",
+                "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
+                "silverstripe/cms": "<4.3.6|>=4.4,<4.4.4",
+                "silverstripe/comments": ">=1.3,<1.9.99|>=2,<2.9.99|>=3,<3.1.1",
+                "silverstripe/forum": "<=0.6.1|>=0.7,<=0.7.3",
+                "silverstripe/framework": "<4.4.7|>=4.5,<4.5.4",
+                "silverstripe/graphql": ">=2,<2.0.5|>=3,<3.1.2|>=3.2,<3.2.4",
+                "silverstripe/registry": ">=2.1,<2.1.2|>=2.2,<2.2.1",
+                "silverstripe/restfulserver": ">=1,<1.0.9|>=2,<2.0.4",
+                "silverstripe/subsites": ">=2,<2.1.1",
+                "silverstripe/taxonomy": ">=1.3,<1.3.1|>=2,<2.0.1",
+                "silverstripe/userforms": "<3",
+                "simple-updates/phpwhois": "<=1",
+                "simplesamlphp/saml2": "<1.10.6|>=2,<2.3.8|>=3,<3.1.4",
+                "simplesamlphp/simplesamlphp": "<1.18.6",
+                "simplesamlphp/simplesamlphp-module-infocard": "<1.0.1",
+                "simplito/elliptic-php": "<1.0.6",
+                "slim/slim": "<2.6",
+                "smarty/smarty": "<3.1.33",
+                "socalnick/scn-social-auth": "<1.15.2",
+                "spoonity/tcpdf": "<6.2.22",
+                "squizlabs/php_codesniffer": ">=1,<2.8.1|>=3,<3.0.1",
+                "ssddanbrown/bookstack": "<0.29.2",
+                "stormpath/sdk": ">=0,<9.9.99",
+                "studio-42/elfinder": "<2.1.49",
+                "sulu/sulu": "<1.6.34|>=2,<2.0.10|>=2.1,<2.1.1",
+                "swiftmailer/swiftmailer": ">=4,<5.4.5",
+                "sylius/admin-bundle": ">=1,<1.0.17|>=1.1,<1.1.9|>=1.2,<1.2.2",
+                "sylius/grid": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
+                "sylius/grid-bundle": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
+                "sylius/resource-bundle": "<1.3.14|>=1.4,<1.4.7|>=1.5,<1.5.2|>=1.6,<1.6.4",
+                "sylius/sylius": "<1.3.16|>=1.4,<1.4.12|>=1.5,<1.5.9|>=1.6,<1.6.5",
+                "symbiote/silverstripe-multivaluefield": ">=3,<3.0.99",
+                "symbiote/silverstripe-versionedfiles": "<=2.0.3",
+                "symfony/cache": ">=3.1,<3.4.35|>=4,<4.2.12|>=4.3,<4.3.8",
+                "symfony/dependency-injection": ">=2,<2.0.17|>=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
+                "symfony/error-handler": ">=4.4,<4.4.4|>=5,<5.0.4",
+                "symfony/form": ">=2.3,<2.3.35|>=2.4,<2.6.12|>=2.7,<2.7.50|>=2.8,<2.8.49|>=3,<3.4.20|>=4,<4.0.15|>=4.1,<4.1.9|>=4.2,<4.2.1",
+                "symfony/framework-bundle": ">=2,<2.3.18|>=2.4,<2.4.8|>=2.5,<2.5.2|>=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
+                "symfony/http-foundation": ">=2,<2.8.52|>=3,<3.4.35|>=4,<4.2.12|>=4.3,<4.3.8|>=4.4,<4.4.7|>=5,<5.0.7",
+                "symfony/http-kernel": ">=2,<2.8.52|>=3,<3.4.35|>=4,<4.2.12|>=4.3,<4.4.13|>=5,<5.1.5",
+                "symfony/intl": ">=2.7,<2.7.38|>=2.8,<2.8.31|>=3,<3.2.14|>=3.3,<3.3.13",
+                "symfony/mime": ">=4.3,<4.3.8",
+                "symfony/phpunit-bridge": ">=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
+                "symfony/polyfill": ">=1,<1.10",
+                "symfony/polyfill-php55": ">=1,<1.10",
+                "symfony/proxy-manager-bridge": ">=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
+                "symfony/routing": ">=2,<2.0.19",
+                "symfony/security": ">=2,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7|>=4.4,<4.4.7|>=5,<5.0.7",
+                "symfony/security-bundle": ">=2,<2.7.48|>=2.8,<2.8.41|>=3,<3.3.17|>=3.4,<3.4.11|>=4,<4.0.11",
+                "symfony/security-core": ">=2.4,<2.6.13|>=2.7,<2.7.9|>=2.7.30,<2.7.32|>=2.8,<2.8.37|>=3,<3.3.17|>=3.4,<3.4.7|>=4,<4.0.7",
+                "symfony/security-csrf": ">=2.4,<2.7.48|>=2.8,<2.8.41|>=3,<3.3.17|>=3.4,<3.4.11|>=4,<4.0.11",
+                "symfony/security-guard": ">=2.8,<2.8.41|>=3,<3.3.17|>=3.4,<3.4.11|>=4,<4.0.11",
+                "symfony/security-http": ">=2.3,<2.3.41|>=2.4,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.2.12|>=4.3,<4.3.8|>=4.4,<4.4.7|>=5,<5.0.7",
+                "symfony/serializer": ">=2,<2.0.11",
+                "symfony/symfony": ">=2,<2.8.52|>=3,<3.4.35|>=4,<4.2.12|>=4.3,<4.4.13|>=5,<5.1.5",
+                "symfony/translation": ">=2,<2.0.17",
+                "symfony/validator": ">=2,<2.0.24|>=2.1,<2.1.12|>=2.2,<2.2.5|>=2.3,<2.3.3",
+                "symfony/var-exporter": ">=4.2,<4.2.12|>=4.3,<4.3.8",
+                "symfony/web-profiler-bundle": ">=2,<2.3.19|>=2.4,<2.4.9|>=2.5,<2.5.4",
+                "symfony/yaml": ">=2,<2.0.22|>=2.1,<2.1.7",
+                "t3g/svg-sanitizer": "<1.0.3",
+                "tecnickcom/tcpdf": "<6.2.22",
+                "thelia/backoffice-default-template": ">=2.1,<2.1.2",
+                "thelia/thelia": ">=2.1-beta.1,<2.1.3",
+                "theonedemon/phpwhois": "<=4.2.5",
+                "titon/framework": ">=0,<9.9.99",
+                "truckersmp/phpwhois": "<=4.3.1",
+                "twig/twig": "<1.38|>=2,<2.7",
+                "typo3/cms": ">=6.2,<6.2.30|>=7,<7.6.32|>=8,<8.7.30|>=9,<9.5.20|>=10,<10.4.6",
+                "typo3/cms-core": ">=8,<8.7.30|>=9,<9.5.20|>=10,<10.4.6",
+                "typo3/flow": ">=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1|>=2.3,<2.3.16|>=3,<3.0.10|>=3.1,<3.1.7|>=3.2,<3.2.7|>=3.3,<3.3.5",
+                "typo3/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4",
+                "typo3/phar-stream-wrapper": ">=1,<2.1.1|>=3,<3.1.1",
+                "ua-parser/uap-php": "<3.8",
+                "usmanhalalit/pixie": "<1.0.3|>=2,<2.0.2",
+                "verot/class.upload.php": "<=1.0.3|>=2,<=2.0.4",
+                "wallabag/tcpdf": "<6.2.22",
+                "willdurand/js-translation-bundle": "<2.1.1",
+                "yii2mod/yii2-cms": "<1.9.2",
+                "yiisoft/yii": ">=1.1.14,<1.1.15",
+                "yiisoft/yii2": "<2.0.15",
+                "yiisoft/yii2-bootstrap": "<2.0.4",
+                "yiisoft/yii2-dev": "<2.0.15",
+                "yiisoft/yii2-elasticsearch": "<2.0.5",
+                "yiisoft/yii2-gii": "<2.0.4",
+                "yiisoft/yii2-jui": "<2.0.4",
+                "yiisoft/yii2-redis": "<2.0.8",
+                "yourls/yourls": "<1.7.4",
+                "zendframework/zend-cache": ">=2.4,<2.4.8|>=2.5,<2.5.3",
+                "zendframework/zend-captcha": ">=2,<2.4.9|>=2.5,<2.5.2",
+                "zendframework/zend-crypt": ">=2,<2.4.9|>=2.5,<2.5.2",
+                "zendframework/zend-db": ">=2,<2.0.99|>=2.1,<2.1.99|>=2.2,<2.2.10|>=2.3,<2.3.5",
+                "zendframework/zend-developer-tools": ">=1.2.2,<1.2.3",
+                "zendframework/zend-diactoros": ">=1,<1.8.4",
+                "zendframework/zend-feed": ">=1,<2.10.3",
+                "zendframework/zend-form": ">=2,<2.2.7|>=2.3,<2.3.1",
+                "zendframework/zend-http": ">=1,<2.8.1",
+                "zendframework/zend-json": ">=2.1,<2.1.6|>=2.2,<2.2.6",
+                "zendframework/zend-ldap": ">=2,<2.0.99|>=2.1,<2.1.99|>=2.2,<2.2.8|>=2.3,<2.3.3",
+                "zendframework/zend-mail": ">=2,<2.4.11|>=2.5,<2.7.2",
+                "zendframework/zend-navigation": ">=2,<2.2.7|>=2.3,<2.3.1",
+                "zendframework/zend-session": ">=2,<2.0.99|>=2.1,<2.1.99|>=2.2,<2.2.9|>=2.3,<2.3.4",
+                "zendframework/zend-validator": ">=2.3,<2.3.6",
+                "zendframework/zend-view": ">=2,<2.2.7|>=2.3,<2.3.1",
+                "zendframework/zend-xmlrpc": ">=2.1,<2.1.6|>=2.2,<2.2.6",
+                "zendframework/zendframework": "<2.5.1",
+                "zendframework/zendframework1": "<1.12.20",
+                "zendframework/zendopenid": ">=2,<2.0.2",
+                "zendframework/zendxml": ">=1,<1.0.1",
+                "zetacomponents/mail": "<1.8.2",
+                "zf-commons/zfc-user": "<1.2.2",
+                "zfcampus/zf-apigility-doctrine": ">=1,<1.0.3",
+                "zfr/zfr-oauth2-server-module": "<0.1.2"
+            },
+            "type": "metapackage",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "role": "maintainer"
+                },
+                {
+                    "name": "Ilya Tribusean",
+                    "email": "slash3b@gmail.com",
+                    "role": "maintainer"
+                }
+            ],
+            "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
+            "funding": [
+                {
+                    "url": "https://github.com/Ocramius",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/roave/security-advisories",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-09-13T17:11:14+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -6332,7 +7398,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "roave/security-advisories": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -6346,5 +7414,8 @@
         "ext-session": "*"
     },
     "platform-dev": [],
+    "platform-overrides": {
+        "php": "7.3.0"
+    },
     "plugin-api-version": "1.1.0"
 }

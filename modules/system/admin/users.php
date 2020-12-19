@@ -91,8 +91,8 @@ switch ($op) {
 		$userdata = & $user_handler->get($uid);
 		icms_core_Message::confirm(array('fct' => 'users',
 											'op' => 'delUserConf',
-											'del_uid' => $userdata->getVar('uid')
-										), 'admin.php', sprintf(_AM_AYSYWTDU, $userdata->getVar('uname')));
+											'del_uid' => $userdata->uid
+										), 'admin.php', sprintf(_AM_AYSYWTDU, $userdata->uname));
 		icms_cp_footer();
 		break;
 
@@ -134,15 +134,15 @@ switch ($op) {
 			if (in_array(ICMS_GROUP_ADMIN, $delgroups)) {
 				$output .= sprintf(
 						_AM_ADMIN_CAN_NOT_BE_DELETEED . ' (' . _AM_NICKNAME . ': %s)',
-						$deluser->getVar('uname')
+						$deluser->uname
 					) . '<br />';
 			} else {
 				if (!$user_handler->delete($deluser)) {
-					$output .= _AM_COULD_NOT_DELETE . ' ' . $deluser->getVar('uname') . '<br />';
+					$output .= _AM_COULD_NOT_DELETE . ' ' . $deluser->uname . '<br />';
 				} else {
-					$output .= $deluser->getVar('uname') . ' ' . _AM_USERS_DELETEED . '<br />';
+					$output .= $deluser->uname . ' ' . _AM_USERS_DELETEED . '<br />';
 				}
-				xoops_notification_deletebyuser($deluser->getVar('uid'));
+				xoops_notification_deletebyuser($deluser->uid);
 			}
 		}
 		icms_cp_header();
@@ -159,11 +159,11 @@ switch ($op) {
 		$groups = $user->getGroups();
 		if (in_array(ICMS_GROUP_ADMIN, $groups)) {
 			icms_cp_header();
-			echo sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED . '.(' . _AM_NICKNAME . ': %s)', $user->getVar('uname'));
+			echo sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED . '.(' . _AM_NICKNAME . ': %s)', $user->uname);
 			icms_cp_footer();
 		} elseif (!$user_handler->delete($user)) {
 			icms_cp_header();
-			echo _AM_ADMIN_CAN_NOT_BE_DELETEED . $deluser->getVar('uname');
+			echo _AM_ADMIN_CAN_NOT_BE_DELETEED . $deluser->uname;
 			icms_cp_footer();
 		} else {
 			$online_handler = icms::handler('icms_core_Online');
@@ -191,20 +191,20 @@ switch ($op) {
 			} else {
 				$newuser = & $user_handler->create();
 				if (isset($user_viewemail)) {
-					$newuser->setVar('user_viewemail', $user_viewemail);
+					$newuser->user_viewemail = $user_viewemail;
 				}
 				if (isset($attachsig)) {
-					$newuser->setVar('attachsig', $attachsig);
+					$newuser->attachsig = $attachsig;
 				}
-				$newuser->setVar('name', $name);
-				$newuser->setVar('login_name', $login_name);
-				$newuser->setVar('uname', $username);
-				$newuser->setVar('email', $email);
-				$newuser->setVar('url', formatURL($url));
-				$newuser->setVar('user_avatar', 'blank.gif');
-				$newuser->setVar('user_regdate', date('U'));
-				$newuser->setVar('user_from', $user_from);
-				$newuser->setVar('user_sig', $user_sig);
+				$newuser->name = $name;
+				$newuser->login_name = $login_name;
+				$newuser->uname = $username;
+				$newuser->email = $email;
+				$newuser->url = formatURL($url);
+				$newuser->user_avatar = 'blank.gif';
+				$newuser->user_regdate = date('U');
+				$newuser->user_from = $user_from;
+				$newuser->user_sig = $user_sig;
 				if ($pass2 != '') {
 					if ($password != $pass2) {
 						icms_cp_header();
@@ -225,20 +225,20 @@ switch ($op) {
 
 					$icmspass = new icms_core_Password();
 					$password = $icmspass->encryptPass($password, $salt, $enc_type);
-					$newuser->setVar('pass', $password);
+					$newuser->pass = $password;
 				}
-				$newuser->setVar('timezone_offset', $timezone_offset);
-				$newuser->setVar('uorder', $uorder);
-				$newuser->setVar('umode', $umode);
-				$newuser->setVar('notify_method', $notify_method);
-				$newuser->setVar('notify_mode', $notify_mode);
-				$newuser->setVar('bio', $bio);
-				$newuser->setVar('rank', $rank);
-				$newuser->setVar('level', 1);
-				$newuser->setVar('user_occ', $user_occ);
-				$newuser->setVar('user_intrest', $user_intrest);
-				$newuser->setVar('user_mailok', $user_mailok);
-				$newuser->setVar('language', $language);
+				$newuser->timezone_offset = $timezone_offset;
+				$newuser->uorder = $uorder;
+				$newuser->umode = $umode;
+				$newuser->notify_method = $notify_method;
+				$newuser->notify_mode = $notify_mode;
+				$newuser->bio = $bio;
+				$newuser->rank = $rank;
+				$newuser->level = 1;
+				$newuser->user_occ = $user_occ;
+				$newuser->user_intrest = $user_intrest;
+				$newuser->user_mailok = $user_mailok;
+				$newuser->language = $language;
 
 					if (!$user_handler->insert($newuser)) {
 						$adduser_errormsg = _AM_CNRNU;
@@ -248,7 +248,7 @@ switch ($op) {
 							$groups = array(ICMS_GROUP_ANONYMOUS);
 						}
 						foreach ($groups as $group) {
-							if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
+							if (!$member_handler->addUserToGroup($group, $newuser->uid)) {
 								$groups_failed[] = $group;
 							}
 						}

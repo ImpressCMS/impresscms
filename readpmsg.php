@@ -81,7 +81,7 @@ if ($delete != 0) {
 
 	$pm = & $pm_handler->get($msg_id);
 
-	if (!is_object($pm) || $pm->getVar('to_userid') != icms::$user->getVar('uid') || !$pm_handler->delete($pm)) {
+	if (!is_object($pm) || $pm->to_userid != icms::$user->uid || !$pm_handler->delete($pm)) {
 		exit();
 	}
 
@@ -93,7 +93,7 @@ require ICMS_ROOT_PATH . '/header.php';
 
 $form = new icms_form_Theme('', 'delete', 'readpmsg.php', 'post', true);
 
-$criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->getVar('uid')));
+$criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->uid));
 $criteria->setLimit(1);
 $criteria->setStart($start);
 $criteria->setSort('msg_time');
@@ -115,15 +115,15 @@ if (is_object($poster) == true) {
 // no need to do this for deleted users
 	$icmsTpl->assign(
 			array(
-				'uname' =>  $poster->getVar('uname'),
-				'poster_id' =>  $poster->getVar('uid'),
+				'uname' =>  $poster->uname,
+				'poster_id' =>  $poster->uid,
 				'gravatar' =>  $poster->gravatar('G', $GLOBALS['icmsConfigUser']['avatar_width']),
 				'online' =>  $poster->isOnline()
 			)
 	);
 
-	if ($poster->getVar("user_from") != "") {
-		$icmsTpl->assign('from', $poster->getVar("user_from"));
+	if ($poster->user_from != "") {
+		$icmsTpl->assign('from', $poster->user_from);
 	}
 
 } else {
@@ -138,7 +138,7 @@ $permHandler = icms::handler('icms_member_groupperm');
 $filterType = $permHandler->checkRight('use_wysiwygeditor', 1, $poster->getGroups())?'html':'text';
 
 $form->addElement(new icms_form_elements_Hidden('delete', '1'));
-$form->addElement(new icms_form_elements_Hidden('msg_id', $pm_arr[0]->getVar("msg_id")));
+$form->addElement(new icms_form_elements_Hidden('msg_id', $pm_arr[0]->msg_id));
 
 
 $form->addElement(new icms_form_elements_Button('', 'delete_message', _DELETE, 'submit'));
@@ -150,13 +150,13 @@ $icmsTpl->assign(
 		array(
 			'total_messages' => $total_messages,
 			'messages' => $pm_arr,
-			'uid' => icms::$user->getVar('uid'),
-			'subject' => $pm_arr[0]->getVar('subject'),
+			'uid' => icms::$user->uid,
+			'subject' => $pm_arr[0]->subject,
 			'poster' => $poster,
-			'image' => $pm_arr[0]->getVar('msg_image', 'E'),
-			'sent_time' => formatTimestamp($pm_arr[0]->getVar('msg_time')),
+			'image' => $pm_arr[0]->getVar("msg_image", "E"),
+			'sent_time' => formatTimestamp($pm_arr[0]->msg_time),
 			'message_body' => icms_core_DataFilter::checkVar($var, $filterType, 'output'),
-			'msg_id' => $pm_arr[0]->getVar('msg_id'),
+			'msg_id' => $pm_arr[0]->msg_id,
 			'form' => $form->render(),
 			'previous' => $previous,
 			'next' => $next
