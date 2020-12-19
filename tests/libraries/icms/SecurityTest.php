@@ -2,6 +2,8 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 use Aura\Session\SessionFactory;
+use icms;
+use icms_core_Security;
 use ImpressCMS\Core\Providers\SecurityServiceProvider;
 use League\Container\Container;
 use PHPUnit\Framework\TestCase;
@@ -50,7 +52,7 @@ class SecurityTest extends TestCase {
 		$container = new Container();
 		$container->addServiceProvider(SecurityServiceProvider::class);
 		/**
-		 * @var \icms_core_Security $instance
+		 * @var icms_core_Security $instance
 		 */
 		$instance = $container->get('security');
         $new_token = $instance->createToken();
@@ -59,9 +61,9 @@ class SecurityTest extends TestCase {
         $this->assertTrue($instance->validateToken($new_token), 'Can\'t validate correct token');
     }
 
-	protected function setUp()
+	protected function setUp(): void
 	{
-		\icms::$session = (new SessionFactory())->newInstance([]);
+		icms::$session = (new SessionFactory())->newInstance([]);
 
 		parent::setUp();
 	}
