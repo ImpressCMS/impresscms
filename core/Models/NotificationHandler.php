@@ -39,6 +39,7 @@
 namespace ImpressCMS\Core\Models;
 
 // RMV-NOTIFY
+use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 
@@ -76,9 +77,9 @@ class NotificationHandler extends AbstractExtendedHandler {
 	public function &getNotification($module_id, $category, $item_id, $event, $user_id) {
 		$criteria = new CriteriaCompo();
 		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_category', icms::$xoopsDB->escape($category)));
 		$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
-		$criteria->add(new CriteriaItem('not_event', \icms::$xoopsDB->escape($event)));
+		$criteria->add(new CriteriaItem('not_event', icms::$xoopsDB->escape($event)));
 		$criteria->add(new CriteriaItem('not_uid', (int) $user_id));
 		$objects = $this->getObjects($criteria);
 		if (count($objects) === 1) {
@@ -103,9 +104,9 @@ class NotificationHandler extends AbstractExtendedHandler {
 	public function isSubscribed($category, $item_id, $event, $module_id, $user_id) {
 		$criteria = new CriteriaCompo();
 		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_category', icms::$xoopsDB->escape($category)));
 		$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
-		$criteria->add(new CriteriaItem('not_event', \icms::$xoopsDB->escape($event)));
+		$criteria->add(new CriteriaItem('not_event', icms::$xoopsDB->escape($event)));
 		$criteria->add(new CriteriaItem('not_uid', (int) $user_id));
 		return $this->getCount($criteria);
 	}
@@ -127,20 +128,20 @@ class NotificationHandler extends AbstractExtendedHandler {
 	 */
 	public function subscribe($category, $item_id, $events, $mode = null, $module_id = null, $user_id = null) {
 		if (!isset($user_id)) {
-			if (empty(\icms::$user)) {
+			if (empty(icms::$user)) {
 				return false; // anonymous cannot subscribe
 			} else {
-				$user_id = \icms::$user->getVar('uid');
+				$user_id = icms::$user->getVar('uid');
 			}
 		}
 
 		if (!isset($module_id)) {
 			global $icmsModule;
-			$module_id = $icmsModule->getVar('mid');
+			$module_id = $icmsModule->mid;
 		}
 
 		if (!isset($mode)) {
-			$user = new \ImpressCMS\Core\Models\User($user_id);
+			$user = new User($user_id);
 			$mode = $user->getVar('notify_mode');
 		}
 
@@ -149,17 +150,17 @@ class NotificationHandler extends AbstractExtendedHandler {
 		}
 		foreach ($events as $event) {
 			if ($notification = & $this->getNotification($module_id, $category, $item_id, $event, $user_id)) {
-				if ($notification->getVar('not_mode') != $mode) {
+				if ($notification->not_mode != $mode) {
 					$this->updateByField($notification, 'not_mode', $mode);
 				}
 			} else {
 				$notification = & $this->create();
-				$notification->setVar('not_modid', $module_id);
-				$notification->setVar('not_category', $category);
-				$notification->setVar('not_itemid', $item_id);
-				$notification->setVar('not_uid', $user_id);
-				$notification->setVar('not_event', $event);
-				$notification->setVar('not_mode', $mode);
+				$notification->not_modid = $module_id;
+				$notification->not_category = $category;
+				$notification->not_itemid =  $item_id;
+				$notification->not_uid = $user_id;
+				$notification->not_event = $event;
+				$notification->not_mode = $mode;
 				$this->insert($notification);
 			}
 		}
@@ -193,7 +194,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 	public function getSubscribedEvents($category, $item_id, $module_id, $user_id) {
 		$criteria = new CriteriaCompo();
 		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_category', icms::$xoopsDB->escape($category)));
 		if ($item_id) {
 			$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
 		}
@@ -201,7 +202,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 		$results = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($results) as $i) {
-			$ret[] = $results[$i]->getVar('not_event');
+			$ret[] = $results[$i]->not_event;
 		}
 		return $ret;
 	}
@@ -273,14 +274,14 @@ class NotificationHandler extends AbstractExtendedHandler {
 		if (!isset($module_id)) {
 			global $icmsModule;
 			$module = & $icmsModule;
-			$module_id = !empty($icmsModule)?$icmsModule->getVar('mid'):0;
+			$module_id = !empty($icmsModule)?$icmsModule->mid:0;
 		} else {
-			$module_handler = \icms::handler('icms_module');
+			$module_handler = icms::handler('icms_module');
 			$module = & $module_handler->get($module_id);
 		}
 
 		// Check if event is enabled
-		$mod_config = & \icms::$config->getConfigsByCat(0, $module->getVar('mid'));
+		$mod_config = & icms::$config->getConfigsByCat(0, $module->getVar('mid'));
 		if (empty($mod_config['notification_enabled'])) {
 			return false;
 		}
@@ -291,17 +292,17 @@ class NotificationHandler extends AbstractExtendedHandler {
 		}
 
 		if (!isset($omit_user_id)) {
-			if (!empty(\icms::$user)) {
-				$omit_user_id = \icms::$user->getVar('uid');
+			if (!empty(icms::$user)) {
+				$omit_user_id = icms::$user->getVar('uid');
 			} else {
 				$omit_user_id = 0;
 			}
 		}
 		$criteria = new CriteriaCompo();
 		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_category', icms::$xoopsDB->escape($category)));
 		$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
-		$criteria->add(new CriteriaItem('not_event', \icms::$xoopsDB->escape($event)));
+		$criteria->add(new CriteriaItem('not_event', icms::$xoopsDB->escape($event)));
 		$mode_criteria = new CriteriaCompo();
 		$mode_criteria->add(new CriteriaItem('not_mode', XOOPS_NOTIFICATION_MODE_SENDALWAYS), 'OR');
 		$mode_criteria->add(new CriteriaItem('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE), 'OR');
@@ -324,26 +325,26 @@ class NotificationHandler extends AbstractExtendedHandler {
 		$tags = array();
 		if (!empty($not_config)) {
 			if (!empty($not_config['tags_file'])) {
-				$tags_file = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/' . $not_config['tags_file'];
+				$tags_file = ICMS_ROOT_PATH . '/modules/' . $module->dirname . '/' . $not_config['tags_file'];
 				if (file_exists($tags_file)) {
 					include_once $tags_file;
 					if (!empty($not_config['tags_func'])) {
 						$tags_func = $not_config['tags_func'];
 						if (function_exists($tags_func)) {
-							$tags = $tags_func(\icms::$xoopsDB->escape($category), (int) $item_id, \icms::$xoopsDB->escape($event));
+							$tags = $tags_func(icms::$xoopsDB->escape($category), (int) $item_id, icms::$xoopsDB->escape($event));
 						}
 					}
 				}
 			}
 			// RMV-NEW
 			if (!empty($not_config['lookup_file'])) {
-				$lookup_file = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/' . $not_config['lookup_file'];
+				$lookup_file = ICMS_ROOT_PATH . '/modules/' . $module->dirname . '/' . $not_config['lookup_file'];
 				if (file_exists($lookup_file)) {
 					include_once $lookup_file;
 					if (!empty($not_config['lookup_func'])) {
 						$lookup_func = $not_config['lookup_func'];
 						if (function_exists($lookup_func)) {
-							$item_info = $lookup_func(\icms::$xoopsDB->escape($category), (int) $item_id);
+							$item_info = $lookup_func(icms::$xoopsDB->escape($category), (int) $item_id);
 						}
 					}
 				}
@@ -353,8 +354,8 @@ class NotificationHandler extends AbstractExtendedHandler {
 		$tags['X_ITEM_NAME'] = !empty($item_info['name'])?$item_info['name']:'[' . _NOT_ITEMNAMENOTAVAILABLE . ']';
 		$tags['X_ITEM_URL']  = !empty($item_info['url'])?$item_info['url']:'[' . _NOT_ITEMURLNOTAVAILABLE . ']';
 		$tags['X_ITEM_TYPE'] = !empty($category_info['item_name'])?$category_info['title']:'[' . _NOT_ITEMTYPENOTAVAILABLE . ']';
-		$tags['X_MODULE'] = $module->getVar('name');
-		$tags['X_MODULE_URL'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/';
+		$tags['X_MODULE'] = $module->name;
+		$tags['X_MODULE_URL'] = ICMS_URL . '/modules/' . $module->dirname . '/';
 		$tags['X_NOTIFY_CATEGORY'] = $category;
 		$tags['X_NOTIFY_EVENT'] = $event;
 
@@ -363,7 +364,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 		$subject = $event_info['mail_subject'];
 
 		foreach ($notifications as $notification) {
-			if (empty($omit_user_id) || $notification->getVar('not_uid') != $omit_user_id) {
+			if (empty($omit_user_id) || $notification->not_uid != $omit_user_id) {
 				// user-specific tags
 				//$tags['X_UNSUBSCRIBE_URL'] = 'TODO';
 				// TODO: don't show unsubscribe link if it is 'one-time' ??
@@ -400,21 +401,21 @@ class NotificationHandler extends AbstractExtendedHandler {
 	 */
 	public function unsubscribe($category, $item_id, $events, $module_id = null, $user_id = null) {
 		if (!isset($user_id)) {
-			if (empty(\icms::$user)) {
+			if (empty(icms::$user)) {
 				return false; // anonymous cannot subscribe
 			} else {
-				$user_id = \icms::$user->getVar('uid');
+				$user_id = icms::$user->getVar('uid');
 			}
 		}
 
 		if (!isset($module_id)) {
 			global $icmsModule;
-			$module_id = $icmsModule->getVar('mid');
+			$module_id = $icmsModule->mid;
 		}
 
 		$criteria = new CriteriaCompo();
 		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_category', icms::$xoopsDB->escape($category)));
 		$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
 		$criteria->add(new CriteriaItem('not_uid', (int) $user_id));
 		if (!is_array($events)) {
@@ -422,7 +423,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 		}
 		$event_criteria = new CriteriaCompo();
 		foreach ($events as $event) {
-			$event_criteria->add(new CriteriaItem('not_event', \icms::$xoopsDB->escape($event)), 'OR');
+			$event_criteria->add(new CriteriaItem('not_event', icms::$xoopsDB->escape($event)), 'OR');
 		}
 		$criteria->add($event_criteria);
 		return $this->deleteAll($criteria);
@@ -454,7 +455,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 	public function unsubscribeByItem($module_id, $category, $item_id) {
 		$criteria = new CriteriaCompo();
 		$criteria->add(new CriteriaItem('not_modid', (int) $module_id));
-		$criteria->add(new CriteriaItem('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new CriteriaItem('not_category', icms::$xoopsDB->escape($category)));
 		$criteria->add(new CriteriaItem('not_itemid', (int) $item_id));
 		return $this->deleteAll($criteria);
 	}
@@ -474,7 +475,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 
 		$notifications = $this->getObjects($criteria, true);
 		foreach ($notifications as $n) {
-			$n->setVar('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT);
+			$n->not_mode = XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT;
 			$this->insert($n);
 		}
 	}
@@ -508,10 +509,10 @@ class NotificationHandler extends AbstractExtendedHandler {
 			if (!isset($module_id)) {
 				return false;
 			}
-			$module_handler = \icms::handler('icms_module');
+			$module_handler = icms::handler('icms_module');
 			$module = & $module_handler->get($module_id);
 			if (!empty($module) && $module->getVar('hasnotification') == 1) {
-				$config = \icms::$config->getConfigsByCat(0, $module_id);
+				$config = icms::$config->getConfigsByCat(0, $module_id);
 				$status = $config['notification_enabled'];
 			} else {
 				return false;
@@ -539,10 +540,10 @@ class NotificationHandler extends AbstractExtendedHandler {
 	public static function &categoryInfo($category_name = '', $module_id = null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
-			$module_id = !empty($icmsModule)?$icmsModule->getVar('mid'):0;
+			$module_id = !empty($icmsModule)?$icmsModule->mid:0;
 			$module = & $icmsModule;
 		} else {
-			$module_handler = \icms::handler('icms_module');
+			$module_handler = icms::handler('icms_module');
 			$module = & $module_handler->get($module_id);
 		}
 		$not_config = & $module->getInfo('notification');
@@ -605,14 +606,14 @@ class NotificationHandler extends AbstractExtendedHandler {
 	public static function &categoryEvents($category_name, $enabled_only, $module_id = null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
-			$module_id = !empty($icmsModule)?$icmsModule->getVar('mid'):0;
+			$module_id = !empty($icmsModule)?$icmsModule->mid:0;
 			$module = & $icmsModule;
 		} else {
-			$module_handler = \icms::handler('icms_module');
+			$module_handler = icms::handler('icms_module');
 			$module = & $module_handler->get($module_id);
 		}
 		$not_config = & $module->getInfo('notification');
-		$mod_config = \icms::$config->getConfigsByCat(0, $module_id);
+		$mod_config = icms::$config->getConfigsByCat(0, $module_id);
 
 		$category = & self::categoryInfo($category_name, $module_id);
 
@@ -625,7 +626,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 
 		foreach ($not_config['event'] as $event) {
 			if ($event['category'] == $category_name) {
-				$event['mail_template_dir'] = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/language/' . $icmsConfig['language'] . '/mail_template/';
+				$event['mail_template_dir'] = ICMS_ROOT_PATH . '/modules/' . $module->dirname . '/language/' . $icmsConfig['language'] . '/mail_template/';
 				if (!$enabled_only || self::eventEnabled($category, $event, $module)) {
 					$event_array[] = $event;
 				}
@@ -645,12 +646,12 @@ class NotificationHandler extends AbstractExtendedHandler {
 
 		// Insert comment info if applicable
 
-		if ($module->getVar('hascomments')) {
+		if ($module->hascomments) {
 			$com_config = $module->getInfo('comments');
 			if (!empty($category['item_name']) && $category['item_name'] == $com_config['itemName']) {
 				$mail_template_dir = ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/';
 				include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
-				$com_config = \icms::$config->getConfigsByCat(0, $module_id);
+				$com_config = icms::$config->getConfigsByCat(0, $module_id);
 				if (!$enabled_only) {
 					$insert_comment = true;
 					$insert_submit = true;
@@ -724,7 +725,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 	 * @return bool
 	 */
 	public static function eventEnabled(&$category, &$event, &$module) {
-		$mod_config = \icms::$config->getConfigsByCat(0, $module->getVar('mid'));
+		$mod_config = icms::$config->getConfigsByCat(0, $module->getVar('mid'));
 
 		if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != array()) {
 			$option_name = self::generateConfig($category, $event, 'option_name');

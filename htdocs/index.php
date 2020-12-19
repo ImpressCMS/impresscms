@@ -38,10 +38,12 @@
  * @author    Sina Asghari(aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+use Aura\Session\Session;
 use GuzzleHttp\Psr7\ServerRequest;
 use ImpressCMS\Core\Controllers\DefaultController;
 use League\Route\Http\Exception as HttpException;
 use League\Route\Router;
+use Aura\Session\SessionFactory;
 
 /** mainfile is required, if it doesn't exist - installation is needed */
 
@@ -72,10 +74,56 @@ if (is_dir('install') && strpos($_SERVER['REQUEST_URI'], '/install') === false) 
  */
 $router = \icms::getInstance()->get('router');
 
-$request = ServerRequest::fromGlobals();
+$basePath = parse_url(
+	env('URL'),
+	PHP_URL_PATH
+);
+if ($basePath !== '/' && $basePath !== null) {
+	$router->middleware(
+		(new \Middlewares\BasePath($basePath))->fixLocation()
+	);
+	if (substr($basePath, -1) !== '/') {
+		$basePath .= '/';
+	}
+	if ($basePath[0] !== '/') {
+		return '/'.$basePath;
+	}
+	$request = ServerRequest::fromGlobals();
+	$uri = $request->getUri();
+	$path = $uri->getPath();
+	if (strpos($path, $basePath) === 0) {
+		$path = substr($path, strlen($basePath)) ?: '';
+		if ($path === '') {
+			$path = '/';
+		}
+		$request = $request->withUri(
+			$uri->withPath($path)
+		);
+	}
+	unset($path, $uri);
+} else {
+	$request = ServerRequest::fromGlobals();
+}
+unset($basePath);
+
 try {
 	$response = $router->dispatch($request);
 } catch (HttpException $httpException) {
+	try {
+		/**
+		 * @var icms_config_Handler $configHandler
+		 */
+		$configHandler = icms::handler('icms_config');
+		$mainConfig = $configHandler->getConfigsByCat(icms_config_Handler::CATEGORY_MAIN);
+	} catch (Exception $exception) {
+		$mainConfig = [];
+	}
+
+	$sessionName = ($mainConfig['use_mysession'] && $mainConfig['session_name']) ? $mainConfig['session_name'] : 'ICMSSESSION';
+	\icms::$session = (new SessionFactory())->newInstance(
+		$request->getCookieParams()
+	);
+
 	$defController = new DefaultController();
 	$_GET['e'] = $httpException->getStatusCode();
 	$response = $defController->getError(
@@ -88,6 +136,7 @@ try {
 		))
 			->withQueryParams($_GET)
 			->withParsedBody($_POST)
+			->withAttribute('session', \icms::$session)
 	);
 }
 

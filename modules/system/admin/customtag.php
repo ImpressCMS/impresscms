@@ -37,7 +37,7 @@ function editcustomtag($customtagid = 0, $clone = false) {
 		$controller = new icms_ipf_Controller($icms_admin_handler);
 		$controller->postDataToObject($customtagObj);
 	}
-	switch ($customtagObj->getVar("customtag_type")) {
+	switch ($customtagObj->customtag_type) {
 		case ICMS_CUSTOMTAG_TYPE_XCODES:
 			break;
 
@@ -59,8 +59,8 @@ function editcustomtag($customtagid = 0, $clone = false) {
 		$icmsAdminTpl->assign("icms_custom_tag_title", _CO_ICMS_CUSTOMTAG_EDIT_INFO);
 		$icmsAdminTpl->display("db:admin/customtag/system_adm_customtag.html");
 	} else {
-		$customtagObj->setVar("customtagid", 0);
-		$customtagObj->setVar("tag", "");
+		$customtagObj->customtagid = 0;
+		$customtagObj->tag = "";
 
 		$sform = $customtagObj->getForm(_CO_ICMS_CUSTOMTAG_CREATE, "addcustomtag");
 

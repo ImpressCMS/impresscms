@@ -211,8 +211,8 @@ switch ($action) {
 				$results = & $module->search($queries, $andor, $search_limiter, 0);
 				$xoopsTpl->assign("showing", sprintf(_SR_SHOWING, 1, $max_results_per_page));
 				$count = count($results);
-				$modname = $module->getVar('name');
-				$moddir = $module->getVar('dirname');
+				$modname = $module->name;
+				$moddir = $module->dirname;
 				$all_results_counts[$modname] = $count;
 
 				if (!is_array($results) || $count == 0) {
@@ -281,8 +281,8 @@ switch ($action) {
 		$results = & $module->search($queries, $andor, 0, $start, $uid);
 		//$xoopsTpl->assign("showing", sprintf(_SR_SHOWING, $start + 1, $start + 20));
 		$count = count($results);
-		$modname = $module->getVar('name');
-		$moddir = $module->getVar('dirname');
+		$modname = $module->name;
+		$moddir = $module->dirname;
 		$all_results_counts[$modname] = $count;
 		if (is_array($results) && $count > 0) {
 			(($count - $start) > $max_results_per_page)

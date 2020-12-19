@@ -1,14 +1,16 @@
 <?php
 
 // Loads environment data
-\Dotenv\Dotenv::create(dirname(__DIR__))->safeLoad();
+use Dotenv\Dotenv;
+
+Dotenv::create(dirname(__DIR__))->safeLoad();
 
 if (!function_exists('env')) {
 	return;
 }
 
 define('ICMS_ROOT_PATH', dirname(__DIR__));
-define('ICMS_URL', env('URL'));
+define('ICMS_URL', rtrim(env('URL'), '/'));
 
 /**#@+
  * Creating ICMS specific constants
@@ -90,5 +92,3 @@ define('ICMS_IMANAGER_FOLDER_URL', ICMS_UPLOAD_URL . '/imagemanager');
  */
 $icms_images_setname = 'kfaenza';
 define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
-
-define('XOOPS_DB_CHKREF', 1);

@@ -74,15 +74,15 @@ function editblock($bid = 0, $clone = false) {
 		$controller->postDataToObject($blockObj);
 	}
 
-	if ($blockObj->getVar("c_type") == "H") {
+	if ($blockObj->c_type == "H") {
 		$blockObj->setControl("content", array("name" => "source", "syntax" => "html"));
-	} elseif ($blockObj->getVar("c_type") == "P") {
+	} elseif ($blockObj->c_type == "P") {
 		$blockObj->setControl("content", array("name" => "source", "syntax" => "php"));
 	} else {
 		$blockObj->setControl("content", "dhtmltextarea");
 	}
 
-	if (!$blockObj->isNew() && $blockObj->getVar('edit_func') != '') {
+	if (!$blockObj->isNew() && $blockObj->edit_func != '') {
 		$blockObj->showFieldOnForm('options');
 	}
 	if (!$clone && !$blockObj->isNew()) {
@@ -90,15 +90,15 @@ function editblock($bid = 0, $clone = false) {
 		$sform->assign($icmsAdminTpl);
 	} else {
 		if ($clone) {
-			if ($blockObj->getVar('block_type') != 'C') {
-				$blockObj->setVar('block_type', 'K');
+			if ($blockObj->block_type != 'C') {
+				$blockObj->block_type = 'K';
 				$blockObj->hideFieldFromForm('content');
 				$blockObj->hideFieldFromForm('c_type');
 			}
-			$blockObj->setVar('bid', '0');
+			$blockObj->bid = '0';
 			$blockObj->setNew();
 		} else {
-			$blockObj->setVar('block_type', 'C');
+			$blockObj->block_type = 'C';
 		}
 		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKS_CREATE, 'addblock');
 		$sform->assign($icmsAdminTpl);
@@ -202,11 +202,11 @@ if (in_array($clean_op, $valid_op, true)) {
 				$obj = $icms_admin_handler->get($v);
 
 				if ($obj->getVar('side', 'e') != $_POST['block_side'][$k]) {
-					$obj->setVar('side', (int) $_POST['block_side'][$k]);
+					$obj->side = $_POST['block_side'][$k];
 					$changed = true;
 				}
 				if ($obj->getVar('weight', 'e') != $_POST['block_weight'][$k]) {
-					$obj->setVar('weight', (int) $_POST['block_weight'][$k]);
+					$obj->weight = $_POST['block_weight'][$k];
 					$changed = true;
 				}
 				if ($changed) {

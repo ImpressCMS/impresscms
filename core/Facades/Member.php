@@ -178,7 +178,7 @@ class Member extends AbstractFacade {
 		$groups = $this->_gHandler->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($groups) as $i) {
-			$ret[$i] = $groups[$i]->getVar('name');
+			$ret[$i] = $groups[$i]->name;
 		}
 		return $ret;
 	}
@@ -197,7 +197,7 @@ class Member extends AbstractFacade {
 		$users = $this->_uHandler->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($users) as $i) {
-			$ret[$i] = $users[$i]->getVar('uname');
+			$ret[$i] = $users[$i]->uname;
 		}
 		return $ret;
 	}
@@ -212,8 +212,8 @@ class Member extends AbstractFacade {
 	 */
 	public function addUserToGroup($group_id, $user_id) {
 		$mship = & $this->_mHandler->create();
-		$mship->setVar('groupid', $group_id);
-		$mship->setVar('uid', $user_id);
+		$mship->groupid = $group_id;
+		$mship->uid = $user_id;
 		return $this->_mHandler->insert($mship);
 	}
 
@@ -397,10 +397,10 @@ class Member extends AbstractFacade {
 	 * @return bool successful?
 	 */
 	public function activateUser(&$user) {
-		if ($user->getVar('level') != 0) {
+		if ($user->level != 0) {
 			return true;
 		}
-		$user->setVar('level', 1);
+		$user->level = 1;
 		return $this->_uHandler->insert($user, true);
 	}
 

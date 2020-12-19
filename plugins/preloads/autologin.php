@@ -1,17 +1,19 @@
 <?php
 
+use ImpressCMS\Core\Event;
+
 class icms_AutologinEventHandler {
 
 	static public function setup() {
-		\ImpressCMS\Core\Event::attach('icms_core_Session', 'sessionStart', array(__CLASS__, 'onSessionStart'));
-		\ImpressCMS\Core\Event::attach('icms_core_Session', 'sessionClose', array(__CLASS__, 'onSessionClose'));
+		Event::attach('icms_core_Session', 'sessionStart', array(__CLASS__, 'onSessionStart'));
+		Event::attach('icms_core_Session', 'sessionClose', array(__CLASS__, 'onSessionClose'));
 	}
 	static public function onSessionStart() {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::$session;
-		$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
+		$session = icms::$session;
+		$userSegment = $session->getSegment('user');
 
 		// Autologin if correct cookie present.
 		if ($userSegment->get('userid') && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass'])) {
@@ -23,7 +25,7 @@ class icms_AutologinEventHandler {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::$session;
+		$session = icms::$session;
 		$autologinSegment = $session->getSegment('autologin');
 
 		if (!empty($_POST)) {
@@ -50,7 +52,7 @@ class icms_AutologinEventHandler {
 				$user = $users[0];
 				$old_limit = time() - (defined('ICMS_AUTOLOGIN_LIFETIME')? ICMS_AUTOLOGIN_LIFETIME : 604800);
 				list($old_Ynj, $old_encpass) = explode(':', $pass);
-				if (strtotime($old_Ynj) < $old_limit || md5($user->getVar('pass') .
+				if (strtotime($old_Ynj) < $old_limit || md5($user->pass .
 						ICMS_DB_PASS . ICMS_DB_PREFIX . $old_Ynj) != $old_encpass) {
 					$user = false;
 				}
@@ -62,24 +64,24 @@ class icms_AutologinEventHandler {
 		if ($icms_cookie_path == ICMS_URL) {
 			$icms_cookie_path = '/';
 		}
-		if (false != $user && $user->getVar('level') > 0) {
+		if (false != $user && $user->level > 0) {
 			// update time of last login
-			$user->setVar('last_login', time());
+			$user->last_login = time();
 			if (!icms::handler('icms_member')->insertUser($user, true)) {
 			}
 
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::$session;
-			$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
+			$session = icms::$session;
+			$userSegment = $session->getSegment('user');
 
-			$userSegment->set('userid', $user->getVar('uid'));
+			$userSegment->set('userid', $user->uid);
 			$userSegment->set('groups', $user->getGroups());
 
 			global $icmsConfig;
-			$user_theme = $user->getVar('theme');
-			$user_language = $user->getVar('language');
+			$user_theme = $user->theme;
+			$user_language = $user->language;
 			if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
 				$userSegment->set('theme', $user_theme);
 			}
@@ -94,7 +96,7 @@ class icms_AutologinEventHandler {
 			setcookie('autologin_uname', $uname, $expire, $icms_cookie_path, '', $secure, 1);
 			$Ynj = date('Y-n-j');
 			setcookie(
-				'autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
+				'autologin_pass', $Ynj . ':' . md5($user->pass . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
 				$expire, $icms_cookie_path, '', $secure, 1
 			);
 		} else {

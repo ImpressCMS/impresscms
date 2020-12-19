@@ -37,6 +37,7 @@
 
 namespace ImpressCMS\Core\Models;
 
+use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 
@@ -69,17 +70,17 @@ class BlockHandler extends AbstractExtendedHandler {
 	public function getBlockPositions($full = false) {
 		if (empty($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
-			$icms_blockposition_handler = \icms::handler('icms_view_block_position');
+			$icms_blockposition_handler = icms::handler('icms_view_block_position');
 			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
 			//			$result = $this->db->query($sql);
 			//			while ($row = $this->db->fetchArray($result)) {
 			$block_positions = $icms_blockposition_handler->getObjects();
 			foreach ($block_positions as $bp) {
-				$this->block_positions[$bp->getVar('id')]['pname'] = $bp->getVar('pname');
-				$this->block_positions[$bp->getVar('id')]['title'] = $bp->getVar('title');
-				$this->block_positions[$bp->getVar('id')]['description'] = $bp->getVar('description');
-				$this->block_positions[$bp->getVar('id')]['block_default'] = $bp->getVar('block_default');
-				$this->block_positions[$bp->getVar('id')]['block_type'] = $bp->getVar('block_type');
+				$this->block_positions[$bp->id]['pname'] = $bp->pname;
+				$this->block_positions[$bp->id]['title'] = $bp->title;
+				$this->block_positions[$bp->id]['description'] = $bp->description;
+				$this->block_positions[$bp->id]['block_default'] = $bp->block_default;
+				$this->block_positions[$bp->id]['block_type'] = $bp->block_type;
 			}
 		}
 		if (!$full) {
@@ -129,15 +130,15 @@ class BlockHandler extends AbstractExtendedHandler {
 
 		if (isset($side)) {
 			// get both sides in sidebox? (some themes need this)
-			$tp = ($side == -2)?'L':($side == -6)?'C':'';
+			$tp = ($side == -2)?'L':(($side == -6)?'C':'');
 			if ($tp != '') {
 			 	$q_side = '';
-				$icms_blockposition_handler = \icms::handler('icms_view_block_position');
+				$icms_blockposition_handler = icms::handler('icms_view_block_position');
 				$criteria = new CriteriaCompo();
 				$criteria->add(new CriteriaItem('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach ($blockpositions as $bp) {
-					$q_side .= "side='" . (int) $bp->getVar('id') . "' OR ";
+					$q_side .= "side='" . (int) $bp->id . "' OR ";
 				}
 				$q_side = "('" . substr($q_side, 0, strlen($q_side) - 4) . "')";
 			} else {
@@ -173,7 +174,7 @@ class BlockHandler extends AbstractExtendedHandler {
 					$criteria->add(new CriteriaItem('bid', '(' . implode(',', $blockids) . ')', 'IN'));
 					$blocks = $this->getObjects($criteria, true, true);
 					foreach ($blocks as $block) {
-						$ret[$block->getVar('bid')] = $block->getVar('title');
+						$ret[$block->bid] = $block->title;
 					}
 					unset($blockids, $blocks);
 				}
@@ -196,14 +197,14 @@ class BlockHandler extends AbstractExtendedHandler {
 	public function &get($id, $as_object = true, $debug = false, $criteria = false)
 	{
 		$obj = parent::get($id, $as_object, $debug, $criteria);
-		$sql = 'SELECT module_id, page_id FROM ' . $this->db->prefix('block_module_link')
-			. " WHERE block_id='" . (int)$obj->getVar('bid') . "'";
+		$sql = "SELECT module_id, page_id FROM " . $this->db->prefix('block_module_link')
+			. " WHERE block_id='" . (int)$obj->bid . "'";
 		$result = $this->db->query($sql);
 		$modules = $bcustomp = array();
 		while ($row = $this->db->fetchArray($result)) {
 			$modules[] = (int)$row['module_id'] . '-' . (int)$row['page_id'];
 		}
-		$obj->setVar('visiblein', $modules);
+		$obj->visiblein = $modules;
 		return $obj;
 	}
 
@@ -316,7 +317,7 @@ class BlockHandler extends AbstractExtendedHandler {
 		$last_block_id = 0;
 		while ($row = $this->db->fetchArray($result)) {
 			$modules[] = (int)($row['module_id']) . '-' . (int)($row['page_id']);
-			$ret[$row['block_id']]->setVar('visiblein', $modules);
+			$ret[$row['block_id']]->visiblein = $modules;
 			if ($row['block_id'] != $last_block_id) {
 				$modules = array();
 			}
@@ -411,11 +412,11 @@ class BlockHandler extends AbstractExtendedHandler {
 	 */
 	public function insert(& $obj, $force = false, $checkObject = true, $debug = false) {
 		$new = $obj->isNew();
-		$obj->setVar('last_modified', time());
-		$obj->setVar('isactive', true);
+		$obj->last_modified = time();
+		$obj->isactive = true;
 		if (!$new) {
 			$sql = sprintf("DELETE FROM %s WHERE block_id = '%u'",
-				$this->db->prefix('block_module_link'), (int) $obj->getVar('bid'));
+				$this->db->prefix('block_module_link'), (int) $obj->bid);
 			if (false != $force) {
 				$this->db->queryF($sql);
 			} else {
@@ -423,24 +424,24 @@ class BlockHandler extends AbstractExtendedHandler {
 			}
 		} else {
 			icms_loadLanguageFile('system', 'blocks', true);
-			if ($obj->getVar('block_type') == 'K') {
-				$obj->setVar('name', _AM_CLONE);
+			if ($obj->block_type == 'K') {
+				$obj->name = _AM_CLONE;
 			} else {
-				switch ($obj->getVar('c_type')) {
+				switch ($obj->c_type) {
 					case 'H':
-						$obj->setVar('name', _AM_CUSTOMHTML);
+						$obj->name = _AM_CUSTOMHTML;
 						break;
 
 					case 'P':
-						$obj->setVar('name', _AM_CUSTOMPHP);
+						$obj->name = _AM_CUSTOMPHP;
 						break;
 
 					case 'S':
-						$obj->setVar('name', _AM_CUSTOMSMILE);
+						$obj->name = _AM_CUSTOMSMILE;
 						break;
 
 					case 'T':
-						$obj->setVar('name', _AM_CUSTOMNOSMILE);
+						$obj->name = _AM_CUSTOMNOSMILE;
 						break;
 					default:
 						break;
@@ -458,7 +459,7 @@ class BlockHandler extends AbstractExtendedHandler {
 					$pageid = $page[1];
 					$sql = "INSERT INTO " . $this->db->prefix('block_module_link')
 						. " (block_id, module_id, page_id) VALUES ('"
-						. (int) $obj->getVar("bid") . "', '"
+						. (int) $obj->bid . "', '"
 						. (int) $mid . "', '"
 						. (int) $pageid . "')";
 					if (false != $force) {
@@ -471,8 +472,8 @@ class BlockHandler extends AbstractExtendedHandler {
 				$page = explode('-', $obj->getVar('visiblein', 'e'));
 				$mid = $page[0];
 				$pageid = $page[1];
-				$sql = 'INSERT INTO ' . $this->db->prefix('block_module_link') . " (block_id, module_id, page_id) VALUES ('"
-					. (int) $obj->getVar("bid") . "', '"
+				$sql = "INSERT INTO " . $this->db->prefix('block_module_link') . " (block_id, module_id, page_id) VALUES ('"
+					. (int) $obj->bid . "', '"
 					. (int) $mid . "', '"
 					. (int) $pageid . "')";
 				if (false != $force) {

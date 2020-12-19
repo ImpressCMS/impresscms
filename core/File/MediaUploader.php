@@ -57,6 +57,7 @@
 namespace ImpressCMS\Core\File;
 
 use ImpressCMS\Core\Utils;
+use League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap;
 
 /**
  * Upload Media files
@@ -145,9 +146,6 @@ class MediaUploader {
 	/** @var string Saved Filename after upload */
 	private $savedFileName;
 
-	/** @var array */
-	private $extensionToMime = array();
-
 	/** @var bool Would you like to check the image type? */
 	private $checkImageType = true;
 
@@ -195,11 +193,6 @@ class MediaUploader {
 	 * @param   int     $maxHeight
 	 */
 	public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
-		$this->extensionToMime = Utils::mimetypes();
-		if (!is_array($this->extensionToMime)) {
-			$this->extensionToMime = array();
-			return false;
-		}
 		if (is_array($allowedMimeTypes)) {
 			$this->allowedMimeTypes = & $allowedMimeTypes;
 		}
@@ -222,10 +215,6 @@ class MediaUploader {
 	 * @return bool
 	 */
 		public function fetchFromURL($url) {
-			if (empty($this->extensionToMime)) {
-				self::setErrors(_ER_UP_MIMETYPELOAD);
-				return false;
-			}
 			//header('Content-Type: text/plain');
 			if (strpos($url, 'data:') === 0) {
 				$fp   = fopen($url, 'r');
@@ -261,35 +250,32 @@ class MediaUploader {
 					$line = trim($line);
 					$i = strpos($line, ':');
 					if (!$i) {
-						if (substr($line, 0, 5) == 'HTTP/') {
+						if (strpos($line, 'HTTP/') === 0) {
 												   $hdrs['http'] = explode(' ', substr($line, 5));
-						} elseif (trim($line) != '') {
+						} elseif (trim($line) !== '') {
 													$hdrs['unknown-header'][] = $line;
 						}
 					} else {
 						$name = strtolower(trim(substr($line, 0, $i)));
 						$value = trim(substr($line, $i + 1));
-						switch ($name) {
-							case 'content-disposition':
-								preg_match_all('/([^;]+);\ *filename=(".+"|.+)/Ui', $value, $matches, PREG_SET_ORDER);
-								if (mb_substr($matches[0][2], 0, 1) == '"') {
-																	$matches[0][2] = mb_substr($matches[0][2], 1, -1);
-								}
-								$hdrs[$name] = array(
-									 'type'     => $matches[0][1],
-									 'filename' => $matches[0][2],
-								);
-							break;
-							default:
-								$hdrs[$name] = $value;
-							break;
+						if ($name == 'content-disposition') {
+							preg_match_all('/([^;]+);\ *filename=(".+"|.+)/Ui', $value, $matches, PREG_SET_ORDER);
+							if (mb_strpos($matches[0][2], '"') === 0) {
+								$matches[0][2] = mb_substr($matches[0][2], 1, -1);
+							}
+							$hdrs[$name] = array(
+								'type' => $matches[0][1],
+								'filename' => $matches[0][2],
+							);
+						} else {
+							$hdrs[$name] = $value;
 						}
 						unset($name, $value);
 					}
 				}
 				$headers = $hdrs;
 				unset($hdrs);
-				if (!isset($headers['http'][1]) || ($headers['http'][1] != 200)) {
+				if (!isset($headers['http'][1]) || ((int)$headers['http'][1] !== 200)) {
 									return false;
 				}
 				if (!isset($headers['content-type'])) {
@@ -312,7 +298,7 @@ class MediaUploader {
 			$this->mediaSize = (int) $headers['content-length'];
 			$this->mediaTmpName = tempnam(sys_get_temp_dir(), 'icms_media');
 			$this->mediaError = 0;
-			$this->mediaRealType = $this->extensionToMime[$ext] ?? $this->mediaType;
+			$this->mediaRealType = (new GeneratedExtensionToMimeTypeMap())->lookupMimeType($ext) ?: $this->mediaType;
 			$fp = fopen($this->mediaTmpName, 'w+');
 			fwrite($fp, $content);
 			fclose($fp);
@@ -334,22 +320,17 @@ class MediaUploader {
 
 	/**
 	 * Fetch the uploaded file
-	 * @todo	Remote get_magic_quotes_gpd - is is deprecated and will always return FALSE in PHP 5.4
 	 * @param   string  $media_name Name of the file field
 	 * @param   int     $index      Index of the file (if more than one uploaded under that name)
 	 * @return  bool
 	 */
 	public function fetchMedia($media_name, $index = null) {
-		if (empty($this->extensionToMime)) {
-			self::setErrors(_ER_UP_MIMETYPELOAD);
-			return false;
-		}
 		if (!isset($_FILES[$media_name])) {
 			self::setErrors(_ER_UP_FILENOTFOUND);
 			return false;
 		} elseif (is_array($_FILES[$media_name]['name']) && isset($index)) {
 			$index = (int) ($index);
-			$this->mediaName = (get_magic_quotes_gpc())? stripslashes($_FILES[$media_name]['name'][$index]):$_FILES[$media_name]['name'][$index];
+			$this->mediaName = $_FILES[$media_name]['name'][$index];
 			$this->mediaType = $_FILES[$media_name]['type'][$index];
 			$this->mediaSize = $_FILES[$media_name]['size'][$index];
 			$this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
@@ -364,8 +345,8 @@ class MediaUploader {
 		}
 		if (($ext = strrpos($this->mediaName, '.')) !== false) {
 			$ext = strtolower(substr($this->mediaName, $ext + 1));
-			if (isset($this->extensionToMime[$ext])) {
-				$this->mediaRealType = $this->extensionToMime[$ext];
+			if ($detectedMimeType = (new GeneratedExtensionToMimeTypeMap())->lookupMimeType($ext)) {
+				$this->mediaRealType = $detectedMimeType;
 			}
 		}
 		$this->errors = array();
@@ -638,17 +619,13 @@ class MediaUploader {
 	 * @return  bool
 	 */
 	public function checkMimeType() {
-		global $icmsModule;
-		$mimetypeHandler = icms_getModulehandler('mimetype', 'system');
-		$modulename = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->getVar('dirname'):'system';
 		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
 			self::setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
 			return false;
 		}
-		$AllowedMimeTypes = $mimetypeHandler->AllowedModules($this->mediaRealType, $modulename);
-		if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes))
-				|| (!empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes))
-				|| (empty($this->allowedMimeTypes) && !$AllowedMimeTypes)) {
+		if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes, false))
+				|| (!empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes, false))
+		) {
 			self::setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
 			return false;
 		}
@@ -684,8 +661,8 @@ class MediaUploader {
 		$patterns = array();
 		$replaces = array();
 		foreach ($this->extensionsToBeSanitized as $ext) {
-			$patterns[] = "/\." . preg_quote($ext) . "\./i";
-			$replaces[] = '_' . $ext . '.';
+			$patterns[] = "/\." . preg_quote($ext, '/') . "\./i";
+			$replaces[] = "_" . $ext . ".";
 		}
 		$this->mediaName = preg_replace($patterns, $replaces, $this->mediaName);
 	}

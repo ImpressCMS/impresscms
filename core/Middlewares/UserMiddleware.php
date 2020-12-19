@@ -34,7 +34,8 @@ class UserMiddleware implements MiddlewareInterface
 		// Todo: remove this once possible
 		icms::$session = $session;
 
-		$userSection = $session->getSegment(icms_member_user_Object::class);
+		$userSection = $session->getSegment('user');
+
 		if ($userId = $userSection->get('userid')) {
 			/**
 			 * @var icms_member_Handler $userHandler

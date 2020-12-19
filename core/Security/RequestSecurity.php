@@ -175,6 +175,7 @@ class RequestSecurity {
 	}
 
 	/**
+
 	 * Check superglobals for contamination
 	 *
 	 * @return void
@@ -194,24 +195,6 @@ class RequestSecurity {
 				exit();
 			}
 		}
-	}
-
-	/**
-	 * Check if visitor's IP address is banned
-	 * @todo : Should be changed to return bool and let the action be up to the calling script
-	 *
-	 * @return void
-	 */
-	public function checkBadips() {
-		global $icmsConfig;
-		if ((int)$icmsConfig['enable_badips'] === 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR']) {
-			foreach ($icmsConfig['bad_ips'] as $bi) {
-				if (!empty($bi) && preg_match('/' . $bi . '/', $_SERVER['REMOTE_ADDR'])) {
-					exit();
-				}
-			}
-		}
-		unset($bi, $bad_ips, $icmsConfig['badips']);
 	}
 
 	/**

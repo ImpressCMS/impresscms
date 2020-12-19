@@ -30,14 +30,15 @@
 /**
  * ThemeComponent component class file
  *
- * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license      https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  */
 
 namespace ImpressCMS\Core\View\Theme;
 
+use icms;
 use ImpressCMS\Core\File\Filesystem;
 use ImpressCMS\Core\View\PageBuilder;
-use icms;
+use ImpressCMS\Core\View\Template;
 
 /**
  * Builds the theme components
@@ -93,7 +94,7 @@ class ThemeComponent
 	public $renderCount = 0;
 	/**
 	 * Pointer to the theme template engine
-	 * @var \ImpressCMS\Core\View\Template
+	 * @var Template
 	 */
 	public $template = false;
 
@@ -153,7 +154,7 @@ class ThemeComponent
 			? ICMS_MODULES_URL . '/system/themes/' . $this->folderName
 			: ICMS_THEME_URL . '/' . $this->folderName;
 
-		$this->template = new \ImpressCMS\Core\View\Template();
+		$this->template = new Template();
 		$this->template->currentTheme = $this;
 		$this->template->assignByRef('xoTheme', $this);
 
@@ -170,9 +171,9 @@ class ThemeComponent
 				'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, _CHARSET),
 				'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET),
 				'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
-				'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
+				'icms_dirname' => @$icmsModule ? $icmsModule->dirname : 'system',
 				'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
-					? $icmsModule->getVar('name')
+					? $icmsModule->name
 					: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET)
 			)
 		);
@@ -190,12 +191,12 @@ class ThemeComponent
 		if (isset(icms::$user) && is_object(icms::$user)) {
 			$this->template->assign(array(
 					'icms_isuser' => true,
-					'icms_userid' => icms::$user->getVar('uid'),
-					'icms_uname' => icms::$user->getVar('uname'),
+					'icms_userid' => icms::$user->uid,
+					'icms_uname' => icms::$user->uname,
 					'icms_isadmin' => icms::$user->isAdmin(),
 					'xoops_isuser' => true,
-					'xoops_userid' => icms::$user->getVar('uid'),
-					'xoops_uname' => icms::$user->getVar('uname'),
+					'xoops_userid' => icms::$user->uid,
+					'xoops_uname' => icms::$user->uname,
 					'xoops_isadmin' => icms::$user->isAdmin(),
 				)
 			);

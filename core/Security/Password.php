@@ -3,6 +3,8 @@ namespace ImpressCMS\Core\Security;
 
 use ImpressCMS\Core\Database\Legacy\Updater\TableUpdater;
 use ImpressCMS\Core\Hash;
+use RandomLib\Factory;
+use SecurityLib\Strength;
 
 /**
  * Class to encrypt User Passwords.
@@ -22,7 +24,7 @@ final class Password {
 	 * Constructor for the Password class
 	 */
 	public function __construct() {
-		$this->mainSalt = env('DB_SALT');
+		$this->mainSalt = env('DB_SALT', env('APP_KEY'));
 	}
 
 	/**
@@ -69,18 +71,16 @@ final class Password {
 	 * @since    1.1
 	 * @param    string $slength The length of the key to produce
 	 * @return   string  returns the generated random key.
+	 *
+	 * @deprecated Use ircmaxell/random-lib functionality. Will be removed in 2.1
 	 */
 	static public function createSalt($slength = 64)
 	{
-		$salt = '';
-		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$microtime = function_exists('microtime') ? microtime() : time();
-		mt_srand((double)$microtime * 1000000);
-		for ($i = 0; $i <= $slength; $i++) {
-			$salt .= substr($base, mt_rand(0, $slength) % strlen($base), 1);
-		}
-
-		return $salt;
+		return (new Factory())
+			->getGenerator(
+				new Strength(Strength::MEDIUM)
+			)
+			->generateString($slength,'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 	}
 
 	/**
@@ -92,7 +92,7 @@ final class Password {
 	 */
 	public function passExpired($uname = '')
 	{
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -124,7 +124,7 @@ final class Password {
 			list($pass_expired) = \icms::$xoopsDB->fetchRow($sql);
 		}
 
-		if ($pass_expired == 1) {
+		if ($pass_expired === 1) {
 			return true;
 		} else {
 			return false;
@@ -142,7 +142,7 @@ final class Password {
 	 */
 	public function getUserSalt($uname = '')
 	{
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -190,7 +190,7 @@ final class Password {
 	 */
 	public function getUserEncType($uname = '')
 	{
-		if (!isset($uname) || (isset($uname) && $uname == '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
@@ -369,7 +369,7 @@ final class Password {
 	 */
 	private function _getUserHash($uname)
 	{
-		if (!isset($uname) || (isset($uname) && $uname === '')) {
+		if (empty($uname)) {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 

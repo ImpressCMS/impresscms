@@ -36,7 +36,10 @@
 
 namespace ImpressCMS\Core\Models;
 
+use icms;
 use ImpressCMS\Core\Autoloader;
+use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * A Module
@@ -135,8 +138,8 @@ class Module
 	 * @return void
 	 */
 	public function registerClassPath($isactive = null) {
-		//if ($this->getVar("dirname") == "system") return;
-		$class_path = ICMS_MODULES_PATH . '/' . $this->getVar('dirname') . '/class';
+		//if ($this->dirname == "system") return;
+		$class_path = ICMS_MODULES_PATH . '/' . $this->dirname . '/class';
 
 		// check if class path exists
 		if (!is_dir($class_path)) {
@@ -144,7 +147,7 @@ class Module
 		}
 
 		// check if module is active (only if applicable)
-		if ($isactive !== null && $this->getVar("isactive") !== (int)$isactive) {
+		if ($isactive !== null && $this->isactive != (int)$isactive) {
 			return;
 		}
 
@@ -176,16 +179,16 @@ class Module
 		$hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1)?1:0;
 		// RMV-NOTIFY
 		$hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1)?1:0;
-		$this->setVar('hasmain', $hasmain);
-		$this->setVar('hasadmin', $hasadmin);
-		$this->setVar('hassearch', $hassearch);
-		$this->setVar('hasconfig', $hasconfig);
-		$this->setVar('hascomments', $hascomments);
+		$this->hasmain = $hasmain;
+		$this->hasadmin = $hasadmin;
+		$this->hassearch = $hassearch;
+		$this->hasconfig = $hasconfig;
+		$this->hascomments = $hascomments;
 		// RMV-NOTIFY
-		$this->setVar('hasnotification', $hasnotification);
+		$this->hasnotification = $hasnotification;
 		$this->setVar('modname', isset($this->modinfo['modname'])?$this->modinfo['modname']:"", true);
 		$ipf = (isset($this->modinfo['object_items']) && is_array($this->modinfo['object_items']))?1:0;
-		$this->setVar('ipf', $ipf);
+		$this->ipf = $ipf;
 	}
 
 	/**
@@ -195,7 +198,7 @@ class Module
 	 * @return  array|string|false	Array of module information.
 	 */
 	public function &getInfo($name = null) {
-		if (!isset($this->modinfo)) {$this->loadInfo($this->getVar('dirname')); }
+		if (!isset($this->modinfo)) {$this->loadInfo($this->dirname); }
 		if (isset($name)) {
 			if (isset($this->modinfo[$name])) {return $this->modinfo[$name]; }
 			$return = false;
@@ -210,7 +213,7 @@ class Module
 	 * @return int dbversion
 	 */
 	public function getDBVersion() {
-		$ret = $this->getVar('dbversion');
+		$ret = $this->dbversion;
 		return $ret;
 	}
 
@@ -220,8 +223,8 @@ class Module
 	 * @return	string $ret or FALSE on fail
 	 */
 	public function mainLink() {
-		if ($this->getVar('hasmain') == 1) {
-			$ret = '<a href="' . ICMS_URL . '/modules/' . $this->getVar('dirname') . '/">' . $this->getVar('name') . '</a>';
+		if ($this->hasmain == 1) {
+			$ret = '<a href="' . ICMS_URL . '/modules/' . $this->dirname . '/">' . $this->name . '</a>';
 			return $ret;
 		}
 		return false;
@@ -247,9 +250,10 @@ class Module
 	 */
 	public function loadAdminMenu() {
 		if ($this->getInfo('adminmenu')
-			&& file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))
+			&& $this->getInfo('adminmenu') != ''
+			&& file_exists(ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $this->getInfo('adminmenu'))
 		) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
+			include_once ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
 			if (isset($headermenu)) {$this->adminheadermenu = & $headermenu; }
 		}
@@ -284,15 +288,41 @@ class Module
 	 */
 	public function loadInfo($dirname, $verbose = true) {
 		global $icmsConfig;
-		icms_loadLanguageFile($dirname, 'modinfo');
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php')) {
-			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php')) {
-			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php';
+
+		$fullPath = ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . $dirname;
+
+		/**
+		 * @var CacheItemPoolInterface $cache
+		 */
+		$cache = icms::getInstance()->get('cache');
+		$cachedModuleInfo = $cache->getItem('module.' . $icmsConfig['language'] . '.' . $dirname);
+
+		if (!$cachedModuleInfo->isHit()) {
+			$modversion = [];
+			/**
+			 * @var ExtensionDescriberInterface $extensionDescriber
+			 */
+			foreach (icms::getInstance()->get('extension_describer.module') as $extensionDescriber) {
+				if (!$extensionDescriber->canDescribe($fullPath)) {
+					continue;
+				}
+				$modversion += $extensionDescriber->describe($fullPath);
+			}
+
+			$cachedModuleInfo->set($modversion);
+			$cache->save($cachedModuleInfo);
+
 		} else {
-			if (false != $verbose) {echo "Module File for $dirname Not Found!"; }
+			$modversion = $cachedModuleInfo->get();
+		}
+
+		if (empty($modversion)) {
+			if (false !== $verbose) {
+				echo "Module File for $dirname Not Found!";
+			}
 			return false;
 		}
+
 		$this->modinfo = & $modversion;
 		return true;
 	}
@@ -308,13 +338,13 @@ class Module
 	 * @return  mixed   Search result or False if fail.
 	 */
 	public function search($term = '', $andor = 'AND', $limit = 0, $offset = 0, $userid = 0) {
-		if ($this->getVar('hassearch') != 1) {return false; }
+		if ($this->hassearch != 1) {return false; }
 		$search = & $this->getInfo('search');
-		if ($this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
+		if ($this->hassearch != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
 			return false;
 		}
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $search['file'])) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $search['file'];
+		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $search['file'])) {
+			include_once ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $search['file'];
 		} else {
 			return false;
 		}
@@ -366,7 +396,7 @@ class Module
 		$url = ICMS_MODULES_URL . DIRECTORY_SEPARATOR . $this->dirname . DIRECTORY_SEPARATOR;
 		$rtn = [
 			'link' => $url . (isset($inf['adminindex'])?$inf['adminindex']:''),
-			'title' => $this->getVar('name'),
+			'title' => $this->name,
 			'dir' => $this->dirname,
 			'absolute' => 1,
 			'subs' => []
