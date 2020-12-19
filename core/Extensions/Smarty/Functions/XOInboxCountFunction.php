@@ -23,7 +23,7 @@ class XOInboxCountFunction implements SmartyFunctionExtensionInterface
 		/**
 		 * @var Session $session
 		 */
-		$session = icms::getInstance()->get('session');
+		$session = icms::$session;
 		$inboxCounterSegment = $session->getSegment('inbox');
 		if ((int)$inboxCounterSegment->get('expire', 0) > $time) {
 			$count = (int)$inboxCounterSegment->get('count', 0);

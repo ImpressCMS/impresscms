@@ -34,7 +34,6 @@
 
 namespace ImpressCMS\Core\View\Theme;
 
-use Aura\Session\Session;
 use icms;
 use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
 use League\Flysystem\Filesystem;
@@ -200,29 +199,13 @@ class ThemeFactory {
 	 */
 	public function &createInstance($options = [], $initArgs = [])
 	{
-		// Grab the theme folder from request vars if present
-		if (!isset($options['folderName']) || empty($options['folderName'])) {
-			// xoops_theme_select still exists to keep compatibilitie ...
 
-			/**
-			 * @var Session $session
-			 */
-			$session = \icms::$session;
-			$xoBundleSection = $session->getSegment($this->xoBundleIdentifier);
-
-			if ((!empty($_REQUEST['theme_select'])) && $this->isThemeAllowed($_REQUEST['theme_select'])) {
-				$options['folderName'] = $_REQUEST['theme_select'];
-				if ($session->isStarted() && $this->allowUserSelection) {
-					$xoBundleSection->set('defaultTheme', $_REQUEST['theme_select']);
-				}
-			} elseif ($defaultTheme = $xoBundleSection->get('defaultTheme')) {
-				$options['folderName'] = $defaultTheme;
-			} elseif (!isset($options['folderName']) || empty($options['folderName']) || !$this->isThemeAllowed($options['folderName'])) {
-				$options['folderName'] = $this->defaultTheme;
-			}
-			$GLOBALS['icmsConfig']['theme_set'] = $options['folderName'];
+		if (!isset( $options['folderName'])) {
+			$options['folderName'] = $GLOBALS['icmsConfig']['theme_set'];
 		}
+
 		$options['path'] = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'])) ? ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'] : ICMS_THEME_PATH . '/' . $options['folderName'];
+
 		$inst = new ThemeComponent();
 		foreach ($options as $k => $v) {
 			$inst->$k = $v;

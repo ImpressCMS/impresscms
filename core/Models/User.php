@@ -428,8 +428,8 @@ class User extends AbstractExtendedModel {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::$session;
-		$userSegment = $session->getSegment(__CLASS__);
+		$session = icms::$session;
+		$userSegment = $session->getSegment('user');
 		foreach ($data as $key => $value) {
 			$userSegment->set($key, $value);
 		}
@@ -443,8 +443,8 @@ class User extends AbstractExtendedModel {
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::$session;
-			$userSegment = $session->getSegment(__CLASS__);
+			$session = icms::$session;
+			$userSegment = $session->getSegment('user');
 			$userSegment->set($name, parent::getVar($name));
 		}
 	}
@@ -484,8 +484,8 @@ class User extends AbstractExtendedModel {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::$session;
-		$userSegment = $session->getSegment(__CLASS__);
+		$session = icms::$session;
+		$userSegment = $session->getSegment('user');
 
 		if ($userid = $userSegment->get('userid')) {
 					return false;

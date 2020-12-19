@@ -24,8 +24,7 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 		global $xoopsTpl;
 		if (is_object(icms::$user)) {
 
-			$userSection = \icms::$session
-				->getSegment(\ImpressCMS\Core\Models\User::class);
+			$userSection = icms::$session->getSegment('user');
 			foreach (icms::$user->vars as $key => $value) {
 				$user[$key] = $value;
 			}

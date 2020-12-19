@@ -36,8 +36,6 @@
  * @author		skalpa <psk@psykaos.net>
  */
 
-use ImpressCMS\Core\Models\User;
-
 $xoopsOption['pagetype'] = 'user';
 if (icms_get_module_status('profile') && file_exists(ICMS_MODULES_PATH . '/profile/edituser.php')) {
 	header('Location: ' . ICMS_MODULES_URL . '/profile/edituser.php');
@@ -259,8 +257,8 @@ switch ($op) {
 					/**
 					 * @var Aura\Session\Session $session
 					 */
-					$session = icms::getInstance()->get('session');
-					$userSegment = $session->getSegment(User::class);
+					$session = icms::$session;
+					$userSegment = $session->getSegment('user');
 					$userSegment->set('theme', $theme_selected);
 					$icmsConfig['theme_set'] = $theme_selected;
 				} else {
