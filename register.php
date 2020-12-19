@@ -169,7 +169,7 @@ switch ($op) {
 			$newuser->setVar('uorder', $icmsConfig['com_order'], true);
 			$newuser->setVar('umode', $icmsConfig['com_mode'], true);
 			$newuser->setVar('user_mailok', $user_mailok, true);
-			$newuser->setVar('notify_method', 2);
+			$newuser->notify_method = 2;
 			if ($valid_actkey || $icmsConfigUser['activation_type'] == 1) {
 				$newuser->setVar('level', 1, true);
 			}
@@ -178,7 +178,7 @@ switch ($op) {
 				include 'footer.php';
 				exit();
 			}
-			$newid = (int) $newuser->getVar('uid');
+			$newid = (int) $newuser->uid;
 			if (!$member_handler->addUserToGroup(ICMS_GROUP_USERS, $newid)) {
 				echo "<div id='registerng'>" . _US_REGISTERNG . '</div>';
 				include 'footer.php';
@@ -223,7 +223,7 @@ switch ($op) {
 				$mailer->assign('USERNAME', $uname);
 				$mailer->assign('USERLOGINNAME', $login_name);
 				$mailer->assign('USEREMAIL', $email);
-				$mailer->assign('USERACTLINK', ICMS_URL . '/user.php?op=actv&amp;id=' . $newid . '&amp;actkey=' . $newuser->getVar('actkey'));
+				$mailer->assign('USERACTLINK', ICMS_URL . '/user.php?op=actv&amp;id=' . $newid . '&amp;actkey=' . $newuser->actkey);
 				$member_handler = icms::handler('icms_member');
 				$mailer->setToGroups($member_handler->getGroup($icmsConfigUser['activation_group']));
 				$mailer->setFromEmail($icmsConfig['adminmail']);

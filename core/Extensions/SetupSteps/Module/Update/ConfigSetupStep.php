@@ -26,14 +26,14 @@ class ConfigSetupStep extends InstallConfigSetupStep
 			$output->incrIndent();
 			for ($i = 0; $i < $confcount; $i++) {
 				if (!$config_handler->deleteConfig($configs[$i])) {
-					$output->error(_MD_AM_CONFIGOPTION_DELETE_FAIL, $configs[$i]->getVar('conf_id'));
+					$output->error(_MD_AM_CONFIGOPTION_DELETE_FAIL, $configs[$i]->conf_id);
 					// save the name of config failed to delete for later use
-					$config_delng[] = $configs[$i]->getVar('conf_name');
+					$config_delng[] = $configs[$i]->conf_name;
 				} else {
-					$config_old[$configs[$i]->getVar('conf_name')]['value'] = $configs[$i]->conf_value;
-					$config_old[$configs[$i]->getVar('conf_name')]['formtype'] = $configs[$i]->getVar('conf_formtype');
-					$config_old[$configs[$i]->getVar('conf_name')]['valuetype'] = $configs[$i]->getVar('conf_valuetype');
-					$output->error(_MD_AM_CONFIGOPTION_DELETED, $configs[$i]->getVar('conf_id'));
+					$config_old[$configs[$i]->conf_name]['value'] = $configs[$i]->conf_value;
+					$config_old[$configs[$i]->conf_name]['formtype'] = $configs[$i]->conf_formtype;
+					$config_old[$configs[$i]->conf_name]['valuetype'] = $configs[$i]->conf_valuetype;
+					$output->error(_MD_AM_CONFIGOPTION_DELETED, $configs[$i]->conf_id);
 				}
 			}
 			$output->decrIndent();
@@ -41,11 +41,11 @@ class ConfigSetupStep extends InstallConfigSetupStep
 
 		// now reinsert them with the new settings
 		$configs = (array)$module->getInfo('config');
-		if ($module->getVar('hascomments') != 0) {
+		if ($module->hascomments != 0) {
 			$this->includeCommentsConfig($configs);
 		}
 
-		if ($module->getVar('hasnotification') != 0) {
+		if ($module->hasnotification != 0) {
 			// Main notification options
 			include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
 			$options = array(
@@ -69,9 +69,9 @@ class ConfigSetupStep extends InstallConfigSetupStep
 			//  initially is ok, but not when 'update' module..
 			$options = array();
 			$notification_handler = icms::handler('icms_data_notification');
-			$categories = &$notification_handler->categoryInfo('', $module->getVar('mid'));
+			$categories = &$notification_handler->categoryInfo('', $module->mid);
 			foreach ($categories as $category) {
-				$events = &$notification_handler->categoryEvents($category['name'], false, $module->getVar('mid'));
+				$events = &$notification_handler->categoryEvents($category['name'], false, $module->mid);
 				foreach ($events as $event) {
 					if (!empty($event['invisible'])) {
 						continue;
@@ -101,13 +101,13 @@ class ConfigSetupStep extends InstallConfigSetupStep
 				// only insert ones that have been deleted previously with success
 				if (!in_array($config['name'], $config_delng)) {
 					$confobj = &$config_handler->createConfig();
-					$confobj->setVar('conf_modid', $module->mid);
-					$confobj->setVar('conf_catid', 0);
-					$confobj->setVar('conf_name', $config['name']);
+					$confobj->conf_modid = $module->mid;
+					$confobj->conf_catid = 0;
+					$confobj->conf_name = $config['name'];
 					$confobj->setVar('conf_title', $config['title'], true);
 					$confobj->setVar('conf_desc', $config['description'], true);
-					$confobj->setVar('conf_formtype', $config['formtype']);
-					$confobj->setVar('conf_valuetype', $config['valuetype']);
+					$confobj->conf_formtype = $config['formtype'];
+					$confobj->conf_valuetype = $config['valuetype'];
 					if (isset($config_old[$config['name']]['value'])
 						&& $config_old[$config['name']]['formtype'] == $config['formtype']
 						&& $config_old[$config['name']]['valuetype'] == $config['valuetype']
@@ -123,7 +123,7 @@ class ConfigSetupStep extends InstallConfigSetupStep
 					} else {
 						$confobj->setConfValueForInput($config['default'], true);
 					}
-					$confobj->setVar('conf_order', $order);
+					$confobj->conf_order = $order;
 					$confop_msgs = [];
 					if (isset($config['options']) && is_array($config['options'])) {
 						foreach ($config['options'] as $key => $value) {

@@ -84,30 +84,27 @@ switch ($op) {
 			$enabledebug_mids = empty($enabledebug_mids)?array():$enabledebug_mids;
 			$read_bids = empty($read_bids)?array():$read_bids;
 			$group = & $member_handler->getGroup($g_id);
-			$group->setVar('name', $name);
-			$group->setVar('description', $desc);
+			$group->name = $name;
+			$group->description = $desc;
 
 			// if this group is not one of the default groups
-			if (!in_array($group->getVar('groupid'), array(ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS))) {
+			if (!in_array($group->groupid, array(ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS))) {
 				if (count($system_catids) > 0) {
-					$group->setVar('group_type', 'Admin');
+					$group->group_type = 'Admin';
 				} else {
-					$group->setVar('group_type', '');
+					$group->group_type = '';
 				}
 			}
 
 			if (!$member_handler->insertGroup($group)) {
 				redirect_header("admin.php?fct=groups", 3, $group->getHtmlErrors());
 			} else {
-				$groupid = $group->getVar('groupid');
+				$groupid = $group->groupid;
 				$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_groupid', $groupid));
 				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
 				$criteria2 = new icms_db_criteria_Compo(new icms_db_criteria_Item('gperm_name', 'system_admin'));
 				$criteria2->add(new icms_db_criteria_Item('gperm_name', 'module_admin'), 'OR');
 				$criteria2->add(new icms_db_criteria_Item('gperm_name', 'module_read'), 'OR');
-				if ($g_id != ICMS_GROUP_ANONYMOUS) {
-					$criteria2->add(new icms_db_criteria_Item('gperm_name', 'use_wysiwygeditor'), 'OR');
-				}
 				$criteria2->add(new icms_db_criteria_Item('gperm_name', 'enable_debug'), 'OR');
 				$criteria2->add(new icms_db_criteria_Item('gperm_name', 'block_read'), 'OR');
 				$criteria2->add(new icms_db_criteria_Item('gperm_name', 'group_manager'), 'OR');
@@ -117,68 +114,57 @@ switch ($op) {
 					array_push($admin_mids, 1);
 					foreach ($system_catids as $s_cid) {
 						$sysperm = & $gperm_handler->create();
-						$sysperm->setVar('gperm_groupid', $groupid);
-						$sysperm->setVar('gperm_itemid', $s_cid);
-						$sysperm->setVar('gperm_name', 'system_admin');
-						$sysperm->setVar('gperm_modid', 1);
+						$sysperm->gperm_groupid = $groupid;
+						$sysperm->gperm_itemid = $s_cid;
+						$sysperm->gperm_name = 'system_admin';
+						$sysperm->gperm_modid = 1;
 						$gperm_handler->insert($sysperm);
 					}
 				}
 
 				foreach ($admin_mids as $a_mid) {
 					$modperm = & $gperm_handler->create();
-					$modperm->setVar('gperm_groupid', $groupid);
-					$modperm->setVar('gperm_itemid', $a_mid);
-					$modperm->setVar('gperm_name', 'module_admin');
-					$modperm->setVar('gperm_modid', 1);
+					$modperm->gperm_groupid = $groupid;
+					$modperm->gperm_itemid = $a_mid;
+					$modperm->gperm_name = 'module_admin';
+					$modperm->gperm_modid = 1;
 					$gperm_handler->insert($modperm);
 				}
 
 				array_push($read_mids, 1);
 				foreach ($read_mids as $r_mid) {
 					$modperm = & $gperm_handler->create();
-					$modperm->setVar('gperm_groupid', $groupid);
-					$modperm->setVar('gperm_itemid', $r_mid);
-					$modperm->setVar('gperm_name', 'module_read');
-					$modperm->setVar('gperm_modid', 1);
+					$modperm->gperm_groupid = $groupid;
+					$modperm->gperm_itemid = $r_mid;
+					$modperm->gperm_name = 'module_read';
+					$modperm->gperm_modid = 1;
 					$gperm_handler->insert($modperm);
-				}
-
-				if ($g_id != ICMS_GROUP_ANONYMOUS) {
-					foreach ($useeditor_mids as $ed_mid) {
-						$modperm = & $gperm_handler->create();
-						$modperm->setVar('gperm_groupid', $groupid);
-						$modperm->setVar('gperm_itemid', $ed_mid);
-						$modperm->setVar('gperm_name', 'use_wysiwygeditor');
-						$modperm->setVar('gperm_modid', 1);
-						$gperm_handler->insert($modperm);
-					}
 				}
 
 				foreach ($enabledebug_mids as $ed_mid) {
 					$modperm = & $gperm_handler->create();
-					$modperm->setVar('gperm_groupid', $groupid);
-					$modperm->setVar('gperm_itemid', $ed_mid);
-					$modperm->setVar('gperm_name', 'enable_debug');
-					$modperm->setVar('gperm_modid', 1);
+					$modperm->gperm_groupid = $groupid;
+					$modperm->gperm_itemid = $ed_mid;
+					$modperm->gperm_name = 'enable_debug';
+					$modperm->gperm_modid = 1;
 					$gperm_handler->insert($modperm);
 				}
 
 				$groupmanager_gids = empty($groupmanager_gids)?array():$groupmanager_gids;
 				foreach ($groupmanager_gids as $gm_gid) {
 					$modperm = & $gperm_handler->create();
-					$modperm->setVar('gperm_groupid', $groupid);
-					$modperm->setVar('gperm_itemid', $gm_gid);
-					$modperm->setVar('gperm_name', 'group_manager');
-					$modperm->setVar('gperm_modid', 1);
+					$modperm->gperm_groupid = $groupid;
+					$modperm->gperm_itemid = $gm_gid;
+					$modperm->gperm_name = 'group_manager';
+					$modperm->gperm_modid = 1;
 					$gperm_handler->insert($modperm);
 				}
 				foreach ($read_bids as $r_bid) {
 					$blockperm = & $gperm_handler->create();
-					$blockperm->setVar('gperm_groupid', $groupid);
-					$blockperm->setVar('gperm_itemid', $r_bid);
-					$blockperm->setVar('gperm_name', 'block_read');
-					$blockperm->setVar('gperm_modid', 1);
+					$blockperm->gperm_groupid = $groupid;
+					$blockperm->gperm_itemid = $r_bid;
+					$blockperm->gperm_name = 'block_read';
+					$blockperm->gperm_modid = 1;
 					$gperm_handler->insert($blockperm);
 				}
 				redirect_header("admin.php?fct=groups", 1, _ICMS_DBUPDATED);
@@ -202,73 +188,65 @@ switch ($op) {
 			$groupmanager_gids = empty($groupmanager_gids)?array():$groupmanager_gids;
 			$read_bids = empty($read_bids)?array():$read_bids;
 			$group = & $member_handler->createGroup();
-			$group->setVar("name", $name);
-			$group->setVar("description", $desc);
+			$group->name = $name;
+			$group->description = $desc;
 			if (count($system_catids) > 0) {
-				$group->setVar("group_type", 'Admin');
+				$group->group_type = 'Admin';
 			}
 			if (!$member_handler->insertGroup($group)) {
 				redirect_header("admin.php?fct=groups", 3, $group->getHtmlErrors());
 			} else {
-				$groupid = $group->getVar('groupid');
+				$groupid = $group->groupid;
 				if (count($system_catids) > 0) {
 					array_push($admin_mids, 1);
 					foreach ($system_catids as $s_cid) {
 						$sysperm = & $gperm_handler->create();
-						$sysperm->setVar('gperm_groupid', $groupid);
-						$sysperm->setVar('gperm_itemid', $s_cid);
-						$sysperm->setVar('gperm_name', 'system_admin');
-						$sysperm->setVar('gperm_modid', 1);
+						$sysperm->gperm_groupid = $groupid;
+						$sysperm->gperm_itemid = $s_cid;
+						$sysperm->gperm_name = 'system_admin';
+						$sysperm->gperm_modid = 1;
 						$gperm_handler->insert($sysperm);
 					}
 				}
 				foreach ($admin_mids as $a_mid) {
 					$modperm = & $gperm_handler->create();
-					$modperm->setVar('gperm_groupid', $groupid);
-					$modperm->setVar('gperm_itemid', $a_mid);
-					$modperm->setVar('gperm_name', 'module_admin');
-					$modperm->setVar('gperm_modid', 1);
+					$modperm->gperm_groupid = $groupid;
+					$modperm->gperm_itemid = $a_mid;
+					$modperm->gperm_name = 'module_admin';
+					$modperm->gperm_modid = 1;
 					$gperm_handler->insert($modperm);
 				}
 				array_push($read_mids, 1);
 				foreach ($read_mids as $r_mid) {
 					$modperm = & $gperm_handler->create();
-					$modperm->setVar('gperm_groupid', $groupid);
-					$modperm->setVar('gperm_itemid', $r_mid);
-					$modperm->setVar('gperm_name', 'module_read');
-					$modperm->setVar('gperm_modid', 1);
-					$gperm_handler->insert($modperm);
-				}
-				foreach ($useeditor_mids as $ed_mid) {
-					$modperm = & $gperm_handler->create();
-					$modperm->setVar('gperm_groupid', $groupid);
-					$modperm->setVar('gperm_itemid', $ed_mid);
-					$modperm->setVar('gperm_name', 'use_wysiwygeditor');
-					$modperm->setVar('gperm_modid', 1);
+					$modperm->gperm_groupid = $groupid;
+					$modperm->gperm_itemid = $r_mid;
+					$modperm->gperm_name = 'module_read';
+					$modperm->gperm_modid = 1;
 					$gperm_handler->insert($modperm);
 				}
 				foreach ($enabledebug_mids as $ed_mid) {
 					$modperm = & $gperm_handler->create();
-					$modperm->setVar('gperm_groupid', $groupid);
-					$modperm->setVar('gperm_itemid', $ed_mid);
-					$modperm->setVar('gperm_name', 'enable_debug');
-					$modperm->setVar('gperm_modid', 1);
+					$modperm->gperm_groupid = $groupid;
+					$modperm->gperm_itemid = $ed_mid;
+					$modperm->gperm_name = 'enable_debug';
+					$modperm->gperm_modid = 1;
 					$gperm_handler->insert($modperm);
 				}
 				foreach ($groupmanager_gids as $gm_gid) {
 					$modperm = & $gperm_handler->create();
-					$modperm->setVar('gperm_groupid', $groupid);
-					$modperm->setVar('gperm_itemid', $gm_gid);
-					$modperm->setVar('gperm_name', 'group_manager');
-					$modperm->setVar('gperm_modid', 1);
+					$modperm->gperm_groupid = $groupid;
+					$modperm->gperm_itemid = $gm_gid;
+					$modperm->gperm_name = 'group_manager';
+					$modperm->gperm_modid = 1;
 					$gperm_handler->insert($modperm);
 				}
 				foreach ($read_bids as $r_bid) {
 					$blockperm = & $gperm_handler->create();
-					$blockperm->setVar('gperm_groupid', $groupid);
-					$blockperm->setVar('gperm_itemid', $r_bid);
-					$blockperm->setVar('gperm_name', 'block_read');
-					$blockperm->setVar('gperm_modid', 1);
+					$blockperm->gperm_groupid = $groupid;
+					$blockperm->gperm_itemid = $r_bid;
+					$blockperm->gperm_name = 'block_read';
+					$blockperm->gperm_modid = 1;
 					$gperm_handler->insert($blockperm);
 				}
 				redirect_header("admin.php?fct=groups", 1, _ICMS_DBUPDATED);

@@ -85,8 +85,12 @@ class ThemeForm extends AbstractForm {
 			if (!is_object($ele)) {
 				$ret .= $ele;
 			} elseif (!$ele->isHidden()) {
-				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>";
-				if ($caption = $ele->getCaption()) {
+				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'>";
+				$caption = $ele->getCaption();
+				if ($caption !== '' || $caption === null) {
+					$ret .= '<td class="head">';
+				}
+				if ($caption != '' && $caption !== null) {
 					$ret .=
 						"<div class='xoops-form-element-caption" . ($ele->isRequired()? '-required' : '') . "'>"
 						. "<span class='caption-text'>{$caption}</span>";
@@ -95,8 +99,10 @@ class ThemeForm extends AbstractForm {
 						}
 					$ret .= "<span class='caption-marker'> *</span></div>";
 				}
-
-				$ret .= "</td><td class='$class'>" . $ele->render() . "</td></tr>\n";
+				if ($caption !== '' || $caption === null) {
+					$ret .= '<td class="head">';
+				}
+				$ret .= "<td class='$class'>" . $ele->render() . "</td></tr>\n";
 			} else {
 				$hidden .= $ele->render();
 			}

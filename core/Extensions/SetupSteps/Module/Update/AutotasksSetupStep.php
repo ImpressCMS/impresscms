@@ -29,14 +29,14 @@ class AutotasksSetupStep implements SetupStepInterface
 			$criteria->add(new CriteriaItem('sat_type', 'addon/' . $module->getInfo('dirname')));
 			$items_atasks = $atasks_handler->getObjects($criteria, false);
 			foreach ($items_atasks as $task) {
-				$taskID = (int)$task->getVar('sat_addon_id');
+				$taskID = (int)$task->sat_addon_id;
 				if (!isset($atasks[$taskID])) {
 					$atasks[$taskID] = [];
 				}
-				$atasks[$taskID]['enabled'] = $task->getVar('sat_enabled');
-				$atasks[$taskID]['repeat'] = $task->getVar('sat_repeat');
-				$atasks[$taskID]['interval'] = $task->getVar('sat_interval');
-				$atasks[$taskID]['name'] = $task->getVar('sat_name');
+				$atasks[$taskID]['enabled'] = $task->sat_enabled;
+				$atasks[$taskID]['repeat'] = $task->sat_repeat;
+				$atasks[$taskID]['interval'] = $task->sat_interval;
+				$atasks[$taskID]['name'] = $task->sat_name;
 			}
 			$atasks_handler->deleteAll($criteria);
 			if (is_array($atasks)) {
@@ -49,21 +49,21 @@ class AutotasksSetupStep implements SetupStepInterface
 					 */
 					$task = &$atasks_handler->create();
 					if (isset($taskData['enabled'])) {
-						$task->setVar('sat_enabled', $taskData['enabled']);
+						$task->sat_enabled = $taskData['enabled'];
 					}
 					if (isset($taskData['repeat'])) {
-						$task->setVar('sat_repeat', $taskData['repeat']);
+						$task->sat_repeat = $taskData['repeat'];
 					}
 					if (isset($taskData['interval'])) {
-						$task->setVar('sat_interval', $taskData['interval']);
+						$task->sat_interval = $taskData['interval'];
 					}
 					if (isset($taskData['onfinish'])) {
-						$task->setVar('sat_onfinish', $taskData['onfinish']);
+						$task->sat_onfinish = $taskData['onfinish'];
 					}
-					$task->setVar('sat_name', $taskData['name']);
-					$task->setVar('sat_code', $taskData['code']);
-					$task->setVar('sat_type', 'addon/' . $module->getInfo('dirname'));
-					$task->setVar('sat_addon_id', (int)$taskID);
+					$task->sat_name = $taskData['name'];
+					$task->sat_code = $taskData['code'];
+					$task->sat_type = 'addon/' . $module->getInfo('dirname');
+					$task->sat_addon_id = $taskID;
 					if (!$task->store()) {
 						$output->error(_MD_AM_AUTOTASK_FAIL . ' ' . $taskData['name']);
 					} else {

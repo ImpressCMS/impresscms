@@ -8,12 +8,14 @@
  * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+use ImpressCMS\Core\Models\AbstractExtendedHandler;
+
 /**
  * Handler for AdSense object
  *
  * @package ImpressCMS\Modules\System\Class\Adsense
  */
-class mod_system_AdsenseHandler extends \ImpressCMS\Core\Models\AbstractExtendedHandler {
+class mod_system_AdsenseHandler extends AbstractExtendedHandler {
 	public $adFormats = array();
 	private $_adFormatsList = array();
 	private $_objects = false;
@@ -130,14 +132,14 @@ class mod_system_AdsenseHandler extends \ImpressCMS\Core\Models\AbstractExtended
 	 * @return	boolean
 	 */
 	protected function beforeSave(&$obj) {
-		if ($obj->getVar('tag') == '') {
-			$obj->setVar('tag', $title = $obj->generateTag());
+		if ($obj->tag == '') {
+			$obj->tag = $obj->generateTag();
 		}
-		$obj->setVar("color_border", str_replace("#", "", $obj->getVar("color_border")));
-		$obj->setVar("color_background", str_replace("#", "", $obj->getVar("color_background")));
-		$obj->setVar("color_link", str_replace("#", "", $obj->getVar("color_link")));
-		$obj->setVar("color_url", str_replace("#", "", $obj->getVar("color_url")));
-		$obj->setVar("color_text", str_replace("#", "", $obj->getVar("color_text")));
+		$obj->color_border = str_replace("#", "", $obj->color_border);
+		$obj->color_background = str_replace("#", "", $obj->color_background);
+		$obj->color_link = str_replace("#", "", $obj->color_link);
+		$obj->color_url = str_replace("#", "", $obj->color_url);
+		$obj->color_text = str_replace("#", "", $obj->color_text);
 
 		return true;
 	}
@@ -151,7 +153,7 @@ class mod_system_AdsenseHandler extends \ImpressCMS\Core\Models\AbstractExtended
 			$adsensesObj = $this->getObjects(null, true);
 			$ret = array();
 			foreach ($adsensesObj as $adsenseObj) {
-				$ret[$adsenseObj->getVar('tag')] = $adsenseObj;
+				$ret[$adsenseObj->tag] = $adsenseObj;
 			}
 			$this->_objects = $ret;
 		}

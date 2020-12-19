@@ -29,13 +29,16 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license		https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  */
 
 namespace ImpressCMS\Core\View\Theme;
 
-use Aura\Session\Session;
 use icms;
+use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
+use League\Flysystem\Filesystem;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException;
 
 /**
  * Theme Factory
@@ -52,7 +55,7 @@ class ThemeFactory {
 	 * Currently enabled themes (if empty, all the themes in themes/ are allowed)
 	 * @public array
 	 */
-	public $allowedThemes = array();
+	public $allowedThemes = [];
 
 	/**
 	 * Default theme to instanciate if none specified
@@ -86,53 +89,103 @@ class ThemeFactory {
 	}
 
 	/**
+	 * Gets theme info
+	 *
+	 * @param string $path Path where is theme located
+	 *
+	 * @return array
+	 *
+	 * @throws InvalidArgumentException
+	 */
+	protected static function getThemeInfo(string $path) {
+		global $icmsConfig;
+
+		/**
+		 * @var CacheItemPoolInterface $cache
+		 */
+		$cache = icms::getInstance()->get('cache');
+		$cachedThemeInfo = $cache->getItem('theme.' . $icmsConfig['language'] . '.' . sha1($path));
+
+		if (!$cachedThemeInfo->isHit()) {
+			$info = [];
+			/**
+			 * @var ExtensionDescriberInterface $extensionDescriber
+			 */
+			foreach (icms::getInstance()->get('extension_describer.theme') as $extensionDescriber) {
+				if (!$extensionDescriber->canDescribe($path)) {
+					continue;
+				}
+				$info += $extensionDescriber->describe($path);
+			}
+
+			$cachedThemeInfo->set($info);
+			$cache->save($cachedThemeInfo);
+		} else {
+			$info = $cachedThemeInfo->get();
+		}
+
+		return $info;
+	}
+
+	/**
 	 * Gets list of themes folder from themes directory, excluding any directories that do not have theme.html
+	 *
 	 * @return	array
 	 */
 	public static function getThemesList() {
 		$dirlist = [];
 		/**
-		 * @var \League\Flysystem\Filesystem $fs
+		 * @var Filesystem $fs
 		 */
 		$fs = icms::getInstance()->get('filesystem.themes');
 		foreach ($fs->listContents() as $fileInfo) {
-			$file = $fileInfo['basename'];
-			if (strpos($file, '.') === 0 || $fs->has($file . '/theme.html') === false) {
+			if ($fileInfo['type'] !== 'dir') {
 				continue;
 			}
-			$dirlist[$file] = $file;
+			$themeInfo = self::getThemeInfo(ICMS_THEME_PATH . DIRECTORY_SEPARATOR .  $fileInfo['filename']);
+			if (!$themeInfo['hasUser']) {
+				continue;
+			}
+			$file = $fileInfo['basename'];
+			$dirlist[$file] = $themeInfo['name'];
 		}
 		return $dirlist;
 	}
 
 	/**
 	 * Gets list of administration themes folder from themes directory, excluding any directories that do not have theme_admin.html
+	 *
 	 * @return	array
 	 */
 	public static function getAdminThemesList() {
 		$items = [];
 		/**
-		 * @var \League\Flysystem\Filesystem $fs
+		 * @var Filesystem $fs
 		 */
 		$fs = icms::getInstance()->get('filesystem.themes');
 		foreach ($fs->listContents() as $fileInfo) {
-			$file = $fileInfo['basename'];
-			if (strpos($file, '.') === 0 || $fs->has( $file . '/theme_admin.html') === false) {
+			if ($fileInfo['type'] !== 'dir') {
 				continue;
 			}
-			$items[$file] = $file;
+			$themeInfo = self::getThemeInfo(ICMS_THEME_PATH . DIRECTORY_SEPARATOR .  $fileInfo['filename']);
+			if (!$themeInfo['hasAdmin']) {
+				continue;
+			}
+			$file = $fileInfo['basename'];
+			$items[$file] = $themeInfo['name'];
 		}
 
 		/**
-		 * @var \League\Flysystem\Filesystem $fm
+		 * @var Filesystem $fm
 		 */
 		$fm = icms::getInstance()->get('filesystem.modules');
 		foreach ($fm->listContents('system/themes') as $fileInfo) {
-			$file = $fileInfo['basename'];
-			if (strpos($file, '.') === 0 || $fm->has('system/themes/' . $file . '/theme.html') === false) {
+			$themeInfo = self::getThemeInfo(ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'themes' .  DIRECTORY_SEPARATOR . $fileInfo['filename']);
+			if (!$themeInfo['hasAdmin']) {
 				continue;
 			}
-			$items[$file] = $file;
+			$file = $fileInfo['basename'];
+			$items[$file] = $themeInfo['name'];
 		}
 
 		return $items;
@@ -146,29 +199,13 @@ class ThemeFactory {
 	 */
 	public function &createInstance($options = [], $initArgs = [])
 	{
-		// Grab the theme folder from request vars if present
-		if (!isset($options['folderName']) || empty($options['folderName'])) {
-			// xoops_theme_select still exists to keep compatibilitie ...
 
-			/**
-			 * @var Session $session
-			 */
-			$session = \icms::$session;
-			$xoBundleSection = $session->getSegment($this->xoBundleIdentifier);
-
-			if ((!empty($_REQUEST['theme_select'])) && $this->isThemeAllowed($_REQUEST['theme_select'])) {
-				$options['folderName'] = $_REQUEST['theme_select'];
-				if ($session->isStarted() && $this->allowUserSelection) {
-					$xoBundleSection->set('defaultTheme', $_REQUEST['theme_select']);
-				}
-			} elseif ($defaultTheme = $xoBundleSection->get('defaultTheme')) {
-				$options['folderName'] = $defaultTheme;
-			} elseif (!isset($options['folderName']) || empty($options['folderName']) || !$this->isThemeAllowed($options['folderName'])) {
-				$options['folderName'] = $this->defaultTheme;
-			}
-			$GLOBALS['icmsConfig']['theme_set'] = $options['folderName'];
+		if (!isset( $options['folderName'])) {
+			$options['folderName'] = $GLOBALS['icmsConfig']['theme_set'];
 		}
+
 		$options['path'] = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'])) ? ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'] : ICMS_THEME_PATH . '/' . $options['folderName'];
+
 		$inst = new ThemeComponent();
 		foreach ($options as $k => $v) {
 			$inst->$k = $v;

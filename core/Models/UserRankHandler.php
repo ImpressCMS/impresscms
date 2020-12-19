@@ -66,9 +66,9 @@ class UserRankHandler extends AbstractExtendedHandler {
 				'image' => ICMS_UPLOAD_URL . 'blank.gif');
 		} else {
 			$rank = array(
-				'id' => $rank_id,
-				'title' => $ranks[0]->getVar('rank_title'),
-				'image' => $this->getImageUrl() . $ranks[0]->getVar('rank_image'));
+				"id" => $rank_id,
+				"title" => $ranks[0]->rank_title,
+				"image" => $this->getImageUrl() . $ranks[0]->rank_image);
 		}
 
 		return $rank;

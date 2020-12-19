@@ -190,7 +190,6 @@ class User extends AbstractExtendedModel {
 		$this->setControl('language', 'language');
 		$this->setControl('uname', 'text');
 		$this->setControl('login_name', 'text');
-		$this->setControl('user_aim', 'text');
 		$this->setControl('actkey', 'text');
 		$this->setControl('name', 'text');
 		$this->setControl('url', 'text');
@@ -201,7 +200,6 @@ class User extends AbstractExtendedModel {
 		$this->setControl('user_regdate', 'date');
 		$this->setControl('notify_method', 'notify_method');
 		$this->setControl('pass_expired', 'yesno');
-		$this->setControl('user_viewoid', 'yesno');
 		$this->setControl('user_mailok', 'yesno');
 		$this->setControl('attachsig', 'yesno');
 		$this->setControl('rank', [
@@ -252,8 +250,8 @@ class User extends AbstractExtendedModel {
         $mailer = new MessageSender();
         $mailer->useMail();
         $mailer->setBody($icmsConfigUser['welcome_msg_content']);
-        $mailer->assign('UNAME', $this->getVar('uname'));
-        $user_email = $this->getVar('email');
+        $mailer->assign('UNAME', $this->uname);
+        $user_email = $this->email;
         $mailer->assign('X_UEMAIL', $user_email);
         $mailer->setToEmails($user_email);
         $mailer->setFromEmail($icmsConfig['adminmail']);
@@ -283,8 +281,8 @@ class User extends AbstractExtendedModel {
             $mailer = new MessageSender();
             $mailer->useMail();
             $mailer->setTemplate('newuser_notify.tpl');
-            $mailer->assign('UNAME', $this->getVar('uname'));
-            $mailer->assign('EMAIL', $this->getVar('email'));
+            $mailer->assign('UNAME', $this->uname);
+            $mailer->assign('EMAIL', $this->email);
             $mailer->setToGroups($member_handler->getGroup($icmsConfigUser['new_user_notify_group']));
             $mailer->setFromEmail($icmsConfig['adminmail']);
             $mailer->setFromName($icmsConfig['sitename']);
@@ -335,7 +333,7 @@ class User extends AbstractExtendedModel {
 	{
 		if (empty($this->_groups)) {
 			$member_handler = icms::handler('icms_member');
-			$this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
+			$this->_groups = $member_handler->getGroupsByUser($this->uid);
 		}
 		return $this->_groups;
 	}
@@ -357,7 +355,7 @@ class User extends AbstractExtendedModel {
 	 * @return bool
 	 */
 	public function isActive() {
-		return $this->getVar('level') > 0;
+		return $this->level > 0;
 	}
 
 	/**
@@ -367,7 +365,7 @@ class User extends AbstractExtendedModel {
 	public function isOnline() {
 		if (!isset($this->_isOnline)) {
 			$onlinehandler = icms::handler('icms_core_Online');
-			$this->_isOnline = $onlinehandler->getCount(new CriteriaItem('online_uid', $this->getVar('uid'))) > 0;
+			$this->_isOnline = $onlinehandler->getCount(new CriteriaItem('online_uid', $this->uid)) > 0;
 		}
 		return $this->_isOnline;
 	}
@@ -385,8 +383,8 @@ class User extends AbstractExtendedModel {
 	 *
 	 */
 	public function gravatar($rating = false, $size = false, $default = false, $border = false, $overwrite = false) {
-		if ($this->getVar('user_avatar') !== 'blank.gif' && !$overwrite && is_file(ICMS_UPLOAD_PATH . '/' . $this->getVar('user_avatar'))) {
-			return ICMS_UPLOAD_URL . '/' . $this->getVar('user_avatar');
+		if (!$overwrite && is_file(ICMS_UPLOAD_PATH . '/' . $this->user_avatar) && $this->user_avatar != 'blank.gif') {
+			return ICMS_UPLOAD_URL . '/' . $this->user_avatar;
 		}
 		$ret = '//www.gravatar.com/avatar/' . md5(strtolower($this->getVar('email', 'E'))) . '?d=identicon';
 		if ($rating) {
@@ -420,7 +418,7 @@ class User extends AbstractExtendedModel {
 	 * Logs in current user
 	 */
 	public function login() {
-		$this->setVar('last_login', time());
+		$this->last_login = time();
 		$this->store();
 		$data = $this->toArray();
 		$data['_rank'] = $this->rank();
@@ -430,8 +428,8 @@ class User extends AbstractExtendedModel {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::$session;
-		$userSegment = $session->getSegment(__CLASS__);
+		$session = icms::$session;
+		$userSegment = $session->getSegment('user');
 		foreach ($data as $key => $value) {
 			$userSegment->set($key, $value);
 		}
@@ -445,8 +443,8 @@ class User extends AbstractExtendedModel {
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::$session;
-			$userSegment = $session->getSegment(__CLASS__);
+			$session = icms::$session;
+			$userSegment = $session->getSegment('user');
 			$userSegment->set($name, parent::getVar($name));
 		}
 	}
@@ -461,7 +459,7 @@ class User extends AbstractExtendedModel {
 		if (!icms::$user) {
 					return false;
 		}
-		return icms::$user->getVar('uid') === $this->getVar('uid');
+		return icms::$user->uid == $this->uid;
 	}
 
 	/**
@@ -471,7 +469,7 @@ class User extends AbstractExtendedModel {
 	public function rank()
 	{
 		if (!isset($this->_rank)) {
-			$this->_rank = icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
+			$this->_rank = icms::handler('icms_member_rank')->getRank($this->rank, $this->posts);
 		}
 		return $this->_rank;
 	}
@@ -486,13 +484,13 @@ class User extends AbstractExtendedModel {
 		/**
 		 * @var Aura\Session\Session $session
 		 */
-		$session = \icms::$session;
-		$userSegment = $session->getSegment(__CLASS__);
+		$session = icms::$session;
+		$userSegment = $session->getSegment('user');
 
 		if ($userid = $userSegment->get('userid')) {
 					return false;
 		}
-		if ($userid !== $this->getVar('uid')) {
+		if ($userid != $this->uid) {
 			return false;
 		}
 		$session->clear();

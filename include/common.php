@@ -83,9 +83,6 @@ if (isset($xoopsOption['nodebug']) && $xoopsOption['nodebug']) {
 	$logger = icms::getInstance()->get('logger');
 	$logger->disableLogger();
 }
-//TODO: change this, because it is using deprecated notations
-icms::$module = icms::getInstance()->get('module');
-$icmsModule = &icms::$module;
 
 // -- finalize boot process
 icms::$preload->triggerEvent('finishCoreBoot');

@@ -2,12 +2,14 @@
 
 namespace ImpressCMS\Tests\Core;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests mainfile.php
  *
  * @package ImpressCMS\Tests\Core
  */
-class MainfileTest extends \PHPUnit_Framework_TestCase
+class MainfileTest extends TestCase
 {
 
 	/**
@@ -46,13 +48,13 @@ class MainfileTest extends \PHPUnit_Framework_TestCase
 	public function testUrlConstant(): void
 	{
 		self::assertTrue(defined('ICMS_URL'), 'ICMS_URL is not defined');
-		self::assertSame(env('URL'), ICMS_URL, 'ICMS_URL is not same as URL env variable');
+		self::assertSame(rtrim(env('URL'), '/'), ICMS_URL, 'ICMS_URL is not same as URL env variable');
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	protected function setUp() {
+	protected function setUp(): void {
 		global $xoopsOption;
 
 		$xoopsOption['nocommon'] = true;

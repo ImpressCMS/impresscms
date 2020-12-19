@@ -5,6 +5,7 @@ namespace ImpressCMS\Core\Middlewares;
 use icms_member_user_Object;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
@@ -12,7 +13,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  *
  * @package ImpressCMS\Core\Middlewares
  */
-class ChangeThemeMiddleware implements \Psr\Http\Server\MiddlewareInterface
+class ChangeThemeMiddleware implements MiddlewareInterface
 {
 	/**
 	 * @var array
@@ -40,7 +41,7 @@ class ChangeThemeMiddleware implements \Psr\Http\Server\MiddlewareInterface
 		 * @var Aura\Session\Session $session
 		 */
 		$session = $request->getAttribute('session');
-		$userSegment = $session->getSegment(icms_member_user_Object::class);
+		$userSegment = $session->getSegment('user');
 
 		$post = $request->getParsedBody();
 

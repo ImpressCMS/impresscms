@@ -19,11 +19,11 @@ class ConfigSetupStep implements SetupStepInterface
 	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
 		$configs = (array)$module->getInfo('config');
-		if ($module->getVar('hascomments') != 0) {
+		if ($module->hascomments != 0) {
 			$this->includeCommentsConfig($configs);
 		}
 
-		if ($module->getVar('hasnotification') != 0) {
+		if ($module->hasnotification != 0) {
 			$this->includeNotificationsConfig($module, $configs);
 		}
 
@@ -40,15 +40,15 @@ class ConfigSetupStep implements SetupStepInterface
 				 * @var ConfigItem $confobj
 				 */
 				$confobj = &$config_handler->createConfig();
-				$confobj->setVar('conf_modid', $module->getVar('mid'));
-				$confobj->setVar('conf_catid', 0);
-				$confobj->setVar('conf_name', $config['name']);
+				$confobj->conf_modid = $module->mid;
+				$confobj->conf_catid = 0;
+				$confobj->conf_name = $config['name'];
 				$confobj->setVar('conf_title', $config['title'], true);
 				$confobj->setVar('conf_desc', $config['description'], true);
-				$confobj->setVar('conf_formtype', $config['formtype']);
-				$confobj->setVar('conf_valuetype', $config['valuetype']);
+				$confobj->conf_formtype = $config['formtype'];
+				$confobj->conf_valuetype = $config['valuetype'];
 				$confobj->setConfValueForInput($config['default'], true);
-				$confobj->setVar('conf_order', $order);
+				$confobj->conf_order = $order;
 				$confop_msgs = [];
 				if (isset($config['options']) && is_array($config['options'])) {
 					foreach ($config['options'] as $key => $value) {
@@ -134,9 +134,9 @@ class ConfigSetupStep implements SetupStepInterface
 		// Event-specific notification options
 		$options = [];
 		$notification_handler = icms::handler('icms_data_notification');
-		$categories = &$notification_handler->categoryInfo('', $module->getVar('mid'));
+		$categories = &$notification_handler->categoryInfo('', $module->mid);
 		foreach ($categories as $category) {
-			$events = &$notification_handler->categoryEvents($category['name'], false, $module->getVar('mid'));
+			$events = &$notification_handler->categoryEvents($category['name'], false, $module->mid);
 			foreach ($events as $event) {
 				if (!empty($event['invisible'])) {
 					continue;

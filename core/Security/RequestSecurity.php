@@ -175,6 +175,7 @@ class RequestSecurity {
 	}
 
 	/**
+
 	 * Check superglobals for contamination
 	 *
 	 * @return void

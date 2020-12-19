@@ -21,7 +21,7 @@ class FilesSetupStep implements SetupStepInterface
 		// delete files
 		try {
 			$file_handler = icms::handler('icms_data_file');
-			$file_handler->deleteAll(icms_buildCriteria(array('mid' => $module->getVar('mid'))));
+			$file_handler->deleteAll(icms_buildCriteria(array('mid' => $module->mid)));
 		} catch (\Exception $ex) {
 
 		}

@@ -42,7 +42,7 @@
 include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 $ph = icms::handler('icms_member_groupperm');
 
-if (('system' != $icmsModule->getVar('dirname')
+if (('system' != $icmsModule->dirname
 		&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
 	|| (!is_object(icms::$user) && !$ph->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, array(ICMS_GROUP_ANONYMOUS)))
 	|| !is_object($icmsModule)
@@ -57,14 +57,14 @@ $com_mode = isset($_GET['com_mode'])
 	: '';
 if ($com_mode == '') {
 	if (is_object(icms::$user)) {
-		$com_mode = icms::$user->getVar('umode');
+		$com_mode = icms::$user->umode;
 	} else {
 		$com_mode = $icmsConfig['com_mode'];
 	}
 }
 if (!isset($_GET['com_order'])) {
 	if (is_object(icms::$user)) {
-		$com_order = icms::$user->getVar('uorder');
+		$com_order = icms::$user->uorder;
 	} else {
 		$com_order = $icmsConfig['com_order'];
 	}
@@ -73,18 +73,18 @@ if (!isset($_GET['com_order'])) {
 }
 $comment_handler = icms::handler('icms_data_comment');
 $comment = & $comment_handler->get($com_id);
-$dohtml = $comment->getVar('dohtml');
-$dosmiley = $comment->getVar('dosmiley');
-$dobr = $comment->getVar('dobr');
-$doxcode = $comment->getVar('doxcode');
-$com_icon = $comment->getVar('com_icon');
-$com_itemid = $comment->getVar('com_itemid');
+$dohtml = $comment->dohtml;
+$dosmiley = $comment->dosmiley;
+$dobr = $comment->dobr;
+$doxcode = $comment->doxcode;
+$com_icon = $comment->com_icon;
+$com_itemid = $comment->com_itemid;
 $com_title = $comment->getVar('com_title', 'E');
 $com_text = $comment->getVar('com_text', 'E');
-$com_pid = $comment->getVar('com_pid');
-$com_status = $comment->getVar('com_status');
-$com_rootid = $comment->getVar('com_rootid');
-if ($icmsModule->getVar('dirname') != 'system') {
+$com_pid = $comment->com_pid;
+$com_status = $comment->com_status;
+$com_rootid = $comment->com_rootid;
+if ($icmsModule->dirname != 'system') {
 	include ICMS_ROOT_PATH . '/header.php';
 	include ICMS_ROOT_PATH . '/include/comment_form.php';
 	include ICMS_ROOT_PATH . '/footer.php';

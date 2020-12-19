@@ -3,7 +3,7 @@
  * Temporary solution for "site closed" status
  *
  * @copyright	The Xoops project http://www.xoops.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license		https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
  * @author		phppp (infomax@gmail.com)
  * @since		Xoops 2.0.17
  * @package 	core
@@ -39,9 +39,9 @@ if (!$allowed) {
 		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, _CHARSET),
 		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET),
 		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
-		'icms_dirname' => @$icmsModule?$icmsModule->getVar('dirname'):'system',
+		'icms_dirname' => @$icmsModule?$icmsModule->dirname:'system',
 		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
-			?$icmsModule->getVar('name')
+			?$icmsModule->name
 			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES, _CHARSET),
 		'lang_login' => _LOGIN,
 		'lang_username' => _USERNAME,

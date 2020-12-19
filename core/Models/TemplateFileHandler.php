@@ -235,12 +235,12 @@ class TemplateFileHandler extends AbstractExtendedHandler {
 	 *
 	 * @param	string		$tplset		template set that's currently in use
 	 * @param	string		$tpl_name	name of the template
-	 * @return	array				array of templates (just one item)
+	 * @return	TemplateFile[]			array of templates (just one item)
 	 */
 	public function getPrefetchedBlock($tplset, $tpl_name) {
 		foreach ($this->_prefetch_cache as $block) {
-			if ($block->getVar('tpl_tplset') === $tplset && $block->getVar('tpl_file') === $tpl_name) {
-				return [$block];
+			if ($block->tpl_tplset == $tplset && $block->tpl_file == $tpl_name) {
+				return array($block);
 			}
 		}
 
@@ -250,8 +250,8 @@ class TemplateFileHandler extends AbstractExtendedHandler {
 		 */
 		if ($tplset != 'default') {
 			foreach ($this->_prefetch_cache as $block) {
-				if ($block->getVar('tpl_tplset') === 'default' && $block->getVar('tpl_file') === $tpl_name) {
-					return [$block];
+				if ($block->tpl_tplset == "default" && $block->tpl_file == $tpl_name) {
+					return array($block);
 				}
 			}
 		}
