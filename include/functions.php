@@ -35,6 +35,9 @@
  * @author    modified by marcan <marcan@impresscms.org>
  */
 
+use Aura\Session\Session;
+use ImpressCMS\Core\Response\ViewResponse;
+
 if (!function_exists('xoops_header')) {
 	/**
 	 * The header
@@ -53,7 +56,7 @@ if (!function_exists('xoops_header')) {
 
 		global $icmsConfig, $xoopsOption;
 
-		$xoopsOption['response'] = new \ImpressCMS\Core\Response\ViewResponse([
+		$xoopsOption['response'] = new ViewResponse([
 			'template_canvas' => 'db:system_blank.html'
 		]);
 
@@ -230,13 +233,12 @@ if (!function_exists('redirect_header')) {
 		}
 
 		/**
-		 * @var \Aura\Session\Session $session
+		 * @var Session $session
 		 */
-		$session = \icms::getInstance()
-			->get('session');
+		$session = icms::$session;
 
 		$session
-			->getSegment(\icms::class)
+			->getSegment(icms::class)
 			->setFlash('redirect_message', $message);
 
 		$session->commit();
@@ -692,7 +694,7 @@ if (!function_exists('icms_loadLanguageFile')) {
 		if ($module == 'core') {
 			$languagePath = ICMS_ROOT_PATH . '/language/';
 		} else {
-			$languagePath = ICMS_ROOT_PATH . '/modules/' . $module . '/language/';
+			$languagePath = ICMS_MODULES_PATH . '/' . $module . '/language/';
 		}
 		$extraPath = $admin ? 'admin/' : '';
 		$filename = $languagePath . $icmsConfig['language'] . '/' . $extraPath . $file . '.php';
@@ -941,7 +943,7 @@ if (!function_exists('icms_get_page_before_form')) {
 	{
 		return isset($_POST['icms_page_before_form'])
 			? icms_core_DataFilter::checkVar($_POST['icms_page_before_form'], 'url')
-			: \icms::$urls['previouspage'];
+			: icms::$urls['previouspage'];
 	}
 }
 
@@ -1684,8 +1686,8 @@ if (!function_exists('icms_getPreviousPage')) {
 	 */
 	function icms_getPreviousPage($default = false)
 	{
-		if (isset(\icms::$urls['previouspage'])) {
-			return \icms::$urls['previouspage'];
+		if (isset(icms::$urls['previouspage'])) {
+			return icms::$urls['previouspage'];
 		} elseif ($default) {
 			return $default;
 		} else {
@@ -1906,7 +1908,7 @@ if (!function_exists('icms_getCurrentPage')) {
 	{
 		trigger_error('Use \icms::$urls[\'full\']', E_USER_DEPRECATED);
 
-		return \icms::$urls['full'];
+		return icms::$urls['full'];
 	}
 }
 
@@ -2244,7 +2246,7 @@ if (!function_exists("icms_openclose_collapsable")) {
 	 */
 	function icms_openclose_collapsable($name)
 	{
-		$path = \icms::$urls['phpself'];
+		$path = icms::$urls['phpself'];
 		$cookie_name = $path . '_icms_collaps_' . $name;
 		$cookie_name = str_replace('.', '_', $cookie_name);
 		$cookie = icms_getCookieVar($cookie_name, '');

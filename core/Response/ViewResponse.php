@@ -30,6 +30,13 @@ class ViewResponse implements ResponseInterface
 	private $theme = null;
 
 	/**
+	 * Status code of response
+	 *
+	 * @var int
+	 */
+	protected $statusCode;
+
+	/**
 	 * Constructor
 	 *
 	 * @param array $config Configuration
@@ -65,8 +72,7 @@ class ViewResponse implements ResponseInterface
 		global $icmsTheme;
 		$GLOBALS['icmsTheme'] = $icmsTheme = &$this->theme;
 
-		$redirect_message = \icms::getInstance()
-			->get('session')
+		$redirect_message = \icms::$session
 			->getSegment(\icms::class)
 			->getFlash('redirect_message');
 		if ($redirect_message) {
@@ -87,6 +93,11 @@ class ViewResponse implements ResponseInterface
 		$this->includeNotificationsSelection();
 
 		$this->setHeaders($headers + ['Content-Type' => 'text/html']);
+
+		if ($http_status === null) {
+			$http_status = 302;
+		}
+		$this->withStatus($http_status);
 	}
 
 	/**
@@ -548,7 +559,7 @@ class ViewResponse implements ResponseInterface
 	 */
 	public function getStatusCode()
 	{
-		return 302;
+		return $this->statusCode;
 	}
 
 	/**
@@ -556,10 +567,11 @@ class ViewResponse implements ResponseInterface
 	 */
 	public function withStatus($code, $reasonPhrase = '')
 	{
-		if ($code !== 302) {
+		if ($code !== 302 && $code !== 503) {
 			throw new ResponseCodeUnsupportedException();
 		}
 
+		$this->statusCode = $code;
 		$this->reasonPhrase = $reasonPhrase;
 
 		return $this;

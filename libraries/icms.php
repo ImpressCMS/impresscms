@@ -345,7 +345,6 @@ final class icms extends Container {
 		self::$db = $this->get('db');
 		self::$xoopsDB = $this->get('xoopsDB');
 		self::$config = $this->get('config');
-		self::$session = $this->get('session');
 		self::$logger = $this->get('logger');
 		self::$preload = $this->get(EventsPreloader::class);
 		self::$security = $this->get('security');

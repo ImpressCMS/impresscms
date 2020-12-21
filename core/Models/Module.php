@@ -36,7 +36,10 @@
 
 namespace ImpressCMS\Core\Models;
 
+use icms;
 use ImpressCMS\Core\Autoloader;
+use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * A Module
@@ -176,16 +179,16 @@ class Module
 		$hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1)?1:0;
 		// RMV-NOTIFY
 		$hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1)?1:0;
-		$this->setVar('hasmain', $hasmain);
-		$this->setVar('hasadmin', $hasadmin);
-		$this->setVar('hassearch', $hassearch);
-		$this->setVar('hasconfig', $hasconfig);
-		$this->setVar('hascomments', $hascomments);
+		$this->hasmain = $hasmain;
+		$this->hasadmin = $hasadmin;
+		$this->hassearch = $hassearch;
+		$this->hasconfig = $hasconfig;
+		$this->hascomments = $hascomments;
 		// RMV-NOTIFY
-		$this->setVar('hasnotification', $hasnotification);
+		$this->hasnotification = $hasnotification;
 		$this->setVar('modname', isset($this->modinfo['modname'])?$this->modinfo['modname']:"", true);
 		$ipf = (isset($this->modinfo['object_items']) && is_array($this->modinfo['object_items']))?1:0;
-		$this->setVar('ipf', $ipf);
+		$this->ipf = $ipf;
 	}
 
 	/**
@@ -285,15 +288,41 @@ class Module
 	 */
 	public function loadInfo($dirname, $verbose = true) {
 		global $icmsConfig;
-		icms_loadLanguageFile($dirname, 'modinfo');
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php')) {
-			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php')) {
-			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php';
+
+		$fullPath = ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . $dirname;
+
+		/**
+		 * @var CacheItemPoolInterface $cache
+		 */
+		$cache = icms::getInstance()->get('cache');
+		$cachedModuleInfo = $cache->getItem('module.' . $icmsConfig['language'] . '.' . $dirname);
+
+		if (!$cachedModuleInfo->isHit()) {
+			$modversion = [];
+			/**
+			 * @var ExtensionDescriberInterface $extensionDescriber
+			 */
+			foreach (icms::getInstance()->get('extension_describer.module') as $extensionDescriber) {
+				if (!$extensionDescriber->canDescribe($fullPath)) {
+					continue;
+				}
+				$modversion += $extensionDescriber->describe($fullPath);
+			}
+
+			$cachedModuleInfo->set($modversion);
+			$cache->save($cachedModuleInfo);
+
 		} else {
-			if (false != $verbose) {echo "Module File for $dirname Not Found!"; }
+			$modversion = $cachedModuleInfo->get();
+		}
+
+		if (empty($modversion)) {
+			if (false !== $verbose) {
+				echo "Module File for $dirname Not Found!";
+			}
 			return false;
 		}
+
 		$this->modinfo = & $modversion;
 		return true;
 	}
