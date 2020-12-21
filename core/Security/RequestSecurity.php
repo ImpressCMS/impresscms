@@ -80,7 +80,7 @@ class RequestSecurity {
 		/**
 		 * @var Session $session
 		 */
-		$session = icms::getInstance()->get('session');
+		$session = \icms::$session;
 
 		$tokenData = $session->getCsrfToken();
 		if (!$tokenData->isValid($token)) {
@@ -138,12 +138,7 @@ class RequestSecurity {
 			trigger_error('$name parameter for createToken is deprecated. Right now does nothing', E_USER_DEPRECATED);
 		}
 
-		/**
-		 * @var Session $session
-		 */
-		$session = icms::getInstance()->get('session');
-
-		return $session->getCsrfToken()->getValue();
+		return \icms::$session->getCsrfToken()->getValue();
 	}
 
 	/**

@@ -38,10 +38,12 @@
  * @author    Sina Asghari(aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+use Aura\Session\Session;
 use GuzzleHttp\Psr7\ServerRequest;
 use ImpressCMS\Core\Controllers\DefaultController;
 use League\Route\Http\Exception as HttpException;
 use League\Route\Router;
+use Aura\Session\SessionFactory;
 
 /** mainfile is required, if it doesn't exist - installation is needed */
 
@@ -107,6 +109,21 @@ unset($basePath);
 try {
 	$response = $router->dispatch($request);
 } catch (HttpException $httpException) {
+	try {
+		/**
+		 * @var icms_config_Handler $configHandler
+		 */
+		$configHandler = icms::handler('icms_config');
+		$mainConfig = $configHandler->getConfigsByCat(icms_config_Handler::CATEGORY_MAIN);
+	} catch (Exception $exception) {
+		$mainConfig = [];
+	}
+
+	$sessionName = ($mainConfig['use_mysession'] && $mainConfig['session_name']) ? $mainConfig['session_name'] : 'ICMSSESSION';
+	\icms::$session = (new SessionFactory())->newInstance(
+		$request->getCookieParams()
+	);
+
 	$defController = new DefaultController();
 	$_GET['e'] = $httpException->getStatusCode();
 	$response = $defController->getError(
@@ -119,6 +136,7 @@ try {
 		))
 			->withQueryParams($_GET)
 			->withParsedBody($_POST)
+			->withAttribute('session', \icms::$session)
 	);
 }
 

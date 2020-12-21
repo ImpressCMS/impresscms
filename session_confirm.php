@@ -14,7 +14,7 @@
 /**
  * @var Aura\Session\Session $session
  */
-$session = \icms::getInstance()->get('session');
+$session = \icms::$session;
 $autologinSegment = $session->getSegment('autologin');
 
 // security check

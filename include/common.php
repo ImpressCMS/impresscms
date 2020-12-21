@@ -71,24 +71,6 @@ if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype']
 
 defined("XOOPS_USE_MULTIBYTES") or define("XOOPS_USE_MULTIBYTES", 0);
 
-/**
- * @var Aura\Session\Session $session
- */
-$session = \icms::getInstance()->get('session');
-$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
-
-if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_POST['xoops_theme_select'];
-	$userSegment->set('theme', $_POST['xoops_theme_select']);
-} elseif (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_POST['theme_select'];
-	$userSegment->set('theme', $_POST['theme_select']);
-} elseif ($userSegment->get('theme')
-	&& in_array($userSegment->get('theme'), $icmsConfig['theme_set_allowed'])
-) {
-	$icmsConfig['theme_set'] = $userSegment->get('theme');
-}
-
 if ($icmsConfig['closesite'] == 1) {
 	include ICMS_INCLUDE_PATH . '/site-closed.php';
 }

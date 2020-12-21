@@ -160,7 +160,7 @@ class Image {
 		/**
 		 * @var Session $session
 		 */
-		$session = icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$captchaSection = $session->getSegment(__CLASS__);
 
 		$sessionName = $captchaSection->get('name');
@@ -216,7 +216,7 @@ class Image {
 			/**
 			 * @var Session $session
 			 */
-			$session = icms::getInstance()->get('session');
+			$session = \icms::$session;
 			$captchaSection = $session->getSegment(__CLASS__);
 
 			$captchaSection->set('name', null);
@@ -261,7 +261,7 @@ class Image {
 		/**
 		 * @var Session $session
 		 */
-		$session = icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$captchaSection = $session->getSegment(__CLASS__);
 
 		$captchaSection->set('name', $this->config['name']);

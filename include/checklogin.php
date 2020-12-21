@@ -42,6 +42,8 @@
  * @since		XOOPS
  */
 
+use ImpressCMS\Core\Facades\Member;
+
 icms_loadLanguageFile('core', 'user');
 $uname = !isset($_POST['uname'])?'':trim($_POST['uname']);
 $pass = !isset($_POST['pass'])?'':trim($_POST['pass']);
@@ -78,7 +80,7 @@ if ($pos !== false) {
 }
 
 /**
- * @var \ImpressCMS\Core\Facades\Member $member_handler
+ * @var Member $member_handler
  */
 $member_handler = icms::handler('icms_member');
 
@@ -152,27 +154,28 @@ if (false != $user) {
 	/**
 	 * @var Aura\Session\Session $session
 	 */
-	$session = \icms::getInstance()->get('session');
+	$session = icms::$session;
 	$session->resume();
 	$session->regenerateId();
 	$session->clear();
 
-	$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
+	$userSegment = $session->getSegment('user');
 	$userSegment->set('userid', $user->uid);
 	$userSegment->set('groups', $user->getGroups());
 	$userSegment->set('last_login', $user->last_login);
 
-	if (!$member_handler->updateUserByField($user, 'last_login', time())) {}
+	$member_handler->updateUserByField($user, 'last_login', time());
+
 	$user_theme = $user->theme;
-	if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
-		$session->getSegment(icms_view_theme_Object::class)->set('name', $user_theme);
+	if (in_array($user_theme, $icmsConfig['theme_set_allowed'], true)) {
+		$session->getSegment('user')->set('theme', $user_theme);
 	}
 
 	// autologin hack V3.1 GIJ (set cookie)
-	$secure = substr(ICMS_URL, 0, 5) == 'https'?1:0; // we need to secure cookie when using SSL
+	$secure = strpos(ICMS_URL, 'https') === 0 ?1:0; // we need to secure cookie when using SSL
 	$icms_cookie_path = defined('ICMS_COOKIE_PATH')? ICMS_COOKIE_PATH :
 	preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
-	if ($icms_cookie_path == ICMS_URL) {
+	if ($icms_cookie_path === ICMS_URL) {
 		$icms_cookie_path = '/';
 	}
 	if (!empty($_POST['rememberme'])) {

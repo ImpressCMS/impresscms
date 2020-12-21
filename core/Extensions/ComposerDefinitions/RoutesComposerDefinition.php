@@ -3,16 +3,19 @@
 namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 
 use FilesystemIterator;
-use icms_module_Handler;
 use Defuse\Crypto\Key;
 use Ellipse\Cookies\EncryptCookiesMiddleware;
 use icms;
+use icms_module_Handler;
 use icms_config_Handler;
 use Http\Factory\Guzzle\ResponseFactory;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use ImpressCMS\Core\Middlewares\HasGroupMiddleware;
 use ImpressCMS\Core\Middlewares\HasPermissionMiddleware;
+use ImpressCMS\Core\Middlewares\ChangeThemeMiddleware;
+use ImpressCMS\Core\Middlewares\SetSessionCookieConfigMiddleware;
+use ImpressCMS\Core\Middlewares\UserMiddleware;
 use League\Container\Container;
 use League\Route\RouteGroup;
 use League\Route\Strategy\ApplicationStrategy;
@@ -23,6 +26,7 @@ use RecursiveIteratorIterator;
 use SplFileInfo;
 use Middlewares\ClientIp;
 use Middlewares\Firewall;
+use Middlewares\AuraSession;
 
 /**
  * let register routes in composer.json
@@ -98,6 +102,31 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			$ret[] = '    )';
 			$ret[] = ');';
 		}
+
+		$sessionName = ($mainConfig['use_mysession'] && $mainConfig['session_name']) ? $mainConfig['session_name'] : 'ICMSSESSION';
+		$ret[] = '$router->middleware(';
+		$ret[] = '    (new \\' . AuraSession::class . '())->name(' . var_export($sessionName, true) . ')';
+		$ret[] = ');';
+
+		$ret[] = '$router->middleware(';
+		$ret[] = sprintf(
+			"    new \\%s(%d, %s, %s)",
+			SetSessionCookieConfigMiddleware::class,
+			60 * $mainConfig['session_expire'],
+			var_export(parse_url(ICMS_URL, PHP_URL_HOST), true),
+			json_encode(strpos(ICMS_URL, 'https') === 0)
+		);
+		$ret[] = ');';
+
+		$ret[] = '$router->middleware(';
+		$ret[] = sprintf(
+			"    new \\%s(%s)",
+			ChangeThemeMiddleware::class,
+			json_encode($mainConfig['theme_set_allowed'])
+		);
+		$ret[] = ');';
+
+		$ret[] = '$router->middleware(new \\' . UserMiddleware::class .'());';
 
 		if ($mainConfig['gzip_compression']) {
 			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\GzipEncoder\');';

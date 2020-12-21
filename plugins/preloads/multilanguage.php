@@ -9,6 +9,8 @@
  * @since		1.3
  */
 
+use ImpressCMS\Core\Event;
+
 /**
  * Handles selection and display of multilanguage texts
  *
@@ -22,7 +24,7 @@ class icms_MultilanguageEventHandler {
 	 *
 	 */
 	static public function setup() {
-		\ImpressCMS\Core\Event::attach('icms', 'loadService-session', array(__CLASS__, 'initMultilang'));
+		Event::attach('icms', 'loadService-session', array(__CLASS__, 'initMultilang'));
 	}
 
 	/**
@@ -38,8 +40,8 @@ class icms_MultilanguageEventHandler {
 			/**
 			 * @var Aura\Session\Session $session
 			 */
-			$session = \icms::getInstance()->get('session');
-			$userSegment = $session->getSegment(\ImpressCMS\Core\Models\User::class);
+			$session = icms::$session;
+			$userSegment = $session->getSegment('user');
 
 			$easiestml_langpaths = icms_core_Filesystem::getDirList(ICMS_ROOT_PATH . '/language/');
 			$langs = array_combine($easiestml_langs, explode(',', $icmsConfigMultilang['ml_names']));
