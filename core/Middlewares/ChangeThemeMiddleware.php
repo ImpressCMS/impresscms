@@ -59,7 +59,7 @@ class ChangeThemeMiddleware implements MiddlewareInterface
 
         return $handler->handle(
 			$request->withAttribute(
-				'theme_set',
+				'theme-set',
 				$icmsConfig['theme_set']
 			)
 		);

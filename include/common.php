@@ -71,10 +71,6 @@ if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype']
 
 defined("XOOPS_USE_MULTIBYTES") or define("XOOPS_USE_MULTIBYTES", 0);
 
-if ($icmsConfig['closesite'] == 1) {
-	include ICMS_INCLUDE_PATH . '/site-closed.php';
-}
-
 global $xoopsOption, $icmsConfig;
 if (isset($xoopsOption['nodebug']) && $xoopsOption['nodebug']) {
 	/**

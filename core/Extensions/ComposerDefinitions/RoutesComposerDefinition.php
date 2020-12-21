@@ -16,6 +16,7 @@ use ImpressCMS\Core\Middlewares\HasPermissionMiddleware;
 use ImpressCMS\Core\Middlewares\ChangeThemeMiddleware;
 use ImpressCMS\Core\Middlewares\MultiLoginOnlineInfoUpdaterMiddleware;
 use ImpressCMS\Core\Middlewares\SetSessionCookieConfigMiddleware;
+use ImpressCMS\Core\Middlewares\SiteClosedMiddleware;
 use ImpressCMS\Core\Middlewares\UserMiddleware;
 use League\Container\Container;
 use League\Route\RouteGroup;
@@ -50,7 +51,6 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 	{
 		$this->container = $container;
 	}
-
 	/**
 	 * @inheritDoc
 	 */
@@ -157,6 +157,17 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			$ret[] = ');';
 		}
 
+		if ($configMain['closesite']) {
+			$ret[] = '$router->middleware(';
+			$ret[] = '    new \\' . SiteClosedMiddleware::class .'(';
+			$ret[] = '        ' . json_encode($configMain['closesite_okgrp']) . ',';
+			$ret[] = '        ' . json_encode($configMain['closesite_text']) . ',';
+			$ret[] = '        ' . json_encode($configMain['sitename']) . ',';
+			$ret[] = '        ' . json_encode($configMain['slogan']);
+			$ret[] = '    )';
+			$ret[] = ');';
+		}
+
 	}
 
 	/**
@@ -224,12 +235,12 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$hasExtraConfig = $hasHost || $hasPort || $hasScheme || $hasStrategy || $hasMiddlewares;
 				$ret[] = ($group !== '') ? $linePrefix . '$group' : '$router';
 				$ret[] = $linePrefix . sprintf(
-					'    ->map(%s, %s, %s)%s',
-					var_export($parsedDefinition['method'], true),
-					var_export( $parsedDefinition['path'], true),
-					var_export($parsedDefinition['handler'], true),
-					$hasExtraConfig ? '' : ';'
-				);
+						'    ->map(%s, %s, %s)%s',
+						var_export($parsedDefinition['method'], true),
+						var_export( $parsedDefinition['path'], true),
+						var_export($parsedDefinition['handler'], true),
+						$hasExtraConfig ? '' : ';'
+					);
 				if ($hasStrategy) {
 					$hasExtraConfig = $hasHost || $hasPort || $hasScheme || $hasMiddlewares;
 					$ret[] = $linePrefix .'    ->setStrategy(';
@@ -262,23 +273,23 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				if ($hasScheme) {
 					$hasExtraConfig = $hasPort || $hasHost;
 					$ret[] = $linePrefix .sprintf(
-						'    ->setScheme(%s)%s',
-						var_export($parsedDefinition['scheme'], true),
-						$hasExtraConfig ? '' : ';'
-					);
+							'    ->setScheme(%s)%s',
+							var_export($parsedDefinition['scheme'], true),
+							$hasExtraConfig ? '' : ';'
+						);
 				}
 				if ($hasHost) {
 					$ret[] = $linePrefix .sprintf(
-						'    ->setHost(%s)%s',
-						var_export($parsedDefinition['host'], true),
-						$hasPort ? '' : ';'
-					);
+							'    ->setHost(%s)%s',
+							var_export($parsedDefinition['host'], true),
+							$hasPort ? '' : ';'
+						);
 				}
 				if ($hasPort) {
 					$ret[] = $linePrefix .sprintf(
-						'    ->setPort(%s);',
-						var_export($parsedDefinition['port'], true)
-					);
+							'    ->setPort(%s);',
+							var_export($parsedDefinition['port'], true)
+						);
 				}
 			}
 			if ($group !== '') {
