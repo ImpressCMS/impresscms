@@ -97,7 +97,7 @@ class ViewResponse implements ResponseInterface
 		if ($http_status === null) {
 			$http_status = 302;
 		}
-		$this->withStatus( $http_status);
+		$this->withStatus($http_status);
 	}
 
 	/**
