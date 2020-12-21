@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "content-hash": "f9e51b30456ccb555cbb7e0a7cc77b45",
+
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
