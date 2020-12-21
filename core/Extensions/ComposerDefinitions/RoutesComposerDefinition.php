@@ -118,7 +118,9 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		$ret[] = sprintf(
 			"    new \\%s(%d, %s, %s)",
 			SetSessionCookieConfigMiddleware::class,
+
 			60 * $configMain['session_expire'],
+
 			var_export(parse_url(ICMS_URL, PHP_URL_HOST), true),
 			json_encode(strpos(ICMS_URL, 'https') === 0)
 		);
