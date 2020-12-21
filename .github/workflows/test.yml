@@ -56,6 +56,7 @@ jobs:
         run: |
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
+        continue-on-error: true
       - name: Install PHP
         uses: shivammathur/setup-php@master
         with:
@@ -99,7 +100,7 @@ jobs:
       - name: Prepare CodeClimate
         run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter before-build
         if: ${{ success() }}
-        continue-on-error: ${{ matrix.experimental }}
+        continue-on-error: true
       - name: Testing with PHPUnit
         env:
           URL: http://localhost
@@ -128,4 +129,4 @@ jobs:
 #      - name: Commiting CodeClimate data
 #        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover -r ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
 #        if: ${{ success() }}
-#        continue-on-error: ${{ matrix.experimental }}
+#        continue-on-error: true
