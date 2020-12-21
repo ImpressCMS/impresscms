@@ -161,7 +161,11 @@ function xoops_module_install($dirname) {
 			. _MD_AM_INSTALLING . $module->getInfo('name') . '</h4>';
 		if ($sqlfile !== FALSE && is_array($sqlfile)) {
 			// handle instances when XOOPS_DB_TYPE includes 'pdo.'
-			if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') $driver = substr(XOOPS_DB_TYPE, 4);
+			if (substr(XOOPS_DB_TYPE, 0, 4) == 'pdo.') {
+				$driver = substr(XOOPS_DB_TYPE, 4);
+			} else {
+				$driver = XOOPS_DB_TYPE;
+			}
 			$sql_file_path = ICMS_MODULES_PATH . "/" . $dirname . "/" . $sqlfile[$driver];
 			if (!file_exists($sql_file_path)) {
 				$errs[] = sprintf(_MD_AM_SQL_NOT_FOUND, '<strong>' . $sql_file_path . '</strong>');

@@ -13,7 +13,7 @@
 			    	<div><input type="checkbox" name="rememberme" value="On" /><{$lang_rememberme}><br /></div>
 			    <{/if}>
 			    <div><input type="hidden" name="op" value="login" /></div>
-		    	<div><input type="hidden" name="xoops_redirect" value="<{$redirect_page}>"/>
+		    	<div><input type="hidden" name="xoops_redirect" value="<{$icms_requesturi}>"/>
 			    <br />
 		    	<input type="submit" value="<{$lang_login}>" /></div>
 			</form>
@@ -67,8 +67,8 @@
 			<br />
 			<form action="resetpass.php" method="post">
 				<{$lang_currentpass}> <input type="password" name="c_password" size="26" maxlength="255" /><br />
-				<{$lang_newpass}> <input type="password" name="password" size="26" maxlength="255" /><br />
-				<{$lang_newpass2}> <input type="password" name="password2" size="26" maxlength="255" />&nbsp;&nbsp;<input type="hidden" name="op" value="resetpass" /><input type="hidden" name="t" value="<{$resetpassword_token}>" />
+				<{$lang_newpass}> <input type="password" name="password" size="26" maxlength="32" /><br />
+				<{$lang_newpass2}> <input type="password" name="password2" size="26" maxlength="32" />&nbsp;&nbsp;<input type="hidden" name="op" value="resetpass" /><input type="hidden" name="t" value="<{$resetpassword_token}>" />
 		    	<br />
 		    	<br />
 		     	<input type="submit" value="<{$smarty.const._US_RESETPASSWORD}>" />

@@ -36,7 +36,7 @@ switch ($op) {
 			$stop .= $icmsCaptcha->getMessage() . '<br />';
 
 		}
-		if (!checkEmail($email)) {
+		if (!icms_core_DataFilter::checkVar($email, 'email')) {
 			$stop .= _US_INVALIDMAIL . '<br />';
 		}
 		if (empty($stop)) {
@@ -81,7 +81,7 @@ switch ($op) {
 		}
 		include 'footer.php';
 		break;
-		
+
 	case 'invite':
 	default:
 		include 'header.php';

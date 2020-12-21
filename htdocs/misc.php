@@ -198,7 +198,7 @@ if ($action == 'showpopups') {
 					$yname = icms_core_DataFilter::stripSlashesGPC(trim($_POST['yname']));
 					$fname = icms_core_DataFilter::stripSlashesGPC(trim($_POST['fname']));
 					$fmail = icms_core_DataFilter::stripSlashesGPC(trim($_POST['fmail']));
-					if (!checkEmail($fmail) || !checkEmail($ymail) || preg_match('/[\\0-\\31]/', $yname)) {
+					if (!icms_core_DataFilter::checkVar($fmail, 'email') || !icms_core_DataFilter::checkVar($ymail, 'email') || preg_match('/[\\0-\\31]/', $yname)) {
 						$errormessage = _MSC_INVALIDEMAIL1.'<br />'._MSC_INVALIDEMAIL2.'';
 						redirect_header(ICMS_URL.'/misc.php?action=showpopups&amp;type=friend&amp;op=sendform',2,$errormessage);
 					}

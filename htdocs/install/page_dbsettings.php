@@ -38,12 +38,12 @@ switch ($vars['DB_TYPE']) {
 	case 'pdo.mysql':
 		try {
 			$link = new PDO('mysql:host=' . $vars['DB_HOST'],
-				$vars['DB_USER'],
-				$vars['DB_PASS'],
-				array(
-					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-					PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
-				));
+					$vars['DB_USER'],
+					$vars['DB_PASS'],
+					array(
+							PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+							PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
+					));
 		} catch (PDOException $ex) {
 			$error = ERR_NO_DBCONNECTION;
 		}
@@ -55,8 +55,7 @@ if (isset($error)) {
 }
 
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
-if (!isset ($vars ['DB_NAME']) || false !== @strpos($_SERVER ['HTTP_CACHE_CONTROL'], 'max-age=0'))
-{
+if (!isset ($vars ['DB_NAME']) || false !== @strpos($_SERVER ['HTTP_CACHE_CONTROL'], 'max-age=0')) {
 	$keys = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT');
 	foreach ($keys as $k) {
 		$vars [$k] = defined("XOOPS_$k")? constant ("XOOPS_$k"):'';
@@ -77,6 +76,16 @@ function fetch_assoc($result) {
 	} else {
 		return mysql_fetch_assoc($result);
 	}
+}
+
+/**
+ * Sanitize a database name by removing all non-alphanumerical characters
+ *
+ * @param $database_name
+ * @return string|string[]|null
+ */
+function sanitize_database($database_name) {
+	return preg_replace('/[^A-Za-z0-9_]+/', '', $database_name);
 }
 
 function quote_sql($sql) {
@@ -235,24 +244,27 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 	$error = validateDbCharset($link, $vars ['DB_CHARSET'], $vars ['DB_COLLATION']);
 	$db_exist = false;
 	if (empty ($error)) {
-		if (!select_db($vars ['DB_NAME'], $link)) {
+		if (!select_db(sanitize_database($vars ['DB_NAME']), $link)) {
 			// Database not here: try to create it
-			$result = exec_query("CREATE DATABASE `" . $vars ['DB_NAME'] . '`', $link);
+			$result = exec_query("CREATE DATABASE " . sanitize_database( $vars ['DB_NAME'] ), $link);
 			if (!$result) {
 				$error = ERR_NO_DATABASE;
 			} else {
-				$error = sprintf(DATABASE_CREATED, $vars ['DB_NAME']);
+				$error = sprintf(DATABASE_CREATED, sanitize_database($vars ['DB_NAME']));
 				$db_exist = true;
+
 			}
 		} else {
 			$db_exist = true;
 		}
 		if ($db_exist && $vars['DB_CHARSET']) {
 			/* Attempt to set the character set and collation to the selected */
-			$sql = "ALTER DATABASE `" . $vars ['DB_NAME'] . "` DEFAULT CHARACTER SET " . quote_sql($vars ['DB_CHARSET']) . ($vars ['DB_COLLATION']?" COLLATE " . quote_sql($vars ['DB_COLLATION']):"");
+
+			$sql = "ALTER DATABASE " . sanitize_database( $vars ['DB_NAME']) . " DEFAULT CHARACTER SET " . quote_sql($vars ['DB_CHARSET']) . ($vars ['DB_COLLATION']?" COLLATE " . quote_sql($vars ['DB_COLLATION']):"");
+			echo $sql;
 			if (!exec_query($sql, $link)) {
 				/* if the alter statement fails, set the constants to match existing */
-				$sql = "USE " . quote_sql($vars["DB_NAME"]);
+				$sql = "USE " . sanitize_database($vars["DB_NAME"]);
 				$result = exec_query($sql, $link);
 
 				/* get the character set variables for the current database */
@@ -262,8 +274,8 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 					$character_sets[$row["Variable_name"]] = $row["Value"];
 				}
 				$vars["DB_CHARSET"] = $character_sets["character_set_database"]
-				?: $character_sets['character_set_server'];
-
+						?$character_sets["character_set_database"]
+						: $character_sets["character_set_server"];
 
 				/* get the collation for the current database */
 				$sql = "SHOW VARIABLES LIKE 'collation%'";
@@ -272,7 +284,8 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 					$collations[$row["Variable_name"]] = $row["Value"];
 				}
 				$vars["DB_COLLATION"] = $collations["collation_database"]
-					?: $collations['collation_server'];
+						?$collations["collation_database"]
+						: $collations["collation_server"];
 			}
 		}
 	}
@@ -353,10 +366,10 @@ if (!empty ($error)) {
 				document.getElementById(id).style.display='display';
 			}
 			new Ajax.Updater(
-				id, '<?php
-					echo $_SERVER ['PHP_SELF'];
-					?>',
-				{ method:'get',parameters:'action=updateCollation&charset='+val }
+					id, '<?php
+							echo $_SERVER ['PHP_SELF'];
+							?>',
+					{ method:'get',parameters:'action=updateCollation&charset='+val }
 			);
 		}
 	</script>
@@ -364,7 +377,7 @@ if (!empty ($error)) {
 		<fieldset>
 			<h3><?php echo LEGEND_DATABASE; ?></h3>
 			<?php
-			echo xoFormField('DB_NAME', $vars ['DB_NAME'], DB_NAME_LABEL, 255, DB_NAME_HELP);
+			echo xoFormField('DB_NAME', sanitize_database($vars ['DB_NAME']), DB_NAME_LABEL, 255, DB_NAME_HELP);
 			?> <?php
 			echo xoFormField('DB_PREFIX', $vars ['DB_PREFIX'], DB_PREFIX_LABEL, 10, DB_PREFIX_HELP);
 			?> <?php
