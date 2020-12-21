@@ -17,6 +17,7 @@
 namespace ImpressCMS\Core\Extensions\Smarty\Compiler;
 
 use ImpressCMS\Core\Extensions\Smarty\SmartyCompilerExtensionInterface;
+use Smarty_Internal_SmartyTemplateCompiler;
 
 /**
  * includeq Smarty compiler plug-in
@@ -46,7 +47,7 @@ class IncludeqCompiler implements SmartyCompilerExtensionInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function execute($args, \Smarty_Internal_SmartyTemplateCompiler &$compiler)
+	public function execute($args, Smarty_Internal_SmartyTemplateCompiler &$compiler)
 	{
 		$arg_list = array();
 
@@ -58,13 +59,17 @@ class IncludeqCompiler implements SmartyCompilerExtensionInterface
 			if ($arg_name == 'file') {
 				$include_file = $arg_value;
 				continue;
-			} elseif ($arg_name == 'assign') {
+			}
+
+			if ($arg_name == 'assign') {
 				$assign_var = $arg_value;
 				continue;
 			}
+
 			if (is_bool($arg_value)) {
 				$arg_value = $arg_value ? 'true' : 'false';
 			}
+
 			$arg_list[] = "'$arg_name' => $arg_value";
 		}
 
@@ -75,7 +80,7 @@ class IncludeqCompiler implements SmartyCompilerExtensionInterface
 		}
 
 		//$output .= "\$_smarty_tpl_vars = \$this->_tpl_vars;\n";
-		$output .= 'include ' . $include_file . ';';
+		$output .= ' $_smarty_tpl->_subTemplateRender( ' . $include_file . ', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, ['.implode(',' , $arg_list).'], 0, true);';
 		//"\$this->_tpl_vars = \$_smarty_tpl_vars;\n" .
 		//"unset(\$_smarty_tpl_vars);\n";
 
