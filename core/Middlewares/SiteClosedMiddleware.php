@@ -14,8 +14,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  *
  * @package ImpressCMS\Core\Middlewares
  */
-class SiteClosedMiddleware implements MiddlewareInterface
-{
+class SiteClosedMiddleware implements MiddlewareInterface {
 
 	/**
 	 * @var array
@@ -42,8 +41,7 @@ class SiteClosedMiddleware implements MiddlewareInterface
 	 * @param string $siteName
 	 * @param string $slogan
 	 */
-	public function __construct(array $allowedGroups, string $siteClosedText, string $siteName, string $slogan)
-	{
+	public function __construct(array $allowedGroups, string $siteClosedText, string $siteName, string $slogan) {
 		$this->allowedGroups = $allowedGroups;
 		$this->siteClosedText = $siteClosedText;
 		$this->siteName = $siteName;
@@ -53,8 +51,7 @@ class SiteClosedMiddleware implements MiddlewareInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-	{
+	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
 		$user = $request->getAttribute('user');
 
 		$request->withAttribute('site-closed', true);
@@ -79,8 +76,7 @@ class SiteClosedMiddleware implements MiddlewareInterface
 	 *
 	 * @return ViewResponse
 	 */
-	protected function makeSiteClosedViewResponse(string $themeSet, ?\icms_module_Object $module, string $requestUri): ViewResponse
-	{
+	protected function makeSiteClosedViewResponse(string $themeSet, ?\icms_module_Object $module, string $requestUri): ViewResponse {
 		$response = new ViewResponse([
 			'template_canvas' => 'db:system_siteclosed.html',
 		], 503);
