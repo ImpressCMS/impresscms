@@ -5,15 +5,16 @@ namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 use FilesystemIterator;
 use Defuse\Crypto\Key;
 use Ellipse\Cookies\EncryptCookiesMiddleware;
+use Http\Factory\Guzzle\ResponseFactory;
 use icms;
 use icms_module_Handler;
 use icms_config_Handler;
-use Http\Factory\Guzzle\ResponseFactory;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
 use ImpressCMS\Core\Middlewares\HasGroupMiddleware;
 use ImpressCMS\Core\Middlewares\HasPermissionMiddleware;
 use ImpressCMS\Core\Middlewares\ChangeThemeMiddleware;
+use ImpressCMS\Core\Middlewares\MultiLoginOnlineInfoUpdaterMiddleware;
 use ImpressCMS\Core\Middlewares\SetSessionCookieConfigMiddleware;
 use ImpressCMS\Core\Middlewares\UserMiddleware;
 use League\Container\Container;
@@ -91,9 +92,14 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		 * @var icms_config_Handler $configHandler
 		 */
 		$configHandler = icms::handler('icms_config');
-		$mainConfig = $configHandler->getConfigsByCat(icms_config_Handler::CATEGORY_MAIN);
+		$configAll = $configHandler->getConfigsByCat([
+			icms_config_Handler::CATEGORY_MAIN,
+			icms_config_Handler::CATEGORY_PERSONA,
+		]);
+		$configMain = $configAll[icms_config_Handler::CATEGORY_MAIN];
+		$configPersona = $configAll[icms_config_Handler::CATEGORY_PERSONA];
 
-		if ($mainConfig['encrypt_cookies']) {
+		if ($configMain['encrypt_cookies']) {
 			$ret[] = '$router->middleware(';
 			$ret[] = '    new \\' . EncryptCookiesMiddleware::class.'(';
 			$ret[] = '        \\' . Key::class . '::loadFromAsciiSafeString(';
@@ -103,7 +109,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 			$ret[] = ');';
 		}
 
-		$sessionName = ($mainConfig['use_mysession'] && $mainConfig['session_name']) ? $mainConfig['session_name'] : 'ICMSSESSION';
+		$sessionName = ($configMain['use_mysession'] && $configMain['session_name']) ? $configMain['session_name'] : 'ICMSSESSION';
 		$ret[] = '$router->middleware(';
 		$ret[] = '    (new \\' . AuraSession::class . '())->name(' . var_export($sessionName, true) . ')';
 		$ret[] = ');';
@@ -112,7 +118,9 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		$ret[] = sprintf(
 			"    new \\%s(%d, %s, %s)",
 			SetSessionCookieConfigMiddleware::class,
-			60 * $mainConfig['session_expire'],
+
+			60 * $configMain['session_expire'],
+
 			var_export(parse_url(ICMS_URL, PHP_URL_HOST), true),
 			json_encode(strpos(ICMS_URL, 'https') === 0)
 		);
@@ -122,25 +130,29 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		$ret[] = sprintf(
 			"    new \\%s(%s)",
 			ChangeThemeMiddleware::class,
-			json_encode($mainConfig['theme_set_allowed'])
+			json_encode($configMain['theme_set_allowed'])
 		);
 		$ret[] = ');';
 
 		$ret[] = '$router->middleware(new \\' . UserMiddleware::class .'());';
 
-		if ($mainConfig['gzip_compression']) {
+		if ($configPersona['multi_login']) {
+			$ret[] = '$router->middleware(new \\' . MultiLoginOnlineInfoUpdaterMiddleware::class .'());';
+		}
+
+		if ($configMain['gzip_compression']) {
 			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\GzipEncoder\');';
 			$ret[] = '$router->lazyMiddleware(\'\\Middlewares\\DeflateEncoder\');';
 		}
 
-		if ($mainConfig['enable_badips']) {
+		if ($configMain['enable_badips']) {
 			$ret[] = '$router->middleware(new \\'.ClientIp::class.'());';
 			$ret[] = '$router->middleware(';
 			$ret[] = '    (new \\'.Firewall::class.'(';
 			$ret[] = '        null,';
 			$ret[] = '        $container->get('.var_export('\\'.ResponseFactory::class, true).')';
 			$ret[] = '    ))->blacklist(';
-			$ret[] = '        ' . json_encode($mainConfig['bad_ips']);
+			$ret[] = '        ' . json_encode($configMain['bad_ips']);
 			$ret[] = '    )->ipAttribute(\'client-ip\')';
 			$ret[] = ');';
 		}

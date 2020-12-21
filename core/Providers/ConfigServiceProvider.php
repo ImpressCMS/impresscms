@@ -8,7 +8,7 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**
- * Config service provider
+ * Config service providerd
  */
 class ConfigServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
