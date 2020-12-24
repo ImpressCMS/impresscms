@@ -1,4 +1,4 @@
-# ImpressCMS 1.4.1 Beta
+# ImpressCMS 1.4.2
 
 ImpressCMS 1.4 is a intermediate release between the legacy 1.3 series and the upcoming 2.0 release. The focus is on providing compatibility with PHP 7 and code cleanup. Existing modules that are compatible with PHP 7 should still work, as long as they are compatible with PHP7 and the obligatory PDO database driver that switching to PHP7 brings with it.
 
@@ -8,7 +8,8 @@ Unzip the contents of the 'htdocs' folder in the root folder of your site, and g
 
 ## Update
 
-When updating from a previous version in the 1.3 series, overwrite your existing installation and update the system module once you are logged in, that should bring you to the latest version.
+When updating from a previous version in the 1.3 series, or from a previous 1.4 release, overwrite your existing installation and update the system module once you are logged in, that should bring you to the latest version.
+When upgrading your PHP, please verify that the modules you use are compatible!
 
 ## Known issues
 
