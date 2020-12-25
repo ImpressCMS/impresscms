@@ -261,7 +261,6 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 			/* Attempt to set the character set and collation to the selected */
 
 			$sql = "ALTER DATABASE " . sanitize_database( $vars ['DB_NAME']) . " DEFAULT CHARACTER SET " . quote_sql($vars ['DB_CHARSET']) . ($vars ['DB_COLLATION']?" COLLATE " . quote_sql($vars ['DB_COLLATION']):"");
-			echo $sql;
 			if (!exec_query($sql, $link)) {
 				/* if the alter statement fails, set the constants to match existing */
 				$sql = "USE " . sanitize_database($vars["DB_NAME"]);
