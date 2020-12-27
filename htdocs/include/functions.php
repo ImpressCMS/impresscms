@@ -58,6 +58,7 @@ function xoops_header($closehead=true) {
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header('Cache-Control: no-store, no-cache, max-age=1, s-maxage=1, must-revalidate, post-check=0, pre-check=0');
 		header("Pragma: no-cache");
+		header("X-Frame-Options: SAMEORIGIN");
 	}
 	echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
 	echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'._LANGCODE.'" lang="'._LANGCODE.'">
@@ -122,102 +123,6 @@ function xoops_footer() {
 	ob_end_flush();
 }
 
-/**
- * ImpressCMS Error Message Function
- *
- * @param string $msg	The Error Message
- * @param string $title	The Error message title
- * @param bool $render	Whether to echo (render) or return the HTML string
- * @return string $ret The entire error message in a HTML string
- * @deprecated	Use icms_coreMessage::error, instead
- * @todo 		Remove in version 1.4 -  - all occurrences have been removed from the core
- */
-function icms_error_msg($msg, $title='', $render = true){
-	icms_core_Debug::setDeprecated('icms_core_Message::error', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Message::error($msg, $title, $render);
-}
-
-/**
- * Backwards Compatibility Function
- *
- * @param string $msg
- * @param string $title
- * @deprecated	Use icms_coreMessage::error, instead
- * @todo		Remove in version 1.4 - all occurrences have been removed from the core
- */
-function xoops_error($msg, $title=''){
-	icms_core_Debug::setDeprecated('icms_coreMessage::error', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Message::error($msg, $title, true);
-}
-
-/**
- * ImpressCMS Warning Message Function
- *
- * @param string $msg	The Error Message
- * @param string $title	The Error Message title
- * @param	bool	$render	Whether to echo (render) or return the HTML string
- * @deprecated	Use icms_core_Message::warning, instead
- * @todo 		Remove in version 1.4 - all occurrences have been removed from the core
- */
-function icms_warning_msg($msg, $title='', $render = false){
-	icms_core_Debug::setDeprecated('icms_core_Message::warning', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Message::warning($msg, $title, $render);
-}
-
-/**
- * Backwards Compatibility Function
- * @deprecated use icms_core_Message::warning instead
- * @see icms_core_Message::warning
- * @todo Remove in version 1.4 - all occurrences have been removed from the core
- * @param string $msg
- * @param string $title
- */
-function xoops_warning($msg, $title=''){
-	icms_core_Debug::setDeprecated( 'icms_core_Message::warning' );
-	return icms_core_Message::warning($msg, $title, true); }
-
-/**
- * Render result message (echo, so no return string)
- * @param string $msg
- * @param string $title
- *
- * @deprecated	Use icms_core_Message:result, instead
- * @todo		Remove in version 1.4 - all occurrences have been removed from the core
- */
-function xoops_result($msg, $title='')
-{
-	icms_core_Debug::setDeprecated('icms_core_Message::result', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Message::result($msg, $title);
-}
-
-/**
- * Generates a confirm form
- *
- * Will render (echo) the form so no return in this function
- *
- * @param array  $hiddens  Array of Hidden values
- * @param string  $action  The Form action
- * @param string  $msg  The message in the confirm form
- * @param string  $submit  The text on the submit button
- * @param bool  $addtoken  Whether or not to add a security token
- *
- * @deprecated	Use icms_core_Message::confirm, instead
- * @todo		Remove in version 1.4 - all occurrences have been removed from the core
- */
-function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
-{
-	icms_core_Debug::setDeprecated('icms_core_Message::confirm', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Message::confirm($hiddens, $action, $msg, $submit, $addtoken);
-}
-
-/**
- * @deprecated, use {@link icms_core_Security} class instead
- * @todo Remove this in 1.4 - all occurrences have been replaced in the core
- **/
-function xoops_refcheck($docheck=1) {
-	icms_core_Debug::setDeprecated('icms_core_Security->checkReferer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms::$security->checkReferer($docheck);
-}
 
 /**
  * Get the timestamp based on the user settings
@@ -255,99 +160,6 @@ function userTimeToServerTime($timestamp, $userTZ=null)
 }
 
 /**
- * Function to generate password
- * @deprecated	use icms_core_Password::createSalt
- *
- * @return string  $makepass  The generated password
- * @todo Move to a static class method - password/user
- * or why not just remove and use icms_core_Password::createSalt($length); instead?
- */
-function xoops_makepass() {
-	icms_core_Debug::setDeprecated('icms_core_Password::createSalt(10) creates random pass of 10 characters', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Password::createSalt(10);
-}
-
-/**
- * Function to display dhtml loading image box
- * @deprecated Not found in the core
- * @todo Remove in version 1.4
- */
-function OpenWaitBox()
-{
-	icms_core_Debug::setDeprecated('','This is very old and will be removed in version 1.4');
-	echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
-	<table cellpadding='6' border='2' class='bg2'>
-		<tr>
-		<td align='center'><b><big>" ._FETCHING."</big></b><br /><img src='".ICMS_URL."/images/await.gif' alt='' /><br />" ._PLEASEWAIT."</td>
-		</tr>
-	</table>
-	</div>
-	<script type='text/javascript'>
-	<!--//
-	var DHTML = (document.getElementById || document.all || document.layers);
-	function ap_getObj(name) {
-		if (document.getElementById) {
-			return document.getElementById(name).style;
-		} else if (document.all) {
-			return document.all[name].style;
-		} else if (document.layers) {
-			return document.layers[name];
-		}
-	}
-	function ap_showWaitMessage(div,flag)  {
-		if (!DHTML) {
-			return;
-		}
-		var x = ap_getObj(div);
-		x.visibility = (flag) ? 'visible' : 'hidden';
-		if (!document.getElementById) {
-			if (document.layers) {
-				x.left=280/2;
-			}
-		}
-		return true;
-	}
-	ap_showWaitMessage('waitDiv', 1);
-	//-->
-	</script>";
-}
-
-/**
- * Function to display the finish of the dhtml wait box
- *
- * @deprecated Not used anywhere in the core
- * @todo Remove in version 1.4
- */
-function CloseWaitBox()
-{
-	icms_core_Debug::setDeprecated('', 'This is very old and will be removed in version 1.4');
-	echo "<script type='text/javascript'>
-	<!--//
-	ap_showWaitMessage('waitDiv', 0);
-	//-->
-	</script>
-	";
-}
-
-/**
- * Checks if email is of correct formatting
- *
- * @deprecated	use icms_core_DataFilter::checkVar
- *
- * @param string     $email      The email address
- * @param string     $antispam   Generate an email address that is protected from spammers
- * @return string    $email      The generated email address
- * @todo Move to a static class method - text validation/formatting
- * new filter can use icms_core_DataFilter::checkVar($email, 'email', $antispam, $blacklist)
- */
-function checkEmail($email, $antispam = 0, $blacklist = 0)
-{
-	icms_core_Debug::setDeprecated('icms_core_DataFilter->checkVar - type = email, $options1 = true/false ($antispam),
-		$options2 = true/false ($blacklist)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::checkVar($email, 'email', $antispam, $blacklist);
-}
-
-/**
  * Format an URL
  *
  * @param string  $url  The URL to format
@@ -362,57 +174,6 @@ function formatURL($url)
 		if((!preg_match("/^http[s]*:\/\//i", $url)) && (!preg_match("/^ftp*:\/\//i", $url)) && (!preg_match("/^ed2k*:\/\//i", $url))) {$url = 'http://'.$url;}
 	}
 	return $url;
-}
-
-/**
- * Function to display banners in all pages
- * @deprecated Use xoops_getbanner instead
- * @todo Remove in version 1.4 - all occurrences have been removed from the core
- */
-function showbanner() {
-	icms_core_Debug::setDeprecated('xoops_getbanner',sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	echo xoops_getbanner();}
-
-/**
- * Gets banner HTML for use in templates
- *
- * @deprecated		Moving to a separate module
- *
- * @return object  $bannerobject  The generated banner HTML string
- */
-function xoops_getbanner() {
-	global $icmsConfig;
-
-	$db = icms_db_Factory::instance();
-	$bresult = $db->query("SELECT * FROM ".$db->prefix('banner')." ORDER BY RAND()", 1);
-	if ($db->getRowsNum($bresult) > 0) {
-		list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
-		if ($icmsConfig['my_ip'] != $_SERVER['REMOTE_ADDR'])
-			$db->queryF(sprintf("UPDATE %s SET impmade = impmade+1 WHERE bid = '%u'", $db->prefix('banner'), (int)($bid)));
-		/* Check if this impression is the last one and print the banner */
-		if ($imptotal == $impmade && $imptotal != 0) {
-			$newid = $db->genId($db->prefix('bannerfinish').'_bid_seq');
-			$sql = sprintf("INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES ('%u', '%u', '%u', '%u', '%u', '%u')", $db->prefix('bannerfinish'), (int) ($newid), (int) ($cid), (int) ($impmade), (int) ($clicks), (int) ($date), time());
-			$db->queryF($sql);
-			$db->queryF(sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('banner'), (int)($bid)));
-		}
-		if ($htmlbanner) {
-			$bannerobject = icms_core_DataFilter::filterHTMLdisplay($htmlcode, 0, 0);
-		} else {
-			$bannerobject = '<div><a href="'.ICMS_URL.'/banners.php?op=click&amp;bid='.$bid.'" rel="external">';
-			if (stristr($imageurl, '.swf')) {
-				$bannerobject = $bannerobject
-				.'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
-				.'<param name="movie" value="'.$imageurl.'"></param>'
-				.'<param name="quality" value="high"></param>'
-				.'</object>';
-			} else {
-				$bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';
-			}
-			$bannerobject = $bannerobject.'</a></div>';
-		}
-		return $bannerobject;
-	}
 }
 
 /**
@@ -508,23 +269,6 @@ function xoops_getenv($key)
 }
 
 /**
- * @deprecated get the theme from the global $icmsConfig instead
- * @todo Remove in version 1.4 - all occurrences have been removed from the core
- */
-function getTheme() {
-	icms_core_Debug::setDeprecated( 'get the theme from the global $icmsConfig' );
-	return $GLOBALS['icmsConfig']['theme_set'];}
-
-/**
- * Function to get css file for a certain theme
- * @deprecated use xoops_getcss() instead
- * @todo Remove in version 1.4 - all instances have been removed from the core
- */
-function getcss($theme = '') {
-	icms_core_Debug::setDeprecated( 'xoops_getcss' );
-	return xoops_getcss($theme);}
-
-/**
  * Function to get css file for a certain themeset
  *
  * @param string  $theme  The theme set from the config
@@ -548,18 +292,6 @@ function xoops_getcss($theme = '')
 		elseif(file_exists(ICMS_THEME_PATH.'/'.$theme.'/css/style.css')) {return ICMS_THEME_URL.'/'.$theme.'/css/style.css';}
 	}
 	return '';
-}
-
-/**
- * Gets Mailer object
- *
- * @return		object  localized email object handler
- * @todo 		Remove in version 1.4
- * @deprecated	Use icms_messaging_Handler, instead
- */
-function &getMailer() {
-	icms_core_Debug::setDeprecated('icms_messaging_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return new icms_messaging_Handler();
 }
 
 /**
@@ -600,52 +332,6 @@ function &xoops_gethandler($name, $optional = false) {
 	);
 	$lower = strtolower($name);
 	return icms::handler(isset($lookup[$lower]) ? $lookup[$lower] : $name);
-}
-
-/**
- * Gets rank
- *
- * @param	int  $rank_id  The Rank ID to get
- * @param 	int	 $posts		The number of posts to match for the rank
- * @return	array	$rank		The fetched rank array
- * @deprecated Use SystemUserrankHandler->getRank
- * @todo Remove in version 1.4 - all instances have been removed from the core
- */
-function xoops_getrank($rank_id =0, $posts = 0) {
-	icms_core_Debug::setDeprecated('SystemUserrankHandler->getRank', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_getModuleHandler("userrank", "system")->getRank($rank_id, $posts);
-}
-
-/**
- * Function maintained only for compatibility
- * @deprecated Use icms_core_DataFilter::icms_substr
- * @todo Remove in version 1.4 - all instances have been removed from the core
- *
- */
-function xoops_substr($str, $start, $length, $trimmarker = '...') {
-	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_substr', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::icms_substr($str, $start, $length, $trimmarker);
-}
-
-/**
- * Returns the portion of string specified by the start and length parameters.
- * If $trimmarker is supplied, it is appended to the return string.
- * This function works fine with multi-byte characters if mb_* functions exist on the server.
- *
- * @deprecated	use icms_core_DataFilter::icms_substr()
- *
- * @param	string	$str
- * @param	int	   $start
- * @param	int	   $length
- * @param	string	$trimmarker
- *
- * @return   string
- * @todo Move to a static class method - String
- */
-function icms_substr($str, $start, $length, $trimmarker = '...')
-{
-	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_substr', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::icms_substr($str, $start, $length, $trimmarker);
 }
 
 // RMV-NOTIFY
@@ -790,88 +476,6 @@ function xoops_utf8_encode(&$text)
  * @todo Move to a static class method - String
  */
 function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
-
-/**
- * Gets Username from UserID and creates a link to the userinfo (!) page
- * @deprecated	icms_member_user_Handler::getUserLink($userid, $name, $users, $withContact)
- *
- * @param	int	$userid	The User ID
- * @return	string	The linked username (from userID or "Anonymous")
- * @todo 	Remove in next major release
- */
-function xoops_getLinkedUnameFromId($userid)
-{
-	icms_core_Debug::setDeprecated("icms_member_user_Handler::getUserLink", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
-	return icms_member_user_Handler::getUserLink($userid);
-
-}
-
-/**
- * Trims certain text
- *
- * @deprecated	use icms_core_DataFilter::icms_trim
- *
- * @param	string	$text	The Text to trim
- * @return	string	$text	The trimmed text
- * @todo Move to a static class method - String
- */
-function xoops_trim($text)
-{
-	icms_core_Debug::setDeprecated('icms_core_DataFilter::icms_trim', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::icms_trim($text);
-}
-
-/**
- * Copy a file, or a folder and its contents
- *
- * @author	Aidan Lister <aidan@php.net>
- * @param	string	$source	The source
- * @param	string  $dest	  The destination
- * @return   bool	Returns true on success, false on failure
- * @deprecated	Use icms_core_Filesystem::copyRecursive, instead
- * @todo		Remove in version 1.4 - all occurrences have been removed from the core
- */
-function icms_copyr($source, $dest)
-{
-	icms_core_Debug::setDeprecated('icms_core_Filesystem::copyRecursive', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::copyRecursive($source, $dest);
-}
-
-/**
- * Safely create a folder
- *
- * @since 1.2.1
- * @copyright ImpressCMS
- *
- * @param string $target path to the folder to be created
- * @param integer $mode permissions to set on the folder. This is affected by umask in effect
- * @param string $base root location for the folder, ICMS_ROOT_PATH or ICMS_TRUST_PATH, for example
- * @param array $metachars Characters to exclude from a valid path name
- * @return boolean True if folder is created, False if it is not
- *
- * @deprecated	Use icms_core_Filesystem::mkdir, instead
- * @todo		Remove in version 1.4 - all occurrences have been removed from the core
- */
-function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = array() ) {
-	icms_core_Debug::setDeprecated('icms_core_Filesystem::mkdir', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::mkdir($target, $mode, $base, $metachars);
-}
-
-/**
- * Change the permission of a file or folder
- *
- * @author	Newbb2 developpement team
- * @param	string	$target  target file or folder
- * @param	int		$mode	permission
- * @return   bool	Returns true on success, false on failure
- *
- * @deprecated	Use icms_core_Filesystem::chmod, instead
- * @todo		Remove in version 1.4 - all occurrences have been removed from the core
- */
-function icms_chmod($target, $mode = 0777) {
-	icms_core_Debug::setDeprecated('icms_core_Filesystem::chmod', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::chmod($target, $mode);
-}
 
 /**
  * Get the icmsModule object of a specified module
@@ -1104,15 +708,6 @@ function icms_currency($var, $currencyObj=false)
 }
 
 /**
- * Use this snippet to extract any currency out of a string
- *
- * @see icms_currency
- * @deprecated Use icms_currency
- * @todo remove in version 1.4
- */
-function icms_float($var) {return icms_currency($var);}
-
-/**
  * Strip text from unwanted text (purify)
  *
  * @param string $text	String to purify
@@ -1287,15 +882,6 @@ function icms_sanitizeAdsenses_callback($matches) {
 	$icms_adsensesObj = $icms_adsense_handler->getAdsensesByTag();
 	if (!isset($icms_adsensesObj[$matches[1]])) return '';
 	return $icms_adsensesObj[$matches[1]]->render();
-}
-
-/**
- * @deprecated Use icms_member_user_Handler instead
- * @todo Remove this function in version 1.4
- */
-function icms_getLinkedUnameFromId($userid, $name = FALSE, $users = array (), $withContact = FALSE) {
-	icms_core_Debug::setDeprecated('icms_member_user_Handler::getUserLink', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_member_user_Handler::getUserLink($userid, $name, $users, $withContact);
 }
 
 /**
@@ -1549,24 +1135,6 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
 		}
 		return implode($break, $splitedArray);
 	}
-}
-
-/**
- * Function to reverse given text with utf-8 character sets
- *
- * @deprecated	use icms_core_DataFilter::utf8_strrev
- *
- * credit for this function should goto lwc courtesy of php.net.
- *
- * @param string $str		The text to be reversed.
- * @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
- *				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
- * @return string
- */
-function icms_utf8_strrev($str, $reverse = false)
-{
-	icms_core_Debug::setDeprecated('icms_core_DataFilter::utf8_strrev', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_DataFilter::utf8_strrev($str, $reverse);
 }
 
 /**
@@ -2039,40 +1607,6 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 	return $inst;
 }
 
-/**
- * Gets module handler
- * For Backward Compatibility.
- *
- * @param	string  $name  The name of the module
- * @param	string	$module_dir		The module directory where to get the module class
- * @return	object  $inst	The reference to the generated object
- * @deprecated Use icms_getmodulehandler instead
- * @todo Remove this function in version 1.4
- */
-function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
-{
-	icms_core_Debug::setDeprecated('icms_getModuleHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_getModuleHandler($name, $module_dir, $module_dir, $optional);
-}
-
-/**
- * Get URL of previous page
- *
- * @deprecated	use icms::$urls['previouspage']
- *
- * @param string $default default page if previous page is not found
- * @return string previous page URL
- * @todo Move to a static class method - HTTP or URI
- */
-function icms_getPreviousPage($default=false) {
-	if (isset(icms::$urls['previouspage'])) {
-		return icms::$urls['previouspage'];
-	} elseif($default) {
-		return $default;
-	} else {
-		return ICMS_URL;
-	}
-}
 
 /**
  * Get module admin link
@@ -2124,31 +1658,6 @@ function icms_getImageSize($url, & $width, & $height) {
 	} else {
 		return true;
 	}
-}
-
-/**
- * Gets all types of urls in one array
- *
- * @deprecated	use icms::$urls
- *
- * @return array The array of urls
- * @todo Move to a static class method - HTTP or URI
- */
-function icms_getCurrentUrls() {
-	return icms::$urls;
-}
-
-/**
- * Deletes a file
- *
- * @param string $dirname path of the file
- * @return	The unlinked dirname
- * @deprecated	Use icms_core_Filesystem::deleteFile
- * @todo		Remove in version 1.4 - all instances have been removed from the core
- */
-function icms_deleteFile($dirname) {
-	icms_core_Debug::setDeprecated('icms_core_Filesystem::deleteFile', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::deleteFile($dirname);
 }
 
 /**
@@ -2278,18 +1787,6 @@ function icms_loadCommonLanguageFile() {
 }
 
 /**
- * Gets current page
- *
- * @deprecated	use icms::$urls['full']
- *
- * @return string The URL of the current page
- * @todo Move to a static class method - HTTP or URI
- */
-function icms_getCurrentPage() {
-	return icms::$urls['full'];
-}
-
-/**
  * Gets module name in SEO format
  *
  * @param mixed $moduleName	Modulename if it is passed, otherwise false
@@ -2383,46 +1880,6 @@ function one_wordwrap($string,$width=false){
 }
 
 /**
- * Removes the content of a folder.
- *
- * @author	Steve Kenow (aka skenow) <skenow@impresscms.org>
- * @author	modified by Vaughan <vaughan@impresscms.org>
- * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @param	string	$path	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_COMPILE_PATH . "/");
- * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
- * @deprecated	Use icms_core_Filesystem::cleanFolders
- * @todo Move to static class Filesystem
- */
-function icms_clean_folders($dir, $remove_admin_cache=false) {
-	icms_core_Debug::setDeprecated('icms_core_Filesystem::cleanFolders', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::cleanFolders($dir, $remove_admin_cache);
-}
-
-/**
- * Clean up all the writeable folders
- * @param bool
- * @deprecated	User icms_core_Filesystem::cleanFolders
- * @todo		Remove in versison 1.4 - all instances have been removed from the core
- */
-function icms_cleaning_write_folders() {
-	icms_core_Debug::setDeprecated('icms_core_Filesystem::cleanFolders', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"));
-}
-
-/**
- * Recursively delete a directory
- *
- * @param string $dir Directory name
- * @param bool $deleteRootToo Delete specified top-level directory as well
- * @deprecated	Use icms_core_Filesystem::deleteRecursive
- * @todo		Remove in version 1.4 - all instances have been removed from the core
- */
-function icms_unlinkRecursive($dir, $deleteRootToo=true){
-	icms_core_Debug::setDeprecated('icms_core_Filesystem::deleteRecursive', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::deleteRecursive($dir, $deleteRootToo);
-}
-
-/**
  * Adds required jQuery files to header for Password meter.
  *
  * @param	string	$password_fieldclass	element id for the password field
@@ -2498,22 +1955,6 @@ function icms_makeSmarty($items) {
 	return true;
 }
 
-/**
- * Copy a file, or a folder and its contents from a website to your host
- *
- * @author	Sina Asghari <stranger@impresscms.org>
- * @author	nensa at zeec dot biz
- * @param	string	$src	The source
- * @param	string  $dest	  The destination
- * @return   bool	Returns stream_copy_to_stream($src, $dest) on success, false on failure
- * @deprecated	Use icms_core_Filesystem::copyStream
- * @todo		Remove in version 1.4 - all instances have been removed from the core
- */
-function icms_stream_copy($src, $dest)
-{
-	icms_core_Debug::setDeprecated('icms_core_Filesystem::copyStream', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_core_Filesystem::copyStream($src, $dest);
-}
 /**
  * Is a module being installed, updated or uninstalled
  * Used for setting module configuration default values or options
@@ -2600,27 +2041,7 @@ function icms_ajaxCollapsableBar($id = '', $title = '', $dsc = '') {
 		echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $dsc . "</span>";
 	}
 }
-/**
- * Ajax testing......
- */
-/*
- function icms_collapsableBar($id = '', $title = '', $dsc='')
- {
 
- global $icmsModule;
- //echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"toggle('" . $id . "'); toggleIcon('" . $id . "_icon')\";>";
-
- ?>
- <h3 class="icms_collapsable_title"><a href="javascript:Effect.Combo('<? echo $id ?>');"><? echo $title ?></a></h3>
- <?
-
- echo "<img id='" . $id . "_icon' src=" . ICMS_URL . "/images/close12.gif alt='' /></a>&nbsp;" . $title . "</h3>";
- echo "<div id='" . $id . "'>";
- if ($dsc != '') {
- echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $dsc . "</span>";
- }
- }
- */
 /**
  *
  * Enter description here ...
@@ -2660,20 +2081,7 @@ function icms_close_collapsable($name) {
 	icms_openclose_collapsable($name);
 	echo "<br />";
 }
-/**
- * Enter description here ...
- * @param $content
- * @param $title
- * @param $description
- * @param $pagetitle
- * @param $width
- * @deprecated	Use icms_view_Printerfriendly::generate, instead
- * @todo		Remove in versions 1.4
- */
-function icms_MakePrinterFriendly($content, $title=false, $description=false, $pagetitle=false, $width=680) {
-	icms_core_Debug::setDeprecated('icms_view_Printerfriendly::generate', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	return icms_view_Printerfriendly::generate($content, $title, $description, $pagetitle, $width);
-}
+
 /**
  * @todo Move to a static class method - user
  * Enter description here ...
@@ -2722,4 +2130,3 @@ function icms_need_do_br($moduleName=false) {
 		return true;
 	}
 }
-?>
