@@ -38,6 +38,10 @@
 namespace ImpressCMS\Core\View;
 
 use icms;
+use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
+use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Facades\Config;
+use ImpressCMS\Core\View\Theme\ThemeFactory;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use SmartyBC;
@@ -73,7 +77,7 @@ class Template extends SmartyBC
 
 		parent::__construct();
 
-		foreach (\icms::getInstance()->get('smarty.resource') as $plugin) {
+		foreach (icms::getInstance()->get('smarty.resource') as $plugin) {
 			$this->registerResource(
 				$plugin->getName(),
 				$plugin
@@ -84,7 +88,7 @@ class Template extends SmartyBC
 					 'modifier' => 'register_modifier',
 					 'compiler' => 'register_compiler_function',
 				 ] as $type => $function) {
-			foreach (\icms::getInstance()->get('smarty.' . $type) as $plugin) {
+			foreach (icms::getInstance()->get('smarty.' . $type) as $plugin) {
 				$this->$function(
 					$plugin->getName(),
 					[$plugin, 'execute']
@@ -209,4 +213,67 @@ class Template extends SmartyBC
 			}
 		}
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function fetch($template = null, $cache_id = null, $compile_id = null, $parent = null)
+	{
+		try {
+			return parent::fetch($template, $cache_id, $compile_id, $parent);
+		} catch (SmartyException $exception) {
+			if (strpos($exception->getMessage(), 'Unable to load template') === 0) {
+				$this->handleDeletedTemplateSet($exception);
+			} else {
+				throw $exception;
+			}
+		}
+	}
+
+	/**
+	 * Handle exception for deleted template set
+	 * (if there is possibility automatically auto updates selected theme in config)
+	 *
+	 * @param SmartyException $exception
+	 *
+	 * @throws SmartyException
+	 */
+	private function handleDeletedTemplateSet(SmartyException $exception): void {
+		$isAdmin = $this->getTemplateVars('icms_isadmin');
+		$themesList = $isAdmin ? ThemeFactory::getAdminThemesList() : ThemeFactory::getThemesList();
+		$configKey = $isAdmin ? 'theme_admin_set' : 'theme_set';
+
+		if (empty($themesList)) {
+			throw $exception;
+		}
+
+		$configCriteria = new CriteriaCompo(
+			new CriteriaItem('conf_modid', 0)
+		);
+		$configCriteria->add(
+			new CriteriaItem('conf_name', $configKey)
+		);
+		$configCriteria->add(
+			new CriteriaItem('conf_catid', Config::CATEGORY_MAIN)
+		);
+
+		/**
+		 * @var Config $configHandler
+		 */
+		$configHandler = icms::getInstance()->get('config');
+		$config = $configHandler->getConfigs($configCriteria);
+		if (!isset($config[0])) {
+			throw $exception;
+		}
+
+		if (isset($themesList[$config[0]->conf_value])) {
+			throw $exception;
+		}
+
+		$config[0]->conf_value = current($themesList);
+		$config[0]->store();
+
+		redirect_header(ICMS_URL);
+	}
+
 }
