@@ -2054,29 +2054,30 @@
         },
         {
             "name": "middlewares/encoder",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/middlewares/encoder.git",
-                "reference": "af8f0bb2efa1d6921938530acd02f478cf6eb8f1"
+                "reference": "6fd1744bcf88bec4e3dea0ca98ed6f900cc41ce0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/encoder/zipball/af8f0bb2efa1d6921938530acd02f478cf6eb8f1",
-                "reference": "af8f0bb2efa1d6921938530acd02f478cf6eb8f1",
+                "url": "https://api.github.com/repos/middlewares/encoder/zipball/6fd1744bcf88bec4e3dea0ca98ed6f900cc41ce0",
+                "reference": "6fd1744bcf88bec4e3dea0ca98ed6f900cc41ce0",
                 "shasum": ""
             },
             "require": {
                 "ext-zlib": "*",
                 "middlewares/utils": "^3.0",
-                "php": "^7.2",
+                "php": "^7.2 || ^8.0",
                 "psr/http-server-middleware": "^1.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.0",
                 "laminas/laminas-diactoros": "^2.2",
                 "oscarotero/php-cs-fixer-config": "^1.0",
-                "phpunit/phpunit": "^8.1",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "^8|^9",
                 "squizlabs/php_codesniffer": "^3.0"
             },
             "type": "library",
@@ -2101,7 +2102,7 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2020-01-24T16:53:17+00:00"
+            "time": "2020-12-03T01:13:28+00:00"
         },
         {
             "name": "middlewares/firewall",
