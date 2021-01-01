@@ -1773,16 +1773,16 @@
         },
         {
             "name": "lulco/phoenix",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lulco/phoenix.git",
-                "reference": "78e73cd63dc694006be90d967093f48d822d4206"
+                "reference": "821e0d97563c1ee614fd8eda64109cb02fba0112"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lulco/phoenix/zipball/78e73cd63dc694006be90d967093f48d822d4206",
-                "reference": "78e73cd63dc694006be90d967093f48d822d4206",
+                "url": "https://api.github.com/repos/lulco/phoenix/zipball/821e0d97563c1ee614fd8eda64109cb02fba0112",
+                "reference": "821e0d97563c1ee614fd8eda64109cb02fba0112",
                 "shasum": ""
             },
             "require": {
@@ -1831,7 +1831,7 @@
                 "rollback",
                 "status"
             ],
-            "time": "2020-04-16T13:19:50+00:00"
+            "time": "2020-12-01T12:50:28+00:00"
         },
         {
             "name": "m6web/firewall",
@@ -3772,27 +3772,22 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v5.1.6",
+            "version": "v5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "2c3ba7ad6884e6c4451ce2340e2dc23f6fa3e0d8"
+                "reference": "0b9231a5922fd7287ba5b411893c0ecd2733e5ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/2c3ba7ad6884e6c4451ce2340e2dc23f6fa3e0d8",
-                "reference": "2c3ba7ad6884e6c4451ce2340e2dc23f6fa3e0d8",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/0b9231a5922fd7287ba5b411893c0ecd2733e5ba",
+                "reference": "0b9231a5922fd7287ba5b411893c0ecd2733e5ba",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.1-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Finder\\": ""
@@ -3831,7 +3826,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-02T16:23:27+00:00"
+            "time": "2020-12-08T17:02:38+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
