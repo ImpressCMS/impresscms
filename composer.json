@@ -570,6 +570,11 @@
         "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getError"
       },
       {
+        "path": "/ping",
+        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getPing",
+        "method": ["GET"]
+      },
+      {
         "path": "/",
         "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex",
         "method": ["GET", "POST"]
