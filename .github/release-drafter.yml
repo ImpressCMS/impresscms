@@ -17,3 +17,4 @@ template: |
   ## What's Changed
 
   $CHANGES
+filter-by-commitish: true
