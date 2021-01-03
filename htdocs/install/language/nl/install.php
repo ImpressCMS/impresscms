@@ -70,22 +70,22 @@ define("NO_PHP5_TITLE", "Geen PHP 5");
 define("NO_PHP5_CONTENT", "PHP 5.2.0 minimum is vereist om ImpressCMS goed te laten functioneren - uw installatie kan niet doorgaan. Werk met uw hostingprovider samen om uw omgeving te upgraden naar een versie van PHP die nieuwer is dan 5..0 (5.2.8 + wordt aanbevolen) voordat u opnieuw probeert te installeren. Voor meer informatie lees <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS op PHP5 </a>.");
 define("SAFE_MODE", "Veilige modus aan");
 define("SAFE_MODE_TITLE", "Veilige modus aan");
-define("SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again.");
+define("SAFE_MODE_CONTENT", "ImpressCMS heeft gedetecteerd dat PHP draait in de Safe Mode. Daarom kan uw installatie niet doorgaan. Werk met uw hostingprovider samen om uw omgeving te wijzigen voordat u probeert opnieuw te installeren.");
 
 // Settings (labels and help text)
 define("XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path"); // L55
 define("XOOPS_ROOT_PATH_HELP", "This is the physical path of the ImpressCMS documents folder, the very web root of your ImpressCMS application"); // L59
 
-define("XOOPS_URL_LABEL", "Website location (URL)"); // L56
-define("XOOPS_URL_HELP", "Main URL that will be used to access your ImpressCMS installation"); // L58
+define("XOOPS_URL_LABEL", "Website locatie (URL)"); // L56
+define("XOOPS_URL_HELP", "Hoofd URL die zal worden gebruikt voor toegang tot uw ImpressCMS installatie"); // L58
 
-define("LEGEND_CONNECTION", "Server connection");
-define("LEGEND_DATABASE", "Database"); // L51
+define("LEGEND_CONNECTION", "Server verbinding");
+define("LEGEND_DATABASE", "Databank"); // L51
 
-define("DB_HOST_LABEL", "Server hostname"); // L27
-define("DB_HOST_HELP", "Hostname of the database server. If you are unsure, <em>localhost</em> works in most cases"); // L67
-define("DB_USER_LABEL", "User name"); // L28
-define("DB_USER_HELP", "Name of the user account that will be used to connect to the database server"); // L65
+define("DB_HOST_LABEL", "Server hostnaam"); // L27
+define("DB_HOST_HELP", "Hostnaam van de databaseserver. Als u het niet zeker weet, werkt <em>localhost</em> in de meeste gevallen"); // L67
+define("DB_USER_LABEL", "Gebruikers naam"); // L28
+define("DB_USER_HELP", "Naam van de gebruikersaccount die zal worden gebruikt om verbinding te maken met de database server"); // L65
 define("DB_PASS_LABEL", "Wachtwoord"); // L52
 define("DB_PASS_HELP", "Password of your database user account"); // L68
 define("DB_NAME_LABEL", "Database name"); // L29
