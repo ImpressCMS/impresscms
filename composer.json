@@ -246,6 +246,22 @@
           "smarty.modifier"
         ]
       },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Modifiers\\TransVarModifier": {
+        "arguments": [
+          "translator"
+        ],
+        "tags": [
+          "smarty.modifier"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Blocks\\TransBlock": {
+        "arguments": [
+          "translator"
+        ],
+        "tags": [
+          "smarty.block"
+        ]
+      },
       "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\ResizeImageFunction": {
         "arguments": [
           "cache"

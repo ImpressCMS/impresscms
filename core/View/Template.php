@@ -87,6 +87,7 @@ class Template extends SmartyBC
 					 'function' => 'register_function',
 					 'modifier' => 'register_modifier',
 					 'compiler' => 'register_compiler_function',
+			         'block' => 'register_block',
 				 ] as $type => $function) {
 			foreach (icms::getInstance()->get('smarty.' . $type) as $plugin) {
 				$this->$function(

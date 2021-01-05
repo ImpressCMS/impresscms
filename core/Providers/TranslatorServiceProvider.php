@@ -124,8 +124,11 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 				if ($dirInfo->isDot() || !$dirInfo->isDir()) {
 					continue;
 				}
+				/**
+				 * @var SplFileInfo $fileInfo
+				 */
 				foreach ($this->createTranslationFileIterator($dirInfo) as $fileInfo) {
-					if ($fileInfo->isDir()) {
+					if ($fileInfo->isDir() || $fileInfo->getExtension() === 'tpl') {
 						continue;
 					}
 					yield $this->generateResourceLineForCache($fileInfo, $dirInfo);
