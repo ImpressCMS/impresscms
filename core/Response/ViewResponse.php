@@ -295,7 +295,7 @@ class ViewResponse implements ResponseInterface
 		 * @var Session $session
 		 */
 		$session = icms::$session;
-		if (!$session) {
+		if (!$session || !$GLOBALS['icmsConfig']['session_autoextend']) {
 			return;
 		}
 		$this->theme->addScript('', ['type' => 'text/javascript'], '
