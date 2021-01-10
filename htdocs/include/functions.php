@@ -638,7 +638,9 @@ function icms_loadLanguageFile($module, $file, $admin=false)
 	if($module == 'core') {$languagePath = ICMS_ROOT_PATH.'/language/';}
 	else {$languagePath = ICMS_ROOT_PATH.'/modules/'.$module.'/language/';}
 	$extraPath = $admin ? 'admin/' : '';
-	$filename = $languagePath.$icmsConfig['language'].'/'.$extraPath.$file.'.php';
+	/** @noinspection NullCoalescingOperatorCanBeUsedInspection */
+	$lang = isset($icmsConfig['language']) ? $icmsConfig['language'] : 'english';
+	$filename = $languagePath . $lang . '/' . $extraPath . $file . '.php';
 	if(!file_exists($filename)) {$filename = $languagePath.'english/'.$extraPath.$file.'.php';}
 	if(file_exists($filename)) {include_once $filename ;}
 }

@@ -76,7 +76,7 @@ class db_manager {
 			$prefixed_query = icms_db_legacy_mysql_Utility::prefixQuery($piece, $this->db->prefix());
 			if ($prefixed_query != false) {
 				$table = $this->db->prefix($prefixed_query[4]);
-				if ($prefixed_query[1] == 'CREATE TABLE') {
+				if ($prefixed_query[1] === 'CREATE TABLE') {
 					if ($this->db->query($prefixed_query[0]) != false) {
 						if (! isset($this->s_tables['create'][$table])) {
 							$this->s_tables['create'][$table] = 1;
