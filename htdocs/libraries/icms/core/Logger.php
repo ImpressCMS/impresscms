@@ -195,10 +195,16 @@ class icms_core_Logger {
 	public function handleException($exception) {
 		icms_loadLanguageFile('core', 'core');
 
-		$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $exception->getMessage());
-		echo $errortext;
+		$errstr = $exception->getMessage();
 		$trace = true;
+		if (substr($errstr, 0, '8') == 'notrace:') {
+			$trace = false;
+			$errstr = substr($errstr, 8);
+		}
+		echo sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 		if ($trace) {
+			echo '<br /><div>File: ' . $exception->getFile() . '</div>';
+			echo '<div>Line: ' . $exception->getLine() . '</div>';
 			echo "<div>Backtrace:<br />";
 			$trace = $exception->getTrace();
 			array_shift( $trace );
