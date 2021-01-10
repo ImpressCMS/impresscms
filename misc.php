@@ -36,7 +36,6 @@
  */
 
 use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\Models\User;
 
 icms_loadLanguageFile('core', 'misc');
 /* set filter types, if not strings */
@@ -80,7 +79,12 @@ if ($action == 'showpopups') {
 				echo "<script type=\"text/javascript\"><!--//
 				function doSmilie(addSmilie) {
 				var currentMessage = window.opener.xoopsGetElementById(\"".$target . "\").value;
-				window.opener.xoopsGetElementById(\"".$target . ";
+				window.opener.xoopsGetElementById(\"".$target . "\").value=currentMessage+addSmilie;
+				return;
+				}
+				//-->
+				</script>
+				";
 				echo '</head><body>
 				<table width="100%" class="outer">
 				<tr><th colspan="3">'._MSC_SMILIES . '</th></tr>
@@ -173,7 +177,7 @@ if ($action == 'showpopups') {
 						<td class='odd'><input type='text' name='fmail' value='$fmail' id='fmail' /></td></tr>
 						<tr><td class='head'>&nbsp;</td><td class='even'>
 						<input type='submit' value='" . _SEND . "' />&nbsp;
-						<input value='"._CLOSE . "' type='button' onclick='window.close();' />"
+						<input value='"._CLOSE . "' type='button' onclick='javascript:window.close();' />"
 						. icms::$security->getTokenHTML() . "</td></tr>
 						</table></form>\n";
 					$closebutton = 0;
@@ -230,7 +234,7 @@ if ($action == 'showpopups') {
 					if ($onlines[$i]['online_uid'] == 0) {
 						$onlineUsers[$i]['user'] = '';
 					} else {
-						$onlineUsers[$i]['user'] = new User($onlines[$i]['online_uid']);
+						$onlineUsers[$i]['user'] = new \ImpressCMS\Core\Models\User($onlines[$i]['online_uid']);
 					}
 					$onlineUsers[$i]['ip'] = $onlines[$i]['online_ip'];
 					$onlineUsers[$i]['updated'] = $onlines[$i]['online_updated'];
@@ -276,7 +280,7 @@ if ($action == 'showpopups') {
 				}
 				if ($closebutton) {
 					echo '<div style="text-align:center;">
-						<input class="formButton" value="'._CLOSE . '" type="button" onclick="window.close();" />
+						<input class="formButton" value="'._CLOSE . '" type="button" onclick="javascript:window.close();" />
 						</div>';
 				}
 				xoops_footer();
