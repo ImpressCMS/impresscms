@@ -39,6 +39,8 @@ define("_MD_AM_SESSNAME", "Session name");
 define("_MD_AM_SESSNAMEDSC", "The name of session (Valid only when 'use custom session' is enabled)");
 define("_MD_AM_SESSEXPIRE", "Session expiration");
 define("_MD_AM_SESSEXPIREDSC", "Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled. Works only when you are using PHP4.2.0 or later.)");
+define('_MD_AM_SESSION_AUTOEXTEND', 'Autoextend session');
+define('_MD_AM_SESSION_AUTOEXTEND_DSC', 'If turned on session will be extended automatically until browser window is closed or internet connection for longer time lost');
 define("_MD_AM_MYIP", "Your IP address");
 define("_MD_AM_MYIPDSC", "");
 define("_MD_AM_ALWDHTML", "HTML tags allowed in all posts.");

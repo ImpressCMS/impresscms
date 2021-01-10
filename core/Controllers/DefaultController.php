@@ -2,10 +2,14 @@
 
 namespace ImpressCMS\Core\Controllers;
 
+use Aura\Session\Session;
+use GuzzleHttp\Psr7\Response;
+use icms;
 use ImpressCMS\Core\Response\RedirectResponse;
 use ImpressCMS\Core\Response\ViewResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use function icms_loadLanguageFile;
 
 /**
  * Controller for doing some basic stuff
@@ -26,13 +30,13 @@ class DefaultController
 	{
 		global $icmsConfig;
 
-		$member_handler = \icms::handler('icms_member');
+		$member_handler = icms::handler('icms_member');
 		$group = $member_handler->getUserBestGroup(
-			(!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->uid : 0
+			(!empty(icms::$user) && is_object(icms::$user)) ? icms::$user->uid : 0
 		);
 
 		// added failover to default startpage for the registered users group -- JULIAN EGELSTAFF Apr 3 2017
-		$groups = (!empty(\icms::$user) && is_object(\icms::$user)) ? \icms::$user->getGroups() : [ICMS_GROUP_ANONYMOUS];
+		$groups = (!empty(icms::$user) && is_object(icms::$user)) ? icms::$user->getGroups() : [ICMS_GROUP_ANONYMOUS];
 		if ((($icmsConfig['startpage'][$group] === '') || ($icmsConfig['startpage'][$group] === '--'))
 			&& in_array(ICMS_GROUP_USERS, $groups, true)
 			&& !in_array($icmsConfig['startpage'][ICMS_GROUP_USERS], ['', '--'], true)
@@ -45,7 +49,7 @@ class DefaultController
 		if (isset($icmsConfig['startpage']) && $icmsConfig['startpage'] != '' && $icmsConfig['startpage'] != '--') {
 			$arr = explode('-', $icmsConfig['startpage']);
 			if (count($arr) > 1) {
-				$page_handler = \icms::handler('icms_data_page');
+				$page_handler = icms::handler('icms_data_page');
 				$page = $page_handler->get($arr[1]);
 				if (is_object($page)) {
 					return new RedirectResponse(
@@ -100,7 +104,7 @@ class DefaultController
 			'template_main' => 'system_error.html'
 		]);
 
-		\icms_loadLanguageFile('core', 'error');
+		icms_loadLanguageFile('core', 'error');
 
 		$siteName = $icmsConfig['sitename'];
 		$lang_error_no = sprintf(_ERR_NO, $errorNo);
@@ -120,6 +124,23 @@ class DefaultController
 		$response->assign('icms_pagetitle', $lang_error_no . ' ' . constant('_ERR_' . $errorNo . '_TITLE'));
 
 		return $response;
+	}
+
+	/**
+	 * Pings from user interface to automatically extend session
+	 *
+	 * @param ServerRequestInterface $request
+	 * @return ResponseInterface
+	 */
+	public function getPing(ServerRequestInterface $request): ResponseInterface {
+		/**
+		 * @var Session $session
+		 */
+		$session = $request->getAttribute('session');
+		if ($session->isStarted()) {
+			$session->regenerateId();
+		}
+		return new Response();
 	}
 
 }
