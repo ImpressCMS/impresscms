@@ -222,12 +222,12 @@ function output_log( $type = 'UNKNOWN' , $uid = 0 , $unique_check = false , $lev
 		// if( ! mysql_select_db( XOOPS_DB_NAME , $this->_conn ) ) die( 'db selection failed.' ) ;
 	}
     // --
-    
+
 	// this is not reliable
 	$ip = @$_SERVER['REMOTE_ADDR'] ;
 	$agent = @$_SERVER['HTTP_USER_AGENT'] ;
     // --
-    
+
 	if( $unique_check ) {
 		$result = icms::$xoopsDB->queryF( 'SELECT ip,type FROM '.XOOPS_DB_PREFIX.'_'.$this->mydirname.'_log ORDER BY timestamp DESC LIMIT 1') ;
 		list( $last_ip , $last_type ) = icms::$xoopsDB->fetchRow( $result ) ;
@@ -462,7 +462,7 @@ function _dblayertrap_check_recursive( $val )
 		}
 	} else {
 		if( strlen( $val ) < 6 ) return ;
-		$val = get_magic_quotes_gpc() ? stripslashes( $val ) : $val ;
+		$val = (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc()) ? stripslashes( $val ) : $val ;
 		foreach( $this->_dblayertrap_doubtful_needles as $needle ) {
 			if( stristr( $val , $needle ) ) {
 				$this->_dblayertrap_doubtfuls[] = $val ;
