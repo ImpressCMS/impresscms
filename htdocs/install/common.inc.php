@@ -29,6 +29,12 @@ define('XOOPS_INSTALL', 1);
  */
 date_default_timezone_set(@date_default_timezone_get());
 
+if (!defined('PHP_VERSION_ID')) {
+	$version = explode('.', PHP_VERSION);
+
+	define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
+}
+
 include_once '../include/version.php';
 // including a few functions - core
 include_once '../include/functions.php';
@@ -59,7 +65,7 @@ class XoopsInstallWizard {
 			$_SERVER['REQUEST_URI'] = htmlentities($_SERVER['PHP_SELF']);
 		}
 
-		if (version_compare( phpversion(), '5.5', '<')) {
+		if (PHP_VERSION_ID < 50500) {
 			$this->no_php5 = true;
 		}
 		/*		 elseif (ini_get('safe_mode') == 1 || strtolower(ini_get('safe_mode')) == 'on') {
@@ -138,19 +144,19 @@ class XoopsInstallWizard {
 	}
 
 	function checkAccess() {
-		if (INSTALL_USER != '' && INSTALL_PASSWORD != '') {
+		if (INSTALL_USER && INSTALL_PASSWORD) {
 			if (!isset($_SERVER['PHP_AUTH_USER'])) {
 				header('WWW-Authenticate: Basic realm="ImpressCMS Installer"');
 				header('HTTP/1.0 401 Unauthorized');
 				echo 'You can not access this ImpressCMS installer.';
 				return false;
 			}
-			if (INSTALL_USER != '' && $_SERVER['PHP_AUTH_USER'] != INSTALL_USER) {
+			if (INSTALL_USER && $_SERVER['PHP_AUTH_USER'] !== INSTALL_USER) {
 				header('HTTP/1.0 401 Unauthorized');
 				echo 'You can not access this ImpressCMS installer.';
 				return false;
 			}
-			if (INSTALL_PASSWD != $_SERVER['PHP_AUTH_PW']) {
+			if (INSTALL_PASSWD !== $_SERVER['PHP_AUTH_PW']) {
 				header('HTTP/1.0 401 Unauthorized');
 				echo 'You can not access this ImpressCMS installer.';
 				return false;
@@ -187,7 +193,7 @@ class XoopsInstallWizard {
 		/**
 		 * If server is in Safe Mode, display the safe_mode page and stop the install
 		 */
-		if ($this->safe_mode && $page != 'safe_mode') {
+		if ($this->safe_mode && $page !== 'safe_mode') {
 			header('location:page_safe_mode.php');
 			exit;
 		}
@@ -195,7 +201,7 @@ class XoopsInstallWizard {
 		if ((int)$page && $page >= 0 && $page < count($this->pages)) {
 			$this->currentPageName = $this->pages[ $page ];
 			$this->currentPage = $page;
-		} elseif (false !== ( $index = array_search( $page, $this->pages ) )) {
+		} elseif (false !== ( $index = array_search( $page, $this->pages, false ) )) {
 			$this->currentPageName = $page;
 			$this->currentPage = $index;
 		} else {
@@ -205,7 +211,7 @@ class XoopsInstallWizard {
 	}
 
 	function baseLocation() {
-		$proto	= ( @$_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
+		$proto	= ( isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on')) ? 'https' : 'http';
 		$host	= htmlentities($_SERVER['HTTP_HOST']);
 		$server_php_self = htmlentities($_SERVER['PHP_SELF']);
 		$base	= substr( $server_php_self, 0, strrpos( $server_php_self, '/' ) );
@@ -213,13 +219,13 @@ class XoopsInstallWizard {
 	}
 
 	function pageURI( $page) {
-		if (!(int)$page{0}) {
-			if ($page{0} == '+') {
+		if (!(int)$page[0]) {
+			if ($page[0] === '+') {
 				$page = $this->currentPage + substr( $page, 1 );
-			} elseif ($page{0} == '-') {
+			} elseif ($page[0] === '-') {
 				$page = $this->currentPage - substr( $page, 1 );
 			} else {
-				$page = (int)array_search( $page, $this->pages );
+				$page = (int)array_search($page, $this->pages, false);
 			}
 		}
 		$page = $this->pages[$page ];
