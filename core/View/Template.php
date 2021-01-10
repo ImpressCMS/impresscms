@@ -30,9 +30,9 @@
 /**
  * The templates class that extends Smarty
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @author	modified by UnderDog <underdog@impresscms.org>
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
+ * @author    modified by UnderDog <underdog@impresscms.org>
  */
 
 namespace ImpressCMS\Core\View;
@@ -50,9 +50,9 @@ use SmartyException;
 /**
  * Template engine
  *
- * @package	ICMS\View
- * @author	Kazumi Ono 	<onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package    ICMS\View
+ * @author    Kazumi Ono    <onokazu@xoops.org>
+ * @copyright    Copyright (c) 2000 XOOPS.org
  */
 class Template extends SmartyBC
 {
@@ -69,11 +69,12 @@ class Template extends SmartyBC
 	 */
 	public $currentTheme;
 
-	public function __construct() {
+	public function __construct()
+	{
 		global $icmsConfig, $icmsModule;
 
 		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
-		$this->compile_check = ( (int)$icmsConfig['theme_fromfile'] === 1 );
+		$this->compile_check = ((int)$icmsConfig['theme_fromfile'] === 1);
 
 		parent::__construct();
 
@@ -87,6 +88,7 @@ class Template extends SmartyBC
 					 'function' => 'register_function',
 					 'modifier' => 'register_modifier',
 					 'compiler' => 'register_compiler_function',
+					 'block' => 'register_block',
 				 ] as $type => $function) {
 			foreach (icms::getInstance()->get('smarty.' . $type) as $plugin) {
 				$this->$function(
@@ -98,8 +100,8 @@ class Template extends SmartyBC
 
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
-			$groups = (is_object(icms::$user))? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
-			$moduleid = (isset($icmsModule) && is_object($icmsModule))?$icmsModule->mid:1;
+			$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+			$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid : 1;
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			if ((int)$icmsConfig['debug_mode'] === 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
@@ -111,26 +113,26 @@ class Template extends SmartyBC
 
 		$this->assign(
 			[
-			'icms_url' => ICMS_URL,
-			'icms_rootpath' => ICMS_ROOT_PATH,
-			'modules_url' => ICMS_MODULES_URL,
-			'modules_rootpath' => ICMS_MODULES_PATH,
-			'icms_langcode' => _LANGCODE,
-			'icms_langname' => $GLOBALS['icmsConfig']['language'],
-			'icms_charset' => _CHARSET,
-			'icms_version' => ICMS_VERSION_NAME,
-			'icms_upload_url' => ICMS_UPLOAD_URL,
-			'xoops_url' => ICMS_URL,
-			'xoops_rootpath' => ICMS_ROOT_PATH,
-			'xoops_langcode' => _LANGCODE,
-			'xoops_charset' => _CHARSET,
-			'xoops_version' => ICMS_VERSION_NAME,
-			'xoops_upload_url' => ICMS_UPLOAD_URL,
-			'globals' => $GLOBALS
+				'icms_url' => ICMS_URL,
+				'icms_rootpath' => ICMS_ROOT_PATH,
+				'modules_url' => ICMS_MODULES_URL,
+				'modules_rootpath' => ICMS_MODULES_PATH,
+				'icms_langcode' => _LANGCODE,
+				'icms_langname' => $GLOBALS['icmsConfig']['language'],
+				'icms_charset' => _CHARSET,
+				'icms_version' => ICMS_VERSION_NAME,
+				'icms_upload_url' => ICMS_UPLOAD_URL,
+				'xoops_url' => ICMS_URL,
+				'xoops_rootpath' => ICMS_ROOT_PATH,
+				'xoops_langcode' => _LANGCODE,
+				'xoops_charset' => _CHARSET,
+				'xoops_version' => ICMS_VERSION_NAME,
+				'xoops_upload_url' => ICMS_UPLOAD_URL,
+				'globals' => $GLOBALS
 			]
 		);
 
-		$this->registerObject('icms', icms::getInstance(),null,false);
+		$this->registerObject('icms', icms::getInstance(), null, false);
 	}
 
 	/**
@@ -141,7 +143,8 @@ class Template extends SmartyBC
 	 * @return  string            Rendered output if $display was false
 	 * @throws SmartyException
 	 */
-	public function fetchFromData($tplSource, $display = false, $vars = null) {
+	public function fetchFromData($tplSource, $display = false, $vars = null)
+	{
 		if (isset($vars)) {
 			$oldVars = $this->_tpl_vars;
 			$this->assign($vars);
@@ -155,11 +158,12 @@ class Template extends SmartyBC
 	/**
 	 * Touch the resource (file) which means get it to recompile the resource
 	 *
-	 * @param   string  $resourceName	Resource name to touch
+	 * @param string $resourceName Resource name to touch
 	 *
 	 * @return  int
 	 */
-	public function touch($resourceName) {
+	public function touch($resourceName)
+	{
 		return $this->clearCache($resourceName);
 	}
 
@@ -171,9 +175,10 @@ class Template extends SmartyBC
 	 * @return  boolean
 	 * @throws InvalidArgumentException
 	 */
-	public static function template_touch($tpl_id) {
-		$tplFileHandler = & icms::handler('icms_view_template_file');
-		$tplFile = & $tplFileHandler->get($tpl_id);
+	public static function template_touch($tpl_id)
+	{
+		$tplFileHandler = &icms::handler('icms_view_template_file');
+		$tplFile = &$tplFileHandler->get($tpl_id);
 
 		if (!is_object($tplFile)) {
 			return false;
@@ -197,9 +202,10 @@ class Template extends SmartyBC
 	/**
 	 * Clear the module cache
 	 *
-	 * @param   int $mid    Module ID
+	 * @param int $mid Module ID
 	 */
-	public static function template_clear_module_cache($mid) {
+	public static function template_clear_module_cache($mid)
+	{
 		$icms_block_handler = icms::handler('icms_view_block');
 		$block_arr = $icms_block_handler->getByModule($mid);
 		$count = count($block_arr);
@@ -238,7 +244,8 @@ class Template extends SmartyBC
 	 *
 	 * @throws SmartyException
 	 */
-	private function handleDeletedTemplateSet(SmartyException $exception): void {
+	private function handleDeletedTemplateSet(SmartyException $exception): void
+	{
 		$isAdmin = $this->getTemplateVars('icms_isadmin');
 		$themesList = $isAdmin ? ThemeFactory::getAdminThemesList() : ThemeFactory::getThemesList();
 		$configKey = $isAdmin ? 'theme_admin_set' : 'theme_set';

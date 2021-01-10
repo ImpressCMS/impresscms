@@ -11,7 +11,7 @@ interface SmartyModifierExtensionInterface extends SmartyExtensionInterface
 {
 
 	/**
-	 * Execute modifier (disabled because there is no way to define it with all possible differnt parameters)
+	 * Execute modifier (disabled because there is no way to define it with all possible different parameters)
 	 * Still function must exist
 	 */
 	//public function execute();
