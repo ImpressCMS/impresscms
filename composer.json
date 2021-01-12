@@ -461,7 +461,7 @@
           "setup_step.module.uninstall"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Install\\CacheClearSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\CacheClearSetupStep": {
         "tags": [
           "setup_step.module.install"
         ],
@@ -469,7 +469,7 @@
           "cache"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Uninstall\\CacheClearSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\CacheClearSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
         ],
@@ -477,7 +477,7 @@
           "cache"
         ]
       },
-      "\\ImpressCMS\\Core\\SetupSteps\\Module\\Update\\CacheClearSetupStep": {
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\CacheClearSetupStep": {
         "tags": [
           "setup_step.module.update"
         ],
