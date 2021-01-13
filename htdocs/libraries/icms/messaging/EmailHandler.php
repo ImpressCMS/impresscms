@@ -43,6 +43,7 @@
  * load the base class
  */
 require_once ICMS_LIBRARIES_PATH . '/phpmailer/class.phpmailer.php';
+require_once ICMS_LIBRARIES_PATH . '/phpmailer/class.smtp.php';
 
 /**
  * Mailer Class.
