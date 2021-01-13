@@ -73,8 +73,8 @@ define("SAFE_MODE_TITLE", "Veilige modus aan");
 define("SAFE_MODE_CONTENT", "ImpressCMS heeft gedetecteerd dat PHP draait in de Safe Mode. Daarom kan uw installatie niet doorgaan. Werk met uw hostingprovider samen om uw omgeving te wijzigen voordat u probeert opnieuw te installeren.");
 
 // Settings (labels and help text)
-define("XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path"); // L55
-define("XOOPS_ROOT_PATH_HELP", "This is the physical path of the ImpressCMS documents folder, the very web root of your ImpressCMS application"); // L59
+define("XOOPS_ROOT_PATH_LABEL", "ImpressCMS documenten fysiek hoofdpad"); // L55
+define("XOOPS_ROOT_PATH_HELP", "Dit is het fysieke pad van de ImpressCMS documentenmap, de webroot van uw ImpressCMS applicatie"); // L59
 
 define("XOOPS_URL_LABEL", "Website locatie (URL)"); // L56
 define("XOOPS_URL_HELP", "Hoofd URL die zal worden gebruikt voor toegang tot uw ImpressCMS installatie"); // L58
@@ -87,9 +87,9 @@ define("DB_HOST_HELP", "Hostnaam van de databaseserver. Als u het niet zeker wee
 define("DB_USER_LABEL", "Gebruikers naam"); // L28
 define("DB_USER_HELP", "Naam van de gebruikersaccount die zal worden gebruikt om verbinding te maken met de database server"); // L65
 define("DB_PASS_LABEL", "Wachtwoord"); // L52
-define("DB_PASS_HELP", "Password of your database user account"); // L68
-define("DB_NAME_LABEL", "Database name"); // L29
-define("DB_NAME_HELP", "The name of database on the host. The installer will attempt to create a database if one does not exist"); // L64
+define("DB_PASS_HELP", "Wachtwoord van uw databank gebruikersaccount"); // L68
+define("DB_NAME_LABEL", "Naam databank"); // L29
+define("DB_NAME_HELP", "De naam van de databank op de host. Het installatieprogramma zal proberen een nieuwe databank aan te maken als deze niet bestaat"); // L64
 define("DB_CHARSET_LABEL", "Database character set, we STRONGLY recommend you to use UTF-8 as default.");
 define("DB_CHARSET_HELP", "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.");
 define("DB_COLLATION_LABEL", "Database collation");
