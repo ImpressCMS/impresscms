@@ -94,11 +94,11 @@ if ($action == 'showpopups') {
 				if ($count > 0) {
 					$rcolor = 'even';
 					for ($i = 0; $i < $count; $i++) {
-						echo "<tr class='$rcolor'><td>" . $smiles[$i]['code'] . "</td>
-							<td>".$smiles[$i]['emotion'] . "</td>
-							<td><img onmouseover='style.cursor=\"pointer\"' onclick='doSmilie(\" "
-							. $smiles[$i]['code'] . " \");' src='"
-							. ICMS_UPLOAD_URL . "/" . $smiles[$i]['smile_url'] . "' alt='' /></td></tr>";
+						echo "<tr class='$rcolor'><td>".htmlentities($smiles[$i]['code'])."</td>
+							<td>".htmlentities($smiles[$i]['emotion'])."</td>
+							<td><img onmouseover=\"style.cursor='pointer'\" onclick=\"doSmilie(decodeURIComponent('"
+								. rawurlencode($smiles[$i]['code']) . "'));\" src='"
+								. ICMS_UPLOAD_URL . "/" . $smiles[$i]['smile_url'] . "' alt='' /></td></tr>";
 						$rcolor = ($rcolor == 'even')?'odd':'even';
 					}
 				} else {echo 'Could not retrieve data from the database.'; }
