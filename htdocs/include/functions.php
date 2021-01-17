@@ -638,7 +638,9 @@ function icms_loadLanguageFile($module, $file, $admin=false)
 	if($module == 'core') {$languagePath = ICMS_ROOT_PATH.'/language/';}
 	else {$languagePath = ICMS_ROOT_PATH.'/modules/'.$module.'/language/';}
 	$extraPath = $admin ? 'admin/' : '';
-	$filename = $languagePath.$icmsConfig['language'].'/'.$extraPath.$file.'.php';
+	/** @noinspection NullCoalescingOperatorCanBeUsedInspection */
+	$lang = isset($icmsConfig['language']) ? $icmsConfig['language'] : 'english';
+	$filename = $languagePath . $lang . '/' . $extraPath . $file . '.php';
 	if(!file_exists($filename)) {$filename = $languagePath.'english/'.$extraPath.$file.'.php';}
 	if(file_exists($filename)) {include_once $filename ;}
 }
@@ -1587,8 +1589,10 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 		if (class_exists($class)) {
 			$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
 		} else {
-			if($module_dir != 'system') {
-				$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php";
+			if($module_dir !== 'system') {
+				if (!file_exists($hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/". ucfirst(strtolower($name)) ."Handler.php")) {
+					$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php";
+				}
 			} else {
 				$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/admin/{$name}/class/{$name}.php";
 			}
