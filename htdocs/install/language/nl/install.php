@@ -90,23 +90,23 @@ define("DB_PASS_LABEL", "Wachtwoord"); // L52
 define("DB_PASS_HELP", "Wachtwoord van uw databank gebruikersaccount"); // L68
 define("DB_NAME_LABEL", "Naam databank"); // L29
 define("DB_NAME_HELP", "De naam van de databank op de host. Het installatieprogramma zal proberen een nieuwe databank aan te maken als deze niet bestaat"); // L64
-define("DB_CHARSET_LABEL", "Database character set, we STRONGLY recommend you to use UTF-8 as default.");
-define("DB_CHARSET_HELP", "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.");
-define("DB_COLLATION_LABEL", "Database collation");
-define("DB_COLLATION_HELP", "A collation is a set of rules for comparing characters in a character set.");
-define("DB_PREFIX_LABEL", "Table prefix"); // L30
-define("DB_PREFIX_HELP", "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
-define("DB_PCONNECT_LABEL", "Use persistent connection"); // L54
+define("DB_CHARSET_LABEL", "Database tekenreeks, wij raden je STERK aan UTF-8 als standaard te gebruiken.");
+define("DB_CHARSET_HELP", "MySQL bevat ondersteuning voor de karakterset die u in staat stelt gegevens op te slaan met behulp van een verscheidenheid aan karaktersets en vergelijkingen uitvoeren volgens een verscheidenheid aan collaties.");
+define("DB_COLLATION_LABEL", "Database collatie");
+define("DB_COLLATION_HELP", "Een collatie is een set regels voor het vergelijken van tekens in een karakterset.");
+define("DB_PREFIX_LABEL", "Tabel voorvoegsel"); // L30
+define("DB_PREFIX_HELP", "Dit voorvoegsel zal worden toegevoegd aan alle nieuwe tabellen om te voorkomen dat er conflicten ontstaan in de database. Als u het niet zeker weet, houd dan de standaard"); // L63
+define("DB_PCONNECT_LABEL", "Gebruik permanente verbinding"); // L54
 
-define("DB_SALT_LABEL", "Password Salt Key"); // L98
-define("DB_SALT_HELP", "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. If you are unsure, just keep the default"); // L97
+define("DB_SALT_LABEL", "Wachtwoord Salt sleutel"); // L98
+define("DB_SALT_HELP", "Deze zout-sleutel zal worden toegevoegd aan wachtwoorden in functie icms_encryptPass() en wordt gebruikt om een volledig uniek wachtwoord te maken. Pas deze sleutel niet aan zodra de site actief is, anders worden ALLE wachtwoorden ongeldig. Als je het niet zeker weet, houd dan de standaard waarde in"); // L97
 
-define("LEGEND_ADMIN_ACCOUNT", "Administrator account");
+define("LEGEND_ADMIN_ACCOUNT", "Beheerder account");
 define("ADMIN_LOGIN_LABEL", "Admin login"); // L37
 define("ADMIN_EMAIL_LABEL", "Admin e-mail"); // L38
 define("ADMIN_PASS_LABEL", "Admin password"); // L39
 define("ADMIN_CONFIRMPASS_LABEL", "Confirm password"); // L74
-define("ADMIN_SALT_LABEL", "Password Salt Key"); // L99
+define("ADMIN_SALT_LABEL", "Wachtwoord Salt sleutel"); // L99
 
 // Buttons
 define("BUTTON_PREVIOUS", "Vorige"); // L42
