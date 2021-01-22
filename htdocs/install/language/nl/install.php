@@ -102,10 +102,10 @@ define("DB_SALT_LABEL", "Wachtwoord Salt sleutel"); // L98
 define("DB_SALT_HELP", "Deze zout-sleutel zal worden toegevoegd aan wachtwoorden in functie icms_encryptPass() en wordt gebruikt om een volledig uniek wachtwoord te maken. Pas deze sleutel niet aan zodra de site actief is, anders worden ALLE wachtwoorden ongeldig. Als je het niet zeker weet, houd dan de standaard waarde in"); // L97
 
 define("LEGEND_ADMIN_ACCOUNT", "Beheerder account");
-define("ADMIN_LOGIN_LABEL", "Admin login"); // L37
-define("ADMIN_EMAIL_LABEL", "Admin e-mail"); // L38
-define("ADMIN_PASS_LABEL", "Admin password"); // L39
-define("ADMIN_CONFIRMPASS_LABEL", "Confirm password"); // L74
+define("ADMIN_LOGIN_LABEL", "Beheerder login"); // L37
+define("ADMIN_EMAIL_LABEL", "Beheerder e-mail"); // L38
+define("ADMIN_PASS_LABEL", "Beheerder wachtwoord"); // L39
+define("ADMIN_CONFIRMPASS_LABEL", "Bevestig wachtwoord"); // L74
 define("ADMIN_SALT_LABEL", "Wachtwoord Salt sleutel"); // L99
 
 // Buttons
@@ -113,10 +113,10 @@ define("BUTTON_PREVIOUS", "Vorige"); // L42
 define("BUTTON_NEXT", "Volgende"); // L47
 define("BUTTON_FINISH", "Volgende");
 define("BUTTON_REFRESH", "Vernieuwen");
-define("BUTTON_SHOW_SITE", "Show my site");
+define("BUTTON_SHOW_SITE", "Toon mijn site");
 
 // Messages
-define("XOOPS_FOUND", "%s found");
+define("XOOPS_FOUND", "%s gevonden");
 define("CHECKING_PERMISSIONS", "Checking file and directory permissions..."); // L82
 define("IS_NOT_WRITABLE", "%s is NOT writable."); // L83
 define("IS_WRITABLE", "%s is writable."); // L84
