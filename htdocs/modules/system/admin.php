@@ -40,12 +40,15 @@
 define('ICMS_IN_ADMIN', 1);
 
 include_once '../../include/functions.php';
+
+/* we need to do better than this */
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
+
 $fct = (isset($_GET['fct']))
-	? trim(filter_input(INPUT_GET, 'fct'))
+	? trim(filter_input(INPUT_GET, 'fct', FILTER_SANITIZE_STRING))
 	: ((isset($_POST['fct']))
-		? trim(filter_input(INPUT_POST, 'fct'))
+		? trim(filter_input(INPUT_POST, 'fct', FILTER_SANITIZE_STRING))
 		: '');
 
 if (isset($fct) && $fct == 'users') {$xoopsOption['pagetype'] = 'user';}
@@ -56,8 +59,8 @@ icms_loadLanguageFile('core', 'moduleabout');
 
 // hook for profile module
 if (isset($fct) && $fct == 'users' && icms_get_module_status('profile')) {
-	$op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op') : '';
-	$uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid') : 0;
+	$op = isset($_GET['op']) ? filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING) : '';
+	$uid = isset($_GET['uid']) ? filter_input(INPUT_GET, 'uid', FILTER_VALIDATE_INT) : 0;
 	if ($op == 'modifyUser' && $uid != 0) {
 		header("Location:" . ICMS_MODULES_URL . "/profile/admin/user.php?op=edit&id=" . $uid);
 	} else {

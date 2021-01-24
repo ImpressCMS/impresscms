@@ -59,9 +59,9 @@ $icms_rating_handler = icms_getmodulehandler('rating');
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_POST['op']))
-	? trim(filter_input(INPUT_POST, 'op'))
+? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING))
 	: ((isset($_GET['op']))
-		? trim(filter_input(INPUT_GET, 'op'))
+			? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))
 		: '');
 
 switch ($op) {
