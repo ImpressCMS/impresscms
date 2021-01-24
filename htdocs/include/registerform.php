@@ -55,7 +55,7 @@ $reg_form->addElement($email_tray);
 if ($icmsConfigUser['pass_level']>20) {
 	icms_PasswordMeter();
 }
-$reg_form->addElement(new icms_form_elements_Password(_US_PASSWORD, "pass", 10, 32, icms_core_DataFilter::htmlSpecialChars(substr($pass, 0, 32), false, ($icmsConfigUser['pass_level']?'password_adv':'')), true);
+$reg_form->addElement(new icms_form_elements_Password(_US_PASSWORD, "pass", 10, 32, icms_core_DataFilter::htmlSpecialChars(substr($pass, 0, 32), false, ($icmsConfigUser['pass_level']? 'password_adv': '')), true));
 $reg_form->addElement(new icms_form_elements_Password(_US_VERIFYPASS, "vpass", 10, 32, icms_core_DataFilter::htmlSpecialChars($vpass)), true);
 $reg_form->addElement(new icms_form_elements_Text(_US_WEBSITE, "url", 25, 255, icms_core_DataFilter::htmlSpecialChars($url)));
 $tzselected = ($timezone_offset != "") ? $timezone_offset : $icmsConfig['default_TZ'];
