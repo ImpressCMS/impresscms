@@ -54,7 +54,7 @@ if ($icmsConfigUser['allow_register'] == 0 && $icmsConfigUser['activation_type']
 if (is_object(icms::$user)) {
 	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
 }
-$op = !isset($_POST['op']) ? 'register' : filter_input(INPUT_POST, 'op');
+$op = !isset($_POST['op']) ? 'register' : filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING);
 $login_name = isset($_POST['login_name']) ? icms_core_DataFilter::stripSlashesGPC($_POST['login_name']) : '';
 $uname = isset($_POST['uname']) ? icms_core_DataFilter::stripSlashesGPC($_POST['uname']) : '';
 $email = isset($_POST['email']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['email'])) : '';
@@ -246,7 +246,7 @@ switch ($op) {
 
 	case 'register':
 	default:
-		$invite_code = isset($_GET['code']) ? filter_input(INPUT_GET, 'code') : NULL;
+		$invite_code = isset($_GET['code']) ? filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING) : NULL;
 		if ($icmsConfigUser['activation_type'] == 3 || !empty($invite_code)) {
 			include 'include/checkinvite.php';
 			load_invite_code($invite_code);
