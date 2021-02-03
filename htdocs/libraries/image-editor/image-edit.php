@@ -132,7 +132,7 @@ if (!empty($op) && $op == 'save') {
 	$simage_name = $image_name;
 	$simage_weight = $image_weight;
 	$simage_display = $image_display;
-	$simage_temp = $image_temp;
+	$simage_temp = str_replace("..","_",$image_temp);
 	$soverwrite = $overwrite;
 
 	$image_handler = icms::handler('icms_image');
