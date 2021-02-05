@@ -1,22 +1,22 @@
 <?php
 
-define("_ERR_SEARCH","搜索");
-define("_ERR_SEARCH_OUR_SITE","搜索我们的网站:");
-define("_ERR_ADVANCED_SEARCH","高级搜索");
+define("_ERR_SEARCH","Search");
+define("_ERR_SEARCH_OUR_SITE","Search our site:");
+define("_ERR_ADVANCED_SEARCH","Advanced Search");
 define("_ERR_START_AGAIN","Start again from the <a href='" . ICMS_URL . "'>home page</a>.");
-define("_ERR_CONTACT","联系<a href='mailto:%s'>管理员</a>报告这一错误.");
-define("_ERR_NO", "出错%u");
+define("_ERR_CONTACT","Contact the <a href='mailto:%s'>webmaster</a> to report this error.");
+define("_ERR_NO", "Error %u");
 
-define("_ERR_400_TITLE", "错误请求");
-define("_ERR_400_DESC", "请求中包含语法错误或是不能被填充。");
-define("_ERR_401_TITLE", "禁止");
+define("_ERR_400_TITLE", "Bad Request");
+define("_ERR_400_DESC", "The request contains bad syntax or cannot be fulfilled.");
+define("_ERR_401_TITLE", "Forbidden");
 define("_ERR_401_DESC", "");
-define("_ERR_402_TITLE", "需要支付");
+define("_ERR_402_TITLE", "Payment Required");
 define("_ERR_402_DESC", "");
-define("_ERR_403_TITLE", "禁止");
+define("_ERR_403_TITLE", "Forbidden");
 define("_ERR_403_DESC", "");
-define("_ERR_404_TITLE", "未发现");
-define("_ERR_404_DESC", "要访问的页面不存在.");
+define("_ERR_404_TITLE", "Not Found");
+define("_ERR_404_DESC", "The page you are trying to access could not be found.");
 define("_ERR_405_TITLE", "Method Not Allowed");
 define("_ERR_405_DESC", "");
 define("_ERR_406_TITLE", "Not Acceptable");
