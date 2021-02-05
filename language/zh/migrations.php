@@ -29,20 +29,20 @@ define('_MIGRATION_SMILE_15', 'Another pint of beer');
 define('_MIGRATION_SMILE_16', 'ToolTimes at work');
 define('_MIGRATION_SMILE_17', 'I have an idea');
 
-define('_MIGRATION_PAGE_2', '控制面板首页');
+define('_MIGRATION_PAGE_2', 'Admin Control Panel');
 define('_MIGRATION_PAGE_3', 'Avatars');
 define('_MIGRATION_PAGE_4', 'Banners');
 define('_MIGRATION_PAGE_5', 'Blocks Admin');
 define('_MIGRATION_PAGE_6', 'Block Positions');
-define('_MIGRATION_PAGE_7', '留言');
+define('_MIGRATION_PAGE_7', 'Comments');
 define('_MIGRATION_PAGE_9', 'Find Users');
 define('_MIGRATION_PAGE_10', 'Custom Tag');
 define('_MIGRATION_PAGE_11', 'Groups');
-define('_MIGRATION_PAGE_12', '图像管理器');
+define('_MIGRATION_PAGE_12', 'Image Manager');
 define('_MIGRATION_PAGE_13', 'Mail Users');
 define('_MIGRATION_PAGE_14', 'Modules Admin');
 define('_MIGRATION_PAGE_15', 'Symlink Manager');
-define('_MIGRATION_PAGE_16', '自定义');
+define('_MIGRATION_PAGE_16', 'Preferences');
 define('_MIGRATION_PAGE_17', 'Smilies');
 define('_MIGRATION_PAGE_18', 'Templates');
 define('_MIGRATION_PAGE_19',  'User Ranks');
@@ -77,7 +77,7 @@ EOF
 
 define('_MIGRATIONS_LOCAOL_STNAME', 'ImpressCMS');
 define('_MIGRATIONS_LOCAL_SLOCGAN', 'Make a lasting impression');
-define('_MIGRATIONS_EXT_DATE_FUNC', '1');
+define('_MIGRATIONS_EXT_DATE_FUNC', '0');
 define('_MIGRATIONS_INSTALL_ANON', 'Anonymous');
 define('_MIGRATIONS_INSTALL_L165', 'The site is currently closed for maintenance. Please come back later.');
 define('_MIGRATIONS_WELCOME_MSG_CONTENT', 'Welcome {UNAME},
