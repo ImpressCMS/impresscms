@@ -1,168 +1,168 @@
 <?php
 
 //%%%%%%	File Name mainfile.php 	%%%%%
-define('_PLEASEWAIT','Please Wait');
-define('_FETCHING','Loading...');
-define('_TAKINGBACK','Taking you back to where you were....');
-define('_LOGOUT','Logout');
-define('_SUBJECT','Subject');
-define('_MESSAGEICON','Message Icon');
-define('_COMMENTS','Comments');
-define('_POSTANON','Post Anonymously');
-define('_DISABLESMILEY','Disable smiley');
-define('_DISABLEHTML','Disable html');
-define('_PREVIEW','Preview');
+define('_PLEASEWAIT','Aguarde...');
+define('_FETCHING','Carregando...');
+define('_TAKINGBACK','Retornando...');
+define('_LOGOUT','Sair');
+define('_SUBJECT','Assunto');
+define('_MESSAGEICON','ícone da mensagem');
+define('_COMMENTS','Comentários');
+define('_POSTANON','Enviar anonimamente');
+define('_DISABLESMILEY','Desativar emoticons');
+define('_DISABLEHTML','Desativar HTML');
+define('_PREVIEW','Exibir');
 
-define('_GO','Go!');
-define('_NESTED','Nested');
-define('_NOCOMMENTS','No Comments');
-define('_FLAT','Flat');
-define('_THREADED','Threaded');
-define('_OLDESTFIRST','Oldest First');
-define('_NEWESTFIRST','Newest First');
-define('_MORE','more...');
-define('_IFNOTRELOAD','If the page does not automatically reload, please click <a href="%s">here</a>');
-define('_WARNINSTALL2','WARNING: Directory %s exists on your server. <br />Please remove this directory for security reasons.');
-define('_WARNINWRITEABLE','WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)');
-define('_WARNINNOTWRITEABLE','WARNING: File %s is not writeable by the server. <br />Please change the permission of this file for functionality reasons.<br /> in Unix (777), in Win32 (writeable)');
+define('_GO','Ok!');
+define('_NESTED','Ocultar');
+define('_NOCOMMENTS','Ocultar comentários');
+define('_FLAT','Desagrupar');
+define('_THREADED','Agrupar');
+define('_OLDESTFIRST','Antigos primeiro');
+define('_NEWESTFIRST','Novos primeiro');
+define('_MORE','mais...');
+define('_IFNOTRELOAD','Se a página não recarregar automaticamente,<br/><a href=\'%s\'>clique aqui</a> para prosseguir.');
+define('_WARNINSTALL2','<b>ATENÇÃO:</b> O Diretório %s existe no servidor ainda.<br/>Por motivos de segurança, <b>remova</b> este diretório.');
+define('_WARNINWRITEABLE','<b>ATENÇÃO:</b> O arquivo %s <b>tem permissão de escrita</b> pelo servidor.<br/>Por motivos de segurança altere esta permissão.<br/>Em sistemas Unix use \'<b>CHMOD 444</b>\', em Windows ajuste para \'<b>somente leitura</b>\'.');
+define('_WARNINNOTWRITEABLE','ATENÇÃO: Arquivo %s Não é gravável pelo servidor. <br />Mude a permissão deste arquivo de acordo com o tipo de servidor.<br /> no Unix (777), no Windows (writeable)');
 
 // Error messages issued by icms_core_Object::cleanVars()
-define( '_XOBJ_ERR_REQUIRED', '%s is required' );
-define( '_XOBJ_ERR_SHORTERTHAN', '%s must be shorter than %d characters.' );
+define( '_XOBJ_ERR_REQUIRED', '%s é obrigatório' );
+define( '_XOBJ_ERR_SHORTERTHAN', '%s precisa ser menor do que %d caracteres.' );
 
 //%%%%%%	File Name themeuserpost.php 	%%%%%
-define('_PROFILE','Profile');
-define('_POSTEDBY','Posted by');
-define('_VISITWEBSITE','Visit Website');
-define('_SENDPMTO','Send Private Message to %s');
-define('_SENDEMAILTO','Send Email to %s');
-define('_ADD','Add');
-define('_REPLY','Reply');
-define('_DATE','Date');   // Posted date
+define('_PROFILE','Perfil');
+define('_POSTEDBY','Enviado por');
+define('_VISITWEBSITE','Visite');
+define('_SENDPMTO','Enviar mensagem particular para %s');
+define('_SENDEMAILTO','Enviar e-mail para %s');
+define('_ADD','Incluir');
+define('_REPLY','Responder');
+define('_DATE','Data de envio');   // Posted date
 
 //%%%%%%	File Name admin_functions.php 	%%%%%
-define('_MAIN','Main');
+define('_MAIN','Principal');
 define('_MANUAL','Manual');
-define('_INFO','Info');
-define('_CPHOME','Admin Control Panel');
-define('_YOURHOME','Home Page');
+define('_INFO','Informações');
+define('_CPHOME','Administração');
+define('_YOURHOME','Página principal');
 
 //%%%%%%	File Name misc.php (who's-online popup)	%%%%%
-define('_WHOSONLINE','Who\'s Online');
-define('_GUESTS', 'Guests');
-define('_MEMBERS', 'Members');
-define('_ONLINEPHRASE','<b>%s</b> user(s) are online');
-define('_ONLINEPHRASEX','<b>%s</b> user(s) are browsing <b>%s</b>');
-define('_CLOSE','Close');  // Close window
+define('_WHOSONLINE','Usuários Online');
+define('_GUESTS', 'Visitantes');
+define('_MEMBERS', 'Usuários');
+define('_ONLINEPHRASE','<b>%s</b> visitantes online');
+define('_ONLINEPHRASEX','<b>%s</b> na seção: <b>%s</b>');
+define('_CLOSE','Fechar');  // Close window
 
 //%%%%%%	File Name module.textsanitizer.php 	%%%%%
-define('_QUOTEC','Quote:');
+define('_QUOTEC','Citando:');
 
 //%%%%%%	File Name admin.php 	%%%%%
-define("_NOPERM","Sorry, you don't have permission to access this area.");
+define("_NOPERM","Você não tem permissão para acessar esta área.");
 
 //%%%%%		Common Phrases		%%%%%
-define("_NO","No");
-define("_YES","Yes");
-define("_EDIT","Edit");
-define("_DELETE","Delete");
-define("_SUBMIT","Submit");
-define("_MODULENOEXIST","Selected module does not exist!");
-define("_ALIGN","Align");
-define("_LEFT","Left");
-define("_CENTER","Center");
-define("_RIGHT","Right");
-define("_FORM_ENTER", "Please enter %s");
+define("_NO","Não");
+define("_YES","Sim");
+define("_EDIT","Editar");
+define("_DELETE","Excluir");
+define("_SUBMIT","Ok!");
+define("_MODULENOEXIST","O módulo escolhido não existe.");
+define("_ALIGN","Alinhar");
+define("_LEFT","Esquerda");
+define("_CENTER","Centro");
+define("_RIGHT","Direita");
+define("_FORM_ENTER", "Digite %s");
 // %s represents file name
-define("_MUSTWABLE","File %s must be writable by the server!");
+define("_MUSTWABLE","O arquivo %s deve ter permissão de gravação pelo servidor.");
 // Module info
-define('_PREFERENCES', 'Preferences');
-define("_VERSION", "Version");
-define("_DESCRIPTION", "Description");
-define("_ERRORS", "Errors");
-define("_NONE", "None");
-define('_ON','on');
-define('_READS','reads');
-define('_SEARCH','Search');
-define('_ALL', 'All');
-define('_TITLE', 'Title');
-define('_OPTIONS', 'Options');
-define('_QUOTE', 'Quote');
-define('_HIDDENC', 'Hidden Content:');
+define('_PREFERENCES', 'Preferências');
+define("_VERSION", "Versão");
+define("_DESCRIPTION", "Descrição");
+define("_ERRORS", "Erros");
+define("_NONE", "Nenhum");
+define('_ON','em');
+define('_READS','leituras');
+define('_SEARCH','Procurar');
+define('_ALL', 'Todos');
+define('_TITLE', 'Título');
+define('_OPTIONS', 'Opções');
+define('_QUOTE', 'Citar');
+define('_HIDDENC', 'Esconder Conteúdo:');
 define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registration at ' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
-define('_LIST', 'List');
-define('_LOGIN','User Login');
-define('_USERNAME','Username: ');
-define('_PASSWORD','Password: ');
-define("_SELECT","Select");
-define("_IMAGE","Image");
-define("_SEND","Send");
-define("_CANCEL","Cancel");
-define("_ASCENDING","Ascending order");
-define("_DESCENDING","Descending order");
-define('_BACK', 'Back');
-define('_NOTITLE', 'No title');
+define('_LIST', 'Listar');
+define('_LOGIN','Entrar');
+define('_USERNAME','Usuário: ');
+define('_PASSWORD','Senha: ');
+define("_SELECT","Escolher");
+define("_IMAGE","Imagem");
+define("_SEND","Ok!");
+define("_CANCEL","Cancelar");
+define("_ASCENDING","Ordem crescente");
+define("_DESCENDING","Ordem decrescente");
+define('_BACK', 'Retornar');
+define('_NOTITLE', 'Sem título');
 
 /* Image manager */
-define('_IMGMANAGER','Image Manager');
-define('_NUMIMAGES', '%s images');
-define('_ADDIMAGE','Add Image File');
-define('_IMAGENAME','Name:');
-define('_IMGMAXSIZE','Max size allowed (bytes):');
-define('_IMGMAXWIDTH','Max width allowed (pixels):');
-define('_IMGMAXHEIGHT','Max height allowed (pixels):');
-define('_IMAGECAT','Category:');
-define('_IMAGEFILE','Image file:');
-define('_IMGWEIGHT','Order:');
-define('_IMGDISPLAY','Display this image?');
-define('_IMAGEMIME','MIME type:');
-define('_FAILFETCHIMG', 'Could not get uploaded file %s');
-define('_FAILSAVEIMG', 'Failed storing image %s into the database');
-define('_NOCACHE', 'No Cache');
-define('_CLONE', 'Clone');
-define('_INVISIBLE', 'Invisible');
+define('_IMGMANAGER','Gestor de imagens');
+define('_NUMIMAGES', '%s imagens');
+define('_ADDIMAGE','Enviar uma nova imagem');
+define('_IMAGENAME','Nome:');
+define('_IMGMAXSIZE','Tamanho Máx.(bytes):');
+define('_IMGMAXWIDTH','Largura Máx.(pixels):');
+define('_IMGMAXHEIGHT','Altura Máx.(pixels):');
+define('_IMAGECAT','Categoria:');
+define('_IMAGEFILE','Arquivo da imagem:');
+define('_IMGWEIGHT','Ordem de visualização das imagens:');
+define('_IMGDISPLAY','Exibir esta imagem?');
+define('_IMAGEMIME','Tipo MIME:');
+define('_FAILFETCHIMG', 'Não foi possível enviar o arquivo %s');
+define('_FAILSAVEIMG', 'Não foi possível incluir a imagem %s no banco de dados');
+define('_NOCACHE', 'Sem cache');
+define('_CLONE', 'Clonar');
+define('_INVISIBLE', 'Invisível');
 
 //%%%%%	File Name class/xoopsform/formmatchoption.php 	%%%%%
-define("_STARTSWITH", "Starts with");
-define("_ENDSWITH", "Ends with");
-define("_MATCHES", "Matches");
-define("_CONTAINS", "Contains");
+define("_STARTSWITH", "Inicia com");
+define("_ENDSWITH", "Termina com");
+define("_MATCHES", "Igual a");
+define("_CONTAINS", "Contém");
 
 //%%%%%%	File Name commentform.php 	%%%%%
-define("_REGISTER","Register");
+define("_REGISTER","Registre-se");
 
 //%%%%%%	File Name xoopscodes.php 	%%%%%
-define("_SIZE","SIZE");  // font size
-define("_FONT","FONT");  // font family
-define("_COLOR","COLOR");  // font color
-define("_EXAMPLE","SAMPLE");
-define("_ENTERURL","Enter the URL of the link you want to add:");
-define("_ENTERWEBTITLE","Enter the web site title:");
-define("_ENTERIMGURL","Enter the URL of the image you want to add.");
-define("_ENTERIMGPOS","Now, enter the position of the image.");
-define("_IMGPOSRORL","'R' or 'r' for right, 'L' or 'l' for left, 'C' or 'c' for center, or leave it blank.");
-define("_ERRORIMGPOS","ERROR! Enter the position of the image.");
-define("_ENTEREMAIL","Enter the email address you want to add.");
-define("_ENTERCODE","Enter the codes that you want to add.");
-define("_ENTERQUOTE","Enter the text that you want to be quoted.");
-define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
-define("_ENTERTEXTBOX","Please input text into the textbox.");
+define("_SIZE","Tamanho");  // font size
+define("_FONT","Fonte");  // font family
+define("_COLOR","Côr");  // font color
+define("_EXAMPLE","Exemplo");
+define("_ENTERURL","Digite o endereço do link que você deseja incluir:");
+define("_ENTERWEBTITLE","Digite o título do link:");
+define("_ENTERIMGURL","Digite o endereço da imagem que você deseja incluir:");
+define("_ENTERIMGPOS","Agora, digite a posição da figura.");
+define("_IMGPOSRORL","'R' ou 'r' para direita (right), 'L' ou 'l' para esquerda (left), ou deixe vazio.");
+define("_ERRORIMGPOS","ERRO: Digite a posição da imagem.");
+define("_ENTEREMAIL","Digite o e-mail que você deseja incluir.");
+define("_ENTERCODE","Digite os códigos que você deseja incluir.");
+define("_ENTERQUOTE","Digite o texto para citação.");
+define("_ENTERHIDDEN","Digite o texto que será escondido para usuários anônimos/visitantes.");
+define("_ENTERTEXTBOX","Digite o texto na caixa de texto.");
 
 //%%%%%		TIME FORMAT SETTINGS   %%%%%
-define('_SECOND', '1 second');
-define('_SECONDS', '%s seconds');
-define('_MINUTE', '1 minute');
-define('_MINUTES', '%s minutes');
-define('_HOUR', '1 hour');
-define('_HOURS', '%s hours');
-define('_DAY', '1 day');
-define('_DAYS', '%s days');
-define('_WEEK', '1 week');
-define('_MONTH', '1 month');
+define('_SECOND', '1 segundo');
+define('_SECONDS', '%s segundos');
+define('_MINUTE', '1 minuto');
+define('_MINUTES', '%s minutos');
+define('_HOUR', '1 hora');
+define('_HOURS', '%s horas');
+define('_DAY', '1 dia');
+define('_DAYS', '%s dias');
+define('_WEEK', '1 semana');
+define('_MONTH', '1 mês');
 
-define("_DATESTRING","Y/n/j G:i:s");
-define("_MEDIUMDATESTRING","Y/n/j G:i");
-define("_SHORTDATESTRING","Y/n/j");
+define("_DATESTRING","d/m/Y H:i:s");
+define("_MEDIUMDATESTRING","d/m/Y H:i");
+define("_SHORTDATESTRING","d/n/Y");
 /*
  The following characters are recognized in the format string:
  a - "am" or "pm"
@@ -195,48 +195,48 @@ define("_SHORTDATESTRING","Y/n/j");
 
 //%%%%%		LANGUAGE SPECIFIC SETTINGS   %%%%%
 define('_CHARSET', 'utf-8');
-define('_LANGCODE', 'en');
+define('_LANGCODE', 'pt_BR');
 
 // change 0 to 1 if this language is a multi-bytes language
 define("XOOPS_USE_MULTIBYTES", "0");
 // change 0 to 1 if this language is a RTL (right to left) language
 define("_ADM_USE_RTL","0");
 
-define('_MODULES','Modules');
-define('_SYSTEM','System');
-define('_IMPRESSCMS_NEWS','News');
-define('_ABOUT','ImpressCMS Project');
-define('_IMPRESSCMS_HOME','Project Home');
-define('_IMPRESSCMS_COMMUNITY','Community');
+define('_MODULES','Módulos');
+define('_SYSTEM','Sistema');
+define('_IMPRESSCMS_NEWS','Novidades');
+define('_ABOUT','Sobre o Projeto');
+define('_IMPRESSCMS_HOME','Projeto ImpressCMS');
+define('_IMPRESSCMS_COMMUNITY','Comunidade');
 define('_IMPRESSCMS_ADDONS','Addons');
 define('_IMPRESSCMS_WIKI','Wiki');
 define('_IMPRESSCMS_BLOG','Blog');
-define('_IMPRESSCMS_DONATE','Donate!');
-define("_IMPRESSCMS_Support","Support the project !");
-define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
-define('_IMPRESSCMS_ADMIN','Administration of');
+define('_IMPRESSCMS_DONATE','Doações!');
+define("_IMPRESSCMS_Support","Suporte do projeto !");
+define('_IMPRESSCMS_SOURCEFORGE','SourceForge');
+define('_IMPRESSCMS_ADMIN','Administração de');
 /** The default separator used in icms_view_Tree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
 //Content Manager
 define('_CT_NAV','Home');
-define('_CT_RELATEDS','Related pages');
+define('_CT_RELATEDS','Páginas Relacionadas');
 //Security image (captcha)
-define("_SECURITYIMAGE_GETCODE","Enter the security code");
-define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgraded your site to the latest version of ImpressCMS!<br />Therefor to finish the upgrade process you'll need to click here and update your system module.<br />Click here to process the upgrade.");
+define("_SECURITYIMAGE_GETCODE","Digite o código de segurança");
+define("_WARNINGUPDATESYSTEM","Parabéns, você acabou de atualizar o seu site com sucesso  para a versão mais nova do ImpressCMS! <br /> Mas para finalizar o processo de atualização você precisa clicar aqui e atualizar o seu módulo de Sistema. <br /> Clique aqui para o processo de atualização.");
 
 // This shows local support site in ImpressCMS menu, (if selected language is not English)
-define('_IMPRESSCMS_LOCAL_SUPPORT', 'https://www.impresscms.org'); //add the local support site's URL
-define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','Local support site');
-define("_ALLEFTCON","Enter the text to be aligned on the Left side.");
-define("_ALCENTERCON","Enter the text to be aligned on the Center side.");
-define("_ALRIGHTCON","Enter the text to be aligned on the Right side.");
+define('_IMPRESSCMS_LOCAL_SUPPORT', 'http://br.impresscms.org'); //add the local support site's URL
+define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','Suporte Brasileiro');
+define("_ALLEFTCON","Digite o texto a ser alinhado à esquerda.");
+define("_ALCENTERCON","Digite o texto a ser alinhado ao Centro.");
+define("_ALRIGHTCON","Digite o texto a ser alinhado à direita.");
 
-define('_MODABOUT_ABOUT', 'About');
+define('_MODABOUT_ABOUT', 'Sobre');
 // if you have troubles with this font on your language or it is not working, download tcpdf from: http://www.tecnick.com/public/code/cp_dpage.php?aiocp_dp=tcpdf and add the required font in libraries/tcpdf/fonts then write down the font name here. system will then load this font for your language.
 define('_PDF_LOCAL_FONT', '');
 define('_CALENDAR_TYPE',''); // this value is for the local calendar used in this system, if you're not sure about this leave this value as it is!
-define('_CALENDAR','Calendar');
-define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ
+define('_CALENDAR','Calendário');
+define('_RETRYPOST','Desculpe, ocorreu um erro de time-out. Você gostaria de enviar novamente?'); // autologin hack GIJ
 
 ############# added since 1.2 #############
 define('_QSEARCH','Quick Search');
@@ -274,7 +274,7 @@ define('_ENTERMEDIAURL', 'Enter media url:');
 define("_TODAY", "	\\o\\d\\a\\y G:i");
 define("_YESTERDAY", "\\Y\e\\s\\t\e\\r\\d\\a\\y G:i");
 define("_MONTHDAY", "n/j G:i");
-define("_YEARMONTHDAY", "Y/n/j G:i");
+define("_YEARMONTHDAY", "d/m/Y H:i");
 define("_ELAPSE", "%s ago");
 define('_VISIBLE', 'Visible');
 define('_UP', 'Up');
