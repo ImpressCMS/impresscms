@@ -1,46 +1,46 @@
 <?php
 // general
-define("THEME_UPTOP","Back to Top");
-define("THEME_VALIDCSS","This theme template is W3C Validated for CSS 1 and 2");
-define("THEME_VALIDXHTML","This theme template is W3C Validated for XHTML 1.01");
-define("THEME_LICENSE","See Creative Commons Licence");
-define("THEME_W3C","Valid W3C - XHTML 1.01 and CSS 1/2/3");
+define("THEME_UPTOP","Ir ao Topo");
+define("THEME_VALIDCSS","Este tema e o modelo (template) é válido no W3C e CSS 1 e 2");
+define("THEME_VALIDXHTML","Este tema e modelo (template) é válido no W3C para o XHTML 1.01");
+define("THEME_LICENSE","Ver licença Creative Commons");
+define("THEME_W3C","Válido W3C - XHTML 1.01 e CSS 1/2/3");
 
 // userbar.html
-define("THEME_REGISTER","Register");
-define("THEME_REGISTERATION",'User Registration');
-define("THEME_REMEMBER"," Remember me ?");
-define("THEME_PSEUDO"," Login");
-define("THEME_DESC_PSEUDO"," Write your login");
-define("THEME_PASSWORD"," Password");
-define("THEME_DESC_PASSWORD"," Write your password");
+define("THEME_REGISTER","Registro");
+define("THEME_REGISTERATION",'Registrar novo Usuário');
+define("THEME_REMEMBER"," Lembrar ?");
+define("THEME_PSEUDO"," Entrar");
+define("THEME_DESC_PSEUDO"," Digite o seu login");
+define("THEME_PASSWORD"," Senha");
+define("THEME_DESC_PASSWORD"," Digite sua senha");
 
-define("THEME_WELLCOME","Welcome");
-define("THEME_PROFILE","Your profile");
-define("THEME_NOTIFICATION","Bookmarks");
-define("THEME_MESSAGE","Show your inbox content");
-define("THEME_INBOX","Inbox");
-define("THEME_YOUHAVE","You have ");
-define("THEME_NOTREAD","unread message(s)");
-define("THEME_MYACCOUNT","My profile");
-define("THEME_LOGOUT","Logout");
-define("THEME_ADMIN","Admin");
-define("THEME_OR","or");
+define("THEME_WELLCOME","Bem-vindo");
+define("THEME_PROFILE","Ver perfil");
+define("THEME_NOTIFICATION","Notificações");
+define("THEME_MESSAGE","Mensagens");
+define("THEME_INBOX","Caixa de Entrada");
+define("THEME_YOUHAVE","Você tem ");
+define("THEME_NOTREAD","Novas mensagens(s)");
+define("THEME_MYACCOUNT","Minha conta");
+define("THEME_LOGOUT","Sair");
+define("THEME_ADMIN","Administração");
+define("THEME_OR","ou");
 
 // searchbar.html
-define("THEME_SEARCH","Search");
-define("THEME_DESC_SEARCH","Search this site");
-define("THEME_KEYWORDS","Put the keywords");
+define("THEME_SEARCH","Pesquisar");
+define("THEME_DESC_SEARCH","Pesquisar neste site");
+define("THEME_KEYWORDS","Palavras-chave");
 
 // globalnav.html
-define("THEME_CONTACT","Contact");
-define("THEME_CONTACT_DESC","Contact us ?");
-define("THEME_SITEMAP","Sitemap");
+define("THEME_CONTACT","Contato");
+define("THEME_CONTACT_DESC","Contatos ?");
+define("THEME_SITEMAP","Mapa do Site");
 define("THEME_RSS","RSS");
 
-define("THEME_NAVTITLE","Navigation");
-define("THEME_HOME","Home");
-define("THEME_HOME_DESC","Back to home");
+define("THEME_NAVTITLE","Navegação");
+define("THEME_HOME","Início");
+define("THEME_HOME_DESC","Voltar ao início");
 
 // Theme accessibility
 define("THEME_Aa","Aa");
@@ -48,11 +48,11 @@ define("THEME_Amin","-");
 define("THEME_Aplus","+");
 
 // ImpressCMS Description Links
-define("THEME_Support_DESC","Support the ImpressCMS Project !");
-define("THEME_Blogs_DESC","Read the ImpressCMS blogs");
-define("THEME_Wiki_DESC","Learn more in the community-driven wiki for ImpressCMS");
-define("THEME_Addons_DESC","Download modules, themes and more documentation");
-define("THEME_Community_DESC","Join the ImpressCMS Community");
-define("THEME_ImpressCMS_DESC","Visit the ImpressCMS main site");
+define("THEME_Support_DESC","Ajude o Projeto ImpressCMS !");
+define("THEME_Blogs_DESC","Ler Blog do ImpressCMS");
+define("THEME_Wiki_DESC","Saiba mais sobre a comunidade e o impressCMS visitando o nosso wiki");
+define("THEME_Addons_DESC","Baixar módulos, temas e todas as documentações");
+define("THEME_Community_DESC","Junte-se à comunidade ImpressCMS");
+define("THEME_ImpressCMS_DESC","Visite o Site principal do projeto ImpressCMS");
 define("THEME_FEEDS","Feeds");
-define("THEME_PARTNERS","Partners");
+define("THEME_PARTNERS","Parceiros");
