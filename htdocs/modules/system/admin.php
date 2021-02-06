@@ -129,7 +129,7 @@ if ($admintest != 0) {
 			unset($modversion);
 			if ($category > 0) {
 				$groups = &icms::$user->getGroups();
-				if (in_array(XOOPS_GROUP_ADMIN, $groups) || false !== $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->getVar('mid'))) {
+				if (in_array(ICMS_GROUP_ADMIN, $groups) || false !== $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->getVar('mid'))) {
 					if (file_exists(ICMS_ROOT_PATH . '/modules/system/admin/' . $fct . '/main.php')) {
 						include_once ICMS_ROOT_PATH . '/modules/system/admin/' . $fct . '/main.php';
 					} else {
