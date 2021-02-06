@@ -1,164 +1,164 @@
 <?php
 
 //%%%%%%	File Name mainfile.php 	%%%%%
-define('_PLEASEWAIT','Please Wait');
-define('_FETCHING','Loading...');
-define('_TAKINGBACK','Taking you back to where you were....');
-define('_LOGOUT','Logout');
-define('_SUBJECT','Subject');
-define('_MESSAGEICON','Message Icon');
-define('_COMMENTS','Comments');
-define('_POSTANON','Post Anonymously');
-define('_DISABLESMILEY','Disable smiley');
-define('_DISABLEHTML','Disable html');
-define('_PREVIEW','Preview');
+define('_PLEASEWAIT','请稍等');
+define('_FETCHING','加载中...');
+define('_TAKINGBACK','返回之前所在的....');
+define('_LOGOUT','登出');
+define('_SUBJECT','主题');
+define('_MESSAGEICON','信息图标');
+define('_COMMENTS','留言');
+define('_POSTANON','匿名留言');
+define('_DISABLESMILEY','表情符不可用');
+define('_DISABLEHTML','html代码不可用');
+define('_PREVIEW','预览');
 
 define('_GO','Go!');
 define('_NESTED','Nested');
-define('_NOCOMMENTS','No Comments');
-define('_FLAT','Flat');
-define('_THREADED','Threaded');
-define('_OLDESTFIRST','Oldest First');
-define('_NEWESTFIRST','Newest First');
-define('_MORE','more...');
-define('_IFNOTRELOAD','If the page does not automatically reload, please click <a href="%s">here</a>');
-define('_WARNINSTALL2','WARNING: Directory %s exists on your server. <br />Please remove this directory for security reasons.');
-define('_WARNINWRITEABLE','WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)');
-define('_WARNINNOTWRITEABLE','WARNING: File %s is not writeable by the server. <br />Please change the permission of this file for functionality reasons.<br /> in Unix (777), in Win32 (writeable)');
+define('_NOCOMMENTS','没有留言');
+define('_FLAT','扁平化');
+define('_THREADED','线程');
+define('_OLDESTFIRST','最早的排前');
+define('_NEWESTFIRST','最新的排前');
+define('_MORE','更多...');
+define('_IFNOTRELOAD','如果页面不能自动响应，请点击<a href="%s">这里</a>');
+define('_WARNINSTALL2','警告: 目录 %s 存在于你的服务器中. <br />安全起见，请移除该目录.');
+define('_WARNINWRITEABLE','警告: 文件 %s 可被服务器写入。 <br />安全起见，请更改权限。<br /> Unix 中为(444), Win32 中(只读)');
+define('_WARNINNOTWRITEABLE','警告: 文件 %s 不可被服务器写入. <br />为启用某些功能，请更改权限。<br /> Unix 中为(777), Win32 中(可写入)');
 
 // Error messages issued by icms_core_Object::cleanVars()
-define( '_XOBJ_ERR_REQUIRED', '%s is required' );
-define( '_XOBJ_ERR_SHORTERTHAN', '%s must be shorter than %d characters.' );
+define( '_XOBJ_ERR_REQUIRED', '%s 必须' );
+define( '_XOBJ_ERR_SHORTERTHAN', '字符 %s 必须比 %d 字符短.' );
 
 //%%%%%%	File Name themeuserpost.php 	%%%%%
-define('_PROFILE','Profile');
-define('_POSTEDBY','Posted by');
-define('_VISITWEBSITE','Visit Website');
-define('_SENDPMTO','Send Private Message to %s');
-define('_SENDEMAILTO','Send Email to %s');
-define('_ADD','Add');
-define('_REPLY','Reply');
-define('_DATE','Date');   // Posted date
+define('_PROFILE','个人资料');
+define('_POSTEDBY','留言人');
+define('_VISITWEBSITE','访问网站');
+define('_SENDPMTO','发送私人信息给 %s');
+define('_SENDEMAILTO','发送电子邮件给 %s');
+define('_ADD','添加');
+define('_REPLY','回复');
+define('_DATE','日期');   // Posted date
 
 //%%%%%%	File Name admin_functions.php 	%%%%%
-define('_MAIN','Main');
-define('_MANUAL','Manual');
-define('_INFO','Info');
-define('_CPHOME','Admin Control Panel');
-define('_YOURHOME','Home Page');
+define('_MAIN','主要的');
+define('_MANUAL','手动');
+define('_INFO','信息');
+define('_CPHOME','控制面板首页');
+define('_YOURHOME','首页');
 
 //%%%%%%	File Name misc.php (who's-online popup)	%%%%%
-define('_WHOSONLINE','Who\'s Online');
-define('_GUESTS', 'Guests');
-define('_MEMBERS', 'Members');
-define('_ONLINEPHRASE','<b>%s</b> user(s) are online');
-define('_ONLINEPHRASEX','<b>%s</b> user(s) are browsing <b>%s</b>');
+define('_WHOSONLINE','有谁在线');
+define('_GUESTS', '游客');
+define('_MEMBERS', '会员');
+define('_ONLINEPHRASE','<b>%s</b> 用户在线');
+define('_ONLINEPHRASEX','<b>%s</b> 用户在浏览<b>%s</b>');
 define('_CLOSE','Close');  // Close window
 
 //%%%%%%	File Name module.textsanitizer.php 	%%%%%
-define('_QUOTEC','Quote:');
+define('_QUOTEC','引用:');
 
 //%%%%%%	File Name admin.php 	%%%%%
-define("_NOPERM","Sorry, you don't have permission to access this area.");
+define("_NOPERM","对不起，权限不足。");
 
 //%%%%%		Common Phrases		%%%%%
 define("_NO","No");
 define("_YES","Yes");
-define("_EDIT","Edit");
-define("_DELETE","Delete");
-define("_SUBMIT","Submit");
-define("_MODULENOEXIST","Selected module does not exist!");
-define("_ALIGN","Align");
-define("_LEFT","Left");
-define("_CENTER","Center");
-define("_RIGHT","Right");
-define("_FORM_ENTER", "Please enter %s");
+define("_EDIT","编辑");
+define("_DELETE","移除");
+define("_SUBMIT","提交");
+define("_MODULENOEXIST","选中的模块不存在!");
+define("_ALIGN","对齐");
+define("_LEFT","左对齐");
+define("_CENTER","中间对齐");
+define("_RIGHT","右对齐");
+define("_FORM_ENTER", "请输入%s");
 // %s represents file name
-define("_MUSTWABLE","File %s must be writable by the server!");
+define("_MUSTWABLE","文件 %s 必须能被服务器写入!");
 // Module info
-define('_PREFERENCES', 'Preferences');
-define("_VERSION", "Version");
-define("_DESCRIPTION", "Description");
-define("_ERRORS", "Errors");
-define("_NONE", "None");
+define('_PREFERENCES', '自定义');
+define("_VERSION", "版本");
+define("_DESCRIPTION", "描述");
+define("_ERRORS", "错误");
+define("_NONE", "没有");
 define('_ON','on');
-define('_READS','reads');
-define('_SEARCH','Search');
-define('_ALL', 'All');
-define('_TITLE', 'Title');
-define('_OPTIONS', 'Options');
-define('_QUOTE', 'Quote');
-define('_HIDDENC', 'Hidden Content:');
+define('_READS','阅读');
+define('_SEARCH','搜索');
+define('_ALL', '全部');
+define('_TITLE', '标题');
+define('_OPTIONS', '选项');
+define('_QUOTE', '引用');
+define('_HIDDENC', '隐藏内容:');
 define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registration at ' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
-define('_LIST', 'List');
-define('_LOGIN','User Login');
-define('_USERNAME','Username: ');
-define('_PASSWORD','Password: ');
-define("_SELECT","Select");
-define("_IMAGE","Image");
-define("_SEND","Send");
-define("_CANCEL","Cancel");
-define("_ASCENDING","Ascending order");
-define("_DESCENDING","Descending order");
-define('_BACK', 'Back');
-define('_NOTITLE', 'No title');
+define('_LIST', '列表');
+define('_LOGIN','用户登录');
+define('_USERNAME','用户名: ');
+define('_PASSWORD','密码: ');
+define("_SELECT","选择");
+define("_IMAGE","图像");
+define("_SEND","发送");
+define("_CANCEL","取消");
+define("_ASCENDING","按字母排序");
+define("_DESCENDING","按字母降序");
+define('_BACK', '返回');
+define('_NOTITLE', '无标题');
 
 /* Image manager */
-define('_IMGMANAGER','Image Manager');
-define('_NUMIMAGES', '%s images');
-define('_ADDIMAGE','Add Image File');
-define('_IMAGENAME','Name:');
-define('_IMGMAXSIZE','Max size allowed (bytes):');
-define('_IMGMAXWIDTH','Max width allowed (pixels):');
-define('_IMGMAXHEIGHT','Max height allowed (pixels):');
-define('_IMAGECAT','Category:');
-define('_IMAGEFILE','Image file:');
-define('_IMGWEIGHT','Order:');
-define('_IMGDISPLAY','Display this image?');
-define('_IMAGEMIME','MIME type:');
-define('_FAILFETCHIMG', 'Could not get uploaded file %s');
-define('_FAILSAVEIMG', 'Failed storing image %s into the database');
-define('_NOCACHE', 'No Cache');
-define('_CLONE', 'Clone');
-define('_INVISIBLE', 'Invisible');
+define('_IMGMANAGER','图像管理器');
+define('_NUMIMAGES', '%s 图片');
+define('_ADDIMAGE','添加图像文件');
+define('_IMAGENAME','名称:');
+define('_IMGMAXSIZE','文件最大尺寸(bytes):');
+define('_IMGMAXWIDTH','图像最大宽度(pixels):');
+define('_IMGMAXHEIGHT','图像最大高度(pixels):');
+define('_IMAGECAT','分类:');
+define('_IMAGEFILE','图像文件:');
+define('_IMGWEIGHT','排序:');
+define('_IMGDISPLAY','显示该图像吗?');
+define('_IMAGEMIME','MIME类型:');
+define('_FAILFETCHIMG', '不能上传文件%s');
+define('_FAILSAVEIMG', '存储图像文件 %s 到数据库时失败');
+define('_NOCACHE', '没有缓存');
+define('_CLONE', '克隆');
+define('_INVISIBLE', '不可见');
 
 //%%%%%	File Name class/xoopsform/formmatchoption.php 	%%%%%
-define("_STARTSWITH", "Starts with");
-define("_ENDSWITH", "Ends with");
-define("_MATCHES", "Matches");
-define("_CONTAINS", "Contains");
+define("_STARTSWITH", "开始于");
+define("_ENDSWITH", "结束于");
+define("_MATCHES", "匹配");
+define("_CONTAINS", "包含");
 
 //%%%%%%	File Name commentform.php 	%%%%%
-define("_REGISTER","Register");
+define("_REGISTER","注册");
 
 //%%%%%%	File Name xoopscodes.php 	%%%%%
-define("_SIZE","SIZE");  // font size
-define("_FONT","FONT");  // font family
-define("_COLOR","COLOR");  // font color
-define("_EXAMPLE","SAMPLE");
-define("_ENTERURL","Enter the URL of the link you want to add:");
-define("_ENTERWEBTITLE","Enter the web site title:");
-define("_ENTERIMGURL","Enter the URL of the image you want to add.");
-define("_ENTERIMGPOS","Now, enter the position of the image.");
-define("_IMGPOSRORL","'R' or 'r' for right, 'L' or 'l' for left, 'C' or 'c' for center, or leave it blank.");
-define("_ERRORIMGPOS","ERROR! Enter the position of the image.");
-define("_ENTEREMAIL","Enter the email address you want to add.");
-define("_ENTERCODE","Enter the codes that you want to add.");
-define("_ENTERQUOTE","Enter the text that you want to be quoted.");
-define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
-define("_ENTERTEXTBOX","Please input text into the textbox.");
+define("_SIZE","字体大小");  // font size
+define("_FONT","字型");  // font family
+define("_COLOR","字体颜色");  // font color
+define("_EXAMPLE","样例");
+define("_ENTERURL","输入需要添加的链接地址:");
+define("_ENTERWEBTITLE","输入网站标题:");
+define("_ENTERIMGURL","输入要添加图片的地址.");
+define("_ENTERIMGPOS","现在，输入图片的位置.");
+define("_IMGPOSRORL","'R' 或 'r' 表示右, 'L' 或 'l' 表示左, 'C' 或 'c' 表示中央, 或者留白.");
+define("_ERRORIMGPOS","出错! 输入图片的位置.");
+define("_ENTEREMAIL","输入需添加的电子邮箱地址.");
+define("_ENTERCODE","输入需添加的代码.");
+define("_ENTERQUOTE","输入需引用的文字.");
+define("_ENTERHIDDEN","输入需显示给匿名用户的文字.");
+define("_ENTERTEXTBOX","请在文字框中输入文字.");
 
 //%%%%%		TIME FORMAT SETTINGS   %%%%%
-define('_SECOND', '1 second');
-define('_SECONDS', '%s seconds');
-define('_MINUTE', '1 minute');
-define('_MINUTES', '%s minutes');
-define('_HOUR', '1 hour');
-define('_HOURS', '%s hours');
-define('_DAY', '1 day');
-define('_DAYS', '%s days');
-define('_WEEK', '1 week');
-define('_MONTH', '1 month');
+define('_SECOND', '1 秒');
+define('_SECONDS', '%s 秒');
+define('_MINUTE', '1 分');
+define('_MINUTES', '%s 分');
+define('_HOUR', '1 小时');
+define('_HOURS', '%s 小时');
+define('_DAY', '1 天');
+define('_DAYS', '%s 天');
+define('_WEEK', '1 周');
+define('_MONTH', '1 月');
 
 define("_DATESTRING","Y/n/j G:i:s");
 define("_MEDIUMDATESTRING","Y/n/j G:i");
@@ -195,55 +195,55 @@ define("_SHORTDATESTRING","Y/n/j");
 
 //%%%%%		LANGUAGE SPECIFIC SETTINGS   %%%%%
 define('_CHARSET', 'utf-8');
-define('_LANGCODE', 'en');
+define('_LANGCODE', 'zh-cn');
 
 // change 0 to 1 if this language is a multi-bytes language
-define("XOOPS_USE_MULTIBYTES", "0");
+define("XOOPS_USE_MULTIBYTES", "1");
 // change 0 to 1 if this language is a RTL (right to left) language
-define("_ADM_USE_RTL","0");
+define("_ADM_USE_RTL","1");
 
-define('_MODULES','Modules');
-define('_SYSTEM','System');
-define('_IMPRESSCMS_NEWS','News');
-define('_ABOUT','ImpressCMS Project');
-define('_IMPRESSCMS_HOME','Project Home');
-define('_IMPRESSCMS_COMMUNITY','Community');
-define('_IMPRESSCMS_ADDONS','Addons');
-define('_IMPRESSCMS_WIKI','Wiki');
-define('_IMPRESSCMS_BLOG','Blog');
-define('_IMPRESSCMS_DONATE','Donate!');
-define("_IMPRESSCMS_Support","Support the project !");
-define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
-define('_IMPRESSCMS_ADMIN','Administration of');
+define('_MODULES','模块');
+define('_SYSTEM','系统');
+define('_IMPRESSCMS_NEWS','新闻');
+define('_ABOUT','ImpressCMS项目');
+define('_IMPRESSCMS_HOME','项目主页');
+define('_IMPRESSCMS_COMMUNITY','社区');
+define('_IMPRESSCMS_ADDONS','附加组件');
+define('_IMPRESSCMS_WIKI','维基');
+define('_IMPRESSCMS_BLOG','博客');
+define('_IMPRESSCMS_DONATE','捐赠!');
+define("_IMPRESSCMS_Support","支持该项目!");
+define('_IMPRESSCMS_SOURCEFORGE','SourceForge项目roject');
+define('_IMPRESSCMS_ADMIN','管理');
 /** The default separator used in icms_view_Tree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
 //Content Manager
-define('_CT_NAV','Home');
-define('_CT_RELATEDS','Related pages');
+define('_CT_NAV','首页');
+define('_CT_RELATEDS','相关页面');
 //Security image (captcha)
-define("_SECURITYIMAGE_GETCODE","Enter the security code");
-define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgraded your site to the latest version of ImpressCMS!<br />Therefor to finish the upgrade process you'll need to click here and update your system module.<br />Click here to process the upgrade.");
+define("_SECURITYIMAGE_GETCODE","输入安全代码");
+define("_WARNINGUPDATESYSTEM","祝贺！网站已成功更新至最新版的ImpressCMS!<br />点击这里升级系统模块以完成更新程序.<br />点击这里进行更新.");
 
 // This shows local support site in ImpressCMS menu, (if selected language is not English)
-define('_IMPRESSCMS_LOCAL_SUPPORT', 'https://www.impresscms.org'); //add the local support site's URL
-define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','Local support site');
-define("_ALLEFTCON","Enter the text to be aligned on the Left side.");
-define("_ALCENTERCON","Enter the text to be aligned on the Center side.");
-define("_ALRIGHTCON","Enter the text to be aligned on the Right side.");
+define('_IMPRESSCMS_LOCAL_SUPPORT', 'http://www.impresscms.org'); //add the local support site's URL
+define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','本地支持站点');
+define("_ALLEFTCON","向左对齐.");
+define("_ALCENTERCON","中间对齐.");
+define("_ALRIGHTCON","向右对齐.");
 
-define('_MODABOUT_ABOUT', 'About');
+define('_MODABOUT_ABOUT', '关于');
 // if you have troubles with this font on your language or it is not working, download tcpdf from: http://www.tecnick.com/public/code/cp_dpage.php?aiocp_dp=tcpdf and add the required font in libraries/tcpdf/fonts then write down the font name here. system will then load this font for your language.
 define('_PDF_LOCAL_FONT', '');
 define('_CALENDAR_TYPE',''); // this value is for the local calendar used in this system, if you're not sure about this leave this value as it is!
-define('_CALENDAR','Calendar');
-define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ
+define('_CALENDAR','日历');
+define('_RETRYPOST','对不起，请求超时. 请再次提交'); // autologin hack GIJ
 
 ############# added since 1.2 #############
-define('_QSEARCH','Quick Search');
-define('_PREV','Prev');
-define('_NEXT','Next');
-define('_LCL_NUM0','0');
-define('_LCL_NUM1','1');
+define('_QSEARCH','快速搜索');
+define('_PREV','上一页');
+define('_NEXT','下一页');
+define('_LCL_NUM0','1');
+define('_LCL_NUM1','0');
 define('_LCL_NUM2','2');
 define('_LCL_NUM3','3');
 define('_LCL_NUM4','4');
@@ -253,44 +253,44 @@ define('_LCL_NUM7','7');
 define('_LCL_NUM8','8');
 define('_LCL_NUM9','9');
 // change 0 to 1 if your language has a different numbering than latin`s alphabet
-define("_USE_LOCAL_NUM","0");
-define("_ICMS_DBUPDATED","Database Updated Successfully!");
+define("_USE_LOCAL_NUM","1");
+define("_ICMS_DBUPDATED","数据库更新成功!");
 define('_MD_AM_DBUPDATED',_ICMS_DBUPDATED);
 
-define('_TOGGLETINY','Toggle Editor');
-define("_ENTERHTMLCODE","Enter the HTML codes that you want to add.");
-define("_ENTERPHPCODE","Enter the PHP codes that you want to add.");
-define("_ENTERCSSCODE","Enter the CSS codes that you want to add.");
-define("_ENTERJSCODE","Enter the JavaScript codes that you want to add.");
-define("_ENTERWIKICODE","Enter the wiki term that you want to add.");
-define("_ENTERLANGCONTENT","Enter the text that you want to be in %s.");
-define('_LANGNAME', 'English');
-define('_ENTERYOUTUBEURL', 'Enter YouTube url:');
-define('_ENTERHEIGHT', 'Enter frame\'s height');
-define('_ENTERWIDTH', 'Enter frame\'s width');
-define('_ENTERMEDIAURL', 'Enter media url:');
+define('_TOGGLETINY','切换编辑器');
+define("_ENTERHTMLCODE","输入需要添加的HTML代码.");
+define("_ENTERPHPCODE","输入需要添加的PHP代码.");
+define("_ENTERCSSCODE","输入需要添加的CSS代码.");
+define("_ENTERJSCODE","输入需要添加的JavaScript代码.");
+define("_ENTERWIKICODE","输入需要添加的wiki代码.");
+define("_ENTERLANGCONTENT","在 %s 中输入需要添加的文字.");
+define('_LANGNAME', '简体中文');
+define('_ENTERYOUTUBEURL', '输入视频URL:');
+define('_ENTERHEIGHT', '定义多媒体框高度');
+define('_ENTERWIDTH', '定义多媒体框宽度');
+define('_ENTERMEDIAURL', '输入多媒体URL:');
 // !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"
 // insert double '\' before 't', 'r', 'n'
 define("_TODAY", "	\\o\\d\\a\\y G:i");
 define("_YESTERDAY", "\\Y\e\\s\\t\e\\r\\d\\a\\y G:i");
 define("_MONTHDAY", "n/j G:i");
 define("_YEARMONTHDAY", "Y/n/j G:i");
-define("_ELAPSE", "%s ago");
-define('_VISIBLE', 'Visible');
-define('_UP', 'Up');
-define('_DOWN', 'Down');
-define('_CONFIGURE', 'Configure');
+define("_ELAPSE", "%s 天前");
+define('_VISIBLE', '可见');
+define('_UP', '上');
+define('_DOWN', '下');
+define('_CONFIGURE', '配置');
 
 // Added in 1.2.2
-define('_FILE_DELETED', 'File %s was deleted successfully');
+define('_FILE_DELETED', '文件 %s 已被删除');
 
 // added in 1.3
-define('_CHECKALL', 'Check all');
-define('_COPYRIGHT', 'Copyright');
+define('_CHECKALL', '全部检查');
+define('_COPYRIGHT', '版权所有');
 define("_LONGDATESTRING", "F jS Y, h:iA");
-define('_AUTHOR', 'Author');
-define("_CREDITS", "Credits");
-define("_LICENSE", "License");
+define('_AUTHOR', '作者');
+define("_CREDITS", "创建");
+define("_LICENSE", "许可证");
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_BLOCK_ID", "Block ID");
 define('_IMPRESSCMS_PROJECT','Project Development');
