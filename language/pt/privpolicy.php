@@ -1,3 +1,3 @@
 <?php
 //%%%%%%		File Name privpolicy.php 		%%%%%
-define('_PRV_PRIVACY_POLICY', 'Privacy Policy');
+define('_PRV_PRIVACY_POLICY', 'Política de Privacidade');
