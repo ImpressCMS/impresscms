@@ -29,7 +29,7 @@ define("RECOMMENDED", "Recommended");
 define("CURRENT", "Current");
 define("RECOMMENDED_EXTENSIONS_MSG", "These extensions are not required for normal use, but may be necessary to exploit
 	some specific features (like the multi-language or RSS support). Thus, it is recommended to have them installed." );
-define("NONE", "Nenhum");
+define("NONE", "None");
 define("SUCCESS", "Success");
 define("WARNING", "Warning");
 define("FAILED", "Failed");
@@ -61,7 +61,7 @@ define("INITIAL_SETTINGS", "Initial settings");
 define("INITIAL_SETTINGS_TITLE", "Please enter your initial settings");
 define("DATA_INSERTION", "Data insertion");
 define("DATA_INSERTION_TITLE", "Saving your settings to the database");
-define("WELCOME", "Bem-vindo");
+define("WELCOME", "Welcome");
 define("NO_PHP5", "No PHP 5");
 define("WELCOME_TITLE", "Installation of ImpressCMS completed"); // L0
 define("MODULES_INSTALL", "Install modules");
@@ -86,7 +86,7 @@ define("DB_HOST_LABEL", "Server hostname"); // L27
 define("DB_HOST_HELP", "Hostname of the database server. If you are unsure, <em>localhost</em> works in most cases"); // L67
 define("DB_USER_LABEL", "User name"); // L28
 define("DB_USER_HELP", "Name of the user account that will be used to connect to the database server"); // L65
-define("DB_PASS_LABEL", "Senha"); // L52
+define("DB_PASS_LABEL", "Password"); // L52
 define("DB_PASS_HELP", "Password of your database user account"); // L68
 define("DB_NAME_LABEL", "Database name"); // L29
 define("DB_NAME_HELP", "The name of database on the host. The installer will attempt to create a database if one does not exist"); // L64
@@ -109,10 +109,10 @@ define("ADMIN_CONFIRMPASS_LABEL", "Confirm password"); // L74
 define("ADMIN_SALT_LABEL", "Password Salt Key"); // L99
 
 // Buttons
-define("BUTTON_PREVIOUS", "<< anterior"); // L42
-define("BUTTON_NEXT", "próximo >>"); // L47
-define("BUTTON_FINISH", "Finalizar");
-define("BUTTON_REFRESH", "Atualizar");
+define("BUTTON_PREVIOUS", "Previous"); // L42
+define("BUTTON_NEXT", "Next"); // L47
+define("BUTTON_FINISH", "Finish");
+define("BUTTON_REFRESH", "Refresh");
 define("BUTTON_SHOW_SITE", "Show my site");
 
 // Messages
@@ -132,7 +132,7 @@ define("DATA_ALREADY_INSERTED", "ImpressCMS data is stored in your database alre
 define("DATABASE_CREATED", "Database %s created!"); // L43
 // %s is table name
 define("TABLE_NOT_CREATED", "Unable to create table %s"); // L118
-define("TABLE_CREATED", "Tabela %s foi criada."); // L45
+define("TABLE_CREATED", "Table %s created."); // L45
 define("ROWS_INSERTED", "%d entries inserted to table %s."); // L119
 define("ROWS_FAILED", "Failed inserting %d entries to table %s."); // L120
 define("TABLE_ALTERED", "Table %s updated."); // L133
@@ -164,7 +164,7 @@ For more information regarding Group Administration, please visit the <a href="h
 define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
 define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');
 define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Module %s could not be installed.");
-define("_INSTALL_ERRORS", 'Erros');
+define("_INSTALL_ERRORS", 'Errors');
 define("_INSTALL_MOD_ALREADY_INSTALLED", "Module %s has already been installed");
 define("_INSTALL_FAILED_TO_EXECUTE", "Failed to execute ");
 define("_INSTALL_EXECUTED_SUCCESSFULLY", "Executed correctly");
@@ -189,7 +189,7 @@ define("_MD_AM_MULTLOGINMSG_TXT", 'It was not possible to login on the site!! <b
          - You left the site or close the browser window without clicking the logout button.<br />
         </p>
         Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
-define("_INSTALL_LOCAL_SITE", 'http://br.impresscms.org/'); //Link to local support site
+define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/'); //Link to local support site
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_ADM_USE_RTL", "0"); // turn this to 1 if your language is right to left
 
