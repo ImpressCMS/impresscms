@@ -5,7 +5,7 @@
 
 // Text for various templates...
 
-define ('_NOT_NOTIFICATIONOPTIONS', 'Options');
+define ('_NOT_NOTIFICATIONOPTIONS', '选项');
 define ('_NOT_UPDATENOW', 'Update Now');
 define ('_NOT_UPDATEOPTIONS', 'Update Notification Options');
 
