@@ -29,7 +29,7 @@ define("RECOMMENDED", "Recommended");
 define("CURRENT", "Current");
 define("RECOMMENDED_EXTENSIONS_MSG", "These extensions are not required for normal use, but may be necessary to exploit
 	some specific features (like the multi-language or RSS support). Thus, it is recommended to have them installed." );
-define("NONE", "None");
+define("NONE", "没有");
 define("SUCCESS", "Success");
 define("WARNING", "Warning");
 define("FAILED", "Failed");
@@ -61,7 +61,7 @@ define("INITIAL_SETTINGS", "Initial settings");
 define("INITIAL_SETTINGS_TITLE", "Please enter your initial settings");
 define("DATA_INSERTION", "Data insertion");
 define("DATA_INSERTION_TITLE", "Saving your settings to the database");
-define("WELCOME", "Welcome");
+define("WELCOME", "欢迎");
 define("NO_PHP5", "No PHP 5");
 define("WELCOME_TITLE", "Installation of ImpressCMS completed"); // L0
 define("MODULES_INSTALL", "Install modules");
@@ -86,7 +86,7 @@ define("DB_HOST_LABEL", "Server hostname"); // L27
 define("DB_HOST_HELP", "Hostname of the database server. If you are unsure, <em>localhost</em> works in most cases"); // L67
 define("DB_USER_LABEL", "User name"); // L28
 define("DB_USER_HELP", "Name of the user account that will be used to connect to the database server"); // L65
-define("DB_PASS_LABEL", "Password"); // L52
+define("DB_PASS_LABEL", "密码"); // L52
 define("DB_PASS_HELP", "Password of your database user account"); // L68
 define("DB_NAME_LABEL", "Database name"); // L29
 define("DB_NAME_HELP", "The name of database on the host. The installer will attempt to create a database if one does not exist"); // L64
@@ -109,10 +109,10 @@ define("ADMIN_CONFIRMPASS_LABEL", "Confirm password"); // L74
 define("ADMIN_SALT_LABEL", "Password Salt Key"); // L99
 
 // Buttons
-define("BUTTON_PREVIOUS", "Previous"); // L42
-define("BUTTON_NEXT", "Next"); // L47
-define("BUTTON_FINISH", "Finish");
-define("BUTTON_REFRESH", "Refresh");
+define("BUTTON_PREVIOUS", "上一页"); // L42
+define("BUTTON_NEXT", "下一页"); // L47
+define("BUTTON_FINISH", "完成");
+define("BUTTON_REFRESH", "刷新");
 define("BUTTON_SHOW_SITE", "Show my site");
 
 // Messages
@@ -132,7 +132,7 @@ define("DATA_ALREADY_INSERTED", "ImpressCMS data is stored in your database alre
 define("DATABASE_CREATED", "Database %s created!"); // L43
 // %s is table name
 define("TABLE_NOT_CREATED", "Unable to create table %s"); // L118
-define("TABLE_CREATED", "Table %s created."); // L45
+define("TABLE_CREATED", "数据表 %s 已创建."); // L45
 define("ROWS_INSERTED", "%d entries inserted to table %s."); // L119
 define("ROWS_FAILED", "Failed inserting %d entries to table %s."); // L120
 define("TABLE_ALTERED", "Table %s updated."); // L133
@@ -143,7 +143,7 @@ define("TABLE_NOT_DROPPED", "Failed deleting table %s."); // L164
 // Error messages
 define("ERR_COULD_NOT_ACCESS", "Could not access the specified folder. Please verify that it exists and is readable by the server.");
 define("ERR_NO_XOOPS_FOUND", "No ImpressCMS installation could be found in the specified folder.");
-define("ERR_INVALID_EMAIL", "Invalid Email"); // L73
+define("ERR_INVALID_EMAIL", "无效Email"); // L73
 define("ERR_REQUIRED", "Please enter all the required info."); // L41
 define("ERR_PASSWORD_MATCH", "The two passwords do not match");
 define("ERR_NEED_WRITE_ACCESS", "The server must be given write access to the following files and folders<br />(i.e. <em>chmod 777 directory_name</em> on a UNIX/LINUX server)"); // L72
@@ -164,7 +164,7 @@ For more information regarding Group Administration, please visit the <a href="h
 define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
 define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');
 define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Module %s could not be installed.");
-define("_INSTALL_ERRORS", 'Errors');
+define("_INSTALL_ERRORS", '错误');
 define("_INSTALL_MOD_ALREADY_INSTALLED", "Module %s has already been installed");
 define("_INSTALL_FAILED_TO_EXECUTE", "Failed to execute ");
 define("_INSTALL_EXECUTED_SUCCESSFULLY", "Executed correctly");
@@ -181,24 +181,24 @@ define("_INSTALL_CHARSET", "utf-8");
 
 define("_INSTALL_PHYSICAL_PATH", "Physical path");
 
-define("_MD_AM_MULTLOGINMSG_TXT", 'It was not possible to login on the site!! <br />
+define("_MD_AM_MULTLOGINMSG_TXT", '不能登录!! <br />
         <p align="left" style="color:red;">
-        Possible causes:<br />
-         - You are already logged in on the site.<br />
-         - Someone else logged in on the site using your username and password.<br />
-         - You left the site or close the browser window without clicking the logout button.<br />
+           出错原因：<br />
+         - 你已登录<br />
+         - 已有其他人使用你的用户帐户登录<br />
+         - 在你关闭浏览器窗口时，没有登出<br />
         </p>
-        Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
-define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/'); //Link to local support site
+           请稍等并重试，如果还不能登录，请联系管理员');
+define("_INSTALL_LOCAL_SITE", 'http://www.impresscms.org/'); //Link to local support site
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
-define("_ADM_USE_RTL", "0"); // turn this to 1 if your language is right to left
+define("_ADM_USE_RTL", "1"); // turn this to 1 if your language is right to left
 
 ######################## Added in 1.2 ###################################
 define("ADMIN_DISPLAY_LABEL", "Admin Display Name"); // L37
-define('_CORE_PASSLEVEL1', 'Too short');
-define('_CORE_PASSLEVEL2', 'Weak');
-define('_CORE_PASSLEVEL3', 'Good');
-define('_CORE_PASSLEVEL4', 'Strong');
+define('_CORE_PASSLEVEL1', '密码太短');
+define('_CORE_PASSLEVEL2', '密码安全性低');
+define('_CORE_PASSLEVEL3', '密码安全性好');
+define('_CORE_PASSLEVEL4', '密码安全性高');
 define('DB_PCONNECT_HELP', "Persistent connections are useful with slower internet connections. They are not generally required for most installations. Default is 'NO'. Choose 'NO' if you are unsure"); // L69
 define("DB_PCONNECT_HELPS", "Persistent connections are useful with slower internet connections. They are not generally required for most installations."); // L69
 
