@@ -48,7 +48,7 @@ For each type of website ImpressCMS offers different functionality with a collec
 To install and use this package, we recommend to use [Composer](https://getcomposer.org):
 
 ```bash
-composer install impresscms/impresscms
+composer create-project -s dev impresscms/impresscms
 ```
 
 More detailed installation instructions are available [on the ImpressCMS site](https://www.impresscms.org/modules/simplywiki/index.php?page=Installing_ImpressCMS_2)
