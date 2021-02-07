@@ -48,9 +48,10 @@
  */
 namespace ImpressCMS\Core\Extensions\Smarty\Functions;
 
-use ImpressCMS\Core\Extensions\Smarty\SmartyFunctionExtensionInterface;
+use icms;
+use Imponeer\Contracts\Smarty\Extension\SmartyFunctionInterface;
 
-class XoopsLinkFunction implements SmartyFunctionExtensionInterface
+class XoopsLinkFunction implements SmartyFunctionInterface
 {
 
 	/**
@@ -85,7 +86,7 @@ class XoopsLinkFunction implements SmartyFunctionExtensionInterface
 		}
 
 		// Get default module/page from current ones if necessary
-		$module = $params['module'] ?? \icms::$module->dirname;
+		$module = $params['module'] ?? icms::$module->dirname;
 		if (!isset($params['page'])) {
 			$cur = $_SERVER['PHP_SELF'];
 			$page = substr($cur, strrpos($cur, '/') + 1);

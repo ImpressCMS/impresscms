@@ -38,6 +38,10 @@
 namespace ImpressCMS\Core\View;
 
 use icms;
+use Imponeer\Contracts\Smarty\Extension\SmartyBlockInterface;
+use Imponeer\Contracts\Smarty\Extension\SmartyCompilerInterface;
+use Imponeer\Contracts\Smarty\Extension\SmartyFunctionInterface;
+use Imponeer\Contracts\Smarty\Extension\SmartyResourceInterface;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Facades\Config;
@@ -78,23 +82,18 @@ class Template extends SmartyBC
 
 		parent::__construct();
 
-		foreach (icms::getInstance()->get('smarty.resource') as $plugin) {
-			$this->registerResource(
-				$plugin->getName(),
-				$plugin
-			);
-		}
-		foreach ([
-					 'function' => 'register_function',
-					 'modifier' => 'register_modifier',
-					 'compiler' => 'register_compiler_function',
-					 'block' => 'register_block',
-				 ] as $type => $function) {
-			foreach (icms::getInstance()->get('smarty.' . $type) as $plugin) {
-				$this->$function(
-					$plugin->getName(),
-					[$plugin, 'execute']
-				);
+		foreach (icms::getInstance()->get('smarty.plugin') as $plugin) {
+			$name = $plugin->getName();
+			if ($plugin instanceof SmartyResourceInterface) {
+				$this->registerResource($name, $plugin);
+			} elseif ($plugin instanceof SmartyFunctionInterface) {
+				$this->register_function($name, [$plugin, 'execute']);
+			} elseif ($plugin instanceof SmartyBlockInterface) {
+				$this->register_block($name, [$plugin, 'execute']);
+			} elseif ($plugin instanceof SmartyCompilerInterface) {
+				$this->register_compiler_function($name, [$plugin, 'execute']);
+			} else {
+				$this->register_modifier($name, [$plugin, 'execute']);
 			}
 		}
 
