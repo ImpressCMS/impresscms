@@ -58,7 +58,7 @@ $filter_get = array('fct' => 'str', 'op' => 'str', 'uid' => 'str');
 if (!empty($_GET)) {
 	// in places where strict mode is not used for checkVarArray, make sure filter_post var is not overwritten
 	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, true);
 	extract($clean_GET);
 }
 
