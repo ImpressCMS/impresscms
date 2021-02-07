@@ -1,8 +1,5 @@
-<p align="center">
-	<a href="https://impresscms.org" target="_blank">
-		<img src="https://github.com/ImpressCMS/impresscms/blob/master/htdocs/uploads/imagemanager/logos/img482278e29e81c.png?raw=true" alt="ImpressCMS">
-	</a>
-</p>
+![](https://github.com/ImpressCMS/impresscms/blob/master/htdocs/uploads/imagemanager/logos/img482278e29e81c.png?raw=true)
+
 <p align="center">
 <a href="https://github.com/ImpressCMS/impresscms/blob/master/LICENSE"><img src="https://img.shields.io/badge/dynamic/json.svg?label=license&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2FImpressCMS%2Fimpresscms%2Fmaster%2Fcomposer.json&amp;query=license&amp;maxAge=86400" alt="license" /></a> <a href="github.com/ImpressCMS/impresscms/releases/latest"><img src="https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=86400&amp;logo=github&amp;logoColor=white&amp;label=latest%20release" alt="GitHub release" /></a> <a href="https://github.com/ImpressCMS/impresscms/releases"><img src="https://img.shields.io/packagist/vpre/impresscms/impresscms.svg?label=preview&amp;logo=github" alt="GitHub tag (latest SemVer pre-release)" /></a> <a href="https://codeclimate.com/github/ImpressCMS/impresscms/test_coverage"><img src="https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/test_coverage" alt="Test Coverage" /></a> <a href="https://codeclimate.com/github/ImpressCMS/impresscms/maintainability"><img src="https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/maintainability" alt="Maintainability" /></a> <a href="https://twitter.com/ImpressCMS"><img src="https://img.shields.io/twitter/follow/ImpressCMS.svg?color=%2338A1F3&amp;label=twitter&amp;style=flat&amp;logo=twitter" alt="Twitter Follow" /></a> <a href="https://www.facebook.com/ImpressCMS/"><img src="https://img.shields.io/badge/facebook-%3F%3F%3F-%233C5A99.svg?logo=facebook" alt="FaceBook" /></a> <a href="http://invite.impresscms.org"><img src="http://invite.impresscms.org/badge.svg" alt="Slack" /></a> <a title="Crowdin" target="_self" href="https://impresscms.crowdin.com/impresscms"><img src="https://badges.crowdin.net/e/f7817e813865fde0509c454ad1ee4c11/localized.svg"></a>
 </p>
@@ -44,6 +41,17 @@ For each type of website ImpressCMS offers different functionality with a collec
 * Add a forum to your site
 * Sell products through your web site using an online store
 * ...and many more
+
+
+## Installation
+
+To install and use this package, we recommend to use [Composer](https://getcomposer.org):
+
+```bash
+composer install impresscms/impresscms
+```
+
+More detailed installation instructions are available [on the ImpressCMS site](https://www.impresscms.org/modules/simplywiki/index.php?page=Installing_ImpressCMS_2)
 
 ## Do you need any help?
 
