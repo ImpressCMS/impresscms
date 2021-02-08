@@ -15,7 +15,6 @@ use Imponeer\Smarty\Extensions\XO\XOAppUrlCompiler;
 use Imponeer\Smarty\Extensions\XO\XOImgUrlCompiler;
 use Imponeer\Smarty\Extensions\XO\XOInboxCountFunction;
 use Imponeer\Smarty\Extensions\XO\XOPageNavFunction;
-use ImpressCMS\Core\Extensions\Smarty\Functions\XoopsLinkFunction;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 /**
@@ -40,7 +39,6 @@ class SmartyPluginsProvider extends AbstractServiceProvider
 		$this->leagueContainer->add(ForeachQOpenTagCompiler::class)->addTag('smarty.plugin');
 		$this->leagueContainer->add(ForeachQCloseTagCompiler::class)->addTag('smarty.plugin');
 		$this->leagueContainer->add(IncludeQCompiler::class)->addTag('smarty.plugin');
-		$this->leagueContainer->add(XoopsLinkFunction::class)->addTag('smarty.plugin');
 		$this->leagueContainer->add(XOPageNavFunction::class)->addArgument("icms::url")->addTag('smarty.plugin');
 		if (class_exists(DebugPrintVarModifier::class)) {
 			$this->leagueContainer->add(DebugPrintVarModifier::class)->addTag('smarty.plugin');
