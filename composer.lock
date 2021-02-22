@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "afd1c3c84eb0b317213667152b2a9afd",
+    "content-hash": "f85c405aaf55a609da4b1ffa5ab6d9a7",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -1227,6 +1227,316 @@
             "time": "2018-07-31T19:32:56+00:00"
         },
         {
+            "name": "imponeer/smarty-db-resource",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/smarty-db-resource.git",
+                "reference": "812f57e7bf2eb6fc6f9113ab355f8d61c71a159f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/smarty-db-resource/zipball/812f57e7bf2eb6fc6f9113ab355f8d61c71a159f",
+                "reference": "812f57e7bf2eb6fc6f9113ab355f8d61c71a159f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": ">=7.1",
+                "imponeer/smarty-extensions-contracts": "^1.0",
+                "php": ">=7.1",
+                "psr/cache": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\Smarty\\Extensions\\DBResource\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "Smarty plugin that adds DB resource type",
+            "keywords": [
+                "database",
+                "pdo",
+                "smarty",
+                "smarty-plugins"
+            ],
+            "time": "2021-02-07T16:01:51+00:00"
+        },
+        {
+            "name": "imponeer/smarty-extensions-contracts",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/smarty-extensions-contracts.git",
+                "reference": "e67d4ade4bc4e8783ab7ad786ac5b4f2579e201e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/e67d4ade4bc4e8783ab7ad786ac5b4f2579e201e",
+                "reference": "e67d4ade4bc4e8783ab7ad786ac5b4f2579e201e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "smarty/smarty": "~3.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\Contracts\\Smarty\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "Interfaces for defining smarty template engine extensions in object way",
+            "keywords": [
+                "abstractions",
+                "contracts",
+                "decoupling",
+                "extensions",
+                "interfaces",
+                "smarty"
+            ],
+            "time": "2021-01-31T20:15:12+00:00"
+        },
+        {
+            "name": "imponeer/smarty-foreachq",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/smarty-foreachq.git",
+                "reference": "c400378864c5340798bf9f54f4f33cc60b10fc11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/smarty-foreachq/zipball/c400378864c5340798bf9f54f4f33cc60b10fc11",
+                "reference": "c400378864c5340798bf9f54f4f33cc60b10fc11",
+                "shasum": ""
+            },
+            "require": {
+                "imponeer/smarty-extensions-contracts": "^1.0",
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\Smarty\\Extensions\\ForeachQ\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "Rewritten Smarty foreach variant that was invented for use in xoops, but nowadays is used in some other PHP based CMS'es",
+            "keywords": [
+                "foreach",
+                "smarty",
+                "smarty-plugins",
+                "xoops"
+            ],
+            "time": "2021-02-02T20:54:26+00:00"
+        },
+        {
+            "name": "imponeer/smarty-image",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/smarty-image.git",
+                "reference": "90ff7816933f17463636b3ac16988ee4a8acb2d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/smarty-image/zipball/90ff7816933f17463636b3ac16988ee4a8acb2d8",
+                "reference": "90ff7816933f17463636b3ac16988ee4a8acb2d8",
+                "shasum": ""
+            },
+            "require": {
+                "imponeer/smarty-extensions-contracts": "^1.0",
+                "intervention/image": "^2.5",
+                "php": ">=7.1",
+                "psr/cache": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\Smarty\\Extensions\\Image\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "Smarty plugin that adds some image related template syntax enchaments",
+            "keywords": [
+                "image",
+                "image-processing",
+                "smarty",
+                "smarty-plugins"
+            ],
+            "time": "2021-02-03T20:13:58+00:00"
+        },
+        {
+            "name": "imponeer/smarty-includeq",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/smarty-includeq.git",
+                "reference": "3818a3e98568f648b869c3db4594aad8d25ad5c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/smarty-includeq/zipball/3818a3e98568f648b869c3db4594aad8d25ad5c5",
+                "reference": "3818a3e98568f648b869c3db4594aad8d25ad5c5",
+                "shasum": ""
+            },
+            "require": {
+                "imponeer/smarty-extensions-contracts": "^1.0",
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\Smarty\\Extensions\\IncludeQ\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "Rewritten smarty 'include' variant that was invented for use in XOOPS, but nowadays is used in some other PHP based CMS'es",
+            "keywords": [
+                "include",
+                "smarty",
+                "smarty-plugins",
+                "xoops"
+            ],
+            "time": "2021-02-03T09:29:03+00:00"
+        },
+        {
+            "name": "imponeer/smarty-translate",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/smarty-translate.git",
+                "reference": "64072bbdfc4862c1b32f41ce7fba6d11eec5ab7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/64072bbdfc4862c1b32f41ce7fba6d11eec5ab7c",
+                "reference": "64072bbdfc4862c1b32f41ce7fba6d11eec5ab7c",
+                "shasum": ""
+            },
+            "require": {
+                "imponeer/smarty-extensions-contracts": "^1.0",
+                "php": ">=7.2.5",
+                "symfony/translation-contracts": "^2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\Smarty\\Extensions\\Translate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "Library that provides trans modifer and block smarty extensions based on Symfony Translations contracts",
+            "keywords": [
+                "smarty",
+                "smarty-plugins",
+                "symfony",
+                "translate"
+            ],
+            "time": "2021-01-31T21:59:55+00:00"
+        },
+        {
+            "name": "imponeer/smarty-xo",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/smarty-xo.git",
+                "reference": "2a6be659f68ae7607358eac01519356406a0e24c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/smarty-xo/zipball/2a6be659f68ae7607358eac01519356406a0e24c",
+                "reference": "2a6be659f68ae7607358eac01519356406a0e24c",
+                "shasum": ""
+            },
+            "require": {
+                "imponeer/smarty-extensions-contracts": "^1.0",
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\Smarty\\Extensions\\XO\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "Smarty template engine plugins collections based on ideas for plugins from XOOPS",
+            "keywords": [
+                "counter",
+                "links",
+                "pagination",
+                "smarty",
+                "smarty-plugins",
+                "xoops"
+            ],
+            "time": "2021-02-07T00:25:51+00:00"
+        },
+        {
             "name": "imponeer/symfony-translations-constants-loader",
             "version": "v1.0.0",
             "source": {
@@ -1275,6 +1585,76 @@
                 "translation"
             ],
             "time": "2020-11-11T01:06:42+00:00"
+        },
+        {
+            "name": "intervention/image",
+            "version": "2.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/image.git",
+                "reference": "abbf18d5ab8367f96b3205ca3c89fb2fa598c69e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/abbf18d5ab8367f96b3205ca3c89fb2fa598c69e",
+                "reference": "abbf18d5ab8367f96b3205ca3c89fb2fa598c69e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "guzzlehttp/psr7": "~1.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.2",
+                "phpunit/phpunit": "^4.8 || ^5.7"
+            },
+            "suggest": {
+                "ext-gd": "to use GD library based image processing.",
+                "ext-imagick": "to use Imagick based image processing.",
+                "intervention/imagecache": "Caching extension for the Intervention Image library"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Intervention\\Image\\ImageServiceProvider"
+                    ],
+                    "aliases": {
+                        "Image": "Intervention\\Image\\Facades\\Image"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Image\\": "src/Intervention/Image"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@olivervogel.com",
+                    "homepage": "http://olivervogel.com/"
+                }
+            ],
+            "description": "Image handling and manipulation library with support for Laravel integration",
+            "homepage": "http://image.intervention.io/",
+            "keywords": [
+                "gd",
+                "image",
+                "imagick",
+                "laravel",
+                "thumbnail",
+                "watermark"
+            ],
+            "time": "2019-11-02T09:15:47+00:00"
         },
         {
             "name": "ircmaxell/random-lib",
@@ -5185,6 +5565,51 @@
             "time": "2020-11-10T18:47:58+00:00"
         },
         {
+            "name": "imponeer/smarty-debug",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/smarty-debug.git",
+                "reference": "0729deb20d61d392810250bb28735f077aa834c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/smarty-debug/zipball/0729deb20d61d392810250bb28735f077aa834c9",
+                "reference": "0729deb20d61d392810250bb28735f077aa834c9",
+                "shasum": ""
+            },
+            "require": {
+                "imponeer/smarty-extensions-contracts": "^1.0",
+                "php": ">=7.1",
+                "symfony/var-dumper": "^5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\Smarty\\Extensions\\Debug\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "github@mekdrop.name"
+                }
+            ],
+            "description": "Smarty plugin to debug template data",
+            "keywords": [
+                "debug",
+                "smarty",
+                "smarty-plugins",
+                "symfony",
+                "var-dumper"
+            ],
+            "time": "2021-02-01T22:43:16+00:00"
+        },
+        {
             "name": "mindplay/composer-locator",
             "version": "2.1.3",
             "source": {
@@ -7260,6 +7685,91 @@
                 }
             ],
             "time": "2020-09-28T06:39:44+00:00"
+        },
+        {
+            "name": "symfony/var-dumper",
+            "version": "v5.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-dumper.git",
+                "reference": "72ca213014a92223a5d18651ce79ef441c12b694"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/72ca213014a92223a5d18651ce79ef441c12b694",
+                "reference": "72ca213014a92223a5d18651ce79ef441c12b694",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php80": "^1.15"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<5.4.3",
+                "symfony/console": "<4.4"
+            },
+            "require-dev": {
+                "ext-iconv": "*",
+                "symfony/console": "^4.4|^5.0",
+                "symfony/process": "^4.4|^5.0",
+                "twig/twig": "^2.13|^3.0.4"
+            },
+            "suggest": {
+                "ext-iconv": "To convert non-UTF-8 strings to UTF-8 (or symfony/polyfill-iconv in case ext-iconv cannot be used).",
+                "ext-intl": "To show region name in time zone dump",
+                "symfony/console": "To use the ServerDumpCommand and/or the bin/var-dump-server script"
+            },
+            "bin": [
+                "Resources/bin/var-dump-server"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Resources/functions/dump.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Component\\VarDumper\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides mechanisms for walking through any arbitrary PHP variable",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "debug",
+                "dump"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-01-27T10:15:41+00:00"
         },
         {
             "name": "symfony/yaml",

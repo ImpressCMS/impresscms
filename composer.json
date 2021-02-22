@@ -52,13 +52,19 @@
     "aura/sqlschema": "^2.0",
     "cerdic/css-tidy": "^1.5",
     "composer/composer": "^1.10",
-    "dompdf/dompdf": "^0.8.5",
-    "erusev/parsedown": "^1.7",
-    "ellipse/cookie-encryption": "^1.0",
     "defuse/php-encryption": "^2.2",
+    "dompdf/dompdf": "^0.8.5",
+    "ellipse/cookie-encryption": "^1.0",
+    "erusev/parsedown": "^1.7",
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
     "http-interop/http-factory-guzzle": "^1.0",
+    "imponeer/smarty-db-resource": "^1.0",
+    "imponeer/smarty-foreachq": "^1.0",
+    "imponeer/smarty-image": "^1.0",
+    "imponeer/smarty-includeq": "^1.0",
+    "imponeer/smarty-translate": "^1.0",
+    "imponeer/smarty-xo": "^1.0",
     "imponeer/symfony-translations-constants-loader": "^1.0",
     "ircmaxell/random-lib": "^1.2",
     "keo/iso-639": "^1.0",
@@ -86,8 +92,8 @@
     "symfony/console": ">5.0",
     "symfony/polyfill-iconv": "^1.12",
     "symfony/translation": "^5.1",
-    "tuupola/server-timing-middleware": "^0.8.2",
     "true/punycode": "^2.1",
+    "tuupola/server-timing-middleware": "^0.8.2",
     "typo3/class-alias-loader": "^1.1",
     "vlucas/phpdotenv": "^3.3.3"
   },
@@ -124,8 +130,9 @@
     ]
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master",
-    "phpunit/phpunit": "^9.4"
+    "imponeer/smarty-debug": "^1.0",
+    "phpunit/phpunit": "^9.4",
+    "roave/security-advisories": "dev-master"
   },
   "extra": {
     "providers": [
@@ -136,7 +143,8 @@
       "\\ImpressCMS\\Core\\Providers\\SecurityServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ConfigServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider",
-      "\\ImpressCMS\\Core\\Providers\\TranslatorServiceProvider"
+      "\\ImpressCMS\\Core\\Providers\\TranslatorServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\SmartyPluginsProvider"
     ],
     "services": {
       "\\ImpressCMS\\Core\\Middlewares\\DetectModuleMiddleware": {
@@ -206,83 +214,6 @@
       "\\ImpressCMS\\Core\\Commands\\GenerateAppKeyCommand": {
         "tags": [
           "console.command"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Resource\\DBResource": {
-        "arguments": [
-          "cache"
-        ],
-        "tags": [
-          "smarty.resource"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\ForeachqCompiler": {
-        "tags": [
-          "smarty.compiler"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\ForeachqCloseCompiler": {
-        "tags": [
-          "smarty.compiler"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\IncludeqCompiler": {
-        "tags": [
-          "smarty.compiler"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\XOAppUrlCompiler": {
-        "tags": [
-          "smarty.compiler"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Compiler\\XOImgUrlCompiler": {
-        "tags": [
-          "smarty.compiler"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Modifiers\\DebugPrintVarModifier": {
-        "tags": [
-          "smarty.modifier"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Modifiers\\TransVarModifier": {
-        "arguments": [
-          "translator"
-        ],
-        "tags": [
-          "smarty.modifier"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Blocks\\TransBlock": {
-        "arguments": [
-          "translator"
-        ],
-        "tags": [
-          "smarty.block"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\ResizeImageFunction": {
-        "arguments": [
-          "cache"
-        ],
-        "tags": [
-          "smarty.function"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\XOInboxCountFunction": {
-        "tags": [
-          "smarty.function"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\XoopsLinkFunction": {
-        "tags": [
-          "smarty.function"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Extensions\\Smarty\\Functions\\XOPageNavFunction": {
-        "tags": [
-          "smarty.function"
         ]
       },
       "\\ImpressCMS\\Core\\Commands\\CacheClearCommand": {
