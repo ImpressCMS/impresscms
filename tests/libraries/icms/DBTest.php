@@ -2,7 +2,6 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use icms_db_criteria_Item;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
@@ -20,9 +19,6 @@ class DBTest extends TestCase {
     public function testAvailability() {
         foreach ([
             'icms_db_Factory' => null,
-            'icms_db_criteria_Element' => null,
-            'icms_db_criteria_Compo' => ['icms_db_criteria_Element'],
-            'icms_db_criteria_Item' => ['icms_db_criteria_Element'],
             'icms_db_legacy_mysql_Utility' => ['icms_db_IUtility'],
             'icms_db_legacy_updater_Handler' => null,
             'icms_db_legacy_updater_Table' => null,
@@ -69,30 +65,6 @@ class DBTest extends TestCase {
      */
     public function testMethodsAvailability() {
         foreach ([
-            'icms_db_criteria_Compo' => [
-                'add',
-                'render',
-                'renderWhere',
-                'renderLdap'
-            ],
-            'icms_db_criteria_Element' => [
-                'render',
-                'setSort',
-                'getSort',
-                'setOrder',
-                'getOrder',
-                'setLimit',
-                'getLimit',
-                'setStart',
-                'getStart',
-                'setGroupby',
-                'getGroupby'
-            ],
-            'icms_db_criteria_Item' => [
-                'render',
-                'renderLdap',
-                'renderWhere'
-            ],
             'icms_db_legacy_updater_Handler' => [
                 'runQuery',
                 'renameTable',
@@ -184,24 +156,6 @@ class DBTest extends TestCase {
      */
     public function testVariables() {
         foreach ([
-            'icms_db_criteria_Compo' => [
-                'criteriaElements' => 'assertIsArray',
-                'conditions' => 'assertIsArray'
-            ],
-            'icms_db_criteria_Item' => [
-                'prefix' => 'assertIsString',
-                'function' => 'assertIsString',
-                'column' => 'assertIsString',
-                'operator' => 'assertIsString',
-                'value' => 'mixed'
-            ],
-            'icms_db_criteria_Element' => [
-                'order' => 'assertIsString',
-                'sort' => 'assertIsString',
-                'limit' => 'assertIsInt',
-                'start' => 'assertIsInt',
-                'groupby' => 'assertIsString'
-            ],
             'icms_db_legacy_updater_Handler' => [
                 'db' => 'assertNull'
             ],
