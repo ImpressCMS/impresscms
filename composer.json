@@ -59,6 +59,7 @@
     "ezyang/htmlpurifier": "^4.10",
     "geshi/geshi": "^1.0",
     "http-interop/http-factory-guzzle": "^1.0",
+    "imponeer/criteria": "^1.0",
     "imponeer/smarty-db-resource": "^1.0",
     "imponeer/smarty-foreachq": "^1.0",
     "imponeer/smarty-image": "^1.0",

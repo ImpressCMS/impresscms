@@ -221,43 +221,4 @@ class DBTest extends TestCase {
         }
     }
 
-    /**
-     * Test how criteria is working
-     */
-    public function testCriteria() {
-        $column = sha1(mt_rand(0, PHP_INT_MAX));
-        $value = sha1(mt_rand(0, PHP_INT_MAX));
-        $group_by = sha1(mt_rand(0, PHP_INT_MAX));
-        $sort_by = sha1(mt_rand(0, PHP_INT_MAX));
-        $item = new icms_db_criteria_Item($column, $value);
-        foreach (['render', 'renderLdap', 'renderWhere'] as $method) {
-            $rendered = $item->$method();
-            $this->assertNotNull($rendered, 'Rendered with ' . $method . ' criteria result must be not null');
-            $this->assertNotSame('', $rendered, 'Rendered with '.$method.' criteria result must be not empty');
-            $this->assertIsString( $rendered, 'Rendered with '.$method.' criteria result must be string');
-        }
-        $item->setGroupby($group_by);
-        $this->assertSame($item->groupby, $group_by, 'When set with setGroupBy function result is not modified groupby variable as should be');
-        $this->assertTrue(strpos($item->getGroupby(), $group_by) > -1, 'getGroupby returns bad result' );
-        $item->setSort($sort_by);
-        $this->assertSame($item->sort, $sort_by, 'When set with setSort function result is not modified $sort variable as should be');
-        $this->assertTrue(strpos($item->getSort(), $sort_by) > -1, 'getSort returns bad result' );
-        $this->assertSame($item->order, $item->getOrder(), 'Variable and function getOrder returns not same data');
-
-        foreach ([
-            'order' => ['DESC', 'ASC'],
-            'start' => [mt_rand(0, PHP_INT_MAX), mt_rand(0, PHP_INT_MAX)],
-            'limit' => [mt_rand(0, PHP_INT_MAX), mt_rand(0, PHP_INT_MAX)],
-        ] as $data => $values) {
-            $method_set = 'set' . ucfirst($data);
-            $method_get = 'get' . ucfirst($data);
-            foreach ($values as $value) {
-                $item->$method_set($value);
-                $fvalue = $item->$method_get();
-                $this->assertSame($item->$data, $fvalue, 'Variable $' . $data . ' and function '.$method_get.' returns not same data');
-                $this->assertSame($value, $fvalue, 'Data for $' . $data . ' was unchangend');
-            }
-        }
-    }
-
 }
