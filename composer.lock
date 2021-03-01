@@ -3111,16 +3111,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.2.0",
+            "version": "v6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "e38888a75c070304ca5514197d4847a59a5c853f"
+                "reference": "4a08cf4cdd2c38d12ee2b9fa69e5d235f37a6dcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/e38888a75c070304ca5514197d4847a59a5c853f",
-                "reference": "e38888a75c070304ca5514197d4847a59a5c853f",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/4a08cf4cdd2c38d12ee2b9fa69e5d235f37a6dcb",
+                "reference": "4a08cf4cdd2c38d12ee2b9fa69e5d235f37a6dcb",
                 "shasum": ""
             },
             "require": {
@@ -3179,7 +3179,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-11-25T15:24:57+00:00"
+            "time": "2021-02-19T15:28:08+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -6471,12 +6471,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "616131e531dedfc378ffd6060e1cfdcce48ff3a2"
+                "reference": "a6bfc5a1416f0dde1f53b7737b2cf983352737b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/616131e531dedfc378ffd6060e1cfdcce48ff3a2",
-                "reference": "616131e531dedfc378ffd6060e1cfdcce48ff3a2",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/a6bfc5a1416f0dde1f53b7737b2cf983352737b8",
+                "reference": "a6bfc5a1416f0dde1f53b7737b2cf983352737b8",
                 "shasum": ""
             },
             "conflict": {
@@ -6658,7 +6658,7 @@
                 "simplesamlphp/simplesamlphp-module-infocard": "<1.0.1",
                 "simplito/elliptic-php": "<1.0.6",
                 "slim/slim": "<2.6",
-                "smarty/smarty": "<3.1.33",
+                "smarty/smarty": "<3.1.39",
                 "socalnick/scn-social-auth": "<1.15.2",
                 "socialiteproviders/steam": "<1.1",
                 "spoonity/tcpdf": "<6.2.22",
@@ -6786,7 +6786,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-25T17:25:28+00:00"
+            "time": "2021-02-26T20:02:39+00:00"
         },
         {
             "name": "sebastian/cli-parser",
