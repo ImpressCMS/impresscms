@@ -2075,21 +2075,21 @@
         },
         {
             "name": "league/route",
-            "version": "4.5.0",
+            "version": "4.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/route.git",
-                "reference": "5ccce47a0120c9036d02a805237b942210993320"
+                "reference": "bb97a32303fc753a771cf2b41aa789f95dfaf00a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/route/zipball/5ccce47a0120c9036d02a805237b942210993320",
-                "reference": "5ccce47a0120c9036d02a805237b942210993320",
+                "url": "https://api.github.com/repos/thephpleague/route/zipball/bb97a32303fc753a771cf2b41aa789f95dfaf00a",
+                "reference": "bb97a32303fc753a771cf2b41aa789f95dfaf00a",
                 "shasum": ""
             },
             "require": {
                 "nikic/fast-route": "^1.0",
-                "php": ">=7.1",
+                "php": "^7.1 || ^8.0",
                 "psr/container": "^1.0",
                 "psr/http-factory": "^1.0",
                 "psr/http-message": "^1.0",
@@ -2101,14 +2101,17 @@
                 "orno/route": "~1.0"
             },
             "require-dev": {
-                "phpstan/phpstan": "^0.10.3",
-                "phpstan/phpstan-phpunit": "^0.10.0",
-                "phpunit/phpunit": "^7.0",
-                "squizlabs/php_codesniffer": "^3.3"
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpunit/phpunit": "^7.5",
+                "roave/security-advisories": "dev-master",
+                "scrutinizer/ocular": "^1.8",
+                "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
+                    "dev-master": "4.x-dev",
                     "dev-4.x": "4.x-dev",
                     "dev-3.x": "3.x-dev",
                     "dev-2.x": "2.x-dev",
@@ -2149,7 +2152,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-05-18T07:34:43+00:00"
+            "time": "2021-01-25T14:48:58+00:00"
         },
         {
             "name": "lulco/phoenix",
