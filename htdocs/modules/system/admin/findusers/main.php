@@ -1,68 +1,62 @@
 <?php
 // $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
+// ------------------------------------------------------------------------ //
+// XOOPS - PHP Content Management System //
+// Copyright (c) 2000 XOOPS.org //
+// <http://www.xoops.org/> //
+// ------------------------------------------------------------------------ //
+// This program is free software; you can redistribute it and/or modify //
+// it under the terms of the GNU General Public License as published by //
+// the Free Software Foundation; either version 2 of the License, or //
+// (at your option) any later version. //
+// //
+// You may not change or alter any portion of this comment or credits //
+// of supporting developers from this source code or any supporting //
+// source code which is considered copyrighted (c) material of the //
+// original comment or credit authors. //
+// //
+// This program is distributed in the hope that it will be useful, //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the //
+// GNU General Public License for more details. //
+// //
+// You should have received a copy of the GNU General Public License //
+// along with this program; if not, write to the Free Software //
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA //
+// ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu) //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
+// Project: The XOOPS Project //
 // ------------------------------------------------------------------------- //
 /**
  * Administration of finding users, main file
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @package		Administration
- * @subpackage	Users
- * @version		SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
+ * @copyright http://www.impresscms.org/ The ImpressCMS Project
+ * @license LICENSE.txt
+ * @package Administration
+ * @subpackage Users
+ * @version SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
  */
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
-/*
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-*/
+
+/* set default values */
+$op = 'form';
+
 $filter_post = array();
 $filter_get = array();
 
 if (!empty($_POST)) {
 	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
-	if (isset($_POST['filter_get'])) unset ($$_POST['filter_get']);
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
-    extract($clean_POST);
+	if (isset($_POST['filter_get'])) unset($$_POST['filter_get']);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
 }
 if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
-    extract($clean_GET);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
 }
-
-$op = (isset($_GET['op']))
-? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))
-	: ((isset($_POST['op']))
-			? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING))
-		: 'form');
 
 icms_cp_header();
 
@@ -92,8 +86,8 @@ if ($op == "form") {
 	$login_name_tray->addElement($login_name_match);
 	$login_name_tray->addElement($login_name_text);
 	$url_text = new icms_form_elements_Text(_AM_URLC, "user_url", 30, 100);
-	//$theme_select = new icms_form_elements_select_Theme(_AM_THEME, "user_theme");
-	//$timezone_select = new icms_form_elements_select_Timezone(_AM_TIMEZONE, "user_timezone_offset");
+	// $theme_select = new icms_form_elements_select_Theme(_AM_THEME, "user_theme");
+	// $timezone_select = new icms_form_elements_select_Timezone(_AM_TIMEZONE, "user_timezone_offset");
 	$icq_text = new icms_form_elements_Text("", "user_icq", 30, 100);
 	$icq_match = new icms_form_elements_select_Matchoption("", "user_icq_match");
 	$icq_tray = new icms_form_elements_Tray(_AM_ICQ, "&nbsp;");
@@ -118,7 +112,7 @@ if ($op == "form") {
 	$occupation_text = new icms_form_elements_Text(_AM_OCCUPATION, "user_occ", 30, 100);
 	$interest_text = new icms_form_elements_Text(_AM_INTEREST, "user_intrest", 30, 100);
 
-	//$bio_text = new icms_form_elements_Text(_AM_EXTRAINFO, "user_bio", 30, 100);
+	// $bio_text = new icms_form_elements_Text(_AM_EXTRAINFO, "user_bio", 30, 100);
 	$lastlog_more = new icms_form_elements_Text(_AM_LASTLOGMORE, "user_lastlog_more", 10, 5);
 	$lastlog_less = new icms_form_elements_Text(_AM_LASTLOGLESS, "user_lastlog_less", 10, 5);
 	$reg_more = new icms_form_elements_Text(_AM_REGMORE, "user_reg_more", 10, 5);
@@ -126,13 +120,13 @@ if ($op == "form") {
 	$posts_more = new icms_form_elements_Text(_AM_POSTSMORE, "user_posts_more", 10, 5);
 	$posts_less = new icms_form_elements_Text(_AM_POSTSLESS, "user_posts_less", 10, 5);
 	$mailok_radio = new icms_form_elements_Radio(_AM_SHOWMAILOK, "user_mailok", "both");
-	$mailok_radio->addOptionArray(array("mailok"=>_AM_MAILOK, "mailng"=>_AM_MAILNG, "both"=>_AM_BOTH));
+	$mailok_radio->addOptionArray(array("mailok" => _AM_MAILOK, "mailng" => _AM_MAILNG, "both" => _AM_BOTH));
 	$type_radio = new icms_form_elements_Radio(_AM_SHOWTYPE, "user_type", "actv");
-	$type_radio->addOptionArray(array("actv"=>_AM_ACTIVE, "inactv"=>_AM_INACTIVE, "both"=>_AM_BOTH));
+	$type_radio->addOptionArray(array("actv" => _AM_ACTIVE, "inactv" => _AM_INACTIVE, "both" => _AM_BOTH));
 	$sort_select = new icms_form_elements_Select(_AM_SORT, "user_sort");
-	$sort_select->addOptionArray(array("uname"=>_AM_UNAME, "login_name"=>_AM_LOGINNAME, "email"=>_AM_EMAIL, "last_login"=>_AM_LASTLOGIN, "user_regdate"=>_AM_REGDATE, "posts"=>_AM_POSTS));
+	$sort_select->addOptionArray(array("uname" => _AM_UNAME, "login_name" => _AM_LOGINNAME, "email" => _AM_EMAIL, "last_login" => _AM_LASTLOGIN, "user_regdate" => _AM_REGDATE, "posts" => _AM_POSTS));
 	$order_select = new icms_form_elements_Select(_AM_ORDER, "user_order");
-	$order_select->addOptionArray(array("ASC"=>_AM_ASC, "DESC"=>_AM_DESC));
+	$order_select->addOptionArray(array("ASC" => _AM_ASC, "DESC" => _AM_DESC));
 	$limit_text = new icms_form_elements_Text(_AM_LIMIT, "limit", 6, 2);
 	$fct_hidden = new icms_form_elements_Hidden("fct", "findusers");
 	$op_hidden = new icms_form_elements_Hidden("op", "submit");
@@ -144,8 +138,8 @@ if ($op == "form") {
 	$form->addElement($login_name_tray);
 	$form->addElement($email_tray);
 	$form->addElement($group_select);
-	//$form->addElement($theme_select);
-	//$form->addElement($timezone_select);
+	// $form->addElement($theme_select);
+	// $form->addElement($timezone_select);
 	$form->addElement($icq_tray);
 	$form->addElement($aim_tray);
 	$form->addElement($yim_tray);
@@ -154,7 +148,7 @@ if ($op == "form") {
 	$form->addElement($location_text);
 	$form->addElement($occupation_text);
 	$form->addElement($interest_text);
-	//$form->addElement($bio_text);
+	// $form->addElement($bio_text);
 	$form->addElement($lastlog_more);
 	$form->addElement($lastlog_less);
 	$form->addElement($reg_more);
@@ -454,7 +448,7 @@ if ($op == "form") {
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
 		$criteria->setStart($start);
-		$foundusers =& $member_handler->getUsersByGroupLink($groups, $criteria, TRUE);
+		$foundusers = &$member_handler->getUsersByGroupLink($groups, $criteria, TRUE);
 		$ucount = 0;
 		foreach (array_keys($foundusers) as $j) {
 			if ($ucount % 2 == 0) {
@@ -462,30 +456,17 @@ if ($op == "form") {
 			} else {
 				$class = 'odd';
 			}
-			$ucount++;
-			$fuser_avatar = $foundusers[$j]->getVar("user_avatar") ? "<img src='" . ICMS_UPLOAD_URL . "/"
-				. $foundusers[$j]->getVar("user_avatar") . "' alt='' />" : "&nbsp;";
+			$ucount++ ;
+			$fuser_avatar = $foundusers[$j]->getVar("user_avatar") ? "<img src='" . ICMS_UPLOAD_URL . "/" . $foundusers[$j]->getVar("user_avatar") . "' alt='' />" : "&nbsp;";
 			$fuser_name = $foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
-			echo "<tr class='$class'><td align='center'><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]' value='"
-				. $foundusers[$j]->getVar("uid") . "' /><input type='hidden' name='memberslist_uname[" . $foundusers[$j]->getVar("uid")
-				. "]' id='memberslist_uname[]' value='" . $foundusers[$j]->getVar("uname") . "' /></td>";
-			echo "<td>$fuser_avatar</td><td><a href='" . ICMS_URL . "/userinfo.php?uid="
-				. $foundusers[$j]->getVar("uid") . "'>" . $foundusers[$j]->getVar("uname")
-				. "</a></td><td>" . $foundusers[$j]->getVar("login_name") . "</td><td>"
-				. $fuser_name . "</td><td align='center'><a href='mailto:"
-				. $foundusers[$j]->getVar("email") . "'><img src='" . ICMS_URL . "/images/icons/"
-				. $GLOBALS["icmsConfig"]["language"] . "/email.gif' border='0' alt='";
+			echo "<tr class='$class'><td align='center'><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]' value='" . $foundusers[$j]->getVar("uid") . "' /><input type='hidden' name='memberslist_uname[" . $foundusers[$j]->getVar("uid") . "]' id='memberslist_uname[]' value='" . $foundusers[$j]->getVar("uname") . "' /></td>";
+			echo "<td>$fuser_avatar</td><td><a href='" . ICMS_URL . "/userinfo.php?uid=" . $foundusers[$j]->getVar("uid") . "'>" . $foundusers[$j]->getVar("uname") . "</a></td><td>" . $foundusers[$j]->getVar("login_name") . "</td><td>" . $fuser_name . "</td><td align='center'><a href='mailto:" . $foundusers[$j]->getVar("email") . "'><img src='" . ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] . "/email.gif' border='0' alt='";
 			printf(_SENDEMAILTO, $foundusers[$j]->getVar("uname", "E"));
-			echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\""
-				. ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $foundusers[$j]->getVar("uid")
-				. "\",\"pmlite\",800,680);'><img src='" . ICMS_URL . "/images/icons/"
-				. $GLOBALS["icmsConfig"]["language"] . "/pm.gif' border='0' alt='";
+			echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\"" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $foundusers[$j]->getVar("uid") . "\",\"pmlite\",800,680);'><img src='" . ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] . "/pm.gif' border='0' alt='";
 			printf(_SENDPMTO, $foundusers[$j]->getVar("uname", "E"));
 			echo "' /></a></td><td align='center'>";
 			if ($foundusers[$j]->getVar("url", "E") != "") {
-				echo "<a href='" . $foundusers[$j]->getVar("url", "E") . "' target='_blank'><img src='"
-					. ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"]
-					. "/www.gif' border='0' alt='" . _VISITWEBSITE . "' /></a>";
+				echo "<a href='" . $foundusers[$j]->getVar("url", "E") . "' target='_blank'><img src='" . ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] . "/www.gif' border='0' alt='" . _VISITWEBSITE . "' /></a>";
 			} else {
 				echo "&nbsp;";
 			}
@@ -496,14 +477,13 @@ if ($op == "form") {
 				echo "&nbsp;";
 			}
 			echo "</td><td align='center'>" . icms_conv_nr2local($foundusers[$j]->getVar("posts")) . "</td>";
-			echo "<td align='center'><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=users&amp;uid="
-				. $foundusers[$j]->getVar("uid") . "&amp;op=modifyUser'><img src='". ICMS_IMAGES_SET_URL . "/actions/edit.png' alt=" . _EDIT . " title=" . _EDIT . " /></a></td></tr>\n";
+			echo "<td align='center'><a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=users&amp;uid=" . $foundusers[$j]->getVar("uid") . "&amp;op=modifyUser'><img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' alt=" . _EDIT . " title=" . _EDIT . " /></a></td></tr>\n";
 		}
 		echo "<tr class='foot'><td><select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _AM_SENDMAIL . "</option>";
 		$group = !empty($group) ? (int) $group : 0;
 		if ($group > 0) {
 			$member_handler = icms::handler('icms_member');
-			$add2group =& $member_handler->getGroup($group);
+			$add2group = &$member_handler->getGroup($group);
 			echo "<option value='groups' selected='selected'>" . sprintf(_AM_ADD2GROUP, $add2group->getVar('name')) . "</option>";
 		}
 		echo "</select>&nbsp;";
@@ -538,22 +518,22 @@ if ($op == "form") {
 				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _AM_PREVIOUS . "</a>&nbsp;\n";
 			}
 			$counter = 1;
-			$currentpage = ($start+$limit) / $limit;
+			$currentpage = ($start + $limit) / $limit;
 			while ($counter <= $totalpages) {
 				if ($counter == $currentpage) {
 					$hiddenform .= "<strong>" . $counter . "</strong> ";
-				} elseif (($counter > $currentpage-4 && $counter < $currentpage+4) || $counter == 1 || $counter == $totalpages) {
-					if ($counter == $totalpages && $currentpage < $totalpages-4) {
+				} elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1 || $counter == $totalpages) {
+					if ($counter == $totalpages && $currentpage < $totalpages - 4) {
 						$hiddenform .= "... ";
 					}
-					$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter-1)*$limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+					$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
 					if ($counter == 1 && $currentpage > 5) {
 						$hiddenform .= "... ";
 					}
 				}
-				$counter++;
+				$counter++ ;
 			}
-			$next = $start+$limit;
+			$next = $start + $limit;
 			if ($total > $next) {
 				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _AM_NEXT . "</a>\n";
 			}
