@@ -2,13 +2,13 @@
 /**
  * ImpressCMS Customtags
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
- * @subpackage	Custom Tags
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: main.php 11012 2011-02-06 16:37:43Z skenow $
+ * @copyright The ImpressCMS Project http://www.impresscms.org/
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package Administration
+ * @subpackage Custom Tags
+ * @since 1.1
+ * @author marcan <marcan@impresscms.org>
+ * @version SVN: $Id: main.php 11012 2011-02-06 16:37:43Z skenow $
  */
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar("mid"))) {
 	exit("Access Denied");
@@ -17,11 +17,11 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 /**
  * Generate the form for editing a custom tag
  *
- * @param $customtagid	unique identifier for the custom tag
- * @param $clone		are you cloning an existing custom tag?
+ * @param $customtagid unique identifier for the custom tag
+ * @param $clone are you cloning an existing custom tag?
  */
 function editcustomtag($customtagid = 0, $clone = FALSE) {
-	global $icms_customtag_handler, $icmsAdminTpl;
+	global $icms_customtag_handler, $icmsAdminTpl, $customtagid;
 
 	icms_cp_header();
 	$customtagObj = $icms_customtag_handler->get($customtagid);
@@ -66,25 +66,47 @@ icms_loadLanguageFile("system", "common");
 
 $icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
+/*
+ * GET variables
+ * (int) customtagid
+ *
+ * POST variables
+ *
+ */
 
-$clean_op = "";
-if (isset($_GET["op"])) $clean_op = htmlentities($_GET["op"]);
-if (isset($_POST["op"])) $clean_op = htmlentities($_POST["op"]);
+/* default values */
+$op = '';
+$customtagid = 0;
 
-$valid_op = array ("mod", "changedField", "clone", "addcustomtag", "del", "");
+$filter_get = array('customtagid' => 'int');
+
+$filter_post = array('customtagid' => 'int');
+
+/* filter the user input */
+if (!empty($_GET)) {
+	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
+	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
+}
+
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
+}
+
+$clean_op = $op;
+
+$valid_op = array("mod", "changedField", "clone", "addcustomtag", "del", "");
 
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case "mod":
 		case "changedField":
-			$customtagid = isset($_GET["customtagid"]) ? (int)$_GET["customtagid"] : 0;
 			editcustomtag($customtagid);
 			break;
 
 		case "clone":
-			$customtagid = isset($_GET["customtagid"]) ? (int)$_GET["customtagid"] : 0;
 			editcustomtag($customtagid, TRUE);
 			break;
 
