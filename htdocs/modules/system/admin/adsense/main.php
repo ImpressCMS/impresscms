@@ -2,14 +2,13 @@
 /**
  * ImpressCMS Adsenses
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
- * @since		1.2
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: main.php 10999 2011-02-03 02:22:45Z skenow $
+ * @copyright The ImpressCMS Project http://www.impresscms.org/
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package Administration
+ * @since 1.2
+ * @author Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version $Id: main.php 10999 2011-02-03 02:22:45Z skenow $
  */
-
 if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmin(icms::$module->getVar('mid'))) {
 	exit("Access Denied");
 }
@@ -17,9 +16,9 @@ if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmi
 /**
  * Edit AdSense entries
  *
- * @param $showmenu		This parameter is not used (why is it here?)
- * @param $adsenseid	Unique identifier of the AdSense unit
- * @param $clone		Is this cloning an existing AdSense unit?
+ * @param $showmenu This parameter is not used (why is it here?)
+ * @param $adsenseid Unique identifier of the AdSense unit
+ * @param $clone Is this cloning an existing AdSense unit?
  */
 function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 	global $icms_adsense_handler, $icmsAdminTpl;
@@ -45,23 +44,42 @@ function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 icms_loadLanguageFile('system', 'common');
 
 $icms_adsense_handler = icms_getModuleHandler("adsense", "system");
+/*
+ * GET variables
+ * (str) op
+ * (int) adsenseid
+ *
+ * POST variables
+ *
+ */
 
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_POST['op']))
-	? trim(StopXSS($_POST['op']))
-	: ((isset($_GET['op']))
-		? trim(StopXSS($_GET['op']))
-		: '');
+/* default values */
+$op = '';
+$adsenseid = 0;
+
+$filter_get = array('op' => 'str', 'adsenseid' => 'int');
+
+$filter_post = array();
+
+/* filter the user input */
+if (!empty($_GET)) {
+	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
+	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, fales);
+	extract($clean_GET);
+}
+
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
+}
 
 switch ($op) {
 	case "mod":
-		$adsenseid = isset($_GET['adsenseid']) ? (int) $_GET['adsenseid'] : 0 ;
 		editadsense(TRUE, $adsenseid);
 		break;
 
 	case "clone":
-		$adsenseid = isset($_GET['adsenseid']) ? (int) $_GET['adsenseid'] : 0 ;
 		editadsense(TRUE, $adsenseid, TRUE);
 		break;
 
