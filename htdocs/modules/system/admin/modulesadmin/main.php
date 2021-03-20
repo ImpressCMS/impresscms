@@ -1,40 +1,41 @@
 <?php
 // $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
+// ------------------------------------------------------------------------ //
+// XOOPS - PHP Content Management System //
+// Copyright (c) 2000 XOOPS.org //
+// <http://www.xoops.org/> //
+// ------------------------------------------------------------------------ //
+// This program is free software; you can redistribute it and/or modify //
+// it under the terms of the GNU General Public License as published by //
+// the Free Software Foundation; either version 2 of the License, or //
+// (at your option) any later version. //
+// //
+// You may not change or alter any portion of this comment or credits //
+// of supporting developers from this source code or any supporting //
+// source code which is considered copyrighted (c) material of the //
+// original comment or credit authors. //
+// //
+// This program is distributed in the hope that it will be useful, //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the //
+// GNU General Public License for more details. //
+// //
+// You should have received a copy of the GNU General Public License //
+// along with this program; if not, write to the Free Software //
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA //
+// ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu) //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
+// Project: The XOOPS Project //
 // ------------------------------------------------------------------------- //
 /**
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Modules
- * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
+ *
+ * @copyright http://www.impresscms.org/ The ImpressCMS Project
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package System
+ * @subpackage Modules
+ * @author Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
  */
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
@@ -44,9 +45,38 @@ $icmsAdminTpl = new icms_view_Tpl();
 
 include_once ICMS_MODULES_PATH . "/system/admin/modulesadmin/modulesadmin.php";
 icms_loadLanguageFile('system', 'blocksadmin', TRUE);
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op')) : ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op')) : 'list');
+
+/*
+ * GET variables
+ * (string) op
+ * (string) module
+ *
+ *
+ * POST variables
+ * (arr|int) newstatus
+ * (arr|int) oldstatus
+ * (arr|int) weight
+ */
+
+/* default values */
+$op = 'list';
+
+$filter_get = array('newstatus' => 'int', 'oldstatus' => 'int', 'weight' => 'int');
+
+$filter_post = array('newstatus' => 'int', 'oldstatus' => 'int', 'weight' => 'int');
+
+/* filter the user input */
+if (!empty($_GET)) {
+	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
+	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+	extract($clean_GET);
+}
+
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+	extract($clean_POST);
+}
 
 if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
 	if (!icms::$security->check()) {
@@ -78,12 +108,7 @@ if ($op == "confirm") {
 		exit();
 	}
 
-	echo "<h4 style='text-align:" . _GLOBAL_LEFT . ";'>" . _MD_AM_PCMFM . "</h4>"
-	. "<form action='admin.php' method='post'>"
-	. "<input type='hidden' name='fct' value='modulesadmin' />"
-	. "<input type='hidden' name='op' value='submit' />"
-	. "<table width='100%' border='0' cellspacing='1' class='outer'>"
-	. "<tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _MD_AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
+	echo "<h4 style='text-align:" . _GLOBAL_LEFT . ";'>" . _MD_AM_PCMFM . "</h4>" . "<form action='admin.php' method='post'>" . "<input type='hidden' name='fct' value='modulesadmin' />" . "<input type='hidden' name='op' value='submit' />" . "<table width='100%' border='0' cellspacing='1' class='outer'>" . "<tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _MD_AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
 	$mcount = 0;
 	foreach ($module as $mid) {
 		if ($mcount % 2 != 0) {
@@ -97,7 +122,7 @@ if ($op == "confirm") {
 			echo '&nbsp;&raquo;&raquo;&nbsp;<span style="color:#ff0000;font-weight:bold;">' . $newname[$mid] . '</span>';
 		}
 		echo '</td><td align="center">';
-		if (isset($newstatus[$mid]) && $newstatus[$mid] ==1) {
+		if (isset($newstatus[$mid]) && $newstatus[$mid] == 1) {
 			if ($oldstatus[$mid] == 0) {
 				echo "<span style='color:#ff0000;font-weight:bold;'>" . _MD_AM_ACTIVATE . "</span>";
 			} else {
@@ -117,20 +142,10 @@ if ($op == "confirm") {
 		} else {
 			echo $weight[$mid];
 		}
-		echo "<input type='hidden' name='module[]' value='". (int) $mid
-		."' /><input type='hidden' name='oldname[" . $mid . "]' value='" . htmlspecialchars($oldname[$mid], ENT_QUOTES)
-		."' /><input type='hidden' name='newname[" . $mid . "]' value='" . htmlspecialchars($newname[$mid], ENT_QUOTES)
-		."' /><input type='hidden' name='oldstatus[" . $mid . "]' value='" . (int) $oldstatus[$mid]
-		."' /><input type='hidden' name='newstatus[" . $mid . "]' value='" . (int) $newstatus[$mid]
-		."' /><input type='hidden' name='oldweight[" . $mid . "]' value='" . (int) $oldweight[$mid]
-		."' /><input type='hidden' name='weight[" . $mid . "]' value='" . (int) $weight[$mid]
-		."' /></td></tr>";
+		echo "<input type='hidden' name='module[]' value='" . (int) $mid . "' /><input type='hidden' name='oldname[" . $mid . "]' value='" . htmlspecialchars($oldname[$mid], ENT_QUOTES) . "' /><input type='hidden' name='newname[" . $mid . "]' value='" . htmlspecialchars($newname[$mid], ENT_QUOTES) . "' /><input type='hidden' name='oldstatus[" . $mid . "]' value='" . (int) $oldstatus[$mid] . "' /><input type='hidden' name='newstatus[" . $mid . "]' value='" . (int) $newstatus[$mid] . "' /><input type='hidden' name='oldweight[" . $mid . "]' value='" . (int) $oldweight[$mid] . "' /><input type='hidden' name='weight[" . $mid . "]' value='" . (int) $weight[$mid] . "' /></td></tr>";
 	}
 
-	echo "<tr class='foot' align='center'><td colspan='3'><input type='submit' value='"
-	. _MD_AM_SUBMIT . "' />&nbsp;<input type='button' value='" . _MD_AM_CANCEL
-	. "' onclick='location=\"admin.php?fct=modulesadmin\"' />" . icms::$security->getTokenHTML()
-	. "</td></tr></table></form>";
+	echo "<tr class='foot' align='center'><td colspan='3'><input type='submit' value='" . _MD_AM_SUBMIT . "' />&nbsp;<input type='button' value='" . _MD_AM_CANCEL . "' onclick='location=\"admin.php?fct=modulesadmin\"' />" . icms::$security->getTokenHTML() . "</td></tr></table></form>";
 	icms_cp_footer();
 	exit();
 }
@@ -139,7 +154,7 @@ if ($op == "submit") {
 	$ret = array();
 	$write = FALSE;
 	foreach ($module as $mid) {
-		if (isset($newstatus[$mid]) && $newstatus[$mid] ==1) {
+		if (isset($newstatus[$mid]) && $newstatus[$mid] == 1) {
 			if ($oldstatus[$mid] == 0) {
 				$ret[] = xoops_module_activate($mid);
 			}
@@ -176,10 +191,10 @@ if ($op == "submit") {
 
 if ($op == 'install') {
 	$module_handler = icms::handler('icms_module');
-	$mod =& $module_handler->create();
+	$mod = &$module_handler->create();
 	$mod->loadInfoAsVar($module);
 	if ($mod->getInfo('image') != FALSE && trim($mod->getInfo('image')) != '') {
-		$msgs ='<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
+		$msgs = '<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREINS;
 	if (empty($from_112)) {
@@ -216,11 +231,11 @@ if ($op == 'install_ok') {
 
 if ($op == 'uninstall') {
 	$module_handler = icms::handler('icms_module');
-	$mod =& $module_handler->getByDirname($module);
+	$mod = &$module_handler->getByDirname($module);
 	$mod->registerClassPath();
 
 	if ($mod->getInfo('image') != FALSE && trim($mod->getInfo('image')) != '') {
-		$msgs ='<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
+		$msgs = '<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREUNINS;
 	icms_cp_header();
@@ -251,15 +266,15 @@ if ($op == 'uninstall_ok') {
 
 if ($op == 'update') {
 	$module_handler = icms::handler('icms_module');
-	$mod =& $module_handler->getByDirname($module);
+	$mod = &$module_handler->getByDirname($module);
 	if ($mod->getInfo('image') != FALSE && trim($mod->getInfo('image')) != '') {
-		$msgs ='<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
+		$msgs = '<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREUPD;
 	icms_cp_header();
 
 	if (icms_getModuleInfo('system')->getDBVersion() < 14 && (!is_writable(ICMS_PLUGINS_PATH) || !is_dir(ICMS_ROOT_PATH . '/plugins/preloads') || !is_writable(ICMS_ROOT_PATH . '/plugins/preloads'))) {
-		icms_core_Message::error(sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads'), _MD_AM_PLUGINSFOLDER_UPDATE_TITLE, TRUE);
+		icms_core_Message::error(sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH, ICMS_ROOT_PATH . '/plugins/preloads'), _MD_AM_PLUGINSFOLDER_UPDATE_TITLE, TRUE);
 	}
 	if (icms_getModuleInfo('system')->getDBVersion() < 37 && !is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
 		icms_core_Message::error(sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH)), _MD_AM_IMAGESFOLDER_UPDATE_TITLE, TRUE);

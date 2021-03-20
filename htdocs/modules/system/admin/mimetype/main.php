@@ -2,15 +2,14 @@
 /**
  * ImpressCMS Mimetypes
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
- * @subpackage	Mimetypes
- * @since		1.2
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: main.php 11143 2011-03-30 13:46:23Z m0nty_ $
+ * @copyright The ImpressCMS Project http://www.impresscms.org/
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package Administration
+ * @subpackage Mimetypes
+ * @since 1.2
+ * @author Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version SVN: $Id: main.php 11143 2011-03-30 13:46:23Z m0nty_ $
  */
-
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
@@ -18,8 +17,8 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 /**
  * Logic and rendering for mimetypes management
  *
- * @param bool	$showmenu	Doesn't appear to have any current functionality
- * @param int	$mimetypeid	Unique ID for mimetype entry
+ * @param bool $showmenu Doesn't appear to have any current functionality
+ * @param int $mimetypeid Unique ID for mimetype entry
  */
 function editmimetype($showmenu = FALSE, $mimetypeid = 0) {
 	global $icms_mimetype_handler, $icmsAdminTpl;
@@ -48,13 +47,37 @@ icms_loadLanguageFile('system', 'common');
 
 $icms_mimetype_handler = icms_getModuleHandler('mimetype');
 
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op')) : ((isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op')) : '');
+/*
+ * GET variables
+ * (string) op
+ *
+ * POST variables
+ *
+ */
+
+/* default values */
+$op = '';
+$mimetypeid = 0;
+
+$filter_get = array('mimetypeid' => 'int');
+
+$filter_post = array('mimetypeid' => 'int');
+
+/* filter the user input */
+if (!empty($_GET)) {
+	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
+	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
+}
+
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
+}
 
 switch ($op) {
 	case "mod":
-		$mimetypeid = isset($_GET['mimetypeid']) ? (int) $_GET['mimetypeid'] : 0;
 		editmimetype(TRUE, $mimetypeid);
 		break;
 

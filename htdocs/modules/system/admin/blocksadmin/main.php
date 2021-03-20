@@ -124,8 +124,8 @@ $clean_bid = isset($_POST['bid']) ? (int) $_POST['bid'] : $clean_bid;
 if (isset($_GET['sortsel'])) {
 	$startbid = (int) $_GET['startbid'];
 	$limitsel = (int) $_GET['limitsel'];
-	$ordersel = filter_input(INPUT_GET, 'ordersel');
-	$sortsel = filter_input(INPUT_GET, 'sortsel');
+	$ordersel = filter_input(INPUT_GET, 'ordersel', FILTER_SANITIZE_STRING);
+	$sortsel = filter_input(INPUT_GET, 'sortsel', FILTER_SANITIZE_STRING);
 }
 /**
  * in_array() is a native PHP function that will determine if the value of the
