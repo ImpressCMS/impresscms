@@ -3,9 +3,16 @@
 
 namespace ImpressCMS\Core\Response;
 
+use Aura\Session\Session;
 use GuzzleHttp\Psr7\MessageTrait;
+use icms;
+use icms_module_Object;
+use icms_view_theme_Factory;
+use icms_view_theme_Object;
 use ImpressCMS\Core\Exceptions\ResponseCodeUnsupportedException;
 use Psr\Http\Message\ResponseInterface;
+use function impresscms_get_adminmenu;
+use function xoops_module_write_admin_menu;
 
 /**
  * Response that renders template
@@ -25,7 +32,7 @@ class ViewResponse implements ResponseInterface
 	/**
 	 * Instance of current theme
 	 *
-	 * @var \icms_view_theme_Object
+	 * @var icms_view_theme_Object
 	 */
 	private $theme = null;
 
@@ -50,13 +57,13 @@ class ViewResponse implements ResponseInterface
 		$this->setThemeFromConfig($config);
 		$this->setGoogleMeta();
 
-		\icms::$preload->triggerEvent('startOutputInit');
+		icms::$preload->triggerEvent('startOutputInit');
 
 		$this->setDefaultMetas();
 		$this->addSanitizerPlugins();
 
 		if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
-			if (\icms::$user === null) {
+			if (icms::$user === null) {
 				redirect_header(ICMS_URL . '/user.php', 3, _NOPERM, false);
 				return;
 			}
@@ -72,8 +79,8 @@ class ViewResponse implements ResponseInterface
 		global $icmsTheme;
 		$GLOBALS['icmsTheme'] = $icmsTheme = &$this->theme;
 
-		$redirect_message = \icms::$session
-			->getSegment(\icms::class)
+		$redirect_message = icms::$session
+			->getSegment(icms::class)
 			->getFlash('redirect_message');
 		if ($redirect_message) {
 			$this->addRedirectMessageScripts($redirect_message);
@@ -142,7 +149,7 @@ class ViewResponse implements ResponseInterface
 				$tplConfig['folderName'] = $icmsConfig['theme_admin_set'];
 			}
 		}
-		$this->theme = \icms_view_theme_Factory::getInstance()->createInstance($tplConfig);
+		$this->theme = icms_view_theme_Factory::getInstance()->createInstance($tplConfig);
 	}
 
 	/**
@@ -246,6 +253,8 @@ class ViewResponse implements ResponseInterface
 				'weight' => 0
 			]
 		];
+
+		$this->addPinger();
 	}
 
 	/**
@@ -279,11 +288,34 @@ class ViewResponse implements ResponseInterface
 	}
 
 	/**
+	 * Adds code for script to automatically ping to extend session
+	 */
+	private function addPinger() {
+		/**
+		 * @var Session $session
+		 */
+		$session = icms::$session;
+		if (!$session || !$GLOBALS['icmsConfig']['session_autoextend']) {
+			return;
+		}
+		$this->theme->addScript('', ['type' => 'text/javascript'], '
+			setInterval(
+				function () {
+					var httpRequest = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+					httpRequest.open("GET", "'.ICMS_URL.'/ping", true);
+					httpRequest.send();
+				},
+				'.($session->getCacheExpire() * 1000 * 0.9).'
+			);
+		');
+	}
+
+	/**
 	 * Ads admin metas
 	 */
 	private function addAdminMetas()
 	{
-		$this->theme->addScript('', array('type' => 'text/javascript'), 'startList = function() {
+		$this->theme->addScript('', ['type' => 'text/javascript'], 'startList = function() {
 						if (document.all&&document.getElementById) {
 							navRoot = document.getElementById("nav");
 							for (i=0; i<navRoot.childNodes.length; i++) {
@@ -309,19 +341,19 @@ class ViewResponse implements ResponseInterface
 	{
 		global $icmsConfig;
 
-		$cache = \icms::getInstance()->get('cache');
+		$cache = icms::getInstance()->get('cache');
 		$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
 
 		if (!$cached_menu->isHit()) {
-			\xoops_module_write_admin_menu(\impresscms_get_adminmenu());
+			xoops_module_write_admin_menu(impresscms_get_adminmenu());
 			$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
 		}
 
 		$admin_menu = $cached_menu->get();
 
-		$moduleperm_handler = \icms::handler('icms_member_groupperm');
-		$module_handler = \icms::handler('icms_module');
-		$groups = \icms::$user->getGroups();
+		$moduleperm_handler = icms::handler('icms_member_groupperm');
+		$module_handler = icms::handler('icms_module');
+		$groups = icms::$user->getGroups();
 		foreach ($admin_menu as $k => $navitem) {
 			//Getting array of allowed modules to use in admin home
 			if ($navitem ['id'] == 'modules') {
@@ -341,7 +373,7 @@ class ViewResponse implements ResponseInterface
 			if ($navitem['id'] == 'opsystem') {
 				$all_ok = false;
 				if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
-					$sysperm_handler = \icms::handler('icms_member_groupperm');
+					$sysperm_handler = icms::handler('icms_member_groupperm');
 					$ok_syscats = &$sysperm_handler->getItemIds('system_admin', $groups);
 				} else {
 					$all_ok = true;
@@ -403,8 +435,8 @@ class ViewResponse implements ResponseInterface
 		/**
 		 * Loading options of the current module.
 		 */
-		if (\icms::$module !== null) {
-			if (\icms::$module->dirname == 'system') {
+		if (icms::$module !== null) {
+			if (icms::$module->dirname == 'system') {
 				if (isset($sysprefs) && count($sysprefs) > 0) {
 					// remove the grouping for the system module preferences (first layer)
 					$sysprefs_tmp = array();
@@ -430,7 +462,7 @@ class ViewResponse implements ResponseInterface
 				}
 			} else {
 				foreach ($mods as $mod) {
-					if ($mod['dir'] == \icms::$module->dirname) {
+					if ($mod['dir'] == icms::$module->dirname) {
 						$m = $mod; //Getting info of the current module
 						break;
 					}
@@ -452,10 +484,10 @@ class ViewResponse implements ResponseInterface
 					}
 				}
 			}
-			$this->theme->template->assign('modpath', ICMS_URL . '/modules/' . \icms::$module->dirname);
-			$this->theme->template->assign('modname', \icms::$module->name);
-			$this->theme->template->assign('modid', \icms::$module->mid);
-			$this->theme->template->assign('moddir', \icms::$module->dirname);
+			$this->theme->template->assign('modpath', ICMS_URL . '/modules/' . icms::$module->dirname);
+			$this->theme->template->assign('modname', icms::$module->name);
+			$this->theme->template->assign('modid', icms::$module->mid);
+			$this->theme->template->assign('moddir', icms::$module->dirname);
 			$this->theme->template->assign('lang_prefs', _PREFERENCES);
 		}
 	}
@@ -521,7 +553,7 @@ class ViewResponse implements ResponseInterface
 	{
 		global $icmsModule;
 		// RMV-NOTIFY
-		if (($icmsModule instanceof \icms_module_Object) && ($icmsModule->hasnotification == 1) && is_object(\icms::$user)) {
+		if (($icmsModule instanceof icms_module_Object) && ($icmsModule->hasnotification == 1) && is_object(icms::$user)) {
 			/** Require the notifications area */
 			global $xoTheme, $xoopsTpl;
 			$xoopsTpl = &$this;

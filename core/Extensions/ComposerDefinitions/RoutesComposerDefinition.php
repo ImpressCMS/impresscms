@@ -2,18 +2,18 @@
 
 namespace ImpressCMS\Core\Extensions\ComposerDefinitions;
 
-use FilesystemIterator;
 use Defuse\Crypto\Key;
 use Ellipse\Cookies\EncryptCookiesMiddleware;
+use FilesystemIterator;
 use Http\Factory\Guzzle\ResponseFactory;
 use icms;
-use icms_module_Handler;
 use icms_config_Handler;
+use icms_module_Handler;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
+use ImpressCMS\Core\Middlewares\ChangeThemeMiddleware;
 use ImpressCMS\Core\Middlewares\HasGroupMiddleware;
 use ImpressCMS\Core\Middlewares\HasPermissionMiddleware;
-use ImpressCMS\Core\Middlewares\ChangeThemeMiddleware;
 use ImpressCMS\Core\Middlewares\MultiLoginOnlineInfoUpdaterMiddleware;
 use ImpressCMS\Core\Middlewares\SetSessionCookieConfigMiddleware;
 use ImpressCMS\Core\Middlewares\SiteClosedMiddleware;
@@ -22,13 +22,13 @@ use League\Container\Container;
 use League\Route\RouteGroup;
 use League\Route\Strategy\ApplicationStrategy;
 use League\Route\Strategy\JsonStrategy;
+use Middlewares\AuraSession;
+use Middlewares\ClientIp;
+use Middlewares\Firewall;
 use Psr\Container\ContainerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
-use Middlewares\ClientIp;
-use Middlewares\Firewall;
-use Middlewares\AuraSession;
 
 /**
  * let register routes in composer.json
@@ -230,7 +230,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 				$hasPort = isset($parsedDefinition['port']);
 				$hasHost = isset($parsedDefinition['host']);
 				$hasScheme = isset($parsedDefinition['scheme']);
-				$hasStrategy = ($parsedDefinition['strategy'] !== ApplicationStrategy::class);
+				$hasStrategy = ($parsedDefinition['strategy'] !== '\\' . ApplicationStrategy::class);
 				$hasMiddlewares = isset($parsedDefinition['middlewares']) && !empty($parsedDefinition['middlewares']);
 				$hasExtraConfig = $hasHost || $hasPort || $hasScheme || $hasStrategy || $hasMiddlewares;
 				$ret[] = ($group !== '') ? $linePrefix . '$group' : '$router';
@@ -448,18 +448,18 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 		if (isset($definition['strategy'])) {
 			switch (strtolower(trim($definition['strategy']))) {
 				case 'json':
-					$strategy = JsonStrategy::class;
+					$strategy = '\\' . JsonStrategy::class;
 					break;
 				case 'default':
 				case 'app':
 				case 'application':
-					$strategy = ApplicationStrategy::class;
+					$strategy = '\\' . ApplicationStrategy::class;
 					break;
 				default:
 					$strategy = $definition['strategy'];
 			}
 		} else {
-			$strategy = ApplicationStrategy::class;
+			$strategy = '\\' . ApplicationStrategy::class;
 		}
 		foreach ($methods as $method) {
 			$ret[] = compact('method', 'path', 'handler', 'strategy', 'middlewares');

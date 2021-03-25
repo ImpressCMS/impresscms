@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ImpressCMS\Core\SetupSteps\Module\Install;
+namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Install;
 
 use Apix\Cache\PsrCache\Pool;
 
