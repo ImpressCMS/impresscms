@@ -56,12 +56,12 @@
 </div>
 <br style="clear:right;" />
 <{foreach from=$images item=image key=key}>
-  <{include file="$icms_root_path/modules/system/templates/admin/images/system_popup_imagemanager_img.html" image=$image i=$key}>
+  <{include file="$icms_root_path/modules/system/templates/system_popup_imagemanager_img.html" image=$image i=$key}>
 <{/foreach}>
 <br style="clear:both;" />
 <{foreach from=$images item=image key=key}>
-  <{include file="$icms_root_path/modules/system/templates/admin/images/system_popup_imagemanager_editimg.html" image=$image i=$key}>
-  <{include file="$icms_root_path/modules/system/templates/admin/images/system_popup_imagemanager_cloneimg.html" image=$image i=$key}>
+  <{include file="$icms_root_path/modules/system/templates/system_popup_imagemanager_editimg.html" image=$image i=$key}>
+  <{include file="$icms_root_path/modules/system/templates/system_popup_imagemanager_cloneimg.html" image=$image i=$key}>
 <{/foreach}>
 <div id="addimgform" class="opt_divs" style="display:none; padding:5px; margin:5px;"><{$addimgform}></div>
 <a name="addimgform"></a>
