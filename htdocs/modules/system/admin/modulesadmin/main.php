@@ -53,9 +53,15 @@ icms_loadLanguageFile('system', 'blocksadmin', TRUE);
  *
  *
  * POST variables
+ * (str) fct
+ * (str) op
  * (arr|int) newstatus
  * (arr|int) oldstatus
+ * (arr|int) newname
+ * (arr|int) oldname
  * (arr|int) weight
+ * (string) module
+ * (str) XOOPS_TOKEN_REQUEST
  */
 
 /* default values */
