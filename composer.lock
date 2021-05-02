@@ -2343,16 +2343,16 @@
         },
         {
             "name": "middlewares/base-path",
-            "version": "v2.0.1",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/middlewares/base-path.git",
-                "reference": "a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5"
+                "reference": "9540b7b3aea29f22be269ad4c182455e70e38b4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/base-path/zipball/a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5",
-                "reference": "a0ed501fe2e14ffd5994b38cb4443c4bc18d6bf5",
+                "url": "https://api.github.com/repos/middlewares/base-path/zipball/9540b7b3aea29f22be269ad4c182455e70e38b4a",
+                "reference": "9540b7b3aea29f22be269ad4c182455e70e38b4a",
                 "shasum": ""
             },
             "require": {
@@ -2387,7 +2387,7 @@
                 "psr-7",
                 "server"
             ],
-            "time": "2020-12-02T00:05:17+00:00"
+            "time": "2021-04-08T19:21:21+00:00"
         },
         {
             "name": "middlewares/client-ip",
