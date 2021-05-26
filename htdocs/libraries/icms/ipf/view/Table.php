@@ -246,7 +246,7 @@ class icms_ipf_view_Table {
 	 * @todo Switch to dependency injection
 	 */
 	public function setSortOrder() {
-		$this->_sortsel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] : $this->getDefaultSort();
+		$this->_sortsel = filter_input(INPUT_GET,isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] : $this->getDefaultSort(),FILTER_SANITIZE_STRING);
 		// $this->_sortsel = isset($_POST['sortsel']) ? $_POST['sortsel'] : $this->_sortsel;
 
 		$this->setCookie($this->_id . '_sortsel', $this->_sortsel);
@@ -258,7 +258,7 @@ class icms_ipf_view_Table {
 			$this->_criteria->setSort($this->_objectHandler->_itemname . "." . $this->_sortsel);
 		}
 
-		$this->_ordersel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] : $this->getDefaultOrder();
+		$this->_ordersel = filter_input(INPUT_GET, isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] : $this->getDefaultOrder(), FILTER_SANITIZE_STRING);
 		// $this->_ordersel = isset($_POST['ordersel']) ? $_POST['ordersel'] :$this->_ordersel;
 		$this->setCookie($this->_id . '_ordersel', $this->_ordersel);
 		$this->getOrdersArray();
