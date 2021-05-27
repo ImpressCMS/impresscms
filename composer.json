@@ -51,7 +51,7 @@
     "aura/sql": "^3.0",
     "aura/sqlschema": "^2.0",
     "cerdic/css-tidy": "^1.5",
-    "composer/composer": "^1.10 || ^2.0",
+    "composer/composer": ">=1.10.22 || >=2.0.13",
     "defuse/php-encryption": "^2.2",
     "dompdf/dompdf": "^0.8.5",
     "ellipse/cookie-encryption": "^1.0",
