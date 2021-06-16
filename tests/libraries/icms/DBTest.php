@@ -2,7 +2,6 @@
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
 
-use icms_db_criteria_Item;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
@@ -20,9 +19,6 @@ class DBTest extends TestCase {
     public function testAvailability() {
         foreach ([
             'icms_db_Factory' => null,
-            'icms_db_criteria_Element' => null,
-            'icms_db_criteria_Compo' => ['icms_db_criteria_Element'],
-            'icms_db_criteria_Item' => ['icms_db_criteria_Element'],
             'icms_db_legacy_mysql_Utility' => ['icms_db_IUtility'],
             'icms_db_legacy_updater_Handler' => null,
             'icms_db_legacy_updater_Table' => null,
@@ -69,30 +65,6 @@ class DBTest extends TestCase {
      */
     public function testMethodsAvailability() {
         foreach ([
-            'icms_db_criteria_Compo' => [
-                'add',
-                'render',
-                'renderWhere',
-                'renderLdap'
-            ],
-            'icms_db_criteria_Element' => [
-                'render',
-                'setSort',
-                'getSort',
-                'setOrder',
-                'getOrder',
-                'setLimit',
-                'getLimit',
-                'setStart',
-                'getStart',
-                'setGroupby',
-                'getGroupby'
-            ],
-            'icms_db_criteria_Item' => [
-                'render',
-                'renderLdap',
-                'renderWhere'
-            ],
             'icms_db_legacy_updater_Handler' => [
                 'runQuery',
                 'renameTable',
@@ -184,24 +156,6 @@ class DBTest extends TestCase {
      */
     public function testVariables() {
         foreach ([
-            'icms_db_criteria_Compo' => [
-                'criteriaElements' => 'assertIsArray',
-                'conditions' => 'assertIsArray'
-            ],
-            'icms_db_criteria_Item' => [
-                'prefix' => 'assertIsString',
-                'function' => 'assertIsString',
-                'column' => 'assertIsString',
-                'operator' => 'assertIsString',
-                'value' => 'mixed'
-            ],
-            'icms_db_criteria_Element' => [
-                'order' => 'assertIsString',
-                'sort' => 'assertIsString',
-                'limit' => 'assertIsInt',
-                'start' => 'assertIsInt',
-                'groupby' => 'assertIsString'
-            ],
             'icms_db_legacy_updater_Handler' => [
                 'db' => 'assertNull'
             ],
@@ -217,45 +171,6 @@ class DBTest extends TestCase {
                 } else {
                     $this->$func($instance->$variable, '$' . $variable . ' is not of correct type');
                 }
-            }
-        }
-    }
-
-    /**
-     * Test how criteria is working
-     */
-    public function testCriteria() {
-        $column = sha1(mt_rand(0, PHP_INT_MAX));
-        $value = sha1(mt_rand(0, PHP_INT_MAX));
-        $group_by = sha1(mt_rand(0, PHP_INT_MAX));
-        $sort_by = sha1(mt_rand(0, PHP_INT_MAX));
-        $item = new icms_db_criteria_Item($column, $value);
-        foreach (['render', 'renderLdap', 'renderWhere'] as $method) {
-            $rendered = $item->$method();
-            $this->assertNotNull($rendered, 'Rendered with ' . $method . ' criteria result must be not null');
-            $this->assertNotSame('', $rendered, 'Rendered with '.$method.' criteria result must be not empty');
-            $this->assertIsString( $rendered, 'Rendered with '.$method.' criteria result must be string');
-        }
-        $item->setGroupby($group_by);
-        $this->assertSame($item->groupby, $group_by, 'When set with setGroupBy function result is not modified groupby variable as should be');
-        $this->assertTrue(strpos($item->getGroupby(), $group_by) > -1, 'getGroupby returns bad result' );
-        $item->setSort($sort_by);
-        $this->assertSame($item->sort, $sort_by, 'When set with setSort function result is not modified $sort variable as should be');
-        $this->assertTrue(strpos($item->getSort(), $sort_by) > -1, 'getSort returns bad result' );
-        $this->assertSame($item->order, $item->getOrder(), 'Variable and function getOrder returns not same data');
-
-        foreach ([
-            'order' => ['DESC', 'ASC'],
-            'start' => [mt_rand(0, PHP_INT_MAX), mt_rand(0, PHP_INT_MAX)],
-            'limit' => [mt_rand(0, PHP_INT_MAX), mt_rand(0, PHP_INT_MAX)],
-        ] as $data => $values) {
-            $method_set = 'set' . ucfirst($data);
-            $method_get = 'get' . ucfirst($data);
-            foreach ($values as $value) {
-                $item->$method_set($value);
-                $fvalue = $item->$method_get();
-                $this->assertSame($item->$data, $fvalue, 'Variable $' . $data . ' and function '.$method_get.' returns not same data');
-                $this->assertSame($value, $fvalue, 'Data for $' . $data . ' was unchangend');
             }
         }
     }
