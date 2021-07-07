@@ -11,48 +11,8 @@
  * @author Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since Xoops 1.00
  * @package core
- * @version $Id: findusers.php 11572 2012-02-16 00:35:21Z skenow $
  */
 include "../mainfile.php";
-xoops_header(false);
-
-/*
- * input variables
- * REQUEST
- * token
- * multiple
- * mode
- *
- * GET
- * (there are no valid GET requests)
- *
- * POST
- * user_submit
- * query
- * $var
- * {$var}_more
- * {$var}_less
- * {$var}_match
- * user_mailok
- * user_avatar
- * level
- * user_from
- * user_occ
- * user_intrest
- * user_avatar
- * groups
- * rank
- * user_order
- * user_sort
- * url
- * limit
- * start
- * posts_more
- * posts_less
- * target
- * multiple
- *
- */
 
 $denied = true;
 if (!empty($_REQUEST['token'])) {
@@ -66,6 +26,65 @@ if ($denied) {
 	icms_core_Message::error(_NOPERM);
 	exit();
 }
+
+/*
+ * Use what is in edituser.php, with some additional form elements
+ *
+ * {$var}_more - last_login (int), user_regdate (int), posts (int)
+ * {$var}_less - last_login (int), user_regdate (int), posts (int)
+ * {$var}_match - uname, email, name, user_icq, user_aim, user_msnm
+ * limit (int)
+ * start (int)
+ * posts_more (int)
+ * posts_less (int)
+ *
+ * -- I can't find these - where do they come from?
+ * mode (int)
+ * target
+ * multiple
+ *
+ */
+
+$filter_post = array (
+		'user_sig' => 'html',
+		'email' => array (
+				'email',
+				'options' => array (
+						0,
+						1
+				)
+		),
+		'url' => 'url',
+		'user_viewemail' => 'int',
+		'user_viewoid' => 'int',
+		'attachsig' => 'int',
+		'user_mailok' => 'int',
+		'usecookie' => 'int',
+		'limit' => 'int',
+		'start' => 'int',
+		'posts' => 'int',
+		'posts_more' => 'int',
+		'posts_less' => 'int',
+		'last_login_more' => 'int',
+		'last_login_less' => 'int',
+		'user_regdate_more' => 'int',
+		'user_regdate_less' => 'int'
+);
+
+$filter_get = array ();
+
+if (!empty($_GET)) {
+	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
+	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
+}
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
+}
+
+xoops_header(false);
 
 $token = @$_REQUEST["token"];
 $name_form = 'memberslist';
