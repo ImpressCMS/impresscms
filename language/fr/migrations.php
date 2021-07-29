@@ -43,7 +43,7 @@ define('_MIGRATION_PAGE_13', 'Mail Users');
 define('_MIGRATION_PAGE_14', 'Modules Admin');
 define('_MIGRATION_PAGE_15', 'Symlink Manager');
 define('_MIGRATION_PAGE_16', 'Pr&eacute;f&eacute;rences');
-define('_MIGRATION_PAGE_17', 'Smilies');
+define('_MIGRATION_PAGE_17', 'Émoticône');
 define('_MIGRATION_PAGE_18', 'Templates');
 define('_MIGRATION_PAGE_19',  'User Ranks');
 define('_MIGRATION_PAGE_20', 'User Edit');
