@@ -8,7 +8,7 @@ define("THEME_W3C","Valid W3C - XHTML 1.01 and CSS 1/2/3");
 
 // userbar.html
 define("THEME_REGISTER","Enregistrer");
-define("THEME_REGISTERATION",'User Registration');
+define("THEME_REGISTERATION",'Enregistrement Membre');
 define("THEME_REMEMBER","Se rappeller de moi ?");
 define("THEME_PSEUDO","Pseudo");
 define("THEME_DESC_PSEUDO","Saisissez votre Pseudo");
