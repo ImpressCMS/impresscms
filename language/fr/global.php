@@ -86,7 +86,7 @@ define('_READS','lectures');
 define('_SEARCH','Cherche');
 define('_ALL', 'Tous');
 define('_TITLE', 'Titre');
-define('_OPTIONS', 'Options');
+define('_OPTIONS', 'Options de notification');
 define('_QUOTE', 'Citation');
 define('_HIDDENC', 'Contenu cach&eacute;:');
 define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registration at ' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
@@ -289,8 +289,8 @@ define('_CHECKALL', 'Check all');
 define('_COPYRIGHT', 'Copyright');
 define("_LONGDATESTRING", "F jS Y, h:iA");
 define('_AUTHOR', 'Author');
-define("_CREDITS", "Credits");
-define("_LICENSE", "License");
+define("_CREDITS", "Crédits");
+define("_LICENSE", "Licence");
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_BLOCK_ID", "Block ID");
 define('_IMPRESSCMS_PROJECT','Project Development');
@@ -307,6 +307,6 @@ define("_FILTERS_MSG4","Output Filter (HTMLPurifier): ");
 // added in 2.0
 define('_ENTER_MENTION', 'Enter the user name to mention:');
 define( '_ENTER_HASHTAG', 'Enter the term(s) to tag:');
-define('_NAME', 'Name');
+define('_NAME', 'Nom');
 
-define('_OR', 'or');
+define('_OR', 'ou');
