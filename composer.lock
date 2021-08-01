@@ -2207,16 +2207,16 @@
         },
         {
             "name": "lulco/phoenix",
-            "version": "1.7.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lulco/phoenix.git",
-                "reference": "85a2c1e01d211232d1bc15a9324960e7287e3f50"
+                "reference": "c7cc69a3ece2ac2226bb4c65e343277f7ad93be5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lulco/phoenix/zipball/85a2c1e01d211232d1bc15a9324960e7287e3f50",
-                "reference": "85a2c1e01d211232d1bc15a9324960e7287e3f50",
+                "url": "https://api.github.com/repos/lulco/phoenix/zipball/c7cc69a3ece2ac2226bb4c65e343277f7ad93be5",
+                "reference": "c7cc69a3ece2ac2226bb4c65e343277f7ad93be5",
                 "shasum": ""
             },
             "require": {
@@ -2265,7 +2265,7 @@
                 "rollback",
                 "status"
             ],
-            "time": "2021-04-14T10:04:53+00:00"
+            "time": "2021-07-07T14:18:34+00:00"
         },
         {
             "name": "m6web/firewall",
@@ -4257,20 +4257,21 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v5.2.4",
+            "version": "v5.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "0d639a0943822626290d169965804f79400e6a04"
+                "reference": "17f50e06018baec41551a71a15731287dbaab186"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/0d639a0943822626290d169965804f79400e6a04",
-                "reference": "0d639a0943822626290d169965804f79400e6a04",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/17f50e06018baec41551a71a15731287dbaab186",
+                "reference": "17f50e06018baec41551a71a15731287dbaab186",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5"
+                "php": ">=7.2.5",
+                "symfony/polyfill-php80": "^1.16"
             },
             "type": "library",
             "autoload": {
@@ -4311,7 +4312,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-15T18:55:04+00:00"
+            "time": "2021-07-23T15:54:19+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
