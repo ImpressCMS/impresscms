@@ -1596,6 +1596,7 @@ class SimplePie
 				$header .= ' charset=UTF-8';
 			}
 			header($header);
+
 		}
 	}
 

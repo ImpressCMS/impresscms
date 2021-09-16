@@ -49,9 +49,10 @@ if (isset($_POST)) {
 }
 $icmsAdminTpl = new icms_view_Tpl();
 $op = (isset($_GET['op']))
-? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))
+
+	? trim(filter_input(INPUT_GET, 'op'))
 	: ((isset($_POST['op']))
-			? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING))
+		? trim(filter_input(INPUT_POST, 'op'))
 		: 'list');
 
 if (isset($_GET['confcat_id'])) {
@@ -171,10 +172,11 @@ switch ($op) {
 					}
 					break;
 
+						
 				case 'yesno' :
 					$ele = new icms_form_elements_Radioyn($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), _YES, _NO);
 					break;
-
+						
 				case 'theme' :
 				case 'theme_multi' :
 				case 'theme_admin' :
@@ -244,14 +246,15 @@ switch ($op) {
 					$form->addElement(new icms_form_elements_Hidden('_old_theme', $config[$i]->getConfValueForOutput()));
 					break;
 
+						
 				case 'timezone' :
 					$ele = new icms_form_elements_select_Timezone($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					break;
-
+						
 				case 'language' :
 					$ele = new icms_form_elements_select_Lang($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					break;
-
+						
 				case 'startpage' :
 					$member_handler = icms::handler('icms_member');
 					$grps = $member_handler->getGroupList();
@@ -292,22 +295,23 @@ switch ($op) {
 					}
 					break;
 
+						
 				case 'group' :
 					$ele = new icms_form_elements_select_Group($title, $config[$i]->getVar('conf_name'), TRUE, $config[$i]->getConfValueForOutput(), 1, FALSE);
 					break;
-
+						
 				case 'group_multi' :
 					$ele = new icms_form_elements_select_Group($title, $config[$i]->getVar('conf_name'), TRUE, $config[$i]->getConfValueForOutput(), 5, TRUE);
 					break;
-
+						
 				case 'user' :
 					$ele = new icms_form_elements_select_User($title, $config[$i]->getVar('conf_name'), FALSE, $config[$i]->getConfValueForOutput(), 1, FALSE);
 					break;
-
+						
 				case 'user_multi' :
 					$ele = new icms_form_elements_select_User($title, $config[$i]->getVar('conf_name'), FALSE, $config[$i]->getConfValueForOutput(), 5, TRUE);
 					break;
-
+						
 				case 'module_cache' :
 					$module_handler = icms::handler('icms_module');
 					$modules = $module_handler->getObjects(new icms_db_criteria_Item('hasmain', 1), TRUE);
@@ -340,6 +344,20 @@ switch ($op) {
 					$ele = new icms_form_elements_Colorpicker($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 
+				case 'hidden' :
+					$ele = new icms_form_elements_Hidden($config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+					break;
+
+
+						
+				case 'password' :
+					$ele = new icms_form_elements_Password($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), FALSE, ($icmsConfigUser['pass_level']?'password_adv':''));
+					break;
+						
+				case 'color' :
+					$ele = new icms_form_elements_Colorpicker($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+					break;
+						
 				case 'hidden' :
 					$ele = new icms_form_elements_Hidden($config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
@@ -467,39 +485,39 @@ switch ($op) {
 						$ele->addOption($optval, $optkey);
 					}
 					break;
-
+						
 				case 'yesno' :
 					$ele = new icms_form_elements_Radioyn($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), _YES, _NO);
 					break;
-
+						
 				case 'group' :
 					$ele = new icms_form_elements_select_Group($title, $config[$i]->getVar('conf_name'), TRUE, $config[$i]->getConfValueForOutput(), 1, FALSE);
 					break;
-
+						
 				case 'group_multi' :
 					$ele = new icms_form_elements_select_Group($title, $config[$i]->getVar('conf_name'), TRUE, $config[$i]->getConfValueForOutput(), 5, TRUE);
 					break;
-
+						
 				case 'user' :
 					$ele = new icms_form_elements_select_User($title, $config[$i]->getVar('conf_name'), FALSE, $config[$i]->getConfValueForOutput(), 1, FALSE);
 					break;
-
+						
 				case 'user_multi' :
 					$ele = new icms_form_elements_select_User($title, $config[$i]->getVar('conf_name'), FALSE, $config[$i]->getConfValueForOutput(), 5, TRUE);
 					break;
-
+						
 				case 'password' :
 					$ele = new icms_form_elements_Password($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
-
+						
 				case 'color' :
 					$ele = new icms_form_elements_Colorpicker($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
-
+						
 				case 'hidden' :
 					$ele = new icms_form_elements_Hidden($config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
-
+						
 				case 'select_pages' :
 					$content_handler = & icms_getModuleHandler('content', 'content');
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());

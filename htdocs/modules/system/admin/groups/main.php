@@ -1,82 +1,68 @@
 <?php
 // $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
-// ------------------------------------------------------------------------ //
-// XOOPS - PHP Content Management System //
-// Copyright (c) 2000 XOOPS.org //
-// <http://www.xoops.org/> //
-// ------------------------------------------------------------------------ //
-// This program is free software; you can redistribute it and/or modify //
-// it under the terms of the GNU General Public License as published by //
-// the Free Software Foundation; either version 2 of the License, or //
-// (at your option) any later version. //
-// //
-// You may not change or alter any portion of this comment or credits //
-// of supporting developers from this source code or any supporting //
-// source code which is considered copyrighted (c) material of the //
-// original comment or credit authors. //
-// //
-// This program is distributed in the hope that it will be useful, //
-// but WITHOUT ANY WARRANTY; without even the implied warranty of //
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the //
-// GNU General Public License for more details. //
-// //
-// You should have received a copy of the GNU General Public License //
-// along with this program; if not, write to the Free Software //
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA //
-// ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu) //
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project //
+// Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
  * Administration of usergroups, main file
  *
- * @copyright http://www.impresscms.org/ The ImpressCMS Project
- * @license LICENSE.txt
- * @package Administration
- * @subpackage Groups
- * @version SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package		Administration
+ * @subpackage	Groups
+ * @version		SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
  */
 $gperm_handler = icms::handler('icms_member_groupperm');
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid')) || (isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], icms::$user->getGroups()))) {
+if (!is_object(icms::$user)
+	|| !is_object($icmsModule)
+	|| !icms::$user->isAdmin($icmsModule->getVar('mid'))
+	|| (isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], icms::$user->getGroups()))
+	) {
 	exit("Access Denied");
 } else {
 	include_once ICMS_MODULES_PATH . "/system/admin/groups/groups.php";
+	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
+	$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op'))
+		: ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op'))
+		:'display');
+	if ($op == 'modify' || $op == 'del') {
+		$g_id = (int) $_GET['g_id'];
 
-	/*
-	 * GET variables
-	 * (string) op
-	 * (int) g_id
-	 *
-	 * POST variables
-	 *
-	 */
-
-	/* default values */
-	$op = 'display';
-
-	$filter_get = array('g_id' => 'int');
-
-	$filter_post = array();
-
-	/* filter the user input */
-	if (!empty($_GET)) {
-		// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
-		if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
-		$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
-		extract($clean_GET);
-	}
-
-	if (!empty($_POST)) {
-		$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
-		extract($clean_POST);
 	}
 }
 
 // from finduser section
 if (!empty($memberslist_id) && is_array($memberslist_id)) {
 	$op = "addUser";
-	$uids = &$memberslist_id;
+
+	$uids =& $memberslist_id;
+
 }
 
 switch ($op) {
@@ -95,7 +81,9 @@ switch ($op) {
 		$enabledebug_mids = empty($enabledebug_mids) ? array() : $enabledebug_mids;
 		$read_bids = empty($read_bids) ? array() : $read_bids;
 		$member_handler = icms::handler('icms_member');
-		$group = &$member_handler->getGroup($g_id);
+
+		$group =& $member_handler->getGroup($g_id);
+
 		$group->setVar('name', $name);
 		$group->setVar('description', $desc);
 
@@ -129,7 +117,9 @@ switch ($op) {
 			if (count($system_catids) > 0) {
 				array_push($admin_mids, 1);
 				foreach ($system_catids as $s_cid) {
-					$sysperm = &$gperm_handler->create();
+
+					$sysperm =& $gperm_handler->create();
+
 					$sysperm->setVar('gperm_groupid', $groupid);
 					$sysperm->setVar('gperm_itemid', $s_cid);
 					$sysperm->setVar('gperm_name', 'system_admin');
@@ -139,7 +129,9 @@ switch ($op) {
 			}
 
 			foreach ($admin_mids as $a_mid) {
-				$modperm = &$gperm_handler->create();
+
+				$modperm =& $gperm_handler->create();
+
 				$modperm->setVar('gperm_groupid', $groupid);
 				$modperm->setVar('gperm_itemid', $a_mid);
 				$modperm->setVar('gperm_name', 'module_admin');
@@ -149,7 +141,9 @@ switch ($op) {
 
 			array_push($read_mids, 1);
 			foreach ($read_mids as $r_mid) {
-				$modperm = &$gperm_handler->create();
+
+				$modperm =& $gperm_handler->create();
+
 				$modperm->setVar('gperm_groupid', $groupid);
 				$modperm->setVar('gperm_itemid', $r_mid);
 				$modperm->setVar('gperm_name', 'module_read');
@@ -159,7 +153,9 @@ switch ($op) {
 
 			if ($g_id != 3) {
 				foreach ($useeditor_mids as $ed_mid) {
-					$modperm = &$gperm_handler->create();
+
+					$modperm =& $gperm_handler->create();
+
 					$modperm->setVar('gperm_groupid', $groupid);
 					$modperm->setVar('gperm_itemid', $ed_mid);
 					$modperm->setVar('gperm_name', 'use_wysiwygeditor');
@@ -169,7 +165,9 @@ switch ($op) {
 			}
 
 			foreach ($enabledebug_mids as $ed_mid) {
-				$modperm = &$gperm_handler->create();
+
+				$modperm =& $gperm_handler->create();
+
 				$modperm->setVar('gperm_groupid', $groupid);
 				$modperm->setVar('gperm_itemid', $ed_mid);
 				$modperm->setVar('gperm_name', 'enable_debug');
@@ -179,7 +177,9 @@ switch ($op) {
 
 			$groupmanager_gids = empty($groupmanager_gids) ? array() : $groupmanager_gids;
 			foreach ($groupmanager_gids as $gm_gid) {
-				$modperm = &$gperm_handler->create();
+
+				$modperm =& $gperm_handler->create();
+
 				$modperm->setVar('gperm_groupid', $groupid);
 				$modperm->setVar('gperm_itemid', $gm_gid);
 				$modperm->setVar('gperm_name', 'group_manager');
@@ -187,7 +187,9 @@ switch ($op) {
 				$gperm_handler->insert($modperm);
 			}
 			foreach ($read_bids as $r_bid) {
-				$blockperm = &$gperm_handler->create();
+
+				$blockperm =& $gperm_handler->create();
+
 				$blockperm->setVar('gperm_groupid', $groupid);
 				$blockperm->setVar('gperm_itemid', $r_bid);
 				$blockperm->setVar('gperm_name', 'block_read');
@@ -203,7 +205,9 @@ switch ($op) {
 			redirect_header("admin.php?fct=groups", 3, implode('<br />', icms::$security->getErrors()));
 		}
 		if (!$name) {
-			redirect_header("admin.php?fct=groups", 3, _AM_UNEED2ENTER);
+
+			redirect_header("admin.php?fct=groups", 3,_AM_UNEED2ENTER);
+
 		}
 
 		$system_catids = empty($system_catids) ? array() : $system_catids;
@@ -214,7 +218,9 @@ switch ($op) {
 		$groupmanager_gids = empty($groupmanager_gids) ? array() : $groupmanager_gids;
 		$read_bids = empty($read_bids) ? array() : $read_bids;
 		$member_handler = icms::handler('icms_member');
-		$group = &$member_handler->createGroup();
+
+		$group =& $member_handler->createGroup();
+
 		$group->setVar("name", $name);
 		$group->setVar("description", $desc);
 		if (count($system_catids) > 0) {
@@ -228,7 +234,8 @@ switch ($op) {
 			if (count($system_catids) > 0) {
 				array_push($admin_mids, 1);
 				foreach ($system_catids as $s_cid) {
-					$sysperm = &$gperm_handler->create();
+
+					$sysperm =& $gperm_handler->create();
 					$sysperm->setVar('gperm_groupid', $groupid);
 					$sysperm->setVar('gperm_itemid', $s_cid);
 					$sysperm->setVar('gperm_name', 'system_admin');
@@ -237,7 +244,7 @@ switch ($op) {
 				}
 			}
 			foreach ($admin_mids as $a_mid) {
-				$modperm = &$gperm_handler->create();
+				$modperm =& $gperm_handler->create();
 				$modperm->setVar('gperm_groupid', $groupid);
 				$modperm->setVar('gperm_itemid', $a_mid);
 				$modperm->setVar('gperm_name', 'module_admin');
@@ -246,7 +253,8 @@ switch ($op) {
 			}
 			array_push($read_mids, 1);
 			foreach ($read_mids as $r_mid) {
-				$modperm = &$gperm_handler->create();
+				$modperm =& $gperm_handler->create();
+
 				$modperm->setVar('gperm_groupid', $groupid);
 				$modperm->setVar('gperm_itemid', $r_mid);
 				$modperm->setVar('gperm_name', 'module_read');
@@ -254,7 +262,9 @@ switch ($op) {
 				$gperm_handler->insert($modperm);
 			}
 			foreach ($useeditor_mids as $ed_mid) {
-				$modperm = &$gperm_handler->create();
+
+				$modperm =& $gperm_handler->create();
+
 				$modperm->setVar('gperm_groupid', $groupid);
 				$modperm->setVar('gperm_itemid', $ed_mid);
 				$modperm->setVar('gperm_name', 'use_wysiwygeditor');
@@ -262,7 +272,8 @@ switch ($op) {
 				$gperm_handler->insert($modperm);
 			}
 			foreach ($enabledebug_mids as $ed_mid) {
-				$modperm = &$gperm_handler->create();
+
+				$modperm =& $gperm_handler->create();
 				$modperm->setVar('gperm_groupid', $groupid);
 				$modperm->setVar('gperm_itemid', $ed_mid);
 				$modperm->setVar('gperm_name', 'enable_debug');
@@ -270,7 +281,8 @@ switch ($op) {
 				$gperm_handler->insert($modperm);
 			}
 			foreach ($groupmanager_gids as $gm_gid) {
-				$modperm = &$gperm_handler->create();
+
+				$modperm =& $gperm_handler->create();
 				$modperm->setVar('gperm_groupid', $groupid);
 				$modperm->setVar('gperm_itemid', $gm_gid);
 				$modperm->setVar('gperm_name', 'group_manager');
@@ -278,7 +290,8 @@ switch ($op) {
 				$gperm_handler->insert($modperm);
 			}
 			foreach ($read_bids as $r_bid) {
-				$blockperm = &$gperm_handler->create();
+
+				$blockperm =& $gperm_handler->create();
 				$blockperm->setVar('gperm_groupid', $groupid);
 				$blockperm->setVar('gperm_itemid', $r_bid);
 				$blockperm->setVar('gperm_name', 'block_read');
@@ -301,7 +314,8 @@ switch ($op) {
 		}
 		if ((int) ($g_id) > 0 && !in_array($g_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
 			$member_handler = icms::handler('icms_member');
-			$group = &$member_handler->getGroup($g_id);
+
+			$group =& $member_handler->getGroup($g_id);
 			$member_handler->deleteGroup($group);
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			$gperm_handler->deleteByGroup($g_id);
@@ -315,7 +329,9 @@ switch ($op) {
 		}
 		$member_handler = icms::handler('icms_member');
 		$size = count($uids);
-		for ($i = 0; $i < $size; $i++ ) {
+
+		for ($i = 0; $i < $size; $i++) {
+
 			$member_handler->addUserToGroup($groupid, $uids[$i]);
 		}
 		redirect_header("admin.php?fct=groups&amp;op=modify&amp;g_id=" . $groupid . "", 0, _AM_DBUPDATED);
