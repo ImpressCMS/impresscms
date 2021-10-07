@@ -1276,16 +1276,16 @@
         },
         {
             "name": "imponeer/smarty-db-resource",
-            "version": "v1.0.0",
+            "version": "v1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-db-resource.git",
-                "reference": "812f57e7bf2eb6fc6f9113ab355f8d61c71a159f"
+                "reference": "1cb22bb8b0537f95fc98f49a21f522c541f48552"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-db-resource/zipball/812f57e7bf2eb6fc6f9113ab355f8d61c71a159f",
-                "reference": "812f57e7bf2eb6fc6f9113ab355f8d61c71a159f",
+                "url": "https://api.github.com/repos/imponeer/smarty-db-resource/zipball/1cb22bb8b0537f95fc98f49a21f522c541f48552",
+                "reference": "1cb22bb8b0537f95fc98f49a21f522c541f48552",
                 "shasum": ""
             },
             "require": {
@@ -1317,7 +1317,11 @@
                 "smarty",
                 "smarty-plugins"
             ],
-            "time": "2021-02-07T16:01:51+00:00"
+            "support": {
+                "issues": "https://github.com/imponeer/smarty-db-resource/issues",
+                "source": "https://github.com/imponeer/smarty-db-resource/tree/v1.1"
+            },
+            "time": "2021-10-07T12:31:40+00:00"
         },
         {
             "name": "imponeer/smarty-extensions-contracts",
