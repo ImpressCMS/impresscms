@@ -185,7 +185,7 @@ class Block extends AbstractExtendedModel
 		if (
 			($this->block_type === static::BLOCK_TYPE_CUSTOM) ||
 			!($edit_func = $this->edit_func) ||
-			!file_exists($func_file = ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/blocks/' . $this->func_file)
+			!file_exists($func_file = ICMS_MODULES_PATH . '/' . $this->dirname . '/blocks/' . $this->func_file)
 		) {
 			return false;
 		}
@@ -235,7 +235,7 @@ class Block extends AbstractExtendedModel
 			return false;
 		}
 
-		$block_template_file = ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/blocks/' . $this->func_file;
+		$block_template_file = ICMS_MODULES_PATH . '/' . $this->dirname . "/blocks/" . $this->func_file;
 		if (!file_exists($block_template_file)) {
 			return false;
 		}

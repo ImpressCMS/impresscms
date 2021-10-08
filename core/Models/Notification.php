@@ -36,6 +36,9 @@
 
 namespace ImpressCMS\Core\Models;
 
+use icms;
+use ImpressCMS\Core\Messaging\MessageSender;
+
 /**
  * A Notification
  *
@@ -89,14 +92,14 @@ class Notification extends AbstractExtendedModel {
 		global $icmsConfigMailer;
 		// Check the user's notification preference.
 
-		$member_handler = \icms::handler('icms_member');
+		$member_handler = icms::handler('icms_member');
 		$user = & $member_handler->getUser($this->getVar('not_uid'));
 		if (!is_object($user)) {
 			return true;
 		}
 		$method = $user->notify_method;
 
-		$mailer = new \ImpressCMS\Core\Messaging\MessageSender();
+		$mailer = new MessageSender();
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 		switch ($method) {
 			case XOOPS_NOTIFICATION_METHOD_PM:
@@ -133,7 +136,7 @@ class Notification extends AbstractExtendedModel {
 		// If send-once-then-wait, disable notification
 
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-		$notification_handler = \icms::handler('icms_data_notification');
+		$notification_handler = icms::handler('icms_data_notification');
 
 		if ($this->not_mode == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
 			$notification_handler->delete($this);
@@ -141,7 +144,7 @@ class Notification extends AbstractExtendedModel {
 		}
 
 		if ($this->not_mode == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
-			$this->setVar('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN);
+			$this->not_mode = XOOPS_NOTIFICATION_MODE_WAITFORLOGIN;
 			$notification_handler->insert($this);
 		}
 		return $success;

@@ -398,10 +398,10 @@ class MessageSender {
 	{
 		$pm_handler = icms::handler('icms_data_privmessage');
 		$pm = &$pm_handler->create();
-		$pm->setVar("subject", $subject);
-		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->uid : icms::$user->uid);
-		$pm->setVar("msg_text", $body);
-		$pm->setVar("to_userid", $uid);
+		$pm->subject = $subject;
+		$pm->from_userid = $this->fromUser->uid ?? icms::$user->uid;
+		$pm->msg_text = $body;
+		$pm->to_userid = $uid;
 		if (!$pm_handler->insert($pm)) {
 			return false;
 		}

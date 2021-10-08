@@ -174,15 +174,15 @@ class DatabaseUpdater {
 		global $dbVersion;
 		$configitem_handler = \icms::handler('icms_config_item');
 		$configitemObj = $configitem_handler->create();
-		$configitemObj->setVar('conf_modid', 0);
-		$configitemObj->setVar('conf_catid', $conf_catid);
-		$configitemObj->setVar('conf_name', $conf_name);
-		$configitemObj->setVar('conf_title', $conf_title);
-		$configitemObj->setVar('conf_value', $conf_value);
-		$configitemObj->setVar('conf_desc', $conf_desc);
-		$configitemObj->setVar('conf_formtype', $conf_formtype);
-		$configitemObj->setVar('conf_valuetype', $conf_valuetype);
-		$configitemObj->setVar('conf_order', $conf_order);
+		$configitemObj->conf_modid = 0;
+		$configitemObj->conf_catid = $conf_catid;
+		$configitemObj->conf_name = $conf_name;
+		$configitemObj->conf_title = $conf_title;
+		$configitemObj->conf_value = $conf_value;
+		$configitemObj->conf_desc = $conf_desc;
+		$configitemObj->conf_formtype = $conf_formtype;
+		$configitemObj->conf_valuetype = $conf_valuetype;
+		$configitemObj->conf_order = $conf_order;
 		if (!$configitem_handler->insert($configitemObj)) {
 			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_ERR, $conf_title);
 		} else {
@@ -564,7 +564,7 @@ class DatabaseUpdater {
 		}
 		$module_handler = \icms::handler('icms_module');
 		$module = $module_handler->getByDirname($dirname);
-		$module->setVar('dbversion', $newDBVersion);
+		$module->dbversion = $newDBVersion;
 
 		if (!$module_handler->insert($module)) {
 			$module->setErrors(_DATABASEUPDATER_MSG_DB_VERSION_ERR);

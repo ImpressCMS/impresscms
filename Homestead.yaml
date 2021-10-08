@@ -2,10 +2,10 @@
 ip: "192.168.10.108"
 
 # How many memory should be used for virtual server?
-memory: 2048
+memory: 3000
 
 # How much CPU cores should be used for virtual server?
-cpus: 1
+cpus: 2
 
 # What provider should be used for virtual server?
 # Possible values: virtualbox, hyperv, vmware_desktop, parallels
@@ -36,3 +36,9 @@ sites:
 # Databases that will be available on this machine
 databases:
   - impresscms
+
+blackfire:
+   - id: 00c0233f-9a02-4d38-a38a-339309bf696b
+     token: 9a014005820f905896537a920a43dca09a8d51142588099e27afa5e6e6116ba3
+     client-id: 41cfc8f9-3ab6-46f3-8825-3fc1975d9917
+     client-token: 8c39f60a4e4b5f03f05bc776e3047ad1a94649a544d8a747a2acd7820173fd6c

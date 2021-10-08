@@ -1,5 +1,4 @@
 <?php
-define("_ER_UP_MIMETYPELOAD", "Error loading mimetypes definition");
 define("_ER_UP_FILENOTFOUND", "File not found");
 define("_ER_UP_INVALIDFILESIZE", "Invalid File Size");
 define("_ER_UP_FILENAMEEMPTY", "Filename Is Empty");

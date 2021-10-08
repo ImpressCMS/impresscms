@@ -146,9 +146,9 @@ switch ($op) {
 					continue;
 				}
 				$avatar_display[$i] = empty($avatar_display[$i])?0:1;
-				$avatar->setVar('avatar_display', $avatar_display[$i]);
-				$avatar->setVar('avatar_weight', $avatar_weight[$i]);
-				$avatar->setVar('avatar_name', $avatar_name[$i]);
+				$avatar->avatar_display = $avatar_display[$i];
+				$avatar->avatar_weight = $avatar_weight[$i];
+				$avatar->avatar_name = $avatar_name[$i];
 				if (!$avt_handler->insert($avatar)) {
 					$error[] = sprintf(_FAILSAVEIMG, $avatar_id[$i]);
 				}
@@ -181,13 +181,13 @@ switch ($op) {
 				$err[] = $uploader->getErrors();
 			} else {
 				$avatar = & $avt_handler->create();
-				$avatar->setVar('avatar_file', $uploader->getSavedFileName());
-				$avatar->setVar('avatar_name', $avatar_name);
-				$avatar->setVar('avatar_mimetype', $uploader->getMediaType());
+				$avatar->avatar_file = $uploader->getSavedFileName();
+				$avatar->avatar_name = $avatar_name;
+				$avatar->avatar_mimetype = $uploader->getMediaType();
 				$avatar_display = empty($avatar_display)?0:1;
-				$avatar->setVar('avatar_display', $avatar_display);
-				$avatar->setVar('avatar_weight', $avatar_weight);
-				$avatar->setVar('avatar_type', 'S');
+				$avatar->avatar_display = $avatar_display;
+				$avatar->avatar_weight = $avatar_weight;
+				$avatar->avatar_type = 'S';
 				if (!$avt_handler->insert($avatar)) {
 					$err[] = sprintf(_FAILSAVEIMG, $avatar->avatar_name);
 				}

@@ -279,11 +279,11 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		$icms_metagen = new Metagen($this->title(), $this->meta_keywords, $this->summary());
 
 		if (empty($this->meta_keywords)) {
-			$this->setVar('meta_keywords', $icms_metagen->_keywords);
+			$this->meta_keywords = $icms_metagen->_keywords;
 		}
 
 		if (empty($this->meta_description)) {
-			$this->setVar('meta_description', $icms_metagen->_meta_description);
+			$this->meta_description = $icms_metagen->_meta_description;
 		}
 
 		// Auto create short_url if empty

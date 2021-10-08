@@ -1,6 +1,8 @@
 <?php
 
 namespace ImpressCMS\Tests\Libraries\ICMS;
+use Aura\Session\SessionFactory;
+use icms;
 use icms_core_Security;
 use ImpressCMS\Core\Providers\SecurityServiceProvider;
 use League\Container\Container;
@@ -37,7 +39,6 @@ class SecurityTest extends TestCase {
 		$container = new Container();
 		$container->addServiceProvider(SecurityServiceProvider::class);
 		$instance = $container->get('security');
-
         foreach ([ 'check', 'createToken', 'validateToken', 'clearTokens', 'filterToken', 'garbageCollection', 'checkReferer', 'checkSuperglobals', 'getTokenHTML', 'setErrors', 'getErrors' ] as $method) {
             $this->assertTrue(method_exists($instance, $method), $method . ' doesn\'t exists');
         }
@@ -49,9 +50,20 @@ class SecurityTest extends TestCase {
     public function testToken() {
 		$container = new Container();
 		$container->addServiceProvider(SecurityServiceProvider::class);
+		/**
+		 * @var icms_core_Security $instance
+		 */
 		$instance = $container->get('security');
         $new_token = $instance->createToken();
-        $this->assertIsString( $new_token, 'Generated token is not type of string');
+
+        $this->assertIsString($new_token, 'Generated token is not type of string');
         $this->assertTrue($instance->validateToken($new_token), 'Can\'t validate correct token');
     }
+
+	protected function setUp(): void
+	{
+		icms::$session = (new SessionFactory())->newInstance([]);
+
+		parent::setUp();
+	}
 }

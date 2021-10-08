@@ -95,11 +95,7 @@ class TextMode {
 	 */
 	public function setCode()
 	{
-		/**
-		 * @var Session $session
-		 */
-		$session = icms::getInstance()->get('session');
-		$session->getSegment(Image::class)->set('session_code', (string)$this->code);
+		\icms::$session->getSegment(icms_form_elements_captcha_Object::class)->set('session_code', strval($this->code));
 	}
 
 }

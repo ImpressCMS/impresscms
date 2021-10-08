@@ -62,9 +62,8 @@ class ImageRenderer {
 		/**
 		 * @var Session $session
 		 */
-		$session = icms::getInstance()->get('session');
+		$session = \icms::$session;
 		$this->captchaSection = $session->getSegment(Image::class);
-		$this->name = $this->captchaSection->get('name');
 
 		if (!$this->name) {
 			$this->invalid = true;

@@ -204,7 +204,7 @@ class BlockHandler extends AbstractExtendedHandler {
 		while ($row = $this->db->fetchArray($result)) {
 			$modules[] = (int)$row['module_id'] . '-' . (int)$row['page_id'];
 		}
-		$obj->setVar('visiblein', $modules);
+		$obj->visiblein = $modules;
 		return $obj;
 	}
 
@@ -317,7 +317,7 @@ class BlockHandler extends AbstractExtendedHandler {
 		$last_block_id = 0;
 		while ($row = $this->db->fetchArray($result)) {
 			$modules[] = (int)($row['module_id']) . '-' . (int)($row['page_id']);
-			$ret[$row['block_id']]->setVar('visiblein', $modules);
+			$ret[$row['block_id']]->visiblein = $modules;
 			if ($row['block_id'] != $last_block_id) {
 				$modules = array();
 			}
@@ -412,8 +412,8 @@ class BlockHandler extends AbstractExtendedHandler {
 	 */
 	public function insert(& $obj, $force = false, $checkObject = true, $debug = false) {
 		$new = $obj->isNew();
-		$obj->setVar('last_modified', time());
-		$obj->setVar('isactive', true);
+		$obj->last_modified = time();
+		$obj->isactive = true;
 		if (!$new) {
 			$sql = sprintf("DELETE FROM %s WHERE block_id = '%u'",
 				$this->db->prefix('block_module_link'), (int) $obj->bid);
@@ -425,23 +425,23 @@ class BlockHandler extends AbstractExtendedHandler {
 		} else {
 			icms_loadLanguageFile('system', 'blocks', true);
 			if ($obj->block_type == 'K') {
-				$obj->setVar('name', _AM_CLONE);
+				$obj->name = _AM_CLONE;
 			} else {
 				switch ($obj->c_type) {
 					case 'H':
-						$obj->setVar('name', _AM_CUSTOMHTML);
+						$obj->name = _AM_CUSTOMHTML;
 						break;
 
 					case 'P':
-						$obj->setVar('name', _AM_CUSTOMPHP);
+						$obj->name = _AM_CUSTOMPHP;
 						break;
 
 					case 'S':
-						$obj->setVar('name', _AM_CUSTOMSMILE);
+						$obj->name = _AM_CUSTOMSMILE;
 						break;
 
 					case 'T':
-						$obj->setVar('name', _AM_CUSTOMNOSMILE);
+						$obj->name = _AM_CUSTOMNOSMILE;
 						break;
 					default:
 						break;

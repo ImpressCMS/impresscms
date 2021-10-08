@@ -106,10 +106,10 @@ if (is_array($perms) && !empty($perms)) {
 						}
 
 						$gperm = & $gperm_handler->create();
-						$gperm->setVar('gperm_groupid', $group_id);
-						$gperm->setVar('gperm_name', $perm_name);
-						$gperm->setVar('gperm_modid', $modid);
-						$gperm->setVar('gperm_itemid', $item_id);
+						$gperm->gperm_groupid = $group_id;
+						$gperm->gperm_name = $perm_name;
+						$gperm->gperm_modid = $modid;
+						$gperm->gperm_itemid = $item_id;
 
 						if (!$gperm_handler->insert($gperm)) {
 							$msg[] = sprintf(_MD_AM_PERMADDNG, '<strong>' . $perm_name . '</strong>', '<strong>' . $perm_data['itemname'][$item_id] . '</strong>', '<strong>' . $group_list[$group_id] . '</strong>');

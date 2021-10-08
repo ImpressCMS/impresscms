@@ -12,7 +12,7 @@ $_SESSION['ad_sess_regen'] = false;
 /**
  * @var \Aura\Session\Session $session
  */
-$session = \icms::getInstance()->get('session');
+$session = \icms::$session;
 if (isset($_SESSION['sess_regen']) && $_SESSION['sess_regen']) {
 	$session->start();
 	$session->regenerateId();

@@ -281,35 +281,35 @@ function updateUser(
 		echo _AM_UNAME . ' ' . $uname . ' ' . _AM_ALREADY_EXISTS;
 		icms_cp_footer();
 	} else {
-		$edituser->setVar('name', $name);
-		$edituser->setVar('uname', $uname);
-		$edituser->setVar('login_name', $loginName);
-		$edituser->setVar('email', $email);
+		$edituser->name = $name;
+		$edituser->uname = $uname;
+		$edituser->login_name = $loginName;
+		$edituser->email = $email;
 		$url = isset($url)? formatURL($url):'';
-		$edituser->setVar('url', $url);
-		$edituser->setVar('user_from', $userFrom);
+		$edituser->url = $url;
+		$edituser->user_from = $userFrom;
 		if ($icmsConfigUser['allow_htsig'] == 0) {
 			$signature = strip_tags(icms_core_DataFilter::codeDecode($user_sig, 1));
-			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
+			$edituser->user_sig = icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']);
 		} else {
 			$signature = icms_core_DataFilter::checkVar($userSignature, 'html', 'input');
-			$edituser->setVar('user_sig', $signature);
+			$edituser->user_sig = $signature;
 		}
 		$userViewEmail = (isset($userViewEmail) && $userViewEmail == 1)?1:0;
-		$edituser->setVar('user_viewemail', $userViewEmail);
+		$edituser->user_viewemail = $userViewEmail;
 		$attachsig = (isset($attachsig) && $attachsig == 1)?1:0;
-		$edituser->setVar('attachsig', $attachsig);
-		$edituser->setVar('timezone_offset', $timezoneOffset);
-		$edituser->setVar('uorder', $uorder);
-		$edituser->setVar('umode', $umode);
-		$edituser->setVar('notify_method', $notifyMethod);
-		$edituser->setVar('notify_mode', $notifyMode);
-		$edituser->setVar('bio', $bio);
-		$edituser->setVar('rank', $rank);
-		$edituser->setVar('user_occ', $userOCC);
-		$edituser->setVar('user_intrest', $userInterest);
-		$edituser->setVar('user_mailok', $userMailOk);
-		$edituser->setVar('language', $language);
+		$edituser->attachsig = $attachsig;
+		$edituser->timezone_offset = $timezoneOffset;
+		$edituser->uorder = $uorder;
+		$edituser->umode = $umode;
+		$edituser->notify_method = $notifyMethod;
+		$edituser->notify_mode = $notifyMode;
+		$edituser->bio = $bio;
+		$edituser->rank = $rank;
+		$edituser->user_occ = $userOCC;
+		$edituser->user_intrest = $userInterest;
+		$edituser->user_mailok = $userMailOk;
+		$edituser->language = $language;
 		if ($pass2 != '') {
 			if ($pass != $pass2) {
 				icms_cp_header();
@@ -319,9 +319,9 @@ function updateUser(
 			}
 
 			$icmspass = new icms_core_Password();
-			$edituser->setVar('pass_expired', $passExpired);
+			$edituser->pass_expired = $passExpired;
 			$pass = $icmspass->encryptPass($pass);
-			$edituser->setVar('pass', $pass);
+			$edituser->pass = $pass;
 		}
 		if (!$user_handler->insert($edituser)) {
 			icms_cp_header();

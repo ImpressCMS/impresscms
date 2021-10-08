@@ -93,7 +93,7 @@ class Category extends AbstractSEOExtendedModel {
 	 * @return 	array An array of the category's properties
 	 */
 	public function toArray() {
-		$this->setVar('doxcode', true);
+		$this->doxcode = true;
 		global $myts;
 		$objectArray = parent::toArray();
 		if ($objectArray['image']) {
