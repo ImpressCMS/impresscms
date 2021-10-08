@@ -100,6 +100,7 @@ class ImpressCMSComposerModuleDescriber implements ExtensionDescriberInterface
 			'config' => $extra['config'] ?? [],
 			'hasNotification' => isset($extra['notification']),
 			'notification' => $extra['notification'],
+			'assets' => $extra['assets'] ?? [],
 		];
 
 		chdir(__DIR__);

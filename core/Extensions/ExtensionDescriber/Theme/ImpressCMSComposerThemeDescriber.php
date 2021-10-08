@@ -47,7 +47,8 @@ class ImpressCMSComposerThemeDescriber implements ExtensionDescriberInterface
 				'admin' => $extra['screenshots']['admin'] ?? null,
 			],
 			'license' => implode(', ', $package->getLicense()),
-			'path' => $path
+			'path' => $path,
+			'assets' => $extra['assets'] ?? [],
 		];
 
 		chdir(__DIR__);

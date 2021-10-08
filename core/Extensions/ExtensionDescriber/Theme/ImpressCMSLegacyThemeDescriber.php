@@ -39,7 +39,8 @@ class ImpressCMSLegacyThemeDescriber implements ExtensionDescriberInterface
 				'admin' => null,
 			],
 			'license' => 'GPLv2',
-			'path' => $path
+			'path' => $path,
+			'assets' => $extra['assets'] ?? [],
 		];
 
 		return array_filter($themeInfo);
