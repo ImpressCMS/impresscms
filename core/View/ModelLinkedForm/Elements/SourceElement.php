@@ -1,6 +1,7 @@
 <?php
 namespace ImpressCMS\Core\View\ModelLinkedForm\Elements;
 
+use icms;
 use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 use ImpressCMS\Core\IPF\AbstractDatabaseModel;
 use ImpressCMS\Core\View\Form\Elements\TextAreaElement;
@@ -25,28 +26,53 @@ class SourceElement extends TextAreaElement {
 	 * @param	AbstractDatabaseModel    $object   reference to targetobject
 	 * @param	string    $key      the form name
 	 */
-	public function __construct($object, $key) {
+	public function __construct($object, $key)
+	{
 		global $icmsConfig;
 
 		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVar($key, 'e'));
 
 		$control = $object->getControl($key);
 
-		$editor_handler = EditorsRegistry::getInstance('source');
-		$this->_editor = &$editor_handler->get($icmsConfig['sourceeditor_default'],
-			array('name' => $key,
+		/**
+		 * @var EditorsRegistry $editorsRegistry
+		 */
+		$editorsRegistry = icms::getInstance()->get(EditorsRegistry::class);
+
+		$this->_editor = $editorsRegistry->get(
+			'source',
+			$icmsConfig['sourceeditor_default'],
+			[
+				'name' => $key,
 				'value' => $object->getVar($key, 'e'),
 				'language' => $control['language'] ?? _LANGCODE,
 				'width' => $control['width'] ?? '100%',
 				'height' => $control['height'] ?? '400px',
-				'syntax' => $control['syntax'] ?? 'php'));
+				'syntax' => $control['syntax'] ?? 'php'
+			]
+		);
+
+		if ($this->_editor) {
+			$extra = '';
+			foreach ($this->_editor->getAttributes() as $attrName => $attrValue) {
+				$extra .= $attrName . '="' . htmlentities($attrValue) . '"';
+			}
+			$this->setExtra($extra);
+		}
 	}
 
 	/**
 	 * Renders the editor
 	 * @return	string  the constructed html string for the editor
 	 */
-	public function render() {
-		return $this->_editor ? $this->_editor->render() : parent::render();
+	public function render()
+	{
+		$ret = parent::render();
+
+		if ($this->_editor) {
+			$ret .= $this->_editor;
+		}
+
+		return $ret;
 	}
 }

@@ -21,7 +21,6 @@ use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\Event;
 use ImpressCMS\Core\Extensions\Autotasks\AbstractAutotaskSystem;
 use ImpressCMS\Core\Extensions\Autotasks\AutotaskSystemInterface;
-use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 use ImpressCMS\Core\Extensions\Plugins\Plugin;
 use ImpressCMS\Core\Extensions\Plugins\PluginRegistry;
 use ImpressCMS\Core\Extensions\Preload\AbstractPreloadItem;
@@ -346,7 +345,6 @@ return [
 	'icms_messaging_Handler' => MessageSender::class,
 	'icms_module_Handler' => ModuleHandler::class,
 	'icms_module_Object' => Module::class,
-	'icms_plugins_EditorHandler' => EditorsRegistry::class,
 	'icms_plugins_Handler' => PluginRegistry::class,
 	'icms_plugins_Object' => Plugin::class,
 	'icms_preload_Handler' => EventsPreloader::class,
