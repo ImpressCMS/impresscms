@@ -79,10 +79,6 @@ class PluginsTest extends TestCase {
      */
     public function testVariables() {
         foreach ([
-            'icms_plugins_EditorHandler' => [
-                'nohtml' => 'assertIsBool',
-                'allowed_editors' => 'assertIsArray'
-            ],
             'icms_plugins_Handler' => [
                 'pluginPatterns' => 'assertIsBool'
             ],

@@ -473,13 +473,17 @@
         ],
         "tags": [
           "module.system.waiting-info-getter"
-          ]
+        ]
       },
-
       "\\Imponeer\\SymfonyTranslationsConstantsLoader\\PHPFileLoader": {
         "class": "\\Imponeer\\SymfonyTranslationsConstantsLoader\\PHPFileLoader",
         "tags": [
           "translation.loader"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Editors\\EditorsRegistry": {
+        "arguments": [
+          "container"
         ]
       }
     },
