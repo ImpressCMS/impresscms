@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e252e1ef7bc3e6dcb1d8ef999892e560",
+    "content-hash": "f9272c249068678ccbe7058cace7acf7",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -1364,6 +1364,41 @@
                 "source": "https://github.com/imponeer/criteria/tree/v1.0.0"
             },
             "time": "2021-02-25T23:57:18+00:00"
+        },
+        {
+            "name": "imponeer/editor-contracts",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/editor-contracts.git",
+                "reference": "a61c1437a03d44b3fd6c41a4e88a62f48173bc9a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/a61c1437a03d44b3fd6c41a4e88a62f48173bc9a",
+                "reference": "a61c1437a03d44b3fd6c41a4e88a62f48173bc9a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "symfony/polyfill-php80": "^1.23"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Imponeer\\Contracts\\Editor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Interfaces for building PHP classes that lets to easier make web editor integrations in your content management systems",
+            "support": {
+                "issues": "https://github.com/imponeer/editor-contracts/issues",
+                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.0"
+            },
+            "time": "2021-10-12T09:36:43+00:00"
         },
         {
             "name": "imponeer/smarty-db-resource",
