@@ -66,7 +66,7 @@ class EditorElement extends TrayElement {
 		/**
 		 * @var EditorsRegistry $editorsRegistry
 		 */
-		$editorsRegistry = icms::getInstance()->get(EditorsRegistry::class);
+		$editorsRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
 
 		$edtlist = $editorsRegistry->getList('content');
 		$option_select = new SelectElement('', $name, $value);

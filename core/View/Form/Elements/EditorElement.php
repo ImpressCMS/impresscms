@@ -72,14 +72,14 @@ class EditorElement extends TextAreaElement
 	 */
 	public function __construct($caption, $name, $editor_configs = null, $noHtml = false, $OnFailure = '')
 	{
-		parent::__construct($caption, $editor_configs['name']);
+		parent::__construct($caption, $editor_configs['name'], $editor_configs['value']);
 
 		/**
 		 * @var EditorsRegistry $editorsRegistry
 		 */
-		$editorsRegistry = icms::getInstance()->get(EditorsRegistry::class);
+		$editorsRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
 
-		$this->editor = $editorsRegistry->create('content', $name, $editor_configs, $noHtml, $OnFailure);
+		$this->editor = $editorsRegistry->create($editor_configs['editor_type'] ?? 'content', $name, $editor_configs, $noHtml, $OnFailure);
 
 		if ($this->editor) {
 			$extra = '';

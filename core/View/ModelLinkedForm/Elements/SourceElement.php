@@ -37,7 +37,7 @@ class SourceElement extends TextAreaElement {
 		/**
 		 * @var EditorsRegistry $editorsRegistry
 		 */
-		$editorsRegistry = icms::getInstance()->get(EditorsRegistry::class);
+		$editorsRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
 
 		$this->_editor = $editorsRegistry->get(
 			'source',
