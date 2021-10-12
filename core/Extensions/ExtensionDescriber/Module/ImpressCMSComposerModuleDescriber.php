@@ -59,7 +59,7 @@ class ImpressCMSComposerModuleDescriber implements ExtensionDescriberInterface
 			'iconbig' => $extra['icon']['big'],
 			'image' => $extra['icon']['big'], // for backward compatibilty; image is alias of big icon
 			'author_word' => null, // probably here should be release message could be fetched... but how?
-			'date' => $package->getReleaseDate()->format('Y-m-d'),
+			'date' => $package->getReleaseDate() ? $package->getReleaseDate()->format('Y-m-d') : null,
 			'status' => null, // deprecated - use version string
 			'status_version' => null, // deprecated - use version string
 			'warning' => $extra['warning'] ?? null,
