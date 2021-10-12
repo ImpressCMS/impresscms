@@ -38,6 +38,7 @@ namespace ImpressCMS\Core\View\Form\Elements;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 use icms;
+use Exception;
 
 /**
  * A textarea with bbcode formatting and smilie buttons

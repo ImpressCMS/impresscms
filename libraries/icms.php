@@ -113,9 +113,9 @@ final class icms extends Container {
 	/**
 	 * Get instance
 	 *
-	 * @return icms|null
+	 * @return icms
 	 */
-	public static function &getInstance()
+	public static function &getInstance(): \icms
 	{
 		static $instance = null;
 		if ($instance === null) {
