@@ -32,6 +32,7 @@ class ImpressCMSVersionModuleDescriber implements ExtensionDescriberInterface
 
 		include $path . DIRECTORY_SEPARATOR . 'icms_version.php';
 
+		/** @noinspection IssetArgumentExistenceInspection */
 		if (!isset($modversion)) {
 			throw new UndefinedVariableException('$modversion');
 		}
