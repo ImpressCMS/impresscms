@@ -68,13 +68,6 @@ class PluginsTest extends TestCase {
     }
 
     /**
-     * Test static method availability
-     */
-    public function testStaticMethodsAvailability() {
-        $this->assertTrue(method_exists('icms_plugins_EditorHandler', 'getListByType'), 'Method getListByType doesn\'t exists for class icms_plugins_EditorHandler');
-    }
-
-    /**
      * Tests variables availability and types
      */
     public function testVariables() {

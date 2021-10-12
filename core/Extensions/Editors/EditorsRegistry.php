@@ -139,7 +139,7 @@ class EditorsRegistry
 
 		$editorTag = 'editor.' . $type;
 
-		if ($this->container->has($editorTag)) {
+		if (!$this->container->has($editorTag)) {
 			return $editors;
 		}
 
