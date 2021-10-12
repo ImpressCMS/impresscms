@@ -16,7 +16,6 @@ class PluginsTest extends TestCase {
      */
     public function testAvailability() {
         foreach ([
-            'icms_plugins_EditorHandler',
             'icms_plugins_Handler',
             'icms_plugins_Object'
         ] as $class) {
@@ -53,13 +52,6 @@ class PluginsTest extends TestCase {
                 'getPlugin',
                 'getPluginsArray'
             ],
-            'icms_plugins_EditorHandler' => [
-                'get',
-                'getList',
-                'render',
-                'setConfig',
-                '_loadEditor'
-            ]
         ] as $class => $methods) {
             foreach ($methods as $method) {
                 $this->assertTrue(method_exists($class, $method), 'Static method ' . $method . ' doesn\'t exists for class ' . $class);

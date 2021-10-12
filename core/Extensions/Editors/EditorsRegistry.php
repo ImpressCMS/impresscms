@@ -52,19 +52,23 @@ class EditorsRegistry
 	 *
 	 * @throws IncompatibleEditorException
 	 */
-	public function create(string $type, string $name = '', ?array $options = null, bool $noHtml = false, string $onFailure = ''): ?EditorAdapterInterface
+	public function create(string $type, ?string $name = '', ?array $options = null, bool $noHtml = false, ?string $onFailure = ''): ?EditorAdapterInterface
 	{
 		if (!is_array($options)) {
 			$options = [];
 		}
 
-		if ($this->has($name)) {
+		if ($name && $this->has($name)) {
 			return $this->createAdapter($name, $options);
 		}
 
 		$list = array_keys($this->getList($type, $noHtml));
 		if (empty($onFailure) || !in_array($onFailure, $list, true)) {
 			$onFailure = $list[0];
+		}
+
+		if (!$onFailure) {
+			return null;
 		}
 
 		return $this->createAdapter($onFailure, $options);
