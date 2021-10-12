@@ -4,10 +4,10 @@ namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Install;
 
 use Exception;
 use Generator;
+use icms_module_Object;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\Models\Module;
-use icms_module_Object;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use League\Flysystem\FileNotFoundException;
@@ -49,6 +49,9 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 
 		foreach ($this->getDefinedAssets((array)$module->getInfo('assets'), $module->dirname) as $assetPath => $assetContent) {
 			$output->msg(_MD_AM_COPY_ASSETS_COPYING, $assetPath);
+			if ($mm->has('modules/' . $assetPath)) {
+				$mm->delete('modules/' . $assetPath);
+			}
 			$mm->writeStream(
 				'modules/' . $assetPath,
 				$assetContent
@@ -84,12 +87,12 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 				}
 				continue;
 			}
-			$path = realpath(ICMS_MODULES_PATH . '/' . $moduleDir . '/' . $path);
-			if (!str_starts_with($path, ICMS_MODULES_PATH . '/'.$moduleDir.'/')) {
+			$path = realpath(ICMS_MODULES_PATH . '/' . $moduleDir . '/' . $path) . '/';
+			if (!str_starts_with($path, ICMS_MODULES_PATH . '/' . $moduleDir . '/')) {
 				throw new Exception('Asset path for module can\'t be outside module path');
 			}
 			foreach ($this->readAssetData($path) as $filename => $fs) {
-				yield $filename => $fs;
+				yield ($moduleDir . '/' . $filename) => $fs;
 			}
 		}
 	}
@@ -98,22 +101,22 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 	 * Read asset from path data
 	 *
 	 * @return Generator|null
-	 * 
+	 *
 	 * @var string $path Read asset data
 	 */
 	protected function readAssetData(string $path): ?Generator
 	{
-		if (is_file($path)) {
+		if (!is_dir($path)) {
 			yield $path => fopen($path, 'r');
 		} elseif (is_dir($path)) {
 			/**
 			 * @var SplFileInfo $fileInfo
 			 */
 			foreach ((new RecursiveDirectoryIterator($path)) as $fileInfo) {
-				if ($fileInfo->isDir()) {
+				if (($fileInfo->getFilename()[0] === '.') || $fileInfo->isDir() || (in_array(strtolower($fileInfo->getExtension()), ['php', 'htm', 'html', 'tpl'], true))) {
 					continue;
 				}
-				yield $fileInfo->getFilename() => fopen($fileInfo->getFilename(), 'r');
+				yield $fileInfo->getFilename() => fopen($fileInfo->getRealPath(), 'r');
 			}
 		}
 	}
