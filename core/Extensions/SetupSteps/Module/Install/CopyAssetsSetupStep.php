@@ -102,6 +102,9 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 				if ($fileSystemItem['type'] !== 'file') {
 					continue;
 				}
+				if (in_array($fileSystemItem['extension'], ['php', 'htm', 'html', 'tpl', 'yml', 'md', '', 'json'], true)) {
+					continue;
+				}
 				yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
 			}
 		}
