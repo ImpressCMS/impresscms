@@ -1,19 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "packages": [
-        {
-            "name": "0.0.0/composer-include-files",
-            "version": "1.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
-                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
-            },
-            "dist": {
+  "_readme": [
+	"This file locks the dependencies of your project to a known state",
+	"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+	"This file is @generated automatically"
+  ],
+  "content-hash": "1c58466e7d1944fcaf4b4592b771a42c",
+  "packages": [
+	{
+	  "name": "0.0.0/composer-include-files",
+	  "version": "1.6.0",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
+		"reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
+	  },
+	  "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
                 "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
@@ -1782,26 +1783,76 @@
             "keywords": [
                 "constants",
                 "loader",
-                "symfony",
-                "translation"
-            ],
-            "support": {
-                "issues": "https://github.com/imponeer/symfony-translations-constants-loader/issues",
-                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.0"
-            },
-            "time": "2020-11-11T01:06:42+00:00"
-        },
-        {
-            "name": "intervention/image",
-            "version": "2.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Intervention/image.git",
-                "reference": "abbf18d5ab8367f96b3205ca3c89fb2fa598c69e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/abbf18d5ab8367f96b3205ca3c89fb2fa598c69e",
+			  "symfony",
+			  "translation"
+			],
+		  "support": {
+			"issues": "https://github.com/imponeer/symfony-translations-constants-loader/issues",
+			"source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.0"
+		  },
+		  "time": "2020-11-11T01:06:42+00:00"
+		},
+	{
+	  "name": "impresscms/composer-addon-installer-plugin",
+	  "version": "dev-master",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/ImpressCMS/composer-addon-installer-plugin.git",
+		"reference": "00cb62669f14b47bb9ac8b1ddc57032e406e49b6"
+	  },
+	  "dist": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/ImpressCMS/composer-addon-installer-plugin/zipball/00cb62669f14b47bb9ac8b1ddc57032e406e49b6",
+		"reference": "00cb62669f14b47bb9ac8b1ddc57032e406e49b6",
+		"shasum": ""
+	  },
+	  "require": {
+		"composer-plugin-api": "^1.0 || ^2.0",
+		"phpexperts/laravel-env-polyfill": ">=1.0",
+		"symfony/polyfill-php80": ">=1.21",
+		"vlucas/phpdotenv": ">=3.3.3"
+	  },
+	  "require-dev": {
+		"composer/composer": "^1.10.23 || ^2.1.9"
+	  },
+	  "default-branch": true,
+	  "type": "composer-plugin",
+	  "extra": {
+		"class": "ImpressCMS\\Composer\\AddonInstaller\\ComposerPlugin"
+	  },
+	  "autoload": {
+		"psr-4": {
+		  "ImpressCMS\\Composer\\AddonInstaller\\": "src/"
+		}
+	  },
+	  "notification-url": "https://packagist.org/downloads/",
+	  "license": [
+		"MIT"
+	  ],
+	  "authors": [
+		{
+		  "name": "David Janssens",
+		  "email": "david.j@impresscms.org"
+		}
+	  ],
+	  "description": "This plugin allows the installation of ImpressCMS addons from composer",
+	  "support": {
+		"issues": "https://github.com/ImpressCMS/composer-addon-installer-plugin/issues",
+		"source": "https://github.com/ImpressCMS/composer-addon-installer-plugin/tree/master"
+	  },
+	  "time": "2021-10-13T15:31:40+00:00"
+	},
+	{
+	  "name": "intervention/image",
+	  "version": "2.5.1",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/Intervention/image.git",
+		"reference": "abbf18d5ab8367f96b3205ca3c89fb2fa598c69e"
+	  },
+	  "dist": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/Intervention/image/zipball/abbf18d5ab8367f96b3205ca3c89fb2fa598c69e",
                 "reference": "abbf18d5ab8367f96b3205ca3c89fb2fa598c69e",
                 "shasum": ""
             },
