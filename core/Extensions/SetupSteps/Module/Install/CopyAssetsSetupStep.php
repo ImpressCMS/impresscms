@@ -1,16 +1,21 @@
 <?php
 
-
 namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Install;
 
-
+use Exception;
+use FilesystemIterator;
+use Generator;
+use icms_module_Object;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
+use ImpressCMS\Core\Models\File;
 use ImpressCMS\Core\Models\Module;
-use icms_module_Object;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
+use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
+use RecursiveDirectoryIterator;
+use SplFileInfo;
 
 /**
  * Copies module assets to public path
@@ -36,34 +41,100 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		$mm->deleteDir('modules/' . $module->dirname);
 		$mm->createDir('modules/' . $module->dirname);
 
+		foreach ($this->getModuleAssetToCopy($module->dirname) as $assetPath => $assetContent) {
+			$output->msg(_MD_AM_COPY_ASSETS_COPYING, 'modules/' . $assetPath);
+			$mm->writeStream(
+				'modules/' . $assetPath,
+				$assetContent
+			);
+		}
+
+		foreach ($this->getDefinedAssets((array)$module->getInfo('assets'), $module->dirname) as $assetPath => $assetContent) {
+			$output->msg(_MD_AM_COPY_ASSETS_COPYING, 'modules/' .  $assetPath);
+			if ($mm->has('modules/' . $assetPath)) {
+				$mm->delete('modules/' . $assetPath);
+			}
+			$mm->writeStream(
+				'modules/' . $assetPath,
+				$assetContent
+			);
+		}
+
+
+		$output->decrIndent();
+
+		return true;
+	}
+
+	/**
+	 * Reads defined assets data for copy
+	 *
+	 * @param array $assets Assets list
+	 * @param string $moduleDir Module dir
+	 *
+	 * @return Generator
+	 *
+	 * @throws Exception
+	 */
+	protected function getDefinedAssets(array $assets, string $moduleDir): ?Generator
+	{
+		foreach ($assets as $path) {
+			if (str_starts_with($path, 'vendor/')) {
+				$originalPath = trim($path, '/');
+				$path = realpath(ICMS_ROOT_PATH . '/' . $path);
+				if (!str_starts_with($path, ICMS_ROOT_PATH . '/vendor/')) {
+					throw new Exception('Asset path for vendor can\'t be outside vendor path');
+				}
+				/**
+				 * @var Filesystem $fs
+				 */
+				$fs = $this->container->get('filesystem.root');
+				foreach ($fs->listContents($originalPath, true) as $fileSystemItem) {
+					if ($fileSystemItem['type'] !== 'file') {
+						continue;
+					}
+					yield ($moduleDir . '/'.$originalPath.'/' . $fileSystemItem['path']) => $fs->readStream($fileSystemItem['path']);
+				}
+				continue;
+			}
+
+			/**
+			 * @var Filesystem $mf
+			 */
+			$mf = $this->container->get('filesystem.modules');
+			foreach ($mf->listContents($moduleDir . '/' . $path, true) as $fileSystemItem) {
+				if ($fileSystemItem['type'] !== 'file') {
+					continue;
+				}
+				yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
+			}
+		}
+	}
+
+	/**
+	 * Gets assets from module to copy
+	 *
+	 * @param string $moduleDirname
+	 *
+	 * @return Generator
+	 *
+	 * @throws FileNotFoundException
+	 */
+	protected function getModuleAssetToCopy(string $moduleDirname): ?Generator
+	{
 		/**
 		 * @var Filesystem $mf
 		 */
 		$mf = $this->container->get('filesystem.modules');
-		foreach ($mf->listContents( $module->dirname, true) as $fileSystemItem) {
-			if ($fileSystemItem['type'] !== 'file') {
+		foreach ($mf->listContents($moduleDirname, true) as $fileSystemItem) {
+			if ($fileSystemItem['type'] !== 'file' || $fileSystemItem['basename'][0] === '.' || $fileSystemItem['basename'] === 'LICENSE') {
 				continue;
 			}
-			if ($fileSystemItem['extension'] === 'php') {
+			if (in_array($fileSystemItem['extension'], ['php', 'htm', 'html', 'tpl', 'yml', 'md', '', 'json'], true)) {
 				continue;
 			}
-			if (
-				(($fileSystemItem['extension'] === 'css') && ($fileSystemItem['dirname'] === $module->dirname)) ||
-				(strpos($fileSystemItem['path'], $module->dirname . '/images/') === 0) ||
-				(strpos($fileSystemItem['path'], $module->dirname . '/css/') === 0) ||
-				(strpos($fileSystemItem['path'], $module->dirname . '/js/') === 0) ||
-				(strpos($fileSystemItem['path'], $module->dirname . '/themes/') === 0)
-			) {
-				$output->msg(_MD_AM_COPY_ASSETS_COPYING, $fileSystemItem['path']);
-				$mm->writeStream(
-					'modules/' . $fileSystemItem['path'],
-					$mf->readStream($fileSystemItem['path'])
-				);
-			}
+			yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
 		}
-		$output->decrIndent();
-
-		return true;
 	}
 
 	/**
