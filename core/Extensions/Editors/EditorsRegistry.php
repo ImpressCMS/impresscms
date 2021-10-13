@@ -7,6 +7,7 @@ use Imponeer\Contracts\Editor\Adapter\EditorAdapterInterface;
 use Imponeer\Contracts\Editor\Exceptions\IncompatibleEditorException;
 use Imponeer\Contracts\Editor\Factory\EditorFactoryInterface;
 use Imponeer\Contracts\Editor\Info\WYSIWYGEditorInfoInterface;
+use ImpressCMS\Core\Models\ModuleHandler;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -123,6 +124,8 @@ class EditorsRegistry
 		if (!$factory) {
 			return null;
 		}
+
+		$options['public_assets_url'] = ICMS_MODULES_URL . '/' . ModuleHandler::resolveModuleDirFromClass($factory) . '/';
 
 		return $factory->create($options, true);
 	}

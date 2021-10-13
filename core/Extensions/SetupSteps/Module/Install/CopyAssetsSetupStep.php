@@ -3,19 +3,15 @@
 namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Install;
 
 use Exception;
-use FilesystemIterator;
 use Generator;
 use icms_module_Object;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
-use ImpressCMS\Core\Models\File;
 use ImpressCMS\Core\Models\Module;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
-use RecursiveDirectoryIterator;
-use SplFileInfo;
 
 /**
  * Copies module assets to public path
@@ -50,12 +46,12 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		}
 
 		foreach ($this->getDefinedAssets((array)$module->getInfo('assets'), $module->dirname) as $assetPath => $assetContent) {
-			$output->msg(_MD_AM_COPY_ASSETS_COPYING, 'modules/' .  $assetPath);
-			if ($mm->has('modules/' . $assetPath)) {
-				$mm->delete('modules/' . $assetPath);
+			$output->msg(_MD_AM_COPY_ASSETS_COPYING, $assetPath);
+			if ($mm->has($assetPath)) {
+				$mm->delete($assetPath);
 			}
 			$mm->writeStream(
-				'modules/' . $assetPath,
+				$assetPath,
 				$assetContent
 			);
 		}
