@@ -3,7 +3,6 @@
 namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Install;
 
 use Exception;
-use FilesystemIterator;
 use Generator;
 use icms_module_Object;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
@@ -50,7 +49,9 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		}
 
 		foreach ($this->getDefinedAssets((array)$module->getInfo('assets'), $module->dirname) as $assetPath => $assetContent) {
-			$output->msg(_MD_AM_COPY_ASSETS_COPYING, 'modules/' .  $assetPath);
+
+			$output->msg(_MD_AM_COPY_ASSETS_COPYING, $assetPath);
+
 			if ($mm->has('modules/' . $assetPath)) {
 				$mm->delete('modules/' . $assetPath);
 			}
@@ -80,33 +81,48 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 	{
 		foreach ($assets as $path) {
 			if (str_starts_with($path, 'vendor/')) {
-				$originalPath = trim($path, '/');
+
 				$path = realpath(ICMS_ROOT_PATH . '/' . $path);
 				if (!str_starts_with($path, ICMS_ROOT_PATH . '/vendor/')) {
 					throw new Exception('Asset path for vendor can\'t be outside vendor path');
 				}
-				/**
-				 * @var Filesystem $fs
-				 */
-				$fs = $this->container->get('filesystem.root');
-				foreach ($fs->listContents($originalPath, true) as $fileSystemItem) {
-					if ($fileSystemItem['type'] !== 'file') {
-						continue;
-					}
-					yield ($moduleDir . '/'.$originalPath.'/' . $fileSystemItem['path']) => $fs->readStream($fileSystemItem['path']);
+
+				foreach ($this->readAssetData($path) as $filename => $fs) {
+					yield $filename => $fs;
 				}
 				continue;
 			}
+			$path = realpath(ICMS_MODULES_PATH . '/' . $moduleDir . '/' . $path) . '/';
+			if (!str_starts_with($path, ICMS_MODULES_PATH . '/' . $moduleDir . '/')) {
+				throw new Exception('Asset path for module can\'t be outside module path');
+			}
+			foreach ($this->readAssetData($path) as $filename => $fs) {
+				yield ($moduleDir . '/' . $filename) => $fs;
+			}
+		}
+	}
 
+	/**
+	 * Read asset from path data
+	 *
+	 * @return Generator|null
+	 *
+	 * @var string $path Read asset data
+	 */
+	protected function readAssetData(string $path): ?Generator
+	{
+		if (!is_dir($path)) {
+			yield $path => fopen($path, 'r');
+		} elseif (is_dir($path)) {
 			/**
-			 * @var Filesystem $mf
+			 * @var SplFileInfo $fileInfo
 			 */
-			$mf = $this->container->get('filesystem.modules');
-			foreach ($mf->listContents($moduleDir . '/' . $path, true) as $fileSystemItem) {
-				if ($fileSystemItem['type'] !== 'file') {
+			foreach ((new RecursiveDirectoryIterator($path)) as $fileInfo) {
+				if (($fileInfo->getFilename()[0] === '.') || $fileInfo->isDir() || (in_array(strtolower($fileInfo->getExtension()), ['php', 'htm', 'html', 'tpl'], true))) {
 					continue;
 				}
-				yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
+				yield $fileInfo->getFilename() => fopen($fileInfo->getRealPath(), 'r');
+
 			}
 		}
 	}
@@ -127,13 +143,23 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		 */
 		$mf = $this->container->get('filesystem.modules');
 		foreach ($mf->listContents($moduleDirname, true) as $fileSystemItem) {
-			if ($fileSystemItem['type'] !== 'file' || $fileSystemItem['basename'][0] === '.' || $fileSystemItem['basename'] === 'LICENSE') {
+
+			if ($fileSystemItem['type'] !== 'file') {
 				continue;
 			}
 			if (in_array($fileSystemItem['extension'], ['php', 'htm', 'html', 'tpl', 'yml', 'md', '', 'json'], true)) {
 				continue;
 			}
-			yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
+
+			if (
+				(($fileSystemItem['extension'] === 'css') && ($fileSystemItem['dirname'] ===$moduleDirname)) ||
+				(strpos($fileSystemItem['path'],$moduleDirname . '/images/') === 0) ||
+				(strpos($fileSystemItem['path'],$moduleDirname . '/css/') === 0) ||
+				(strpos($fileSystemItem['path'],$moduleDirname . '/js/') === 0) ||
+				(strpos($fileSystemItem['path'],$moduleDirname . '/themes/') === 0)
+			) {
+				yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
+			}
 		}
 	}
 

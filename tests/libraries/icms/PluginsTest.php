@@ -16,7 +16,6 @@ class PluginsTest extends TestCase {
      */
     public function testAvailability() {
         foreach ([
-            'icms_plugins_EditorHandler',
             'icms_plugins_Handler',
             'icms_plugins_Object'
         ] as $class) {
@@ -53,13 +52,6 @@ class PluginsTest extends TestCase {
                 'getPlugin',
                 'getPluginsArray'
             ],
-            'icms_plugins_EditorHandler' => [
-                'get',
-                'getList',
-                'render',
-                'setConfig',
-                '_loadEditor'
-            ]
         ] as $class => $methods) {
             foreach ($methods as $method) {
                 $this->assertTrue(method_exists($class, $method), 'Static method ' . $method . ' doesn\'t exists for class ' . $class);
@@ -68,21 +60,10 @@ class PluginsTest extends TestCase {
     }
 
     /**
-     * Test static method availability
-     */
-    public function testStaticMethodsAvailability() {
-        $this->assertTrue(method_exists('icms_plugins_EditorHandler', 'getListByType'), 'Method getListByType doesn\'t exists for class icms_plugins_EditorHandler');
-    }
-
-    /**
      * Tests variables availability and types
      */
     public function testVariables() {
         foreach ([
-            'icms_plugins_EditorHandler' => [
-                'nohtml' => 'assertIsBool',
-                'allowed_editors' => 'assertIsArray'
-            ],
             'icms_plugins_Handler' => [
                 'pluginPatterns' => 'assertIsBool'
             ],

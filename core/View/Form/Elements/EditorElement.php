@@ -36,42 +36,73 @@
  */
 namespace ImpressCMS\Core\View\Form\Elements;
 
+use icms;
+use Imponeer\Contracts\Editor\Adapter\EditorAdapterInterface;
+use Imponeer\Contracts\Editor\Exceptions\IncompatibleEditorException;
 use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 
 /**
  * XoopsEditor hanlder
  *
- * @since	XOOPS
- * @author	D.J.
- * @copyright	copyright (c) 2000-2005 XOOPS.org
- * @package	ICMS\Form\Elements
+ * @since    XOOPS
+ * @author    D.J.
+ * @copyright    copyright (c) 2000-2005 XOOPS.org
+ * @package    ICMS\Form\Elements
  *
  * @todo	To be removed as this is not used anywhere in the core
  */
-class EditorElement extends TextAreaElement {
-	var $editor;
+class EditorElement extends TextAreaElement
+{
+
+	/**
+	 * @var EditorAdapterInterface|null
+	 */
+	protected $editor;
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string  $caption    Caption
-	 * @param	string  $name       "name" attribute
-	 * @param	string  $value      Initial text
-	 * @param	array 	$configs     configures
-	 * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
-	 * @param	string  $OnFailure editor to be used if current one failed
+	 * @param string $caption Caption
+	 * @param string $name "name" attribute
+	 * @param null|array $editor_configs
+	 * @param bool $noHtml use non-WYSIWYG eitor onfailure
+	 * @param string $OnFailure editor to be used if current one failed
+	 *
+	 * @throws IncompatibleEditorException
 	 */
-	public function __construct($caption, $name, $editor_configs = null, $noHtml = false, $OnFailure = '') {
-		parent::__construct($caption, $editor_configs['name']);
-		$editor_handler = EditorsRegistry::getInstance();
-		$this->editor = & $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
+	public function __construct($caption, $name, $editor_configs = null, $noHtml = false, $OnFailure = '')
+	{
+		parent::__construct($caption, $editor_configs['name'], $editor_configs['value']);
+
+		/**
+		 * @var EditorsRegistry $editorsRegistry
+		 */
+		$editorsRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+
+		$this->editor = $editorsRegistry->create($editor_configs['editor_type'] ?? 'content', $name, $editor_configs, $noHtml, $OnFailure);
+
+		if ($this->editor) {
+			$extra = '';
+			foreach ($this->editor->getAttributes() as $attrName => $attrValue) {
+				$extra .= $attrName . '="' . htmlentities($attrValue) . '"';
+			}
+			$this->setExtra($extra);
+		}
 	}
 
 	/**
 	 * Renders the editor
-	 * @return	string  the constructed html string for the editor
+	 *
+	 * @return    string  the constructed html string for the editor
 	 */
-	function render() {
-		return $this->editor->render();
+	public function render()
+	{
+		$ret = parent::render();
+
+		if ($this->editor) {
+			$ret .= $this->editor;
+		}
+
+		return $ret;
 	}
 }

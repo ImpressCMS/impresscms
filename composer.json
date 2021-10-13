@@ -60,6 +60,7 @@
     "geshi/geshi": "^1.0",
     "http-interop/http-factory-guzzle": "^1.0",
     "imponeer/criteria": "^1.0",
+    "imponeer/editor-contracts": "^1.0",
     "imponeer/smarty-db-resource": "^1.0",
     "imponeer/smarty-foreachq": "^1.0",
     "imponeer/smarty-image": "^1.0",
@@ -118,7 +119,6 @@
     ],
     "psr-4": {
       "ImpressCMS\\Core\\": "core/",
-      "ImpressCMS\\Editors\\": "htdocs/editors/",
       "ImpressCMS\\Plugins\\": "plugins/",
       "ImpressCMS\\Modules\\System\\Extensions\\": "modules/system/extensions/"
     },
@@ -417,38 +417,6 @@
           "cache"
         ]
       },
-      "CKeditor": {
-        "class": "\\ImpressCMS\\Editors\\CKeditor\\Editor",
-        "tags": [
-          "editor.content"
-        ]
-      },
-      "tinymce": {
-        "class": "\\ImpressCMS\\Editors\\TinyMCE\\Editor",
-        "tags": [
-          "editor.content"
-        ]
-      },
-      "stopwatch": {
-        "class": "\\Tuupola\\Middleware\\ServerTiming\\Stopwatch"
-      },
-      "\\Tuupola\\Middleware\\ServerTimingMiddleware": {
-        "arguments": [
-          "stopwatch"
-        ]
-      },
-      "codemirror": {
-        "class": "\\ImpressCMS\\Plugins\\SourceEditors\\CodeMirror\\Editor",
-        "tags": [
-          "editor.source"
-        ]
-      },
-      "editarea": {
-        "class": "\\ImpressCMS\\Plugins\\SourceEditors\\EditArea\\Editor",
-        "tags": [
-          "editor.source"
-        ]
-      },
       "router": {
         "class": "\\League\\Route\\Router",
         "methods": {
@@ -457,6 +425,14 @@
       },
       "container": {
         "class": "\\icms"
+      },
+      "stopwatch": {
+        "class": "\\Tuupola\\Middleware\\ServerTiming\\Stopwatch"
+      },
+      "\\Tuupola\\Middleware\\ServerTimingMiddleware": {
+        "arguments": [
+          "stopwatch"
+        ]
       },
       "\\League\\Route\\Strategy\\ApplicationStrategy": {
         "methods": {
@@ -497,13 +473,17 @@
         ],
         "tags": [
           "module.system.waiting-info-getter"
-          ]
+        ]
       },
-
       "\\Imponeer\\SymfonyTranslationsConstantsLoader\\PHPFileLoader": {
         "class": "\\Imponeer\\SymfonyTranslationsConstantsLoader\\PHPFileLoader",
         "tags": [
           "translation.loader"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\Editors\\EditorsRegistry": {
+        "arguments": [
+          "container"
         ]
       }
     },
