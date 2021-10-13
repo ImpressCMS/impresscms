@@ -121,6 +121,10 @@ class ModuleHandler extends AbstractExtendedHandler
 	public static function getAvailable(): array
 	{
 		$cleanList = [];
+		if (!icms::getInstance()->has('extension_describer.module')) {
+			return $cleanList;
+		}
+
 		$dirtyList = Filesystem::getDirList(ICMS_MODULES_PATH . '/');
 		foreach ($dirtyList as $item) {
 			/**
