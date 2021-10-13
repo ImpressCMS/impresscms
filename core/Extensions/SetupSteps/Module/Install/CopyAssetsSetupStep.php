@@ -89,7 +89,7 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 					if ($fileSystemItem['type'] !== 'file') {
 						continue;
 					}
-					yield ($moduleDir . '/'.$originalPath.'/' . $fileSystemItem['path']) => $fs->readStream($fileSystemItem['path']);
+					yield 'modules/' . $moduleDir . '/' . $fileSystemItem['path'] => $fs->readStream($fileSystemItem['path']);
 				}
 				continue;
 			}
