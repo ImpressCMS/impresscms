@@ -170,7 +170,7 @@ class Module
 	public function loadInfoAsVar($dirname, $verbose = true) {
 		if (!isset($this->modinfo)) {$this->loadInfo($dirname, $verbose); }
 		$this->setVar('name', $this->modinfo['name'], true);
-		$this->setVar('version', (int) (100 * ($this->modinfo['version'] + 0.001)), true);
+		$this->setVar('version', is_string($this->modinfo['version']) ? 0 : (int) (100 * ($this->modinfo['version'] + 0.001)), true);
 		$this->setVar('dirname', $this->modinfo['dirname'], true);
 		$hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1)?1:0;
 		$hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1)?1:0;
