@@ -87,6 +87,7 @@
     "php-console/php-console": "^3.1",
     "phpexperts/laravel-env-polyfill": "^1.0",
     "phpmailer/phpmailer": "^6.0.7",
+    "phpseclib/bcmath_compat": "^2.0",
     "simplepie/simplepie": "^1.5",
     "smarty/smarty": "^3.1",
     "smottt/wideimage": "^v1.1.3",
