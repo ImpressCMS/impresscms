@@ -84,27 +84,29 @@ class ModuleHandler extends AbstractExtendedHandler
 	 * @param string|object $object Class name or object
 	 *
 	 * @return string|null
-	 *
-	 * @throws ReflectionException
 	 */
 	public static function resolveModuleDirFromClass($object): ?string
 	{
-		$reflector = new ReflectionClass($object);
-		$filename = $reflector->getFileName();
-		if (!str_starts_with($filename, ICMS_MODULES_PATH)) {
+		try {
+			$reflector = new ReflectionClass($object);
+			$filename = $reflector->getFileName();
+			if (!str_starts_with($filename, ICMS_MODULES_PATH)) {
+				return null;
+			}
+			return strstr(
+				trim(
+					mb_substr(
+						$filename,
+						mb_strlen(ICMS_MODULES_PATH)
+					),
+					'/'
+				),
+				'/',
+				true
+			);
+		} catch (ReflectionException $exception) {
 			return null;
 		}
-		return strstr(
-			trim(
-				mb_substr(
-					$filename,
-					mb_strlen(ICMS_MODULES_PATH)
-				),
-				'/'
-			),
-			'/',
-			true
-		);
 	}
 
 	/**

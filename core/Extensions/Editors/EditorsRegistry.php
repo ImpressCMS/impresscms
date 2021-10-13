@@ -126,6 +126,7 @@ class EditorsRegistry
 		}
 
 		$options['public_assets_url'] = ICMS_MODULES_URL . '/' . ModuleHandler::resolveModuleDirFromClass($factory) . '/';
+		$options['target_selector'] = '#' . $options['name'] . '_tarea';
 
 		return $factory->create($options, true);
 	}
