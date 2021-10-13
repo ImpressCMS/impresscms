@@ -23,8 +23,8 @@
 									<{if $module.hasadmin == 1 && $module.isactive == '1'}> <a
 										href="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.adminindex}>">
 										<{else}> <a href="javascript: void(0);"> <{/if}>
-											<h4 class="originalModuleName"><{$module.name}> -
-												<{$module.version}> <{$module.status}></h4> <img
+											<h4 class="originalModuleName"><{$module.name}><{if $module.version > 0}> -
+												<{$module.version}> <{$module.status}><{/if}></h4> <img
 											src="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.image}>"
 											alt="<{$module.name}>" title="<{$module.name}>" />
 									</a><br /> <small><strong><{$lang_lastup}>:</strong> <span><{$module.last_update}></span></small>
@@ -145,8 +145,8 @@
 						<div class="inner">
 							<div class="clearfix moduleIcon">
 								<a href="javascript: void(0);">
-									<h4 class="originalModuleName"><{$module.name}> -
-										<{$module.version}> <{$module.status}></h4>
+									<h4 class="originalModuleName"><{$module.name}>
+										<{if $module.version > 0}> - <{$module.version}> <{$module.status}><{/if}></h4>
 								</a> <img
 									src="<{$icms_url}>/modules/<{$module.dirname}>/<{$module.image}>"
 									alt="<{$module.name}>" title="<{$module.name}>" /><br />

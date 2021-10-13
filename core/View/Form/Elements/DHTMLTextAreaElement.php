@@ -35,18 +35,19 @@
  */
 namespace ImpressCMS\Core\View\Form\Elements;
 
-use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
+use Exception;
 use icms;
+use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 
 /**
  * A textarea with bbcode formatting and smilie buttons
  *
- * @package	ICMS\Form\Elements
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @package    ICMS\Form\Elements
+ * @author    Kazumi Ono    <onokazu@xoops.org>
+ * @copyright    copyright (c) 2000-2003 XOOPS.org
  */
-class DHTMLTextAreaElement extends TextAreaElement {
+class DHTMLTextAreaElement extends TextAreaElement
+{
 	/**
 	 * Extended HTML editor definition
 	 *
@@ -89,8 +90,19 @@ class DHTMLTextAreaElement extends TextAreaElement {
 			$editor_default = $icmsConfig['editor_default'];
 		}
 
-		$editorHandler = EditorsRegistry::getInstance('content');
-		$this->htmlEditor = $editorHandler->get($editor_default);
+		/**
+		 * @var EditorsRegistry $editorsRegistry
+		 */
+		$editorsRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+		$this->htmlEditor = $editorsRegistry->create('content', $editor_default);
+
+		if ($this->htmlEditor) {
+			$extra = '';
+			foreach ($this->htmlEditor->getAttributes() as $attrName => $attrValue) {
+				$extra .= $attrName . '="' . htmlentities($attrValue) . '"';
+			}
+			$this->setExtra($extra);
+		}
 	}
 
 	/**
@@ -98,17 +110,25 @@ class DHTMLTextAreaElement extends TextAreaElement {
 	 *
 	 * @return	string  HTML
 	 */
-	public function render() {
-		return $this->htmlEditor->render();
+	public function render()
+	{
+		$ret = parent::render();
+
+		if ($this->htmlEditor) {
+			$ret .= $this->htmlEditor;
+		}
+
+		return $ret;
 	}
 
 	/**
 	 * Render Validation Javascript
 	 *
-	 * @return	mixed  rendered validation javascript or empty string
+	 * @return    string
 	 */
-	public function renderValidationJS() {
-		if (method_exists($this->htmlEditor, "renderValidationJS")) {
+	public function renderValidationJS(): string
+	{
+		if ($this->htmlEditor && method_exists($this->htmlEditor, "renderValidationJS")) {
 			return $this->htmlEditor->renderValidationJS();
 		}
 		return '';
