@@ -7,14 +7,11 @@ use Generator;
 use icms_module_Object;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
-use ImpressCMS\Core\Models\File;
 use ImpressCMS\Core\Models\Module;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
-use RecursiveDirectoryIterator;
-use SplFileInfo;
 
 /**
  * Copies module assets to public path
@@ -49,14 +46,12 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		}
 
 		foreach ($this->getDefinedAssets((array)$module->getInfo('assets'), $module->dirname) as $assetPath => $assetContent) {
-
 			$output->msg(_MD_AM_COPY_ASSETS_COPYING, $assetPath);
-
-			if ($mm->has('modules/' . $assetPath)) {
-				$mm->delete('modules/' . $assetPath);
+			if ($mm->has($assetPath)) {
+				$mm->delete($assetPath);
 			}
 			$mm->writeStream(
-				'modules/' . $assetPath,
+				$assetPath,
 				$assetContent
 			);
 		}
@@ -81,48 +76,33 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 	{
 		foreach ($assets as $path) {
 			if (str_starts_with($path, 'vendor/')) {
-
+				$originalPath = trim($path, '/');
 				$path = realpath(ICMS_ROOT_PATH . '/' . $path);
 				if (!str_starts_with($path, ICMS_ROOT_PATH . '/vendor/')) {
 					throw new Exception('Asset path for vendor can\'t be outside vendor path');
 				}
-
-				foreach ($this->readAssetData($path) as $filename => $fs) {
-					yield $filename => $fs;
+				/**
+				 * @var Filesystem $fs
+				 */
+				$fs = $this->container->get('filesystem.root');
+				foreach ($fs->listContents($originalPath, true) as $fileSystemItem) {
+					if ($fileSystemItem['type'] !== 'file') {
+						continue;
+					}
+					yield 'modules/' . $moduleDir . '/' . $fileSystemItem['path'] => $fs->readStream($fileSystemItem['path']);
 				}
 				continue;
 			}
-			$path = realpath(ICMS_MODULES_PATH . '/' . $moduleDir . '/' . $path) . '/';
-			if (!str_starts_with($path, ICMS_MODULES_PATH . '/' . $moduleDir . '/')) {
-				throw new Exception('Asset path for module can\'t be outside module path');
-			}
-			foreach ($this->readAssetData($path) as $filename => $fs) {
-				yield ($moduleDir . '/' . $filename) => $fs;
-			}
-		}
-	}
 
-	/**
-	 * Read asset from path data
-	 *
-	 * @return Generator|null
-	 *
-	 * @var string $path Read asset data
-	 */
-	protected function readAssetData(string $path): ?Generator
-	{
-		if (!is_dir($path)) {
-			yield $path => fopen($path, 'r');
-		} elseif (is_dir($path)) {
 			/**
-			 * @var SplFileInfo $fileInfo
+			 * @var Filesystem $mf
 			 */
-			foreach ((new RecursiveDirectoryIterator($path)) as $fileInfo) {
-				if (($fileInfo->getFilename()[0] === '.') || $fileInfo->isDir() || (in_array(strtolower($fileInfo->getExtension()), ['php', 'htm', 'html', 'tpl'], true))) {
+			$mf = $this->container->get('filesystem.modules');
+			foreach ($mf->listContents($moduleDir . '/' . $path, true) as $fileSystemItem) {
+				if ($fileSystemItem['type'] !== 'file') {
 					continue;
 				}
-				yield $fileInfo->getFilename() => fopen($fileInfo->getRealPath(), 'r');
-
+				yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
 			}
 		}
 	}
@@ -143,23 +123,13 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		 */
 		$mf = $this->container->get('filesystem.modules');
 		foreach ($mf->listContents($moduleDirname, true) as $fileSystemItem) {
-
-			if ($fileSystemItem['type'] !== 'file') {
+			if ($fileSystemItem['type'] !== 'file' || $fileSystemItem['basename'][0] === '.' || $fileSystemItem['basename'] === 'LICENSE') {
 				continue;
 			}
 			if (in_array($fileSystemItem['extension'], ['php', 'htm', 'html', 'tpl', 'yml', 'md', '', 'json'], true)) {
 				continue;
 			}
-
-			if (
-				(($fileSystemItem['extension'] === 'css') && ($fileSystemItem['dirname'] ===$moduleDirname)) ||
-				(strpos($fileSystemItem['path'],$moduleDirname . '/images/') === 0) ||
-				(strpos($fileSystemItem['path'],$moduleDirname . '/css/') === 0) ||
-				(strpos($fileSystemItem['path'],$moduleDirname . '/js/') === 0) ||
-				(strpos($fileSystemItem['path'],$moduleDirname . '/themes/') === 0)
-			) {
-				yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
-			}
+			yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
 		}
 	}
 
