@@ -172,7 +172,7 @@ class GroupPermHandler extends AbstractExtendedHandler
 		$ret = array();
 		$criteria = new CriteriaCompo(new CriteriaItem('gperm_name', $gperm_name));
 		$criteria->add(new CriteriaItem('gperm_modid', (int)$gperm_modid));
-		if (is_array($gperm_groupid)) {
+		if (is_array($gperm_groupid) && !empty($gperm_groupid)) {
 			$criteria2 = new CriteriaCompo();
 			foreach ($gperm_groupid as $gid) {
 				$criteria2->add(new CriteriaItem('gperm_groupid', $gid), 'OR');

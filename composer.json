@@ -68,6 +68,7 @@
     "imponeer/smarty-translate": "^1.0",
     "imponeer/smarty-xo": "^1.0",
     "imponeer/symfony-translations-constants-loader": "^1.0",
+    "impresscms/composer-addon-installer-plugin": ">1.0.2",
     "ircmaxell/random-lib": "^1.2",
     "keo/iso-639": "^1.0",
     "league/container": "^3.2",
