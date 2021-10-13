@@ -30,30 +30,33 @@
 /**
  * Template file object
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
  */
 
 namespace ImpressCMS\Core\Models;
+
+use icms;
 
 /**
  * Base class for all templates
  *
  * @author      Kazumi Ono (AKA onokazu)
- * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS\View\Template\File
+ * @copyright    Copyright (c) 2000 XOOPS.org
+ * @package    ICMS\View\Template\File
  *
- * @property int    $tpl_id            Template ID
- * @property int    $tpl_refid
+ * @property int $tpl_id            Template ID
+ * @property int $tpl_refid
  * @property string $tpl_tplset        Template set
  * @property string $tpl_file          Template filename
  * @property string $tpl_desc          Description
- * @property int    $tpl_lastmodified  When it was last modified?
- * @property int    $tpl_lastimported  When it was last imported?
+ * @property int $tpl_lastmodified  When it was last modified?
+ * @property int $tpl_lastimported  When it was last imported?
  * @property string $tpl_module        Module
  * @property string $tpl_type          Type
  * */
-class TemplateFile extends AbstractExtendedModel {
+class TemplateFile extends AbstractExtendedModel
+{
 
 	public $tpl_source = false;
 
@@ -62,7 +65,8 @@ class TemplateFile extends AbstractExtendedModel {
 	 *
 	 * @todo: move here tpl_source
 	 */
-	public function __construct($handler, $data = array()) {
+	public function __construct($handler, $data = array())
+	{
 		$this->initVar('tpl_id', self::DTYPE_INTEGER, null, false);
 		$this->initVar('tpl_refid', self::DTYPE_INTEGER, 0, false);
 		$this->initVar('tpl_tplset', self::DTYPE_STRING, null, false, 50);
@@ -74,53 +78,72 @@ class TemplateFile extends AbstractExtendedModel {
 		$this->initVar('tpl_type', self::DTYPE_STRING, null, false, 20);
 		//$this->initVar('tpl_source', self::DTYPE_DEP_SOURCE, null, false);
 
-				parent::__construct($handler, $data);
+		parent::__construct($handler, $data);
 	}
 
 	/**
 	 * Gets Template Source
 	 */
-	public function getSource() {
+	public function getSource()
+	{
 		$sql = "SELECT tpl_source FROM " . $this->handler->db->prefix('tplsource')
-				. " WHERE tpl_id='" . $this->tpl_id . "'";
-		if (!$result = $this->handler->db->query($sql)) {
-					return false;
+			. " WHERE tpl_id='" . $this->tpl_id . "'";
+
+		$result = $this->handler->db->query($sql);
+		if (!$result) {
+			return false;
 		}
-				$myrow = $this->handler->db->fetchArray($result);
-				return $myrow['tpl_source'];
+		$myrow = $this->handler->db->fetchArray($result);
+
+		if (!$myrow) {
+			// trying to resolve with DB resource resolver
+			$resolver = icms::getInstance()->get('smarty.helper.db_resource_resolver');
+			$filename = $resolver([
+				'tpl_module' => $this->tpl_module,
+				'tpl_type' => $this->tpl_type,
+				'tpl_file' => $this->tpl_file
+			]);
+			return $filename ? file_get_contents($filename) : null;
+		}
+
+		return $myrow['tpl_source'];
 	}
 
-		public function getVar($name, $format = 's') {
-			if ($name === 'tpl_source') {
-				if ($this->tpl_source === false) {
-					$this->tpl_source = $this->getSource();
-				}
-				return $this->tpl_source;
-			} else {
-				return parent::getVar($name, $format);
+	public function getVar($name, $format = 's')
+	{
+		if ($name === 'tpl_source') {
+			if ($this->tpl_source === false) {
+				$this->tpl_source = $this->getSource();
 			}
+			return $this->tpl_source;
 		}
 
-		public function assignVar($name, &$value) {
-			if ($name === 'tpl_source') {
-				$this->tpl_source = $value;
-			} else {
-				parent::assignVar($name, $value);
-			}
-		}
+		return parent::getVar($name, $format);
+	}
 
-		public function setVar($name, $value, $options = null) {
-			if ($name === 'tpl_source') {
-				$this->tpl_source = $value;
-			} else {
-				parent::setVar($name, $value, $options);
-			}
+	public function assignVar($name, &$value)
+	{
+		if ($name === 'tpl_source') {
+			$this->tpl_source = $value;
+		} else {
+			parent::assignVar($name, $value);
 		}
+	}
+
+	public function setVar($name, $value, $options = null)
+	{
+		if ($name === 'tpl_source') {
+			$this->tpl_source = $value;
+		} else {
+			parent::setVar($name, $value, $options);
+		}
+	}
 
 	/**
 	 * Gets Last Modified timestamp
 	 */
-	public function getLastModified() {
+	public function getLastModified()
+	{
 		return $this->tpl_lastmodified;
 	}
 }
