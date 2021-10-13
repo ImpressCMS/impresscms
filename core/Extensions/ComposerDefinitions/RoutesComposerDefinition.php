@@ -11,6 +11,7 @@ use icms_config_Handler;
 use icms_module_Handler;
 use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Exceptions\RoutePathUndefinedException;
+use ImpressCMS\Core\Facades\Config;
 use ImpressCMS\Core\Middlewares\ChangeThemeMiddleware;
 use ImpressCMS\Core\Middlewares\HasGroupMiddleware;
 use ImpressCMS\Core\Middlewares\HasPermissionMiddleware;
@@ -89,7 +90,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 	 */
 	protected function addMiddlewaresDependingOnConfig(array &$ret): void {
 		/**
-		 * @var icms_config_Handler $configHandler
+		 * @var Config $configHandler
 		 */
 		$configHandler = icms::handler('icms_config');
 		$configAll = $configHandler->getConfigsByCat([

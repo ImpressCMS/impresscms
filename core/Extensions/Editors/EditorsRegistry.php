@@ -7,6 +7,7 @@ use Imponeer\Contracts\Editor\Adapter\EditorAdapterInterface;
 use Imponeer\Contracts\Editor\Exceptions\IncompatibleEditorException;
 use Imponeer\Contracts\Editor\Factory\EditorFactoryInterface;
 use Imponeer\Contracts\Editor\Info\WYSIWYGEditorInfoInterface;
+use ImpressCMS\Core\Models\ModuleHandler;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -101,7 +102,6 @@ class EditorsRegistry
 
 		if (!$this->container->has($editorName)) {
 			return null;
-
 		}
 
 		$editorFactory = $this->container->get($editorName);
@@ -125,6 +125,9 @@ class EditorsRegistry
 			return null;
 		}
 
+		$options['public_assets_url'] = ICMS_MODULES_URL . '/' . ModuleHandler::resolveModuleDirFromClass($factory) . '/';
+		$options['target_selector'] = '#' . $options['name'] . '_tarea';
+
 		return $factory->create($options, true);
 	}
 
@@ -138,7 +141,6 @@ class EditorsRegistry
 	 *
 	 * @throws Exception
 	 */
-
 	public function getList(string $type, bool $noHtml = false): array
 	{
 		$editors = [];
@@ -168,5 +170,4 @@ class EditorsRegistry
 
 		return $editors;
 	}
-
 }

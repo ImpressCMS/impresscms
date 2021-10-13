@@ -22,7 +22,7 @@ class ConfigSetupStep extends InstallConfigSetupStep
 		$confcount = count($configs);
 		$config_delng = array();
 		if ($confcount > 0) {
-			$output->info(_MD_AM_CONFIGOPTION_DELETED);
+			$output->info(_MD_AM_CONFIGOPTIONS_DELETE);
 			$output->incrIndent();
 			for ($i = 0; $i < $confcount; $i++) {
 				if (!$config_handler->deleteConfig($configs[$i])) {
