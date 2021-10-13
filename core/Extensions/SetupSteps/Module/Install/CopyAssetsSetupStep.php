@@ -7,6 +7,7 @@ use Generator;
 use icms_module_Object;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
+use ImpressCMS\Core\Models\File;
 use ImpressCMS\Core\Models\Module;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
@@ -48,7 +49,9 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		}
 
 		foreach ($this->getDefinedAssets((array)$module->getInfo('assets'), $module->dirname) as $assetPath => $assetContent) {
+
 			$output->msg(_MD_AM_COPY_ASSETS_COPYING, $assetPath);
+
 			if ($mm->has('modules/' . $assetPath)) {
 				$mm->delete('modules/' . $assetPath);
 			}
@@ -78,10 +81,12 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 	{
 		foreach ($assets as $path) {
 			if (str_starts_with($path, 'vendor/')) {
+
 				$path = realpath(ICMS_ROOT_PATH . '/' . $path);
 				if (!str_starts_with($path, ICMS_ROOT_PATH . '/vendor/')) {
 					throw new Exception('Asset path for vendor can\'t be outside vendor path');
 				}
+
 				foreach ($this->readAssetData($path) as $filename => $fs) {
 					yield $filename => $fs;
 				}
@@ -117,6 +122,7 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 					continue;
 				}
 				yield $fileInfo->getFilename() => fopen($fileInfo->getRealPath(), 'r');
+
 			}
 		}
 	}
@@ -137,12 +143,14 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		 */
 		$mf = $this->container->get('filesystem.modules');
 		foreach ($mf->listContents($moduleDirname, true) as $fileSystemItem) {
+
 			if ($fileSystemItem['type'] !== 'file') {
 				continue;
 			}
-			if ($fileSystemItem['extension'] === 'php') {
+			if (in_array($fileSystemItem['extension'], ['php', 'htm', 'html', 'tpl', 'yml', 'md', '', 'json'], true)) {
 				continue;
 			}
+
 			if (
 				(($fileSystemItem['extension'] === 'css') && ($fileSystemItem['dirname'] ===$moduleDirname)) ||
 				(strpos($fileSystemItem['path'],$moduleDirname . '/images/') === 0) ||

@@ -101,6 +101,7 @@ class EditorsRegistry
 
 		if (!$this->container->has($editorName)) {
 			return null;
+
 		}
 
 		$editorFactory = $this->container->get($editorName);
@@ -137,6 +138,7 @@ class EditorsRegistry
 	 *
 	 * @throws Exception
 	 */
+
 	public function getList(string $type, bool $noHtml = false): array
 	{
 		$editors = [];
@@ -166,4 +168,5 @@ class EditorsRegistry
 
 		return $editors;
 	}
+
 }
