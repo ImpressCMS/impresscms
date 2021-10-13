@@ -28,17 +28,13 @@ jobs:
         php:
           - 7.3
           - 7.4
+          - 8.0
         database:
           - mysql:5.6
           - mariadb:10.1
         composer:
-          - 1
+          - 2
         experimental: [false]
-        include:
-          - os: ubuntu-latest
-            php: 8.0
-            database: mysql:5.6
-            experimental: true
     name: Test - php:${{ matrix.php }}; ${{ matrix.database }}; ${{ matrix.os }}; composer:${{ matrix.composer }}
     services:
       mysql:
