@@ -96,6 +96,7 @@
     "suin/php-rss-writer": "^1.6",
     "symfony/console": ">5.0",
     "symfony/polyfill-iconv": "^1.12",
+    "symfony/polyfill-php80": "^1.23",
     "symfony/translation": "^5.1",
     "true/punycode": "^2.1",
     "tuupola/server-timing-middleware": ">=0.8.2",

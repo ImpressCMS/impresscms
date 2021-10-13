@@ -1,20 +1,20 @@
 {
-  "_readme": [
-	"This file locks the dependencies of your project to a known state",
-	"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-	"This file is @generated automatically"
-  ],
-  "content-hash": "46bafa0002e4576548a26c121db2683e",
-  "packages": [
-	{
-	  "name": "0.0.0/composer-include-files",
-	  "version": "1.6.0",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
-		"reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
-	  },
-	  "dist": {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "de6ac42315d71553d19827e7e7c7c4f9",
+    "packages": [
+        {
+            "name": "0.0.0/composer-include-files",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
+                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
+            },
+            "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
                 "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
@@ -1783,103 +1783,103 @@
             "keywords": [
                 "constants",
                 "loader",
-			  "symfony",
-			  "translation"
-			],
-		  "support": {
-			"issues": "https://github.com/imponeer/symfony-translations-constants-loader/issues",
-			"source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.0"
-		  },
-		  "time": "2020-11-11T01:06:42+00:00"
-		},
-	{
-	  "name": "impresscms/codemirror-integration",
-	  "version": "v0.1",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/ImpressCMS/codemirror-integration.git",
-		"reference": "c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f"
-	  },
-	  "dist": {
-		"type": "zip",
-		"url": "https://api.github.com/repos/ImpressCMS/codemirror-integration/zipball/c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f",
-		"reference": "c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f",
-		"shasum": ""
-	  },
-	  "require": {
-		"ext-json": "*",
-		"imponeer/editor-contracts": "^1.0",
-		"imponeer/symfony-translations-constants-loader": "^1.0",
-		"npm-asset/codemirror": "^5.63",
-		"php": ">=7.3",
-		"symfony/translation": "^5.1"
-	  },
-	  "require-dev": {
-		"roave/security-advisories": "dev-latest"
-	  },
-	  "type": "impresscms-module",
-	  "extra": {
-		"icon": {
-		  "big": "images/codemirror-logo.png",
-		  "small": "images/codemirror-logo.png"
-		},
-		"services": {
-		  "\\ImpressCMS\\Modules\\CodeMirrorIntegration\\EditorInfo": {
-			"class": "\\ImpressCMS\\Modules\\CodeMirrorIntegration\\EditorInfo",
-			"arguments": [
-			  "translator"
-			]
-		  },
-		  "codemirror": {
-			"class": "\\ImpressCMS\\Modules\\CodeMirrorIntegration\\EditorFactory",
-			"arguments": [
-			  "\\ImpressCMS\\Modules\\CodeMirrorIntegration\\EditorInfo"
-			],
-			"tags": [
-			  "editor.source"
-			]
-		  }
-		},
-		"assets": [
-		  "vendor/npm-asset/codemirror/lib/",
-		  "vendor/npm-asset/codemirror/theme/",
-		  "vendor/npm-asset/codemirror/mode/",
-		  "vendor/npm-asset/codemirror/addon/"
-		]
-	  },
-	  "autoload": {
-		"psr-4": {
-		  "ImpressCMS\\Modules\\CodeMirrorIntegration\\": "src/"
-		}
-	  },
-	  "notification-url": "https://packagist.org/downloads/",
-	  "license": [
-		"MIT"
-	  ],
-	  "authors": [
-		{
-		  "name": "Raimondas Rimkevičius",
-		  "email": "mekdrop@impresscms.org"
-		}
-	  ],
-	  "description": "Integrates CodeMirror with ImpressCMS",
-	  "support": {
-		"issues": "https://github.com/ImpressCMS/codemirror-integration/issues",
-		"source": "https://github.com/ImpressCMS/codemirror-integration/tree/v0.1"
-	  },
-	  "time": "2021-10-13T10:26:34+00:00"
-	},
-	{
-	  "name": "impresscms/composer-addon-installer-plugin",
-	  "version": "dev-master",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/ImpressCMS/composer-addon-installer-plugin.git",
-		"reference": "00cb62669f14b47bb9ac8b1ddc57032e406e49b6"
-	  },
-	  "dist": {
-		"type": "zip",
-		"url": "https://api.github.com/repos/ImpressCMS/composer-addon-installer-plugin/zipball/00cb62669f14b47bb9ac8b1ddc57032e406e49b6",
+                "symfony",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/imponeer/symfony-translations-constants-loader/issues",
+                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.0"
+            },
+            "time": "2020-11-11T01:06:42+00:00"
+        },
+        {
+            "name": "impresscms/codemirror-integration",
+            "version": "v0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ImpressCMS/codemirror-integration.git",
+                "reference": "c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ImpressCMS/codemirror-integration/zipball/c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f",
+                "reference": "c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "imponeer/editor-contracts": "^1.0",
+                "imponeer/symfony-translations-constants-loader": "^1.0",
+                "npm-asset/codemirror": "^5.63",
+                "php": ">=7.3",
+                "symfony/translation": "^5.1"
+            },
+            "require-dev": {
+                "roave/security-advisories": "dev-latest"
+            },
+            "type": "impresscms-module",
+            "extra": {
+                "icon": {
+                    "big": "images/codemirror-logo.png",
+                    "small": "images/codemirror-logo.png"
+                },
+                "services": {
+                    "\\ImpressCMS\\Modules\\CodeMirrorIntegration\\EditorInfo": {
+                        "class": "\\ImpressCMS\\Modules\\CodeMirrorIntegration\\EditorInfo",
+                        "arguments": [
+                            "translator"
+                        ]
+                    },
+                    "codemirror": {
+                        "class": "\\ImpressCMS\\Modules\\CodeMirrorIntegration\\EditorFactory",
+                        "arguments": [
+                            "\\ImpressCMS\\Modules\\CodeMirrorIntegration\\EditorInfo"
+                        ],
+                        "tags": [
+                            "editor.source"
+                        ]
+                    }
+                },
+                "assets": [
+                    "vendor/npm-asset/codemirror/lib/",
+                    "vendor/npm-asset/codemirror/theme/",
+                    "vendor/npm-asset/codemirror/mode/",
+                    "vendor/npm-asset/codemirror/addon/"
+                ]
+            },
+            "autoload": {
+                "psr-4": {
+                    "ImpressCMS\\Modules\\CodeMirrorIntegration\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius",
+                    "email": "mekdrop@impresscms.org"
+                }
+            ],
+            "description": "Integrates CodeMirror with ImpressCMS",
+            "support": {
+                "issues": "https://github.com/ImpressCMS/codemirror-integration/issues",
+                "source": "https://github.com/ImpressCMS/codemirror-integration/tree/v0.1"
+            },
+            "time": "2021-10-13T10:26:34+00:00"
+        },
+        {
+            "name": "impresscms/composer-addon-installer-plugin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ImpressCMS/composer-addon-installer-plugin.git",
+                "reference": "00cb62669f14b47bb9ac8b1ddc57032e406e49b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ImpressCMS/composer-addon-installer-plugin/zipball/00cb62669f14b47bb9ac8b1ddc57032e406e49b6",
                 "reference": "00cb62669f14b47bb9ac8b1ddc57032e406e49b6",
                 "shasum": ""
             },
@@ -3328,38 +3328,38 @@
             ],
             "description": "Fast request router for PHP",
             "keywords": [
-			  "router",
-			  "routing"
-			],
-		  "support": {
-			"issues": "https://github.com/nikic/FastRoute/issues",
-			"source": "https://github.com/nikic/FastRoute/tree/master"
-		  },
-		  "time": "2018-02-13T20:26:39+00:00"
-		},
-	{
-	  "name": "npm-asset/codemirror",
-	  "version": "5.63.3",
-	  "dist": {
-		"type": "tar",
-		"url": "https://registry.npmjs.org/codemirror/-/codemirror-5.63.3.tgz"
-	  },
-	  "type": "npm-asset",
-	  "license": [
-		"MIT"
-	  ]
-	},
-	{
-	  "name": "old-xoops-libraries/php-downloader",
-	  "version": "1.0.1",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/OldXoopsLibraries/php-downloader.git",
-		"reference": "95e0d6a7d886fbfea6e9450e6bc86a8541290fd4"
-	  },
-	  "dist": {
-		"type": "zip",
-		"url": "https://api.github.com/repos/OldXoopsLibraries/php-downloader/zipball/95e0d6a7d886fbfea6e9450e6bc86a8541290fd4",
+                "router",
+                "routing"
+            ],
+            "support": {
+                "issues": "https://github.com/nikic/FastRoute/issues",
+                "source": "https://github.com/nikic/FastRoute/tree/master"
+            },
+            "time": "2018-02-13T20:26:39+00:00"
+        },
+        {
+            "name": "npm-asset/codemirror",
+            "version": "5.63.3",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/codemirror/-/codemirror-5.63.3.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "old-xoops-libraries/php-downloader",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/OldXoopsLibraries/php-downloader.git",
+                "reference": "95e0d6a7d886fbfea6e9450e6bc86a8541290fd4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/OldXoopsLibraries/php-downloader/zipball/95e0d6a7d886fbfea6e9450e6bc86a8541290fd4",
                 "reference": "95e0d6a7d886fbfea6e9450e6bc86a8541290fd4",
                 "shasum": ""
             },
