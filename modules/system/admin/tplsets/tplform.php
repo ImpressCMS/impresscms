@@ -50,6 +50,7 @@ $form->addElement(new icms_form_elements_Label(_MD_LASTMOD, formatTimestamp($tfo
 $config = array(
 	'name' => 'html',
 	'value' => $tform['tpl_source'],
+	'editor_type' => 'source',
 	'language' => _LANGCODE,
 	'width' => '100%',
 	'height' => '400px',
