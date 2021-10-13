@@ -56,7 +56,6 @@ class SmartyPluginsProvider extends AbstractServiceProvider
 	private function addDBResource() {
 		$this->leagueContainer
 			->add(DBResource::class)
-			->addArgument('cache')
 			->addArgument('db')
 			->addArgument($GLOBALS['icmsConfig']['template_set'])
 			->addArgument(
