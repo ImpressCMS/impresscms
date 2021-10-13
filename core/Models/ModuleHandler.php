@@ -42,6 +42,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Database\Legacy\Updater\TableUpdater;
 use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\Facades\Member;
@@ -85,15 +86,20 @@ class ModuleHandler
 	 * @return    array    List of folder names in the modules directory
 	 * @since    1.3
 	 */
-	static public function getAvailable()
+	public static function getAvailable(): array
 	{
-		$cleanList = array();
+		$cleanList = [];
 		$dirtyList = Filesystem::getDirList(ICMS_MODULES_PATH . '/');
 		foreach ($dirtyList as $item) {
-			if (file_exists(ICMS_MODULES_PATH . '/' . $item . '/icms_version.php')) {
+			/**
+			 * @var ExtensionDescriberInterface $extensionDescriber
+			 */
+			foreach (icms::getInstance()->get('extension_describer.module') as $extensionDescriber) {
+				if (!$extensionDescriber->canDescribe(ICMS_MODULES_PATH . '/' . $item)) {
+					continue;
+				}
 				$cleanList[$item] = $item;
-			} elseif (file_exists(ICMS_MODULES_PATH . '/' . $item . '/xoops_version.php')) {
-				$cleanList[$item] = $item;
+				break;
 			}
 		}
 		return $cleanList;

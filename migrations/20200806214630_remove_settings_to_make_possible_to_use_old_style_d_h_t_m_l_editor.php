@@ -1,5 +1,6 @@
 <?php
 
+use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 use Phoenix\Migration\AbstractMigration;
 
 class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractMigration
@@ -20,11 +21,23 @@ class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractMigra
 				'conf_catid' => 1
 			]
 		);
+
+		if (!icms::getInstance()->has('\\' . EditorsRegistry::class)) {
+			icms::getInstance()->boot(false);
+		}
+
+		/**
+		 * @var EditorsRegistry $editorRegistry
+		 */
+		$editorRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+
+		icms::getInstance()->get('cache')->clear();
+
 		$this->update(
 			$this->prefix('config'),
 			[
 				'conf_value' => key(
-					\icms_plugins_EditorHandler::getListByType('content')
+					$editorRegistry->getList('content')
 				)
 			],
 			[
@@ -77,6 +90,6 @@ class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractMigra
 	 */
 	private function prefix(string $table): string
 	{
-		return \icms::getInstance()->get('db-connection-1')->prefix($table);
+		return icms::getInstance()->get('db-connection-1')->prefix($table);
 	}
 }
