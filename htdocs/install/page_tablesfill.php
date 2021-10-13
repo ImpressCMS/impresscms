@@ -78,11 +78,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	/** @noinspection NotOptimalIfConditionsInspection */
 	if (($symfonyConsoleApplication->run(new ArrayInput([
 				'command' => 'init',
+				'-v' => true,
 				'--config_type' => 'php',
 				'--config' => dirname(dirname(__DIR__)) . '/phoenix.php',
-			]), $output) > 0) && (strrpos($output->fetch(), 'Phoenix was already initialized') === false)) {
-		$content = nl2br($output->fetch());
-		$wizard->redirectToPage('dbsettings');
+			]), $output) > 0) && (strrpos($content = $output->fetch(), 'Phoenix was already initialized') === false)) {
+
+		$content = nl2br($content);
+		$pageHasForm = true;
+		include 'install_tpl.php';
+
+		//$wizard->redirectToPage('dbsettings');
 		exit();
 	}
 	$symfonyConsoleApplication->run(new ArrayInput([

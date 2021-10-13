@@ -110,21 +110,23 @@ if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 			<div id="rightside">
 				<div class="page" id="<?php echo $wizard->currentPageName; ?>">
 					<?php if ($pageHasHelp) { ?>
-						<button type="button" onclick="javascript:void(0);" id="help_button"
+						<button type="button" onclick="void(0);" id="help_button"
 								title="<?php echo SHOW_HIDE_HELP; ?>">
 							<img src="img/help2.png" alt="<?php echo SHOW_HIDE_HELP; ?>"
 								 title="<?php echo SHOW_HIDE_HELP; ?>"/>
 						</button>
 					<?php } ?>
-					<button type="button" onclick="javascript:void(0);" id="pagedown">
+					<button type="button" onclick="void(0);" id="pagedown">
 						<img src="img/down.png" alt="<?php echo SHOW_HIDE_HELP; ?>"
 							 title="<?php echo SHOW_HIDE_HELP; ?>"/>
 					</button>
-					<button type="button" onclick="javascript:void(0);" id="toggler">
+					<button type="button" onclick="void(0);" id="toggler">
 						<img src="img/toggler.png" alt="<?php echo SHOW_HIDE_HELP; ?>"/>
 					</button>
 					<h2><?php echo $wizard->pagesTitles[$wizard->currentPage]; ?></h2>
-					<?php echo $content; ?>
+					<div class="content">
+						<?php echo $content; ?>
+					</div>
 				</div>
 				<div id="buttons">
 					<?php if ($wizard->currentPage != 0 && ($wizard->currentPage != 11)) { ?>
