@@ -113,12 +113,12 @@ class EditorsRegistry {
 	 * @return object
 	 * @throws Exception
 	 */
-	public function &get($name = '', $options = null, $noHtml = false, $OnFailure = '')
+	public function get($name = '', $options = null, $noHtml = false, $OnFailure = '')
 	{
 		if (!is_array($options)) {
 			$options = [];
 		}
-		if ($editor = $this->_loadEditor($name, $options)) {
+		if ($editor = $this->_loadEditor($name)) {
 			return $editor->create($options);
 		}
 		$list = array_keys($this->getList($noHtml));
@@ -126,7 +126,7 @@ class EditorsRegistry {
 			$OnFailure = $list[0];
 		}
 
-		return $this->_loadEditor($OnFailure, $options)->create($options);
+		return $this->_loadEditor($OnFailure)->create($options);
 	}
 
 	/**
@@ -136,21 +136,29 @@ class EditorsRegistry {
 	 * @return  array   $_list    list of available editors that are allowed (through admin config)
 	 * @throws Exception
 	 */
-	public function &getList($noHtml = false)
+	public function getList($noHtml = false)
 	{
 		$editors = [];
 		$sort = [
 			'titles' => [],
 			'order' => []
 		];
+
+		$editorTag = 'editor.' . $this->_type;
+
+		$icmsContainer = icms::getInstance();
+		if ($icmsContainer->has($editorTag)) {
+			return $editors;
+		}
+
 		/**
 		 * @var EditorInterface $editor
 		 */
-		foreach (icms::getInstance()->get('editor.' . $this->_type) as $editor) {
+		foreach ($icmsContainer->get($editorTag) as $editor) {
 			if (!($editor instanceof EditorInterface)) {
 				continue;
 			}
-			$name = icms::getInstance()->getServiceDefinition(get_class($editor))->getAlias();
+			$name = $icmsContainer->getServiceDefinition(get_class($editor))->getAlias();
 			if (!empty($this->allowed_editors) && !in_array($name, $this->allowed_editors, true)) {
 				continue;
 			}
@@ -175,7 +183,9 @@ class EditorsRegistry {
 
 	/**
 	 * Render the editor
+	 *
 	 * @param   string    &$editor    Reference to the editor object
+	 *
 	 * @return  string    The rendered Editor string
 	 */
 	public function render(&$editor) {
@@ -211,20 +221,28 @@ class EditorsRegistry {
 			return null;
 		}
 
+		$container = icms::getInstance();
+		if (!$container->has($name)) {
+			return null;
+		}
+
 		/**
 		 * @var EditorInterface $editor
 		 */
-		$editor = icms::getInstance()->get($name);
+		$editor = $container->get($name);
 		return ($editor instanceof EditorInterface) ? $editor : null;
 	}
 
 	/**
 	 * Retrieve a list of the available editors, by type
-	 * @param string $type
+	 *
+	 * @param string $type Type of editor
+	 *
 	 * @return    array    Available editors
+	 *
 	 * @throws Exception
 	 */
-	public static function getListByType($type = 'content')
+	public static function getListByType($type = 'content'): array
 	{
 		$editor = self::getInstance($type);
 		return $editor->getList();
