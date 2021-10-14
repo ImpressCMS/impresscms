@@ -5,7 +5,6 @@
         "This file is @generated automatically"
     ],
     "content-hash": "de6ac42315d71553d19827e7e7c7c4f9",
-
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -1872,28 +1871,26 @@
         },
         {
             "name": "impresscms/composer-addon-installer-plugin",
-            "version": "dev-master",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/composer-addon-installer-plugin.git",
-                "reference": "00cb62669f14b47bb9ac8b1ddc57032e406e49b6"
+                "reference": "9f4ba67805c412b317d8ace956c29dba1a330321"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/composer-addon-installer-plugin/zipball/00cb62669f14b47bb9ac8b1ddc57032e406e49b6",
-                "reference": "00cb62669f14b47bb9ac8b1ddc57032e406e49b6",
+                "url": "https://api.github.com/repos/ImpressCMS/composer-addon-installer-plugin/zipball/9f4ba67805c412b317d8ace956c29dba1a330321",
+                "reference": "9f4ba67805c412b317d8ace956c29dba1a330321",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
                 "phpexperts/laravel-env-polyfill": ">=1.0",
-                "symfony/polyfill-php80": ">=1.21",
                 "vlucas/phpdotenv": ">=3.3.3"
             },
             "require-dev": {
                 "composer/composer": "^1.10.23 || ^2.1.9"
             },
-            "default-branch": true,
             "type": "composer-plugin",
             "extra": {
                 "class": "ImpressCMS\\Composer\\AddonInstaller\\ComposerPlugin"
@@ -1916,9 +1913,9 @@
             "description": "This plugin allows the installation of ImpressCMS addons from composer",
             "support": {
                 "issues": "https://github.com/ImpressCMS/composer-addon-installer-plugin/issues",
-                "source": "https://github.com/ImpressCMS/composer-addon-installer-plugin/tree/master"
+                "source": "https://github.com/ImpressCMS/composer-addon-installer-plugin/tree/v1.0.3"
             },
-            "time": "2021-10-13T15:31:40+00:00"
+            "time": "2021-10-14T20:21:46+00:00"
         },
         {
             "name": "intervention/image",
