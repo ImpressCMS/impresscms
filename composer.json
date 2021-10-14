@@ -527,5 +527,11 @@
   },
   "scripts": {
     "test": "phpunit -c tests/configuration.xml"
+  },
+  "repositories": {
+    "composer_assets": {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
   }
 }
