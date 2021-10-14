@@ -77,9 +77,9 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		foreach ($assets as $path) {
 			if (str_starts_with($path, 'vendor/')) {
 				$originalPath = trim($path, '/');
-				$path = realpath(ICMS_ROOT_PATH . '/' . $path);
+				$path = ICMS_ROOT_PATH . '/' . $path;
 				if (!str_starts_with($path, ICMS_ROOT_PATH . '/vendor/')) {
-					throw new Exception('Asset path for vendor can\'t be outside vendor path');
+					throw new Exception('Asset path for vendor can\'t be outside vendor path (' . json_encode([$path, ICMS_ROOT_PATH . '/vendor/']) . ')');
 				}
 				/**
 				 * @var Filesystem $fs
