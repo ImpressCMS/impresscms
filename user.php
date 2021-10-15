@@ -43,11 +43,8 @@ $op = (isset($_GET['op']))
 	? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))
 	: ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'main');
 
-$redirect = isset($_GET['xoops_redirect'])
-	? $_GET['xoops_redirect']
-	: isset($_POST['xoops_redirect'])
-		? $_POST['xoops_redirect']
-		: false;
+$redirect = $_GET['xoops_redirect'] ?? $_POST['xoops_redirect'] ?? false;
+
 if ($redirect) {
 	$redirect = htmlspecialchars(trim($redirect), ENT_QUOTES, _CHARSET);
 	$isExternal = false;
@@ -105,7 +102,7 @@ switch ($op) {
 		break;
 
 	case $op == 'logout':
-		$sessHandler = \icms::$session->destroy();
+		$sessHandler = icms::$session->destroy();
 		redirect_header(ICMS_URL . '/', 3, _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT);
 		break;
 

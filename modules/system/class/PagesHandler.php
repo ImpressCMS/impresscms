@@ -35,7 +35,7 @@ class mod_system_PagesHandler extends icms_data_page_Handler {
 	 * @return	array
 	 */
 	public function getModulesArray($full = false) {
-		if (!count($this->modules_name)) {
+		if (empty($this->modules_name)) {
 			$icms_module_handler = icms::handler('icms_module');
 			$installed_modules = $icms_module_handler->getObjects();
 			foreach ($installed_modules as $module) {

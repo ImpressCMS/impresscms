@@ -701,6 +701,7 @@ if (!function_exists('icms_loadLanguageFile')) {
 		if (!file_exists($filename)) {
 			$filename = $languagePath . 'english/' . $extraPath . $file . '.php';
 		}
+
 		if (file_exists($filename)) {
 			include_once $filename;
 		}
@@ -1207,9 +1208,6 @@ if (!function_exists('icms_escapeValue')) {
 	function icms_escapeValue($value, $quotes = true)
 	{
 		if (is_string($value)) {
-			if (get_magic_quotes_gpc) {
-				$value = stripslashes($value);
-			}
 			$value = icms::$xoopsDB->escape($value);
 			if ($quotes) {
 				$value = '"' . $value . '"';
@@ -1866,7 +1864,7 @@ if (!function_exists('icms_random_str')) {
 		$letras = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,w,y,z,1,2,3,4,5,6,7,8,9,0";
 		$array = explode(",", $letras);
 		shuffle($array);
-		$senha = implode($array, "");
+		$senha = implode("", $array);
 		return substr($senha, 0, $numchar);
 	}
 }

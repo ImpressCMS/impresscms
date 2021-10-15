@@ -6,6 +6,8 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 {
 	protected function up(): void
 	{
+		icms_loadLanguageFile('core', 'global');
+
 		foreach ($this->fetchNextColumnToChange() as [$table, $column, $indexColumn, $id, $originalVal]) {
 			$val = $this->replaceYoutubeTags(
 				$this->replaceWindowsMediaPlayerTags(
@@ -261,7 +263,7 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 	 *
 	 * @return Generator|null
 	 */
-	private function getNextColumnToChange(): ?\Generator
+	private function getNextColumnToChange(): ?Generator
 	{
 		foreach ($this->getAllTablesNames() as $tableName) {
 			$columns = $this->getTable($tableName)->getColumns();
@@ -295,15 +297,15 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 	private function getAllTablesNames(): array
 	{
 		/**
-		 * @var \icms_db_Connection $db
+		 * @var icms_db_Connection $db
 		 */
-		$db = \icms::getInstance()->get('db-connection-1');
+		$db = icms::getInstance()->get('db-connection-1');
 
 		$query = $db->prepareWithValues('SHOW TABLES LIKE :rule;', [
 			'rule' => $db->prefix('') . '%'
 		]);
 		$query->execute();
-		return $query->fetchAll(\PDO::FETCH_COLUMN);
+		return $query->fetchAll(PDO::FETCH_COLUMN);
 	}
 
 }

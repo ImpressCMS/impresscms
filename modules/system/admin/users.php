@@ -55,6 +55,7 @@ $op = '';
 
 /** common header for the admin functions */
 include "admin_header.php";
+global $icms_admin_handler, $user_handler;
 $user_handler = $icms_admin_handler;
 
 include_once ICMS_MODULES_PATH . "/system/admin/users/users.php";
@@ -115,7 +116,7 @@ switch ($op) {
 				. icms::$security->getTokenHTML()
 				. "<input type='submit' value='" . _YES . "' />"
 				. "<input type='button' value='" . _NO
-				. "' onclick='javascript:location.href=\"admin.php?op=adminMain\"' />"
+				. "' />"
 				. $hidden . "</form></div>";
 		} else {echo _AM_NOUSERS; }
 		icms_cp_footer();

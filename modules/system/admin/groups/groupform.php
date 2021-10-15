@@ -30,13 +30,17 @@
 /**
  * Form for setting group options
  *
- * @copyright	http://www.XOOPS.org/
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
- * @author		Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
- * @author		modified by UnderDog <underdog@impresscms.org>
+ * @copyright    http://www.XOOPS.org/
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        Administration
+ * @author        Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
+ * @author        modified by UnderDog <underdog@impresscms.org>
  */
+
+use Imponeer\Database\Criteria\CriteriaCompo;
+use Imponeer\Database\Criteria\CriteriaItem;
+use Imponeer\Database\Criteria\Enum\ComparisionOperator;
 
 $name_text = new icms_form_elements_Text(_NAME, "name", 30, 50, $name_value);
 $desc_text = new icms_form_elements_Textarea(_AM_DESCRIPTION, "desc", $desc_value);
@@ -69,44 +73,44 @@ unset($dirlist);
 $a_mod_checkbox = new icms_form_elements_Checkbox(_AM_ACTIVERIGHTS, "admin_mids[]", $a_mod_value);
 
 $module_handler = icms::handler('icms_module');
-$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hasadmin', 1));
-$criteria->add(new icms_db_criteria_Item('isactive', 1));
-$criteria->add(new icms_db_criteria_Item('dirname', 'system', '<>'));
+$criteria = new CriteriaCompo(new CriteriaItem('hasadmin', 1));
+$criteria->add(new CriteriaItem('isactive', 1));
+$criteria->add(new CriteriaItem('dirname', 'system', ComparisionOperator::NOT_EQUAL_TO));
 
 /* criteria added to see if the active user can admin the module, do not filter for administrator group  (module_admin)*/
 if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 	$a_mod = $gperm_handler->getItemIds('module_admin', $groups);
-	$criteria->add(new icms_db_criteria_Item('mid', '(' . implode(',', $a_mod) . ')', 'IN'));
+	$criteria->add(new CriteriaItem('mid', '(' . implode(',', $a_mod) . ')', 'IN'));
 }
 $a_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
 $r_mod_checkbox = new icms_form_elements_Checkbox(_AM_ACCESSRIGHTS, "read_mids[]", $r_mod_value);
-$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hasmain', 1));
-$criteria->add(new icms_db_criteria_Item('isactive', 1));
+$criteria = new CriteriaCompo(new CriteriaItem('hasmain', 1));
+$criteria->add(new CriteriaItem('isactive', 1));
 
 /* criteria added to see if the active user can access the module, do not filter for administrator group  (module_read)*/
 if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 	$r_mod = $gperm_handler->getItemIds('module_read', $groups);
-	$criteria->add(new icms_db_criteria_Item('mid', '(' . implode(',', $r_mod) . ')', 'IN'));
+	$criteria->add(new CriteriaItem('mid', '(' . implode(',', $r_mod) . ')', 'IN'));
 }
 $r_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
-$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
+$criteria = new CriteriaCompo(new CriteriaItem('isactive', 1));
 
 $debug_mod_checkbox = new icms_form_elements_Checkbox(_AM_DEBUG_PERM, "enabledebug_mids[]", $debug_mod_value);
-$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
+$criteria = new CriteriaCompo(new CriteriaItem('isactive', 1));
 
 /* criteria added to see where the active user can view the debug mode (enable_debug)
  * administrators do not have explicit entries for this, do not filter
  */
 if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
 	$debug_mod = $gperm_handler->getItemIds('enable_debug', $groups);
-	$criteria->add(new icms_db_criteria_Item('mid', '(' . implode(',', $debug_mod) . ')', 'IN'));
+	$criteria->add(new CriteriaItem('mid', '(' . implode(',', $debug_mod) . ')', 'IN'));
 }
 $debug_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
 $group_manager_checkbox = new icms_form_elements_Checkbox(_AM_GROUPMANAGER_PERM, "groupmanager_gids[]", $group_manager_value);
-$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
+$criteria = new CriteriaCompo(new CriteriaItem('isactive', 1));
 $groups = $member_handler->getGroups();
 
 foreach ($groups as $group) {

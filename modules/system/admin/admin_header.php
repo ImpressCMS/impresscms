@@ -49,6 +49,7 @@ if (!empty($_POST)) {
 }
 
 if ($fct !== "") {
+	global $icms_admin_handler;
 	$icms_admin_handler = icms_getModuleHandler($fct, $module_dir);
 	icms_loadLanguageFile($module_dir, $fct, true);
 }

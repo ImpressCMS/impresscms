@@ -1,5 +1,6 @@
 <?php
 
+use ImpressCMS\Core\Database\DatabaseConnection;
 use Phoenix\Migration\AbstractMigration;
 
 class AddInitialData extends AbstractMigration
@@ -29,16 +30,19 @@ class AddInitialData extends AbstractMigration
 		}
 
 		/**
-		 * @var \icms_db_Connection $dbm
+		 * @var DatabaseConnection $dbm
 		 */
-		$dbm = \icms::getInstance()->get('db-connection-1');
+		$dbm = icms::getInstance()->get('db-connection-1');
 		$usersTable = $dbm->prefix('users');
-		if ($this->tableExists( $usersTable) && ((int)($dbm->fetchCol('SELECT COUNT(*) FROM `' . $usersTable . '`;')[0]) > 0)) {
+		if ($this->tableExists($usersTable) && ((int)($dbm->fetchCol('SELECT COUNT(*) FROM `' . $usersTable . '`;')[0]) > 0)) {
 			// skipping this migration if at least one user is found
 			return;
 		}
 
 		icms_loadLanguageFile('core', 'migrations');
+		icms_loadLanguageFile('system', 'common');
+		icms_loadLanguageFile('system', 'customtag', true);
+		icms_loadLanguageFile('system', 'preferences', true);
 
 		$this->insertWithPrefix('groups', [
 			[
@@ -5782,7 +5786,7 @@ class AddInitialData extends AbstractMigration
 			return $this;
 		}
 		return $this->insert(
-			\icms::getInstance()->get('db-connection-1')->prefix($table),
+			icms::getInstance()->get('db-connection-1')->prefix($table),
 			$data
 		);
 	}
@@ -5810,7 +5814,7 @@ class AddInitialData extends AbstractMigration
 					 'icmspage',
 				 ] as $table) {
 			$this->delete(
-				\icms::getInstance()->get('db-connection-1')->prefix($table)
+				icms::getInstance()->get('db-connection-1')->prefix($table)
 			);
 		}
 	}

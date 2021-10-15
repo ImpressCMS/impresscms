@@ -2,9 +2,8 @@
 
 namespace ImpressCMS\Core\Providers;
 
-use ImpressCMS\Core\Event;
-use ImpressCMS\Core\Security\RequestSecurity;
 use icms_core_Security;
+use ImpressCMS\Core\Security\RequestSecurity;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 /**
@@ -28,7 +27,7 @@ class SecurityServiceProvider extends AbstractServiceProvider
 		$this->getContainer()->add('security', function () {
 			$instance = new RequestSecurity();
 
-      if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] != 'POST' || !$instance->checkReferer(XOOPS_DB_CHKREF))) {
+			if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] != 'POST' || (defined('XOOPS_DB_CHKREF') && !$instance->checkReferer(XOOPS_DB_CHKREF)))) {
 
 				define('XOOPS_DB_PROXY', 1);
 			}
