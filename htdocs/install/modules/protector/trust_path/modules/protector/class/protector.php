@@ -1,6 +1,5 @@
 <?php
 
-/** @todo	Remove get_magic_quotes_gpc - they are deprecated in PHP 5.4 and will always return FALSE */
 class Protector {
 	var $mydirname;
 	var $_conn = null;
@@ -427,7 +426,6 @@ class Protector {
 			}
 		} else {
 			if (strlen($val) < 6) return;
-			$val = (function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc()) ? stripslashes($val) : $val;
 			foreach ($this->_dblayertrap_doubtful_needles as $needle) {
 				if (stristr($val, $needle)) {
 					$this->_dblayertrap_doubtfuls[] = $val;
