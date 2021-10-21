@@ -23,7 +23,7 @@ if (file_exists("$mydirpath/language/$language/modinfo.php")) {
 	include_once "$mytrustdirpath/language/english/modinfo.php";
 }
 
-include dirname(dirname(__FILE__)) . '/admin_menu.php';
+include dirname(__DIR__) . '/admin_menu.php';
 
 if (file_exists(ICMS_TRUST_PATH . '/libs/altsys/mytplsadmin.php')) {
 	// mytplsadmin (TODO check if this module has tplfile)

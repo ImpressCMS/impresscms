@@ -131,7 +131,7 @@ echo "<h3 style='text-align:" . _GLOBAL_LEFT . ";'>" . $xoopsModule->getVar('nam
 
 // configs writable check
 if (!is_writable(dirname(__DIR__) . '/configs')) {
-	printf("<p style='color:red;font-weight:bold;'>" . _AM_FMT_CONFIGSNOTWRITABLE . "</p>\n", dirname(dirname(__FILE__)) . '/configs');
+	printf("<p style='color:red;font-weight:bold;'>" . _AM_FMT_CONFIGSNOTWRITABLE . "</p>\n", dirname(__DIR__) . '/configs');
 }
 
 // bad_ips

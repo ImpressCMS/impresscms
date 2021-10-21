@@ -3,7 +3,7 @@ $db = icms_db_Factory::instance();
 
 // beginning of Output
 icms_cp_header();
-include dirname(__FILE__) . '/mymenu.php';
+include __DIR__ . '/mymenu.php';
 
 // for RTL users
 @define('_GLOBAL_LEFT', @_ADM_USE_RTL == 1 ? 'right' : 'left');

@@ -1,13 +1,13 @@
 <?php
-require_once dirname(__FILE__) . '/precheck_functions.php';
+require_once __DIR__ . '/precheck_functions.php';
 
 if (in_array('icms_db_legacy_Factory', get_declared_classes())) {
-	require dirname(__FILE__) . '/postcheck.inc.php';
+	require __DIR__ . '/postcheck.inc.php';
 	return;
 }
 
 define('PROTECTOR_PRECHECK_INCLUDED', 1);
-define('PROTECTOR_VERSION', file_get_contents(dirname(__FILE__) . '/version.txt'));
+define('PROTECTOR_VERSION', file_get_contents(__DIR__ . '/version.txt'));
 
 // set $_SERVER['REQUEST_URI'] for IIS
 if (empty($_SERVER['REQUEST_URI'])) { // Not defined by IIS
