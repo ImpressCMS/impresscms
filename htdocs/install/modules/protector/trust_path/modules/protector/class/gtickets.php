@@ -13,8 +13,8 @@ if (!class_exists('XoopsGTicket')) {
 
 			// language file
 			if (defined('ICMS_ROOT_PATH') && !empty($xoopsConfig['language']) && !strstr($xoopsConfig['language'], '/')) {
-				if (file_exists(dirname(dirname(__FILE__)) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml')) {
-					include dirname(dirname(__FILE__)) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml';
+				if (file_exists(dirname(__DIR__) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml')) {
+					include dirname(__DIR__) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml';
 				}
 			}
 
