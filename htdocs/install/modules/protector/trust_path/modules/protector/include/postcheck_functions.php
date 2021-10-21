@@ -6,7 +6,7 @@ function protector_postcommon() {
 	// patch for 2.2.x from xoops.org (I know this is not so beautiful...)
 	if (substr(@XOOPS_VERSION, 6, 3) > 2.0 && stristr(@$_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
 		$module_handler = icms::handler('icms_module');
-		$module = &$module_handler->get(intval(@$_GET['mod']));
+		$module = &$module_handler->get((int) @$_GET['mod']);
 		if (is_object($module)) {
 			$module->getInfo();
 		}
@@ -140,11 +140,11 @@ function protector_postcommon() {
 		// SPAM Check
 		if (is_object(icms::$user)) {
 			if (!icms::$user->isAdmin() && $conf['spamcount_uri4user']) {
-				$protector->spam_check(intval($conf['spamcount_uri4user']), icms::$user->getVar('uid'));
+				$protector->spam_check((int) $conf['spamcount_uri4user'], icms::$user->getVar('uid'));
 			}
 		} else if ($conf['spamcount_uri4guest']) {
 
-			$protector->spam_check(intval($conf['spamcount_uri4guest']), 0);
+			$protector->spam_check((int) $conf['spamcount_uri4guest'], 0);
 		}
 
 		// filter plugins for POST on postcommon stage

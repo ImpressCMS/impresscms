@@ -229,13 +229,13 @@ class Protector {
 			}
 		}
 
-		icms::$xoopsDB->queryF("INSERT INTO " . XOOPS_DB_PREFIX . "_" . $this->mydirname . "_log SET ip='" . addslashes($ip) . "',agent='" . addslashes($agent) . "',type='" . addslashes($type) . "',description='" . addslashes($this->message) . "',uid='" . intval($uid) . "',timestamp=NOW()");
+		icms::$xoopsDB->queryF("INSERT INTO " . XOOPS_DB_PREFIX . "_" . $this->mydirname . "_log SET ip='" . addslashes($ip) . "',agent='" . addslashes($agent) . "',type='" . addslashes($type) . "',description='" . addslashes($this->message) . "',uid='" . (int) $uid . "',timestamp=NOW()");
 		$this->_logged = true;
 		return true;
 	}
 
 	function write_file_bwlimit($expire) {
-		$expire = min(intval($expire), time() + 300);
+		$expire = min((int) $expire, time() + 300);
 
 		$fp = @fopen($this->get_filepath4bwlimit(), 'w');
 		if ($fp) {
@@ -251,7 +251,7 @@ class Protector {
 
 	function get_bwlimit() {
 		list($expire) = @file(self::get_filepath4bwlimit());
-		$expire = min(intval($expire), time() + 300);
+		$expire = min((int) $expire, time() + 300);
 
 		return $expire;
 	}
@@ -707,7 +707,7 @@ class Protector {
 						@unlink($temp_file);
 					}
 
-					$imagetype = intval($image_attributes[2]);
+					$imagetype = (int) $image_attributes[2];
 					if ($imagetype == IMAGETYPE_SWC) $imagetype = IMAGETYPE_SWF;
 					if ($image_attributes === false || $image_extensions[$imagetype] != $ext) {
 						$this->message .= "Attempt to upload camouflaged image file {$_file['name']}.\n";
@@ -801,7 +801,7 @@ class Protector {
 		}
 
 		// sql for recording access log (INSERT should be placed after SELECT)
-		$sql4insertlog = "INSERT INTO " . icms::$xoopsDB->prefix($this->mydirname . "_access") . " SET ip='$ip4sql',request_uri='$uri4sql',expire=UNIX_TIMESTAMP()+'" . intval($this->_conf['dos_expire']) . "'";
+		$sql4insertlog = "INSERT INTO " . icms::$xoopsDB->prefix($this->mydirname . "_access") . " SET ip='$ip4sql',request_uri='$uri4sql',expire=UNIX_TIMESTAMP()+'" . (int) $this->_conf['dos_expire'] . "'";
 
 		// bandwidth limitation
 		if (@$this->_conf['bwlimit_count'] >= 10) {
