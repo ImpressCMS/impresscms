@@ -25,18 +25,20 @@
 //  ------------------------------------------------------------------------ //
 
 /**
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since        XOOPS
+ * @author        http://www.xoops.org The XOOPS Project
  * @author      sato-san <sato-san@impresscms.org>
- * @package		Member
- * @subpackage	User
+ * @package        Member
+ * @subpackage    User
  */
 
+use ImpressCMS\Core\Models\GroupPermHandler;
+
 $xoopsOption['pagetype'] = 'user';
-$uid = (int) $_GET['uid'];
+$uid = (int)$_GET['uid'];
 
 if (icms_get_module_status("profile")) {
 	$module = icms::handler("icms_module")->getByDirName("profile", true);
@@ -60,10 +62,13 @@ if ($uid <= 0) {
 	redirect_header('index.php', 3, _US_SELECTNG);
 }
 
+/**
+ * @var GroupPermHandler $gperm_handler
+ */
 $gperm_handler = icms::handler('icms_member_groupperm');
 $groups = is_object(icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
 
-$isAdmin = $gperm_handler->checkRight('system_admin', ICMS_SYSTEM_USER, $groups);
+$isAdmin = $gperm_handler->checkRight('system_admin', 1, $groups);
 
 if (is_object(icms::$user)) {
 	if ($uid == icms::$user->uid) {

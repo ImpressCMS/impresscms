@@ -171,10 +171,7 @@ class DataFilter
 	 */
 	public static function addSlashes($text)
 	{
-		if (!get_magic_quotes_gpc()) {
-			$text = addslashes($text);
-		}
-		return $text;
+		return addslashes($text);
 	}
 
 	/**
@@ -187,9 +184,6 @@ class DataFilter
 	 */
 	public static function stripSlashesGPC($text)
 	{
-		if (get_magic_quotes_gpc()) {
-			$text = stripslashes($text);
-		}
 		return $text;
 	}
 
@@ -1112,11 +1106,11 @@ class DataFilter
 
 				switch ($options1) {
 					case 'scheme':
-						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED);
+						$valid = filter_var($data, FILTER_VALIDATE_URL);
 						break;
 
 					case 'host':
-						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED);
+						$valid = filter_var($data, FILTER_VALIDATE_URL);
 						break;
 
 					case 'path':

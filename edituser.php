@@ -379,27 +379,27 @@ switch ($op) {
 			$pwd_tray->addElement($pwd_text);
 			$pwd_tray->addElement($pwd_text2);
 			$pwd_text_old = new icms_form_elements_Password(_US_OLD_PASSWORD, 'old_password', 10, 255);
-			$mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', icms::$user->user_mailok);
-			$uid_hidden = new icms_form_elements_Hidden('uid', (int) icms::$user->uid);
-			$op_hidden = new icms_form_elements_Hidden('op', 'saveuser');
-			$submit_button = new icms_form_elements_Button('', 'submit', _US_SAVECHANGES, 'submit');
+	$mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', icms::$user->user_mailok);
+	$uid_hidden = new icms_form_elements_Hidden('uid', (int)icms::$user->uid);
+	$op_hidden = new icms_form_elements_Hidden('op', 'saveuser');
+	$submit_button = new icms_form_elements_Button('', 'submit', _US_SAVECHANGES, 'submit');
 
-			$form->addElement($timezone_select);
-			$form->addElement($location_text);
-			$form->addElement($occupation_text);
-			$form->addElement($interest_text);
-			$form->addElement($sig_tray);
-			if (count($icmsConfig['theme_set_allowed']) > 1) {
-				$form->addElement($selected_theme);
-			}
+	$form->addElement($timezone_select);
+	$form->addElement($location_text);
+	$form->addElement($occupation_text);
+	$form->addElement($interest_text);
+	$form->addElement($sig_tray);
+	if (!empty($icmsConfig['theme_set_allowed'])) {
+		$form->addElement($selected_theme);
+	}
 
-			if ($icmsConfigMultilang['ml_enable']) {
-				$form->addElement($selected_language);
-			}
+	if ($icmsConfigMultilang['ml_enable']) {
+		$form->addElement($selected_language);
+	}
 
-			$form->addElement($umode_select);
-			$form->addElement($uorder_select);
-			$form->addElement($notify_method_select);
+	$form->addElement($umode_select);
+	$form->addElement($uorder_select);
+	$form->addElement($notify_method_select);
 			$form->addElement($notify_mode_select);
 			$form->addElement($bio_tarea);
 			$form->addElement($pwd_change_radio);

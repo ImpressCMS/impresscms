@@ -65,9 +65,9 @@ class AutotasksSetupStep implements SetupStepInterface
 					$task->sat_type = 'addon/' . $module->getInfo('dirname');
 					$task->sat_addon_id = $taskID;
 					if (!$task->store()) {
-						$output->error(_MD_AM_AUTOTASK_FAIL . ' ' . $taskData['name']);
+						$output->error(_MD_AM_AUTOTASK_FAIL, $taskData['name']);
 					} else {
-						$output->success(_MD_AM_AUTOTASK_ADDED . ' ' . $taskData['name']);
+						$output->success(_MD_AM_AUTOTASK_ADDED, $taskData['name']);
 					}
 				}
 			}
