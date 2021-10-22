@@ -1048,22 +1048,9 @@ class Protector {
 				}
 			}
 
-			// preview CSRF zx 2004/12/14
-			// news submit.php
-			if (substr(@$_SERVER['SCRIPT_NAME'], -23) == 'modules/news/submit.php' && isset($_POST['preview']) && strpos(@$_SERVER['HTTP_REFERER'], ICMS_URL . '/modules/news/submit.php') !== 0) {
-				$HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1;
-			}
-			// news admin/index.php
-			if (substr(@$_SERVER['SCRIPT_NAME'], -28) == 'modules/news/admin/index.php' && ($_POST['op'] == 'preview' || $_GET['op'] == 'preview') && strpos(@$_SERVER['HTTP_REFERER'], ICMS_URL . '/modules/news/admin/index.php') !== 0) {
-				$HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1;
-			}
 			// comment comment_post.php
 			if (isset($_POST['com_dopreview']) && !strstr(substr(@$_SERVER['HTTP_REFERER'], -16), 'comment_post.php')) {
 				$HTTP_POST_VARS['dohtml'] = $_POST['dohtml'] = 0;
-			}
-			// disable preview of system's blocksadmin
-			if (substr(@$_SERVER['SCRIPT_NAME'], -24) == 'modules/system/admin.php' && ($_GET['fct'] == 'blocksadmin' || $_POST['fct'] == 'blocksadmin') && isset($_POST['previewblock']) /* && strpos( $_SERVER['HTTP_REFERER'] , ICMS_URL.'/modules/system/admin.php' ) !== 0 */ ) {
-				die("Danger! don't use this preview. Use 'altsys module' instead.(by Protector)");
 			}
 			// tpl preview
 			if (substr(@$_SERVER['SCRIPT_NAME'], -24) == 'modules/system/admin.php' && ($_GET['fct'] == 'tplsets' || $_POST['fct'] == 'tplsets')) {

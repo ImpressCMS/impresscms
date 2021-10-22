@@ -7,11 +7,6 @@ class protector_postcommon_post_htmlpurify4guest extends ProtectorFilterAbstract
 	function execute() {
 		global $xoopsUser;
 
-		// HTMLPurifier runs with PHP5 only
-		if (version_compare(PHP_VERSION, '5.0.0') < 0) {
-			die('Turn postcommon_post_htmlpurify4guest.php off because this filter cannot run with PHP4');
-		}
-
 		if (is_object($xoopsUser)) {
 			return true;
 		}

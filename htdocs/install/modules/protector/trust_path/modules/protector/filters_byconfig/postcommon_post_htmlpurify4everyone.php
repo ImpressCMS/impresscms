@@ -5,11 +5,6 @@ class protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstr
 	var $method;
 
 	function execute() {
-		// HTMLPurifier runs with PHP5 only
-		if (version_compare(PHP_VERSION, '5.0.0') < 0) {
-			die('Turn postcommon_post_htmlpurify4everyone.php off because this filter cannot run with PHP4');
-		}
-
 		// use HTMLPurifier inside ImpressCMS
 		if (!class_exists('icms_core_HTMLFilter')) {
 			$this->purifier = &icms_core_HTMLFilter::getInstance();
