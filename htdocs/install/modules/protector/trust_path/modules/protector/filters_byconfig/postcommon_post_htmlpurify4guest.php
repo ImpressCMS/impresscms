@@ -12,7 +12,7 @@ class protector_postcommon_post_htmlpurify4guest extends ProtectorFilterAbstract
 		}
 
 		// use HTMLPurifier inside ImpressCMS
-		if (!class_exists('icms_core_HTMLFilter')) {
+		if (class_exists('icms_core_HTMLFilter')) {
 			$this->purifier = &icms_core_HTMLFilter::getInstance();
 			$this->method = 'htmlpurify';
 		} else {
