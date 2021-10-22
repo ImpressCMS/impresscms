@@ -118,17 +118,7 @@ $modversion['config'][] = array (
 	'default' => "1",
 	'options' => array ()
 );
-/*
- * $modversion['config'][] = array(
- * 'name' => 'die_nullbyte' ,
- * 'title' => $constpref.'_DIE_NULLBYTE' ,
- * 'description' => $constpref.'_DIE_NULLBYTEDSC' ,
- * 'formtype' => 'yesno' ,
- * 'valuetype' => 'int' ,
- * 'default' => "1" ,
- * 'options' => array()
- * ) ;
- */
+
 $modversion['config'][] = array (
 	'name' => 'die_badext',
 	'title' => $constpref . '_DIE_BADEXT',
