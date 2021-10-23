@@ -385,9 +385,6 @@ $modversion['config'][] = array (
 	'options' => array ()
 );
 
-// Search
-$modversion['hasSearch'] = 0;
-
 // Comments
 $modversion['hasComments'] = 0;
 
