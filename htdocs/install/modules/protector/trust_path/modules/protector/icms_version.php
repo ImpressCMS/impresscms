@@ -38,6 +38,9 @@ $modversion['blocks'] = array ();
 // Menu
 $modversion['hasMain'] = 0;
 
+// Search
+$modversion['hasSearch'] = false;
+
 // Config
 $modversion['config'][1] = array (
 	'name' => 'global_disabled',
