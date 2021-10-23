@@ -11,7 +11,7 @@ if (!is_object($xoopsModule)) die('$xoopsModule is not set');
 @define('_GLOBAL_RIGHT', @_ADM_USE_RTL == 1 ? 'left' : 'right');
 
 // language files (modinfo.php)
-$language = empty($xoopsConfig['language']) ? 'english' : $xoopsConfig['language'];
+$language = empty($icmsConfig['language']) ? 'english' : $icmsConfig['language'];
 if (file_exists("$mydirpath/language/$language/modinfo.php")) {
 	// user customized language file
 	include_once "$mydirpath/language/$language/modinfo.php";

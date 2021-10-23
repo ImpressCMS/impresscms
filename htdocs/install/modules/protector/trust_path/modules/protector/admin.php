@@ -17,7 +17,7 @@ $xoopsOption['pagetype'] = 'admin';
 require ICMS_ROOT_PATH . '/include/cp_functions.php';
 
 // language files (admin.php)
-$language = empty($xoopsConfig['language']) ? 'english' : $xoopsConfig['language'];
+$language = empty($icmsConfig['language']) ? 'english' : $icmsConfig['language'];
 if (file_exists("$mydirpath/language/$language/admin.php")) {
 	// user customized language file
 	include_once "$mydirpath/language/$language/admin.php";
@@ -30,7 +30,7 @@ if (file_exists("$mydirpath/language/$language/admin.php")) {
 }
 
 // language files (main.php)
-$language = empty($xoopsConfig['language']) ? 'english' : $xoopsConfig['language'];
+$language = empty($icmsConfig['language']) ? 'english' : $icmsConfig['language'];
 if (file_exists("$mydirpath/language/$language/main.php")) {
 	// user customized language file
 	include_once "$mydirpath/language/$language/main.php";

@@ -6,7 +6,7 @@ class ProtectorFilterAbstract {
 
 	function __construct() {
 		$this->protector = &Protector::getInstance();
-		$lang = empty($GLOBALS['xoopsConfig']['language']) ? @$this->protector->_conf['default_lang'] : $GLOBALS['xoopsConfig']['language'];
+		$lang = empty($GLOBALS['icmsConfig']['language']) ? @$this->protector->_conf['default_lang'] : $GLOBALS['icmsConfig']['language'];
 		@include_once dirname(__DIR__) . '/language/' . $lang . '/main.php';
 		if (!defined('_MD_PROTECTOR_YOUAREBADIP')) {
 			include_once dirname(__DIR__) . '/language/english/main.php';

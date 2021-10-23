@@ -1,8 +1,8 @@
 <?php
 
 // language file (modinfo.php)
-if (file_exists(__DIR__ . '/language/' . @$GLOBALS['xoopsConfig']['language'] . '/modinfo.php')) {
-	include __DIR__ . '/language/' . @$GLOBALS['xoopsConfig']['language'] . '/modinfo.php';
+if (file_exists(__DIR__ . '/language/' . @$GLOBALS['icmsConfig']['language'] . '/modinfo.php')) {
+	include __DIR__ . '/language/' . @$GLOBALS['icmsConfig']['language'] . '/modinfo.php';
 } else if (file_exists(__DIR__ . '/language/english/modinfo.php')) {
 	include __DIR__ . '/language/english/modinfo.php';
 }
@@ -54,7 +54,7 @@ $modversion['config'][] = array (
 	'description' => $constpref . '_DEFAULT_LANGDSC',
 	'formtype' => 'textbox',
 	'valuetype' => 'text',
-	'default' => @$GLOBALS['xoopsConfig']['language'],
+	'default' => @$GLOBALS['icmsConfig']['language'],
 	'options' => array ()
 );
 $modversion['config'][] = array (

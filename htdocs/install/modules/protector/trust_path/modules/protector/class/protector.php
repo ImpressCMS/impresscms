@@ -81,6 +81,7 @@ class Protector {
 			'xoopsUserGroups',
 			'xoopsUserIsAdmin',
 			'xoopsConfig',
+			'icmsConfig',
 			'xoopsOption',
 			'xoopsModule',
 			'xoopsModuleConfig'
