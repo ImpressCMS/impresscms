@@ -5,9 +5,8 @@ class protector_postcommon_post_htmlpurify4guest extends ProtectorFilterAbstract
 	var $method;
 
 	function execute() {
-		global $xoopsUser;
 
-		if (is_object($xoopsUser)) {
+		if (is_object(icms::$user)) {
 			return true;
 		}
 
