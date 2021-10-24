@@ -13,3 +13,7 @@ define('ICMS_IN_ADMIN', 1);
 
 // include the default language file for the admin interface
 icms_loadLanguageFile(icms::$module->dirname, 'admin');
+
+if (icms::$module && !ModuleHandler::checkModuleAccess(icms::$module, true)) {
+	return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
+}
