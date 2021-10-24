@@ -41,4 +41,9 @@ $xoopsOption['response'] = new \ImpressCMS\Core\Response\ViewResponse($xoopsOpti
 global $icmsTpl, $xoopsTpl;
 
 \icms::$logger->stopTime('ICMS output init');
+
+if (\icms::$module && !ModuleHandler::checkModuleAccess(\icms::$module, false)) {
+	return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
+}
+
 \icms::$logger->startTime('Module display');
