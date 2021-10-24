@@ -58,11 +58,16 @@ class LegacyController
 			$headers = [];
 			foreach(headers_list() as $header) {
 				[$headerName, $headerValue] = explode(':', $header, 2);
+				$headerName = strtolower(trim($headerName));
+				$headerValue = trim($headerValue);
+				if ((strtolower($headerName) === 'location') && !filter_var($headerValue, FILTER_VALIDATE_URL) && $headerValue[0] !== '/') {
+					$headerValue = ICMS_URL . dirname($request->getUri()->getPath()) . '/' . $headerValue;
+				}
 				$headers[$headerName] = $headerValue;
 			}
 
 			return new Response(
-				200,
+				isset($headers['location']) ? 301 : 200,
 				$headers,
 				ob_get_clean()
 			);
