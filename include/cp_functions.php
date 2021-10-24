@@ -42,6 +42,8 @@
  */
 
 // @todo remove this hack
+use ImpressCMS\Core\Models\ModuleHandler;
+
 if (
 !(
 	(
@@ -170,7 +172,7 @@ if (!function_exists('impresscms_get_adminmenu')) {
 		# System Preferences menu
 		#########################################################################
 		/**
-		 * @var icms_module_Handler $module_handler
+		 * @var ModuleHandler $module_handler
 		 */
 		$module_handler = icms::handler('icms_module');
 		$mod = $module_handler->getByDirname('system');
@@ -274,7 +276,7 @@ if (!function_exists('impresscms_sort_adminmenu_modules')) {
 	{
 		$n1 = strtolower($a->name);
 		$n2 = strtolower($b->name);
-		if ($n1 == $n2) {
+		if ($n1 === $n2) {
 			return 0;
 		}
 		return ($n1 < $n2) ? -1 : +1;
