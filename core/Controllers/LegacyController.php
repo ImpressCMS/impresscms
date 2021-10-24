@@ -57,7 +57,7 @@ class LegacyController
 			require $path;
 			$headers = [];
 			foreach(headers_list() as $header) {
-				[$headerName, $headerValue] = explode(':', $headers, 2);
+				[$headerName, $headerValue] = explode(':', $header, 2);
 				$headers[$headerName] = $headerValue;
 			}
 
