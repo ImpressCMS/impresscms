@@ -31,12 +31,7 @@ class LegacyController
 	{
 		$path = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $request->getUri()->getPath();
 		if (pathinfo($path, PATHINFO_EXTENSION) === 'php') {
-			$inAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
-			$module = $request->getAttribute('module');
-
-			if (!ModuleHandler::checkModuleAccess($module, $inAdmin)) {
-				return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
-			}
+			$currentModule = $request->getAttribute('module');
 
 			$module_handler = icms::handler('icms_module');
 			try {
@@ -51,7 +46,11 @@ class LegacyController
 
 			}
 
-			global $icmsTpl, $xoopsTpl, $xoopsOption, $icmsAdminTpl, $icms_admin_handler;
+			global $icmsTpl, $xoopsTpl, $xoopsOption, $icmsAdminTpl, $icms_admin_handler, $icmsModule;
+			if (!isset($icmsModule)) {
+				$icmsModule = \icms::$module;
+			}
+			
 			ob_start();
 			require $path;
 			return new Response(
