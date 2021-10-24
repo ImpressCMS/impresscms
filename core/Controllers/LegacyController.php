@@ -53,11 +53,14 @@ class LegacyController
 
 			global $icmsTpl, $xoopsTpl, $xoopsOption, $icmsAdminTpl, $icms_admin_handler;
 			ob_start();
+			
+			$oldHeaders = headers_list();
 			require $path;
+			$headers = array_diff(headers_list(), $oldHeaders);
 
 			return new Response(
 				200,
-				headers_list(),
+				$headers,
 				ob_get_clean()
 			);
 		}
