@@ -4,7 +4,10 @@ namespace ImpressCMS\Core\Controllers;
 
 use Aura\Session\Session;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use icms;
+use ImpressCMS\Core\Models\Image;
+use ImpressCMS\Core\Models\ImageHandler;
 use ImpressCMS\Core\Response\RedirectResponse;
 use ImpressCMS\Core\Response\ViewResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -141,6 +144,53 @@ class DefaultController
 			$session->regenerateId();
 		}
 		return new Response();
+	}
+
+	/**
+	 * Gets image from database as real image
+	 *
+	 * @param ServerRequestInterface $request
+	 * @return Response
+	 */
+	public function getImage(ServerRequestInterface $request): ?Response
+	{
+		$params = $request->getQueryParams();
+
+		icms::$logger->disableLogger();
+
+		if (isset($params['id'])) {
+			/**
+			 * @var ImageHandler $handler
+			 */
+			$handler = icms::handler("icms_image");
+			/**
+			 * @var Image $image
+			 */
+			$image = $handler->get($params["id"], true);
+			if ($image && $image->image_display) {
+				return new Response(
+					200,
+					[
+						"Content-type" => $image->image_mimetype,
+						'Cache-control' => 'max-age=31536000',
+						'Expires' => gmdate("D, d M Y H:i:s", time() + 31536000) . "GMT",
+						'Content-disposition' => 'filename=' . $image->image_name,
+						'Content-Length' => strlen($image->image_body),
+						'Last-Modified' => gmdate("D, d M Y H:i:s", $image->image_created) . "GMT",
+					],
+					$image->image_body
+				);
+			}
+
+			$resource = Utils::tryFopen(ICMS_UPLOAD_PATH . "/blank.gif", 'r');
+			return new Response(
+				200,
+				[
+					"Content-type" => "image/gif",
+				],
+				Utils::streamFor($resource)
+			);
+		}
 	}
 
 }
