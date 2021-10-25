@@ -9,6 +9,16 @@ Legend :
   -  a constant was removed OR a whole file was removed
   #  Directory / Folders guide
 
+ImpressCMS 1.4.3
+===
+finish.php
+----------
+ - Remove Siteground mention
+ 
+install.php
+-----------
+ - Remove Siteground mention
+
 ImpressCMS 1.3.11
 =======================================================
 finish.php
