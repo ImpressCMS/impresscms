@@ -30,11 +30,13 @@
 /**
  * Manage images
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
  */
+
 namespace ImpressCMS\Core\Models;
 
+use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
@@ -46,11 +48,12 @@ use ImpressCMS\Core\Database\DatabaseConnectionInterface;
  * This class is responsible for providing data access mechanisms to the data source
  * of image class objects.
  *
- * @package	ICMS\Image
- * @author	Kazumi Ono 	<onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package    ICMS\Image
+ * @author    Kazumi Ono    <onokazu@xoops.org>
+ * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class ImageHandler extends AbstractExtendedHandler {
+class ImageHandler extends AbstractExtendedHandler
+{
 
 	/**
 	 * Handler for image bodies
@@ -63,43 +66,69 @@ class ImageHandler extends AbstractExtendedHandler {
 	/**
 	 * Constructor
 	 *
-	 * @param DatabaseConnectionInterface $db              Database connection
+	 * @param DatabaseConnectionInterface $db Database connection
 	 */
-		public function __construct(&$db) {
-			$this->imagebody_handler = \icms::handler('icms_image_body');
+	public function __construct(&$db)
+	{
+		$this->imagebody_handler = icms::handler('icms_image_body');
 
-			parent::__construct($db, 'image', 'image_id', 'image_name', 'image_nicename', 'icms', 'image');
-		}
+		parent::__construct($db, 'image', 'image_id', 'image_name', 'image_nicename', 'icms', 'image');
+	}
 
-		/**
-		 * This event is executed when saving
-		 *
-		 * @param   ImageBody $obj        Saving object
-		 *
-		 * @return  boolean
-		 */
-		protected function afterSave(&$obj) {
-			if ($obj->image_body) {
-				$body = $this->imagebody_handler->get($obj->image_id);
-				$body->image_id = $obj->image_id;
-				$body->image_body = $obj->image_body;
-				return $body->store();
-			}
-			return true;
+	/**
+	 * @inheritDoc
+	 *
+	 * @return array|false|Image|null
+	 */
+	public function &get($id, $as_object = true, $debug = false, $criteria = false)
+	{
+		$mainCriteria = new \Imponeer\Database\Criteria\CriteriaCompo(
+			new \Imponeer\Database\Criteria\CriteriaItem('i.image_id', $id)
+		);
+		if ($criteria) {
+			$mainCriteria->add($criteria);
 		}
+		$mainCriteria->setLimit(1);
+		$image = $this->getObjects($mainCriteria, false, true);
+		if (isset($image[0])) {
+			$ret = $as_object ? $image[0] : $image[0]->toArray();
+		} else {
+			$ret = null;
+		}
+		return $ret;
+	}
 
-		/**
-		 * This event executes after deletion
-		 *
-		 * @param ImageBody $obj      Deleted object
-		 *
-		 * @return boolean
-		 */
-		protected function afterDelete(&$obj) {
-			$sql = sprintf('DELETE FROM %s WHERE image_id = %d', $this->imagebody_handler->table, $obj->image_id);
-			$this->db->query($sql);
-			return true;
+	/**
+	 * This event is executed when saving
+	 *
+	 * @param ImageBody $obj Saving object
+	 *
+	 * @return  boolean
+	 */
+	protected function afterSave(&$obj)
+	{
+		if ($obj->image_body) {
+			$body = $this->imagebody_handler->get($obj->image_id);
+			$body->image_id = $obj->image_id;
+			$body->image_body = $obj->image_body;
+			return $body->store();
 		}
+		return true;
+	}
+
+	/**
+	 * This event executes after deletion
+	 *
+	 * @param ImageBody $obj Deleted object
+	 *
+	 * @return boolean
+	 */
+	protected function afterDelete(&$obj)
+	{
+		$sql = sprintf('DELETE FROM %s WHERE image_id = %d', $this->imagebody_handler->table, $obj->image_id);
+		$this->db->query($sql);
+		return true;
+	}
 
 	/**
 	 * Load image from the database
@@ -107,12 +136,13 @@ class ImageHandler extends AbstractExtendedHandler {
 	 * @param null|CriteriaItem $criteria Criteria
 	 * @param bool $id_as_key Use the ID as key into the array
 	 * @param bool $getbinary Get binary image?
-	 * @param bool|string $sql  Extra sql
+	 * @param bool|string $sql Extra sql
 	 * @param bool $debug Debug mode?
 	 *
 	 * @return Image[]
 	 */
-	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false, $sql = false, $debug = false) {
+	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false, $sql = false, $debug = false)
+	{
 		if ($getbinary) {
 			$this->generalSQL = 'SELECT i.*, b.image_body FROM ' . $this->table . ' i LEFT JOIN ' . $this->imagebody_handler->table . ' b ON b.image_id=i.image_id';
 		} else {
@@ -141,17 +171,18 @@ class ImageHandler extends AbstractExtendedHandler {
 	 *
 	 * @todo Do better fix here for declaration compatibility
 	 */
-	public function getList($imgcat_id = null, $image_display = 0, $notinuse = 0, $debug = false) {
+	public function getList($imgcat_id = null, $image_display = 0, $notinuse = 0, $debug = false)
+	{
 		$criteria = new CriteriaCompo();
 		if ($imgcat_id !== null) {
 			$criteria->add(
-				new CriteriaItem('imgcat_id', (int) ($imgcat_id))
+				new CriteriaItem('imgcat_id', (int)($imgcat_id))
 			);
 		}
 		if ($image_display) {
-			$criteria->add(new CriteriaItem('image_display', (int) ($image_display)));
+			$criteria->add(new CriteriaItem('image_display', (int)($image_display)));
 		}
-		$images = & $this->getObjects($criteria, false, true, false, true);
+		$images = &$this->getObjects($criteria, false, true, false, true);
 		$ret = array();
 		foreach (array_keys($images) as $i) {
 			$ret[$images[$i]->image_name] = $images[$i]->image_nicename;

@@ -393,7 +393,7 @@ class Module
 				'headermenucount' => count($this->getAdminHeaderMenu()),
 				'submenus' => $submenus,
 				'currentsub' => $currentsub,
-				'submenuscount' => count($submenus)
+				'submenuscount' => $submenus ? count($submenus) : 0,
 			)
 		);
 		$tpl->display('db:admin/system_adm_modulemenu.html');

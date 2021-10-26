@@ -56,7 +56,6 @@
 
 namespace ImpressCMS\Core\File;
 
-use ImpressCMS\Core\Utils;
 use League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap;
 
 /**
@@ -565,7 +564,7 @@ class MediaUploader {
 	 * @return  bool
 	 */
 	public function checkMaxFileSize() {
-		if (!isset($this->maxFileSize)) {
+		if (!isset($this->maxFileSize) || $this->maxFileSize < 1) {
 			return true;
 		}
 		if ($this->mediaSize > $this->maxFileSize) {
@@ -579,8 +578,9 @@ class MediaUploader {
 	 * Is the picture the right width?
 	 * @return  bool
 	 */
-	public function checkMaxWidth() {
-		if (!isset($this->maxWidth)) {
+	public function checkMaxWidth()
+	{
+		if (!isset($this->maxWidth) || $this->maxWidth < 1) {
 			return true;
 		}
 		if (false !== $dimension = getimagesize($this->mediaTmpName)) {
@@ -599,8 +599,9 @@ class MediaUploader {
 	 *
 	 * @return  bool
 	 */
-	public function checkMaxHeight() {
-		if (!isset($this->maxHeight)) {
+	public function checkMaxHeight()
+	{
+		if (!isset($this->maxHeight) || $this->maxHeight < 1) {
 			return true;
 		}
 		if (false !== $dimension = getimagesize($this->mediaTmpName)) {

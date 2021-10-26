@@ -451,7 +451,13 @@ switch ($op) {
 				$form->addElement(new icms_form_elements_Hidden('redirect', ICMS_MODULES_URL . '/' . $module->dirname . '/' . $module->getInfo('adminindex')));
 			}
 			for ($i = 0; $i < $count; $i++) {
-				$title = (!defined($config[$i]->conf_desc) || constant($config[$i]->conf_desc) == '')? constant($config[$i]->conf_title):'<span>' . constant($config[$i]->conf_title) . '</span> <span data-toggle="tooltip" data-html="true" title="' . constant($config[$i]->conf_desc) . '"><span class="glyphicon glyphicon-info-sign"></span></span>';
+				if (!defined($config[$i]->conf_desc)) {
+					$title = $config[$i]->conf_title;
+				} elseif (!constant($config[$i]->conf_desc)) {
+					$title = constant($config[$i]->conf_title);
+				} else {
+					$title = '<span>' . constant($config[$i]->conf_title) . '</span> <span data-toggle="tooltip" data-html="true" title="' . constant($config[$i]->conf_desc) . '"><span class="glyphicon glyphicon-info-sign"></span></span>';
+				}
 				switch ($config[$i]->conf_formtype) {
 					case 'textsarea' :
 						if ($config[$i]->conf_valuetype == 'array') {
