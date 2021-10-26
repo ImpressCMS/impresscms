@@ -3,14 +3,16 @@
  * All functions for Password Expiry & Reset Password generator are going through here.
  * Form and process for resetting password and sending to user
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Member
- * @subpackage	Users
- * @since		ImpressCMS 1.1
- * @author		Vaughan Montgomery <vaughan@impresscms.org>
- * @author		The ImpressCMS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        Member
+ * @subpackage    Users
+ * @since        ImpressCMS 1.1
+ * @author        Vaughan Montgomery <vaughan@impresscms.org>
+ * @author        The ImpressCMS Project
  */
+
+use ImpressCMS\Core\DataFilter;
 
 $xoopsOption['pagetype'] = 'user';
 /* the following are passed through $_POST/$_GET
@@ -25,11 +27,11 @@ $filter_post = array(
 	'email' => array('email', 'options' => array(0, 1)),
 );
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	$clean_GET = DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 

@@ -27,24 +27,26 @@
 /**
  * View and manage your private messages
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since        XOOPS
+ * @author        http://www.xoops.org The XOOPS Project
  * @author      sato-san <sato-san@impresscms.org>
- * @package		core
- * @subpackage	Privmessage
+ * @package        core
+ * @subpackage    Privmessage
  */
+
+use ImpressCMS\Core\DataFilter;
+
 $xoopsOption['pagetype'] = 'pmsg';
 
 /* set filter types, if not strings */
-$filter_get = array(
-);
+$filter_get = array();
 
 $filter_post = array(
-		'msg_id' => 'int',
-		'delete_messages' => 'str',
+	'msg_id' => 'int',
+	'delete_messages' => 'str',
 );
 
 /* set default values for variables */
@@ -53,12 +55,12 @@ $delete_messages = '';
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	$clean_POST = DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_POST);
 }
 
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 

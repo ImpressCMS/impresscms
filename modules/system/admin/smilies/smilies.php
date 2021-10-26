@@ -27,15 +27,17 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+use ImpressCMS\Core\DataFilter;
+
 /**
  * Administration of smilies, main functions file
  *
- * @copyright	http://www.XOOPS.org/
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Smilies
- * @todo		Extract HTML and CSS to a template
+ * @copyright    http://www.XOOPS.org/
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        System
+ * @subpackage    Smilies
+ * @todo        Extract HTML and CSS to a template
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->mid)) {
 	exit("Access Denied");
@@ -57,11 +59,11 @@ function SmilesAdmin() {
 		} else {
 			$i = 0;
 			while ($smiles = $db->fetchArray($getsmiles)) {
-				$smile[$i]['code'] = icms_core_DataFilter::htmlSpecialChars($smiles['code']);
-				$smile[$i]['smile_url'] = icms_core_DataFilter::htmlSpecialChars($smiles['smile_url']);
-				$smile[$i]['smile_emotion'] = icms_core_DataFilter::htmlSpecialChars($smiles['emotion']);
-				$smile[$i]['id'] = icms_core_DataFilter::htmlSpecialChars($smiles['id']);
-				$smile[$i]['display'] = icms_core_DataFilter::htmlSpecialChars($smiles['display']);
+				$smile[$i]['code'] = DataFilter::htmlSpecialChars($smiles['code']);
+				$smile[$i]['smile_url'] = DataFilter::htmlSpecialChars($smiles['smile_url']);
+				$smile[$i]['smile_emotion'] = DataFilter::htmlSpecialChars($smiles['emotion']);
+				$smile[$i]['id'] = DataFilter::htmlSpecialChars($smiles['id']);
+				$smile[$i]['display'] = DataFilter::htmlSpecialChars($smiles['display']);
 				$i++;
 				$icmsAdminTpl->assign("smilesarray", $smile);
 			}
@@ -98,9 +100,9 @@ function SmilesEdit($id) {
 			//EMPTY
 		} else {
 			if ($smiles = $db->fetchArray($getsmiles)) {
-				$smiles['smile_code'] = icms_core_DataFilter::htmlSpecialChars($smiles['code']);
-				$smiles['smile_url'] = icms_core_DataFilter::htmlSpecialChars($smiles['smile_url']);
-				$smiles['smile_desc'] = icms_core_DataFilter::htmlSpecialChars($smiles['emotion']);
+				$smiles['smile_code'] = DataFilter::htmlSpecialChars($smiles['code']);
+				$smiles['smile_url'] = DataFilter::htmlSpecialChars($smiles['smile_url']);
+				$smiles['smile_desc'] = DataFilter::htmlSpecialChars($smiles['emotion']);
 				$smiles['smile_display'] = $smiles['display'];
 				$smiles['smile_form'] = _AM_EDITSMILE;
 				$smiles['op'] = 'SmilesSave';

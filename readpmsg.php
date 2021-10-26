@@ -35,6 +35,7 @@
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Member;
 
 $xoopsOption['pagetype'] = "pmsg";
@@ -60,12 +61,12 @@ $start = $total_messages = $msg_id = $delete = 0;
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	$clean_POST = DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_POST);
 }
 
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 
@@ -147,20 +148,20 @@ $previous = $start - 1;
 $next = $start + 1;
 
 $icmsTpl->assign(
-		array(
-			'total_messages' => $total_messages,
-			'messages' => $pm_arr,
-			'uid' => icms::$user->uid,
-			'subject' => $pm_arr[0]->subject,
-			'poster' => $poster,
-			'image' => $pm_arr[0]->getVar("msg_image", "E"),
-			'sent_time' => formatTimestamp($pm_arr[0]->msg_time),
-			'message_body' => icms_core_DataFilter::checkVar($var, $filterType, 'output'),
-			'msg_id' => $pm_arr[0]->msg_id,
-			'form' => $form->render(),
-			'previous' => $previous,
-			'next' => $next
-		)
+	array(
+		'total_messages' => $total_messages,
+		'messages' => $pm_arr,
+		'uid' => icms::$user->uid,
+		'subject' => $pm_arr[0]->subject,
+		'poster' => $poster,
+		'image' => $pm_arr[0]->getVar("msg_image", "E"),
+		'sent_time' => formatTimestamp($pm_arr[0]->msg_time),
+		'message_body' => DataFilter::checkVar($var, $filterType, 'output'),
+		'msg_id' => $pm_arr[0]->msg_id,
+		'form' => $form->render(),
+		'previous' => $previous,
+		'next' => $next
+	)
 );
 
 require 'footer.php';

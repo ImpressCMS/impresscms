@@ -31,19 +31,22 @@
 /**
  * Administration of users, main file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @author		modified by UnderDog <underdog@impresscms.org>
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        Administration
+ * @since        XOOPS
+ * @author        http://www.xoops.org The XOOPS Project
+ * @author        modified by UnderDog <underdog@impresscms.org>
  */
 
 /* set get and post filters before including admin_header, if not strings */
+
+use ImpressCMS\Core\DataFilter;
+
 $filter_post = array(
 	'user_sig' => 'html',
-	'bio'=> 'html',
+	'bio' => 'html',
 );
 
 $filter_get = array(
@@ -213,9 +216,9 @@ switch ($op) {
 						icms_cp_footer();
 						exit();
 					}
-					if ($password == $username || $password == icms_core_DataFilter::utf8_strrev($username, true)
+					if ($password == $username || $password == DataFilter::utf8_strrev($username, true)
 						|| strripos($password, $username) === true || $password == $login_name
-						|| $password == icms_core_Datafilter::utf8_strrev($login_name, true)
+						|| $password == DataFilter::utf8_strrev($login_name, true)
 						|| strripos($password, $login_name) === true
 					) {
 						icms_cp_header();

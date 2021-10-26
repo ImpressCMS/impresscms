@@ -29,15 +29,18 @@
 // ------------------------------------------------------------------------- //
 
 /**
- * @copyright	http://www.XOOPS.org/
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Modules
- * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @copyright    http://www.XOOPS.org/
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        System
+ * @subpackage    Modules
+ * @author        Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 
 /* set get and post filters before including admin_header, if not strings */
+
+use ImpressCMS\Core\DataFilter;
+
 $filter_get = array('mid' => 'int');
 
 $filter_post = array('mid' => 'int');
@@ -87,8 +90,8 @@ switch ($op) {
 		$mcount = 0;
 		foreach ($module as $mid) {
 			$class = ($mcount % 2 != 0) ? 'odd' : 'even';
-			echo '<tr class="' . $class . '"><td align="center">' . icms_core_DataFilter::stripSlashesGPC($oldname[$mid]);
-			$newname[$mid] = trim(icms_core_DataFilter::stripslashesGPC($newname[$mid]));
+			echo '<tr class="' . $class . '"><td align="center">' . DataFilter::stripSlashesGPC($oldname[$mid]);
+			$newname[$mid] = trim(DataFilter::stripslashesGPC($newname[$mid]));
 			if ($newname[$mid] != $oldname[$mid]) {
 				printf('&nbsp;&raquo;&raquo;&nbsp;<span style="color:#ff0000;font-weight:bold;">%s</span>', $newname[$mid]);
 			}
@@ -97,8 +100,8 @@ switch ($op) {
 				if ($oldstatus[$mid] == 0) {
 					printf("<span style='color:#ff0000;font-weight:bold;'>%s</span>", _MD_AM_ACTIVATE);
 				} else {
-						echo _MD_AM_NOCHANGE;
-					}
+					echo _MD_AM_NOCHANGE;
+				}
 				} else {
 					$newstatus[$mid] = 0;
 					if ($oldstatus[$mid] == 1) {

@@ -29,13 +29,15 @@
  *
  * Form and process for sending a new password to a user
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Member
- * @subpackage	Users
- * @since		XOOPS
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        Member
+ * @subpackage    Users
+ * @since        XOOPS
  */
+
+use ImpressCMS\Core\DataFilter;
 
 $xoopsOption['pagetype'] = 'user';
 /* $_POST parameters
@@ -53,11 +55,11 @@ $filter_get = $filter_post = array('email' => array('email', 'options' => array(
 $code = '';
 
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	$clean_GET = DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 if ($email == '') {

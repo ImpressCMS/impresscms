@@ -4,6 +4,7 @@ namespace ImpressCMS\Tests\Libraries\ICMS;
 
 use icms_core_DataFilter;
 use icms_core_HTMLFilter;
+use ImpressCMS\Core\DataFilter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,17 +20,18 @@ class FilterTest extends TestCase {
     public function testAvailability() {
         $this->assertTrue(class_exists('icms_core_DataFilter', true), "icms_core_DataFilter class doesn't exist");
         $this->assertTrue(class_exists('icms_core_HTMLFilter', true), "icms_core_HTMLFilter class doesn't exist");
-        $instance = new icms_core_HTMLFilter();
-        $this->assertInstanceOf(icms_core_DataFilter::class, $instance, 'icms_core_HTMLFilter is not instanceof icms_core_DataFilter');
+		$instance = new icms_core_HTMLFilter();
+		$this->assertInstanceOf(DataFilter::class, $instance, 'icms_core_HTMLFilter is not instanceof icms_core_DataFilter');
     }
 
     /**
      * Tests if static variables has correct values
      */
-    public function testStaticVariables() {
-        $this->assertIsArray( icms_core_DataFilter::$allSmileys, '$allSmileys must be an array');
-        $this->assertIsArray( icms_core_DataFilter::$displaySmileys, '$displaySmileys must be an array');
-    }
+    public function testStaticVariables()
+	{
+		$this->assertIsArray(DataFilter::$allSmileys, '$allSmileys must be an array');
+		$this->assertIsArray(DataFilter::$displaySmileys, '$displaySmileys must be an array');
+	}
 
     /**
      * Checks if all required static methdos are available

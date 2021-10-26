@@ -2,18 +2,20 @@
 /**
  * ImpressCMS Adsenses
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since	1.2
- * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @copyright    The ImpressCMS Project http://www.impresscms.org/
+ * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since    1.2
+ * @author    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
+
+use ImpressCMS\Core\DataFilter;
 
 /**
  * AdSense object - Google AdSense
  *
  * @package ImpressCMS\Modules\System\Class\Adsense
  *
- * @property int    $adsenseid          Adsense ID
+ * @property int $adsenseid          Adsense ID
  * @property string $description        Description
  * @property string $client_id          Client ID
  * @property string $slot               Slot
@@ -193,9 +195,10 @@ class mod_system_Adsense extends \ImpressCMS\Core\Models\AbstractExtendedModel {
 	 * Generate a unique tag for an AdSense unit
 	 * @return	string
 	 */
-	public function generateTag() {
+	public function generateTag()
+	{
 		$title = rawurlencode(strtolower($this->getVar('description', 'e')));
-		$title = icms_core_DataFilter::icms_substr($title, 0, 10, '');
+		$title = DataFilter::icms_substr($title, 0, 10, '');
 
 		$pattern = array("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./");
 		$rep_pat = array("-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-", "-", "-", "-", "-", "-", "-", "-", "-");

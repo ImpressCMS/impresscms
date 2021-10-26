@@ -36,6 +36,7 @@
  */
 
 use Aura\Session\Session;
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Response\ViewResponse;
 
 if (!function_exists('xoops_header')) {
@@ -796,7 +797,7 @@ if (!function_exists('icms_purifyText')) {
 		$text = str_replace('<br', ' ', $text);
 		$text = strip_tags($text);
 		$text = html_entity_decode($text);
-		$text = icms_core_DataFilter::undoHtmlSpecialChars($text);
+		$text = DataFilter::undoHtmlSpecialChars($text);
 		$text = str_replace(')', ' ', $text);
 		$text = str_replace('(', ' ', $text);
 		$text = str_replace(':', ' ', $text);
@@ -943,7 +944,7 @@ if (!function_exists('icms_get_page_before_form')) {
 	function icms_get_page_before_form()
 	{
 		return isset($_POST['icms_page_before_form'])
-			? icms_core_DataFilter::checkVar($_POST['icms_page_before_form'], 'url')
+			? DataFilter::checkVar($_POST['icms_page_before_form'], 'url')
 			: icms::$urls['previouspage'];
 	}
 }

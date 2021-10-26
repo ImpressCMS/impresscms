@@ -35,6 +35,7 @@
  * @subpackage    User
  */
 
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Models\GroupPermHandler;
 
 $xoopsOption['pagetype'] = 'user';
@@ -135,7 +136,7 @@ icms_makeSmarty(array(
 	'lang_interest' => _US_INTEREST,
 	'user_interest' => $thisUser->user_intrest,
 	'lang_extrainfo' => _US_EXTRAINFO,
-	'user_extrainfo' => icms_core_DataFilter::checkVar($thisUser->bio, 'text', 'output'),
+	'user_extrainfo' => DataFilter::checkVar($thisUser->bio, 'text', 'output'),
 	'lang_statistics' => _US_STATISTICS,
 	'lang_membersince' => _US_MEMBERSINCE,
 	'user_joindate' => formatTimestamp($thisUser->user_regdate, 's'),
@@ -168,7 +169,7 @@ if ($icmsConfigUser['allwshow_sig'] == true && strlen(trim($thisUser->user_sig))
    	icms_makeSmarty(array(
 		'user_showsignature' => true,
 		'lang_signature' => _US_SIGNATURE,
-		'user_signature' => icms_core_DataFilter::checkVar($thisUser->user_sig, 'html', 'output')
+		'user_signature' => DataFilter::checkVar($thisUser->user_sig, 'html', 'output')
 	));
 }
 
@@ -194,8 +195,8 @@ foreach ($mids as $mid) {
 						$results[$i]['link'] = "modules/" . $module->dirname . "/" . $results[$i]['link'];
 					}
 				}
-				$results[$i]['title'] = icms_core_DataFilter::htmlSpecialChars($results[$i]['title']);
-				$results[$i]['time'] = $results[$i]['time']? formatTimestamp($results[$i]['time']):'';
+				$results[$i]['title'] = DataFilter::htmlSpecialChars($results[$i]['title']);
+				$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
 			}
 			if ($count == 5) {
 				$showall_link = '<a href="search.php?action=showallbyuser&amp;mid=' . (int) $mid .

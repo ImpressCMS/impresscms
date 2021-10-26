@@ -4,13 +4,15 @@
  *
  * This page checks if the ImpressCMS install runs the latest released version
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Version
- * @since		1.0
- * @author		malanciault <marcan@impresscms.org)
+ * @copyright    The ImpressCMS Project http://www.impresscms.org/
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        System
+ * @subpackage    Version
+ * @since        1.0
+ * @author        malanciault <marcan@impresscms.org)
  */
+
+use ImpressCMS\Core\DataFilter;
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin()) {
 	exit("Access Denied");
@@ -36,7 +38,7 @@ $icmsVersionChecker = icms_core_Versionchecker::getInstance();
 icms_cp_header();
 if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('update_available', true);
-	$icmsAdminTpl->assign('latest_changelog', icms_core_DataFilter::makeClickable($icmsVersionChecker->latest_changelog));
+	$icmsAdminTpl->assign('latest_changelog', DataFilter::makeClickable($icmsVersionChecker->latest_changelog));
 	$icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
 	$icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);
 } else {
