@@ -501,6 +501,13 @@
         ]
       },
       {
+        "path": "/privpolicy.php",
+        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getPrivatePolicy",
+        "method": [
+          "GET"
+        ]
+      },
+      {
         "path": "/image.php",
         "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getImage",
         "method": [
