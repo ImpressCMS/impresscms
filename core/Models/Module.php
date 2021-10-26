@@ -250,13 +250,26 @@ class Module
 	 */
 	public function loadAdminMenu() {
 		if ($this->getInfo('adminmenu')
-			&& $this->getInfo('adminmenu') != ''
-			&& file_exists(ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $this->getInfo('adminmenu'))
+			&& $this->getInfo('adminmenu')
+			&& file_exists($this->getPath() . '/' . $this->getInfo('adminmenu'))
 		) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $this->getInfo('adminmenu');
+			icms_loadLanguageFile($this->modname, 'modinfo');
+			include_once $this->getPath() . '/' . $this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
-			if (isset($headermenu)) {$this->adminheadermenu = & $headermenu; }
+			if (isset($headermenu)) {
+				$this->adminheadermenu = & $headermenu;
+			}
 		}
+	}
+
+	/**
+	 * Get module path
+	 *
+	 * @return string
+	 */
+	public function getPath(): string
+	{
+		return ICMS_MODULES_PATH . '/' . $this->dirname;
 	}
 
 	/**
@@ -380,7 +393,7 @@ class Module
 				'headermenucount' => count($this->getAdminHeaderMenu()),
 				'submenus' => $submenus,
 				'currentsub' => $currentsub,
-				'submenuscount' => count($submenus)
+				'submenuscount' => $submenus ? count($submenus) : 0,
 			)
 		);
 		$tpl->display('db:admin/system_adm_modulemenu.html');

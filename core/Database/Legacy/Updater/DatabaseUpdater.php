@@ -11,6 +11,8 @@
  */
 namespace ImpressCMS\Core\Database\Legacy\Updater;
 
+use icms;
+use ReflectionClass;
 use ImpressCMS\Core\Database\DatabaseConnection;
 use ImpressCMS\Core\Models\AbstractExtendedModel;
 use ImpressCMS\Core\Models\AbstractModel;
@@ -52,8 +54,8 @@ class DatabaseUpdater {
 	public function __construct() {
 		icms_loadLanguageFile('core', 'databaseupdater');
 		// backward compat
-		$this->_db = \icms::getInstance()->get('db');
-		$this->db = \icms::getInstance()->get('db');
+		$this->_db = icms::getInstance()->get('db');
+		$this->db = icms::getInstance()->get('db');
 	}
 
 	/**
@@ -172,7 +174,7 @@ class DatabaseUpdater {
 	function insertConfig($conf_catid, $conf_name, $conf_title, $conf_value, $conf_desc, $conf_formtype, $conf_valuetype, $conf_order)
 	{
 		global $dbVersion;
-		$configitem_handler = \icms::handler('icms_config_item');
+		$configitem_handler = icms::handler('icms_config_item');
 		$configitemObj = $configitem_handler->create();
 		$configitemObj->conf_modid = 0;
 		$configitemObj->conf_catid = $conf_catid;
@@ -562,7 +564,7 @@ class DatabaseUpdater {
 		if (!$dirname) {
 			$dirname = icms_getCurrentModuleName();
 		}
-		$module_handler = \icms::handler('icms_module');
+		$module_handler = icms::handler('icms_module');
 		$module = $module_handler->getByDirname($dirname);
 		$module->dbversion = $newDBVersion;
 
@@ -574,4 +576,3 @@ class DatabaseUpdater {
 	}
 
 }
-

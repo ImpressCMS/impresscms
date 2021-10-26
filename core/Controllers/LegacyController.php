@@ -31,12 +31,7 @@ class LegacyController
 	{
 		$path = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $request->getUri()->getPath();
 		if (pathinfo($path, PATHINFO_EXTENSION) === 'php') {
-			$inAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
-			$module = $request->getAttribute('module');
-
-			if (!ModuleHandler::checkModuleAccess($module, $inAdmin)) {
-				return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
-			}
+			$currentModule = $request->getAttribute('module');
 
 			$module_handler = icms::handler('icms_module');
 			try {
@@ -51,8 +46,27 @@ class LegacyController
 
 			}
 
-			global $icmsTpl, $xoopsTpl, $xoopsOption, $icmsAdminTpl, $icms_admin_handler;
+			global $icmsTpl, $xoopsTpl, $xoopsOption, $icmsAdminTpl, $icms_admin_handler, $icmsModule;
+			if (!isset($icmsModule)) {
+				$icmsModule = \icms::$module;
+			}
+			
 			ob_start();
+			
+			// Never PHP needs to have all constants in file defined and this is problem with some older modules that loads a bit later translations
+			// so here is hack to fix this issue - load all language files at once
+			if (version_compare(phpversion(), '8.0', '>=')) {
+				/**
+				 * @var Filesystem $modulesFs
+				 */
+				$modulesFs = \icms::getInstance()->get('filesystem.modules');
+				foreach ((array)$modulesFs->listContents(\icms::$module->dirname . '/language/english/', true) as $file) {
+					if (!is_array($file) || $file['type'] !== 'file' || $file['basename'][0] === '.' || $file['extension'] !== 'php') {
+						continue;
+					}
+					icms_loadLanguageFile(\icms::$module->dirname, $file['filename']);
+				}
+			}
 			
 			require $path;
 			$headers = [];

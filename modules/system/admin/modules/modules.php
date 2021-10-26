@@ -85,9 +85,9 @@ function xoops_module_list() {
 			'hasadmin' => $module->hasadmin,
 			'hasmain' => $module->hasmain,
 			'isactive' => $module->isactive,
-			'version' => icms_conv_nr2local(round($module -> getVar('version') / 100, 2)),
-			'status' => ($module->getInfo('status'))?$module->getInfo('status'):'&nbsp;',
-			'last_update' => ($module->last_update != 0)? formatTimestamp($module->last_update, 'm'):'&nbsp;',
+			'version' => icms_conv_nr2local(round($module->version ? $module->version / 100 : 0, 2)),
+			'status' => ($module->getInfo('status')) ? $module->getInfo('status') : '&nbsp;',
+			'last_update' => ($module->last_update != 0) ? formatTimestamp($module->last_update, 'm') : '&nbsp;',
 			'weight' => $module->weight,
 			'support_site_url' => $module->getInfo('support_site_url'),
 		);
@@ -108,7 +108,7 @@ function xoops_module_list() {
 				'dirname' => $module->getInfo('dirname'),
 				'name' => $module->getInfo('name'),
 				'image' => $module->getInfo('image'),
-				'version' => icms_conv_nr2local(round($module->getInfo('version'), 2)),
+				'version' => icms_conv_nr2local(round($module->version ? $module->version / 100 : 0, 2)),
 				'status' => $module->getInfo('status'),
 			);
 			$icmsAdminTpl->append('avmodules', $mod);
