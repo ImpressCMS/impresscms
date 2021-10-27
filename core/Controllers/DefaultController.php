@@ -6,12 +6,15 @@ use Aura\Session\Session;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use icms;
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Models\Image;
 use ImpressCMS\Core\Models\ImageHandler;
 use ImpressCMS\Core\Response\RedirectResponse;
 use ImpressCMS\Core\Response\ViewResponse;
+use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use function icms_loadLanguageFile;
 
 /**
@@ -191,6 +194,60 @@ class DefaultController
 				Utils::streamFor($resource)
 			);
 		}
+	}
+
+	/**
+	 * If enabled show, privacy policy page
+	 *
+	 * @param ServerRequestInterface $request
+	 *
+	 * @return ViewResponse
+	 *
+	 * @throws NotFoundException
+	 */
+	public function getPrivatePolicy(ServerRequestInterface $request): ViewResponse
+	{
+		global $icmsConfigUser, $icmsConfig;
+
+		if (!$icmsConfigUser['priv_dpolicy']) {
+			throw new  NotFoundException();
+		}
+
+		$response = new ViewResponse(
+			[
+				'template_main' => 'system_privpolicy.html',
+			]
+		);
+
+		$policyVars = [
+			'{X_SITEURL}' => ICMS_URL . '/',
+			'{X_SITENAME}', $icmsConfig['sitename']
+		];
+
+		/**
+		 * @var TranslatorInterface $translator
+		 */
+		$translator = icms::getInstance()->get('translator');
+
+		$response->assign('priv_poltype', 'page');
+		$response->assign(
+			'priv_policy',
+			DataFilter::checkVar(
+				str_replace(
+					array_keys($policyVars),
+					array_values($policyVars),
+					$icmsConfigUser['priv_policy']
+				),
+				'html',
+				'output'
+			)
+		);
+		$response->assign(
+			'lang_privacy_policy',
+			$translator->trans('_PRV_PRIVACY_POLICY', [], 'privpolicy')
+		);
+
+		return $response;
 	}
 
 }
