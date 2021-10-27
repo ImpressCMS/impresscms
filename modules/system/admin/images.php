@@ -43,6 +43,7 @@
  * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
  */
 
+use ImpressCMS\Core\DataFilter;
 use WideImage\WideImage as WideImage;
 
 /* set filter types, if not strings */
@@ -487,17 +488,17 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$arrimg[$i]['weight'] = $images[$i]->image_weight;
 		$arrimg[$i]['display'] = $images[$i]->image_display;
 		$arrimg[$i]['categ_id'] = $images[$i]->imgcat_id;
-		$arrimg[$i]['display_nicename'] = icms_core_DataFilter::icms_substr($images[$i]->image_nicename, 0, 20);
+		$arrimg[$i]['display_nicename'] = DataFilter::icms_substr($images[$i]->image_nicename, 0, 20);
 
 		$uniq = icms_random_str(5);
 
 		if ($imagecategory->imgcat_storetype == 'db') {
 			$src = ICMS_MODULES_URL . "/system/admin/images/preview.php?file=" . $images[$i]->image_name . '&resize=0';
-						if ($images[$i]->image_body) {
-							$img = WideImage::load($images[$i]->image_body);
-						} else {
-							$img = WideImage::createTrueColorImage(1, 1);
-						}
+			if ($images[$i]->image_body) {
+				$img = WideImage::load($images[$i]->image_body);
+			} else {
+				$img = WideImage::createTrueColorImage(1, 1);
+			}
 						$img->saveToFile(ICMS_IMANAGER_FOLDER_PATH . '/' . $images[$i]->image_name);
 			$arrimg[$i]['size'] = icms_convert_size(filesize(ICMS_IMANAGER_FOLDER_PATH . '/' . $images[$i]->image_name));
 			$arrimg[$i]['width'] = $img->getWidth();

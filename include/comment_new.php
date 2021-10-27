@@ -31,15 +31,18 @@
 /**
  * The new comment include file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package		Administration
- * @subpackage	Comments
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
+ * @package        Administration
+ * @subpackage    Comments
+ * @since    XOOPS
+ * @author    http://www.xoops.org The XOOPS Project
+ * @author    modified by UnderDog <underdog@impresscms.org>
  */
+
+use ImpressCMS\Core\DataFilter;
+
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 if (('system' != $icmsModule->dirname && XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
 	|| (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost'])
@@ -58,9 +61,9 @@ if ($com_itemid > 0) {
 			//themecenterposts($com_replytitle, $com_replytext);
 			echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $com_replytitle . '</td></tr><tr><td><br />' . $com_replytext . '<br /></td></tr></table>';
 		}
-		$com_title = icms_core_DataFilter::htmlSpecialChars($com_replytitle);
+		$com_title = DataFilter::htmlSpecialChars($com_replytitle);
 		if (!preg_match("/^(Re|" . _CM_RE . "):/i", $com_title)) {
-			$com_title = _CM_RE . ": " . icms_core_DataFilter::icms_substr($com_title, 0, 56);
+			$com_title = _CM_RE . ": " . DataFilter::icms_substr($com_title, 0, 56);
 		}
 	} else {
 		$com_title = '';

@@ -38,6 +38,7 @@
  * @subpackage    Preferences
  */
 
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 
 if (!is_object(icms::$user)
@@ -122,10 +123,10 @@ switch ($op) {
 						if ($config[$i]->conf_valuetype == 'array') {
 							// this is exceptional.. only when value type is array, need a smarter way for this
 							$ele = ($config[$i]->conf_value != '')
-								?new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
+								? new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
 								: new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
 						} else {
-							$ele = new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+							$ele = new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						}
 						break;
 
@@ -133,10 +134,10 @@ switch ($op) {
 						if ($config[$i]->conf_valuetype == 'array') {
 							// this is exceptional.. only when value type is array, need a smarter way for this
 							$ele = ($config[$i]->conf_value != '')
-								?new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
+								? new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
 								: new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
 						} else {
-							$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+							$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						}
 						break;
 
@@ -353,15 +354,15 @@ switch ($op) {
 						break;
 
 					case 'password' :
-						$ele = new icms_form_elements_Password($title, $config[$i]->conf_name, 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), false, ($icmsConfigUser['pass_level']?'password_adv':''));
+						$ele = new icms_form_elements_Password($title, $config[$i]->conf_name, 50, 255, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), false, ($icmsConfigUser['pass_level'] ? 'password_adv' : ''));
 						break;
 
 					case 'color' :
-						$ele = new icms_form_elements_Colorpicker($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Colorpicker($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 
 					case 'hidden' :
-						$ele = new icms_form_elements_Hidden($config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Hidden($config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 
 					case 'select_pages' :
@@ -405,7 +406,7 @@ switch ($op) {
 
 					case 'textbox' :
 					default :
-						$ele = new icms_form_elements_Text($title, $config[$i]->conf_name, 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Text($title, $config[$i]->conf_name, 50, 255, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 					}
 			$hidden = new icms_form_elements_Hidden('conf_ids[]', $config[$i]->conf_id);
@@ -462,18 +463,18 @@ switch ($op) {
 					case 'textsarea' :
 						if ($config[$i]->conf_valuetype == 'array') {
 							// this is exceptional.. only when value type is arrayneed a smarter way for this
-							$ele = ($config[$i]->conf_value != '')?new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50):new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
+							$ele = ($config[$i]->conf_value != '') ? new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
 						} else {
-							$ele = new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
+							$ele = new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
 						}
 						break;
 
 					case 'textarea' :
 						if ($config[$i]->conf_valuetype == 'array') {
 							// this is exceptional.. only when value type is array need a smarter way for this
-							$ele = ($config[$i]->conf_value != '')?new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50):new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
+							$ele = ($config[$i]->conf_value != '') ? new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
 						} else {
-							$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
+							$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
 						}
 						break;
 
@@ -521,15 +522,15 @@ switch ($op) {
 						break;
 
 					case 'password' :
-						$ele = new icms_form_elements_Password($title, $config[$i]->conf_name, 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Password($title, $config[$i]->conf_name, 50, 255, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 
 					case 'color' :
-						$ele = new icms_form_elements_Colorpicker($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Colorpicker($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 
 					case 'hidden' :
-						$ele = new icms_form_elements_Hidden($config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Hidden($config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 
 					case 'select_pages' :
@@ -540,7 +541,7 @@ switch ($op) {
 
 					case 'textbox' :
 					default :
-						$ele = new icms_form_elements_Text($title, $config[$i]->conf_name, 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Text($title, $config[$i]->conf_name, 50, 255, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 					}
 			$hidden = new icms_form_elements_Hidden('conf_ids[]', $config[$i]->conf_id);

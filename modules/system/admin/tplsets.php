@@ -30,14 +30,17 @@
 /**
  * Administration of template sets, main file
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @package		System
- * @subpackage	Templates
- * @todo		Extract HTML and CSS to a template
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        LICENSE.txt
+ * @package        System
+ * @subpackage    Templates
+ * @todo        Extract HTML and CSS to a template
  */
 
 /* set get and post filters before including admin_header, if not strings */
+
+use ImpressCMS\Core\DataFilter;
+
 $filter_get = array(
 	'html' => 'html',
 );
@@ -887,7 +890,7 @@ switch ($op) {
 		}
 
 
-		$html = icms_core_DataFilter::stripSlashesGPC($html);
+		$html = DataFilter::stripSlashesGPC($html);
 		/**
 		 * @var icms_view_template_file_Handler $tpltpl_handler
 		 */

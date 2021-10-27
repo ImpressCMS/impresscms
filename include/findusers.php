@@ -5,12 +5,14 @@
  * limit: Only work with javascript enabled
  * @todo: plugins for external applications, including but not limited: sending massive emails/PMs, membership edit
  *
- * @copyright	The XOOPS project http://www.xoops.org/
- * @license		https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since		Xoops 1.00
+ * @copyright    The XOOPS project http://www.xoops.org/
+ * @license        https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
+ * @author        Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @since        Xoops 1.00
  * @package core
  */
+
+use ImpressCMS\Core\DataFilter;
 
 xoops_header(false);
 
@@ -182,8 +184,8 @@ if (empty($_POST["user_submit"])) {
 		$criteria = new icms_db_criteria_Compo();
 		foreach (array_keys($items_match) as $var) {
 			if (!empty($_POST[$var])) {
-				$match = (!empty($_POST["{$var}_match"]))?(int) ($_POST["{$var}_match"]):XOOPS_MATCH_START;
-				$value = str_replace("_", "\\\_", icms_core_DataFilter::addSlashes(trim($_POST[$var])));
+				$match = (!empty($_POST["{$var}_match"])) ? (int)($_POST["{$var}_match"]) : XOOPS_MATCH_START;
+				$value = str_replace("_", "\\\_", DataFilter::addSlashes(trim($_POST[$var])));
 				switch ($match) {
 					case XOOPS_MATCH_START:
 						$criteria->add(new icms_db_criteria_Item($var, $value . '%', 'LIKE'));
@@ -207,14 +209,14 @@ if (empty($_POST["user_submit"])) {
 		}
 
 		if (!empty($_POST['user_from'])) {
-			$criteria->add(new icms_db_criteria_Item('user_from', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_from'])) . '%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_from', '%' . DataFilter::addSlashes(trim($_POST['user_from'])) . '%', 'LIKE'));
 		}
 
 		if (!empty($_POST['user_intrest'])) {
-			$criteria->add(new icms_db_criteria_Item('user_intrest', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_intrest'])) . '%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_intrest', '%' . DataFilter::addSlashes(trim($_POST['user_intrest'])) . '%', 'LIKE'));
 		}
 		if (!empty($_POST['user_occ'])) {
-			$criteria->add(new icms_db_criteria_Item('user_occ', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_occ'])) . '%', 'LIKE'));
+			$criteria->add(new icms_db_criteria_Item('user_occ', '%' . DataFilter::addSlashes(trim($_POST['user_occ'])) . '%', 'LIKE'));
 		}
 
 		foreach (array("last_login", "user_regdate") as $var) {
@@ -366,7 +368,7 @@ if (empty($_POST["user_submit"])) {
 				// regenerate token value
 				$hiddenform .= icms::$security->getTokenHTML() . "\n";
 			} else {
-				$hiddenform .= "<input type='hidden' name='" . htmlSpecialChars($k, ENT_QUOTES) . "' value='" . htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v), ENT_QUOTES) . "' />\n";
+				$hiddenform .= "<input type='hidden' name='" . htmlSpecialChars($k, ENT_QUOTES) . "' value='" . htmlSpecialChars(DataFilter::stripSlashesGPC($v), ENT_QUOTES) . "' />\n";
 			}
 		}
 
@@ -452,7 +454,7 @@ if (empty($_POST["user_submit"])) {
 				// regenerate token value
 				$hiddenform .= icms::$security->getTokenHTML() . "\n";
 			} else {
-				$hiddenform .= "<input type='hidden' name='" . htmlSpecialChars($k, ENT_QUOTES) . "' value='" . htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v), ENT_QUOTES) . "' />\n";
+				$hiddenform .= "<input type='hidden' name='" . htmlSpecialChars($k, ENT_QUOTES) . "' value='" . htmlSpecialChars(DataFilter::stripSlashesGPC($v), ENT_QUOTES) . "' />\n";
 			}
 		}
 

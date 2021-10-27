@@ -30,12 +30,14 @@
 /**
  * Administration of users, main functions file
  *
- * @copyright	http://www.XOOPS.org/
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Users
+ * @copyright    http://www.XOOPS.org/
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        System
+ * @subpackage    Users
  */
+
+use ImpressCMS\Core\DataFilter;
 
 if (!is_object(icms::$user)
 	|| !is_object($icmsModule)
@@ -289,10 +291,10 @@ function updateUser(
 		$edituser->url = $url;
 		$edituser->user_from = $userFrom;
 		if ($icmsConfigUser['allow_htsig'] == 0) {
-			$signature = strip_tags(icms_core_DataFilter::codeDecode($user_sig, 1));
-			$edituser->user_sig = icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']);
+			$signature = strip_tags(DataFilter::codeDecode($user_sig, 1));
+			$edituser->user_sig = DataFilter::icms_substr($signature, 0, (int)$icmsConfigUser['sig_max_length']);
 		} else {
-			$signature = icms_core_DataFilter::checkVar($userSignature, 'html', 'input');
+			$signature = DataFilter::checkVar($userSignature, 'html', 'input');
 			$edituser->user_sig = $signature;
 		}
 		$userViewEmail = (isset($userViewEmail) && $userViewEmail == 1)?1:0;

@@ -27,34 +27,36 @@
 /**
  * Registration form
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @package	core
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        LICENSE.txt
+ * @package    core
+ * @since        XOOPS
+ * @author        http://www.xoops.org The XOOPS Project
  */
 
+use ImpressCMS\Core\DataFilter;
+
 $email_tray = new icms_form_elements_Tray(_US_EMAIL, "<br />");
-$email_text = new icms_form_elements_Text("", "email", 25, 60, icms_core_DataFilter::htmlSpecialChars($email));
+$email_text = new icms_form_elements_Text("", "email", 25, 60, DataFilter::htmlSpecialChars($email));
 $email_option = new icms_form_elements_Checkbox("", "user_viewemail", $user_viewemail);
 $email_option->addOption(1, _US_ALLOWVIEWEMAIL);
 $email_tray->addElement($email_text, true);
 $email_tray->addElement($email_option);
 $reg_form = new icms_form_Theme(_US_USERREG, "userinfo", "register.php", "post", true);
-$uname_size = $icmsConfigUser['maxuname'] < 75?$icmsConfigUser['maxuname']:75;
-$uname_size = $icmsConfigUser['maxuname'] > 3?$icmsConfigUser['maxuname']:3;
-$reg_form->addElement(new icms_form_elements_Text(_US_NICKNAME, "uname", $uname_size, $uname_size, icms_core_DataFilter::htmlSpecialChars($uname)), true);
-$login_name_size = $icmsConfigUser['maxuname'] < 75?$icmsConfigUser['maxuname']:75;
-$reg_form->addElement(new icms_form_elements_Text(_US_LOGIN_NAME, "login_name", $login_name_size, $login_name_size, icms_core_DataFilter::htmlSpecialChars($login_name)), true);
+$uname_size = $icmsConfigUser['maxuname'] < 75 ? $icmsConfigUser['maxuname'] : 75;
+$uname_size = $icmsConfigUser['maxuname'] > 3 ? $icmsConfigUser['maxuname'] : 3;
+$reg_form->addElement(new icms_form_elements_Text(_US_NICKNAME, "uname", $uname_size, $uname_size, DataFilter::htmlSpecialChars($uname)), true);
+$login_name_size = $icmsConfigUser['maxuname'] < 75 ? $icmsConfigUser['maxuname'] : 75;
+$reg_form->addElement(new icms_form_elements_Text(_US_LOGIN_NAME, "login_name", $login_name_size, $login_name_size, DataFilter::htmlSpecialChars($login_name)), true);
 $reg_form->addElement($email_tray);
 if ($icmsConfigUser['pass_level'] > 20) {
 	icms_PasswordMeter();
 }
-$reg_form->addElement(new icms_form_elements_Password(_US_PASSWORD, "pass", 10, 255, icms_core_DataFilter::htmlSpecialChars($pass), false, ($icmsConfigUser['pass_level']?'password_adv':'')), true);
-$reg_form->addElement(new icms_form_elements_Password(_US_VERIFYPASS, "vpass", 10, 255, icms_core_DataFilter::htmlSpecialChars($vpass)), true);
-$reg_form->addElement(new icms_form_elements_Text(_US_WEBSITE, "url", 25, 255, icms_core_DataFilter::htmlSpecialChars($url)));
-$tzselected = ($timezone_offset != "")?$timezone_offset:$icmsConfig['default_TZ'];
+$reg_form->addElement(new icms_form_elements_Password(_US_PASSWORD, "pass", 10, 255, DataFilter::htmlSpecialChars($pass), false, ($icmsConfigUser['pass_level'] ? 'password_adv' : '')), true);
+$reg_form->addElement(new icms_form_elements_Password(_US_VERIFYPASS, "vpass", 10, 255, DataFilter::htmlSpecialChars($vpass)), true);
+$reg_form->addElement(new icms_form_elements_Text(_US_WEBSITE, "url", 25, 255, DataFilter::htmlSpecialChars($url)));
+$tzselected = ($timezone_offset != "") ? $timezone_offset : $icmsConfig['default_TZ'];
 $reg_form->addElement(new icms_form_elements_select_Timezone(_US_TIMEZONE, "timezone_offset", $tzselected));
 //$reg_form->addElement($avatar_tray);
 $reg_form->addElement(new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', $user_mailok));
@@ -73,7 +75,7 @@ if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] 
 	$reg_form->addElement($disc_tray);
 }
 
-$reg_form->addElement(new icms_form_elements_Hidden("actkey", icms_core_DataFilter::htmlSpecialChars($actkey)));
+$reg_form->addElement(new icms_form_elements_Hidden("actkey", DataFilter::htmlSpecialChars($actkey)));
 
 if ($icmsConfigUser['use_captcha'] == true) {
 	$reg_form->addElement(new icms_form_elements_Captcha(_SECURITYIMAGE_GETCODE, "scode"), true);
