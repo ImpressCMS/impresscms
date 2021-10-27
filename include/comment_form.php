@@ -27,14 +27,16 @@
 /**
  * The comment form extra include file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
+ * @package    core
+ * @since    XOOPS
+ * @author    http://www.xoops.org The XOOPS Project
+ * @author    modified by UnderDog <underdog@impresscms.org>
  */
+
+use ImpressCMS\Core\DataFilter;
 
 if (!is_object($icmsModule)) {
 	exit();
@@ -127,9 +129,9 @@ if ('system' != $icmsModule->dirname) {
 		foreach ($comment_config['extraParams'] as $extra_param) {
 			// This routine is included from forms accessed via both GET and POST
 			if (isset($_POST[$extra_param])) {
-				$hidden_value = icms_core_DataFilter::stripSlashesGPC($_POST[$extra_param]);
+				$hidden_value = DataFilter::stripSlashesGPC($_POST[$extra_param]);
 			} elseif (isset($_GET[$extra_param])) {
-				$hidden_value = icms_core_DataFilter::stripSlashesGPC($_GET[$extra_param]);
+				$hidden_value = DataFilter::stripSlashesGPC($_GET[$extra_param]);
 			} else {
 				$hidden_value = '';
 			}

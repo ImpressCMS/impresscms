@@ -16,6 +16,7 @@ if (!icms::$user) {
 	redirect_header(ICMS_URL . '/index.php', 6, _NOPERM);
 }
 
+use ImpressCMS\Core\DataFilter;
 use WideImage\WideImage;
 
 $icmsTpl = new icms_view_Tpl();
@@ -435,7 +436,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$arrimg[$i]['weight'] = $images[$i]->image_weight;
 		$arrimg[$i]['display'] = $images[$i]->image_display;
 		$arrimg[$i]['categ_id'] = $images[$i]->imgcat_id;
-		$arrimg[$i]['display_nicename'] = icms_core_DataFilter::icms_substr($images[$i]->image_nicename, 0, 20);
+		$arrimg[$i]['display_nicename'] = DataFilter::icms_substr($images[$i]->image_nicename, 0, 20);
 
 		$uniq = icms_random_str(5);
 

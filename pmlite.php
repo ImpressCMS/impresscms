@@ -38,6 +38,7 @@
 
 /* this will set which language file will load for this page */
 
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Models\User;
 
 $xoopsOption['pagetype'] = "pmsg";
@@ -66,12 +67,12 @@ $reply = $send = $send2 = $refresh = $to_userid = $msg_id = 0;
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	$clean_POST = DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_POST);
 }
 
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 
@@ -144,8 +145,8 @@ if (!icms::$user) {
 					$mailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
 					$mailer->assign('X_UNAME', $toUser->uname);
 					$mailer->assign('X_FROMUNAME', icms::$user->uname);
-					$mailer->assign('X_SUBJECT', icms_core_DataFilter::stripSlashesGPC($subject));
-					$mailer->assign('X_MESSAGE', icms_core_DataFilter::stripSlashesGPC($message));
+					$mailer->assign('X_SUBJECT', DataFilter::stripSlashesGPC($subject));
+					$mailer->assign('X_MESSAGE', DataFilter::stripSlashesGPC($message));
 					$mailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
 					$mailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $icmsConfig['sitename']));
 					$mailer->send();

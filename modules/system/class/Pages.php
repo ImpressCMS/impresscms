@@ -2,16 +2,19 @@
 /**
  * Administration of Symlinks
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
  */
+
+use ImpressCMS\Core\DataFilter;
 
 /**
  * Symlinks object
  *
  * @package     ImpressCMS\Modules\System\Class\Pages
  */
-class mod_system_Pages extends icms_data_page_Object {
+class mod_system_Pages extends icms_data_page_Object
+{
 
 	/**
 	 * Constructor
@@ -64,11 +67,12 @@ class mod_system_Pages extends icms_data_page_Object {
 	 * Build a link to the page represented by the symlink, if available
 	 * @return	string
 	 */
-	public function getViewItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
+	public function getViewItemLink($onlyUrl = false, $withimage = true, $userSide = false)
+	{
 		$url = (substr($this->getVar('page_url', 'e'), 0, 7) == 'http://')
-			?$this->getVar('page_url', 'e')
+			? $this->getVar('page_url', 'e')
 			: ICMS_URL . '/' . $this->getVar('page_url', 'e');
-		$url = icms_core_DataFilter::checkVar($url, 'url', 'host');
+		$url = DataFilter::checkVar($url, 'url', 'host');
 
 		if (!$url) {
 			$ret = '';

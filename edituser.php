@@ -27,14 +27,16 @@
 /**
  * Generates form and validation for editing users
  *
- * @copyright	http://www.xoops.org/ The Xoops Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Member
- * @subpackage	Users
- * @since		Xoops
- * @author		skalpa <psk@psykaos.net>
+ * @copyright    http://www.xoops.org/ The Xoops Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        Member
+ * @subpackage    Users
+ * @since        Xoops
+ * @author        skalpa <psk@psykaos.net>
  */
+
+use ImpressCMS\Core\DataFilter;
 
 $xoopsOption['pagetype'] = 'user';
 if (icms_get_module_status('profile') && file_exists(ICMS_MODULES_PATH . '/profile/edituser.php')) {
@@ -94,11 +96,11 @@ $filter_get = array(
 );
 
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	$clean_GET = DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 
@@ -116,17 +118,17 @@ switch ($op) {
 
 			if ($icmsConfigUser['allow_chgmail'] == 1) {
 				if (!empty($email)) {
-					$email = icms_core_DataFilter::stripSlashesGPC(trim($email));
+					$email = DataFilter::stripSlashesGPC(trim($email));
 				}
 
-				if ($email == '' || !icms_core_DataFilter::checkVar($email, 'email', 0, 1)) {
+				if ($email == '' || !DataFilter::checkVar($email, 'email', 0, 1)) {
 					$errors[] = _US_INVALIDMAIL;
 				}
 
 				$count = 0;
 				if ($email) {
 					$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s',
-							icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString(addslashes($email)));
+						icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString(addslashes($email)));
 					$result = icms::$xoopsDB->query($sql);
 					list($count) = icms::$xoopsDB->fetchRow($result);
 					if ($count > 1) {
@@ -137,7 +139,7 @@ switch ($op) {
 
 			if ($icmsConfigUser['allow_chguname'] == 1) {
 				if (!empty($uname)) {
-					$uname = icms_core_DataFilter::stripSlashesGPC(trim($uname));
+					$uname = DataFilter::stripSlashesGPC(trim($uname));
 				}
 
 				if ($uname == '') {
@@ -171,9 +173,9 @@ switch ($op) {
 			}
 
 			if (!empty($password)) {
-				$password = icms_core_DataFilter::stripSlashesGPC(trim($password));
+				$password = DataFilter::stripSlashesGPC(trim($password));
 				$oldpass = !empty($old_password)
-					? icms_core_DataFilter::stripSlashesGPC(trim($old_password))
+					? DataFilter::stripSlashesGPC(trim($old_password))
 					: '';
 
 				$member_handler = icms::handler('icms_member');
@@ -187,7 +189,7 @@ switch ($op) {
 				}
 
 				if (!empty($vpass)) {
-					$vpass = icms_core_DataFilter::stripSlashesGPC(trim($vpass));
+					$vpass = DataFilter::stripSlashesGPC(trim($vpass));
 				}
 
 				if ($password != $vpass) {
@@ -195,7 +197,7 @@ switch ($op) {
 				}
 
 				if ($password == $username
-					|| $password == icms_core_DataFilter::utf8_strrev($username, true)
+					|| $password == DataFilter::utf8_strrev($username, true)
 					|| strripos($password, $username) === true
 					) {
 					$errors[] = _US_BADPWD;
@@ -224,10 +226,10 @@ switch ($op) {
 				$edituser->user_from = $user_from;
 				if ($icmsConfigUser['allwshow_sig'] == 1) {
 					if ($icmsConfigUser['allow_htsig'] == 0) {
-						$signature = strip_tags(icms_core_DataFilter::checkVar($user_sig, 'text', 'input'));
-						$edituser->user_sig = icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']);
+						$signature = strip_tags(DataFilter::checkVar($user_sig, 'text', 'input'));
+						$edituser->user_sig = DataFilter::icms_substr($signature, 0, (int)$icmsConfigUser['sig_max_length']);
 					} else {
-						$signature = icms_core_DataFilter::checkVar($user_sig, 'html', 'input');
+						$signature = DataFilter::checkVar($user_sig, 'html', 'input');
 						$edituser->user_sig = $signature;
 					}
 				}
@@ -240,14 +242,14 @@ switch ($op) {
 					$edituser->setVar('pass', $pass, true);
 				}
 
-				$attachsig = !empty($attachsig)?1:0;
+				$attachsig = !empty($attachsig) ? 1 : 0;
 				$edituser->attachsig = $attachsig;
 				$edituser->timezone_offset = $timezone_offset;
 				$edituser->uorder = $uorder;
 				$edituser->umode = $umode;
 				$edituser->notify_method = $notify_method;
 				$edituser->notify_mode = $notify_mode;
-				$edituser->bio = icms_core_DataFilter::icms_substr($bio, 0, 255);
+				$edituser->bio = DataFilter::icms_substr($bio, 0, 255);
 				$edituser->user_occ = $user_occ;
 				$edituser->user_intrest = $user_intrest;
 				$edituser->user_mailok = $user_mailok;
@@ -539,10 +541,10 @@ switch ($op) {
 
 			$avt_handler = icms::handler('icms_data_avatar');
 			if (!empty($user_avatar)) {
-				$user_avatar = icms_core_DataFilter::addSlashes(trim($user_avatar));
+				$user_avatar = DataFilter::addSlashes(trim($user_avatar));
 				$criteria_avatar = new icms_db_criteria_Compo(new icms_db_criteria_Item('avatar_file', $user_avatar));
 				$criteria_avatar->add(new icms_db_criteria_Item('avatar_type', "S"));
-				$avatars = & $avt_handler->getObjects($criteria_avatar);
+				$avatars = &$avt_handler->getObjects($criteria_avatar);
 				if (!is_array($avatars) || !count($avatars)) {
 					$user_avatar = 'blank.gif';
 				}

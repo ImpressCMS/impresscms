@@ -2,13 +2,15 @@
 /**
  * All functions for Registering users by invitation are going through here.
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @package		Member
- * @subpackage	Users
- * @author		marcan <marcan@impresscms.org>
- * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        LICENSE.txt
+ * @package        Member
+ * @subpackage    Users
+ * @author        marcan <marcan@impresscms.org>
+ * @author        Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
+
+use ImpressCMS\Core\DataFilter;
 
 $xoopsOption['pagetype'] = 'user';
 
@@ -18,8 +20,8 @@ if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register']
 	exit();
 }
 
-$op = !isset($_POST['op'])?'invite':$_POST['op'];
-$email = isset($_POST['email'])? trim(icms_core_DataFilter::stripSlashesGPC($_POST['email'])):'';
+$op = !isset($_POST['op']) ? 'invite' : $_POST['op'];
+$email = isset($_POST['email']) ? trim(DataFilter::stripSlashesGPC($_POST['email'])) : '';
 
 switch ($op) {
 	case 'finish':

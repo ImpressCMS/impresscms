@@ -62,6 +62,9 @@
  * (str) mail_body
  *
  */
+
+use ImpressCMS\Core\DataFilter;
+
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->mid)) {
 	exit("Access Denied");
 } else {
@@ -183,10 +186,10 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				$mailer->setToUsers($added[$i]);
 			}
 
-			$mailer->setFromName(icms_core_DataFilter::stripSlashesGPC($_POST['mail_fromname']));
-			$mailer->setFromEmail(icms_core_DataFilter::stripSlashesGPC($_POST['mail_fromemail']));
-			$mailer->setSubject(icms_core_DataFilter::stripSlashesGPC($_POST['mail_subject']));
-			$mailer->setBody(icms_core_DataFilter::stripSlashesGPC($_POST['mail_body']));
+			$mailer->setFromName(DataFilter::stripSlashesGPC($_POST['mail_fromname']));
+			$mailer->setFromEmail(DataFilter::stripSlashesGPC($_POST['mail_fromemail']));
+			$mailer->setSubject(DataFilter::stripSlashesGPC($_POST['mail_subject']));
+			$mailer->setBody(DataFilter::stripSlashesGPC($_POST['mail_body']));
 			if (in_array("mail", $_POST['mail_send_to'])) {
 				$mailer->useMail();
 			}
@@ -207,21 +210,21 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 					}
 				}
 				$inactive_hidden = new icms_form_elements_Hidden("mail_inactive", @$_POST['mail_inactive']);
-				$lastlog_min_hidden = new icms_form_elements_Hidden("mail_lastlog_min", icms_core_DataFilter::checkVar($_POST['mail_lastlog_min'], 'text'));
-				$lastlog_max_hidden = new icms_form_elements_Hidden("mail_lastlog_max", icms_core_DataFilter::checkVar($_POST['mail_lastlog_max'], 'text'));
-				$regd_min_hidden = new icms_form_elements_Hidden("mail_regd_min", icms_core_DataFilter::checkVar($_POST['mail_regd_min'], 'text'));
-				$regd_max_hidden = new icms_form_elements_Hidden("mail_regd_max", icms_core_DataFilter::checkVar($_POST['mail_regd_max'], 'text'));
-				$idle_more_hidden = new icms_form_elements_Hidden("mail_idle_more", icms_core_DataFilter::checkVar($_POST['mail_idle_more'], 'text'));
-				$idle_less_hidden = new icms_form_elements_Hidden("mail_idle_less", icms_core_DataFilter::checkVar($_POST['mail_idle_less'], 'text'));
-				$fname_hidden = new icms_form_elements_Hidden("mail_fromname", icms_core_DataFilter::checkVar($_POST['mail_fromname'], 'text'));
-				$femail_hidden = new icms_form_elements_Hidden("mail_fromemail", icms_core_DataFilter::checkVar($_POST['mail_fromemail'], 'text'));
-				$subject_hidden = new icms_form_elements_Hidden("mail_subject", icms_core_DataFilter::checkVar($_POST['mail_subject'], 'text'));
-				$body_hidden = new icms_form_elements_Hidden("mail_body", icms_core_DataFilter::checkVar($_POST['mail_body'], 'text'));
-				$start_hidden = new icms_form_elements_Hidden("mail_start", (int) $_POST['mail_start'] + $limit);
-				$mail_mailok_hidden = new icms_form_elements_Hidden("mail_mailok", icms_core_DataFilter::checkVar(@$_POST['mail_mailok']));
+				$lastlog_min_hidden = new icms_form_elements_Hidden("mail_lastlog_min", DataFilter::checkVar($_POST['mail_lastlog_min'], 'text'));
+				$lastlog_max_hidden = new icms_form_elements_Hidden("mail_lastlog_max", DataFilter::checkVar($_POST['mail_lastlog_max'], 'text'));
+				$regd_min_hidden = new icms_form_elements_Hidden("mail_regd_min", DataFilter::checkVar($_POST['mail_regd_min'], 'text'));
+				$regd_max_hidden = new icms_form_elements_Hidden("mail_regd_max", DataFilter::checkVar($_POST['mail_regd_max'], 'text'));
+				$idle_more_hidden = new icms_form_elements_Hidden("mail_idle_more", DataFilter::checkVar($_POST['mail_idle_more'], 'text'));
+				$idle_less_hidden = new icms_form_elements_Hidden("mail_idle_less", DataFilter::checkVar($_POST['mail_idle_less'], 'text'));
+				$fname_hidden = new icms_form_elements_Hidden("mail_fromname", DataFilter::checkVar($_POST['mail_fromname'], 'text'));
+				$femail_hidden = new icms_form_elements_Hidden("mail_fromemail", DataFilter::checkVar($_POST['mail_fromemail'], 'text'));
+				$subject_hidden = new icms_form_elements_Hidden("mail_subject", DataFilter::checkVar($_POST['mail_subject'], 'text'));
+				$body_hidden = new icms_form_elements_Hidden("mail_body", DataFilter::checkVar($_POST['mail_body'], 'text'));
+				$start_hidden = new icms_form_elements_Hidden("mail_start", (int)$_POST['mail_start'] + $limit);
+				$mail_mailok_hidden = new icms_form_elements_Hidden("mail_mailok", DataFilter::checkVar(@$_POST['mail_mailok']));
 				$op_hidden = new icms_form_elements_Hidden("op", "send");
 				$submit_button = new icms_form_elements_Button("", "mail_submit", _AM_SENDNEXT, "submit");
-				$sent_label = new icms_form_elements_Label(_AM_SENT, sprintf(_AM_SENTNUM, (int) $_POST['mail_start'] + 1, (int) $_POST['mail_start'] + $limit, $count_criteria + $added_count - $limit));
+				$sent_label = new icms_form_elements_Label(_AM_SENT, sprintf(_AM_SENTNUM, (int)$_POST['mail_start'] + 1, (int)$_POST['mail_start'] + $limit, $count_criteria + $added_count - $limit));
 				$form->addElement($sent_label);
 				$form->addElement($inactive_hidden);
 				$form->addElement($lastlog_min_hidden);

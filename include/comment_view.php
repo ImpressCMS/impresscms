@@ -31,14 +31,16 @@
 /**
  * The commentview include file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
+ * @package    core
+ * @since    XOOPS
+ * @author    http://www.xoops.org The XOOPS Project
+ * @author    modified by UnderDog <underdog@impresscms.org>
  */
+
+use ImpressCMS\Core\DataFilter;
 
 if (!is_object($icmsModule)) {
 	exit();
@@ -73,11 +75,11 @@ $com_mode = '';
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	$clean_GET = DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 

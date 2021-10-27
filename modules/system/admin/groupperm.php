@@ -33,13 +33,16 @@
  * Target for the group permissions form to handle the POST data. Only used
  * by some modules - not the core.
  *
- * @todo		Full refactoring: this should really be a callback method, not a separate target.
+ * @todo        Full refactoring: this should really be a callback method, not a separate target.
  *
- * @copyright	http://www.XOOPS.org/
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
+ * @copyright    http://www.XOOPS.org/
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        Administration
  */
+
+use ImpressCMS\Core\DataFilter;
+
 define('ICMS_IN_ADMIN', 1);
 
 /** necessary files, since this is a direct POST target */
@@ -62,7 +65,7 @@ $fct = $op = "";
 
 /* filter the user input */
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 

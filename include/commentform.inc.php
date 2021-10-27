@@ -27,19 +27,21 @@
 /**
  * The commentform include file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package		Administration
- * @subpackage	Comments
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
+ * @package        Administration
+ * @subpackage    Comments
+ * @since    XOOPS
+ * @author    http://www.xoops.org The XOOPS Project
+ * @author    modified by UnderDog <underdog@impresscms.org>
  */
+
+use ImpressCMS\Core\DataFilter;
 
 $cform = new icms_form_Theme(_CM_POSTCOMMENT, "commentform", "postcomment.php", "post", true);
 if (!preg_match("/^re:/i", $subject)) {
-	$subject = "Re: " . icms_core_DataFilter::icms_substr($subject, 0, 56);
+	$subject = "Re: " . DataFilter::icms_substr($subject, 0, 56);
 }
 $cform->addElement(new icms_form_elements_Text(_CM_TITLE, 'subject', 50, 255, $subject), true);
 $icons_radio = new icms_form_elements_Radio(_MESSAGEICON, 'icon', $icon);

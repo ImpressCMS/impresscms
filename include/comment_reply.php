@@ -31,14 +31,16 @@
 /**
  * The commentreply include file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
+ * @package    core
+ * @since    XOOPS
+ * @author    http://www.xoops.org The XOOPS Project
+ * @author    modified by UnderDog <underdog@impresscms.org>
  */
+
+use ImpressCMS\Core\DataFilter;
 
 if (!is_object($icmsModule)) {
 	exit();
@@ -46,7 +48,7 @@ if (!is_object($icmsModule)) {
 
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 if (('system' != $icmsModule->dirname
-	&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
+		&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
 	|| (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost'])
 	|| !is_object($icmsModule)) {
 	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
@@ -77,7 +79,7 @@ $r_name = \ImpressCMS\Core\Models\User::getUnameFromId($comment->com_uid);
 $r_text = _CM_POSTER . ': <strong>' . $r_name . '</strong>&nbsp;&nbsp;' . _CM_POSTED . ': <strong>' . formatTimestamp($comment->com_created) . '</strong><br /><br />' . $comment->com_text;
 $com_title = $comment->getVar('com_title', 'E');
 if (!preg_match("/^(Re|" . _CM_RE . "):/i", $com_title)) {
-	$com_title = _CM_RE . ": " . icms_core_DataFilter::icms_substr($com_title, 0, 56);
+	$com_title = _CM_RE . ": " . DataFilter::icms_substr($com_title, 0, 56);
 }
 $com_pid = $com_id;
 $com_text = '';

@@ -27,24 +27,28 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+
 /**
  * Good ol' system blocks
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @package		System
- * @subpackage	Blocks
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        LICENSE.txt
+ * @package        System
+ * @subpackage    Blocks
  */
+
+use ImpressCMS\Core\DataFilter;
 
 /**
  * Shows which users and guests are online
  *
  * @return mixed $block or FALSE if no users were online
  */
-function b_system_online_show() {
+function b_system_online_show()
+{
 	global $icmsModule;
 	$online_handler = icms::handler('icms_core_Online');
-	mt_srand((double) microtime() * 1000000);
+	mt_srand((double)microtime() * 1000000);
 	// set gc probabillity to 10% for now..
 	if (mt_rand(1, 100) < 11) {
 		$online_handler->gc(300);
@@ -257,15 +261,15 @@ function b_system_info_show($options) {
 			while ($userinfo = icms::$xoopsDB->fetchArray($result)) {
 				if ($prev_caption != $userinfo['groupname']) {
 					$prev_caption = $userinfo['groupname'];
-					$block['groups'][$i]['name'] = icms_core_DataFilter::htmlSpecialChars($userinfo['groupname']);
+					$block['groups'][$i]['name'] = DataFilter::htmlSpecialChars($userinfo['groupname']);
 				}
 				if (isset(icms::$user) && is_object(icms::$user)) {
-					$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $userinfo['uid'] . "','pmlite',800,680);\"><img src=\"" . ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] . "/pm_small.gif\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+					$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $userinfo['uid'] . "','pmlite',800,680);\"><img src=\"" . ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] . "/pm_small.gif\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
 				} else {
 					if ($userinfo['user_viewemail']) {
-						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => '<a href="mailto:' . $userinfo['email'] . '"><img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/em_small.gif" width="16px" height="14px" alt="" /></a>', 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => '<a href="mailto:' . $userinfo['email'] . '"><img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/em_small.gif" width="16px" height="14px" alt="" /></a>', 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
 					} else {
-						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => '&nbsp;', 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => '&nbsp;', 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
 					}
 				}
 				$i++;

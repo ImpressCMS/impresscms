@@ -19,7 +19,7 @@
 class IcmsPreloadProtectEmail extends icms_preload_Item {
 
 	/**
-	 * Function to be triggered after completing icms_core_DataFilter::filterTextareaDisplay() function
+	 * Function to be triggered after completing \ImpressCMS\Core\DataFilter::filterTextareaDisplay() function
 	 *
 	 * The $array var is structured like this:
 	 * $array[0] = $text
@@ -38,7 +38,7 @@ class IcmsPreloadProtectEmail extends icms_preload_Item {
 	}
 
 	/**
-	 * Function to be triggered after icms_core_DataFilter::filterHTMLdisplay() function
+	 * Function to be triggered after \ImpressCMS\Core\DataFilter::filterHTMLdisplay() function
 	 *
 	 * The $array var is structured like this:
 	 * $array[0] = $text

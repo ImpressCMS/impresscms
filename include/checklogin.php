@@ -42,6 +42,7 @@
  * @since		XOOPS
  */
 
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Member;
 
 icms_loadLanguageFile('core', 'user');
@@ -81,15 +82,15 @@ if ($pos !== false) {
 $member_handler = icms::handler('icms_member');
 
 icms_loadLanguageFile('core', 'auth');
-$icmsAuth = & icms_auth_Factory::getAuthConnection(icms_core_DataFilter::addSlashes($uname));
+$icmsAuth = &icms_auth_Factory::getAuthConnection(DataFilter::addSlashes($uname));
 
-$uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($uname));
-$pass4sql = icms_core_DataFilter::stripSlashesGPC($pass);
+$uname4sql = addslashes(DataFilter::stripSlashesGPC($uname));
+$pass4sql = DataFilter::stripSlashesGPC($pass);
 
 
 /* Check to see if being access by a user - if not, attempt to authenticate */
 if (empty($user) || !is_object($user)) {
-	$user = & $icmsAuth->authenticate($uname4sql, $pass4sql);
+	$user = &$icmsAuth->authenticate($uname4sql, $pass4sql);
 }
 
 /* User exists: check to see if the user has been activated.

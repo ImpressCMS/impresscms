@@ -31,14 +31,16 @@
 /**
  * The post a comment include file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license    LICENSE.txt
+ * @package    core
+ * @since    XOOPS
+ * @author    http://www.xoops.org The XOOPS Project
+ * @author    modified by UnderDog <underdog@impresscms.org>
  */
+
+use ImpressCMS\Core\DataFilter;
 
 if (!is_object($icmsModule)) {
 	exit();
@@ -46,7 +48,7 @@ if (!is_object($icmsModule)) {
 icms_loadLanguageFile('core', 'comment');
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 if ('system' == $icmsModule->dirname) {
-	$com_id = isset($_POST['com_id'])?(int) $_POST['com_id']:0;
+	$com_id = isset($_POST['com_id']) ? (int)$_POST['com_id'] : 0;
 	if (empty($com_id)) {
 		exit();
 	}
@@ -121,7 +123,7 @@ switch ($op) {
 			break;
 		case "preview":
 			$doimage = 1;
-			$com_title = icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($_POST['com_title']));
+			$com_title = DataFilter::htmlSpecialChars(DataFilter::stripSlashesGPC($_POST['com_title']));
 			if ($dohtml != 0) {
 				if (is_object(icms::$user)) {
 					if (!icms::$user->isAdmin($com_modid)) {
@@ -134,9 +136,9 @@ switch ($op) {
 					$dohtml = 0;
 				}
 			}
-			$p_comment = icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'input');
-			$noname = isset($noname)?(int) $noname:0;
-			$com_text = icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($_POST['com_text']));
+			$p_comment = DataFilter::checkVar($_POST['com_text'], 'html', 'input');
+			$noname = isset($noname) ? (int)$noname : 0;
+			$com_text = DataFilter::htmlSpecialChars(DataFilter::stripSlashesGPC($_POST['com_text']));
 			if ($icmsModule->dirname != 'system') {
 				include ICMS_ROOT_PATH . '/header.php';
 				//themecenterposts($com_title, $p_comment);
@@ -278,23 +280,23 @@ switch ($op) {
 						$comment->com_status = XOOPS_COMMENT_PENDING;
 						// RMV-NOTIFY
 						$notify_event = 'comment_submit';
-					break;
+						break;
 				}
 			}
-			$comment->com_uid = $uid;
-		}
+				$comment->com_uid = $uid;
+			}
 
-		$com_title = icms_core_DataFilter::icms_trim($_POST['com_title']);
-		$com_title = ($com_title == '')? _NOTITLE : $com_title;
-		$comment->com_title = $com_title;
-		$comment->com_text = $_POST['com_text'];
-		$comment->dohtml = $dohtml;
-		$comment->dosmiley = $dosmiley;
-		$comment->doxcode = $doxcode;
-		$comment->doimage = $doimage;
-		$comment->dobr = $dobr;
-		$comment->com_icon = $com_icon;
-		$comment->com_modified = time();
+			$com_title = DataFilter::icms_trim($_POST['com_title']);
+			$com_title = ($com_title == '') ? _NOTITLE : $com_title;
+			$comment->com_title = $com_title;
+			$comment->com_text = $_POST['com_text'];
+			$comment->dohtml = $dohtml;
+			$comment->dosmiley = $dosmiley;
+			$comment->doxcode = $doxcode;
+			$comment->doimage = $doimage;
+			$comment->dobr = $dobr;
+			$comment->com_icon = $com_icon;
+			$comment->com_modified = time();
 		$comment->com_modid = $com_modid;
 		if (isset($extra_params)) {
 			$comment->com_exparams = $extra_params;
