@@ -1,20 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "4f91c8a33bf0fe143db1f3ee41101865",
-    "packages": [
-        {
-            "name": "0.0.0/composer-include-files",
-            "version": "1.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
-                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
-            },
-            "dist": {
+  "_readme": [
+	"This file locks the dependencies of your project to a known state",
+	"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+	"This file is @generated automatically"
+  ],
+  "content-hash": "73e18e173383087ce409cdee3275de4c",
+  "packages": [
+	{
+	  "name": "0.0.0/composer-include-files",
+	  "version": "1.6.0",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
+		"reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
+	  },
+	  "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
                 "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
@@ -1400,25 +1400,24 @@
             },
             "time": "2021-10-12T09:36:43+00:00"
         },
-        {
-            "name": "imponeer/smarty-db-resource",
-            "version": "v1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/imponeer/smarty-db-resource.git",
-                "reference": "1cb22bb8b0537f95fc98f49a21f522c541f48552"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-db-resource/zipball/1cb22bb8b0537f95fc98f49a21f522c541f48552",
-                "reference": "1cb22bb8b0537f95fc98f49a21f522c541f48552",
-                "shasum": ""
-            },
+	{
+	  "name": "imponeer/smarty-db-resource",
+	  "version": "v2.0",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/imponeer/smarty-db-resource.git",
+		"reference": "01fe7974a5a01a887cfd8d5eb3c1b6be790166a7"
+	  },
+	  "dist": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/imponeer/smarty-db-resource/zipball/01fe7974a5a01a887cfd8d5eb3c1b6be790166a7",
+		"reference": "01fe7974a5a01a887cfd8d5eb3c1b6be790166a7",
+		"shasum": ""
+	  },
             "require": {
                 "ext-pdo": ">=7.1",
                 "imponeer/smarty-extensions-contracts": "^1.0",
-                "php": ">=7.1",
-                "psr/cache": "^1.0"
+			  "php": ">=7.1"
             },
             "type": "library",
             "autoload": {
@@ -1445,9 +1444,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-db-resource/issues",
-                "source": "https://github.com/imponeer/smarty-db-resource/tree/v1.1"
+			  "source": "https://github.com/imponeer/smarty-db-resource/tree/v2.0"
             },
-            "time": "2021-02-07T16:01:51+00:00"
+	  "time": "2021-10-27T19:02:55+00:00"
         },
         {
             "name": "imponeer/smarty-extensions-contracts",
