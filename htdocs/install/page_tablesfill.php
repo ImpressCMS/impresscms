@@ -7,12 +7,18 @@
  *
  * @copyright    The XOOPS project http://www.xoops.org/
  * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package		installer
+ * @package        installer
  * @since        Xoops 2.3.0
- * @author		Haruki Setoyama  <haruki@planewave.org>
- * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
- * @author		Skalpa Keo <skalpa@xoops.org>
+ * @author        Haruki Setoyama  <haruki@planewave.org>
+ * @author        Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author        Skalpa Keo <skalpa@xoops.org>
  */
+
+use Phoenix\Command\InitCommand;
+use Phoenix\Command\MigrateCommand;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 require_once 'common.inc.php';
 if (!defined('XOOPS_INSTALL')) {
@@ -37,7 +43,7 @@ if (!$dbm->isConnectable()) {
 /**
  * @var icms_db_Connection $db
  */
-$db = \icms::getInstance()->get('db');
+$db = icms::getInstance()->get('db');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$cm = 'dummy';
@@ -64,25 +70,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	putenv('INSTALL_ADMIN_PASS=' . $adminpass);
 	putenv('INSTALL_ADMIN_LOGIN=' . $adminlogin_name);
 	putenv('INSTALL_LANGUAGE=' . $language);
-	$symfonyConsoleApplication = new \Symfony\Component\Console\Application('icms-installer');
+	$symfonyConsoleApplication = new Application('icms-installer');
 	$symfonyConsoleApplication->setAutoExit(false);
-	$symfonyConsoleApplication->add(new \Phoenix\Command\InitCommand());
-	$symfonyConsoleApplication->add(new \Phoenix\Command\MigrateCommand());
-	$output = new \Symfony\Component\Console\Output\BufferedOutput();
-	if ($symfonyConsoleApplication->run(new \Symfony\Component\Console\Input\ArrayInput([
-		'command' => 'init',
-		'--config_type' => 'php',
-		'--config' => dirname(dirname(__DIR__	)) . '/phoenix.php',
-	]), $output) > 0) {
-		$content = nl2br($output->fetch());
-		$wizard->redirectToPage('dbsettings');
+	$symfonyConsoleApplication->add(new InitCommand());
+	$symfonyConsoleApplication->add(new MigrateCommand());
+	$output = new BufferedOutput();
+	/** @noinspection NotOptimalIfConditionsInspection */
+	if (($symfonyConsoleApplication->run(new ArrayInput([
+				'command' => 'init',
+				'-v' => true,
+				'--config_type' => 'php',
+				'--config' => dirname(dirname(__DIR__)) . '/phoenix.php',
+			]), $output) > 0) && (strrpos($content = $output->fetch(), 'Phoenix was already initialized') === false)) {
+
+		$content = nl2br($content);
+		$pageHasForm = true;
+		include 'install_tpl.php';
+
+		//$wizard->redirectToPage('dbsettings');
 		exit();
 	}
-	$symfonyConsoleApplication->run(new \Symfony\Component\Console\Input\ArrayInput([
+	$symfonyConsoleApplication->run(new ArrayInput([
 		'command' => 'migrate',
 		'--dir' => ['core'],
 		'--config_type' => 'php',
-		'--config' => dirname(dirname(__DIR__	)). '/phoenix.php',
+		'--config' => dirname(dirname(__DIR__)) . '/phoenix.php',
 	]), $output);
 	$content = nl2br($output->fetch());
 } else {

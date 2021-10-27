@@ -36,6 +36,7 @@
  */
 
 use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\Models\User;
 
 icms_loadLanguageFile('core', 'misc');
 /* set filter types, if not strings */
@@ -78,18 +79,13 @@ if ($action == 'showpopups') {
 			if ($target == '' || !preg_match('/^[0-9a-z_]*$/i', $target)) {} else {
 				echo "<script type=\"text/javascript\"><!--//
 				function doSmilie(addSmilie) {
-				var currentMessage = window.opener.xoopsGetElementById(\"".$target . "\").value;
-				window.opener.xoopsGetElementById(\"".$target . "\").value=currentMessage+addSmilie;
-				return;
-				}
-				//-->
-				</script>
-				";
+				var currentMessage = window.opener.xoopsGetElementById(\"" . $target . "\").value;
+				window.opener.xoopsGetElementById(\"" . $target . ";
 				echo '</head><body>
 				<table width="100%" class="outer">
 				<tr><th colspan="3">'._MSC_SMILIES . '</th></tr>
 				<tr class="head"><td>'._MSC_CODE . '</td><td>' . _MSC_EMOTION . '</td><td>' . _IMAGE . '</td></tr>';
-				$smiles = icms_core_DataFilter::getSmileys(1);
+				$smiles = DataFilter::getSmileys(1);
 				$count = count($smiles);
 				if ($count > 0) {
 					$rcolor = 'even';
@@ -167,7 +163,7 @@ if ($action == 'showpopups') {
 								<input type='hidden' name='op' value='sendsite' />
 								<input type='hidden' name='action' value='showpopups' />
 								<input type='hidden' name='type' value='friend' />\n";
-					echo _MSC_YOURNAMEC . "</td>
+				echo _MSC_YOURNAMEC . "</td>
 						<td class='even'><input type='text' name='yname' value='$yname' id='yname' /></td></tr>
 						<tr><td class='head'>" . _MSC_YOUREMAILC . "</td><td class='odd'>
 						<input type='text' name='ymail' value='".$ymail . "' id='ymail' /></td></tr>
@@ -177,34 +173,34 @@ if ($action == 'showpopups') {
 						<td class='odd'><input type='text' name='fmail' value='$fmail' id='fmail' /></td></tr>
 						<tr><td class='head'>&nbsp;</td><td class='even'>
 						<input type='submit' value='" . _SEND . "' />&nbsp;
-						<input value='"._CLOSE . "' type='button' onclick='javascript:window.close();' />"
-						. icms::$security->getTokenHTML() . "</td></tr>
+						<input value='"._CLOSE . "' type='button' onclick='window.close();' />"
+				. icms::$security->getTokenHTML() . "</td></tr>
 						</table></form>\n";
-					$closebutton = 0;
+				$closebutton = 0;
 				} elseif ($op == 'sendsite') {
-					if (icms::$user) {
-						$ymail = icms::$user->email;
-					} else {
-						$ymail = isset($ymail)? icms_core_DataFilter::stripSlashesGPC(trim($ymail)):'';
-					}
-					if (!isset($yname) || trim($yname) == '' || $ymail == ''
-						|| !isset($fname) || trim($fname) == ''
-						|| !isset($fmail) || trim($fmail) == '') {
-						redirect_header(ICMS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, _MSC_NEEDINFO);
-					}
-					$yname = icms_core_DataFilter::stripSlashesGPC(trim($_POST['yname']));
-					$fname = icms_core_DataFilter::stripSlashesGPC(trim($_POST['fname']));
-					$fmail = icms_core_DataFilter::stripSlashesGPC(trim($_POST['fmail']));
-					if (!checkEmail($fmail) || !checkEmail($ymail) || preg_match('/[\\0-\\31]/', $yname)) {
-						$errormessage = _MSC_INVALIDEMAIL1 . '<br />' . _MSC_INVALIDEMAIL2 . '';
-						redirect_header(ICMS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, $errormessage);
-					}
-					global $icmsConfig;
+				if (icms::$user) {
+				$ymail = icms::$user->email;
+				} else {
+				$ymail = isset($ymail)? DataFilter::stripSlashesGPC(trim($ymail)):'';
+				}
+				if (!isset($yname) || trim($yname) == '' || $ymail == ''
+				|| !isset($fname) || trim($fname) == ''
+				|| !isset($fmail) || trim($fmail) == '') {
+				redirect_header(ICMS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, _MSC_NEEDINFO);
+				}
+				$yname = DataFilter::stripSlashesGPC(trim($_POST['yname']));
+				$fname = DataFilter::stripSlashesGPC(trim($_POST['fname']));
+				$fmail = DataFilter::stripSlashesGPC(trim($_POST['fmail']));
+				if (!checkEmail($fmail) || !checkEmail($ymail) || preg_match('/[\\0-\\31]/', $yname)) {
+				$errormessage = _MSC_INVALIDEMAIL1 . '<br />' . _MSC_INVALIDEMAIL2 . '';
+				redirect_header(ICMS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, $errormessage);
+				}
+				global $icmsConfig;
 
-					$mailer = new icms_messaging_Handler();
-					$mailer->setTemplate('tellfriend.tpl');
-					$mailer->assign('SITENAME', $icmsConfig['sitename']);
-					$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
+				$mailer = new icms_messaging_Handler();
+				$mailer->setTemplate('tellfriend.tpl');
+				$mailer->assign('SITENAME', $icmsConfig['sitename']);
+				$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 					$mailer->assign('SITEURL', ICMS_URL.'/');
 					$mailer->assign('YOUR_NAME', $yname);
 					$mailer->assign('FRIEND_NAME', $fname);
@@ -226,25 +222,29 @@ if ($action == 'showpopups') {
 				$criteria = new icms_db_criteria_Compo();
 				$criteria->setLimit($limit);
 				$criteria->setStart($start);
-				$onlines = & $online_handler->getAll($criteria);
+				$onlines = &$online_handler->getAll($criteria);
 				$count = count($onlines);
 				$module_handler = icms::handler('icms_module');
-				$modules = & $module_handler->getList(new icms_db_criteria_Item('isactive', 1));
-				for ($i = 0; $i < $count; $i++) {
-					if ($onlines[$i]['online_uid'] == 0) {
-						$onlineUsers[$i]['user'] = '';
-					} else {
-						$onlineUsers[$i]['user'] = new \ImpressCMS\Core\Models\User($onlines[$i]['online_uid']);
-					}
-					$onlineUsers[$i]['ip'] = $onlines[$i]['online_ip'];
-					$onlineUsers[$i]['updated'] = $onlines[$i]['online_updated'];
-					$onlineUsers[$i]['module'] = ($onlines[$i]['online_module'] > 0)?$modules[$onlines[$i]['online_module']]:'';
+				$modules = &$module_handler->getList(new icms_db_criteria_Item('isactive', 1));
+				for ($i = 0;
+				$i < $count;
+				$i++) {
+				if ($onlines[$i]['online_uid'] == 0) {
+				$onlineUsers[$i]['user'] = '';
+				} else {
+				$onlineUsers[$i]['user'] = new User($onlines[$i]['online_uid']);
+				}
+				$onlineUsers[$i]['ip'] = $onlines[$i]['online_ip'];
+				$onlineUsers[$i]['updated'] = $onlines[$i]['online_updated'];
+				$onlineUsers[$i]['module'] = ($onlines[$i]['online_module'] > 0)?$modules[$onlines[$i]['online_module']]:'';
 				}
 				$class = 'even';
-				for ($i = 0; $i < $count; $i++) {
-					$class = ($class == 'odd')?'even':'odd';
-					echo '<tr valign="middle" align="center" class="' . $class . '">';
-					if (is_object($onlineUsers[$i]['user'])) {
+				for ($i = 0;
+				$i < $count;
+				$i++) {
+				$class = ($class == 'odd')?'even':'odd';
+				echo '<tr valign="middle" align="center" class="' . $class . '">';
+				if (is_object($onlineUsers[$i]['user'])) {
 						$avatar = $onlineUsers[$i]['user']->user_avatar
 							?'<img src="' . ICMS_UPLOAD_URL . '/' . $onlineUsers[$i]['user']->user_avatar . '" alt="" />':'&nbsp;';
 						echo '<td>' . $avatar . "</td><td>
@@ -272,25 +272,25 @@ if ($action == 'showpopups') {
 					echo '<div style="text-align:center;">
 						<input class="formButton" value="'._CLOSE . '" type="button" onclick="window.opener.location.reload();window.close();" />
 						</div>';
-					$closebutton = false;
+				$closebutton = false;
 				}
 				break;
-			default:
+				default:
 				break;
 				}
 				if ($closebutton) {
-					echo '<div style="text-align:center;">
-						<input class="formButton" value="'._CLOSE . '" type="button" onclick="javascript:window.close();" />
+				echo '<div style="text-align:center;">
+						<input class="formButton" value="'._CLOSE . '" type="button" onclick="window.close();" />
 						</div>';
 				}
 				xoops_footer();
-			}
+				}
 
-			function printCheckForm() {
+				function printCheckForm() {
 				?>
 					<script language='javascript'>
-					<!--//
-					function checkForm() {
+						<!--//
+						function checkForm() {
 						if (xoopsGetElementById("yname").value == "") {
 							alert("<?php echo _MSC_ENTERYNAME; ?>");
 							xoopsGetElementById("yname").focus();

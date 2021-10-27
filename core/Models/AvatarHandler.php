@@ -37,6 +37,7 @@
 
 namespace ImpressCMS\Core\Models;
 
+use Exception;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
@@ -54,9 +55,9 @@ use ImpressCMS\Core\File\Filesystem;
  */
 class AvatarHandler extends AbstractExtendedHandler {
 
-		public function __construct(&$db) {
-			parent::__construct($db, 'data_avatar', 'avatar_id', 'avatar_name', 'avatar_file', 'icms', 'avatar', 'avatar_id');
-		}
+	public function __construct(&$db) {
+		parent::__construct($db, 'data_avatar', 'avatar_id', 'avatar_name', 'avatar_file', 'icms', 'avatar', 'avatar_id');
+	}
 
 	/**
 	 * Deletes an avatar
@@ -80,12 +81,13 @@ class AvatarHandler extends AbstractExtendedHandler {
 	}
 
 	/**
-	 *
-	 * @param object $criteria
-	 * @param boolean $id_as_key
-	 * @return array
+	 * @inheritDoc
 	 */
-	public function &getObjects($criteria = null, $id_as_key = false) {
+	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false)
+	{
+		if ($sql) {
+			throw new Exception('$sql must be not specified for this method call');
+		}
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT a.*, COUNT(u.user_id) AS count FROM '
@@ -167,26 +169,35 @@ class AvatarHandler extends AbstractExtendedHandler {
 
 	/**
 	 * Get a list of avatars
+	 * @param null $criteria
+	 * @param int $limit
+	 * @param int $start
+	 * @param bool $debug
 	 * @param string $avatar_type
 	 * @param integer $avatar_display
 	 * @return array
+	 * @throws Exception
 	 */
-	public function getList($avatar_type = null, $avatar_display = null) {
-		$criteria = new CriteriaCompo();
+	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false, $avatar_type = null, $avatar_display = null)
+	{
+		if (!($criteria instanceof \Imponeer\Database\Criteria\CriteriaCompo)) {
+			$criteria = new CriteriaCompo();
+		}
 		if (isset($avatar_type)) {
-			$avatar_type = ($avatar_type == 'C')?'C':'S';
+			$avatar_type = ($avatar_type == 'C') ? 'C' : 'S';
 			$criteria->add(new CriteriaItem('avatar_type', $avatar_type));
 		}
 		if (isset($avatar_display)) {
-			$criteria->add(new CriteriaItem('avatar_display', (int) $avatar_display));
+			$criteria->add(new CriteriaItem('avatar_display', (int)$avatar_display));
 		}
-		$avatars = & $this->getObjects($criteria, true);
+		$avatars = $this->getObjects($criteria, true);
 		$ret = array('blank.gif' => _NONE);
 		foreach (array_keys($avatars) as $i) {
 			$ret[$avatars[$i]->avatar_file] = $avatars[$i]->avatar_name;
 		}
 		return $ret;
 	}
+
 	/**
 	 * Gets list of avatar file names in a certain directory
 	 * if directory is not specified, default avatar directory will be searched

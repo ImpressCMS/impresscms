@@ -26,14 +26,16 @@
 
 /**
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @package		core
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since        XOOPS
+ * @author        http://www.xoops.org The XOOPS Project
+ * @author        Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package        core
  */
+
+use ImpressCMS\Core\DataFilter;
 
 $xoopsOption['pagetype'] = "search";
 
@@ -149,9 +151,9 @@ if ($action != 'showallbyuser') {
 		foreach ($temp_queries as $q) {
 			$q = trim($q);
 			if (strlen($q) >= $icmsConfigSearch['keyword_min']) {
-				$queries[] = icms_core_DataFilter::addSlashes($q);
+				$queries[] = DataFilter::addSlashes($q);
 			} else {
-				$ignored_queries[] = icms_core_DataFilter::addSlashes($q);
+				$ignored_queries[] = DataFilter::addSlashes($q);
 			}
 		}
 
@@ -165,7 +167,7 @@ if ($action != 'showallbyuser') {
 			redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, icms_conv_nr2local($icmsConfigSearch['keyword_min'])));
 			exit();
 		}
-		$queries = array(icms_core_DataFilter::addSlashes($query));
+		$queries = array(DataFilter::addSlashes($query));
 	}
 }
 $xoopsTpl->assign("label_search_results", _SR_SEARCHRESULTS);
@@ -220,7 +222,7 @@ switch ($action) {
 				} else {
 					(($count - $start) > $max_results_per_page)?$num_show_this_page = $max_results_per_page:$num_show_this_page = $count - $start;
 					for ($i = 0; $i < $num_show_this_page; $i++) {
-						$results[$i]['processed_image_alt_text'] = icms_core_DataFilter::checkVar($modname, 'text', 'output') . ": ";
+						$results[$i]['processed_image_alt_text'] = DataFilter::checkVar($modname, 'text', 'output') . ": ";
 
 						if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
 							$results[$i]['processed_image_url'] = "modules/" . $moddir . "/" . $results[$i]['image'];
@@ -232,7 +234,7 @@ switch ($action) {
 							if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
 								$results[$i]['link'] = "modules/" . $moddir . "/" . $results[$i]['link'];
 							}
-							$results[$i]['processed_title'] = icms_core_DataFilter::checkVar($results[$i]['title'], 'text', 'output');
+							$results[$i]['processed_title'] = DataFilter::checkVar($results[$i]['title'], 'text', 'output');
 						}
 						/*UnderDog Mark*/
 						if ($icmsConfigSearch['search_user_date']) {
@@ -289,7 +291,7 @@ switch ($action) {
 			?$num_show_this_page = $max_results_per_page
 			: $num_show_this_page = $count - $start;
 			for ($i = $start; $i < $start + $num_show_this_page; $i++) {
-				$results[$i]['processed_image_alt_text'] = icms_core_DataFilter::checkVar($modname, 'text', 'output') . ": ";
+				$results[$i]['processed_image_alt_text'] = DataFilter::checkVar($modname, 'text', 'output') . ": ";
 				if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
 					$results[$i]['processed_image_url'] = "modules/" . $moddir . "/" . $results[$i]['image'];
 				} else {
@@ -298,15 +300,15 @@ switch ($action) {
 				if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
 					$results[$i]['link'] = "modules/" . $moddir . "/" . $results[$i]['link'];
 				}
-				$results[$i]['processed_title'] = icms_core_DataFilter::checkVar($results[$i]['title'], 'text', 'output');
+				$results[$i]['processed_title'] = DataFilter::checkVar($results[$i]['title'], 'text', 'output');
 				if ($icmsConfigSearch['search_user_date']) {
-					$results[$i]['uid'] = @ (int) $results[$i]['uid'];
+					$results[$i]['uid'] = @ (int)$results[$i]['uid'];
 					if (!empty($results[$i]['uid'])) {
 						$uname = \ImpressCMS\Core\Models\User::getUnameFromId($results[$i]['uid']);
 						$results[$i]['processed_user_name'] = $uname;
 						$results[$i]['processed_user_url'] = ICMS_URL . '/userinfo.php?uid=' . $results[$i]['uid'];
 					}
-					$results[$i]['processed_time'] = !empty($results[$i]['time'])?" (" . formatTimestamp((int) $results[$i]['time']) . ")":"";
+					$results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (" . formatTimestamp((int)$results[$i]['time']) . ")" : "";
 				}
 			}
 

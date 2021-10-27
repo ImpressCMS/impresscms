@@ -3,19 +3,15 @@
 namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Install;
 
 use Exception;
-use FilesystemIterator;
 use Generator;
 use icms_module_Object;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
-use ImpressCMS\Core\Models\File;
 use ImpressCMS\Core\Models\Module;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
-use RecursiveDirectoryIterator;
-use SplFileInfo;
 
 /**
  * Copies module assets to public path
@@ -50,12 +46,12 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		}
 
 		foreach ($this->getDefinedAssets((array)$module->getInfo('assets'), $module->dirname) as $assetPath => $assetContent) {
-			$output->msg(_MD_AM_COPY_ASSETS_COPYING, 'modules/' .  $assetPath);
-			if ($mm->has('modules/' . $assetPath)) {
-				$mm->delete('modules/' . $assetPath);
+			$output->msg(_MD_AM_COPY_ASSETS_COPYING, $assetPath);
+			if ($mm->has($assetPath)) {
+				$mm->delete($assetPath);
 			}
 			$mm->writeStream(
-				'modules/' . $assetPath,
+				$assetPath,
 				$assetContent
 			);
 		}
@@ -81,9 +77,9 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		foreach ($assets as $path) {
 			if (str_starts_with($path, 'vendor/')) {
 				$originalPath = trim($path, '/');
-				$path = realpath(ICMS_ROOT_PATH . '/' . $path);
+				$path = ICMS_ROOT_PATH . '/' . $path;
 				if (!str_starts_with($path, ICMS_ROOT_PATH . '/vendor/')) {
-					throw new Exception('Asset path for vendor can\'t be outside vendor path');
+					throw new Exception('Asset path for vendor can\'t be outside vendor path (' . json_encode([$path, ICMS_ROOT_PATH . '/vendor/']) . ')');
 				}
 				/**
 				 * @var Filesystem $fs
@@ -93,7 +89,7 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 					if ($fileSystemItem['type'] !== 'file') {
 						continue;
 					}
-					yield ($moduleDir . '/'.$originalPath.'/' . $fileSystemItem['path']) => $fs->readStream($fileSystemItem['path']);
+					yield 'modules/' . $moduleDir . '/' . $fileSystemItem['path'] => $fs->readStream($fileSystemItem['path']);
 				}
 				continue;
 			}
@@ -104,6 +100,9 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 			$mf = $this->container->get('filesystem.modules');
 			foreach ($mf->listContents($moduleDir . '/' . $path, true) as $fileSystemItem) {
 				if ($fileSystemItem['type'] !== 'file') {
+					continue;
+				}
+				if (in_array($fileSystemItem['extension'], ['php', 'htm', 'html', 'tpl', 'yml', 'md', '', 'json'], true)) {
 					continue;
 				}
 				yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);

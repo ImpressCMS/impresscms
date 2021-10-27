@@ -67,6 +67,8 @@ function b_system_admin_cp_show()
 {
 	global $icmsTpl, $icmsConfig;
 
+	icms_loadLanguageFile('core', 'admin');
+
 	$block['lang_cp'] = _CPHOME;
 	$block['lang_insmodules'] = _AD_INSTALLEDMODULES;
 

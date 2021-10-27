@@ -48,6 +48,8 @@ use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\Facades\Member;
 use ImpressCMS\Core\File\Filesystem;
 use ImpressCMS\Core\View\Template;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Module handler class.
@@ -59,8 +61,7 @@ use ImpressCMS\Core\View\Template;
  * @author    Kazumi Ono    <onokazu@xoops.org>
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class ModuleHandler
-	extends AbstractExtendedHandler
+class ModuleHandler extends AbstractExtendedHandler
 {
 
 	/**
@@ -78,6 +79,37 @@ class ModuleHandler
 	}
 
 	/**
+	 * Resolves module directory from class instance or class name
+	 *
+	 * @param string|object $object Class name or object
+	 *
+	 * @return string|null
+	 */
+	public static function resolveModuleDirFromClass($object): ?string
+	{
+		try {
+			$reflector = new ReflectionClass($object);
+			$filename = $reflector->getFileName();
+			if (!str_starts_with($filename, ICMS_MODULES_PATH)) {
+				return null;
+			}
+			return strstr(
+				trim(
+					mb_substr(
+						$filename,
+						mb_strlen(ICMS_MODULES_PATH)
+					),
+					'/'
+				),
+				'/',
+				true
+			);
+		} catch (ReflectionException $exception) {
+			return null;
+		}
+	}
+
+	/**
 	 * Returns an array of all available modules, based on folders in the modules directory
 	 *
 	 * The getList method cannot be used for this, because uninstalled modules are not listed
@@ -89,6 +121,10 @@ class ModuleHandler
 	public static function getAvailable(): array
 	{
 		$cleanList = [];
+		if (!icms::getInstance()->has('extension_describer.module')) {
+			return $cleanList;
+		}
+
 		$dirtyList = Filesystem::getDirList(ICMS_MODULES_PATH . '/');
 		foreach ($dirtyList as $item) {
 			/**

@@ -2,7 +2,6 @@
 namespace ImpressCMS\Core\Properties;
 
 use ImpressCMS\Core\DataFilter;
-use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\File\MediaUploader;
 use ImpressCMS\Core\Textsanitizer;
 use Serializable;
@@ -493,9 +492,6 @@ abstract class AbstractProperties implements Serializable {
 			default:
 				if (!is_string($value)) {
 					$value = (string)$value;
-				}
-				if (isset($this->_vars[$key][self::VARCFG_NOT_GPC]) && !$this->_vars[$key][self::VARCFG_NOT_GPC] && get_magic_quotes_gpc()) {
-					$value = stripslashes($value);
 				}
 				if (!empty($this->_vars[$key][self::VARCFG_VALUE]) && isset($this->_vars[$key][self::VARCFG_VALIDATE_RULE]) && !empty($this->_vars[$key][self::VARCFG_VALIDATE_RULE])) {
 					if (!preg_match($this->_vars[$key][self::VARCFG_VALIDATE_RULE], $value)) {

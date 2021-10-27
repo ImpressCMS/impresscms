@@ -29,6 +29,7 @@ class SmartyPluginsProvider extends AbstractServiceProvider
 	 */
 	protected $provides = [
 		'smarty.plugin',
+		'smarty.helper.db_resource_resolver',
 	];
 
 	/**
@@ -53,7 +54,29 @@ class SmartyPluginsProvider extends AbstractServiceProvider
 	/**
 	 * Adds DB resource plugin
 	 */
-	private function addDBResource() {
+	private function addDBResource()
+	{
+		$this->leagueContainer
+			->add(
+				'smarty.helper.db_resource_resolver',
+				function () {
+					return static function (array $row) {
+						$theme = $GLOBALS['icmsConfig']['theme_set'] ?? 'default';
+						$module = $row['tpl_module'];
+						$type = $row['tpl_type'];
+						$tpl_name = $row['tpl_file'];
+						$blockpath = ($type === 'block') ? 'blocks/' : '';
+						$filepath = ICMS_THEME_PATH . "/$theme/modules/$module/$blockpath$tpl_name";
+						if (!file_exists($filepath)) {
+							$filepath = ICMS_ROOT_PATH . "/modules/$module/templates/$blockpath$tpl_name";
+							if (!file_exists($filepath)) {
+								return null;
+							}
+						}
+						return $filepath;
+					};
+				}
+			);
 		$this->leagueContainer
 			->add(DBResource::class)
 			->addArgument('db')
@@ -65,21 +88,7 @@ class SmartyPluginsProvider extends AbstractServiceProvider
 			->addArgument('tpl_lastmodified')
 			->addArgument('tpl_tplset')
 			->addArgument('tpl_file')
-			->addArgument(static function (array $row) {
-				$theme = $GLOBALS['icmsConfig']['theme_set'] ?? 'default';
-				$module = $row['tpl_module'];
-				$type = $row['tpl_type'];
-				$tpl_name = $row['tpl_file'];
-				$blockpath = ($type === 'block') ? 'blocks/' : '';
-				$filepath = ICMS_THEME_PATH . "/$theme/modules/$module/$blockpath$tpl_name";
-				if (!file_exists($filepath)) {
-					$filepath = ICMS_ROOT_PATH . "/modules/$module/templates/$blockpath$tpl_name";
-					if (!file_exists($filepath)) {
-						return null;
-					}
-				}
-				return $filepath;
-			})
+			->addArgument('smarty.helper.db_resource_resolver')
 			->addTag('smarty.plugin')
 		;
 	}

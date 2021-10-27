@@ -1,5 +1,6 @@
 <?php
 
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Event;
 
 class icms_AutologinEventHandler {
@@ -37,8 +38,8 @@ class icms_AutologinEventHandler {
 			redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
 		}
 
-		$uname = icms_core_DataFilter::stripSlashesGPC($autologinName);
-		$pass = icms_core_DataFilter::stripSlashesGPC($autologinPass);
+		$uname = DataFilter::stripSlashesGPC($autologinName);
+		$pass = DataFilter::stripSlashesGPC($autologinPass);
 		if (empty($uname) || is_numeric($pass)) {
 			$user = false;
 		} else {

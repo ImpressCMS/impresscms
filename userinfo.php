@@ -25,18 +25,21 @@
 //  ------------------------------------------------------------------------ //
 
 /**
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since        XOOPS
+ * @author        http://www.xoops.org The XOOPS Project
  * @author      sato-san <sato-san@impresscms.org>
- * @package		Member
- * @subpackage	User
+ * @package        Member
+ * @subpackage    User
  */
 
+use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\Models\GroupPermHandler;
+
 $xoopsOption['pagetype'] = 'user';
-$uid = (int) $_GET['uid'];
+$uid = (int)$_GET['uid'];
 
 if (icms_get_module_status("profile")) {
 	$module = icms::handler("icms_module")->getByDirName("profile", true);
@@ -60,10 +63,13 @@ if ($uid <= 0) {
 	redirect_header('index.php', 3, _US_SELECTNG);
 }
 
+/**
+ * @var GroupPermHandler $gperm_handler
+ */
 $gperm_handler = icms::handler('icms_member_groupperm');
 $groups = is_object(icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
 
-$isAdmin = $gperm_handler->checkRight('system_admin', ICMS_SYSTEM_USER, $groups);
+$isAdmin = $gperm_handler->checkRight('system_admin', 1, $groups);
 
 if (is_object(icms::$user)) {
 	if ($uid == icms::$user->uid) {
@@ -130,7 +136,7 @@ icms_makeSmarty(array(
 	'lang_interest' => _US_INTEREST,
 	'user_interest' => $thisUser->user_intrest,
 	'lang_extrainfo' => _US_EXTRAINFO,
-	'user_extrainfo' => icms_core_DataFilter::checkVar($thisUser->bio, 'text', 'output'),
+	'user_extrainfo' => DataFilter::checkVar($thisUser->bio, 'text', 'output'),
 	'lang_statistics' => _US_STATISTICS,
 	'lang_membersince' => _US_MEMBERSINCE,
 	'user_joindate' => formatTimestamp($thisUser->user_regdate, 's'),
@@ -163,7 +169,7 @@ if ($icmsConfigUser['allwshow_sig'] == true && strlen(trim($thisUser->user_sig))
    	icms_makeSmarty(array(
 		'user_showsignature' => true,
 		'lang_signature' => _US_SIGNATURE,
-		'user_signature' => icms_core_DataFilter::checkVar($thisUser->user_sig, 'html', 'output')
+		'user_signature' => DataFilter::checkVar($thisUser->user_sig, 'html', 'output')
 	));
 }
 
@@ -189,8 +195,8 @@ foreach ($mids as $mid) {
 						$results[$i]['link'] = "modules/" . $module->dirname . "/" . $results[$i]['link'];
 					}
 				}
-				$results[$i]['title'] = icms_core_DataFilter::htmlSpecialChars($results[$i]['title']);
-				$results[$i]['time'] = $results[$i]['time']? formatTimestamp($results[$i]['time']):'';
+				$results[$i]['title'] = DataFilter::htmlSpecialChars($results[$i]['title']);
+				$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
 			}
 			if ($count == 5) {
 				$showall_link = '<a href="search.php?action=showallbyuser&amp;mid=' . (int) $mid .

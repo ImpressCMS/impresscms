@@ -158,9 +158,9 @@ class ConfigItem extends AbstractExtendedModel {
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
 		if ($this->conf_formtype == 'textarea' && $this->conf_valuetype !== 'array') {
-			$value = icms_core_DataFilter::checkVar($value, 'html', 'input');
+			$value = DataFilter::checkVar($value, 'html', 'input');
 		} elseif ($this->conf_formtype == 'textsarea' && $this->conf_valuetype !== 'array') {
-			$value = icms_core_DataFilter::checkVar($value, 'text', 'input');
+			$value = DataFilter::checkVar($value, 'text', 'input');
 		} elseif ($this->conf_formtype == 'password') {
 			$value = filter_var($value, FILTER_SANITIZE_URL);
 		} else {

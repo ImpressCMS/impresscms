@@ -36,8 +36,10 @@
 
 namespace ImpressCMS\Core\View\Renderer;
 
+use icms;
 use ImpressCMS\Core\Models\Comment;
 use ImpressCMS\Core\ObjectTree;
+use Smarty;
 
 /**
  * Display comments
@@ -61,11 +63,16 @@ class CommentRenderer {
 	 * @param   boolean $use_icons
 	 * @param   boolean $do_iconcheck
 	 */
-	private function __construct(&$tpl, $use_icons = true, $do_iconcheck = false) {
-		$this->_tpl = & $tpl;
+	private function __construct(&$tpl, $use_icons = true, $do_iconcheck = false)
+	{
+		$this->_tpl = &$tpl;
 		$this->_useIcons = $use_icons;
 		$this->_doIconCheck = $do_iconcheck;
-		$this->_memberHandler = \icms::handler('icms_member');
+		$this->_memberHandler = icms::handler('icms_member');
+
+		require_once ICMS_INCLUDE_PATH . DIRECTORY_SEPARATOR . 'comment_constants.php';
+		icms_loadLanguageFile('core', 'comment');
+
 		$this->_statusText = [
 			XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">' . _CM_PENDING . '</span>',
 			XOOPS_COMMENT_ACTIVE => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',
@@ -76,7 +83,7 @@ class CommentRenderer {
 	/**
 	 * Access the only instance of this class
 	 *
-	 * @param \Smarty $tpl reference to a Smarty object
+	 * @param Smarty $tpl reference to a Smarty object
 	 * @param boolean $use_icons
 	 * @param boolean $do_iconcheck
 	 *

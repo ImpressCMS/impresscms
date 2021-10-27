@@ -31,17 +31,20 @@
 /**
  * Administration of preferences, main file
  *
- * @copyright	http://www.XOOPS.org/
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Preferences
+ * @copyright    http://www.XOOPS.org/
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        System
+ * @subpackage    Preferences
  */
+
+use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 
 if (!is_object(icms::$user)
 	|| !is_object($icmsModule)
 	|| !icms::$user->isAdmin($icmsModule->mid)
-	) {
+) {
 	exit("Access Denied");
 }
 if (isset($_POST)) {
@@ -49,7 +52,7 @@ if (isset($_POST)) {
 	if (is_array($post_vars)) {
 		extract($post_vars);
 	}
-	}
+}
 $icmsAdminTpl = new icms_view_Tpl();
 $op = (isset($_GET['op']))
 	? trim(filter_input(INPUT_GET, 'op'))
@@ -120,10 +123,10 @@ switch ($op) {
 						if ($config[$i]->conf_valuetype == 'array') {
 							// this is exceptional.. only when value type is array, need a smarter way for this
 							$ele = ($config[$i]->conf_value != '')
-								?new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
+								? new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
 								: new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
 						} else {
-							$ele = new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+							$ele = new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						}
 						break;
 
@@ -131,10 +134,10 @@ switch ($op) {
 						if ($config[$i]->conf_valuetype == 'array') {
 							// this is exceptional.. only when value type is array, need a smarter way for this
 							$ele = ($config[$i]->conf_value != '')
-								?new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
+								? new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
 								: new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
 						} else {
-							$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+							$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						}
 						break;
 
@@ -202,9 +205,14 @@ switch ($op) {
 						if ($type == 'editor') {
 							$type = '';
 						}
-						$dirlist = icms_plugins_EditorHandler::getListByType($type);
+
+						/**
+						 * @var EditorsRegistry $editorRegistry
+						 */
+						$editorRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+
+						$dirlist = $editorRegistry->getList($type);
 						if (!empty($dirlist)) {
-							asort($dirlist);
 							$ele->addOptionArray($dirlist);
 						}
 						unset($type);
@@ -212,7 +220,12 @@ switch ($op) {
 
 					case 'editor_multi' :
 						$ele = new icms_form_elements_Select($title, $config[$i]->conf_name, $config[$i]->getConfValueForOutput(), 5, true);
-						$dirlist = icms_plugins_EditorHandler::getListByType();
+						/**
+						 * @var EditorsRegistry $editorRegistry
+						 */
+						$editorRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+
+						$dirlist = $editorRegistry->getList('content');
 						if (!empty($dirlist)) {
 							asort($dirlist);
 							$ele->addOptionArray($dirlist);
@@ -341,15 +354,15 @@ switch ($op) {
 						break;
 
 					case 'password' :
-						$ele = new icms_form_elements_Password($title, $config[$i]->conf_name, 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), false, ($icmsConfigUser['pass_level']?'password_adv':''));
+						$ele = new icms_form_elements_Password($title, $config[$i]->conf_name, 50, 255, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), false, ($icmsConfigUser['pass_level'] ? 'password_adv' : ''));
 						break;
 
 					case 'color' :
-						$ele = new icms_form_elements_Colorpicker($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Colorpicker($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 
 					case 'hidden' :
-						$ele = new icms_form_elements_Hidden($config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Hidden($config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 
 					case 'select_pages' :
@@ -393,7 +406,7 @@ switch ($op) {
 
 					case 'textbox' :
 					default :
-						$ele = new icms_form_elements_Text($title, $config[$i]->conf_name, 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Text($title, $config[$i]->conf_name, 50, 255, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 					}
 			$hidden = new icms_form_elements_Hidden('conf_ids[]', $config[$i]->conf_id);
@@ -439,23 +452,29 @@ switch ($op) {
 				$form->addElement(new icms_form_elements_Hidden('redirect', ICMS_MODULES_URL . '/' . $module->dirname . '/' . $module->getInfo('adminindex')));
 			}
 			for ($i = 0; $i < $count; $i++) {
-				$title = (!defined($config[$i]->conf_desc) || constant($config[$i]->conf_desc) == '')? constant($config[$i]->conf_title):'<span>' . constant($config[$i]->conf_title) . '</span> <span data-toggle="tooltip" data-html="true" title="' . constant($config[$i]->conf_desc) . '"><span class="glyphicon glyphicon-info-sign"></span></span>';
+				if (!defined($config[$i]->conf_desc)) {
+					$title = $config[$i]->conf_title;
+				} elseif (!constant($config[$i]->conf_desc)) {
+					$title = constant($config[$i]->conf_title);
+				} else {
+					$title = '<span>' . constant($config[$i]->conf_title) . '</span> <span data-toggle="tooltip" data-html="true" title="' . constant($config[$i]->conf_desc) . '"><span class="glyphicon glyphicon-info-sign"></span></span>';
+				}
 				switch ($config[$i]->conf_formtype) {
 					case 'textsarea' :
 						if ($config[$i]->conf_valuetype == 'array') {
 							// this is exceptional.. only when value type is arrayneed a smarter way for this
-							$ele = ($config[$i]->conf_value != '')?new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50):new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
+							$ele = ($config[$i]->conf_value != '') ? new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
 						} else {
-							$ele = new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
+							$ele = new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
 						}
 						break;
 
 					case 'textarea' :
 						if ($config[$i]->conf_valuetype == 'array') {
 							// this is exceptional.. only when value type is array need a smarter way for this
-							$ele = ($config[$i]->conf_value != '')?new icms_form_elements_Textarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50):new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
+							$ele = ($config[$i]->conf_value != '') ? new icms_form_elements_Textarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new icms_form_elements_Textarea($title, $config[$i]->conf_name, '', 5, 50);
 						} else {
-							$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
+							$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
 						}
 						break;
 
@@ -503,15 +522,15 @@ switch ($op) {
 						break;
 
 					case 'password' :
-						$ele = new icms_form_elements_Password($title, $config[$i]->conf_name, 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Password($title, $config[$i]->conf_name, 50, 255, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 
 					case 'color' :
-						$ele = new icms_form_elements_Colorpicker($title, $config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Colorpicker($title, $config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 
 					case 'hidden' :
-						$ele = new icms_form_elements_Hidden($config[$i]->conf_name, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Hidden($config[$i]->conf_name, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 
 					case 'select_pages' :
@@ -522,7 +541,7 @@ switch ($op) {
 
 					case 'textbox' :
 					default :
-						$ele = new icms_form_elements_Text($title, $config[$i]->conf_name, 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+						$ele = new icms_form_elements_Text($title, $config[$i]->conf_name, 50, 255, DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 						break;
 					}
 			$hidden = new icms_form_elements_Hidden('conf_ids[]', $config[$i]->conf_id);
@@ -573,18 +592,18 @@ switch ($op) {
 
 					if (is_array($new_value) || $new_value != $config->conf_value) {
 						// if language has been changed
-						if (!$lang_updated && $config->conf_catid == \icms_config_Handler::CATEGORY_MAIN && $config->conf_name == 'language') {
+						if (!$lang_updated && $config->conf_catid == icms_config_Handler::CATEGORY_MAIN && $config->conf_name == 'language') {
 							$icmsConfig['language'] = ${$config->conf_name};
 							$lang_updated = true;
 						}
 						// if default theme has been changed
-						if (!$theme_updated && $config->conf_catid == \icms_config_Handler::CATEGORY_MAIN && $config->conf_name == 'theme_set') {
+						if (!$theme_updated && $config->conf_catid == icms_config_Handler::CATEGORY_MAIN && $config->conf_name == 'theme_set') {
 							$member_handler = icms::handler('icms_member');
 							$member_handler->updateUsersByField('theme', ${$config->conf_name});
 							$theme_updated = true;
 						}
 						// if password encryption has been changed
-						if (!$encryption_updated && $config->conf_catid == \icms_config_Handler::CATEGORY_USER && $config->conf_name == 'enc_type') {
+						if (!$encryption_updated && $config->conf_catid == icms_config_Handler::CATEGORY_USER && $config->conf_name == 'enc_type') {
 							if ($icmsConfig['closesite'] !== 1) {
 								$member_handler = icms::handler('icms_member');
 								$member_handler->updateUsersByField('pass_expired', 1);
@@ -595,16 +614,16 @@ switch ($op) {
 						}
 
 						if (!$purifier_style_updated
-							&& $config->conf_catid == \icms_config_Handler::CATEGORY_PURIFIER
+							&& $config->conf_catid == icms_config_Handler::CATEGORY_PURIFIER
 							&& $config->conf_name == 'purifier_Filter_ExtractStyleBlocks'
-							) {
+						) {
 							if ($config->purifier_Filter_ExtractStyleBlocks == 1) {
 								$purifier_style_updated = true;
 							}
 						}
 
 						// if default template set has been changed
-						if (!$tpl_updated && $config->conf_catid == \icms_config_Handler::CATEGORY_MAIN && $config->conf_name == 'template_set') {
+						if (!$tpl_updated && $config->conf_catid == icms_config_Handler::CATEGORY_MAIN && $config->conf_name == 'template_set') {
 							// clear cached/compiled files and regenerate them if default theme has been changed
 							if ($icmsConfig['template_set'] != ${$config->conf_name}) {
 								$newtplset = ${$config->conf_name};
@@ -613,14 +632,14 @@ switch ($op) {
 								// generate compiled files for the new theme
 								// block files only for now..
 								$tplfile_handler = icms::handler('icms_view_template_file');
-								$dtemplates = & $tplfile_handler->find('default', 'block');
+								$dtemplates = &$tplfile_handler->find('default', 'block');
 								$dcount = count($dtemplates);
 
 								// need to do this to pass to icms_view_Tpl::template_touch function
 								$GLOBALS['icmsConfig']['template_set'] = $newtplset;
 
 								for ($i = 0; $i < $dcount; $i++) {
-									$found = & $tplfile_handler->find($newtplset, 'block', $dtemplates[$i]->tpl_refid, null);
+									$found = &$tplfile_handler->find($newtplset, 'block', $dtemplates[$i]->tpl_refid, null);
 									if (count($found) > 0) {
 										// template for the new theme found, compile it
 										icms_view_Tpl::template_touch($found[0]->tpl_id);
@@ -634,7 +653,7 @@ switch ($op) {
 						}
 
 						// add read permission for the start module to all groups
-						if (!$startmod_updated && $new_value != '--' && $config->conf_catid == \icms_config_Handler::CATEGORY_MAIN && $config->conf_name == 'startpage') {
+						if (!$startmod_updated && $new_value != '--' && $config->conf_catid == icms_config_Handler::CATEGORY_MAIN && $config->conf_name == 'startpage') {
 							$moduleperm_handler = icms::handler('icms_member_groupperm');
 							$module_handler = icms::handler('icms_module');
 
@@ -642,9 +661,9 @@ switch ($op) {
 								$arr = explode('-', $v);
 								if (count($arr) > 1) {
 									$mid = $arr[0];
-									$module = & $module_handler->get($mid);
+									$module = &$module_handler->get($mid);
 									if ($arr[0] == 1 && $arr[1] > 0) {
-	//Set read permission to the content page for the selected group
+										//Set read permission to the content page for the selected group
 										if (!$moduleperm_handler->checkRight('content_read', $arr[1], $k)) {
 											$moduleperm_handler->addRight('content_read', $arr[1], $k);
 										}

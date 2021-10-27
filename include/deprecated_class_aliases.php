@@ -21,8 +21,6 @@ use ImpressCMS\Core\Debug;
 use ImpressCMS\Core\Event;
 use ImpressCMS\Core\Extensions\Autotasks\AbstractAutotaskSystem;
 use ImpressCMS\Core\Extensions\Autotasks\AutotaskSystemInterface;
-use ImpressCMS\Core\Extensions\Editors\EditorInterface;
-use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
 use ImpressCMS\Core\Extensions\Plugins\Plugin;
 use ImpressCMS\Core\Extensions\Plugins\PluginRegistry;
 use ImpressCMS\Core\Extensions\Preload\AbstractPreloadItem;
@@ -53,6 +51,7 @@ use ImpressCMS\Core\Models\Block;
 use ImpressCMS\Core\Models\BlockHandler;
 use ImpressCMS\Core\Models\BlockPosition;
 use ImpressCMS\Core\Models\BlockPositionHandler;
+use ImpressCMS\Core\Models\Category;
 use ImpressCMS\Core\Models\CategoryHandler;
 use ImpressCMS\Core\Models\Comment;
 use ImpressCMS\Core\Models\CommentHandler;
@@ -93,6 +92,7 @@ use ImpressCMS\Core\Models\TemplateSet;
 use ImpressCMS\Core\Models\TemplateSetHandler;
 use ImpressCMS\Core\Models\UrlLink;
 use ImpressCMS\Core\Models\UrlLinkHandler;
+use ImpressCMS\Core\Models\User;
 use ImpressCMS\Core\Models\UserHandler;
 use ImpressCMS\Core\Models\UserRank;
 use ImpressCMS\Core\Models\UserRankHandler;
@@ -283,7 +283,7 @@ return [
 	'icms_image_Handler' => ImageHandler::class,
 	'icms_image_Object' => Image::class,
 	'icms_ipf_category_Handler' => CategoryHandler::class,
-	'icms_ipf_category_Object' => \ImpressCMS\Core\Models\Category::class,
+	'icms_ipf_category_Object' => Category::class,
 	'icms_ipf_export_Handler' => Exporter::class,
 	'icms_ipf_export_Renderer' => ExportRenderer::class,
 	'icms_ipf_form_elements_Autocomplete' => AutocompleteElement::class,
@@ -333,20 +333,18 @@ return [
 	'icms_member_group_membership_Handler' => GroupMembershipHandler::class,
 	'icms_member_group_membership_Object' => GroupMembership::class,
 	'icms_member_group_Handler' => GroupHandler::class,
-	'icms_member_group_Object'=> Group::class,
-	'icms_member_groupperm_Handler'=> GroupPermHandler::class,
-	'icms_member_groupperm_Object'=> GroupPerm::class,
+	'icms_member_group_Object' => Group::class,
+	'icms_member_groupperm_Handler' => GroupPermHandler::class,
+	'icms_member_groupperm_Object' => GroupPerm::class,
 	'icms_member_rank_Handler' => UserRankHandler::class,
 	'icms_member_rank_Object' => UserRank::class,
 	'icms_member_user_Handler' => UserHandler::class,
-	'icms_member_user_Object' => \ImpressCMS\Core\Models\User::class,
+	'icms_member_user_Object' => User::class,
 	'icms_member_Handler' => Member::class,
 	'icms_messaging_EmailHandler' => Mailer::class,
 	'icms_messaging_Handler' => MessageSender::class,
 	'icms_module_Handler' => ModuleHandler::class,
 	'icms_module_Object' => Module::class,
-	'icms_plugins_EditorHandler' => EditorsRegistry::class,
-	'icms\\plugins\\EditorInterface' => EditorInterface::class,
 	'icms_plugins_Handler' => PluginRegistry::class,
 	'icms_plugins_Object' => Plugin::class,
 	'icms_preload_Handler' => EventsPreloader::class,

@@ -83,7 +83,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 						$fcount++;
 						try {
 							$db->perform(
-								'UPDATE ' . $db->prefix(newblocks) . '
+								'UPDATE ' . $db->prefix('newblocks') . '
 									  SET name=:name, edit_func=:edit_func, content=:content, template=:template, last_modified=:last_modified
 									  WHERE bid=:bid', [
 								'name' => $block['name'],

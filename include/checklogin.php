@@ -42,6 +42,7 @@
  * @since		XOOPS
  */
 
+use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Member;
 
 icms_loadLanguageFile('core', 'user');
@@ -51,17 +52,13 @@ $pass = !isset($_POST['pass'])?'':trim($_POST['pass']);
 /* make sure redirect stays within domain and isn't open to exploit */
 if (!isset($redirect)) {
 
-	$redirect = isset($_GET['xoops_redirect'])
-		?$_GET['xoops_redirect']
-		: isset($_POST['xoops_redirect'])
-			?$_POST['xoops_redirect']
-			: ICMS_URL;
+	$redirect = $_GET['xoops_redirect'] ?? $_POST['xoops_redirect'] ?? ICMS_URL;
 
-		$redirect = htmlspecialchars(trim($redirect));
-		if ($redirect !== htmlspecialchars($_SERVER['REQUEST_URI'])) {
-			$redirect = ICMS_URL;
-		}
-		}
+	$redirect = htmlspecialchars(trim($redirect));
+	if ($redirect !== htmlspecialchars($_SERVER['REQUEST_URI'])) {
+		$redirect = ICMS_URL;
+	}
+}
 
 /* if redirect goes to the register page, divert to main page - users don't go to register */
 if ($redirect && strpos($redirect, 'register') !== false) {
@@ -85,15 +82,15 @@ if ($pos !== false) {
 $member_handler = icms::handler('icms_member');
 
 icms_loadLanguageFile('core', 'auth');
-$icmsAuth = & icms_auth_Factory::getAuthConnection(icms_core_DataFilter::addSlashes($uname));
+$icmsAuth = &icms_auth_Factory::getAuthConnection(DataFilter::addSlashes($uname));
 
-$uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($uname));
-$pass4sql = icms_core_DataFilter::stripSlashesGPC($pass);
+$uname4sql = addslashes(DataFilter::stripSlashesGPC($uname));
+$pass4sql = DataFilter::stripSlashesGPC($pass);
 
 
 /* Check to see if being access by a user - if not, attempt to authenticate */
 if (empty($user) || !is_object($user)) {
-	$user = & $icmsAuth->authenticate($uname4sql, $pass4sql);
+	$user = &$icmsAuth->authenticate($uname4sql, $pass4sql);
 }
 
 /* User exists: check to see if the user has been activated.
@@ -167,14 +164,14 @@ if (false != $user) {
 	$member_handler->updateUserByField($user, 'last_login', time());
 
 	$user_theme = $user->theme;
-	if (in_array($user_theme, $icmsConfig['theme_set_allowed'], true)) {
+	if (in_array($user_theme, (array)$icmsConfig['theme_set_allowed'], true)) {
 		$session->getSegment('user')->set('theme', $user_theme);
 	}
 
 	// autologin hack V3.1 GIJ (set cookie)
-	$secure = strpos(ICMS_URL, 'https') === 0 ?1:0; // we need to secure cookie when using SSL
-	$icms_cookie_path = defined('ICMS_COOKIE_PATH')? ICMS_COOKIE_PATH :
-	preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
+	$secure = strpos(ICMS_URL, 'https') === 0 ? 1 : 0; // we need to secure cookie when using SSL
+	$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH :
+		preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
 	if ($icms_cookie_path === ICMS_URL) {
 		$icms_cookie_path = '/';
 	}

@@ -16,47 +16,230 @@
 	#leftside ul li {padding-bottom: 5px; padding-left: 5px; margin-bottom: 5px;}
 	#leftside ul li.current {color: #fff; font-weight: bold; background: transparent url(img/activestep.jpg) top left no-repeat; padding-top: 2px; padding-left: 5px; padding-bottom: 2px;}
 	#leftside ul li a {width: 160px; padding-right: 20px; color: #ccc; font-weight: normal; font-style: italic; text-decoration: none; background: url(img/yes.png) top right no-repeat;}
-	#leftside ul li a:hover {color: #fff;}
 
-#rightside {width: 660px; float: right; background: transparent; margin-right: 1px;}
-	#rightside a {color: #7c7b7b; text-decoration: underline;}
-	#rightside a:hover {color: #000;}
-	#rightside ul {list-style-type: none; padding: 0; margin: 0; padding: 1px;}
-	#rightside ul li {}
-	#rightside .page {margin-left: 5px; margin-right: 5px; margin-top: 8px; background: #fff; padding: 5px;}
-	#rightside .page h2, #rightside .page h3 {color: #000; font-size: 16px; border-bottom: 1px solid #aeaeae;}
-	#rightside .page h4 {color: #000; font-size: 12px; border-bottom: 1px solid #aeaeae;}
+#leftside ul li a:hover {
+	color: #fff;
+}
 
-	select#modinstall, select#modperms {margin-left: 25%; text-align: center; width: 50%; height: 125px; font-size: 12px; text-transform: uppercase; margin-bottom: 10px;}
-	.langselect {margin: 3px; font-family: Arial, Helvetica, sans-serif; text-align: center; text-decoration: none; font-size: 11px; display: inline-block;}
-	.langselect a {display: inline-block; height: 70px !important; height: 70px; width: 70px !important; width: 70px; vertical-align: middle; text-decoration: none; text-transform: uppercase; border: 1px solid #CCCCCC; padding: 2px 5px 1px 5px; margin: 0; margin-bottom:4px; color: #666666;}
-	.langselect a input {text-align: center; float: left; margin-left: 45%;}
-	.langselect a:hover{background-color: #FFF6C1; border: 1px solid #FF9900; color: #1E90FF;}
-	.langselect a img {text-align: center; text-decoration: none; border: 0px; margin: 5px 0px;}
+#rightside {
+	width: 660px;
+	float: right;
+	background: transparent;
+	margin-right: 1px;
+}
+
+#rightside a {
+	color: #7c7b7b;
+	text-decoration: underline;
+}
+
+#rightside a:hover {
+	color: #000;
+}
+
+#rightside ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	padding: 1px;
+}
+
+#rightside ul li {
+}
+
+#rightside .page {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 8px;
+	background: #fff;
+	padding: 5px;
+}
+
+#rightside .page h2, #rightside .page h3 {
+	color: #000;
+	font-size: 16px;
+	border-bottom: 1px solid #aeaeae;
+}
+
+#rightside .page h4 {
+	color: #000;
+	font-size: 12px;
+	border-bottom: 1px solid #aeaeae;
+}
+
+#rightside .content {
+	height: calc(100% - 6em);
+	overflow-y: auto;
+}
+
+select#modinstall, select#modperms {
+	margin-left: 25%;
+	text-align: center;
+	width: 50%;
+	height: 125px;
+	font-size: 12px;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+}
+
+.langselect {
+	margin: 3px;
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+	text-decoration: none;
+	font-size: 11px;
+	display: inline-block;
+}
+
+.langselect a {
+	display: inline-block;
+	height: 70px !important;
+	height: 70px;
+	width: 70px !important;
+	width: 70px;
+	vertical-align: middle;
+	text-decoration: none;
+	text-transform: uppercase;
+	border: 1px solid #CCCCCC;
+	padding: 2px 5px 1px 5px;
+	margin: 0;
+	margin-bottom: 4px;
+	color: #666666;
+}
+
+.langselect a input {
+	text-align: center;
+	float: left;
+	margin-left: 45%;
+}
+
+.langselect a:hover {
+	background-color: #FFF6C1;
+	border: 1px solid #FF9900;
+	color: #1E90FF;
+}
+
+.langselect a img {
+	text-align: center;
+	text-decoration: none;
+	border: 0px;
+	margin: 5px 0px;
+}
 
 
-	.diags {border-bottom: 1px solid #f2f2f2; padding-bottom: 5px; margin-bottom: 5px; width: 100%;}
-	.diags caption {width: 100%; color: #414040; text-align: left;}
-	.diags .head {width: 25%; background: #f2f2f2; color: #000; border-right: 1px solid #7c7b7b; border-bottom: 1px solid #7c7b7b; text-align: center; padding: 2px; font-weight: bold;}
-	.diags .success {width: 100%; background: #c4fbbd; color: #000; border: 2px solid #17b402; padding: 4px; margin-bottom: 2px;}
-	.diags .warning, .diags .failure {width: 100%; background: #fbc1bd; color: #000; border: 2px solid #c60f01; padding: 4px; margin-bottom: 2px;}
-	.diags th#recs {margin-bottom: 15px; border: 1px solid #f2f2f2;}
+.diags {
+	border-bottom: 1px solid #f2f2f2;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	width: 100%;
+}
 
-	.xoform-help {display: none; border: orange 2px solid; padding: 5px; background: #fff8dc; margin: .5em; text-align: center;}
-	.diags button, #trustperms button {float: right; margin-right: 10px; margin-top: 4px;}
+.diags caption {
+	width: 100%;
+	color: #414040;
+	text-align: left;
+}
 
-	#pathsettings label {clear: both; width: 100%;}
-	input#rootpath, input#trustpath, input#url, input#DB_HOST, input#DB_USER, input#DB_PASS, input#DB_NAME, input#DB_PREFIX, input#APP_KEY {width: 60%; margin-left: 5px;}
-	input, select {float: right; clear: both; margin-bottom: 5px;}
-	#trustpathimg, #rootpathimg {padding-right: 5px;}
-	#rootpathimg .rootimg {padding-right: 5px;}
+.diags .head {
+	width: 25%;
+	background: #f2f2f2;
+	color: #000;
+	border-right: 1px solid #7c7b7b;
+	border-bottom: 1px solid #7c7b7b;
+	text-align: center;
+	padding: 2px;
+	font-weight: bold;
+}
 
-	#rootperms, #trustperms {margin-top: 8px; padding-top: 8px; border-top: 1px solid #f2f2f2; clear: both;}
+.diags .success {
+	width: 100%;
+	background: #c4fbbd;
+	color: #000;
+	border: 2px solid #17b402;
+	padding: 4px;
+	margin-bottom: 2px;
+}
 
-	.dbconn_line {border-bottom: 1px solid #f2f2f2; padding-bottom: 5px; margin-bottom: 5px; clear: both;}
+.diags .warning, .diags .failure {
+	width: 100%;
+	background: #fbc1bd;
+	color: #000;
+	border: 2px solid #c60f01;
+	padding: 4px;
+	margin-bottom: 2px;
+}
 
-	#configsave ul {background: #fbfbfb; border: 1px solid #f2f2f2; margin: 5px;}
-	.x2-note {background: #cafbc2; border: 1px solid #7c7b7b; margin: 5px; text-align: center;}
+.diags th#recs {
+	margin-bottom: 15px;
+	border: 1px solid #f2f2f2;
+}
+
+.xoform-help {
+	display: none;
+	border: orange 2px solid;
+	padding: 5px;
+	background: #fff8dc;
+	margin: .5em;
+	text-align: center;
+}
+
+.diags button, #trustperms button {
+	float: right;
+	margin-right: 10px;
+	margin-top: 4px;
+}
+
+#pathsettings label {
+	clear: both;
+	width: 100%;
+}
+
+input#rootpath, input#trustpath, input#url, input#DB_HOST, input#DB_U
+SER, input#DB_PASS, input#DB_NAME, input#DB_PREFIX, input#APP_KEY {
+	width: 60%;
+	margin-left: 5px;
+}
+
+input, select {
+	float: right;
+	clear: both;
+	margin-bottom: 5px;
+}
+
+#trustpathimg, #rootpathimg {
+	padding-right: 5px;
+}
+
+#rootpathimg .rootimg {
+	padding-right: 5px;
+}
+
+#rootperms, #trustperms {
+	margin-top: 8px;
+	padding-top: 8px;
+	border-top: 1px solid #f2f2f2;
+	clear: both;
+}
+
+.dbconn_line {
+	border-bottom: 1px solid #f2f2f2;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	clear: both;
+}
+
+#configsave ul {
+	background: #fbfbfb;
+	border: 1px solid #f2f2f2;
+	margin: 5px;
+}
+
+.x2-note {
+	background: #cafbc2;
+	border: 1px solid #7c7b7b;
+	margin: 5px;
+	text-align: center;
+}
 	.errorMsg {background: #fbd1c2; border: 1px solid #7c7b7b; margin: 5px; text-align: center;}
 
 	#modinstall {width: 100%;}

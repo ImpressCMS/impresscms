@@ -42,51 +42,64 @@
  */
 namespace ImpressCMS\Core\Models;
 
+use Exception;
+use Imponeer\Database\Criteria\CriteriaCompo;
+use Imponeer\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\DatabaseConnectionInterface;
+use RuntimeException;
 
 /**
  * XOOPS imageset handler class.
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS imageset class objects.
  *
- * @package	ICMS\Image\Set
+ * @package    ICMS\Image\Set
  * @author      Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
 class ImageSetHandler extends AbstractExtendedHandler {
 
-		/**
-		 * Constructor
-		 *
-		 * @param DatabaseConnectionInterface $db              Database connection
-		 */
-		public function __construct(&$db) {
-				parent::__construct($db, 'image_set', 'imgset_id', 'imgset_name', '', 'icms', 'imgset');
-		}
+	/**
+	 * Constructor
+	 *
+	 * @param DatabaseConnectionInterface $db              Database connection
+	 */
+	public function __construct(&$db) {
+		parent::__construct($db, 'image_set', 'imgset_id', 'imgset_name', '', 'icms', 'imgset');
+	}
 
-		/**
-		 * This event executes after deletion
-		 *
-		 * @param ImageSet $obj           Instance of icms_image_set_Object
-		 *
-		 * @return boolean
-		 */
-		protected function afterDelete($obj) {
-				$sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), $obj->imgset_id);
-				$this->db->query($sql);
-				return true;
-		}
+	/**
+	 * This event executes after deletion
+	 *
+	 * @param ImageSet $obj           Instance of icms_image_set_Object
+	 *
+	 * @return boolean
+	 */
+	protected function afterDelete($obj) {
+		$sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), $obj->imgset_id);
+		$this->db->query($sql);
+		return true;
+	}
 
 	/**
 	 * Retrieve array of images meeting certain conditions
 	 *
-	 * @param CriteriaElement $criteria Criteria with conditions for the imagesets
+	 * @param \Imponeer\Database\Criteria\CriteriaElement $criteria Criteria with conditions for the imagesets
 	 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
+	 * @param bool $as_object
+	 * @param bool $sql
+	 * @param bool $debug
 	 *
 	 * @return ImageSet[]
+	 *
+	 * @throws Exception
 	 */
-	public function &getObjects($criteria = null, $id_as_key = false) {
+	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false)
+	{
+		if ($sql) {
+			throw new RuntimeException('$sql must be set to false');
+		}
 		$ret = array();
 		$limit = $start = 0;
 		$sql = sprintf(
@@ -173,20 +186,28 @@ class ImageSetHandler extends AbstractExtendedHandler {
 	/**
 	 * Get a list of image set objects matching certain conditions
 	 *
+	 * @param null $criteria
+	 * @param int $limit
+	 * @param int $start
+	 * @param bool $debug
 	 * @param int $refid conditions to match
 	 * @param int $tplset conditions to match
 	 *
 	 * @return ImageSet[]
-	 * */
-	public function getList($refid = null, $tplset = null) {
-		$criteria = new CriteriaCompo();
+	 * @throws Exception
+	 */
+	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false, $refid = null, $tplset = null)
+	{
+		if (!($criteria instanceof CriteriaCompo)) {
+			$criteria = new CriteriaCompo();
+		}
 		if (isset($refid)) {
-			$criteria->add(new Criteria('imgset_refid', (int) $refid));
+			$criteria->add(new CriteriaItem('imgset_refid', (int)$refid));
 		}
 		if (isset($tplset)) {
-			$criteria->add(new Criteria('tplset_name', $tplset));
+			$criteria->add(new CriteriaItem('tplset_name', $tplset));
 		}
-		$imgsets = & $this->getObjects($criteria, true);
+		$imgsets = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($imgsets) as $i) {
 			$ret[$i] = $imgsets[$i]->imgset_name;

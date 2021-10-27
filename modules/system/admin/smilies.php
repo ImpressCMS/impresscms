@@ -31,14 +31,17 @@
 /**
  * Administration of smilies, main file
  *
- * @copyright	http://www.XOOPS.org/
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Smilies
+ * @copyright    http://www.XOOPS.org/
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package        System
+ * @subpackage    Smilies
  */
 
 /* set get and post filters before including admin_header, if not strings */
+
+use ImpressCMS\Core\DataFilter;
+
 $filter_get = array(
 	'id' => 'int',
 );
@@ -90,11 +93,11 @@ switch ($op) {
 				$err = $uploader->getErrors();
 			} else {
 				$smile_url = $uploader->getSavedFileName();
-				$smile_code = icms_core_DataFilter::stripSlashesGPC($smile_code);
-				$smile_desc = icms_core_DataFilter::stripSlashesGPC($smile_desc);
-				$smile_display = (int) $smile_display > 0?1:0;
+				$smile_code = DataFilter::stripSlashesGPC($smile_code);
+				$smile_desc = DataFilter::stripSlashesGPC($smile_desc);
+				$smile_display = (int)$smile_display > 0 ? 1 : 0;
 				$newid = $db->genId($db->prefix('smilies') . "_id_seq");
-				$sql = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES ('%d', %s, %s, %s, '%d')", $db->prefix('smiles'), (int) $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
+				$sql = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES ('%d', %s, %s, %s, '%d')", $db->prefix('smiles'), (int)$newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
 				if (!$db->query($sql)) {
 					$err = _CO_ICMS_SAVE_ERROR;
 				}
@@ -122,9 +125,9 @@ switch ($op) {
 		if ($id <= 0 | !icms::$security->check()) {
 			redirect_header('admin.php?fct=smilies', 3, implode('<br />', icms::$security->getErrors()));
 		}
-		$smile_code = icms_core_DataFilter::stripSlashesGPC($smile_code);
-		$smile_desc = icms_core_DataFilter::stripSlashesGPC($smile_desc);
-		$smile_display = (int) $smile_display > 0?1:0;
+		$smile_code = DataFilter::stripSlashesGPC($smile_code);
+		$smile_desc = DataFilter::stripSlashesGPC($smile_desc);
+		$smile_display = (int)$smile_display > 0 ? 1 : 0;
 		if ($_FILES['smile_url']['name'] != "") {
 			$uploader = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
 			$uploader->setPrefix('smil');

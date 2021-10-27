@@ -77,13 +77,14 @@ function edituserrank($showmenu = false, $rank_id = 0, $clone = false) {
 	}
 }
 
+global $icms_userrank_handler;
 $icms_userrank_handler = icms_getModuleHandler("userrank", "system");
 
 if (!empty($_POST)) {
 	foreach ($_POST as $k => $v) {
 		${$k} = StopXSS($v);
 	}
-	}
+}
 if (!empty($_GET)) {
 	foreach ($_GET as $k => $v) {
 		${$k} = StopXSS($v);

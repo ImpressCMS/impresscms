@@ -1,96 +1,78 @@
 <?php
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+
 namespace ImpressCMS\Core\Extensions\Editors;
 
 use Exception;
-use icms;
+use Imponeer\Contracts\Editor\Adapter\EditorAdapterInterface;
+use Imponeer\Contracts\Editor\Exceptions\IncompatibleEditorException;
+use Imponeer\Contracts\Editor\Factory\EditorFactoryInterface;
+use Imponeer\Contracts\Editor\Info\WYSIWYGEditorInfoInterface;
+use ImpressCMS\Core\Models\ModuleHandler;
+use Psr\Container\ContainerInterface;
 
 /**
- * Editor framework
+ * Gaiters info about editors and makes instances
  *
- * @license	https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPLv2 or later license
- * @author	Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @copyright	Copyright (c) 2000 XOOPS.org
- * @package	ICMS\Plugins
+ * @package ImpressCMS\Core\Extensions\Editors
  */
-class EditorsRegistry {
+class EditorsRegistry
+{
 
 	/**
-	 * No HTML mode?
+	 * What editors are allowed to be used
 	 *
-	 * @var bool
+	 * @var string[]
 	 */
-	public $nohtml = false;
+	protected $allowedEditors = [];
 
 	/**
-	 * What editors to allow?
-	 *
-	 * @var array
+	 * @var ContainerInterface
 	 */
-	public $allowed_editors = array();
+	private $container;
 
 	/**
-	 * Editor type
+	 * EditorsRegistry constructor.
 	 *
-	 * @var string
+	 * @param ContainerInterface $container
 	 */
-	private $_type;
-
-	/**
-	 * Constructor
-	 *
-	 * @param string $type Editor type
-	 */
-	public function __construct($type = 'content')
+	public function __construct(ContainerInterface $container)
 	{
-		$this->_type = $type;
+		$this->container = $container;
 	}
 
 	/**
-	 * Access the only instance of this class
+	 * Creates editor instance
 	 *
-	 * @param string    type
-	 * @return    self
-	 * @static
-	 * @staticvar   object
+	 * @param string $type Editor type
+	 * @param string $name Internal editor name
+	 * @param array $options Editor options
+	 * @param bool $noHtml No HTML mode?
+	 * @param string $onFailure Another editor that will be returned on first editor fail
+	 *
+	 * @return EditorAdapterInterface|null
+	 *
+	 * @throws IncompatibleEditorException
 	 */
-	public static function &getInstance($type = 'content')
+	public function create(string $type, ?string $name = '', ?array $options = null, bool $noHtml = false, ?string $onFailure = ''): ?EditorAdapterInterface
 	{
-		static $instances = array();
-		if (!$type) {
-			$type = 'content';
+		if (!is_array($options)) {
+			$options = [];
 		}
-		if (!isset($instances[$type])) {
-			$instances[$type] = new self($type);
+
+		if ($name && $this->has($name)) {
+			return $this->createAdapter($name, $options);
 		}
-		return $instances[$type];
+
+		$list = array_keys($this->getList($type, $noHtml));
+		if (empty($onFailure) || !in_array($onFailure, $list, true)) {
+			$onFailure = $list[0];
+		}
+
+		if (!$onFailure) {
+			return null;
+		}
+
+		return $this->createAdapter($onFailure, $options);
 	}
 
 	/**
@@ -102,149 +84,90 @@ class EditorsRegistry {
 	 */
 	public function has(string $name): bool
 	{
-		return $this->_loadEditor($name) ? true : false;
+		return $this->getFactory($name) !== null;
 	}
 
 	/**
-	 * @param string $name Editor name which is actually the folder name
-	 * @param array $options editor options: $key => $val
-	 * @param string $OnFailure a pre-validated editor that will be used if the required editor is failed to create
-	 * @param bool $noHtml dohtml disabled
-	 * @return object
-	 * @throws Exception
+	 * Gets editor factory instance
+	 *
+	 * @param string $editorName Editor name
+	 *
+	 * @return EditorFactoryInterface|null
 	 */
-	public function get($name = '', $options = null, $noHtml = false, $OnFailure = '')
+	protected function getFactory(string $editorName): ?EditorFactoryInterface
 	{
-		if (!is_array($options)) {
-			$options = [];
-		}
-		if ($editor = $this->_loadEditor($name)) {
-			return $editor->create($options);
-		}
-		$list = array_keys($this->getList($noHtml));
-		if (empty($OnFailure) || !in_array($OnFailure, $list, true)) {
-			$OnFailure = $list[0];
+		if (!$editorName) {
+			return null;
 		}
 
-		return $this->_loadEditor($OnFailure)->create($options);
+		if (!$this->container->has($editorName)) {
+			return null;
+		}
+
+		$editorFactory = $this->container->get($editorName);
+		return ($editorFactory instanceof EditorFactoryInterface) ? $editorFactory : null;
+	}
+
+	/**
+	 * Create editor adapter instance
+	 *
+	 * @param string $name Editor internal name
+	 * @param array $options Editor options
+	 *
+	 * @return EditorAdapterInterface|null
+	 *
+	 * @throws IncompatibleEditorException
+	 */
+	protected function createAdapter(string $name, array $options = []): ?EditorAdapterInterface
+	{
+		$factory = $this->getFactory($name);
+		if (!$factory) {
+			return null;
+		}
+
+		$options['public_assets_url'] = ICMS_MODULES_URL . '/' . ModuleHandler::resolveModuleDirFromClass($factory) . '/';
+		$options['target_selector'] = '#' . $options['name'] . '_tarea';
+
+		return $factory->create($options, true);
 	}
 
 	/**
 	 * Gets list of available editors
 	 *
-	 * @param bool $noHtml is this an editor with no html options?
-	 * @return  array   $_list    list of available editors that are allowed (through admin config)
+	 * @param string $type Editors type
+	 * @param bool $noHtml Do we need to use NoHTML options for this editor?
+	 *
+	 * @return  array<string, string>
+	 *
 	 * @throws Exception
 	 */
-	public function getList($noHtml = false)
+	public function getList(string $type, bool $noHtml = false): array
 	{
 		$editors = [];
-		$sort = [
-			'titles' => [],
-			'order' => []
-		];
 
-		$editorTag = 'editor.' . $this->_type;
+		$editorTag = 'editor.' . $type;
 
-		$icmsContainer = icms::getInstance();
-		if ($icmsContainer->has($editorTag)) {
+		if (!$this->container->has($editorTag)) {
 			return $editors;
 		}
 
-		/**
-		 * @var EditorInterface $editor
-		 */
-		foreach ($icmsContainer->get($editorTag) as $editor) {
-			if (!($editor instanceof EditorInterface)) {
+		foreach ($this->container->get($editorTag) as $editorFactory) {
+			if (!($editorFactory instanceof EditorFactoryInterface)) {
 				continue;
 			}
-			$name = $icmsContainer->getServiceDefinition(get_class($editor))->getAlias();
-			if (!empty($this->allowed_editors) && !in_array($name, $this->allowed_editors, true)) {
+			$name = $this->container->getServiceDefinition(get_class($editorFactory))->getAlias();
+			if (!empty($this->allowedEditors) && !in_array($name, $this->allowedEditors, true)) {
 				continue;
 			}
-			if ($noHtml && !$editor->supportsHTML()) {
+			$editorInfo = $editorFactory->getInfo();
+			if ($noHtml && ($editorInfo instanceof WYSIWYGEditorInfoInterface)) {
 				continue;
 			}
-			$sort['titles'][] = $editor->getTitle();
-			$sort['order'][] = $editor->getOrder() ?? PHP_INT_MAX;
-			$editors[$name] = $editor->getTitle();
+			$editors[$name] = $editorInfo->getName();
 		}
 
-		array_multisort(
-			$sort['order'],
-			SORT_ASC,
-			$sort['titles'],
-			SORT_ASC,
-			$editors
-		);
+		asort($editors);
 
 		return $editors;
-	}
-
-	/**
-	 * Render the editor
-	 *
-	 * @param   string    &$editor    Reference to the editor object
-	 *
-	 * @return  string    The rendered Editor string
-	 */
-	public function render(&$editor) {
-		return $editor->render();
-	}
-
-	/**
-	 * Sets the config of the editor
-	 *
-	 * @param   string    &$editor    Reference to the editor object
-	 * @param   string    $options    Options in the configuration to set
-	 */
-	public function setConfig(&$editor, $options) {
-		if (method_exists($editor, 'setConfig')) {
-			$editor->setConfig($options);
-		} else {
-			foreach ($options as $key => $val) {
-				$editor->$key = $val;
-			}
-		}
-	}
-
-	/**
-	 * Loads the editor
-	 *
-	 * @param string $name Name of the editor to load
-	 * @return  EditorInterface                The loaded Editor object
-	 *
-	 */
-	public function _loadEditor($name)
-	{
-		if (!$name) {
-			return null;
-		}
-
-		$container = icms::getInstance();
-		if (!$container->has($name)) {
-			return null;
-		}
-
-		/**
-		 * @var EditorInterface $editor
-		 */
-		$editor = $container->get($name);
-		return ($editor instanceof EditorInterface) ? $editor : null;
-	}
-
-	/**
-	 * Retrieve a list of the available editors, by type
-	 *
-	 * @param string $type Type of editor
-	 *
-	 * @return    array    Available editors
-	 *
-	 * @throws Exception
-	 */
-	public static function getListByType($type = 'content'): array
-	{
-		$editor = self::getInstance($type);
-		return $editor->getList();
 	}
 }

@@ -2,12 +2,14 @@
 /**
  *
  *
- * @category	ICMS
- * @package		Administration
- * @subpackage	System
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
+ * @category    ICMS
+ * @package        Administration
+ * @subpackage    System
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        LICENSE.txt
  */
+
+use ImpressCMS\Core\DataFilter;
 
 if (!is_object(icms::$user)
 	|| !is_object(icms::$module)
@@ -40,15 +42,16 @@ $fct = $op = "";
 
 /* filter the user input */
 if (!empty($_GET)) {
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	$clean_GET = DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
 
 if ($fct !== "") {
+	global $icms_admin_handler;
 	$icms_admin_handler = icms_getModuleHandler($fct, $module_dir);
 	icms_loadLanguageFile($module_dir, $fct, true);
 }
