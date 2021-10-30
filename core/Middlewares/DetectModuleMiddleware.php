@@ -5,6 +5,7 @@ namespace ImpressCMS\Core\Middlewares;
 use icms;
 use icms_module_Object;
 use ImpressCMS\Core\Controllers\LegacyController;
+use ImpressCMS\Core\Models\Module;
 use League\Route\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -44,7 +45,7 @@ class DetectModuleMiddleware implements MiddlewareInterface
 		$module = null;
 		if ($moduleName !== null) {
 			/**
-			 * @var icms_module_Object $module
+			 * @var Module $module
 			 */
 			$module = icms::handler('icms_module')->getByDirname($moduleName, true);
 			$module->launch();

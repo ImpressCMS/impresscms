@@ -198,7 +198,7 @@ class RoutesComposerDefinition implements ComposerDefinitionInterface
 					function ($service) {
 						return '\\' . get_class($service);
 					},
-					$this->container->get('middleware.global')
+
 				),
 				JSON_PRETTY_PRINT
 			) .

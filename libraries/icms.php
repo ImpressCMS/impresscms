@@ -11,13 +11,18 @@
  * @internal    for convenience, as we are not targetting php 5.3+ yet
  */
 
+use Composer\Factory;
+use Composer\IO\NullIO;
+use Composer\Package\CompletePackage;
 use ImpressCMS\Core\Autoloader;
 use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\Extensions\ComposerDefinitions\ComposerDefinitionInterface;
 use ImpressCMS\Core\Extensions\ComposerDefinitions\ProvidersComposerDefinition;
-use ImpressCMS\Core\Extensions\ComposerDefinitions\RoutesComposerDefinition;
 use ImpressCMS\Core\Extensions\ComposerDefinitions\ServicesComposerDefinition;
 use ImpressCMS\Core\Extensions\Preload\EventsPreloader;
+use ImpressCMS\Core\Models\User;
 use League\Container\Container;
+use League\Container\Definition\DefinitionInterface;
 
 /**
  * ICMS Kernel / Services manager
@@ -50,7 +55,7 @@ final class icms extends Container {
 	/**
 	 * Current logged in user
 	 *
-	 * @var \ImpressCMS\Core\Models\User|null
+	 * @var User|null
 	 */
 	public static $user;
 
@@ -88,7 +93,7 @@ final class icms extends Container {
 	 */
 	static public function url($url)
 	{
-		return (false !== strpos($url, '://') ? $url : \icms::getInstance()->path($url, true));
+		return (false !== strpos($url, '://') ? $url : icms::getInstance()->path($url, true));
 	}
 
 	/**
@@ -107,7 +112,7 @@ final class icms extends Container {
 			// Returns a physical path
 			return self::$paths[$root][0] . '/' . $path;
 		}
-		return !isset(self::$paths[$root][1])?'':(self::$paths[$root][1] . '/' . $path);
+		return !isset(self::$paths[$root][1]) ? '' : (self::$paths[$root][1] . '/' . $path);
 	}
 
 	/**
@@ -115,7 +120,7 @@ final class icms extends Container {
 	 *
 	 * @return icms
 	 */
-	public static function &getInstance(): \icms
+	public static function &getInstance(): icms
 	{
 		static $instance = null;
 		if ($instance === null) {
@@ -266,12 +271,12 @@ final class icms extends Container {
 		if ($extras === null) {
 			chdir($composerJsonPath);
 			putenv('COMPOSER_HOME=' . ICMS_STORAGE_PATH . '/composer');
-			$composer = \Composer\Factory::create(
-				new \Composer\IO\NullIO()
+			$composer = Factory::create(
+				new NullIO()
 			);
 			$extras = $composer->getPackage()->getExtra();
 			/**
-			 * @var \Composer\Package\CompletePackage $package
+			 * @var CompletePackage $package
 			 */
 			foreach ($composer->getRepositoryManager()->getLocalRepository()->getPackages() as $package) {
 				if (!in_array($package->getType(), ['impresscms-module'])) {
@@ -290,9 +295,9 @@ final class icms extends Container {
 	/**
 	 * Loads composer definitions
 	 *
-	 * @param \ImpressCMS\Core\Extensions\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition Composer definition class
+	 * @param ComposerDefinitionInterface $composerDefinition Composer definition class
 	 */
-	protected function loadComposerDefinition(\ImpressCMS\Core\Extensions\ComposerDefinitions\ComposerDefinitionInterface $composerDefinition)
+	protected function loadComposerDefinition(ComposerDefinitionInterface $composerDefinition)
 	{
 		$composerJsonPath = dirname(__DIR__);
 
@@ -325,12 +330,6 @@ final class icms extends Container {
 			$this->registerCommonServiceVariables();
 		}
 
-		if (!(defined('ICMS_MIGRATION_MODE') && ICMS_MIGRATION_MODE) && $registerCommonServices) {
-			$this->loadComposerDefinition(
-				new RoutesComposerDefinition($this)
-			);
-		}
-
 		//Cant do this here until common.php 100% refactored
 		//self::$preload->triggerEvent('finishCoreBoot');
 
@@ -355,14 +354,14 @@ final class icms extends Container {
 	 *
 	 * @param string $serviceName Service name to get
 	 *
-	 * @return \League\Container\Definition\DefinitionInterface|null
+	 * @return DefinitionInterface|null
 	 * @throws Exception
 	 */
-	public function getServiceDefinition($serviceName): ?\League\Container\Definition\DefinitionInterface
+	public function getServiceDefinition($serviceName): ?DefinitionInterface
 	{
 		if (!$this->definitions->has($serviceName)) {
 			/**
-			 * @var \League\Container\Definition\DefinitionInterface $definition
+			 * @var DefinitionInterface $definition
 			 */
 			foreach ($this->definitions->getIterator() as $definition) {
 				if (($definition->getConcrete() === $serviceName) || ($definition->getConcrete() === '\\' . $serviceName)) {
