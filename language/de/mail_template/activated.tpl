@@ -1,12 +1,12 @@
 Hello {X_UNAME},
 
-Your new account at {SITENAME} has been activated by the administrator.
+Ihr neues Konto bei {SITENAME} wurde vom Administrator aktiviert.
 
-You can now login from the following URL with the password you have provided upon registration.
+Sie können sich nun von der folgenden URL aus mit dem Passwort anmelden, das Sie bei der Registrierung angegeben haben.
 
 {SITEURL}/user.php
 
 -----------
 {SITENAME} ({SITEURL}) 
-webmaster
+Webmaster
 {ADMINMAIL}
