@@ -9,40 +9,39 @@
  * @package 		installer
  */
 
-define("SHOW_HIDE_HELP", "Show/hide help text");
+define("SHOW_HIDE_HELP", "die Hilfe Anzeigen oder Verstecken");
 
 define("ALTERNATE_LANGUAGE_MSG", "Download an alternate language pack from the ImpressCMS website");
 define("ALTERNATE_LANGUAGE_LNK_MSG", "Select another language not listed here.");
 define("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 
 // Configuration check page
-define("SERVER_API", "Server API");
-define("PHP_EXTENSION", "%s extension");
-define("CHAR_ENCODING", "Character encoding");
+define("SERVER_API", "Server Verbindung");
+define("PHP_EXTENSION", "%s Erweiterung");
+define("CHAR_ENCODING", "Zeichenkodierung");
 define("XML_PARSING", "XML parsing");
-define("REQUIREMENTS", "Requirements");
-define("_PHP_VERSION", "PHP version");
-define("RECOMMENDED_SETTINGS", "Recommended settings");
-define("RECOMMENDED_EXTENSIONS", "Recommended extensions");
+define("REQUIREMENTS", "Anforderungen");
+define("_PHP_VERSION", "PHP Version");
+define("RECOMMENDED_SETTINGS", "Empfohlene Einstellungen");
+define("RECOMMENDED_EXTENSIONS", "Empfohlene Erweiterungen");
 define("SETTING_NAME", "Setting name");
-define("RECOMMENDED", "Recommended");
-define("CURRENT", "Current");
-define("RECOMMENDED_EXTENSIONS_MSG", "These extensions are not required for normal use, but may be necessary to exploit
-	some specific features (like the multi-language or RSS support). Thus, it is recommended to have them installed." );
-define("NONE", "None");
-define("SUCCESS", "Success");
-define("WARNING", "Warning");
-define("FAILED", "Failed");
+define("RECOMMENDED", "Empfohlen");
+define("CURRENT", "Aktuell");
+define("RECOMMENDED_EXTENSIONS_MSG", "Diese Erweiterungen sind nicht für den normalen Gebrauch erforderlich, aber sie können notwendig sein, um bestimmte Funktionen (wie die mehrsprachige oder RSS-Unterstützung) zu nutzen. Daher wird empfohlen, sie installiert zu haben." );
+define("NONE", "Nichts");
+define("SUCCESS", "Vorhanden");
+define("WARNING", "Warnung");
+define("FAILED", "Fehlt");
 
 // Titles (main and pages)
-define("XOOPS_INSTALL_WIZARD", " %s - Installation Wizard");
-define("INSTALL_STEP", "Step");
-define("INSTALL_H3_STEPS", "Steps");
-define("INSTALL_OUTOF", " out of ");
+define("XOOPS_INSTALL_WIZARD", " %s - Installationsassistent");
+define("INSTALL_STEP", "Schritt");
+define("INSTALL_H3_STEPS", "Schritte");
+define("INSTALL_OUTOF", " von ");
 define("INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"https://www.impresscms.org\" target=\"_blank\">The ImpressCMS Project</a>");
 
-define("LANGUAGE_SELECTION", "Language selection");
-define("LANGUAGE_SELECTION_TITLE", "Choose your language"); // L128
+define("LANGUAGE_SELECTION", "Sprache auswählen");
+define("LANGUAGE_SELECTION_TITLE", "Wählen Sie Ihre Sprache"); // L128
 define("INTRODUCTION", "Introduction");
 define("INTRODUCTION_TITLE", "Welcome to the ImpressCMS installation assistant"); // L0
 define("CONFIGURATION_CHECK", "Configuration check");
