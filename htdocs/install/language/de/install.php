@@ -143,16 +143,16 @@ define("TABLE_NOT_DROPPED", "Löschen der Tabelle %s fehlgeschlagen."); // L164
 define("ERR_COULD_NOT_ACCESS", "Auf den Ordner kann nicht zugegriffen werden. Bitte Ã¼berprÃ¼fen Sie, ob der Ordner existitert und berschreibbar ist.");
 define("ERR_NO_XOOPS_FOUND", "Im angegebenen Ordner konnte keine ImpressCMS Installation gefunden werden.");
 define("ERR_INVALID_EMAIL", "Ungültige E-Mail"); // L73
-define("ERR_REQUIRED", "Please enter all the required info."); // L41
-define("ERR_PASSWORD_MATCH", "The two passwords do not match");
-define("ERR_NEED_WRITE_ACCESS", "The server must be given write access to the following files and folders<br />(i.e. <em>chmod 777 directory_name</em> on a UNIX/LINUX server)"); // L72
-define("ERR_NO_DATABASE", "Could not create database. Contact the server administrator for details."); // L31
-define("ERR_NO_DBCONNECTION", "Could not connect to the database server."); // L106
-define("ERR_WRITING_CONSTANT", "Failed writing constant %s."); // L122
-define('ERR_WRITE_ENV_DATA', 'Error write .env data');
-define("ERR_INVALID_DBCHARSET", "The charset '%s' is not supported.");
-define("ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported.");
-define("ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database.");
+define("ERR_REQUIRED", "Bitte geben Sie alle erforderlichen Informationen ein."); // L41
+define("ERR_PASSWORD_MATCH", "Die zwei Passwörter stimmen nicht überein");
+define("ERR_NEED_WRITE_ACCESS", "Dem Server muss Schreibzugriff auf die folgenden Dateien und Ordner<br />gewährt werden (z.B. <em>chmod 777 directory_name</em> auf einem UNIX/LINUX Server)"); // L72
+define("ERR_NO_DATABASE", "Datenbank konnte nicht erstellt werden. Kontaktieren Sie den Server-Administrator für Details."); // L31
+define("ERR_NO_DBCONNECTION", "Es konnte keine Verbindung zum Datenbank-Server hergestellt werden."); // L106
+define("ERR_WRITING_CONSTANT", "%s konnte nicht geschrieben."); // L122
+define('ERR_WRITE_ENV_DATA', 'Fehler beim Schreiben der .env Daten');
+define("ERR_INVALID_DBCHARSET", "Das Zeichensatz '%s' wird nicht unterstützt.");
+define("ERR_INVALID_DBCOLLATION", "Das Zeichensatz '%s' wird nicht unterstützt.");
+define("ERR_CHARSET_NOT_SET", "Standardzeichensatz ist für die ImpressCMS Datenbank nicht gesetzt.");
 
 //
 define("_INSTALL_SELECT_MODS_INTRO", 'From the list below, please select the modules that you wish to install on this site. <br /><br />
@@ -202,4 +202,4 @@ define('DB_PCONNECT_HELP', "Persistent connections are useful with slower intern
 define("DB_PCONNECT_HELPS", "Persistent connections are useful with slower internet connections. They are not generally required for most installations."); // L69
 
 // Added in 1.3
-define("FILE_PERMISSIONS", "File Permissions");
+define("FILE_PERMISSIONS", "Datei-Berechtigungen");
