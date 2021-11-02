@@ -43,22 +43,22 @@ define("_CAL_SAT", "Sa");
 define("_CAL_FIRSTDAY", "1");
 define("_CAL_JAN", "Jan");
 define("_CAL_FEB", "Feb");
-define("_CAL_MAR", "Mar");
+define("_CAL_MAR", "Mär");
 define("_CAL_APR", "Apr");
-define("_CAL_JUN", "Jun");
+define("_CAL_JUN", "Juni");
 define("_CAL_JUL", "Jul");
 define("_CAL_AUG", "Aug");
 define("_CAL_SEP", "Sept");
-define("_CAL_OCT", "Oct");
+define("_CAL_OCT", "Okt");
 define("_CAL_NOV", "Nov");
-define("_CAL_DEC", "Dec");
+define("_CAL_DEC", "Dez");
 // Direction of the calendar, ltr for left to right and rtl for roght to left (for Persian, Arabic, etc.)
 define("_CAL_DIRECTION", "ltr");
 define("_CAL_AM", "am");
 define("_CAL_AM_CAPS", "AM");
 define("_CAL_PM", "pm");
 define("_CAL_PM_CAPS", "PM");
-define("_CAL_TIME", "Time");
+define("_CAL_TIME", "Zeit");
 define("_CAL_WK", "wk"); // shorten of week-end
 // This may be local-dependent.  It specifies the week-end days, as an array
 // of comma-separated numbers.  The numbers are from 0 to 6: 0 means Sunday, 1
@@ -81,5 +81,5 @@ define('_CAL_ESFAND','Esfand');
 define("_CAL_NUMS_ARRAY", "'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'"); // numeric values can differ in different languages
 ############# added since 1.2 #############
 define("_CAL_SUFFIX", "th");
-define('_CAL_AM_LONG','before noon');
-define('_CAL_PM_LONG','after noon');
+define('_CAL_AM_LONG','Vormittag');
+define('_CAL_PM_LONG','Nachmittag');
