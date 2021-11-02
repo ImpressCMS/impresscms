@@ -1,11 +1,11 @@
-Hello {X_UNAME},
+Hallo {X_UNAME},
 
-A new user {USERNAME} (login name: {USERLOGINNAME}) (E-mail address: {USEREMAIL}) has just registered an account at {X_SITENAME}.
-Clicking on the link below will activate the account of this user:
+Ein neuer Benutzer {USERNAME} (Login-Name: {USERLOGINNAME}) (E-Mail-Adresse: {USEREMAIL}) hat gerade ein Konto bei {X_SITENAME} registriert.
+Wenn Sie auf den unten stehenden Link klicken, wird das Konto dieses Benutzers aktiviert:
 
 {USERACTLINK}
 
 -----------
 {X_SITENAME} ({X_SITEURL})
-webmaster
+Webmaster
 {X_ADMINMAIL}
