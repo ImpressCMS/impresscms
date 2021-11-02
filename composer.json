@@ -75,7 +75,7 @@
     "ircmaxell/random-lib": "^1.2",
     "keo/iso-639": "^1.0",
     "league/container": "^3.2",
-    "league/flysystem": "^1.0.51",
+    "league/flysystem": "^2",
     "league/mime-type-detection": "^1.3",
     "lulco/phoenix": "^1.1",
     "middlewares/aura-session": "^1.1",
@@ -145,9 +145,9 @@
     "providers": [
       "\\ImpressCMS\\Core\\Providers\\PreloadServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\LoggerServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\DatabaseServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\RouterServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\FilesystemServiceProvider",
-      "\\ImpressCMS\\Core\\Providers\\DatabaseServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\SecurityServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\ConfigServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider",
@@ -225,6 +225,14 @@
         ]
       },
       "\\ImpressCMS\\Core\\Commands\\CacheClearCommand": {
+        "tags": [
+          "console.command"
+        ]
+      },
+      "\\Sunrise\\Http\\Router\\Command\\RouteListCommand": {
+        "arguments": [
+          "router"
+        ],
         "tags": [
           "console.command"
         ]

@@ -10,6 +10,7 @@ use Ellipse\Cookies\EncryptCookiesMiddleware;
 use GuzzleHttp\Psr7\ServerRequest;
 use Http\Factory\Guzzle\ResponseFactory;
 use icms;
+use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Facades\Config;
 use ImpressCMS\Core\Middlewares\ChangeThemeMiddleware;
 use ImpressCMS\Core\Middlewares\MultiLoginOnlineInfoUpdaterMiddleware;
@@ -18,6 +19,10 @@ use ImpressCMS\Core\Middlewares\SiteClosedMiddleware;
 use ImpressCMS\Core\Middlewares\UserMiddleware;
 use ImpressCMS\Core\Models\ModuleHandler;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Flysystem\FileAttributes;
+use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\StorageAttributes;
 use Middlewares\AuraSession;
 use Middlewares\BasePath;
 use Middlewares\ClientIp;
@@ -27,6 +32,8 @@ use Middlewares\GzipEncoder;
 use Psr\Http\Server\MiddlewareInterface;
 use Sunrise\Http\Router\Loader\DescriptorLoader;
 use Sunrise\Http\Router\Loader\LoaderInterface;
+use Sunrise\Http\Router\RouteCollector;
+use Sunrise\Http\Router\RouteInterface;
 use Sunrise\Http\Router\Router;
 use Tuupola\Middleware\ServerTimingMiddleware;
 
@@ -54,6 +61,9 @@ class RouterServiceProvider extends AbstractServiceProvider
 			$router = new Router();
 			$router->load(
 				$this->createDescriptorLoader()
+			);
+			$router->addRoute(
+				...$this->getOldStyleRoutes()
 			);
 			$router->addMiddleware(
 				...$this->getSystemMiddlewares(),
@@ -228,5 +238,178 @@ class RouterServiceProvider extends AbstractServiceProvider
 		}
 
 		return $middleware;
+	}
+
+	private function createPathRegExpString(Filesystem $filesystem, string $path, array $excludedExtensions = [], array $excludedFilenames = [])
+	{
+		$parts = [];
+		/**
+		 * @var StorageAttributes $item
+		 */
+		foreach ($filesystem->listContents($path, false) as $item) {
+			var_dump($item->path());
+			die();
+			if ($item->isDir()) {
+
+				continue;
+			}
+
+			if (
+				($file['type'] !== 'file') ||
+				($file['basename'][0] === '.') ||
+				in_array($file['basename'], $excludedFilenames, true) ||
+				in_array(strtolower($file['extension']), $excludedExtensions, true)
+			) {
+				continue;
+			}
+			$parts[] = preg_quote($file['path'], '/');
+		}
+
+		if (empty($parts)) {
+			return null;
+		}
+
+		return (count($parts) > 1) ? ('(' . implode('|', $parts) . ')') : $parts[0];
+	}
+
+	/**
+	 * Finds accessible items from path
+	 *
+	 * @param Filesystem $filesystem Filesystem instance
+	 * @param string $prefix Prefix for each included item
+	 * @param string $path Path where to look in this filesystem
+	 * @param bool $deep Recursive lookup?
+	 * @param string[] $excludedBasenames Filenames that will be excluded
+	 * @param string[] $exludedExtensions Extensions that will be ignored
+	 *
+	 * @return string[]
+	 *
+	 * @throws FilesystemException
+	 */
+	protected function findAccessibleItemsFromPath(Filesystem $filesystem, string $prefix, string $path, bool $deep = true, array $excludedBasenames = [], array $exludedExtensions = [], ?callable $customItemFilterCallback = null): array
+	{
+		$paths = [];
+
+		/**
+		 * @var FileAttributes $item
+		 */
+		foreach ($filesystem->listContents($path, $deep) as $item) {
+			if (!$item->isFile()) {
+				continue;
+			}
+
+			$path = $item->path();
+			$basename = basename($path);
+
+			if (in_array($basename, $excludedBasenames, true)) {
+				continue;
+			}
+
+			$ext = pathinfo($basename, PATHINFO_EXTENSION);
+
+			if (in_array(strtolower($ext), $exludedExtensions, true)) {
+				continue;
+			}
+
+			$pathsParts = explode('/', $path);
+			foreach ($pathsParts as $pathPart) {
+				if ($pathPart === '') {
+					continue;
+				}
+				if ($pathPart[0] === '.') {
+					continue 2;
+				}
+			}
+			if (($customItemFilterCallback !== null) && !$customItemFilterCallback($pathsParts)) {
+				continue;
+			}
+
+			$paths[] = $prefix . '/' . $path;
+		}
+
+		return $paths;
+	}
+
+	/**
+	 * Get old style routes collection
+	 *
+	 * @return RouteInterface[]
+	 *
+	 * @throws FilesystemException
+	 */
+	protected function getOldStyleRoutes(): array
+	{
+		$ignoredExts = ['html', 'htm', 'md', 'txt', 'yaml', 'yml', 'xml', 'json', 'lock'];
+
+		$paths = $this->findAccessibleItemsFromPath(
+			$this->container->get('filesystem.root'),
+			'',
+			'',
+			false,
+			[
+				'mainfile.php',
+				'header.php',
+				'footer.php',
+				'phoenix.php',
+				'Vagrantfile'
+			],
+			$ignoredExts
+		);
+		foreach ($paths as $i => $path) {
+			$paths[$i] = mb_substr($path, 1);
+		}
+
+		/**
+		 * @var Filesystem $librariesFileSystem
+		 */
+		$librariesFileSystem = $this->container->get('filesystem.libraries');
+
+		$extraPaths = [];
+		foreach (['image-editor', 'paginationstyles'] as $library) {
+			$extraPaths[] = $this->findAccessibleItemsFromPath(
+				$librariesFileSystem,
+				'libraries',
+				$library,
+				true,
+				[],
+				$ignoredExts
+			);
+		}
+
+		/**
+		 * @var Filesystem $modulesFileSystem
+		 */
+		$modulesFileSystem = $this->container->get('filesystem.modules');
+
+		foreach (ModuleHandler::getActive() as $moduleName) {
+			$extraPaths[] = $this->findAccessibleItemsFromPath(
+				$modulesFileSystem,
+				'modules',
+				$moduleName,
+				true,
+				['admin_header.php', 'icms_version.php'],
+				$ignoredExts,
+				static function (array $pathParts) {
+					return !in_array($pathParts[1], ['language', 'class', 'blocks', 'Extensions'], true);
+				}
+			);
+		}
+
+		$paths = array_merge($paths, ...$extraPaths);
+		sort($paths);
+
+		$regexp = implode(
+			'|',
+			array_map(function ($path) {
+				return preg_quote($path, '/');
+			}, $paths)
+		);
+
+		$collector = new RouteCollector();
+		$collector
+			->get('legacy_proxy', "/{path</$regexp/>}", [LegacyController::class, 'proxy'])
+			->setMethods('GET', 'POST');
+
+		return $collector->getCollection()->all();
 	}
 }
