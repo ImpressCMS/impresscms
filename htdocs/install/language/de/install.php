@@ -11,8 +11,8 @@
 
 define("SHOW_HIDE_HELP", "die Hilfe Anzeigen oder Verstecken");
 
-define("ALTERNATE_LANGUAGE_MSG", "Download an alternate language pack from the ImpressCMS website");
-define("ALTERNATE_LANGUAGE_LNK_MSG", "Select another language not listed here.");
+define("ALTERNATE_LANGUAGE_MSG", "Laden Sie ein alternatives Sprachpaket von der ImpressCMS Website herunter");
+define("ALTERNATE_LANGUAGE_LNK_MSG", "Wählen Sie eine andere Sprache, die hier nicht aufgeführt ist.");
 define("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 
 // Configuration check page
@@ -42,56 +42,56 @@ define("INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a 
 
 define("LANGUAGE_SELECTION", "Sprache auswählen");
 define("LANGUAGE_SELECTION_TITLE", "Wählen Sie Ihre Sprache"); // L128
-define("INTRODUCTION", "Introduction");
-define("INTRODUCTION_TITLE", "Welcome to the ImpressCMS installation assistant"); // L0
-define("CONFIGURATION_CHECK", "Configuration check");
-define("CONFIGURATION_CHECK_TITLE", "Checking your server configuration");
-define("PATHS_SETTINGS", "Paths settings");
-define("PATHS_SETTINGS_TITLE", "Paths settings");
-define("DATABASE_CONNECTION", "Database connection");
-define("DATABASE_CONNECTION_TITLE", "Database connection");
-define("DATABASE_CONFIG", "Database configuration");
-define("DATABASE_CONFIG_TITLE", "Database configuration");
-define("CONFIG_SAVE", "Configuration save");
-define("CONFIG_SAVE_TITLE", "Saving your system configuration");
-define("TABLES_CREATION", "Tables creation");
-define("TABLES_CREATION_TITLE", "Database tables creation");
-define("INITIAL_SETTINGS", "Initial settings");
-define("INITIAL_SETTINGS_TITLE", "Please enter your initial settings");
-define("DATA_INSERTION", "Data insertion");
-define("DATA_INSERTION_TITLE", "Saving your settings to the database");
-define("WELCOME", "Welcome");
-define("NO_PHP5", "No PHP 5");
-define("WELCOME_TITLE", "Installation of ImpressCMS completed"); // L0
-define("MODULES_INSTALL", "Install modules");
-define("MODULES_INSTALL_TITLE", "Installation of modules ");
-define("NO_PHP5_TITLE", "No PHP 5");
-define("NO_PHP5_CONTENT", "PHP 5.2.0 minimum is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.2.0 (5.2.8 + is recommended) before attempting to install again. For more information, read <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS on PHP5 </a>.");
-define("SAFE_MODE", "Safe Mode On");
-define("SAFE_MODE_TITLE", "Safe Mode On");
-define("SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again.");
+define("INTRODUCTION", "Vorbereitungen/Info");
+define("INTRODUCTION_TITLE", "Willkommen beim ImpressCMS Installationsassistenten"); // L0
+define("CONFIGURATION_CHECK", "Konfigurations-Überprüfung");
+define("CONFIGURATION_CHECK_TITLE", "Überprüfe die Serverkonfiguration");
+define("PATHS_SETTINGS", "Verzeichnisse");
+define("PATHS_SETTINGS_TITLE", "Verzeichnisse");
+define("DATABASE_CONNECTION", "Datenbankverbindung");
+define("DATABASE_CONNECTION_TITLE", "Datenbank-Verbindung");
+define("DATABASE_CONFIG", "Datenbank-Konfiguration");
+define("DATABASE_CONFIG_TITLE", "Datenbank-Konfiguration");
+define("CONFIG_SAVE", "Konfiguration speichern");
+define("CONFIG_SAVE_TITLE", "Speichern Sie Ihre System-Konfiguration");
+define("TABLES_CREATION", "Datenbank-Tabellen");
+define("TABLES_CREATION_TITLE", "Datenbank-Tabellen werden erstellt");
+define("INITIAL_SETTINGS", "Erste Einstellungen");
+define("INITIAL_SETTINGS_TITLE", "Bitte geben Sie hier Ihre Daten ein");
+define("DATA_INSERTION", "Datenbank füllen");
+define("DATA_INSERTION_TITLE", "Speichern Ihrer Einstellungen in der Datenbank");
+define("WELCOME", "Willkommen");
+define("NO_PHP5", "Keine PHP 5");
+define("WELCOME_TITLE", "Installation von ImpressCMS abgeschlossen"); // L0
+define("MODULES_INSTALL", "Module installieren");
+define("MODULES_INSTALL_TITLE", "Die Installation der Module");
+define("NO_PHP5_TITLE", "Keine PHP 5");
+define("NO_PHP5_CONTENT", "Für das einwandfreie Funktionieren von ImpressCMS wird ein Minimum von PHP 5.2.0 benötigt - Ihre Installation kann nicht fortgesetzt werden. Bitte arbeiten Sie mit Ihrem Hosting-Provider zusammen, um Ihre Umgebung auf eine Version von PHP zu aktualisieren, die älter als 5 ist. .0 (5.2.8 + wird empfohlen) bevor Sie versuchen erneut zu installieren. Für weitere Informationen lesen Sie <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS unter PHP5 </a>.");
+define("SAFE_MODE", "Sicherer Modus an");
+define("SAFE_MODE_TITLE", "Sicherer Modus an");
+define("SAFE_MODE_CONTENT", "ImpressCMS hat festgestellt, dass PHP im Safe Mode läuft. Aus diesem Grund kann Ihre Installation nicht fortgesetzt werden. Bitte arbeiten Sie mit Ihrem Hosting-Provider zusammen, um Ihre Umgebung zu ändern, bevor Sie versuchen erneut zu installieren.");
 
 // Settings (labels and help text)
-define("XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path"); // L55
-define("XOOPS_ROOT_PATH_HELP", "This is the physical path of the ImpressCMS documents folder, the very web root of your ImpressCMS application"); // L59
+define("XOOPS_ROOT_PATH_LABEL", "ImpressCMS - Pfad für Basisverzeichnis (Physikalischer Pfad)"); // L55
+define("XOOPS_ROOT_PATH_HELP", "Dies ist der physikalische Pfad der ImpressCMS Dateien und Ordner, sozusagen das Basisverzeichnis Ihrer Anwendung. Man spricht hier auch von einem ImpressCMS Root-Verzeichnis."); // L59
 
-define("XOOPS_URL_LABEL", "Website location (URL)"); // L56
-define("XOOPS_URL_HELP", "Main URL that will be used to access your ImpressCMS installation"); // L58
+define("XOOPS_URL_LABEL", "Virtueller Pfad (URL)"); // L56
+define("XOOPS_URL_HELP", "Haupt-URL, die verwendet wird, um nach der Installtion den Zugriff auf das ImpressCMS zu erhalten."); // L58
 
-define("LEGEND_CONNECTION", "Server connection");
-define("LEGEND_DATABASE", "Database"); // L51
+define("LEGEND_CONNECTION", "Serververbindung");
+define("LEGEND_DATABASE", "Datenbank Art"); // L51
 
-define("DB_HOST_LABEL", "Server hostname"); // L27
-define("DB_HOST_HELP", "Hostname of the database server. If you are unsure, <em>localhost</em> works in most cases"); // L67
-define("DB_USER_LABEL", "User name"); // L28
-define("DB_USER_HELP", "Name of the user account that will be used to connect to the database server"); // L65
-define("DB_PASS_LABEL", "Password"); // L52
-define("DB_PASS_HELP", "Password of your database user account"); // L68
-define("DB_NAME_LABEL", "Database name"); // L29
-define("DB_NAME_HELP", "The name of database on the host. The installer will attempt to create a database if one does not exist"); // L64
-define("DB_CHARSET_LABEL", "Database character set, we STRONGLY recommend you to use UTF-8 as default.");
-define("DB_CHARSET_HELP", "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.");
-define("DB_COLLATION_LABEL", "Database collation");
+define("DB_HOST_LABEL", "Server Hostname"); // L27
+define("DB_HOST_HELP", "Hostname des Datenbankservers. Wenn Sie unsicher sind, <em>localhost</em> funktioniert in den meisten Fällen"); // L67
+define("DB_USER_LABEL", "Benutzername"); // L28
+define("DB_USER_HELP", "Das ist der Username Ihres Datenbank-Kontos"); // L65
+define("DB_PASS_LABEL", "Passwort"); // L52
+define("DB_PASS_HELP", "Das ist das Kennwort welches verlangt wird, um auf Ihre Datenbank zuzugreifen."); // L68
+define("DB_NAME_LABEL", "Datenbankname"); // L29
+define("DB_NAME_HELP", "Das ist der Name Ihrer Datenbank in der die Tabellen erstellt werden. Der Installer wird versuchen, eine Datenbank zu erstellen, wenn diese noch nicht existiert."); // L64
+define("DB_CHARSET_LABEL", "Datenbank-Zeichensatz, wir empfehlen Ihnen die Verwendung von UTF-8 als Standard.");
+define("DB_CHARSET_HELP", "MySQL beinhaltet die Unterstützung für Zeichensätze, die es Ihnen ermöglicht, Daten mit verschiedenen Zeichensätzen zu speichern und Vergleiche nach verschiedenen Sortierfolgen durchzuführen.");
+define("DB_COLLATION_LABEL", "Datenbank Klausel");
 define("DB_COLLATION_HELP", "A collation is a set of rules for comparing characters in a character set.");
 define("DB_PREFIX_LABEL", "Table prefix"); // L30
 define("DB_PREFIX_HELP", "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
