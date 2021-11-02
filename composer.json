@@ -156,6 +156,9 @@
     ],
     "services": {
       "\\ImpressCMS\\Core\\Middlewares\\DetectModuleMiddleware": {
+        "arguments": [
+          "router"
+        ],
         "tags": [
           "middleware.global"
         ]
@@ -491,46 +494,6 @@
         ]
       }
     },
-    "routes": [
-      {
-        "path": "/index.php",
-        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex",
-        "method": [
-          "GET",
-          "POST"
-        ]
-      },
-      {
-        "path": "/privpolicy.php",
-        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getPrivatePolicy",
-        "method": [
-          "GET"
-        ]
-      },
-      {
-        "path": "/image.php",
-        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getImage",
-        "method": [
-          "GET"
-        ]
-      },
-      {
-        "path": "/error.php",
-        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getError"
-      },
-      {
-        "path": "/ping",
-        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getPing",
-        "method": [
-          "GET"
-        ]
-      },
-      {
-        "path": "/",
-        "handler": "\\ImpressCMS\\Core\\Controllers\\DefaultController::getIndex",
-        "method": ["GET", "POST"]
-      }
-    ],
     "typo3/class-alias-loader": {
       "class-alias-maps": [
         "include/deprecated_class_aliases.php"

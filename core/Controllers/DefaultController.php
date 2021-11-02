@@ -14,6 +14,8 @@ use ImpressCMS\Core\Response\ViewResponse;
 use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Sunrise\Http\Router\Annotation\Route;
+use Sunrise\Http\Router\Exception\PageNotFoundException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use function icms_loadLanguageFile;
 
@@ -27,6 +29,12 @@ class DefaultController
 
 	/**
 	 * Gets index page
+	 *
+	 * @Route(
+	 *     name="homepage",
+	 *     path="/(index.php)",
+	 *     methods={"GET", "POST"}
+	 * )
 	 *
 	 * @param ServerRequestInterface $request Request
 	 *
@@ -94,6 +102,12 @@ class DefaultController
 	 *
 	 * @param ServerRequestInterface $request
 	 *
+	 * @Route(
+	 *     name="error",
+	 *     path="/error.php",
+	 *     methods={"GET"}
+	 * )
+	 *
 	 * @return ResponseInterface
 	 */
 	public function getError(ServerRequestInterface $request): ResponseInterface
@@ -135,6 +149,12 @@ class DefaultController
 	/**
 	 * Pings from user interface to automatically extend session
 	 *
+	 * @Route(
+	 *     name="ping",
+	 *     path="/ping",
+	 *     method="GET"
+	 * )
+	 *
 	 * @param ServerRequestInterface $request
 	 * @return ResponseInterface
 	 */
@@ -151,6 +171,12 @@ class DefaultController
 
 	/**
 	 * Gets image from database as real image
+	 *
+	 * @Route(
+	 *     name="image_from_db",
+	 *     path="/image.php",
+	 *     methods={"GET"}
+	 * )
 	 *
 	 * @param ServerRequestInterface $request
 	 * @return Response
@@ -199,18 +225,24 @@ class DefaultController
 	/**
 	 * If enabled show, privacy policy page
 	 *
+	 * @Route(
+	 *     name="privacy_policy",
+	 *     path="/privpolicy.php",
+	 *     methods={"GET"}
+	 * )
+	 *
 	 * @param ServerRequestInterface $request
 	 *
 	 * @return ViewResponse
 	 *
-	 * @throws NotFoundException
+	 * @throws PageNotFoundException
 	 */
 	public function getPrivatePolicy(ServerRequestInterface $request): ViewResponse
 	{
 		global $icmsConfigUser, $icmsConfig;
 
 		if (!$icmsConfigUser['priv_dpolicy']) {
-			throw new  NotFoundException();
+			throw new  PageNotFoundException();
 		}
 
 		$response = new ViewResponse(

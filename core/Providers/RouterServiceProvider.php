@@ -29,6 +29,7 @@ use Middlewares\ClientIp;
 use Middlewares\DeflateEncoder;
 use Middlewares\Firewall;
 use Middlewares\GzipEncoder;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Sunrise\Http\Router\Loader\DescriptorLoader;
 use Sunrise\Http\Router\Loader\LoaderInterface;
@@ -58,17 +59,21 @@ class RouterServiceProvider extends AbstractServiceProvider
 	public function register()
 	{
 		$this->leagueContainer->add('router', function () {
-			$router = new Router();
-			$router->load(
-				$this->createDescriptorLoader()
-			);
-			$router->addRoute(
-				...$this->getOldStyleRoutes()
-			);
-			$router->addMiddleware(
-				...$this->getSystemMiddlewares(),
-				...$this->getContainer()->get('middleware.global')
-			);
+			static $router = null;
+
+			if ($router === null) {
+				$router = new Router();
+				$router->load(
+					$this->createDescriptorLoader()
+				);
+				$router->addRoute(
+					...$this->getOldStyleRoutes()
+				);
+				$router->addMiddleware(
+					...$this->getSystemMiddlewares(),
+					...$this->getContainer()->get('middleware.global')
+				);
+			}
 
 			return $router;
 		});
@@ -331,13 +336,13 @@ class RouterServiceProvider extends AbstractServiceProvider
 	}
 
 	/**
-	 * Get old style routes collection
+	 * Get regexp for legacy routes
 	 *
-	 * @return RouteInterface[]
+	 * @return string
 	 *
 	 * @throws FilesystemException
 	 */
-	protected function getOldStyleRoutes(): array
+	protected function getLegacyRegexp(): string
 	{
 		$ignoredExts = ['html', 'htm', 'md', 'txt', 'yaml', 'yml', 'xml', 'json', 'lock'];
 
@@ -398,14 +403,39 @@ class RouterServiceProvider extends AbstractServiceProvider
 		$paths = array_merge($paths, ...$extraPaths);
 		sort($paths);
 
-		$regexp = implode(
+		return implode(
 			'|',
 			array_map(function ($path) {
 				return preg_quote($path, '/');
 			}, $paths)
 		);
+	}
+
+	/**
+	 * Get old style routes collection
+	 *
+	 * @return RouteInterface[]
+	 *
+	 * @throws FilesystemException
+	 */
+	protected function getOldStyleRoutes(): array
+	{
+		/**
+		 * @var CacheItemPoolInterface $cache
+		 */
+		$cache = $this->container->get('cache');
+
+		$cachedItem = $cache->getItem('router_legacy_regexp');
+		if (!$cachedItem->isHit()) {
+			$cachedItem->set(
+				$this->getLegacyRegexp()
+			);
+			$cache->save($cachedItem);
+		}
 
 		$collector = new RouteCollector();
+
+		$regexp = $cachedItem->get();
 		$collector
 			->get('legacy_proxy', "/{path</$regexp/>}", [LegacyController::class, 'proxy'])
 			->setMethods('GET', 'POST');

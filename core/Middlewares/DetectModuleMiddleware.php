@@ -4,13 +4,17 @@ namespace ImpressCMS\Core\Middlewares;
 
 use icms;
 use icms_module_Object;
-use ImpressCMS\Core\Controllers\LegacyController;
 use ImpressCMS\Core\Models\Module;
 use League\Route\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use ReflectionClass;
+use RuntimeException;
+use Sunrise\Http\Router\RequestHandler\CallableRequestHandler;
+use Sunrise\Http\Router\Router;
+use Throwable;
 
 /**
  * Middleware that detects module
@@ -19,27 +23,64 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class DetectModuleMiddleware implements MiddlewareInterface
 {
+	/**
+	 * @var Router
+	 */
+	private $router;
+
+	/**
+	 * DetectModuleMiddleware constructor.
+	 *
+	 * @param Router $router
+	 */
+	public function __construct(Router $router)
+	{
+		$this->router = $router;
+	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
 	{
-		$stack = $handler->getMiddlewareStack();
-		$moduleName = null;
-		if (!empty($stack)) {
-			$route = end($stack);
-			if ($route instanceof Route) {
-				list($controller, $method) = $route->getCallable();
-				$class = get_class($controller);
-				if ($class === LegacyController::class) {
-					if (preg_match('/modules\/([^\/]+)/', $request->getRequestTarget(), $matches)) {
-						$moduleName = $matches[1];
-					}
-				} elseif (preg_match($class, '/^ImpressCMS\\Modules\\([^\\]+)\\/', $matches) === 0) {
+		try {
+			$route = $this->router->match($request);
+			if ($route->getName() === 'legacy_proxy') {
+				if (preg_match('/modules\/([^\/]+)/', $request->getRequestTarget(), $matches)) {
 					$moduleName = $matches[1];
+				} else {
+					$moduleName = null;
+				}
+			} else {
+				$requestHandler = $route->getRequestHandler();
+				if ($requestHandler instanceof CallableRequestHandler) {
+					$callback = $requestHandler->getCallback();
+					if (isset($callback[0])) {
+						$reflection = new ReflectionClass($callback[0]);
+						$filename = $reflection->getFileName();
+						if (str_starts_with($filename, ICMS_MODULES_PATH)) {
+							$croppedPath = trim(
+								mb_substr($filename, mb_strlen(ICMS_MODULES_PATH)),
+								DIRECTORY_SEPARATOR
+							);
+							$i = mb_strpos($croppedPath, DIRECTORY_SEPARATOR);
+							if ($i !== false) {
+								$moduleName = mb_substr($croppedPath, 0, $i);
+							} else {
+								$moduleName = $croppedPath;
+							}
+						} else {
+							$moduleName = null;
+						}
+					} else {
+						$moduleName = null; // we think that non controller callbacks can come only from core
+					}
+				} else {
+					throw new RuntimeException('Unsupported request handler');
 				}
 			}
+		} catch (Throwable $throwable) {
+			$moduleName = null;
 		}
 
 		$module = null;
