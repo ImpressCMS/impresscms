@@ -92,47 +92,47 @@ define("DB_NAME_HELP", "Das ist der Name Ihrer Datenbank in der die Tabellen ers
 define("DB_CHARSET_LABEL", "Datenbank-Zeichensatz, wir empfehlen Ihnen die Verwendung von UTF-8 als Standard.");
 define("DB_CHARSET_HELP", "MySQL beinhaltet die Unterstützung für Zeichensätze, die es Ihnen ermöglicht, Daten mit verschiedenen Zeichensätzen zu speichern und Vergleiche nach verschiedenen Sortierfolgen durchzuführen.");
 define("DB_COLLATION_LABEL", "Datenbank Klausel");
-define("DB_COLLATION_HELP", "A collation is a set of rules for comparing characters in a character set.");
-define("DB_PREFIX_LABEL", "Table prefix"); // L30
-define("DB_PREFIX_HELP", "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
-define("DB_PCONNECT_LABEL", "Use persistent connection"); // L54
+define("DB_COLLATION_HELP", "Wenn Sie unsicher sind, verwenden Sie die Voreinstellung. Die Klausel (auch Kollation genannt) gibt die Standardsortierfolge der Datenbank an.");
+define("DB_PREFIX_LABEL", "Tabellenpräfix"); // L30
+define("DB_PREFIX_HELP", "Dieser Präfix wird zu allen neuen Tabellen hinzugefügt, die erstellt wurden, um Namenskonflikte in der Datenbank zu vermeiden. Wenn Sie sich nicht sicher sind, behalten Sie einfach die Voreinstellung. Besonders wichtig ist dies, wenn eine Datenbank für mehrere Websites genutzt werden soll."); // L63
+define("DB_PCONNECT_LABEL", "Brauchen Sie eine beständige Verbindung?"); // L54
 
-define("DB_SALT_LABEL", "Password Salt Key"); // L98
-define("DB_SALT_HELP", "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. If you are unsure, just keep the default"); // L97
+define("DB_SALT_LABEL", "Kennwort - privater Schlüssel"); // L98
+define("DB_SALT_HELP", "Der private Schlüssel wird als Kennwort in der Function icms_encryptPass() verwendet und erstellt, damit ein völlig einzigartiges und sicheres Kennwort für das CMS entsteht. Ändern Sie den Schlüssel nicht mehr, nachdem die Installation durchgeführt wurde, sonst werden damit alle Kennwörter ungültig. Wenn Sie sich unsicher sind, benutzen Sie die Voreinstellungen."); // L97
 
-define("LEGEND_ADMIN_ACCOUNT", "Administrator account");
-define("ADMIN_LOGIN_LABEL", "Admin login"); // L37
-define("ADMIN_EMAIL_LABEL", "Admin e-mail"); // L38
-define("ADMIN_PASS_LABEL", "Admin password"); // L39
-define("ADMIN_CONFIRMPASS_LABEL", "Confirm password"); // L74
-define("ADMIN_SALT_LABEL", "Password Salt Key"); // L99
+define("LEGEND_ADMIN_ACCOUNT", "Administrator Konto");
+define("ADMIN_LOGIN_LABEL", "Admin-Login"); // L37
+define("ADMIN_EMAIL_LABEL", "Admin-E-Mail"); // L38
+define("ADMIN_PASS_LABEL", "Admin-Passwort"); // L39
+define("ADMIN_CONFIRMPASS_LABEL", "Admin Kennwort wiederholen"); // L74
+define("ADMIN_SALT_LABEL", "Kennwort - privater Schlüssel (Salt Key)"); // L99
 
 // Buttons
-define("BUTTON_PREVIOUS", "Previous"); // L42
-define("BUTTON_NEXT", "Next"); // L47
-define("BUTTON_FINISH", "Finish");
-define("BUTTON_REFRESH", "Refresh");
-define("BUTTON_SHOW_SITE", "Show my site");
+define("BUTTON_PREVIOUS", "Zurück"); // L42
+define("BUTTON_NEXT", "Weiter"); // L47
+define("BUTTON_FINISH", "Ende");
+define("BUTTON_REFRESH", "Neu laden");
+define("BUTTON_SHOW_SITE", "Installation verlassen und Webseite jetzt anzeigen");
 
 // Messages
-define("XOOPS_FOUND", "%s found");
-define("CHECKING_PERMISSIONS", "Checking file and directory permissions..."); // L82
-define("IS_NOT_WRITABLE", "%s is NOT writable."); // L83
-define("IS_WRITABLE", "%s is writable."); // L84
-define("ALL_PERM_OK", "All Permissions are correct.");
+define("XOOPS_FOUND", "%s wurde gefunden");
+define("CHECKING_PERMISSIONS", "Überprüfe die Datei- und Verzeichnisberechtigungen..."); // L82
+define("IS_NOT_WRITABLE", "%s ist NICHT beschreibbar."); // L83
+define("IS_WRITABLE", "%s ist beschreibbar."); // L84
+define("ALL_PERM_OK", "Alle Berechtigungen sind korrekt.");
 
-define("READY_CREATE_TABLES", "No ImpressCMS tables were detected.<br />The installer is now ready to create the ImpressCMS system tables.<br />Press <em>next</em> to proceed.");
-define("XOOPS_TABLES_FOUND", "The ImpressCMS system tables already exists in your database.<br />Press <em>next</em> to go to the next step."); // L131
-define("READY_INSERT_DATA", "The installer is now ready to insert initial data into your database.");
-define("READY_SAVE_MAINFILE", "The installer is now ready to save the specified settings to <em>.env</em>.<br />Press <em>next</em> to proceed.");
-define("DATA_ALREADY_INSERTED", "ImpressCMS data is stored in your database already. No further data will be stored by this action.<br />Press <em>next</em> to go to the next step.");
+define("READY_CREATE_TABLES", "Es wurden keine ImpressCMS Tabellen gefunden.<br />Der Installer ist nun bereit um die Tabellen fÃ¼r das ImpressCMS zu erstellen.<br />Klicken Sie auf <em>Weiter</em> fÃ¼r diesen Vorgang.");
+define("XOOPS_TABLES_FOUND", "Die ImpressCMS Systemtabellen sind schon in der Datenbank vorhanden.<br />Klicken Sie auf <em>Weiter</em> für den nächsten Schritt."); // L131
+define("READY_INSERT_DATA", "Das Installationsprogramm ist nun bereit, die Daten in die Datenbank zu schreiben.");
+define("READY_SAVE_MAINFILE", "Der Installer ist nun bereit zum Speichern der Angaben in die <em>mainfile.php</em>.<br />Klicken Sie auf <em>Weiter</em> um diesen Schritt durchzuführen.");
+define("DATA_ALREADY_INSERTED", "ImpressCMS Daten schon in der Datenbank vorhanden. Es werden <b>keine</b> weiteren Daten eingetragen.<br />Drücken Sie<em>Weiter</em> um fortzufahren.");
 
 // %s is database name
-define("DATABASE_CREATED", "Database %s created!"); // L43
+define("DATABASE_CREATED", "Datenbank %s erstellt!"); // L43
 // %s is table name
-define("TABLE_NOT_CREATED", "Unable to create table %s"); // L118
-define("TABLE_CREATED", "Table %s created."); // L45
-define("ROWS_INSERTED", "%d entries inserted to table %s."); // L119
+define("TABLE_NOT_CREATED", "Tabelle konnten nicht erstellt werden %s"); // L118
+define("TABLE_CREATED", "Tabelle %s erstellt."); // L45
+define("ROWS_INSERTED", "%d Einträge in die Tabelle %s hinzugefügt."); // L119
 define("ROWS_FAILED", "Failed inserting %d entries to table %s."); // L120
 define("TABLE_ALTERED", "Table %s updated."); // L133
 define("TABLE_NOT_ALTERED", "Failed updating table %s."); // L134
