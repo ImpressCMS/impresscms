@@ -6,5 +6,5 @@ If you didn't ask for this, please contact an administrator informing them of th
 
 -----------
 {SITENAME} ({SITEURL}) 
-webmaster
+Webmaster
 {ADMINMAIL}
