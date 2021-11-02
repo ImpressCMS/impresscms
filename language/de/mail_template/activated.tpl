@@ -1,4 +1,4 @@
-Hello {X_UNAME},
+Hallo {X_UNAME},
 
 Ihr neues Konto bei {SITENAME} wurde vom Administrator aktiviert.
 
@@ -8,5 +8,5 @@ Sie können sich nun von der folgenden URL aus mit dem Passwort anmelden, das Si
 
 -----------
 {SITENAME} ({SITEURL}) 
-Der Webmaster 
+Webmaster
 {ADMINMAIL}
