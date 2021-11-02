@@ -9,12 +9,12 @@ You can view the comment here (if you have permission):
 
 You are receiving this message because you selected to be notified when comments are submitted to this {X_ITEM_TYPE}.
 
-If this is an error or you wish not to receive further such notifications, please update your subscriptions by visiting the link below:
+Wenn dies ein Fehler ist oder Sie keine weiteren solchen Benachrichtigungen erhalten möchten, aktualisieren Sie bitte Ihre Abonnements unter dem folgenden Link:
 {X_UNSUBSCRIBE_URL}
 
-Please do not reply to this message.
+Bitte antworten Sie nicht auf diese Nachricht.
 
 -----------
 {X_SITENAME} ({X_SITEURL}) 
-webmaster
+Webmaster
 {X_ADMINMAIL}
