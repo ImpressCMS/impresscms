@@ -7,5 +7,5 @@ Site URL:  {SITEURL}
 
 -----------
 {SITENAME} ({SITEURL}) 
-webmaster
+Webmaster
 {ADMINMAIL}
