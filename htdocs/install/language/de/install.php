@@ -9,9 +9,9 @@
  * @package 		installer
  */
 
-define("SHOW_HIDE_HELP", "die Hilfe Anzeigen oder Verstecken");
+define("SHOW_HIDE_HELP", "Die Hilfe Anzeigen oder Verstecken");
 
-define("ALTERNATE_LANGUAGE_MSG", "Laden Sie ein alternatives Sprachpaket von der ImpressCMS Website herunter");
+define("ALTERNATE_LANGUAGE_MSG", "Laden Sie ein alternatives Sprachpaket von der ImpressCMS Website herunter.");
 define("ALTERNATE_LANGUAGE_LNK_MSG", "Wählen Sie eine andere Sprache, die hier nicht aufgeführt ist.");
 define("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 
@@ -27,7 +27,8 @@ define("RECOMMENDED_EXTENSIONS", "Empfohlene Erweiterungen");
 define("SETTING_NAME", "Setting name");
 define("RECOMMENDED", "Empfohlen");
 define("CURRENT", "Aktuell");
-define("RECOMMENDED_EXTENSIONS_MSG", "Diese Erweiterungen sind nicht für den normalen Gebrauch erforderlich, aber sie können notwendig sein, um bestimmte Funktionen (wie die mehrsprachige oder RSS-Unterstützung) zu nutzen. Daher wird empfohlen, sie installiert zu haben." );
+define("RECOMMENDED_EXTENSIONS_MSG", "Diese Erweiterungen sind nicht für den normalen Gebrauch erforderlich, aber sie können notwendig sein, um
+	bestimmte Funktionen (wie die mehrsprachige oder RSS-Unterstützung) zu nutzen. Daher wird empfohlen, sie installiert zu haben." );
 define("NONE", "Nichts");
 define("SUCCESS", "Vorhanden");
 define("WARNING", "Warnung");
@@ -43,7 +44,7 @@ define("INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a 
 define("LANGUAGE_SELECTION", "Sprache auswählen");
 define("LANGUAGE_SELECTION_TITLE", "Wählen Sie Ihre Sprache"); // L128
 define("INTRODUCTION", "Vorbereitungen/Info");
-define("INTRODUCTION_TITLE", "Willkommen beim ImpressCMS Installationsassistenten"); // L0
+define("INTRODUCTION_TITLE", "Willkommen beim  ImpressCMS Installationsassistenten"); // L0
 define("CONFIGURATION_CHECK", "Konfigurations-Überprüfung");
 define("CONFIGURATION_CHECK_TITLE", "Überprüfe die Serverkonfiguration");
 define("PATHS_SETTINGS", "Verzeichnisse");
@@ -62,21 +63,21 @@ define("DATA_INSERTION", "Datenbank füllen");
 define("DATA_INSERTION_TITLE", "Speichern Ihrer Einstellungen in der Datenbank");
 define("WELCOME", "Willkommen");
 define("NO_PHP5", "Keine PHP 5");
-define("WELCOME_TITLE", "Installation von ImpressCMS abgeschlossen"); // L0
+define("WELCOME_TITLE", "Installation von ImpressCMS abgeschlossen."); // L0
 define("MODULES_INSTALL", "Module installieren");
-define("MODULES_INSTALL_TITLE", "Die Installation der Module");
+define("MODULES_INSTALL_TITLE", "Die Installation der Module.");
 define("NO_PHP5_TITLE", "Keine PHP 5");
-define("NO_PHP5_CONTENT", "Für das einwandfreie Funktionieren von ImpressCMS wird ein Minimum von PHP 5.2.0 benötigt - Ihre Installation kann nicht fortgesetzt werden. Bitte arbeiten Sie mit Ihrem Hosting-Provider zusammen, um Ihre Umgebung auf eine Version von PHP zu aktualisieren, die älter als 5 ist. .0 (5.2.8 + wird empfohlen) bevor Sie versuchen erneut zu installieren. Für weitere Informationen lesen Sie <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS unter PHP5 </a>.");
+define("NO_PHP5_CONTENT", "Für das einwandfreie Funktionieren von ImpressCMS  wird ein Minimum von PHP 5.2.0 benötigt - Ihre Installation kann nicht fortgesetzt werden. Bitte arbeiten Sie mit Ihrem Hosting-Provider zusammen, um Ihre Umgebung auf eine Version von PHP zu aktualisieren, die älter als 5 ist. .0 (5.2.8 + wird empfohlen) bevor Sie versuchen erneut zu installieren. Für weitere Informationen lesen Sie <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS  unter PHP5 </a>.");
 define("SAFE_MODE", "Sicherer Modus an");
 define("SAFE_MODE_TITLE", "Sicherer Modus an");
-define("SAFE_MODE_CONTENT", "ImpressCMS hat festgestellt, dass PHP im Safe Mode läuft. Aus diesem Grund kann Ihre Installation nicht fortgesetzt werden. Bitte arbeiten Sie mit Ihrem Hosting-Provider zusammen, um Ihre Umgebung zu ändern, bevor Sie versuchen erneut zu installieren.");
+define("SAFE_MODE_CONTENT", "ImpressCMS  hat festgestellt, dass PHP im Safe Mode läuft. Aus diesem Grund kann Ihre Installation nicht fortgesetzt werden. Bitte arbeiten Sie mit Ihrem Hosting-Provider zusammen, um Ihre Umgebung zu ändern, bevor Sie versuchen erneut zu installieren.");
 
 // Settings (labels and help text)
-define("XOOPS_ROOT_PATH_LABEL", "ImpressCMS - Pfad für Basisverzeichnis (Physikalischer Pfad)"); // L55
+define("XOOPS_ROOT_PATH_LABEL", "ImpressCMS  - Pfad für Basisverzeichnis (Physikalischer Pfad)"); // L55
 define("XOOPS_ROOT_PATH_HELP", "Dies ist der physikalische Pfad der ImpressCMS Dateien und Ordner, sozusagen das Basisverzeichnis Ihrer Anwendung. Man spricht hier auch von einem ImpressCMS Root-Verzeichnis."); // L59
 
 define("XOOPS_URL_LABEL", "Virtueller Pfad (URL)"); // L56
-define("XOOPS_URL_HELP", "Haupt-URL, die verwendet wird, um nach der Installtion den Zugriff auf das ImpressCMS zu erhalten."); // L58
+define("XOOPS_URL_HELP", "Haupt-URL, die verwendet wird, um nach der Installtion den Zugriff auf das ImpressCMS  zu erhalten."); // L58
 
 define("LEGEND_CONNECTION", "Serververbindung");
 define("LEGEND_DATABASE", "Datenbank Art"); // L51
@@ -161,7 +162,7 @@ Wenn Sie die Berechtigungen für anonyme Benutzer festlegen müssen, tun Sie die
 Für weitere Informationen zur Gruppenadministration besuchen Sie bitte das <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">Wiki</a>.');
 
 define("_INSTALL_SELECT_MODULES", 'Wählen Sie die Module, welche installiert werden sollen');
-define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Wählen Sie die Module, welche für die Besucher sichbar sein sollen');
+define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Wählen Sie die Module, welche für die Besucher sichbar sein sollen.');
 define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Das Modul %s konnte nicht installiert werden.");
 define("_INSTALL_ERRORS", 'Fehler');
 define("_INSTALL_MOD_ALREADY_INSTALLED", "Das Modul %s wurde erfolgreich installiert");
@@ -178,7 +179,7 @@ define("_INSTALL_WEB_LOCATIONS_LABEL", "Adresse im Internet");
 define("_INSTALL_COULD_NOT_INSERT", "Der Assistent konnte Modul %s nicht in der Datenbank installieren.");
 define("_INSTALL_CHARSET", "utf-8");
 
-define("_INSTALL_PHYSICAL_PATH", "Physikalisches Verzeichni");
+define("_INSTALL_PHYSICAL_PATH", "Physikalisches Verzeichnis");
 
 define("_MD_AM_MULTLOGINMSG_TXT", 'Es war nicht möglich, sich auf der Website anzumelden!! <br />
         <p align="left" style="color:red;">
@@ -199,7 +200,7 @@ define('_CORE_PASSLEVEL2', 'Schwach');
 define('_CORE_PASSLEVEL3', 'Gut');
 define('_CORE_PASSLEVEL4', 'Stark');
 define('DB_PCONNECT_HELP', "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nützlich. In den meisten Fällen ist das nicht erfolderlich, deshalb ist standardmässig 'Nein' gewälht. Wählen Sie auch 'Nein' wenn Sie unsicher sind."); // L69
-define("DB_PCONNECT_HELPS", "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nüzlich. Daher ist diese Option nicht erfolderlich."); // L69
+define("DB_PCONNECT_HELPS", "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nüzlich. Daher ist diese Option nicht erfolderlich"); // L69
 
 // Added in 1.3
 define("FILE_PERMISSIONS", "Datei-Berechtigungen");
