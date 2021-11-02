@@ -18,7 +18,7 @@ Entwicklung kleiner bis großer dynamischer Community-Websites, unternehmensinte
 <h3>Vorbereitungen</h3>
 <ul>
 	<li>Setup des HTTP-Servers, PHP und der Datenbankrechte.</li>
-	<li>Erstellen Sie eine Datenbank für Ihre ImpressCMS- Webseite. Es kann auch eine bereits vorhandene Datenbank benutzt werden.</li>
+	<li>Erstellen Sie eine Datenbank für Ihre ImpressCMS - Webseite. Es kann auch eine bereits vorhandene Datenbank benutzt werden.</li>
 	<li>Erstellen Sie ein Benutzerkonto und gewähren Sie diesem Benutzer Zugriff auf die Datenbank (alle Rechte).</li>
 	<li>Geben Sie den folgenden Verzeichnisse uploads, templates_c, cache, log, htmlpurifier, modules die Berechtchtigung (chmod 777 oder 755 - je nach Server ).</li>
 	<li>Machen Sie die Datei ../.env schreibbar (chmod 666 je nach Server).</li>
