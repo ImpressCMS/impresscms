@@ -16,5 +16,5 @@ Bitte antworten Sie nicht auf diese Nachricht.
 
 -----------
 {X_SITENAME} ({X_SITEURL}) 
-Webmaster
+Der Webmaster 
 {X_ADMINMAIL}
