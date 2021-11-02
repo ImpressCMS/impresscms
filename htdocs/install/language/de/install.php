@@ -133,16 +133,16 @@ define("DATABASE_CREATED", "Datenbank %s erstellt!"); // L43
 define("TABLE_NOT_CREATED", "Tabelle konnten nicht erstellt werden %s"); // L118
 define("TABLE_CREATED", "Tabelle %s erstellt."); // L45
 define("ROWS_INSERTED", "%d Einträge in die Tabelle %s hinzugefügt."); // L119
-define("ROWS_FAILED", "Failed inserting %d entries to table %s."); // L120
-define("TABLE_ALTERED", "Table %s updated."); // L133
-define("TABLE_NOT_ALTERED", "Failed updating table %s."); // L134
-define("TABLE_DROPPED", "Table %s dropped."); // L163
-define("TABLE_NOT_DROPPED", "Failed deleting table %s."); // L164
+define("ROWS_FAILED", "%d Tabelleneinträge in Tabelle %s fehlgeschlagen."); // L120
+define("TABLE_ALTERED", "Tabelle %s aktualisiert."); // L133
+define("TABLE_NOT_ALTERED", "Aktualisierung von Tabelle %s fehlgeschlagen."); // L134
+define("TABLE_DROPPED", "Tabelle %s gelöscht."); // L163
+define("TABLE_NOT_DROPPED", "Löschen der Tabelle %s fehlgeschlagen."); // L164
 
 // Error messages
-define("ERR_COULD_NOT_ACCESS", "Could not access the specified folder. Please verify that it exists and is readable by the server.");
-define("ERR_NO_XOOPS_FOUND", "No ImpressCMS installation could be found in the specified folder.");
-define("ERR_INVALID_EMAIL", "Invalid Email"); // L73
+define("ERR_COULD_NOT_ACCESS", "Auf den Ordner kann nicht zugegriffen werden. Bitte Ã¼berprÃ¼fen Sie, ob der Ordner existitert und berschreibbar ist.");
+define("ERR_NO_XOOPS_FOUND", "Im angegebenen Ordner konnte keine ImpressCMS Installation gefunden werden.");
+define("ERR_INVALID_EMAIL", "Ungültige E-Mail"); // L73
 define("ERR_REQUIRED", "Please enter all the required info."); // L41
 define("ERR_PASSWORD_MATCH", "The two passwords do not match");
 define("ERR_NEED_WRITE_ACCESS", "The server must be given write access to the following files and folders<br />(i.e. <em>chmod 777 directory_name</em> on a UNIX/LINUX server)"); // L72
