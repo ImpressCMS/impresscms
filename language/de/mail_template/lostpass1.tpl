@@ -9,5 +9,5 @@ If you didn't ask for this, don't worry. Just delete this Email.
 
 -----------
 {SITENAME} ({SITEURL}) 
-webmaster
+Webmaster
 {ADMINMAIL}
