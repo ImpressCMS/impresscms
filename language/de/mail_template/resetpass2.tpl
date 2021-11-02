@@ -1,4 +1,4 @@
-Hello {X_UNAME},
+Hallo {X_UNAME},
 
 Your password for {SITENAME} has been successfully reset.
 
