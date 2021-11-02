@@ -11,7 +11,7 @@
 
 define("SHOW_HIDE_HELP", "Die Hilfe Anzeigen oder Verstecken");
 
-define("ALTERNATE_LANGUAGE_MSG", "Laden Sie ein alternatives Sprachpaket von der ImpressCMS Website herunter.");
+define("ALTERNATE_LANGUAGE_MSG", "Laden Sie ein alternatives Sprachpaket von der ImpressCMS Website herunter. ");
 define("ALTERNATE_LANGUAGE_LNK_MSG", "Wählen Sie eine andere Sprache, die hier nicht aufgeführt ist.");
 define("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 
@@ -28,7 +28,7 @@ define("SETTING_NAME", "Setting name");
 define("RECOMMENDED", "Empfohlen");
 define("CURRENT", "Aktuell");
 define("RECOMMENDED_EXTENSIONS_MSG", "Diese Erweiterungen sind nicht für den normalen Gebrauch erforderlich, aber sie können notwendig sein, um
-	bestimmte Funktionen (wie die mehrsprachige oder RSS-Unterstützung) zu nutzen. Daher wird empfohlen, sie installiert zu haben." );
+	bestimmte Funktionen (wie die mehrsprachige oder RSS-Unterstützung) zu nutzen. Daher wird empfohlen, sie installiert zu haben. " );
 define("NONE", "Nichts");
 define("SUCCESS", "Vorhanden");
 define("WARNING", "Warnung");
@@ -73,40 +73,40 @@ define("SAFE_MODE_TITLE", "Sicherer Modus an");
 define("SAFE_MODE_CONTENT", "ImpressCMS  hat festgestellt, dass PHP im Safe Mode läuft. Aus diesem Grund kann Ihre Installation nicht fortgesetzt werden. Bitte arbeiten Sie mit Ihrem Hosting-Provider zusammen, um Ihre Umgebung zu ändern, bevor Sie versuchen erneut zu installieren.");
 
 // Settings (labels and help text)
-define("XOOPS_ROOT_PATH_LABEL", "ImpressCMS  - Pfad für Basisverzeichnis (Physikalischer Pfad)"); // L55
-define("XOOPS_ROOT_PATH_HELP", "Dies ist der physikalische Pfad der ImpressCMS Dateien und Ordner, sozusagen das Basisverzeichnis Ihrer Anwendung. Man spricht hier auch von einem ImpressCMS Root-Verzeichnis."); // L59
+define("XOOPS_ROOT_PATH_LABEL", "ImpressCMS  - Pfad für Basisverzeichnis (Physikalischer Pfad)."); // L55
+define("XOOPS_ROOT_PATH_HELP", "Dies ist der physikalische Pfad der ImpressCMS Dateien und Ordner, sozusagen das Basisverzeichnis Ihrer Anwendung. Man spricht hier auch von einem ImpressCMS Root-Verzeichnis. "); // L59
 
 define("XOOPS_URL_LABEL", "Virtueller Pfad (URL)"); // L56
-define("XOOPS_URL_HELP", "Haupt-URL, die verwendet wird, um nach der Installtion den Zugriff auf das ImpressCMS  zu erhalten."); // L58
+define("XOOPS_URL_HELP", "Haupt-URL, die verwendet wird, um nach der Installtion den Zugriff auf das ImpressCMS  zu erhalten. "); // L58
 
 define("LEGEND_CONNECTION", "Serververbindung");
 define("LEGEND_DATABASE", "Datenbank Art"); // L51
 
 define("DB_HOST_LABEL", "Server Hostname"); // L27
-define("DB_HOST_HELP", "Hostname des Datenbankservers. Wenn Sie unsicher sind, <em>localhost</em> funktioniert in den meisten Fällen"); // L67
+define("DB_HOST_HELP", "Hostname des Datenbankservers. Wenn Sie unsicher sind, <em>localhost</em> funktioniert in den meisten Fällen. "); // L67
 define("DB_USER_LABEL", "Benutzername"); // L28
-define("DB_USER_HELP", "Das ist der Username Ihres Datenbank-Kontos"); // L65
+define("DB_USER_HELP", "Das ist der Username Ihres Datenbank-Kontos. "); // L65
 define("DB_PASS_LABEL", "Passwort"); // L52
-define("DB_PASS_HELP", "Das ist das Kennwort welches verlangt wird, um auf Ihre Datenbank zuzugreifen."); // L68
+define("DB_PASS_HELP", "Das ist das Kennwort welches verlangt wird, um auf Ihre Datenbank zuzugreifen. "); // L68
 define("DB_NAME_LABEL", "Datenbankname"); // L29
-define("DB_NAME_HELP", "Das ist der Name Ihrer Datenbank in der die Tabellen erstellt werden. Der Installer wird versuchen, eine Datenbank zu erstellen, wenn diese noch nicht existiert."); // L64
+define("DB_NAME_HELP", "Das ist der Name Ihrer Datenbank in der die Tabellen erstellt werden. Der Installer wird versuchen, eine Datenbank zu erstellen, wenn diese noch nicht existiert"); // L64
 define("DB_CHARSET_LABEL", "Datenbank-Zeichensatz, wir empfehlen Ihnen die Verwendung von UTF-8 als Standard.");
-define("DB_CHARSET_HELP", "MySQL beinhaltet die Unterstützung für Zeichensätze, die es Ihnen ermöglicht, Daten mit verschiedenen Zeichensätzen zu speichern und Vergleiche nach verschiedenen Sortierfolgen durchzuführen.");
+define("DB_CHARSET_HELP", "MySQL beinhaltet die Unterstützung für Zeichensätze, die es Ihnen ermöglicht, Daten mit verschiedenen Zeichensätzen zu speichern und Vergleiche nach verschiedenen Sortierfolgen durchzuführen");
 define("DB_COLLATION_LABEL", "Datenbank Klausel");
-define("DB_COLLATION_HELP", "Wenn Sie unsicher sind, verwenden Sie die Voreinstellung. Die Klausel (auch Kollation genannt) gibt die Standardsortierfolge der Datenbank an.");
+define("DB_COLLATION_HELP", "Wenn Sie unsicher sind, verwenden Sie die Voreinstellung. Die Klausel (auch Kollation genannt) gibt die Standardsortierfolge der Datenbank an");
 define("DB_PREFIX_LABEL", "Tabellenpräfix"); // L30
-define("DB_PREFIX_HELP", "Dieser Präfix wird zu allen neuen Tabellen hinzugefügt, die erstellt wurden, um Namenskonflikte in der Datenbank zu vermeiden. Wenn Sie sich nicht sicher sind, behalten Sie einfach die Voreinstellung. Besonders wichtig ist dies, wenn eine Datenbank für mehrere Websites genutzt werden soll."); // L63
-define("DB_PCONNECT_LABEL", "Brauchen Sie eine beständige Verbindung?"); // L54
+define("DB_PREFIX_HELP", "Dieser Präfix wird zu allen neuen Tabellen hinzugefügt, die erstellt wurden, um Namenskonflikte in der Datenbank zu vermeiden. Wenn Sie sich nicht sicher sind, behalten Sie einfach die Voreinstellung. Besonders wichtig ist dies, wenn eine Datenbank für mehrere Websites genutzt werden soll"); // L63
+define("DB_PCONNECT_LABEL", "Brauchen Sie eine beständige Verbindung? "); // L54
 
 define("DB_SALT_LABEL", "Kennwort - privater Schlüssel"); // L98
-define("DB_SALT_HELP", "Der private Schlüssel wird als Kennwort in der Function icms_encryptPass() verwendet und erstellt, damit ein völlig einzigartiges und sicheres Kennwort für das CMS entsteht. Ändern Sie den Schlüssel nicht mehr, nachdem die Installation durchgeführt wurde, sonst werden damit alle Kennwörter ungültig. Wenn Sie sich unsicher sind, benutzen Sie die Voreinstellungen."); // L97
+define("DB_SALT_HELP", "Der private Schlüssel wird als Kennwort in der Function icms_encryptPass() verwendet und erstellt, damit ein völlig einzigartiges und sicheres Kennwort für das CMS entsteht. Ändern Sie den Schlüssel nicht mehr, nachdem die Installation durchgeführt wurde, sonst werden damit alle Kennwörter ungültig. Wenn Sie sich unsicher sind, benutzen Sie die Voreinstellungen. "); // L97
 
 define("LEGEND_ADMIN_ACCOUNT", "Administrator Konto");
-define("ADMIN_LOGIN_LABEL", "Admin-Login"); // L37
+define("ADMIN_LOGIN_LABEL", "Admin-Login "); // L37
 define("ADMIN_EMAIL_LABEL", "Admin-E-Mail"); // L38
-define("ADMIN_PASS_LABEL", "Admin-Passwort"); // L39
+define("ADMIN_PASS_LABEL", "Admin-Passwort "); // L39
 define("ADMIN_CONFIRMPASS_LABEL", "Admin Kennwort wiederholen"); // L74
-define("ADMIN_SALT_LABEL", "Kennwort - privater Schlüssel (Salt Key)"); // L99
+define("ADMIN_SALT_LABEL", "Kennwort - privater Schlüssel (Salt Key) "); // L99
 
 // Buttons
 define("BUTTON_PREVIOUS", "Zurück"); // L42
@@ -122,11 +122,11 @@ define("IS_NOT_WRITABLE", "%s ist NICHT beschreibbar."); // L83
 define("IS_WRITABLE", "%s ist beschreibbar."); // L84
 define("ALL_PERM_OK", "Alle Berechtigungen sind korrekt.");
 
-define("READY_CREATE_TABLES", "Es wurden keine ImpressCMS Tabellen gefunden.<br />Der Installer ist nun bereit um die Tabellen fÃ¼r das ImpressCMS zu erstellen.<br />Klicken Sie auf <em>Weiter</em> fÃ¼r diesen Vorgang.");
-define("XOOPS_TABLES_FOUND", "Die ImpressCMS Systemtabellen sind schon in der Datenbank vorhanden.<br />Klicken Sie auf <em>Weiter</em> für den nächsten Schritt."); // L131
+define("READY_CREATE_TABLES", "Es wurden keine ImpressCMS Tabellen gefunden.<br />Der Installer ist nun bereit um die Tabellen fÃ¼r das ImpressCMS zu erstellen.<br />Klicken Sie auf <em>Weiter</em> fÃ¼r diesen Vorgang. ");
+define("XOOPS_TABLES_FOUND", "Die ImpressCMS Systemtabellen sind schon in der Datenbank vorhanden.<br />Klicken Sie auf <em>Weiter</em> für den nächsten Schritt. "); // L131
 define("READY_INSERT_DATA", "Das Installationsprogramm ist nun bereit, die Daten in die Datenbank zu schreiben.");
 define("READY_SAVE_MAINFILE", "Der Installer ist nun bereit zum Speichern der Angaben in die <em>mainfile.php</em>.<br />Klicken Sie auf <em>Weiter</em> um diesen Schritt durchzuführen.");
-define("DATA_ALREADY_INSERTED", "ImpressCMS Daten schon in der Datenbank vorhanden. Es werden <b>keine</b> weiteren Daten eingetragen.<br />Drücken Sie<em>Weiter</em> um fortzufahren.");
+define("DATA_ALREADY_INSERTED", "ImpressCMS Daten schon in der Datenbank vorhanden. Es werden <b>keine</b> weiteren Daten eingetragen.<br />Drücken Sie<em>Weiter</em> um fortzufahren. ");
 
 // %s is database name
 define("DATABASE_CREATED", "Datenbank %s erstellt!"); // L43
@@ -141,28 +141,28 @@ define("TABLE_DROPPED", "Tabelle %s gelöscht."); // L163
 define("TABLE_NOT_DROPPED", "Löschen der Tabelle %s fehlgeschlagen."); // L164
 
 // Error messages
-define("ERR_COULD_NOT_ACCESS", "Auf den Ordner kann nicht zugegriffen werden. Bitte Ã¼berprÃ¼fen Sie, ob der Ordner existitert und berschreibbar ist.");
-define("ERR_NO_XOOPS_FOUND", "Im angegebenen Ordner konnte keine ImpressCMS Installation gefunden werden.");
+define("ERR_COULD_NOT_ACCESS", "Auf den Ordner kann nicht zugegriffen werden. Bitte Ã¼berprÃ¼fen Sie, ob der Ordner existitert und berschreibbar ist. ");
+define("ERR_NO_XOOPS_FOUND", "Im angegebenen Ordner konnte keine ImpressCMS Installation gefunden werden. ");
 define("ERR_INVALID_EMAIL", "Ungültige E-Mail"); // L73
 define("ERR_REQUIRED", "Bitte geben Sie alle erforderlichen Informationen ein."); // L41
 define("ERR_PASSWORD_MATCH", "Die zwei Passwörter stimmen nicht überein");
-define("ERR_NEED_WRITE_ACCESS", "Dem Server muss Schreibzugriff auf die folgenden Dateien und Ordner<br />gewährt werden (z.B. <em>chmod 777 directory_name</em> auf einem UNIX/LINUX Server)"); // L72
+define("ERR_NEED_WRITE_ACCESS", "Dem Server muss Schreibzugriff auf die folgenden Dateien und Ordner<br />gewährt werden (z.B. <em>chmod 777 directory_name</em> auf einem UNIX/LINUX Server). "); // L72
 define("ERR_NO_DATABASE", "Datenbank konnte nicht erstellt werden. Kontaktieren Sie den Server-Administrator für Details."); // L31
 define("ERR_NO_DBCONNECTION", "Es konnte keine Verbindung zum Datenbank-Server hergestellt werden."); // L106
 define("ERR_WRITING_CONSTANT", "%s konnte nicht geschrieben."); // L122
-define('ERR_WRITE_ENV_DATA', 'Fehler beim Schreiben der .env Daten');
+define('ERR_WRITE_ENV_DATA', 'Fehler beim Schreiben der .env Daten. ');
 define("ERR_INVALID_DBCHARSET", "Das Zeichensatz '%s' wird nicht unterstützt.");
 define("ERR_INVALID_DBCOLLATION", "Das Zeichensatz '%s' wird nicht unterstützt.");
-define("ERR_CHARSET_NOT_SET", "Standardzeichensatz ist für die ImpressCMS Datenbank nicht gesetzt.");
+define("ERR_CHARSET_NOT_SET", "Standardzeichensatz ist für die ImpressCMS Datenbank nicht gesetzt. ");
 
 //
 define("_INSTALL_SELECT_MODS_INTRO", 'Wählen Sie aus der Liste unten bitte die Module aus, die Sie auf dieser Seite installieren möchten. <br /><br />
 Alle installierten Module sind standardmäßig für die Administratorengruppe und die Registrierte Benutzergruppe zugänglich. <br /><br />
 Wenn Sie die Berechtigungen für anonyme Benutzer festlegen müssen, tun Sie dies bitte im Administrationsbereich, nachdem Sie diesen Installer abgeschlossen haben. <br /><br />
-Für weitere Informationen zur Gruppenadministration besuchen Sie bitte das <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">Wiki</a>.');
+Für weitere Informationen zur Gruppenadministration besuchen Sie bitte das <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">Wiki</a>. ');
 
 define("_INSTALL_SELECT_MODULES", 'Wählen Sie die Module, welche installiert werden sollen');
-define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Wählen Sie die Module, welche für die Besucher sichbar sein sollen.');
+define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Wählen Sie die Module, welche für die Besucher sichbar sein sollen. ');
 define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Das Modul %s konnte nicht installiert werden.");
 define("_INSTALL_ERRORS", 'Fehler');
 define("_INSTALL_MOD_ALREADY_INSTALLED", "Das Modul %s wurde erfolgreich installiert");
@@ -188,7 +188,7 @@ define("_MD_AM_MULTLOGINMSG_TXT", 'Es war nicht möglich, sich auf der Website a
          - Jemand anderes hat sich mit Ihrem Benutzernamen und Passwort auf der Website eingeloggt.<br />
          - Sie haben die Seite verlassen oder das Browser-Fenster geschlossen, ohne auf den Logout-Button zu klicken.<br />
         </p>
-        Warte einige Minuten und versuche es später erneut. Wenn die Probleme weiterhin bestehen, kontaktieren Sie den Administrator.');
+        Warte einige Minuten und versuche es später erneut. Wenn die Probleme weiterhin bestehen, kontaktieren Sie den Administrator. ');
 define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/'); //Link to local support site
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_ADM_USE_RTL", "0"); // turn this to 1 if your language is right to left
@@ -199,8 +199,8 @@ define('_CORE_PASSLEVEL1', 'Zu kurz');
 define('_CORE_PASSLEVEL2', 'Schwach');
 define('_CORE_PASSLEVEL3', 'Gut');
 define('_CORE_PASSLEVEL4', 'Stark');
-define('DB_PCONNECT_HELP', "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nützlich. In den meisten Fällen ist das nicht erfolderlich, deshalb ist standardmässig 'Nein' gewälht. Wählen Sie auch 'Nein' wenn Sie unsicher sind."); // L69
-define("DB_PCONNECT_HELPS", "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nüzlich. Daher ist diese Option nicht erfolderlich"); // L69
+define('DB_PCONNECT_HELP', "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nützlich. In den meisten Fällen ist das nicht erfolderlich, deshalb ist standardmässig 'Nein' gewälht. Wählen Sie auch 'Nein' wenn Sie unsicher sind. "); // L69
+define("DB_PCONNECT_HELPS", "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nüzlich. Daher ist diese Option nicht erfolderlich. "); // L69
 
 // Added in 1.3
 define("FILE_PERMISSIONS", "Datei-Berechtigungen");
