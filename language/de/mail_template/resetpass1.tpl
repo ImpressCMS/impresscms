@@ -10,5 +10,5 @@ If you didn't request this, don't worry. Just delete this Email and nothing will
 
 -----------
 {SITENAME} ({SITEURL}) 
-webmaster
+Webmaster
 {ADMINMAIL}
