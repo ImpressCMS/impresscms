@@ -155,16 +155,16 @@ define("ERR_INVALID_DBCOLLATION", "Das Zeichensatz '%s' wird nicht unterstützt.
 define("ERR_CHARSET_NOT_SET", "Standardzeichensatz ist für die ImpressCMS Datenbank nicht gesetzt.");
 
 //
-define("_INSTALL_SELECT_MODS_INTRO", 'From the list below, please select the modules that you wish to install on this site. <br /><br />
-All the installed modules are accessible by the Administrators group and the Registered Users group by default. <br /><br />
-If you need to set permissions for Anonymous Users please do so in the Administration Panel after you complete this installer. <br /><br />
-For more information regarding Group Administration, please visit the <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">wiki</a>.');
+define("_INSTALL_SELECT_MODS_INTRO", 'Wählen Sie aus der Liste unten bitte die Module aus, die Sie auf dieser Seite installieren möchten. <br /><br />
+Alle installierten Module sind standardmäßig für die Administratorengruppe und die Registrierte Benutzergruppe zugänglich. <br /><br />
+Wenn Sie die Berechtigungen für anonyme Benutzer festlegen müssen, tun Sie dies bitte im Administrationsbereich, nachdem Sie diesen Installer abgeschlossen haben. <br /><br />
+Für weitere Informationen zur Gruppenadministration besuchen Sie bitte das <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">Wiki</a>.');
 
-define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
-define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');
-define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Module %s could not be installed.");
-define("_INSTALL_ERRORS", 'Errors');
-define("_INSTALL_MOD_ALREADY_INSTALLED", "Module %s has already been installed");
+define("_INSTALL_SELECT_MODULES", 'Wählen Sie die Module, welche installiert werden sollen');
+define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Wählen Sie die Module, welche für die Besucher sichbar sein sollen');
+define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Das Modul %s konnte nicht installiert werden.");
+define("_INSTALL_ERRORS", 'Fehler');
+define("_INSTALL_MOD_ALREADY_INSTALLED", "Das Modul %s wurde erfolgreich installiert");
 define("_INSTALL_FAILED_TO_EXECUTE", "Failed to execute ");
 define("_INSTALL_EXECUTED_SUCCESSFULLY", "Executed correctly");
 
