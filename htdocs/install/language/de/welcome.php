@@ -1,30 +1,28 @@
 <?php
 
 $content .= '
+<p>ImpressCMS ist ein in PHP geschriebenes Web-Publishing-System. Es ist ein ideales Werkzeug für
+Entwicklung kleiner bis großer dynamischer Community-Websites, unternehmensinterner Portale, Unternehmensportale, Weblogs und vieles mehr.</p>
 <p>
-	ImpressCMS is a Web publishing system written in PHP. It is an ideal tool for
-	developing small to large dynamic community websites, intra company portals, corporate portals, weblogs and much more.
-</p>
-<p>
-	ImpressCMS is released under the terms of the
+	ImpressCMS ist freigegeben unter den Bedingungen der
 	<a href="http://www.gnu.org/copyleft/gpl.html" rel="external">GNU General Public License (GPL)</a>
-	and is free to use and modify.
-	It is free to redistribute as long as you abide by the distribution terms of the GPL.
+	und ist frei zu verwenden und zu Ändern.
+	Es ist frei, so lange Ãnderungen, wie Sie durch die Bestimungen der GPL genannt sind, erhalten bleiben.
 </p>
-<h3>Requirements</h3>
+<h3>Anforderungen</h3>
 <ul>
 	<li>- WWW Server: <a href="http://www.apache.org/" rel="external">Apache</a>, IIS, Roxen, etc</li>
-	<li>- Script: <a href="http://www.php.net/" rel="external">PHP</a> 5.2.8 or higher and 16mb minimum memory allocation</li>
-	<li>- Database: <a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 or higher, <a href="https://mariadb.org/" rel="external">MariaDB</a> 5.1 or higher</li>
+	<li>- Script: <a href="http://www.php.net/" rel="external">PHP</a> 5.5+  oder Höher and 16mb minimum Memory-Limit</li>
+	<li>- Database: <a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 oder Höher, <a href="https://mariadb.org/" rel="external">MariaDB</a> 5.1  oder Höher</li>
 </ul>
-<h3>Before you install</h3>
+<h3>Vorbereitungen</h3>
 <ul>
-	<li>Setup the web server, PHP and database server properly.</li>
-	<li>Prepare a database for ImpressCMS. This can be an existing database as well as a newly created one.</li>
-	<li>Prepare a user account and grant this user access to the database (all rights).</li>
-	<li>Make the directories of uploads/, ../storage/templates_c, ../storage/cache, ../storage/log, ../storage/htmlpurifier, ../modules/ writable (chmod 777 or 755 - depending on servers).</li>
-	<li>Make the file ../.env writable (chmod 666 depending on server).</li>
-	<li>In your internet browser settings turn on the allowance of cookies and JavaScript.</li>
+	<li>Setup des HTTP-Servers, PHP und der Datenbankrechte.</li>
+	<li>Erstellen Sie eine Datenbank für Ihre ImpressCMS- Webseite. Es kann auch eine bereits vorhandene Datenbank benutzt werden.</li>
+	<li>Erstellen Sie ein Benutzerkonto und gewähren Sie diesem Benutzer Zugriff auf die Datenbank (alle Rechte).</li>
+	<li>Geben Sie den folgenden Verzeichnisse uploads, templates_c, cache, log, htmlpurifier, modules die Berechtchtigung (chmod 777 oder 755 - je nach Server ).</li>
+	<li>Machen Sie die Datei ../.env schreibbar (chmod 666 je nach Server).</li>
+	<li>Aktivieren Sie in den Einstellungen Ihres Internetbrowsers das Zulassen von Cookies und JavaScript.</li>
 </ul>
 ';
 
