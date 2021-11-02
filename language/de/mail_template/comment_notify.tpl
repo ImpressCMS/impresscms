@@ -1,20 +1,20 @@
-Hello {X_UNAME},
+Hallo {X_UNAME},
 
-A comment has been added to the {X_ITEM_TYPE} "{X_ITEM_NAME}" you are monitoring in the {X_MODULE} module at our site.
+Ein Kommentar wurde dem {X_ITEM_TYPE} "{X_ITEM_NAME}" hinzugefügt, das Sie im Modul {X_MODULE} auf unserer Seite beobachten.
 
-You can view the comment here:
+Sie können den Kommentar hier einsehen:
 {X_COMMENT_URL}
 
 -----------
 
-You are receiving this message because you selected to be notified when comments are added to this {X_ITEM_TYPE}.
+Sie erhalten diese Nachricht, weil Sie ausgewählt haben, benachrichtigt zu werden, wenn Kommentare zu dieser {X_ITEM_TYPE} hinzugefügt werden.
 
-If this is an error or you wish not to receive further such notifications, please update your subscriptions by visiting the link below:
+Wenn dies ein Fehler ist oder Sie keine weiteren solchen Benachrichtigungen erhalten möchten, aktualisieren Sie bitte Ihre Abonnements unter dem folgenden Link:
 {X_UNSUBSCRIBE_URL}
 
-Please do not reply to this message.
+Bitte antworten Sie nicht auf diese Nachricht.
 
 -----------
 {X_SITENAME} ({X_SITEURL}) 
-webmaster
+Webmaster
 {X_ADMINMAIL}
