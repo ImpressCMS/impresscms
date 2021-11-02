@@ -7,5 +7,5 @@ Wenn Sie auf den unten stehenden Link klicken, wird das Konto dieses Benutzers a
 
 -----------
 {X_SITENAME} ({X_SITEURL})
-Webmaster
+Der Webmaster 
 {X_ADMINMAIL}
