@@ -165,41 +165,41 @@ define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Wählen Sie die Module, welche f
 define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Das Modul %s konnte nicht installiert werden.");
 define("_INSTALL_ERRORS", 'Fehler');
 define("_INSTALL_MOD_ALREADY_INSTALLED", "Das Modul %s wurde erfolgreich installiert");
-define("_INSTALL_FAILED_TO_EXECUTE", "Failed to execute ");
-define("_INSTALL_EXECUTED_SUCCESSFULLY", "Executed correctly");
+define("_INSTALL_FAILED_TO_EXECUTE", "Nicht korrekt ausgeführt ");
+define("_INSTALL_EXECUTED_SUCCESSFULLY", "Korrekt ausgeführt");
 
-define("_INSTALL_MOD_INSTALL_SUCCESSFULLY", "Module %s has been installed succesfully.");
-define("_INSTALL_MOD_INSTALL_FAILED", "The wizard could not install module %s.");
-define("_INSTALL_INSTALLING", "Installing %s module");
+define("_INSTALL_MOD_INSTALL_SUCCESSFULLY", "Modul %s wurde erfolgreich installiert.");
+define("_INSTALL_MOD_INSTALL_FAILED", "Der Assistent konnte Modul %s nicht installieren.");
+define("_INSTALL_INSTALLING", "Installiere %s Modul");
 
-define("_INSTALL_WEB_LOCATIONS", "Web location");
-define("_INSTALL_WEB_LOCATIONS_LABEL", "Web location");
+define("_INSTALL_WEB_LOCATIONS", "Adresse im Internet");
+define("_INSTALL_WEB_LOCATIONS_LABEL", "Adresse im Internet");
 
-define("_INSTALL_COULD_NOT_INSERT", "The wizard was unable to install module %s the database.");
+define("_INSTALL_COULD_NOT_INSERT", "Der Assistent konnte Modul %s nicht in der Datenbank installieren.");
 define("_INSTALL_CHARSET", "utf-8");
 
-define("_INSTALL_PHYSICAL_PATH", "Physical path");
+define("_INSTALL_PHYSICAL_PATH", "Physikalisches Verzeichni");
 
-define("_MD_AM_MULTLOGINMSG_TXT", 'It was not possible to login on the site!! <br />
+define("_MD_AM_MULTLOGINMSG_TXT", 'Es war nicht möglich, sich auf der Website anzumelden!! <br />
         <p align="left" style="color:red;">
-        Possible causes:<br />
-         - You are already logged in on the site.<br />
-         - Someone else logged in on the site using your username and password.<br />
-         - You left the site or close the browser window without clicking the logout button.<br />
+        Mögliche Ursachen:<br />
+         - Sie sind bereits eingeloggt.<br />
+         - Jemand anderes hat sich mit Ihrem Benutzernamen und Passwort auf der Website eingeloggt.<br />
+         - Sie haben die Seite verlassen oder das Browser-Fenster geschlossen, ohne auf den Logout-Button zu klicken.<br />
         </p>
-        Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
+        Warte einige Minuten und versuche es später erneut. Wenn die Probleme weiterhin bestehen, kontaktieren Sie den Administrator.');
 define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/'); //Link to local support site
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_ADM_USE_RTL", "0"); // turn this to 1 if your language is right to left
 
 ######################## Added in 1.2 ###################################
-define("ADMIN_DISPLAY_LABEL", "Admin Display Name"); // L37
-define('_CORE_PASSLEVEL1', 'Too short');
-define('_CORE_PASSLEVEL2', 'Weak');
-define('_CORE_PASSLEVEL3', 'Good');
-define('_CORE_PASSLEVEL4', 'Strong');
-define('DB_PCONNECT_HELP', "Persistent connections are useful with slower internet connections. They are not generally required for most installations. Default is 'NO'. Choose 'NO' if you are unsure"); // L69
-define("DB_PCONNECT_HELPS", "Persistent connections are useful with slower internet connections. They are not generally required for most installations."); // L69
+define("ADMIN_DISPLAY_LABEL", "Angezeigter Name"); // L37
+define('_CORE_PASSLEVEL1', 'Zu kurz');
+define('_CORE_PASSLEVEL2', 'Schwach');
+define('_CORE_PASSLEVEL3', 'Gut');
+define('_CORE_PASSLEVEL4', 'Stark');
+define('DB_PCONNECT_HELP', "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nützlich. In den meisten Fällen ist das nicht erfolderlich, deshalb ist standardmässig 'Nein' gewälht. Wählen Sie auch 'Nein' wenn Sie unsicher sind."); // L69
+define("DB_PCONNECT_HELPS", "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nüzlich. Daher ist diese Option nicht erfolderlich."); // L69
 
 // Added in 1.3
 define("FILE_PERMISSIONS", "Datei-Berechtigungen");
