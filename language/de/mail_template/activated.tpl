@@ -8,5 +8,5 @@ Sie können sich nun von der folgenden URL aus mit dem Passwort anmelden, das Si
 
 -----------
 {SITENAME} ({SITEURL}) 
-Webmaster
+Der Webmaster 
 {ADMINMAIL}
