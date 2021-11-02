@@ -13,5 +13,5 @@ $content .=
 <p>Schrijf je nu in op onze <a href='http://impresscms.us1.list-manage.com/subscribe?u=55aacd489c3081ba60a7b5c09&id=77e43dd1a9' target='_blank'>ImpressCMS Nieuwsbrief</a>, om maandelijks het laatste nieuws te ontvangen over thema's, modules en belangrijke updates!</p>
 
 <h3>Ihre Webseite</h3>
-<p>Je kan nu naar de startpagina van je site, door te klikken op de knop hieronder en de installatie te voltooien.</p>
+<p>Je kan nu naar de startpagina van je site, door te klikken op de knop hieronder en de installatie te voltooien.</p> 
 ";
