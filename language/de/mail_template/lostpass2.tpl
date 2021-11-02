@@ -11,5 +11,5 @@ If you didn't ask for this, don't worry. You are seeing this message, not 'them'
 
 -----------
 {SITENAME} ({SITEURL}) 
-webmaster
+Webmaster
 {ADMINMAIL}
