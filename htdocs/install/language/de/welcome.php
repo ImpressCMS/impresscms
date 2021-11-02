@@ -23,6 +23,6 @@ Entwicklung kleiner bis großer dynamischer Community-Websites, unternehmensinte
 	<li>Geben Sie den folgenden Verzeichnisse uploads, templates_c, cache, log, htmlpurifier, modules die Berechtchtigung (chmod 777 oder 755 - je nach Server ).</li>
 	<li>Machen Sie die Datei ../.env schreibbar (chmod 666 je nach Server).</li>
 	<li>Aktivieren Sie in den Einstellungen Ihres Internetbrowsers das Zulassen von Cookies und JavaScript.</li>
-</ul>
-';
+</ul> 
+ ';
 
