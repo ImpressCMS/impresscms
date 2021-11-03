@@ -7,7 +7,7 @@ Username: {X_USERLOGINNAME}
 New Password: {NEWPWD}
 
 You can change it after you login at {SITEURL}/user.php.
-If you didn't ask for this, don't worry. You are seeing this message, not 'them'. If this was an error, we are really sorry but please login with your new password.
+Als u hier niet om hebt gevraagd, maakt u zich geen zorgen. You are seeing this message, not 'them'. If this was an error, we are really sorry but please login with your new password.
 
 -----------
 {SITENAME} ({SITEURL}) 
