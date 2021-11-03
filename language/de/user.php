@@ -141,116 +141,116 @@ define('_US_TYPEPASSTWICE','(Geben Sie zweimal ein neues Passwort ein, um es zu 
 define('_US_SAVECHANGES','Änderungen speichern');
 define('_US_NOEDITRIGHT',"Sie haben leider nicht das Recht, die Benutzerinformationen zu bearbeiten.");
 define('_US_PASSNOTSAME','Beide Passwörter sind unterschiedlich, sie müssen identisch sein.');
-define('_US_PWDTOOSHORT','Sorry, your password must be at least <b>%s</b> characters long.');
-define('_US_PROFUPDATED','Your Profile Updated!');
-define('_US_USECOOKIE','Store my user name in a cookie for 1 year');
+define('_US_PWDTOOSHORT','Ihr Passwort muss mindestens <b>%s</b> Zeichen lang sein.');
+define('_US_PROFUPDATED','Dein Profil wurde aktualisiert!');
+define('_US_USECOOKIE','Speichere meinen Benutzernamen in einem Cookie für ein Jahr');
 //define('_US_NO','No');
-define('_US_DELACCOUNT','Delete Account');
-define('_US_MYAVATAR', 'My Avatar');
-define('_US_UPLOADMYAVATAR', 'Upload Avatar');
+define('_US_DELACCOUNT','Konto löschen');
+define('_US_MYAVATAR', 'Mein Profilbild');
+define('_US_UPLOADMYAVATAR', 'Profilbild hochladen');
 define('_US_MAXPIXEL','Max Pixels');
-define('_US_MAXIMGSZ','Max Image Size (Bytes)');
-define('_US_SELFILE','Select file');
-define('_US_OLDDELETED','Your old avatar will be deleted!');
-define('_US_CHOOSEAVT', 'Choose avatar from the available list');
-define('_US_SELECT_THEME', 'Default Theme');
-define('_US_SELECT_LANG', 'Default Language');
+define('_US_MAXIMGSZ','Maximale Bildgröße (Bytes)');
+define('_US_SELFILE','Datei auswählen');
+define('_US_OLDDELETED','Dein alter Avatar wird gelöscht!');
+define('_US_CHOOSEAVT', 'Avatar aus der verfügbaren Liste auswählen');
+define('_US_SELECT_THEME', 'Standard-Theme');
+define('_US_SELECT_LANG', 'Standardsprache');
 
-define('_US_PRESSLOGIN', 'Press the button below to login');
+define('_US_PRESSLOGIN', 'Zum Anmelden auf den Button unten drücken');
 
-define('_US_ADMINNO', 'User in the webmasters group cannot be removed');
-define('_US_GROUPS', 'User\'s Groups');
+define('_US_ADMINNO', 'Benutzer in der Webmasters Gruppe kann nicht entfernt werden');
+define('_US_GROUPS', 'Benutzer-Gruppen');
 
-define('_US_YOURREGISTRATION', 'Your registration at %s');
-define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
-define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
-define('_US_REGFORM_NOJAVASCRIPT', 'To log in at the site it\'s necessary that your browser has javascript enabled.');
-define('_US_REGFORM_WARNING', 'To register at the site you need to use a secure password. Try to create your password by using a mixture of letters (upper and lowercase), numbers and symbols. Try to create a password the more complex as possible although you can remember it.');
-define('_US_CHANGE_PASSWORD', 'Change Password?');
-define('_US_POSTSNOTENOUGH','Sorry, at least you need to have <b>%s</b> posts, to be able to upload your avatar.');
-define('_US_UNCHOOSEAVT', 'Until you reach this amount you can choose avatar from the list below.');
+define('_US_YOURREGISTRATION', 'Ihre Anmeldung bei %s');
+define('_US_WELCOMEMSGFAILED', 'Fehler beim Senden der Willkommens-E-Mail.');
+define('_US_NEWUSERNOTIFYADMINFAIL', 'Benachrichtigung an Admin über neue Benutzerregistrierung fehlgeschlagen.');
+define('_US_REGFORM_NOJAVASCRIPT', 'Um sich auf der Website anzumelden, ist es notwendig, dass Ihr Browser Javascript aktiviert hat.');
+define('_US_REGFORM_WARNING', 'Um sich auf der Website zu registrieren, müssen Sie ein sicheres Passwort verwenden. Versuchen Sie, Ihr Passwort mit einer Mischung aus Buchstaben (Groß- und Kleinbuchstaben), Zahlen und Symbolen zu erstellen. Versuchen Sie, ein Passwort zu erstellen, je komplexer wie möglich, obwohl Sie es merken können.');
+define('_US_CHANGE_PASSWORD', 'Passwort ändern?');
+define('_US_POSTSNOTENOUGH','Entschuldigung, mindestens benötigst du <b>%s</b> Beiträge, um deinen Avatar hochladen zu können.');
+define('_US_UNCHOOSEAVT', 'Bis Sie diesen Betrag erreicht haben, können Sie Avatar aus der Liste unten auswählen.');
 
 
-define('_US_SERVER_PROBLEM_OCCURRED','There was an issue while checking for spammers list!');
-define('_US_INVALIDIP','ERROR: This IP adress is not allowed to register');
+define('_US_SERVER_PROBLEM_OCCURRED','Beim Überprüfen der Spammerliste ist ein Problem aufgetreten!');
+define('_US_INVALIDIP','FEHLER: Diese IP-Adresse darf sich nicht registrieren');
 
 ######################## Added in 1.2 ###################################
-define('_US_LOGIN_NAME', "Login Name");
-define('_US_OLD_PASSWORD', "Old Password");
-define('_US_NICKNAME','Display Name');
-define('_US_MULTLOGIN', 'It was not possible to login on the site!! <br />
+define('_US_LOGIN_NAME', "Benutzername");
+define('_US_OLD_PASSWORD', "Altes Passwort");
+define('_US_NICKNAME','Anzeigename');
+define('_US_MULTLOGIN', 'Es war nicht möglich, sich auf der Website anzumelden!! <br />
         <p align="left" style="color:red;">
-        Possible causes:<br />
-         - You are already logged in on the site.<br />
-         - Someone else logged in on the site using your username and password.<br />
-         - You left the site or close the browser window without clicking the logout button.<br />
+        Mögliche Ursachen:<br />
+         - Sie sind bereits eingeloggt.<br />
+         - Jemand anderes hat sich mit Ihrem Benutzernamen und Passwort auf der Website eingeloggt.<br />
+         - Sie haben die Seite verlassen oder das Browser-Fenster geschlossen, ohne auf den Logout-Button zu klicken.<br />
         </p>
-        Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
+        Warte einige Minuten und versuche es später erneut. Wenn die Probleme weiterhin bestehen, kontaktieren Sie den Administrator.');
 
 // added in 1.3
-define('_US_NOTIFICATIONS', "Notifications");
+define('_US_NOTIFICATIONS', "Benachrichtigungen");
 
 // relocated from finduser.php in 2.0
 // formselectuser.php
 
-define("_MA_USER_MORE", "Search users");
-define("_MA_USER_REMOVE", "Remove unselected users");
+define("_MA_USER_MORE", "Benutzer suchen");
+define("_MA_USER_REMOVE", "Nicht ausgewählte Nutzer entfernen");
 
 //%%%%%%	File Name findusers.php 	%%%%%
-define("_MA_USER_ADD_SELECTED", "Add selected users");
+define("_MA_USER_ADD_SELECTED", "Ausgewählte Benutzer hinzufügen");
 
-define("_MA_USER_GROUP", "Group");
+define("_MA_USER_GROUP", "Gruppen");
 define("_MA_USER_LEVEL", "Level");
 define("_MA_USER_LEVEL_ACTIVE", "Aktiv");
-define("_MA_USER_LEVEL_INACTIVE", "Inactive");
-define("_MA_USER_LEVEL_DISABLED", "Disabled");
+define("_MA_USER_LEVEL_INACTIVE", "Inaktiv");
+define("_MA_USER_LEVEL_DISABLED", "Deaktiviert");
 define("_MA_USER_RANK", "Rang");
 
-define("_MA_USER_FINDUS","Find Users");
+define("_MA_USER_FINDUS","Benutzer finden");
 define("_MA_USER_REALNAME","Name");
-define("_MA_USER_REGDATE","Joined Date");
-define("_MA_USER_EMAIL","Email");
+define("_MA_USER_REGDATE","Anmeldedatum");
+define("_MA_USER_EMAIL","E-Mail");
 define("_MA_USER_PREVIOUS","Vorherige");
-define("_MA_USER_NEXT","Next");
-define("_MA_USER_USERSFOUND","%s user(s) found");
+define("_MA_USER_NEXT","Nächste");
+define("_MA_USER_USERSFOUND","%s Benutzer gefunden");
 
-define("_MA_USER_ACTUS", "Active Users: %s");
-define("_MA_USER_INACTUS", "Inactive Users: %s");
-define("_MA_USER_NOFOUND","No Users Found");
-define("_MA_USER_UNAME","User Name");
-define("_MA_USER_ICQ","ICQ Number");
-define("_MA_USER_AIM","AIM Handle");
-define("_MA_USER_YIM","YIM Handle");
-define("_MA_USER_MSNM","MSNM Handle");
-define("_MA_USER_LOCATION","Location contains");
-define("_MA_USER_OCCUPATION","Occupation contains");
-define("_MA_USER_INTEREST","Interest contains");
-define("_MA_USER_URLC","URL contains");
-define("_MA_USER_SORT","Sort by");
-define("_MA_USER_ORDER","Order");
-define("_MA_USER_LASTLOGIN","Last login");
-define("_MA_USER_POSTS","Number of posts");
-define("_MA_USER_ASC","Ascending order");
-define("_MA_USER_DESC","Descending order");
-define("_MA_USER_LIMIT","Number of users per page");
-define("_MA_USER_RESULTS", "Search results");
-define("_MA_USER_SHOWMAILOK", "Type of users to show");
-define("_MA_USER_MAILOK","Only users that accept mail");
-define("_MA_USER_MAILNG","Only users that don't accept mail");
-define("_MA_USER_BOTH", "All");
+define("_MA_USER_ACTUS", "Aktive Benutzer: %s");
+define("_MA_USER_INACTUS", "Inaktive Benutzer: %s");
+define("_MA_USER_NOFOUND","Keine User gefunden");
+define("_MA_USER_UNAME","Benutzername");
+define("_MA_USER_ICQ","ICQ-Nummer");
+define("_MA_USER_AIM","AIM-Handle");
+define("_MA_USER_YIM","YIM-Handle");
+define("_MA_USER_MSNM","MSNM-Handle");
+define("_MA_USER_LOCATION","Ort enthält");
+define("_MA_USER_OCCUPATION","Beruf enthält");
+define("_MA_USER_INTEREST","Interessen");
+define("_MA_USER_URLC","URL enthält");
+define("_MA_USER_SORT","Sortieren nach");
+define("_MA_USER_ORDER","Reihenfolge");
+define("_MA_USER_LASTLOGIN","Letzter Login");
+define("_MA_USER_POSTS","Anzahl der Beiträge");
+define("_MA_USER_ASC","Aufsteigende Reihenfolge");
+define("_MA_USER_DESC","Absteigende Reihenfolge");
+define("_MA_USER_LIMIT","Anzahl der Nutzer pro Seite");
+define("_MA_USER_RESULTS", "Suchergebnisse");
+define("_MA_USER_SHOWMAILOK", "Benutzertyp anzeigen");
+define("_MA_USER_MAILOK","Nur Benutzer, die E-Mails akzeptieren");
+define("_MA_USER_MAILNG","Nur Benutzer, die keine E-Mail akzeptieren");
+define("_MA_USER_BOTH", "Alle");
 
-define("_MA_USER_RANGE_LAST_LOGIN","Logged in past <span style='color:#ff0000;'>X</span>days");
-define("_MA_USER_RANGE_USER_REGDATE","Registered in past <span style='color:#ff0000;'>X</span>days");
+define("_MA_USER_RANGE_LAST_LOGIN","Eingeloggt in den letzten <span style='color:#ff0000;'>X</span>Tagen");
+define("_MA_USER_RANGE_USER_REGDATE","Eingeloggt in den letzten <span style='color:#ff0000;'>X</span>Tagen");
 define("_MA_USER_RANGE_POSTS","Beiträge");
 
-define("_MA_USER_HASAVATAR", "Has avatar");
-define("_MA_USER_MODE_SIMPLE", "Simple mode");
-define("_MA_USER_MODE_ADVANCED", "Advanced mode");
-define("_MA_USER_MODE_QUERY", "Query mode");
-define("_MA_USER_QUERY", "Query");
+define("_MA_USER_HASAVATAR", "Hat Avatar");
+define("_MA_USER_MODE_SIMPLE", "Einfacher Modus");
+define("_MA_USER_MODE_ADVANCED", "Erweiterter Modus");
+define("_MA_USER_MODE_QUERY", "Abfragemodus");
+define("_MA_USER_QUERY", "Abfrage");
 
-define("_MA_USER_SEARCHAGAIN", "Search again");
-define("_MA_USER_NOUSERSELECTED", "No user selected");
-define("_MA_USER_USERADDED", "Users have been added");
+define("_MA_USER_SEARCHAGAIN", "Erneute Suche");
+define("_MA_USER_NOUSERSELECTED", "Kein Benutzer ausgewählt");
+define("_MA_USER_USERADDED", "Benutzer wurden hinzugefügt");
 
-define("_MA_USER_SENDMAIL","Send Email");
+define("_MA_USER_SENDMAIL","E-Mail senden");
