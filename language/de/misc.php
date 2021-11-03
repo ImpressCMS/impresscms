@@ -1,12 +1,12 @@
 <?php
 
-define("_MSC_YOURNAMEC","Your Name: ");
-define("_MSC_YOUREMAILC","Your Email: ");
-define("_MSC_FRIENDNAMEC","Friend Name: ");
-define("_MSC_FRIENDEMAILC","Friend Email: ");
-define("_MSC_RECOMMENDSITE","Recommend this Site to a Friend");
+define("_MSC_YOURNAMEC","Dein Name: ");
+define("_MSC_YOUREMAILC","Deine E-Mail: ");
+define("_MSC_FRIENDNAMEC","Der Name Ihres Freundes:");
+define("_MSC_FRIENDEMAILC","E-Mail Adresse Ihres Freundes: ");
+define("_MSC_RECOMMENDSITE","Empfehlen Sie diese Website einem Freund");
 // %s is your site name
-define("_MSC_INTSITE","Interesting Site: %s");
+define("_MSC_INTSITE","Interessante Webseite: %s");
 define("_MSC_REFERENCESENT","The reference to our site has been sent to your friend. Thanks!");
 define("_MSC_ENTERYNAME","Please enter your name");
 define("_MSC_ENTERFNAME","Please enter your friend's name");
