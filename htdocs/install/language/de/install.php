@@ -141,7 +141,7 @@ define("TABLE_DROPPED", "Tabelle %s gelöscht."); // L163
 define("TABLE_NOT_DROPPED", "Löschen der Tabelle %s fehlgeschlagen."); // L164
 
 // Error messages
-define("ERR_COULD_NOT_ACCESS", "Auf den Ordner kann nicht zugegriffen werden. Bitte Ã¼berprÃ¼fen Sie, ob der Ordner existitert und berschreibbar ist. ");
+define("ERR_COULD_NOT_ACCESS", "Auf den Ordner kann nicht zugegriffen werden. Bitte überprüfen Sie, ob der Ordner existitert und berschreibbar ist. ");
 define("ERR_NO_XOOPS_FOUND", "Im angegebenen Ordner konnte keine ImpressCMS Installation gefunden werden. ");
 define("ERR_INVALID_EMAIL", "Ungültige E-Mail"); // L73
 define("ERR_REQUIRED", "Bitte geben Sie alle erforderlichen Informationen ein."); // L41
@@ -200,7 +200,7 @@ define('_CORE_PASSLEVEL2', 'Schwach');
 define('_CORE_PASSLEVEL3', 'Gut');
 define('_CORE_PASSLEVEL4', 'Stark');
 define('DB_PCONNECT_HELP', "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nützlich. In den meisten Fällen ist das nicht erfolderlich, deshalb ist standardmässig 'Nein' gewälht. Wählen Sie auch 'Nein' wenn Sie unsicher sind. "); // L69
-define("DB_PCONNECT_HELPS", "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nüzlich. Daher ist diese Option nicht erfolderlich. "); // L69
+define("DB_PCONNECT_HELPS", "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nützlich. Daher ist diese Option nicht erfolderlich. "); // L69
 
 // Added in 1.3
 define("FILE_PERMISSIONS", "Datei-Berechtigungen");
