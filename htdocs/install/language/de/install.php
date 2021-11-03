@@ -200,7 +200,7 @@ define('_CORE_PASSLEVEL2', 'Schwach');
 define('_CORE_PASSLEVEL3', 'Gut');
 define('_CORE_PASSLEVEL4', 'Stark');
 define('DB_PCONNECT_HELP', "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nützlich. In den meisten Fällen ist das nicht erfolderlich, deshalb ist standardmässig 'Nein' gewälht. Wählen Sie auch 'Nein' wenn Sie unsicher sind. "); // L69
-define("DB_PCONNECT_HELPS", "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nützlich. Daher ist diese Option nicht erfolderlich. "); // L69
+define("DB_PCONNECT_HELPS", "Eine beständige Verbindung ist nur bei sehr langsamen Internetverbindungen nützlich. Daher ist diese Option nicht erforderlich."); // L69
 
 // Added in 1.3
 define("FILE_PERMISSIONS", "Datei-Berechtigungen");
