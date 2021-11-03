@@ -1,8 +1,8 @@
 
-Please follow the link below to complete your membership at {SITENAME}.
+Klik op onderstaande link om je lidmaatschap bij {SITENAME} te voltooien.
 
 {REGISTERLINK}
 
 -----------
 {SITENAME} ({SITEURL}) 
-Webmaster Team
+Het webmaster team
