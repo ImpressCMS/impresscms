@@ -17,67 +17,67 @@ define('_US_RESETPASSINFO','Bitte füllen Sie das folgende Formular aus, um Ihr 
 define('_US_PASSEXPIRED','Ihr Passwort ist abgelaufen.<br />Sie werden nun zu einem Formular weitergeleitet, in dem Sie Ihr Passwort zurücksetzen können.');
 define('_US_SORRYUNAMENOTMATCHEMAIL','Der eingegebene Loginname ist nicht mit der angegebenen E-Mail-Adresse vorhanden!');
 define('_US_PWDRESET','Ihr Passwort wurde erfolgreich zurückgesetzt!');
-define('_US_SORRYINCORRECTPASS','You have entered your current password incorrectly!');
+define('_US_SORRYINCORRECTPASS','Sie haben Ihr aktuelles Passwort falsch eingegeben!');
 
 // 2001-11-17 ADD
-define('_US_NOACTTPADM','The selected user has been deactivated or has not been activated yet.<br />Please contact the administrator for details.');
-define('_US_ACTKEYNOT','Activation key not correct!');
-define('_US_ACONTACT','Selected account is already activated!');
-define('_US_ACTLOGIN','Your account has been activated. Please login with the registered password.');
-define('_US_NOPERMISS','Sorry, you dont have the permission to perform this action!');
-define('_US_SURETODEL','Are you sure you want to delete your account?');
-define('_US_REMOVEINFO','This will remove all your info from our database.');
-define('_US_BEENDELED','Your account has been deleted.');
-define('_US_REMEMBERME', 'Remember me');
+define('_US_NOACTTPADM','Der ausgewählte Benutzer wurde deaktiviert oder wurde noch nicht aktiviert.<br />Bitte kontaktieren Sie den Administrator für weitere Details.');
+define('_US_ACTKEYNOT','Aktivierungsschlüssel nicht korrekt!');
+define('_US_ACONTACT','Ausgewähltes Konto ist bereits aktiviert!');
+define('_US_ACTLOGIN','Ihr Konto wurde aktiviert. Bitte melden Sie sich mit dem registrierten Passwort an.');
+define('_US_NOPERMISS','Entschuldigung, du hast nicht die Berechtigung diese Aktion auszuführen!');
+define('_US_SURETODEL','Sind Sie sicher, dass Sie Ihr Konto löschen möchten?');
+define('_US_REMOVEINFO','Dadurch werden alle Ihre Daten aus unserer Datenbank entfernt.');
+define('_US_BEENDELED','Ihr Konto wurde gelöscht.');
+define('_US_REMEMBERME', 'Eingeloggt bleiben');
 
 //%%%%%%		File Name register.php 		%%%%%
 define('_US_USERREG','Benutzer-Registrierung');
-define('_US_EMAIL','Email');
-define('_US_ALLOWVIEWEMAIL','Allow other users to view my email address');
-define('_US_WEBSITE','Website');
-define('_US_TIMEZONE','Time Zone');
-define('_US_AVATAR','Avatar');
-define('_US_VERIFYPASS','Verify Password');
-define('_US_SUBMIT','Submit');
-define('_US_LOGINNAME','Username');
-define('_US_FINISH','Finish');
-define('_US_REGISTERNG','Could not register new user.');
-define('_US_MAILOK','Receive occasional email notices from administrators and moderators?');
-define('_US_DISCLAIMER','Disclaimer');
-define('_US_IAGREE','I agree to the above');
-define('_US_UNEEDAGREE', 'Sorry, you have to agree to our disclaimer to get registered.');
-define('_US_NOREGISTER','Sorry, we are currently closed for new user registrations');
+define('_US_EMAIL','E-Mail');
+define('_US_ALLOWVIEWEMAIL','Erlaube anderen Benutzern, meine E-Mail-Adresse zu sehen');
+define('_US_WEBSITE','Webseite');
+define('_US_TIMEZONE','Zeitzone');
+define('_US_AVATAR','Profilbild');
+define('_US_VERIFYPASS','Passwort überprüfen');
+define('_US_SUBMIT','Absenden');
+define('_US_LOGINNAME','Benutzername');
+define('_US_FINISH','Beenden');
+define('_US_REGISTERNG','Neuer Benutzer konnte nicht registriert werden.');
+define('_US_MAILOK','Erhalten Sie gelegentliche E-Mail-Nachrichten von Administratoren und Moderatoren?');
+define('_US_DISCLAIMER','Haftungsausschluss');
+define('_US_IAGREE','Ich stimme dem oben genannten zu');
+define('_US_UNEEDAGREE', 'Leider musst du unserem Haftungsausschluss zustimmen, um dich registrieren zu können.');
+define('_US_NOREGISTER','Leider sind wir derzeit für neue Benutzerregistrierungen geschlossen');
 
 // %s is username. This is a subject for email
-define('_US_USERKEYFOR','User activation key for %s');
+define('_US_USERKEYFOR','Benutzer Aktivierungsschlüssel für %s');
 
-define('_US_YOURREGISTERED','You are now registered. An email containing a user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
-define('_US_YOURREGMAILNG','You are now registered. However, we were unable to send the activation mail to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.');
-define('_US_YOURREGISTERED2','You are now registered.  Please wait for your account to be activated by the adminstrators.  You will receive an email once you are activated.  This could take a while so please be patient.');
+define('_US_YOURREGISTERED','Sie sind jetzt registriert. Eine E-Mail mit einem Aktivierungsschlüssel wurde an das von Ihnen angegebene E-Mail-Konto gesendet. Bitte folgen Sie den Anweisungen in der E-Mail, um Ihr Konto zu aktivieren. ');
+define('_US_YOURREGMAILNG','Du bist jetzt registriert. Aufgrund eines internen Fehlers auf unserem Server konnten wir die Aktivierungsmail jedoch nicht an Ihr E-Mail-Konto senden. Wir entschuldigen uns für die Unannehmlichkeiten, bitte senden Sie dem Webmaster eine E-Mail mit einer Benachrichtigung über die Situation.');
+define('_US_YOURREGISTERED2','Du bist jetzt registriert. Bitte warte darauf, dass dein Account von den Administratoren aktiviert wird. Sie erhalten eine E-Mail, sobald Sie aktiviert sind. Dies kann eine Weile dauern, also haben Sie Geduld.');
 
 // %s is your site name
-define('_US_NEWUSERREGAT','New user registration at %s');
+define('_US_NEWUSERREGAT','Neue Benutzerregistrierung am %s');
 // %s is a username
-define('_US_HASJUSTREG','%s has just registered!');
+define('_US_HASJUSTREG','%s hat sich gerade registriert!');
 
-define('_US_INVALIDMAIL','ERROR: Invalid email');
-define('_US_INVALIDNICKNAME','ERROR: Invalid Loginname, please try an other Loginname.');
-define('_US_NICKNAMETOOLONG','Username is too long. It must be less than %s characters.');
-define('_US_NICKNAMETOOSHORT','Username is too short. It must be more than %s characters.');
-define('_US_NAMERESERVED','ERROR: Name is reserved.');
-define('_US_NICKNAMENOSPACES','There cannot be any spaces in the Username.');
-define('_US_LOGINNAMETAKEN','ERROR: Username taken.');
-define('_US_NICKNAMETAKEN','ERROR: Display Name taken.');
-define('_US_EMAILTAKEN','ERROR: Email address already registered.');
-define('_US_ENTERPWD','ERROR: You must provide a password.');
-define('_US_SORRYNOTFOUND','Sorry, no corresponding user info was found.');
+define('_US_INVALIDMAIL','Fehler: Ungültige E-Mail-Adresse');
+define('_US_INVALIDNICKNAME','FEHLER: Ungültiger Loginname, bitte versuchen Sie einen anderen Loginnamen.');
+define('_US_NICKNAMETOOLONG','Benutzername ist zu lang. Er muss weniger als %s Zeichen lang sein.');
+define('_US_NICKNAMETOOSHORT','Benutzername ist zu kurz. Er muss mehr als %s Zeichen lang sein.');
+define('_US_NAMERESERVED','FEHLER: Name ist reserviert.');
+define('_US_NICKNAMENOSPACES','Der Benutzername darf keine Leerzeichen enthalten.');
+define('_US_LOGINNAMETAKEN','Fehler: Benutzername vergeben.');
+define('_US_NICKNAMETAKEN','Fehler: Anzeigename vergeben.');
+define('_US_EMAILTAKEN','FEHLER: E-Mail-Adresse ist bereits registriert.');
+define('_US_ENTERPWD','FEHLER: Sie müssen ein Passwort eingeben.');
+define('_US_SORRYNOTFOUND','Entschuldigung, es wurden keine entsprechenden Benutzerinformationen gefunden.');
 
-define('_US_USERINVITE', 'Membership invitation');
-define('_US_INVITENONE','ERROR: Registration is by invitation only.');
-define('_US_INVITEINVALID','ERROR: Incorrect invitation code.');
-define('_US_INVITEEXPIRED','ERROR: Invitation code is already used or expired.');
+define('_US_USERINVITE', 'Einladung zur Mitgliedschaft');
+define('_US_INVITENONE','FEHLER: Die Registrierung erfolgt nur auf Einladung.');
+define('_US_INVITEINVALID','FEHLER: Falscher Einladungscode.');
+define('_US_INVITEEXPIRED','FEHLER: Einladungscode ist bereits verwendet oder abgelaufen.');
 
-define('_US_INVITEBYMEMBER','Only an existing member can invite new members; please request an invitation email from some registered member.');
+define('_US_INVITEBYMEMBER','Nur ein vorhandenes Mitglied kann neue Mitglieder einladen. Bitte fordern Sie eine Einladungs-E-Mail eines registrierten Mitglieds an.');
 define('_US_INVITEMAILERR','We were unable to send the mail with registration link to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
 define('_US_INVITEDBERR','We were unable to process your registration request due to an internal error. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
 define('_US_INVITESENT','An email containing registration link has been sent to the email account you provided. Please follow the instructions in the mail to register your account. This could take few minutes so please be patient.');
