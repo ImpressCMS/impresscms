@@ -63,11 +63,11 @@ define("DATA_INSERTION", "Datenbank füllen");
 define("DATA_INSERTION_TITLE", "Speichern Ihrer Einstellungen in der Datenbank");
 define("WELCOME", "Willkommen");
 define("NO_PHP5", "Keine PHP 5");
-define("WELCOME_TITLE", "Installation von ImpressCMS abgeschlossen."); // L0
+define("WELCOME_TITLE", "Installation von ImpressCMS abgeschlossen"); // L0
 define("MODULES_INSTALL", "Module installieren");
-define("MODULES_INSTALL_TITLE", "Die Installation der Module.");
+define("MODULES_INSTALL_TITLE", "Modulinstallation ");
 define("NO_PHP5_TITLE", "Keine PHP 5");
-define("NO_PHP5_CONTENT", "Für das einwandfreie Funktionieren von ImpressCMS  wird ein Minimum von PHP 5.2.0 benötigt - Ihre Installation kann nicht fortgesetzt werden. Bitte arbeiten Sie mit Ihrem Hosting-Provider zusammen, um Ihre Umgebung auf eine Version von PHP zu aktualisieren, die älter als 5 ist. .0 (5.2.8 + wird empfohlen) bevor Sie versuchen erneut zu installieren. Für weitere Informationen lesen Sie <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS  unter PHP5 </a>.");
+define("NO_PHP5_CONTENT", "Für das einwandfreie Funktionieren von ImpressCMS wird mindestens PHP 5.2.0 benötigt - Ihre Installation kann nicht fortgesetzt werden. Bitte arbeiten Sie mit Ihrem Hosting Anbieter zusammen, um Ihre Umgebung auf eine Version von PHP zu aktualisieren, die älter als 5 ist..0 (5.2.8 + wird empfohlen) bevor Sie versuchen erneut zu installieren. Für weitere Informationen lesen Sie bitte <a href='https://www.impresscms.org/modules/news/article.php?article_id=122' >ImpressCMS unter PHP5 </a>.");
 define("SAFE_MODE", "Sicherer Modus an");
 define("SAFE_MODE_TITLE", "Sicherer Modus an");
 define("SAFE_MODE_CONTENT", "ImpressCMS  hat festgestellt, dass PHP im Safe Mode läuft. Aus diesem Grund kann Ihre Installation nicht fortgesetzt werden. Bitte arbeiten Sie mit Ihrem Hosting-Provider zusammen, um Ihre Umgebung zu ändern, bevor Sie versuchen erneut zu installieren.");
