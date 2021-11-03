@@ -30,4 +30,4 @@ define("_TZ_GMTP9", "(GMT+9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk");
 define("_TZ_GMTP95", "(GMT+9:30) Adelaide, Darwin");
 define("_TZ_GMTP10", "(GMT+10:00) Brisbane, Canberra, Melbourne, Sydney, Guam, Wladiwostok");
 define("_TZ_GMTP11", "(GMT+11:00)  Magadan, Salomonen, Neukaledonien");
-define("_TZ_GMTP12", "(GMT+12:00) Auckland, Wellington, Fidschi, Kamtschatka, Marshall-Insel");
+define("_TZ_GMTP12", "(GMT+12:00) Auckland, Wellington, Fidschi, Kamtschatka, Marshallinseln");
