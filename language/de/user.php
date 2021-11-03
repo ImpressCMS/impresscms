@@ -4,7 +4,7 @@
 define('_US_NOTREGISTERED','Not registered?  Click <a href="register.php">here</a>.');
 define('_US_LOSTPASSWORD','Lost your password?');
 define('_US_NOPROBLEM','No problem. Simply enter the e-mail address we have on file for your account.');
-define('_US_YOUREMAIL','Your Email: ');
+define('_US_YOUREMAIL','Deine E-Mail: ');
 define('_US_SENDPASSWORD','Send Password');
 define('_US_LOGGEDOUT','You are now logged out');
 define('_US_THANKYOUFORVISIT','Thank you for your visit to our site!');
