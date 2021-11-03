@@ -1,12 +1,12 @@
 Hallo {X_UNAME},
 
-A web user from {IP} has just requested to reset the password for your account at {SITENAME}.
+Ein Webbenutzer von {IP} hat gerade angefordert, das Passwort für Ihr Konto bei {SITENAME} zurückzusetzen.
 
-Your password will only be reset by clicking on the link below:
+Ihr Passwort wird nur zurückgesetzt, indem Sie auf den unten stehenden Link klicken:
 
 {RESETPWD_LINK}
 
-If you didn't request this, don't worry. Just delete this Email and nothing will be changed.
+Wenn Sie dies nicht angefordert haben, machen Sie sich keine Sorgen. Löschen Sie einfach diese E-Mail und nichts wird geändert.
 
 -----------
 {SITENAME} ({SITEURL}) 
