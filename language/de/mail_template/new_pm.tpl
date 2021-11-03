@@ -1,18 +1,18 @@
 Hallo {X_UNAME},
 
-"{X_FROMUNAME}" just sent you a Private Message :
+"{X_FROMUNAME}" hat dir gerade eine private Nachricht geschickt:
 
-SUBJECT : {X_SUBJECT}
+SUBJEKT : {X_SUBJECT}
 
 {X_MESSAGE}
 
 -----------
-Click on the following link to view, reply or delete this message :
+Klicken Sie auf den folgenden Link, um diese Nachricht anzusehen, zu beantworten oder zu löschen:
 {X_ITEM_URL}
 
 -----------
 
-You received this notification because you selected email notification method.
+Sie haben diese Benachrichtigung erhalten, weil Sie die E-Mail-Benachrichtigungsmethode gewählt haben.
 
 Bitte antworten Sie nicht auf diese Nachricht.
 
