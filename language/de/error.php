@@ -2,35 +2,35 @@
 
 define("_ERR_SEARCH","Suchen");
 define("_ERR_SEARCH_OUR_SITE","Diese Website durchsuchen:");
-define("_ERR_ADVANCED_SEARCH","Advanced Search");
+define("_ERR_ADVANCED_SEARCH","Erweiterte Suche");
 define("_ERR_START_AGAIN","Start again from the <a href='" . ICMS_URL . "'>home page</a>.");
-define("_ERR_CONTACT","Contact the <a href='mailto:%s'>webmaster</a> to report this error.");
-define("_ERR_NO", "Error %u");
+define("_ERR_CONTACT","Kontaktieren Sie den <a href='mailto:%s'>Webmaster</a> um diesen Fehler zu melden.");
+define("_ERR_NO", "Fehler %u");
 
-define("_ERR_400_TITLE", "Bad Request");
-define("_ERR_400_DESC", "The request contains bad syntax or cannot be fulfilled.");
-define("_ERR_401_TITLE", "Forbidden");
+define("_ERR_400_TITLE", "Ungültige Anfrage");
+define("_ERR_400_DESC", "Die Anfrage enthält eine fehlerhafte Syntax oder kann nicht erfüllt werden.");
+define("_ERR_401_TITLE", "Verboten");
 define("_ERR_401_DESC", "");
-define("_ERR_402_TITLE", "Payment Required");
+define("_ERR_402_TITLE", "Bezahlung erforderlich");
 define("_ERR_402_DESC", "");
-define("_ERR_403_TITLE", "Forbidden");
+define("_ERR_403_TITLE", "Verboten");
 define("_ERR_403_DESC", "");
-define("_ERR_404_TITLE", "Not Found");
-define("_ERR_404_DESC", "The page you are trying to access could not be found.");
-define("_ERR_405_TITLE", "Method Not Allowed");
+define("_ERR_404_TITLE", "Nicht gefunden");
+define("_ERR_404_DESC", "Die Seite, auf die Sie zugreifen möchten, konnte nicht gefunden werden.");
+define("_ERR_405_TITLE", "Methode nicht zulässig");
 define("_ERR_405_DESC", "");
-define("_ERR_406_TITLE", "Not Acceptable");
+define("_ERR_406_TITLE", "Nicht akzeptiert");
 define("_ERR_406_DESC", "");
-define("_ERR_407_TITLE", "Proxy Authentication Required");
+define("_ERR_407_TITLE", "Proxy-Authentifizierung erforderlich");
 define("_ERR_407_DESC", "");
-define("_ERR_408_TITLE", "Request Timeout");
+define("_ERR_408_TITLE", "Anfrage-Timeout");
 define("_ERR_408_DESC", "");
-define("_ERR_409_TITLE", "Conflict");
+define("_ERR_409_TITLE", "Konflikt");
 define("_ERR_409_DESC", "");
-define("_ERR_500_TITLE", "Internal Server Error");
+define("_ERR_500_TITLE", "Interner Server-Fehler");
 define("_ERR_500_DESC", "");
 
-define('_ERR_MSG_NO_MOD_REWRITE', 'No mod rewrite was installed on the server. Without it ICMS can\'t work');
+define('_ERR_MSG_NO_MOD_REWRITE', 'Es wurde kein Mod Rewrite auf dem Server installiert. Ohne es kann ICMS nicht funktionieren');
 
 /*
  *  // TODO: Define all the other errors constants (4xx and 5xx). Can be found in "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
