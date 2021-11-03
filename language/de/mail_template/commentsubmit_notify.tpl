@@ -1,13 +1,13 @@
 Hallo {X_UNAME},
 
-A comment has been submitted (but not yet approved) to the {X_ITEM_TYPE} "{X_ITEM_NAME}" you are monitoring in the {X_MODULE} module at our site.
+Ein Kommentar wurde dem {X_ITEM_TYPE} "{X_ITEM_NAME}" hinzugefügt, das Sie im Modul {X_MODULE} auf unserer Seite beobachten.
 
-You can view the comment here (if you have permission):
+Sie können den Kommentar hier anzeigen (falls Sie die Erlaubnis haben):
 {X_COMMENT_URL}
 
 -----------
 
-You are receiving this message because you selected to be notified when comments are submitted to this {X_ITEM_TYPE}.
+Sie erhalten diese Nachricht, weil Sie ausgewählt haben, benachrichtigt zu werden, wenn Kommentare zu dieser {X_ITEM_TYPE} hinzugefügt werden.
 
 Wenn dies ein Fehler ist oder Sie keine weiteren solchen Benachrichtigungen erhalten möchten, aktualisieren Sie bitte Ihre Abonnements unter dem folgenden Link:
 {X_UNSUBSCRIBE_URL}
