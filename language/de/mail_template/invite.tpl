@@ -1,5 +1,5 @@
 
-Please follow the link below to complete your membership at {SITENAME}.
+Bitte folgen Sie dem folgenden Link, um Ihre Mitgliedschaft bei {SITENAME} abzuschließen.
 
 {REGISTERLINK}
 
