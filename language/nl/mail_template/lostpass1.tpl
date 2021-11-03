@@ -1,11 +1,11 @@
 Hallo {X_UNAME},
 
-A web user from {IP} has just requested a new password for your account at {SITENAME}.
-You can get your new password by clicking on the link below:
+Iemand vanop {IP} heeft zojuist een nieuw wachtwoord aangevraagd voor uw account op {SITENAME}.
+U kunt uw nieuwe wachtwoord ontvangen door op de onderstaande link te klikken:
 
 {NEWPWD_LINK}
 
-If you didn't ask for this, don't worry. Just delete this Email.
+Als u hier niet om hebt gevraagd, maakt u zich geen zorgen. Het volstaat om deze mail te verwijderen.
 
 -----------
 {SITENAME} ({SITEURL}) 
