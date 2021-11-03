@@ -31,7 +31,7 @@ define('_US_BEENDELED','Your account has been deleted.');
 define('_US_REMEMBERME', 'Remember me');
 
 //%%%%%%		File Name register.php 		%%%%%
-define('_US_USERREG','User Registration');
+define('_US_USERREG','Benutzer-Registrierung');
 define('_US_EMAIL','Email');
 define('_US_ALLOWVIEWEMAIL','Allow other users to view my email address');
 define('_US_WEBSITE','Website');
