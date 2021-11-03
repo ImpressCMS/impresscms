@@ -1,11 +1,11 @@
-Hello admin,
+Hallo Admin,
 
-A new user registered on {X_SITENAME}
+Ein neuer Benutzer registriert am {X_SITENAME}
 
-Username : {UNAME}
+Benutzername: {UNAME}
 Email : {EMAIL}
 
 -----------
-Cordially,
+Herzlich,
 {X_SITENAME}
 {X_SITEURL}
