@@ -1,8 +1,8 @@
 Hallo {X_UNAME},
 
-Your password for {SITENAME} has been successfully reset.
+Ihr Passwort für {SITENAME} wurde erfolgreich zurückgesetzt.
 
-If you didn't ask for this, please contact an administrator informing them of this request.
+Wenn Sie nicht darum gebeten haben, wenden Sie sich bitte an einen Administrator, der ihn über diese Anfrage informiert.
 
 -----------
 {SITENAME} ({SITEURL}) 
