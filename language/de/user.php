@@ -201,7 +201,7 @@ define("_MA_USER_ADD_SELECTED", "Add selected users");
 
 define("_MA_USER_GROUP", "Group");
 define("_MA_USER_LEVEL", "Level");
-define("_MA_USER_LEVEL_ACTIVE", "Active");
+define("_MA_USER_LEVEL_ACTIVE", "Aktiv");
 define("_MA_USER_LEVEL_INACTIVE", "Inactive");
 define("_MA_USER_LEVEL_DISABLED", "Disabled");
 define("_MA_USER_RANK", "Rank");
@@ -241,7 +241,7 @@ define("_MA_USER_BOTH", "All");
 
 define("_MA_USER_RANGE_LAST_LOGIN","Logged in past <span style='color:#ff0000;'>X</span>days");
 define("_MA_USER_RANGE_USER_REGDATE","Registered in past <span style='color:#ff0000;'>X</span>days");
-define("_MA_USER_RANGE_POSTS","Posts");
+define("_MA_USER_RANGE_POSTS","Beiträge");
 
 define("_MA_USER_HASAVATAR", "Has avatar");
 define("_MA_USER_MODE_SIMPLE", "Simple mode");
