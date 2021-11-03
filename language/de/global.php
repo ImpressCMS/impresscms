@@ -81,82 +81,82 @@ define("_VERSION", "Version");
 define("_DESCRIPTION", "Beschreibung");
 define("_ERRORS", "Fehler");
 define("_NONE", "Nichts");
-define('_ON','on');
-define('_READS','reads');
-define('_SEARCH','Suchen');
-define('_ALL', 'All');
+define('_ON','an');
+define('_READS','lesen');
+define('_SEARCH','Suche');
+define('_ALL', 'Alle');
 define('_TITLE', 'Titel');
-define('_OPTIONS', 'Options');
-define('_QUOTE', 'Quote');
-define('_HIDDENC', 'Hidden Content:');
+define('_OPTIONS', 'Optionen');
+define('_QUOTE', 'Zitat');
+define('_HIDDENC', 'Versteckter Inhalt:');
 define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registration at ' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
-define('_LIST', 'List');
-define('_LOGIN','User Login');
-define('_USERNAME','Username: ');
-define('_PASSWORD','Password: ');
-define("_SELECT","Select");
-define("_IMAGE","Image");
-define("_SEND","Send");
-define("_CANCEL","Cancel");
-define("_ASCENDING","Ascending order");
-define("_DESCENDING","Descending order");
-define('_BACK', 'Back');
-define('_NOTITLE', 'No title');
+define('_LIST', 'Liste');
+define('_LOGIN','Benutzer Login');
+define('_USERNAME','Benutzername: ');
+define('_PASSWORD','Passwort: ');
+define("_SELECT","Auswählen");
+define("_IMAGE","Bild");
+define("_SEND","Senden");
+define("_CANCEL","Abbruch");
+define("_ASCENDING","Aufsteigende Reihenfolge");
+define("_DESCENDING","Absteigende Reihenfolge");
+define('_BACK', 'Zurück');
+define('_NOTITLE', 'Kein Titel');
 
 /* Image manager */
-define('_IMGMANAGER','Image Manager');
-define('_NUMIMAGES', '%s images');
-define('_ADDIMAGE','Add Image File');
+define('_IMGMANAGER','Bildmanager');
+define('_NUMIMAGES', '%s Bilder');
+define('_ADDIMAGE','Bilddatei hinzufügen');
 define('_IMAGENAME','Name:');
-define('_IMGMAXSIZE','Max size allowed (bytes):');
-define('_IMGMAXWIDTH','Max width allowed (pixels):');
-define('_IMGMAXHEIGHT','Max height allowed (pixels):');
-define('_IMAGECAT','Category:');
-define('_IMAGEFILE','Image file:');
-define('_IMGWEIGHT','Order:');
-define('_IMGDISPLAY','Display this image?');
-define('_IMAGEMIME','MIME type:');
-define('_FAILFETCHIMG', 'Could not get uploaded file %s');
-define('_FAILSAVEIMG', 'Failed storing image %s into the database');
-define('_NOCACHE', 'No Cache');
-define('_CLONE', 'Clone');
-define('_INVISIBLE', 'Invisible');
+define('_IMGMAXSIZE','Maximale erlaubte Größe (Bytes):');
+define('_IMGMAXWIDTH','Maximale erlaubte Größe (Bytes):');
+define('_IMGMAXHEIGHT','Maximale erlaubte Größe (Bytes):');
+define('_IMAGECAT','Kategorie:');
+define('_IMAGEFILE','Bilddatei:');
+define('_IMGWEIGHT','Reihenfolge:');
+define('_IMGDISPLAY','Dieses Bild anzeigen?');
+define('_IMAGEMIME','MIME-Typ:');
+define('_FAILFETCHIMG', 'Datei %s konnte nicht hochgeladen werden');
+define('_FAILSAVEIMG', 'Fehler beim Speichern des Bildes %s in der Datenbank');
+define('_NOCACHE', 'Kein Cache');
+define('_CLONE', 'Kopieren');
+define('_INVISIBLE', 'Unsichtbar');
 
 //%%%%%	File Name class/xoopsform/formmatchoption.php 	%%%%%
-define("_STARTSWITH", "Starts with");
-define("_ENDSWITH", "Ends with");
-define("_MATCHES", "Matches");
-define("_CONTAINS", "Contains");
+define("_STARTSWITH", "Beginnt mit");
+define("_ENDSWITH", "Endet mit");
+define("_MATCHES", "Treffer");
+define("_CONTAINS", "Beinhaltet");
 
 //%%%%%%	File Name commentform.php 	%%%%%
-define("_REGISTER","Register");
+define("_REGISTER","Registrieren");
 
 //%%%%%%	File Name xoopscodes.php 	%%%%%
 define("_SIZE","SIZE");  // font size
-define("_FONT","FONT");  // font family
-define("_COLOR","COLOR");  // font color
-define("_EXAMPLE","SAMPLE");
-define("_ENTERURL","Enter the URL of the link you want to add:");
-define("_ENTERWEBTITLE","Enter the web site title:");
-define("_ENTERIMGURL","Enter the URL of the image you want to add.");
-define("_ENTERIMGPOS","Now, enter the position of the image.");
-define("_IMGPOSRORL","'R' or 'r' for right, 'L' or 'l' for left, 'C' or 'c' for center, or leave it blank.");
-define("_ERRORIMGPOS","ERROR! Enter the position of the image.");
-define("_ENTEREMAIL","Enter the email address you want to add.");
-define("_ENTERCODE","Enter the codes that you want to add.");
-define("_ENTERQUOTE","Enter the text that you want to be quoted.");
-define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
-define("_ENTERTEXTBOX","Please input text into the textbox.");
+define("_FONT","Schrift");  // font family
+define("_COLOR","FARBE");  // font color
+define("_EXAMPLE","Auswahl");
+define("_ENTERURL","Geben Sie die URL des Links ein, den Sie hinzufügen möchten:");
+define("_ENTERWEBTITLE","Geben Sie den Titel der Webseite ein:");
+define("_ENTERIMGURL","Geben Sie die URL des Links ein, den Sie hinzufügen möchten.");
+define("_ENTERIMGPOS","Geben Sie nun die Position des Bildes ein.");
+define("_IMGPOSRORL","'R' oder 'r' für rechts, 'L' oder 'l' für links, 'C' oder 'c' für die Mitte oder lassen Sie es leer.");
+define("_ERRORIMGPOS","Geben Sie nun die Position des Bildes ein.");
+define("_ENTEREMAIL","Geben Sie die E-Mail-Adresse ein, die Sie hinzufügen möchten.");
+define("_ENTERCODE","Geben Sie die URL des Links ein, den Sie hinzufügen möchten.");
+define("_ENTERQUOTE","Geben Sie den Text ein, den Sie zitieren möchten.");
+define("_ENTERHIDDEN","Geben Sie den Text ein, den Sie für anonyme Benutzer verstecken möchten.");
+define("_ENTERTEXTBOX","Bitte geben Sie Text in das Textfeld ein.");
 
 //%%%%%		TIME FORMAT SETTINGS   %%%%%
-define('_SECOND', '1 second');
-define('_SECONDS', '%s seconds');
-define('_MINUTE', '1 minute');
-define('_MINUTES', '%s minutes');
-define('_HOUR', '1 hour');
-define('_HOURS', '%s hours');
-define('_DAY', '1 day');
-define('_DAYS', '%s days');
+define('_SECOND', '1 Sekunde');
+define('_SECONDS', '%s Sekunden');
+define('_MINUTE', '1Minute');
+define('_MINUTES', '%s Minuten');
+define('_HOUR', '1 Stunde');
+define('_HOURS', '%s Stunden');
+define('_DAY', '1 Tag');
+define('_DAYS', '%s Tage');
 define('_WEEK', '1 week');
 define('_MONTH', '1 month');
 
