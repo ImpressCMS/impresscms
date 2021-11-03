@@ -4,7 +4,7 @@
 define("_PM_DELETED","Your message(s) has been deleted");
 define("_PM_PRIVATEMESSAGE","Private Messages");
 define("_PM_INBOX","Inbox"); // could use _US_INBOX
-define("_PM_FROM","From");
+define("_PM_FROM","Aus");
 define("_PM_YOUDONTHAVE","You don't have any private messages");
 //define("_PM_FROMC","From: "); 								//replaced with _PM_FROM with colon
 define("_PM_SENTC","Sent: "); // The date of message sent
