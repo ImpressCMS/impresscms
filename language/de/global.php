@@ -1,86 +1,86 @@
 <?php
 
 //%%%%%%	File Name mainfile.php 	%%%%%
-define('_PLEASEWAIT','Please Wait');
-define('_FETCHING','Loading...');
-define('_TAKINGBACK','Taking you back to where you were....');
-define('_LOGOUT','Logout');
-define('_SUBJECT','Subject');
-define('_MESSAGEICON','Message Icon');
-define('_COMMENTS','Comments');
-define('_POSTANON','Post Anonymously');
-define('_DISABLESMILEY','Disable smiley');
-define('_DISABLEHTML','Disable html');
-define('_PREVIEW','Preview');
+define('_PLEASEWAIT','Bitte warten');
+define('_FETCHING','Lädt...');
+define('_TAKINGBACK','Bring dich dorthin zurück, wo du warst');
+define('_LOGOUT','Abmelden');
+define('_SUBJECT','Betreff');
+define('_MESSAGEICON','Nachrichten Symbol');
+define('_COMMENTS','Kommentare');
+define('_POSTANON','Anonym schreiben');
+define('_DISABLESMILEY','Smiley deaktivieren');
+define('_DISABLEHTML','HTML deaktivieren');
+define('_PREVIEW','Vorschau');
 
 define('_GO','Go!');
-define('_NESTED','Nested');
-define('_NOCOMMENTS','No Comments');
+define('_NESTED','Verschachtelt');
+define('_NOCOMMENTS','Keine Kommentare');
 define('_FLAT','Flat');
-define('_THREADED','Threaded');
-define('_OLDESTFIRST','Oldest First');
-define('_NEWESTFIRST','Newest First');
-define('_MORE','more...');
-define('_IFNOTRELOAD','If the page does not automatically reload, please click <a href="%s">here</a>');
-define('_WARNINSTALL2','WARNING: Directory %s exists on your server. <br />Please remove this directory for security reasons.');
-define('_WARNINWRITEABLE','WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)');
-define('_WARNINNOTWRITEABLE','WARNING: File %s is not writeable by the server. <br />Please change the permission of this file for functionality reasons.<br /> in Unix (777), in Win32 (writeable)');
+define('_THREADED','Thread');
+define('_OLDESTFIRST','Älteste zuerst');
+define('_NEWESTFIRST','Neueste zuerst');
+define('_MORE','mehr...');
+define('_IFNOTRELOAD','Wenn die Seite nicht automatisch neu geladen wird, klicken Sie bitte <a href="%s">hier</a>');
+define('_WARNINSTALL2','WARNUNG: Verzeichnis %s existiert auf Ihrem Server. <br />Bitte entfernen Sie dieses Verzeichnis aus Sicherheitsgründen.');
+define('_WARNINWRITEABLE','WARNUNG: Datei %s ist beschreibbar durch den Server. <br />Bitte ändern Sie die Berechtigung dieser Datei aus Sicherheitsgründen.<br /> in Unix (444), in Win32 (schreibgeschützt)');
+define('_WARNINNOTWRITEABLE','WARNUNG: Datei %s ist beschreibbar durch den Server. <br />Bitte ändern Sie die Berechtigung dieser Datei aus Sicherheitsgründen.<br /> in Unix (777), in Win32 (schreibgeschützt)');
 
 // Error messages issued by icms_core_Object::cleanVars()
-define( '_XOBJ_ERR_REQUIRED', '%s is required' );
-define( '_XOBJ_ERR_SHORTERTHAN', '%s must be shorter than %d characters.' );
+define( '_XOBJ_ERR_REQUIRED', '%s ist erforderlich' );
+define( '_XOBJ_ERR_SHORTERTHAN', '%s muss kürzer als %d Zeichen sein.' );
 
 //%%%%%%	File Name themeuserpost.php 	%%%%%
-define('_PROFILE','Profile');
-define('_POSTEDBY','Posted by');
-define('_VISITWEBSITE','Visit Website');
-define('_SENDPMTO','Send Private Message to %s');
-define('_SENDEMAILTO','Send Email to %s');
-define('_ADD','Add');
-define('_REPLY','Reply');
-define('_DATE','Date');   // Posted date
+define('_PROFILE','Profil');
+define('_POSTEDBY','Gepostet von');
+define('_VISITWEBSITE','Webseite besuchen');
+define('_SENDPMTO','Private Nachricht an %s senden');
+define('_SENDEMAILTO','E-Mail an %s senden');
+define('_ADD','Hinzufügen');
+define('_REPLY','Antworten');
+define('_DATE','Datum');   // Posted date
 
 //%%%%%%	File Name admin_functions.php 	%%%%%
-define('_MAIN','Main');
-define('_MANUAL','Manual');
-define('_INFO','Info');
-define('_CPHOME','Admin Control Panel');
-define('_YOURHOME','Home Page');
+define('_MAIN','Hauptseite');
+define('_MANUAL','Handbuch');
+define('_INFO','Informationen');
+define('_CPHOME','Administrator Systemsteuerung');
+define('_YOURHOME','Startseite');
 
 //%%%%%%	File Name misc.php (who's-online popup)	%%%%%
-define('_WHOSONLINE','Who\'s Online');
-define('_GUESTS', 'Guests');
-define('_MEMBERS', 'Members');
-define('_ONLINEPHRASE','<b>%s</b> user(s) are online');
-define('_ONLINEPHRASEX','<b>%s</b> user(s) are browsing <b>%s</b>');
-define('_CLOSE','Close');  // Close window
+define('_WHOSONLINE','Wer ist online');
+define('_GUESTS', 'Gäste');
+define('_MEMBERS', 'Mitglieder');
+define('_ONLINEPHRASE','<b>%s</b> Benutzer sind online');
+define('_ONLINEPHRASEX','<b>%s</b> Benutzer durchsuchen <b>%s</b>');
+define('_CLOSE','Schließen');  // Close window
 
 //%%%%%%	File Name module.textsanitizer.php 	%%%%%
-define('_QUOTEC','Quote:');
+define('_QUOTEC','Zitat:');
 
 //%%%%%%	File Name admin.php 	%%%%%
-define("_NOPERM","Sorry, you don't have permission to access this area.");
+define("_NOPERM","Sie haben keine Berechtigung auf diese Seite zuzugreifen.");
 
 //%%%%%		Common Phrases		%%%%%
-define("_NO","No");
-define("_YES","Yes");
-define("_EDIT","Edit");
-define("_DELETE","Delete");
-define("_SUBMIT","Submit");
-define("_MODULENOEXIST","Selected module does not exist!");
-define("_ALIGN","Align");
-define("_LEFT","Left");
-define("_CENTER","Center");
-define("_RIGHT","Right");
-define("_FORM_ENTER", "Please enter %s");
+define("_NO","Nein");
+define("_YES","Ja");
+define("_EDIT","Bearbeiten");
+define("_DELETE","Löschen");
+define("_SUBMIT","Absenden");
+define("_MODULENOEXIST","Ausgewähltes Modul existiert nicht!");
+define("_ALIGN","Ausrichten");
+define("_LEFT","Links");
+define("_CENTER","Zentriert");
+define("_RIGHT","Rechts");
+define("_FORM_ENTER", "Bitte geben Sie %s ein");
 // %s represents file name
-define("_MUSTWABLE","File %s must be writable by the server!");
+define("_MUSTWABLE","Datei %s muss vom Server beschreibbar sein!");
 // Module info
-define('_PREFERENCES', 'Preferences');
+define('_PREFERENCES', 'Einstellungen');
 define("_VERSION", "Version");
-define("_DESCRIPTION", "Description");
-define("_ERRORS", "Errors");
-define("_NONE", "None");
+define("_DESCRIPTION", "Beschreibung");
+define("_ERRORS", "Fehler");
+define("_NONE", "Nichts");
 define('_ON','on');
 define('_READS','reads');
 define('_SEARCH','Suchen');
