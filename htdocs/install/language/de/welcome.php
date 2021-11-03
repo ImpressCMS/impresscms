@@ -2,12 +2,7 @@
 
 $content .= '
 <p>ImpressCMS ist ein in PHP geschriebenes Web-Publishing-System. Es ist ein ideales Werkzeug für Entwicklung kleiner bis großer dynamischer Community-Websites, unternehmensinterner Portale, Unternehmensportale, Weblogs und vieles mehr.</p>
-<p>
-	ImpressCMS ist freigegeben unter den Bedingungen der
-	<a href="http://www.gnu.org/copyleft/gpl.html" rel="external">GNU General Public License (GPL)</a>
-	und ist frei zu verwenden und zu Ändern.
-	Es ist frei, so lange Ãnderungen, wie Sie durch die Bestimungen der GPL genannt sind, erhalten bleiben.
-</p>
+<p>ImpressCMS ist freigegeben unter den Bedingungen der  <a href="http://www.gnu.org/copyleft/gpl.html" rel="external">GNU General Public License (GPL)</a> und ist frei zu verwenden und zu Ändern. Es ist frei, so lange Ãnderungen, wie Sie durch die Bestimungen der GPL genannt sind, erhalten bleiben.</p>
 <h3>Anforderungen</h3>
 <ul>
 	<li>- WWW Server: <a href="http://www.apache.org/" rel="external">Apache</a>, IIS, Roxen, etc</li>
@@ -23,5 +18,6 @@ $content .= '
 	<li>Machen Sie die Datei ../.env schreibbar (chmod 666 je nach Server).</li>
 	<li>Aktivieren Sie in den Einstellungen Ihres Internetbrowsers das Zulassen von Cookies und JavaScript.</li>
 </ul> 
- ';
+ 
+';
 
