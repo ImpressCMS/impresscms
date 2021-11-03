@@ -210,7 +210,7 @@ define("_MA_USER_FINDUS","Find Users");
 define("_MA_USER_REALNAME","Real Name");
 define("_MA_USER_REGDATE","Joined Date");
 define("_MA_USER_EMAIL","Email");
-define("_MA_USER_PREVIOUS","Previous");
+define("_MA_USER_PREVIOUS","Vorherige");
 define("_MA_USER_NEXT","Next");
 define("_MA_USER_USERSFOUND","%s user(s) found");
 
