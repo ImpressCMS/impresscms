@@ -78,62 +78,62 @@ define('_US_INVITEINVALID','FEHLER: Falscher Einladungscode.');
 define('_US_INVITEEXPIRED','FEHLER: Einladungscode ist bereits verwendet oder abgelaufen.');
 
 define('_US_INVITEBYMEMBER','Nur ein vorhandenes Mitglied kann neue Mitglieder einladen. Bitte fordern Sie eine Einladungs-E-Mail eines registrierten Mitglieds an.');
-define('_US_INVITEMAILERR','We were unable to send the mail with registration link to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
-define('_US_INVITEDBERR','We were unable to process your registration request due to an internal error. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
-define('_US_INVITESENT','An email containing registration link has been sent to the email account you provided. Please follow the instructions in the mail to register your account. This could take few minutes so please be patient.');
+define('_US_INVITEMAILERR','Du bist jetzt registriert. Aufgrund eines internen Fehlers auf unserem Server konnten wir die Aktivierungsmail jedoch nicht an Ihr E-Mail-Konto senden. Wir entschuldigen uns für die Unannehmlichkeiten, bitte senden Sie dem Webmaster eine E-Mail mit einer Benachrichtigung über die Situation.');
+define('_US_INVITEDBERR','Ihre Registrierungsanfrage konnte aufgrund eines internen Fehlers nicht bearbeitet werden. Wir entschuldigen uns für die Unannehmlichkeiten, bitte versuchen Sie es noch einmal, und wenn das Problem weiterhin besteht, senden Sie dem Webmaster eine E-Mail, in der er über die Situation informiert. <br />');
+define('_US_INVITESENT','Eine E-Mail mit Registrierungslink wurde an das von Ihnen angegebene E-Mail-Konto gesendet. Bitte folgen Sie den Anweisungen in der E-Mail, um Ihr Konto zu registrieren. Dies kann einige Minuten dauern, also haben Sie Geduld.');
 // %s is your site name
-define('_US_INVITEREGLINK','Registration invitation from %s');
+define('_US_INVITEREGLINK','Registrierungseinladung von %s');
 
 // %s is your site name
-define('_US_NEWPWDREQ','New Password Request at %s');
-define('_US_YOURACCOUNT', 'Your account at %s');
+define('_US_NEWPWDREQ','Neue Passwortanfrage bei %s');
+define('_US_YOURACCOUNT', 'Ihr Konto bei %s');
 
-define('_US_MAILPWDNG','mail_password: could not update user entry. Contact the Administrator');
-define('_US_RESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
+define('_US_MAILPWDNG','mail_password: Benutzereintrag konnte nicht aktualisiert werden. Kontaktieren Sie den Administrator');
+define('_US_RESETPWDNG','reset_password: Benutzereintrag konnte nicht aktualisiert werden. Kontaktieren Sie den Administrator');
 
-define('_US_RESETPWDREQ','Reset Password Request at %s');
-define('_US_MAILRESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
-define('_US_NEWPASSWORD','New Password');
-define('_US_YOURUSERNAME','Your Username');
-define('_US_CURRENTPASS','Your Current Password');
-define('_US_BADPWD','Bad Password, Password can not contain username.');
+define('_US_RESETPWDREQ','Passwortanfrage bei %s zurücksetzen');
+define('_US_MAILRESETPWDNG','reset_password: Benutzereintrag konnte nicht aktualisiert werden. Kontaktieren Sie den Administrator');
+define('_US_NEWPASSWORD','Passwort senden');
+define('_US_YOURUSERNAME','Ihr Benutzername');
+define('_US_CURRENTPASS','Ihr aktuelles Passwort');
+define('_US_BADPWD','Falsches Passwort, Passwort darf keinen Benutzernamen enthalten.');
 
 // %s is a username
-define('_US_PWDMAILED','Password for %s mailed.');
-define('_US_CONFMAIL','Confirmation Mail for %s mailed.');
-define('_US_ACTVMAILNG', 'Failed sending notification mail to %s');
-define('_US_ACTVMAILOK', 'Notification mail to %s sent.');
+define('_US_PWDMAILED','Passwort für %s gemailed.');
+define('_US_CONFMAIL','Bestätigungsmail für %s gemailed.');
+define('_US_ACTVMAILNG', 'Fehler beim Senden der Benachrichtigungsmail an %s');
+define('_US_ACTVMAILOK', 'Benachrichtigungsmail an %s gesendet.');
 
 //%%%%%%		File Name userinfo.php 		%%%%%
-define('_US_SELECTNG','No User Selected! Please go back and try again.');
+define('_US_SELECTNG','Kein Benutzer ausgewählt! Bitte gehen Sie zurück und versuchen Sie es erneut.');
 define('_US_PM','PM');
 define('_US_ICQ','ICQ');
 define('_US_AIM','AIM');
 define('_US_YIM','YIM');
 define('_US_MSNM','MSNM');
-define('_US_LOCATION','Location');
-define('_US_OCCUPATION','Occupation');
-define('_US_INTEREST','Interest');
-define('_US_SIGNATURE','Signature');
-define('_US_EXTRAINFO','Extra Info');
-define('_US_EDITPROFILE','Edit Profile');
-define('_US_LOGOUT','Logout');
+define('_US_LOCATION','Wohnort');
+define('_US_OCCUPATION','Beruf');
+define('_US_INTEREST','Interessen');
+define('_US_SIGNATURE','Signatur,');
+define('_US_EXTRAINFO','zusätzliche Informationen');
+define('_US_EDITPROFILE','Profil bearbeiten');
+define('_US_LOGOUT','Abmelden');
 define('_US_INBOX','Postfach');
-define('_US_MEMBERSINCE','Member Since');
-define('_US_RANK','Rank');
-define('_US_POSTS','Comments/Posts');
-define('_US_LASTLOGIN','Last Login');
-define('_US_ALLABOUT','All about %s');
-define('_US_STATISTICS','Statistics');
-define('_US_MYINFO','My Info');
-define('_US_BASICINFO','Basic information');
-define('_US_MOREABOUT','More About Me');
-define('_US_SHOWALL','Show All');
+define('_US_MEMBERSINCE','Mitglied seit');
+define('_US_RANK','Rang');
+define('_US_POSTS','Kommentare/Beiträge');
+define('_US_LASTLOGIN','Letzter Login');
+define('_US_ALLABOUT','Profil von %s');
+define('_US_STATISTICS','Meine Statistiken');
+define('_US_MYINFO','Über Mich');
+define('_US_BASICINFO','Stammdaten');
+define('_US_MOREABOUT','Mehr zu mir');
+define('_US_SHOWALL','Alle anzeigen');
 
 //%%%%%%		File Name edituser.php 		%%%%%
-define('_US_PROFILE','Profile');
-define('_US_REALNAME','Real Name');
-define('_US_SHOWSIG','Always attach my signature');
+define('_US_PROFILE','Profil');
+define('_US_REALNAME','Name');
+define('_US_SHOWSIG','Meine Signatur immer hinzufügen');
 define('_US_CDISPLAYMODE','Comments Display Mode');
 define('_US_CSORTORDER','Comments Sort Order');
 define('_US_PASSWORD','Password');
@@ -204,10 +204,10 @@ define("_MA_USER_LEVEL", "Level");
 define("_MA_USER_LEVEL_ACTIVE", "Aktiv");
 define("_MA_USER_LEVEL_INACTIVE", "Inactive");
 define("_MA_USER_LEVEL_DISABLED", "Disabled");
-define("_MA_USER_RANK", "Rank");
+define("_MA_USER_RANK", "Rang");
 
 define("_MA_USER_FINDUS","Find Users");
-define("_MA_USER_REALNAME","Real Name");
+define("_MA_USER_REALNAME","Name");
 define("_MA_USER_REGDATE","Joined Date");
 define("_MA_USER_EMAIL","Email");
 define("_MA_USER_PREVIOUS","Vorherige");
