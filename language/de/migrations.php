@@ -29,7 +29,7 @@ define('_MIGRATION_SMILE_15', 'Ein weiteres Bier');
 define('_MIGRATION_SMILE_16', 'ToolTimes at work');
 define('_MIGRATION_SMILE_17', 'Ich habe eine Idee');
 
-define('_MIGRATION_PAGE_2', 'Admin-Systemsteuerung');
+define('_MIGRATION_PAGE_2', 'Administrator Systemsteuerung');
 define('_MIGRATION_PAGE_3', 'Profilbild');
 define('_MIGRATION_PAGE_4', 'Banner');
 define('_MIGRATION_PAGE_5', 'Block Admin');
@@ -40,10 +40,10 @@ define('_MIGRATION_PAGE_10', 'Benutzerdefiniertes Tag');
 define('_MIGRATION_PAGE_11', 'Gruppen');
 define('_MIGRATION_PAGE_12', 'Bildmanager');
 define('_MIGRATION_PAGE_13', 'E-Mail Benutzer');
-define('_MIGRATION_PAGE_14', 'Modul-Admin');
-define('_MIGRATION_PAGE_15', 'Symlink-Manager');
+define('_MIGRATION_PAGE_14', 'Modul Administration');
+define('_MIGRATION_PAGE_15', 'Symlink Manager');
 define('_MIGRATION_PAGE_16', 'Einstellungen');
-define('_MIGRATION_PAGE_17', 'Smilies');
+define('_MIGRATION_PAGE_17', 'Smileys');
 define('_MIGRATION_PAGE_18', 'Templates');
 define('_MIGRATION_PAGE_19',  'Benutzerrang');
 define('_MIGRATION_PAGE_20', 'Benutzer bearbeiten');
@@ -156,13 +156,13 @@ define('_MIGRATIONS_LOCAL_FOOTER', 'Powered by ImpressCMS &copy; 2007-' . date('
 define('_MIGRATIONS_LOCAL_SENSORTXT', '#OPS-#'); //Add local translation
 define('_MIGRATIONS_DEF_LANG_TAGS', 'en,de'); //Add local translation
 define('_MIGRATIONS_DEF_LANG_NAMES', 'german,german'); //Add local translation
-define('_MIGRATIONS_LOCAL_LANG_NAMES', 'English,Deutsch'); //Add local translation
+define('_MIGRATIONS_LOCAL_LANG_NAMES', 'Englisch, Deutsch'); //Add local translation
 define('_MIGRATIONS_AM_RSSLOCALLINK_DESC', 'https://www.impresscms.org/modules/news/rss.php'); //Link to the rrs of local support site
-define('_MIGRATIONS_INSTALL_WEBMASTER', 'Webmasters');
-define('_MIGRATIONS_INSTALL_WEBMASTERD', 'Webmasters of this site');
-define('_MIGRATIONS_INSTALL_REGUSERS', 'Registered Users');
-define('_MIGRATIONS_INSTALL_REGUSERSD', 'Registered Users Group');
-define('_MIGRATIONS_INSTALL_ANONUSERS', 'Anonymous Users');
-define('_MIGRATIONS_INSTALL_ANONUSERSD', 'Anonymous Users Group');
-define('_MIGRATIONS_WELCOME_WEBMASTER', 'Welcome Webmaster !');
-define('_MIGRATIONS_WELCOME_ANONYMOUS', 'Welcome to an ImpressCMS powered website !');
+define('_MIGRATIONS_INSTALL_WEBMASTER', 'Webmaster');
+define('_MIGRATIONS_INSTALL_WEBMASTERD', 'Webmaster dieser Seite');
+define('_MIGRATIONS_INSTALL_REGUSERS', 'Registrierte Benutzer');
+define('_MIGRATIONS_INSTALL_REGUSERSD', 'Registrierte Benutzer');
+define('_MIGRATIONS_INSTALL_ANONUSERS', 'Anonyme Benutzer');
+define('_MIGRATIONS_INSTALL_ANONUSERSD', 'Anonyme Benutzer');
+define('_MIGRATIONS_WELCOME_WEBMASTER', 'Willkommen Webmaster!');
+define('_MIGRATIONS_WELCOME_ANONYMOUS', 'Herzlich willkommen auf einer ImpressCMS powered website!');
