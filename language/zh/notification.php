@@ -5,11 +5,11 @@
 
 // Text for various templates...
 
-define ('_NOT_NOTIFICATIONOPTIONS', '选项');
+define ('_NOT_NOTIFICATIONOPTIONS', 'Options');
 define ('_NOT_UPDATENOW', 'Update Now');
 define ('_NOT_UPDATEOPTIONS', 'Update Notification Options');
 
-define ('_NOT_CLEAR', '清除');
+define ('_NOT_CLEAR', 'Clear');
 define ('_NOT_CHECKALL', 'Check All');
 define ('_NOT_MODULE', 'Module');
 define ('_NOT_CATEGORY', 'Category');
