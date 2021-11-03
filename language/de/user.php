@@ -1,22 +1,22 @@
 <?php
 
 //%%%%%%		File Name user.php 		%%%%%
-define('_US_NOTREGISTERED','Not registered?  Click <a href="register.php">here</a>.');
-define('_US_LOSTPASSWORD','Lost your password?');
-define('_US_NOPROBLEM','No problem. Simply enter the e-mail address we have on file for your account.');
+define('_US_NOTREGISTERED','Nicht registriert? Klicken Sie <a href="register.php">hier</a>.');
+define('_US_LOSTPASSWORD','Passwort vergessen?');
+define('_US_NOPROBLEM','Kein Problem: Geben Sie einfach die E-Mail-Adresse ein, die wir für Ihr Konto haben.');
 define('_US_YOUREMAIL','Deine E-Mail: ');
-define('_US_SENDPASSWORD','Send Password');
-define('_US_LOGGEDOUT','You are now logged out');
-define('_US_THANKYOUFORVISIT','Thank you for your visit to our site!');
-define('_US_INCORRECTLOGIN','Incorrect Login!');
-define('_US_LOGGINGU','Thank you for logging in, %s.');
-define('_US_RESETPASSWORD','Reset your password');
-define('_US_SUBRESETPASSWORD','Reset Password');
-define('_US_RESETPASSTITLE','Your password has expired!');
-define('_US_RESETPASSINFO','Please complete the following form in order to reset your password. If your email, login name and current password all match our record, your password will be changed instantly and you will be able to log back in!');
-define('_US_PASSEXPIRED','Your password has expired.<br />You will now be redirected to a form where you will be able to reset your password.');
-define('_US_SORRYUNAMENOTMATCHEMAIL','The login name entered is not associated with the given Email address!');
-define('_US_PWDRESET','Your password has been reset successfully!');
+define('_US_SENDPASSWORD','Passwort senden');
+define('_US_LOGGEDOUT','Sie sind jetzt ausgeloggt');
+define('_US_THANKYOUFORVISIT','Vielen Dank für Ihren Besuch auf unserer Website!');
+define('_US_INCORRECTLOGIN','Falscher Login!');
+define('_US_LOGGINGU','Vielen Dank für Ihre Anmeldung, %s.');
+define('_US_RESETPASSWORD','Passwort vergessen');
+define('_US_SUBRESETPASSWORD','Passwort zurücksetzen');
+define('_US_RESETPASSTITLE','Dein Passwort ist abgelaufen!');
+define('_US_RESETPASSINFO','Bitte füllen Sie das folgende Formular aus, um Ihr Passwort zurückzusetzen. Wenn Ihre E-Mail, Ihr Benutzername und Ihr aktuelles Passwort mit unserem Eintrag übereinstimmen, Ihr Passwort wird sofort geändert und Sie können sich wieder einloggen!');
+define('_US_PASSEXPIRED','Ihr Passwort ist abgelaufen.<br />Sie werden nun zu einem Formular weitergeleitet, in dem Sie Ihr Passwort zurücksetzen können.');
+define('_US_SORRYUNAMENOTMATCHEMAIL','Der eingegebene Loginname ist nicht mit der angegebenen E-Mail-Adresse vorhanden!');
+define('_US_PWDRESET','Ihr Passwort wurde erfolgreich zurückgesetzt!');
 define('_US_SORRYINCORRECTPASS','You have entered your current password incorrectly!');
 
 // 2001-11-17 ADD
