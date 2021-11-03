@@ -5,7 +5,7 @@ Thanks for subscribing to {X_SITENAME}. As a registered member your can:
 - Participate in discussion boards
 - Get the latest news
 - Submit content
-- Much, much more....
+- und , noch viel mehr....
 
 The email address ({X_UEMAIL}) has been used to register an account.
 
