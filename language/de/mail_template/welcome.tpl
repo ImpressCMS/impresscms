@@ -1,12 +1,12 @@
-Welcome {UNAME},
+Willkommen {UNAME},
 
-Your account has been successfully activated on {X_SITENAME}. As a member of our site, you will benefit from all the features reserved to registered members !
+Ihr Konto wurde erfolgreich auf {X_SITENAME} aktiviert. Als Mitglied unserer Website profitieren Sie von allen Funktionen, die registrierten Mitgliedern vorbehalten sind !
 
-Once again, welcome to our site. Visit us often !
+Nochmals herzlich willkommen auf unserer Website. Besuchen Sie uns oft !
 
-If you did not registered to our site, please contact us at the following address {X_ADMINMAIL}, and we will fix the situation.
+Wenn Sie sich nicht auf unserer Website registriert haben, kontaktieren Sie uns bitte unter der folgenden Adresse {X_ADMINMAIL}, und wir werden das Problem beheben.
 
 -----------
-Yours truly,
+Deine wirklich,
 {X_SITENAME}
 {X_SITEURL}
