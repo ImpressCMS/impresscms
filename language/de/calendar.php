@@ -59,12 +59,12 @@ define("_CAL_AM_CAPS", "AM");
 define("_CAL_PM", "pm");
 define("_CAL_PM_CAPS", "PM");
 define("_CAL_TIME", "Zeit");
-define("_CAL_WK", "wk"); // shorten of week-end
+define("_CAL_WK", "WE"); // shorten of week-end
 // This may be local-dependent.  It specifies the week-end days, as an array
 // of comma-separated numbers.  The numbers are from 0 to 6: 0 means Sunday, 1
 // means Monday, etc.
 define("_CAL_WEEKEND", "0,6");
-define("_CAL_DSPFIRST", "Display %s first");
+define("_CAL_DSPFIRST", "Zeige %s zuerst");
 //This constants are for the jalali calendar included in the library
 define('_CAL_FARVARDIN','Farvardin');
 define('_CAL_ORDIBEHESHT','Ordibehest');
@@ -75,11 +75,11 @@ define('_CAL_SHAHRIVAR','Shahrivar');
 define('_CAL_MEHR','Mehr');
 define('_CAL_ABAN','Aban');
 define('_CAL_AZAR','Azar');
-define('_CAL_DEY','Day');
+define('_CAL_DEY','Tag');
 define('_CAL_BAHMAN','Bahman');
 define('_CAL_ESFAND','Esfand');
 define("_CAL_NUMS_ARRAY", "'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'"); // numeric values can differ in different languages
 ############# added since 1.2 #############
 define("_CAL_SUFFIX", "th");
 define('_CAL_AM_LONG','Vormittag');
-define('_CAL_PM_LONG','Nachmittag');
+define('_CAL_PM_LONG','nachmittags');
