@@ -3,11 +3,11 @@ Hallo {X_UNAME},
 Ein Webbenutzer von {IP} hat soeben das Passwort angefordert.
 Hier sind Ihre Anmeldedaten unter {SITENAME}.
 
-Username: {X_USERLOGINNAME}
-New Password: {NEWPWD}
+Benutzername: {X_USERLOGINNAME}
+Neues Passwort: {NEWPWD}
 
-You can change it after you login at {SITEURL}/user.php.
-Wenn Sie dies nicht angefordert haben, machen Sie sich keine Sorgen. You are seeing this message, not 'them'. If this was an error, we are really sorry but please login with your new password.
+Du kannst es ändern, nachdem du dich bei {SITEURL}/user.php angemeldet hast.
+Wenn Sie dies nicht angefordert haben, machen Sie sich keine Sorgen. Sie sehen diese Nachrichtt, nicht "sie". Wenn dies ein Fehler war, entschuldigen wir wirklich, aber bitte melden Sie sich mit Ihrem neuen Passwort an.
 
 -----------
 {SITENAME} ({SITEURL}) 
