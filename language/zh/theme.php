@@ -1,46 +1,46 @@
 <?php
 // general
-define("THEME_UPTOP","返回顶部");
-define("THEME_VALIDCSS","本主题模板通过W3C-CSS1和2验证");
-define("THEME_VALIDXHTML","本主题模板通过W3C-XHTML 1.01验证");
-define("THEME_LICENSE","请查阅Creative Commons 许可证");
+define("THEME_UPTOP","Back to Top");
+define("THEME_VALIDCSS","This theme template is W3C Validated for CSS 1 and 2");
+define("THEME_VALIDXHTML","This theme template is W3C Validated for XHTML 1.01");
+define("THEME_LICENSE","See Creative Commons Licence");
 define("THEME_W3C","Valid W3C - XHTML 1.01 and CSS 1/2/3");
 
 // userbar.html
-define("THEME_REGISTER","注册");
-define("THEME_REGISTERATION",'用户注册');
-define("THEME_REMEMBER"," 记住我");
-define("THEME_PSEUDO"," 登录");
-define("THEME_DESC_PSEUDO"," 用户名");
-define("THEME_PASSWORD"," 密码");
-define("THEME_DESC_PASSWORD"," 输入密码");
+define("THEME_REGISTER","Register");
+define("THEME_REGISTERATION",'User Registration');
+define("THEME_REMEMBER"," Remember me ?");
+define("THEME_PSEUDO"," Login");
+define("THEME_DESC_PSEUDO"," Write your login");
+define("THEME_PASSWORD"," Password");
+define("THEME_DESC_PASSWORD"," Write your password");
 
-define("THEME_WELLCOME","欢迎");
-define("THEME_PROFILE","个人资料");
-define("THEME_NOTIFICATION","收藏");
-define("THEME_MESSAGE","显示信箱内容");
-define("THEME_INBOX","信箱");
-define("THEME_YOUHAVE","你有");
-define("THEME_NOTREAD","未读信息");
-define("THEME_MYACCOUNT","我的个人资料");
-define("THEME_LOGOUT","登出");
-define("THEME_ADMIN","管理员");
-define("THEME_OR","或");
+define("THEME_WELLCOME","Welcome");
+define("THEME_PROFILE","Your profile");
+define("THEME_NOTIFICATION","Bookmarks");
+define("THEME_MESSAGE","Show your inbox content");
+define("THEME_INBOX","Inbox");
+define("THEME_YOUHAVE","You have ");
+define("THEME_NOTREAD","unread message(s)");
+define("THEME_MYACCOUNT","My profile");
+define("THEME_LOGOUT","Logout");
+define("THEME_ADMIN","Admin");
+define("THEME_OR","or");
 
 // searchbar.html
-define("THEME_SEARCH","搜索");
-define("THEME_DESC_SEARCH","站内搜索");
-define("THEME_KEYWORDS","输入关键词");
+define("THEME_SEARCH","Search");
+define("THEME_DESC_SEARCH","Search this site");
+define("THEME_KEYWORDS","Put the keywords");
 
 // globalnav.html
-define("THEME_CONTACT","联系");
-define("THEME_CONTACT_DESC","联系我们");
-define("THEME_SITEMAP","网站地图");
+define("THEME_CONTACT","Contact");
+define("THEME_CONTACT_DESC","Contact us ?");
+define("THEME_SITEMAP","Sitemap");
 define("THEME_RSS","RSS");
 
-define("THEME_NAVTITLE","导航");
-define("THEME_HOME","首页");
-define("THEME_HOME_DESC","返回首页");
+define("THEME_NAVTITLE","Navigation");
+define("THEME_HOME","Home");
+define("THEME_HOME_DESC","Back to home");
 
 // Theme accessibility
 define("THEME_Aa","Aa");
@@ -48,11 +48,11 @@ define("THEME_Amin","-");
 define("THEME_Aplus","+");
 
 // ImpressCMS Description Links
-define("THEME_Support_DESC","支持ImpressCMS项目!");
-define("THEME_Blogs_DESC","阅读ImpressCMS博客");
-define("THEME_Wiki_DESC","从wiki中获得更多ImpressCMS的信息");
-define("THEME_Addons_DESC","模块、主题下载，技术文档");
-define("THEME_Community_DESC","加入ImpressCMS社区");
-define("THEME_ImpressCMS_DESC","访问ImpressCMS主站点");
+define("THEME_Support_DESC","Support the ImpressCMS Project !");
+define("THEME_Blogs_DESC","Read the ImpressCMS blogs");
+define("THEME_Wiki_DESC","Learn more in the community-driven wiki for ImpressCMS");
+define("THEME_Addons_DESC","Download modules, themes and more documentation");
+define("THEME_Community_DESC","Join the ImpressCMS Community");
+define("THEME_ImpressCMS_DESC","Visit the ImpressCMS main site");
 define("THEME_FEEDS","Feeds");
-define("THEME_PARTNERS","合作伙伴");
+define("THEME_PARTNERS","Partners");
