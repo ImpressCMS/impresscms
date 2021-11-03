@@ -1,9 +1,9 @@
-Hello {FRIEND_NAME},
+Hallo {FRIEND_NAME},
 
-Your friend {YOUR_NAME} liked our site and wanted to show it to you.
+Dein Freund {YOUR_NAME} gefällt unsere Seite und wollte sie dir zeigen.
 
-Site Name: {SITENAME}
-Site URL:  {SITEURL}
+Site-Name: {SITENAME}
+Site-URL:  {SITEURL}
 
 -----------
 {SITENAME} ({SITEURL}) 
