@@ -20,13 +20,13 @@ define('_MIGRATION_SMILE_6',  'Cool');
 define('_MIGRATION_SMILE_7', 'Lachend');
 define('_MIGRATION_SMILE_8', 'Wahnsinn');
 define('_MIGRATION_SMILE_9', 'Razz');
-define('_MIGRATION_SMILE_10', 'Embarrassed');
+define('_MIGRATION_SMILE_10', 'Beschämt');
 define('_MIGRATION_SMILE_11', 'Weinend (sehr traurig)');
 define('_MIGRATION_SMILE_12', 'Böse oder sehr verrückt');
 define('_MIGRATION_SMILE_13', 'Rollende Augen');
 define('_MIGRATION_SMILE_14', 'Winken');
 define('_MIGRATION_SMILE_15', 'Ein weiteres Bier');
-define('_MIGRATION_SMILE_16', 'ToolTimes at work');
+define('_MIGRATION_SMILE_16', 'ToolTimes im Einsatz');
 define('_MIGRATION_SMILE_17', 'Ich habe eine Idee');
 
 define('_MIGRATION_PAGE_2', 'Administrator Systemsteuerung');
@@ -155,7 +155,7 @@ EOF
 define('_MIGRATIONS_LOCAL_FOOTER', 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define('_MIGRATIONS_LOCAL_SENSORTXT', '#OPS-#'); //Add local translation
 define('_MIGRATIONS_DEF_LANG_TAGS', 'en,de'); //Add local translation
-define('_MIGRATIONS_DEF_LANG_NAMES', 'german,german'); //Add local translation
+define('_MIGRATIONS_DEF_LANG_NAMES', 'englisch, deutsch'); //Add local translation
 define('_MIGRATIONS_LOCAL_LANG_NAMES', 'Englisch, Deutsch'); //Add local translation
 define('_MIGRATIONS_AM_RSSLOCALLINK_DESC', 'https://www.impresscms.org/modules/news/rss.php'); //Link to the rrs of local support site
 define('_MIGRATIONS_INSTALL_WEBMASTER', 'Webmaster');
