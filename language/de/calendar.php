@@ -19,7 +19,7 @@ define("_CAL_SEPTEMBER", "September");
 define("_CAL_OCTOBER", "Oktober");
 define("_CAL_NOVEMBER", "November");
 define("_CAL_DECEMBER", "Dezember");
-define("_CAL_TGL1STD", "ersten Wochentag umschalten");
+define("_CAL_TGL1STD", "ersten Wochentag ein/aus");
 define("_CAL_PREVYR", "Vorheriges Jahr");
 define("_CAL_PREVMNTH", "Vorheriger Monat");
 define("_CAL_GOTODAY", "Heute");
@@ -59,7 +59,7 @@ define("_CAL_AM_CAPS", "AM");
 define("_CAL_PM", "pm");
 define("_CAL_PM_CAPS", "PM");
 define("_CAL_TIME", "Zeit");
-define("_CAL_WK", "WE"); // shorten of week-end
+define("_CAL_WK", "wk"); // shorten of week-end
 // This may be local-dependent.  It specifies the week-end days, as an array
 // of comma-separated numbers.  The numbers are from 0 to 6: 0 means Sunday, 1
 // means Monday, etc.
