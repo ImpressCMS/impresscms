@@ -11,7 +11,7 @@
 
 define("SHOW_HIDE_HELP", "Die Hilfe Anzeigen oder Verstecken");
 
-define("ALTERNATE_LANGUAGE_MSG", "Laden Sie ein alternatives Sprachpaket von der ImpressCMS Website herunter. ");
+define("ALTERNATE_LANGUAGE_MSG", "Laden Sie ein alternatives Sprachpaket von der ImpressCMS Website herunter");
 define("ALTERNATE_LANGUAGE_LNK_MSG", "Wählen Sie eine andere Sprache, die hier nicht aufgeführt ist.");
 define("ALTERNATE_LANGUAGE_LNK_URL", "https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Languages/");
 
@@ -28,7 +28,7 @@ define("SETTING_NAME", "Setting name");
 define("RECOMMENDED", "Empfohlen");
 define("CURRENT", "Aktuell");
 define("RECOMMENDED_EXTENSIONS_MSG", "Diese Erweiterungen sind nicht für den normalen Gebrauch erforderlich, aber sie können notwendig sein, um
-	bestimmte Funktionen (wie die mehrsprachige oder RSS-Unterstützung) zu nutzen. Daher wird empfohlen, sie installiert zu haben. " );
+	bestimmte Funktionen (wie die Mehrsprachen- oder RSS - Unterstützung) zu nutzen. Es wird daher empfohlen, sie installiert zu lassen." );
 define("NONE", "Nichts");
 define("SUCCESS", "Vorhanden");
 define("WARNING", "Warnung");
@@ -44,7 +44,7 @@ define("INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a 
 define("LANGUAGE_SELECTION", "Sprache auswählen");
 define("LANGUAGE_SELECTION_TITLE", "Wählen Sie Ihre Sprache"); // L128
 define("INTRODUCTION", "Vorbereitungen/Info");
-define("INTRODUCTION_TITLE", "Willkommen beim  ImpressCMS Installationsassistenten"); // L0
+define("INTRODUCTION_TITLE", "Willkommen beim ImpressCMS Installationsassistenten"); // L0
 define("CONFIGURATION_CHECK", "Konfigurations-Überprüfung");
 define("CONFIGURATION_CHECK_TITLE", "Überprüfe die Serverkonfiguration");
 define("PATHS_SETTINGS", "Verzeichnisse");
@@ -141,8 +141,8 @@ define("TABLE_DROPPED", "Tabelle %s gelöscht."); // L163
 define("TABLE_NOT_DROPPED", "Löschen der Tabelle %s fehlgeschlagen."); // L164
 
 // Error messages
-define("ERR_COULD_NOT_ACCESS", "Auf den Ordner kann nicht zugegriffen werden. Bitte überprüfen Sie, ob der Ordner existitert und berschreibbar ist. ");
-define("ERR_NO_XOOPS_FOUND", "Im angegebenen Ordner konnte keine ImpressCMS Installation gefunden werden. ");
+define("ERR_COULD_NOT_ACCESS", "Auf den Ordner kann nicht zugegriffen werden. Bitte überprüfen Sie, ob der Ordner existiert und beschreibbar ist.");
+define("ERR_NO_XOOPS_FOUND", "Im angegebenen Ordner konnte keine ImpressCMS Installation gefunden werden.");
 define("ERR_INVALID_EMAIL", "Ungültige E-Mail"); // L73
 define("ERR_REQUIRED", "Bitte geben Sie alle erforderlichen Informationen ein."); // L41
 define("ERR_PASSWORD_MATCH", "Die zwei Passwörter stimmen nicht überein");
