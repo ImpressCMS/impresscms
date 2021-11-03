@@ -117,32 +117,32 @@ define("BUTTON_SHOW_SITE", "Toon mijn site");
 
 // Messages
 define("XOOPS_FOUND", "%s gevonden");
-define("CHECKING_PERMISSIONS", "Checking file and directory permissions..."); // L82
-define("IS_NOT_WRITABLE", "%s is NOT writable."); // L83
-define("IS_WRITABLE", "%s is writable."); // L84
-define("ALL_PERM_OK", "All Permissions are correct.");
+define("CHECKING_PERMISSIONS", "Bestands- en mapmachtigingen controleren..."); // L82
+define("IS_NOT_WRITABLE", "%s is NIET schrijfbaar."); // L83
+define("IS_WRITABLE", "%s is schrijfbaar."); // L84
+define("ALL_PERM_OK", "Alle machtigingen zijn correct.");
 
-define("READY_CREATE_TABLES", "No ImpressCMS tables were detected.<br />The installer is now ready to create the ImpressCMS system tables.<br />Press <em>next</em> to proceed.");
-define("XOOPS_TABLES_FOUND", "The ImpressCMS system tables already exists in your database.<br />Press <em>next</em> to go to the next step."); // L131
-define("READY_INSERT_DATA", "The installer is now ready to insert initial data into your database.");
-define("READY_SAVE_MAINFILE", "The installer is now ready to save the specified settings to <em>.env</em>.<br />Press <em>next</em> to proceed.");
-define("DATA_ALREADY_INSERTED", "ImpressCMS data is stored in your database already. No further data will be stored by this action.<br />Press <em>next</em> to go to the next step.");
+define("READY_CREATE_TABLES", "Er zijn geen ImpressCMS tabellen gedetecteerd.<br />Het installatieprogramma is nu klaar om de ImpressCMS systeemtabellen aan te maken.<br />Druk op <em>volgende</em> om verder te gaan.");
+define("XOOPS_TABLES_FOUND", "De ImpressCMS systeemtabellen bestaan al in uw database.<br />Klik op <em>Volgende</em> om naar de volgende stap te gaan."); // L131
+define("READY_INSERT_DATA", "Het installatieprogramma is nu klaar om de initiële gegevens in uw database te plaatsen.");
+define("READY_SAVE_MAINFILE", "Het installatieprogramma is nu klaar om de opgegeven instellingen op te slaan op <em>.env</em>.<br />Druk op <em>volgende</em> om verder te gaan.");
+define("DATA_ALREADY_INSERTED", "ImpressCMS gegevens zijn al aanwezig in uw database. Er worden geen verdere gegevens opgeslagen door deze actie.<br />Druk op <em>Volgende</em> om naar de volgende stap te gaan.");
 
 // %s is database name
-define("DATABASE_CREATED", "Database %s created!"); // L43
+define("DATABASE_CREATED", "Database %s aangemaakt!"); // L43
 // %s is table name
-define("TABLE_NOT_CREATED", "Unable to create table %s"); // L118
+define("TABLE_NOT_CREATED", "Kan tabel %s niet aanmaken"); // L118
 define("TABLE_CREATED", "Tabel %s is aangemaakt."); // L45
-define("ROWS_INSERTED", "%d entries inserted to table %s."); // L119
-define("ROWS_FAILED", "Failed inserting %d entries to table %s."); // L120
-define("TABLE_ALTERED", "Table %s updated."); // L133
-define("TABLE_NOT_ALTERED", "Failed updating table %s."); // L134
-define("TABLE_DROPPED", "Table %s dropped."); // L163
-define("TABLE_NOT_DROPPED", "Failed deleting table %s."); // L164
+define("ROWS_INSERTED", "%d elementen toegevoegd aan tabel %s."); // L119
+define("ROWS_FAILED", "Fout bij het invoegen van %d elementen in tabel %s."); // L120
+define("TABLE_ALTERED", "Tabel %s bijgewerkt."); // L133
+define("TABLE_NOT_ALTERED", "Tabel %s bijwerken mislukt."); // L134
+define("TABLE_DROPPED", "Tabel %s is verwijderd."); // L163
+define("TABLE_NOT_DROPPED", "Verwijderen van tabel %s mislukt."); // L164
 
 // Error messages
-define("ERR_COULD_NOT_ACCESS", "Could not access the specified folder. Please verify that it exists and is readable by the server.");
-define("ERR_NO_XOOPS_FOUND", "No ImpressCMS installation could be found in the specified folder.");
+define("ERR_COULD_NOT_ACCESS", "Kon de opgegeven map niet openen. Controleer of deze bestaat en leesbaar is voor de server.");
+define("ERR_NO_XOOPS_FOUND", "Er kon geen installatie van ImpressCMS gevonden worden in de opgegeven map.");
 define("ERR_INVALID_EMAIL", "Ongeldige e-mail"); // L73
 define("ERR_REQUIRED", "Vul alle verplichten velden in."); // L41
 define("ERR_PASSWORD_MATCH", "De twee wachtwoorden komen niet overeen");
@@ -150,16 +150,16 @@ define("ERR_NEED_WRITE_ACCESS", "De server moet schrijftoegang krijgen tot de vo
 define("ERR_NO_DATABASE", "Kan de database niet aanmaken. Neem voor meer informatie contact op met de serverbeheerder."); // L31
 define("ERR_NO_DBCONNECTION", "Kan geen verbinding maken met de databaseserver."); // L106
 define("ERR_WRITING_CONSTANT", "Schrijven constante %s mislukt."); // L122
-define('ERR_WRITE_ENV_DATA', 'Error write .env data');
-define("ERR_INVALID_DBCHARSET", "The charset '%s' is not supported.");
-define("ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported.");
-define("ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database.");
+define('ERR_WRITE_ENV_DATA', 'Fout bij schrijven van .env gegevens');
+define("ERR_INVALID_DBCHARSET", "De tekenset '%s' wordt niet ondersteund.");
+define("ERR_INVALID_DBCOLLATION", "De collatie '%s' wordt niet ondersteund.");
+define("ERR_CHARSET_NOT_SET", "Standaard tekenset is niet ingesteld voor ImpressCMS database.");
 
 //
-define("_INSTALL_SELECT_MODS_INTRO", 'From the list below, please select the modules that you wish to install on this site. <br /><br />
-All the installed modules are accessible by the Administrators group and the Registered Users group by default. <br /><br />
-If you need to set permissions for Anonymous Users please do so in the Administration Panel after you complete this installer. <br /><br />
-For more information regarding Group Administration, please visit the <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">wiki</a>.');
+define("_INSTALL_SELECT_MODS_INTRO", 'Selecteer de modules die u op deze site wilt installeren uit de lijst hieronder. <br /><br />
+Alle geïnstalleerde modules zijn standaard toegankelijk voor de beheerdersgroep en de Geregistreerde Gebruikersgroep. <br /><br />
+Als u de rechten voor anonieme gebruikers wilt instellen, doe dit dan in het beheerpaneel nadat u dit installatieprogramma heeft voltooid. <br /><br />
+Bezoek de <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">wiki</a> voor meer informatie over Groepsbeheer.');
 
 define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
 define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');
