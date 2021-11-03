@@ -1,5 +1,5 @@
 <?php
-define("_ER_UP_MIMETYPELOAD", "Fehler beim Laden des Mime-Types (Dateityp)");
+define("_ER_UP_MIMETYPELOAD", "Fehler beim Laden des Mime-Types ( Dateityp)");
 define("_ER_UP_FILENOTFOUND", "Datei nicht gefunden");
 define("_ER_UP_INVALIDFILESIZE", "Ungültige Dateigröße");
 define("_ER_UP_FILENAMEEMPTY", "Dateiname ist leer");
@@ -12,14 +12,14 @@ define("_ER_UP_FILESIZETOOLARGE", "Dateigröße zu groß (maximal %u Bytes): %u 
 define("_ER_UP_FILEWIDTHTOOLARGE", "Dateibreite zu groß (Maximal %u px): %u px");
 define("_ER_UP_FILEHEIGHTTOOLARGE", "Dateigröße zu groß (Maximum %u px): %u px");
 define("_ER_UP_MIMETYPENOTALLOWED", "MIME Typ nicht zulässig: %s");
-define("_ER_UP_FAILEDFETCHIMAGESIZE", "Failed fetching image size of %s, skipping max dimension check..");
-define("_ER_UP_UNKNOWNFILETYPEREJECTED", "Unknown filetype rejected");
-define("_ER_UP_ERRORSRETURNED", "Errors Returned While Uploading");
-define("_ER_UP_INVALIDIMAGEFILE", "Invalid image file");
-define("_ER_UP_SUSPICIOUSREFUSED", "Suspicious image upload refused");
-define("_ER_UP_INVALIDFILENAME", "Invalid file name");
-define("_ER_UP_FAILEDSAVEFILE", "Failed to save file to %s");
+define("_ER_UP_FAILEDFETCHIMAGESIZE", "Fehler beim ermitteln der Bildgröße der Datei %s, überspringe Überprüfung.");
+define("_ER_UP_UNKNOWNFILETYPEREJECTED", "Unbekannter Dateiformat abgelehnt");
+define("_ER_UP_ERRORSRETURNED", "Während des Hochladens ist ein Fehler aufgetreten");
+define("_ER_UP_INVALIDIMAGEFILE", "Ungültige Bilddatei");
+define("_ER_UP_SUSPICIOUSREFUSED", "Das Hochladen wurde abgebrochen, bitte wenden Sie sich an den Webmaster");
+define("_ER_UP_INVALIDFILENAME", "Ungültiger Dateiname");
+define("_ER_UP_FAILEDSAVEFILE", "Fehler beim Speichern der Datei in %s");
 // added in 1.3
-define("_ER_UP_PARTIALLY", "The uploaded file was only partially uploaded.");
-define("_ER_UP_NO_TMP_DIR", "Missing a temporary folder. Please contact the administrator.");
-define("_ER_UP_CANT_WRITE", "Failed to write file to disk. Please contact the administrator.");
+define("_ER_UP_PARTIALLY", "Die hochgeladene Datei wurde nur teilweise hochgeladen.");
+define("_ER_UP_NO_TMP_DIR", "Es wurde kein temporäres Verzeichnis gefunden. Bitte kontaktieren Sie den Administrator. Vielen Dank.");
+define("_ER_UP_CANT_WRITE", "Datei konnte nicht auf die Festplatte geschrieben werden. Bitte kontaktieren Sie den Administrator. Vielen Dank.");
