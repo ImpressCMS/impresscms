@@ -4,7 +4,7 @@
 	"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
 	"This file is @generated automatically"
   ],
-  "content-hash": "73e18e173383087ce409cdee3275de4c",
+  "content-hash": "bc2f6dfd297329f1cd0196b6b252f170",
   "packages": [
 	{
 	  "name": "0.0.0/composer-include-files",
@@ -15,16 +15,16 @@
 		"reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
 	  },
 	  "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
-                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0 || ^2.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
+		"reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
+		"shasum": ""
+	  },
+	  "require": {
+		"composer-plugin-api": "^1.0 || ^2.0"
+	  },
+	  "type": "composer-plugin",
+	  "extra": {
                 "class": "ComposerIncludeFiles\\Plugin"
             },
             "autoload": {
@@ -1390,16 +1390,16 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Interfaces for building PHP classes that lets to easier make web editor integrations in your content management systems",
-            "support": {
-                "issues": "https://github.com/imponeer/editor-contracts/issues",
-                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.0"
-            },
-            "time": "2021-10-12T09:36:43+00:00"
-        },
+		  "license": [
+			"MIT"
+		  ],
+		  "description": "Interfaces for building PHP classes that lets to easier make web editor integrations in your content management systems",
+		  "support": {
+			"issues": "https://github.com/imponeer/editor-contracts/issues",
+			"source": "https://github.com/imponeer/editor-contracts/tree/v1.0.0"
+		  },
+		  "time": "2021-10-12T09:36:43+00:00"
+		},
 	{
 	  "name": "imponeer/smarty-db-resource",
 	  "version": "v2.0",
@@ -1414,16 +1414,16 @@
 		"reference": "01fe7974a5a01a887cfd8d5eb3c1b6be790166a7",
 		"shasum": ""
 	  },
-            "require": {
-                "ext-pdo": ">=7.1",
-                "imponeer/smarty-extensions-contracts": "^1.0",
-			  "php": ">=7.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Imponeer\\Smarty\\Extensions\\DBResource\\": "src/"
-                }
+	  "require": {
+		"ext-pdo": ">=7.1",
+		"imponeer/smarty-extensions-contracts": "^1.0",
+		"php": ">=7.1"
+	  },
+	  "type": "library",
+	  "autoload": {
+		"psr-4": {
+		  "Imponeer\\Smarty\\Extensions\\DBResource\\": "src/"
+		}
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1907,26 +1907,495 @@
                 {
                     "name": "David Janssens",
                     "email": "david.j@impresscms.org"
-                }
-            ],
-            "description": "This plugin allows the installation of ImpressCMS addons from composer",
-            "support": {
-                "issues": "https://github.com/ImpressCMS/composer-addon-installer-plugin/issues",
-                "source": "https://github.com/ImpressCMS/composer-addon-installer-plugin/tree/v1.0.3"
-            },
-            "time": "2021-10-14T20:21:46+00:00"
-        },
-        {
-            "name": "intervention/image",
-            "version": "2.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Intervention/image.git",
-                "reference": "abbf18d5ab8367f96b3205ca3c89fb2fa598c69e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/abbf18d5ab8367f96b3205ca3c89fb2fa598c69e",
+				}
+			],
+		  "description": "This plugin allows the installation of ImpressCMS addons from composer",
+		  "support": {
+			"issues": "https://github.com/ImpressCMS/composer-addon-installer-plugin/issues",
+			"source": "https://github.com/ImpressCMS/composer-addon-installer-plugin/tree/v1.0.3"
+		  },
+		  "time": "2021-10-14T20:21:46+00:00"
+		},
+	{
+	  "name": "impresscms/system-module",
+	  "version": "dev-main",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/ImpressCMS/system-module.git",
+		"reference": "38ae7f721494fd2d97c80122113c84349768ef6f"
+	  },
+	  "dist": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/ImpressCMS/system-module/zipball/38ae7f721494fd2d97c80122113c84349768ef6f",
+		"reference": "38ae7f721494fd2d97c80122113c84349768ef6f",
+		"shasum": ""
+	  },
+	  "require": {
+		"typo3/class-alias-loader": "^1.1"
+	  },
+	  "default-branch": true,
+	  "type": "impresscms-module",
+	  "extra": {
+		"credits": "The ImpressCMS Project",
+		"icon": {
+		  "small": "images/icon_small.png",
+		  "big": "images/system_big.png"
+		},
+		"warning": "_CO_ICMS_WARNING_ALPHA",
+		"website_url": "https://www.impresscms.org",
+		"email": "contact@impresscms.org",
+		"people": {
+		  "developers": [
+			"[url=https://www.impresscms.org/userinfo.php?uid=1102]fiammybe[/url] (David Janssens)",
+			"[url=https://www.impresscms.org/userinfo.php?uid=168]marcan[/url] (Marc-Andr&eacute; Lanciault)",
+			"[url=https://www.impresscms.org/userinfo.php?uid=489]mekdrop[/url] (Mekdrop)",
+			"[url=https://www.impresscms.org/userinfo.php?uid=54]Skenow[/url] (Steve Kenow)"
+		  ],
+		  "testers": [
+			"[url=https://www.impresscms.org/userinfo.php?uid=53]davidl2[/url] (David Ledbury)",
+			"[url=https://www.impresscms.org/userinfo.php?uid=10]sato-san[/url]",
+			"[url=https://www.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]"
+		  ],
+		  "documenters": [
+			"[url=https://www.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]",
+			"[url=https://www.impresscms.org/userinfo.php?uid=54]Skenow[/url]"
+		  ]
+		},
+		"autotasks": [
+		  {
+			"enabled": true,
+			"name": "_MI_SYSTEM_REMOVEUSERS",
+			"code": "autotask.php",
+			"interval": 1440
+		  }
+		],
+		"admin": {
+		  "index": "admin.php",
+		  "menu": "menu.php"
+		},
+		"manual": {
+		  "wiki": [
+			"<a href='https://www.impresscms.org/modules/simplywiki/index.php?page=System' target='_blank'>_MI_SYSTEM_NAME</a>"
+		  ]
+		},
+		"object_items": [
+		  "adsense",
+		  "autotasks",
+		  "customtag",
+		  "mimetype",
+		  "pages",
+		  "rating",
+		  "blocks",
+		  "positions",
+		  "userrank"
+		],
+		"has_main": false,
+		"blocks": {
+		  "1": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME2",
+			"description": "",
+			"show_func": "b_system_user_show",
+			"edit_func": "b_system_user_edit",
+			"options": "0",
+			"template": "system_block_user.html"
+		  },
+		  "2": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME3",
+			"description": "",
+			"show_func": "b_system_login_show",
+			"template": "system_block_login.html"
+		  },
+		  "3": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME4",
+			"description": "",
+			"show_func": "b_system_search_show",
+			"template": "system_block_search.html"
+		  },
+		  "4": {
+			"file": "system_waiting.php",
+			"name": "_MI_SYSTEM_BNAME5",
+			"description": "",
+			"show_func": "b_system_waiting_show",
+			"edit_func": "b_system_waiting_edit",
+			"options": "1|5",
+			"template": "system_block_waiting.html"
+		  },
+		  "5": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME6",
+			"description": "",
+			"show_func": "b_system_main_show",
+			"template": "system_block_mainmenu.html"
+		  },
+		  "6": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME7",
+			"description": "",
+			"show_func": "b_system_info_show",
+			"edit_func": "b_system_info_edit",
+			"options": "320|190|s_poweredby.gif|1",
+			"template": "system_block_siteinfo.html"
+		  },
+		  "7": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME8",
+			"description": "",
+			"show_func": "b_system_online_show",
+			"template": "system_block_online.html"
+		  },
+		  "8": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME9",
+			"description": "",
+			"show_func": "b_system_topposters_show",
+			"edit_func": "b_system_topposters_edit",
+			"options": "10|1",
+			"template": "system_block_topusers.html"
+		  },
+		  "9": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME10",
+			"description": "",
+			"show_func": "b_system_newmembers_show",
+			"edit_func": "b_system_newmembers_edit",
+			"options": "10|1|1",
+			"template": "system_block_newusers.html"
+		  },
+		  "10": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME11",
+			"description": "",
+			"show_func": "b_system_comments_show",
+			"edit_func": "b_system_comments_edit",
+			"options": "10",
+			"template": "system_block_comments.html"
+		  },
+		  "11": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME12",
+			"description": "",
+			"show_func": "b_system_notification_show",
+			"template": "system_block_notification.html"
+		  },
+		  "12": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME13",
+			"description": "",
+			"show_func": "b_system_themes_show",
+			"edit_func": "b_system_themes_edit",
+			"options": "0|80",
+			"template": "system_block_themes.html"
+		  },
+		  "13": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME14",
+			"description": "",
+			"show_func": "b_system_multilanguage_show",
+			"template": "system_block_multilanguage.html"
+		  },
+		  "14": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BNAME18",
+			"description": "",
+			"show_func": "b_system_social_show",
+			"edit_func": "b_system_social_edit",
+			"options": "1|1|1|1|0|0|0|0|0|0|0|0|0|1|0|0|0|0|1|0|1|0|0|1|0|0|0|0|0|0|0|0",
+			"template": "system_block_socialbookmark.html"
+		  },
+		  "15": {
+			"file": "system_admin_blocks.php",
+			"name": "_MI_SYSTEM_BNAME101",
+			"description": "",
+			"show_func": "b_system_admin_warnings_show",
+			"template": "system_admin_block_warnings.html"
+		  },
+		  "16": {
+			"file": "system_admin_blocks.php",
+			"name": "_MI_SYSTEM_BNAME102",
+			"description": "",
+			"show_func": "b_system_admin_cp_show",
+			"template": "system_admin_block_cp.html"
+		  },
+		  "17": {
+			"file": "system_admin_blocks.php",
+			"name": "_MI_SYSTEM_BNAME103",
+			"description": "",
+			"show_func": "b_system_admin_modules_show",
+			"template": "system_admin_block_modules.html"
+		  },
+		  "18": {
+			"file": "system_blocks.php",
+			"name": "_MI_SYSTEM_BLOCK_BOOKMARKS",
+			"description": "_MI_SYSTEM_BLOCK_BOOKMARKS_DESC",
+			"show_func": "b_system_bookmarks_show",
+			"template": "system_block_bookmarks.html"
+		  },
+		  "19": {
+			"file": "system_admin_blocks.php",
+			"name": "_MI_SYSTEM_BLOCK_CP_NEW",
+			"description": "",
+			"show_func": "b_system_admin_cp_new_show",
+			"template": "system_admin_block_cp_new.html"
+		  }
+		},
+		"templates": {
+		  "1": {
+			"file": "system_imagemanager.html",
+			"description": ""
+		  },
+		  "2": {
+			"file": "system_imagemanager2.html",
+			"description": ""
+		  },
+		  "3": {
+			"file": "system_userinfo.html",
+			"description": ""
+		  },
+		  "4": {
+			"file": "system_userform.html",
+			"description": ""
+		  },
+		  "5": {
+			"file": "system_comment.html",
+			"description": ""
+		  },
+		  "6": {
+			"file": "system_comments_flat.html",
+			"description": ""
+		  },
+		  "7": {
+			"file": "system_comments_thread.html",
+			"description": ""
+		  },
+		  "8": {
+			"file": "system_comments_nest.html",
+			"description": ""
+		  },
+		  "9": {
+			"file": "system_siteclosed.html",
+			"description": ""
+		  },
+		  "10": {
+			"file": "system_dummy.html",
+			"description": ""
+		  },
+		  "11": {
+			"file": "system_notification_list.html",
+			"description": ""
+		  },
+		  "12": {
+			"file": "system_notification_select.html",
+			"description": ""
+		  },
+		  "13": {
+			"file": "system_block_dummy.html",
+			"description": ""
+		  },
+		  "14": {
+			"file": "system_privpolicy.html",
+			"description": ""
+		  },
+		  "15": {
+			"file": "system_error.html",
+			"description": ""
+		  },
+		  "16": {
+			"file": "admin/positions/system_adm_positions.html",
+			"description": ""
+		  },
+		  "17": {
+			"file": "admin/pages/system_adm_pagemanager_index.html",
+			"description": ""
+		  },
+		  "18": {
+			"file": "admin/blocks/system_adm_blocks.html",
+			"description": ""
+		  },
+		  "19": {
+			"file": "admin/modules/system_adm_modules.html",
+			"description": ""
+		  },
+		  "20": {
+			"file": "system_common_form.html",
+			"description": ""
+		  },
+		  "21": {
+			"file": "system_persistabletable_display.html",
+			"description": ""
+		  },
+		  "22": {
+			"file": "admin/customtag/system_adm_customtag.html",
+			"description": ""
+		  },
+		  "23": {
+			"file": "system_default_form.html",
+			"description": ""
+		  },
+		  "24": {
+			"file": "admin/images/system_adm_imagemanager.html",
+			"description": ""
+		  },
+		  "25": {
+			"file": "admin/images/system_adm_imagemanager_imglist.html",
+			"description": ""
+		  },
+		  "26": {
+			"file": "admin/images/system_adm_imagemanager_img.html",
+			"description": ""
+		  },
+		  "27": {
+			"file": "admin/images/system_adm_imagemanager_editimg.html",
+			"description": ""
+		  },
+		  "28": {
+			"file": "admin/images/system_adm_imagemanager_cloneimg.html",
+			"description": ""
+		  },
+		  "29": {
+			"file": "admin/system_adm_rss.html",
+			"description": ""
+		  },
+		  "30": {
+			"file": "system_search.html",
+			"description": ""
+		  },
+		  "31": {
+			"file": "system_persistable_singleview.html",
+			"description": ""
+		  },
+		  "32": {
+			"file": "system_breadcrumb.html",
+			"description": ""
+		  },
+		  "33": {
+			"file": "admin/adsense/system_adm_adsense.html",
+			"description": ""
+		  },
+		  "34": {
+			"file": "system_print.html",
+			"description": ""
+		  },
+		  "35": {
+			"file": "admin/rating/system_adm_rating.html",
+			"description": ""
+		  },
+		  "36": {
+			"file": "system_rating_form.html",
+			"description": ""
+		  },
+		  "37": {
+			"file": "admin/mimetype/system_adm_mimetype.html",
+			"description": ""
+		  },
+		  "38": {
+			"file": "admin/userrank/system_adm_userrank.html",
+			"description": ""
+		  },
+		  "39": {
+			"file": "admin/autotasks/system_adm_autotasks.html",
+			"description": ""
+		  },
+		  "40": {
+			"file": "system_readmsg.html",
+			"description": ""
+		  },
+		  "41": {
+			"file": "system_viewmsgs.html",
+			"description": ""
+		  },
+		  "42": {
+			"file": "admin/groups/system_adm_groups.html",
+			"description": ""
+		  },
+		  "43": {
+			"file": "admin/comments/system_adm_comments.html",
+			"description": ""
+		  },
+		  "44": {
+			"file": "admin/system_adm_version.html",
+			"description": ""
+		  },
+		  "45": {
+			"file": "admin/smilies/system_adm_smilies.html",
+			"description": ""
+		  },
+		  "46": {
+			"file": "admin/avatars/system_adm_avatars.html",
+			"description": ""
+		  },
+		  "47": {
+			"file": "admin/findusers/system_adm_findusers.html",
+			"description": ""
+		  },
+		  "48": {
+			"file": "admin/system_adm_modulemenu.html",
+			"description": ""
+		  },
+		  "49": {
+			"file": "admin/system_adm_moduleabout.html",
+			"description": ""
+		  },
+		  "50": {
+			"file": "system_blank.html",
+			"description": ""
+		  }
+		},
+		"services": {
+		  "\\ImpressCMS\\Modules\\System\\Extensions\\WaitingInfoGetter\\InactiveUsersWaitingInfoGetter": {
+			"arguments": [
+			  "db"
+			],
+			"tags": [
+			  "module.system.waiting-info-getter"
+			]
+		  },
+		  "\\ImpressCMS\\Modules\\System\\Extensions\\WaitingInfoGetter\\CommentsWaitingInfoGetter": {
+			"arguments": [
+			  "db"
+			],
+			"tags": [
+			  "module.system.waiting-info-getter"
+			]
+		  }
+		},
+		"typo3/class-alias-loader": {
+		  "class-alias-maps": [
+			"include/deprecated_class_aliases.php"
+		  ],
+		  "always-add-alias-loader": true
+		}
+	  },
+	  "autoload": {
+		"psr-4": {
+		  "ImpressCMS\\Modules\\System\\Extensions\\": "./Extensions/",
+		  "ImpressCMS\\Modules\\System\\Models\\": "./Models/"
+		}
+	  },
+	  "notification-url": "https://packagist.org/downloads/",
+	  "license": [
+		"GPL-2.0-or-later"
+	  ],
+	  "description": "For administration of core settings of the site.",
+	  "support": {
+		"issues": "https://github.com/ImpressCMS/system-module/issues",
+		"source": "https://github.com/ImpressCMS/system-module/tree/main"
+	  },
+	  "time": "2021-10-27T19:42:40+00:00"
+	},
+	{
+	  "name": "intervention/image",
+	  "version": "2.5.1",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/Intervention/image.git",
+		"reference": "abbf18d5ab8367f96b3205ca3c89fb2fa598c69e"
+	  },
+	  "dist": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/Intervention/image/zipball/abbf18d5ab8367f96b3205ca3c89fb2fa598c69e",
                 "reference": "abbf18d5ab8367f96b3205ca3c89fb2fa598c69e",
                 "shasum": ""
             },
@@ -9151,8 +9620,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "roave/security-advisories": 20
-    },
+	  "impresscms/system-module": 20,
+	  "roave/security-advisories": 20
+	},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

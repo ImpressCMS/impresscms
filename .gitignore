@@ -10,5 +10,3 @@ vendor/
 .vagrant
 user-customizations.sh
 .env
-/modules/*
-!/modules/system/
