@@ -161,25 +161,25 @@ Alle geïnstalleerde modules zijn standaard toegankelijk voor de beheerdersgroep
 Als u de rechten voor anonieme gebruikers wilt instellen, doe dit dan in het beheerpaneel nadat u dit installatieprogramma heeft voltooid. <br /><br />
 Bezoek de <a href="https://www.impresscms.org/modules/simplywiki/index.php?page=Permissions" rel="external">wiki</a> voor meer informatie over Groepsbeheer.');
 
-define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
-define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');
-define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Module %s could not be installed.");
+define("_INSTALL_SELECT_MODULES", 'Selecteer modules om te installeren');
+define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Selecteer modules zichtbaar voor bezoekers');
+define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Module %s kon niet worden geïnstalleerd.");
 define("_INSTALL_ERRORS", 'Fouten');
-define("_INSTALL_MOD_ALREADY_INSTALLED", "Module %s has already been installed");
-define("_INSTALL_FAILED_TO_EXECUTE", "Failed to execute ");
-define("_INSTALL_EXECUTED_SUCCESSFULLY", "Executed correctly");
+define("_INSTALL_MOD_ALREADY_INSTALLED", "Module %s is reeds geïnstalleerd");
+define("_INSTALL_FAILED_TO_EXECUTE", "Fout bij uitvoeren ");
+define("_INSTALL_EXECUTED_SUCCESSFULLY", "Succesvol uitgevoerd");
 
-define("_INSTALL_MOD_INSTALL_SUCCESSFULLY", "Module %s has been installed succesfully.");
-define("_INSTALL_MOD_INSTALL_FAILED", "The wizard could not install module %s.");
-define("_INSTALL_INSTALLING", "Installing %s module");
+define("_INSTALL_MOD_INSTALL_SUCCESSFULLY", "Module %s is met succes geïnstalleerd.");
+define("_INSTALL_MOD_INSTALL_FAILED", "De wizard kon module %s niet installeren.");
+define("_INSTALL_INSTALLING", "Installatie van %s module");
 
-define("_INSTALL_WEB_LOCATIONS", "Web location");
-define("_INSTALL_WEB_LOCATIONS_LABEL", "Web location");
+define("_INSTALL_WEB_LOCATIONS", "Web locatie");
+define("_INSTALL_WEB_LOCATIONS_LABEL", "Web locatie");
 
-define("_INSTALL_COULD_NOT_INSERT", "The wizard was unable to install module %s the database.");
+define("_INSTALL_COULD_NOT_INSERT", "De wizard kon module %s niet toevoegen aan de database.");
 define("_INSTALL_CHARSET", "utf-8");
 
-define("_INSTALL_PHYSICAL_PATH", "Physical path");
+define("_INSTALL_PHYSICAL_PATH", "Fysieke pad");
 
 define("_MD_AM_MULTLOGINMSG_TXT", 'Het was niet mogelijk in te loggen op de website!! <br />
         <p align="left" style="color:red;">
@@ -194,13 +194,13 @@ define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time())
 define("_ADM_USE_RTL", "0"); // turn this to 1 if your language is right to left
 
 ######################## Added in 1.2 ###################################
-define("ADMIN_DISPLAY_LABEL", "Admin Display Name"); // L37
+define("ADMIN_DISPLAY_LABEL", "Beheerder Display Naam"); // L37
 define('_CORE_PASSLEVEL1', 'Te kort');
 define('_CORE_PASSLEVEL2', 'Zwak');
 define('_CORE_PASSLEVEL3', 'Goed');
 define('_CORE_PASSLEVEL4', 'Sterk');
-define('DB_PCONNECT_HELP', "Persistent connections are useful with slower internet connections. They are not generally required for most installations. Default is 'NO'. Choose 'NO' if you are unsure"); // L69
-define("DB_PCONNECT_HELPS", "Persistent connections are useful with slower internet connections. They are not generally required for most installations."); // L69
+define('DB_PCONNECT_HELP', "Persistente verbindingen zijn handig bij langzamere internetverbindingen. Ze zijn over het algemeen niet vereist voor de meeste installaties. Standaard is 'NIET'. Kies 'NIET' als u niet zeker bent"); // L69
+define("DB_PCONNECT_HELPS", "Persistente verbindingen zijn handig bij langzamere internetverbindingen. Ze zijn over het algemeen niet vereist voor de meeste installaties."); // L69
 
 // Added in 1.3
-define("FILE_PERMISSIONS", "File Permissions");
+define("FILE_PERMISSIONS", "Toegangsrechten bestand");
