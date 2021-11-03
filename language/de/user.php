@@ -118,7 +118,7 @@ define('_US_SIGNATURE','Signature');
 define('_US_EXTRAINFO','Extra Info');
 define('_US_EDITPROFILE','Edit Profile');
 define('_US_LOGOUT','Logout');
-define('_US_INBOX','Inbox');
+define('_US_INBOX','Postfach');
 define('_US_MEMBERSINCE','Member Since');
 define('_US_RANK','Rank');
 define('_US_POSTS','Comments/Posts');
