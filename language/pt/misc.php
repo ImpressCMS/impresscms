@@ -1,23 +1,23 @@
 <?php
 
-define("_MSC_YOURNAMEC","Your Name: ");
-define("_MSC_YOUREMAILC","Your Email: ");
-define("_MSC_FRIENDNAMEC","Friend Name: ");
-define("_MSC_FRIENDEMAILC","Friend Email: ");
-define("_MSC_RECOMMENDSITE","Recommend this Site to a Friend");
+define("_MSC_YOURNAMEC","Seu nome:");
+define("_MSC_YOUREMAILC","Seu e-mail:");
+define("_MSC_FRIENDNAMEC","Nome do destinatário:");
+define("_MSC_FRIENDEMAILC","e-mail do destinatário:");
+define("_MSC_RECOMMENDSITE","Indique este site!");
 // %s is your site name
-define("_MSC_INTSITE","Interesting Site: %s");
-define("_MSC_REFERENCESENT","The reference to our site has been sent to your friend. Thanks!");
-define("_MSC_ENTERYNAME","Please enter your name");
-define("_MSC_ENTERFNAME","Please enter your friend's name");
-define("_MSC_ENTERFMAIL","Please enter your friend's email address");
-define("_MSC_NEEDINFO","You need to enter required info!");
-define("_MSC_INVALIDEMAIL1","The email address you provided is not a valid address.");
-define("_MSC_INVALIDEMAIL2","Please check the address and try again.");
+define("_MSC_INTSITE","Site interessante: %s");
+define("_MSC_REFERENCESENT","A indicação do site foi enviada.");
+define("_MSC_ENTERYNAME","Digite o seu nome");
+define("_MSC_ENTERFNAME","Digite o nome do destinatário");
+define("_MSC_ENTERFMAIL","Digite o e-mail do destinatário");
+define("_MSC_NEEDINFO","Digite a informação solicitada!");
+define("_MSC_INVALIDEMAIL1","O e-mail digitado não é válido.");
+define("_MSC_INVALIDEMAIL2","Verifique o e-mail e tente novamente.");
 
-define("_MSC_AVAVATARS","Available Avatars");
+define("_MSC_AVAVATARS","Avatares disponíveis");
 
-define("_MSC_SMILIES","Smilies");
-define("_MSC_CLICKASMILIE","Click a smilie to insert it into your message.");
-define("_MSC_CODE","Code");
-define("_MSC_EMOTION","Emotion");
+define("_MSC_SMILIES","Emoticons");
+define("_MSC_CLICKASMILIE","Clique em um emoticon para inserí-lo na mensagem.");
+define("_MSC_CODE","Código");
+define("_MSC_EMOTION","Emoticon");
