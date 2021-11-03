@@ -85,7 +85,7 @@ define('_ON','on');
 define('_READS','reads');
 define('_SEARCH','Search');
 define('_ALL', 'All');
-define('_TITLE', 'Title');
+define('_TITLE', 'Titel');
 define('_OPTIONS', 'Options');
 define('_QUOTE', 'Quote');
 define('_HIDDENC', 'Hidden Content:');
