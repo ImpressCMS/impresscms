@@ -12,24 +12,24 @@
  * @version		$Id
  */
 
-define('_CORE_MEMORYUSAGE', 'Memory usage');
-define('_CORE_BYTES', 'bytes');
+define('_CORE_MEMORYUSAGE', 'Speichernutzung (PHP memory)');
+define('_CORE_BYTES', 'Bytes');
 define('_CORE_KILOBYTES', 'Kilo Bytes');
 define('_CORE_MEGABYTES', 'Mega Bytes');
 define('_CORE_GIGABYTES', 'Giga Bytes');
-define('_CORE_KILOBYTES_SHORTEN', 'Kb');
-define('_CORE_MEGABYTES_SHORTEN', 'Mb');
-define('_CORE_GIGABYTES_SHORTEN', 'Gb');
-define('_CORE_MODULEHANDLER_NOTAVAILABLE', 'Handler does not exist<br />Module: %s<br />Name: %s');
-define('_CORE_COREHANDLER_NOTAVAILABLE', 'Class <b>%s</b> does not exist<br />Handler Name: %s');
-define('_CORE_NOMODULE', 'No Module is loaded');
-define('_CORE_PAGENOTDISPLAYED', 'This page cannot be displayed due to an internal error.<br/><br/>You can provide the following information to the administrators of this site to help them solve the problem:<br /><br />Error: %s<br />');
+define('_CORE_KILOBYTES_SHORTEN', 'KB');
+define('_CORE_MEGABYTES_SHORTEN', 'MB');
+define('_CORE_GIGABYTES_SHORTEN', 'GB');
+define('_CORE_MODULEHANDLER_NOTAVAILABLE', 'Handler existiert nicht<br />Modul: %s<br />Name: %s');
+define('_CORE_COREHANDLER_NOTAVAILABLE', 'Class <b>%s</b> existiert nicht<br />Handlername: %s');
+define('_CORE_NOMODULE', 'Kein Modul ist geladen');
+define('_CORE_PAGENOTDISPLAYED', 'Diese Seite kann aufgrund eines internen Fehlers nicht angezeigt werden.<br/><br/>Sie können den Administratoren dieser Seite folgende Informationen zur Verfügung stellen, um ihnen bei der Lösung des Problems zu helfen:<br /><br />Fehler: %s<br />');
 define('_CORE_TOKEN', 'XOOPS_TOKEN');
-define('_CORE_TOKENVALID', 'Token Validation');
-define('_CORE_TOKENNOVALID', 'No valid token found in request/session');
-define('_CORE_TOKENINVALID', 'No valid token found in request/session');
-define('_CORE_TOKENISVALID', 'Valid token found');
-define('_CORE_TOKENEXPIRED', 'Valid token expired');
+define('_CORE_TOKENVALID', 'Token-Validierung');
+define('_CORE_TOKENNOVALID', 'Kein gültiges Token in der Anfrage/Sitzung gefunden');
+define('_CORE_TOKENINVALID', 'Kein gültiger Token in Anfrage/Sitzung gefunden');
+define('_CORE_TOKENISVALID', 'Gültiges Token gefunden');
+define('_CORE_TOKENEXPIRED', 'Gültiger Token abgelaufen');
 define('_CORE_CLASSNOTINSTANIATED', 'This class cannot be instantiated!');
 
 define('_CORE_DB_NOTRACE', 'notrace:mysql extension not loaded');
