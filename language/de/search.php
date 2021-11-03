@@ -21,4 +21,4 @@ define('_SR_KEYIGNORE', 'Suchbegriffe  mit weniger als <b>%s</b> Zeichen werden 
 define('_SR_SEARCHRULE', 'Suchregel');
 define('_SR_IGNOREDWORDS', 'Die folgenden Wörter sind kürzer als die zulässige Mindestlänge (%u Zeichen) und wurden nicht in Ihre Suche aufgenommen:');
 ############# added since 1.2 #############
-define('_SR_HITSRETURNED', 'hit(s) returned');
+define('_SR_HITSRETURNED', 'Treffer gefunden');
