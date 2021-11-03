@@ -14,8 +14,8 @@
 
 define('_CORE_MEMORYUSAGE', 'Speichernutzung (PHP memory)');
 define('_CORE_BYTES', 'Bytes');
-define('_CORE_KILOBYTES', 'Kilo Bytes');
-define('_CORE_MEGABYTES', 'Mega Bytes');
+define('_CORE_KILOBYTES', 'KByte');
+define('_CORE_MEGABYTES', 'Mbytes');
 define('_CORE_GIGABYTES', 'Giga Bytes');
 define('_CORE_KILOBYTES_SHORTEN', 'KB');
 define('_CORE_MEGABYTES_SHORTEN', 'MB');
@@ -30,7 +30,7 @@ define('_CORE_TOKENNOVALID', 'Kein gültiges Token in der Anfrage/Sitzung gefund
 define('_CORE_TOKENINVALID', 'Kein gültiger Token in Anfrage/Sitzung gefunden');
 define('_CORE_TOKENISVALID', 'Gültiges Token gefunden');
 define('_CORE_TOKENEXPIRED', 'Gültiger Token abgelaufen');
-define('_CORE_CLASSNOTINSTANIATED', 'This class cannot be instantiated!');
+define('_CORE_CLASSNOTINSTANIATED', 'Diese Klasse kann nicht instanziiert werden!');
 
 define('_CORE_DB_NOTRACE', 'notrace:mysql extension not loaded');
 define('_CORE_DB_NOTALLOWEDINGET', 'Database updates are not allowed during processing of a GET request');
