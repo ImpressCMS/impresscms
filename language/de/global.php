@@ -83,7 +83,7 @@ define("_ERRORS", "Errors");
 define("_NONE", "None");
 define('_ON','on');
 define('_READS','reads');
-define('_SEARCH','Search');
+define('_SEARCH','Suchen');
 define('_ALL', 'All');
 define('_TITLE', 'Titel');
 define('_OPTIONS', 'Options');
