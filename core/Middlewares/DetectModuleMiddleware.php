@@ -3,9 +3,7 @@
 namespace ImpressCMS\Core\Middlewares;
 
 use icms;
-use icms_module_Object;
 use ImpressCMS\Core\Models\Module;
-use League\Route\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

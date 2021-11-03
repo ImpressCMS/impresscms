@@ -11,7 +11,6 @@ use ImpressCMS\Core\Models\Image;
 use ImpressCMS\Core\Models\ImageHandler;
 use ImpressCMS\Core\Response\RedirectResponse;
 use ImpressCMS\Core\Response\ViewResponse;
-use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Sunrise\Http\Router\Annotation\Route;
