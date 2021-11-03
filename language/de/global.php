@@ -157,11 +157,11 @@ define('_HOUR', '1 Stunde');
 define('_HOURS', '%s Stunden');
 define('_DAY', '1 Tag');
 define('_DAYS', '%s Tage');
-define('_WEEK', '1 week');
-define('_MONTH', '1 month');
+define('_WEEK', '1 Woche');
+define('_MONTH', '1 Monat');
 
 define("_DATESTRING","Y/n/j G:i:s");
-define("_MEDIUMDATESTRING","Y/n/j G:i");
+define("_MEDIUMDATESTRING","Y/n/j G:i:s");
 define("_SHORTDATESTRING","Y/n/j");
 /*
  The following characters are recognized in the format string:
@@ -195,53 +195,53 @@ define("_SHORTDATESTRING","Y/n/j");
 
 //%%%%%		LANGUAGE SPECIFIC SETTINGS   %%%%%
 define('_CHARSET', 'utf-8');
-define('_LANGCODE', 'en');
+define('_LANGCODE', 'de');
 
 // change 0 to 1 if this language is a multi-bytes language
 define("XOOPS_USE_MULTIBYTES", "0");
 // change 0 to 1 if this language is a RTL (right to left) language
 define("_ADM_USE_RTL","0");
 
-define('_MODULES','Modules');
+define('_MODULES','Module');
 define('_SYSTEM','System');
-define('_IMPRESSCMS_NEWS','News');
-define('_ABOUT','ImpressCMS Project');
-define('_IMPRESSCMS_HOME','Project Home');
+define('_IMPRESSCMS_NEWS','Nachrichten');
+define('_ABOUT','ImpressCMS Projekt');
+define('_IMPRESSCMS_HOME','Projekt-Home');
 define('_IMPRESSCMS_COMMUNITY','Community');
 define('_IMPRESSCMS_ADDONS','Addons');
 define('_IMPRESSCMS_WIKI','Wiki');
 define('_IMPRESSCMS_BLOG','Blog');
-define('_IMPRESSCMS_DONATE','Donate!');
-define("_IMPRESSCMS_Support","Support the project !");
-define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
-define('_IMPRESSCMS_ADMIN','Administration of');
+define('_IMPRESSCMS_DONATE','Spenden!');
+define("_IMPRESSCMS_Support","Unterstütze das Projekt !");
+define('_IMPRESSCMS_SOURCEFORGE','SourceForge Projekt');
+define('_IMPRESSCMS_ADMIN','Administration von');
 /** The default separator used in icms_view_Tree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
 //Content Manager
-define('_CT_NAV','Home');
-define('_CT_RELATEDS','Related pages');
+define('_CT_NAV','Startseite');
+define('_CT_RELATEDS','Verwandte Seiten');
 //Security image (captcha)
-define("_SECURITYIMAGE_GETCODE","Enter the security code");
-define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgraded your site to the latest version of ImpressCMS!<br />Therefor to finish the upgrade process you'll need to click here and update your system module.<br />Click here to process the upgrade.");
+define("_SECURITYIMAGE_GETCODE","Sicherheitscode eingeben");
+define("_WARNINGUPDATESYSTEM","Herzlichen Glückwunsch, Sie haben gerade erfolgreich auf die neueste Version von ImpressCMS aktualisiert!<br />Um den Aktualisierungsprozess abzuschließen, müssen Sie hier klicken und Ihr Systemmodul aktualisieren.<br />Klicken Sie hier, um das Upgrade zu bearbeiten.");
 
 // This shows local support site in ImpressCMS menu, (if selected language is not English)
 define('_IMPRESSCMS_LOCAL_SUPPORT', 'https://www.impresscms.org'); //add the local support site's URL
-define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','Local support site');
-define("_ALLEFTCON","Enter the text to be aligned on the Left side.");
-define("_ALCENTERCON","Enter the text to be aligned on the Center side.");
-define("_ALRIGHTCON","Enter the text to be aligned on the Right side.");
+define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','Offizielle Support-Site');
+define("_ALLEFTCON","Geben Sie den Text ein, der auf der linken Seite ausgerichtet werden soll.");
+define("_ALCENTERCON","Geben Sie den Text ein, der auf der linken Seite ausgerichtet werden soll.");
+define("_ALRIGHTCON","Geben Sie den Text ein, der auf der linken Seite ausgerichtet werden soll.");
 
-define('_MODABOUT_ABOUT', 'About');
+define('_MODABOUT_ABOUT', 'Über');
 // if you have troubles with this font on your language or it is not working, download tcpdf from: http://www.tecnick.com/public/code/cp_dpage.php?aiocp_dp=tcpdf and add the required font in libraries/tcpdf/fonts then write down the font name here. system will then load this font for your language.
 define('_PDF_LOCAL_FONT', '');
 define('_CALENDAR_TYPE',''); // this value is for the local calendar used in this system, if you're not sure about this leave this value as it is!
-define('_CALENDAR','Calendar');
-define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ
+define('_CALENDAR','Kalender');
+define('_RETRYPOST','Leider ist eine Time Out aufgetreten. Möchtest du erneut posten ?'); // autologin hack GIJ
 
 ############# added since 1.2 #############
-define('_QSEARCH','Quick Search');
-define('_PREV','Prev');
-define('_NEXT','Next');
+define('_QSEARCH','Schnellsuche');
+define('_PREV','Vorher');
+define('_NEXT','Nächste');
 define('_LCL_NUM0','0');
 define('_LCL_NUM1','1');
 define('_LCL_NUM2','2');
@@ -254,59 +254,59 @@ define('_LCL_NUM8','8');
 define('_LCL_NUM9','9');
 // change 0 to 1 if your language has a different numbering than latin`s alphabet
 define("_USE_LOCAL_NUM","0");
-define("_ICMS_DBUPDATED","Database Updated Successfully!");
+define("_ICMS_DBUPDATED","Datenbank erfolgreich aktualisiert!");
 define('_MD_AM_DBUPDATED',_ICMS_DBUPDATED);
 
-define('_TOGGLETINY','Toggle Editor');
-define("_ENTERHTMLCODE","Enter the HTML codes that you want to add.");
-define("_ENTERPHPCODE","Enter the PHP codes that you want to add.");
-define("_ENTERCSSCODE","Enter the CSS codes that you want to add.");
-define("_ENTERJSCODE","Enter the JavaScript codes that you want to add.");
-define("_ENTERWIKICODE","Enter the wiki term that you want to add.");
-define("_ENTERLANGCONTENT","Enter the text that you want to be in %s.");
-define('_LANGNAME', 'English');
-define('_ENTERYOUTUBEURL', 'Enter YouTube url:');
-define('_ENTERHEIGHT', 'Enter frame\'s height');
-define('_ENTERWIDTH', 'Enter frame\'s width');
-define('_ENTERMEDIAURL', 'Enter media url:');
+define('_TOGGLETINY','Editor umschalten');
+define("_ENTERHTMLCODE","Geben Sie die URL des Links ein, den Sie hinzufügen möchten.");
+define("_ENTERPHPCODE","Geben Sie die URL des Links ein, den Sie hinzufügen möchten.");
+define("_ENTERCSSCODE","Geben Sie die URL des Links ein, den Sie hinzufügen möchten.");
+define("_ENTERJSCODE","Geben Sie die URL des Links ein, den Sie hinzufügen möchten.");
+define("_ENTERWIKICODE","Geben Sie die URL des Links ein, den Sie hinzufügen möchten.");
+define("_ENTERLANGCONTENT","Geben Sie den Text ein, der in %s sein soll.");
+define('_LANGNAME', 'Deutsch');
+define('_ENTERYOUTUBEURL', 'YouTube-URL eingeben:');
+define('_ENTERHEIGHT', 'Höhe des Bildes eingeben');
+define('_ENTERWIDTH', 'Breite des Bildes eingeben');
+define('_ENTERMEDIAURL', 'Medien-URL eingeben:');
 // !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"
 // insert double '\' before 't', 'r', 'n'
 define("_TODAY", "	\\o\\d\\a\\y G:i");
-define("_YESTERDAY", "\\Y\e\\s\\t\e\\r\\d\\a\\y G:i");
+define("_YESTERDAY", "\\Y<unk> \\s\\t<unk>\\r\\d\\a\\y G:i");
 define("_MONTHDAY", "n/j G:i");
-define("_YEARMONTHDAY", "Y/n/j G:i");
-define("_ELAPSE", "%s ago");
-define('_VISIBLE', 'Visible');
-define('_UP', 'Up');
-define('_DOWN', 'Down');
-define('_CONFIGURE', 'Configure');
+define("_YEARMONTHDAY", "Y/n/j G:i:s");
+define("_ELAPSE", "vor %s");
+define('_VISIBLE', 'Sichtbar');
+define('_UP', 'Hoch');
+define('_DOWN', 'Unten');
+define('_CONFIGURE', 'Konfigurieren');
 
 // Added in 1.2.2
-define('_FILE_DELETED', 'File %s was deleted successfully');
+define('_FILE_DELETED', 'Datei %s wurde erfolgreich gelöscht');
 
 // added in 1.3
-define('_CHECKALL', 'Check all');
-define('_COPYRIGHT', 'Copyright');
+define('_CHECKALL', 'Alle auswählen');
+define('_COPYRIGHT', 'Urheberrecht');
 define("_LONGDATESTRING", "F jS Y, h:iA");
-define('_AUTHOR', 'Author');
+define('_AUTHOR', 'Verfasser');
 define("_CREDITS", "Credits");
-define("_LICENSE", "License");
+define("_LICENSE", "Lizenz");
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
-define("_BLOCK_ID", "Block ID");
-define('_IMPRESSCMS_PROJECT','Project Development');
+define("_BLOCK_ID", "Block-ID");
+define('_IMPRESSCMS_PROJECT','Projekt Entwicklung');
 
 // added in 1.3.5
-define("_FILTERS","Filters");
+define("_FILTERS","Filter");
 define("_FILTER","Filter");
-define("_FILTERS_MSG1","Input Filter: ");
-define("_FILTERS_MSG2","Input Filter (HTMLPurifier): ");
-define("_FILTERS_MSG3","Output Filter: ");
-define("_FILTERS_MSG4","Output Filter (HTMLPurifier): ");
+define("_FILTERS_MSG1","Eingabe Filter: ");
+define("_FILTERS_MSG2","Eingabefilter (HTMLPurifier): ");
+define("_FILTERS_MSG3","Ausgabe-Filter: ");
+define("_FILTERS_MSG4","Eingabefilter (HTMLPurifier): ");
 
 
 // added in 2.0
-define('_ENTER_MENTION', 'Enter the user name to mention:');
-define( '_ENTER_HASHTAG', 'Enter the term(s) to tag:');
+define('_ENTER_MENTION', 'Geben Sie den zu erwähnenden Benutzernamen ein:');
+define( '_ENTER_HASHTAG', 'Geben Sie den Begriff (e) zum Tag ein:');
 define('_NAME', 'Name');
 
-define('_OR', 'or');
+define('_OR', 'oder');
