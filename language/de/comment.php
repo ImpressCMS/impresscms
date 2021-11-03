@@ -35,10 +35,10 @@ define('_CM_COMAPPROVEALL','Kommentare werden sofort und immer genehmigt');
 define('_CM_COMAPPROVEUSER','Nur angemeldete Benutzer dürfen Kommentare schreiben');
 define('_CM_COMAPPROVEADMIN','Alle Kommentare müssen vom Administrator geprüft und genehmigt werden');
 define('_CM_COMANONPOST','Gästen erlauben Kommentare zu schreiben?');
-define('_CM_COMNOCOM','Disable comments');
+define('_CM_COMNOCOM','Kommentare deaktivieren');
 define('_CM_RE','Re');
 ############# added since 1.2 #############
-define('_CM_COULDNOTCHANGEPIDTOID', 'Could not change comment parent ID from <b>%s</b> to <b>%s</b>. (ID: %s)');
-define('_CM_COULDNOTCHANGEROOTID', 'Could not change comment root ID from <b>%s</b> to <b>%s</b>.');
-define('_CM_COULDNOTCHANGEPAID', 'Could not change comment parent ID from <b>%s</b> to <b>%s</b>.');
-define('_CM_COULDNOTUPDATEPOSTS', 'Could not update user posts.');
+define('_CM_COULDNOTCHANGEPIDTOID', 'Übergeordnete Kommentar-ID von <b>%s</b> zu <b>%s</b>konnte nicht geändert werden. (ID: %s)');
+define('_CM_COULDNOTCHANGEROOTID', 'Konnte die Kommentar-Root-ID von <b>%s</b> zu <b>%s</b> nicht ändern.');
+define('_CM_COULDNOTCHANGEPAID', 'Übergeordnete Kommentar-ID von <b>%s</b> auf <b>%s</b> konnte nicht geändert werden.');
+define('_CM_COULDNOTUPDATEPOSTS', 'Konnte keine Benutzerbeiträge aktualisieren.');
