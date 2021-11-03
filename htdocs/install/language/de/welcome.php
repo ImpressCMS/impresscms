@@ -1,8 +1,7 @@
 <?php
 
 $content .= '
-<p>ImpressCMS ist ein in PHP geschriebenes Web-Publishing-System. Es ist ein ideales Werkzeug für
-Entwicklung kleiner bis großer dynamischer Community-Websites, unternehmensinterner Portale, Unternehmensportale, Weblogs und vieles mehr.</p>
+<p>ImpressCMS ist ein in PHP geschriebenes Web-Publishing-System. Es ist ein ideales Werkzeug für Entwicklung kleiner bis großer dynamischer Community-Websites, unternehmensinterner Portale, Unternehmensportale, Weblogs und vieles mehr.</p>
 <p>
 	ImpressCMS ist freigegeben unter den Bedingungen der
 	<a href="http://www.gnu.org/copyleft/gpl.html" rel="external">GNU General Public License (GPL)</a>
