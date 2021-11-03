@@ -68,22 +68,22 @@ define ('_NOT_COMMENTSUBMIT_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} Auto-Benachri
 
 define ('_NOT_BOOKMARK_NOTIFY', 'Lesezeichen');
 define ('_NOT_BOOKMARK_NOTIFYCAP', 'Lesezeichen für diesen Eintrag (keine Benachrichtigung).');
-define ('_NOT_BOOKMARK_NOTIFYDSC', 'Keep track of this item without receiving any event notifications.');
+define ('_NOT_BOOKMARK_NOTIFYDSC', 'Behalten Sie den Überblick über dieses Element, ohne dass Sie irgendwelche Benachrichtigungen erhalten.');
 
 // For user profile
 // FIXME: These should be reworded a little...
 
-define ('_NOT_NOTIFYMETHOD', 'Notification Method: When you monitor e.g. a forum, how would you like to receive notifications of updates?');
-define ('_NOT_METHOD_EMAIL', 'Email (use address in my profile)');
-define ('_NOT_METHOD_PM', 'Private Message');
-define ('_NOT_METHOD_DISABLE', 'Temporarily Disable');
+define ('_NOT_NOTIFYMETHOD', 'Benachrichtigungsmethode: Wie möchten Sie Benachrichtigungen über Updates erhalten, wenn Sie z.B. ein Forum überwachen?');
+define ('_NOT_METHOD_EMAIL', 'E-Mail (Benutze die Adresse in meinem Profil)');
+define ('_NOT_METHOD_PM', 'Private Nachrichten');
+define ('_NOT_METHOD_DISABLE', 'Vorübergehend deaktivieren');
 
-define ('_NOT_NOTIFYMODE', 'Default Notification Mode');
-define ('_NOT_MODE_SENDALWAYS', 'Notify me of all selected updates');
-define ('_NOT_MODE_SENDONCE', 'Notify me only once');
-define ('_NOT_MODE_SENDONCEPERLOGIN', 'Notify me once then disable until I log in again');
+define ('_NOT_NOTIFYMODE', 'Standard-Benachrichtigungsmodus');
+define ('_NOT_MODE_SENDALWAYS', 'Benachrichtigen Sie mich über alle ausgewählten Updates');
+define ('_NOT_MODE_SENDONCE', 'Nur einmal benachrichtigen');
+define ('_NOT_MODE_SENDONCEPERLOGIN', 'Benachrichtigen Sie mich einmal und deaktivieren Sie mich, bis ich mich erneut anmelden kann');
 
-define ('_NOT_NOTHINGTODELETE', 'There is nothing to delete.');
+define ('_NOT_NOTHINGTODELETE', 'Es ist nichts zu löschen.');
 
 // Added in 1.3.1
-define("_NOT_RUSUREDEL", "Are you sure you want to delete these notifications?");
+define("_NOT_RUSUREDEL", "Sind Sie sicher, dass Sie diese Benachrichtigungen löschen möchten?");
