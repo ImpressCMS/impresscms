@@ -37,6 +37,7 @@ namespace ImpressCMS\Core\View\Theme;
 use icms;
 use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
 use League\Flysystem\Filesystem;
+use League\Flysystem\StorageAttributes;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 
@@ -132,21 +133,25 @@ class ThemeFactory {
 	 *
 	 * @return	array
 	 */
-	public static function getThemesList() {
+	public static function getThemesList()
+	{
 		$dirlist = [];
 		/**
 		 * @var Filesystem $fs
 		 */
 		$fs = icms::getInstance()->get('filesystem.themes');
-		foreach ($fs->listContents() as $fileInfo) {
-			if ($fileInfo['type'] !== 'dir') {
+		/**
+		 * @var StorageAttributes $fileInfo
+		 */
+		foreach ($fs->listContents('') as $fileInfo) {
+			if (!$fileInfo->isDir()) {
 				continue;
 			}
-			$themeInfo = self::getThemeInfo(ICMS_THEME_PATH . DIRECTORY_SEPARATOR .  $fileInfo['filename']);
+			$themeInfo = self::getThemeInfo(ICMS_THEME_PATH . DIRECTORY_SEPARATOR . $fileInfo->path());
 			if (!$themeInfo['hasUser']) {
 				continue;
 			}
-			$file = $fileInfo['basename'];
+			$file = $fileInfo->path();
 			$dirlist[$file] = $themeInfo['name'];
 		}
 		return $dirlist;
@@ -157,21 +162,25 @@ class ThemeFactory {
 	 *
 	 * @return	array
 	 */
-	public static function getAdminThemesList() {
+	public static function getAdminThemesList()
+	{
 		$items = [];
 		/**
 		 * @var Filesystem $fs
 		 */
 		$fs = icms::getInstance()->get('filesystem.themes');
-		foreach ($fs->listContents() as $fileInfo) {
-			if ($fileInfo['type'] !== 'dir') {
+		/**
+		 * @var StorageAttributes $fileInfo
+		 */
+		foreach ($fs->listContents('') as $fileInfo) {
+			if (!$fileInfo->isDir()) {
 				continue;
 			}
-			$themeInfo = self::getThemeInfo(ICMS_THEME_PATH . DIRECTORY_SEPARATOR .  $fileInfo['filename']);
+			$themeInfo = self::getThemeInfo(ICMS_THEME_PATH . DIRECTORY_SEPARATOR . $fileInfo->path());
 			if (!$themeInfo['hasAdmin']) {
 				continue;
 			}
-			$file = $fileInfo['basename'];
+			$file = $fileInfo->path();
 			$items[$file] = $themeInfo['name'];
 		}
 
@@ -180,11 +189,16 @@ class ThemeFactory {
 		 */
 		$fm = icms::getInstance()->get('filesystem.modules');
 		foreach ($fm->listContents('system/themes') as $fileInfo) {
-			$themeInfo = self::getThemeInfo(ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'themes' .  DIRECTORY_SEPARATOR . $fileInfo['filename']);
+			if (!$fileInfo->isDir()) {
+				continue;
+			}
+			$filename = mb_substr($fileInfo->path(), mb_strlen('system/themes/'));
+
+			$themeInfo = self::getThemeInfo(ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $filename);
 			if (!$themeInfo['hasAdmin']) {
 				continue;
 			}
-			$file = $fileInfo['basename'];
+			$file = $filename;
 			$items[$file] = $themeInfo['name'];
 		}
 
