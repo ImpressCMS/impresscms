@@ -7,7 +7,8 @@ use Exception;
 use GuzzleHttp\Psr7\Response;
 use icms;
 use ImpressCMS\Core\Models\Module;
-use ImpressCMS\Core\Models\ModuleHandler;
+use League\Flysystem\FileAttributes;
+use League\Flysystem\Filesystem;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use function GuzzleHttp\Psr7\mimetype_from_filename;
@@ -48,26 +49,32 @@ class LegacyController
 
 			global $icmsTpl, $xoopsTpl, $xoopsOption, $icmsAdminTpl, $icms_admin_handler, $icmsModule;
 			if (!isset($icmsModule)) {
-				$icmsModule = \icms::$module;
+				$icmsModule = icms::$module;
 			}
-			
+
 			ob_start();
-			
+
 			// Never PHP needs to have all constants in file defined and this is problem with some older modules that loads a bit later translations
 			// so here is hack to fix this issue - load all language files at once
 			if (version_compare(phpversion(), '8.0', '>=')) {
 				/**
 				 * @var Filesystem $modulesFs
 				 */
-				$modulesFs = \icms::getInstance()->get('filesystem.modules');
-				foreach ((array)$modulesFs->listContents(\icms::$module->dirname . '/language/english/', true) as $file) {
-					if (!is_array($file) || $file['type'] !== 'file' || $file['basename'][0] === '.' || $file['extension'] !== 'php') {
+				$modulesFs = icms::getInstance()->get('filesystem.modules');
+				foreach ((array)$modulesFs->listContents(icms::$module->dirname . '/language/english/', true) as $file) {
+					if (!($file instanceof FileAttributes)) {
 						continue;
 					}
-					icms_loadLanguageFile(\icms::$module->dirname, $file['filename']);
+					$relativePath = $file->path();
+					$basename = basename($relativePath);
+					$ext = pathinfo($relativePath, PATHINFO_EXTENSION);
+					if ($basename === '.' || $ext !== 'php') {
+						continue;
+					}
+					icms_loadLanguageFile(icms::$module->dirname, $relativePath);
 				}
 			}
-			
+
 			require $path;
 			$headers = [];
 			foreach(headers_list() as $header) {
