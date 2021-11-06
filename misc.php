@@ -37,6 +37,7 @@
 
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Models\User;
+use ImpressCMS\Core\View\Form\Elements\Captcha\ImageRenderer;
 
 icms_loadLanguageFile('core', 'misc');
 /* set filter types, if not strings */
@@ -64,7 +65,7 @@ if (!empty($_POST)) {
 }
 
 if ($action === 'update-captcha') {
-	$image_handler = new \ImpressCMS\Core\View\Form\Elements\Captcha\ImageRenderer();
+	$image_handler = new ImageRenderer();
 	$image_handler->clearAttempts();
 	$image_handler->loadImage();
 	exit(0);
@@ -75,32 +76,6 @@ if ($action == 'showpopups') {
 	// show javascript close button?
 	$closebutton = 1;
 	switch ($type) {
-		case 'smilies':
-			if ($target == '' || !preg_match('/^[0-9a-z_]*$/i', $target)) {} else {
-				echo "<script type=\"text/javascript\"><!--//
-				function doSmilie(addSmilie) {
-				var currentMessage = window.opener.xoopsGetElementById(\"" . $target . "\").value;
-				window.opener.xoopsGetElementById(\"" . $target . ";
-				echo '</head><body>
-				<table width="100%" class="outer">
-				<tr><th colspan="3">'._MSC_SMILIES . '</th></tr>
-				<tr class="head"><td>'._MSC_CODE . '</td><td>' . _MSC_EMOTION . '</td><td>' . _IMAGE . '</td></tr>';
-				$smiles = DataFilter::getSmileys(1);
-				$count = count($smiles);
-				if ($count > 0) {
-					$rcolor = 'even';
-					for ($i = 0; $i < $count; $i++) {
-						echo "<tr class='$rcolor'><td>".htmlentities($smiles[$i]['code'])."</td>
-							<td>".htmlentities($smiles[$i]['emotion'])."</td>
-							<td><img onmouseover=\"style.cursor='pointer'\" onclick=\"doSmilie(decodeURIComponent('"
-								. rawurlencode($smiles[$i]['code']) . "'));\" src='"
-								. ICMS_UPLOAD_URL . "/" . $smiles[$i]['smile_url'] . "' alt='' /></td></tr>";
-						$rcolor = ($rcolor == 'even')?'odd':'even';
-					}
-				} else {echo 'Could not retrieve data from the database.'; }
-				echo '</table>' . _MSC_CLICKASMILIE;
-			}
-			break;
 		case 'avatars':
 			?>
 			<script language='javascript'>
@@ -265,49 +240,4 @@ if ($action == 'showpopups') {
 					echo '<div style="text-align: right;">' . $nav->renderNav() . '</div>';
 				}
 				break;
-			case 'ssllogin':
-				if ($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && is_object(icms::$user)) {
-					icms_loadLanguageFile('core', 'user');
-					echo sprintf(_US_LOGGINGU, icms::$user->uname);
-					echo '<div style="text-align:center;">
-						<input class="formButton" value="'._CLOSE . '" type="button" onclick="window.opener.location.reload();window.close();" />
-						</div>';
-				$closebutton = false;
-				}
-				break;
-				default:
-				break;
-				}
-				if ($closebutton) {
-				echo '<div style="text-align:center;">
-						<input class="formButton" value="'._CLOSE . '" type="button" onclick="window.close();" />
-						</div>';
-				}
-				xoops_footer();
-				}
-
-				function printCheckForm() {
-				?>
-					<script language='javascript'>
-						<!--//
-						function checkForm() {
-						if (xoopsGetElementById("yname").value == "") {
-							alert("<?php echo _MSC_ENTERYNAME; ?>");
-							xoopsGetElementById("yname").focus();
-							return false;
-						} elseif (xoopsGetElementById("fname").value == "") {
-							alert("<?php echo _MSC_ENTERFNAME; ?>");
-							xoopsGetElementById("fname").focus();
-							return false;
-						} elseif (xoopsGetElementById("fmail").value =="") {
-							alert("<?php echo _MSC_ENTERFMAIL; ?>");
-							xoopsGetElementById("fmail").focus();
-							return false;
-						} else {
-							return true;
-						}
-					}
-					//-->
-					</script>
-				<?php
 			}
