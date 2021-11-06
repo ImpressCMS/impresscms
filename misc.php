@@ -76,47 +76,6 @@ if ($action == 'showpopups') {
 	// show javascript close button?
 	$closebutton = 1;
 	switch ($type) {
-		case 'avatars':
-			?>
-			<script language='javascript'>
-				<!--//
-				function myimage_onclick(counter) {
-					window.opener.xoopsGetElementById("user_avatar").options[counter].selected = true;
-					showAvatar();
-					window.opener.xoopsGetElementById("user_avatar").focus();
-					window.close();
-				}
-				function showAvatar() {
-					window.opener.xoopsGetElementById("avatar").src='<?php echo ICMS_UPLOAD_URL; ?>/'
-					+ window.opener.xoopsGetElementById("user_avatar")
-					.options[window.opener.xoopsGetElementById("user_avatar").selectedIndex].value;
-				}
-				//-->
-			</script>
-			</head>
-			<body>
-			<h4><?php echo _MSC_AVAVATARS; ?></h4>
-			<table width='100%'>
-				<tr>
-				<?php
-				$avatar_handler = icms::handler('icms_data_avatar');
-				$avatarslist = & $avatar_handler->getList('S');
-				$cntavs = 0;
-				$counter = isset($start)?(int) ($start):0;
-				foreach ($avatarslist as $file => $name) {
-					echo '<td><img src="uploads/' . $file . '" alt="' . $name . '" style="padding:10px; vertical-align:top;" />
-						<br />'.$name . '<br />
-						<input name="myimage" type="button" value="'._SELECT . '" onclick="myimage_onclick(' . $counter . ')" />
-						</td>';
-					$counter++;
-					$cntavs++;
-					if ($cntavs > 8) {
-						echo '</tr><tr>';
-						$cntavs = 0;
-					}
-				}
-				echo '</tr></table></div>';
-				break;
 			case 'friend':
 				if (!icms::$security->check() || !isset($op) || $op == 'sendform') {
 					if (icms::$user) {

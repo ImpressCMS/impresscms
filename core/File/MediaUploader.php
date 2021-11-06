@@ -335,12 +335,14 @@ class MediaUploader {
 			$this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
 			$this->mediaError = !empty($_FILES[$media_name]['error'][$index])?$_FILES[$media_name]['error'][$index]:0;
 		} else {
-			$media_name = & $_FILES[$media_name];
+			if (!is_array($media_name)) {
+				$media_name = &$_FILES[$media_name];
+			}
 			$this->mediaName = $media_name['name'];
 			$this->mediaType = $media_name['type'];
 			$this->mediaSize = $media_name['size'];
 			$this->mediaTmpName = $media_name['tmp_name'];
-			$this->mediaError = !empty($media_name['error'])?$media_name['error']:0;
+			$this->mediaError = !empty($media_name['error']) ? $media_name['error'] : 0;
 		}
 		if (($ext = strrpos($this->mediaName, '.')) !== false) {
 			$ext = strtolower(substr($this->mediaName, $ext + 1));
@@ -349,7 +351,7 @@ class MediaUploader {
 			}
 		}
 		$this->errors = array();
-		if ((int) ($this->mediaSize) < 0) {
+		if ((int)($this->mediaSize) < 0) {
 			self::setErrors(_ER_UP_INVALIDFILESIZE);
 			return false;
 		}
@@ -357,7 +359,7 @@ class MediaUploader {
 			self::setErrors(_ER_UP_FILENAMEEMPTY);
 			return false;
 		}
-		if ($this->mediaTmpName == 'none' || !is_uploaded_file($this->mediaTmpName)) {
+		if (!$this->mediaTmpName || $this->mediaTmpName == 'none' || !is_uploaded_file($this->mediaTmpName)) {
 			self::setErrors($this->getUploadErrorText($media_name['error']));
 			return false;
 		}

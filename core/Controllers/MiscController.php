@@ -5,6 +5,7 @@ namespace ImpressCMS\Core\Controllers;
 use GuzzleHttp\Psr7\Response;
 use icms;
 use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\Models\AvatarHandler;
 use ImpressCMS\Core\Response\ViewResponse;
 use ImpressCMS\Core\View\Form\Elements\Captcha\ImageRenderer;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -159,7 +160,25 @@ class MiscController
 	 */
 	public function showAvatarsPopup(ServerRequestInterface $request): ResponseInterface
 	{
+		global $icmsConfigUser;
 
+		/**
+		 * @var AvatarHandler $avatar_handler
+		 */
+		$avatar_handler = icms::handler('icms_data_avatar');
+
+		$response = new ViewResponse([
+			'template_canvas' => 'db:system_blank.html',
+			'template_main' => 'db:system_avatars.html',
+		]);
+
+		$response->assign(
+			'avatars',
+			$avatar_handler->getList('S')
+		);
+		$response->assign('avatar_width', $icmsConfigUser['avatar_width']);
+		$response->assign('avatar_height', $icmsConfigUser['avatar_height']);
+		return $response;
 	}
 
 	/**
