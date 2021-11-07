@@ -5,9 +5,11 @@ namespace ImpressCMS\Core\Models;
 
 
 use Exception;
+use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use PDO;
 
 /**
  * Handles online data
@@ -105,6 +107,39 @@ class OnlineHandler extends AbstractExtendedHandler
 		$item->online_module = $moduleId;
 
 		return $item->store();
+	}
+
+	/**
+	 * Get online items for list
+	 *
+	 * @param int $from From where to get
+	 * @param int $limit How many to get
+	 *
+	 * @return array
+	 */
+	public function getItemsForList(int $from, int $limit = 20): array
+	{
+		/**
+		 * @var UserHandler $userHandler
+		 */
+		$userHandler = icms::handler('icms_member_user');
+
+		/**
+		 * @var ModuleHandler $moduleHandler
+		 */
+		$moduleHandler = icms::handler('icms_module');
+
+		$result = $this->db->perform('SELECT u.uid uid, u.user_avatar avatar, o.online_ip ip, o.online_updated, m.name module, u.uname
+ 				 FROM ' . $this->table . ' o
+				 LEFT JOIN ' . $userHandler->table . ' u ON o.online_uid = u.uid AND o.online_uid != 0
+				 LEFT JOIN ' . $moduleHandler->table . ' m ON o.online_module = m.mid AND o.online_module != 0 AND m.isactive = 1
+				 LIMIT ' . (int)$from . ', ' . (int)$limit);
+
+		if (!$result) {
+			return [];
+		}
+
+		return $result->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 }

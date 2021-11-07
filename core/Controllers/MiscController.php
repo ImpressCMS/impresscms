@@ -6,8 +6,10 @@ use GuzzleHttp\Psr7\Response;
 use icms;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Models\AvatarHandler;
+use ImpressCMS\Core\Models\OnlineHandler;
 use ImpressCMS\Core\Response\ViewResponse;
 use ImpressCMS\Core\View\Form\Elements\Captcha\ImageRenderer;
+use ImpressCMS\Core\View\PageNav;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -196,7 +198,40 @@ class MiscController
 	 */
 	public function showUsersOnlinePopup(ServerRequestInterface $request): ResponseInterface
 	{
+		global $icmsConfig;
 
+		$data = $request->getQueryParams();
+
+		/**
+		 * @var OnlineHandler $onlineHandler
+		 */
+		$onlineHandler = icms::handler('icms_core_Online');
+
+		$start = isset($data['start']) ? (int)$data['start'] : 0;
+		$limit = 20;
+
+		$count = $onlineHandler->getCount();
+
+		$response = new ViewResponse([
+			'template_canvas' => 'db:system_blank.html',
+			'template_main' => 'db:system_who_is_online.html',
+		]);
+		$response->assign(
+			'items',
+			$onlineHandler->getItemsForList($start, $limit)
+		);
+		$response->assign(
+			'isAdmin',
+			icms::$user ? icms::$user->isAdmin() : false
+		);
+		$response->assign('anonymousName', $icmsConfig['anonymous']);
+
+		if ($count > $limit) {
+			$nav = new PageNav($$count, $limit, $start, 'start', 'action=showpopups&amp;type=online');
+			$response->assign('nav', $nav->renderNav());
+		}
+
+		return $response;
 	}
 
 }
