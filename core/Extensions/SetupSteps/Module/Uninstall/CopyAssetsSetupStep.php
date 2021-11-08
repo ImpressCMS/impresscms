@@ -2,10 +2,10 @@
 
 namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Uninstall;
 
+use icms_module_Object;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\Models\Module;
-use icms_module_Object;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use League\Flysystem\Filesystem;
@@ -29,7 +29,7 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		 */
 		$fs = $this->container->get('filesystem.public');
 		$output->info(_MD_AM_COPY_ASSETS_DELETING);
-		$fs->deleteDir('modules/' . $module->dirname);
+		$fs->deleteDirectory('modules/' . $module->dirname);
 
 		return true;
 	}

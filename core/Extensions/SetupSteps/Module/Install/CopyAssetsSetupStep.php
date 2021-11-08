@@ -36,8 +36,8 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		$output->info(_MD_AM_COPY_ASSETS_INFO);
 		$output->incrIndent();
 		$output->msg(_MD_AM_COPY_ASSETS_DELETE_OLD);
-		$mm->deleteDir('modules/' . $module->dirname);
-		$mm->createDir('modules/' . $module->dirname);
+		$mm->deleteDirectory('modules/' . $module->dirname);
+		$mm->createDirectory('modules/' . $module->dirname);
 
 		foreach ($this->getModuleAssetToCopy($module->dirname) as $assetPath => $assetContent) {
 			$output->msg(_MD_AM_COPY_ASSETS_COPYING, 'modules/' . $assetPath);
@@ -49,7 +49,7 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 
 		foreach ($this->getDefinedAssets((array)$module->getInfo('assets'), $module->dirname) as $assetPath => $assetContent) {
 			$output->msg(_MD_AM_COPY_ASSETS_COPYING, $assetPath);
-			if ($mm->has($assetPath)) {
+			if ($mm->fileExists($assetPath)) {
 				$mm->delete($assetPath);
 			}
 			$mm->writeStream(
