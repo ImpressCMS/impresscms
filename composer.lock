@@ -5,6 +5,7 @@
 	"This file is @generated automatically"
   ],
   "content-hash": "638a25ca7289df7efac439194e0fa9b3",
+
   "packages": [
 	{
 	  "name": "0.0.0/composer-include-files",
@@ -15,16 +16,16 @@
 		"reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
 	  },
 	  "dist": {
-		"type": "zip",
-		"url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
-		"reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
-		"shasum": ""
-	  },
-	  "require": {
-		"composer-plugin-api": "^1.0 || ^2.0"
-	  },
-	  "type": "composer-plugin",
-	  "extra": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
+                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
                 "class": "ComposerIncludeFiles\\Plugin"
             },
             "autoload": {
@@ -132,6 +133,7 @@
                 "mongodb",
                 "msgpack",
                 "mysql",
+
 			  "pdo",
 			  "pgsql",
 			  "postgres",
@@ -1347,6 +1349,7 @@
 		  ],
 		  "description": "Standards compliant HTML filter written in PHP",
 		  "homepage": "http://htmlpurifier.org/",
+
 		  "keywords": [
 			"html"
 		  ],
