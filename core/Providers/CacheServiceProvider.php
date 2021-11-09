@@ -2,7 +2,7 @@
 
 namespace ImpressCMS\Core\Providers;
 
-use Apix\Cache\Factory;
+use Apix\SimpleCache\Factory;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 
@@ -16,7 +16,8 @@ class CacheServiceProvider extends AbstractServiceProvider
 	 * @inheritdoc
 	 */
 	protected $provides = [
-		'cache'
+		'cache',
+		'cache.simple',
 	];
 
 	/**
@@ -24,8 +25,19 @@ class CacheServiceProvider extends AbstractServiceProvider
 	 */
 	public function register()
 	{
-		$this->getContainer()->add('cache', function () {
+		$this->getContainer()->add('cache.simple', function () {
 			return Factory::getPool(
+				'files',
+				[
+					'directory' => ICMS_CACHE_PATH,
+					'locking' => true,
+					'prefix_key' => 'icms'
+				],
+				true
+			);
+		});
+		$this->getContainer()->add('cache', function () {
+			return \Apix\Cache\Factory::getPool(
 				'files',
 				[
 					'directory' => ICMS_CACHE_PATH,

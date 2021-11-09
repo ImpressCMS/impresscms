@@ -151,7 +151,9 @@ class ModuleHandler extends AbstractExtendedHandler
 	 */
 	public static function getActive()
 	{
-		$module_handler = new self(icms::$xoopsDB);
+		$module_handler = new self(
+			icms::getInstance()->get('db')
+		);
 		$criteria = new CriteriaItem('isactive', 1);
 		return $module_handler->getList($criteria, true);
 	}

@@ -10,8 +10,10 @@ use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\Models\Module;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
+use League\Flysystem\FileAttributes;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
+use League\Flysystem\StorageAttributes;
 
 /**
  * Copies module assets to public path
@@ -34,8 +36,8 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		$output->info(_MD_AM_COPY_ASSETS_INFO);
 		$output->incrIndent();
 		$output->msg(_MD_AM_COPY_ASSETS_DELETE_OLD);
-		$mm->deleteDir('modules/' . $module->dirname);
-		$mm->createDir('modules/' . $module->dirname);
+		$mm->deleteDirectory('modules/' . $module->dirname);
+		$mm->createDirectory('modules/' . $module->dirname);
 
 		foreach ($this->getModuleAssetToCopy($module->dirname) as $assetPath => $assetContent) {
 			$output->msg(_MD_AM_COPY_ASSETS_COPYING, 'modules/' . $assetPath);
@@ -47,7 +49,7 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 
 		foreach ($this->getDefinedAssets((array)$module->getInfo('assets'), $module->dirname) as $assetPath => $assetContent) {
 			$output->msg(_MD_AM_COPY_ASSETS_COPYING, $assetPath);
-			if ($mm->has($assetPath)) {
+			if ($mm->fileExists($assetPath)) {
 				$mm->delete($assetPath);
 			}
 			$mm->writeStream(
@@ -85,11 +87,15 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 				 * @var Filesystem $fs
 				 */
 				$fs = $this->container->get('filesystem.root');
+				/**
+				 * @var StorageAttributes $fileSystemItem
+				 */
 				foreach ($fs->listContents($originalPath, true) as $fileSystemItem) {
-					if ($fileSystemItem['type'] !== 'file') {
+					if ($fileSystemItem->isFile()) {
 						continue;
 					}
-					yield 'modules/' . $moduleDir . '/' . $fileSystemItem['path'] => $fs->readStream($fileSystemItem['path']);
+					$relativePath = $fileSystemItem->path();
+					yield 'modules/' . $moduleDir . '/' . $relativePath => $fs->readStream($relativePath);
 				}
 				continue;
 			}
@@ -99,13 +105,15 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 			 */
 			$mf = $this->container->get('filesystem.modules');
 			foreach ($mf->listContents($moduleDir . '/' . $path, true) as $fileSystemItem) {
-				if ($fileSystemItem['type'] !== 'file') {
+				if (!($fileSystemItem instanceof FileAttributes)) {
 					continue;
 				}
-				if (in_array($fileSystemItem['extension'], ['php', 'htm', 'html', 'tpl', 'yml', 'md', '', 'json'], true)) {
+				$relativePath = $fileSystemItem->path();
+				$ext = pathinfo($relativePath, PATHINFO_EXTENSION);
+				if (in_array($ext, ['php', 'htm', 'html', 'tpl', 'yml', 'md', '', 'json'], true)) {
 					continue;
 				}
-				yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
+				yield $relativePath => $mf->readStream($relativePath);
 			}
 		}
 	}
@@ -126,13 +134,19 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		 */
 		$mf = $this->container->get('filesystem.modules');
 		foreach ($mf->listContents($moduleDirname, true) as $fileSystemItem) {
-			if ($fileSystemItem['type'] !== 'file' || $fileSystemItem['basename'][0] === '.' || $fileSystemItem['basename'] === 'LICENSE') {
+			if (!($fileSystemItem instanceof FileAttributes)) {
 				continue;
 			}
-			if (in_array($fileSystemItem['extension'], ['php', 'htm', 'html', 'tpl', 'yml', 'md', '', 'json'], true)) {
+			$relativePath = $fileSystemItem->path();
+			$basename = basename($relativePath);
+			if ($basename[0] === '.' || $basename === 'LICENSE') {
 				continue;
 			}
-			yield $fileSystemItem['path'] => $mf->readStream($fileSystemItem['path']);
+			$ext = pathinfo($relativePath, PATHINFO_EXTENSION);
+			if (in_array($ext, ['php', 'htm', 'html', 'tpl', 'yml', 'md', '', 'json'], true)) {
+				continue;
+			}
+			yield $relativePath => $mf->readStream($relativePath);
 		}
 	}
 

@@ -1,13 +1,12 @@
 <?php
 
-
 namespace ImpressCMS\Core\Middlewares;
-
 
 use icms;
 use icms_member_groupperm_Handler;
-use League\Route\Http\Exception\UnauthorizedException;
+use ImpressCMS\Core\Models\GroupPermHandler;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -39,14 +38,12 @@ class HasPermissionMiddleware implements MiddlewareInterface
 
 	/**
 	 * @inheritDoc
-	 *
-	 * @throws UnauthorizedException
 	 */
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
 	{
 		$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
 		/**
-		 * @var icms_member_groupperm_Handler $permissionHandler
+		 * @var GroupPermHandler $permissionHandler
 		 */
 		$permissionHandler = icms::handler('icms_member_groupperm');
 
@@ -57,6 +54,10 @@ class HasPermissionMiddleware implements MiddlewareInterface
 			return $handler->handle($request);
 		}
 
-		throw new UnauthorizedException();
+		/**
+		 * @var ResponseFactoryInterface $responseFactory
+		 */
+		$responseFactory = $this->container->get('response_factory');
+		return $responseFactory->createResponse(403);
 	}
 }
