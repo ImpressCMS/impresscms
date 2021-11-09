@@ -9,6 +9,7 @@ use Imponeer\Smarty\Extensions\ForeachQ\ForeachQCloseTagCompiler;
 use Imponeer\Smarty\Extensions\ForeachQ\ForeachQOpenTagCompiler;
 use Imponeer\Smarty\Extensions\Image\ResizeImageFunction;
 use Imponeer\Smarty\Extensions\IncludeQ\IncludeQCompiler;
+use Imponeer\Smarty\Extensions\SunriseHTTPRouter\UrlFunction;
 use Imponeer\Smarty\Extensions\Translate\TransBlock;
 use Imponeer\Smarty\Extensions\Translate\TransVarModifier;
 use Imponeer\Smarty\Extensions\XO\XOAppUrlCompiler;
@@ -49,6 +50,9 @@ class SmartyPluginsProvider extends AbstractServiceProvider
 		$this->addTranslationTags();
 		$this->addImageTags();
 		$this->addXOInboxCount();
+		$this->leagueContainer->add(UrlFunction::class)
+			->addArgument('router')
+			->addTag('smarty.plugin');
 	}
 
 	/**
