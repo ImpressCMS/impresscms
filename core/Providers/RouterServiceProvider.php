@@ -246,6 +246,7 @@ class RouterServiceProvider extends AbstractServiceProvider
 	}
 
 
+
 	private function createPathRegExpString(Filesystem $filesystem, string $path, array $excludedExtensions = [], array $excludedFilenames = [])
 	{
 		$parts = [];
