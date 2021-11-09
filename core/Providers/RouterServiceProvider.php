@@ -22,6 +22,7 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Flysystem\FileAttributes;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemException;
+use League\Flysystem\StorageAttributes;
 use Middlewares\AuraSession;
 use Middlewares\BasePath;
 use Middlewares\ClientIp;
@@ -242,6 +243,40 @@ class RouterServiceProvider extends AbstractServiceProvider
 		}
 
 		return $middleware;
+	}
+
+
+
+	private function createPathRegExpString(Filesystem $filesystem, string $path, array $excludedExtensions = [], array $excludedFilenames = [])
+	{
+		$parts = [];
+		/**
+		 * @var StorageAttributes $item
+		 */
+		foreach ($filesystem->listContents($path, false) as $item) {
+			var_dump($item->path());
+			die();
+			if ($item->isDir()) {
+
+				continue;
+			}
+
+			if (
+				($file['type'] !== 'file') ||
+				($file['basename'][0] === '.') ||
+				in_array($file['basename'], $excludedFilenames, true) ||
+				in_array(strtolower($file['extension']), $excludedExtensions, true)
+			) {
+				continue;
+			}
+			$parts[] = preg_quote($file['path'], '/');
+		}
+
+		if (empty($parts)) {
+			return null;
+		}
+
+		return (count($parts) > 1) ? ('(' . implode('|', $parts) . ')') : $parts[0];
 	}
 
 	/**
