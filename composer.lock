@@ -132,6 +132,7 @@
                 "mongodb",
                 "msgpack",
                 "mysql",
+
                 "pdo",
                 "pgsql",
                 "postgres",
@@ -142,6 +143,7 @@
                 "serializer",
                 "session",
                 "sqlite",
+
 			  "tagging"
 			],
 		  "support": {
@@ -239,6 +241,7 @@
                 "aura/di": "~2.0"
             },
             "suggest": {
+
                 "ext-mcrypt": "Mcrypt generates the next best secure CSRF tokens.",
                 "ext-openssl": "OpenSSL generates the best secure CSRF tokens.",
                 "ircmaxell/random-lib": "A Library For Generating Secure Random Numbers",
@@ -951,6 +954,7 @@
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
+
             ],
             "authors": [
                 {
@@ -964,6 +968,7 @@
 			  "psr-7",
 			  "psr7"
 			],
+
 		  "support": {
 			"issues": "https://github.com/dflydev/dflydev-fig-cookies/issues",
 			"source": "https://github.com/dflydev/dflydev-fig-cookies/tree/master"
@@ -1133,6 +1138,7 @@
 	  "dist": {
 		"type": "zip",
 		"url": "https://api.github.com/repos/dompdf/dompdf/zipball/db91d81866c69a42dad1d2926f61515a1e3f42c5",
+
                 "reference": "db91d81866c69a42dad1d2926f61515a1e3f42c5",
                 "shasum": ""
             },
@@ -1337,6 +1343,7 @@
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-2.1-or-later"
+
             ],
             "authors": [
                 {
@@ -1347,6 +1354,7 @@
             ],
             "description": "Standards compliant HTML filter written in PHP",
             "homepage": "http://htmlpurifier.org/",
+
 		  "keywords": [
 			"html"
 		  ],
@@ -1433,6 +1441,7 @@
             "autoload": {
                 "classmap": [
                     "src/geshi/",
+
                     "src/geshi.php"
                 ]
             },
@@ -1906,26 +1915,68 @@
             "keywords": [
                 "include",
                 "smarty",
-                "smarty-plugins",
-                "xoops"
-            ],
-            "support": {
-                "issues": "https://github.com/imponeer/smarty-includeq/issues",
-                "source": "https://github.com/imponeer/smarty-includeq/tree/v1.0.0"
-            },
-            "time": "2021-02-03T09:29:03+00:00"
-        },
-        {
-            "name": "imponeer/smarty-translate",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/imponeer/smarty-translate.git",
-                "reference": "64072bbdfc4862c1b32f41ce7fba6d11eec5ab7c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/64072bbdfc4862c1b32f41ce7fba6d11eec5ab7c",
+			  "smarty-plugins",
+			  "xoops"
+			],
+		  "support": {
+			"issues": "https://github.com/imponeer/smarty-includeq/issues",
+			"source": "https://github.com/imponeer/smarty-includeq/tree/v1.0.0"
+		  },
+		  "time": "2021-02-03T09:29:03+00:00"
+		},
+	{
+	  "name": "imponeer/smarty-sunrise-http-router",
+	  "version": "v1.0",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/imponeer/smarty-sunrise-http-router.git",
+		"reference": "242bf4ae211875fd6fb1661e226e69382f2e8bd7"
+	  },
+	  "dist": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/imponeer/smarty-sunrise-http-router/zipball/242bf4ae211875fd6fb1661e226e69382f2e8bd7",
+		"reference": "242bf4ae211875fd6fb1661e226e69382f2e8bd7",
+		"shasum": ""
+	  },
+	  "require": {
+		"imponeer/smarty-extensions-contracts": "^1.0",
+		"php": ">=7.2",
+		"sunrise/http-router": "^2"
+	  },
+	  "type": "library",
+	  "autoload": {
+		"psr-4": {
+		  "Imponeer\\Smarty\\Extensions\\SunriseHTTPRouter\\": "src/"
+		}
+	  },
+	  "notification-url": "https://packagist.org/downloads/",
+	  "license": [
+		"MIT"
+	  ],
+	  "authors": [
+		{
+		  "name": "Raimondas Rimkevičius (aka MekDrop)",
+		  "email": "github@mekdrop.name"
+		}
+	  ],
+	  "description": "Smarty extensions to use with amazing router from sunrise-php",
+	  "support": {
+		"issues": "https://github.com/imponeer/smarty-sunrise-http-router/issues",
+		"source": "https://github.com/imponeer/smarty-sunrise-http-router/tree/v1.0"
+	  },
+	  "time": "2021-11-04T21:31:04+00:00"
+	},
+	{
+	  "name": "imponeer/smarty-translate",
+	  "version": "v1.0.0",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/imponeer/smarty-translate.git",
+		"reference": "64072bbdfc4862c1b32f41ce7fba6d11eec5ab7c"
+	  },
+	  "dist": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/64072bbdfc4862c1b32f41ce7fba6d11eec5ab7c",
                 "reference": "64072bbdfc4862c1b32f41ce7fba6d11eec5ab7c",
                 "shasum": ""
             },
@@ -5580,6 +5631,7 @@
                 "symfony/polyfill-php73": "^1.8",
                 "symfony/polyfill-php80": "^1.16",
                 "symfony/service-contracts": "^1.1|^2",
+
                 "symfony/string": "^5.1"
             },
             "conflict": {

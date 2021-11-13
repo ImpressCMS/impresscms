@@ -33,17 +33,22 @@ class Simplerss extends SimplePie {
 	 * object's methods and properties will be available to you.
 	 *
 	 * @access public
-	 * @param str $feed_url This is the URL you want to parse.
+	 * @param string $feed_url This is the URL you want to parse.
 	 * @param int $cache_duration This is the number of seconds that you want to store the cache file for.
 	 */
-	public function __construct($feed_url = null, $cache_duration = null) {
+	public function __construct($feed_url = null, $cache_duration = null)
+	{
 		/* SimplePie 1.3+ does not accept arguments in the constructor */
 		parent::__construct();
 
 		$this->set_cache_location(ICMS_CACHE_PATH);
+		$this->set_curl_options(
+			$this->getDefaultCurlOptions()
+		);
 
 		if ($cache_duration !== null) {
 			$this->set_cache_duration($cache_duration);
+			$this->enable_cache(true);
 		}
 
 		// Only init the script if we're passed a feed URL
@@ -51,5 +56,25 @@ class Simplerss extends SimplePie {
 			$this->set_feed_url($feed_url);
 			$this->init();
 		}
+	}
+
+	/**
+	 * Get default CURL options
+	 *
+	 * @return array<string, mixed>
+	 */
+	protected function getDefaultCurlOptions(): array
+	{
+		$options = [
+			CURLOPT_REFERER => ICMS_URL,
+			CURLOPT_USERAGENT => null,
+		];
+
+		if (env('LOGGING_ENABLED', false)) {
+			$options[CURLOPT_VERBOSE] = true;
+			$options[CURLOPT_STDERR] = fopen(ICMS_LOGGING_PATH . '/curl.log', 'w+');
+		}
+
+		return $options;
 	}
 }

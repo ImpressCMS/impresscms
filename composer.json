@@ -67,6 +67,7 @@
     "imponeer/smarty-foreachq": "^1.0",
     "imponeer/smarty-image": "^1.0",
     "imponeer/smarty-includeq": "^1.0",
+    "imponeer/smarty-sunrise-http-router": "^1.0",
     "imponeer/smarty-translate": "^1.0",
     "imponeer/smarty-xo": "^1.0",
     "imponeer/symfony-translations-constants-loader": "^1.0",
