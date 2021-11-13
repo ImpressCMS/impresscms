@@ -308,7 +308,7 @@ class ModelController
 			if ($icmsObj->isNew()) {
 				// This is a new object. We need to store the meta data and then the language data
 				// First, we will get rid of the multilanguage data to only store the meta data
-				$icmsObj->stripMultilanguageFields();
+				method_exists($icmsObj, 'stripMultilanguageFields') && $icmsObj->stripMultilanguageFields();
 				$newObject = &$this->doStoreFromDefaultForm($icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page, $debug);
 				/**
 				 * @todo we need to trap potential errors here
