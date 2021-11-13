@@ -42,6 +42,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\File\Filesystem;
+use PDO;
 
 /**
  * Avatar handler class.
@@ -89,17 +90,35 @@ class AvatarHandler extends AbstractExtendedHandler {
 			throw new Exception('$sql must be not specified for this method call');
 		}
 		$ret = array();
-		$limit = $start = 0;
+
 		$sql = 'SELECT a.*, COUNT(u.user_id) AS count FROM '
 			. $this->table . ' a LEFT JOIN '
 			. $this->db->prefix('avatar_user_link') . ' u ON u.avatar_id=a.avatar_id';
-		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
+
+		if (isset($criteria) && is_subclass_of($criteria, \Imponeer\Database\Criteria\CriteriaElement::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$sql .= ' GROUP BY a.avatar_id ORDER BY avatar_weight, avatar_id';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
+
+			if ((int)$limit) {
+				$sql .= ' LIMIT :start, :limit';
+			}
+
+			$query = $this->db->prepare($sql);
+			foreach ($criteria->getBindData() as $key => $value) {
+				$query->bindValue($key, $value);
+			}
+			if ((int)$limit) {
+				$query->bindValue('start', $start, PDO::PARAM_INT);
+				$query->bindValue('limit', $limit, PDO::PARAM_INT);
+			}
+			if ($query->execute()) {
+				$result = $query;
+			}
+		} else {
+			$result = $this->db->query($sql);
 		}
-		$result = $this->db->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
