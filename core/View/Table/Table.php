@@ -17,10 +17,12 @@ use icms;
 use Imponeer\Database\Criteria\CriteriaCompo;
 use Imponeer\Database\Criteria\CriteriaElement;
 use Imponeer\Database\Criteria\CriteriaItem;
+use Imponeer\Database\Criteria\Enum\Order;
 use ImpressCMS\Core\Models\AbstractExtendedHandler;
 use ImpressCMS\Core\View\PageNav;
 use ImpressCMS\Core\View\Template;
 use SmartyException;
+use UnexpectedValueException;
 
 /**
  * ViewTable base class
@@ -286,7 +288,14 @@ class Table {
 		//$this->_ordersel = isset($_POST['ordersel']) ? $_POST['ordersel'] :$this->_ordersel;
 		$this->setCookie($this->_id . '_ordersel', $this->_ordersel);
 		$this->getOrdersArray();
-		$this->_criteria->setOrder($this->_ordersel);
+
+		try {
+			$this->_criteria->setOrder($this->_ordersel);
+		} catch (UnexpectedValueException $exception) {
+			$this->_criteria->setOrder(
+				Order::ASC()
+			);
+		}
 	}
 
 	/**
