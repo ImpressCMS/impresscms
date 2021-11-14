@@ -10,6 +10,7 @@ use icms_module_Object;
 use icms_view_theme_Factory;
 use icms_view_theme_Object;
 use ImpressCMS\Core\Exceptions\ResponseCodeUnsupportedException;
+use ImpressCMS\Core\View\Theme\ThemeComponent;
 use Psr\Http\Message\ResponseInterface;
 use function impresscms_get_adminmenu;
 use function xoops_module_write_admin_menu;
@@ -20,6 +21,7 @@ use function xoops_module_write_admin_menu;
  * @package ImpressCMS\Core\Response
  *
  * @method assign(string $name, mixed $value)   Assigns var to template
+ * @method addStylesheet(string $url)    Adds style sheet
  */
 class ViewResponse implements ResponseInterface
 {
@@ -32,7 +34,7 @@ class ViewResponse implements ResponseInterface
 	/**
 	 * Instance of current theme
 	 *
-	 * @var icms_view_theme_Object
+	 * @var ThemeComponent
 	 */
 	private $theme = null;
 
@@ -583,7 +585,7 @@ class ViewResponse implements ResponseInterface
 	 */
 	public function __call($name, $arguments)
 	{
-		return call_user_func_array([$this->theme->template, $name], $arguments);
+		return call_user_func_array([$this->theme, $name], $arguments);
 	}
 
 	/**

@@ -321,7 +321,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$icmspermissions_handler = new PermissionsManager($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
-			$criteria->add(new CriteriaItem($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
+			$criteria->add(new \Imponeer\Database\Criteria\CriteriaItem($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
 			return true;
 		} else {
 			return false;

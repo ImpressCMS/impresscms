@@ -736,4 +736,16 @@ class ThemeComponent
 		}
 		return $tagName . '-' . $cache[$tagName]++;
 	}
+
+	/**
+	 * Proxy method to call template functions
+	 *
+	 * @param string $name Method name
+	 * @param array $arguments Arguments passed to this method
+	 * @return mixed
+	 */
+	public function __call($name, $arguments)
+	{
+		return call_user_func_array([$this->template, $name], $arguments);
+	}
 }
