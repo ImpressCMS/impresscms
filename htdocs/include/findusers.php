@@ -206,7 +206,7 @@ if (empty($_POST["user_submit"])) {
 		}
 
 		if (!empty($_POST['url'])) {
-			$url = formatURL(trim(filter_input(INPUT_POST, $_POST['url'], FILTER_SANITIZE_URL)));
+			$url = icms_core_DataFilter::addSlashes(formatURL(trim(filter_input(INPUT_POST, $_POST['url'], FILTER_SANITIZE_URL))),'%');
 			$criteria->add(new icms_db_criteria_Item('url', $url.'%', 'LIKE'));
 		}
 
