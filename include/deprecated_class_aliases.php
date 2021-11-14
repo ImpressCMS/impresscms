@@ -372,4 +372,11 @@ return [
 	'icms_Autoloader' => Autoloader::class,
 	'icms_Event' => Event::class,
 	'icms_Utils' => Utils::class,
+	'IcmsPersistableObject' => AbstractExtendedModel::class,
+	'IcmsPersistableObjectHandler' => AbstractExtendedHandler::class,
+	'IcmsPersistableRegistry' => ObjectRegistry::class,
+	'Criteria' => CriteriaItem::class,
+	'IcmsPersistableTable' => Table::class,
+	'IcmsPersistableColumn' => Column::class,
+	'CriteriaCompo' => CriteriaCompo::class,
 ];
