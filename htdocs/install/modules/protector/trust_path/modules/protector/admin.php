@@ -3,7 +3,6 @@ $mytrustdirname = basename(__DIR__);
 $mytrustdirpath = __DIR__;
 
 // environment
-require_once ICMS_ROOT_PATH . '/class/template.php';
 $module_handler = icms::handler('icms_module');
 $xoopsModule = $module_handler->getByDirname($mydirname);
 $config_handler = icms::handler('icms_config');
@@ -42,27 +41,13 @@ if (file_exists("$mydirpath/language/$language/main.php")) {
 	include_once "$mytrustdirpath/language/english/main.php";
 }
 
-if (!empty($_GET['lib'])) {
-	// common libs (eg. altsys)
-	$lib = preg_replace('/[^a-zA-Z0-9_-]/', '', $_GET['lib']);
-	$page = preg_replace('/[^a-zA-Z0-9_-]/', '', @$_GET['page']);
+// fork each pages of this module
+$page = preg_replace('/[^a-zA-Z0-9_-]/', '', @$_GET['page']);
 
-	if (file_exists(ICMS_TRUST_PATH . '/libs/' . $lib . '/' . $page . '.php')) {
-		include ICMS_TRUST_PATH . '/libs/' . $lib . '/' . $page . '.php';
-	} else if (file_exists(ICMS_TRUST_PATH . '/libs/' . $lib . '/index.php')) {
-		include ICMS_TRUST_PATH . '/libs/' . $lib . '/index.php';
-	} else {
-		die('wrong request');
-	}
+if (file_exists("$mytrustdirpath/admin/$page.php")) {
+	include "$mytrustdirpath/admin/$page.php";
+} else if (file_exists("$mytrustdirpath/admin/index.php")) {
+	include "$mytrustdirpath/admin/index.php";
 } else {
-	// fork each pages of this module
-	$page = preg_replace('/[^a-zA-Z0-9_-]/', '', @$_GET['page']);
-
-	if (file_exists("$mytrustdirpath/admin/$page.php")) {
-		include "$mytrustdirpath/admin/$page.php";
-	} else if (file_exists("$mytrustdirpath/admin/index.php")) {
-		include "$mytrustdirpath/admin/index.php";
-	} else {
-		die('wrong request');
-	}
+	die('wrong request');
 }
