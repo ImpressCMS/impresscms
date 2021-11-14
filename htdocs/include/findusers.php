@@ -179,8 +179,8 @@ if (empty($_POST["user_submit"])) {
 	$form->display();
 
 } else {
-	$limit = empty($_POST['limit']) ? 50 : (int) ( $_POST['limit'] );
-	$start = (int) ( @$_POST['start'] );
+	$limit = empty($_POST['limit']) ? 50 : icms_core_DataFilter::addSlashes((int) ( $_POST['limit'] ));
+	$start = icms_core_DataFilter::checkVar((int) ( @$_POST['start'] ),'str');
 
 	if (!isset($_POST["query"])) {
 		$criteria = new icms_db_criteria_Compo();
