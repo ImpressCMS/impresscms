@@ -31,6 +31,11 @@ class LegacyController
 	public function proxy(ServerRequestInterface $request): ResponseInterface
 	{
 		$path = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $request->getUri()->getPath();
+
+		if (is_dir($path)) {
+			$path .= '/index.php';
+		}
+
 		if (pathinfo($path, PATHINFO_EXTENSION) === 'php') {
 			$currentModule = $request->getAttribute('module');
 
