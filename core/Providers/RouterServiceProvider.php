@@ -331,6 +331,10 @@ class RouterServiceProvider extends AbstractServiceProvider
 				continue;
 			}
 
+			if ($pathsParts[count($pathsParts) - 1] === 'index.php') {
+				$paths[] = $prefix . '/' . implode('/', array_slice($pathsParts, 0, -1)) . '/';
+			}
+
 			$paths[] = $prefix . '/' . $path;
 		}
 

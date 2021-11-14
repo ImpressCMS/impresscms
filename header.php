@@ -23,27 +23,32 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+
 /**
  * This file is used as header for all places where content is generated not in object way
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright    http://www.xoops.org/ The XOOPS Project
  * @copyright    http://www.impresscms.org/ The ImpressCMS Project
  * @package     ImpressCMS/Core
  *
  * @todo        Remove this file in the future
  */
-\icms::$logger->stopTime('Module init');
-\icms::$logger->startTime('ICMS output init');
+
+use ImpressCMS\Core\Models\ModuleHandler;
+use ImpressCMS\Core\Response\ViewResponse;
+
+icms::$logger->stopTime('Module init');
+icms::$logger->startTime('ICMS output init');
 
 global $xoopsOption;
 $xoopsOption['theme_use_smarty'] = 1;
-$xoopsOption['response'] = new \ImpressCMS\Core\Response\ViewResponse($xoopsOption);
+$xoopsOption['response'] = new ViewResponse($xoopsOption);
 global $icmsTpl, $xoopsTpl;
 
-\icms::$logger->stopTime('ICMS output init');
+icms::$logger->stopTime('ICMS output init');
 
-if (\icms::$module && !ModuleHandler::checkModuleAccess(\icms::$module, false)) {
+if (icms::$module && !ModuleHandler::checkModuleAccess(icms::$module, false)) {
 	return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
 }
 
-\icms::$logger->startTime('Module display');
+icms::$logger->startTime('Module display');

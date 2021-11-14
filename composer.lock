@@ -1,20 +1,20 @@
 {
-  "_readme": [
-	"This file locks the dependencies of your project to a known state",
-	"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-	"This file is @generated automatically"
-  ],
-  "content-hash": "1af8ab170af0674c1862adcd4e4f8046",
-  "packages": [
-	{
-	  "name": "0.0.0/composer-include-files",
-	  "version": "1.6.0",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
-		"reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
-	  },
-	  "dist": {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "638a25ca7289df7efac439194e0fa9b3",
+    "packages": [
+        {
+            "name": "0.0.0/composer-include-files",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
+                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
+            },
+            "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
                 "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
@@ -143,8 +143,7 @@
                 "serializer",
                 "session",
                 "sqlite",
-
-			  "tagging"
+                "tagging"
 			],
 		  "support": {
 			"irc": "irc://irc.freenode.org/ouarz",
@@ -1138,7 +1137,6 @@
 	  "dist": {
 		"type": "zip",
 		"url": "https://api.github.com/repos/dompdf/dompdf/zipball/db91d81866c69a42dad1d2926f61515a1e3f42c5",
-
                 "reference": "db91d81866c69a42dad1d2926f61515a1e3f42c5",
                 "shasum": ""
             },
@@ -1354,7 +1352,6 @@
             ],
             "description": "Standards compliant HTML filter written in PHP",
             "homepage": "http://htmlpurifier.org/",
-
 		  "keywords": [
 			"html"
 		  ],
@@ -1977,6 +1974,7 @@
 	  "dist": {
 		"type": "zip",
 		"url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/64072bbdfc4862c1b32f41ce7fba6d11eec5ab7c",
+
                 "reference": "64072bbdfc4862c1b32f41ce7fba6d11eec5ab7c",
                 "shasum": ""
             },
@@ -2248,12 +2246,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/system-module.git",
-                "reference": "38ae7f721494fd2d97c80122113c84349768ef6f"
+                "reference": "33b660bb15e6a26e58ec17aa1e3f24e76e38a7b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/system-module/zipball/38ae7f721494fd2d97c80122113c84349768ef6f",
-                "reference": "38ae7f721494fd2d97c80122113c84349768ef6f",
+                "url": "https://api.github.com/repos/ImpressCMS/system-module/zipball/33b660bb15e6a26e58ec17aa1e3f24e76e38a7b9",
+                "reference": "33b660bb15e6a26e58ec17aa1e3f24e76e38a7b9",
                 "shasum": ""
             },
             "require": {
@@ -2667,6 +2665,22 @@
                     "50": {
                         "file": "system_blank.html",
                         "description": ""
+                    },
+                    "51": {
+                        "file": "system_smiles.html",
+                        "description": ""
+                    },
+                    "52": {
+                        "file": "system_avatars.html",
+                        "description": ""
+                    },
+                    "53": {
+                        "file": "system_who_is_online.html",
+                        "description": ""
+                    },
+                    "54": {
+                        "file": "system_send_to_friend.html",
+                        "description": ""
                     }
                 },
                 "services": {
@@ -2709,7 +2723,7 @@
                 "issues": "https://github.com/ImpressCMS/system-module/issues",
                 "source": "https://github.com/ImpressCMS/system-module/tree/main"
             },
-            "time": "2021-10-27T19:42:40+00:00"
+            "time": "2021-11-11T07:12:25+00:00"
         },
         {
             "name": "intervention/image",
@@ -3083,90 +3097,90 @@
             ],
             "time": "2021-07-09T08:23:52+00:00"
         },
-	{
-	  "name": "league/flysystem",
-	  "version": "2.3.0",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/thephpleague/flysystem.git",
-		"reference": "499313f8b65f9a4dae1c779cd974d59a6fcf0f15"
-	  },
-	  "dist": {
-		"type": "zip",
-		"url": "https://api.github.com/repos/thephpleague/flysystem/zipball/499313f8b65f9a4dae1c779cd974d59a6fcf0f15",
-		"reference": "499313f8b65f9a4dae1c779cd974d59a6fcf0f15",
-		"shasum": ""
-	  },
+        {
+            "name": "league/flysystem",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "499313f8b65f9a4dae1c779cd974d59a6fcf0f15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/499313f8b65f9a4dae1c779cd974d59a6fcf0f15",
+                "reference": "499313f8b65f9a4dae1c779cd974d59a6fcf0f15",
+                "shasum": ""
+            },
             "require": {
-			  "ext-json": "*",
-			  "league/mime-type-detection": "^1.0.0",
-			  "php": "^7.2 || ^8.0"
-			},
+                "ext-json": "*",
+                "league/mime-type-detection": "^1.0.0",
+                "php": "^7.2 || ^8.0"
+            },
             "conflict": {
-			  "guzzlehttp/ringphp": "<1.1.1"
+                "guzzlehttp/ringphp": "<1.1.1"
             },
             "require-dev": {
-			  "async-aws/s3": "^1.5",
-			  "async-aws/simple-s3": "^1.0",
-			  "aws/aws-sdk-php": "^3.132.4",
-			  "composer/semver": "^3.0",
-			  "ext-fileinfo": "*",
-			  "friendsofphp/php-cs-fixer": "^2.16",
-			  "google/cloud-storage": "^1.23",
-			  "phpseclib/phpseclib": "^2.0",
-			  "phpstan/phpstan": "^0.12.26",
-			  "phpunit/phpunit": "^8.5 || ^9.4",
-			  "sabre/dav": "^4.1"
-			},
+                "async-aws/s3": "^1.5",
+                "async-aws/simple-s3": "^1.0",
+                "aws/aws-sdk-php": "^3.132.4",
+                "composer/semver": "^3.0",
+                "ext-fileinfo": "*",
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "google/cloud-storage": "^1.23",
+                "phpseclib/phpseclib": "^2.0",
+                "phpstan/phpstan": "^0.12.26",
+                "phpunit/phpunit": "^8.5 || ^9.4",
+                "sabre/dav": "^4.1"
+            },
             "type": "library",
             "autoload": {
                 "psr-4": {
-				  "League\\Flysystem\\": "src"
+                    "League\\Flysystem\\": "src"
                 }
             },
-	  "notification-url": "https://packagist.org/downloads/",
-	  "license": [
-		"MIT"
-	  ],
-	  "authors": [
-		{
-		  "name": "Frank de Jonge",
-		  "email": "info@frankdejonge.nl"
-		}
-	  ],
-	  "description": "File storage abstraction for PHP",
-	  "keywords": [
-		"WebDAV",
-		"aws",
-		"cloud",
-		"file",
-		"files",
-		"filesystem",
-		"filesystems",
-		"ftp",
-		"s3",
-		"sftp",
-		"storage"
-	  ],
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "File storage abstraction for PHP",
+            "keywords": [
+                "WebDAV",
+                "aws",
+                "cloud",
+                "file",
+                "files",
+                "filesystem",
+                "filesystems",
+                "ftp",
+                "s3",
+                "sftp",
+                "storage"
+            ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-			  "source": "https://github.com/thephpleague/flysystem/tree/2.3.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/2.3.0"
             },
             "funding": [
-			  {
-				"url": "https://offset.earth/frankdejonge",
-				"type": "custom"
-			  },
-			  {
-				"url": "https://github.com/frankdejonge",
-				"type": "github"
-			  },
-			  {
-				"url": "https://tidelift.com/funding/github/packagist/league/flysystem",
-				"type": "tidelift"
-			  }
-			],
-	  "time": "2021-09-22T06:09:19+00:00"
+                {
+                    "url": "https://offset.earth/frankdejonge",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-09-22T06:09:19+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -5512,115 +5526,115 @@
                 "feed",
                 "generator",
                 "php",
-			  "rss",
-			  "writer"
-			],
-		  "support": {
-			"issues": "https://github.com/suin/php-rss-writer/issues",
-			"source": "https://github.com/suin/php-rss-writer/tree/master"
-		  },
-		  "time": "2017-07-13T10:47:50+00:00"
-		},
-	{
-	  "name": "sunrise/http-router",
-	  "version": "v2.11.1",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/sunrise-php/http-router.git",
-		"reference": "f1764a20452dd2a9a1b138e06a37c9714b9eb129"
-	  },
-	  "dist": {
-		"type": "zip",
-		"url": "https://api.github.com/repos/sunrise-php/http-router/zipball/f1764a20452dd2a9a1b138e06a37c9714b9eb129",
-		"reference": "f1764a20452dd2a9a1b138e06a37c9714b9eb129",
-		"shasum": ""
-	  },
-	  "require": {
-		"fig/http-message-util": "^1.1",
-		"php": "^7.1|^8.0",
-		"psr/container": "^1.0",
-		"psr/http-message": "^1.0",
-		"psr/http-server-handler": "^1.0",
-		"psr/http-server-middleware": "^1.0",
-		"psr/simple-cache": "^1.0"
-	  },
-	  "require-dev": {
-		"doctrine/annotations": "^1.6",
-		"phpunit/phpunit": "7.5.20|9.5.0",
-		"sunrise/coding-standard": "1.0.0",
-		"sunrise/http-factory": "1.1.0",
-		"symfony/console": "^4.4"
-	  },
-	  "type": "library",
-	  "autoload": {
-		"files": [
-		  "functions/emit.php",
-		  "functions/path_build.php",
-		  "functions/path_match.php",
-		  "functions/path_parse.php",
-		  "functions/path_plain.php",
-		  "functions/path_regex.php"
-		],
-		"psr-4": {
-		  "Sunrise\\Http\\Router\\": "src/"
-		}
-	  },
-	  "notification-url": "https://packagist.org/downloads/",
-	  "license": [
-		"MIT"
-	  ],
-	  "authors": [
-		{
-		  "name": "Anatoly Fenric",
-		  "email": "anatoly@fenric.ru",
-		  "homepage": "https://anatoly.fenric.ru/"
-		}
-	  ],
-	  "description": "Sunrise // HTTP router for PHP 7.1+ (incl. PHP 8 with attributes) based on PSR-7 and PSR-15 with support for annotations and OpenApi Specification",
-	  "homepage": "https://github.com/sunrise-php/http-router",
-	  "keywords": [
-		"PHP7",
-		"annotations",
-		"attributes",
-		"fenric",
-		"http",
-		"middlewares",
-		"openapi",
-		"php-attributes",
-		"php8",
-		"psr-15",
-		"psr-7",
-		"router",
-		"sunrise",
-		"swagger"
-	  ],
-	  "support": {
-		"issues": "https://github.com/sunrise-php/http-router/issues",
-		"source": "https://github.com/sunrise-php/http-router/tree/v2.11.1"
-	  },
-	  "funding": [
-		{
-		  "url": "https://github.com/fenric",
-		  "type": "github"
-		},
-		{
-		  "url": "https://tidelift.com/funding/github/packagist/sunrise/http-router",
-		  "type": "tidelift"
-		}
-	  ],
-	  "time": "2021-10-12T13:25:08+00:00"
-	},
-	{
-	  "name": "symfony/console",
-	  "version": "v5.3.7",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/symfony/console.git",
-		"reference": "8b1008344647462ae6ec57559da166c2bfa5e16a"
-	  },
-	  "dist": {
-		"type": "zip",
-		"url": "https://api.github.com/repos/symfony/console/zipball/8b1008344647462ae6ec57559da166c2bfa5e16a",
+                "rss",
+                "writer"
+            ],
+            "support": {
+                "issues": "https://github.com/suin/php-rss-writer/issues",
+                "source": "https://github.com/suin/php-rss-writer/tree/master"
+            },
+            "time": "2017-07-13T10:47:50+00:00"
+        },
+        {
+            "name": "sunrise/http-router",
+            "version": "v2.11.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sunrise-php/http-router.git",
+                "reference": "f1764a20452dd2a9a1b138e06a37c9714b9eb129"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sunrise-php/http-router/zipball/f1764a20452dd2a9a1b138e06a37c9714b9eb129",
+                "reference": "f1764a20452dd2a9a1b138e06a37c9714b9eb129",
+                "shasum": ""
+            },
+            "require": {
+                "fig/http-message-util": "^1.1",
+                "php": "^7.1|^8.0",
+                "psr/container": "^1.0",
+                "psr/http-message": "^1.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0",
+                "psr/simple-cache": "^1.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.6",
+                "phpunit/phpunit": "7.5.20|9.5.0",
+                "sunrise/coding-standard": "1.0.0",
+                "sunrise/http-factory": "1.1.0",
+                "symfony/console": "^4.4"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "functions/emit.php",
+                    "functions/path_build.php",
+                    "functions/path_match.php",
+                    "functions/path_parse.php",
+                    "functions/path_plain.php",
+                    "functions/path_regex.php"
+                ],
+                "psr-4": {
+                    "Sunrise\\Http\\Router\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anatoly Fenric",
+                    "email": "anatoly@fenric.ru",
+                    "homepage": "https://anatoly.fenric.ru/"
+                }
+            ],
+            "description": "Sunrise // HTTP router for PHP 7.1+ (incl. PHP 8 with attributes) based on PSR-7 and PSR-15 with support for annotations and OpenApi Specification",
+            "homepage": "https://github.com/sunrise-php/http-router",
+            "keywords": [
+                "PHP7",
+                "annotations",
+                "attributes",
+                "fenric",
+                "http",
+                "middlewares",
+                "openapi",
+                "php-attributes",
+                "php8",
+                "psr-15",
+                "psr-7",
+                "router",
+                "sunrise",
+                "swagger"
+            ],
+            "support": {
+                "issues": "https://github.com/sunrise-php/http-router/issues",
+                "source": "https://github.com/sunrise-php/http-router/tree/v2.11.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fenric",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sunrise/http-router",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-10-12T13:25:08+00:00"
+        },
+        {
+            "name": "symfony/console",
+            "version": "v5.3.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/console.git",
+                "reference": "8b1008344647462ae6ec57559da166c2bfa5e16a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/console/zipball/8b1008344647462ae6ec57559da166c2bfa5e16a",
                 "reference": "8b1008344647462ae6ec57559da166c2bfa5e16a",
                 "shasum": ""
             },
