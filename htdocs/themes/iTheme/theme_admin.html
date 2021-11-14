@@ -82,7 +82,7 @@
     <{foreach item=item from=$navitems}>
       <{if ($systemadm || $item.id != 'opsystem') && ($item.id != 'news' || $show_impresscms_menu)}>
         <{if $modulesadm || $item.id != 'modules'}>
-	      <li><a href="<{$item.link}>"><img src="<{$icms_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
+	      r
 	        <ul>
 		      <{foreach item=sub from=$item.menu}>
                 <{if $item.id == 'cphome'}>
