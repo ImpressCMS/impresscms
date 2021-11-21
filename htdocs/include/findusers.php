@@ -38,16 +38,15 @@ if ($denied) {
  * posts_more (int)
  * posts_less (int)
  *
- * -- I can't find these - where do they come from?
- * mode (int)
- * target
- * multiple
+ * mode (int) - possible different modes for searching
+ * target (str) - URL fragment to view userinfo
+ * multiple (str) - option in the select box for group membership
  *
  */
 
 $filter_post = array (
 		'user_sig' => 'html',
-		'email' => array (
+		'email' => array ( // may need to relax this because the search allows partial matches
 				'email',
 				'options' => array (
 						0,
@@ -68,9 +67,25 @@ $filter_post = array (
 		'last_login_more' => 'int',
 		'last_login_less' => 'int',
 		'user_regdate_more' => 'int',
-		'user_regdate_less' => 'int'
+		'user_regdate_less' => 'int',
+		'mode' => 'int',
+		'target' => 'str',
+		'multiple' => 'str',
+		'query' => 'str',
+		'token' => 'str',
+		'groups' => 'str',
+		'level' => 'int',
+		'rank' => 'int',
+		'user_from' => 'str',
+		'user_occ' => 'str',
+		'user_intrest' => 'str',
+		'user_submit' => 'str',
+		'user_avatar' => 'str',
+		'user_sort' => 'str',
+		'user_order' => 'str'
 );
 
+/** there are no valid GET requests for this page
 $filter_get = array ();
 
 if (!empty($_GET)) {
@@ -79,8 +94,10 @@ if (!empty($_GET)) {
 	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
 	extract($clean_GET);
 }
+*/
+
 if (!empty($_POST)) {
-	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
 	extract($clean_POST);
 }
 
@@ -123,6 +140,7 @@ $items_range = array (
 		"posts" => _MA_USER_RANGE_POSTS
 );
 
+// what are these used for and how?
 define("FINDUSERS_MODE_SIMPLE", 0);
 define("FINDUSERS_MODE_ADVANCED", 1);
 define("FINDUSERS_MODE_QUERY", 2);
@@ -132,6 +150,7 @@ $modes = array (
 		FINDUSERS_MODE_ADVANCED => _MA_USER_MODE_ADVANCED,
 		FINDUSERS_MODE_QUERY => _MA_USER_MODE_QUERY
 );
+// see above comment
 
 if (empty($_POST["user_submit"])) {
 
@@ -153,10 +172,10 @@ if (empty($_POST["user_submit"])) {
 				unset($text, $match, $match_tray);
 			}
 
-			$url_text = new icms_form_elements_Text(_MA_USER_URLC, "url", 30, 100, @$_POST["url"]);
-			$location_text = new icms_form_elements_Text(_MA_USER_LOCATION, "user_from", 30, 100, @$_POST["user_from"]);
-			$occupation_text = new icms_form_elements_Text(_MA_USER_OCCUPATION, "user_occ", 30, 100, @$_POST["user_occ"]);
-			$interest_text = new icms_form_elements_Text(_MA_USER_INTEREST, "user_intrest", 30, 100, @$_POST["user_intrest"]);
+			$url_text = new icms_form_elements_Text(_MA_USER_URLC, "url", 30, 100, $url]);
+			$location_text = new icms_form_elements_Text(_MA_USER_LOCATION, "user_from", 30, 100, $user_from);
+			$occupation_text = new icms_form_elements_Text(_MA_USER_OCCUPATION, "user_occ", 30, 100, $user_occ);
+			$interest_text = new icms_form_elements_Text(_MA_USER_INTEREST, "user_intrest", 30, 100, $user_intrest);
 			foreach ($items_range as $var => $title) {
 				$more = new icms_form_elements_Text("", "{$var}_more", 10, 5, @$_POST["{$var}_more"]);
 				$less = new icms_form_elements_Text("", "{$var}_less", 10, 5, @$_POST["{$var}_less"]);
@@ -167,7 +186,7 @@ if (empty($_POST["user_submit"])) {
 				unset($more, $less, $range_tray);
 			}
 
-			$mailok_radio = new icms_form_elements_Radio(_MA_USER_SHOWMAILOK, "user_mailok", empty($_POST["user_mailok"]) ? "both" : $_POST["user_mailok"]);
+			$mailok_radio = new icms_form_elements_Radio(_MA_USER_SHOWMAILOK, "user_mailok", empty($user_mailok) ? "both" : $user_mailok);
 			$mailok_radio->addOptionArray(array (
 					"mailok" => _MA_USER_MAILOK,
 					"mailng" => _MA_USER_MAILNG,
@@ -291,20 +310,19 @@ if (empty($_POST["user_submit"])) {
 			}
 		}
 
-		if (!empty($_POST['url'])) {
-			$url = formatURL(trim($_POST['url']));
+		if (!empty($url)) {
 			$criteria->add(new icms_db_criteria_Item('url', $url . '%', 'LIKE'));
 		}
 
-		if (!empty($_POST['user_from'])) {
-			$criteria->add(new icms_db_criteria_Item('user_from', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_from'])) . '%', 'LIKE'));
+		if (!empty($user_from)) {
+			$criteria->add(new icms_db_criteria_Item('user_from', '%' . $user_from . '%', 'LIKE'));
 		}
 
-		if (!empty($_POST['user_intrest'])) {
-			$criteria->add(new icms_db_criteria_Item('user_intrest', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_intrest'])) . '%', 'LIKE'));
+		if (!empty($user_intrest)) {
+			$criteria->add(new icms_db_criteria_Item('user_intrest', '%' . $user_intrest . '%', 'LIKE'));
 		}
-		if (!empty($_POST['user_occ'])) {
-			$criteria->add(new icms_db_criteria_Item('user_occ', '%' . icms_core_DataFilter::addSlashes(trim($_POST['user_occ'])) . '%', 'LIKE'));
+		if (!empty($user_occ)) {
+			$criteria->add(new icms_db_criteria_Item('user_occ', '%' . $user_occ . '%', 'LIKE'));
 		}
 
 		foreach (array (
