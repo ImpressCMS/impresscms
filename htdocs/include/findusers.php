@@ -28,7 +28,7 @@ if ($denied) {
 }
 
 /*
- * Use what is in edituser.php, with some additional form elements
+ * Look at what is in /edituser.php, /modules/system/admin/findusers/main.php
  *
  * {$var}_more - last_login (int), user_regdate (int), posts (int)
  * {$var}_less - last_login (int), user_regdate (int), posts (int)
@@ -45,56 +45,56 @@ if ($denied) {
  */
 
 $filter_post = array (
-		'user_sig' => 'html',
-		'email' => array ( // may need to relax this because the search allows partial matches
-				'email',
-				'options' => array (
-						0,
-						1
-				)
-		),
-		'url' => 'url',
-		'user_viewemail' => 'int',
-		'user_viewoid' => 'int',
-		'attachsig' => 'int',
-		'user_mailok' => 'int',
-		'usecookie' => 'int',
-		'limit' => 'int',
-		'start' => 'int',
-		'posts' => 'int',
-		'posts_more' => 'int',
-		'posts_less' => 'int',
-		'last_login_more' => 'int',
-		'last_login_less' => 'int',
-		'user_regdate_more' => 'int',
-		'user_regdate_less' => 'int',
-		'mode' => 'int',
-		'target' => 'str',
-		'multiple' => 'str',
-		'query' => 'str',
-		'token' => 'str',
-		'groups' => 'str',
-		'level' => 'int',
-		'rank' => 'int',
-		'user_from' => 'str',
-		'user_occ' => 'str',
-		'user_intrest' => 'str',
-		'user_submit' => 'str',
-		'user_avatar' => 'str',
-		'user_sort' => 'str',
-		'user_order' => 'str'
+	'user_sig' => 'html',
+	'email' => array ( // may need to relax this because the search allows partial matches
+		'email',
+		'options' => array (
+			0,
+			1
+		)
+	),
+	'url' => 'url',
+	'user_viewemail' => 'int',
+	'user_viewoid' => 'int',
+	'attachsig' => 'int',
+	'user_mailok' => 'int',
+	'usecookie' => 'int',
+	'limit' => 'int',
+	'start' => 'int',
+	'posts' => 'int',
+	'posts_more' => 'int',
+	'posts_less' => 'int',
+	'last_login_more' => 'int',
+	'last_login_less' => 'int',
+	'user_regdate_more' => 'int',
+	'user_regdate_less' => 'int',
+	'mode' => 'int',
+	'target' => 'str',
+	'multiple' => 'str',
+	'query' => 'str',
+	'token' => 'str',
+	'groups' => 'str',
+	'level' => 'int',
+	'rank' => 'int',
+	'user_from' => 'str',
+	'user_occ' => 'str',
+	'user_intrest' => 'str',
+	'user_submit' => 'str',
+	'user_avatar' => 'str',
+	'user_sort' => 'str',
+	'user_order' => 'str'
 );
 
 /** there are no valid GET requests for this page
-$filter_get = array ();
+ $filter_get = array ();
 
-if (!empty($_GET)) {
-	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
-	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
-	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
-	extract($clean_GET);
-}
-*/
+ if (!empty($_GET)) {
+ // in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
+ if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
+ $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+ extract($clean_GET);
+ }
+ */
 
 if (!empty($_POST)) {
 	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
@@ -113,31 +113,31 @@ icms_loadLanguageFile('core', 'findusers');
 $rank_handler = icms_getModuleHandler("userrank", "system");
 $user_handler = icms::handler("icms_member");
 $unsets = array (
-		"actkey",
-		"pass",
-		"theme",
-		"umode",
-		"uorder",
-		"notify_mode"
+	"actkey",
+	"pass",
+	"theme",
+	"umode",
+	"uorder",
+	"notify_mode"
 );
 foreach ($unsets as $var) {
 	unset($user_handler->vars[$var]);
 }
 
 $items_match = array (
-		"uname" => _MA_USER_UNAME,
-		"name" => _MA_USER_REALNAME,
-		"email" => _MA_USER_EMAIL,
-		"user_icq" => _MA_USER_ICQ,
-		"user_aim" => _MA_USER_AIM,
-		"user_yim" => _MA_USER_YIM,
-		"user_msnm" => _MA_USER_MSNM
+	"uname" => _MA_USER_UNAME,
+	"name" => _MA_USER_REALNAME,
+	"email" => _MA_USER_EMAIL,
+	"user_icq" => _MA_USER_ICQ,
+	"user_aim" => _MA_USER_AIM,
+	"user_yim" => _MA_USER_YIM,
+	"user_msnm" => _MA_USER_MSNM
 );
 
 $items_range = array (
-		"user_regdate" => _MA_USER_RANGE_USER_REGDATE,
-		"last_login" => _MA_USER_RANGE_LAST_LOGIN,
-		"posts" => _MA_USER_RANGE_POSTS
+	"user_regdate" => _MA_USER_RANGE_USER_REGDATE,
+	"last_login" => _MA_USER_RANGE_LAST_LOGIN,
+	"posts" => _MA_USER_RANGE_POSTS
 );
 
 // what are these used for and how?
@@ -146,9 +146,9 @@ define("FINDUSERS_MODE_ADVANCED", 1);
 define("FINDUSERS_MODE_QUERY", 2);
 
 $modes = array (
-		FINDUSERS_MODE_SIMPLE => _MA_USER_MODE_SIMPLE,
-		FINDUSERS_MODE_ADVANCED => _MA_USER_MODE_ADVANCED,
-		FINDUSERS_MODE_QUERY => _MA_USER_MODE_QUERY
+	FINDUSERS_MODE_SIMPLE => _MA_USER_MODE_SIMPLE,
+	FINDUSERS_MODE_ADVANCED => _MA_USER_MODE_ADVANCED,
+	FINDUSERS_MODE_QUERY => _MA_USER_MODE_QUERY
 );
 // see above comment
 
@@ -188,23 +188,23 @@ if (empty($_POST["user_submit"])) {
 
 			$mailok_radio = new icms_form_elements_Radio(_MA_USER_SHOWMAILOK, "user_mailok", empty($user_mailok) ? "both" : $user_mailok);
 			$mailok_radio->addOptionArray(array (
-					"mailok" => _MA_USER_MAILOK,
-					"mailng" => _MA_USER_MAILNG,
-					"both" => _MA_USER_BOTH
+				"mailok" => _MA_USER_MAILOK,
+				"mailng" => _MA_USER_MAILNG,
+				"both" => _MA_USER_BOTH
 			));
 			$avatar_radio = new icms_form_elements_Radio(_MA_USER_HASAVATAR, "user_avatar", empty($_POST["user_avatar"]) ? "both" : $_POST["user_avatar"]);
 			$avatar_radio->addOptionArray(array (
-					"y" => _YES,
-					"n" => _NO,
-					"both" => _MA_USER_BOTH
+				"y" => _YES,
+				"n" => _NO,
+				"both" => _MA_USER_BOTH
 			));
 
 			$level_radio = new icms_form_elements_Radio(_MA_USER_LEVEL, "level", @$_POST["level"]);
 			$levels = array (
-					0 => _ALL,
-					1 => _MA_USER_LEVEL_ACTIVE,
-					2 => _MA_USER_LEVEL_INACTIVE,
-					3 => _MA_USER_LEVEL_DISABLED
+				0 => _ALL,
+				1 => _MA_USER_LEVEL_ACTIVE,
+				2 => _MA_USER_LEVEL_INACTIVE,
+				3 => _MA_USER_LEVEL_DISABLED
 			);
 			$level_radio->addOptionArray($levels);
 
@@ -231,8 +231,8 @@ if (empty($_POST["user_submit"])) {
 			$form->addElement($rank_select);
 		} else {
 			foreach (array (
-					"uname",
-					"email"
+				"uname",
+				"email"
 			) as $var) {
 				$title = $items_match[$var];
 				$text = new icms_form_elements_Text("", $var, 30, 100, @$_POST[$var]);
@@ -247,15 +247,15 @@ if (empty($_POST["user_submit"])) {
 
 		$sort_select = new icms_form_elements_Select(_MA_USER_SORT, "user_sort", @$_POST["user_sort"]);
 		$sort_select->addOptionArray(array (
-				"uname" => _MA_USER_UNAME,
-				"last_login" => _MA_USER_LASTLOGIN,
-				"user_regdate" => _MA_USER_REGDATE,
-				"posts" => _MA_USER_POSTS
+			"uname" => _MA_USER_UNAME,
+			"last_login" => _MA_USER_LASTLOGIN,
+			"user_regdate" => _MA_USER_REGDATE,
+			"posts" => _MA_USER_POSTS
 		));
 		$order_select = new icms_form_elements_Select(_MA_USER_ORDER, "user_order", @$_POST["user_order"]);
 		$order_select->addOptionArray(array (
-				"ASC" => _MA_USER_ASC,
-				"DESC" => _MA_USER_DESC
+			"ASC" => _MA_USER_ASC,
+			"DESC" => _MA_USER_DESC
 		));
 
 		$form->addElement($sort_select);
@@ -326,8 +326,8 @@ if (empty($_POST["user_submit"])) {
 		}
 
 		foreach (array (
-				"last_login",
-				"user_regdate"
+			"last_login",
+			"user_regdate"
 		) as $var) {
 			if (!empty($_POST["{$var}_more"]) && is_numeric($_POST["{$var}_more"])) {
 				$time = time() - (60 * 60 * 24 * (int) (trim($_POST["{$var}_more"])));
@@ -366,9 +366,9 @@ if (empty($_POST["user_submit"])) {
 
 		if (!empty($_POST['level'])) {
 			$level_value = array (
-					1 => 1,
-					2 => 0,
-					3 => -1
+				1 => 1,
+				2 => 0,
+				3 => -1
 			);
 			$level = isset($level_value[(int) ($_POST["level"])]) ? $level_value[(int) ($_POST["level"])] : 1;
 			$criteria->add(new icms_db_criteria_Item("level", $level));
@@ -392,11 +392,11 @@ if (empty($_POST["user_submit"])) {
 		$total = $user_handler->getUserCountByGroupLink(@$_POST["groups"], $criteria);
 
 		$validsort = array (
-				"uname",
-				"email",
-				"last_login",
-				"user_regdate",
-				"posts"
+			"uname",
+			"email",
+			"last_login",
+			"user_regdate",
+			"posts"
 		);
 		$sort = (!in_array($_POST['user_sort'], $validsort)) ? "uname" : $_POST['user_sort'];
 		$order = "ASC";
@@ -429,7 +429,7 @@ if (empty($_POST["user_submit"])) {
 
 		$sql_count = "SELECT COUNT(DISTINCT " . (empty($alias) ? "" : $alias . ".") . "uid) FROM " . $subquery;
 		$result = icms::$xoopsDB->query($sql_count);
-		list ( $total ) = icms::$xoopsDB->FetchRow($result);
+		list($total) = icms::$xoopsDB->FetchRow($result);
 
 		$result = icms::$xoopsDB->query($query, $limit, $start);
 		$foundusers = array ();
