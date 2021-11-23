@@ -2,15 +2,10 @@
 /**
  * Finds users
  *
- * limit: Only work with javascript enabled
- *
- * @todo: plugins for external applications, including but not limited: sending massive emails/PMs, membership edit
- *
  * @copyright The XOOPS project http://www.xoops.org/
  * @license http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since Xoops 1.00
- * @package core
  */
 include "../mainfile.php";
 
@@ -85,7 +80,12 @@ $filter_post = array (
 	'user_order' => 'str'
 );
 
-/** there are no valid GET requests for this page
+/** there may be valid GET requests for this page - need to determine
+ * target
+ * multiple
+ * token
+ * userselect
+ *
  $filter_get = array ();
 
  if (!empty($_GET)) {
@@ -140,7 +140,7 @@ $items_range = array (
 	"posts" => _MA_USER_RANGE_POSTS
 );
 
-// what are these used for and how?
+// --> these show up on the PM dialog when the number of users exceeds xxx
 define("FINDUSERS_MODE_SIMPLE", 0);
 define("FINDUSERS_MODE_ADVANCED", 1);
 define("FINDUSERS_MODE_QUERY", 2);
@@ -150,7 +150,7 @@ $modes = array (
 	FINDUSERS_MODE_ADVANCED => _MA_USER_MODE_ADVANCED,
 	FINDUSERS_MODE_QUERY => _MA_USER_MODE_QUERY
 );
-// see above comment
+// <-- see above comment
 
 if (empty($_POST["user_submit"])) {
 
