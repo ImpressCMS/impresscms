@@ -10,6 +10,8 @@
 include "../mainfile.php";
 
 $denied = true;
+
+// validate user first, then token
 if (!empty($_REQUEST['token'])) {
 	if (icms::$security->validateToken($_REQUEST['token'], false)) {
 		$denied = false;
@@ -38,6 +40,18 @@ if ($denied) {
  * multiple (str) - option in the select box for group membership
  *
  */
+
+/** there are valid GET requests for this page - need to fully determine
+ * target
+ * multiple
+ * token
+ */
+$filter_get = array (
+	'target' => 'str',
+	'multiple' => 'str',
+	'token' => 'str',
+	'mode' => 'int'
+);
 
 $filter_post = array (
 	'user_sig' => 'html',
@@ -80,21 +94,12 @@ $filter_post = array (
 	'user_order' => 'str'
 );
 
-/** there may be valid GET requests for this page - need to determine
- * target
- * multiple
- * token
- * userselect
- *
- $filter_get = array ();
-
- if (!empty($_GET)) {
- // in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
- if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
- $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
- extract($clean_GET);
- }
- */
+if (!empty($_GET)) {
+	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
+	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, true);
+	extract($clean_GET);
+}
 
 if (!empty($_POST)) {
 	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
@@ -140,7 +145,7 @@ $items_range = array (
 	"posts" => _MA_USER_RANGE_POSTS
 );
 
-// --> these show up on the PM dialog when the number of users exceeds xxx
+// --> these show up on the PM dialog when the number of users exceeds 200 (default)
 define("FINDUSERS_MODE_SIMPLE", 0);
 define("FINDUSERS_MODE_ADVANCED", 1);
 define("FINDUSERS_MODE_QUERY", 2);
@@ -172,7 +177,7 @@ if (empty($_POST["user_submit"])) {
 				unset($text, $match, $match_tray);
 			}
 
-			$url_text = new icms_form_elements_Text(_MA_USER_URLC, "url", 30, 100, $url]);
+			$url_text = new icms_form_elements_Text(_MA_USER_URLC, "url", 30, 100, $url);
 			$location_text = new icms_form_elements_Text(_MA_USER_LOCATION, "user_from", 30, 100, $user_from);
 			$occupation_text = new icms_form_elements_Text(_MA_USER_OCCUPATION, "user_occ", 30, 100, $user_occ);
 			$interest_text = new icms_form_elements_Text(_MA_USER_INTEREST, "user_intrest", 30, 100, $user_intrest);
