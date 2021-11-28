@@ -35,8 +35,8 @@
  * @author    modified by marcan <marcan@impresscms.org>
  */
 
-use Aura\Session\Session;
 use ImpressCMS\Core\DataFilter;
+use ImpressCMS\Core\Response\RedirectResponse;
 use ImpressCMS\Core\Response\ViewResponse;
 
 if (!function_exists('xoops_header')) {
@@ -192,59 +192,20 @@ if (!function_exists('redirect_header')) {
 	 * @param string $url The URL to redirect to
 	 * @param int $time DEPRECATED: does nothing
 	 * @param string $message The message to show while redirecting
-	 * @param bool $addredirect Add a link to the redirect URL?
-	 * @param string $allowExternalLink Allow external links
+	 * @param bool $addredirect Add a link to the redirect URL? DEPRECATED: does nothing
+	 * @param bool $allowExternalLink Allow external links
 	 */
 	function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 	{
-		global $icmsConfig, $icmsConfigPersona;
-		if (preg_match("/[\\0-\\31]|about:|script:/i", $url) && preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
-			$url = ICMS_URL;
+		$response = new RedirectResponse(
+			$url,
+			301,
+			trim($message) ? $message : _TAKINGBACK,
+			$allowExternalLink
+		);
+		foreach (array_keys($response->getHeaders()) as $headerName) {
+			header($headerName . ": " . $response->getHeaderLine($headerName));
 		}
-		if (!$allowExternalLink && $pos = strpos($url, '://')) {
-			$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
-			if (substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {
-				$url = ICMS_URL;
-			} elseif (substr($url, $pos + 3, strlen($xoopsLocation) + 1) == $xoopsLocation . '.') {
-				$url = ICMS_URL;
-			}
-		}
-		// if the user selected a theme in the theme block, let's use this theme
-
-		if (!empty($_SERVER['REQUEST_URI']) && $addredirect && strstr($url, 'user.php')) {
-			if (!strstr($url, '?')) {
-				$url .= '?xoops_redirect=' . urlencode($_SERVER['REQUEST_URI']);
-			} else {
-				$url .= '&amp;xoops_redirect=' . urlencode($_SERVER['REQUEST_URI']);
-			}
-		}
-		if (defined('SID') && SID && (!isset($_COOKIE[session_name()]) || ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '' && !isset($_COOKIE[$icmsConfig['session_name']])))) {
-			if (!strstr($url, '?')) {
-				$url .= '?' . SID;
-			} else {
-				$url .= '&amp;' . SID;
-			}
-		}
-		$url = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES, _CHARSET));
-		$message = trim($message) != '' ? $message : _TAKINGBACK;
-		// GIJ start
-
-		if (empty($url)) {
-			$url = './';
-		}
-
-		/**
-		 * @var Session $session
-		 */
-		$session = icms::$session;
-
-		$session
-			->getSegment(icms::class)
-			->setFlash('redirect_message', $message);
-
-		$session->commit();
-
-		header("Location: " . preg_replace("/[&]amp;/i", '&', $url));
 		exit();
 	}
 }
