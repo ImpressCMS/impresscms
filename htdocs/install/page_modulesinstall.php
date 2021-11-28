@@ -9,8 +9,14 @@
  * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
  * @package        installer
  * @since        1.0
- * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
+ * @author        Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
  */
+
+use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
+use ImpressCMS\Core\Models\ModuleHandler;
+use ImpressCMS\Core\Models\UserHandler;
+use Symfony\Component\Console\Output\BufferedOutput;
+
 define('INSTALLER_INCLUDE_MAIN', true);
 require_once 'common.inc.php';
 
@@ -50,12 +56,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		 * Automatically updating the system module before installing the selected modules
 		 * @since 1.3
 		 *
-		 * @var \ImpressCMS\Core\Models\ModuleHandler $module_handler
+		 * @var ModuleHandler $module_handler
 		 */
 		$module_handler = icms::handler('icms_module');
 
-		$buffer = new \Symfony\Component\Console\Output\BufferedOutput();
-		$output = new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($buffer);
+		$buffer = new BufferedOutput();
+		$output = new OutputDecorator($buffer);
+
+		/**
+		 * @var UserHandler $userHandler
+		 */
+		$userHandler = icms::handler('icms_member_user');
+
+		// gets first user
+		icms::$user = $userHandler->get(1);
 
 		$module_handler->update('system', $output);
 
