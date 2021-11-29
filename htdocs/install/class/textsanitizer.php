@@ -242,7 +242,7 @@ class TextSanitizer
 	/** @todo	get_magic_quotes_runtime is deprecated in PHP 5.4 and will always return FALSE */
 	function &oopsStripSlashesRT($text)
 	{
-		if (get_magic_quotes_runtime()) {
+		if (PHP_VERSION_ID <= 70000 && get_magic_quotes_runtime()) {
 			$text =& stripslashes($text);
 		}
 		return $text;

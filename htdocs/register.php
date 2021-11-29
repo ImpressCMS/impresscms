@@ -54,12 +54,12 @@ if ($icmsConfigUser['allow_register'] == 0 && $icmsConfigUser['activation_type']
 if (is_object(icms::$user)) {
 	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
 }
-$op = !isset($_POST['op']) ? 'register' : filter_input(INPUT_POST, 'op');
+$op = !isset($_POST['op']) ? 'register' : filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING);
 $login_name = isset($_POST['login_name']) ? icms_core_DataFilter::stripSlashesGPC($_POST['login_name']) : '';
 $uname = isset($_POST['uname']) ? icms_core_DataFilter::stripSlashesGPC($_POST['uname']) : '';
 $email = isset($_POST['email']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['email'])) : '';
 $url = isset($_POST['url']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['url'])) : '';
-$pass = isset($_POST['pass']) ? icms_core_DataFilter::stripSlashesGPC($_POST['pass']) : '';
+$pass = isset($_POST['pass']) ? icms_core_DataFilter::stripSlashesGPC(substr($_POST['pass'],0,32)) : '';
 $vpass = isset($_POST['vpass']) ? icms_core_DataFilter::stripSlashesGPC($_POST['vpass']) : '';
 $timezone_offset = isset($_POST['timezone_offset']) ? (float)($_POST['timezone_offset']) : $icmsConfig['default_TZ'];
 $user_viewemail = (isset($_POST['user_viewemail']) && (int) $_POST['user_viewemail']) ? 1 : 0;
@@ -109,8 +109,8 @@ switch ($op) {
 				. "' /><input type='hidden' name='user_viewemail' value='" . (int) $user_viewemail
 				. "' /><input type='hidden' name='timezone_offset' value='" . $timezone_offset
 				. "' /><input type='hidden' name='url' value='" . icms_core_DataFilter::htmlSpecialChars($url)
-				. "' /><input type='hidden' name='pass' value='" . icms_core_DataFilter::htmlSpecialChars($pass)
-				. "' /><input type='hidden' name='vpass' value='" . icms_core_DataFilter::htmlSpecialChars($vpass)
+				. "' /><input type='hidden' maxlength='99' name='pass' value='" . icms_core_DataFilter::htmlSpecialChars($pass)
+				. "' /><input type='hidden' maxlength='99' name='vpass' value='" . icms_core_DataFilter::htmlSpecialChars($vpass)
 				. "' /><input type='hidden' name='user_mailok' value='" . (int) $user_mailok
 				. "' /><input type='hidden' name='actkey' value='" . icms_core_DataFilter::htmlSpecialChars($actkey)
 				. "' /><input type='hidden' name='agree_disc' value='" . (int) $agree_disc
@@ -124,7 +124,7 @@ switch ($op) {
 		$xoopsTpl->assign('icms_pagetitle', _US_USERREG);
 		include 'footer.php';
 		break;
-		
+
 	case 'finish':
 		include 'header.php';
 		$stop = $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
@@ -243,10 +243,10 @@ switch ($op) {
 		$xoopsTpl->assign('icms_pagetitle', _US_USERREG);
 		include 'footer.php';
 		break;
-		
+
 	case 'register':
 	default:
-		$invite_code = isset($_GET['code']) ? filter_input(INPUT_GET, 'code') : NULL;
+		$invite_code = isset($_GET['code']) ? filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING) : NULL;
 		if ($icmsConfigUser['activation_type'] == 3 || !empty($invite_code)) {
 			include 'include/checkinvite.php';
 			load_invite_code($invite_code);

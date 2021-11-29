@@ -39,10 +39,11 @@
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 /** @todo when this is no longer possible to run under PHP 5.x, we can remove the check - fiammybe 12 may 2019 */
-if(get_magic_quotes_runtime())
-{
-	// Deactivate
+/** @noinspection ConstantCanBeUsedInspection */
+if (version_compare(PHP_VERSION, '5.3.0', '<')) {
 	set_magic_quotes_runtime(false);
+} else {
+	ini_set('magic_quotes_runtime', 0);
 }
 
 // -- Include common functions and constants file

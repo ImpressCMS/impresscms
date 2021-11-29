@@ -68,7 +68,7 @@ function SmilesAdmin() {
 				if ($i % 2 == 0) {
 					$class = 'even';
 				} else {
-					$class= 'odd';
+					$class = 'odd';
 				}
 				$smiles['code'] = icms_core_DataFilter::htmlSpecialChars($smiles['code']);
 				$smiles['smile_url'] = icms_core_DataFilter::htmlSpecialChars($smiles['smile_url']);
@@ -113,13 +113,13 @@ function SmilesAdmin() {
  * @param int $id
  */
 function SmilesEdit($id) {
-	$db =& icms_db_Factory::instance();
+	$db = &icms_db_Factory::instance();
 	icms_cp_header();
-	echo '<a href="admin.php?fct=smilies">' . _AM_SMILESCONTROL .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_EDITSMILE . '<br /><br />';
-	if ($getsmiles = $db->query("SELECT * FROM " . $db->prefix("smiles") . " WHERE id = '". (int) $id . "'")) {
+	echo '<a href="admin.php?fct=smilies">' . _AM_SMILESCONTROL . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_EDITSMILE . '<br /><br />';
+	if ($getsmiles = $db->query("SELECT * FROM " . $db->prefix("smiles") . " WHERE id = '" . (int) $id . "'")) {
 		$numsmiles = $db->getRowsNum($getsmiles);
 		if ($numsmiles == 0) {
-			//EMPTY
+			// EMPTY
 		} else {
 			if ($smiles = $db->fetchArray($getsmiles)) {
 				$smiles['smile_code'] = icms_core_DataFilter::htmlSpecialChars($smiles['code']);

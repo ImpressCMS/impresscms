@@ -61,6 +61,7 @@ class icms_core_Logger {
 			$instance = new icms_core_Logger();
 			// Always catch errors, for security reasons
 			set_error_handler( array( $instance, "handleError" ) );
+			set_exception_handler(array($instance, 'handleException'));
 		}
 		return $instance;
 	}
@@ -185,7 +186,39 @@ class icms_core_Logger {
 		if ($this->activated )
 		$this->filters[] = array('name' => $name, 'filtermsg' => (int) $filter_message);
 	}
-    
+
+	/**
+	 * Handle exception
+	 *
+	 * @param Exception $exception
+	 */
+	public function handleException($exception) {
+		icms_loadLanguageFile('core', 'core');
+
+		$errstr = $exception->getMessage();
+		$trace = true;
+		if (substr($errstr, 0, '8') == 'notrace:') {
+			$trace = false;
+			$errstr = substr($errstr, 8);
+		}
+		echo sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
+		if ($trace) {
+			echo '<br /><div>File: ' . $exception->getFile() . '</div>';
+			echo '<div>Line: ' . $exception->getLine() . '</div>';
+			echo "<div>Backtrace:<br />";
+			$trace = $exception->getTrace();
+			array_shift( $trace );
+			foreach ( $trace as $step) {
+				if (isset($step['file'])) {
+					echo $this->sanitizePath($step['file']);
+					echo ' (' . $step['line'] . ")\n<br />";
+				}
+			}
+			echo '</div>';
+		}
+		exit();
+	}
+
     /**
 	 * Error handling callback (called by the zend engine)
 	 * @param  string  $errno

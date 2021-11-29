@@ -1,8 +1,40 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 1.4.2
+Date: 24 Dec 2020
+DB Version: 45
+Build Version: 100
+
+This release fixes several bugs that were found during the HackerOne initial penetration test run on the 1.4.1 release. Some improvements and bugfixes are present as well.
+
+### Fixes
+ - 574 Test 1.4 on PHP 7.4 PHP7 (fiammybe)
+ - 692 Include new version of profile PHP7 (fiammybe)
+ - 845 PHP 7.4 : access array offset on value of type null in include/functions.php 1037 php 7.4 (fiammybe)
+ - 852 anti-clickjacking security vulnerability (report #1055589 by jrckmcsb on HackerOne) (fiammybe)
+ - 825 Improve path sanitizing bug security vulnerability (MekDrop)
+ - 814 Better sanitize database queries in installer bug  (report #983710 by solov9ev on HackerOne) (fiammybe)
+ - 637 Notice on admin pages in PHP 7.4 duplicate php 7.4 (fiammybe)
+ - 843 Fix the amount of cookies (fiammybe)
+ - 805 Missing templates in system module (skenow)
+ - 838 Remove whitesource config (Mekdrop)
+ - 834 + 836 Limit maximum length of password  (report #1033373	by f1v3 on HackerOne) (fiammybe)
+ - 821 Fixed possible file system exposing due language cookie on installer (MekDrop)
+ - 812 Prevents using submitted filenames with ../ for controller (report #1035311 by siva12 on HackerOne) (MekDrop)
+ - 815 Better sanitize database queries in installer (report #983710 by solov9ev on HackerOne) (fiammybe)
+ - 811 Remove phpopenid example folder bug (report #1042838 by hackerone_success on HackerOne) (fiammybe)
+ - 810 more strict comparison of variables  (report #1036883 by hodorsec on HackerOne) (fiammybe)
+ - 806 Include the missing templates for the image manager (skenow)
+ - 603 Issue with image inclusion on TinyMCE (fiammybe)
+
+### Improvements
+ - 636 errors in form fields on admin account creation page of the installer (fiammybe)
+ - 848 Cleanup deprecated functions in functions.php (fiammybe)
+ - 694 remove the icms_banner reference. No longer present (fiammybe)
+
 ## ImpressCMS 1.4.1
 Date: 07 Jul 2020
-DB Version: 45 
+DB Version: 45
 Build Version: 98
 
 This release fixes several bugs that were present in the 1.4.0 release, some of them with security impact.
@@ -15,10 +47,10 @@ This release fixes several bugs that were present in the 1.4.0 release, some of 
  - Fatal error during installation at page_tablescreate.php ( #576 ) @skenow
  - Test 1.4 on PHP 7.3 ( #573 ) @fiammybe
  - Login in Chrome points to blank page ( #100 ) @fiammybe
- 
+
 ## ImpressCMS 1.4.0
 Date: 19 Dec 2019
-DB Version: 45 
+DB Version: 45
 Build Version: 96
 
 ### Improvements
@@ -57,7 +89,7 @@ DB Version: 44
 Build Version: 91
 
 ### Security
-Fix XSS vulnerabilities in installer (as found by Omar Kurt, security researcher at Netsparker (https://www.netsparker.com) 
+Fix XSS vulnerabilities in installer (as found by Omar Kurt, security researcher at Netsparker (https://www.netsparker.com)
 
 ### Improvements
 109 - Add extra metadata types property and itemprop

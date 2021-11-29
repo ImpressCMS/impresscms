@@ -94,10 +94,10 @@ if ($action == 'showpopups') {
 					$rcolor = 'even';
 					for ($i = 0; $i < $count; $i++)
 					{
-						echo "<tr class='$rcolor'><td>".$smiles[$i]['code']."</td>
-							<td>".$smiles[$i]['emotion']."</td>
-							<td><img onmouseover='style.cursor=\"pointer\"' onclick='doSmilie(\" "
-							. $smiles[$i]['code'] . " \");' src='"
+						echo "<tr class='$rcolor'><td>".htmlentities($smiles[$i]['code'])."</td>
+							<td>".htmlentities($smiles[$i]['emotion'])."</td>
+							<td><img onmouseover=\"style.cursor='pointer'\" onclick=\"doSmilie(decodeURIComponent('"
+							. rawurlencode($smiles[$i]['code']) . "'));\" src='"
 							. ICMS_UPLOAD_URL . "/" . $smiles[$i]['smile_url'] . "' alt='' /></td></tr>";
 						$rcolor = ($rcolor == 'even') ? 'odd' : 'even';
 					}
@@ -198,7 +198,7 @@ if ($action == 'showpopups') {
 					$yname = icms_core_DataFilter::stripSlashesGPC(trim($_POST['yname']));
 					$fname = icms_core_DataFilter::stripSlashesGPC(trim($_POST['fname']));
 					$fmail = icms_core_DataFilter::stripSlashesGPC(trim($_POST['fmail']));
-					if (!checkEmail($fmail) || !checkEmail($ymail) || preg_match('/[\\0-\\31]/', $yname)) {
+					if (!icms_core_DataFilter::checkVar($fmail, 'email') || !icms_core_DataFilter::checkVar($ymail, 'email') || preg_match('/[\\0-\\31]/', $yname)) {
 						$errormessage = _MSC_INVALIDEMAIL1.'<br />'._MSC_INVALIDEMAIL2.'';
 						redirect_header(ICMS_URL.'/misc.php?action=showpopups&amp;type=friend&amp;op=sendform',2,$errormessage);
 					}

@@ -40,6 +40,7 @@
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 } else {
+
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 	$op = (isset($_GET['op']))
@@ -69,9 +70,11 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'avatar_file', $icmsConfigUser['avatar_maxsize']));
 		$form->addElement(new icms_form_elements_Text(_IMGWEIGHT, 'avatar_weight', 3, 4, 0));
 		$form->addElement(new icms_form_elements_Radioyn(_IMGDISPLAY, 'avatar_display', 1, _YES, _NO));
+
 		$restrictions  = _MD_AM_AVATARMAX . ": " . $icmsConfigUser['avatar_maxsize'] . "<br />";
 		$restrictions .= _MD_AM_AVATARW . ": " . $icmsConfigUser['avatar_width'] . "px<br />";
 		$restrictions .= _MD_AM_AVATARH . ": ". $icmsConfigUser['avatar_height']. "px";
+
 		$form->addElement(new icms_form_elements_Label(_MD_RESTRICTIONS, $restrictions));
 		$form->addElement(new icms_form_elements_Hidden('op', 'addfile'));
 		$form->addElement(new icms_form_elements_Hidden('fct', 'avatars'));
@@ -84,6 +87,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	if ($op == 'listavt') {
 		$avt_handler = icms::handler('icms_data_avatar');
 		icms_cp_header();
+
 		$type = (isset($_GET['type']) && $_GET['type'] == 'C') ? 'C' : 'S';
 		echo '<div class="CPbigTitle" style="background-image: url('
 			. ICMS_URL . '/modules/system/admin/avatars/images/avatars_big.png)"><a href="admin.php?fct=avatars">'
@@ -96,14 +100,17 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		echo '</div><br /><br /><br />';
 		$criteria = new icms_db_criteria_Item('avatar_type', $type);
 		$avtcount = $avt_handler->getCount($criteria);
+
 		$start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
 		$criteria->setStart($start);
 		$criteria->setLimit(10);
 		$avatars =& $avt_handler->getObjects($criteria, TRUE);
+
 		if ($type == 'S') {
 			foreach (array_keys($avatars) as $i) {
 				echo '<form action="admin.php" method="post">';
 				$id = $avatars[$i]->getVar('avatar_id');
+
 				echo '<table class="outer" cellspacing="1" width="100%">'
 					. '<tr><td align="center" width="30%" rowspan="6"><img src="'
 					. ICMS_UPLOAD_URL . '/' . $avatars[$i]->getVar('avatar_file')
@@ -135,6 +142,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 					. '<a href="admin.php?fct=avatars&amp;op=delfile&amp;avatar_id='
 					. $avatars[$i]->getVar('avatar_id') . '&amp;user_id=' . $userids[0] . '">'
 					. _DELETE . '</a></td></tr></table><br />';
+
 			}
 		}
 		if ($avtcount > 0) {
@@ -143,12 +151,14 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				echo '<div style="text-align:' . _GLOBAL_RIGHT . ';">' . $nav->renderImageNav() . '</div>';
 			}
 			if ($type == 'S') {
+
 				echo '<div style="text-align:center;">'
 					. '<input type="hidden" name="op" value="save" />'
 					. '<input type="hidden" name="fct" value="avatars" />'
 					. '<input type="submit" name="submit" value="' . _SUBMIT . '" />'
 					. icms::$security->getTokenHTML()
 					. '</div></form>';
+
 			}
 		}
 		icms_cp_footer();
@@ -166,6 +176,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 			$error = array();
 			for ($i = 0; $i < $count; $i++) {
 				$avatar =& $avt_handler->get($avatar_id[$i]);
+
 				if (!is_object($avatar)) {
 					$error[] = sprintf(_FAILGETIMG, $avatar_id[$i]);
 					continue;
@@ -206,7 +217,9 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				$err[] = $uploader->getErrors();
 			} else {
 				$avt_handler = icms::handler('icms_data_avatar');
+
 				$avatar =& $avt_handler->create();
+
 				$avatar->setVar('avatar_file', $uploader->getSavedFileName());
 				$avatar->setVar('avatar_name', $avatar_name);
 				$avatar->setVar('avatar_mimetype', $uploader->getMediaType());
@@ -232,8 +245,10 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 
 	if ($op == 'delfile') {
 		icms_cp_header();
+
 		$user_id = isset($_GET['user_id']) ? (int) ($_GET['user_id']) : 0;
 		icms_core_Message::confirm(array('op' => 'delfileok', 'avatar_id' => (int) ($_GET['avatar_id']), 'fct' => 'avatars', 'user_id' => $user_id), 'admin.php', _MD_RUDELIMG);
+
 		icms_cp_footer();
 		exit();
 	}
@@ -242,12 +257,16 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		if (!icms::$security->check()) {
 			redirect_header('admin.php?fct=avatars', 1, 3, implode('<br />', icms::$security->getErrors()));
 		}
+
 		$avatar_id = (int) ($avatar_id);
+
 		if ($avatar_id <= 0) {
 			redirect_header('admin.php?fct=avatars', 1);
 		}
 		$avt_handler = icms::handler('icms_data_avatar');
+
 		$avatar =& $avt_handler->get($avatar_id);
+
 		if (!is_object($avatar)) {
 			redirect_header('admin.php?fct=avatars', 1);
 		}
@@ -260,11 +279,12 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 		$file = $avatar->getVar('avatar_file');
 		@unlink(ICMS_UPLOAD_PATH . '/' . $file);
 		if (isset($user_id) && $avatar->getVar('avatar_type') == 'C') {
+
 			icms::$xoopsDB->query("UPDATE " . icms::$xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE uid='". (int) ($user_id) . "'");
+
 		} else {
 			icms::$xoopsDB->query("UPDATE " . icms::$xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE user_avatar='" . $file . "'");
 		}
 		redirect_header('admin.php?fct=avatars', 2, _MD_AM_DBUPDATED);
 	}
 }
-

@@ -46,14 +46,14 @@ defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
  */
 $modversion = array (
 		'name' => _MI_SYSTEM_NAME,
-		'version' => '1.4.1',
+		'version' => '1.4.2',
 		'description' => _MI_SYSTEM_DESC,
 		'author' => "fiammybe",
 		'credits' => "The ImpressCMS Project",
 		'help' => "",
 		'license' => "GNU General Public License v2 (GPL2)",
 		'official' => TRUE,
-		'dirname' => basename(dirname(__FILE__)),
+		'dirname' => basename(__DIR__),
 		'modname' => 'system',
 
 		/**
@@ -66,7 +66,7 @@ $modversion = array (
 /**  Development information */
 	'status_version' => "Final",
 		'status' => "Final",
-		'date' => "07 Jul 2020",
+		'date' => "24 Dec 2020",
 		'author_word' => "",
 		'warning' => _CO_ICMS_WARNING_FINAL,
 
@@ -80,10 +80,8 @@ $modversion = array (
 $modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=168]marcan[/url] (Marc-Andr&eacute; Lanciault)";
 $modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
 $modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
-$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=2998]Tac Hisaoka[/url]";
 $modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=489]Mekdrop[/url]";
 
-$modversion['people']['testers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=53]davidl2[/url]";
 $modversion['people']['testers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
 $modversion['people']['translators'][] = "";
 $modversion['people']['documenters'][] = "[url=https://www.impresscms.org/userinfo.php?uid=54]Skenow[/url]";

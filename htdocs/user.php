@@ -149,7 +149,7 @@ switch ($op) {
 
 	case 'actv':
 		$id = (int) $_GET['id'];
-		$actkey = trim(filter_input(INPUT_GET, 'actkey'));
+		$actkey = trim(filter_input(INPUT_GET, 'actkey', FILTER_SANITIZE_STRING));
 		if (empty($id)) {
 			redirect_header('index.php',1,'');
 		}

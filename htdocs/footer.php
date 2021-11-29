@@ -87,6 +87,7 @@ if (isset($xoopsOption['theme_use_smarty']) && $xoopsOption['theme_use_smarty'] 
 		header('Expires:' . gmdate("D, d M Y H:i:s T", strtotime("yesterday")) );
 		header('Cache-Control: private, no-cache');
 		header('Pragma: no-cache');
+		header("X-Frame-Options: SAMEORIGIN");
 	}
 	/*
 	 global $icmsConfig;

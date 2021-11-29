@@ -47,8 +47,8 @@ $icms_autotasks_handler = icms_getModuleHandler('autotasks', 'system');
 
 $op = '';
 
-if (isset($_GET['op'])) $op = filter_input(INPUT_GET, 'op');
-if (isset($_POST['op'])) $op = filter_input(INPUT_POST, 'op');
+if (isset($_GET['op'])) $op = filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING);
+if (isset($_POST['op'])) $op = filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING);
 
 switch ($op) {
 	case "mod":

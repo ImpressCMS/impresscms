@@ -35,6 +35,7 @@
  * @subpackage	Modules
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
+
  */
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
@@ -44,9 +45,11 @@ $icmsAdminTpl = new icms_view_Tpl();
 
 include_once ICMS_MODULES_PATH . "/system/admin/modulesadmin/modulesadmin.php";
 icms_loadLanguageFile('system', 'blocksadmin', TRUE);
+
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op')) : ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op')) : 'list');
+
 
 if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
 	if (!icms::$security->check()) {
@@ -78,12 +81,15 @@ if ($op == "confirm") {
 		exit();
 	}
 
+
+
 	echo "<h4 style='text-align:" . _GLOBAL_LEFT . ";'>" . _MD_AM_PCMFM . "</h4>"
 	. "<form action='admin.php' method='post'>"
 	. "<input type='hidden' name='fct' value='modulesadmin' />"
 	. "<input type='hidden' name='op' value='submit' />"
 	. "<table width='100%' border='0' cellspacing='1' class='outer'>"
 	. "<tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _MD_AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
+
 	$mcount = 0;
 	foreach ($module as $mid) {
 		if ($mcount % 2 != 0) {
@@ -97,7 +103,9 @@ if ($op == "confirm") {
 			echo '&nbsp;&raquo;&raquo;&nbsp;<span style="color:#ff0000;font-weight:bold;">' . $newname[$mid] . '</span>';
 		}
 		echo '</td><td align="center">';
+
 		if (isset($newstatus[$mid]) && $newstatus[$mid] ==1) {
+
 			if ($oldstatus[$mid] == 0) {
 				echo "<span style='color:#ff0000;font-weight:bold;'>" . _MD_AM_ACTIVATE . "</span>";
 			} else {
@@ -117,6 +125,7 @@ if ($op == "confirm") {
 		} else {
 			echo $weight[$mid];
 		}
+
 		echo "<input type='hidden' name='module[]' value='". (int) $mid
 		."' /><input type='hidden' name='oldname[" . $mid . "]' value='" . htmlspecialchars($oldname[$mid], ENT_QUOTES)
 		."' /><input type='hidden' name='newname[" . $mid . "]' value='" . htmlspecialchars($newname[$mid], ENT_QUOTES)
@@ -131,6 +140,7 @@ if ($op == "confirm") {
 	. _MD_AM_SUBMIT . "' />&nbsp;<input type='button' value='" . _MD_AM_CANCEL
 	. "' onclick='location=\"admin.php?fct=modulesadmin\"' />" . icms::$security->getTokenHTML()
 	. "</td></tr></table></form>";
+
 	icms_cp_footer();
 	exit();
 }
@@ -139,7 +149,9 @@ if ($op == "submit") {
 	$ret = array();
 	$write = FALSE;
 	foreach ($module as $mid) {
+
 		if (isset($newstatus[$mid]) && $newstatus[$mid] ==1) {
+
 			if ($oldstatus[$mid] == 0) {
 				$ret[] = xoops_module_activate($mid);
 			}
@@ -176,10 +188,12 @@ if ($op == "submit") {
 
 if ($op == 'install') {
 	$module_handler = icms::handler('icms_module');
+
 	$mod =& $module_handler->create();
 	$mod->loadInfoAsVar($module);
 	if ($mod->getInfo('image') != FALSE && trim($mod->getInfo('image')) != '') {
 		$msgs ='<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
+
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREINS;
 	if (empty($from_112)) {
@@ -216,11 +230,13 @@ if ($op == 'install_ok') {
 
 if ($op == 'uninstall') {
 	$module_handler = icms::handler('icms_module');
+
 	$mod =& $module_handler->getByDirname($module);
 	$mod->registerClassPath();
 
 	if ($mod->getInfo('image') != FALSE && trim($mod->getInfo('image')) != '') {
 		$msgs ='<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
+
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREUNINS;
 	icms_cp_header();
@@ -251,15 +267,19 @@ if ($op == 'uninstall_ok') {
 
 if ($op == 'update') {
 	$module_handler = icms::handler('icms_module');
+
 	$mod =& $module_handler->getByDirname($module);
 	if ($mod->getInfo('image') != FALSE && trim($mod->getInfo('image')) != '') {
 		$msgs ='<img src="' . ICMS_MODULES_URL . '/' . $mod->getVar('dirname') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
+
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _MD_AM_RUSUREUPD;
 	icms_cp_header();
 
 	if (icms_getModuleInfo('system')->getDBVersion() < 14 && (!is_writable(ICMS_PLUGINS_PATH) || !is_dir(ICMS_ROOT_PATH . '/plugins/preloads') || !is_writable(ICMS_ROOT_PATH . '/plugins/preloads'))) {
+
 		icms_core_Message::error(sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads'), _MD_AM_PLUGINSFOLDER_UPDATE_TITLE, TRUE);
+
 	}
 	if (icms_getModuleInfo('system')->getDBVersion() < 37 && !is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
 		icms_core_Message::error(sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH)), _MD_AM_IMAGESFOLDER_UPDATE_TITLE, TRUE);
@@ -289,4 +309,3 @@ if ($op == 'update_ok') {
 	icms_cp_footer();
 	exit();
 }
-

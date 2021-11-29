@@ -291,6 +291,6 @@ class setting_manager {
 
 	function generatePrefix() {
 		include_once $this->root_path."/include/functions.php";
-		return xoops_makepass(5);
+		return icms_core_Password::createSalt(5);;
 	}
 }

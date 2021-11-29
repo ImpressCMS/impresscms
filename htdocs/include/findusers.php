@@ -179,8 +179,10 @@ if (empty($_POST["user_submit"])) {
 	$form->display();
 
 } else {
+
 	$limit = empty($_POST['limit']) ? 50 : (int) ( $_POST['limit'] );
 	$start = (int) ( @$_POST['start'] );
+
 
 	if (!isset($_POST["query"])) {
 		$criteria = new icms_db_criteria_Compo();
@@ -206,7 +208,8 @@ if (empty($_POST["user_submit"])) {
 		}
 
 		if (!empty($_POST['url'])) {
-			$url = formatURL(trim($_POST['url']));
+
+			$url = icms_core_DataFilter::addSlashes(formatURL(trim(filter_input(INPUT_POST, $_POST['url'], FILTER_SANITIZE_URL))),'%');
 			$criteria->add(new icms_db_criteria_Item('url', $url.'%', 'LIKE'));
 		}
 
