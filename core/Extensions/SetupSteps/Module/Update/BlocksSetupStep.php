@@ -1,8 +1,6 @@
 <?php
 
-
 namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Update;
-
 
 use Exception;
 use icms;
@@ -38,7 +36,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 		/**
 		 * @var DatabaseConnection $db
 		 */
-		$db = icms::getInstance()->get('db');
+		$db = $this->getContainer()->get('db');
 
 		/**
 		 * @var BlockHandler $newBlocksHandler
@@ -46,15 +44,15 @@ class BlocksSetupStep extends InstallBlockSetupStep
 		$newBlocksHandler = icms::handler('icms_view_block');
 
 		if ($blocks !== false) {
-			$showfuncs = array();
-			$funcfiles = array();
+			$showfuncs = [];
+			$funcfiles = [];
 			foreach ($blocks as $i => $block) {
-				if (isset($block['show_func']) && $block['show_func'] != '' && isset($block['file']) && $block['file'] != '') {
-					$editfunc = isset($block['edit_func']) ? $block['edit_func'] : '';
+				if (isset($block['show_func'], $block['file']) && $block['show_func'] && $block['file']) {
+					$editfunc = $block['edit_func'] ?? '';
 					$showfuncs[] = $block['show_func'];
 					$funcfiles[] = $block['file'];
 					$template = $content = '';
-					if ((isset($block['template']) && trim($block['template']) != '')) {
+					if ((isset($block['template']) && trim($block['template']))) {
 						$content = $this->readTemplate($module->dirname, $block['template']);
 					}
 					if (!$content) {
@@ -86,7 +84,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 								'UPDATE ' . $db->prefix('newblocks') . '
 									  SET name=:name, edit_func=:edit_func, content=:content, template=:template, last_modified=:last_modified
 									  WHERE bid=:bid', [
-								'name' => $block['name'],
+								'name' => $this->getTranslatedName($block['name']),
 								'edit_func' => $editfunc,
 								'content' => '',
 								'template' => $template,
@@ -98,12 +96,12 @@ class BlocksSetupStep extends InstallBlockSetupStep
 							$result = false;
 						}
 						if (!$result) {
-							$output->error(_MD_AM_UPDATE_FAIL, $fblock['name']);
+							$output->error(_MD_AM_UPDATE_FAIL, $this->getTranslatedName($fblock['name']));
 						} else {
-							$output->success(_MD_AM_BLOCK_UPDATED, $fblock['name'], icms_conv_nr2local($fblock['bid']));
-							if ($template != '') {
+							$output->success(_MD_AM_BLOCK_UPDATED, $this->getTranslatedName($fblock['name']), icms_conv_nr2local($fblock['bid']));
+							if ($template) {
 								$tplfile = $tplfile_handler->find('default', 'block', $fblock['bid']);
-								if (count($tplfile) == 0) {
+								if (empty($tplfile)) {
 									$tplfile_new = &$tplfile_handler->create();
 									$tplfile_new->tpl_module = $module->dirname;
 									$tplfile_new->tpl_refid = (int)$fblock['bid'];
@@ -121,7 +119,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 									$output->error(_MD_AM_TEMPLATE_UPDATE_FAIL, $block['template']);
 								} else {
 									$output->success(_MD_AM_TEMPLATE_UPDATED, $block['template']);
-									if ($icmsConfig['template_set'] == 'default') {
+									if ($icmsConfig['template_set'] === 'default') {
 										if (!Template::template_touch($tplfile_new->tpl_id)) {
 											$output->error(_MD_AM_TEMPLATE_RECOMPILE_FAIL, $block['template']);
 										} else {
@@ -133,7 +131,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 						}
 					}
 
-					if ($fcount == 0) {
+					if ($fcount === 0) {
 						/**
 						 * @var Block $newBlock
 						 */
@@ -141,8 +139,8 @@ class BlocksSetupStep extends InstallBlockSetupStep
 						$newBlock->mid = $module->mid;
 						$newBlock->func_num = $i;
 						$newBlock->options = $options;
-						$newBlock->name = $block['name'];
-						$newBlock->title = $block['name'];
+						$newBlock->name = $this->getTranslatedName($block['name']);
+						$newBlock->title = $this->getTranslatedName($block['name']);
 						$newBlock->content = '';
 						$newBlock->side = 1;
 						$newBlock->weight = 0;
@@ -159,7 +157,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 						$newBlock->last_modified = time();
 
 						if (!$newBlock->store()) {
-							$output->error(_MD_AM_CREATE_FAIL, $block['name']);
+							$output->error(_MD_AM_CREATE_FAIL, $this->getTranslatedName($block['name']));
 						} else {
 							$newbid = $newBlock->bid;
 							$groups = &icms::$user->getGroups();
@@ -177,7 +175,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 								}
 							}
 
-							if ($template != '') {
+							if ($template) {
 								$tplfile = &$tplfile_handler->create();
 								$tplfile->tpl_module = $module->dirname;
 								$tplfile->tpl_refid = (int)$newbid;
@@ -193,7 +191,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 								} else {
 									$newid = $tplfile->tpl_id;
 									$output->success(_MD_AM_TEMPLATE_INSERTED, $block['template'], $newid);
-									if ($icmsConfig['template_set'] == 'default') {
+									if ($icmsConfig['template_set'] === 'default') {
 										if (!Template::template_touch($newid)) {
 											$output->error(_MD_AM_TEMPLATE_RECOMPILE_FAIL, $block['template']);
 										} else {
@@ -202,7 +200,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 									}
 								}
 							}
-							$output->success(_MD_AM_BLOCK_CREATED, $block['name'], $newbid);
+							$output->success(_MD_AM_BLOCK_CREATED, $this->getTranslatedName($block['name']), $newbid);
 							$db->perform('INSERT INTO ' . $db->prefix('block_module_link')
 								. ' (block_id, module_id, page_id) VALUES (:bid, :mid, :pid);', [
 								'bid' => $newbid,
@@ -216,20 +214,19 @@ class BlocksSetupStep extends InstallBlockSetupStep
 
 			$block_arr = $newBlocksHandler->getByModule($module->mid);
 			foreach ($block_arr as $block) {
-				if (!in_array($block->show_func, $showfuncs) || !in_array($block->func_file, $funcfiles)) {
+				if (!in_array($block->show_func, $showfuncs, false) || !in_array($block->func_file, $funcfiles, false)) {
 					if (!$newBlocksHandler->delete($block)) {
 						$output->error(_MD_AM_BLOCK_DELETE_FAIL, $block->name, $block->bid);
 					} else {
 						$output->success(_MD_AM_BLOCK_DELETED, $block->name, $block->bid);
-						if ($block->template != '') {
-							$tplfiles = &$tplfile_handler->find(null, 'block', $block->bid);
+						if ($block->template) {
+							$tplfiles = $tplfile_handler->find(null, 'block', $block->bid);
 							if (is_array($tplfiles)) {
-								$btcount = count($tplfiles);
-								for ($k = 0; $k < $btcount; $k++) {
+								foreach ($tplfiles as $k => $kValue) {
 									if (!$tplfile_handler->delete($tplfiles[$k])) {
-										$output->error(_MD_AM_BLOCK_TMPLT_DELETE_FAILED, $tplfiles[$k]->tpl_file, $tplfiles[$k]->tpl_id);
+										$output->error(_MD_AM_BLOCK_TMPLT_DELETE_FAILED, $kValue->tpl_file, $kValue->tpl_id);
 									} else {
-										$output->success(_MD_AM_BLOCK_TMPLT_DELETED, $tplfiles[$k]->tpl_file, $tplfiles[$k]->tpl_id);
+										$output->success(_MD_AM_BLOCK_TMPLT_DELETED, $kValue->tpl_file, $kValue->tpl_id);
 									}
 								}
 							}

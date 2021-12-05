@@ -11,10 +11,14 @@ use ImpressCMS\Core\Models\Block;
 use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\Models\TemplateFile;
 use ImpressCMS\Core\View\Template;
+use League\Container\ContainerAwareInterface;
+use League\Container\ContainerAwareTrait;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use function icms_conv_nr2local;
 
-class BlockSetupStep implements SetupStepInterface
+class BlockSetupStep implements SetupStepInterface, ContainerAwareInterface
 {
+	use ContainerAwareTrait;
 
 	/**
 	 * @inheritDoc
@@ -29,12 +33,12 @@ class BlockSetupStep implements SetupStepInterface
 			$newmid = $module->mid;
 			$handler = icms::handler('icms_view_block');
 			foreach ($blocks as $blockkey => $block) {
-				if (!isset($block['file']) || !isset($block['show_func'])) {
+				if (!isset($block['file'], $block['show_func'])) {
 					continue;
 				}
 				$options = !empty($block['options']) ? trim($block['options']) : '';
 				$template = '';
-				if ((isset($block['template']) && trim($block['template']) != '')) {
+				if ((isset($block['template']) && trim($block['template']))) {
 					$content = $this->readTemplate($dirname, $block['template']);
 				}
 				if (empty($content)) {
@@ -46,18 +50,17 @@ class BlockSetupStep implements SetupStepInterface
 				 * @var Block $newBlock
 				 */
 				$newBlock = $handler->create();
-				$newBlock->name = trim($block['name']);
 				$newBlock->mid = $newmid;
 				$newBlock->func_num = $blockkey;
 				$newBlock->options = $options;
-				$newBlock->name = $block['name'];
-				$newBlock->title = $block['name'];
+				$newBlock->name = $this->getTranslatedName($block['name']);
+				$newBlock->title = $this->getTranslatedName($block['name']);
 				$newBlock->content = '';
 				$newBlock->side = 1;
 				$newBlock->weight = 0;
 				$newBlock->visible = 0;
-				$newBlock->block_type = 'M';
-				$newBlock->c_type = 'H';
+				$newBlock->block_type = Block::BLOCK_TYPE_MODULE;
+				$newBlock->c_type = Block::CONTENT_TYPE_HTML;
 				$newBlock->isactive = 1;
 				$newBlock->dirname = $dirname;
 				$newBlock->func_file = $block['file'];
@@ -68,10 +71,10 @@ class BlockSetupStep implements SetupStepInterface
 				$newBlock->last_modified = time();
 
 				if (!$newBlock->store()) {
-					$output->error(_MD_AM_BLOCKS_ADD_FAIL, $block['name']);
+					$output->error(_MD_AM_BLOCKS_ADD_FAIL, $this->getTranslatedName($block['name']));
 				} else {
 					$newbid = $newBlock->id();
-					$output->success(_MD_AM_BLOCK_ADDED, $block['name'], icms_conv_nr2local($newbid));
+					$output->success(_MD_AM_BLOCK_ADDED, $this->getTranslatedName($block['name']), icms_conv_nr2local($newbid));
 					$sql = sprintf(
 						'INSERT INTO `%s` (block_id, module_id, page_id) VALUES(%d, %d, %d);',
 						$module->handler->db->prefix('block_module_link'),
@@ -80,7 +83,7 @@ class BlockSetupStep implements SetupStepInterface
 						1
 					);
 					$module->handler->db->query($sql);
-					if ($template != '') {
+					if ($template) {
 						/**
 						 * @var TemplateFile $tplfile
 						 */
@@ -91,7 +94,11 @@ class BlockSetupStep implements SetupStepInterface
 						$tplfile->tpl_file = $block['template'];
 						$tplfile->tpl_module = $dirname;
 						$tplfile->tpl_type = 'block';
-						$tplfile->setVar('tpl_desc', isset($block['description']) ? $block['description'] : '', true);
+						$tplfile->setVar(
+							'tpl_desc',
+							$block['description'] ?? '',
+							true
+						);
 						$tplfile->tpl_lastimported = 0;
 						$tplfile->tpl_lastmodified = time();
 						if (!$tplfile->store()) {
@@ -142,7 +149,7 @@ class BlockSetupStep implements SetupStepInterface
 	 * @param Module $module Module to update
 	 * @param OutputDecorator $output
 	 */
-	protected function updateBlocksPermissions(Module $module, OutputDecorator $output)
+	protected function updateBlocksPermissions(Module $module, OutputDecorator $output): void
 	{
 		$groups = $module->getInfo('hasMain') ? [ICMS_GROUP_ADMIN, ICMS_GROUP_USERS, ICMS_GROUP_ANONYMOUS] : [ICMS_GROUP_ADMIN];
 		$icms_block_handler = icms::handler('icms_view_block');
@@ -190,6 +197,23 @@ class BlockSetupStep implements SetupStepInterface
 				unset($bperm);
 			}
 		}
+	}
+
+	/**
+	 * Gets translated named
+	 *
+	 * @param string $name String or constant to translate
+	 *
+	 * @return string
+	 */
+	protected function getTranslatedName(string $name): string
+	{
+		/**
+		 * @var TranslatorInterface $translator
+		 */
+		$translator = $this->getContainer()->get('translator');
+
+		return $translator->trans($name, [], 'modinfo');
 	}
 
 	/**

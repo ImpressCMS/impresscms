@@ -424,7 +424,7 @@ class BlockHandler extends AbstractExtendedHandler {
 			}
 		} else {
 			icms_loadLanguageFile('system', 'blocks', true);
-			if ($obj->block_type == 'K') {
+			if ($obj->block_type === Block::BLOCK_TYPE_DUPLICATED) {
 				$obj->name = _AM_CLONE;
 			} else {
 				switch ($obj->c_type) {
