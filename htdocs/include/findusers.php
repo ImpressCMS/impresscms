@@ -24,22 +24,12 @@ if ($denied) {
 	exit();
 }
 
-/*
- * Look at what is in /edituser.php, /modules/system/admin/findusers/main.php
- *
- * {$var}_more - last_login (int), user_regdate (int), posts (int)
- * {$var}_less - last_login (int), user_regdate (int), posts (int)
- * {$var}_match - uname, email, name, user_icq, user_aim, user_msnm
- * limit (int)
- * start (int)
- * posts_more (int)
- * posts_less (int)
- *
- * mode (int) - possible different modes for searching
- * target (str) - field to receive user selection
- * multiple (str) - option in the select box for group membership
- *
- */
+/* define variable and set default values */
+$target = $multiple = $token = $user_from = $user_occ = $user_intrest = '';
+$user_submit = $user_avatar = $user_sort = $user_order = '';
+$mode = $user_viewemail = $user_viewoid = $attachsig = $user_mailok = $usecookie = $limit = $start = 0;
+$posts = $posts_more = $posts_less = $last_login_more = $last_login_less = $user_regdate_more = 0;
+$user_regdate_less = $level = $rank = $groups = 0;
 
 $filter_get = array(
 	'target' => 'str',
@@ -48,17 +38,21 @@ $filter_get = array(
 	'mode' => 'int');
 
 $filter_post = array(
+	'uname' => 'str',
 	'user_sig' => 'html',
+/*
 	'email' => array( // may need to relax this because the search allows partial matches
 		'email',
 		'options' => array(
 			0,
 			1)),
+*/
+	'email' => 'str',
 	'url' => 'url',
 	'user_viewemail' => 'int',
 	'user_viewoid' => 'int',
 	'attachsig' => 'int',
-	'user_mailok' => 'int',
+	'user_mailok' => 'str',
 	'usecookie' => 'int',
 	'limit' => 'int',
 	'start' => 'int',
@@ -73,7 +67,7 @@ $filter_post = array(
 	'target' => 'str',
 	'multiple' => 'str',
 	'token' => 'str',
-	'groups' => 'str',
+	'groups' => 'int',
 	'level' => 'int',
 	'rank' => 'int',
 	'user_from' => 'str',
@@ -82,7 +76,14 @@ $filter_post = array(
 	'user_submit' => 'str',
 	'user_avatar' => 'str',
 	'user_sort' => 'str',
-	'user_order' => 'str');
+	'user_order' => 'str',
+	'uname_match' => 'str',
+	'name_match' => 'str',
+	'email_match' => 'str',
+	'user_icq_match' => 'str',
+	'user_aim_match' => 'str',
+	'user_yim_match' => 'str',
+	'user_msnm_match' => 'str');
 
 if (!empty($_GET)) {
 	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
@@ -140,14 +141,14 @@ $modes = array(
 	FINDUSERS_MODE_ADVANCED => _MA_USER_MODE_ADVANCED);
 // <-- see above comment
 
-if (empty($_POST["user_submit"])) {
+if (empty($user_submit)) {
 
 	$form = new icms_form_Theme(_MA_USER_FINDUS, "uesr_findform", "findusers.php", 'post', true);
 
 	if (FINDUSERS_MODE_ADVANCED == $mode) {
 		foreach ($items_match as $var => $title) {
-			$text = new icms_form_elements_Text("", $var, 30, 100, @$_POST[$var]);
-			$match = new icms_form_elements_select_Matchoption("", "{$var}_match", @$_POST["{$var}_match"]);
+			$text = new icms_form_elements_Text("", $var, 30, 100, ${$var});
+			$match = new icms_form_elements_select_Matchoption("", "{$var}_match", ${$var . '_match'});
 			$match_tray = new icms_form_elements_Tray($title, "&nbsp;");
 			$match_tray->addElement($match);
 			$match_tray->addElement($text);
@@ -160,8 +161,8 @@ if (empty($_POST["user_submit"])) {
 		$occupation_text = new icms_form_elements_Text(_MA_USER_OCCUPATION, "user_occ", 30, 100, $user_occ);
 		$interest_text = new icms_form_elements_Text(_MA_USER_INTEREST, "user_intrest", 30, 100, $user_intrest);
 		foreach ($items_range as $var => $title) {
-			$more = new icms_form_elements_Text("", "{$var}_more", 10, 5, @$_POST["{$var}_more"]);
-			$less = new icms_form_elements_Text("", "{$var}_less", 10, 5, @$_POST["{$var}_less"]);
+			$more = new icms_form_elements_Text("", "{$var}_more", 10, 5, ${$var . '_more'});
+			$less = new icms_form_elements_Text("", "{$var}_less", 10, 5, ${$var . '_less'});
 			$range_tray = new icms_form_elements_Tray($title, "&nbsp;-&nbsp;&nbsp;");
 			$range_tray->addElement($less);
 			$range_tray->addElement($more);
@@ -190,7 +191,7 @@ if (empty($_POST["user_submit"])) {
 
 		$member_handler = icms::handler('icms_member');
 		$groups = $member_handler->getGroupList();
-		$groups[0] = _ALL;
+//		$groups[0] = _ALL; having this results in an SQL error if no groups are selected, or if this is selected
 		$group_select = new icms_form_elements_Select(_MA_USER_GROUP, 'groups', $groups, 3, true);
 		$group_select->addOptionArray($groups);
 
@@ -214,8 +215,8 @@ if (empty($_POST["user_submit"])) {
 			"uname",
 			"email") as $var) {
 			$title = $items_match[$var];
-			$text = new icms_form_elements_Text("", $var, 30, 100, @$_POST[$var]);
-			$match = new icms_form_elements_select_Matchoption("", "{$var}_match", @$_POST["{$var}_match"]);
+			$text = new icms_form_elements_Text("", $var, 30, 100, ${$var});
+			$match = new icms_form_elements_select_Matchoption("", "{$var}_match", ${$var . '_match'});
 			$match_tray = new icms_form_elements_Tray($title, "&nbsp;");
 			$match_tray->addElement($match);
 			$match_tray->addElement($text);
@@ -260,14 +261,14 @@ if (empty($_POST["user_submit"])) {
 	echo "(" . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . " " . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ")";
 	$form->display();
 } else {
-	$limit = empty($limit) ? 50 : (int) $limit;
-	$start = (int) $start;
+	$limit = empty($limit) ? 50 : $limit;
+	$start = $start;
 
 	$criteria = new icms_db_criteria_Compo();
 	foreach (array_keys($items_match) as $var) {
-		if (!empty($_POST[$var])) {
-			$match = (!empty($_POST["{$var}_match"])) ? (int) ($_POST["{$var}_match"]) : XOOPS_MATCH_START;
-			$value = str_replace("_", "\\\_", icms_core_DataFilter::addSlashes(trim($_POST[$var])));
+		if (!empty($$var)) {
+			$match = (!empty(${$var . '_match'})) ? (int) (${$var / '_match'}) : XOOPS_MATCH_START;
+			$value = str_replace("_", "\\\_", icms_core_DataFilter::addSlashes(trim($$var)));
 			switch ($match) {
 				case XOOPS_MATCH_START:
 					$criteria->add(new icms_db_criteria_Item($var, $value . '%', 'LIKE'));
@@ -303,54 +304,54 @@ if (empty($_POST["user_submit"])) {
 	foreach (array(
 		"last_login",
 		"user_regdate") as $var) {
-		if (!empty($_POST["{$var}_more"]) && is_numeric($_POST["{$var}_more"])) {
-			$time = time() - (60 * 60 * 24 * (int) (trim($_POST["{$var}_more"])));
+		if (!empty(${$var . '_more'})) {
+			$time = time() - (60 * 60 * 24 * (int) (trim(${$var . '_more'})));
 			if ($time > 0) {
 				$criteria->add(new icms_db_criteria_Item($var, $time, '<='));
 			}
 		}
-		if (!empty($_POST["{$var}_less"]) && is_numeric($_POST["{$var}_less"])) {
-			$time = time() - (60 * 60 * 24 * (int) (trim($_POST["{$var}_less"])));
+		if (!empty(${$var . '_less'})) {
+			$time = time() - (60 * 60 * 24 * (int) (trim(${$var . '_less'})));
 			if ($time > 0) {
 				$criteria->add(new icms_db_criteria_Item($var, $time, '>='));
 			}
 		}
 	}
 
-	if (!empty($_POST['posts_more']) && is_numeric($_POST['posts_more'])) {
-		$criteria->add(new icms_db_criteria_Item('posts', (int) ($_POST['posts_more']), '<='));
+	if (!empty($posts_more)) {
+		$criteria->add(new icms_db_criteria_Item('posts', $posts_more, '<='));
 	}
-	if (!empty($_POST['posts_less']) && is_numeric($_POST['posts_less'])) {
-		$criteria->add(new icms_db_criteria_Item('posts', (int) ($_POST['posts_less']), '>='));
+	if (!empty($posts_less)) {
+		$criteria->add(new icms_db_criteria_Item('posts', $posts_less, '>='));
 	}
-	if (!empty($_POST['user_mailok'])) {
-		if ($_POST['user_mailok'] == "mailng") {
+	if (!empty($user_mailok)) {
+		if ($user_mailok == "mailng") {
 			$criteria->add(new icms_db_criteria_Item('user_mailok', 0));
-		} elseif ($_POST['user_mailok'] == "mailok") {
+		} elseif ($user_mailok == "mailok") {
 			$criteria->add(new icms_db_criteria_Item('user_mailok', 1));
 		}
 	}
-	if (!empty($_POST['user_avatar'])) {
-		if ($_POST['user_avatar'] == "y") {
+	if (!empty($user_avatar)) {
+		if ($user_avatar == "y") {
 			$criteria->add(new icms_db_criteria_Item('user_avatar', "('', 'blank.gif')", 'NOT IN'));
-		} elseif ($_POST['user_avatar'] == "n") {
+		} elseif ($user_avatar == "n") {
 			$criteria->add(new icms_db_criteria_Item('user_avatar', "('', 'blank.gif')", 'IN'));
 		}
 	}
 
-	if (!empty($_POST['level'])) {
+	if (!empty($level)) {
 		$level_value = array(
 			1 => 1,
 			2 => 0,
 			3 => -1);
-		$level = isset($level_value[(int) ($_POST["level"])]) ? $level_value[(int) ($_POST["level"])] : 1;
+		$level = isset($level_value[$level]) ? $level_value[$level] : 1;
 		$criteria->add(new icms_db_criteria_Item("level", $level));
 	}
 
-	if (!empty($_POST['rank'])) {
-		$rank_obj = $rank_handler->get($_POST['rank']);
+	if (!empty($rank)) {
+		$rank_obj = $rank_handler->get($rank);
 		if ($rank_obj->getVar("rank_special")) {
-			$criteria->add(new icms_db_criteria_Item("rank", (int) ($_POST['rank'])));
+			$criteria->add(new icms_db_criteria_Item("rank", ($rank)));
 		} else {
 			if ($rank_obj->getVar("rank_min")) {
 				$criteria->add(new icms_db_criteria_Item('posts', $rank_obj->getVar("rank_min"), '>='));
@@ -362,7 +363,7 @@ if (empty($_POST["user_submit"])) {
 		}
 	}
 
-	$total = $user_handler->getUserCountByGroupLink(@$_POST["groups"], $criteria);
+	$total = $user_handler->getUserCountByGroupLink($groups, $criteria);
 
 	$validsort = array(
 		"uname",
@@ -370,9 +371,9 @@ if (empty($_POST["user_submit"])) {
 		"last_login",
 		"user_regdate",
 		"posts");
-	$sort = (!in_array($_POST['user_sort'], $validsort)) ? "uname" : $_POST['user_sort'];
+	$sort = (!in_array($user_sort, $validsort)) ? "uname" : $user_sort;
 	$order = "ASC";
-	if (isset($_POST['user_order']) && $_POST['user_order'] == "DESC") {
+	if (isset($user_order) && $user_order == "DESC") {
 		$order = "DESC";
 	}
 
@@ -380,7 +381,7 @@ if (empty($_POST["user_submit"])) {
 	$criteria->setOrder($order);
 	$criteria->setLimit($limit);
 	$criteria->setStart($start);
-	$foundusers = $user_handler->getUsersByGroupLink(@$_POST["groups"], $criteria, TRUE);
+	$foundusers = $user_handler->getUsersByGroupLink($groups, $criteria, true);
 
 	echo $js_adduser = '
 		<script type="text/javascript">
@@ -457,7 +458,7 @@ if (empty($_POST["user_submit"])) {
 			<table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'>
 			<tr>
 			<th align='center' width='5px'>";
-			if (!empty($_POST["multiple"])) {
+			if (!empty($multiple)) {
 				echo "<input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"{$name_form}\", \"memberslist_checkall\");' />";
 			}
 			echo "</th>
@@ -478,7 +479,7 @@ if (empty($_POST["user_submit"])) {
 				$fuser_name = $foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
 				echo "<tr class='$class'>
 				<td align='center'>";
-				if (!empty($_POST["multiple"])) {
+				if (!empty($multiple)) {
 					echo "<input type='checkbox' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar("uid") . "' />";
 					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar("uname") . "' />";
 				} else {
@@ -496,7 +497,7 @@ if (empty($_POST["user_submit"])) {
 			echo "<tr class='foot'><td colspan='6'>";
 
 			// placeholder for external applications
-			if (empty($_POST["target"])) {
+			if (empty($target)) {
 				echo "<select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _MA_USER_SENDMAIL . "</option>";
 				echo "</select>&nbsp;";
 				echo icms::$security->getTokenHTML() . "<input type='submit' value='" . _SUBMIT . "' />";
@@ -520,10 +521,10 @@ if (empty($_POST["user_submit"])) {
 			}
 		}
 
-		if (!isset($_POST['limit'])) {
+		if (!isset($limit)) {
 			$hiddenform .= "<input type='hidden' name='limit' value='" . $limit . "' />\n";
 		}
-		if (!isset($_POST['start'])) {
+		if (!isset($start)) {
 			$hiddenform .= "<input type='hidden' name='start' value='" . $start . "' />\n";
 		}
 		$hiddenform .= "<input type='hidden' name='token' value='" . htmlspecialchars($token, ENT_QUOTES) . "' />\n";
