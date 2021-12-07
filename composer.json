@@ -284,6 +284,11 @@
           "setup_step.module.install"
         ]
       },
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\MigrateSetupStep": {
+        "tags": [
+          "setup_step.module.install"
+        ]
+      },
       "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Install\\BlockSetupStep": {
         "tags": [
           "setup_step.module.install"
@@ -324,6 +329,11 @@
           "setup_step.module.update"
         ]
       },
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\MigrateSetupStep": {
+        "tags": [
+          "setup_step.module.update"
+        ]
+      },
       "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Update\\ConfigSetupStep": {
         "tags": [
           "setup_step.module.update"
@@ -352,6 +362,11 @@
       "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\BlockSetupStep": {
         "tags": [
           "setup_step.module.uninstall"
+        ]
+      },
+      "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\MigrateSetupStep": {
+        "tags": [
+          "setup_step.module.uninstalls"
         ]
       },
       "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\CommentsSetupStep": {
