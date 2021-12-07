@@ -366,7 +366,7 @@
       },
       "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\MigrateSetupStep": {
         "tags": [
-          "setup_step.module.uninstalls"
+          "setup_step.module.uninstall"
         ]
       },
       "\\ImpressCMS\\Core\\Extensions\\SetupSteps\\Module\\Uninstall\\CommentsSetupStep": {
