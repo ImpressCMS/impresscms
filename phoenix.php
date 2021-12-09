@@ -4,6 +4,8 @@
  * This file is used for configuring migrations service
  */
 
+use ImpressCMS\Core\Models\ModuleHandler;
+
 define('ICMS_MIGRATION_MODE', true);
 
 require_once __DIR__ . '/mainfile.php';
@@ -11,14 +13,14 @@ require_once __DIR__ . '/mainfile.php';
 /**
  * @var icms_db_Connection $databaseConnection
  */
-$databaseConnection = \icms::getInstance()->get('db-connection-1');
+$databaseConnection = icms::getInstance()->get('db-connection-1');
 
 /**
  * Finds module paths that contains migrations
  * (if module has folder called 'migrations' that means module has some migrations)
  */
 $modulesMigrations = [];
-foreach(icms_module_Handler::getAvailable() as $dirName) {
+foreach (ModuleHandler::getAvailable() as $dirName) {
 	$path = ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . $dirName . DIRECTORY_SEPARATOR . 'migrations';
 	if (!file_exists($path) || !is_dir($path)) {
 		continue;

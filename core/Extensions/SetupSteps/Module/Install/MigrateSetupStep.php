@@ -6,6 +6,9 @@ namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Install;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\Models\Module;
+use Phoenix\Command\MigrateCommand;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
 
 class MigrateSetupStep implements SetupStepInterface
 {
@@ -20,10 +23,10 @@ class MigrateSetupStep implements SetupStepInterface
 			return true;
 		}
 
-		$symfonyConsoleApplication = new \Symfony\Component\Console\Application('icms-setup-action');
+		$symfonyConsoleApplication = new Application('icms-setup-action');
 		$symfonyConsoleApplication->setAutoExit(false);
-		$symfonyConsoleApplication->add(new \Phoenix\Command\MigrateCommand());
-		$symfonyConsoleApplication->run(new \Symfony\Component\Console\Input\ArrayInput([
+		$symfonyConsoleApplication->add(new MigrateCommand());
+		$symfonyConsoleApplication->run(new ArrayInput([
 			'command' => 'migrate',
 			'--dir' => ['module/' . $module->dirname],
 			'--config_type' => 'php',
@@ -38,6 +41,6 @@ class MigrateSetupStep implements SetupStepInterface
 	 */
 	public function getPriority(): int
 	{
-		return 0;
+		return 99;
 	}
 }
