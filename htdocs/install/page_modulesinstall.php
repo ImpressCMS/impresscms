@@ -39,18 +39,26 @@ if (!$dbm->isConnectable()) {
 	exit();
 }
 $process = '';
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$process = 'install';
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	// If there's nothing to do: switch to next page
 	if (empty($process)) {
 		$wizard->redirectToPage('+1');
 		exit();
 	}
-	if ($_POST['mod'] == 1) {
+	if ((int)$_POST['mod'] === 1) {
 		icms_loadLanguageFile('system', 'modules', true);
+
+		if (!icms::$user) {
+			/**
+			 * @var UserHandler $usersHandler
+			 */
+			$usersHandler = icms::handler('icms_member_user');
+			icms::$user = $usersHandler->get(1);
+		}
 
 		/**
 		 * Automatically updating the system module before installing the selected modules
@@ -63,18 +71,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$buffer = new BufferedOutput();
 		$output = new OutputDecorator($buffer);
 
-		/**
-		 * @var UserHandler $userHandler
-		 */
-		$userHandler = icms::handler('icms_member_user');
-
-		// gets first user
-		icms::$user = $userHandler->get(1);
-
 		$module_handler->update('system', $output);
 
-		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
-		$anon_accessible_mods = isset($_POST['anon_accessible_mods']) ? $_POST['anon_accessible_mods'] : '';
+		$install_mods = $_POST['install_mods'] ?? '';
+		$anon_accessible_mods = $_POST['anon_accessible_mods'] ?? '';
 		if (isset($_POST['install_mods'])) {
 			for ($i = 0; $i <= count($install_mods) - 1; $i++) {
 				$module_handler->install($install_mods[$i], $output);
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit();
 	}
 } else {
-	$langarr = icms_module_Handler::getAvailable();
+	$langarr = ModuleHandler::getAvailable();
 
 	$content .= '<div>' . _INSTALL_SELECT_MODS_INTRO . '</div>';
 	$content .= '<div class="dbconn_line">';
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$content .= '<div id="modinstall" name="install_mods[]">';
 
 	foreach ($langarr as $lang) {
-		if ($lang == 'system') {
+		if ($lang === 'system') {
 			$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../modules/$lang/images/icon_small.png\" alt=\"$lang\" /><br />$lang <br /><input type=\"checkbox\" checked=\"checked\" name=\"update_mods[]\" checked value=\"$lang\" disabled /></a></div>";
 			continue;
 		}
