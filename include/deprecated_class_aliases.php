@@ -375,6 +375,7 @@ return [
 	'IcmsPersistableObject' => AbstractExtendedModel::class,
 	'IcmsPersistableObjectHandler' => AbstractExtendedHandler::class,
 	'IcmsPersistableRegistry' => ObjectRegistry::class,
+	'IcmsPersistableController' => ModelController::class,
 	'Criteria' => CriteriaItem::class,
 	'IcmsPersistableTable' => Table::class,
 	'IcmsPersistableColumn' => Column::class,
