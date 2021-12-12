@@ -73,7 +73,7 @@ define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH . '/include');
 define('ICMS_INCLUDE_URL', ICMS_ROOT_PATH . '/include');
 define('ICMS_UPLOAD_PATH', ICMS_PUBLIC_PATH . '/uploads');
 define('ICMS_UPLOAD_URL', ICMS_URL . '/uploads');
-define('ICMS_THEME_PATH', ICMS_PUBLIC_PATH . '/themes');
+define('ICMS_THEME_PATH', ICMS_ROOT_PATH . '/themes');
 define('ICMS_THEME_URL', ICMS_URL . '/themes');
 define('ICMS_STORAGE_PATH', ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'storage');
 define('ICMS_CACHE_PATH', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'cache');
