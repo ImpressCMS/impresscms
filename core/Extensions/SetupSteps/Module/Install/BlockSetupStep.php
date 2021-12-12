@@ -215,23 +215,10 @@ class BlockSetupStep implements SetupStepInterface, ContainerAwareInterface
 	 */
 	protected function createNewBlock(array $blockInfo, Module $module, $key, string $template): Block
 	{
-		static $blockPositions = null;
-
 		/**
 		 * @var BlockHandler $blockHandler
 		 */
 		$blockHandler = icms::handler('icms_view_block');
-
-		if ($blockPositions === null) {
-			$blockPositions = array_flip(
-				$blockHandler->getBlockPositions()
-			);
-		}
-
-		$side = 1;
-		if (isset($blockInfo['position'], $blockPositions[$blockInfo['position']])) {
-			$side = $blockPositions[$blockInfo['position']];
-		}
 
 		/**
 		 * @var Block $newBlock
@@ -243,7 +230,7 @@ class BlockSetupStep implements SetupStepInterface, ContainerAwareInterface
 		$newBlock->name = $this->getTranslatedName($blockInfo['name']);
 		$newBlock->title = $this->getTranslatedName($blockInfo['name']);
 		$newBlock->content = '';
-		$newBlock->side = $side;
+		$newBlock->side = isset($blockInfo['position']) ? $this->getBlockPositionIdByName($blockInfo['position']) : 1;
 		$newBlock->weight = $blockInfo['weight'] ?? 0;
 		$newBlock->visible = isset($blockInfo['visible']) && $blockInfo['visible'];
 		$newBlock->block_type = ($module->dirname === 'system') ? Block::BLOCK_TYPE_SYSTEM : Block::BLOCK_TYPE_MODULE;
@@ -258,5 +245,30 @@ class BlockSetupStep implements SetupStepInterface, ContainerAwareInterface
 		$newBlock->last_modified = time();
 
 		return $newBlock;
+	}
+
+	/**
+	 * Get block position ID by name
+	 *
+	 * @param string $positionName Block position name
+	 *
+	 * @return int
+	 */
+	private function getBlockPositionIdByName(string $positionName): int
+	{
+		static $blockPositions = null;
+
+		/**
+		 * @var BlockHandler $blockHandler
+		 */
+		$blockHandler = icms::handler('icms_view_block');
+
+		if ($blockPositions === null) {
+			$blockPositions = array_flip(
+				$blockHandler->getBlockPositions()
+			);
+		}
+
+		return $blockPositions[$positionName] ?? 1;
 	}
 }
