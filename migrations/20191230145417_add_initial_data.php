@@ -1,6 +1,7 @@
 <?php
 
 use ImpressCMS\Core\Database\DatabaseConnection;
+use ImpressCMS\Core\Models\Block;
 use Phoenix\Migration\AbstractMigration;
 
 class AddInitialData extends AbstractMigration
@@ -397,15 +398,15 @@ class AddInitialData extends AbstractMigration
 				} else {
 					$visible = 0;
 				}
-				if ($newblock['template'] == 'system_block_search.html') {
+				if ($newblock['template'] === 'system_block_search.html') {
 					$canvaspos = 2;
-				} elseif ($newblock['template'] == 'system_block_socialbookmark.html') {
+				} elseif ($newblock['template'] === 'system_block_socialbookmark.html') {
 					$canvaspos = 7;
-				} elseif ($newblock['template'] == 'system_admin_block_warnings.html') {
+				} elseif ($newblock['template'] === 'system_admin_block_warnings.html') {
 					$canvaspos = 12;
-				} elseif ($newblock['template'] == 'system_admin_block_cp.html') {
+				} elseif ($newblock['template'] === 'system_admin_block_cp.html') {
 					$canvaspos = 11;
-				} elseif ($newblock['template'] == 'system_admin_block_modules.html') {
+				} elseif ($newblock['template'] === 'system_admin_block_modules.html') {
 					$canvaspos = 13;
 				} elseif (in_array($newblock['template'], ['system_block_online.html', 'system_block_waiting.html'])) {
 					$canvaspos = 9;
@@ -428,8 +429,8 @@ class AddInitialData extends AbstractMigration
 						'side' => $canvaspos,
 						'weight' => 0,
 						'visible' => $visible,
-						'block_type' => 'S',
-						'c_type' => 'H',
+						'block_type' => Block::BLOCK_TYPE_SYSTEM,
+						'c_type' => Block::CONTENT_TYPE_HTML,
 						'isactive' => 1,
 						'dirname' => 'system',
 						'func_file' => $newblock['file'],
