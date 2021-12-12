@@ -36,14 +36,17 @@
 
 namespace ImpressCMS\Core\View;
 
+use ImpressCMS\Core\Exceptions\UndefinedVariableException;
+
 /**
  * Class to facilitate navigation in a multi page document/list
  *
- * @package	ICMS\View
- * @author	Kazumi Ono 	<onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
+ * @package    ICMS\View
+ * @author    Kazumi Ono    <onokazu@xoops.org>
+ * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class PageNav {
+class PageNav
+{
 
 	/**
 	 * @public int $total  Total of pages to show
@@ -61,36 +64,87 @@ class PageNav {
 	public $current;
 
 	/**
-	 * @public string $url   What is the current url
+	 * @public string $path   Current path
 	 */
-	public $url;
+	protected $path;
+
+	/**
+	 * Current request query
+	 *
+	 * @var array<string, mixed> Current query
+	 */
+	protected $query = [];
+
+	/**
+	 * Start query key name
+	 *
+	 * @var string
+	 */
+	protected $startName;
 
 	/**
 	 * Constructor
 	 *
-	 * @param   int	 $total_items	Total number of items
-	 * @param   int	 $items_perpage  Number of items per page
-	 * @param   int	 $current_start  First item on the current page
-	 * @param   string  $start_name	 Name for "start" or "offset"
-	 * @param   string  $extra_arg	  Additional arguments to pass in the URL
+	 * @param int $total_items Total number of items
+	 * @param int $items_perpage Number of items per page
+	 * @param int $current_start First item on the current page
+	 * @param string $start_name Name for "start" or "offset"
+	 * @param string $extra_arg Additional arguments to pass in the URL
 	 */
-	public function __construct($total_items, $items_perpage, $current_start, $start_name = 'start', $extra_arg = '') {
-		$this->total = (int) ($total_items);
-		$this->perpage = (int) ($items_perpage);
-		$this->current = (int) ($current_start);
+	public function __construct($total_items, $items_perpage, $current_start, $start_name = 'start', $extra_arg = '')
+	{
+		$this->total = (int)($total_items);
+		$this->perpage = (int)($items_perpage);
+		$this->current = (int)($current_start);
+
+		$parsedUrl = parse_url($_SERVER['REQUEST_URI']);
+		if (isset($parsedUrl['query'])) {
+			parse_str($parsedUrl['query'], $this->query);
+		}
+		$this->path = $parsedUrl['path'];
+
 		if ($extra_arg && (substr($extra_arg, -5) !== '&amp;' || substr($extra_arg, -1) !== '&')) {
 			$extra_arg .= '&amp;';
 		}
-		$this->url = $_SERVER['PHP_SELF'] . '?' . $extra_arg . trim($start_name) . '=';
+
+		parse_str(html_entity_decode($extra_arg . trim($start_name) . '='), $query);
+		foreach ($query as $param => $value) {
+			$this->query[$param] = $value;
+		}
+		$this->startName = $start_name;
+	}
+
+	/** @noinspection MagicMethodsValidityInspection */
+	public function __get($name)
+	{
+		if ($name === 'url') {
+			return $this->buildUrl('');
+		}
+		throw new UndefinedVariableException($name);
+	}
+
+	/**
+	 * Build URL
+	 *
+	 * @param int|string $page Start page
+	 *
+	 * @return string
+	 */
+	protected function buildUrl($page): string
+	{
+		$query = $this->query;
+		$query[$this->startName] = $page;
+		return $this->path . '?' . http_build_query($query);
 	}
 
 	/**
 	 * Create text navigation
 	 *
-	 * @param   integer $offset
+	 * @param integer $offset
 	 * @return  string
 	 */
-	public function renderNav($offset = 4) {
+	public function renderNav($offset = 4)
+	{
 		global $icmsConfigPersona, $xoTheme;
 
 		$style = (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php'))?$icmsConfigPersona['pagstyle']:'default';
@@ -107,7 +161,7 @@ class PageNav {
 		if ($total_pages > 1) {
 			$prev = $this->current - $this->perpage;
 			if ($prev >= 0) {
-				$ret .= '<a href="' . $this->url . $prev . '">' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)? '&#9658; ' : '&#9668; ') . '' . _PREV . '</a> ';
+				$ret .= '<a href="' . $this->buildUrl($prev) . '">' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '&#9658; ' : '&#9668; ') . '' . _PREV . '</a> ';
 			} else {
 				$ret .= '<span class="disabled"><strong>' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)? '&#9658; ' : '&#9668; ') . '' . _PREV . '</strong></span> ';
 			}
@@ -120,7 +174,7 @@ class PageNav {
 					if ($counter === $total_pages && $current_page < $total_pages - $offset) {
 						$ret .= '... ';
 					}
-					$ret .= '<a href="' . $this->url . (($counter - 1) * $this->perpage) . '">' . icms_conv_nr2local($counter) . '</a> ';
+					$ret .= '<a href="' . $this->buildUrl(($counter - 1) * $this->perpage) . '">' . icms_conv_nr2local($counter) . '</a> ';
 					if ($counter === 1 && $current_page > 1 + $offset) {
 						$ret .= '... ';
 					}
@@ -129,7 +183,7 @@ class PageNav {
 			}
 			$next = $this->current + $this->perpage;
 			if ($this->total > $next) {
-				$ret .= '<a href="' . $this->url . $next . '">' . _NEXT . '' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)? ' &#9668;' : ' &#9658;') . '</a> ';
+				$ret .= '<a href="' . $this->buildUrl($next) . '">' . _NEXT . '' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? ' &#9668;' : ' &#9658;') . '</a> ';
 			} else {
 				$ret .= '<span class="disabled"><strong>' . _NEXT . '' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)? ' &#9668;' : ' &#9658;') . '</strong></span> ';
 			}
@@ -156,9 +210,9 @@ class PageNav {
 			$current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
 			while ($counter <= $total_pages) {
 				if ($counter === $current_page) {
-					$ret .= '<option value="' . $this->url . (($counter - 1) * $this->perpage) . '" selected="selected">' . icms_conv_nr2local($counter) . '</option>';
+					$ret .= '<option value="' . $this->buildUrl(($counter - 1) * $this->perpage) . '" selected="selected">' . icms_conv_nr2local($counter) . '</option>';
 				} else {
-					$ret .= '<option value="' . $this->url . (($counter - 1) * $this->perpage) . '">' . icms_conv_nr2local($counter) . '</option>';
+					$ret .= '<option value="' . $this->buildUrl(($counter - 1) * $this->perpage) . '">' . icms_conv_nr2local($counter) . '</option>';
 				}
 				$counter++;
 			}
@@ -187,7 +241,7 @@ class PageNav {
 			$ret = '<table><tr>';
 			$prev = $this->current - $this->perpage;
 			if ($prev >= 0) {
-				$ret .= '<td class="pagneutral"><a href="' . $this->url . $prev . '">&lt;</a></td><td><img src="' . ICMS_URL . '/images/blank.gif" width="6" alt="" /></td>';
+				$ret .= '<td class="pagneutral"><a href="' . $this->buildUrl($prev) . '">&lt;</a></td><td><img src="' . ICMS_URL . '/images/blank.gif" width="6" alt="" /></td>';
 			} else {
 				$ret .= '<td class="pagno"></a></td><td><img src="' . ICMS_URL . '/images/blank.gif" width="6" alt="" /></td>';
 			}
@@ -200,7 +254,7 @@ class PageNav {
 					if ($counter === $total_pages && $current_page < $total_pages - $offset) {
 						$ret .= '<td class="paginact">...</td>';
 					}
-					$ret .= '<td class="paginact"><a href="' . $this->url . (($counter - 1) * $this->perpage) . '">' . $counter . '</a></td>';
+					$ret .= '<td class="paginact"><a href="' . $this->buildUrl(($counter - 1) * $this->perpage) . '">' . $counter . '</a></td>';
 					if ($counter === 1 && $current_page > 1 + $offset) {
 						$ret .= '<td class="paginact">...</td>';
 					}
@@ -209,7 +263,7 @@ class PageNav {
 			}
 			$next = $this->current + $this->perpage;
 			if ($this->total > $next) {
-				$ret .= '<td><img src="' . ICMS_URL . '/images/blank.gif" width="6" alt="" /></td><td class="pagneutral"><a href="' . $this->url . $next . '">&gt;</a></td>';
+				$ret .= '<td><img src="' . ICMS_URL . '/images/blank.gif" width="6" alt="" /></td><td class="pagneutral"><a href="' . $this->buildUrl($next) . '">&gt;</a></td>';
 			} else {
 				$ret .= '<td><img src="' . ICMS_URL . '/images/blank.gif" width="6" alt="" /></td><td class="pagno"></td>';
 			}
