@@ -203,7 +203,17 @@ class BlockSetupStep implements SetupStepInterface, ContainerAwareInterface
 		return 1;
 	}
 
-	protected function createNewBlock(array $blockInfo, Module $module, $key, string $template)
+	/**
+	 * Creates new block
+	 *
+	 * @param array $blockInfo Block info
+	 * @param Module $module Module where block belongs
+	 * @param mixed $key Key in module info for this block
+	 * @param string $template Template for the block
+	 *
+	 * @return Block
+	 */
+	protected function createNewBlock(array $blockInfo, Module $module, $key, string $template): Block
 	{
 		static $blockPositions = null;
 
@@ -223,15 +233,13 @@ class BlockSetupStep implements SetupStepInterface, ContainerAwareInterface
 			$side = $blockPositions[$blockInfo['position']];
 		}
 
-		$options = !empty($block['options']) ? trim($block['options']) : '';
-
 		/**
 		 * @var Block $newBlock
 		 */
 		$newBlock = $blockHandler->create();
 		$newBlock->mid = $module->mid;
 		$newBlock->func_num = $key;
-		$newBlock->options = $options;
+		$newBlock->options = !empty($blockInfo['options']) ? trim($blockInfo['options']) : '';
 		$newBlock->name = $this->getTranslatedName($blockInfo['name']);
 		$newBlock->title = $this->getTranslatedName($blockInfo['name']);
 		$newBlock->content = '';
