@@ -164,7 +164,7 @@ class icms_core_DataFilter {
 	 * Add slashes to the text if magic_quotes_gpc is turned off.
 	 *
 	 */
-	static public function addSlashes(string $text, string $param) {
+	static public function addSlashes(string $text, string $param = null ) {
 		if (!get_magic_quotes_gpc()) {
 			$text = addslashes($text, $param);
 		}
