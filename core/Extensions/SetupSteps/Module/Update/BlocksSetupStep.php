@@ -7,7 +7,6 @@ use icms;
 use ImpressCMS\Core\Database\DatabaseConnection;
 use ImpressCMS\Core\Extensions\SetupSteps\Module\Install\BlockSetupStep as InstallBlockSetupStep;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
-use ImpressCMS\Core\Models\Block;
 use ImpressCMS\Core\Models\BlockHandler;
 use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\Models\TemplateFileHandler;
@@ -132,29 +131,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 					}
 
 					if ($fcount === 0) {
-						/**
-						 * @var Block $newBlock
-						 */
-						$newBlock = $newBlocksHandler->create();
-						$newBlock->mid = $module->mid;
-						$newBlock->func_num = $i;
-						$newBlock->options = $options;
-						$newBlock->name = $this->getTranslatedName($block['name']);
-						$newBlock->title = $this->getTranslatedName($block['name']);
-						$newBlock->content = '';
-						$newBlock->side = 1;
-						$newBlock->weight = 0;
-						$newBlock->visible = 0;
-						$newBlock->block_type = Block::BLOCK_TYPE_MODULE;
-						$newBlock->c_type = Block::CONTENT_TYPE_HTML;
-						$newBlock->isactive = 1;
-						$newBlock->dirname = $module->dirname;
-						$newBlock->func_file = $block['file'];
-						$newBlock->show_func = $block['show_func'];
-						$newBlock->edit_func = $editfunc;
-						$newBlock->template = $template;
-						$newBlock->bcachetime = 0;
-						$newBlock->last_modified = time();
+						$newBlock = $this->createNewBlock($block, $module, $i, $template);
 
 						if (!$newBlock->store()) {
 							$output->error(_MD_AM_CREATE_FAIL, $this->getTranslatedName($block['name']));

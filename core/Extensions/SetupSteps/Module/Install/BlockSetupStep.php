@@ -8,6 +8,7 @@ use icms;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
 use ImpressCMS\Core\Models\Block;
+use ImpressCMS\Core\Models\BlockHandler;
 use ImpressCMS\Core\Models\Module;
 use ImpressCMS\Core\Models\TemplateFile;
 use ImpressCMS\Core\View\Template;
@@ -30,13 +31,12 @@ class BlockSetupStep implements SetupStepInterface, ContainerAwareInterface
 			$output->info(_MD_AM_BLOCKS_ADDING);
 			$output->incrIndent();
 			$dirname = $module->dirname;
-			$newmid = $module->mid;
-			$handler = icms::handler('icms_view_block');
+
 			foreach ($blocks as $blockkey => $block) {
 				if (!isset($block['file'], $block['show_func'])) {
 					continue;
 				}
-				$options = !empty($block['options']) ? trim($block['options']) : '';
+
 				$template = '';
 				if ((isset($block['template']) && trim($block['template']))) {
 					$content = $this->readTemplate($dirname, $block['template']);
@@ -46,29 +46,8 @@ class BlockSetupStep implements SetupStepInterface, ContainerAwareInterface
 				} else {
 					$template = trim($block['template']);
 				}
-				/**
-				 * @var Block $newBlock
-				 */
-				$newBlock = $handler->create();
-				$newBlock->mid = $newmid;
-				$newBlock->func_num = $blockkey;
-				$newBlock->options = $options;
-				$newBlock->name = $this->getTranslatedName($block['name']);
-				$newBlock->title = $this->getTranslatedName($block['name']);
-				$newBlock->content = '';
-				$newBlock->side = 1;
-				$newBlock->weight = 0;
-				$newBlock->visible = 0;
-				$newBlock->block_type = Block::BLOCK_TYPE_MODULE;
-				$newBlock->c_type = Block::CONTENT_TYPE_HTML;
-				$newBlock->isactive = 1;
-				$newBlock->dirname = $dirname;
-				$newBlock->func_file = $block['file'];
-				$newBlock->show_func = $block['show_func'];
-				$newBlock->edit_func = isset($block['edit_func']) ? trim($block['edit_func']) : '';
-				$newBlock->template = $template;
-				$newBlock->bcachetime = 0;
-				$newBlock->last_modified = time();
+
+				$newBlock = $this->createNewBlock($block, $module, $blockkey, $template);
 
 				if (!$newBlock->store()) {
 					$output->error(_MD_AM_BLOCKS_ADD_FAIL, $this->getTranslatedName($block['name']));
@@ -222,5 +201,74 @@ class BlockSetupStep implements SetupStepInterface, ContainerAwareInterface
 	public function getPriority(): int
 	{
 		return 1;
+	}
+
+	/**
+	 * Creates new block
+	 *
+	 * @param array $blockInfo Block info
+	 * @param Module $module Module where block belongs
+	 * @param mixed $key Key in module info for this block
+	 * @param string $template Template for the block
+	 *
+	 * @return Block
+	 */
+	protected function createNewBlock(array $blockInfo, Module $module, $key, string $template): Block
+	{
+		/**
+		 * @var BlockHandler $blockHandler
+		 */
+		$blockHandler = icms::handler('icms_view_block');
+
+		/**
+		 * @var Block $newBlock
+		 */
+		$newBlock = $blockHandler->create();
+		$newBlock->mid = $module->mid;
+		$newBlock->func_num = $key;
+		$newBlock->options = !empty($blockInfo['options']) ? trim($blockInfo['options']) : '';
+		$newBlock->name = $this->getTranslatedName($blockInfo['name']);
+		$newBlock->title = $this->getTranslatedName($blockInfo['name']);
+		$newBlock->content = '';
+		$newBlock->side = isset($blockInfo['position']) ? $this->getBlockPositionIdByName($blockInfo['position']) : 1;
+		$newBlock->weight = $blockInfo['weight'] ?? 0;
+		$newBlock->visible = isset($blockInfo['visible']) && $blockInfo['visible'];
+		$newBlock->block_type = ($module->dirname === 'system') ? Block::BLOCK_TYPE_SYSTEM : Block::BLOCK_TYPE_MODULE;
+		$newBlock->c_type = Block::CONTENT_TYPE_HTML;
+		$newBlock->isactive = 1;
+		$newBlock->dirname = $module->dirname;
+		$newBlock->func_file = $blockInfo['file'];
+		$newBlock->show_func = $blockInfo['show_func'];
+		$newBlock->edit_func = isset($blockInfo['edit_func']) ? trim($blockInfo['edit_func']) : '';
+		$newBlock->template = $template;
+		$newBlock->bcachetime = 0;
+		$newBlock->last_modified = time();
+
+		return $newBlock;
+	}
+
+	/**
+	 * Get block position ID by name
+	 *
+	 * @param string $positionName Block position name
+	 *
+	 * @return int
+	 */
+	private function getBlockPositionIdByName(string $positionName): int
+	{
+		static $blockPositions = null;
+
+		/**
+		 * @var BlockHandler $blockHandler
+		 */
+		$blockHandler = icms::handler('icms_view_block');
+
+		if ($blockPositions === null) {
+			$blockPositions = array_flip(
+				$blockHandler->getBlockPositions()
+			);
+		}
+
+		return $blockPositions[$positionName] ?? 1;
 	}
 }
