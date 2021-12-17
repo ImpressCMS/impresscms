@@ -26,12 +26,14 @@ $content .= '
 	<ul style="list-style-type: disc; list-style-position: inside">
 	<li>uploads/</li>
 	<li>modules/</li>
+	<li>themes/</li>
 	<li>../storage/templates_c</li>
 	<li>../storage/cache</li>
 	<li>../storage/log</li>
 	<li>../storage/htmlpurifier</li>
 	<li>../storage/composer</li>
 	<li>../modules/</li>
+	<li>../themes/</li>
 </ul>
 	<li>Make the file ../.env writable (chmod 666 depending on server).</li>
 	<li>In your internet browser settings turn on the allowance of cookies and JavaScript.</li>

@@ -41,11 +41,11 @@ function xoDiag($status = -1, $str = '') {
 }
 function xoDiagBoolSetting($name, $wanted = false, $severe = false) {
 	$setting = strtolower(ini_get($name));
-	$setting = (empty($setting) || $setting == 'off' || $setting == 'false')? false : true;
-	if ($setting == $wanted) {
-		return xoDiag(1, $setting?'ON':'OFF');
+	$setting = !(empty($setting) || $setting === 'off' || $setting === 'false');
+	if ($setting === $wanted) {
+		return xoDiag(1, $setting ? 'ON' : 'OFF');
 	} else {
-		return xoDiag($severe? -1:0, $setting?'ON':'OFF');
+		return xoDiag($severe ? -1 : 0, $setting ? 'ON' : 'OFF');
 	}
 }
 
@@ -101,32 +101,35 @@ if (version_compare(phpversion(), '5.6', '>=')) {
 	<img src="" alt="Success" class="rootimg" />
 		<script type="text/javascript" defer>
 			$(
-				function () {
-					var loc = window.location.href;
-					var url = loc.substr(0, loc.indexOf('/install/'));
-					url += '/modules/system/images/icon_small.png';
-					function error() {
-						$('#url-rewrite-check').text('OFF');
-						$('#url-rewrite-check+img').attr({
-							'src': 'img/no.png'
-						});
-					};
-					function success() {
-						$('#url-rewrite-check').text('ON');
-						$('#url-rewrite-check+img').attr({
-							'src': 'img/yes.png'
-						});
-					};
-					function update() {
-						$.ajax({
-							url: url,
-							error: error,
-							success: function (response, status, xhr) {
-								var ct = xhr.getResponseHeader("content-type") || "";
-								if (ct == 'image/png') {
-									success();
-								} else {
-									error();
+					function () {
+						var loc = window.location.href;
+						var url = loc.substr(0, loc.indexOf('/install/'));
+						url += '/modules/system/images/icon_small.png';
+
+						function error() {
+							$('#url-rewrite-check').text('OFF');
+							$('#url-rewrite-check+img').attr({
+								'src': 'img/no.png'
+							});
+						}
+
+						function success() {
+							$('#url-rewrite-check').text('ON');
+							$('#url-rewrite-check+img').attr({
+								'src': 'img/yes.png'
+							});
+						}
+
+						function update() {
+							$.ajax({
+								url: url,
+								error: error,
+								success: function (response, status, xhr) {
+									var ct = xhr.getResponseHeader("content-type") || "";
+									if (ct == 'image/png') {
+										success();
+									} else {
+										error();
 								}
 							}
 						});
@@ -185,13 +188,16 @@ if (empty($ext)) {
     </thead>
 	<?php
 		$paths = array(
-			"uploads/",
-			"../storage/htmlpurifier",
-			"../storage/log",
-			"../storage/cache",
-			"../storage/templates_c",
-			"../storage/composer",
-			"../.env"
+				"uploads/",
+				"themes/",
+				"../storage/htmlpurifier",
+				"../storage/log",
+				"../storage/cache",
+				"../storage/templates_c",
+				"../storage/composer",
+				"../modules",
+				"../themes",
+				"../.env"
 		);
 		foreach ($paths as $path) {
 	?>

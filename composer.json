@@ -73,6 +73,8 @@
     "imponeer/symfony-translations-constants-loader": "^1.0",
     "impresscms/codemirror-integration": "^0.1.0",
     "impresscms/composer-addon-installer-plugin": ">1.0.2",
+    "impresscms/core-theme": "dev-main",
+    "impresscms/itheme-theme": "dev-main",
     "impresscms/system-module": "dev-main",
     "ircmaxell/random-lib": "^1.2",
     "keo/iso-639": "^1.0",

@@ -22,7 +22,9 @@ if (!defined('XOOPS_INSTALL')) {
 }
 
 icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'modules', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'themes', 0777);
 icms_core_Filesystem::chmod('../modules', 0777);
+icms_core_Filesystem::chmod('../themes', 0777);
 icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . '.env', 0777);
 icms_core_Filesystem::chmod('../uploads', 0777);
 icms_core_Filesystem::chmod(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'htmlpurifier', 0777);
