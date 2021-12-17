@@ -166,7 +166,7 @@ class icms_core_DataFilter {
 	 */
 	static public function addSlashes(string $text, string $param = null ) {
 		if (!get_magic_quotes_gpc()) {
-			$text = addslashes($text, $param);
+			$text = addcslashes($text, $param);
 		}
 		return $text;
 	}
