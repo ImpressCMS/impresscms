@@ -472,9 +472,6 @@ class icms_member_Handler {
 		$limit = $start = 0;
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql_criteria = $criteria->render();
-			if ($criteria->getSort() != '') {
-				$sql_criteria .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
-			}
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 			if ($sql_criteria) {
@@ -482,7 +479,10 @@ class icms_member_Handler {
 			}
 		}
 		$sql_string = implode(" AND ", array_filter($sql));
-		if (! $result =icms::$xoopsDB->query($sql_string, $limit, $start)) {
+		if ($criteria->getSort() != '') {
+			$sql_string .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
+		}
+		if (! $result = icms::$xoopsDB->query($sql_string, $limit, $start)) {
 			return $ret;
 		}
 		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
