@@ -42,15 +42,8 @@ $filter_get = array(
 $filter_post = array(
 	'uname' => 'str',
 	'user_sig' => 'html',
-/*
-	'email' => array( // may need to relax this because the search allows partial matches
-		'email',
-		'options' => array(
-			0,
-			1)),
-*/
-	'email' => 'str',
-	'url' => 'url',
+	'email' => 'str', // because we search for partial email addresses
+	'url' => 'str', // the search is for partial matching
 	'user_viewemail' => 'int',
 	'user_viewoid' => 'int',
 	'attachsig' => 'int',
