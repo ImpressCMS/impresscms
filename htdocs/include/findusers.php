@@ -26,10 +26,12 @@ if ($denied) {
 
 /* define variable and set default values */
 $target = $multiple = $token = $user_from = $user_occ = $user_intrest = '';
-$user_submit = $user_avatar = $user_sort = $user_order = '';
+$uname = $user_submit = $user_avatar = $user_sort = $user_order = '';
 $mode = $user_viewemail = $user_viewoid = $attachsig = $user_mailok = $usecookie = $limit = $start = 0;
 $posts = $posts_more = $posts_less = $last_login_more = $last_login_less = $user_regdate_more = 0;
 $user_regdate_less = $level = $rank = $groups = 0;
+$email = $name = $user_icq = $user_aim = $user_yim = $user_msnm = $url = '';
+$uname_match = $name_match = $email_match = $user_icq_match = $user_aim_match = $user_yim_match = $user_msnm_match = '';
 
 $filter_get = array(
 	'target' => 'str',
@@ -191,7 +193,7 @@ if (empty($user_submit)) {
 
 		$member_handler = icms::handler('icms_member');
 		$groups = $member_handler->getGroupList();
-		$groups[0] = _ALL;
+//		$groups[0] = _ALL;
 		$group_select = new icms_form_elements_Select(_MA_USER_GROUP, 'groups', $groups, 3, true);
 		$group_select->addOptionArray($groups);
 
