@@ -191,7 +191,7 @@ if (empty($user_submit)) {
 
 		$member_handler = icms::handler('icms_member');
 		$groups = $member_handler->getGroupList();
-//		$groups[0] = _ALL; having this results in an SQL error if no groups are selected, or if this is selected
+		$groups[0] = _ALL;
 		$group_select = new icms_form_elements_Select(_MA_USER_GROUP, 'groups', $groups, 3, true);
 		$group_select->addOptionArray($groups);
 
