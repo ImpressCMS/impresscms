@@ -49,9 +49,10 @@ if (isset($_POST)) {
 }
 $icmsAdminTpl = new icms_view_Tpl();
 $op = (isset($_GET['op']))
-? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))
+
+	? trim(filter_input(INPUT_GET, 'op'))
 	: ((isset($_POST['op']))
-			? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING))
+		? trim(filter_input(INPUT_POST, 'op'))
 		: 'list');
 
 if (isset($_GET['confcat_id'])) {
@@ -171,6 +172,7 @@ switch ($op) {
 					}
 					break;
 
+
 				case 'yesno' :
 					$ele = new icms_form_elements_Radioyn($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), _YES, _NO);
 					break;
@@ -244,6 +246,7 @@ switch ($op) {
 					$form->addElement(new icms_form_elements_Hidden('_old_theme', $config[$i]->getConfValueForOutput()));
 					break;
 
+
 				case 'timezone' :
 					$ele = new icms_form_elements_select_Timezone($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					break;
@@ -292,6 +295,7 @@ switch ($op) {
 					}
 					break;
 
+
 				case 'group' :
 					$ele = new icms_form_elements_select_Group($title, $config[$i]->getVar('conf_name'), TRUE, $config[$i]->getConfValueForOutput(), 1, FALSE);
 					break;
@@ -330,6 +334,18 @@ switch ($op) {
 				case 'site_cache' :
 					$ele = new icms_form_elements_Select($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					$ele->addOptionArray(array('0' => _NOCACHE, '30' => sprintf(_SECONDS, 30), '60' => _MINUTE, '300' => sprintf(_MINUTES, 5), '1800' => sprintf(_MINUTES, 30), '3600' => _HOUR, '18000' => sprintf(_HOURS, 5), '86400' => _DAY, '259200' => sprintf(_DAYS, 3), '604800' => _WEEK));
+					break;
+
+				case 'password' :
+					$ele = new icms_form_elements_Password($title, $config[$i]->getVar('conf_name'), 50, 255, icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), FALSE, ($icmsConfigUser['pass_level']?'password_adv':''));
+					break;
+
+				case 'color' :
+					$ele = new icms_form_elements_Colorpicker($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+					break;
+
+				case 'hidden' :
+					$ele = new icms_form_elements_Hidden($config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 
 				case 'password' :

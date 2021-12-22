@@ -12,6 +12,7 @@ include "../mainfile.php";
 $denied = true;
 
 // validate user first, then token
+
 if (!empty($_REQUEST['token'])) {
 	if (icms::$security->validateToken($_REQUEST['token'], false)) {
 		$denied = false;
@@ -23,6 +24,7 @@ if ($denied) {
 	icms_core_Message::error(_NOPERM);
 	exit();
 }
+
 
 /* define variable and set default values */
 $target = $multiple = $token = $user_from = $user_occ = $user_intrest = '';
@@ -98,10 +100,12 @@ $name_form = 'memberslist';
 $name_userid = 'uid' . ($multiple ? "[]" : "");
 $name_username = 'uname' . ($multiple ? "[]" : "");
 
+
 icms_loadLanguageFile('core', 'findusers');
 
 $rank_handler = icms_getModuleHandler("userrank", "system");
 $user_handler = icms::handler("icms_member");
+
 $unsets = array(
 	"actkey",
 	"pass",
@@ -109,6 +113,7 @@ $unsets = array(
 	"umode",
 	"uorder",
 	"notify_mode");
+
 foreach ($unsets as $var) {
 	unset($user_handler->vars[$var]);
 }
@@ -241,14 +246,18 @@ if (empty($user_submit)) {
 	$form->addElement(new icms_form_elements_Hidden("token", $token));
 	$form->addElement(new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit"));
 
+
 	$acttotal = $user_handler->getUserCountByGroupLink(array(), new icms_db_criteria_Item('level', 0, '>'));
 	$inacttotal = $user_handler->getUserCountByGroupLink(array(), new icms_db_criteria_Item('level', 0, '<='));
 	echo "</html><body>";
+
 	echo "<h2 style='text-align:" . _GLOBAL_LEFT . ";'>" . _MA_USER_FINDUS . " - " . $modes[$mode] . "</h2>";
+
 	$modes_switch = array();
 
 	foreach ($modes as $_mode => $title) {
 		if ($mode == $_mode) continue;
+
 		$modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars($target, ENT_QUOTES) . "&amp;multiple=" . htmlspecialchars($multiple, ENT_QUOTES) . "&amp;token=" . htmlspecialchars($token, ENT_QUOTES) . "&amp;mode={$_mode}'>{$title}</a>";
 	}
 
@@ -381,14 +390,17 @@ if (empty($user_submit)) {
 	echo $js_adduser = '
 		<script type="text/javascript">
 			var multiple=' . (int) $multiple . ';
+
 			function addusers()
 			{
 				var sel_str = "";
 				var num = 0;
+
 				var mForm = document.forms["' . $name_form . '"];
 				for (var i=0;i!=mForm.elements.length;i++) {
 					var id=mForm.elements[i];
 					if (( (multiple > 0 && id.type == "checkbox") || (multiple == 0 && id.type == "radio") ) && (id.checked == true) && ( id.name == "' . $name_userid . '" )) {
+
 						var name = mForm.elements[++i];
 						var len = id.value.length + name.value.length;
 						sel_str += len + ":" + id.value + ":" + name.value;
@@ -397,13 +409,17 @@ if (empty($user_submit)) {
 				}
 
 				if (num == 0) {
+
 					alert("' . _MA_USER_NOUSERSELECTED . '");
+
 					return false;
 				}
 
 				sel_str = num + ":" + sel_str;
 				window.opener.addusers(sel_str);
+
 				alert("' . _MA_USER_USERADDED . '");
+
 				if (multiple == 0) {
 					window.close();
 					window.opener.focus();
@@ -446,6 +462,7 @@ if (empty($user_submit)) {
 	} elseif ($start < $total) {
 		if (!empty($total)) {
 			echo sprintf(_MA_USER_USERSFOUND, $total) . "<br />";
+
 		}
 
 		if (!empty($foundusers)) {
@@ -453,6 +470,7 @@ if (empty($user_submit)) {
 			<table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'>
 			<tr>
 			<th align='center' width='5px'>";
+
 			if (!empty($multiple)) {
 				echo "<input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"{$name_form}\", \"memberslist_checkall\");' />";
 			}
@@ -462,6 +480,7 @@ if (empty($user_submit)) {
 			<th align='center'>" . _MA_USER_REGDATE . "</th>
 			<th align='center'>" . _MA_USER_LASTLOGIN . "</th>
 			<th align='center'>" . _MA_USER_POSTS . "</th>
+
 			</tr>";
 			$ucount = 0;
 			foreach (array_keys($foundusers) as $j) {
@@ -470,6 +489,7 @@ if (empty($user_submit)) {
 				} else {
 					$class = 'odd';
 				}
+
 				$ucount++ ;
 				$fuser_name = $foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
 				echo "<tr class='$class'>
@@ -535,25 +555,31 @@ if (empty($user_submit)) {
 
 				while ($counter <= $currentpage) {
 					if ($counter == $currentpage) {
+
 						$hiddenform .= "<strong>" . $counter . "</strong> ";
 					} elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1) {
 						$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+
 						if ($counter == 1 && $currentpage > 5) {
 							$hiddenform .= "... ";
 						}
 					}
+
 					$counter++ ;
 				}
+
 			} else {
 
 				while ($counter <= $totalpages) {
 					if ($counter == $currentpage) {
+
 						$hiddenform .= "<strong>" . $counter . "</strong> ";
 					} elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1 || $counter == $totalpages) {
 						if ($counter == $totalpages && $currentpage < $totalpages - 4) {
 							$hiddenform .= "... ";
 						}
 						$hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+
 						if ($counter == 1 && $currentpage > 5) {
 							$hiddenform .= "... ";
 						}
@@ -563,6 +589,7 @@ if (empty($user_submit)) {
 			}
 
 			$next = $start + $limit;
+      
 			if ((isset($total) && $total > $next) || (!isset($total) && count($foundusers) >= $limit)) {
 				$hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _MA_USER_NEXT . "</a>\n";
 			}
@@ -574,8 +601,11 @@ if (empty($user_submit)) {
 			echo "<br />" . sprintf(_MA_USER_USERSFOUND, $total) . "&nbsp;";
 		}
 		echo "<a href='#' onclick='javascript:document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
+
 		echo "</div>";
 	}
 }
 
+
 xoops_footer();
+

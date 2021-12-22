@@ -19,8 +19,7 @@ protector.php is a preload file which you can use with the Protector module with
 
 ImpressCMS recommends the use of the Protector module to protect your site against most common attacks.
 
-Learn more about Protector here: http://wiki.impresscms.org/index.php?title=Protector
-Download latest version here: http://xoops.peak.ne.jp/modules/mydownloads/singlefile.php?lid=105&cid=1
+Learn more about Protector here: https://www.impresscms.org/modules/simplywiki/index.php?page=Protector
 
 Installation
 ----------------------------------

@@ -15,4 +15,3 @@ $content .=
 <h3>Your New Site</h3>
 <p>You can now access the home page of your site, by clicking on the button below and finishing the wizard.</p>
 ";
-?>

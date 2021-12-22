@@ -65,22 +65,21 @@ if (!empty($_GET)) {
 /*
  * This is where it gets difficult - each submodule has its own post vars.
  * Each submodule needs to filter appropriately. This page has no post actions. Sort of.
- * users, findusers, groups, mailusers are exceptions to this,
+ * users, findusers, groups, mailusers, modulesadmin are exceptions to this,
  * and all the IPF submodules that use quick search
  */
 
-/*
- * normally done here, deferring to the submodules
- * $filter_post = array();
- *
- * if (!empty($_POST)) {
- * $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
- * extract($clean_POST);
- * }
- */
+/* cannot defer everything - be strict about it, though */
 
-if (isset($fct) && $fct == 'users') {
-	$xoopsOption['pagetype'] = 'user';
+$filter_post = array('fct' => 'str');
+
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
+	extract($clean_POST);
+}
+
+if ($fct == 'users') {
+	icms_loadLanguageFile('core', 'user');
 }
 
 // hook for profile module

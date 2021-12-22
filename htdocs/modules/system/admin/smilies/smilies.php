@@ -1,42 +1,42 @@
 <?php
 // $Id: smilies.php 12313 2013-09-15 21:14:35Z skenow $
-// ------------------------------------------------------------------------ //
-// XOOPS - PHP Content Management System //
-// Copyright (c) 2000 XOOPS.org //
-// <http://www.xoops.org/> //
-// ------------------------------------------------------------------------ //
-// This program is free software; you can redistribute it and/or modify //
-// it under the terms of the GNU General Public License as published by //
-// the Free Software Foundation; either version 2 of the License, or //
-// (at your option) any later version. //
-// //
-// You may not change or alter any portion of this comment or credits //
-// of supporting developers from this source code or any supporting //
-// source code which is considered copyrighted (c) material of the //
-// original comment or credit authors. //
-// //
-// This program is distributed in the hope that it will be useful, //
-// but WITHOUT ANY WARRANTY; without even the implied warranty of //
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the //
-// GNU General Public License for more details. //
-// //
-// You should have received a copy of the GNU General Public License //
-// along with this program; if not, write to the Free Software //
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA //
-// ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu) //
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project //
+// Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
  * Administration of smilies, main functions file
  *
- * @copyright http://www.impresscms.org/ The ImpressCMS Project
- * @license LICENSE.txt
- * @package System
- * @subpackage Smilies
- * @todo Extract HTML and CSS to a template
- * @version SVN: $Id: smilies.php 12313 2013-09-15 21:14:35Z skenow $
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package		System
+ * @subpackage	Smilies
+ * @todo		Extract HTML and CSS to a template
+ * @version		SVN: $Id: smilies.php 12313 2013-09-15 21:14:35Z skenow $
  */
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
@@ -44,18 +44,25 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 
 /**
  * Logic and rendering for Smilies administration
+ *
  */
 function SmilesAdmin() {
-	$db = icms_db_Factory::instance();
+	$db =& icms_db_Factory::instance();
 	$url_smiles = ICMS_UPLOAD_URL;
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/smilies/images/smilies_big.png)">' . _AM_SMILESCONTROL . '</div><br />';
 
 	if ($getsmiles = $db->query("SELECT * FROM " . $db->prefix("smiles"))) {
 		if (($numsmiles = $db->getRowsNum($getsmiles)) == "0") {
-			// EMPTY
+			//EMPTY
 		} else {
-			echo '<form action="admin.php" method="post"><table width="100%" class="outer" cellpadding="4" cellspacing="1">' . "<tr align='center'><th align='" . _GLOBAL_LEFT . "'>" . _AM_CODE . "</th>" . "<th>" . _AM_SMILIE . "</th>" . "<th>" . _AM_SMILEEMOTION . "</th>" . "<th>" . _AM_DISPLAYF . "</th>" . "<th>" . _AM_ACTION . "</th>" . "</tr>\n";
+			echo '<form action="admin.php" method="post"><table width="100%" class="outer" cellpadding="4" cellspacing="1">'
+				. "<tr align='center'><th align='" . _GLOBAL_LEFT . "'>" ._AM_CODE . "</th>"
+				. "<th>" ._AM_SMILIE . "</th>"
+				. "<th>" . _AM_SMILEEMOTION . "</th>"
+				. "<th>" ._AM_DISPLAYF . "</th>"
+				. "<th>" . _AM_ACTION . "</th>"
+				. "</tr>\n";
 			$i = 0;
 			while ($smiles = $db->fetchArray($getsmiles)) {
 				if ($i % 2 == 0) {
@@ -66,14 +73,23 @@ function SmilesAdmin() {
 				$smiles['code'] = icms_core_DataFilter::htmlSpecialChars($smiles['code']);
 				$smiles['smile_url'] = icms_core_DataFilter::htmlSpecialChars($smiles['smile_url']);
 				$smiles['smile_emotion'] = icms_core_DataFilter::htmlSpecialChars($smiles['emotion']);
-				echo "<tr align='center' class='$class'>" . "<td align='" . _GLOBAL_LEFT . "'>" . $smiles['code'] . "</td>" . "<td><img src='" . $url_smiles . "/" . $smiles['smile_url'] . "' alt='' /></td>" . '<td>' . $smiles['smile_emotion'] . '</td>' . '<td><input type="hidden" name="smile_id[' . $i . ']" value="' . $smiles['id'] . '" /><input type="hidden" name="old_display[' . $i . ']" value="' . $smiles['display'] . '" /><input type="checkbox" value="1" name="smile_display[' . $i . ']"';
+				echo "<tr align='center' class='$class'>"
+					. "<td align='" . _GLOBAL_LEFT . "'>" . $smiles['code'] . "</td>"
+					. "<td><img src='" . $url_smiles . "/" . $smiles['smile_url'] . "' alt='' /></td>"
+					. '<td>' . $smiles['smile_emotion'] . '</td>'
+					. '<td><input type="hidden" name="smile_id[' . $i . ']" value="' . $smiles['id'] . '" /><input type="hidden" name="old_display[' . $i . ']" value="' . $smiles['display'] . '" /><input type="checkbox" value="1" name="smile_display[' . $i . ']"';
 				if ($smiles['display'] == 1) {
 					echo ' checked="checked"';
 				}
-				echo " /></td><td><a href='admin.php?fct=smilies&amp;op=SmilesEdit&amp;id=" . $smiles['id'] . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' alt=" . _EDIT . " title=" . _EDIT . " /></a>&nbsp;" . "<a href='admin.php?fct=smilies&amp;op=SmilesDel&amp;id=" . $smiles['id'] . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' alt=" . _DELETE . " title=" . _DELETE . " /></a></td>" . "</tr>\n";
-				$i++ ;
+				echo " /></td><td><a href='admin.php?fct=smilies&amp;op=SmilesEdit&amp;id=" . $smiles['id'] . "'><img src='". ICMS_IMAGES_SET_URL . "/actions/edit.png' alt=" . _EDIT . " title=" . _EDIT . " /></a>&nbsp;"
+					. "<a href='admin.php?fct=smilies&amp;op=SmilesDel&amp;id=" . $smiles['id'] . "'><img src='". ICMS_IMAGES_SET_URL . "/actions/editdelete.png' alt=" . _DELETE . " title=" . _DELETE . " /></a></td>"
+					. "</tr>\n";
+				$i++;
 			}
-			echo '<tr><td class="foot" colspan="5" align="center">' . '<input type="hidden" name="op" value="SmilesUpdate" /><input type="hidden" name="fct" value="smilies" />' . icms::$security->getTokenHTML() . '<input type="submit" value="' . _SUBMIT . '" /></tr></table></form>';
+			echo '<tr><td class="foot" colspan="5" align="center">'
+				. '<input type="hidden" name="op" value="SmilesUpdate" /><input type="hidden" name="fct" value="smilies" />'
+				. icms::$security->getTokenHTML()
+				. '<input type="submit" value="' . _SUBMIT . '" /></tr></table></form>';
 		}
 	} else {
 		echo _AM_CNRFTSD;
