@@ -49,7 +49,7 @@ $filter_get = array();
 
 if (!empty($_POST)) {
 	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
-	if (isset($_POST['filter_get'])) unset($$_POST['filter_get']);
+	if (isset($_POST['filter_get'])) unset($_POST['filter_get']);
 	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
 	extract($clean_POST);
 }
