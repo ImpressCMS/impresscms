@@ -101,10 +101,10 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	$CleanWritingFolders = FALSE;
 
 	if ($dbVersion < 40) include 'update-112-to-122.php';
-	if ($dbVersion < 45) include 'update-13.php';
+	if ($dbVersion < 46) include 'update-13.php';
 
 	/*  Begin upgrade to version 1.4 */
-	if (!$abortUpdate) $newDbVersion = 45;
+	if (!$abortUpdate) $newDbVersion = 46;
 	try {
 		if ($dbVersion < $newDbVersion) {
 			// Remove the banners table
