@@ -62,7 +62,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 				"area_height" => $this->_height,
 				"fonts" => $this->getFonts(),
 				"contentsCss" => xoops_getcss(), // default: CKEDITOR.basePath + 'contents.css''
-				"filebrowserImageBrowseUrl" => ICMS_URL . '/editors/CKeditor/ceditfinder/browse.php?site=administrator',
+				"filebrowserImageBrowseUrl" => ICMS_URL . '/editors/CKeditor/imagebrowser.php',
 			);
 
 		require_once dirname(__FILE__) . "/ckeditor/ckeditor.php";
@@ -113,7 +113,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 		$ret = $xoTheme->addScript("/editors/CKeditor/ckeditor/ckeditor.js", array('type' => 'text/javascript'), '');
 		$ret .= $xoTheme->addScript("/editors/CKeditor/ckeditor/adapters/jquery.js", array('type' => 'text/javascript'), '');
 		$ret .= $xoTheme->addScript('', array('type' => 'text/javascript'),
-			'var config = {filebrowserImageBrowseUrl: "' . ICMS_URL . '/editors/CKeditor/ceditfinder/browse.php?site=administrator", toolbar: "' .  $toolbar . '"}; $(function() { $("#'.@$this->_name.'_tarea").ckeditor(config); $("#'.@$this->_name.'_tarea").parents("form").submit(function() { var data = $("#'.@$this->_name.'_tarea").html(); $("#'.@$this->_name.'_tarea").html(data); }); });');
+			'var config = {filebrowserImageBrowseUrl: "' . ICMS_URL . '/editors/CKeditor/imagebrowser.php", toolbar: "' .  $toolbar . '"}; $(function() { $("#'.@$this->_name.'_tarea").ckeditor(config); $("#'.@$this->_name.'_tarea").parents("form").submit(function() { var data = $("#'.@$this->_name.'_tarea").html(); $("#'.@$this->_name.'_tarea").html(data); }); });');
 		$ret .= parent::render();
 
 		$ret .= '<br clear="' . _GLOBAL_RIGHT . '" />';
