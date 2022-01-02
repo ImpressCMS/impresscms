@@ -11,9 +11,7 @@ include "../mainfile.php";
 
 $denied = true;
 
-// validate user first, then token
-
-if (!empty($_REQUEST['token'])) {
+if (!empty($_REQUEST['token']) && is_object(icms::$user)) {
 	if (icms::$security->validateToken($_REQUEST['token'], false)) {
 		$denied = false;
 	}
