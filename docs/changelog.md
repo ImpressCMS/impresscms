@@ -1,7 +1,7 @@
 # ImpressCMS ChangeLog
 
 ## ImpressCMS 1.4.3
-Date : 17 Dec 2021
+Date : 04 Jan 2022
 DB Version: 46
 Build Version : 
 
