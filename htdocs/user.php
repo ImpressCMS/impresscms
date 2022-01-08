@@ -1,29 +1,29 @@
 <?php
 // $Id: user.php 12474 2014-11-08 14:18:35Z skenow $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+// ------------------------------------------------------------------------ //
+// XOOPS - PHP Content Management System //
+// Copyright (c) 2000 XOOPS.org //
+// <http://www.xoops.org/> //
+// ------------------------------------------------------------------------ //
+// This program is free software; you can redistribute it and/or modify //
+// it under the terms of the GNU General Public License as published by //
+// the Free Software Foundation; either version 2 of the License, or //
+// (at your option) any later version. //
+// //
+// You may not change or alter any portion of this comment or credits //
+// of supporting developers from this source code or any supporting //
+// source code which is considered copyrighted (c) material of the //
+// original comment or credit authors. //
+// //
+// This program is distributed in the hope that it will be useful, //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the //
+// GNU General Public License for more details. //
+// //
+// You should have received a copy of the GNU General Public License //
+// along with this program; if not, write to the Free Software //
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA //
+// ------------------------------------------------------------------------ //
 
 /**
  * Login page for users, will redirect to userinfo.php if the user is logged in
@@ -38,19 +38,12 @@
  * @subpackage	Users
  * @version		SVN: $Id: user.php 12474 2014-11-08 14:18:35Z skenow $
  */
-
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 
-$op = (isset($_GET['op']))
-	? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))
-	: ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'main');
+$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING)) : ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'main');
 
-$redirect = isset($_GET['xoops_redirect'])
-		? $_GET['xoops_redirect']
-		: isset($_POST['xoops_redirect'])
-			? $_POST['xoops_redirect']
-			: FALSE;
+$redirect = isset($_GET['xoops_redirect']) ? $_GET['xoops_redirect'] : isset($_POST['xoops_redirect']) ? $_POST['xoops_redirect'] : FALSE;
 if ($redirect) {
 	$redirect = htmlspecialchars(trim($redirect), ENT_QUOTES);
 	$isExternal = FALSE;
@@ -73,33 +66,33 @@ switch ($op) {
 		if (!icms::$user) {
 			$xoopsOption['template_main'] = 'system_userform.html';
 			include 'header.php';
-			icms_makeSmarty(array(
-	            'usercookie' => isset($_COOKIE[$icmsConfig['usercookie']]) ? $_COOKIE[$icmsConfig['usercookie']] : FALSE,
-	            'lang_login' => _LOGIN,
-	            'lang_username' => _USERNAME,
-	            'redirect_page' => $redirect,
-	            'lang_password' => _PASSWORD,
-	            'lang_notregister' => _US_NOTREGISTERED,
-	            'lang_lostpassword' => _US_LOSTPASSWORD,
-	            'lang_noproblem' => _US_NOPROBLEM,
-	            'lang_youremail' => _US_YOUREMAIL,
-	            'lang_sendpassword' => _US_SENDPASSWORD,
-	            'lang_rememberme' => _US_REMEMBERME,
-	            'lang_youoid' => _US_OPENID_URL,
-	            'lang_login_oid' => _US_OPENID_LOGIN,
-	            'lang_back2normoid' => _US_OPENID_NORMAL_LOGIN,
-	            'mailpasswd_token' => icms::$security->createToken(),
-	            'allow_registration' => $icmsConfigUser['allow_register'],
-	            'rememberme' => $icmsConfigUser['remember_me'],
-	            'auth_openid' => $icmsConfigAuth['auth_openid'],
-	            'icms_pagetitle' => _LOGIN
+			icms_makeSmarty(array (
+				'usercookie' => isset($_COOKIE[$icmsConfig['usercookie']]) ? filter_var($_COOKIE[$icmsConfig['usercookie']], FILTER_SANITIZE_STRING) : false,
+				'lang_login' => _LOGIN,
+				'lang_username' => _USERNAME,
+				'redirect_page' => $redirect,
+				'lang_password' => _PASSWORD,
+				'lang_notregister' => _US_NOTREGISTERED,
+				'lang_lostpassword' => _US_LOSTPASSWORD,
+				'lang_noproblem' => _US_NOPROBLEM,
+				'lang_youremail' => _US_YOUREMAIL,
+				'lang_sendpassword' => _US_SENDPASSWORD,
+				'lang_rememberme' => _US_REMEMBERME,
+				'lang_youoid' => _US_OPENID_URL,
+				'lang_login_oid' => _US_OPENID_LOGIN,
+				'lang_back2normoid' => _US_OPENID_NORMAL_LOGIN,
+				'mailpasswd_token' => icms::$security->createToken(),
+				'allow_registration' => $icmsConfigUser['allow_register'],
+				'rememberme' => $icmsConfigUser['remember_me'],
+				'auth_openid' => $icmsConfigAuth['auth_openid'],
+				'icms_pagetitle' => _LOGIN
 			));
 			include 'footer.php';
 		} elseif ($redirect) {
 			header('Location: ' . $redirect);
 			exit();
 		} else {
-			header('Location: ' . ICMS_URL . '/userinfo.php?uid='. (int) icms::$user->getVar('uid'));
+			header('Location: ' . ICMS_URL . '/userinfo.php?uid=' . (int) icms::$user->getVar('uid'));
 			exit();
 		}
 		exit();
@@ -109,28 +102,28 @@ switch ($op) {
 		if (icms::$user) {
 			$xoopsOption['template_main'] = 'system_userform.html';
 			include 'header.php';
-			icms_makeSmarty(array(
-	            'redirect_page' => $redirect,
-	            'lang_reset' => 1,
-//	            'lang_username' => _USERNAME,
-//	            'lang_uname' => isset($_GET['uname']) ? filter_input(INPUT_GET, 'uname') : '',
-	            'lang_resetpassword' => _US_RESETPASSWORD,
-	            'lang_resetpassinfo' => _US_RESETPASSINFO,
-//	            'lang_youremail' => _US_YOUREMAIL,
-	            'lang_sendpassword' => _US_SENDPASSWORD,
-	            'lang_subresetpassword' => _US_SUBRESETPASSWORD,
-	            'lang_currentpass' => _US_CURRENTPASS,
-	            'lang_newpass' => _US_NEWPASSWORD,
-	            'lang_newpass2' => _US_VERIFYPASS,
-	            'resetpassword_token' => icms::$security->createToken(),
-	            'icms_pagetitle' => _LOGIN
+			icms_makeSmarty(array (
+				'redirect_page' => $redirect,
+				'lang_reset' => 1,
+				// 'lang_username' => _USERNAME,
+				// 'lang_uname' => isset($_GET['uname']) ? filter_input(INPUT_GET, 'uname') : '',
+				'lang_resetpassword' => _US_RESETPASSWORD,
+				'lang_resetpassinfo' => _US_RESETPASSINFO,
+				// 'lang_youremail' => _US_YOUREMAIL,
+				'lang_sendpassword' => _US_SENDPASSWORD,
+				'lang_subresetpassword' => _US_SUBRESETPASSWORD,
+				'lang_currentpass' => _US_CURRENTPASS,
+				'lang_newpass' => _US_NEWPASSWORD,
+				'lang_newpass2' => _US_VERIFYPASS,
+				'resetpassword_token' => icms::$security->createToken(),
+				'icms_pagetitle' => _LOGIN
 			));
 			include 'footer.php';
 		} elseif ($redirect) {
 			header('Location: ' . $redirect);
 			exit();
 		} else {
-			header('Location: ' . ICMS_URL . '/userinfo.php?uid='. (int) icms::$user->getVar('uid'));
+			header('Location: ' . ICMS_URL . '/userinfo.php?uid=' . (int) icms::$user->getVar('uid'));
 			exit();
 		}
 		exit();
@@ -151,15 +144,15 @@ switch ($op) {
 		$id = (int) $_GET['id'];
 		$actkey = trim(filter_input(INPUT_GET, 'actkey', FILTER_SANITIZE_STRING));
 		if (empty($id)) {
-			redirect_header('index.php',1,'');
+			redirect_header('index.php', 1, '');
 		}
 		$member_handler = icms::handler('icms_member');
-		$thisuser =& $member_handler->getUser($id);
+		$thisuser = &$member_handler->getUser($id);
 		if (!is_object($thisuser)) {
 			exit();
 		}
 		if ($thisuser->getVar('actkey') != $actkey) {
-			redirect_header('index.php',5,_US_ACTKEYNOT);
+			redirect_header('index.php', 5, _US_ACTKEYNOT);
 		} else {
 			if ($thisuser->getVar('level') > 0) {
 				redirect_header('user.php', 5, _US_ACONTACT, FALSE);
@@ -197,7 +190,7 @@ switch ($op) {
 
 	case 'delete':
 		if (!icms::$user || $icmsConfigUser['self_delete'] != 1) {
-			redirect_header('index.php',5,_US_NOPERMISS);
+			redirect_header('index.php', 5, _US_NOPERMISS);
 		} else {
 			$groups = icms::$user->getGroups();
 			if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
@@ -206,7 +199,10 @@ switch ($op) {
 			$ok = !isset($_POST['ok']) ? 0 : (int) $_POST['ok'];
 			if ($ok != 1) {
 				include 'header.php';
-				icms_core_Message::confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);
+				icms_core_Message::confirm(array (
+					'op' => 'delete',
+					'ok' => 1
+				), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);
 				include 'footer.php';
 			} else {
 				$del_uid = (int) icms::$user->getVar('uid');
@@ -217,7 +213,7 @@ switch ($op) {
 					xoops_notification_deletebyuser($del_uid);
 					redirect_header('index.php', 5, _US_BEENDELED);
 				}
-				redirect_header('index.php',5,_US_NOPERMISS);
+				redirect_header('index.php', 5, _US_NOPERMISS);
 			}
 			exit();
 		}
