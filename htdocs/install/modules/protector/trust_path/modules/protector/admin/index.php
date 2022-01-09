@@ -162,7 +162,7 @@ echo "
     <td class='even'>
       <textarea name='bad_ips' id='bad_ips' style='width:200px;height:60px;'>$bad_ips4disp</textarea>
       <br />
-      TRUSTPATH/" . htmlspecialchars(str_replace(ICMS_TRUST_PATH, '', $protector->get_filepath4badips())) . "
+      " . htmlspecialchars(str_replace(ICMS_TRUST_PATH, 'TRUSTPATH', $protector->get_filepath4badips())) . "
     </td>
   </tr>
   <tr valign='top' align='" . _GLOBAL_LEFT . "'>
@@ -172,7 +172,7 @@ echo "
     <td class='even'>
       <textarea name='group1_ips' id='group1_ips' style='width:200px;height:60px;'>$group1_ips4disp</textarea>
       <br />
-      TRUSTPATH/" . htmlspecialchars(str_replace(ICMS_TRUST_PATH, '', $protector->get_filepath4badips())) . "
+      " . htmlspecialchars(str_replace(ICMS_TRUST_PATH, 'TRUSTPATH', $protector->get_filepath4badips())) . "
     </td>
   </tr>
   <tr valign='top' align='" . _GLOBAL_LEFT . "'>
