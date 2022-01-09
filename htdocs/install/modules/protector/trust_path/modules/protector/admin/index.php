@@ -55,6 +55,8 @@ if (!empty($_POST['action'])) {
 				$g1_ips[$i] = trim($i);
 			}
 		}
+
+		array_filter($g1_ips);
 		$fp = @fopen($protector->get_filepath4group1ips(), 'w');
 		if ($fp) {
 			@flock($fp, LOCK_EX);
