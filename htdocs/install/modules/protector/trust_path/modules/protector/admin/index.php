@@ -39,20 +39,26 @@ if (!empty($_POST['action'])) {
 		$bad_ips = array ();
 		foreach ($lines as $line) {
 			@list($bad_ip, $jailed_time) = explode(':', $line, 2);
-			$bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
+			$bad_ip = filter_var(trim($line), FILTER_VALIDATE_IP);
+			$bad_ips[$bad_ip] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
 		}
+
+		array_filter($bad_ips);
 		if (!$protector->write_file_badips($bad_ips)) {
 			$error_msg .= _AM_MSG_BADIPSCANTOPEN;
 		}
 
 		$group1_ips = empty($_POST['group1_ips']) ? array () : explode("\n", trim($_POST['group1_ips']));
+		$g1_ips = array ();
 		foreach (array_keys($group1_ips) as $i) {
-			$group1_ips[$i] = trim($group1_ips[$i]);
+			if (filter_var(trim($i), FILTER_VALIDATE_IP)) {
+				$g1_ips[$i] = trim($i);
+			}
 		}
 		$fp = @fopen($protector->get_filepath4group1ips(), 'w');
 		if ($fp) {
 			@flock($fp, LOCK_EX);
-			fwrite($fp, serialize(array_unique($group1_ips)) . "\n");
+			fwrite($fp, serialize(array_unique($g1_ips)) . "\n");
 			@flock($fp, LOCK_UN);
 			fclose($fp);
 		} else {
