@@ -39,8 +39,10 @@ if (!empty($_POST['action'])) {
 		$bad_ips = array ();
 		foreach ($lines as $line) {
 			@list($bad_ip, $jailed_time) = explode(':', $line, 2);
-			$bad_ip = filter_var(trim($line), FILTER_VALIDATE_IP);
-			$bad_ips[$bad_ip] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
+			$bad_ip = trim($bad_ip);
+			if (!preg_match('/[^0-9\.]/', $bad_ip) && strlen($bad_ip) < 16) {
+				$bad_ips[$bad_ip] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
+			}
 		}
 
 		array_filter($bad_ips);
@@ -51,8 +53,9 @@ if (!empty($_POST['action'])) {
 		$group1_ips = empty($_POST['group1_ips']) ? array () : explode("\n", trim($_POST['group1_ips']));
 		$g1_ips = array ();
 		foreach (array_keys($group1_ips) as $i) {
-			if (filter_var(trim($i), FILTER_VALIDATE_IP)) {
-				$g1_ips[$i] = trim($i);
+			$i = trim($i);
+			if (!preg_match('/[^0-9\.]/', $i) && strlen($i) < 16) {
+				$g1_ips[$i] = $i;
 			}
 		}
 
