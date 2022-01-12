@@ -46,7 +46,7 @@ defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
  */
 $modversion = array (
 		'name' => _MI_SYSTEM_NAME,
-		'version' => '1.4.3 RC',
+		'version' => '1.4.3 RC2',
 		'description' => _MI_SYSTEM_DESC,
 		'author' => "fiammybe",
 		'credits' => "The ImpressCMS Project",
@@ -66,7 +66,7 @@ $modversion = array (
 /**  Development information */
 	'status_version' => "RC",
 		'status' => "RC",
-		'date' => "04 Dec 2021",
+		'date' => "12 Jan 2022",
 		'author_word' => "",
 		'warning' => _CO_ICMS_WARNING_RC,
 

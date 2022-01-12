@@ -1,5 +1,41 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 1.4.3 RC2
+* Date : 12 Jan 2022
+* DB Version: 46
+* Build Version : 102
+
+This release contains mainly fixes for several security vulnerabilities that where found during HackerOne security Checks. 
+
+## What's Changed
+* Fixed some warnings and notices in installer for newer PHP versions by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/882
+* Protector get_magic_quotes_gpc fix for php 7.4 by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/884
+* Smiles in misc.php now are escaped by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/890
+* Fix "#881 trying to send mails with SMTP auth gives missing smtp class" by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/889
+* Added exception handler by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/888
+* Fixed bug when handlers from module separate files cant be loaded by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/887
+* Fixes 'Notice: Only variables should be passed by reference in /home/vagrant/impresscms/htdocs/libraries/icms/config/Handler.php on line 237' by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/886
+* Fixed bug when admin menu can't regenerate when module folder is removed before uninstalling by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/897
+* Fixed syntax error in include/registerform.php by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/896
+* fix vulnerability in autoloader by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/913
+* block path traversal in image editor, transform .. to _ by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/915
+* Fixes/ipf table filtering - limitsel missing POST value by @skenow in https://github.com/ImpressCMS/impresscms/pull/937
+* Adjusted template file inclusion for correct path. Fixes #603 by @skenow in https://github.com/ImpressCMS/impresscms/pull/944
+* Increase input sanitizing for system module and submodules by @skenow in https://github.com/ImpressCMS/impresscms/pull/943
+* Dev/jquery inclusion by @skenow in https://github.com/ImpressCMS/impresscms/pull/935
+* Fix for modules admin; user language files - fix #948 by @skenow in https://github.com/ImpressCMS/impresscms/pull/949
+* Update release_notes.md by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1058
+* Added filtering to the input in setSortOrder in icms_ipf_table by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/966
+* filter url variable in findusers.php by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/967
+* Remove the old FCKEditor - no longer supported by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/833
+* add CKEditor 4.17.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1095
+* Protector updates - PHP8 compatibility, update and remove legacy code by @skenow in https://github.com/ImpressCMS/impresscms/pull/1098
+* Preparations for the 1.4.3 RC release by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1099
+* Add a default parameter to addSlashes by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1108
+
+
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v1.4.2...v1.4.3
+
 ## ImpressCMS 1.4.2
 Date: 24 Dec 2020
 DB Version: 45
