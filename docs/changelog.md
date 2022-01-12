@@ -1,9 +1,9 @@
 # ImpressCMS ChangeLog
 
 ## ImpressCMS 1.4.3 RC2
-Date : 12 Jan 2022
-DB Version: 46
-Build Version : 102
+* Date : 12 Jan 2022
+* DB Version: 46
+* Build Version : 102
 
 This release contains mainly fixes for several security vulnerabilities that where found during HackerOne security Checks. 
 
