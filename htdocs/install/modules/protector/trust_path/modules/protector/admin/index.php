@@ -39,20 +39,31 @@ if (!empty($_POST['action'])) {
 		$bad_ips = array ();
 		foreach ($lines as $line) {
 			@list($bad_ip, $jailed_time) = explode(':', $line, 2);
-			$bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
+			$bad_ip = trim($bad_ip);
+			if (!preg_match('/[^0-9\.]/', $bad_ip) && strlen($bad_ip) < 16) {
+				$bad_ips[$bad_ip] = empty($jailed_time) ? 0x7fffffff : (int) $jailed_time;
+			}
 		}
+
+		array_filter($bad_ips);
 		if (!$protector->write_file_badips($bad_ips)) {
 			$error_msg .= _AM_MSG_BADIPSCANTOPEN;
 		}
 
 		$group1_ips = empty($_POST['group1_ips']) ? array () : explode("\n", trim($_POST['group1_ips']));
+		$g1_ips = array ();
 		foreach (array_keys($group1_ips) as $i) {
-			$group1_ips[$i] = trim($group1_ips[$i]);
+			$i = trim($i);
+			if (!preg_match('/[^0-9\.]/', $i) && strlen($i) < 16) {
+				$g1_ips[$i] = $i;
+			}
 		}
+
+		array_filter($g1_ips);
 		$fp = @fopen($protector->get_filepath4group1ips(), 'w');
 		if ($fp) {
 			@flock($fp, LOCK_EX);
-			fwrite($fp, serialize(array_unique($group1_ips)) . "\n");
+			fwrite($fp, serialize(array_unique($g1_ips)) . "\n");
 			@flock($fp, LOCK_UN);
 			fclose($fp);
 		} else {
@@ -162,7 +173,7 @@ echo "
     <td class='even'>
       <textarea name='bad_ips' id='bad_ips' style='width:200px;height:60px;'>$bad_ips4disp</textarea>
       <br />
-      " . htmlspecialchars($protector->get_filepath4badips()) . "
+      " . htmlspecialchars(str_replace(ICMS_TRUST_PATH, 'TRUSTPATH', $protector->get_filepath4badips())) . "
     </td>
   </tr>
   <tr valign='top' align='" . _GLOBAL_LEFT . "'>
@@ -172,7 +183,7 @@ echo "
     <td class='even'>
       <textarea name='group1_ips' id='group1_ips' style='width:200px;height:60px;'>$group1_ips4disp</textarea>
       <br />
-      " . htmlspecialchars($protector->get_filepath4group1ips()) . "
+      " . htmlspecialchars(str_replace(ICMS_TRUST_PATH, 'TRUSTPATH', $protector->get_filepath4badips())) . "
     </td>
   </tr>
   <tr valign='top' align='" . _GLOBAL_LEFT . "'>

@@ -216,9 +216,9 @@ class Protector {
 		}
 		// --
 
-		// this is not reliable
-		$ip = @$_SERVER['REMOTE_ADDR'];
-		$agent = @$_SERVER['HTTP_USER_AGENT'];
+		// this is not reliable - and we need to filter
+		$ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
+		$agent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING);
 		// --
 
 		if ($unique_check) {
@@ -230,7 +230,7 @@ class Protector {
 			}
 		}
 
-		icms::$xoopsDB->queryF("INSERT INTO " . XOOPS_DB_PREFIX . "_" . $this->mydirname . "_log SET ip='" . addslashes($ip) . "',agent='" . addslashes($agent) . "',type='" . addslashes($type) . "',description='" . addslashes($this->message) . "',uid='" . (int) $uid . "',timestamp=NOW()");
+		icms::$xoopsDB->queryF("INSERT INTO " . XOOPS_DB_PREFIX . "_" . $this->mydirname . "_log SET ip='" . $ip . "',agent='" . $agent . "',type='" . addslashes($type) . "',description='" . addslashes($this->message) . "',uid='" . (int) $uid . "',timestamp=NOW()");
 		$this->_logged = true;
 		return true;
 	}
@@ -277,7 +277,7 @@ class Protector {
 	}
 
 	function register_bad_ips($jailed_time = 0, $ip = null) {
-		if (empty($ip)) $ip = @$_SERVER['REMOTE_ADDR'];
+		if (empty($ip)) $ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if (empty($ip)) return false;
 
 		$bad_ips = $this->get_bad_ips(true);
@@ -336,7 +336,7 @@ class Protector {
 				switch (substr($ip, -1)) {
 					case '.':
 						// foward match
-						if (substr(@$_SERVER['REMOTE_ADDR'], 0, strlen($ip)) == $ip) {
+						if (substr(filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP), 0, strlen($ip)) == $ip) {
 							$this->ip_matched_info = $info;
 							return true;
 						}
@@ -352,14 +352,14 @@ class Protector {
 					case '8':
 					case '9':
 						// full match
-						if (@$_SERVER['REMOTE_ADDR'] == $ip) {
+						if (filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP) == $ip) {
 							$this->ip_matched_info = $info;
 							return true;
 						}
 						break;
 					default:
 						// perl regex
-						if (@preg_match($ip, @$_SERVER['REMOTE_ADDR'])) {
+						if (@preg_match($ip, filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP))) {
 							$this->ip_matched_info = $info;
 							return true;
 						}
@@ -372,7 +372,7 @@ class Protector {
 	}
 
 	function deny_by_htaccess($ip = null) {
-		if (empty($ip)) $ip = @$_SERVER['REMOTE_ADDR'];
+		if (empty($ip)) $ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if (empty($ip)) return false;
 		if (!function_exists('file_get_contents')) return false;
 
@@ -786,11 +786,9 @@ class Protector {
 	function check_dos_attack($uid = 0, $can_ban = false) {
 		if ($this->_done_dos) return true;
 
-		$ip = @$_SERVER['REMOTE_ADDR'];
-		$uri = @$_SERVER['REQUEST_URI'];
-		$ip4sql = addslashes($ip);
-		$uri4sql = addslashes($uri);
-		if (empty($ip) || $ip == '') return true;
+		$ip4sql = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
+		$uri4sql = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_VALIDATE_URL);
+		if (empty($ip4sql) || $ip4sql == '') return true;
 
 		// gargage collection
 		$result = icms::$xoopsDB->queryF("DELETE FROM " . icms::$xoopsDB->prefix($this->mydirname . "_access") . " WHERE expire < UNIX_TIMESTAMP()");
@@ -905,13 +903,11 @@ class Protector {
 
 	//
 	function check_brute_force() {
-		$ip = @$_SERVER['REMOTE_ADDR'];
-		$uri = @$_SERVER['REQUEST_URI'];
-		$ip4sql = addslashes($ip);
-		$uri4sql = addslashes($uri);
-		if (empty($ip) || $ip == '') return true;
+		$ip4sql = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
+		$uri4sql = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_VALIDATE_URL);
+		if (empty($ip4sql) || $ip4sql == '') return true;
 
-		$victim_uname = empty($_COOKIE['autologin_uname']) ? $_POST['uname'] : $_COOKIE['autologin_uname'];
+		$victim_uname = empty($_COOKIE['autologin_uname']) ? filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_STRING) : filter_input(INPUT_COOKIE, 'autologin_uname', FILTER_SANITIZE_STRING);
 		// some UA send 'deleted' as a value of the deleted cookie.
 		if ($victim_uname == 'deleted') return;
 		$mal4sql = addslashes("BRUTE FORCE: $victim_uname");
@@ -966,7 +962,7 @@ class Protector {
 		$this->_spam_check_point_recursive($_POST);
 
 		if ($this->_spamcount_uri >= $points4deny) {
-			$this->message .= @$_SERVER['REQUEST_URI'] . " SPAM POINT: $this->_spamcount_uri\n";
+			$this->message .= filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_VALIDATE_URL) . " SPAM POINT: $this->_spamcount_uri\n";
 			$this->output_log('URI SPAM', $uid, false, 128);
 			$ret = $this->call_filter('spamcheck_overrun');
 			if ($ret == false) exit();
