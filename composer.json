@@ -509,7 +509,10 @@
     }
   },
   "scripts": {
-    "test": "phpunit -c tests/configuration.xml"
+    "test": "phpunit -c tests/configuration.xml",
+    "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
   },
   "repositories": {
     "composer_assets": {
