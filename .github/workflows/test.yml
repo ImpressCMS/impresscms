@@ -62,13 +62,6 @@ jobs:
           ini-values: post_max_size=256M
           coverage: none
           tools: composer:v${{ matrix.composer }}
-      - name: Check PHP Version
-        run: php -v
-      - name: Verify MySQL connection
-        run: |
-          sudo apt-get update -q -y
-          sudo apt-get install -y mysql-client
-          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -picms -e "SHOW DATABASES"
       - name: Install Composer dependencies (with dev)
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
         continue-on-error: ${{ matrix.experimental }}
