@@ -42,13 +42,13 @@ use Imponeer\Contracts\Smarty\Extension\SmartyBlockInterface;
 use Imponeer\Contracts\Smarty\Extension\SmartyCompilerInterface;
 use Imponeer\Contracts\Smarty\Extension\SmartyFunctionInterface;
 use Imponeer\Contracts\Smarty\Extension\SmartyResourceInterface;
-use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
-use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use Imponeer\Database\Criteria\CriteriaCompo;
+use Imponeer\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\Facades\Config;
 use ImpressCMS\Core\View\Theme\ThemeFactory;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
-use SmartyBC;
+use Smarty;
 use SmartyException;
 
 /**
@@ -58,7 +58,7 @@ use SmartyException;
  * @author    Kazumi Ono    <onokazu@xoops.org>
  * @copyright    Copyright (c) 2000 XOOPS.org
  */
-class Template extends SmartyBC
+class Template extends Smarty
 {
 
 	public $left_delimiter = '<{';
