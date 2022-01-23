@@ -47,6 +47,7 @@ class SetupStepsProvider extends AbstractServiceProvider
 		$this->leagueContainer
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Install\BlockSetupStep::class)
 			->addTag(self::SETUP_STEP_MODULE_INSTALL)
+			->addMethodCall('setLeagueContainer',['container'])
 		;
 		$this->leagueContainer
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Install\ConfigSetupStep::class)
@@ -67,6 +68,7 @@ class SetupStepsProvider extends AbstractServiceProvider
 		$this->leagueContainer
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Install\CopyAssetsSetupStep::class)
 			->addTag(self::SETUP_STEP_MODULE_INSTALL)
+			->addMethodCall('setLeagueContainer',['container'])
 		;
 		$this->leagueContainer
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Install\CacheClearSetupStep::class)
@@ -84,6 +86,7 @@ class SetupStepsProvider extends AbstractServiceProvider
 		$this->leagueContainer
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Update\BlocksSetupStep::class)
 			->addTag(self::SETUP_STEP_MODULE_UPDATE)
+			->addMethodCall('setLeagueContainer',['container'])
 		;
 		$this->leagueContainer
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Update\MigrateSetupStep::class)
@@ -104,6 +107,7 @@ class SetupStepsProvider extends AbstractServiceProvider
 		$this->leagueContainer
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Update\CopyAssetsSetupStep::class)
 			->addTag(self::SETUP_STEP_MODULE_UPDATE)
+			->addMethodCall('setLeagueContainer',['container'])
 		;
 		$this->leagueContainer
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Update\CacheClearSetupStep::class)
@@ -165,6 +169,7 @@ class SetupStepsProvider extends AbstractServiceProvider
 		$this->leagueContainer
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Uninstall\CopyAssetsSetupStep::class)
 			->addTag(self::SETUP_STEP_MODULE_UNINSTALL)
+			->addMethodCall('setLeagueContainer',['container'])
 		;
 		$this->leagueContainer
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Uninstall\ViewTemplateSetupStep::class)
