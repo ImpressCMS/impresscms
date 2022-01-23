@@ -165,7 +165,7 @@ class User extends AbstractExtendedModel {
 	{
 		trigger_error('Use same function from handler. This one is deprecahed!', E_DEPRECATED);
 		$handler = icms::handler('icms_member_user');
-		return $handler->getUnameFromId($userid, (bool)$usereal);
+		return $handler->getUnameFromId($userid, (bool) $usereal);
 	}
 
 	/**
@@ -247,23 +247,23 @@ class User extends AbstractExtendedModel {
 					return true;
 		}
 
-        $mailer = new MessageSender();
-        $mailer->useMail();
-        $mailer->setBody($icmsConfigUser['welcome_msg_content']);
-        $mailer->assign('UNAME', $this->uname);
-        $user_email = $this->email;
-        $mailer->assign('X_UEMAIL', $user_email);
-        $mailer->setToEmails($user_email);
-        $mailer->setFromEmail($icmsConfig['adminmail']);
-        $mailer->setFromName($icmsConfig['sitename']);
-        $mailer->setSubject(sprintf(_US_YOURREGISTRATION, DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
-        if (!$mailer->send(true)) {
-            $this->setErrors(_US_WELCOMEMSGFAILED);
-            return false;
-        } else {
-            return true;
-        }
-    }
+		$mailer = new MessageSender();
+		$mailer->useMail();
+		$mailer->setBody($icmsConfigUser['welcome_msg_content']);
+		$mailer->assign('UNAME', $this->uname);
+		$user_email = $this->email;
+		$mailer->assign('X_UEMAIL', $user_email);
+		$mailer->setToEmails($user_email);
+		$mailer->setFromEmail($icmsConfig['adminmail']);
+		$mailer->setFromName($icmsConfig['sitename']);
+		$mailer->setSubject(sprintf(_US_YOURREGISTRATION, DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
+		if (!$mailer->send(true)) {
+			$this->setErrors(_US_WELCOMEMSGFAILED);
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 	/**
 	 * sends a notification to admins to inform them that a new user registered
@@ -276,27 +276,27 @@ class User extends AbstractExtendedModel {
 	public function newUserNotifyAdmin() {
 		global $icmsConfigUser, $icmsConfig;
 
-        if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
-            $member_handler = icms::handler('icms_member');
-            $mailer = new MessageSender();
-            $mailer->useMail();
-            $mailer->setTemplate('newuser_notify.tpl');
-            $mailer->assign('UNAME', $this->uname);
-            $mailer->assign('EMAIL', $this->email);
-            $mailer->setToGroups($member_handler->getGroup($icmsConfigUser['new_user_notify_group']));
-            $mailer->setFromEmail($icmsConfig['adminmail']);
-            $mailer->setFromName($icmsConfig['sitename']);
-            $mailer->setSubject(sprintf(_US_NEWUSERREGAT, $icmsConfig['sitename']));
-            if (!$mailer->send(true)) {
-                $this->setErrors(_US_NEWUSERNOTIFYADMINFAIL);
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
+		if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
+			$member_handler = icms::handler('icms_member');
+			$mailer = new MessageSender();
+			$mailer->useMail();
+			$mailer->setTemplate('newuser_notify.tpl');
+			$mailer->assign('UNAME', $this->uname);
+			$mailer->assign('EMAIL', $this->email);
+			$mailer->setToGroups($member_handler->getGroup($icmsConfigUser['new_user_notify_group']));
+			$mailer->setFromEmail($icmsConfig['adminmail']);
+			$mailer->setFromName($icmsConfig['sitename']);
+			$mailer->setSubject(sprintf(_US_NEWUSERREGAT, $icmsConfig['sitename']));
+			if (!$mailer->send(true)) {
+				$this->setErrors(_US_NEWUSERNOTIFYADMINFAIL);
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
 
 	/**
 	 * Is the user admin ?
@@ -312,7 +312,7 @@ class User extends AbstractExtendedModel {
 	public function isAdmin($module_id = null) {
 		static $buffer = array();
 		if ($module_id === null) {
-			$module_id = isset($GLOBALS['xoopsModule'])?$GLOBALS['xoopsModule']->mid:1;
+			$module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->mid : 1;
 		} elseif ((int) $module_id < 1) {
 			$module_id = 0;
 		}
@@ -383,21 +383,21 @@ class User extends AbstractExtendedModel {
 	 *
 	 */
 	public function gravatar($rating = false, $size = false, $default = false, $border = false, $overwrite = false) {
-		if (!$overwrite && is_file(ICMS_UPLOAD_PATH . '/' . $this->user_avatar) && $this->user_avatar != 'blank.gif') {
-			return ICMS_UPLOAD_URL . '/' . $this->user_avatar;
+		if (!$overwrite && is_file(ICMS_UPLOAD_PATH.'/'.$this->user_avatar) && $this->user_avatar != 'blank.gif') {
+			return ICMS_UPLOAD_URL.'/'.$this->user_avatar;
 		}
-		$ret = '//www.gravatar.com/avatar/' . md5(strtolower($this->getVar('email', 'E'))) . '?d=identicon';
+		$ret = '//www.gravatar.com/avatar/'.md5(strtolower($this->getVar('email', 'E'))).'?d=identicon';
 		if ($rating) {
-			$ret .= '&amp;rating=' . $rating;
+			$ret .= '&amp;rating='.$rating;
 		}
 		if ($size) {
-			$ret .= '&amp;size=' . $size;
+			$ret .= '&amp;size='.$size;
 		}
 		if ($default) {
-			$ret .= '&amp;default=' . urlencode($default);
+			$ret .= '&amp;default='.urlencode($default);
 		}
 		if ($border) {
-			$ret .= '&amp;border=' . $border;
+			$ret .= '&amp;border='.$border;
 		}
 		return $ret;
 	}

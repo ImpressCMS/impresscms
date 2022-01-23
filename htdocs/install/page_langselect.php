@@ -45,12 +45,12 @@ $content = "";
 
 $languages = icms_core_Filesystem::getDirList("./language/");
 foreach ($languages as $lang) {
-	$sel = ($lang == $wizard->language)?' checked="checked"':'';
+	$sel = ($lang == $wizard->language) ? ' checked="checked"' : '';
 	$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../images/flags/$lang.gif\" alt=\"$lang\" /><br />$lang<br /> <input type=\"radio\" name=\"lang\" value=\"$lang\"$sel /></a></div>";
 }
 $content .= '<fieldset style="text-align: center;">';
-$content .= '<div>' . ALTERNATE_LANGUAGE_MSG . '</div>';
-$content .= '<div style="text-align: center; margin-top: 5px;"><a href="' . ALTERNATE_LANGUAGE_LNK_URL . '" target="_blank">' . ALTERNATE_LANGUAGE_LNK_MSG . '</a></div>';
+$content .= '<div>'.ALTERNATE_LANGUAGE_MSG.'</div>';
+$content .= '<div style="text-align: center; margin-top: 5px;"><a href="'.ALTERNATE_LANGUAGE_LNK_URL.'" target="_blank">'.ALTERNATE_LANGUAGE_LNK_MSG.'</a></div>';
 $content .= '</fieldset>';
 
 include 'install_tpl.php';

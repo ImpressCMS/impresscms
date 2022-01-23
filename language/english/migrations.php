@@ -16,7 +16,7 @@ define('_MIGRATION_SMILE_2', 'Smile');
 define('_MIGRATION_SMILE_3', 'Sad');
 define('_MIGRATION_SMILE_4', 'Surprised');
 define('_MIGRATION_SMILE_5', 'Confused');
-define('_MIGRATION_SMILE_6',  'Cool');
+define('_MIGRATION_SMILE_6', 'Cool');
 define('_MIGRATION_SMILE_7', 'Laughing');
 define('_MIGRATION_SMILE_8', 'Mad');
 define('_MIGRATION_SMILE_9', 'Razz');
@@ -45,7 +45,7 @@ define('_MIGRATION_PAGE_15', 'Symlink Manager');
 define('_MIGRATION_PAGE_16', 'Preferences');
 define('_MIGRATION_PAGE_17', 'Smilies');
 define('_MIGRATION_PAGE_18', 'Templates');
-define('_MIGRATION_PAGE_19',  'User Ranks');
+define('_MIGRATION_PAGE_19', 'User Ranks');
 define('_MIGRATION_PAGE_20', 'User Edit');
 define('_MIGRATION_PAGE_21', 'Version Checker');
 
@@ -152,7 +152,7 @@ If you believe that any information we are holding on you is incorrect or incomp
 </p>
 EOF
 );
-define('_MIGRATIONS_LOCAL_FOOTER', 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
+define('_MIGRATIONS_LOCAL_FOOTER', 'Powered by ImpressCMS &copy; 2007-'.date('Y', time()).' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define('_MIGRATIONS_LOCAL_SENSORTXT', '#OOPS#'); //Add local translation
 define('_MIGRATIONS_DEF_LANG_TAGS', 'en,de'); //Add local translation
 define('_MIGRATIONS_DEF_LANG_NAMES', 'english,german'); //Add local translation

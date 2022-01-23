@@ -284,7 +284,7 @@ class Config extends AbstractFacade
 	public function &getConfigsByCat($category, $module = 0)
 	{
 		if (is_array($category)) {
-			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int)$module));
+			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int) $module));
 			$criteria->add(new CriteriaItem('conf_catid', $category, 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
@@ -301,9 +301,9 @@ class Config extends AbstractFacade
 				return $this->_cachedConfigs[$module][$category];
 			}
 
-			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int)$module));
+			$criteria = new CriteriaCompo(new CriteriaItem('conf_modid', (int) $module));
 			if (!empty($category)) {
-				$criteria->add(new CriteriaItem('conf_catid', (int)$category));
+				$criteria->add(new CriteriaItem('conf_catid', (int) $category));
 			}
 			$ret = array();
 			$configs = $this->getConfigs($criteria, true);

@@ -79,7 +79,7 @@ class HTMLFilter extends DataFilter {
 	 * @return	object	array list of filter objects
 	 */
 	private static function getCustomFilterList() {
-		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
+		$dirPath = ICMS_LIBRARIES_PATH.'/htmlpurifier/standalone/HTMLPurifier/Filter/';
 		$test = new \HTMLPurifier();
 		$icmsConfigPurifier = \icms::$config->getConfigsByCat(Config::CATEGORY_PURIFIER);
 		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
@@ -90,7 +90,7 @@ class HTMLFilter extends DataFilter {
 			$fileList = array_values($fileList);
 
 			foreach ($fileList as &$val) {
-				$val = 'HTMLPurifier_Filter_' . substr($val, 0, strrpos($val, '.'));
+				$val = 'HTMLPurifier_Filter_'.substr($val, 0, strrpos($val, '.'));
 				$newObject = new $val;
 				$filterList[] = $newObject;
 			}
@@ -112,9 +112,9 @@ class HTMLFilter extends DataFilter {
 		if ($IframeRegExp !== '') {
 			$pos = strpos($IframeRegExp, '|');
 			if ($pos === false) {
-				$IframeRegExp = '%^' . $IframeRegExp . '%';
+				$IframeRegExp = '%^'.$IframeRegExp.'%';
 			} else {
-				$IframeRegExp = '%^(' . $IframeRegExp . ')%';
+				$IframeRegExp = '%^('.$IframeRegExp.')%';
 			}
 		}
 

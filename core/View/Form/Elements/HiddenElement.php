@@ -72,7 +72,7 @@ class HiddenElement extends AbstractFormElement {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
+		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET) : $this->_value;
 	}
 
 	/**
@@ -93,10 +93,10 @@ class HiddenElement extends AbstractFormElement {
 		if (is_array($this->getValue())) {
 			$ret = '';
 			foreach ($this->getValue() as $value) {
-				$ret .= "<input type='hidden' name='" . $this->getName() . "[]' id='" . $this->getName() . "' value='" . $value . "' />\n";
+				$ret .= "<input type='hidden' name='".$this->getName()."[]' id='".$this->getName()."' value='".$value."' />\n";
 			}
 		} else {
-			$ret = "<input type='hidden' name='" . $this->getName() . "' id='" . $this->getName() . "' value='" . $this->getValue() . "' />";
+			$ret = "<input type='hidden' name='".$this->getName()."' id='".$this->getName()."' value='".$this->getValue()."' />";
 		}
 
 		return $ret;

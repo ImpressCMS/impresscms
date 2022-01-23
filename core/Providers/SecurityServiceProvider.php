@@ -24,7 +24,7 @@ class SecurityServiceProvider extends AbstractServiceProvider
 	 */
 	public function register()
 	{
-		$this->getContainer()->add('security', function () {
+		$this->getContainer()->add('security', function() {
 			$instance = new RequestSecurity();
 
 			if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] != 'POST' || (defined('XOOPS_DB_CHKREF') && !$instance->checkReferer(XOOPS_DB_CHKREF)))) {

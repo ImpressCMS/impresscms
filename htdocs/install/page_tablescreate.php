@@ -24,8 +24,8 @@ if (!defined('XOOPS_INSTALL')) {
 include_once '../../mainfile.php';
 
 icms_core_Filesystem::chmod('../.env', 0444);
-icms_core_Filesystem::chmod(ICMS_ROOT_PATH . '/modules', 0777);
-icms_core_Filesystem::chmod(ICMS_ROOT_PATH . '/modules', 0755);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH.'/modules', 0777);
+icms_core_Filesystem::chmod(ICMS_ROOT_PATH.'/modules', 0755);
 $wizard->setPage('tablescreate');
 $pageHasForm = true;
 $pageHasHelp = false;

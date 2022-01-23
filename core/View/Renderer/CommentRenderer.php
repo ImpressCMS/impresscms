@@ -70,13 +70,13 @@ class CommentRenderer {
 		$this->_doIconCheck = $do_iconcheck;
 		$this->_memberHandler = icms::handler('icms_member');
 
-		require_once ICMS_INCLUDE_PATH . DIRECTORY_SEPARATOR . 'comment_constants.php';
+		require_once ICMS_INCLUDE_PATH.DIRECTORY_SEPARATOR.'comment_constants.php';
 		icms_loadLanguageFile('core', 'comment');
 
 		$this->_statusText = [
-			XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">' . _CM_PENDING . '</span>',
-			XOOPS_COMMENT_ACTIVE => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',
-			XOOPS_COMMENT_HIDDEN => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>'
+			XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">'._CM_PENDING.'</span>',
+			XOOPS_COMMENT_ACTIVE => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">'._CM_ACTIVE.'</span>',
+			XOOPS_COMMENT_HIDDEN => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">'._CM_HIDDEN.'</span>'
 		];
 	}
 
@@ -118,13 +118,13 @@ class CommentRenderer {
 		$count = count($this->_comments);
 		for ($i = 0; $i < $count; $i++) {
 			if (false != $this->_useIcons) {
-				$title = $this->_getTitleIcon($this->_comments[$i]->com_icon) . '&nbsp;' . $this->_comments[$i]->com_title;
+				$title = $this->_getTitleIcon($this->_comments[$i]->com_icon).'&nbsp;'.$this->_comments[$i]->com_title;
 			} else {
 				$title = $this->_comments[$i]->com_title;
 			}
 			$poster = $this->_getPosterArray($this->_comments[$i]->com_uid);
 			if (false != $admin_view) {
-				$text = $this->_comments[$i]->com_text . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$this->_comments[$i]->com_status] . '<br />IP: <span style="font-weight: bold;">' . $this->_comments[$i]->com_ip . '</span></div>';
+				$text = $this->_comments[$i]->com_text.'<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'._CM_STATUS.': '.$this->_statusText[$this->_comments[$i]->com_status].'<br />IP: <span style="font-weight: bold;">'.$this->_comments[$i]->com_ip.'</span></div>';
 			} else {
 				// hide comments that are not active
 				if (XOOPS_COMMENT_ACTIVE != $this->_comments[$i]->com_status) {
@@ -152,7 +152,7 @@ class CommentRenderer {
 		$tree = & $xot->getTree();
 
 		if (false != $this->_useIcons) {
-			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->com_icon) . '&nbsp;' . $tree[$comment_id]['obj']->com_title;
+			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->com_icon).'&nbsp;'.$tree[$comment_id]['obj']->com_title;
 		} else {
 			$title = $tree[$comment_id]['obj']->com_title;
 		}
@@ -165,9 +165,9 @@ class CommentRenderer {
 		}
 		if (false != $admin_view) {
 			// admins can see all
-			$text = $tree[$comment_id]['obj']->com_text . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'
-				. _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->com_status]
-				. '<br />IP: <span style="font-weight: bold;">' . $tree[$comment_id]['obj']->com_ip . '</span></div>';
+			$text = $tree[$comment_id]['obj']->com_text.'<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'
+				. _CM_STATUS.': '.$this->_statusText[$tree[$comment_id]['obj']->com_status]
+				. '<br />IP: <span style="font-weight: bold;">'.$tree[$comment_id]['obj']->com_ip.'</span></div>';
 		} else {
 			// hide comments that are not active
 			if (XOOPS_COMMENT_ACTIVE != $tree[$comment_id]['obj']->com_status) {
@@ -216,11 +216,11 @@ class CommentRenderer {
 		if ($depth > 0) {
 			$simple_title = $thread[$key]['obj']->com_title;
 			if (false != $this->_useIcons) {
-				$title = $this->_getTitleIcon($thread[$key]['obj']->com_icon) . '&nbsp;' . $thread[$key]['obj']->com_title;
+				$title = $this->_getTitleIcon($thread[$key]['obj']->com_icon).'&nbsp;'.$thread[$key]['obj']->com_title;
 			} else {
 				$title = $thread[$key]['obj']->com_title;
 			}
-			$title = (false != $admin_view)?$title . ' ' . $this->_statusText[$thread[$key]['obj']->com_status]:$title;
+			$title = (false != $admin_view) ? $title.' '.$this->_statusText[$thread[$key]['obj']->com_status] : $title;
 			$replies[] = array(
 				'id' => $key,
 				'prefix' => $current_prefix,
@@ -262,14 +262,14 @@ class CommentRenderer {
 		$xot = new ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree = & $xot->getTree();
 		if (false != $this->_useIcons) {
-			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->com_icon) . '&nbsp;' . $tree[$comment_id]['obj']->com_title;
+			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->com_icon).'&nbsp;'.$tree[$comment_id]['obj']->com_title;
 		} else {
 			$title = $tree[$comment_id]['obj']->com_title;
 		}
 		if (false != $admin_view) {
-			$text = $tree[$comment_id]['obj']->com_text . '<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'
-				. _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->com_status]
-				. '<br />IP: <span style="font-weight: bold;">' . $tree[$comment_id]['obj']->com_ip . '</span></div>';
+			$text = $tree[$comment_id]['obj']->com_text.'<div style="text-align:right; margin-top: 2px; margin-bottom: 0px; margin-right: 2px;">'
+				. _CM_STATUS.': '.$this->_statusText[$tree[$comment_id]['obj']->com_status]
+				. '<br />IP: <span style="font-weight: bold;">'.$tree[$comment_id]['obj']->com_ip.'</span></div>';
 		} else {
 			// skip this comment if it is not active and continue on processing its child comments instead
 			if (XOOPS_COMMENT_ACTIVE != $tree[$comment_id]['obj']->com_status) {
@@ -315,11 +315,11 @@ class CommentRenderer {
 	private function _renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0) {
 		if ($depth > 0) {
 			if (false != $this->_useIcons) {
-				$title = $this->_getTitleIcon($thread[$key]['obj']->com_icon) . '&nbsp;' . $thread[$key]['obj']->com_title;
+				$title = $this->_getTitleIcon($thread[$key]['obj']->com_icon).'&nbsp;'.$thread[$key]['obj']->com_title;
 			} else {
 				$title = $thread[$key]['obj']->com_title;
 			}
-			$text = (false != $admin_view)?$thread[$key]['obj']->com_text . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->com_status] . '<br />IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->com_ip . '</span></div>':$thread[$key]['obj']->com_text;
+			$text = (false != $admin_view) ? $thread[$key]['obj']->com_text.'<div style="text-align:right; margin-top: 2px; margin-right: 2px;">'._CM_STATUS.': '.$this->_statusText[$thread[$key]['obj']->com_status].'<br />IP: <span style="font-weight: bold;">'.$thread[$key]['obj']->com_ip.'</span></div>' : $thread[$key]['obj']->com_text;
 			$replies[] = array(
 				'id' => $key,
 				'prefix' => $prefix,
@@ -364,7 +364,7 @@ class CommentRenderer {
 		if ($poster['id'] > 0) {
 			$com_poster = & $this->_memberHandler->getUser($poster_id);
 			if (is_object($com_poster)) {
-				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->uname . '</a>';
+				$poster['uname'] = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->uname.'</a>';
 				return $poster;
 			}
 		}
@@ -384,7 +384,7 @@ class CommentRenderer {
 		if ($poster['id'] > 0) {
 			$com_poster = & $this->_memberHandler->getUser($poster['id']);
 			if (is_object($com_poster)) {
-				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->uname . '</a>';
+				$poster['uname'] = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->uname.'</a>';
 				$poster_rank = $com_poster->rank();
 				$poster['rank_image'] = $poster_rank['image'];
 				$poster['rank_title'] = $poster_rank['title'];
@@ -392,14 +392,14 @@ class CommentRenderer {
 				$poster['regdate'] = formatTimestamp($com_poster->user_regdate, 's');
 				$poster['from'] = $com_poster->user_from;
 				$poster['postnum'] = $com_poster->posts;
-				$poster['status'] = $com_poster->isOnline()? _CM_ONLINE : '';
+				$poster['status'] = $com_poster->isOnline() ? _CM_ONLINE : '';
 				return $poster;
 			}
 		}
 		$poster['id'] = 0; // to cope with deleted user accounts
 		$poster['uname'] = $GLOBALS['icmsConfig']['anonymous'];
 		$poster['rank_title'] = '';
-		$poster['avatar'] = ICMS_UPLOAD_URL . '/blank.gif';
+		$poster['avatar'] = ICMS_UPLOAD_URL.'/blank.gif';
 		$poster['regdate'] = '';
 		$poster['from'] = '';
 		$poster['postnum'] = 0;
@@ -417,15 +417,15 @@ class CommentRenderer {
 		$icon_image = htmlspecialchars(trim($icon_image), ENT_COMPAT | ENT_HTML401, _CHARSET);
 		if ($icon_image != '') {
 			if (false != $this->_doIconCheck) {
-				if (!file_exists(ICMS_URL . '/images/subject/' . $icon_image)) {
-					return '<img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/no_posticon.gif" alt="" />';
+				if (!file_exists(ICMS_URL.'/images/subject/'.$icon_image)) {
+					return '<img src="'.ICMS_URL.'/images/icons/'.$GLOBALS["icmsConfig"]["language"].'/no_posticon.gif" alt="" />';
 				} else {
-					return '<img src="' . ICMS_URL . '/images/subject/' . $icon_image . '" alt="" />';
+					return '<img src="'.ICMS_URL.'/images/subject/'.$icon_image.'" alt="" />';
 				}
 			} else {
-				return '<img src="' . ICMS_URL . '/images/subject/' . $icon_image . '" alt="" />';
+				return '<img src="'.ICMS_URL.'/images/subject/'.$icon_image.'" alt="" />';
 			}
 		}
-		return '<img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/no_posticon.gif" alt="" />';
+		return '<img src="'.ICMS_URL.'/images/icons/'.$GLOBALS["icmsConfig"]["language"].'/no_posticon.gif" alt="" />';
 	}
 }

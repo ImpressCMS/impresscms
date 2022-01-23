@@ -332,7 +332,7 @@ abstract class AbstractProperties implements Serializable {
 	 */
 	public function assignVars($values) {
 		foreach ($this->_vars as $key => $var) {
-			$value = (!isset($values[$key]))?null:$values[$key];
+			$value = (!isset($values[$key])) ?null:$values[$key];
 			$this->_vars[$key][self::VARCFG_VALUE] = $this->cleanVar($key, $this->_vars[$key][self::VARCFG_TYPE], $value);
 		}
 	}
@@ -414,7 +414,7 @@ abstract class AbstractProperties implements Serializable {
 						if (!empty($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
 							$filename = call_user_func($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION], 'post', $uploader->getMediaType(), $uploader->getMediaName());
 							if (!empty($this->_vars[$key][self::VARCFG_PREFIX])) {
-								$filename = $this->_vars[$key][self::VARCFG_PREFIX] . $filename;
+								$filename = $this->_vars[$key][self::VARCFG_PREFIX].$filename;
 							}
 							$uploader->setTargetFileName($filename);
 						} elseif (!empty($this->_vars[$key][self::VARCFG_PREFIX])) {
@@ -435,10 +435,10 @@ abstract class AbstractProperties implements Serializable {
 							'mimetype' => $this->getFileMimeType($value),
 						);
 					}
-					if (file_exists(ICMS_UPLOAD_PATH . DIRECTORY_SEPARATOR . $value)) {
+					if (file_exists(ICMS_UPLOAD_PATH.DIRECTORY_SEPARATOR.$value)) {
 						return array(
 							'filename' => $value,
-							'mimetype' => $this->getFileMimeType(ICMS_UPLOAD_PATH . DIRECTORY_SEPARATOR . $value),
+							'mimetype' => $this->getFileMimeType(ICMS_UPLOAD_PATH.DIRECTORY_SEPARATOR.$value),
 						);
 					}
 					$uploader = new MediaUploader($this->_vars[$key][self::VARCFG_PATH], $this->_vars[$key][self::VARCFG_ALLOWED_MIMETYPES], $this->_vars[$key][self::VARCFG_MAX_FILESIZE], $this->_vars[$key][self::VARCFG_MAX_WIDTH], $this->_vars[$key][self::VARCFG_MAX_HEIGHT]);
@@ -446,7 +446,7 @@ abstract class AbstractProperties implements Serializable {
 						if (!empty($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
 							$filename = call_user_func($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION], 'post', $uploader->getMediaType(), $uploader->getMediaName());
 							if (!empty($this->_vars[$key][self::VARCFG_PREFIX])) {
-								$filename = $this->_vars[$key][self::VARCFG_PREFIX] . $filename;
+								$filename = $this->_vars[$key][self::VARCFG_PREFIX].$filename;
 							}
 							$uploader->setTargetFileName($filename);
 						} elseif (!empty($this->_vars[$key][self::VARCFG_PREFIX])) {
@@ -487,11 +487,11 @@ abstract class AbstractProperties implements Serializable {
 				} else {
 									$time = (int) strtotime($value);
 				}
-				return ($time < 0)?0:$time;
+				return ($time < 0) ? 0 : $time;
 			case self::DTYPE_STRING:
 			default:
 				if (!is_string($value)) {
-					$value = (string)$value;
+					$value = (string) $value;
 				}
 				if (!empty($this->_vars[$key][self::VARCFG_VALUE]) && isset($this->_vars[$key][self::VARCFG_VALIDATE_RULE]) && !empty($this->_vars[$key][self::VARCFG_VALIDATE_RULE])) {
 					if (!preg_match($this->_vars[$key][self::VARCFG_VALIDATE_RULE], $value)) {
@@ -545,7 +545,7 @@ abstract class AbstractProperties implements Serializable {
 				$varname = 'doxcode';
 			break;
 		}
-		include __DIR__ . '/common/' . $varname . '.php';
+		include __DIR__.'/common/'.$varname.'.php';
 		$this->hideFieldFromSingleView($varname);
 	}
 
@@ -688,7 +688,7 @@ abstract class AbstractProperties implements Serializable {
 	public function &getVars()
 	{
 		foreach (array_keys($this->_vars) as $key) {
-			$this->_vars[$key][self::VARCFG_DEFAULT_VALUE] = $this->cleanVar($key, $this->_vars[$key][self::VARCFG_TYPE], isset($this->_vars[$key][self::VARCFG_DEFAULT_VALUE])?$this->_vars[$key][self::VARCFG_DEFAULT_VALUE]:null);
+			$this->_vars[$key][self::VARCFG_DEFAULT_VALUE] = $this->cleanVar($key, $this->_vars[$key][self::VARCFG_TYPE], isset($this->_vars[$key][self::VARCFG_DEFAULT_VALUE]) ? $this->_vars[$key][self::VARCFG_DEFAULT_VALUE] : null);
 		}
 		return $this->_vars;
 	}
@@ -746,7 +746,7 @@ abstract class AbstractProperties implements Serializable {
 		}
 
 		if (!isset($this->_vars[$key])) {
-			return trigger_error('Variable ' . get_class($this) . '::$' . $key . ' not found', E_USER_WARNING);
+			return trigger_error('Variable '.get_class($this).'::$'.$key.' not found', E_USER_WARNING);
 		}
 
 		$this->_vars[$key][$info] = $value;
@@ -909,11 +909,11 @@ abstract class AbstractProperties implements Serializable {
 			case self::DTYPE_STRING:
 				if (!isset($this->_vars[$name][self::VARCFG_AF_DISABLED]) || !$this->_vars[$name][self::VARCFG_AF_DISABLED]) {
 					$ts = Textsanitizer::getInstance();
-					$html = !empty($this->_vars['dohtml'])?1:0;
-					$xcode = (!isset($this->_vars['doxcode']) || $this->_vars['doxcode'][self::VARCFG_VALUE] == 1)?1:0;
-					$smiley = (!isset($this->_vars['dosmiley']) || $this->_vars['dosmiley'][self::VARCFG_VALUE] == 1)?1:0;
-					$image = (!isset($this->_vars['doimage']) || $this->_vars['doimage'][self::VARCFG_VALUE] == 1)?1:0;
-					$br = (!isset($this->_vars['dobr']) || $this->_vars['dobr'][self::VARCFG_VALUE] == 1)?1:0;
+					$html = !empty($this->_vars['dohtml']) ? 1 : 0;
+					$xcode = (!isset($this->_vars['doxcode']) || $this->_vars['doxcode'][self::VARCFG_VALUE] == 1) ? 1 : 0;
+					$smiley = (!isset($this->_vars['dosmiley']) || $this->_vars['dosmiley'][self::VARCFG_VALUE] == 1) ? 1 : 0;
+					$image = (!isset($this->_vars['doimage']) || $this->_vars['doimage'][self::VARCFG_VALUE] == 1) ? 1 : 0;
+					$br = (!isset($this->_vars['dobr']) || $this->_vars['dobr'][self::VARCFG_VALUE] == 1) ? 1 : 0;
 					if ($html) {
 						return $ts->displayTarea($this->_vars[$name][self::VARCFG_VALUE], $html, $smiley, $xcode, $image, $br);
 					} else {
@@ -931,13 +931,13 @@ abstract class AbstractProperties implements Serializable {
 			case self::DTYPE_INTEGER: // self::DTYPE_INTEGER
 				return $this->_vars[$name][self::VARCFG_VALUE];
 			case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
-				return sprintf(isset($this->_vars[$name][self::VARCFG_FORMAT])?$this->_vars[$name][self::VARCFG_FORMAT]:'%d', $this->_vars[$name][self::VARCFG_VALUE]);
+				return sprintf(isset($this->_vars[$name][self::VARCFG_FORMAT]) ? $this->_vars[$name][self::VARCFG_FORMAT] : '%d', $this->_vars[$name][self::VARCFG_VALUE]);
 			case self::DTYPE_BOOLEAN:
-				return $this->_vars[$name][self::VARCFG_VALUE]? _YES : _NO;
+				return $this->_vars[$name][self::VARCFG_VALUE] ? _YES : _NO;
 			case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
 				return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_vars[$name][self::VARCFG_VALUE], ENT_QUOTES, _CHARSET));
 			case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
-				return date(isset($this->_vars[$name][self::VARCFG_FORMAT])?$this->_vars[$name][self::VARCFG_FORMAT]:'r', $this->_vars[$name][self::VARCFG_VALUE]);
+				return date(isset($this->_vars[$name][self::VARCFG_FORMAT]) ? $this->_vars[$name][self::VARCFG_FORMAT] : 'r', $this->_vars[$name][self::VARCFG_VALUE]);
 			case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
 				return $this->_vars[$name][self::VARCFG_VALUE];
 			case self::DTYPE_LIST; // XOBJ_DTYPE_SIMPLE_ARRAY
@@ -1038,13 +1038,13 @@ abstract class AbstractProperties implements Serializable {
 	 */
 	public function __set($name, $value) {
 		if (!isset($this->_vars[$name])) {
-					return trigger_error('Variable ' . get_class($this) . '::$' . $name . ' not found', E_USER_WARNING);
+					return trigger_error('Variable '.get_class($this).'::$'.$name.' not found', E_USER_WARNING);
 		}
 		if ($this->_vars[$name][self::VARCFG_LOCKED]) {
-					return trigger_error('Variable ' . get_class($this) . '::$' . $name . ' locked', E_USER_WARNING);
+					return trigger_error('Variable '.get_class($this).'::$'.$name.' locked', E_USER_WARNING);
 		}
 		if (isset($this->_vars[$name][self::VARCFG_POSSIBLE_OPTIONS]) && !in_array($value, $this->_vars[$name][self::VARCFG_POSSIBLE_OPTIONS])) {
-					return trigger_error('Option not in array for variable ' . get_class($this) . '::$' . $name . ' not found', E_USER_WARNING);
+					return trigger_error('Option not in array for variable '.get_class($this).'::$'.$name.' not found', E_USER_WARNING);
 		}
 		$clean = $this->cleanVar($name, $this->_vars[$name][self::VARCFG_TYPE], $value);
 

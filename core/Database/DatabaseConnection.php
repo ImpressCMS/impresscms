@@ -64,7 +64,7 @@ class DatabaseConnection extends ExtendedPdo implements DatabaseConnectionInterf
 	public function queryF($sql, $limit = 0, $start = 0)
 	{
 		if (!empty($limit) && is_numeric($limit)) {
-			$sql .= ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
+			$sql .= ' LIMIT '.((int) $start).', '.((int) $limit);
 		}
 		$result = $this->perform($sql);
 		if ($result) {
@@ -100,7 +100,7 @@ class DatabaseConnection extends ExtendedPdo implements DatabaseConnectionInterf
 	 */
 	public function prefix($tablename = '')
 	{
-		return $tablename ? $this->prefix . '_' . $tablename : $this->prefix;
+		return $tablename ? $this->prefix.'_'.$tablename : $this->prefix;
 	}
 
 	/**

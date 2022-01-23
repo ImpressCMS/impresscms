@@ -62,7 +62,7 @@ class AutocompleteElement extends \ImpressCMS\Core\View\Form\Elements\TextElemen
 	public function render() {
 		global $xoTheme;
 
-		if (!is_file(ICMS_ROOT_PATH . '/' . $this->_file)) {
+		if (!is_file(ICMS_ROOT_PATH.'/'.$this->_file)) {
 			return parent::render();
 		}
 
@@ -70,17 +70,17 @@ class AutocompleteElement extends \ImpressCMS\Core\View\Form\Elements\TextElemen
 		$delay = $control['delay'] ?? 500;
 
 		$js  = "jQuery(document).ready(function() {\n";
-		$js .= " jQuery('#" . $this->getName() . "').autocomplete({\n";
+		$js .= " jQuery('#".$this->getName()."').autocomplete({\n";
 		$js .= "  source: function(req, add){\n";
-		$js .= "   jQuery.getJSON('" . ICMS_URL . '/' . $this->_file . "?callback=?', req, function(data) {\n";
+		$js .= "   jQuery.getJSON('".ICMS_URL.'/'.$this->_file."?callback=?', req, function(data) {\n";
 		$js .= "    var suggestions = [];\n";
 		$js .= "    jQuery.each(data, function(i, val){ suggestions.push(val.item); });\n";
 		$js .= "    add(suggestions);\n";
 		$js .= "   });\n";
 		$js .= "  }\n";
 		$js .= " }, {\n";
-		$js .= '  minLength:' . $minlength . ",\n";
-		$js .= '  delay:' . $delay . "\n";
+		$js .= '  minLength:'.$minlength.",\n";
+		$js .= '  delay:'.$delay."\n";
 		$js .= " });\n";
 		$js .= '});';
 

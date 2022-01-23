@@ -102,7 +102,7 @@ class TarDownloader extends Downloader {
 	 * @param   integer $time
 	 */
 	public function addFileData(&$data, $filename, $time = 0) {
-		$dummyfile = ICMS_CACHE_PATH . '/dummy_' . time() . '.html';
+		$dummyfile = ICMS_CACHE_PATH.'/dummy_'.time().'.html';
 		$fp = fopen($dummyfile, 'w');
 		fwrite($fp, $data);
 		fclose($fp);
@@ -129,7 +129,7 @@ class TarDownloader extends Downloader {
 	 * @param   integer $time
 	 */
 	public function addBinaryFileData(&$data, $filename, $time = 0) {
-		$dummyfile = ICMS_CACHE_PATH . '/dummy_' . time() . '.html';
+		$dummyfile = ICMS_CACHE_PATH.'/dummy_'.time().'.html';
 		$fp = fopen($dummyfile, 'wb');
 		fwrite($fp, $data);
 		fclose($fp);
@@ -155,7 +155,7 @@ class TarDownloader extends Downloader {
 	 * @param   boolean $gzip   Use GZ compression
 	 */
 	public function download($name, $gzip = true) {
-		$this->_header($name . $this->ext);
-		echo $this->archiver->toTarOutput($name . $this->ext, $gzip);
+		$this->_header($name.$this->ext);
+		echo $this->archiver->toTarOutput($name.$this->ext, $gzip);
 	}
 }

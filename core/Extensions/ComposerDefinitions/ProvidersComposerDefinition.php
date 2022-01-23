@@ -18,7 +18,7 @@ class ProvidersComposerDefinition implements ComposerDefinitionInterface
 	 */
 	public function getCacheFilename(): string
 	{
-		return ICMS_CACHE_PATH . '/providers.php';
+		return ICMS_CACHE_PATH.'/providers.php';
 	}
 
 	/**
@@ -29,8 +29,8 @@ class ProvidersComposerDefinition implements ComposerDefinitionInterface
 		$filename = $this->getCacheFilename();
 
 		return (!file_exists($filename)) ||
-			(filemtime($filename) < filemtime($composerPath . '/composer.json')) ||
-			(filemtime($filename) < filemtime($composerPath . '/composer.lock'));
+			(filemtime($filename) < filemtime($composerPath.'/composer.json')) ||
+			(filemtime($filename) < filemtime($composerPath.'/composer.lock'));
 	}
 
 	/**
@@ -38,15 +38,15 @@ class ProvidersComposerDefinition implements ComposerDefinitionInterface
 	 */
 	public function updateCache(array $data): void
 	{
-		$ret = '<?php' . PHP_EOL;
-		$ret .= '/**' . PHP_EOL;
-		$ret .= ' * @var ' . Container::class . ' $container' . PHP_EOL;
-		$ret .= ' */' . PHP_EOL;
-		$ret .= '$container' . PHP_EOL;
+		$ret = '<?php'.PHP_EOL;
+		$ret .= '/**'.PHP_EOL;
+		$ret .= ' * @var '.Container::class.' $container'.PHP_EOL;
+		$ret .= ' */'.PHP_EOL;
+		$ret .= '$container'.PHP_EOL;
 		foreach ($this->generateData($data) as $provider) {
-			$ret .= '    ->addServiceProvider(' . var_export($provider, true) . ')' . PHP_EOL;
+			$ret .= '    ->addServiceProvider('.var_export($provider, true).')'.PHP_EOL;
 		}
-		$ret = trim($ret) . ';';
+		$ret = trim($ret).';';
 
 		file_put_contents(
 			$this->getCacheFilename(),

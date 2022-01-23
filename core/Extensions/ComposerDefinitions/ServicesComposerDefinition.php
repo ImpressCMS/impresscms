@@ -22,8 +22,8 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 		$filename = $this->getCacheFilename();
 
 		return (!file_exists($filename)) ||
-			(filemtime($filename) < filemtime($composerPath . '/composer.json')) ||
-			(filemtime($filename) < filemtime($composerPath . '/composer.lock'));
+			(filemtime($filename) < filemtime($composerPath.'/composer.json')) ||
+			(filemtime($filename) < filemtime($composerPath.'/composer.lock'));
 	}
 
 	/**
@@ -33,7 +33,7 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 	 */
 	public function getCacheFilename(): string
 	{
-		return ICMS_CACHE_PATH . '/services.php';
+		return ICMS_CACHE_PATH.'/services.php';
 	}
 
 	/**
@@ -41,16 +41,16 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 	 */
 	public function updateCache(array $data): void
 	{
-		$ret = '<?php' . PHP_EOL;
-		$ret .= '/**' . PHP_EOL;
-		$ret .= ' * @var ' . Container::class . ' $container' . PHP_EOL;
-		$ret .= ' */' . PHP_EOL;
-		$ret .= '$container' . PHP_EOL;
-		$ret .= "    ->add('container', \icms::getInstance());" . PHP_EOL;
+		$ret = '<?php'.PHP_EOL;
+		$ret .= '/**'.PHP_EOL;
+		$ret .= ' * @var '.Container::class.' $container'.PHP_EOL;
+		$ret .= ' */'.PHP_EOL;
+		$ret .= '$container'.PHP_EOL;
+		$ret .= "    ->add('container', \icms::getInstance());".PHP_EOL;
 		$services = (isset($data['services']) && is_array($data['services'])) ? $data['services'] : [];
-		$containerAwareStr = '    ->addMethodCall(' . var_export('setLeagueContainer', true) . ',[' . var_export('container', true) . '])' . PHP_EOL;
+		$containerAwareStr = '    ->addMethodCall('.var_export('setLeagueContainer', true).',['.var_export('container', true).'])'.PHP_EOL;
 		foreach ($services as $alias => $serviceInfo) {
-			$ret .= '$container' . PHP_EOL;
+			$ret .= '$container'.PHP_EOL;
 			$class = $serviceInfo['class'] ?? $alias;
 			$ret .= sprintf(
 				'    ->add(%s, %s, %s)%s',
@@ -63,19 +63,19 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 					true
 				),
 				var_export(
-					isset($serviceInfo['shared']) ? (bool)$serviceInfo['shared'] : true,
+					isset($serviceInfo['shared']) ? (bool) $serviceInfo['shared'] : true,
 					true
 				),
 				PHP_EOL
 			);
 			if (isset($serviceInfo['tags'])) {
 				foreach ($serviceInfo['tags'] as $tag) {
-					$ret .= '    ->addTag(' . var_export($tag, true) . ')' . PHP_EOL;
+					$ret .= '    ->addTag('.var_export($tag, true).')'.PHP_EOL;
 				}
 			}
 			if (isset($serviceInfo['arguments'])) {
 				foreach ($serviceInfo['arguments'] as $argument) {
-					$ret .= '    ->addArgument(' . var_export($argument, true) . ')' . PHP_EOL;
+					$ret .= '    ->addArgument('.var_export($argument, true).')'.PHP_EOL;
 				}
 			}
 			if ($this->implementsContainerAwareInterface($class)) {
@@ -83,15 +83,15 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 			}
 			if (isset($serviceInfo['methods'])) {
 				foreach ($serviceInfo['methods'] as $method => $arguments) {
-					$ret .= '    ->addMethodCall(' . PHP_EOL;
-					$ret .= sprintf('        %s,', var_export($method, true)) . PHP_EOL;
-					foreach (explode(PHP_EOL, var_export((array)$arguments, true)) as $line) {
-						$ret .= '        ' . $line . PHP_EOL;
+					$ret .= '    ->addMethodCall('.PHP_EOL;
+					$ret .= sprintf('        %s,', var_export($method, true)).PHP_EOL;
+					foreach (explode(PHP_EOL, var_export((array) $arguments, true)) as $line) {
+						$ret .= '        '.$line.PHP_EOL;
 					}
-					$ret .= '    )' . PHP_EOL;
+					$ret .= '    )'.PHP_EOL;
 				}
 			}
-			$ret = trim($ret) . ';' . PHP_EOL;
+			$ret = trim($ret).';'.PHP_EOL;
 		}
 
 		file_put_contents(
@@ -113,7 +113,7 @@ class ServicesComposerDefinition implements ComposerDefinitionInterface
 	protected function implementsContainerAwareInterface(string $class): bool
 	{
 		$reflect = new ReflectionClass(
-			(strpos($class, '\\') === 0) ? substr($class, 1): $class
+			(strpos($class, '\\') === 0) ? substr($class, 1) : $class
 		);
 		return $reflect->implementsInterface(ContainerAwareInterface::class);
 	}

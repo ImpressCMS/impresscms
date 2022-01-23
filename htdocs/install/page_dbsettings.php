@@ -129,7 +129,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '', $charset)
 
 	$field = "<label for='$name'>$label</label>\n";
 	if ($help) {
-		$field .= '<div class="xoform-help">' . $help . "</div><div class='clear'>&nbsp;</div>\n";
+		$field .= '<div class="xoform-help">'.$help."</div><div class='clear'>&nbsp;</div>\n";
 	}
 	$field .= "<select name='$name' id='$name'\">";
 
@@ -140,10 +140,10 @@ function xoFormFieldCollation($name, $value, $label, $help = '', $charset)
 			$collation_default = $key;
 			continue;
 		}
-		$options .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key}</option>";
+		$options .= "<option value='{$key}'".(($value == $key) ? " selected='selected'" : "").">{$key}</option>";
 	}
 	if ($collation_default) {
-		$field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty ($value)) ? " 'selected'" : "") . ">{$collation_default} (Default)</option>";
+		$field .= "<option value='{$collation_default}'".(($value == $collation_default || empty ($value)) ? " 'selected'" : "").">{$collation_default} (Default)</option>";
 	}
 	$field .= $options;
 	$field .= "</select>";
@@ -153,7 +153,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '', $charset)
 
 function xoFormBlockCollation($name, $value, $label, $help = '', $charset)
 {
-	$block = '<div id="' . $name . '_div">';
+	$block = '<div id="'.$name.'_div">';
 	$block .= xoFormFieldCollation($name, $value, $label, $help, $charset);
 	$block .= '</div>';
 
@@ -164,7 +164,7 @@ function select_db($db_name)
 {
 	global $db;
 	try {
-		$db->exec("use `" . $db_name . '`;');
+		$db->exec("use `".$db_name.'`;');
 		return true;
 	} catch (PDOException $ex) {
 		return false;
@@ -191,7 +191,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 		if (!select_db($vars['DB_NAME'])) {
 			// Database not here: try to create it
 			try {
-				$db->exec("CREATE DATABASE `" . $vars ['DB_NAME'] . '`');
+				$db->exec("CREATE DATABASE `".$vars ['DB_NAME'].'`');
 				$error = sprintf(DATABASE_CREATED, $vars ['DB_NAME']);
 				$db_exist = true;
 			} catch (\Exception $exception) {
@@ -203,7 +203,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 		if ($db_exist && $vars['DB_CHARSET']) {
 			/* Attempt to set the character set and collation to the selected */
 			if (!$db->perform(
-				"ALTER DATABASE `" . $vars['DB_NAME'] . "` DEFAULT CHARACTER SET :chr COLLATE :collation",
+				"ALTER DATABASE `".$vars['DB_NAME']."` DEFAULT CHARACTER SET :chr COLLATE :collation",
 				[
 					'chr' => $vars['DB_CHARSET'],
 					'collation' => $vars['DB_COLLATION']
@@ -245,7 +245,7 @@ if (@empty ($vars ['DB_NAME'])) {
 			'DB_NAME' => '',
 			'DB_CHARSET' => 'utf8',
 			'DB_COLLATION' => '',
-			'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8),
+			'DB_PREFIX' => 'i'.substr(md5(time()), 0, 8),
 			'APP_KEY' => \Defuse\Crypto\Key::createNewRandomKey()->saveToAsciiSafeString(),
 	]);
 }
@@ -255,11 +255,11 @@ function xoFormField($name, $value, $label, $maxlength, $help = '')
 	$label = htmlspecialchars($label);
 	$name = htmlspecialchars($name, ENT_QUOTES);
 	$value = htmlspecialchars($value, ENT_QUOTES);
-	$maxlength = (int)($maxlength);
+	$maxlength = (int) ($maxlength);
 
 	$field = "<div class='dbconn_line'><label for='$name'>$label</label>\n";
 	if ($help) {
-		$field .= '<div class="xoform-help">' . $help . "</div><div class='clear'>&nbsp;</div>\n";
+		$field .= '<div class="xoform-help">'.$help."</div><div class='clear'>&nbsp;</div>\n";
 	}
 	$field .= "<input type='text' name='$name' id='$name' value='$value' /></div>";
 
@@ -290,12 +290,12 @@ function xoFormFieldCharset($name, $value, $label, $help = '')
 
 	$field = "<div class='dbconn_line'><label for='$name'>$label</label>\n";
 	if ($help) {
-		$field .= '<div class="xoform-help">' . $help . "</div><div class='clear'>&nbsp;</div>\n";
+		$field .= '<div class="xoform-help">'.$help."</div><div class='clear'>&nbsp;</div>\n";
 	}
 	$field .= "<select name='$name' id='$name' onchange=\"setFormFieldCollation('DB_COLLATION_div', this.value)\">";
 	$field .= "<option value=''>None</option>";
 	foreach ($charsets as $key => $desc) {
-		$field .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key} - {$desc}</option>";
+		$field .= "<option value='{$key}'".(($value == $key) ? " selected='selected'" : "").">{$key} - {$desc}</option>";
 	}
 	$field .= "</select></div>";
 
@@ -307,7 +307,7 @@ ob_start();
 
 <?php
 if (!empty ($error)) {
-	echo '<div class="x2-note error">' . $error . "</div>\n";
+	echo '<div class="x2-note error">'.$error."</div>\n";
 }
 ?>
 	<script type="text/javascript">

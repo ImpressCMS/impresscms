@@ -42,7 +42,7 @@ use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Security\StopSpammer;
 
-include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
+include_once ICMS_INCLUDE_PATH.'/notification_constants.php';
 
 /**
  * User handler class.
@@ -65,7 +65,7 @@ class UserHandler
 			icms_loadLanguageFile('core', 'notification');
 			icms_loadLanguageFile('core', 'global');
 
-			$objName = ($module === 'icms')?'member_user':'user';
+			$objName = ($module === 'icms') ? 'member_user' : 'user';
 			parent::__construct($db, $objName, 'uid', 'uname', 'email', $module, 'users');
 		}
 
@@ -118,7 +118,7 @@ class UserHandler
 			}
 			$sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), substr(md5(time()), 0, 8));
 			if ($criteria instanceof CriteriaElement) {
-							$sql .= ' ' . $criteria->renderWhere();
+							$sql .= ' '.$criteria->renderWhere();
 			}
 			return (bool) $this->db->query($sql);
 	}
@@ -143,7 +143,7 @@ class UserHandler
 
 		// initializations
 		$member_handler = \icms::handler('icms_member');
-		$thisUser = ($uid > 0)?$thisUser = $member_handler->getUser($uid):false;
+		$thisUser = ($uid > 0) ? $thisUser = $member_handler->getUser($uid) : false;
 		$icmsStopSpammers = new StopSpammer();
 		$stop = '';
 		switch ($icmsConfigUser['uname_test_level']) {
@@ -161,11 +161,11 @@ class UserHandler
 		// check email
 		if ((is_object($thisUser) && $thisUser->getVar('email', 'e') !== $email && $email !== false) || !is_object($thisUser)) {
 			if (!DataFilter::checkVar($email, 'email', 0, 1)) {
-				$stop .= _US_INVALIDMAIL . '<br />';
+				$stop .= _US_INVALIDMAIL.'<br />';
 			}
 			$count = $this->getCount(icms_buildCriteria(array('email' => addslashes($email))));
 			if ($count > 0) {
-				$stop .= _US_EMAILTAKEN . '<br />';
+				$stop .= _US_EMAILTAKEN.'<br />';
 			}
 		}
 
@@ -173,26 +173,26 @@ class UserHandler
 		$login_name = DataFilter::icms_trim($login_name);
 		if ((is_object($thisUser) && $thisUser->getVar('login_name', 'e') !== $login_name && $login_name !== false) || !is_object($thisUser)) {
 			if (empty($login_name) || preg_match($restriction, $login_name)) {
-				$stop .= _US_INVALIDNICKNAME . '<br />';
+				$stop .= _US_INVALIDNICKNAME.'<br />';
 			}
 			if (strlen($login_name) > $icmsConfigUser['maxuname']) {
-				$stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']) . '<br />';
+				$stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']).'<br />';
 			}
 			if (strlen($login_name) < $icmsConfigUser['minuname']) {
-				$stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']) . '<br />';
+				$stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']).'<br />';
 			}
 			foreach ($icmsConfigUser['bad_unames'] as $bu) {
-				if (!empty($bu) && preg_match('/' . $bu . '/i', $login_name)) {
-					$stop .= _US_NAMERESERVED . '<br />';
+				if (!empty($bu) && preg_match('/'.$bu.'/i', $login_name)) {
+					$stop .= _US_NAMERESERVED.'<br />';
 					break;
 				}
 			}
 			if (strrpos($login_name, ' ') > 0) {
-				$stop .= _US_NICKNAMENOSPACES . '<br />';
+				$stop .= _US_NICKNAMENOSPACES.'<br />';
 			}
 			$count = $this->getCount(icms_buildCriteria(array('login_name' => addslashes($login_name))));
 			if ($count > 0) {
-				$stop .= _US_LOGINNAMETAKEN . '<br />';
+				$stop .= _US_LOGINNAMETAKEN.'<br />';
 			}
 		}
 
@@ -200,28 +200,28 @@ class UserHandler
 		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') !== $uname && $uname !== false) || !is_object($thisUser)) {
 			$count = $this->getCount(icms_buildCriteria(array('uname' => addslashes($uname))));
 			if ($count > 0) {
-				$stop .= _US_NICKNAMETAKEN . '<br />';
+				$stop .= _US_NICKNAMETAKEN.'<br />';
 			}
 		}
 
 		// check password
 		if ($pass !== false) {
 			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') {
-				$stop .= _US_ENTERPWD . '<br />';
+				$stop .= _US_ENTERPWD.'<br />';
 			}
 			if ((isset($pass)) && ($pass !== $vpass)) {
-				$stop .= _US_PASSNOTSAME . '<br />';
+				$stop .= _US_PASSNOTSAME.'<br />';
 			} elseif ($pass && (strlen($pass) < $icmsConfigUser['minpass'])) {
-				$stop .= sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']) . '<br />';
+				$stop .= sprintf(_US_PWDTOOSHORT, $icmsConfigUser['minpass']).'<br />';
 			}
 			if (isset($pass, $login_name) && ($pass === $login_name || $pass === DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)) {
-				$stop .= _US_BADPWD . '<br />';
+				$stop .= _US_BADPWD.'<br />';
 			}
 		}
 
 		// check other things
 		if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) {
-			$stop .= _US_INVALIDIP . '<br />';
+			$stop .= _US_INVALIDIP.'<br />';
 		}
 
 		return $stop;
@@ -256,7 +256,7 @@ class UserHandler
 			}
 
 			if (is_object($user)) {
-				$author = $isAuthor?" rel='author'": '';
+				$author = $isAuthor ? " rel='author'" : '';
 				$fullname = '';
 				$linkeduser = '';
 
@@ -266,24 +266,24 @@ class UserHandler
 					$fullname = $user->name;
 				}
 				if (!empty($fullname)) {
-					$linkeduser = $fullname . '[';
+					$linkeduser = $fullname.'[';
 				}
-				$linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $uid . '"' . $author . '>';
-				$linkeduser .= DataFilter::htmlSpecialChars($username) . '</a>';
+				$linkeduser .= '<a href="'.ICMS_URL.'/userinfo.php?uid='.$uid.'"'.$author.'>';
+				$linkeduser .= DataFilter::htmlSpecialChars($username).'</a>';
 				if (!empty($fullname)) {
 					$linkeduser .= ']';
 				}
 
 				if ($withContact) {
-					$linkeduser .= '<a href="mailto:' . $user->email . '">';
-					$linkeduser .= '<img style="vertical-align: middle;" src="' . ICMS_IMAGES_URL
-						. '/icons/' . $icmsConfig["language"] . '/email.gif' . '" alt="'
-						. _US_SEND_MAIL . '" title="' . _US_SEND_MAIL . '"/></a>';
-					$js = "javascript:openWithSelfMain('" . ICMS_URL . '/pmlite.php?send2=1&to_userid='
-						. $uid . "', 'pmlite', 450, 370);";
-					$linkeduser .= '<a href="' . $js . '"><img style="vertical-align: middle;" src="'
-						. ICMS_IMAGES_URL . '/icons/' . $icmsConfig["language"] . '/pm.gif'
-						. '" alt="' . _US_SEND_PM . '" title="' . _US_SEND_PM . '"/></a>';
+					$linkeduser .= '<a href="mailto:'.$user->email.'">';
+					$linkeduser .= '<img style="vertical-align: middle;" src="'.ICMS_IMAGES_URL
+						. '/icons/'.$icmsConfig["language"].'/email.gif'.'" alt="'
+						. _US_SEND_MAIL.'" title="'._US_SEND_MAIL.'"/></a>';
+					$js = "javascript:openWithSelfMain('".ICMS_URL.'/pmlite.php?send2=1&to_userid='
+						. $uid."', 'pmlite', 450, 370);";
+					$linkeduser .= '<a href="'.$js.'"><img style="vertical-align: middle;" src="'
+						. ICMS_IMAGES_URL.'/icons/'.$icmsConfig["language"].'/pm.gif'
+						. '" alt="'._US_SEND_PM.'" title="'._US_SEND_PM.'"/></a>';
 				}
 
 				return $linkeduser;
@@ -301,8 +301,8 @@ class UserHandler
 	public static function getUnameFromEmail($email = '') {
 				$handler = \icms::handler('icms_member_user');
 		if ($email !== '') {
-			$sql = $handler->db->query('SELECT uname, email FROM ' . $handler->table
-				. " WHERE email = '" . (!empty($email)?htmlspecialchars($email, ENT_QUOTES, _CHARSET):'')
+			$sql = $handler->db->query('SELECT uname, email FROM '.$handler->table
+				. " WHERE email = '".(!empty($email) ?htmlspecialchars($email, ENT_QUOTES, _CHARSET) : '')
 				. "'");
 			list($uname, $email) = $handler->db->fetchRow($sql);
 		} else {
@@ -322,7 +322,7 @@ class UserHandler
 		$userid = (int) $userid;
 		if ($userid > 0) {
 						$sql = $this->db->query(
-								'SELECT ' . ($usereal?'name':'uname') . ' FROM ' . $this->table
+								'SELECT '.($usereal ? 'name' : 'uname').' FROM '.$this->table
 				. " WHERE userid = '"
 								. $userid
 				. "'"

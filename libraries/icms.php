@@ -110,9 +110,9 @@ final class icms extends Container {
 		}
 		if (!$virtual) {
 			// Returns a physical path
-			return self::$paths[$root][0] . '/' . $path;
+			return self::$paths[$root][0].'/'.$path;
 		}
-		return !isset(self::$paths[$root][1]) ? '' : (self::$paths[$root][1] . '/' . $path);
+		return !isset(self::$paths[$root][1]) ? '' : (self::$paths[$root][1].'/'.$path);
 	}
 
 	/**
@@ -147,9 +147,9 @@ final class icms extends Container {
 		}
 		if (!empty($params)) {
 			foreach ($params as $k => $v) {
-				$params[$k] = $k . '=' . rawurlencode($v);
+				$params[$k] = $k.'='.rawurlencode($v);
 			}
-			$url .= '?' . implode('&', $params);
+			$url .= '?'.implode('&', $params);
 		}
 		return $url;
 	}
@@ -164,20 +164,20 @@ final class icms extends Container {
 	public static function &handler($name, $optional = false)
 	{
 		$instance = static::getInstance();
-		$real_name = $name . '_handler';
+		$real_name = $name.'_handler';
 		if (!$instance->has($real_name)) {
-			$class = $name . 'Handler';
+			$class = $name.'Handler';
 			if (!class_exists($class)) {
-				$class = $name . '_Handler';
+				$class = $name.'_Handler';
 				if (!class_exists($class)) {
 					// Try old style handler loading (should be removed later, in favor of the
 					// lookup table present in xoops_gethandler)
 					$lower = strtolower(trim($name));
-					if (file_exists($hnd_file = ICMS_ROOT_PATH . '/class/' . $lower . '.php')) {
+					if (file_exists($hnd_file = ICMS_ROOT_PATH.'/class/'.$lower.'.php')) {
 						require_once $hnd_file;
 					}
-					if (!class_exists($class = 'Xoops' . ucfirst($lower) . 'Handler', false)) {
-						if (!class_exists($class = 'Icms' . ucfirst($lower) . 'Handler', false)) {
+					if (!class_exists($class = 'Xoops'.ucfirst($lower).'Handler', false)) {
+						if (!class_exists($class = 'Icms'.ucfirst($lower).'Handler', false)) {
 							// Not found at all
 							$class = false;
 						}
@@ -203,10 +203,10 @@ final class icms extends Container {
 	public function setup()
 	{
 		self::$paths['www'] = array(ICMS_ROOT_PATH, ICMS_URL);
-		self::$paths['modules'] = array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
+		self::$paths['modules'] = array(ICMS_ROOT_PATH.'/modules', ICMS_URL.'/modules');
 		self::$paths['themes'] = array(ICMS_THEME_PATH, ICMS_THEME_URL);
 		// Initialize the autoloader
-		require_once dirname(__DIR__) . '/core/Autoloader.php';
+		require_once dirname(__DIR__).'/core/Autoloader.php';
 		Autoloader::setup();
 		$this->buildRelevantUrls();
 
@@ -220,7 +220,7 @@ final class icms extends Container {
 	protected function buildRelevantUrls() {
 		if (isset($_SERVER['HTTP_HOST']) && !self::$urls) {
 			$http = strpos(ICMS_URL, "https://") === false
-				?"http://"
+				? "http://"
 				: "https://";
 
 			/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */
@@ -237,15 +237,15 @@ final class icms extends Container {
 			$httphost = $clean_SERVER['HTTP_HOST'];
 			$querystring = $clean_SERVER['QUERY_STRING'];
 			if ($querystring != '') {
-				$querystring = '?' . $querystring;
+				$querystring = '?'.$querystring;
 			}
-			$currenturl = $http . $httphost . $phpself . $querystring;
+			$currenturl = $http.$httphost.$phpself.$querystring;
 			self::$urls = array();
 			self::$urls['http'] = $http;
 			self::$urls['httphost'] = $httphost;
 			self::$urls['phpself'] = $phpself;
 			self::$urls['querystring'] = $querystring;
-			self::$urls['full_phpself'] = $http . $httphost . $phpself;
+			self::$urls['full_phpself'] = $http.$httphost.$phpself;
 			self::$urls['full'] = $currenturl;
 
 			$previouspage = '';
@@ -270,7 +270,7 @@ final class icms extends Container {
 
 		if ($extras === null) {
 			chdir($composerJsonPath);
-			putenv('COMPOSER_HOME=' . ICMS_STORAGE_PATH . '/composer');
+			putenv('COMPOSER_HOME='.ICMS_STORAGE_PATH.'/composer');
 			$composer = Factory::create(
 				new NullIO()
 			);
@@ -364,7 +364,7 @@ final class icms extends Container {
 			 * @var DefinitionInterface $definition
 			 */
 			foreach ($this->definitions->getIterator() as $definition) {
-				if (($definition->getConcrete() === $serviceName) || ($definition->getConcrete() === '\\' . $serviceName)) {
+				if (($definition->getConcrete() === $serviceName) || ($definition->getConcrete() === '\\'.$serviceName)) {
 					return $definition;
 				}
 			}

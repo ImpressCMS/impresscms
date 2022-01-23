@@ -65,11 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit();
 	}
 
-	putenv('INSTALL_ADMIN_EMAIL=' . $adminmail);
-	putenv('INSTALL_ADMIN_NAME=' . $adminname);
-	putenv('INSTALL_ADMIN_PASS=' . $adminpass);
-	putenv('INSTALL_ADMIN_LOGIN=' . $adminlogin_name);
-	putenv('INSTALL_LANGUAGE=' . $language);
+	putenv('INSTALL_ADMIN_EMAIL='.$adminmail);
+	putenv('INSTALL_ADMIN_NAME='.$adminname);
+	putenv('INSTALL_ADMIN_PASS='.$adminpass);
+	putenv('INSTALL_ADMIN_LOGIN='.$adminlogin_name);
+	putenv('INSTALL_LANGUAGE='.$language);
 	$symfonyConsoleApplication = new Application('icms-installer');
 	$symfonyConsoleApplication->setAutoExit(false);
 	$symfonyConsoleApplication->add(new InitCommand());
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				'command' => 'init',
 				'-v' => true,
 				'--config_type' => 'php',
-				'--config' => dirname(dirname(__DIR__)) . '/phoenix.php',
+				'--config' => dirname(dirname(__DIR__)).'/phoenix.php',
 			]), $output) > 0) && (strrpos($content = $output->fetch(), 'Phoenix was already initialized') === false)) {
 
 		$content = nl2br($content);
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		'command' => 'migrate',
 		'--dir' => ['core'],
 		'--config_type' => 'php',
-		'--config' => dirname(dirname(__DIR__)) . '/phoenix.php',
+		'--config' => dirname(dirname(__DIR__)).'/phoenix.php',
 	]), $output);
 	$content = nl2br($output->fetch());
 } else {

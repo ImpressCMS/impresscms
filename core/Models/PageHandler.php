@@ -33,7 +33,7 @@ class PageHandler extends AbstractExtendedHandler {
 		$rtn = array();
 		$pages = $this->getObjects($criteria, true);
 		foreach ($pages as $page) {
-			$rtn[$page->page_moduleid . '-' . $page->page_id] = $page->page_title;
+			$rtn[$page->page_moduleid.'-'.$page->page_id] = $page->page_title;
 		}
 		return $rtn;
 	}
@@ -48,22 +48,22 @@ class PageHandler extends AbstractExtendedHandler {
 		$module_list = & $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module) {
-			$mods .= '<optgroup label="' . $module->getVar('name') . '">';
+			$mods .= '<optgroup label="'.$module->getVar('name').'">';
 			$criteria = new CriteriaCompo(new CriteriaItem('page_moduleid', $module->getVar('mid')));
 			$criteria->add(new CriteriaItem('page_status', 1));
 			$pages = & $this->getObjects($criteria);
 			$sel = '';
-			if (in_array($module->mid . '-0', $value)) {
+			if (in_array($module->mid.'-0', $value)) {
 				$sel = ' selected=selected';
 			}
-			$mods .= '<option value="' . $module->mid . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
+			$mods .= '<option value="'.$module->mid.'-0"'.$sel.'>'._AM_ALLPAGES.'</option>';
 			foreach ($pages as $page) {
 				$sel = '';
-				if (in_array($module->mid . '-' . $page->page_id, $value)) {
+				if (in_array($module->mid.'-'.$page->page_id, $value)) {
 					$sel = ' selected=selected';
 				}
 				$mods .= '<option value="'
-						. $module->mid . '-' . $page->page_id . '"' . $sel . '>'
+						. $module->mid.'-'.$page->page_id.'"'.$sel.'>'
 						. $page->page_title
 						 . '</option>';
 			}
@@ -76,18 +76,18 @@ class PageHandler extends AbstractExtendedHandler {
 		$pages = & $this->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0) {
-			$cont = '<optgroup label="' . $module->name . '">';
+			$cont = '<optgroup label="'.$module->name.'">';
 			$sel = '';
-			if (in_array($module->mid . '-0', $value)) {
+			if (in_array($module->mid.'-0', $value)) {
 				$sel = ' selected=selected';
 			}
-			$cont .= '<option value="' . $module->mid . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
+			$cont .= '<option value="'.$module->mid.'-0"'.$sel.'>'._AM_ALLPAGES.'</option>';
 			foreach ($pages as $page) {
 				$sel = '';
-				if (in_array($module->mid . '-' . $page->page_id, $value)) {
+				if (in_array($module->mid.'-'.$page->page_id, $value)) {
 					$sel = ' selected=selected';
 				}
-				$cont .= '<option value="' . $module->mid . '-' . $page->page_id . '"' . $sel . '>'
+				$cont .= '<option value="'.$module->mid.'-'.$page->page_id.'"'.$sel.'>'
 						. $page->page_title
 						. '</option>';
 			}
@@ -100,10 +100,10 @@ class PageHandler extends AbstractExtendedHandler {
 		if (in_array('0-0', $value)) {
 			$sel1 = ' selected=selected';
 		}
-		$ret = '<option value="0-1"' . $sel . '>' . _AM_TOPPAGE
-			. '</option><option value="0-0"' . $sel1 . '>' . _AM_ALLPAGES
+		$ret = '<option value="0-1"'.$sel.'>'._AM_TOPPAGE
+			. '</option><option value="0-0"'.$sel1.'>'._AM_ALLPAGES
 			. '</option>';
-		$ret .= $cont . $mods;
+		$ret .= $cont.$mods;
 
 		return $ret;
 	}

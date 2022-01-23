@@ -5,10 +5,10 @@ use Phoenix\Migration\AbstractMigration;
 
 class AddSessionExtensionSettingsOption extends AbstractMigration
 {
-    protected function up(): void
-    {
-    	$this->execute(
-    		'UPDATE ' . $this->prefix('config') . ' SET conf_order = conf_order + 1 WHERE conf_order > 21'
+	protected function up(): void
+	{
+		$this->execute(
+			'UPDATE ' . $this->prefix('config') . ' SET conf_order = conf_order + 1 WHERE conf_order > 21'
 		);
 		$this->insert(
 			$this->prefix('config'),
@@ -24,10 +24,10 @@ class AddSessionExtensionSettingsOption extends AbstractMigration
 				'conf_order' => 22
 			]
 		);
-    }
+	}
 
-    protected function down(): void
-    {
+	protected function down(): void
+	{
 		$this->delete(
 			$this->prefix('config'),
 			[
@@ -37,9 +37,9 @@ class AddSessionExtensionSettingsOption extends AbstractMigration
 			]
 		);
 		$this->execute(
-			'UPDATE ' . $this->prefix('config') . ' SET conf_order = conf_order - 1 WHERE conf_order > 21'
+			'UPDATE '.$this->prefix('config').' SET conf_order = conf_order - 1 WHERE conf_order > 21'
 		);
-    }
+	}
 
 	/**
 	 * Prefix table

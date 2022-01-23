@@ -46,17 +46,17 @@ if (!is_object($icmsModule)) {
 	exit();
 }
 
-include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
+include_once ICMS_INCLUDE_PATH.'/comment_constants.php';
 if (('system' != $icmsModule->dirname
 		&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
 	|| (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost'])
 	|| !is_object($icmsModule)) {
-	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
+	redirect_header(ICMS_URL.'/user.php', 1, _NOPERM);
 }
 
 icms_loadLanguageFile('core', 'comment');
-$com_id = isset($_GET['com_id'])?(int) $_GET['com_id']:0;
-$com_mode = isset($_GET['com_mode'])? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES, _CHARSET):'';
+$com_id = isset($_GET['com_id']) ? (int) $_GET['com_id'] : 0;
+$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES, _CHARSET) : '';
 if ($com_mode == '') {
 	if (is_object(icms::$user)) {
 		$com_mode = icms::$user->umode;
@@ -76,16 +76,16 @@ if (!isset($_GET['com_order'])) {
 $comment_handler = icms::handler('icms_data_comment');
 $comment = & $comment_handler->get($com_id);
 $r_name = \ImpressCMS\Core\Models\User::getUnameFromId($comment->com_uid);
-$r_text = _CM_POSTER . ': <strong>' . $r_name . '</strong>&nbsp;&nbsp;' . _CM_POSTED . ': <strong>' . formatTimestamp($comment->com_created) . '</strong><br /><br />' . $comment->com_text;
+$r_text = _CM_POSTER.': <strong>'.$r_name.'</strong>&nbsp;&nbsp;'._CM_POSTED.': <strong>'.formatTimestamp($comment->com_created).'</strong><br /><br />'.$comment->com_text;
 $com_title = $comment->getVar('com_title', 'E');
-if (!preg_match("/^(Re|" . _CM_RE . "):/i", $com_title)) {
-	$com_title = _CM_RE . ": " . DataFilter::icms_substr($com_title, 0, 56);
+if (!preg_match("/^(Re|"._CM_RE."):/i", $com_title)) {
+	$com_title = _CM_RE.": ".DataFilter::icms_substr($com_title, 0, 56);
 }
 $com_pid = $com_id;
 $com_text = '';
 $com_id = 0;
 $dosmiley = 1;
-$groups   = (is_object(icms::$user))? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
+$groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
 $gperm_handler = icms::handler('icms_member_groupperm');
 $dohtml = 1;
 $dobr = 0;
@@ -94,8 +94,8 @@ $doimage = 1;
 $com_icon = '';
 $com_rootid = $comment->com_rootid;
 $com_itemid = $comment->com_itemid;
-include ICMS_ROOT_PATH . '/header.php';
+include ICMS_ROOT_PATH.'/header.php';
 //themecenterposts($comment->com_title, $r_text);
-echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $comment->com_title . '</td></tr><tr><td><br />' . $r_text . '<br /></td></tr></table>';
-include ICMS_INCLUDE_PATH . '/comment_form.php';
-include ICMS_ROOT_PATH . '/footer.php';
+echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'.$comment->com_title.'</td></tr><tr><td><br />'.$r_text.'<br /></td></tr></table>';
+include ICMS_INCLUDE_PATH.'/comment_form.php';
+include ICMS_ROOT_PATH.'/footer.php';

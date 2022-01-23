@@ -47,7 +47,7 @@ namespace ImpressCMS\Core\Models;
  */
 class GroupHandler extends AbstractExtendedHandler {
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'member_group', 'groupid', 'name', 'description', 'icms', 'groups', 'groupid');
-        }
+		public function __construct(&$db) {
+			parent::__construct($db, 'member_group', 'groupid', 'name', 'description', 'icms', 'groups', 'groupid');
+		}
 }

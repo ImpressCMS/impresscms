@@ -140,7 +140,7 @@ class ExportRenderer
 			}
 		} while (false);
 		if ($needQuote) {
-			$val = '"' . $val . '"';
+			$val = '"'.$val.'"';
 		}
 		return $val;
 	}
@@ -156,10 +156,10 @@ class ExportRenderer
 			case 'csv':
 				$separator = $this->options['separator'] ?? ';';
 				$firstRow = implode($separator, $this->data['columnsHeaders']);
-				$exportFileData .= $firstRow . "\r\n";
+				$exportFileData .= $firstRow."\r\n";
 
 				foreach ($this->data['rows'] as $cols) {
-					$exportFileData .= $this->arrayToCsvString($cols, $separator) . "\r\n";
+					$exportFileData .= $this->arrayToCsvString($cols, $separator)."\r\n";
 				}
 				break;
 
@@ -194,19 +194,19 @@ class ExportRenderer
 	public function saveCsv($content)
 	{
 		if (!$this->filepath) {
-			$this->filepath = ICMS_UPLOAD_PATH . '/';
+			$this->filepath = ICMS_UPLOAD_PATH.'/';
 		}
 		if (!$this->filename) {
 			$this->filename .= time();
 			$this->filename .= '.csv';
 		}
 
-		$fullFileName = $this->filepath . $this->filename;
+		$fullFileName = $this->filepath.$this->filename;
 
 		if (!$handle = fopen($fullFileName, 'a+')) {
-			trigger_error('Unable to open ' . $fullFileName, E_USER_WARNING);
+			trigger_error('Unable to open '.$fullFileName, E_USER_WARNING);
 		} elseif (fwrite($handle, $content) === false) {
-			trigger_error('Unable to write in ' . $fullFileName, E_USER_WARNING);
+			trigger_error('Unable to write in '.$fullFileName, E_USER_WARNING);
 		} else {
 			$mimeType = 'text/csv';
 			$file = strrev($this->filename);
@@ -216,7 +216,7 @@ class ExportRenderer
 			} else {
 				$file_name = $temp_name;
 			}
-			$fullFileName = $this->filepath . stripslashes(trim($this->filename));
+			$fullFileName = $this->filepath.stripslashes(trim($this->filename));
 
 			if (ini_get('zlib.output_compression')) {
 				ini_set('zlib.output_compression', 'Off');
@@ -227,10 +227,10 @@ class ExportRenderer
 			header('Cache-Control: private', false);
 			header('Content-Transfer-Encoding: binary');
 			if (isset($mimeType)) {
-				header('Content-Type: ' . $mimeType);
+				header('Content-Type: '.$mimeType);
 			}
 
-			header('Content-Disposition: attachment; filename=' . $file_name);
+			header('Content-Disposition: attachment; filename='.$file_name);
 
 			if (isset($mimeType) && strpos($mimeType, 'text/') !== false) {
 				$fp = fopen($fullFileName, 'rb');

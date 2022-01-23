@@ -185,7 +185,7 @@ class Block extends AbstractExtendedModel
 		if (
 			($this->block_type === static::BLOCK_TYPE_CUSTOM) ||
 			!($edit_func = $this->edit_func) ||
-			!file_exists($func_file = ICMS_MODULES_PATH . '/' . $this->dirname . '/blocks/' . $this->func_file)
+			!file_exists($func_file = ICMS_MODULES_PATH.'/'.$this->dirname.'/blocks/'.$this->func_file)
 		) {
 			return false;
 		}
@@ -235,7 +235,7 @@ class Block extends AbstractExtendedModel
 			return false;
 		}
 
-		$block_template_file = ICMS_MODULES_PATH . '/' . $this->dirname . "/blocks/" . $this->func_file;
+		$block_template_file = ICMS_MODULES_PATH.'/'.$this->dirname."/blocks/".$this->func_file;
 		if (!file_exists($block_template_file)) {
 			return false;
 		}
@@ -284,7 +284,7 @@ class Block extends AbstractExtendedModel
 			case self::BLOCK_TYPE_SYSTEM:
 				if ($c_type === static::CONTENT_TYPE_HTML) {
 					$content = $this->content;
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+					$content = str_replace('{X_SITEURL}', ICMS_URL.'/', $content);
 					$content = str_replace(env('APP_KEY'), '', $content);
 					return $content;
 				} elseif ($c_type === static::CONTENT_TYPE_PHP) {
@@ -292,15 +292,15 @@ class Block extends AbstractExtendedModel
 					echo eval(DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
 					$content = ob_get_contents();
 					ob_end_clean();
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
+					$content = str_replace('{X_SITEURL}', ICMS_URL.'/', $content);
 					$content = str_replace(env('APP_KEY'), '', $content);
 					return $content;
 				} elseif ($c_type === static::CONTENT_TYPE_AUTO_FORMAT) {
 					$myts = Textsanitizer::getInstance();
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
+					$content = str_replace('{X_SITEURL}', ICMS_URL.'/', $this->content);
 					return $myts->displayTarea($content, 1, 1);
 				} else {
-					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->content);
+					$content = str_replace('{X_SITEURL}', ICMS_URL.'/', $this->content);
 					return DataFilter::checkVar($content, 'text', 'output');
 				}
 				break;

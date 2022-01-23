@@ -32,7 +32,7 @@ if (isset($_COOKIE['xo_install_lang'])) {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION); ?>
-		(<?php echo ($wizard->currentPage + 1) . '/' . count($wizard->pages); ?>)</title>
+		(<?php echo ($wizard->currentPage + 1).'/'.count($wizard->pages); ?>)</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>"/>
 	<?php
 	if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
@@ -79,8 +79,8 @@ if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 <div id="wrapper">
 	<div id="header">
 		<div id="logo"><img src="img/logo.png" alt="ImpressCMS"/></div>
-		<div id="info"><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION) . "<br />" . INSTALL_STEP; ?>
-			&nbsp;<?php echo ($wizard->currentPage + 1) . INSTALL_OUTOF . count($wizard->pages); ?></div>
+		<div id="info"><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION)."<br />".INSTALL_STEP; ?>
+			&nbsp;<?php echo ($wizard->currentPage + 1).INSTALL_OUTOF.count($wizard->pages); ?></div>
 	</div>
 
 	<div id="page_top">&nbsp;</div>
@@ -98,7 +98,7 @@ if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 							$class = ' class="disabled"';
 						}
 						if (empty($class)) {
-							$li = '<a href="' . $wizard->pageURI($page) . '">' . $wizard->pagesNames[$k] . '</a>';
+							$li = '<a href="'.$wizard->pageURI($page).'">'.$wizard->pagesNames[$k].'</a>';
 						} else {
 							$li = $wizard->pagesNames[$k];
 						}

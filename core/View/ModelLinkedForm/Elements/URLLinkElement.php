@@ -30,15 +30,15 @@ class URLLinkElement extends TrayElement {
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
 		$this->addElement(new LabelElement('', _CO_ICMS_URLLINK_URL));
-		$this->addElement(new TextElement($urllinkObj, 'url_' . $key));
-		$this->addElement(new LabelElement('', '<br/>' . _CO_ICMS_CAPTION));
-		$this->addElement(new TextElement($urllinkObj, 'caption_' . $key));
-		$this->addElement(new LabelElement('', '<br/>' . _CO_ICMS_DESC));
-		$this->addElement(new TextElement($urllinkObj, 'desc_' . $key));
-		$this->addElement(new LabelElement('', '<br/>' . _CO_ICMS_URLLINK_TARGET));
-		$this->addElement(new HiddenElement('mid_' . $key, $module->getVar('mid')));
+		$this->addElement(new TextElement($urllinkObj, 'url_'.$key));
+		$this->addElement(new LabelElement('', '<br/>'._CO_ICMS_CAPTION));
+		$this->addElement(new TextElement($urllinkObj, 'caption_'.$key));
+		$this->addElement(new LabelElement('', '<br/>'._CO_ICMS_DESC));
+		$this->addElement(new TextElement($urllinkObj, 'desc_'.$key));
+		$this->addElement(new LabelElement('', '<br/>'._CO_ICMS_URLLINK_TARGET));
+		$this->addElement(new HiddenElement('mid_'.$key, $module->getVar('mid')));
 		$targ_val = $urllinkObj->getVar('target');
-		$targetRadio = new RadioElement('', 'target_' . $key, $targ_val !== '' ?$targ_val: '_blank');
+		$targetRadio = new RadioElement('', 'target_'.$key, $targ_val !== '' ? $targ_val : '_blank');
 		$control = $urllinkObj->getControl('target');
 		$targetRadio->addOptionArray($control['options']);
 		$this->addElement($targetRadio);

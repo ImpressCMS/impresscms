@@ -37,7 +37,7 @@ function xoDiag($status = -1, $str = '') {
 	if (empty($str)) {
 		$str = $strings[$status];
 	}
-	return '<td class="' . $classes[$status] . '">' . $str . '</td>';
+	return '<td class="'.$classes[$status].'">'.$str.'</td>';
 }
 function xoDiagBoolSetting($name, $wanted = false, $severe = false) {
 	$setting = strtolower(ini_get($name));
@@ -50,7 +50,7 @@ function xoDiagBoolSetting($name, $wanted = false, $severe = false) {
 }
 
 function xoDiagIfWritable($path) {
-	$path = "../" . $path;
+	$path = "../".$path;
 	$error = true;
 	if (!is_dir($path)) {
 		if (file_exists($path)) {
@@ -61,7 +61,7 @@ function xoDiagIfWritable($path) {
 		@chmod($path, 0777);
 		$error = !is_writeable($path);
 	}
-	return xoDiag($error? -1:1, $error?'Not writable':'Writable');
+	return xoDiag($error ? -1 : 1, $error ? 'Not writable' : 'Writable');
 }
 
 ob_start();
@@ -79,23 +79,23 @@ if (version_compare(phpversion(), '5.6', '>=')) {
 	$php_version_error = true;
 }
 ?> <img
-	src="img/<?php echo (isset($php_version_error)?"no":"yes") ?>.png"
+	src="img/<?php echo (isset($php_version_error) ? "no" : "yes") ?>.png"
 	alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php printf(PHP_EXTENSION, 'MySQL'); ?>:&nbsp; <?php echo xoDiag($lastCheck = (function_exists('mysql_connect') || class_exists('PDO'))?1:-1); ?>
-<img src="img/<?php echo (($lastCheck < 1)?"no":"yes") ?>.png" alt="<?=($lastCheck < 1)?FAILED:SUCCESS;?>" class="rootimg" /></h4>
+<h4><?php printf(PHP_EXTENSION, 'MySQL'); ?>:&nbsp; <?php echo xoDiag($lastCheck = (function_exists('mysql_connect') || class_exists('PDO')) ? 1 : -1); ?>
+<img src="img/<?php echo (($lastCheck < 1) ? "no" : "yes") ?>.png" alt="<?=($lastCheck < 1) ?FAILED:SUCCESS; ?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php printf(PHP_EXTENSION, 'Session'); ?>:&nbsp; <?php echo xoDiag($lastCheck = extension_loaded('session')?1:-1); ?>
-<img src="img/<?php echo (($lastCheck < 1)?"no":"yes") ?>.png" alt="<?=($lastCheck < 1)?FAILED:SUCCESS;?>" class="rootimg" /></h4>
+<h4><?php printf(PHP_EXTENSION, 'Session'); ?>:&nbsp; <?php echo xoDiag($lastCheck = extension_loaded('session') ? 1 : -1); ?>
+<img src="img/<?php echo (($lastCheck < 1) ? "no" : "yes") ?>.png" alt="<?=($lastCheck < 1) ?FAILED:SUCCESS; ?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
-<h4><?php printf(PHP_EXTENSION, 'PCRE'); ?>:&nbsp; <?php echo xoDiag($lastCheck = extension_loaded('pcre')?1:-1); ?>
-<img src="img/<?php echo (($lastCheck < 1)?"no":"yes") ?>.png" alt="<?=($lastCheck < 1)?FAILED:SUCCESS;?>" class="rootimg" /></h4>
+<h4><?php printf(PHP_EXTENSION, 'PCRE'); ?>:&nbsp; <?php echo xoDiag($lastCheck = extension_loaded('pcre') ? 1 : -1); ?>
+<img src="img/<?php echo (($lastCheck < 1) ? "no" : "yes") ?>.png" alt="<?=($lastCheck < 1) ?FAILED:SUCCESS; ?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4>file_uploads:&nbsp; <?php echo xoDiagBoolSetting('file_uploads', true); ?>
-<img src="img/<?php echo (($lastCheck < 1)?"no":"yes") ?>.png" alt="<?=($lastCheck < 1)?FAILED:SUCCESS;?>" class="rootimg" /></h4>
+<img src="img/<?php echo (($lastCheck < 1) ? "no" : "yes") ?>.png" alt="<?=($lastCheck < 1) ?FAILED:SUCCESS; ?>" class="rootimg" /></h4>
 	<div class="clear">&nbsp;</div>
-	<h4><?php printf(PHP_EXTENSION, 'CURL'); ?>:&nbsp; <?php echo xoDiag($lastCheck = extension_loaded('curl')?1:-1); ?>
-		<img src="img/<?php echo (($lastCheck < 1)?"no":"yes") ?>.png" alt="<?=($lastCheck < 1)?FAILED:SUCCESS;?>" class="rootimg" /></h4>
+	<h4><?php printf(PHP_EXTENSION, 'CURL'); ?>:&nbsp; <?php echo xoDiag($lastCheck = extension_loaded('curl') ? 1 : -1); ?>
+		<img src="img/<?php echo (($lastCheck < 1) ? "no" : "yes") ?>.png" alt="<?=($lastCheck < 1) ?FAILED:SUCCESS; ?>" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 	<h4>URL Rewrite:&nbsp; <span id="url-rewrite-check"></span>
 	<img src="" alt="Success" class="rootimg" />

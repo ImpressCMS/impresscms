@@ -27,7 +27,7 @@ class UserElement extends \ImpressCMS\Core\View\Form\Elements\Select\UserElement
 
 		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'), $size, $this->_multiple);
 
-		$sql = 'SELECT uid, uname FROM ' . icms::$xoopsDB->prefix('users') . ' ORDER BY uname ASC';
+		$sql = 'SELECT uid, uname FROM '.icms::$xoopsDB->prefix('users').' ORDER BY uname ASC';
 		$result = icms::$xoopsDB->query($sql);
 		if ($result) {
 			while ($myrow = icms::$xoopsDB->fetchArray($result)) {

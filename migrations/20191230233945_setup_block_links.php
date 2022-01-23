@@ -4,25 +4,25 @@ use Phoenix\Migration\AbstractMigration;
 
 class SetupBlockLinks extends AbstractMigration
 {
-    protected function up(): void
-    {
+	protected function up(): void
+	{
 		/**
 		 * @var \icms_db_Connection $dbm
 		 */
 		$dbm = \icms::getInstance()->get('db-connection-1');
 
-		if (((int)($dbm->fetchCol('SELECT COUNT(*) FROM `' . $dbm->prefix('block_module_link') . '`;')[0]) > 0)) {
+		if (((int) ($dbm->fetchCol('SELECT COUNT(*) FROM `'.$dbm->prefix('block_module_link').'`;')[0]) > 0)) {
 			// skipping this migration if at least one block_module_link is found
 			return;
 		}
 
 		// data for table 'block_module_link'
-		$sql = 'SELECT bid, side, template FROM ' . $dbm->prefix('newblocks');
+		$sql = 'SELECT bid, side, template FROM '.$dbm->prefix('newblocks');
 		$result = $dbm->query($sql);
 
 		$links = [];
 		while ($newBlocksRow = $result->fetch(PDO::FETCH_ASSOC)) {
-			$side = (int)$newBlocksRow['side'];
+			$side = (int) $newBlocksRow['side'];
 			if ($side === 1 || $side === 2 || $side === 7) {
 				$links[] = [
 					'block_id' => $newBlocksRow['bid'],
@@ -45,10 +45,10 @@ class SetupBlockLinks extends AbstractMigration
 		}
 
 		$this->insert($dbm->prefix('block_module_link'), $links);
-    }
+	}
 
-    protected function down(): void
-    {
+	protected function down(): void
+	{
 
-    }
+	}
 }

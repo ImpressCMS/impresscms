@@ -119,7 +119,7 @@ class SelectElement extends AbstractFormElement {
 		}
 		$value = array();
 		foreach ($this->_value as $val) {
-			$value[] = $val? htmlspecialchars($val, ENT_QUOTES, _CHARSET):$val;
+			$value[] = $val ? htmlspecialchars($val, ENT_QUOTES, _CHARSET) : $val;
 		}
 		return $value;
 	}
@@ -180,8 +180,8 @@ class SelectElement extends AbstractFormElement {
 		}
 		$value = array();
 		foreach ($this->_options as $val => $name) {
-			$value[$encode? htmlspecialchars($val, ENT_QUOTES, _CHARSET):$val]
-				= ($encode > 1)? htmlspecialchars($name, ENT_QUOTES, _CHARSET):$name;
+			$value[$encode ? htmlspecialchars($val, ENT_QUOTES, _CHARSET) : $val]
+				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES, _CHARSET) : $name;
 		}
 		return $value;
 	}
@@ -195,18 +195,18 @@ class SelectElement extends AbstractFormElement {
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue();
 		$ele_options = $this->getOptions();
-		$ret = "<select class='form-control' size='" . $this->getSize() . "'" . $this->getExtra();
+		$ret = "<select class='form-control' size='".$this->getSize()."'".$this->getExtra();
 		if ($this->isMultiple()) {
-			$ret .= " name='" . $ele_name . "[]' id='" . $ele_name . "[]' multiple='multiple'>\n";
+			$ret .= " name='".$ele_name."[]' id='".$ele_name."[]' multiple='multiple'>\n";
 		} else {
-			$ret .= " name='" . $ele_name . "' id='" . $ele_name . "'>\n";
+			$ret .= " name='".$ele_name."' id='".$ele_name."'>\n";
 		}
 		foreach ($ele_options as $value => $name) {
-			$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
+			$ret .= "<option value='".htmlspecialchars($value, ENT_QUOTES, _CHARSET)."'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value, false)) {
 				$ret .= " selected='selected'";
 			}
-			$ret .= '>' . $name . "</option>\n";
+			$ret .= '>'.$name."</option>\n";
 		}
 		$ret .= '</select>';
 		return $ret;

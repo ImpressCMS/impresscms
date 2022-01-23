@@ -97,7 +97,7 @@ class Category extends AbstractSEOExtendedModel {
 		global $myts;
 		$objectArray = parent::toArray();
 		if ($objectArray['image']) {
-			$objectArray['image'] = $this->getImageDir() . $objectArray['image'];
+			$objectArray['image'] = $this->getImageDir().$objectArray['image'];
 		}
 		return $objectArray;
 	}
@@ -126,7 +126,7 @@ class Category extends AbstractSEOExtendedModel {
 					exit;
 				}
 				$parentid = $parentObj->parentid;
-				$ret = $parentObj->getCategoryPath($withAllLink, $currentCategory) . " > " . $ret;
+				$ret = $parentObj->getCategoryPath($withAllLink, $currentCategory)." > ".$ret;
 			}
 			$this->_categoryPath = $ret;
 		}

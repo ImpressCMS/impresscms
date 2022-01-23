@@ -42,26 +42,26 @@ $xoopsOption['pagetype'] = "search";
 include 'mainfile.php';
 
 if ($icmsConfigSearch['enable_search'] == false) {
-	header('Location: ' . ICMS_URL . '/');
+	header('Location: '.ICMS_URL.'/');
 	exit();
 }
 
-$search_limiter = (($icmsConfigSearch['enable_deep_search'] == false)?$icmsConfigSearch['num_shallow_search']:false);
+$search_limiter = (($icmsConfigSearch['enable_deep_search'] == false) ? $icmsConfigSearch['num_shallow_search'] : false);
 $xoopsOption['template_main'] = 'system_search.html';
-include ICMS_ROOT_PATH . '/header.php';
+include ICMS_ROOT_PATH.'/header.php';
 
-$action = (isset($_GET['action']))? trim(filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING))
-	: ((isset($_POST['action']))? trim(filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING)):'search');
-$query = (isset($_GET['query']))? trim(filter_input(INPUT_GET, 'query', FILTER_SANITIZE_STRING))
-	: ((isset($_POST['query']))? trim(filter_input(INPUT_POST, 'query', FILTER_SANITIZE_STRING)):'');
-$andor = (isset($_GET['andor']))? trim(filter_input(INPUT_GET, 'andor', FILTER_SANITIZE_STRING))
-	: ((isset($_POST['andor']))? trim(filter_input(INPUT_POST, 'andor', FILTER_SANITIZE_STRING)):'AND');
-$mid = (isset($_GET['mid']))? trim(filter_input(INPUT_GET, 'mid', FILTER_VALIDATE_INT))
-	: ((isset($_POST['mid']))? trim(filter_input(INPUT_POST, 'mid', FILTER_VALIDATE_INT)):0);
-$uid = (isset($_GET['uid']))? trim(filter_input(INPUT_GET, 'uid', FILTER_VALIDATE_INT))
-	: ((isset($_POST['uid']))? trim(filter_input(INPUT_POST, 'uid', FILTER_VALIDATE_INT)):0);
-$start = (isset($_GET['start']))? trim(filter_input(INPUT_GET, 'start', FILTER_VALIDATE_INT))
-	: ((isset($_POST['start']))? trim(filter_input(INPUT_POST, 'start', FILTER_VALIDATE_INT)):0);
+$action = (isset($_GET['action'])) ? trim(filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING))
+	: ((isset($_POST['action'])) ? trim(filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING)) : 'search');
+$query = (isset($_GET['query'])) ? trim(filter_input(INPUT_GET, 'query', FILTER_SANITIZE_STRING))
+	: ((isset($_POST['query'])) ? trim(filter_input(INPUT_POST, 'query', FILTER_SANITIZE_STRING)) : '');
+$andor = (isset($_GET['andor'])) ? trim(filter_input(INPUT_GET, 'andor', FILTER_SANITIZE_STRING))
+	: ((isset($_POST['andor'])) ? trim(filter_input(INPUT_POST, 'andor', FILTER_SANITIZE_STRING)) : 'AND');
+$mid = (isset($_GET['mid'])) ? trim(filter_input(INPUT_GET, 'mid', FILTER_VALIDATE_INT))
+	: ((isset($_POST['mid'])) ? trim(filter_input(INPUT_POST, 'mid', FILTER_VALIDATE_INT)) : 0);
+$uid = (isset($_GET['uid'])) ? trim(filter_input(INPUT_GET, 'uid', FILTER_VALIDATE_INT))
+	: ((isset($_POST['uid'])) ? trim(filter_input(INPUT_POST, 'uid', FILTER_VALIDATE_INT)) : 0);
+$start = (isset($_GET['start'])) ? trim(filter_input(INPUT_GET, 'start', FILTER_VALIDATE_INT))
+	: ((isset($_POST['start'])) ? trim(filter_input(INPUT_POST, 'start', FILTER_VALIDATE_INT)) : 0);
 
 $xoopsTpl->assign("start", $start + 1);
 
@@ -84,7 +84,7 @@ if ($action == "results") {
 	}
 }
 
-$groups = is_object(icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
+$groups = is_object(icms::$user) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
 $gperm_handler = icms::handler('icms_member_groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
@@ -96,7 +96,7 @@ if ($action == 'search') {
 	$xoopsTpl->assign('search_form', $search_form);
 	$xoopsTpl->assign('basic_search', true);
 	$xoopsTpl->assign('icms_pagetitle', _SEARCH);
-	include ICMS_ROOT_PATH . '/footer.php';
+	include ICMS_ROOT_PATH.'/footer.php';
 	exit();
 }
 
@@ -112,7 +112,7 @@ if ($andor == 'AND') {
 if ($andor == 'exact') {
 	$label_andor = _SR_EXACT;
 }
-$xoopsTpl->assign("label_search_type", _SR_TYPE . ':');
+$xoopsTpl->assign("label_search_type", _SR_TYPE.':');
 $xoopsTpl->assign("search_type", $label_andor);
 
 if ($action != 'showallbyuser') {
@@ -173,7 +173,7 @@ if ($action != 'showallbyuser') {
 $xoopsTpl->assign("label_search_results", _SR_SEARCHRESULTS);
 
 // Keywords section.
-$xoopsTpl->assign("label_keywords", _SR_KEYWORDS . ':');
+$xoopsTpl->assign("label_keywords", _SR_KEYWORDS.':');
 $keywords = array();
 $ignored_keywords = array();
 foreach ($queries as $q) {
@@ -188,7 +188,7 @@ if (!empty($ignored_queries)) {
 	$xoopsTpl->assign("ignored_keywords", $ignored_keywords);
 }
 $xoopsTpl->assign("searched_keywords", $keywords);
-$xoopsTpl->assign('icms_pagetitle', _SR_SEARCHRESULTS . ' - ' . htmlspecialchars(implode(' ', $keywords), ENT_COMPAT, _CHARSET));
+$xoopsTpl->assign('icms_pagetitle', _SR_SEARCHRESULTS.' - '.htmlspecialchars(implode(' ', $keywords), ENT_COMPAT, _CHARSET));
 
 $all_results = array();
 $all_results_counts = array();
@@ -198,9 +198,9 @@ switch ($action) {
 		$module_handler = icms::handler('icms_module');
 		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('hassearch', 1));
 		$criteria->add(new icms_db_criteria_Item('isactive', 1));
-		$criteria->add(new icms_db_criteria_Item('mid', "(" . implode(',', $available_modules) . ")", 'IN'));
+		$criteria->add(new icms_db_criteria_Item('mid', "(".implode(',', $available_modules).")", 'IN'));
 		$modules = & $module_handler->getObjects($criteria, true);
-		$mids = isset($_REQUEST['mids'])?$_REQUEST['mids']:array();
+		$mids = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
 		if (empty($mids) || !is_array($mids)) {
 			unset($mids);
 			$mids = array_keys($modules);
@@ -220,19 +220,19 @@ switch ($action) {
 				if (!is_array($results) || $count == 0) {
 					if ($icmsConfigSearch['search_no_res_mod']) {$all_results[$modname] = array(); }
 				} else {
-					(($count - $start) > $max_results_per_page)?$num_show_this_page = $max_results_per_page:$num_show_this_page = $count - $start;
+					(($count - $start) > $max_results_per_page) ? $num_show_this_page = $max_results_per_page : $num_show_this_page = $count - $start;
 					for ($i = 0; $i < $num_show_this_page; $i++) {
-						$results[$i]['processed_image_alt_text'] = DataFilter::checkVar($modname, 'text', 'output') . ": ";
+						$results[$i]['processed_image_alt_text'] = DataFilter::checkVar($modname, 'text', 'output').": ";
 
 						if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
-							$results[$i]['processed_image_url'] = "modules/" . $moddir . "/" . $results[$i]['image'];
+							$results[$i]['processed_image_url'] = "modules/".$moddir."/".$results[$i]['image'];
 						} else {
 							$results[$i]['processed_image_url'] = "images/icons/posticon2.gif";
 						}
 
 						if (isset ($results[$i]['link']) && $results[$i]['link'] != '') {
 							if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-								$results[$i]['link'] = "modules/" . $moddir . "/" . $results[$i]['link'];
+								$results[$i]['link'] = "modules/".$moddir."/".$results[$i]['link'];
 							}
 							$results[$i]['processed_title'] = DataFilter::checkVar($results[$i]['title'], 'text', 'output');
 						}
@@ -242,22 +242,22 @@ switch ($action) {
 							if (!empty($results[$i]['uid'])) {
 								$uname = \ImpressCMS\Core\Models\User::getUnameFromId($results[$i]['uid']);
 								$results[$i]['processed_user_name'] = $uname;
-								$results[$i]['processed_user_url'] = ICMS_URL . "/userinfo.php?uid=" . $results[$i]['uid'];
+								$results[$i]['processed_user_url'] = ICMS_URL."/userinfo.php?uid=".$results[$i]['uid'];
 							}
-							$results[$i]['processed_time'] = !empty($results[$i]['time'])?" (" . formatTimestamp((int) $results[$i]['time']) . ")":"";
+							$results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (".formatTimestamp((int) $results[$i]['time']).")" : "";
 						}
 					}
 
 					if ($icmsConfigSearch['enable_deep_search'] == false) {
 						if ($count > $max_results_per_page) {
-							$search_url = ICMS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
+							$search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
 							$search_url .= "&mid=$mid&action=showall&andor=$andor";
 						} else {
 							$search_url = "";
 						}
 					} else {
 						if ($count >= $max_results_per_page) {
-							$search_url = ICMS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
+							$search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
 							$search_url .= "&mid=$mid&action=showall&andor=$andor";
 						} else {
 							$search_url = "";
@@ -288,47 +288,47 @@ switch ($action) {
 		$all_results_counts[$modname] = $count;
 		if (is_array($results) && $count > 0) {
 			(($count - $start) > $max_results_per_page)
-			?$num_show_this_page = $max_results_per_page
+			? $num_show_this_page = $max_results_per_page
 			: $num_show_this_page = $count - $start;
 			for ($i = $start; $i < $start + $num_show_this_page; $i++) {
-				$results[$i]['processed_image_alt_text'] = DataFilter::checkVar($modname, 'text', 'output') . ": ";
+				$results[$i]['processed_image_alt_text'] = DataFilter::checkVar($modname, 'text', 'output').": ";
 				if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
-					$results[$i]['processed_image_url'] = "modules/" . $moddir . "/" . $results[$i]['image'];
+					$results[$i]['processed_image_url'] = "modules/".$moddir."/".$results[$i]['image'];
 				} else {
 					$results[$i]['processed_image_url'] = "images/icons/posticon2.gif";
 				}
 				if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-					$results[$i]['link'] = "modules/" . $moddir . "/" . $results[$i]['link'];
+					$results[$i]['link'] = "modules/".$moddir."/".$results[$i]['link'];
 				}
 				$results[$i]['processed_title'] = DataFilter::checkVar($results[$i]['title'], 'text', 'output');
 				if ($icmsConfigSearch['search_user_date']) {
-					$results[$i]['uid'] = @ (int)$results[$i]['uid'];
+					$results[$i]['uid'] = @ (int) $results[$i]['uid'];
 					if (!empty($results[$i]['uid'])) {
 						$uname = \ImpressCMS\Core\Models\User::getUnameFromId($results[$i]['uid']);
 						$results[$i]['processed_user_name'] = $uname;
-						$results[$i]['processed_user_url'] = ICMS_URL . '/userinfo.php?uid=' . $results[$i]['uid'];
+						$results[$i]['processed_user_url'] = ICMS_URL.'/userinfo.php?uid='.$results[$i]['uid'];
 					}
-					$results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (" . formatTimestamp((int)$results[$i]['time']) . ")" : "";
+					$results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (".formatTimestamp((int) $results[$i]['time']).")" : "";
 				}
 			}
 
 			$search_url_prev = "";
 			$search_url_next = "";
 
-			$search_url_base = ICMS_URL . '/search.php?';
-			$search_url_get_params = 'query=' . urlencode(stripslashes(implode(' ', $queries)));
+			$search_url_base = ICMS_URL.'/search.php?';
+			$search_url_get_params = 'query='.urlencode(stripslashes(implode(' ', $queries)));
 			$search_url_get_params .= "&mid=$mid&action=$action&andor=$andor";
 			if ($action == 'showallbyuser') {
 				$search_url_get_params .= "&uid=$uid";
 			}
 			$search_url_get_params = htmlspecialchars($search_url_get_params, ENT_COMPAT, _CHARSET);
-			$search_url = $search_url_base . $search_url_get_params;
+			$search_url = $search_url_base.$search_url_get_params;
 
 			$pagenav = new icms_view_PageNav($count, $max_results_per_page, $start, "start", $search_url_get_params);
 			$all_results[$modname] = array("results" =>array_slice($results, $start, $num_show_this_page),
 			"page_nav" => $pagenav->renderNav());
 		} else {
-			echo '<p>' . _SR_NOMATCH . '</p>';
+			echo '<p>'._SR_NOMATCH.'</p>';
 		}
 		break;
 
@@ -343,4 +343,4 @@ $xoopsTpl->assign("search_results", $all_results);
 $search_form = include 'include/searchform.php';
 $xoopsTpl->assign('search_form', $search_form);
 
-include ICMS_ROOT_PATH . "/footer.php";
+include ICMS_ROOT_PATH."/footer.php";

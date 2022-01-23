@@ -77,16 +77,16 @@ if (!empty($_POST)) {
 }
 
 if (empty($refresh) && !empty($op) && $op != _SUBMIT) {
-	$jump = "pmlite.php?refresh=" . time() . "";
+	$jump = "pmlite.php?refresh=".time()."";
 	if ($send != 0) {
-		$jump .= "&amp;send=" . $send . "";
+		$jump .= "&amp;send=".$send."";
 	} elseif ($send2 != 0) {
-		$jump .= "&amp;send2=" . $send2 . "&amp;to_userid=" . $to_userid . "";
+		$jump .= "&amp;send2=".$send2."&amp;to_userid=".$to_userid."";
 	} elseif ($reply != 0) {
-		$jump .= "&amp;reply=" . $reply . "&amp;msg_id=" . $msg_id . "";
+		$jump .= "&amp;reply=".$reply."&amp;msg_id=".$msg_id."";
 	} else {
 	}
-	echo "<html><head><meta http-equiv='Refresh' content='0; url=" . $jump . "' /></head><body></body></html>";
+	echo "<html><head><meta http-equiv='Refresh' content='0; url=".$jump."' /></head><body></body></html>";
 	exit();
 }
 
@@ -96,7 +96,7 @@ $html = '';
 if (!icms::$user) {
 	/* Request is made by a non-user, or user that is not logged in */
 	icms_core_Message::warning(
-		_PM_PLZREG . " <a href='" . ICMS_URL . "/register.php'>" . _PM_REGISTERNOW . "</a> " . _OR . " <a href='" . ICMS_URL . "/user.php'>" . _LOGIN . "</a>",
+		_PM_PLZREG." <a href='".ICMS_URL."/register.php'>"._PM_REGISTERNOW."</a> "._OR." <a href='".ICMS_URL."/user.php'>"._LOGIN."</a>",
 		_PM_SORRY,
 		true
 	);
@@ -106,11 +106,11 @@ if (!icms::$user) {
 		if (!icms::$security->check()) {
 			$security_error = true;
 		}
-		$res = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("users")
-			. " WHERE uid='" . $to_userid . "'");
+		$res = icms::$xoopsDB->query("SELECT COUNT(*) FROM ".icms::$xoopsDB->prefix("users")
+			. " WHERE uid='".$to_userid."'");
 		list($count) = icms::$xoopsDB->fetchRow($res);
 		if ($count != 1) {
-			redirect_header(icms_getPreviousPage(), 5, _PM_USERNOEXIST . ' ' . _PM_PLZTRYAGAIN);
+			redirect_header(icms_getPreviousPage(), 5, _PM_USERNOEXIST.' '._PM_PLZTRYAGAIN);
 			if (isset($security_error) && $security_error == true) {
 				redirect_header(icms_getPreviousPage(), 5, implode('<br />', icms::$security->getErrors()));
 			}
@@ -141,13 +141,13 @@ if (!icms::$user) {
 					}
 					$mailer->setTemplate('new_pm.tpl');
 					$mailer->assign('X_SITENAME', $icmsConfig['sitename']);
-					$mailer->assign('X_SITEURL', ICMS_URL . "/");
+					$mailer->assign('X_SITEURL', ICMS_URL."/");
 					$mailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
 					$mailer->assign('X_UNAME', $toUser->uname);
 					$mailer->assign('X_FROMUNAME', icms::$user->uname);
 					$mailer->assign('X_SUBJECT', DataFilter::stripSlashesGPC($subject));
 					$mailer->assign('X_MESSAGE', DataFilter::stripSlashesGPC($message));
-					$mailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
+					$mailer->assign('X_ITEM_URL', ICMS_URL."/viewpmsg.php");
 					$mailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $icmsConfig['sitename']));
 					$mailer->send();
 				}
@@ -160,7 +160,7 @@ if (!icms::$user) {
 		$theme = new icms_view_theme_Factory();
 		$icmsTheme = & $theme->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
 
-		$form = new icms_form_Theme('', 'coolsus', ICMS_URL . '/pmlite.php', 'post', true);
+		$form = new icms_form_Theme('', 'coolsus', ICMS_URL.'/pmlite.php', 'post', true);
 
 		if ($reply != 0) {
 			/* we are replying to a message */
@@ -171,7 +171,7 @@ if (!icms::$user) {
 				$pm_uname = User::getUnameFromId($pm->from_userid);
 				$message  = "[quote]\n"
 					. sprintf(_PM_USERWROTE, $pm_uname)
-					. "\n" . $pm->getVar("msg_text", "E") . "\n[/quote]";
+					. "\n".$pm->getVar("msg_text", "E")."\n[/quote]";
 			} else {
 				unset($pm);
 				$reply = $send2 = 0;
@@ -179,7 +179,7 @@ if (!icms::$user) {
 
 			$subject = $pm->getVar('subject', 'E');
 			if (!preg_match("/^Re:/i", $subject)) {
-				$subject = 'Re: ' . $subject;
+				$subject = 'Re: '.$subject;
 			}
 
 			$userID = $pm->from_userid;

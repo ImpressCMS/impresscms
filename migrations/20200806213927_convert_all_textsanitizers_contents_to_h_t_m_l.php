@@ -118,9 +118,9 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 			$criteria = new icms_db_criteria_Item('uname', $text);
 			$userId = $userHandler->getUsers($criteria);
 			if (!$userId) {
-				return $prefix . "@" . $text;
+				return $prefix."@".$text;
 			}
-			return $prefix . "<a href='" . sprintf(ICMS_URL . '/userinfo.php?uid=%u', $userId[0]->getVar('uid')) . "' title='" . sprintf(_US_ALLABOUT, $text) . "'>@" . $text . "</a>";
+			return $prefix."<a href='".sprintf(ICMS_URL.'/userinfo.php?uid=%u', $userId[0]->getVar('uid'))."' title='".sprintf(_US_ALLABOUT, $text)."'>@".$text."</a>";
 		}, $val);
 	}
 
@@ -146,12 +146,12 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 	 */
 	private function replaceWikiTags(string $val): string
 	{
-		$wikiTagLink = 'https://' . _LANGCODE . '.wikipedia.org/wiki/%s';
-		return preg_replace_callback("/\[\[([^\]]*)\]\]/sU", function ($matches) use ($wikiTagLink) {
+		$wikiTagLink = 'https://'._LANGCODE.'.wikipedia.org/wiki/%s';
+		return preg_replace_callback("/\[\[([^\]]*)\]\]/sU", function($matches) use ($wikiTagLink) {
 			if (empty($matches[1])) {
 				return $matches[1];
 			}
-			return '<a href="' . sprintf($wikiTagLink, $matches[1]) . '" target="_blank" title="">' . $matches[1] . '</a>';
+			return '<a href="'.sprintf($wikiTagLink, $matches[1]).'" target="_blank" title="">'.$matches[1].'</a>';
 		}, $val);
 	}
 
@@ -164,15 +164,15 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 	 */
 	private function replaceHashtags(string $val): string
 	{
-		$hashTagLink = ICMS_URL . '/search.php?query=%s&amp;action=results';
+		$hashTagLink = ICMS_URL.'/search.php?query=%s&amp;action=results';
 		icms_loadLanguageFile('core', 'search');
-		return preg_replace_callback("#([\s\r])\#(?:([\w\-]+)|\[([\w\s\-]+)\])#", function ($matches) use ($hashTagLink) {
+		return preg_replace_callback("#([\s\r])\#(?:([\w\-]+)|\[([\w\s\-]+)\])#", function($matches) use ($hashTagLink) {
 			$text = $matches[2];
 			$prefix = $matches[1];
 			if (empty($text)) {
 				return $text;
 			}
-			return $prefix . "<a href='" . sprintf($hashTagLink, urlencode($text)) . "' title='" . _SR_SEARCHRESULTS . ": " . $text . "'>#" . $text . "</a>";
+			return $prefix."<a href='".sprintf($hashTagLink, urlencode($text))."' title='"._SR_SEARCHRESULTS.": ".$text."'>#".$text."</a>";
 		}, $val);
 	}
 
@@ -203,7 +203,7 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 	 */
 	private function replaceYoutubeTags(string $val): string
 	{
-		return preg_replace_callback("/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU", function ($matches) {
+		return preg_replace_callback("/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU", function($matches) {
 			$url = $matches[4];
 			$width = $matches[2];
 			$height = $matches[3];
@@ -211,7 +211,7 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 				//trigger_error("Not matched: {$url} {$width} {$height}", E_USER_WARNING);
 				return $matches[0];
 			}
-			$src = "http://www.youtube.com/v/" . $matches[2];
+			$src = "http://www.youtube.com/v/".$matches[2];
 			if (empty($width) || empty($height)) {
 				if (!$dimension = @getimagesize($src)) {
 					return "";
@@ -224,9 +224,9 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 					list($width, $height) = array($dimension[0], $dimension[1]);
 				}
 			}
-			$code = "<object width='{$width}' height='{$height}'><param name='movie' value='{$src}'></param>" .
-				"<param name='wmode' value='transparent'></param>" .
-				"<embed src='{$src}' type='application/x-shockwave-flash' wmode='transparent' width='425' height='350'></embed>" .
+			$code = "<object width='{$width}' height='{$height}'><param name='movie' value='{$src}'></param>".
+				"<param name='wmode' value='transparent'></param>".
+				"<embed src='{$src}' type='application/x-shockwave-flash' wmode='transparent' width='425' height='350'></embed>".
 				"</object>";
 			return $code;
 		}, $val);
@@ -239,7 +239,7 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 			$batch = 1000;
 			while (true) {
 				$items = $this->select(
-					'SELECT `' . $indexColumn . '` item_index, `' . $column . '` item_val FROM `' . $table . '` WHERE `' . $column . '` IS NOT NULL AND `' . $column . '` != \'\' LIMIT ' . $start . ',' . $batch
+					'SELECT `'.$indexColumn.'` item_index, `'.$column.'` item_val FROM `'.$table.'` WHERE `'.$column.'` IS NOT NULL AND `'.$column.'` != \'\' LIMIT '.$start.','.$batch
 				);
 				if (empty($items)) {
 					break;
@@ -302,7 +302,7 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 		$db = icms::getInstance()->get('db-connection-1');
 
 		$query = $db->prepareWithValues('SHOW TABLES LIKE :rule;', [
-			'rule' => $db->prefix('') . '%'
+			'rule' => $db->prefix('').'%'
 		]);
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_COLUMN);

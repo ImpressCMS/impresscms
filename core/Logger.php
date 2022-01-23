@@ -27,10 +27,10 @@ class Logger extends \Monolog\Logger
 	{
 		static $instance;
 		if (!isset($instance)) {
-			$enabled = (bool)env('LOGGING_ENABLED', false);
+			$enabled = (bool) env('LOGGING_ENABLED', false);
 			$instance = new static('default', [
 				new RotatingFileHandler(
-					ICMS_LOGGING_PATH . '/default.log',
+					ICMS_LOGGING_PATH.'/default.log',
 					0,
 					$enabled ? self::DEBUG : self::ERROR
 				)
@@ -63,7 +63,7 @@ class Logger extends \Monolog\Logger
 	 */
 	public function disableRendering()
 	{
-		$this->handlers = array_filter($this->handlers, function ($handler) {
+		$this->handlers = array_filter($this->handlers, function($handler) {
 			return !($handler instanceof BrowserConsoleHandler) &&
 				!($handler instanceof PHPConsoleHandler) &&
 				!($handler instanceof FirePHPHandler) &&
@@ -124,7 +124,7 @@ class Logger extends \Monolog\Logger
 	public function disableLogger()
 	{
 		error_reporting(0);
-		$this->handlers = array_filter($this->handlers, function ($handler) {
+		$this->handlers = array_filter($this->handlers, function($handler) {
 			return !($handler instanceof RotatingFileHandler);
 		});
 	}
@@ -244,7 +244,7 @@ class Logger extends \Monolog\Logger
 			if (!isset($step['file'])) {
 				continue;
 			}
-			$trace_data[] = $this->sanitizePath($step['file']) . ' (' . $step['line'] . ')';
+			$trace_data[] = $this->sanitizePath($step['file']).' ('.$step['line'].')';
 		}
 
 		$data = compact('errorNumber', 'file', 'line', 'trace_data');

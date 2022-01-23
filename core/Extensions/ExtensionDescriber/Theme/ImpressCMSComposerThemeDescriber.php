@@ -19,7 +19,7 @@ class ImpressCMSComposerThemeDescriber implements ExtensionDescriberInterface
 	 */
 	public function canDescribe(string $path): bool
 	{
-		return file_exists($path . DIRECTORY_SEPARATOR . 'composer.json');
+		return file_exists($path.DIRECTORY_SEPARATOR.'composer.json');
 	}
 
 	/**
@@ -28,7 +28,7 @@ class ImpressCMSComposerThemeDescriber implements ExtensionDescriberInterface
 	public function describe(string $path): array
 	{
 		chdir($path);
-		putenv('COMPOSER_HOME=' . ICMS_STORAGE_PATH . '/composer');
+		putenv('COMPOSER_HOME='.ICMS_STORAGE_PATH.'/composer');
 		$composer = Factory::create(
 			new NullIO()
 		);

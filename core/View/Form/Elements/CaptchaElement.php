@@ -60,7 +60,7 @@ class CaptchaElement extends AbstractFormElement {
 		if (!$this->_captchaHandler->active) {
 			$this->setHidden();
 		} else {
-			$caption = !empty($caption)?$caption:$this->_captchaHandler->getCaption();
+			$caption = !empty($caption) ? $caption : $this->_captchaHandler->getCaption();
 			$this->setCaption($caption);
 		}
 	}

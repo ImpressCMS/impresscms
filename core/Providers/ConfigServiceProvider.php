@@ -33,7 +33,7 @@ class ConfigServiceProvider extends AbstractServiceProvider implements BootableS
 	 */
 	public function boot()
 	{
-		$this->getContainer()->add('config', function () {
+		$this->getContainer()->add('config', function() {
 			/**
 			 * @var Config $instance
 			 */
@@ -48,7 +48,7 @@ class ConfigServiceProvider extends AbstractServiceProvider implements BootableS
 				Config::CATEGORY_CAPTCHA => [], Config::CATEGORY_SEARCH => []
 			];
 			$GLOBALS['icmsConfig'] = $configs[Config::CATEGORY_MAIN];
-			$GLOBALS['xoopsConfig'] =& $GLOBALS['icmsConfig'];
+			$GLOBALS['xoopsConfig'] = & $GLOBALS['icmsConfig'];
 			$GLOBALS['icmsConfigUser'] = $configs[Config::CATEGORY_USER];
 			$GLOBALS['icmsConfigMetaFooter'] = $configs[Config::CATEGORY_METAFOOTER];
 			$GLOBALS['icmsConfigMailer'] = $configs[Config::CATEGORY_MAILER];

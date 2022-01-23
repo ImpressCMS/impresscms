@@ -173,7 +173,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 * @param string $section_name
 	 */
 	public function closeFormSection($section_name) {
-		$this->initVar('close_section_' . $section_name, self::DTYPE_FORM_SECTION_CLOSE, '', false, null, '', false, '', '', false, false, true);
+		$this->initVar('close_section_'.$section_name, self::DTYPE_FORM_SECTION_CLOSE, '', false, null, '', false, '', '', false, false, true);
 	}
 
 	public function getVarInfo($key = null, $info = null, $default = null) {
@@ -207,7 +207,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		if ($form_caption) {
 			return $form_caption;
 		}
-		$dyn_form_caption = strtoupper('_CO_' . $this->handler->moduleName . '_' . $this->handler->_itemname . '_' . $key);
+		$dyn_form_caption = strtoupper('_CO_'.$this->handler->moduleName.'_'.$this->handler->_itemname.'_'.$key);
 
 		if (defined($dyn_form_caption)) {
 					$form_caption = constant($dyn_form_caption);
@@ -222,7 +222,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		if ($form_dsc) {
 			return $form_dsc;
 		}
-		$dyn_form_dsc = strtoupper('_CO_' . $this->handler->moduleName . '_' . $this->handler->_itemname . '_' . $key);
+		$dyn_form_dsc = strtoupper('_CO_'.$this->handler->moduleName.'_'.$this->handler->_itemname.'_'.$key);
 
 		if (defined($dyn_form_dsc)) {
 			$form_dsc = constant($dyn_form_dsc);
@@ -270,7 +270,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	public function quickInitVar($key, $data_type, $required = false, $form_caption = '', $form_dsc = '', $value = null) {
 		trigger_error('Use enableUpload() instead', E_USER_DEPRECATED);
 
-		$maxlength = $data_type == self::DTYPE_DEP_TXTBOX?255:null;
+		$maxlength = $data_type == self::DTYPE_DEP_TXTBOX ? 255 : null;
 		$this->initVar($key, $data_type, $value, $required, $maxlength, '', false, $form_caption, $form_dsc, false, true, true);
 	}
 
@@ -718,7 +718,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 		foreach ($this->_vars as $key => $field_info) {
 			if ($field_info['sortby']) {
 				$ret[$key]['caption'] = $field_info['form_caption'];
-				$ret[$key]['selected'] = $key == $sortsel?"selected='selected'":'';
+				$ret[$key]['selected'] = $key == $sortsel ? "selected='selected'" : '';
 			}
 		}
 
@@ -761,10 +761,10 @@ abstract class AbstractExtendedModel extends AbstractModel {
 			if ($this->_vars[$k]['persistent'] === true || $this->_vars[$k]['persistent'] === null) {
 				switch ($this->_vars[$k][self::VARCFG_TYPE]) {
 					case self::DTYPE_DATETIME:
-						$fieldsToStoreInDB[$k] = date('Y-m-d H:i:s', (int)$this->_vars[$k][self::VARCFG_VALUE]);
+						$fieldsToStoreInDB[$k] = date('Y-m-d H:i:s', (int) $this->_vars[$k][self::VARCFG_VALUE]);
 						break;
 					case self::DTYPE_BOOLEAN:
-						$fieldsToStoreInDB[$k] = (int)$this->_vars[$k][self::VARCFG_VALUE];
+						$fieldsToStoreInDB[$k] = (int) $this->_vars[$k][self::VARCFG_VALUE];
 						break;
 					case self::DTYPE_ARRAY:
 						$value = json_encode($this->_vars[$k][self::VARCFG_VALUE]);
@@ -779,7 +779,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 							$value = $this->_vars[$k][self::VARCFG_VALUE];
 						}
 						if (!is_string($value)) {
-							$value = (string)$value;
+							$value = (string) $value;
 						}
 						$fieldsToStoreInDB[$k] = $value;
 						break;
@@ -1076,7 +1076,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	 */
 	function getFileObj($key) {
 		$file_handler = icms::handler("icms_data_file");
-		$fileid = $this->getVar($key) != null?$this->getVar($key):0;
+		$fileid = $this->getVar($key) != null ? $this->getVar($key) : 0;
 		if ($fileid != 0) {
 			return $file_handler->get($fileid);
 		} else {
@@ -1107,7 +1107,7 @@ abstract class AbstractExtendedModel extends AbstractModel {
 	public function unserialize($serialized) {
 		$data = unserialize($serialized);
 		if ($data['handler']['module'] == 'core' || $data['handler']['module'] == 'icms') {
-			$handler = icms::handler('icms_' . $data['handler']['itemname']);
+			$handler = icms::handler('icms_'.$data['handler']['itemname']);
 		} else {
 			$handler = icms_getModuleHandler($data['handler']['itemname'], $data['handler']['module']);
 		}

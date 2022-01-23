@@ -103,10 +103,10 @@ class DatabaseUpdater {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE_ERR, $from);
+			$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE_ERR, $from);
 			return false;
 		} else {
-			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE, $from, $to);
+			$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE, $from, $to);
 			return true;
 		}
 	}
@@ -141,7 +141,7 @@ class DatabaseUpdater {
 
 		if (isset($parentObjectVars)) {
 			$objectVars = $object->getVars();
-			$table = new TableUpdater(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
+			$table = new TableUpdater(str_replace(env('DB_PREFIX').'_', '', $module_handler->table));
 			foreach (array_keys($objectVars) as $var) {
 				if (!isset($parentObjectVars[$var])) {
 					$table->addDropedField($var);
@@ -152,7 +152,7 @@ class DatabaseUpdater {
 			if (in_array($module_handler->table, $reservedTables)) {
 							return false;
 			}
-			$table = new TableUpdater(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
+			$table = new TableUpdater(str_replace(env('DB_PREFIX').'_', '', $module_handler->table));
 			$ret = $table->dropTable();
 		}
 		$this->_messages = array_merge($this->_messages, $table->_messages);
@@ -201,7 +201,7 @@ class DatabaseUpdater {
 
 		$dbVersion = $module->getDbversion();
 
-		$newDbVersion = constant(strtoupper($dirname . '_db_version')) ?: 0;
+		$newDbVersion = constant(strtoupper($dirname.'_db_version')) ?: 0;
 		$textcurrentversion = sprintf(_DATABASEUPDATER_CURRENTVER, $dbVersion);
 		$textlatestversion = sprintf(_DATABASEUPDATER_LATESTVER, $newDbVersion);
 		$this->_messages[] = $textcurrentversion;
@@ -209,7 +209,7 @@ class DatabaseUpdater {
 		if (!$tables_first) {
 			if ($newDbVersion > $dbVersion) {
 				for ($i = $dbVersion + 1; $i <= $newDbVersion; $i++) {
-					$upgrade_function = $dirname . '_db_upgrade_' . $i;
+					$upgrade_function = $dirname.'_db_upgrade_'.$i;
 					if (function_exists($upgrade_function)) {
 						$upgrade_function();
 					}
@@ -234,7 +234,7 @@ class DatabaseUpdater {
 		if ($tables_first) {
 			if ($newDbVersion > $dbVersion) {
 				for ($i = $dbVersion + 1; $i <= $newDbVersion; $i++) {
-					$upgrade_function = $dirname . '_db_upgrade_' . $i;
+					$upgrade_function = $dirname.'_db_upgrade_'.$i;
 					if (function_exists($upgrade_function)) {
 						$upgrade_function();
 					}
@@ -278,7 +278,7 @@ class DatabaseUpdater {
 			return false;
 		}
 
-		$table = new TableUpdater(str_replace(env('DB_PREFIX') . '_', '', $module_handler->table));
+		$table = new TableUpdater(str_replace(env('DB_PREFIX').'_', '', $module_handler->table));
 		$object = $module_handler->create();
 		$class = new ReflectionClass($object);
 		$isExtention = false;
@@ -332,12 +332,12 @@ class DatabaseUpdater {
 			$ModKeyNames = $module_handler->keyName;
 			$structure .= 'PRIMARY KEY  (';
 			if (is_array($ModKeyNames)) {
-				$structure .= '`' . $ModKeyNames[0] . '`';
+				$structure .= '`'.$ModKeyNames[0].'`';
 				foreach ($ModKeyNames as $ModKeyName) {
-					$structure .= ($ModKeyName != $ModKeyNames[0])? ', `' . $ModKeyName . '`' : '';
+					$structure .= ($ModKeyName != $ModKeyNames[0]) ? ', `'.$ModKeyName.'`' : '';
 				}
 			} else {
-				$structure .= '`' . $ModKeyNames . '`';
+				$structure .= '`'.$ModKeyNames.'`';
 			}
 			$structure .= ')';
 			$table->setStructure($structure);
@@ -362,7 +362,7 @@ class DatabaseUpdater {
 						} else {
 							$extra = false;
 						}
-						$table->addNewField($key, "$type not null " . $extra);
+						$table->addNewField($key, "$type not null ".$extra);
 					} else {
 						// if field already exists, let's check if the definition is correct
 						$definition = strtolower($existingFieldsArray[$key]);
@@ -433,7 +433,7 @@ class DatabaseUpdater {
 				break;
 			case AbstractProperties::DTYPE_FLOAT:
 				if (isset($var[AbstractProperties::VARCFG_MAX_LENGTH]) && ($var[AbstractProperties::VARCFG_MAX_LENGTH] > 0)) {
-					return 'FLOAT(' . AbstractProperties::VARCFG_MAX_LENGTH . ')';
+					return 'FLOAT('.AbstractProperties::VARCFG_MAX_LENGTH.')';
 				} else {
 					return 'FLOAT';
 				}
@@ -458,7 +458,7 @@ class DatabaseUpdater {
 			case AbstractProperties::DTYPE_STRING:
 				if (isset($var[AbstractProperties::VARCFG_MAX_LENGTH])) {
 					if ($var[AbstractProperties::VARCFG_MAX_LENGTH] < 500) {
-						return 'VARCHAR(' . $var[AbstractProperties::VARCFG_MAX_LENGTH] . ')';
+						return 'VARCHAR('.$var[AbstractProperties::VARCFG_MAX_LENGTH].')';
 					} elseif ($var[AbstractProperties::VARCFG_MAX_LENGTH] < 8000) {
 						return 'TEXT';
 					} elseif ($var[AbstractProperties::VARCFG_MAX_LENGTH] < 2097000) {

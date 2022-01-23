@@ -18,7 +18,7 @@ class ConfigSetupStep implements SetupStepInterface
 	 */
 	public function execute(Module $module, OutputDecorator $output, ...$params): bool
 	{
-		$configs = (array)$module->getInfo('config');
+		$configs = (array) $module->getInfo('config');
 		if ($module->hascomments != 0) {
 			$this->includeCommentsConfig($configs);
 		}
@@ -56,15 +56,15 @@ class ConfigSetupStep implements SetupStepInterface
 						$confop->setVar('confop_name', $key, true);
 						$confop->setVar('confop_value', $value, true);
 						$confobj->setConfOptions($confop);
-						$confop_msgs[] = sprintf('    ' . _MD_AM_CONFIGOPTION_ADDED, $key, $value);
+						$confop_msgs[] = sprintf('    '._MD_AM_CONFIGOPTION_ADDED, $key, $value);
 						unset($confop);
 					}
 				}
 				$order++;
 				if ($config_handler->insertConfig($confobj) !== false) {
-					$output->success(_MD_AM_CONFIG_ADDED . implode(PHP_EOL, $confop_msgs), $config['name']);
+					$output->success(_MD_AM_CONFIG_ADDED.implode(PHP_EOL, $confop_msgs), $config['name']);
 				} else {
-					$output->error(_MD_AM_CONFIG_ADD_FAIL . implode(PHP_EOL, $confop_msgs), $config['name']);
+					$output->error(_MD_AM_CONFIG_ADD_FAIL.implode(PHP_EOL, $confop_msgs), $config['name']);
 				}
 				unset($confobj);
 			}
@@ -82,7 +82,7 @@ class ConfigSetupStep implements SetupStepInterface
 	 */
 	protected function includeCommentsConfig(array &$configs)
 	{
-		include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
+		include_once ICMS_INCLUDE_PATH.'/comment_constants.php';
 		$configs[] = [
 			'name' => 'com_rule',
 			'title' => '_CM_COMRULES',
@@ -115,7 +115,7 @@ class ConfigSetupStep implements SetupStepInterface
 	 */
 	protected function includeNotificationsConfig(Module $module, array &$configs)
 	{
-		include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
+		include_once ICMS_INCLUDE_PATH.'/notification_constants.php';
 		$options = [
 			'_NOT_CONFIG_DISABLE' => XOOPS_NOTIFICATION_DISABLE,
 			'_NOT_CONFIG_ENABLEBLOCK' => XOOPS_NOTIFICATION_ENABLEBLOCK,
@@ -141,8 +141,8 @@ class ConfigSetupStep implements SetupStepInterface
 				if (!empty($event['invisible'])) {
 					continue;
 				}
-				$option_name = $category['title'] . ' : ' . $event['title'];
-				$option_value = $category['name'] . '-' . $event['name'];
+				$option_name = $category['title'].' : '.$event['title'];
+				$option_value = $category['name'].'-'.$event['name'];
 				$options[$option_name] = $option_value;
 			}
 		}

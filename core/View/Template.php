@@ -77,8 +77,8 @@ class Template extends Smarty
 	{
 		global $icmsConfig, $icmsModule;
 
-		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
-		$this->compile_check = ((int)$icmsConfig['theme_fromfile'] === 1);
+		$this->compile_id = $icmsConfig['template_set'].'-'.$icmsConfig['theme_set'];
+		$this->compile_check = ((int) $icmsConfig['theme_fromfile'] === 1);
 
 		parent::__construct();
 
@@ -102,7 +102,7 @@ class Template extends Smarty
 			$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 			$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid : 1;
 			$gperm_handler = icms::handler('icms_member_groupperm');
-			if ((int)$icmsConfig['debug_mode'] === 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
+			if ((int) $icmsConfig['debug_mode'] === 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
 			}
 		}
@@ -147,11 +147,11 @@ class Template extends Smarty
 		if (isset($vars)) {
 			$oldVars = $this->_tpl_vars;
 			$this->assign($vars);
-			$out = $this->fetch('eval:' . $tplSource);
+			$out = $this->fetch('eval:'.$tplSource);
 			$this->_tpl_vars = $oldVars;
 			return $out;
 		}
-		return $this->fetch('eval:' . $tplSource);
+		return $this->fetch('eval:'.$tplSource);
 	}
 
 	/**
@@ -189,7 +189,7 @@ class Template extends Smarty
 		 * @var CacheItemPoolInterface $cache
 		 */
 		$cache = icms::getInstance()->get('cache');
-		$cache->deleteItem('tpl_db_' . base64_encode($file));
+		$cache->deleteItem('tpl_db_'.base64_encode($file));
 
 		$tpl = new Template();
 
@@ -213,7 +213,7 @@ class Template extends Smarty
 			$tpl->caching = 2;
 			for ($i = 0; $i < $count; $i++) {
 				if ($block_arr[$i]->template != '') {
-					$tpl->clear_cache('db:' . $block_arr[$i]->template, 'blk_' . $block_arr[$i]->bid);
+					$tpl->clear_cache('db:'.$block_arr[$i]->template, 'blk_'.$block_arr[$i]->bid);
 				}
 			}
 		}

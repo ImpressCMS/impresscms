@@ -20,7 +20,7 @@ $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
 $filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
 
 /* prevent remote file inclusion */
-$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
+$valid_path = ICMS_IMANAGER_FOLDER_PATH.'/temp';
 if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) == 0) {
 	$image_path = realpath($image_path);
 } else {
@@ -32,10 +32,10 @@ $submitted_url = parse_url($image_url);
 $base_url = parse_url(ICMS_URL); // \icms::$urls not available?
 if ($submitted_url['scheme'] != $base_url['scheme']) $image_url = null;
 if ($submitted_url['host'] != $base_url['host']) $image_url = null;
-if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . basename($image_path), PHP_URL_PATH)) $image_url = null;
+if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL.'/temp/'.basename($image_path), PHP_URL_PATH)) $image_url = null;
 
 if (!isset($image_path) || !isset($image_url)) {
-	echo "alert('" . _ERROR . "');";
+	echo "alert('"._ERROR."');";
 } else {
 	$fit = 'inside';
 	$width = null;
@@ -43,7 +43,7 @@ if (!isset($image_path) || !isset($image_url)) {
 
 	if (isset($_GET['width'])) {
 		if (substr($_GET['width'], -1, 1) == '%') {
-			$width = (int) $_GET['width'] . "%";
+			$width = (int) $_GET['width']."%";
 			$fit = 'fill';
 		} else {
 			$width = (int) $_GET['width'];
@@ -52,7 +52,7 @@ if (!isset($image_path) || !isset($image_url)) {
 
 	if (isset($_GET['height'])) {
 		if (substr($_GET['height'], -1, 1) == '%') {
-			$height = (int) $_GET['height'] . "%";
+			$height = (int) $_GET['height']."%";
 			$fit = 'fill';
 		} else {
 			$height = (int) $_GET['height'];
@@ -64,10 +64,10 @@ if (!isset($image_path) || !isset($image_url)) {
 
 	$img = WideImage::load($image_path);
 	$arr = explode('/', $image_path);
-	$arr[count($arr) - 1] = 'resize_' . $arr[count($arr) - 1];
+	$arr[count($arr) - 1] = 'resize_'.$arr[count($arr) - 1];
 	$temp_img_path = implode('/', $arr);
 	$arr = explode('/', $image_url);
-	$arr[count($arr) - 1] = 'resize_' . $arr[count($arr) - 1];
+	$arr[count($arr) - 1] = 'resize_'.$arr[count($arr) - 1];
 	$temp_img_url = implode('/', $arr);
 
 	if ($del) {
@@ -79,20 +79,20 @@ if (!isset($image_path) || !isset($image_url)) {
 
 	if ($save) {
 		if (!@unlink($image_path)) {
-			echo "alert('" . _ERROR . "');";
+			echo "alert('"._ERROR."');";
 			exit();
 		}
 		if (!@copy($temp_img_path, $image_path)) {
-			echo "alert('" . _ERROR . "');";
+			echo "alert('"._ERROR."');";
 			exit();
 		}
 		if (!@unlink($temp_img_path)) {
-			echo "alert('" . _ERROR . "');";
+			echo "alert('"._ERROR."');";
 			exit();
 		}
 		echo 'window.location.reload( true );';
 	} else {
-		echo "var w = window.open('" . $temp_img_url . "','resize_image_preview','width=" . ($width + 20) . ",height=" . ($height + 20) . ",resizable=yes');";
+		echo "var w = window.open('".$temp_img_url."','resize_image_preview','width=".($width + 20).",height=".($height + 20).",resizable=yes');";
 		echo "w.onunload = function (){resize_delpreview();}";
 	}
 }

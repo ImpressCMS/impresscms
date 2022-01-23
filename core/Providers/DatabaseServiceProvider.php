@@ -33,17 +33,17 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 		 */
 		$container = $this->getContainer();
 
-		$container->add('db-connection-1', function () {
+		$container->add('db-connection-1', function() {
 			return $this->createDatabaseConnection(
 				env('DB_TYPE', 'mysql'),
 				env('DB_HOST', '127.0.0.1'),
 				env('DB_USER', ''),
 				env('DB_PASS', ''),
-				(int)env('DB_PCONNECT', 0),
+				(int) env('DB_PCONNECT', 0),
 				env('DB_NAME', 'impresscms'),
 				env('DB_CHARSET', 'utf8'),
 				env('DB_PREFIX'),
-				(int)env('DB_PORT', 3306)
+				(int) env('DB_PORT', 3306)
 			);
 		})->addTag('database_connection');
 
@@ -69,7 +69,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 				->addTag('database_connection_' . ($is_master ? 'write' : 'read') );
 		}*/
 
-		$container->add('db', function () use ($container) {
+		$container->add('db', function() use ($container) {
 			return $container->get('db-connection-1');
 			/*return new ConnectionLocator(
 				function () use ($container) {
@@ -79,7 +79,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 				$container->has('database_connection_write') ? $container->get('database_connection_write') : []
 			);*/
 		});
-		$container->add('xoopsDB', function () use ($container) {
+		$container->add('xoopsDB', function() use ($container) {
 			return $container->get('db');
 		});
 	}
@@ -106,18 +106,18 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 			$type = substr($type, 4);
 		}
 
-		$dsn = $type . ':host=' . $host;
+		$dsn = $type.':host='.$host;
 		if ($name && !(defined('DB_NO_AUTO_SELECT') && DB_NO_AUTO_SELECT)) {
-			$dsn .= ';dbname=' . $name;
+			$dsn .= ';dbname='.$name;
 		}
-		$dsn .= ';port=' . $port;
+		$dsn .= ';port='.$port;
 		if ($charset) {
-			$dsn .= ';charset=' . $charset;
+			$dsn .= ';charset='.$charset;
 		}
 
 		$options = [
 			\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-			\PDO::ATTR_PERSISTENT => (bool)$persistentConnection,
+			\PDO::ATTR_PERSISTENT => (bool) $persistentConnection,
 		];
 
 		$connection = new DatabaseConnection(
@@ -137,12 +137,12 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 			trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);
 		}
 
-		$enabled = (bool)env('LOGGING_ENABLED', false);
+		$enabled = (bool) env('LOGGING_ENABLED', false);
 		$logger = new Logger(
 			'DB',
 			[
 				new \Monolog\Handler\RotatingFileHandler(
-					ICMS_LOGGING_PATH . '/db.log',
+					ICMS_LOGGING_PATH.'/db.log',
 					0,
 					$enabled ? \Monolog\Logger::DEBUG : \Monolog\Logger::ERROR
 				)

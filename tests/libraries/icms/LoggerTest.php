@@ -28,9 +28,9 @@ class LoggerTest extends TestCase {
 	{
         $logger = &icms_core_Logger::instance();
         $logger->disableRendering();
-        $this->assertIsString( $logger->render('a'), 'Render must return string');
-        $this->assertIsString( $logger->dump(), 'dump must return string');
-		$this->assertIsNumeric( $logger->dumpTime(), 'dumpTime must return numeric');
+        $this->assertIsString($logger->render('a'), 'Render must return string');
+        $this->assertIsString($logger->dump(), 'dump must return string');
+		$this->assertIsNumeric($logger->dumpTime(), 'dumpTime must return numeric');
     }
 
 }

@@ -49,8 +49,8 @@ namespace ImpressCMS\Core\Models;
  */
 class ConfigCategoryHandler extends AbstractExtendedHandler {
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'config_category', 'confcat_id', 'confcat_name', 'confcat_order', 'icms', 'configcategory', 'confcat_id');
-        }
+		public function __construct(&$db) {
+			parent::__construct($db, 'config_category', 'confcat_id', 'confcat_name', 'confcat_order', 'icms', 'configcategory', 'confcat_id');
+		}
 }
 

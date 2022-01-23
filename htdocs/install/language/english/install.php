@@ -39,7 +39,7 @@ define("XOOPS_INSTALL_WIZARD", " %s - Installation Wizard");
 define("INSTALL_STEP", "Step");
 define("INSTALL_H3_STEPS", "Steps");
 define("INSTALL_OUTOF", " out of ");
-define("INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"https://www.impresscms.org\" target=\"_blank\">The ImpressCMS Project</a>");
+define("INSTALL_COPYRIGHT", "Copyright &copy; 2007-".date('Y', time())." <a href=\"https://www.impresscms.org\" target=\"_blank\">The ImpressCMS Project</a>");
 
 define("LANGUAGE_SELECTION", "Language selection");
 define("LANGUAGE_SELECTION_TITLE", "Choose your language"); // L128
@@ -190,7 +190,7 @@ define("_MD_AM_MULTLOGINMSG_TXT", 'It was not possible to login on the site!! <b
         </p>
         Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
 define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/'); //Link to local support site
-define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
+define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-'.date('Y', time()).' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a><br />Hosting by <a href="http://www.siteground.com/impresscms-hosting.htm?afcode=7e9aa639d30265c079823a498f5b8f15">SiteGround</a>'); //footer Link to local support site
 define("_ADM_USE_RTL", "0"); // turn this to 1 if your language is right to left
 
 ######################## Added in 1.2 ###################################

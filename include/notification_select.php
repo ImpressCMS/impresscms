@@ -38,9 +38,9 @@
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
 
-include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
+include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
 $xoops_notification = [
-	'show' => (isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline'))?1:0
+	'show' => (isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline')) ? 1 : 0
 ];
 
 if ($xoops_notification['show']) {
@@ -63,7 +63,7 @@ if ($xoops_notification['show']) {
 				if (!empty($event['invisible'])) {
 					continue;
 				}
-				$subscribed = in_array($event['name'], $subscribed_events)?1:0;
+				$subscribed = in_array($event['name'], $subscribed_events) ? 1 : 0;
 				$section['events'][$event['name']] = array('name'=>$event['name'], 'title'=>$event['title'], 'caption'=>$event['caption'], 'description'=>$event['description'], 'subscribed'=>$subscribed);
 				$event_count++;
 			}
@@ -71,7 +71,7 @@ if ($xoops_notification['show']) {
 		}
 		$xoops_notification['target_page'] = "notification_update.php";
 		$xoops_notification['redirect_script'] = xoops_getenv('PHP_SELF');
-		$xoopsTpl->assign(array('lang_activenotifications' => _NOT_ACTIVENOTIFICATIONS, 'lang_notificationoptions' => _NOT_NOTIFICATIONOPTIONS, 'lang_updateoptions' => _NOT_UPDATEOPTIONS, 'lang_updatenow' => _NOT_UPDATENOW, 'lang_category' => _NOT_CATEGORY, 'lang_event' => _NOT_EVENT, 'lang_events' => _NOT_EVENTS, 'lang_checkall' => _NOT_CHECKALL, 'lang_notificationmethodis' => _NOT_NOTIFICATIONMETHODIS, 'lang_change' => _NOT_CHANGE, 'editprofile_url' => ICMS_URL . '/edituser.php?uid=' . icms::$user->uid));
+		$xoopsTpl->assign(array('lang_activenotifications' => _NOT_ACTIVENOTIFICATIONS, 'lang_notificationoptions' => _NOT_NOTIFICATIONOPTIONS, 'lang_updateoptions' => _NOT_UPDATEOPTIONS, 'lang_updatenow' => _NOT_UPDATENOW, 'lang_category' => _NOT_CATEGORY, 'lang_event' => _NOT_EVENT, 'lang_events' => _NOT_EVENTS, 'lang_checkall' => _NOT_CHECKALL, 'lang_notificationmethodis' => _NOT_NOTIFICATIONMETHODIS, 'lang_change' => _NOT_CHANGE, 'editprofile_url' => ICMS_URL.'/edituser.php?uid='.icms::$user->uid));
 		switch (icms::$user->notify_method) {
 			case XOOPS_NOTIFICATION_METHOD_DISABLE:
 				$xoopsTpl->assign('user_method', _NOT_DISABLE);

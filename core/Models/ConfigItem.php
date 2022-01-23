@@ -131,7 +131,7 @@ class ConfigItem extends AbstractExtendedModel {
 									return array();
 				}
 				$value = @unserialize($value);
-				return $value?$value:array();
+				return $value ? $value : array();
 
 			case 'float':
 				$value = $this->conf_value;

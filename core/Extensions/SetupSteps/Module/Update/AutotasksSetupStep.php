@@ -26,10 +26,10 @@ class AutotasksSetupStep implements SetupStepInterface
 			$output->info(_MD_AM_AUTOTASK_UPDATE);
 			$output->incrIndent();
 			$criteria = new CriteriaCompo();
-			$criteria->add(new CriteriaItem('sat_type', 'addon/' . $module->getInfo('dirname')));
+			$criteria->add(new CriteriaItem('sat_type', 'addon/'.$module->getInfo('dirname')));
 			$items_atasks = $atasks_handler->getObjects($criteria, false);
 			foreach ($items_atasks as $task) {
-				$taskID = (int)$task->sat_addon_id;
+				$taskID = (int) $task->sat_addon_id;
 				if (!isset($atasks[$taskID])) {
 					$atasks[$taskID] = [];
 				}
@@ -62,7 +62,7 @@ class AutotasksSetupStep implements SetupStepInterface
 					}
 					$task->sat_name = $taskData['name'];
 					$task->sat_code = $taskData['code'];
-					$task->sat_type = 'addon/' . $module->getInfo('dirname');
+					$task->sat_type = 'addon/'.$module->getInfo('dirname');
 					$task->sat_addon_id = $taskID;
 					if (!$task->store()) {
 						$output->error(_MD_AM_AUTOTASK_FAIL, $taskData['name']);

@@ -44,7 +44,7 @@ if (!is_object($icmsModule)) {
 $com_modid = $icmsModule->mid;
 $cform = new icms_form_Theme(_CM_POSTCOMMENT, 'commentform', 'comment_post.php', 'post', true);
 if (isset($icmsModuleConfig['com_rule'])) {
-	include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
+	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 	switch ($icmsModuleConfig['com_rule']) {
 		case XOOPS_COMMENT_APPROVEALL:
 			$rule_text = _CM_COMAPPROVEALL;
@@ -64,9 +64,9 @@ if (isset($icmsModuleConfig['com_rule'])) {
 
 $cform->addElement(new icms_form_elements_Text(_CM_TITLE, 'com_title', 50, 255, $com_title), true);
 $icons_radio = new icms_form_elements_Radio(_MESSAGEICON, 'com_icon', $com_icon);
-$subject_icons = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/subject/", '', array('gif', 'jpg', 'png'));
+$subject_icons = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH."/images/subject/", '', array('gif', 'jpg', 'png'));
 foreach ($subject_icons as $iconfile) {
-	$icons_radio->addOption($iconfile, '<img src="' . ICMS_URL . '/images/subject/' . $iconfile . '" alt="" />');
+	$icons_radio->addOption($iconfile, '<img src="'.ICMS_URL.'/images/subject/'.$iconfile.'" alt="" />');
 }
 $cform->addElement($icons_radio);
 $cform->addElement(new icms_form_elements_Dhtmltextarea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), true);
@@ -76,7 +76,7 @@ $button_tray = new icms_form_elements_Tray('', '&nbsp;');
 
 if (is_object(icms::$user)) {
 	if ($icmsModuleConfig['com_anonpost'] == 1) {
-		$noname = !empty($noname)?1:0;
+		$noname = !empty($noname) ? 1 : 0;
 		$noname_checkbox = new icms_form_elements_Checkbox('', 'noname', $noname);
 		$noname_checkbox->addOption(1, _POSTANON);
 		$option_tray->addElement($noname_checkbox);
@@ -84,7 +84,7 @@ if (is_object(icms::$user)) {
 	if (false != icms::$user->isAdmin($com_modid)) {
 		// show status change box when editing (comment id is not empty)
 		if (!empty($com_id)) {
-			include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
+			include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 			$status_select = new icms_form_elements_Select(_CM_STATUS, 'com_status', $com_status);
 			$status_select->addOptionArray(
 				array(

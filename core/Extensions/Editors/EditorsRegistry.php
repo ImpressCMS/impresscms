@@ -125,8 +125,8 @@ class EditorsRegistry
 			return null;
 		}
 
-		$options['public_assets_url'] = ICMS_MODULES_URL . '/' . ModuleHandler::resolveModuleDirFromClass($factory) . '/';
-		$options['target_selector'] = '#' . $options['name'] . '_tarea';
+		$options['public_assets_url'] = ICMS_MODULES_URL.'/'.ModuleHandler::resolveModuleDirFromClass($factory).'/';
+		$options['target_selector'] = '#'.$options['name'].'_tarea';
 
 		return $factory->create($options, true);
 	}
@@ -145,7 +145,7 @@ class EditorsRegistry
 	{
 		$editors = [];
 
-		$editorTag = 'editor.' . $type;
+		$editorTag = 'editor.'.$type;
 
 		if (!$this->container->has($editorTag)) {
 			return $editors;

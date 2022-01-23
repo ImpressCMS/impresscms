@@ -13,6 +13,6 @@ if (!defined('_CM_DOAUTOWRAP')) {
 	icms_loadLanguageFile('core', 'comment');
 }
 
-$value = ($default === 'notdefined')? true : $default;
+$value = ($default === 'notdefined') ? true : $default;
 $this->initVar($varname, \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_INTEGER, $value, false, null, "", false, _CM_DOAUTOWRAP, '', false, true, $displayOnForm);
 $this->setControl($varname, 'yesno');

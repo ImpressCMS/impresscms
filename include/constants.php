@@ -15,12 +15,12 @@ define('ICMS_URL', rtrim(env('URL'), '/'));
 /**#@+
  * Creating ICMS specific constants
  */
-define('ICMS_PLUGINS_PATH', ICMS_ROOT_PATH . '/plugins');
-define('ICMS_PLUGINS_URL', ICMS_URL . '/plugins');
-define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH . '/preloads');
+define('ICMS_PLUGINS_PATH', ICMS_ROOT_PATH.'/plugins');
+define('ICMS_PLUGINS_URL', ICMS_URL.'/plugins');
+define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH.'/preloads');
 // ImpressCMS Modules path & url
-define('ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules');
-define('ICMS_MODULES_URL', ICMS_URL . '/modules');
+define('ICMS_MODULES_PATH', ICMS_ROOT_PATH.'/modules');
+define('ICMS_MODULES_URL', ICMS_URL.'/modules');
 /**#@-*/
 
 // ################# Creation of the ImpressCMS Libraries ##############
@@ -28,8 +28,8 @@ define('ICMS_MODULES_URL', ICMS_URL . '/modules');
  * @todo The definition of the library path needs to be in mainfile
  */
 // ImpressCMS Third Party Libraries folder
-define('ICMS_LIBRARIES_PATH', ICMS_ROOT_PATH . '/libraries');
-define('ICMS_LIBRARIES_URL', ICMS_URL . '/libraries');
+define('ICMS_LIBRARIES_PATH', ICMS_ROOT_PATH.'/libraries');
+define('ICMS_LIBRARIES_URL', ICMS_URL.'/libraries');
 /**#@+
  * Constants
  */
@@ -55,7 +55,7 @@ if (!defined('ICMS_PUBLIC_PATH')) {
 	$path = env('public_path');
 	if (empty($path)) {
 		foreach (['public_html', 'htdocs', 'wwwroot'] as $dirname) {
-			if (file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $dirname)) {
+			if (file_exists(ICMS_ROOT_PATH.DIRECTORY_SEPARATOR.$dirname)) {
 				$path = $dirname;
 				break;
 			}
@@ -65,30 +65,30 @@ if (!defined('ICMS_PUBLIC_PATH')) {
 		}
 		unset($dirname);
 	}
-	define('ICMS_PUBLIC_PATH', ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $path);
+	define('ICMS_PUBLIC_PATH', ICMS_ROOT_PATH.DIRECTORY_SEPARATOR.$path);
 	unset($dirname);
 }
 
-define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH . '/include');
-define('ICMS_INCLUDE_URL', ICMS_ROOT_PATH . '/include');
-define('ICMS_UPLOAD_PATH', ICMS_PUBLIC_PATH . '/uploads');
-define('ICMS_UPLOAD_URL', ICMS_URL . '/uploads');
-define('ICMS_THEME_PATH', ICMS_ROOT_PATH . '/themes');
-define('ICMS_THEME_URL', ICMS_URL . '/themes');
-define('ICMS_STORAGE_PATH', ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'storage');
-define('ICMS_CACHE_PATH', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'cache');
-define('ICMS_LOGGING_PATH', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'log');
-define('ICMS_PURIFIER_CACHE', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'htmlpurifier');
-define('ICMS_COMPILE_PATH', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'templates_c');
-define('ICMS_IMAGES_URL', ICMS_URL . '/images');
-define('ICMS_EDITOR_PATH', ICMS_PUBLIC_PATH . '/editors');
-define('ICMS_EDITOR_URL', ICMS_URL . '/editors');
-define('ICMS_IMANAGER_FOLDER_PATH', ICMS_UPLOAD_PATH . '/imagemanager');
-define('ICMS_IMANAGER_FOLDER_URL', ICMS_UPLOAD_URL . '/imagemanager');
+define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH.'/include');
+define('ICMS_INCLUDE_URL', ICMS_ROOT_PATH.'/include');
+define('ICMS_UPLOAD_PATH', ICMS_PUBLIC_PATH.'/uploads');
+define('ICMS_UPLOAD_URL', ICMS_URL.'/uploads');
+define('ICMS_THEME_PATH', ICMS_ROOT_PATH.'/themes');
+define('ICMS_THEME_URL', ICMS_URL.'/themes');
+define('ICMS_STORAGE_PATH', ICMS_ROOT_PATH.DIRECTORY_SEPARATOR.'storage');
+define('ICMS_CACHE_PATH', ICMS_STORAGE_PATH.DIRECTORY_SEPARATOR.'cache');
+define('ICMS_LOGGING_PATH', ICMS_STORAGE_PATH.DIRECTORY_SEPARATOR.'log');
+define('ICMS_PURIFIER_CACHE', ICMS_STORAGE_PATH.DIRECTORY_SEPARATOR.'htmlpurifier');
+define('ICMS_COMPILE_PATH', ICMS_STORAGE_PATH.DIRECTORY_SEPARATOR.'templates_c');
+define('ICMS_IMAGES_URL', ICMS_URL.'/images');
+define('ICMS_EDITOR_PATH', ICMS_PUBLIC_PATH.'/editors');
+define('ICMS_EDITOR_URL', ICMS_URL.'/editors');
+define('ICMS_IMANAGER_FOLDER_PATH', ICMS_UPLOAD_PATH.'/imagemanager');
+define('ICMS_IMANAGER_FOLDER_URL', ICMS_UPLOAD_URL.'/imagemanager');
 /**#@-*/
 
 /**
  * @todo make this $icms_images_setname as an option in preferences...
  */
 $icms_images_setname = 'kfaenza';
-define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
+define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL.'/'.$icms_images_setname);

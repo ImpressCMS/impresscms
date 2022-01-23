@@ -45,7 +45,7 @@ class Image {
 		icms_loadLanguageFile('core', 'captcha');
 
 		// Loading default preferences
-		$this->config = @include __DIR__ . '/config.php';
+		$this->config = @include __DIR__.'/config.php';
 
 		global $icmsConfigCaptcha;
 		$this->setMode($icmsConfigCaptcha['captcha_mode']);
@@ -141,7 +141,7 @@ class Image {
 
 		// Skip CAPTCHA for group
 		//$gperm_handler = \icms::handler('icms_member_groupperm');
-		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
 			$this->active = false;
 		} elseif ($icmsConfigCaptcha['captcha_mode'] === 'none') {
@@ -165,32 +165,32 @@ class Image {
 
 		$sessionName = $captchaSection->get('name');
 		$skipMember = $skipMember ?? $captchaSection->get('skip_member');
-		$maxAttempts = (int)$captchaSection->get('max_attempts');
+		$maxAttempts = (int) $captchaSection->get('max_attempts');
 
 		$is_valid = false;
 
-		$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		if (is_object(icms::$user) && array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember'])) {
 			$is_valid = true;
-		} elseif (!empty($maxAttempts) && $captchaSection->get('attempt_' . $sessionName) > $maxAttempts) {
+		} elseif (!empty($maxAttempts) && $captchaSection->get('attempt_'.$sessionName) > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 			// Verify the code
 		} elseif ($session_code = $captchaSection->get('session_code')) {
-			$func = ($icmsConfigCaptcha['captcha_casesensitive'])? 'strcmp' : 'strcasecmp';
+			$func = ($icmsConfigCaptcha['captcha_casesensitive']) ? 'strcmp' : 'strcasecmp';
 			$is_valid = !$func(trim(@$_POST[$sessionName]), $session_code);
 		}
 
 		if (!empty($maxAttempts)) {
 			if (!$is_valid) {
 				// Increase the attempt records on failure
-				$captchaSection->set('attempt_' . $sessionName, $captchaSection->get('attempt_' . $sessionName) + 1);
+				$captchaSection->set('attempt_'.$sessionName, $captchaSection->get('attempt_'.$sessionName) + 1);
 				// Log the error message
 				$this->message[] = ICMS_CAPTCHA_INVALID_CODE;
 
 			} else {
 				// reset attempt records on success
-				$captchaSection->set('attempt_' . $sessionName, null);
+				$captchaSection->set('attempt_'.$sessionName, null);
 			}
 		}
 
@@ -270,12 +270,12 @@ class Image {
 		$captchaSection->set('max_attempts', $maxAttempts);
 
 		 if (!empty($maxAttempts)) {
-			 $captchaSection->set('max_attempts_' . $captchaSection->get('name'), $maxAttempts);
+			 $captchaSection->set('max_attempts_'.$captchaSection->get('name'), $maxAttempts);
 		}
 
 
 		// Fail on too many attempts
-		if (!empty($maxAttempts) && $captchaSection->get('max_attempts_' . $captchaSection->get('name')) > $maxAttempts) {
+		if (!empty($maxAttempts) && $captchaSection->get('max_attempts_'.$captchaSection->get('name')) > $maxAttempts) {
 			$form = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 			// Load the form element
 		} else {

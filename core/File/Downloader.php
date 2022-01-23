@@ -71,14 +71,14 @@ abstract class Downloader {
 		if (function_exists('mb_http_output')) {
 			mb_http_output('pass');
 		}
-		header('Content-Type: ' . $this->mimetype);
+		header('Content-Type: '.$this->mimetype);
 		if (preg_match("/MSIE ([0-9]\.[0-9]{1,2})/", $_SERVER['HTTP_USER_AGENT'])) {
-			header('Content-Disposition: attachment; filename="' . $filename . '"');
+			header('Content-Disposition: attachment; filename="'.$filename.'"');
 			header('Expires: 0');
 			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			header('Pragma: public');
 		} else {
-			header('Content-Disposition: attachment; filename="' . $filename . '"');
+			header('Content-Disposition: attachment; filename="'.$filename.'"');
 			header('Expires: 0');
 			header('Pragma: no-cache');
 		}

@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ob_start();
 ?>
 <?php if (!empty($error)) {
-	echo '<div class="x2-note error">' . $error . "</div>\n";
+	echo '<div class="x2-note error">'.$error."</div>\n";
 }
 ?>
 

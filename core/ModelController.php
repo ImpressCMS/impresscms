@@ -59,13 +59,13 @@ class ModelController
 
 			switch ($data_type) {
 				case AbstractProperties::DTYPE_DEP_IMAGE:
-					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key]) {
+					if (isset($_POST['url_'.$key]) && $_POST['url_'.$key]) {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 						if (!$eventResult) {
 							$icmsObj->setErrors('An error occured during the beforeFileUnlink event');
 						}
-						$oldFile = $icmsObj->getUploadDir(true) . $icmsObj->getVar($key, 'e');
-						$icmsObj->setVar($key, preg_replace('|[\.]+\/|', './', $_POST['url_' . $key]));
+						$oldFile = $icmsObj->getUploadDir(true).$icmsObj->getVar($key, 'e');
+						$icmsObj->setVar($key, preg_replace('|[\.]+\/|', './', $_POST['url_'.$key]));
 						if (is_file($oldFile)) {
 							unlink($oldFile);
 						}
@@ -74,12 +74,12 @@ class ModelController
 							$icmsObj->setErrors('An error occured during the afterFileUnlink event');
 						}
 					}
-					if (isset($_POST['delete_' . $key]) && (string)$_POST['delete_' . $key] === '1') {
+					if (isset($_POST['delete_'.$key]) && (string) $_POST['delete_'.$key] === '1') {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 						if (!$eventResult) {
 							$icmsObj->setErrors('An error occured during the beforeFileUnlink event');
 						}
-						$oldFile = $icmsObj->getUploadDir(true) . $icmsObj->getVar($key, 'e');
+						$oldFile = $icmsObj->getUploadDir(true).$icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, '');
 						if (is_file($oldFile)) {
 							unlink($oldFile);
@@ -93,11 +93,11 @@ class ModelController
 
 				case AbstractProperties::DTYPE_DEP_URLLINK:
 					$linkObj = $icmsObj->getUrlLinkObj($key);
-					$linkObj->mid = $_POST['mid_' . $key];
-					$linkObj->caption = $_POST['caption_' . $key];
-					$linkObj->description = $_POST['desc_' . $key];
-					$linkObj->target = $_POST['target_' . $key];
-					$linkObj->url = $_POST['url_' . $key];
+					$linkObj->mid = $_POST['mid_'.$key];
+					$linkObj->caption = $_POST['caption_'.$key];
+					$linkObj->description = $_POST['desc_'.$key];
+					$linkObj->target = $_POST['target_'.$key];
+					$linkObj->url = $_POST['url_'.$key];
 					if ($linkObj->url != '') {
 						$icmsObj->storeUrlLinkObj($linkObj);
 					}
@@ -106,12 +106,12 @@ class ModelController
 					break;
 
 				case AbstractProperties::DTYPE_DEP_FILE:
-					if (!isset($_FILES['upload_' . $key]['name']) || $_FILES['upload_' . $key]['name'] == '') {
+					if (!isset($_FILES['upload_'.$key]['name']) || $_FILES['upload_'.$key]['name'] == '') {
 						$fileObj = $icmsObj->getFileObj($key);
-						$fileObj->mid = $_POST['mid_' . $key];
-						$fileObj->caption = $_POST['caption_' . $key];
-						$fileObj->description = $_POST['desc_' . $key];
-						$fileObj->url = preg_replace('|[\.]+\/|', './', $_POST['url_' . $key]);
+						$fileObj->mid = $_POST['mid_'.$key];
+						$fileObj->caption = $_POST['caption_'.$key];
+						$fileObj->description = $_POST['desc_'.$key];
+						$fileObj->url = preg_replace('|[\.]+\/|', './', $_POST['url_'.$key]);
 						if (!($fileObj->getVar('url') == '' && $fileObj->getVar('url') == '' && $fileObj->getVar('url') == '')) {
 							$res = $icmsObj->storeFileObj($fileObj);
 							if ($res) {
@@ -132,7 +132,7 @@ class ModelController
 						$value = strtotime($_POST[$key]['date']) + $_POST[$key]['time'];
 						// in case the field is hidden, it's not formated so we can simply take the value and store it
 					} elseif (filter_var($_POST[$key], FILTER_VALIDATE_INT) == $_POST[$key]) {
-						$value = (int)$_POST[$key];
+						$value = (int) $_POST[$key];
 					} else {
 						$value = strtotime($_POST[$key]);
 					}
@@ -185,7 +185,7 @@ class ModelController
 			foreach ($_FILES as $name => $file_array) {
 				if (isset ($file_array['name']) && $file_array['name'] && in_array(str_replace('upload_', '', $name), $icmsObj->getVarNames(), false)) {
 					if ($uploaderObj->fetchMedia($name)) {
-						$uploaderObj->setTargetFileName(time() . '_' . $uploaderObj->getMediaName());
+						$uploaderObj->setTargetFileName(time().'_'.$uploaderObj->getMediaName());
 						if ($uploaderObj->upload()) {
 							$uploaderResult = $uploaderResult && true;
 							// Find the related field in the \ImpressCMS\Core\IPF\AbstractModel
@@ -199,10 +199,10 @@ class ModelController
 							if ($var_type === AbstractProperties::DTYPE_DEP_FILE) {
 								$object_fileurl = $icmsObj->getUploadDir();
 								$fileObj = $icmsObj->getFileObj($related_field);
-								$fileObj->url = $object_fileurl . $uploaderObj->getSavedFileName();
-								$fileObj->mid = $_POST['mid_' . $related_field];
-								$fileObj->caption = $_POST['caption_' . $related_field];
-								$fileObj->description = $_POST['desc_' . $related_field];
+								$fileObj->url = $object_fileurl.$uploaderObj->getSavedFileName();
+								$fileObj->mid = $_POST['mid_'.$related_field];
+								$fileObj->caption = $_POST['caption_'.$related_field];
+								$fileObj->description = $_POST['desc_'.$related_field];
 								$icmsObj->storeFileObj($fileObj);
 								$icmsObj->setVar($related_field, $fileObj->fileid);
 							} else {
@@ -212,7 +212,7 @@ class ModelController
 									$uploaderResult = $uploaderResult && false;
 								}
 
-								$old_file = $icmsObj->getUploadDir(true) . $icmsObj->getVar($related_field);
+								$old_file = $icmsObj->getUploadDir(true).$icmsObj->getVar($related_field);
 								if (is_file($old_file)) {
 									unlink($old_file);
 								}
@@ -259,7 +259,7 @@ class ModelController
 			return $icmsObj;
 		} else {
 			if (!$storeResult) {
-				redirect_header(icms::$urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header(icms::$urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR.$icmsObj->getHtmlErrors());
 			} else {
 				$redirect_page = $redirect_page ?: icms_get_page_before_form();
 				redirect_header($redirect_page, 2, $redirect_msg);
@@ -281,7 +281,7 @@ class ModelController
 	public function &storeFromDefaultForm($created_success_msg, $modified_success_msg, $redirect_page = false, $debug = false, $x_param = false)
 	{
 		$objectid = (isset($_POST[$this->handler->keyName]))
-			? (int)$_POST[$this->handler->keyName]
+			? (int) $_POST[$this->handler->keyName]
 			: 0;
 		if ($debug) {
 			if ($x_param) {
@@ -363,7 +363,7 @@ class ModelController
 	 */
 	public function handleObjectDeletion($confirm_msg = false, $op = 'del', $userSide = false)
 	{
-		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int)$_REQUEST[$this->handler->keyName] : 0;
+		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int) $_REQUEST[$this->handler->keyName] : 0;
 		$icmsObj = $this->handler->get($objectid);
 
 		if ($icmsObj->isNew()) {
@@ -374,7 +374,7 @@ class ModelController
 		$confirm = $_POST['confirm'] ?? 0;
 		if ($confirm) {
 			if (!$this->handler->delete($icmsObj)) {
-				redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_ERROR.$icmsObj->getHtmlErrors());
 				exit;
 			}
 
@@ -396,7 +396,7 @@ class ModelController
 				'redirect_page' => icms::$urls['previouspage']
 			);
 			if ($this->handler->moduleName == 'system') {
-				$hiddens['fct'] = isset($_GET['fct'])?$_GET['fct']:false;
+				$hiddens['fct'] = isset($_GET['fct']) ? $_GET['fct'] : false;
 			}
 			Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg, $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
@@ -415,7 +415,7 @@ class ModelController
 	{
 		global $icmsTpl;
 
-		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int)($_REQUEST[$this->handler->keyName]) : 0;
+		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int) ($_REQUEST[$this->handler->keyName]) : 0;
 		$icmsObj = $this->handler->get($objectid);
 
 		if ($icmsObj->isNew()) {
@@ -426,7 +426,7 @@ class ModelController
 		$confirm = $_POST['confirm'] ?? 0;
 		if ($confirm) {
 			if (!$this->handler->delete($icmsObj)) {
-				redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_ERROR.$icmsObj->getHtmlErrors());
 				exit;
 			}
 
@@ -464,21 +464,21 @@ class ModelController
 	 */
 	public function getAdminViewItemLink($icmsObj, $onlyUrl = false, $withimage = false)
 	{
-		$ret = $this->handler->_moduleUrl . "admin/"
-			. $this->handler->_page . "?op=view&amp;"
-			. $this->handler->keyName . "="
+		$ret = $this->handler->_moduleUrl."admin/"
+			. $this->handler->_page."?op=view&amp;"
+			. $this->handler->keyName."="
 			. $icmsObj->getVar($this->handler->keyName);
 		if ($onlyUrl) {
 			return $ret;
 		} elseif ($withimage) {
-			return "<a href='" . $ret . "'>
+			return "<a href='".$ret."'>
 					<img src='" . ICMS_IMAGES_SET_URL
 				. "/actions/viewmag.png' style='vertical-align: middle;' alt='"
-				. _CO_ICMS_ADMIN_VIEW . "'  title='"
-				. _CO_ICMS_ADMIN_VIEW . "'/></a>";
+				. _CO_ICMS_ADMIN_VIEW."'  title='"
+				. _CO_ICMS_ADMIN_VIEW."'/></a>";
 		}
 
-		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . '</a>';
+		return "<a href='".$ret."'>".$icmsObj->getVar($this->handler->identifierName).'</a>';
 	}
 
 	/**
@@ -510,11 +510,11 @@ class ModelController
 			$ret = SMARTOBJECT_URL . 'seo.php/' . $seoModuleName . '.' . $this->handler->itemName . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
 			} else {
 			*/
-		$ret = $this->handler->_moduleUrl . $this->handler->_page . '?' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
+		$ret = $this->handler->_moduleUrl.$this->handler->_page.'?'.$this->handler->keyName.'='.$icmsObj->getVar($this->handler->keyName);
 		//}
 
 		if (!$onlyUrl) {
-			$ret = "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . '</a>';
+			$ret = "<a href='".$ret."'>".$icmsObj->getVar($this->handler->identifierName).'</a>';
 		}
 		return $ret;
 	}
@@ -530,24 +530,24 @@ class ModelController
 	 */
 	public function getViewItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
 		if ($this->handler->moduleName !== 'system') {
-			$admin_side = $userSide?'':'admin/';
-			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+			$admin_side = $userSide ? '' : 'admin/';
+			$ret = $this->handler->_moduleUrl.$admin_side.$this->handler->_page."?".$this->handler->keyName."=".$icmsObj->getVar($this->handler->keyName);
 		} else {
 			$admin_side = '';
-			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct='
-				. $this->handler->itemName . "&amp;op=view&amp;"
-				. $this->handler->keyName . "="
+			$ret = $this->handler->_moduleUrl.$admin_side.'admin.php?fct='
+				. $this->handler->itemName."&amp;op=view&amp;"
+				. $this->handler->keyName."="
 				. $icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {
 			return $ret;
 		} elseif ($withimage) {
-			return "<a href='" . $ret . "'>
-				<img src='" . ICMS_IMAGES_SET_URL . "/actions/viewmag.png' style='vertical-align: middle;' alt='"
-				. _PREVIEW . "'  title='" . _PREVIEW . "'/></a>";
+			return "<a href='".$ret."'>
+				<img src='" . ICMS_IMAGES_SET_URL."/actions/viewmag.png' style='vertical-align: middle;' alt='"
+				. _PREVIEW."'  title='"._PREVIEW."'/></a>";
 		}
 
-		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . '</a>';
+		return "<a href='".$ret."'>".$icmsObj->getVar($this->handler->identifierName).'</a>';
 	}
 
 	/**
@@ -558,19 +558,19 @@ class ModelController
 	 */
 	public function getEditLanguageLink($icmsObj, $onlyUrl = false, $withimage = true)
 	{
-		$ret = $this->handler->_moduleUrl . 'admin/'
+		$ret = $this->handler->_moduleUrl.'admin/'
 			. $this->handler->_page
-			. "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName)
-			. "&amp;language=" . $icmsObj->language;
+			. "?op=mod&amp;".$this->handler->keyName."=".$icmsObj->getVar($this->handler->keyName)
+			. "&amp;language=".$icmsObj->language;
 		if ($onlyUrl) {
 			return $ret;
 		} elseif ($withimage) {
-			return "<a href='" . $ret . "'>
-				<img src='" . ICMS_IMAGES_SET_URL . "/actions/wizard.png' style='vertical-align: middle;' alt='"
-				. _CO_ICMS_LANGUAGE_MODIFY . "'  title='" . _CO_ICMS_LANGUAGE_MODIFY . "'/></a>";
+			return "<a href='".$ret."'>
+				<img src='" . ICMS_IMAGES_SET_URL."/actions/wizard.png' style='vertical-align: middle;' alt='"
+				. _CO_ICMS_LANGUAGE_MODIFY."'  title='"._CO_ICMS_LANGUAGE_MODIFY."'/></a>";
 		}
 
-		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
+		return "<a href='".$ret."'>".$icmsObj->getVar($this->handler->identifierName)."</a>";
 	}
 
 	/**
@@ -582,28 +582,28 @@ class ModelController
 	 */
 	public function getEditItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
 		if ($this->handler->moduleName !== 'system') {
-			$admin_side = $userSide?'':'admin/';
-			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
-				. '?op=mod&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
+			$admin_side = $userSide ? '' : 'admin/';
+			$ret = $this->handler->_moduleUrl.$admin_side.$this->handler->_page
+				. '?op=mod&amp;'.$this->handler->keyName.'='.$icmsObj->getVar($this->handler->keyName);
 		} else {
 			/**
 			 * @todo: to be implemented...
 			 */
 			//$admin_side = $userSide ? '' : 'admin/';
 			$admin_side = '';
-			$ret = $this->handler->_moduleUrl . $admin_side
-				. 'admin.php?fct=' . $this->handler->_itemname
-				. '&amp;op=mod&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
+			$ret = $this->handler->_moduleUrl.$admin_side
+				. 'admin.php?fct='.$this->handler->_itemname
+				. '&amp;op=mod&amp;'.$this->handler->keyName.'='.$icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {
 			return $ret;
 		} elseif ($withimage) {
-			return "<a href='" . $ret . "'>
-				<img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' style='vertical-align: middle;' alt='"
-				. _CO_ICMS_MODIFY . "'  title='" . _CO_ICMS_MODIFY . "'/></a>";
+			return "<a href='".$ret."'>
+				<img src='" . ICMS_IMAGES_SET_URL."/actions/edit.png' style='vertical-align: middle;' alt='"
+				. _CO_ICMS_MODIFY."'  title='"._CO_ICMS_MODIFY."'/></a>";
 		}
 
-		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . '</a>';
+		return "<a href='".$ret."'>".$icmsObj->getVar($this->handler->identifierName).'</a>';
 	}
 
 	/**
@@ -615,28 +615,28 @@ class ModelController
 	 */
 	public function getDeleteItemLink($icmsObj, $onlyUrl = false, $withimage = true, $userSide = false) {
 		if ($this->handler->moduleName !== 'system') {
-			$admin_side = $userSide?'':'admin/';
-			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
-				. '?op=del&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
+			$admin_side = $userSide ? '' : 'admin/';
+			$ret = $this->handler->_moduleUrl.$admin_side.$this->handler->_page
+				. '?op=del&amp;'.$this->handler->keyName.'='.$icmsObj->getVar($this->handler->keyName);
 		} else {
 			/**
 			 * @todo: to be implemented...
 			 */
 			//$admin_side = $userSide ? '' : 'admin/';
 			$admin_side = '';
-			$ret = $this->handler->_moduleUrl . $admin_side
-				. 'admin.php?fct=' . $this->handler->_itemname
-				. '&amp;op=del&amp;' . $this->handler->keyName . '=' . $icmsObj->getVar($this->handler->keyName);
+			$ret = $this->handler->_moduleUrl.$admin_side
+				. 'admin.php?fct='.$this->handler->_itemname
+				. '&amp;op=del&amp;'.$this->handler->keyName.'='.$icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {
 			return $ret;
 		} elseif ($withimage) {
-			return "<a href='" . $ret . "'>
-				<img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' style='vertical-align: middle;' alt='"
-				. _CO_ICMS_DELETE . "'  title='" . _CO_ICMS_DELETE . "'/></a>";
+			return "<a href='".$ret."'>
+				<img src='" . ICMS_IMAGES_SET_URL."/actions/editdelete.png' style='vertical-align: middle;' alt='"
+				. _CO_ICMS_DELETE."'  title='"._CO_ICMS_DELETE."'/></a>";
 		}
 
-		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . '</a>';
+		return "<a href='".$ret."'>".$icmsObj->getVar($this->handler->identifierName).'</a>';
 	}
 
 	/**
@@ -667,7 +667,7 @@ class ModelController
 	 * Creates a string from the object's module name and item name
 	 */
 	public function getModuleItemString() {
-		return $this->handler->moduleName . '_' . $this->handler->_itemname;
+		return $this->handler->moduleName.'_'.$this->handler->_itemname;
 	}
 }
 

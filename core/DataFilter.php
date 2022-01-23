@@ -368,8 +368,8 @@ class DataFilter
 						$options1 = '';
 						$options2 = '';
 					} else {
-						$options1 = (int)$options1;
-						$options2 = (int)$options2;
+						$options1 = (int) $options1;
+						$options2 = (int) $options2;
 					}
 					break;
 
@@ -605,7 +605,7 @@ class DataFilter
 		$patterns = array();
 		$replacements = array();
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
-		$replacements[] = '<a href="' . ICMS_URL . '/\\2">\\3</a>';
+		$replacements[] = '<a href="'.ICMS_URL.'/\\2">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
 		$replacements[] = '<a href="\\2" rel="external">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(ftp?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
@@ -647,16 +647,16 @@ class DataFilter
 		if ($allowimage != 1) {
 			$replacements[] = '<a href="\\3" rel="external">\\3</a>';
 			$replacements[] = '<a href="\\1" rel="external">\\1</a>';
-			$replacements[] = '<a href="' . ICMS_URL . '/image.php?id=\\4" rel="external">\\5</a>';
-			$replacements[] = '<a href="' . ICMS_URL . '/image.php?id=\\2" rel="external">\\3</a>';
+			$replacements[] = '<a href="'.ICMS_URL.'/image.php?id=\\4" rel="external">\\5</a>';
+			$replacements[] = '<a href="'.ICMS_URL.'/image.php?id=\\2" rel="external">\\3</a>';
 		} else {
 			$replacements[] = '<img src="\\3" align="\\2" alt="" />';
 			$replacements[] = '<img src="\\1" alt="" />';
-			$replacements[] = '<img src="' . ICMS_URL . '/image.php?id=\\4" align="\\2" alt="\\5" />';
-			$replacements[] = '<img src="' . ICMS_URL . '/image.php?id=\\2" alt="\\3" />';
+			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\4" align="\\2" alt="\\5" />';
+			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\2" alt="\\3" />';
 		}
 		$patterns[] = "/\[quote]/sU";
-		$replacements[] = _QUOTEC . '<div class="icmsQuote"><blockquote><p>';
+		$replacements[] = _QUOTEC.'<div class="icmsQuote"><blockquote><p>';
 		$patterns[] = "/\[\/quote]/sU";
 		$replacements[] = '</p></blockquote></div>';
 		$text = str_replace("\x00", "", $text);
@@ -679,7 +679,7 @@ class DataFilter
 	public static function makeClickable($text)
 	{
 		global $icmsConfigPersona;
-		$text = ' ' . $text;
+		$text = ' '.$text;
 		$patterns = array(
 			"/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i",
 			"/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i",
@@ -698,19 +698,19 @@ class DataFilter
 			$countlinks = count($links);
 			for ($i = 0; $i < $countlinks; $i++) {
 				$link = $links[$i];
-				$link = (preg_match('#(.*)(href=")#is', $link)) ? '<a' . $link : $link;
+				$link = (preg_match('#(.*)(href=")#is', $link)) ? '<a'.$link : $link;
 				$begin = strpos($link, '>') + 1;
 				$end = strpos($link, '<', $begin);
 				$length = $end - $begin;
 				$urlname = substr($link, $begin, $length);
 
-				$maxlength = (int)($icmsConfigPersona['max_url_long']);
-				$cutlength = (int)($icmsConfigPersona['pre_chars_left']);
-				$endlength = -(int)($icmsConfigPersona['last_chars_left']);
+				$maxlength = (int) ($icmsConfigPersona['max_url_long']);
+				$cutlength = (int) ($icmsConfigPersona['pre_chars_left']);
+				$endlength = -(int) ($icmsConfigPersona['last_chars_left']);
 				$middleurl = " ... ";
 				$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is',
 						$urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
-				$text = str_replace('>' . $urlname . '<', '>' . $chunked . '<', $text);
+				$text = str_replace('>'.$urlname.'<', '>'.$chunked.'<', $text);
 			}
 		}
 		$text = substr($text, 1);
@@ -751,14 +751,14 @@ class DataFilter
 				foreach ($icmsConfigCensor['censor_words'] as $bad) {
 					if (!empty($bad)) {
 						$bad = quotemeta($bad);
-						$patterns[] = "/(\s)" . $bad . '/siU';
-						$replacements[] = "\\1" . $replacement;
-						$patterns[] = '/^' . $bad . '/siU';
+						$patterns[] = "/(\s)".$bad.'/siU';
+						$replacements[] = "\\1".$replacement;
+						$patterns[] = '/^'.$bad.'/siU';
 						$replacements[] = $replacement;
-						$patterns[] = "/(\n)" . $bad . '/siU';
-						$replacements[] = "\\1" . $replacement;
-						$patterns[] = '/]' . $bad . '/siU';
-						$replacements[] = ']' . $replacement;
+						$patterns[] = "/(\n)".$bad.'/siU';
+						$replacements[] = "\\1".$replacement;
+						$patterns[] = '/]'.$bad.'/siU';
+						$replacements[] = ']'.$replacement;
 						$text = preg_replace($patterns, $replacements, $text);
 					}
 				}
@@ -775,9 +775,9 @@ class DataFilter
 	 */
 	public static function codePreConv($text, $imcode = 1)
 	{
-		if ((int)$imcode !== 0) {
+		if ((int) $imcode !== 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
-			$text = preg_replace_callback($patterns, function ($match) {
+			$text = preg_replace_callback($patterns, function($match) {
 				return base64_encode($match[1]);
 			}, $text);
 		}
@@ -794,11 +794,11 @@ class DataFilter
 	 */
 	public static function codeConv($text, $imcode = 1, $image = 1)
 	{
-		if ((int)$imcode !== 0) {
+		if ((int) $imcode !== 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
-			$text = preg_replace_callback($patterns, function ($matches) use ($image) {
+			$text = preg_replace_callback($patterns, function($matches) use ($image) {
 				$code = DataFilter::codeSanitizer($matches[1], ($image != 0) ? 1 : 0);
-				return '<div class=\"icmsCode\">' . $code . '</div>';
+				return '<div class=\"icmsCode\">'.$code.'</div>';
 			}, $text);
 		}
 		return $text;
@@ -887,9 +887,9 @@ class DataFilter
 			$text = self::textsanitizer_php_highlight($text);
 		} elseif ($icmsConfigPlugins['code_sanitizer'] == 'geshi') {
 			$text = self::undoHtmlSpecialChars($text);
-			$text = '<code>' . self::textsanitizer_geshi_highlight($text) . '</code>';
+			$text = '<code>'.self::textsanitizer_geshi_highlight($text).'</code>';
 		} else {
-			$text = '<pre><code>' . $text . '</code></pre>';
+			$text = '<pre><code>'.$text.'</code></pre>';
 		}
 		return $text;
 	}
@@ -907,7 +907,7 @@ class DataFilter
 		$text = trim($text);
 		$addedtag_open = 0;
 		if (!strpos($text, '<?php') && (strpos($text, '<?php') !== 0)) {
-			$text = "<?php\n" . $text;
+			$text = "<?php\n".$text;
 			$addedtag_open = 1;
 		}
 		$addedtag_close = 0;
@@ -933,7 +933,7 @@ class DataFilter
 		$length_text = ($pos_close) ? $pos_close - $length_open : 0;
 		$str_internal = ($length_text) ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
 
-		$buffer = $str_open . $str_internal . $str_close;
+		$buffer = $str_open.$str_internal.$str_close;
 		return $buffer;
 	}
 
@@ -1043,7 +1043,7 @@ class DataFilter
 			$strs = [];
 			$hasML = false;
 			foreach ($tags as $tag) {
-				if (preg_match("/\[" . $tag . "](.*)\[\/" . $tag . "\]/sU", $str, $matches) && count($matches) > 0) {
+				if (preg_match("/\[".$tag."](.*)\[\/".$tag."\]/sU", $str, $matches) && count($matches) > 0) {
 					$hasML = true;
 					$strs[] = $matches[1];
 				}
@@ -1058,11 +1058,11 @@ class DataFilter
 
 		for ($i = 0; $i <= count($strs) - 1; $i++) {
 			if (!XOOPS_USE_MULTIBYTES) {
-				$strs[$i] = (strlen($strs[$i]) - $start <= $length) ? substr($strs[$i], $start, $length) : substr($strs[$i], $start, $length - strlen($trimmarker)) . $trimmarker;
+				$strs[$i] = (strlen($strs[$i]) - $start <= $length) ? substr($strs[$i], $start, $length) : substr($strs[$i], $start, $length - strlen($trimmarker)).$trimmarker;
 			}
 			if (function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET)) {
 				$str2 = mb_strcut($strs[$i], $start, $length - strlen($trimmarker));
-				$strs[$i] = $str2 . (mb_strlen($strs[$i]) !== mb_strlen($str2) ? $trimmarker : '');
+				$strs[$i] = $str2.(mb_strlen($strs[$i]) !== mb_strlen($str2) ? $trimmarker : '');
 			}
 
 			$DEP_CHAR = 127;
@@ -1080,8 +1080,8 @@ class DataFilter
 					break;
 				}
 			}
-			$strs[$i] = ($action) ? substr($strs[$i], $pos_st, $pos_i - $pos_st - strlen($trimmarker)) . $trimmarker : $strs[$i];
-			$strs[$i] = ($hasML) ? '[' . $tags[$i] . ']' . $strs[$i] . '[/' . $tags[$i] . ']' : $strs[$i];
+			$strs[$i] = ($action) ? substr($strs[$i], $pos_st, $pos_i - $pos_st - strlen($trimmarker)).$trimmarker : $strs[$i];
+			$strs[$i] = ($hasML) ? '['.$tags[$i].']'.$strs[$i].'[/'.$tags[$i].']' : $strs[$i];
 		}
 		$str = implode('', $strs);
 		return $str;
@@ -1126,7 +1126,7 @@ class DataFilter
 						break;
 				}
 				if ($valid) {
-					if (isset($options2) && (int)$options2 === 1) {
+					if (isset($options2) && (int) $options2 === 1) {
 						return filter_var($data, FILTER_SANITIZE_ENCODED);
 					}
 					return $data;
@@ -1140,9 +1140,9 @@ class DataFilter
 				$data = filter_var($data, FILTER_SANITIZE_EMAIL);
 
 				if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
-					if ((int)$options2 === 1 && is_array($icmsConfigUser['bad_emails'])) {
+					if ((int) $options2 === 1 && is_array($icmsConfigUser['bad_emails'])) {
 						foreach ($icmsConfigUser['bad_emails'] as $be) {
-							if ((!empty($be) && preg_match('/' . $be . '/i', $data))) {
+							if ((!empty($be) && preg_match('/'.$be.'/i', $data))) {
 								return false;
 							}
 						}
@@ -1154,7 +1154,7 @@ class DataFilter
 				} else {
 					return false;
 				}
-				if ((int)$options1 === 1) {
+				if ((int) $options1 === 1) {
 					$data = str_replace(['@', '.'], [' at ', ' dot '], $data);
 				}
 				return $data;
@@ -1310,7 +1310,7 @@ class DataFilter
 		foreach ($smileys as $smile) {
 			$message = str_replace(
 				$smile['code'],
-				'<img src="' . ICMS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url'])
+				'<img src="'.ICMS_UPLOAD_URL.'/'.htmlspecialchars($smile['smile_url'])
 				. '" alt="" />',
 				$message
 			);
@@ -1329,7 +1329,7 @@ class DataFilter
 	 */
 	private static function priv_getSmileys($all = false)
 	{
-		if ((count(self::$allSmileys) === 0) && ($result = icms::$xoopsDB->query('SELECT * FROM ' . icms::$xoopsDB->prefix('smiles')))) {
+		if ((count(self::$allSmileys) === 0) && ($result = icms::$xoopsDB->query('SELECT * FROM '.icms::$xoopsDB->prefix('smiles')))) {
 			while ($smiley = icms::$xoopsDB->fetchArray($result)) {
 				if ($smiley['display']) {
 					self::$displaySmileys[] = $smiley;

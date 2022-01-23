@@ -30,14 +30,14 @@ date_default_timezone_set(@date_default_timezone_get());
 
 /* we need this so we can use icms_core_Logger during the install to trap errors */
 if (defined('INSTALLER_INCLUDE_MAIN')) {
-	require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "mainfile.php";
+	require_once dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR."mainfile.php";
 }
 
-require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+require_once dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
 // installer common functions
 require_once 'include/functions.php';
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'xoopsinstallwizard.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'class'.DIRECTORY_SEPARATOR.'xoopsinstallwizard.php';
 
 $errorHandler = icms_core_Logger::instance();
 error_reporting(E_ALL);
@@ -59,7 +59,7 @@ if (!$wizard->xoInit()) {
 session_start();
 
 foreach ((isset($_SESSION['settings']) ? $_SESSION['settings'] : []) as $key => $value) {
-	putenv("$key=" . $value);
+	putenv("$key=".$value);
 	$_ENV[$key] = $value;
 	$_SERVER[$key] = $value;
 }

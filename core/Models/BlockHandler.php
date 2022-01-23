@@ -126,11 +126,11 @@ class BlockHandler extends AbstractExtendedHandler {
 	 */
 	public function getAllBlocks($rettype = 'object', $side = null, $visible = null, $orderby = 'side, weight, bid', $isactive = 1) {
 		$ret = array();
-		$where_query = " WHERE isactive='" . (int) $isactive . "'";
+		$where_query = " WHERE isactive='".(int) $isactive."'";
 
 		if (isset($side)) {
 			// get both sides in sidebox? (some themes need this)
-			$tp = ($side == -2)?'L':(($side == -6)?'C':'');
+			$tp = ($side == -2) ? 'L' : (($side == -6) ? 'C' : '');
 			if ($tp != '') {
 			 	$q_side = '';
 				$icms_blockposition_handler = icms::handler('icms_view_block_position');
@@ -138,22 +138,22 @@ class BlockHandler extends AbstractExtendedHandler {
 				$criteria->add(new CriteriaItem('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach ($blockpositions as $bp) {
-					$q_side .= "side='" . (int) $bp->id . "' OR ";
+					$q_side .= "side='".(int) $bp->id."' OR ";
 				}
-				$q_side = "('" . substr($q_side, 0, strlen($q_side) - 4) . "')";
+				$q_side = "('".substr($q_side, 0, strlen($q_side) - 4)."')";
 			} else {
-				$q_side = "side='" . (int) $side . "'";
+				$q_side = "side='".(int) $side."'";
 			}
-			$where_query .= ' AND ' . $q_side;
+			$where_query .= ' AND '.$q_side;
 		}
 
 		if (isset($visible)) {
-			$where_query .= " AND visible='" . (int) $visible . "'";
+			$where_query .= " AND visible='".(int) $visible."'";
 		}
 		$where_query .= " ORDER BY $orderby";
 		switch ($rettype) {
 			case 'object':
-				$sql = 'SELECT * FROM ' . $this->db->prefix("newblocks") . "" . $where_query;
+				$sql = 'SELECT * FROM '.$this->db->prefix("newblocks")."".$where_query;
 				$result = $this->db->query($sql);
 				while ($myrow = $this->db->fetchArray($result)) {
 					// @todo this is causing to many SQL queries. In case this section is still needed,
@@ -163,7 +163,7 @@ class BlockHandler extends AbstractExtendedHandler {
 				break;
 
 			case 'list':
-				$sql = 'SELECT * FROM ' . $this->db->prefix('newblocks') . $where_query;
+				$sql = 'SELECT * FROM '.$this->db->prefix('newblocks').$where_query;
 				$result = $this->db->query($sql);
 				if ($this->db->getRowsNum($result) > 0) {
 					$blockids = array();
@@ -171,7 +171,7 @@ class BlockHandler extends AbstractExtendedHandler {
 						$blockids[] = $myrow['bid'];
 					}
 					$criteria = new CriteriaCompo();
-					$criteria->add(new CriteriaItem('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+					$criteria->add(new CriteriaItem('bid', '('.implode(',', $blockids).')', 'IN'));
 					$blocks = $this->getObjects($criteria, true, true);
 					foreach ($blocks as $block) {
 						$ret[$block->bid] = $block->title;
@@ -181,7 +181,7 @@ class BlockHandler extends AbstractExtendedHandler {
 				break;
 
 			case 'id':
-				$sql = 'SELECT bid FROM ' . $this->db->prefix('newblocks') . $where_query;
+				$sql = 'SELECT bid FROM '.$this->db->prefix('newblocks').$where_query;
 				$result = $this->db->query($sql);
 				while ($myrow = $this->db->fetchArray($result)) {
 					$ret[] = $myrow['bid'];
@@ -197,12 +197,12 @@ class BlockHandler extends AbstractExtendedHandler {
 	public function &get($id, $as_object = true, $debug = false, $criteria = false)
 	{
 		$obj = parent::get($id, $as_object, $debug, $criteria);
-		$sql = "SELECT module_id, page_id FROM " . $this->db->prefix('block_module_link')
-			. " WHERE block_id='" . (int)$obj->bid . "'";
+		$sql = "SELECT module_id, page_id FROM ".$this->db->prefix('block_module_link')
+			. " WHERE block_id='".(int) $obj->bid."'";
 		$result = $this->db->query($sql);
 		$modules = $bcustomp = array();
 		while ($row = $this->db->fetchArray($result)) {
-			$modules[] = (int)$row['module_id'] . '-' . (int)$row['page_id'];
+			$modules[] = (int) $row['module_id'].'-'.(int) $row['page_id'];
 		}
 		$obj->visiblein = $modules;
 		return $obj;
@@ -226,14 +226,14 @@ class BlockHandler extends AbstractExtendedHandler {
 
 		$isactive = (int) $isactive;
 		$ret = array();
-		$sql = 'SELECT DISTINCT gperm_itemid FROM ' . $this->db->prefix('group_permission')
+		$sql = 'SELECT DISTINCT gperm_itemid FROM '.$this->db->prefix('group_permission')
 			. " WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
 		if (is_array($groupid)) {
 			$gid = array_map('intval', $groupid);
-			$sql .= ' AND gperm_groupid IN (' . implode(',', $gid) . ')';
+			$sql .= ' AND gperm_groupid IN ('.implode(',', $gid).')';
 		} else {
 			if ((int) $groupid > 0) {
-				$sql .= " AND gperm_groupid='" . (int) $groupid . "'";
+				$sql .= " AND gperm_groupid='".(int) $groupid."'";
 			}
 		}
 		$result = $this->db->query($sql);
@@ -243,11 +243,11 @@ class BlockHandler extends AbstractExtendedHandler {
 		}
 
 		if (!empty($blockids)) {
-			$sql = 'SELECT b.* FROM ' . $this->db->prefix('newblocks') . ' b, ' . $this->db->prefix('block_module_link')
+			$sql = 'SELECT b.* FROM '.$this->db->prefix('newblocks').' b, '.$this->db->prefix('block_module_link')
 				. ' m WHERE m.block_id=b.bid';
-			$sql .= " AND b.isactive='" . $isactive . "'";
+			$sql .= " AND b.isactive='".$isactive."'";
 			if (isset($visible)) {
-				$sql .= " AND b.visible='" . (int) ($visible) . "'";
+				$sql .= " AND b.visible='".(int) ($visible)."'";
 			}
 
 			$arr = explode('-', $module_id);
@@ -273,8 +273,8 @@ class BlockHandler extends AbstractExtendedHandler {
 				}
 			}
 
-			$sql .= ' AND b.bid IN (' . implode(',', $blockids) . ')';
-			$sql .= ' ORDER BY ' . $orderby;
+			$sql .= ' AND b.bid IN ('.implode(',', $blockids).')';
+			$sql .= ' ORDER BY '.$orderby;
 			$result = $this->db->query($sql);
 
 			// old method of gathering block data. Since this could result in a whole bunch of queries, a new method was introduced
@@ -307,16 +307,16 @@ class BlockHandler extends AbstractExtendedHandler {
 	private function &getMultiple($blockids)
 	{
 		$criteria = new CriteriaCompo();
-		$criteria->add(new CriteriaItem('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+		$criteria->add(new CriteriaItem('bid', '('.implode(',', $blockids).')', 'IN'));
 		$criteria->setSort('weight');
 		$ret = $this->getObjects($criteria, true, true);
-		$sql = 'SELECT block_id, module_id, page_id FROM ' . $this->db->prefix('block_module_link')
-			. ' WHERE block_id IN (' . implode(',', array_keys($ret)) . ') ORDER BY block_id';
+		$sql = 'SELECT block_id, module_id, page_id FROM '.$this->db->prefix('block_module_link')
+			. ' WHERE block_id IN ('.implode(',', array_keys($ret)).') ORDER BY block_id';
 		$result = $this->db->query($sql);
 		$modules = array();
 		$last_block_id = 0;
 		while ($row = $this->db->fetchArray($result)) {
-			$modules[] = (int)($row['module_id']) . '-' . (int)($row['page_id']);
+			$modules[] = (int) ($row['module_id']).'-'.(int) ($row['page_id']);
 			$ret[$row['block_id']]->visiblein = $modules;
 			if ($row['block_id'] != $last_block_id) {
 				$modules = array();
@@ -341,14 +341,14 @@ class BlockHandler extends AbstractExtendedHandler {
 	public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
 		$ret = array();
 		$bids = array();
-		$sql = 'SELECT DISTINCT(bid) from ' . $this->db->prefix('newblocks');
+		$sql = 'SELECT DISTINCT(bid) from '.$this->db->prefix('newblocks');
 		if ($result = $this->db->query($sql)) {
 			while ($myrow = $this->db->fetchArray($result)) {
 				$bids[] = $myrow['bid'];
 			}
 		}
-		$sql = 'SELECT DISTINCT(p.gperm_itemid) from ' . $this->db->prefix('group_permission') . ' p, '
-			. $this->db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
+		$sql = 'SELECT DISTINCT(p.gperm_itemid) from '.$this->db->prefix('group_permission').' p, '
+			. $this->db->prefix('groups')." g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
 		$grouped = array();
 		if ($result = $this->db->query($sql)) {
 			while ($myrow = $this->db->fetchArray($result)) {
@@ -357,15 +357,15 @@ class BlockHandler extends AbstractExtendedHandler {
 		}
 		$non_grouped = array_diff($bids, $grouped);
 		if (!empty($non_grouped)) {
-			$sql = 'SELECT b.* FROM ' . $this->db->prefix('newblocks') . ' b, '
-				. $this->db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
-			$sql .= " AND b.isactive='" . (int) $isactive . "'";
+			$sql = 'SELECT b.* FROM '.$this->db->prefix('newblocks').' b, '
+				. $this->db->prefix('block_module_link').' m WHERE m.block_id=b.bid';
+			$sql .= " AND b.isactive='".(int) $isactive."'";
 			if (isset($visible)) {
-				$sql .= " AND b.visible='" . (int) $visible . "'";
+				$sql .= " AND b.visible='".(int) $visible."'";
 			}
 			$module_id = (int) $module_id;
 			if (!empty($module_id)) {
-				$sql .= " AND m.module_id IN ('0', '" . (int) $module_id . "'";
+				$sql .= " AND m.module_id IN ('0', '".(int) $module_id."'";
 				if ($toponlyblock) {
 					$sql .= ",'-1'";
 				}
@@ -377,8 +377,8 @@ class BlockHandler extends AbstractExtendedHandler {
 					$sql .= " AND m.module_id='0'";
 				}
 			}
-			$sql .= ' AND b.bid IN (' . implode(',', $non_grouped) . ')';
-			$sql .= ' ORDER BY ' . $orderby;
+			$sql .= ' AND b.bid IN ('.implode(',', $non_grouped).')';
+			$sql .= ' ORDER BY '.$orderby;
 			$result = $this->db->query($sql);
 
 			// old method of gathering block data. Since this could result in a whole bunch of queries, a new method was introduced
@@ -457,11 +457,11 @@ class BlockHandler extends AbstractExtendedHandler {
 					$page = explode('-', $bmid);
 					$mid = $page[0];
 					$pageid = $page[1];
-					$sql = "INSERT INTO " . $this->db->prefix('block_module_link')
+					$sql = "INSERT INTO ".$this->db->prefix('block_module_link')
 						. " (block_id, module_id, page_id) VALUES ('"
-						. (int) $obj->bid . "', '"
-						. (int) $mid . "', '"
-						. (int) $pageid . "')";
+						. (int) $obj->bid."', '"
+						. (int) $mid."', '"
+						. (int) $pageid."')";
 					if (false != $force) {
 						$this->db->queryF($sql);
 					} else {
@@ -472,10 +472,10 @@ class BlockHandler extends AbstractExtendedHandler {
 				$page = explode('-', $obj->getVar('visiblein', 'e'));
 				$mid = $page[0];
 				$pageid = $page[1];
-				$sql = "INSERT INTO " . $this->db->prefix('block_module_link') . " (block_id, module_id, page_id) VALUES ('"
-					. (int) $obj->bid . "', '"
-					. (int) $mid . "', '"
-					. (int) $pageid . "')";
+				$sql = "INSERT INTO ".$this->db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('"
+					. (int) $obj->bid."', '"
+					. (int) $mid."', '"
+					. (int) $pageid."')";
 				if (false != $force) {
 					$this->db->queryF($sql);
 				} else {

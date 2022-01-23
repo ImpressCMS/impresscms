@@ -27,9 +27,9 @@ class PasswordTrayElement extends TrayElement {
 		$control = $object->controls[$key];
 
 		icms_loadLanguageFile('core', 'user');
-		parent::__construct($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
+		parent::__construct($var['form_caption'].'<br />'._US_TYPEPASSTWICE, ' ', $key.'_password_tray');
 
-		$password_box1 = new PasswordElement('', $key . '1', 10, 32, '', false, 'password_adv');
+		$password_box1 = new PasswordElement('', $key.'1', 10, 32, '', false, 'password_adv');
 		$this->addElement($password_box1);
 
 		$this->_key = $key;
@@ -37,7 +37,7 @@ class PasswordTrayElement extends TrayElement {
 
 	public function render() {
 		$ret = parent::render();
-		$ret .= "<input class='form-control' type='password' name='" . $this->_key . "2' id='" . $this->_key . "2' "
+		$ret .= "<input class='form-control' type='password' name='".$this->_key."2' id='".$this->_key."2' "
 			 .  "size='10' maxlength='32' value='' autocomplete='off' />";
 		return $ret;
 	}

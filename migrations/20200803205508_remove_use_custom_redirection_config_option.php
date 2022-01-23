@@ -4,26 +4,26 @@ use Phoenix\Migration\AbstractMigration;
 
 class RemoveUseCustomRedirectionConfigOption extends AbstractMigration
 {
-    protected function up(): void
-    {
-    	$this->delete(
+	protected function up(): void
+	{
+		$this->delete(
 			$this->prefix('config'),
 			[
 				'conf_name' => 'use_custom_redirection'
 			]
 		);
-    	$this->delete(
-    		$this->prefix('tplfile'),
+		$this->delete(
+			$this->prefix('tplfile'),
 			[
 				'tpl_file' => 'system_redirect.html',
 				'tpl_tplset' => 'default'
 			]
 		);
-    }
+	}
 
-    protected function down(): void
-    {
-    	$this->insert(
+	protected function down(): void
+	{
+		$this->insert(
 			$this->prefix('config'),
 			[
 				'conf_modid' => 0,
@@ -50,7 +50,7 @@ class RemoveUseCustomRedirectionConfigOption extends AbstractMigration
 				'tpl_type' => 'module',
 			]
 		);
-    }
+	}
 
 	/**
 	 * Prefix table

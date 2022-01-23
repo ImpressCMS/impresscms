@@ -22,7 +22,7 @@ class ScriptSetupStep implements SetupStepInterface
 		if ($install_script === false || empty($install_script = trim($install_script))) {
 			return true;
 		}
-		include_once ICMS_MODULES_PATH . '/' . $dirname . '/' . $install_script;
+		include_once ICMS_MODULES_PATH.'/'.$dirname.'/'.$install_script;
 
 		$is_IPF = $module->getInfo('object_items');
 		if (!empty($is_IPF)) {
@@ -33,9 +33,9 @@ class ScriptSetupStep implements SetupStepInterface
 			);
 		}
 
-		if (function_exists($func = 'xoops_module_install_' . $module_name)) {
+		if (function_exists($func = 'xoops_module_install_'.$module_name)) {
 			$this->execFunc($func, $module, $output);
-		} elseif (function_exists($func = 'icms_module_install_' . $module_name)) {
+		} elseif (function_exists($func = 'icms_module_install_'.$module_name)) {
 			$this->execFunc($func, $module, $output);
 		}
 

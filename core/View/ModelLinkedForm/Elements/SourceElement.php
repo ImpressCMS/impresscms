@@ -37,7 +37,7 @@ class SourceElement extends TextAreaElement {
 		/**
 		 * @var EditorsRegistry $editorsRegistry
 		 */
-		$editorsRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+		$editorsRegistry = icms::getInstance()->get('\\'.EditorsRegistry::class);
 
 		$this->_editor = $editorsRegistry->get(
 			'source',
@@ -55,7 +55,7 @@ class SourceElement extends TextAreaElement {
 		if ($this->_editor) {
 			$extra = '';
 			foreach ($this->_editor->getAttributes() as $attrName => $attrValue) {
-				$extra .= $attrName . '="' . htmlentities($attrValue) . '"';
+				$extra .= $attrName.'="'.htmlentities($attrValue).'"';
 			}
 			$this->setExtra($extra);
 		}

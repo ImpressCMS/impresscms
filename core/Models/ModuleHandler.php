@@ -125,13 +125,13 @@ class ModuleHandler extends AbstractExtendedHandler
 			return $cleanList;
 		}
 
-		$dirtyList = Filesystem::getDirList(ICMS_MODULES_PATH . '/');
+		$dirtyList = Filesystem::getDirList(ICMS_MODULES_PATH.'/');
 		foreach ($dirtyList as $item) {
 			/**
 			 * @var ExtensionDescriberInterface $extensionDescriber
 			 */
 			foreach (icms::getInstance()->get('extension_describer.module') as $extensionDescriber) {
-				if (!$extensionDescriber->canDescribe(ICMS_MODULES_PATH . '/' . $item)) {
+				if (!$extensionDescriber->canDescribe(ICMS_MODULES_PATH.'/'.$item)) {
 					continue;
 				}
 				$cleanList[$item] = $item;
@@ -215,16 +215,16 @@ class ModuleHandler extends AbstractExtendedHandler
 		$module->registerClassPath();
 		$module->weight = 1;
 
-		$output->info(_MD_AM_INSTALLING . $module->getInfo('name'));
-		$output->writeln(_VERSION . ': ' . icms_conv_nr2local($module->getInfo('version')));
+		$output->info(_MD_AM_INSTALLING.$module->getInfo('name'));
+		$output->writeln(_VERSION.': '.icms_conv_nr2local($module->getInfo('version')));
 		if (($module->getInfo('author') !== false) && trim($module->getInfo('author'))) {
-			$output->writeln(_AUTHOR . ': ' . trim($module->getInfo('author')));
+			$output->writeln(_AUTHOR.': '.trim($module->getInfo('author')));
 		}
 		/**
 		 * @var SetupStepInterface[] $steps
 		 */
-		$steps = (array)icms::getInstance()->get('setup_step.module.install');
-		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
+		$steps = (array) icms::getInstance()->get('setup_step.module.install');
+		usort($steps, function(SetupStepInterface $stepA, SetupStepInterface $stepB) {
 			return $stepA->getPriority() > $stepB->getPriority();
 		});
 
@@ -271,7 +271,7 @@ class ModuleHandler extends AbstractExtendedHandler
 			$output->fatal(
 				_MD_AM_FAILUNINS, $module->name
 			);
-			$output->writeln(_MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_SYSNO);
+			$output->writeln(_MD_AM_ERRORSC.PHP_EOL.' - '._MD_AM_SYSNO);
 			return false;
 		}
 
@@ -279,7 +279,7 @@ class ModuleHandler extends AbstractExtendedHandler
 			$output->fatal(
 				_MD_AM_FAILUNINS, $module->name
 			);
-			$output->writeln(_MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO);
+			$output->writeln(_MD_AM_ERRORSC.PHP_EOL.' - '._MD_AM_STRTNO);
 			return false;
 		}
 
@@ -294,7 +294,7 @@ class ModuleHandler extends AbstractExtendedHandler
 				if ($module->mid == $stararr[0]) {
 					$output->fatal(_MD_AM_FAILDEACT, $module->name);
 					$output->writeln(
-						_MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO
+						_MD_AM_ERRORSC.PHP_EOL.' - '._MD_AM_STRTNO
 					);
 					return false;
 				}
@@ -304,15 +304,15 @@ class ModuleHandler extends AbstractExtendedHandler
 			$output->fatal(
 				_MD_AM_FAILDEACT, $module->name
 			);
-			$output->writeln(_MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO);
+			$output->writeln(_MD_AM_ERRORSC.PHP_EOL.' - '._MD_AM_STRTNO);
 			return false;
 		}
 
 		/**
 		 * @var SetupStepInterface[] $steps
 		 */
-		$steps = (array)icms::getInstance()->get('setup_step.module.uninstall');
-		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
+		$steps = (array) icms::getInstance()->get('setup_step.module.uninstall');
+		usort($steps, function(SetupStepInterface $stepA, SetupStepInterface $stepB) {
 			return $stepA->getPriority() > $stepB->getPriority();
 		});
 
@@ -405,19 +405,19 @@ class ModuleHandler extends AbstractExtendedHandler
 		// delete admin permissions assigned for this module
 		$sql = sprintf(
 			"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->mid
+			$this->db->prefix('group_permission'), (int) $module->mid
 		);
 		$this->db->query($sql);
 		// delete read permissions assigned for this module
 		$sql = sprintf(
 			"DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'",
-			$this->db->prefix('group_permission'), (int)$module->mid
+			$this->db->prefix('group_permission'), (int) $module->mid
 		);
 		$this->db->query($sql);
 
 		$sql = sprintf(
 			"SELECT block_id FROM %s WHERE module_id = '%u'",
-			$this->db->prefix('block_module_link'), (int)$module->mid
+			$this->db->prefix('block_module_link'), (int) $module->mid
 		);
 		if ($result = $this->db->query($sql)) {
 			$block_id_arr = array();
@@ -431,26 +431,26 @@ class ModuleHandler extends AbstractExtendedHandler
 			foreach ($block_id_arr as $i) {
 				$sql = sprintf(
 					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
-					$this->db->prefix('block_module_link'), (int)$module->mid, (int)$i
+					$this->db->prefix('block_module_link'), (int) $module->mid, (int) $i
 				);
 				if ($result2 = $this->db->query($sql)) {
 					if (0 < $this->db->getRowsNum($result2)) {
 						// this block has other entries, so delete the entry for this module
 						$sql = sprintf(
 							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
-							$this->db->prefix('block_module_link'), (int)$module->mid, (int)$i
+							$this->db->prefix('block_module_link'), (int) $module->mid, (int) $i
 						);
 						$this->db->query($sql);
 					} else {
 						// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
 						$sql = sprintf(
 							"UPDATE %s SET visible = '0' WHERE bid = '%u'",
-							$this->db->prefix('newblocks'), (int)$i
+							$this->db->prefix('newblocks'), (int) $i
 						);
 						$this->db->query($sql);
 						$sql = sprintf(
 							"UPDATE %s SET module_id = '-1' WHERE module_id = '%u'",
-							$this->db->prefix('block_module_link'), (int)$module->mid
+							$this->db->prefix('block_module_link'), (int) $module->mid
 						);
 						$this->db->query($sql);
 					}
@@ -518,8 +518,8 @@ class ModuleHandler extends AbstractExtendedHandler
 		/**
 		 * @var SetupStepInterface[] $steps
 		 */
-		$steps = (array)icms::getInstance()->get('setup_step.module.update');
-		usort($steps, function (SetupStepInterface $stepA, SetupStepInterface $stepB) {
+		$steps = (array) icms::getInstance()->get('setup_step.module.update');
+		usort($steps, function(SetupStepInterface $stepA, SetupStepInterface $stepB) {
 			return $stepA->getPriority() > $stepB->getPriority();
 		});
 
@@ -546,7 +546,7 @@ class ModuleHandler extends AbstractExtendedHandler
 		Template::template_clear_module_cache($module->mid);
 		$module->isactive = 1;
 		if (!$module->store()) {
-			$output->fatal(_MD_AM_FAILACT . ' ' . _MD_AM_ERRORSC);
+			$output->fatal(_MD_AM_FAILACT.' '._MD_AM_ERRORSC);
 			$output->msg(
 				$module->getHtmlErrors()
 			);
@@ -600,14 +600,14 @@ class ModuleHandler extends AbstractExtendedHandler
 		if ($module->dirname == "system") {
 			$output->fatal(
 				_MD_AM_FAILDEACT
-				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_SYSNO,
+				. ' '._MD_AM_ERRORSC.PHP_EOL.' - '._MD_AM_SYSNO,
 				$module->name
 			);
 			return false;
 		} elseif ($module->dirname == $icmsConfig['startpage']) {
 			$output->fatal(
 				_MD_AM_FAILDEACT
-				. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO,
+				. ' '._MD_AM_ERRORSC.PHP_EOL.' - '._MD_AM_STRTNO,
 				$module->name
 			);
 			return false;
@@ -620,7 +620,7 @@ class ModuleHandler extends AbstractExtendedHandler
 					if ($module->mid == $stararr[0]) {
 						$output->fatal(
 							_MD_AM_FAILDEACT
-							. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO,
+							. ' '._MD_AM_ERRORSC.PHP_EOL.' - '._MD_AM_STRTNO,
 							$module->name
 						);
 						return false;
@@ -630,7 +630,7 @@ class ModuleHandler extends AbstractExtendedHandler
 			if (in_array($module->dirname, $icmsConfig['startpage'], true)) {
 				$output->fatal(
 					_MD_AM_FAILDEACT
-					. ' ' . _MD_AM_ERRORSC . PHP_EOL . ' - ' . _MD_AM_STRTNO,
+					. ' '._MD_AM_ERRORSC.PHP_EOL.' - '._MD_AM_STRTNO,
 					$module->name
 				);
 				return false;
@@ -638,7 +638,7 @@ class ModuleHandler extends AbstractExtendedHandler
 			if (!$module->store()) {
 				$output->fatal(
 					_MD_AM_FAILDEACT
-					. ' ' . _MD_AM_ERRORSC,
+					. ' '._MD_AM_ERRORSC,
 					$module->name
 				);
 				$output->msg(
@@ -677,7 +677,7 @@ class ModuleHandler extends AbstractExtendedHandler
 		if (!$module->store()) {
 			$output->fatal(
 				_MD_AM_FAILORDER
-				. ' ' . _MD_AM_ERRORSC,
+				. ' '._MD_AM_ERRORSC,
 				DataFilter::stripSlashesGPC($name)
 			);
 			$output->msg(

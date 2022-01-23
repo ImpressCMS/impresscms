@@ -93,9 +93,9 @@ class PageNav
 	 */
 	public function __construct($total_items, $items_perpage, $current_start, $start_name = 'start', $extra_arg = '')
 	{
-		$this->total = (int)($total_items);
-		$this->perpage = (int)($items_perpage);
-		$this->current = (int)($current_start);
+		$this->total = (int) ($total_items);
+		$this->perpage = (int) ($items_perpage);
+		$this->current = (int) ($current_start);
 
 		$parsedUrl = parse_url($_SERVER['REQUEST_URI']);
 		if (isset($parsedUrl['query'])) {
@@ -107,7 +107,7 @@ class PageNav
 			$extra_arg .= '&amp;';
 		}
 
-		parse_str(html_entity_decode($extra_arg . trim($start_name) . '='), $query);
+		parse_str(html_entity_decode($extra_arg.trim($start_name).'='), $query);
 		foreach ($query as $param => $value) {
 			$this->query[$param] = $value;
 		}
@@ -134,7 +134,7 @@ class PageNav
 	{
 		$query = $this->query;
 		$query[$this->startName] = $page;
-		return $this->path . '?' . http_build_query($query);
+		return $this->path.'?'.http_build_query($query);
 	}
 
 	/**
@@ -147,34 +147,34 @@ class PageNav
 	{
 		global $icmsConfigPersona, $xoTheme;
 
-		$style = (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php'))?$icmsConfigPersona['pagstyle']:'default';
+		$style = (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH.'/paginationstyles/paginationstyles.php')) ? $icmsConfigPersona['pagstyle'] : 'default';
 		$ret = '';
 		if (isset($xoTheme)) {
-			$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/paginationstyles/css/' . $icmsConfigPersona['pagstyle'] . '.css', array("media" => "all"));
+			$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css', array("media" => "all"));
 		} else {
-			echo'<link rel="stylesheet" type="text/css" href="' . ICMS_LIBRARIES_URL . '/paginationstyles/css/' . $icmsConfigPersona['pagstyle'] . '.css" />';
+			echo'<link rel="stylesheet" type="text/css" href="'.ICMS_LIBRARIES_URL.'/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css" />';
 		}
 		if ($this->total <= $this->perpage) {
 			return $ret;
 		}
-		$total_pages = (int)ceil($this->total / $this->perpage);
+		$total_pages = (int) ceil($this->total / $this->perpage);
 		if ($total_pages > 1) {
 			$prev = $this->current - $this->perpage;
 			if ($prev >= 0) {
-				$ret .= '<a href="' . $this->buildUrl($prev) . '">' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '&#9658; ' : '&#9668; ') . '' . _PREV . '</a> ';
+				$ret .= '<a href="'.$this->buildUrl($prev).'">'.((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '&#9658; ' : '&#9668; ').''._PREV.'</a> ';
 			} else {
-				$ret .= '<span class="disabled"><strong>' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)? '&#9658; ' : '&#9668; ') . '' . _PREV . '</strong></span> ';
+				$ret .= '<span class="disabled"><strong>'.((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '&#9658; ' : '&#9668; ').''._PREV.'</strong></span> ';
 			}
 			$counter = 1;
 			$current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
 			while ($counter <= $total_pages) {
 				if ($counter === $current_page) {
-					$ret .= '<span class="current"><strong>' . (($style === 'default')?'(':'') . icms_conv_nr2local($counter) . (($style === 'default')?')':'') . '</strong></span> ';
+					$ret .= '<span class="current"><strong>'.(($style === 'default') ? '(' : '').icms_conv_nr2local($counter).(($style === 'default') ? ')' : '').'</strong></span> ';
 				} elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter === 1 || $counter === $total_pages) {
 					if ($counter === $total_pages && $current_page < $total_pages - $offset) {
 						$ret .= '... ';
 					}
-					$ret .= '<a href="' . $this->buildUrl(($counter - 1) * $this->perpage) . '">' . icms_conv_nr2local($counter) . '</a> ';
+					$ret .= '<a href="'.$this->buildUrl(($counter - 1) * $this->perpage).'">'.icms_conv_nr2local($counter).'</a> ';
 					if ($counter === 1 && $current_page > 1 + $offset) {
 						$ret .= '... ';
 					}
@@ -183,12 +183,12 @@ class PageNav
 			}
 			$next = $this->current + $this->perpage;
 			if ($this->total > $next) {
-				$ret .= '<a href="' . $this->buildUrl($next) . '">' . _NEXT . '' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? ' &#9668;' : ' &#9658;') . '</a> ';
+				$ret .= '<a href="'.$this->buildUrl($next).'">'._NEXT.''.((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? ' &#9668;' : ' &#9658;').'</a> ';
 			} else {
-				$ret .= '<span class="disabled"><strong>' . _NEXT . '' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL)? ' &#9668;' : ' &#9658;') . '</strong></span> ';
+				$ret .= '<span class="disabled"><strong>'._NEXT.''.((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? ' &#9668;' : ' &#9658;').'</strong></span> ';
 			}
 		}
-		return '<div class="pagination ' . $style . '">' . $ret . '</div>';
+		return '<div class="pagination '.$style.'">'.$ret.'</div>';
 	}
 
 	/**
@@ -201,7 +201,7 @@ class PageNav
 		if ($this->total < $this->perpage) {
 			return;
 		}
-		$total_pages = (int)ceil($this->total / $this->perpage);
+		$total_pages = (int) ceil($this->total / $this->perpage);
 		$ret = '';
 		if ($total_pages > 1) {
 			$ret = '<form name="pagenavform">';
@@ -210,15 +210,15 @@ class PageNav
 			$current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
 			while ($counter <= $total_pages) {
 				if ($counter === $current_page) {
-					$ret .= '<option value="' . $this->buildUrl(($counter - 1) * $this->perpage) . '" selected="selected">' . icms_conv_nr2local($counter) . '</option>';
+					$ret .= '<option value="'.$this->buildUrl(($counter - 1) * $this->perpage).'" selected="selected">'.icms_conv_nr2local($counter).'</option>';
 				} else {
-					$ret .= '<option value="' . $this->buildUrl(($counter - 1) * $this->perpage) . '">' . icms_conv_nr2local($counter) . '</option>';
+					$ret .= '<option value="'.$this->buildUrl(($counter - 1) * $this->perpage).'">'.icms_conv_nr2local($counter).'</option>';
 				}
 				$counter++;
 			}
 			$ret .= '</select>';
 			if ($showbutton) {
-				$ret .= '&nbsp;<input type="submit" value="' . _GO . '" />';
+				$ret .= '&nbsp;<input type="submit" value="'._GO.'" />';
 			}
 			$ret .= '</form>';
 		}
@@ -235,26 +235,26 @@ class PageNav
 		if ($this->total < $this->perpage) {
 			return;
 		}
-		$total_pages = (int)ceil($this->total / $this->perpage);
+		$total_pages = (int) ceil($this->total / $this->perpage);
 		$ret = '';
 		if ($total_pages > 1) {
 			$ret = '<table><tr>';
 			$prev = $this->current - $this->perpage;
 			if ($prev >= 0) {
-				$ret .= '<td class="pagneutral"><a href="' . $this->buildUrl($prev) . '">&lt;</a></td><td><img src="' . ICMS_URL . '/images/blank.gif" width="6" alt="" /></td>';
+				$ret .= '<td class="pagneutral"><a href="'.$this->buildUrl($prev).'">&lt;</a></td><td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td>';
 			} else {
-				$ret .= '<td class="pagno"></a></td><td><img src="' . ICMS_URL . '/images/blank.gif" width="6" alt="" /></td>';
+				$ret .= '<td class="pagno"></a></td><td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td>';
 			}
 			$counter = 1;
 			$current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
 			while ($counter <= $total_pages) {
 				if ($counter === $current_page) {
-					$ret .= '<td class="pagact"><strong>' . $counter . '</strong></td>';
+					$ret .= '<td class="pagact"><strong>'.$counter.'</strong></td>';
 				} elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter === 1 || $counter === $total_pages) {
 					if ($counter === $total_pages && $current_page < $total_pages - $offset) {
 						$ret .= '<td class="paginact">...</td>';
 					}
-					$ret .= '<td class="paginact"><a href="' . $this->buildUrl(($counter - 1) * $this->perpage) . '">' . $counter . '</a></td>';
+					$ret .= '<td class="paginact"><a href="'.$this->buildUrl(($counter - 1) * $this->perpage).'">'.$counter.'</a></td>';
 					if ($counter === 1 && $current_page > 1 + $offset) {
 						$ret .= '<td class="paginact">...</td>';
 					}
@@ -263,9 +263,9 @@ class PageNav
 			}
 			$next = $this->current + $this->perpage;
 			if ($this->total > $next) {
-				$ret .= '<td><img src="' . ICMS_URL . '/images/blank.gif" width="6" alt="" /></td><td class="pagneutral"><a href="' . $this->buildUrl($next) . '">&gt;</a></td>';
+				$ret .= '<td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td><td class="pagneutral"><a href="'.$this->buildUrl($next).'">&gt;</a></td>';
 			} else {
-				$ret .= '<td><img src="' . ICMS_URL . '/images/blank.gif" width="6" alt="" /></td><td class="pagno"></td>';
+				$ret .= '<td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td><td class="pagno"></td>';
 			}
 			$ret .= '</tr></table>';
 		}

@@ -178,7 +178,7 @@ abstract class AbstractFormElement {
 			return htmlspecialchars(substr($str, 0, $pos), ENT_QUOTES, _CHARSET)
 				. '<span style="text-decoration:underline">'
 				. htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES, _CHARSET)
-				. '</span>' . htmlspecialchars(substr($str, $pos + 1), ENT_QUOTES, _CHARSET);
+				. '</span>'.htmlspecialchars(substr($str, $pos + 1), ENT_QUOTES, _CHARSET);
 		}
 		return htmlspecialchars($str, ENT_QUOTES, _CHARSET);
 	}
@@ -227,7 +227,7 @@ abstract class AbstractFormElement {
 	 * @return	string
 	 */
 	public function getCaption($encode = false) {
-		return $encode? htmlspecialchars($this->_caption, ENT_QUOTES, _CHARSET):$this->_caption;
+		return $encode ? htmlspecialchars($this->_caption, ENT_QUOTES, _CHARSET) : $this->_caption;
 	}
 
 	/**
@@ -308,13 +308,13 @@ abstract class AbstractFormElement {
 	 */
 	public function getExtra($encode = false) {
 		if (!$encode) {
-			return ' ' . implode(' ', $this->_extra);
+			return ' '.implode(' ', $this->_extra);
 		}
 		$value = array();
 		foreach ($this->_extra as $val) {
 			$value[] = str_replace(array('<', '>'), array('&lt;', '&gt;'), $val);
 		}
-		return empty($value)? '' : ' ' . implode(' ', $value);
+		return empty($value) ? '' : ' '.implode(' ', $value);
 	}
 
 	/**

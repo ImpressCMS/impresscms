@@ -9,7 +9,7 @@
  * @since		1.2
  */
 
-$font = ICMS_LIBRARIES_PATH . '/icms/form/elements/captcha/fonts/' . $icmsConfigPersona['email_font'];
+$font = ICMS_LIBRARIES_PATH.'/icms/form/elements/captcha/fonts/'.$icmsConfigPersona['email_font'];
 // If you use TTF fontLength = 8
 // If you don't you may put 7 :-)
 $fontSize = (int) ($icmsConfigPersona['email_font_len']);

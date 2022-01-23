@@ -92,10 +92,10 @@ class icms_auth_Object {
 			$ret .= _US_INCORRECTLOGIN;
 		} else {
 			if (empty($this->_errors)) {
-				$ret .= _NONE . '<br />';
+				$ret .= _NONE.'<br />';
 			} else {
 				foreach ($this->_errors as $errno => $errstr) {
-					$ret .= $errstr . '<br/>';
+					$ret .= $errstr.'<br/>';
 				}
 			$ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $this->auth_method);
 			}

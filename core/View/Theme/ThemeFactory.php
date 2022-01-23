@@ -105,7 +105,7 @@ class ThemeFactory {
 		 * @var CacheItemPoolInterface $cache
 		 */
 		$cache = icms::getInstance()->get('cache');
-		$cachedThemeInfo = $cache->getItem('theme.' . $icmsConfig['language'] . '.' . sha1($path));
+		$cachedThemeInfo = $cache->getItem('theme.'.$icmsConfig['language'].'.'.sha1($path));
 
 		if (!$cachedThemeInfo->isHit()) {
 			$info = [];
@@ -147,7 +147,7 @@ class ThemeFactory {
 			if (!$fileInfo->isDir()) {
 				continue;
 			}
-			$themeInfo = self::getThemeInfo(ICMS_THEME_PATH . DIRECTORY_SEPARATOR . $fileInfo->path());
+			$themeInfo = self::getThemeInfo(ICMS_THEME_PATH.DIRECTORY_SEPARATOR.$fileInfo->path());
 			if (!$themeInfo['hasUser']) {
 				continue;
 			}
@@ -176,7 +176,7 @@ class ThemeFactory {
 			if (!$fileInfo->isDir()) {
 				continue;
 			}
-			$themeInfo = self::getThemeInfo(ICMS_THEME_PATH . DIRECTORY_SEPARATOR . $fileInfo->path());
+			$themeInfo = self::getThemeInfo(ICMS_THEME_PATH.DIRECTORY_SEPARATOR.$fileInfo->path());
 			if (!$themeInfo['hasAdmin']) {
 				continue;
 			}
@@ -194,7 +194,7 @@ class ThemeFactory {
 			}
 			$filename = mb_substr($fileInfo->path(), mb_strlen('system/themes/'));
 
-			$themeInfo = self::getThemeInfo(ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $filename);
+			$themeInfo = self::getThemeInfo(ICMS_MODULES_PATH.DIRECTORY_SEPARATOR.'system'.DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.$filename);
 			if (!$themeInfo['hasAdmin']) {
 				continue;
 			}
@@ -214,11 +214,11 @@ class ThemeFactory {
 	public function &createInstance($options = [], $initArgs = [])
 	{
 
-		if (!isset( $options['folderName'])) {
+		if (!isset($options['folderName'])) {
 			$options['folderName'] = $GLOBALS['icmsConfig']['theme_set'];
 		}
 
-		$options['path'] = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'])) ? ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'] : ICMS_THEME_PATH . '/' . $options['folderName'];
+		$options['path'] = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$options['folderName'])) ? ICMS_MODULES_PATH . '/system/themes/'.$options['folderName'] : ICMS_THEME_PATH.'/'.$options['folderName'];
 
 		$inst = new ThemeComponent();
 		foreach ($options as $k => $v) {

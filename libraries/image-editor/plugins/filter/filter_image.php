@@ -20,7 +20,7 @@ $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
 $filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
 
 /* prevent remote file inclusion */
-$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
+$valid_path = ICMS_IMANAGER_FOLDER_PATH.'/temp';
 if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) == 0) {
 	$image_path = realpath($image_path);
 } else {
@@ -32,10 +32,10 @@ $submitted_url = parse_url($image_url);
 $base_url = parse_url(ICMS_URL); // \icms::$urls not available?
 if ($submitted_url['scheme'] != $base_url['scheme']) $image_url = null;
 if ($submitted_url['host'] != $base_url['host']) $image_url = null;
-if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . basename($image_path), PHP_URL_PATH)) $image_url = null;
+if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL.'/temp/'.basename($image_path), PHP_URL_PATH)) $image_url = null;
 
 /* possible filter entries */
-$filters = array (
+$filters = array(
 		'IMG_FILTER_NEGATE',
 		'IMG_FILTER_GRAYSCALE',
 		'IMG_FILTER_BRIGHTNESS',
@@ -51,18 +51,22 @@ $filters = array (
 );
 
 $filter = isset($_GET['filter']) ? filter_var($_GET['filter'], FILTER_SANITIZE_STRING) : null;
-if (!in_array($filter, $filters)) $filter = null;
+if (!in_array($filter, $filters)) {
+	$filter = null;
+}
 
 if (!isset($image_path) || !isset($image_url)) {
-	echo "alert('" . _ERROR . "');";
+	echo "alert('"._ERROR."');";
 } else {
 	/*
 	 * this goes here instead of the initial conditions
 	 * because errors occur when previewing the filter effect
 	 */
-	if (!isset($filter)) exit();
+	if (!isset($filter)) {
+		exit();
+	}
 
-	$args = array ();
+	$args = array();
 
 	if (isset($_GET['arg1'])) {
 		$args[] = (int) $_GET['arg1'];
@@ -78,10 +82,10 @@ if (!isset($image_path) || !isset($image_url)) {
 
 	$img = WideImage::load($image_path);
 	$arr = explode('/', $image_path);
-	$arr[count($arr) - 1] = 'filter_' . $arr[count($arr) - 1];
+	$arr[count($arr) - 1] = 'filter_'.$arr[count($arr) - 1];
 	$temp_img_path = implode('/', $arr);
 	$arr = explode('/', $image_url);
-	$arr[count($arr) - 1] = 'filter_' . $arr[count($arr) - 1];
+	$arr[count($arr) - 1] = 'filter_'.$arr[count($arr) - 1];
 	$temp_img_url = implode('/', $arr);
 
 	if ($del) {
@@ -97,22 +101,22 @@ if (!isset($image_path) || !isset($image_url)) {
 
 	if ($save) {
 		if (!@unlink($image_path)) {
-			echo "alert('" . _ERROR . "');";
+			echo "alert('"._ERROR."');";
 			exit();
 		}
 		if (!@copy($temp_img_path, $image_path)) {
-			echo "alert('" . _ERROR . "');";
+			echo "alert('"._ERROR."');";
 			exit();
 		}
 		if (!@unlink($temp_img_path)) {
-			echo "alert('" . _ERROR . "');";
+			echo "alert('"._ERROR."');";
 			exit();
 		}
 		echo 'window.location.reload( true );';
 	} else {
 		$width = $img->getWidth();
 		$height = $img->getHeight();
-		echo "var w = window.open('" . $temp_img_url . "','crop_image_preview','width=" . ($width + 20) . ",height=" . ($height + 20) . ",resizable=yes');";
+		echo "var w = window.open('".$temp_img_url."','crop_image_preview','width=".($width + 20).",height=".($height + 20).",resizable=yes');";
 		echo "w.onunload = function (){filter_delpreview();}";
 	}
 }

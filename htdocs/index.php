@@ -12,12 +12,12 @@ define('ICMS_PUBLIC_PATH', __DIR__);
 // ImpressCMS is not installed yet.
 if (is_dir('install') && strpos($_SERVER['REQUEST_URI'], '/install') === false) {
 	try {
-		include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+		include_once dirname(__DIR__).DIRECTORY_SEPARATOR.'mainfile.php';
 		/**
 		 * @var DatabaseConnection $dbm
 		 */
 		$dbm = icms::getInstance()->get('db-connection-1');
-		$isInstalled = $dbm->fetchCol('SELECT 1 FROM `' . $dbm->prefix('users') . '` LIMIT 1;') > 0;
+		$isInstalled = $dbm->fetchCol('SELECT 1 FROM `'.$dbm->prefix('users').'` LIMIT 1;') > 0;
 
 	} catch (Throwable $exception) {
 		$isInstalled = false;
@@ -27,7 +27,7 @@ if (is_dir('install') && strpos($_SERVER['REQUEST_URI'], '/install') === false) 
 		exit();
 	}
 } else {
-	include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+	include_once dirname(__DIR__).DIRECTORY_SEPARATOR.'mainfile.php';
 }
 
 /**

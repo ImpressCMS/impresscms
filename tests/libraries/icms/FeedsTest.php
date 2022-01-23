@@ -36,7 +36,7 @@ class FeedsTest extends TestCase {
             'lastbuild',
             'ttl',
         ] as $var) {
-            $this->assertTrue(property_exists($instance, $var), "icms_feeds_Rss doesn't have $" . $var);
+            $this->assertTrue(property_exists($instance, $var), "icms_feeds_Rss doesn't have $".$var);
         }
     }
 

@@ -63,7 +63,7 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 		if (trim($user = $this->getCronTabUser()) == '') {
 			return 'crontab';
 		} else {
-			return 'crontab -u ' . $user;
+			return 'crontab -u '.$user;
 		}
 	}
 
@@ -129,7 +129,7 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 		if ($number == 0) {
 			return '*';
 		}
-		return '*/' . $number;
+		return '*/'.$number;
 	}
 
 	function getNormalValue($crontab_number) {
@@ -174,7 +174,7 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 				$config_atasks['autotasks_helper_path'] .= '/';
 			}
 		}
-		$autotasks_helper_path = $config_atasks['autotasks_helper_path'] . str_replace(array('%path%', '%url%'), array(ICMS_ROOT_PATH, ICMS_URL), trim($config_atasks['autotasks_helper'])) . '/include/autotasks.php > /dev/null';
+		$autotasks_helper_path = $config_atasks['autotasks_helper_path'].str_replace(array('%path%', '%url%'), array(ICMS_ROOT_PATH, ICMS_URL), trim($config_atasks['autotasks_helper'])).'/include/autotasks.php > /dev/null';
 		return $autotasks_helper_path;
 	}
 
@@ -195,11 +195,11 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 			if (isset($line[0]['command'])) {
 				$line = $line[0];
 			}
-			if (strpos($line['command'], ICMS_ROOT_PATH . '/include/autotasks.php') !== false) {
+			if (strpos($line['command'], ICMS_ROOT_PATH.'/include/autotasks.php') !== false) {
 				$this->_line_id = (int) $id;
 				break;
 			}
-			if (strpos($line['command'], ICMS_URL . '/include/autotasks.php') !== false) {
+			if (strpos($line['command'], ICMS_URL.'/include/autotasks.php') !== false) {
 				$this->_line_id = (int) $id;
 				break;
 			}
@@ -224,7 +224,7 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 	 *	Reads cron tab file and parses to $this->_lines array
 	 */
 	function readCronTab() {
-		exec($this->getCronCommandLine() . " -l 2>&1", $crons, $return);
+		exec($this->getCronCommandLine()." -l 2>&1", $crons, $return);
 		if ($return != 0) {
 			return false;
 		}
@@ -271,7 +271,7 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 					$line = $current_line[0];
 					break;
 				case 2: //assign
-					$line = $current_line[0]['name'] . " = " . $current_line[0]['value'];
+					$line = $current_line[0]['name']." = ".$current_line[0]['value'];
 					break;
 				case 4: //comand
 					$line = implode(' ', $current_line[0]);
@@ -285,11 +285,11 @@ class IcmsAutoTasksCron extends icms_sys_autotasks_System {
 				default:
 					die('ERROR: Unknown type of line.');
 			}
-			fwrite($file, $line . "\n");
+			fwrite($file, $line."\n");
 		}
 		fclose($file);
 
-		exec($this->getCronCommandLine() . " $filename 2>&1", $returnar, $return);
+		exec($this->getCronCommandLine()." $filename 2>&1", $returnar, $return);
 		if ($return != 0) {
 			die("Error running crontab ($return). $filename not deleted\n");
 		} else {

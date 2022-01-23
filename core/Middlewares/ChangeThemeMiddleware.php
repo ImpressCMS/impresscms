@@ -31,10 +31,10 @@ class ChangeThemeMiddleware implements MiddlewareInterface
 	}
 
 	/**
-     * @inheritDoc
-     */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
+	 * @inheritDoc
+	 */
+	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+	{
 		global $icmsConfig;
 
 		/**
@@ -57,11 +57,11 @@ class ChangeThemeMiddleware implements MiddlewareInterface
 			$icmsConfig['theme_set'] = $userSegment->get('theme');
 		}
 
-        return $handler->handle(
+		return $handler->handle(
 			$request->withAttribute(
 				'theme-set',
 				$icmsConfig['theme_set']
 			)
 		);
-    }
+	}
 }

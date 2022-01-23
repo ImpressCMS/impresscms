@@ -121,7 +121,7 @@ abstract class AbstractForm {
 	 * @return	string
 	 */
 	public function getTitle($encode = false) {
-		return $encode? htmlspecialchars($this->_title, ENT_QUOTES, _CHARSET):$this->_title;
+		return $encode ? htmlspecialchars($this->_title, ENT_QUOTES, _CHARSET) : $this->_title;
 	}
 
 	/**
@@ -142,7 +142,7 @@ abstract class AbstractForm {
 	 * @return	string
 	 */
 	public function getAction($encode = true) {
-		return $encode? htmlspecialchars($this->_action, ENT_QUOTES, _CHARSET):$this->_action;
+		return $encode ? htmlspecialchars($this->_action, ENT_QUOTES, _CHARSET) : $this->_action;
 	}
 
 	/**
@@ -151,7 +151,7 @@ abstract class AbstractForm {
 	 * @return	string
 	 */
 	public function getMethod() {
-		return (strtolower($this->_method) === 'get')? 'get' : 'post';
+		return (strtolower($this->_method) === 'get') ? 'get' : 'post';
 	}
 
 	/**
@@ -328,7 +328,7 @@ abstract class AbstractForm {
 	 * @return	string $extra
 	 */
 	public function &getExtra() {
-		$extra = empty($this->_extra)? '' : ' ' . implode(' ', $this->_extra);
+		$extra = empty($this->_extra) ? '' : ' '.implode(' ', $this->_extra);
 		return $extra;
 	}
 
@@ -437,7 +437,7 @@ abstract class AbstractForm {
 			}
 			$ele_name = $ele->getName();
 			$ele_description = $ele->getDescription();
-			$n = $ele_name?:$i;
+			$n = $ele_name ?: $i;
 			$elements[$n]['name']       = $ele_name;
 			$elements[$n]['caption']    = $ele->getCaption();
 			$elements[$n]['body']       = $ele->render();
@@ -448,6 +448,6 @@ abstract class AbstractForm {
 			}
 		}
 		$js = $this->renderValidationJS();
-		$tpl->assign($this->getName(), array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(), 'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_' . $this->getName() . '();"' . $this->getExtra(), 'javascript' => $js, 'elements' => $elements));
+		$tpl->assign($this->getName(), array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(), 'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().'();"'.$this->getExtra(), 'javascript' => $js, 'elements' => $elements));
 	}
 }

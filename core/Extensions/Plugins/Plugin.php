@@ -70,7 +70,7 @@ class Plugin {
 		$ret = false;
 		foreach ($this->_infoArray['items'] as $k => $v) {
 			$search_str = str_replace('%u', '', $v['url']);
-			if (strpos($_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'], $search_str) > 0) {
+			if (strpos($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'], $search_str) > 0) {
 				$ret = $k;
 				break;
 			}

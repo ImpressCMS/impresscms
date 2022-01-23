@@ -58,19 +58,19 @@ class Filesystem {
 		$base = preg_replace('/[\\|\/]/', DIRECTORY_SEPARATOR, $base);
 		$target = preg_replace('/[\\|\/]/', DIRECTORY_SEPARATOR, $target);
 		if ($base !== '') {
-			$target = str_ireplace($base . DIRECTORY_SEPARATOR, '', $target);
-			$target = $base . DIRECTORY_SEPARATOR . str_replace($metachars, '_', $target);
+			$target = str_ireplace($base.DIRECTORY_SEPARATOR, '', $target);
+			$target = $base.DIRECTORY_SEPARATOR.str_replace($metachars, '_', $target);
 		} else {
 			$target = str_replace($metachars, '_', $target);
 		}
 		if (mkdir($target, $mode, true) && is_dir($target)) {
 			// create an index.html file in this directory
-			if ($fh = @fopen($target . '/index.html', 'w')) {
+			if ($fh = @fopen($target.'/index.html', 'w')) {
 				fwrite($fh, '<script>history.go(-1);</script>');
 				@fclose($fh);
 			}
 
-			if (substr(decoct(fileperms($target)), 2) !== (string)$mode) {
+			if (substr(decoct(fileperms($target)), 2) !== (string) $mode) {
 				chmod($target, $mode);
 			}
 		}
@@ -99,12 +99,12 @@ class Filesystem {
 			$dd = opendir($d);
 			while ($file = readdir($dd)) {
 				$files_array = $remove_admin_cache
-					?($file !== 'index.html' && $file !== 'php.ini' && $file !== '.htaccess'
+					? ($file !== 'index.html' && $file !== 'php.ini' && $file !== '.htaccess'
 						&& $file !== '.gitignore')
 					: ($file != 'index.html' && $file !== 'php.ini' && $file !== '.htaccess'
-						&& $file !== '.gitignore' && $file !== 'adminmenu_' . $icmsConfig['language'] . '.php');
-				if ($files_array && is_file($d . $file)) {
-					unlink($d . $file);
+						&& $file !== '.gitignore' && $file !== 'adminmenu_'.$icmsConfig['language'].'.php');
+				if ($files_array && is_file($d.$file)) {
+					unlink($d.$file);
 				}
 			}
 			closedir($dd);
@@ -121,7 +121,7 @@ class Filesystem {
 	public static function cleanWriteFolders() {
 		return self::cleanFolders(
 			[
-				'cache' => ICMS_CACHE_PATH . DIRECTORY_SEPARATOR,
+				'cache' => ICMS_CACHE_PATH.DIRECTORY_SEPARATOR,
 			]
 		);
 	}
@@ -257,8 +257,8 @@ class Filesystem {
 		if (!is_string($path) || ($path === '')) {
 			return false;
 		}
-		$path = (substr($path, -1) === '/') ? substr($path, 0, -1):$path;
-		$filename = $path . '/index.html';
+		$path = (substr($path, -1) === '/') ? substr($path, 0, -1) : $path;
+		$filename = $path.'/index.html';
 		if (file_exists($filename)) {
 			return true;
 		}
@@ -282,7 +282,7 @@ class Filesystem {
 	public static function generateChecksum() {
 		$rootdir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH);
 		$dir = new RecursiveDirectoryIterator($rootdir);
-		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
+		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH).DIRECTORY_SEPARATOR.'checkfile.sha1';
 
 		$file = new \SplFileObject($checkfile, 'w');
 		$cache_dir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_CACHE_PATH);
@@ -294,8 +294,8 @@ class Filesystem {
 			/* exclude cache and templates directories */
 			if ($itemPath !== $cache_dir) {
 				$fileHash = sha1_file($name);
-				echo _CORE_CHECKSUM_ADDING . ': ' . $name . _CORE_CHECKSUM_CHECKSUM . ' : <em>' . $fileHash . '</em>, ' . _CORE_CHECKSUM_PERMISSIONS . ' : ' . $itemPerms . '<br />';
-				$file->fwrite($newline . $name . ';' . $fileHash . ';' . $itemPerms);
+				echo _CORE_CHECKSUM_ADDING.': '.$name._CORE_CHECKSUM_CHECKSUM.' : <em>'.$fileHash.'</em>, '._CORE_CHECKSUM_PERMISSIONS.' : '.$itemPerms.'<br />';
+				$file->fwrite($newline.$name.';'.$fileHash.';'.$itemPerms);
 			}
 			$newline = "\n";
 		}
@@ -314,7 +314,7 @@ class Filesystem {
 	static public function validateChecksum() {
 		$rootdir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH);
 		$dir = new RecursiveDirectoryIterator($rootdir);
-		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
+		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH).DIRECTORY_SEPARATOR.'checkfile.sha1';
 		$validationFile = new \SplFileObject($checkfile);
 		if ($validationFile->isReadable()) {
 			$currentHash = $currentPerms = array();
@@ -330,7 +330,7 @@ class Filesystem {
 					$currentPerms[$name] = $itemPerms;
 				}
 			}
-			echo _CORE_CHECKSUM_CHECKFILE . $checkfile . '<br />';
+			echo _CORE_CHECKSUM_CHECKFILE.$checkfile.'<br />';
 			$validHash = $validPerms = array();
 			while (!$validationFile->eof()) {
 				list($filename, $checksum, $filePermissions) = $validationFile->fgetcsv(';');
@@ -341,21 +341,21 @@ class Filesystem {
 			$addedFiles = array_diff_key($currentHash, $validHash);
 			$missingFiles = array_diff_key($validHash, $currentHash);
 			$permVariations = array_diff_assoc($validPerms, $currentPerms); // changed permissions or removed files
-			echo '<br /><strong>' . count($hashVariations) . _CORE_CHECKSUM_ALTERED_REMOVED . '</strong><br />';
+			echo '<br /><strong>'.count($hashVariations)._CORE_CHECKSUM_ALTERED_REMOVED.'</strong><br />';
 			foreach ($hashVariations as $file=>$check) {
-				echo $file . '<br />';
+				echo $file.'<br />';
 			}
-			echo '<br /><strong>' . count($addedFiles) . _CORE_CHECKSUM_FILES_ADDED . '</strong><br />';
+			echo '<br /><strong>'.count($addedFiles)._CORE_CHECKSUM_FILES_ADDED.'</strong><br />';
 			foreach ($addedFiles as $file=>$hash) {
-				echo $file . '<br />';
+				echo $file.'<br />';
 			}
-			echo '<br /><strong>' . count($missingFiles) . _CORE_CHECKSUM_FILES_REMOVED . '</strong><br />';
+			echo '<br /><strong>'.count($missingFiles)._CORE_CHECKSUM_FILES_REMOVED.'</strong><br />';
 			foreach ($missingFiles as $file=>$hash) {
-				echo $file . '<br />';
+				echo $file.'<br />';
 			}
-			echo '<br /><strong>' . count($permVariations) . _CORE_CHECKSUM_PERMISSIONS_ALTERED . '</strong><br />';
+			echo '<br /><strong>'.count($permVariations)._CORE_CHECKSUM_PERMISSIONS_ALTERED.'</strong><br />';
 			foreach ($permVariations as $file=>$perms) {
-				echo $file . '<br />';
+				echo $file.'<br />';
 			}
 		} else {
 			echo _CORE_CHECKSUM_CHECKFILE_UNREADABLE;
@@ -418,10 +418,10 @@ class Filesystem {
 				$filename = $file->getFilename();
 				if (!$hideDot || (strpos($filename, '.') !== 0)) {
 					if (!$extList) {
-						$file = $prefix . $filename;
+						$file = $prefix.$filename;
 						$fileList[$file] = $file;
 					} elseif (preg_match(sprintf("/(\.%s)$/i", $extList), $filename)) {
-						$file = $prefix . $filename;
+						$file = $prefix.$filename;
 						$fileList[$file] = $file;
 					}
 				}
@@ -452,8 +452,8 @@ class Filesystem {
 		if (DIRECTORY_SEPARATOR !== '/') {
 			$location = str_replace(DIRECTORY_SEPARATOR, '/', $location);
 		}
-		$file = $location . '/' . $filename . '.' . $extension;
-		$mode = $overwrite? 'wb' : 'ab';
+		$file = $location.'/'.$filename.'.'.$extension;
+		$mode = $overwrite ? 'wb' : 'ab';
 		if ($fp = fopen($file, $mode)) {
 			if (fwrite($fp, $contents) === false) {
 				echo 'failed write file';
@@ -485,13 +485,13 @@ class Filesystem {
 		 */
 		$filename = hash("sha256",
 				str_replace(
-						array("\\", ICMS_URL . '/', '/', '.' . $type),
+						array("\\", ICMS_URL.'/', '/', '.'.$type),
 						array('/', '', '-', ''),
 						implode('+', array_keys($files))
 				)
 		);
 
-		$combinedFile = $location . '/' . $filename . '.' . $type;
+		$combinedFile = $location.'/'.$filename.'.'.$type;
 
 		/* check to see if the compound file has been cached and for how long */
 		$combinedFileExists = file_exists($combinedFile);
@@ -504,10 +504,10 @@ class Filesystem {
 			$overwrite = $replace || $expired;
 			foreach ($files as $file => $properties) {
 				/* local files, only */
-				$handle = fopen(ICMS_ROOT_PATH . $file, 'rb');
-				$file_contents = fread($handle, filesize(ICMS_ROOT_PATH . $file));
+				$handle = fopen(ICMS_ROOT_PATH.$file, 'rb');
+				$file_contents = fread($handle, filesize(ICMS_ROOT_PATH.$file));
 				$success = self::writeFile(
-						'/* ' . $type . ' from ' . $file . " */\n" . $file_contents . "\n",
+						'/* '.$type.' from '.$file." */\n".$file_contents."\n",
 						$filename,
 						$type,
 						$location,
@@ -522,7 +522,7 @@ class Filesystem {
 		}
 		$filepath = $combinedFile;
 
-		$minFile = $location . '/' . $filename . '-min' . '.' . $type;
+		$minFile = $location.'/'.$filename.'-min'.'.'.$type;
 		$minFileExists = file_exists($minFile);
 		if ($minFileExists && $maxage !== 0) {
 			$expired = (time() - filectime($minFile)) > $maxage;
@@ -533,13 +533,13 @@ class Filesystem {
 			$file_contents = fread($handle, filesize($combinedFile));
 			/* @todo this could be more sophisticated for minifying */
 			$min_contents = preg_replace(
-				["/\t/", "/(\s)+/",],
-				[' ', "\\1",],
+				["/\t/", "/(\s)+/", ],
+				[' ', "\\1", ],
 				$file_contents
 			);
 			$success = self::writeFile(
 					$min_contents,
-					$filename . '-min',
+					$filename.'-min',
 					$type,
 					$location,
 					true

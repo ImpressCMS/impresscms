@@ -43,11 +43,11 @@ define('EASIESTML_DEFAULT_LANG', 0);
 // CONFIGURATIONS END
 
 // Target check
-if (!preg_match('?' . preg_quote(ICMS_ROOT_PATH, '?') . '(/common/)?', $_SERVER['SCRIPT_FILENAME'])) {
+if (!preg_match('?'.preg_quote(ICMS_ROOT_PATH, '?').'(/common/)?', $_SERVER['SCRIPT_FILENAME'])) {
 	global $easiestml_lang;
 
 	// get cookie path
-	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH')? XOOPS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
+	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
 	if ($xoops_cookie_path == ICMS_URL) {
 		$xoops_cookie_path = '/';
 	}
@@ -138,20 +138,20 @@ function easiestml($s) {
 	}
 	$langnames = explode(',', EASIESTML_LANGNAMES);
 	if (empty($_SERVER['QUERY_STRING'])) {
-		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?lang=';
+		$link_base = basename($_SERVER['SCRIPT_NAME']).'?lang=';
 	} else if (($pos = strpos($_SERVER['QUERY_STRING'], 'lang=')) === false) {
-		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?' . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES, _CHARSET) . '&amp;lang=';
+		$link_base = basename($_SERVER['SCRIPT_NAME']).'?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES, _CHARSET).'&amp;lang=';
 	} else if ($pos < 2) {
-		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?lang=';
+		$link_base = basename($_SERVER['SCRIPT_NAME']).'?lang=';
 	} else {
-		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?' . htmlspecialchars(substr($_SERVER['QUERY_STRING'], 0, $pos - 1), ENT_QUOTES, _CHARSET) . '&amp;lang=';
+		$link_base = basename($_SERVER['SCRIPT_NAME']).'?'.htmlspecialchars(substr($_SERVER['QUERY_STRING'], 0, $pos - 1), ENT_QUOTES, _CHARSET).'&amp;lang=';
 	}
 	$langimage_html = '';
 	foreach ($easiestml_langs as $l => $lang) {
-		$langimage_html .= '<a href="' . $link_base . urlencode($lang) . '"><img src="' . ICMS_URL . '/' . $langimages[$l] . '" title="' . $langnames[$l] . '" alt="' . $langnames[$l] . '" /></a>&nbsp;';
-		$s = preg_replace('/\[change_lang_' . $lang . '\]/', $link_base . urlencode($lang), $s);
+		$langimage_html .= '<a href="'.$link_base.urlencode($lang).'"><img src="'.ICMS_URL.'/'.$langimages[$l].'" title="'.$langnames[$l].'" alt="'.$langnames[$l].'" /></a>&nbsp;';
+		$s = preg_replace('/\[change_lang_'.$lang.'\]/', $link_base.urlencode($lang), $s);
 	}
-	$s = preg_replace('/\[' . EASIESTML_IMAGETAG . '\]/', $langimage_html, $s);
+	$s = preg_replace('/\['.EASIESTML_IMAGETAG.'\]/', $langimage_html, $s);
 
 	// create the pattern between language tags
 	//$pqhtmltags = explode( ',' , preg_quote( EASIESTML_NEVERCROSSTAGS , '/')) ;
@@ -162,11 +162,11 @@ function easiestml($s) {
 		if ($easiestml_lang == $lang) {
 			continue;
 		}
-		$s = preg_replace_callback('/\[' . preg_quote($lang) . '\].*\[\/' . preg_quote($lang) . '(?:\]\<br \/\>|\])/isU', 'easiestml_check_nevercross', $s);
+		$s = preg_replace_callback('/\['.preg_quote($lang).'\].*\[\/'.preg_quote($lang).'(?:\]\<br \/\>|\])/isU', 'easiestml_check_nevercross', $s);
 	}
 
 	// simple pattern to strip selected lang_tags (remove all tags)
-	$s = preg_replace('/\[\/?' . preg_quote($easiestml_lang) . '\](\<br \/\>)?/i', '', $s);
+	$s = preg_replace('/\[\/?'.preg_quote($easiestml_lang).'\](\<br \/\>)?/i', '', $s);
 
 	// much complex pattern to strip valid pair of selected lag_tags (BUGGY?)
 	// $s = str_replace( '['.$easiestml_lang.']<br />' , '['.$easiestml_lang.']' , $s) ;
@@ -188,9 +188,9 @@ function easiestml($s) {
  */
 function easiestml_escape_bracket_textbox($matches) {
 	if (preg_match('/type=["\']?text["\']?/i', $matches[2])) {
-		return $matches[1] . str_replace('[', '&#91;', $matches[2]) . $matches[3];
+		return $matches[1].str_replace('[', '&#91;', $matches[2]).$matches[3];
 	} else {
-		return $matches[1] . $matches[2] . $matches[3];
+		return $matches[1].$matches[2].$matches[3];
 	}
 }
 
@@ -201,7 +201,7 @@ function easiestml_escape_bracket_textbox($matches) {
  * @return array
  */
 function easiestml_escape_bracket_textarea($matches) {
-	return $matches[1] . str_replace('[', '&#91;', $matches[2]) . $matches[3];
+	return $matches[1].str_replace('[', '&#91;', $matches[2]).$matches[3];
 }
 
 /**
@@ -213,7 +213,7 @@ function easiestml_escape_bracket_textarea($matches) {
 function easiestml_check_nevercross($matches) {
 	$answer = '';
 	if (EASIESTML_NEVERCROSSREGEX != '') {
-		$answer = preg_match(EASIESTML_NEVERCROSSREGEX, $matches[0])?$matches[0]:'';
+		$answer = preg_match(EASIESTML_NEVERCROSSREGEX, $matches[0]) ? $matches[0] : '';
 	}
 	return $answer;
 }

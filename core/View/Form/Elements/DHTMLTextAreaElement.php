@@ -93,13 +93,13 @@ class DHTMLTextAreaElement extends TextAreaElement
 		/**
 		 * @var EditorsRegistry $editorsRegistry
 		 */
-		$editorsRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+		$editorsRegistry = icms::getInstance()->get('\\'.EditorsRegistry::class);
 		$this->htmlEditor = $editorsRegistry->create('content', $editor_default);
 
 		if ($this->htmlEditor) {
 			$extra = '';
 			foreach ($this->htmlEditor->getAttributes() as $attrName => $attrValue) {
-				$extra .= $attrName . '="' . htmlentities($attrValue) . '"';
+				$extra .= $attrName.'="'.htmlentities($attrValue).'"';
 			}
 			$this->setExtra($extra);
 		}

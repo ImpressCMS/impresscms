@@ -52,7 +52,7 @@ class ThemeForm extends AbstractForm {
 	 * @param	string	$class	CSS class name for <td> tag
 	 */
 	public function insertBreak($extra = '', $class = '') {
-		$class = $class?" class='$class'":'';
+		$class = $class ? " class='$class'" : '';
 		//Fix for $extra tag not showing
 		if ($extra) {
 			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
@@ -70,14 +70,14 @@ class ThemeForm extends AbstractForm {
 	 */
 	public function render() {
 		$ele_name = $this->getName();
-		$ret = "<form id='" . $ele_name
-				. "' name='" . $ele_name
-				. "' action='" . $this->getAction()
-				. "' method='" . $this->getMethod()
-				. "' onsubmit='return xoopsFormValidate_" . $ele_name . "();'" . $this->getExtra() . ">
+		$ret = "<form id='".$ele_name
+				. "' name='".$ele_name
+				. "' action='".$this->getAction()
+				. "' method='".$this->getMethod()
+				. "' onsubmit='return xoopsFormValidate_".$ele_name."();'".$this->getExtra().">
 			<div class='xo-theme-form'>
 			<table width='100%' class='outer table' cellspacing='1'>
-			<tr><th colspan='2'>" . $this->getTitle() . '</th></tr>
+			<tr><th colspan='2'>" . $this->getTitle().'</th></tr>
 		';
 		$hidden = '';
 		$class = 'even';
@@ -85,14 +85,14 @@ class ThemeForm extends AbstractForm {
 			if (!is_object($ele)) {
 				$ret .= $ele;
 			} elseif (!$ele->isHidden()) {
-				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'>";
+				$ret .= "<tr valign='top' align='"._GLOBAL_LEFT."'>";
 				$caption = $ele->getCaption();
 				if ($caption !== '' || $caption === null) {
 					$ret .= '<td class="head">';
 				}
 				if ($caption != '' && $caption !== null) {
 					$ret .=
-						"<div class='xoops-form-element-caption" . ($ele->isRequired()? '-required' : '') . "'>"
+						"<div class='xoops-form-element-caption".($ele->isRequired() ? '-required' : '')."'>"
 						. "<span class='caption-text'>{$caption}</span>";
 						if ($desc = $ele->getDescription()) {
 							$ret .= "<div class='xoops-form-element-help'>{$desc}</div>";
@@ -102,7 +102,7 @@ class ThemeForm extends AbstractForm {
 				if ($caption !== '' || $caption === null) {
 					$ret .= '<td class="head">';
 				}
-				$ret .= "<td class='$class'>" . $ele->render() . "</td></tr>\n";
+				$ret .= "<td class='$class'>".$ele->render()."</td></tr>\n";
 			} else {
 				$hidden .= $ele->render();
 			}

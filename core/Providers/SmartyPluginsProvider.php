@@ -63,16 +63,16 @@ class SmartyPluginsProvider extends AbstractServiceProvider
 		$this->leagueContainer
 			->add(
 				'smarty.helper.db_resource_resolver',
-				function () {
-					return static function (array $row) {
+				function() {
+					return static function(array $row) {
 						$theme = $GLOBALS['icmsConfig']['theme_set'] ?? 'default';
 						$module = $row['tpl_module'];
 						$type = $row['tpl_type'];
 						$tpl_name = $row['tpl_file'];
 						$blockpath = ($type === 'block') ? 'blocks/' : '';
-						$filepath = ICMS_THEME_PATH . "/$theme/modules/$module/$blockpath$tpl_name";
+						$filepath = ICMS_THEME_PATH."/$theme/modules/$module/$blockpath$tpl_name";
 						if (!file_exists($filepath)) {
-							$filepath = ICMS_ROOT_PATH . "/modules/$module/templates/$blockpath$tpl_name";
+							$filepath = ICMS_ROOT_PATH."/modules/$module/templates/$blockpath$tpl_name";
 							if (!file_exists($filepath)) {
 								return null;
 							}
@@ -104,7 +104,7 @@ class SmartyPluginsProvider extends AbstractServiceProvider
 		$this->leagueContainer
 			->add(XOAppUrlCompiler::class)
 			->addArguments([
-				function (string $url) {
+				function(string $url) {
 					return icms::getInstance()->path($url, true);
 				},
 				'\icms::buildUrl'
@@ -119,8 +119,8 @@ class SmartyPluginsProvider extends AbstractServiceProvider
 		$this->leagueContainer
 			->add(XOImgUrlCompiler::class)
 			->addArgument(
-				function (string $path) {
-					$path = ( isset($GLOBALS['xoTheme']) && is_object( $GLOBALS['xoTheme'] ) ) ? $GLOBALS['xoTheme']->resourcePath( $path ) : $path;
+				function(string $path) {
+					$path = (isset($GLOBALS['xoTheme']) && is_object($GLOBALS['xoTheme'])) ? $GLOBALS['xoTheme']->resourcePath($path) : $path;
 					return icms::url($path);
 				}
 			)
@@ -158,7 +158,7 @@ class SmartyPluginsProvider extends AbstractServiceProvider
 	private function addXOInboxCount() {
 		$this->leagueContainer
 			->add(XOInboxCountFunction::class)
-			->addArgument( "\\ImpressCMS\\Core\\Models\\PrivateMessage::getCountForUser")
+			->addArgument("\\ImpressCMS\\Core\\Models\\PrivateMessage::getCountForUser")
 			->addTag('smarty.plugin');
 	}
 }

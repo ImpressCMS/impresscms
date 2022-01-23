@@ -164,7 +164,7 @@ class TrayElement extends AbstractFormElement {
 	 * @return	string  The delimiter
 	 */
 	public function getDelimeter($encode = false) {
-		return $encode? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)):$this->_delimeter;
+		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
 	}
 
 	/**
@@ -176,16 +176,16 @@ class TrayElement extends AbstractFormElement {
 		$count = 0;
 		$ret = "";
 		if ($this->getExtra()) {
-			$ret .= '<div ' . $this->getExtra() . '>';
+			$ret .= '<div '.$this->getExtra().'>';
 		}
 		foreach ($this->getElements() as $ele) {
 			if ($count > 0) {
 				$ret .= $this->getDelimeter();
 			}
 			if ($ele->getCaption()) {
-				$ret .= $ele->getCaption() . '&nbsp;';
+				$ret .= $ele->getCaption().'&nbsp;';
 			}
-			$ret .= $ele->render() . "\n";
+			$ret .= $ele->render()."\n";
 			if (!$ele->isHidden()) {
 				$count++;
 			}

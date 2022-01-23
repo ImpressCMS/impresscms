@@ -59,7 +59,7 @@ if (!is_object($icmsModule)) {
 	exit();
 }
 
-include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
+include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
 icms_loadLanguageFile('core', 'notification');
 
 if (!isset($_POST['not_submit'])) {
@@ -79,7 +79,7 @@ if (!icms::$security->check()) {
 $update_list = $_POST['not_list'];
 
 $module_id = $icmsModule->mid;
-$user_id = is_object(icms::$user)? icms::$user->uid:0;
+$user_id = is_object(icms::$user) ? icms::$user->uid : 0;
 
 // For each event, update the notification depending on the status.
 // If status=1, subscribe to the event; otherwise, unsubscribe.
@@ -92,7 +92,7 @@ $notification_handler = icms::handler('icms_data_notification');
 foreach ($update_list as $update_item) {
 
 	list($category, $item_id, $event) = explode(',', $update_item['params']);
-	$status = !empty($update_item['status'])?1:0;
+	$status = !empty($update_item['status']) ? 1 : 0;
 
 	if (!$status) {
 		$notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
@@ -125,13 +125,13 @@ $argstring = '';
 $first_arg = 1;
 foreach (array_keys($redirect_args) as $arg) {
 	if ($first_arg) {
-		$argstring .= "?" . $arg . "=" . $redirect_args[$arg];
+		$argstring .= "?".$arg."=".$redirect_args[$arg];
 		$first_arg = 0;
 	} else {
-		$argstring .= "&" . $arg . "=" . $redirect_args[$arg];
+		$argstring .= "&".$arg."=".$redirect_args[$arg];
 	}
 }
 
-redirect_header($_POST['not_redirect'] . $argstring, 3, _NOT_UPDATEOK);
+redirect_header($_POST['not_redirect'].$argstring, 3, _NOT_UPDATEOK);
 exit();
 

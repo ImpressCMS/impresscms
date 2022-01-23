@@ -55,13 +55,13 @@ class FormTest extends TestCase {
             'icms_form_elements_captcha_ImageHandler' => null,
             'icms_form_elements_captcha_Image' => null
         ] as $class => $must_be_instances_of) {
-            $this->assertTrue(class_exists($class, true), $class . ' does\'t exist');
+            $this->assertTrue(class_exists($class, true), $class.' does\'t exist');
             if ($must_be_instances_of === null) {
                 continue;
             }
             $instance = $this->getClassInstance($class);
             foreach ($must_be_instances_of as $must_be_instance_of) {
-                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' must be instance of ' . $must_be_instance_of . ' but is not');
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class.' must be instance of '.$must_be_instance_of.' but is not');
             }
         }
     }
@@ -297,7 +297,7 @@ class FormTest extends TestCase {
             ]
         ] as $class => $methods) {
             foreach ($methods as $method) {
-                $this->assertTrue(method_exists($class, $method), 'Static method ' . $method . ' doesn\'t exists for class ' . $class);
+                $this->assertTrue(method_exists($class, $method), 'Static method '.$method.' doesn\'t exists for class '.$class);
             }
         }
     }
@@ -325,7 +325,7 @@ class FormTest extends TestCase {
         ] as $class => $methods) {
             $instance = $this->getClassInstance($class);
             foreach ($methods as $method) {
-                $this->assertTrue(method_exists($instance, $method), 'Method ' . $method . ' doesn\'t exists for class ' . $class);
+                $this->assertTrue(method_exists($instance, $method), 'Method '.$method.' doesn\'t exists for class '.$class);
             }
         }
     }
@@ -357,7 +357,7 @@ class FormTest extends TestCase {
         ] as $class => $variables) {
             $instance = $this->getClassInstance($class);
             foreach ($variables as $variable => $func) {
-                $this->$func($instance->$variable, '$' . $variable . ' is not of correct type ');
+                $this->$func($instance->$variable, '$'.$variable.' is not of correct type ');
             }
         }
     }

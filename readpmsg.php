@@ -90,7 +90,7 @@ if ($delete != 0) {
 }
 
 $xoopsOption['template_main'] = 'system_readmsg.html';
-require ICMS_ROOT_PATH . '/header.php';
+require ICMS_ROOT_PATH.'/header.php';
 
 $form = new icms_form_Theme('', 'delete', 'readpmsg.php', 'post', true);
 
@@ -136,7 +136,7 @@ $var = $pm_arr[0]->msg_text;
 // see if the sender had permission to use wysiwyg for the system module - in 2.0, everyone will
 /* @todo remove editor permission check in 2.0 */
 $permHandler = icms::handler('icms_member_groupperm');
-$filterType = $permHandler->checkRight('use_wysiwygeditor', 1, $poster->getGroups())?'html':'text';
+$filterType = $permHandler->checkRight('use_wysiwygeditor', 1, $poster->getGroups()) ? 'html' : 'text';
 
 $form->addElement(new icms_form_elements_Hidden('delete', '1'));
 $form->addElement(new icms_form_elements_Hidden('msg_id', $pm_arr[0]->msg_id));

@@ -22,7 +22,7 @@ class LanguageElement extends LangElement {
 	public function __construct($object, $key) {
 		$var = $object->getVarInfo($key);
 		$control = $object->controls[$key];
-		$all = isset($control['all'])? true : false;
+		$all = isset($control['all']) ? true : false;
 
 		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'));
 		if ($all) {

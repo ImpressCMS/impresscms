@@ -44,7 +44,7 @@ class Page extends AbstractExtendedModel {
 		 */
 		public function getURL() {
 			return (substr($this->page_url, 0, 7) == 'http://')
-				?$this->page_url:ICMS_URL . '/' . $this->page_url;
+				? $this->page_url : ICMS_URL.'/'.$this->page_url;
 		}
 }
 

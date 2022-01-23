@@ -29,8 +29,8 @@ $pageHasForm = true;
 $pageHasHelp = false;
 
 $vars = & $_SESSION['settings'];
-include_once ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "include" . DIRECTORY_SEPARATOR . "common.php";
-include_once __DIR__ . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'dbmanager.php';
+include_once ICMS_ROOT_PATH.DIRECTORY_SEPARATOR."include".DIRECTORY_SEPARATOR."common.php";
+include_once __DIR__.DIRECTORY_SEPARATOR.'class'.DIRECTORY_SEPARATOR.'dbmanager.php';
 
 $dbm = new db_manager();
 
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$wizard->redirectToPage('+1');
 		exit();
 	}
-	if ((int)$_POST['mod'] === 1) {
+	if ((int) $_POST['mod'] === 1) {
 		icms_loadLanguageFile('system', 'modules', true);
 
 		if (!icms::$user) {
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$content = nl2br(
 			$buffer->fetch()
 		);
-		$content .= "<div style='height:auto;max-height:400px;overflow:auto;'>" . $dbm->report() . "</div>";
+		$content .= "<div style='height:auto;max-height:400px;overflow:auto;'>".$dbm->report()."</div>";
 	} else {
 		$wizard->redirectToPage('+1');
 		exit();
@@ -94,9 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
 	$langarr = ModuleHandler::getAvailable();
 
-	$content .= '<div>' . _INSTALL_SELECT_MODS_INTRO . '</div>';
+	$content .= '<div>'._INSTALL_SELECT_MODS_INTRO.'</div>';
 	$content .= '<div class="dbconn_line">';
-	$content .= '<h3>' . _INSTALL_SELECT_MODULES . '</h3>';
+	$content .= '<h3>'._INSTALL_SELECT_MODULES.'</h3>';
 	$content .= '<div id="modinstall" name="install_mods[]">';
 
 	foreach ($langarr as $lang) {

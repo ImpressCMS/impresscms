@@ -26,7 +26,7 @@ class AutotasksSetupStep implements SetupStepInterface
 		$output->success(_MD_AM_AUTOTASKS_DELETE);
 		$handler = &icms_getModuleHandler('autotasks', 'system');
 		$criteria = new CriteriaCompo();
-		$criteria->add(new CriteriaItem('sat_type', 'addon/' . $module->getInfo('dirname')));
+		$criteria->add(new CriteriaItem('sat_type', 'addon/'.$module->getInfo('dirname')));
 		$handler->deleteAll($criteria);
 
 		return true;

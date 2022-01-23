@@ -91,7 +91,7 @@ class LibrariesPreloader {
 	 * @return	string path of the boot file of the specified library
 	 */
 	public function getLibraryBootFilePath($library) {
-		return ICMS_LIBRARIES_PATH . '/' . $library . '/icms.library.' . $library . '.php';
+		return ICMS_LIBRARIES_PATH.'/'.$library.'/icms.library.'.$library.'.php';
 	}
 
 	/**
@@ -102,7 +102,7 @@ class LibrariesPreloader {
 	 * @return	string name of the function
 	 */
 	public function getFunctionName($event, $library) {
-		return 'icmsLibrary' . ucfirst($library) . '_' . $event;
+		return 'icmsLibrary'.ucfirst($library).'_'.$event;
 	}
 }
 

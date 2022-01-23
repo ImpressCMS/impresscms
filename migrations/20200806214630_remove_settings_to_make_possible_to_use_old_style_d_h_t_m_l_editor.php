@@ -5,8 +5,8 @@ use Phoenix\Migration\AbstractMigration;
 
 class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractMigration
 {
-    protected function up(): void
-    {
+	protected function up(): void
+	{
 		$this->delete(
 			$this->prefix('config'),
 			[
@@ -22,14 +22,14 @@ class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractMigra
 			]
 		);
 
-		if (!icms::getInstance()->has('\\' . EditorsRegistry::class)) {
+		if (!icms::getInstance()->has('\\'.EditorsRegistry::class)) {
 			icms::getInstance()->boot(false);
 		}
 
 		/**
 		 * @var EditorsRegistry $editorRegistry
 		 */
-		$editorRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+		$editorRegistry = icms::getInstance()->get('\\'.EditorsRegistry::class);
 
 		icms::getInstance()->get('cache')->clear();
 
@@ -46,10 +46,10 @@ class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractMigra
 				'conf_catid' => 1,
 			]
 		);
-    }
+	}
 
-    protected function down(): void
-    {
+	protected function down(): void
+	{
 		$this->insert(
 			$this->prefix('config'),
 			[
@@ -79,7 +79,7 @@ class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractMigra
 			]
 		);
 		// We can't rollback default editor, so we doing here nothing about that
-    }
+	}
 
 	/**
 	 * Prefix table

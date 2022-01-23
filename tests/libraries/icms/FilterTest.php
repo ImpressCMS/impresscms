@@ -37,11 +37,11 @@ class FilterTest extends TestCase {
      * Checks if all required static methdos are available
      */
     public function testMethodsAvailability() {
-         foreach ([ 'filterDebugInfo', '_filterImgUrl', 'checkUrlString', 'nl2Br', 'htmlSpecialChars', 'undoHtmlSpecialChars', 'htmlEntities', 'addSlashes', 'stripSlashesGPC', 'cleanArray', 'checkVar', 'checkVarArray', 'filterTextareaInput', 'filterTextareaDisplay', 'filterHTMLinput', 'filterHTMLdisplay', 'codeDecode', 'makeClickable', 'smiley', 'getSmileys', 'censorString', 'codePreConv', 'codeConv', 'codeSanitizer', 'codeDecode_extended', 'loadExtension', 'executeExtension', 'textsanitizer_syntaxhighlight', 'textsanitizer_php_highlight', 'textsanitizer_geshi_highlight', 'icms_trim', 'utf8_strrev', 'icms_substr', 'priv_checkVar', 'priv_smiley', 'priv_getSmileys' ] as $method) {
-             $this->assertTrue(method_exists('icms_core_DataFilter', $method), $method . ' doesn\'t exists');
+         foreach (['filterDebugInfo', '_filterImgUrl', 'checkUrlString', 'nl2Br', 'htmlSpecialChars', 'undoHtmlSpecialChars', 'htmlEntities', 'addSlashes', 'stripSlashesGPC', 'cleanArray', 'checkVar', 'checkVarArray', 'filterTextareaInput', 'filterTextareaDisplay', 'filterHTMLinput', 'filterHTMLdisplay', 'codeDecode', 'makeClickable', 'smiley', 'getSmileys', 'censorString', 'codePreConv', 'codeConv', 'codeSanitizer', 'codeDecode_extended', 'loadExtension', 'executeExtension', 'textsanitizer_syntaxhighlight', 'textsanitizer_php_highlight', 'textsanitizer_geshi_highlight', 'icms_trim', 'utf8_strrev', 'icms_substr', 'priv_checkVar', 'priv_smiley', 'priv_getSmileys'] as $method) {
+             $this->assertTrue(method_exists('icms_core_DataFilter', $method), $method.' doesn\'t exists');
          }
-         foreach ([ 'getInstance', 'filterHTML', 'getCustomFilterList', 'getHTMLFilterConfig' ] as $method) {
-             $this->assertTrue(method_exists('icms_core_HTMLFilter', $method), $method . ' doesn\'t exists');
+         foreach (['getInstance', 'filterHTML', 'getCustomFilterList', 'getHTMLFilterConfig'] as $method) {
+             $this->assertTrue(method_exists('icms_core_HTMLFilter', $method), $method.' doesn\'t exists');
          }
     }
 

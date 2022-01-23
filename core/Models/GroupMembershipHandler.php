@@ -62,8 +62,8 @@ class GroupMembershipHandler extends AbstractExtendedHandler {
 	 */
 	public function getGroupsByUser($uid) {
 		$ret = array();
-		$sql = 'SELECT groupid FROM ' . icms::$xoopsDB->prefix('groups_users_link')
-			. " WHERE uid='" . (int) $uid . "'";
+		$sql = 'SELECT groupid FROM '.icms::$xoopsDB->prefix('groups_users_link')
+			. " WHERE uid='".(int) $uid."'";
 		$result = icms::$xoopsDB->query($sql);
 		if (!$result) {
 			return $ret;
@@ -84,8 +84,8 @@ class GroupMembershipHandler extends AbstractExtendedHandler {
 	 */
 	public function getUsersByGroup($groupid, $limit = 0, $start = 0) {
 		$ret = array();
-		$sql = 'SELECT uid FROM ' . icms::$xoopsDB->prefix('groups_users_link')
-			. " WHERE groupid='" . (int) $groupid . "'";
+		$sql = 'SELECT uid FROM '.icms::$xoopsDB->prefix('groups_users_link')
+			. " WHERE groupid='".(int) $groupid."'";
 		$result = icms::$xoopsDB->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;

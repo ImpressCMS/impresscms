@@ -14,23 +14,23 @@ use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
 class ImpressCMSVersionModuleDescriber implements ExtensionDescriberInterface
 {
 
-    /**
-     * @inheritDoc
-     */
-    public function canDescribe(string $path): bool
-    {
+	/**
+	 * @inheritDoc
+	 */
+	public function canDescribe(string $path): bool
+	{
 		return file_exists($path . DIRECTORY_SEPARATOR . 'icms_version.php');
-    }
+	}
 
-    /**
-     * @inheritDoc
-     */
-    public function describe(string $path): array
-    {
+	/**
+	 * @inheritDoc
+	 */
+	public function describe(string $path): array
+	{
 		global $icmsConfig;
 		icms_loadLanguageFile(basename($path), 'modinfo');
 
-		include $path . DIRECTORY_SEPARATOR . 'icms_version.php';
+		include $path.DIRECTORY_SEPARATOR.'icms_version.php';
 
 		/** @noinspection IssetArgumentExistenceInspection */
 		if (!isset($modversion)) {
@@ -38,5 +38,5 @@ class ImpressCMSVersionModuleDescriber implements ExtensionDescriberInterface
 		}
 
 		return $modversion;
-    }
+	}
 }

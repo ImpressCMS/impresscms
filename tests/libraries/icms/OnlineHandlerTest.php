@@ -23,8 +23,8 @@ class OnlineHandlerTest extends TestCase {
      */
     public function testMethodsAvailability() {
 		$mock = $this->createMock('icms_core_OnlineHandler');
-         foreach ([ 'write', 'destroy', 'gc', 'getAll', 'getCount' ] as $method) {
-             $this->assertTrue(method_exists($mock, $method), $method . ' doesn\'t exists for icms_core_OnlineHandler');
+         foreach (['write', 'destroy', 'gc', 'getAll', 'getCount'] as $method) {
+             $this->assertTrue(method_exists($mock, $method), $method.' doesn\'t exists for icms_core_OnlineHandler');
          }
     }
 

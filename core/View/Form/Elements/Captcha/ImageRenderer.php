@@ -132,14 +132,14 @@ class ImageRenderer {
 			return;
 		}
 
-		$this->captchaSection->set('session_code', (string)$this->code);
-		$maxAttempts = (int)$this->captchaSection->get('max_attempts');
+		$this->captchaSection->set('session_code', (string) $this->code);
+		$maxAttempts = (int) $this->captchaSection->get('max_attempts');
 
 		// Increase the attempt records on refresh
 		if (!empty($maxAttempts)) {
 			$this->captchaSection->set(
-				'attempt_' . $this->name,
-				$attempt = $this->captchaSection->get('attempt_' . $this->name ) + 1
+				'attempt_'.$this->name,
+				$attempt = $this->captchaSection->get('attempt_'.$this->name) + 1
 			);
 			if ($attempt > $maxAttempts) {
 				$this->invalid = true;
@@ -153,7 +153,7 @@ class ImageRenderer {
 	public function clearAttempts()
 	{
 		$this->captchaSection->set(
-			'attempt_' . $this->name,
+			'attempt_'.$this->name,
 			0
 		);
 	}
@@ -168,7 +168,7 @@ class ImageRenderer {
 			if ($this->sendHeader) {
 				header('Content-type: image/gif');
 			}
-			readfile(ICMS_PUBLIC_PATH . '/images/subject/icon2.gif');
+			readfile(ICMS_PUBLIC_PATH.'/images/subject/icon2.gif');
 			return;
 		}
 		return $this->mode === 'bmp' ? $this->createImageBmp() : $this->createImageGd();
@@ -259,7 +259,7 @@ class ImageRenderer {
 			ini_set('display_errors', 1);
 			imagepng($this->oImage);
 		} else {
-			imagepng($this->oImage, ICMS_CACHE_PATH . '/captcha/' . $file . '.jpg');
+			imagepng($this->oImage, ICMS_CACHE_PATH.'/captcha/'.$file.'.jpg');
 		}
 		imagedestroy($this->oImage);
 	}
@@ -269,8 +269,8 @@ class ImageRenderer {
 	 */
 	public function loadFont()
 	{
-		$fonts = $this->_getList( __DIR__ . '/fonts', 'ttf');
-		$this->font = __DIR__ . '/fonts/' . $fonts[array_rand($fonts)];
+		$fonts = $this->_getList(__DIR__.'/fonts', 'ttf');
+		$this->font = __DIR__.'/fonts/'.$fonts[array_rand($fonts)];
 	}
 
 	/**
@@ -281,7 +281,7 @@ class ImageRenderer {
 	 */
 	public function _getList($name, $extension = '') {
 		$files = array_values(
-			Filesystem::getFileList((string)($name), '', [$extension])
+			Filesystem::getFileList((string) ($name), '', [$extension])
 		);
 
 		if (function_exists('mod_createCacheFile')) {
@@ -435,7 +435,7 @@ class ImageRenderer {
 	{
 		$RandBackground = null;
 		if ($backgrounds = $this->_getList('backgrounds', '(gif|jpg|png)')) {
-			$RandBackground = 'backgrounds/' . $backgrounds[array_rand($backgrounds)];
+			$RandBackground = 'backgrounds/'.$backgrounds[array_rand($backgrounds)];
 		}
 		return $RandBackground;
 	}

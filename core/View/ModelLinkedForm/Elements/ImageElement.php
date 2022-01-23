@@ -35,25 +35,25 @@ class ImageElement extends TrayElement {
 		}
 
 		if ($object->getVar($key, 'e') && (strpos($object->getVar($key, 'e'), 'http') === 0 || strpos($object->getVar($key, 'e'), '{ICMS_URL}') === 0)) {
-			$this->addElement(new LabelElement('', "<img src='" . str_replace('{ICMS_URL}', ICMS_URL, $object->getVar($key, 'e')) . "' alt='' /><br/><br/>"));
+			$this->addElement(new LabelElement('', "<img src='".str_replace('{ICMS_URL}', ICMS_URL, $object->getVar($key, 'e'))."' alt='' /><br/><br/>"));
 		} elseif ($object->getVar($key, 'e')) {
-			$this->addElement(new LabelElement('', "<a rel='lightbox' title='" . $object_imageurl . $object->getVar($key, 'e')
-				. "' href='" . $object_imageurl . $object->getVar($key, 'e')
-				. "' ><img class='acp_object_imageurl' src='" . $object_imageurl . $object->getVar($key, 'e')
-				. "' alt='" . $object_imageurl . $object->getVar($key, 'e') . "' height='150' /></a><br/><br/>"));
+			$this->addElement(new LabelElement('', "<a rel='lightbox' title='".$object_imageurl.$object->getVar($key, 'e')
+				. "' href='".$object_imageurl.$object->getVar($key, 'e')
+				. "' ><img class='acp_object_imageurl' src='".$object_imageurl.$object->getVar($key, 'e')
+				. "' alt='".$object_imageurl.$object->getVar($key, 'e')."' height='150' /></a><br/><br/>"));
 		}
 
 		$this->addElement(new FileUploadElement($object, $key));
 
 		if (!isset($control['nourl']) || !$control['nourl']) {
-			$this->addElement(new LabelElement('<div style="padding-top: 8px; font-size: 80%;">' . _CO_ICMS_URL_FILE_DSC . '</div>', ''));
-			$this->addElement(new LabelElement('', '<br />' . _CO_ICMS_URL_FILE));
-			$this->addElement(new TextElement('', 'url_' . $key, 50, 500));
+			$this->addElement(new LabelElement('<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
+			$this->addElement(new LabelElement('', '<br />'._CO_ICMS_URL_FILE));
+			$this->addElement(new TextElement('', 'url_'.$key, 50, 500));
 		}
 		if (!$object->isNew()) {
 			$this->addElement(new LabelElement('', '<br /><br />'));
-			$delete_check = new CheckboxElement('', 'delete_' . $key);
-			$delete_check->addOption(1, '<span style="color:red;">' . _CO_ICMS_DELETE . '</span>');
+			$delete_check = new CheckboxElement('', 'delete_'.$key);
+			$delete_check->addOption(1, '<span style="color:red;">'._CO_ICMS_DELETE.'</span>');
 			$this->addElement($delete_check);
 		}
 	}

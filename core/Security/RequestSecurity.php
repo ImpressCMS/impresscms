@@ -75,7 +75,7 @@ class RequestSecurity {
 	 * @return bool
 	 */
 	public function validateToken($token = false, $clearIfValid = true, $name = _CORE_TOKEN) {
-		$token = ($token !== false)?$token:($_REQUEST[$name . '_REQUEST'] ?? '');
+		$token = ($token !== false) ? $token : ($_REQUEST[$name.'_REQUEST'] ?? '');
 
 		/**
 		 * @var Session $session
@@ -175,7 +175,6 @@ class RequestSecurity {
 	}
 
 	/**
-
 	 * Check superglobals for contamination
 	 *
 	 * @return void
@@ -191,7 +190,7 @@ class RequestSecurity {
 						'icmsConfigCaptcha', 'icmsConfigSearch',
 		) as $bad_global) {
 			if (isset($_REQUEST[$bad_global])) {
-				header('Location: ' . ICMS_URL);
+				header('Location: '.ICMS_URL);
 				exit();
 			}
 		}
@@ -223,7 +222,7 @@ class RequestSecurity {
 			$ret = '';
 			if (count($this->errors) > 0) {
 				foreach ($this->errors as $error) {
-					$ret .= $error . '<br />';
+					$ret .= $error.'<br />';
 				}
 			}
 			return $ret;

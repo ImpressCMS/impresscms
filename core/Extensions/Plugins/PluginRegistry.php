@@ -28,10 +28,10 @@ class PluginRegistry {
 	 * @return	mixed	A plugin object or False
 	 */
 	public function getPlugin($path, $dirname) {
-		$pluginName = ICMS_PLUGINS_PATH . '/' . $path . '/' . $dirname . '.php';
+		$pluginName = ICMS_PLUGINS_PATH.'/'.$path.'/'.$dirname.'.php';
 		if (file_exists($pluginName)) {
 			include_once $pluginName;
-			$function = 'icms_plugin_' . $dirname;
+			$function = 'icms_plugin_'.$dirname;
 			if (function_exists($function)) {
 				$array = $function();
 				return new Plugin($array);
@@ -56,11 +56,11 @@ class PluginRegistry {
 			$modulesObj[$moduleObj->dirname] = $moduleObj;
 		}
 
-		$aFiles = str_replace('.php', '', Filesystem::getFileList(ICMS_PLUGINS_PATH . '/' . $path . '/', '', array('php')));
+		$aFiles = str_replace('.php', '', Filesystem::getFileList(ICMS_PLUGINS_PATH.'/'.$path.'/', '', array('php')));
 		$ret = array();
 		foreach ($aFiles as $pluginName) {
-			$module_xoops_version_file = ICMS_MODULES_PATH . "/$pluginName/xoops_version.php";
-			$module_icms_version_file = ICMS_MODULES_PATH . "/$pluginName/icms_version.php";
+			$module_xoops_version_file = ICMS_MODULES_PATH."/$pluginName/xoops_version.php";
+			$module_icms_version_file = ICMS_MODULES_PATH."/$pluginName/icms_version.php";
 			if ((file_exists($module_xoops_version_file) || file_exists($module_icms_version_file)) && isset($modulesObj[$pluginName])) {
 				$ret[$pluginName] = $modulesObj[$pluginName]->name;
 			}

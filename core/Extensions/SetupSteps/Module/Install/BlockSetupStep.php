@@ -115,7 +115,7 @@ class BlockSetupStep implements SetupStepInterface, ContainerAwareInterface
 	protected function readTemplate(string $dirname, string $filename): string
 	{
 		$ret = '';
-		$file = ICMS_MODULES_PATH . '/' . $dirname . '/templates/blocks/' . $filename;
+		$file = ICMS_MODULES_PATH.'/'.$dirname.'/templates/blocks/'.$filename;
 		if (!file_exists($file)) {
 			return $ret;
 		}

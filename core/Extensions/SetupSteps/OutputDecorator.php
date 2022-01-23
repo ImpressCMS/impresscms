@@ -58,7 +58,7 @@ class OutputDecorator implements OutputInterface
 	 */
 	public function fatal(string $message, ...$params): void
 	{
-		$this->write('<error>' . vsprintf($message, $params) . '</error>', true);
+		$this->write('<error>'.vsprintf($message, $params).'</error>', true);
 	}
 
 	/**
@@ -69,7 +69,7 @@ class OutputDecorator implements OutputInterface
 	 */
 	public function success(string $message, ...$params): void
 	{
-		$this->write('<info>' . vsprintf($message, $params) . '</info>', true);
+		$this->write('<info>'.vsprintf($message, $params).'</info>', true);
 	}
 
 	/**
@@ -80,7 +80,7 @@ class OutputDecorator implements OutputInterface
 	 */
 	public function error(string $message, ...$params): void
 	{
-		$this->write('<error>' . vsprintf($message, $params) . '</error>', true);
+		$this->write('<error>'.vsprintf($message, $params).'</error>', true);
 	}
 
 	/**
@@ -91,7 +91,7 @@ class OutputDecorator implements OutputInterface
 	 */
 	public function info(string $message, ...$params): void
 	{
-		$this->write('<comment>' . vsprintf($message, $params) . '</comment>', true);
+		$this->write('<comment>'.vsprintf($message, $params).'</comment>', true);
 	}
 
 	/**
@@ -113,7 +113,7 @@ class OutputDecorator implements OutputInterface
 		if ($this->indent > 0) {
 			$tmpMsg = '';
 			foreach (explode(PHP_EOL, $messages) as $line) {
-				$tmpMsg .= str_repeat(' ', $this->indent * 2) . $line . PHP_EOL;
+				$tmpMsg .= str_repeat(' ', $this->indent * 2).$line.PHP_EOL;
 			}
 			$messages = rtrim($tmpMsg);
 		}

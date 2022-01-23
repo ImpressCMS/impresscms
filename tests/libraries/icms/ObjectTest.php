@@ -26,8 +26,8 @@ class ObjectTest extends TestCase {
      */
     public function testMethodsAvailability() {
          $mock = $this->getMockForAbstractClass('icms_core_Object');
-         foreach ([ 'setNew', 'unsetNew', 'isNew', 'initVar', 'setFormVars', 'registerFilter', '__clone', 'setErrors', 'getErrors', 'getHtmlErrors', 'hasError' ] as $method) {
-             $this->assertTrue(method_exists($mock, $method), $method . ' doesn\'t exists for icms_core_Object');
+         foreach (['setNew', 'unsetNew', 'isNew', 'initVar', 'setFormVars', 'registerFilter', '__clone', 'setErrors', 'getErrors', 'getHtmlErrors', 'hasError'] as $method) {
+             $this->assertTrue(method_exists($mock, $method), $method.' doesn\'t exists for icms_core_Object');
          }
     }
 

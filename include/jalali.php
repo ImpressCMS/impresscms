@@ -285,7 +285,7 @@ function jdate($type, $maket = 'now') {
 			case 'd':
 				list($jyear, $jmonth, $jday) = gregorian_to_jalali($year, $month, $day);
 				if ($jday < 10) {
-					$result1 = '0' . $jday;
+					$result1 = '0'.$jday;
 				} else {
 					$result1 = $jday;
 				}
@@ -355,7 +355,7 @@ function jdate($type, $maket = 'now') {
 			case 'm':
 				list($jyear, $jmonth, $jday) = gregorian_to_jalali($year, $month, $day);
 				if ($jmonth < 10) {
-					$result1 = '0' . $jmonth;
+					$result1 = '0'.$jmonth;
 				} else {
 					$result1 = $jmonth;
 				}

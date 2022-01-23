@@ -29,7 +29,7 @@ class TablesSetupStep extends InstallTablesSetupStep
 
 		foreach ($modtables as $table) {
 			if ($is_IPF) {
-				$table = str_replace(env('DB_PREFIX') . '_', '', $table);
+				$table = str_replace(env('DB_PREFIX').'_', '', $table);
 			}
 			$prefix_table = $module->handler->db->prefix($table);
 
@@ -38,7 +38,7 @@ class TablesSetupStep extends InstallTablesSetupStep
 				continue;
 			}
 
-			$sql = 'DROP TABLE ' . $prefix_table;
+			$sql = 'DROP TABLE '.$prefix_table;
 			if ($module->handler->db->query($sql)) {
 				$output->success(_MD_AM_MOD_TABLE_DELETED, $prefix_table);
 			} else {

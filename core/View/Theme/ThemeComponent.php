@@ -147,12 +147,12 @@ class ThemeComponent
 	{
 		global $xoops;
 
-		$this->path = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName))
-			? ICMS_MODULES_PATH . '/system/themes/' . $this->folderName
-			: ICMS_THEME_PATH . '/' . $this->folderName;
-		$this->url = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName))
-			? ICMS_MODULES_URL . '/system/themes/' . $this->folderName
-			: ICMS_THEME_URL . '/' . $this->folderName;
+		$this->path = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))
+			? ICMS_MODULES_PATH . '/system/themes/'.$this->folderName
+			: ICMS_THEME_PATH.'/'.$this->folderName;
+		$this->url = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))
+			? ICMS_MODULES_URL . '/system/themes/'.$this->folderName
+			: ICMS_THEME_URL.'/'.$this->folderName;
 
 		$this->template = new Template();
 		$this->template->currentTheme = $this;
@@ -162,11 +162,11 @@ class ThemeComponent
 		$this->template->assign(
 			array(
 				'ml_is_enabled' => $icmsConfigMultilang['ml_enable'],
-				'icms_style' => ICMS_URL . '/icms' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '') . '.css',
+				'icms_style' => ICMS_URL.'/icms'.((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '').'.css',
 				'icms_theme' => $this->folderName,
-				'icms_imageurl' => (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $this->folderName . '/'))
-					? ICMS_MODULES_URL . '/system/themes/' . $this->folderName . '/'
-					: ICMS_THEME_URL . '/' . $this->folderName . '/',
+				'icms_imageurl' => (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName.'/'))
+					? ICMS_MODULES_URL . '/system/themes/'.$this->folderName.'/'
+					: ICMS_THEME_URL.'/'.$this->folderName.'/',
 				'icms_themecss' => xoops_getcss($this->folderName),
 				'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, _CHARSET),
 				'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES, _CHARSET),
@@ -217,13 +217,13 @@ class ThemeComponent
 			} elseif (substr($name, 0, 6) == 'footer') {
 				$values = $value;
 				if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
-					$values = $value . "<script>
+					$values = $value."<script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-" . $icmsConfigMetaFooter['google_analytics'] . "', 'auto');
+  ga('create', 'UA-" . $icmsConfigMetaFooter['google_analytics']."', 'auto');
   ga('send', 'pageview');
 
 </script>";
@@ -298,9 +298,9 @@ class ThemeComponent
 			$uri = str_replace(ICMS_URL, '', $_SERVER['REQUEST_URI']);
 			// Clean uri by removing session id
 			if (defined('SID') && SID && strpos($uri, SID)) {
-				$uri = preg_replace("/([\?&])(" . SID . "$|" . SID . "&)/", "\\1", $uri);
+				$uri = preg_replace("/([\?&])(".SID."$|".SID."&)/", "\\1", $uri);
 			}
-			$this->contentCacheId = $this->generateCacheId($dirname . '|' . $uri);
+			$this->contentCacheId = $this->generateCacheId($dirname.'|'.$uri);
 
 			if ($this->template->is_cached($template, $this->contentCacheId)) {
 				icms::$logger->addExtra($template, sprintf(_REGENERATES, $this->contentCacheLifetime));
@@ -338,18 +338,18 @@ class ThemeComponent
 
 				// Generate group section
 				if (!@is_object(icms::$user)) {
-					$extra_string .= '|' . ICMS_GROUP_ANONYMOUS;
+					$extra_string .= '|'.ICMS_GROUP_ANONYMOUS;
 				} else {
 					$groups = icms::$user->getGroups();
 					sort($groups);
 					// Generate group string for non-anonymous groups,
-					$extra_string .= '|' . implode(',', $groups)
+					$extra_string .= '|'.implode(',', $groups)
 						. crc32(ICMS_ROOT_PATH);
 				}
 			}
 			$extraString = $extra_string;
 		}
-		$cache_id .= '|' . $extraString;
+		$cache_id .= '|'.$extraString;
 
 		return $cache_id;
 	}
@@ -433,11 +433,11 @@ class ThemeComponent
 			? $this->template->getTemplateVars('icms_module_header')
 			: $xoopsOption['icms_module_header'];
 
-		$this->template->assign('icms_module_header', $header . "\n" . $this->renderOldMetas(null, true));
+		$this->template->assign('icms_module_header', $header."\n".$this->renderOldMetas(null, true));
 
 		/* create template vars for the new meta zones */
 		foreach ($this->metas as $zone => $value) {
-			$this->template->assign($zone, "<!-- " . ucfirst($zone) . " section-->\n" . $this->renderMetas(null, true, $zone));
+			$this->template->assign($zone, "<!-- ".ucfirst($zone)." section-->\n".$this->renderMetas(null, true, $zone));
 		}
 
 		$pagetitle = empty($xoopsOption['icms_pagetitle'])
@@ -450,7 +450,7 @@ class ThemeComponent
 		$this->template->caching = 0;
 
 		if (false === strpos($this->canvasTemplate, ':')) {
-			$ret = $this->template->fetch($this->path . '/' . $this->canvasTemplate);
+			$ret = $this->template->fetch($this->path.'/'.$this->canvasTemplate);
 		} else {
 			$ret = $this->template->fetch($this->canvasTemplate);
 		}
@@ -508,9 +508,9 @@ class ThemeComponent
 				case 'script':
 					/* new js refactoring will change how we do this */
 					foreach ($this->metas[$zone][$type] as $attrs) {
-						$str .= '<script' . $this->renderAttributes($attrs['value']) . ">";
+						$str .= '<script'.$this->renderAttributes($attrs['value']).">";
 						if (!empty($attrs['value']['_'])) {
-							$str .= "\n" . $attrs['value']['_'] . "\n";
+							$str .= "\n".$attrs['value']['_']."\n";
 						}
 						$str .= "</script>\n";
 					}
@@ -518,7 +518,7 @@ class ThemeComponent
 
 				case 'link':
 					foreach ($this->metas[$zone][$type] as $rel => $attrs) {
-						$str .= '<link rel="' . $rel . '"' . $this->renderAttributes($attrs['value']) . " />\n";
+						$str .= '<link rel="'.$rel.'"'.$this->renderAttributes($attrs['value'])." />\n";
 					}
 					break;
 
@@ -532,28 +532,28 @@ class ThemeComponent
 						$filesrc = Filesystem::combineFiles($filepath, "css", true);
 						/* only render a link if the result is not FALSE */
 						if ($filepath !== false) {
-							$str .= '<link href="' . str_replace(ICMS_ROOT_PATH, ICMS_URL, $filesrc) . '" rel="stylesheet" type="text/css">';
+							$str .= '<link href="'.str_replace(ICMS_ROOT_PATH, ICMS_URL, $filesrc).'" rel="stylesheet" type="text/css">';
 						}
 					}
 
 					foreach ($this->metas[$zone][$type] as $attrs) {
 						if (!empty($attrs['value']['_'])) {
-							$str .= '<style' . $this->renderAttributes($attrs['value']) . ">\n" . $attrs['value']['_'] . "\n</style>";
+							$str .= '<style'.$this->renderAttributes($attrs['value']).">\n".$attrs['value']['_']."\n</style>";
 						} elseif (!$combine) {
-							$str .= '<link rel="stylesheet"' . $this->renderAttributes($attrs['value']) . " />\n";
+							$str .= '<link rel="stylesheet"'.$this->renderAttributes($attrs['value'])." />\n";
 						}
 					}
 					break;
 
 				case 'http':
 					foreach ($this->metas[$zone][$type] as $name => $content) {
-						$str .= '<meta http-equiv="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content, ENT_QUOTES, _CHARSET) . "\" />\n";
+						$str .= '<meta http-equiv="'.htmlspecialchars($name, ENT_QUOTES).'" content="'.htmlspecialchars($content, ENT_QUOTES, _CHARSET)."\" />\n";
 					}
 					break;
 
 				default:
 					foreach ($this->metas[$zone][$type] as $name => $content) {
-						$str .= '<meta name="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content['value'], ENT_QUOTES, _CHARSET) . "\" />\n";
+						$str .= '<meta name="'.htmlspecialchars($name, ENT_QUOTES).'" content="'.htmlspecialchars($content['value'], ENT_QUOTES, _CHARSET)."\" />\n";
 					}
 					break;
 			}
@@ -575,7 +575,7 @@ class ThemeComponent
 		$str = '';
 		foreach ($coll as $name => $val) {
 			if ($name != '_') {
-				$str .= ' ' . $name . '="' . htmlspecialchars($val, ENT_QUOTES, _CHARSET) . '"';
+				$str .= ' '.$name.'="'.htmlspecialchars($val, ENT_QUOTES, _CHARSET).'"';
 			}
 		}
 		return $str;
@@ -734,7 +734,7 @@ class ThemeComponent
 		if (!isset($cache[$tagName])) {
 			$cache[$tagName] = 1;
 		}
-		return $tagName . '-' . $cache[$tagName]++;
+		return $tagName.'-'.$cache[$tagName]++;
 	}
 
 	/**

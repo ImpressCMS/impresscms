@@ -295,7 +295,7 @@ class Member extends AbstractFacade {
 			redirect_header(ICMS_URL . '/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);
 		} */
 
-        $pwd = $icmspass->verifyPass($pwd, $uname);
+		$pwd = $icmspass->verifyPass($pwd, $uname);
 
 		$table = new TableUpdater('users');
 		if ($table->fieldExists('loginname')) {
@@ -320,11 +320,11 @@ class Member extends AbstractFacade {
 
 		if ($email !== '') {
 			if ($table->fieldExists('loginname')) {
-				$sql = \icms::$xoopsDB->query('SELECT loginname, email FROM ' . \icms::$xoopsDB->prefix('users')
-					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
+				$sql = \icms::$xoopsDB->query('SELECT loginname, email FROM '.\icms::$xoopsDB->prefix('users')
+					. " WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
 			} elseif ($table->fieldExists('login_name')) {
-				$sql = \icms::$xoopsDB->query('SELECT login_name, email FROM ' . \icms::$xoopsDB->prefix('users')
-					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
+				$sql = \icms::$xoopsDB->query('SELECT login_name, email FROM '.\icms::$xoopsDB->prefix('users')
+					. " WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
 			}
 			list($uname, $email) = \icms::$xoopsDB->fetchRow($sql);
 		} else {
@@ -418,19 +418,19 @@ class Member extends AbstractFacade {
 	public function getUsersByGroupLink($groups, $criteria = null, $asobject = false, $id_as_key = false) {
 		$ret = array();
 
-		$select = $asobject? 'u.*' : 'u.uid';
+		$select = $asobject ? 'u.*' : 'u.uid';
 		$sql[] = "	SELECT DISTINCT {$select} "
-				. '	FROM ' . \icms::$xoopsDB->prefix('users') . ' AS u'
-				. ' LEFT JOIN ' . \icms::$xoopsDB->prefix('groups_users_link') . ' AS m ON m.uid = u.uid'
+				. '	FROM '.\icms::$xoopsDB->prefix('users').' AS u'
+				. ' LEFT JOIN '.\icms::$xoopsDB->prefix('groups_users_link').' AS m ON m.uid = u.uid'
 				. "	WHERE 1 = '1'";
 		if (!empty($groups)) {
-			$sql[] = 'm.groupid IN (' . implode((array)", ", $groups) . ')';
+			$sql[] = 'm.groupid IN ('.implode((array) ", ", $groups).')';
 		}
 		$limit = $start = 0;
 		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql_criteria = $criteria->render();
-			if (in_array(strtolower((string)$criteria->getSort()), ['asc', 'desc'], true)) {
-				$sql_criteria .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
+			if (in_array(strtolower((string) $criteria->getSort()), ['asc', 'desc'], true)) {
+				$sql_criteria .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -469,11 +469,11 @@ class Member extends AbstractFacade {
 		$ret = 0;
 
 		$sql[] = '	SELECT COUNT(DISTINCT u.uid) '
-				. '	FROM ' . \icms::$xoopsDB->prefix('users') . ' AS u'
-				. ' LEFT JOIN ' . \icms::$xoopsDB->prefix('groups_users_link') . ' AS m ON m.uid = u.uid'
+				. '	FROM '.\icms::$xoopsDB->prefix('users').' AS u'
+				. ' LEFT JOIN '.\icms::$xoopsDB->prefix('groups_users_link').' AS m ON m.uid = u.uid'
 				. "	WHERE 1 = '1'";
 		if (!empty($groups)) {
-			$sql[] = 'm.groupid IN (' . implode(', ', $groups) . ')';
+			$sql[] = 'm.groupid IN ('.implode(', ', $groups).')';
 		}
 		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
 			$sql[] = $criteria->render();
@@ -508,7 +508,7 @@ class Member extends AbstractFacade {
 			foreach ($groups as $group) {
 				$sql = 'SELECT COUNT(gperm_id) as total FROM '
 					. \icms::$xoopsDB->prefix('group_permission')
-					. ' WHERE gperm_groupid=' . $group;
+					. ' WHERE gperm_groupid='.$group;
 				if (!$result = \icms::$xoopsDB->query($sql)) {
 					return $ret;
 				}
@@ -583,7 +583,7 @@ class Member extends AbstractFacade {
 		if (strlen($name) > 0) {
 			$name = explode(' ', trim($name));
 			if (count($name) > 1) {
-				$basename = strtolower(substr($name[0], 0, 1) . $name[count($name) - 1]);
+				$basename = strtolower(substr($name[0], 0, 1).$name[count($name) - 1]);
 			} else {
 				$basename = strtolower($name[0]);
 			}
@@ -600,10 +600,10 @@ class Member extends AbstractFacade {
 		while ($i < $count) {
 			$num = $this->genRandNumber();
 			if ($onbasename < 0 && $hasbasename) {
-				$names[] = DataFilter::icms_substr($basename, 0, 58, '') . $num;
+				$names[] = DataFilter::icms_substr($basename, 0, 58, '').$num;
 
 			} else {
-				$names[] = DataFilter::icms_substr($emailname, 0, 58, '') . $num;
+				$names[] = DataFilter::icms_substr($emailname, 0, 58, '').$num;
 			}
 			$i = count($names);
 			$onbasename = ~ $onbasename;

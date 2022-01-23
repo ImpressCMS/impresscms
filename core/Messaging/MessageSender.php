@@ -237,7 +237,7 @@ class MessageSender {
 			}
 			return false;
 		} elseif ($this->template) {
-			$path = ($this->templatedir)?$this->templatedir . '' . $this->template:(ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/' . $this->template);
+			$path = ($this->templatedir) ? $this->templatedir.''.$this->template : (ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/mail_template/'.$this->template);
 			if (!($fd = @fopen($path, 'r'))) {
 				if ($debug) {
 					$this->errors[] = _MAIL_FAILOPTPL;
@@ -250,7 +250,7 @@ class MessageSender {
 		// for sending mail only
 		if ($this->isMail || !empty($this->toEmails)) {
 			if (!empty($this->priority)) {
-				$this->headers[] = 'X-Priority: ' . $this->priority;
+				$this->headers[] = 'X-Priority: '.$this->priority;
 			}
 			//$this->headers[] = "X-Mailer: PHP/" . phpversion();
 			//$this->headers[] = "Return-Path: " . $this->fromEmail;
@@ -273,8 +273,8 @@ class MessageSender {
 
 		// replace tags with actual values
 		foreach ($this->assignedTags as $k => $v) {
-			$this->body = str_replace('{' . $k . '}', $v, $this->body);
-			$this->subject = str_replace('{' . $k . '}', $v, $this->subject);
+			$this->body = str_replace('{'.$k.'}', $v, $this->body);
+			$this->subject = str_replace('{'.$k.'}', $v, $this->subject);
 		}
 		$this->body = str_replace("\r\n", "\n", $this->body);
 		$this->body = str_replace("\r", "\n", $this->body);
@@ -303,7 +303,7 @@ class MessageSender {
 			$text = str_replace("{X_UID}", $user->uid, $text);
 			$text = str_replace("{X_UEMAIL}", $user->email, $text);
 			$text = str_replace("{X_UNAME}", $user->uname, $text);
-			$text = str_replace("{X_UACTLINK}", ICMS_URL . "/user.php?op=actv&id=" . $user->uid . "&actkey=" . $user->actkey, $text);
+			$text = str_replace("{X_UACTLINK}", ICMS_URL."/user.php?op=actv&id=".$user->uid."&actkey=".$user->actkey, $text);
 			// send mail
 			if ($this->isMail) {
 				if (!$this->sendMail($user->email, $subject, $text, $headers)) {
@@ -413,9 +413,9 @@ class MessageSender {
 			return $this->errors;
 		} else {
 			if (!empty($this->errors)) {
-				$ret = '<h4>' . _ERRORS . '</h4>';
+				$ret = '<h4>'._ERRORS.'</h4>';
 				foreach ($this->errors as $error) {
-					$ret .= $error . '<br />';
+					$ret .= $error.'<br />';
 				}
 			} else {
 				$ret = '';
@@ -431,7 +431,7 @@ class MessageSender {
 			$ret = '';
 			if (!empty($this->success)) {
 				foreach ($this->success as $suc) {
-					$ret .= $suc . '<br />';
+					$ret .= $suc.'<br />';
 				}
 			}
 			return $ret;
@@ -439,7 +439,7 @@ class MessageSender {
 	}
 
 	public function addHeaders($value) {
-		$this->headers[] = trim($value) . $this->LE;
+		$this->headers[] = trim($value).$this->LE;
 	}
 
 	public function setToEmails($email) {

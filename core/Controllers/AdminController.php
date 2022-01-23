@@ -41,7 +41,7 @@ class AdminController
 		icms::$logger->stopTime('Module init');
 		icms::$logger->startTime('ImpressCMS CP Output Init');
 
-		if (isset($params['op']) && (int)$params['op'] === 1) {
+		if (isset($params['op']) && (int) $params['op'] === 1) {
 			return $this->showRSSFeedPage($request);
 		}
 

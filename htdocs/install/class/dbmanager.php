@@ -127,7 +127,7 @@ class db_manager {
 						}
 					}
 				} elseif ($prefixed_query[1] == 'DROP TABLE') {
-					if ($this->db->query('DROP TABLE ' . $table) != false) {
+					if ($this->db->query('DROP TABLE '.$table) != false) {
 						if (!isset($this->s_tables['drop'][$table])) {
 							$this->s_tables['drop'][$table] = 1;
 						}
@@ -149,7 +149,7 @@ class db_manager {
 			if (!@empty($this->s_tables[$cmd])) {
 				foreach ($this->s_tables[$cmd] as $key => $val) {
 					$content .= '<li class="success">';
-					$content .= ($cmd != 'insert')? sprintf($this->successStrings[$cmd], $key):sprintf($this->successStrings[$cmd], $val, $key);
+					$content .= ($cmd != 'insert') ? sprintf($this->successStrings[$cmd], $key) : sprintf($this->successStrings[$cmd], $val, $key);
 					$content .= "</li>\n";
 				}
 			}
@@ -158,7 +158,7 @@ class db_manager {
 			if (!@empty($this->f_tables[$cmd])) {
 				foreach ($this->f_tables[$cmd] as $key => $val) {
 					$content .= '<li class="failure">';
-					$content .= ($cmd != 'insert')? sprintf($this->failureStrings[$cmd], $key):sprintf($this->failureStrings[$cmd], $val, $key);
+					$content .= ($cmd != 'insert') ? sprintf($this->failureStrings[$cmd], $key) : sprintf($this->failureStrings[$cmd], $val, $key);
 					$content .= "</li>\n";
 				}
 			}
@@ -188,18 +188,18 @@ class db_manager {
 		$sql = sprintf(
 			'INSERT INTO `%s`(%s) VALUES',
 			$table,
-			'`' . implode('`,`', array_keys($query[0])) . '`'
+			'`'.implode('`,`', array_keys($query[0])).'`'
 		);
 		$prep_data = [];
 		$groups_sql = [];
 		foreach ($query as $i => $row) {
 			$keys = [];
 			foreach ($row as $key => $value) {
-				$vkey = $key . '_' . $i;
+				$vkey = $key.'_'.$i;
 				$prep_data[$vkey] = $value;
-				$keys[] = ':' . $vkey;
+				$keys[] = ':'.$vkey;
 			}
-			$groups_sql[] = '(' . implode(',', $keys) . ')';
+			$groups_sql[] = '('.implode(',', $keys).')';
 		}
 		$sql .= implode(', ', $groups_sql);
 		if (!$count = $this->db->fetchAffected($sql, $prep_data)) {
@@ -219,7 +219,7 @@ class db_manager {
 	}
 
 	function isError() {
-		return (isset($this->f_tables))? true : false;
+		return (isset($this->f_tables)) ? true : false;
 	}
 
 	function tableExists($table) {
@@ -228,7 +228,7 @@ class db_manager {
 		if ($table != '') {
 			$this->db->connect();
 			try {
-				$sql = 'SELECT 1 FROM ' . $this->db->prefix($table);
+				$sql = 'SELECT 1 FROM '.$this->db->prefix($table);
 				return $this->db->query($sql) != false;
 			} catch (\Exception $exception) {
 				return false;

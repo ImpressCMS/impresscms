@@ -73,7 +73,7 @@ class DefaultController
 				return $this->getDefaultEmptyPage($request);
 			}
 			return new RedirectResponse(
-				ICMS_MODULES_URL . '/' . $icmsConfig['startpage'] . '/'
+				ICMS_MODULES_URL.'/'.$icmsConfig['startpage'].'/'
 			);
 		}
 		return $this->getDefaultEmptyPage($request);
@@ -117,7 +117,7 @@ class DefaultController
 
 		$params = $request->getQueryParams();
 
-		$errorNo = isset($params['e']) ? (int)$params['e'] : 500;
+		$errorNo = isset($params['e']) ? (int) $params['e'] : 500;
 
 		$response = new ViewResponse([
 			'template_main' => 'system_error.html'
@@ -134,13 +134,13 @@ class DefaultController
 		$response->assign('lang_start_again', _ERR_START_AGAIN);
 		$response->assign('lang_search_our_site', _ERR_SEARCH_OUR_SITE);
 
-		$msg = $params['msg'] ? constant('_ERR_MSG_' . strtoupper($params['msg'])) : sprintf(constant('_ERR_' . $errorNo . '_DESC'), $siteName);
+		$msg = $params['msg'] ? constant('_ERR_MSG_'.strtoupper($params['msg'])) : sprintf(constant('_ERR_'.$errorNo.'_DESC'), $siteName);
 
 
 		$response->assign('lang_error_no', $lang_error_no);
 		$response->assign('lang_error_desc', $msg);
-		$response->assign('lang_error_title', $lang_error_no . ' ' . constant('_ERR_' . $errorNo . '_TITLE'));
-		$response->assign('icms_pagetitle', $lang_error_no . ' ' . constant('_ERR_' . $errorNo . '_TITLE'));
+		$response->assign('lang_error_title', $lang_error_no.' '.constant('_ERR_'.$errorNo.'_TITLE'));
+		$response->assign('icms_pagetitle', $lang_error_no.' '.constant('_ERR_'.$errorNo.'_TITLE'));
 
 		return $response;
 	}
@@ -201,16 +201,16 @@ class DefaultController
 					[
 						"Content-type" => $image->image_mimetype,
 						'Cache-control' => 'max-age=31536000',
-						'Expires' => gmdate("D, d M Y H:i:s", time() + 31536000) . "GMT",
-						'Content-disposition' => 'filename=' . $image->image_name,
+						'Expires' => gmdate("D, d M Y H:i:s", time() + 31536000)."GMT",
+						'Content-disposition' => 'filename='.$image->image_name,
 						'Content-Length' => strlen($image->image_body),
-						'Last-Modified' => gmdate("D, d M Y H:i:s", $image->image_created) . "GMT",
+						'Last-Modified' => gmdate("D, d M Y H:i:s", $image->image_created)."GMT",
 					],
 					$image->image_body
 				);
 			}
 
-			$resource = Utils::tryFopen(ICMS_UPLOAD_PATH . "/blank.gif", 'r');
+			$resource = Utils::tryFopen(ICMS_UPLOAD_PATH."/blank.gif", 'r');
 			return new Response(
 				200,
 				[
@@ -251,7 +251,7 @@ class DefaultController
 		);
 
 		$policyVars = [
-			'{X_SITEURL}' => ICMS_URL . '/',
+			'{X_SITEURL}' => ICMS_URL.'/',
 			'{X_SITENAME}', $icmsConfig['sitename']
 		];
 

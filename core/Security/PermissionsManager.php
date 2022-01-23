@@ -124,7 +124,7 @@ class PermissionsManager {
 				$gperm_handler = icms::handler('icms_member_groupperm');
 
 				//Get user's groups
-				$groups = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+				$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 
 				//Get all allowed item ids in this module and for this user's groups
 				$userpermissions = $gperm_handler->getItemIds($gperm_name, $groups, $icmsModule->mid);
@@ -191,7 +191,7 @@ class PermissionsManager {
 	 * @return boolean : TRUE if user has access, FALSE if not
 	 */
 	public function accessGranted($gperm_name, $gperm_itemid) {
-		$gperm_groupid = is_object(icms::$user)? icms::$user->getGroups():array(ICMS_GROUP_ANONYMOUS);
+		$gperm_groupid = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$icmsModule = & $this->handler->getModuleInfo();
 		$gperm_modid = $icmsModule->mid;
 

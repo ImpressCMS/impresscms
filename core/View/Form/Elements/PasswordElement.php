@@ -120,7 +120,7 @@ class PasswordElement extends AbstractFormElement {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
+		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET) : $this->_value;
 	}
 
 	/**
@@ -148,7 +148,7 @@ class PasswordElement extends AbstractFormElement {
 	 * @return	string
 	 */
 	public function getClassName($encode = false) {
-		return $encode? htmlspecialchars($this->_classname, ENT_QUOTES, _CHARSET):$this->_classname;
+		return $encode ? htmlspecialchars($this->_classname, ENT_QUOTES, _CHARSET) : $this->_classname;
 	}
 
 	/**
@@ -158,12 +158,12 @@ class PasswordElement extends AbstractFormElement {
 	 */
 	public function render() {
 		$ele_name = $this->getName();
-		return "<input class='" . $this->getClassName()
-			. "' type='password' name='" . $ele_name
-			. "' id='" . $ele_name
-			. "' size='" . $this->getSize()
-			. "' maxlength='" . $this->getMaxlength()
-			. "' value='" . $this->getValue() . "'" . $this->getExtra() . ' ' . ($this->autoComplete? '' :"autocomplete='off' ")
+		return "<input class='".$this->getClassName()
+			. "' type='password' name='".$ele_name
+			. "' id='".$ele_name
+			. "' size='".$this->getSize()
+			. "' maxlength='".$this->getMaxlength()
+			. "' value='".$this->getValue()."'".$this->getExtra().' '.($this->autoComplete ? '' : "autocomplete='off' ")
 			. '/>';
 	}
 }

@@ -86,8 +86,8 @@ class TemplateFile extends AbstractExtendedModel
 	 */
 	public function getSource()
 	{
-		$sql = "SELECT tpl_source FROM " . $this->handler->db->prefix('tplsource')
-			. " WHERE tpl_id='" . $this->tpl_id . "'";
+		$sql = "SELECT tpl_source FROM ".$this->handler->db->prefix('tplsource')
+			. " WHERE tpl_id='".$this->tpl_id."'";
 
 		$result = $this->handler->db->query($sql);
 		if (!$result) {

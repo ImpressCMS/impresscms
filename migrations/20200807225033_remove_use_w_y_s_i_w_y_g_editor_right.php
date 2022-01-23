@@ -4,18 +4,18 @@ use Phoenix\Migration\AbstractMigration;
 
 class RemoveUseWYSIWYGEditorRight extends AbstractMigration
 {
-    protected function up(): void
-    {
+	protected function up(): void
+	{
 		$this->delete(
 			$this->prefix('group_permission'),
 			[
 				'gperm_name' => 'use_wysiwygeditor'
 			]
 		);
-    }
+	}
 
-    protected function down(): void
-    {
+	protected function down(): void
+	{
 		$this->insert(
 			$this->prefix('group_permission'),
 			[
@@ -25,7 +25,7 @@ class RemoveUseWYSIWYGEditorRight extends AbstractMigration
 				'gperm_name' => 'use_wysiwygeditor'
 			]
 		);
-    }
+	}
 
 	/**
 	 * Prefix table

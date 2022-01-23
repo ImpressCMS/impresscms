@@ -4,8 +4,8 @@ use Phoenix\Migration\AbstractMigration;
 
 class RemoveOldMessangersFromUserIfExists extends AbstractMigration
 {
-    protected function up(): void
-    {
+	protected function up(): void
+	{
 		if ($this->tableColumnExists($this->prefix('users'), 'user_msnm')) {
 			$this->table($this->prefix('users'))->dropColumn('user_msnm')->save();
 		}
@@ -18,12 +18,12 @@ class RemoveOldMessangersFromUserIfExists extends AbstractMigration
 		if ($this->tableColumnExists($this->prefix('users'), 'user_icq')) {
 			$this->table($this->prefix('users'))->dropColumn('user_icq')->save();
 		}
-    }
+	}
 
-    protected function down(): void
-    {
-    	$this->execute(
-    		sprintf('ALTER TABLE %s ADD COLUMN `user_msnm` varchar(100) NOT NULL default \'\'', $this->prefix('users'))
+	protected function down(): void
+	{
+		$this->execute(
+			sprintf('ALTER TABLE %s ADD COLUMN `user_msnm` varchar(100) NOT NULL default \'\'', $this->prefix('users'))
 		);
 		$this->execute(
 			sprintf('ALTER TABLE %s ADD COLUMN `user_yim` varchar(25) NOT NULL default \'\'', $this->prefix('users'))
@@ -34,7 +34,7 @@ class RemoveOldMessangersFromUserIfExists extends AbstractMigration
 		$this->execute(
 			sprintf('ALTER TABLE %s ADD COLUMN `user_icq` varchar(15) NOT NULL default \'\'', $this->prefix('users'))
 		);
-    }
+	}
 
 	/**
 	 * Prefix table

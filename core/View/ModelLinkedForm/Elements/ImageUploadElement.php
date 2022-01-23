@@ -19,7 +19,7 @@ class ImageUploadElement extends UploadElement {
 	public function __construct($object, $key) {
 		parent::__construct($object, $key);
 		// Override name for upload purposes
-		$this->setName('upload_' . $key);
+		$this->setName('upload_'.$key);
 	}
 
 	/**
@@ -28,8 +28,8 @@ class ImageUploadElement extends UploadElement {
 	 * @return	string	HTML
 	 */
 	public function render() {
-		return "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />
-		        <input type='file' name='" . $this->getName() . "' id='" . $this->getName() . "'" . $this->getExtra() . " />
-		        <input type='hidden' name='icms_upload_image[]' id='icms_upload_image[]' value='" . $this->getName() . "' />";
+		return "<input type='hidden' name='MAX_FILE_SIZE' value='".$this->getMaxFileSize()."' />
+		        <input type='file' name='" . $this->getName()."' id='".$this->getName()."'".$this->getExtra()." />
+		        <input type='hidden' name='icms_upload_image[]' id='icms_upload_image[]' value='" . $this->getName()."' />";
 	}
 }

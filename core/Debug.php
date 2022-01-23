@@ -25,7 +25,7 @@ class Debug {
 	 * @param boolean $exit
 	 */
 	public static function message($msg, $exit = false) {
-		echo "<div style='padding: 5px; color: red; font-weight: bold'>" . _CORE_DEBUG . ' :: ' . $msg . '</div>';
+		echo "<div style='padding: 5px; color: red; font-weight: bold'>"._CORE_DEBUG.' :: '.$msg.'</div>';
 		if ($exit) {
 			die();
 		}
@@ -58,19 +58,19 @@ class Debug {
 		$trace = debug_backtrace();
 		array_shift($trace);
 		$level = $msg = $message = '';
-		$pre = '<strong><em>(' . _CORE_DEPRECATED . ')</em></strong> - ';
+		$pre = '<strong><em>('._CORE_DEPRECATED.')</em></strong> - ';
 		if ($trace[0]['function'] !== 'include'
 			&& $trace[0]['function'] !== 'include_once'
 			&& $trace[0]['function'] !== 'require'
 			&& $trace[0]['function'] !== 'require_once'
 		) {
-			$pre .= $trace[0]['function'] . ': ';
+			$pre .= $trace[0]['function'].': ';
 		}
 
 		foreach ($trace as $step) {
 			$level .= '-';
 			if (isset($step['file'])) {
-					$message .= $level . $msg
+					$message .= $level.$msg
 						. ($step['class'] ?? '')
 						. ($step['type'] ?? '')
 						. sprintf(_CORE_DEPRECATED_MSG, $step['function'],
@@ -83,9 +83,9 @@ class Debug {
 
 		$logger = Logger::instance();
 		$logger->addDeprecated(
-			$pre . ($replacement?' <strong><em>' . sprintf(_CORE_DEPRECATED_REPLACEMENT, $replacement) . '</em></strong>.':'')
-			. ($extra?' <strong><em>' . $extra . '</em></strong>':'')
-			. _CORE_DEPRECATED_CALLSTACK . $message
+			$pre.($replacement ? ' <strong><em>'.sprintf(_CORE_DEPRECATED_REPLACEMENT, $replacement).'</em></strong>.' : '')
+			. ($extra ? ' <strong><em>'.$extra.'</em></strong>' : '')
+			. _CORE_DEPRECATED_CALLSTACK.$message
 		);
  	}
  }

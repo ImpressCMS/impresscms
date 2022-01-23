@@ -4,10 +4,10 @@ use Phoenix\Migration\AbstractMigration;
 
 class UpdateConfigForUseWithMonolog extends AbstractMigration
 {
-    protected function up(): void
-    {
-        $this->delete(
-        	$this->prefix('configoption'),
+	protected function up(): void
+	{
+		$this->delete(
+			$this->prefix('configoption'),
 			[
 				'confop_name' => '_MD_AM_DEBUGMODE2'
 			]
@@ -29,11 +29,11 @@ class UpdateConfigForUseWithMonolog extends AbstractMigration
 			],
 			'conf_value > 1'
 		);
-    }
+	}
 
-    protected function down(): void
-    {
-    	$conf_ids = $this->select('SELECT conf_id FROM `' . $this->prefix('config') . '` WHERE conf_name = \'debug_mode\' LIMIT 1');
+	protected function down(): void
+	{
+		$conf_ids = $this->select('SELECT conf_id FROM `' . $this->prefix('config') . '` WHERE conf_name = \'debug_mode\' LIMIT 1');
 		$conf_id = $conf_ids[0]['conf_id'];
 
 		$this->insert(
@@ -51,7 +51,7 @@ class UpdateConfigForUseWithMonolog extends AbstractMigration
 				]
 			]
 		);
-    }
+	}
 
 	/**
 	 * Prefix table

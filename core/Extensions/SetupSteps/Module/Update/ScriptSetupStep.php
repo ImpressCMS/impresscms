@@ -21,7 +21,7 @@ class ScriptSetupStep extends InstallScriptSetupStep
 		$update_script = $module->getInfo('onUpdate');
 		$moduleName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $module->dirname;
 		if (false !== $update_script && trim($update_script) != '') {
-			include_once ICMS_MODULES_PATH . '/' . $module->dirname . '/' . trim($update_script);
+			include_once ICMS_MODULES_PATH.'/'.$module->dirname.'/'.trim($update_script);
 
 			$is_IPF = $module->getInfo('object_items');
 			if (!empty($is_IPF)) {
@@ -34,9 +34,9 @@ class ScriptSetupStep extends InstallScriptSetupStep
 				}
 			}
 
-			if (function_exists($func = 'xoops_module_uninstall_' . $moduleName)) {
+			if (function_exists($func = 'xoops_module_uninstall_'.$moduleName)) {
 				$this->execFunc($func, $module, $output, $prev_version, $prev_dbversion);
-			} elseif (function_exists($func = 'icms_module_uninstall_' . $moduleName)) {
+			} elseif (function_exists($func = 'icms_module_uninstall_'.$moduleName)) {
 				$this->execFunc($func, $module, $output, $prev_version, $prev_dbversion);
 			}
 		}

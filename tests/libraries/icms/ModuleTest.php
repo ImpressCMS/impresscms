@@ -21,12 +21,12 @@ class ModuleTest extends TestCase {
                 'icms_module_Handler' => AbstractExtendedHandler::class,
                 'icms_module_Object' => AbstractExtendedModel::class
             ] as $class => $must_be_instance_of) {
-                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
+                $this->assertTrue(class_exists($class, true), $class." class doesn't exist");
             if ($must_be_instance_of !== null) {
                 $instance = $this->getMockBuilder($class)
                     ->disableOriginalConstructor()
                     ->getMock();
-                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' is not instanceof ' . $must_be_instance_of);
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class.' is not instanceof '.$must_be_instance_of);
             }
         }
     }
@@ -69,7 +69,7 @@ class ModuleTest extends TestCase {
                     ->disableOriginalConstructor()
                     ->getMock();
             foreach ($methods as $method) {
-                $this->assertTrue(method_exists($instance, $method), $method . ' doesn\'t exists for ' . $class);
+                $this->assertTrue(method_exists($instance, $method), $method.' doesn\'t exists for '.$class);
             }
         }
     }
@@ -86,7 +86,7 @@ class ModuleTest extends TestCase {
             ]
         ] as $class => $methods) {
             foreach ($methods as $method) {
-                $this->assertTrue(method_exists($class, $method), $method . ' doesn\'t exists for ' . $class);
+                $this->assertTrue(method_exists($class, $method), $method.' doesn\'t exists for '.$class);
             }
         }
     }

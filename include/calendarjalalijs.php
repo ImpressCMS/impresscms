@@ -11,7 +11,7 @@
 
 global $icmsConfig, $icmsTheme;
 icms_loadLanguageFile('core', 'calendar');
-$icmsTheme->addScript(ICMS_URL . "/libraries/jalalijscalendar/jquery.ui.datepicker-cc-fa.js", array("type" => "text/javascript"));
+$icmsTheme->addScript(ICMS_URL."/libraries/jalalijscalendar/jquery.ui.datepicker-cc-fa.js", array("type" => "text/javascript"));
 
 function dateFormatTojQueryUIDatePickerFormat($dateFormat) {
 	$chars = array(
@@ -27,18 +27,18 @@ function dateFormatTojQueryUIDatePickerFormat($dateFormat) {
 $dateFormatTojQueryUIDatePickerFormat = dateFormatTojQueryUIDatePickerFormat(_SHORTDATESTRING);
 define('_DATEFORMATCHANGED', $dateFormatTojQueryUIDatePickerFormat);
 
-$time = isset($jstime)?$jstime:"null";
+$time = isset($jstime) ? $jstime : "null";
 $src = ' $(function() {
 $(".datepick").datepicker({
-dateFormat: "' ._DATEFORMATCHANGED . '",
+dateFormat: "' ._DATEFORMATCHANGED.'",
 showOn: "button",
-buttonImage: "' . ICMS_URL . '/images/calendar.png",
+buttonImage: "' . ICMS_URL.'/images/calendar.png",
 buttonImageOnly: true,
 changeMonth: true,
 changeYear: true,
 showAnim: "slideDown"
 });
-$(".ui-datepicker-trigger").attr("alt", "' ._CALENDAR . '").attr("title", "' . _CALENDAR . '");
+$(".ui-datepicker-trigger").attr("alt", "' ._CALENDAR.'").attr("title", "'._CALENDAR.'");
 });';
 
 $icmsTheme->addScript("", array("type" => "text/javascript"), $src);

@@ -77,14 +77,14 @@ class EditorElement extends TextAreaElement
 		/**
 		 * @var EditorsRegistry $editorsRegistry
 		 */
-		$editorsRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+		$editorsRegistry = icms::getInstance()->get('\\'.EditorsRegistry::class);
 
 		$this->editor = $editorsRegistry->create($editor_configs['editor_type'] ?? 'content', $name, $editor_configs, $noHtml, $OnFailure);
 
 		if ($this->editor) {
 			$extra = '';
 			foreach ($this->editor->getAttributes() as $attrName => $attrValue) {
-				$extra .= $attrName . '="' . htmlentities($attrValue) . '"';
+				$extra .= $attrName.'="'.htmlentities($attrValue).'"';
 			}
 			$this->setExtra($extra);
 		}

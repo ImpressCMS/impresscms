@@ -64,7 +64,7 @@ class TemplateSetHandler extends AbstractExtendedHandler {
 				$criteria = new CriteriaItem('tplset_name', trim($tplset_name));
 				$criteria->setLimit(1);
 				$objs = $this->getObjects($criteria);
-				return isset($objs[0])?$objs[0]:null;
+				return isset($objs[0]) ? $objs[0] : null;
 	}
 
 	/**

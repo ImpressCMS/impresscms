@@ -115,7 +115,7 @@ class Form extends ThemeForm {
 		if ($key) {
 			if ($this->targetObject->getVarInfo($key, 'readonly')) {
 				$formElement->setExtra('disabled="disabled"');
-				$formElement->setName($key . '-readonly');
+				$formElement->setName($key.'-readonly');
 				// Since this element is disabled, we still want to pass it's value in the form
 				$hidden = new HiddenElement($key, $this->targetObject->getVar($key, 'n'));
 				$this->addElement($hidden);
@@ -128,7 +128,7 @@ class Form extends ThemeForm {
 				$this->addElement($hidden);
 				$otherExtra = $var['form_extra'] ?? '';
 				$onchangedString = "this.form.elements.changedField.value='$key'; this.form.elements.op.value='changedField'; submit()";
-				$formElement->setExtra('onchange="' . $onchangedString . '"' . ' ' . $otherExtra);
+				$formElement->setExtra('onchange="'.$onchangedString.'"'.' '.$otherExtra);
 			} else {
 				if (isset($var['form_extra'])) {
 					$formElement->setExtra($var['form_extra']);
@@ -138,9 +138,9 @@ class Form extends ThemeForm {
 			if (isset($controls[$key]['js'])) {
 				$formElement->customValidationCode[] = $controls[$key]['js'];
 			}
-			parent::addElement($formElement, $required == 'notset'?$var['required']:$required);
+			parent::addElement($formElement, $required == 'notset' ? $var['required'] : $required);
 		} else {
-			parent::addElement($formElement, $required == 'notset'? false : true);
+			parent::addElement($formElement, $required == 'notset' ? false : true);
 		}
 		unset($formElement);
 	}
@@ -160,7 +160,7 @@ class Form extends ThemeForm {
 			// If $displayOnForm is FALSE OR this is the primary key, it doesn't
 			// need to be displayed, then we only create an hidden field
 			if ($key == $this->targetObject->handler->keyName || (isset($var['displayOnForm']) && !$var['displayOnForm'])) {
-				$val = isset($var['value'])?$var['value']:null;
+				$val = isset($var['value']) ? $var['value'] : null;
 				$elementToAdd = new HiddenElement($key, $val);
 				$this->addElement($elementToAdd, $key, $var, false);
 				unset($elementToAdd);
@@ -311,8 +311,8 @@ class Form extends ThemeForm {
 			foreach ($permissions as $permission) {
 				$groups_value = false;
 				if ($this->targetObject->isNew()) {
-					if (isset($icmsModuleConfig['def_perm_' . $permission['perm_name']])) {
-						$groups_value = $icmsModuleConfig['def_perm_' . $permission['perm_name']];
+					if (isset($icmsModuleConfig['def_perm_'.$permission['perm_name']])) {
+						$groups_value = $icmsModuleConfig['def_perm_'.$permission['perm_name']];
 					}
 				} else {
 					$groups_value = $this->targetObject->getGroupPerm($permission['perm_name']);
@@ -345,7 +345,7 @@ class Form extends ThemeForm {
 		} else {
 			$butt_create = new ButtonElement('', 'modify_button', $submit_button_caption, 'submit');
 		}
-		$butt_create->setExtra('onclick="this.form.elements.op.value=\'' . $form_name . '\'"');
+		$butt_create->setExtra('onclick="this.form.elements.op.value=\''.$form_name.'\'"');
 		$button_tray->addElement($butt_create);
 
 		//creating custom buttons
@@ -353,7 +353,7 @@ class Form extends ThemeForm {
 			foreach ($this->_custom_button as $custom_button) {
 				$butt_custom = new ButtonElement('', $custom_button['name'], $custom_button['caption'], 'submit');
 				if ($custom_button['onclick']) {
-					$butt_custom->setExtra('onclick="' . $custom_button['onclick'] . '"');
+					$butt_custom->setExtra('onclick="'.$custom_button['onclick'].'"');
 				}
 				$button_tray->addElement($butt_custom);
 				unset($butt_custom);
@@ -363,7 +363,7 @@ class Form extends ThemeForm {
 		// creating the "cancel" button
 		$butt_cancel = new ButtonElement('', 'cancel_button', _CO_ICMS_CANCEL, 'button');
 		if ($this->_cancel_js_action) {
-			$butt_cancel->setExtra('onclick="' . $this->_cancel_js_action . '"');
+			$butt_cancel->setExtra('onclick="'.$this->_cancel_js_action.'"');
 		} else {
 			$butt_cancel->setExtra('onclick="history.go(-1)"');
 		}
@@ -443,18 +443,18 @@ class Form extends ThemeForm {
 				break;
 
 			default:
-				$classname = "\\ImpressCMS\\Core\\IPF\\Form\\Elements\\" . ucfirst($controlName);
+				$classname = "\\ImpressCMS\\Core\\IPF\\Form\\Elements\\".ucfirst($controlName);
 				if (!class_exists($classname)) {
 					// perhaps this is a control created by the module
 					$moduleName = $this->targetObject->handler->_moduleName;
-					$moduleFormElementsPath = $this->targetObject->handler->_modulePath . '/class/form/elements/';
-					$classname = ucfirst($moduleName) . ucfirst($controlName) . 'Element';
-					$classFileName = strtolower($classname) . '.php';
+					$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/class/form/elements/';
+					$classname = ucfirst($moduleName).ucfirst($controlName).'Element';
+					$classFileName = strtolower($classname).'.php';
 
-					if (file_exists($moduleFormElementsPath . $classFileName)) {
-						include_once $moduleFormElementsPath . $classFileName;
+					if (file_exists($moduleFormElementsPath.$classFileName)) {
+						include_once $moduleFormElementsPath.$classFileName;
 					} else {
-						trigger_error($classname . ' not found', E_USER_WARNING);
+						trigger_error($classname.' not found', E_USER_WARNING);
 						return new LabelElement();
 					}
 				}
@@ -472,7 +472,7 @@ class Form extends ThemeForm {
 	 * @return SelectElement
 	 */
 	private function getThemeSelect($key, $var, $multiple = false) {
-		$size = $multiple?5:1;
+		$size = $multiple ? 5 : 1;
 		$theme_select = new SelectElement($var['form_caption'], $key, $this->targetObject->getVar($key), $size, $multiple);
 
 		$theme_select->addOptionArray(
@@ -490,7 +490,7 @@ class Form extends ThemeForm {
 	 */
 	public function &getElementById($keyname) {
 		foreach ($this->_elements as $eleObj) {
-			if ((string)$eleObj->getName() === (string)$keyname) {
+			if ((string) $eleObj->getName() === (string) $keyname) {
 				$ret = & $eleObj;
 				break;
 			}
@@ -506,9 +506,9 @@ class Form extends ThemeForm {
 	public function render() {
 		$required = & $this->getRequired();
 		$ret = "
-			<form name='".$this->getName() . "_dorga' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "' onsubmit='return xoopsFormValidate_" . $this->getName() . "(this);'" . $this->getExtra() . ">
+			<form name='".$this->getName()."_dorga' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$this->getName()."(this);'".$this->getExtra().">
 			<table width='100%' class='outer table' cellspacing='1'>
-			<tr><th colspan='2'>".$this->getTitle() . '</th></tr>
+			<tr><th colspan='2'>".$this->getTitle().'</th></tr>
 		';
 		$hidden = '';
 		$class = 'even';
@@ -517,15 +517,15 @@ class Form extends ThemeForm {
 				$ret .= $ele;
 			} elseif (!$ele->isHidden()) {
 				if ((get_class($ele) === FormSectionElement::class) && !$ele->isClosingSection()) {
-					$ret .= '<tr><th colspan="2">' . $ele->render() . '</th></tr>';
+					$ret .= '<tr><th colspan="2">'.$ele->render().'</th></tr>';
 				} elseif ((get_class($ele) === FormSectionElement::class) && $ele->isClosingSection()) {
 					$ret .= '<tr><td class="even" colspan="2">&nbsp;</td></tr>';
 				} else {
-					$ret .= "<tr id='" . $ele->getName() . "_row' valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>" . $ele->getCaption();
+					$ret .= "<tr id='".$ele->getName()."_row' valign='top' align='"._GLOBAL_LEFT."'><td class='head'>".$ele->getCaption();
 					if ($ele->getDescription()) {
-						$ret .= '<br /><br /><span style="font-weight: normal;">' . $ele->getDescription() . '</span>';
+						$ret .= '<br /><br /><span style="font-weight: normal;">'.$ele->getDescription().'</span>';
 					}
-					$ret .= "</td><td class='$class'>" . $ele->render() . "</td></tr>\n";
+					$ret .= "</td><td class='$class'>".$ele->render()."</td></tr>\n";
 				}
 			} else {
 				$hidden .= $ele->render();
@@ -546,7 +546,7 @@ class Form extends ThemeForm {
 		$i = 0;
 		$elements = array();
 		foreach ($this->getElements() as $ele) {
-			$n = $ele->getName()?:$i;
+			$n = $ele->getName() ?: $i;
 			$elements[$n]['name'] = $ele->getName();
 			$elements[$n]['caption'] = $ele->getCaption();
 			$elements[$n]['body'] = $ele->render();
@@ -554,7 +554,7 @@ class Form extends ThemeForm {
 			$elements[$n]['required'] = $ele->isRequired();
 			$elements[$n]['section'] = get_class($ele) === FormSectionElement::class && !$ele->isClosingSection();
 			$elements[$n]['section_close'] = get_class($ele) === FormSectionElement::class && $ele->isClosingSection();
-			$elements[$n]['hide'] = ($i === $n)?false:$this->targetObject->getVarInfo($n, 'hide', false);
+			$elements[$n]['hide'] = ($i === $n) ?false:$this->targetObject->getVarInfo($n, 'hide', false);
 
 			if ($ele->getDescription()) {
 				$elements[$n]['description'] = $ele->getDescription();
@@ -566,7 +566,7 @@ class Form extends ThemeForm {
 			$smartyName = $this->getName();
 		}
 
-		$tpl->assign($smartyName, array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(), 'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_' . $this->getName() . '(this);"' . $this->getExtra(), 'javascript' => $js, 'elements' => $elements));
+		$tpl->assign($smartyName, array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(), 'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().'(this);"'.$this->getExtra(), 'javascript' => $js, 'elements' => $elements));
 	}
 
 	/**
@@ -587,7 +587,7 @@ class Form extends ThemeForm {
 		foreach ($elements as $elt) {
 			$eltname = $elt->getName();
 			$eltcaption = trim($elt->getCaption());
-			$eltmsg = empty($eltcaption)? sprintf(_FORM_ENTER, $eltname):sprintf(_FORM_ENTER, $eltcaption);
+			$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
 			$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
 			if (get_class($elt) === RadioElement::class) {
 				$js .= 'var myOption = -1;';
@@ -646,7 +646,7 @@ class Form extends ThemeForm {
 		foreach ($elements as $elt) {
 			if (method_exists($elt, 'renderValidationJS') && get_class($elt) !== CheckboxElement::class) {
 				if ($eltjs = $elt->renderValidationJS()) {
-					$js .= $eltjs . "\n";
+					$js .= $eltjs."\n";
 				}
 			}
 		}
@@ -671,18 +671,18 @@ class Form extends ThemeForm {
 			if (!empty($rules)) {
 						$rules .= ',';
 			}
-			$rules .= '\'' . $elt->getName() . '\': { required: TRUE }';
+			$rules .= '\''.$elt->getName().'\': { required: TRUE }';
 			if (!empty($titles)) {
 						$titles .= ',';
 			}
-			$titles .= $elt->getName() . ': "' . _REQUIRED . '"';
+			$titles .= $elt->getName().': "'._REQUIRED.'"';
 		}
-		$xoTheme->addScript('', array('type' => 'text/javascript'), 'alert($());$().ready(function() { $("#' . $this->getName() . '").validate({
+		$xoTheme->addScript('', array('type' => 'text/javascript'), 'alert($());$().ready(function() { $("#'.$this->getName().'").validate({
 		rules: {
-			'.$rules . '
+			'.$rules.'
 		},
 		messages: {
-			'.$titles . '
+			'.$titles.'
 		}
 		})});');
 	}

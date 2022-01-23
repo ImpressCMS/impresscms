@@ -76,13 +76,13 @@ class UserElement extends TrayElement {
 		$member_handler = icms::handler('icms_member');
 		$user_count = $member_handler->getUserCount();
 		$value = is_array($value)
-			?$value
+			? $value
 			: (empty ($value)
-				?array()
+				? array()
 				: array($value)
 			);
 		if ($user_count > $limit && count($value) > 0) {
-			$criteria = new CriteriaCompo(new CriteriaItem('uid', '(' . implode(',', $value) . ')', 'IN'));
+			$criteria = new CriteriaCompo(new CriteriaItem('uid', '('.implode(',', $value).')', 'IN'));
 		} else {
 			$criteria = new CriteriaCompo();
 			$criteria->setLimit($limit);
@@ -108,7 +108,7 @@ class UserElement extends TrayElement {
 					function addusers(opts){
 						var num = opts.substring(0, opts.indexOf(":"));
 						opts = opts.substring(opts.indexOf(":")+1, opts.length);
-						var sel = xoopsGetElementById("' . $name . ($multiple? '[]' : '') . '");
+						var sel = xoopsGetElementById("' . $name.($multiple ? '[]' : '').'");
 						var arr = new Array(num);
 						for (var n=0; n < num; n++) {
 							var nm = opts.substring(0, opts.indexOf(":"));
@@ -136,13 +136,13 @@ class UserElement extends TrayElement {
 		$token = icms::$security->createToken();
 		$action_tray = new TrayElement('', ' | ');
 		$action_tray->addElement(new LabelElement('',
-			"<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name
-			. ($multiple? '[]' : '') . '\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}} return false;\'>"'
-			. _MA_USER_REMOVE . '</a>'));
+			"<a href='#' onclick='var sel = xoopsGetElementById(\"".$name
+			. ($multiple ? '[]' : '').'\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}} return false;\'>"'
+			. _MA_USER_REMOVE.'</a>'));
 		$action_tray->addElement(new LabelElement('',
-			"<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL
+			"<a href='#' onclick='openWithSelfMain(\"".ICMS_URL
 			. "/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >"
-			. _MA_USER_MORE . '</a>' . $js_addusers));
+			. _MA_USER_MORE.'</a>'.$js_addusers));
 
 		parent::__construct($caption, '<br /><br />', $name);
 		$this->addElement($select_element);

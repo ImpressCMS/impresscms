@@ -183,7 +183,7 @@ class Mailer extends PHPMailer {
 		if (empty($addr[1])) {
 			$formatted = $addr[0];
 		} else {
-			$formatted = sprintf('%s <%s>', '=?' . $this->CharSet . '?B?' . base64_encode($addr[1]) . '?=', $addr[0]);
+			$formatted = sprintf('%s <%s>', '=?'.$this->CharSet.'?B?'.base64_encode($addr[1]).'?=', $addr[0]);
 		}
 		return $formatted;
 	}

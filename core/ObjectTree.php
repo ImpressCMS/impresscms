@@ -221,11 +221,11 @@ class ObjectTree
 	{
 		if ($key > 0) {
 			$value = $this->_tree[$key]['obj']->getVar($this->_myId);
-			$ret .= '<option value="' . $value . '"';
+			$ret .= '<option value="'.$value.'"';
 			if ($value === $selected) {
 				$ret .= ' selected="selected"';
 			}
-			$ret .= '>' . $prefix_curr . $this->_tree[$key]['obj']->getVar($fieldName) . '</option>';
+			$ret .= '>'.$prefix_curr.$this->_tree[$key]['obj']->getVar($fieldName).'</option>';
 			$prefix_curr .= $prefix_orig;
 		}
 		if (isset ($this->_tree[$key]['child']) && !empty ($this->_tree[$key]['child'])) {
@@ -249,12 +249,12 @@ class ObjectTree
 	 */
 	public function makeSelBox($name, $fieldName, $prefix = '-', $selected = '', $addEmptyOption = false, $key = 0)
 	{
-		$ret = '<select class="form-control" name="' . $name . '" id="' . $name . '">';
+		$ret = '<select class="form-control" name="'.$name.'" id="'.$name.'">';
 		if (false != $addEmptyOption) {
 			$ret .= '<option value="0"></option>';
 		}
 		$this->_makeSelBoxOptions($fieldName, $selected, $key, $ret, $prefix);
-		return $ret . '</select>';
+		return $ret.'</select>';
 	}
 
 }

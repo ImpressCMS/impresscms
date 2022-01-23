@@ -29,7 +29,7 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		 */
 		$fs = $this->container->get('filesystem.public');
 		$output->info(_MD_AM_COPY_ASSETS_DELETING);
-		$fs->deleteDirectory('modules/' . $module->dirname);
+		$fs->deleteDirectory('modules/'.$module->dirname);
 
 		return true;
 	}

@@ -46,8 +46,8 @@ use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Member;
 
 icms_loadLanguageFile('core', 'user');
-$uname = !isset($_POST['uname'])?'':trim($_POST['uname']);
-$pass = !isset($_POST['pass'])?'':trim($_POST['pass']);
+$uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
+$pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
 
 /* make sure redirect stays within domain and isn't open to exploit */
 if (!isset($redirect)) {
@@ -71,7 +71,7 @@ if ($pos !== false) {
 	$icmsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
 	if (substr($redirect, $pos + 3, strlen($icmsLocation)) != $icmsLocation) {
 		$redirect = ICMS_URL;
-	} elseif (substr($redirect, $pos + 3, strlen($icmsLocation) + 1) == $icmsLocation . '.') {
+	} elseif (substr($redirect, $pos + 3, strlen($icmsLocation) + 1) == $icmsLocation.'.') {
 		$redirect = ICMS_URL;
 	}
 }
@@ -98,7 +98,7 @@ if (empty($user) || !is_object($user)) {
  */
 if (false != $user) {
 	if (0 == $user->level) {
-		redirect_header(ICMS_URL . '/', 5, _US_NOACTTPADM);
+		redirect_header(ICMS_URL.'/', 5, _US_NOACTTPADM);
 		exit();
 	}
 
@@ -113,7 +113,7 @@ if (false != $user) {
 			foreach ($onlines as $online) {
 				if ($online['online_uid'] == $user->uid) {
 					$user = false;
-					redirect_header(ICMS_URL . '/', 3, _US_MULTLOGIN);
+					redirect_header(ICMS_URL.'/', 3, _US_MULTLOGIN);
 				}
 			}
 			if (is_object($user)) {
@@ -138,7 +138,7 @@ if (false != $user) {
 			}
 		}
 		if (!$allowed) {
-			redirect_header(ICMS_URL . '/', 1, _NOPERM);
+			redirect_header(ICMS_URL.'/', 1, _NOPERM);
 			exit();
 		}
 	}
@@ -164,7 +164,7 @@ if (false != $user) {
 	$member_handler->updateUserByField($user, 'last_login', time());
 
 	$user_theme = $user->theme;
-	if (in_array($user_theme, (array)$icmsConfig['theme_set_allowed'], true)) {
+	if (in_array($user_theme, (array) $icmsConfig['theme_set_allowed'], true)) {
 		$session->getSegment('user')->set('theme', $user_theme);
 	}
 
@@ -176,10 +176,10 @@ if (false != $user) {
 		$icms_cookie_path = '/';
 	}
 	if (!empty($_POST['rememberme'])) {
-		$expire = time() + (defined('ICMS_AUTOLOGIN_LIFETIME')? ICMS_AUTOLOGIN_LIFETIME : 604800); // 1 week default
+		$expire = time() + (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800); // 1 week default
 		setcookie('autologin_uname', $user->login_name, $expire, $icms_cookie_path, '', $secure, 0);
 		$Ynj = date('Y-n-j');
-		setcookie('autologin_pass', $Ynj . ':' . md5($user->pass . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
+		setcookie('autologin_pass', $Ynj.':'.md5($user->pass.ICMS_DB_PASS.ICMS_DB_PREFIX.$Ynj),
 		$expire, $icms_cookie_path, '', $secure, 0);
 	}
 	// end of autologin hack V3.1 GIJ
@@ -191,18 +191,18 @@ if (false != $user) {
 	/* check if user's password has expired and send to reset password page if it has */
 	$is_expired = $user->pass_expired;
 	if ($is_expired == 1) {
-		redirect_header(ICMS_URL . '/user.php?op=resetpass', 5, _US_PASSEXPIRED, false);
+		redirect_header(ICMS_URL.'/user.php?op=resetpass', 5, _US_PASSEXPIRED, false);
 	} else {
 		redirect_header($redirect, 1, sprintf(_US_LOGGINGU, $user->uname), false);
 	}
 
 } elseif (!isset($_POST['xoops_redirect']) && !isset($_GET['xoops_redirect'])) {
 	/* if not a user and redirect has not been set, go back to the user page */
-	redirect_header(ICMS_URL . '/user.php', 5, $icmsAuth->getHtmlErrors());
+	redirect_header(ICMS_URL.'/user.php', 5, $icmsAuth->getHtmlErrors());
 } else {
 	/* if not a user and redirect has been set, go back to that page */
 	redirect_header(
-		ICMS_URL . '/user.php?xoops_redirect='
+		ICMS_URL.'/user.php?xoops_redirect='
 		. urlencode($redirect), 5, $icmsAuth->getHtmlErrors(), false
 	);
 }

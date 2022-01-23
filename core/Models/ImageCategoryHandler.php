@@ -69,8 +69,8 @@ class ImageCategoryHandler extends AbstractExtendedHandler {
 	 * @return ImageCategory[]
 	 */
 	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
-			$this->generalSQL = 'SELECT DISTINCT c.* FROM ' . $this->table . ' c LEFT JOIN '
-			. $this->db->prefix('group_permission') . ' l ON l.gperm_itemid=c.imgcat_id';
+			$this->generalSQL = 'SELECT DISTINCT c.* FROM '.$this->table.' c LEFT JOIN '
+			. $this->db->prefix('group_permission').' l ON l.gperm_itemid=c.imgcat_id';
 
 			$criteria_main = new CriteriaCompo();
 			$criteria_main->add(new CriteriaItem('l.gperm_name', ['imgcat_read', 'imgcat_write'], ' IN '));
@@ -91,8 +91,8 @@ class ImageCategoryHandler extends AbstractExtendedHandler {
 	 * @return int
 	 */
 	public function getCount($criteria = null) {
-			$this->generalSQL = 'SELECT COUNT(*) FROM ' . $this->table . ' i LEFT JOIN '
-			. $this->db->prefix('group_permission') . ' l ON l.gperm_itemid=i.imgcat_id';
+			$this->generalSQL = 'SELECT COUNT(*) FROM '.$this->table.' i LEFT JOIN '
+			. $this->db->prefix('group_permission').' l ON l.gperm_itemid=i.imgcat_id';
 
 
 			$criteria_main = new CriteriaCompo();
@@ -182,7 +182,7 @@ class ImageCategoryHandler extends AbstractExtendedHandler {
 			$ret[$i] = $categories[$i]->imgcat_name;
 			$subcategories = $this->getCategList($groups, $perm, $display, $storetype, $categories[$i]->imgcat_id);
 			foreach (array_keys($subcategories) as $j) {
-				$ret[$j] = '-' . $subcategories[$j];
+				$ret[$j] = '-'.$subcategories[$j];
 			}
 		}
 
@@ -205,13 +205,13 @@ class ImageCategoryHandler extends AbstractExtendedHandler {
 		} else {
 			$supcateg = 0;
 		}
-		$folder = ($supcateg)?$supcateg . '/':'';
+		$folder = ($supcateg) ? $supcateg.'/' : '';
 		if ($full) {
 			$folder = ($type == 'path')
-					? ICMS_IMANAGER_FOLDER_PATH . '/' . $folder
-					: ICMS_IMANAGER_FOLDER_URL . '/' . $folder;
+					? ICMS_IMANAGER_FOLDER_PATH . '/'.$folder
+					: ICMS_IMANAGER_FOLDER_URL.'/'.$folder;
 		}
 
-		return $folder . $imgcat->imgcat_foldername;
+		return $folder.$imgcat->imgcat_foldername;
 	}
 }

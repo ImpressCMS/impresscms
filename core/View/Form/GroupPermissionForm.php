@@ -77,7 +77,7 @@ class GroupPermissionForm extends AbstractForm {
 	 * Constructor
 	 */
 	public function __construct($title, $modid, $permname, $permdesc, $url = "") {
-		parent::__construct($title, 'groupperm_form', ICMS_URL . '/modules/system/admin/groupperm.php', 'post');
+		parent::__construct($title, 'groupperm_form', ICMS_URL.'/modules/system/admin/groupperm.php', 'post');
 		$this->_modid = (int) $modid;
 		$this->_permName = $permname;
 		$this->_permDesc = $permdesc;
@@ -144,7 +144,7 @@ class GroupPermissionForm extends AbstractForm {
 		foreach (array_keys($glist) as $i) {
 			// get selected item id(s) for each group
 			$selected = $gperm_handler->getItemIds($this->_permName, $i, $this->_modid);
-			$ele = new GroupPermissionElement($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
+			$ele = new GroupPermissionElement($glist[$i], 'perms['.$this->_permName.']', $i, $selected);
 			$ele->setOptionTree($this->_itemTree);
 			$this->addElement($ele);
 			unset ($ele);
@@ -154,12 +154,12 @@ class GroupPermissionForm extends AbstractForm {
 		$tray->addElement(new ButtonElement('', 'submit', _SUBMIT, 'submit'));
 		$tray->addElement(new ButtonElement('', 'reset', _CANCEL, 'reset'));
 		$this->addElement($tray);
-		$ret = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br />';
-		$ret .= "<form name='" . $this->getName()
-			. "' id='" . $this->getName()
-			. "' action='" . $this->getAction()
-			. "' method='" . $this->getMethod()
-			. "'" . $this->getExtra()
+		$ret = '<h4>'.$this->getTitle().'</h4>'.$this->_permDesc.'<br />';
+		$ret .= "<form name='".$this->getName()
+			. "' id='".$this->getName()
+			. "' action='".$this->getAction()
+			. "' method='".$this->getMethod()
+			. "'".$this->getExtra()
 			. ">\n<table width='100%' class='outer' cellspacing='1' valign='top'>\n";
 		$elements = $this->getElements();
 		$hidden = '';
@@ -168,11 +168,11 @@ class GroupPermissionForm extends AbstractForm {
 			if (!is_object($elements[$i])) {
 				$ret .= $elements[$i];
 			} elseif (!$elements[$i]->isHidden()) {
-				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td class='head'>" . $elements[$i]->getCaption();
+				$ret .= "<tr valign='top' align='"._GLOBAL_LEFT."'><td class='head'>".$elements[$i]->getCaption();
 				if ($elements[$i]->getDescription()) {
-					$ret .= '<br /><br /><span style="font-weight: normal;">' . $elements[$i]->getDescription() . '</span>';
+					$ret .= '<br /><br /><span style="font-weight: normal;">'.$elements[$i]->getDescription().'</span>';
 				}
-				$ret .= "</td>\n<td class='even'>\n" . $elements[$i]->render() . "\n</td></tr>\n";
+				$ret .= "</td>\n<td class='even'>\n".$elements[$i]->render()."\n</td></tr>\n";
 			} else {
 				$hidden .= $elements[$i]->render();
 			}

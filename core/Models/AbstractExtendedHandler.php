@@ -232,8 +232,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 		// Todo: Autodect module
 		if ($modulename === null || $modulename === 'icms') {
 			$this->moduleName = 'icms';
-			if (!class_exists($classname = '\\ImpressCMS\\Core\\Models\\' . ucfirst($itemname))) {
-				$classname = $this->moduleName . '_' . $itemname . '_Object';
+			if (!class_exists($classname = '\\ImpressCMS\\Core\\Models\\'.ucfirst($itemname))) {
+				$classname = $this->moduleName.'_'.$itemname.'_Object';
 			}
 			if ($table === null) {
 				$table = $itemname;
@@ -242,7 +242,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 			$this->moduleName = $modulename;
 			$classname = substr(get_class($this), 0, -7);
 			if ($table === null) {
-				$table = $this->moduleName . '_' . $itemname;
+				$table = $this->moduleName.'_'.$itemname;
 			}
 		}
 
@@ -251,7 +251,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		 * to be evaluated...
 		 */
 		if (!class_exists($classname)) {
-			$classname = ucfirst($this->moduleName) . ucfirst($itemname);
+			$classname = ucfirst($this->moduleName).ucfirst($itemname);
 		}
 
 		$this->table = $db->prefix($table);
@@ -260,11 +260,11 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$this->className = $classname;
 		$this->identifierName = $idenfierName;
 		$this->summaryName = $summaryName;
-		$this->_page = $itemname . '.php';
-		$this->_modulePath = ICMS_MODULES_PATH . '/' . $this->moduleName . '/';
-		$this->_moduleUrl = ICMS_MODULES_URL . '/' . $this->moduleName . '/';
-		$this->_uploadPath = ICMS_UPLOAD_PATH . '/' . $this->moduleName . '/';
-		$this->_uploadUrl = ICMS_UPLOAD_URL . '/' . $this->moduleName . '/';
+		$this->_page = $itemname.'.php';
+		$this->_modulePath = ICMS_MODULES_PATH.'/'.$this->moduleName.'/';
+		$this->_moduleUrl = ICMS_MODULES_URL.'/'.$this->moduleName.'/';
+		$this->_uploadPath = ICMS_UPLOAD_PATH.'/'.$this->moduleName.'/';
+		$this->_uploadUrl = ICMS_UPLOAD_URL.'/'.$this->moduleName.'/';
 	}
 
 	/**
@@ -321,7 +321,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$icmspermissions_handler = new PermissionsManager($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
-			$criteria->add(new \Imponeer\Database\Criteria\CriteriaItem($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
+			$criteria->add(new \Imponeer\Database\Criteria\CriteriaItem($this->keyName, '('.implode(', ', $grantedItems).')', 'IN'));
 			return true;
 		} else {
 			return false;
@@ -344,19 +344,19 @@ class AbstractExtendedHandler extends AbstractHandler {
 
 		$sql = 'SELECT ';
 		foreach ($field_func as $field => $func) {
-			$sql .= $func . '(`' . $field . '`) ' . $field . '_' . $func . ', ';
+			$sql .= $func.'(`'.$field.'`) '.$field.'_'.$func.', ';
 		}
 		$sql = substr($sql, 0, -2);
-		$sql .= ' FROM ' . $this->table;
+		$sql .= ' FROM '.$this->table;
 
 		if (isset($criteria) && $criteria instanceof CriteriaElement) {
-			$sql .= ' ' . $criteria->renderWhere(true);
+			$sql .= ' '.$criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
 			}
 			if ($criteria->getSort() !== '') {
-				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
+				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
 			}
 		} else {
 			$args = [];
@@ -410,14 +410,14 @@ class AbstractExtendedHandler extends AbstractHandler {
 		if ($this->generalSQL) {
 			$sql = $this->generalSQL;
 		} elseif (!$sql) {
-			$sql = 'SELECT ' . $this->getFields(true, true) . ' FROM `' . $this->table . '` AS ' . $this->itemName;
+			$sql = 'SELECT '.$this->getFields(true, true).' FROM `'.$this->table.'` AS '.$this->itemName;
 		}
 
 		if (isset($criteria) && $criteria instanceof CriteriaElement) {
-			$sql .= ' ' . $criteria->renderWhere(true);
+			$sql .= ' '.$criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 			if ($criteria->getSort() !== '') {
-				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
+				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -430,7 +430,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		}
 
 		if (!empty($limit)) {
-			$sql .= ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
+			$sql .= ' LIMIT '.((int) $start).', '.((int) $limit);
 		}
 
 		$result = $this->db->perform($sql, $args);
@@ -466,7 +466,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 			}
 		}
 		if ($forSQL) {
-			return '`' . implode('`, `', $ret) . '`';
+			return '`'.implode('`, `', $ret).'`';
 		}
 		return $ret;
 	}
@@ -623,7 +623,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 */
 	public function getImageUrl()
 	{
-		return $this->_uploadUrl . $this->itemName . '/';
+		return $this->_uploadUrl.$this->itemName.'/';
 	}
 
 	/**
@@ -631,11 +631,11 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 */
 	public function getImagePath()
 	{
-		$dir = $this->_uploadPath . $this->itemName;
+		$dir = $this->_uploadPath.$this->itemName;
 		if (!file_exists($dir)) {
 			Filesystem::mkdir($dir);
 		}
-		return $dir . '/';
+		return $dir.'/';
 	}
 
 	protected function convertResultSet_Object($result, $as_object)
@@ -829,16 +829,16 @@ class AbstractExtendedHandler extends AbstractHandler {
 			$criteria->setSort($keyValue);
 		}
 
-		$sql = 'SELECT ' . (is_array($keyName) ? implode(', ', $keyName) : $keyName);
+		$sql = 'SELECT '.(is_array($keyName) ? implode(', ', $keyName) : $keyName);
 		if (!empty($keyValue)) {
-			$sql .= ', ' . $keyValue;
+			$sql .= ', '.$keyValue;
 		}
-		$sql .= ' FROM ' . $this->table . ' AS ' . $this->itemName;
+		$sql .= ' FROM '.$this->table.' AS '.$this->itemName;
 		if (isset($criteria) && $criteria instanceof CriteriaElement) {
-			$sql .= ' ' . $criteria->renderWhere(true);
+			$sql .= ' '.$criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 			if ($criteria->getSort() !== '') {
-				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
+				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -851,7 +851,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		}
 
 		if (!empty($limit)) {
-			$sql .= ' LIMIT ' . ((int)$start) . ', ' . ((int)$limit);
+			$sql .= ' LIMIT '.((int) $start).', '.((int) $limit);
 		}
 
 		$result = $this->db->perform($sql, $args);
@@ -875,7 +875,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	public function getIdentifierName($withprefix = true)
 	{
 		if ($withprefix) {
-			return $this->itemName . "." . $this->identifierName;
+			return $this->itemName.".".$this->identifierName;
 		} else {
 			return $this->identifierName;
 		}
@@ -919,7 +919,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$for_update = [];
 		foreach ($data as $i => $obj) {
 			if ($obj->handler->className !== $this->className) {
-				$obj->setErrors(get_class($obj) . ' Differs from ' . $this->className);
+				$obj->setErrors(get_class($obj).' Differs from '.$this->className);
 				continue;
 			}
 			if (!$obj->isChanged()) {
@@ -987,7 +987,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 				$for_insert[0]->setVar($this->keyName, $id);
 				$for_insert[0]->setVarInfo(null, AbstractProperties::VARCFG_CHANGED, false);
 				$for_insert[0]->unsetNew();
-				$scount = (int)$this->executeEvent('afterInsert', $for_insert[0]);
+				$scount = (int) $this->executeEvent('afterInsert', $for_insert[0]);
 			}
 		}
 
@@ -1028,7 +1028,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 			if (method_exists($this, $event)) {
 				$ret = $this->$event($executeEventObj);
 				if (!$ret) {
-					$executeEventObj->setErrors('An error occured during the ' . $event . ' event');
+					$executeEventObj->setErrors('An error occured during the '.$event.' event');
 				}
 			} else {
 				// check to see if there is a hook for this event
@@ -1058,22 +1058,22 @@ class AbstractExtendedHandler extends AbstractHandler {
 		if (!is_array($data)) {
 			$data = array($data);
 		}
-		$sql = 'INSERT INTO `' . $this->table . '` (`';
+		$sql = 'INSERT INTO `'.$this->table.'` (`';
 
 		$params = [];
 		foreach ($data as $i => $obj) {
 			$fieldsToStoreInDB = $obj->getVarsForQuery(false);
 			if ($i === 0) {
-				$sql .= implode('`,`', array_keys($fieldsToStoreInDB)) . '`) VALUES';
+				$sql .= implode('`,`', array_keys($fieldsToStoreInDB)).'`) VALUES';
 			} else {
 				$sql .= ', ';
 			}
 			$bindKeys = [];
 			foreach ($fieldsToStoreInDB as $k => $v) {
 				$params[$k] = $v;
-				$bindKeys[] = ':' . $k;
+				$bindKeys[] = ':'.$k;
 			}
-			$sql .= '(' . implode(',', $bindKeys) . ')';
+			$sql .= '('.implode(',', $bindKeys).')';
 		}
 		return $this->db->perform($sql, $params);
 	}
@@ -1091,9 +1091,9 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$bindFieldName = 'field_';
 		$bindFieldSuffixId = 0;
 		if (is_array($data)) {
-			$sql = 'UPDATE `' . $this->table . '` SET ' . "\r\n";
+			$sql = 'UPDATE `'.$this->table.'` SET '."\r\n";
 			if (is_array($this->keyName)) {
-				$case = '  CASE `' . implode('`, `', $this->keyName) . "`\r\n";
+				$case = '  CASE `'.implode('`, `', $this->keyName)."`\r\n";
 				$when = array();
 				$criteria = new CriteriaCompo();
 				foreach ($data as $i => $obj) {
@@ -1109,7 +1109,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 						if (in_array($key, $this->keyName, true)) {
 							continue;
 						}
-						$when[$key][$i] = '    WHEN ' . $rendered_criteria . ' THEN ' . $value;
+						$when[$key][$i] = '    WHEN '.$rendered_criteria.' THEN '.$value;
 					}
 				}
 				if (empty($when)) {
@@ -1122,12 +1122,12 @@ class AbstractExtendedHandler extends AbstractHandler {
 					} else {
 						$first = false;
 					}
-					$sql .= '`' . $wdata . '` = ' . $case . implode("\r", $when[$wdata]) . ' END ' . "\r";
+					$sql .= '`'.$wdata.'` = '.$case.implode("\r", $when[$wdata]).' END '."\r";
 				}
-				$sql .= ' ' . $criteria->renderWhere(true);
+				$sql .= ' '.$criteria->renderWhere(true);
 				$params = array_merge($params, $criteria->getBindData());
 			} else {
-				$case = '  CASE `' . $this->keyName . "` \r\n";
+				$case = '  CASE `'.$this->keyName."` \r\n";
 				$when = array();
 				$ids = array();
 				foreach ($data as $i => $obj) {
@@ -1137,8 +1137,8 @@ class AbstractExtendedHandler extends AbstractHandler {
 						if ($key === $this->keyName) {
 							continue;
 						}
-						$when[$key][$i] = '    WHEN ' . $id . ' THEN :' . $bindFieldName . (++$bindFieldSuffixId);
-						$params[$bindFieldName . $bindFieldSuffixId] = $value;
+						$when[$key][$i] = '    WHEN '.$id.' THEN :'.$bindFieldName.(++$bindFieldSuffixId);
+						$params[$bindFieldName.$bindFieldSuffixId] = $value;
 					}
 					$ids[] = $id;
 				}
@@ -1152,7 +1152,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 					} else {
 						$first = false;
 					}
-					$sql .= '`' . $wdata . '` = ' . $case . implode("\r", $when[$wdata]) . ' END ' . "\r";
+					$sql .= '`'.$wdata.'` = '.$case.implode("\r", $when[$wdata]).' END '."\r";
 				}
 				$criteria = new CriteriaItem($this->keyName, $ids, 'IN');
 				$sql .= $criteria->renderWhere(true);
@@ -1164,7 +1164,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 				return null;
 			}
 
-			$sql = 'UPDATE `' . $this->table . '` SET';
+			$sql = 'UPDATE `'.$this->table.'` SET';
 			foreach ($fieldsToStoreInDB as $key => $value) {
 				if ((!is_array($this->keyName) && $key === $this->keyName)
 					|| (is_array($this->keyName) && in_array($key, $this->keyName, true))) {
@@ -1173,12 +1173,12 @@ class AbstractExtendedHandler extends AbstractHandler {
 				if (isset($notfirst)) {
 					$sql .= ',';
 				}
-				$sql .= ' `' . $key . '` = :' . $bindFieldName . (++$bindFieldSuffixId);
-				$params[$bindFieldName . $bindFieldSuffixId] = $value;
+				$sql .= ' `'.$key.'` = :'.$bindFieldName.(++$bindFieldSuffixId);
+				$params[$bindFieldName.$bindFieldSuffixId] = $value;
 				$notfirst = true;
 			}
 			$criteria = $data->getCriteriaForSelectByID();
-			$sql .= ' ' . $criteria->renderWhere(true);
+			$sql .= ' '.$criteria->renderWhere(true);
 			$params = array_merge($params, $criteria->getBindData());
 		}
 		if (!$sql) {
@@ -1229,7 +1229,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 */
 	public function doFastChange($id, $field, $value = 1, $math_func = '+', $force = false, $debug = false)
 	{
-		return $this->query('UPDATE `' . $this->keyName . '` SET `' . $field . '` = `' . $field . '` ' . $math_func . ' ' . $value, null, $force, $debug);
+		return $this->query('UPDATE `'.$this->keyName.'` SET `'.$field.'` = `'.$field.'` '.$math_func.' '.$value, null, $force, $debug);
 	}
 
 	/**
@@ -1247,13 +1247,13 @@ class AbstractExtendedHandler extends AbstractHandler {
 		$ret = array();
 
 		if (isset($criteria) && $criteria instanceof CriteriaElement) {
-			$sql .= ' ' . $criteria->renderWhere(true);
+			$sql .= ' '.$criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
 			}
 			if ($criteria->getSort() !== '') {
-				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
+				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
 			}
 		} else {
 			$args = [];
@@ -1284,7 +1284,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		if (isset($criteria) && $criteria instanceof CriteriaElement) {
 			if ($criteria->groupby !== '') {
 				$groupby = true;
-				$field = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
+				$field = $criteria->groupby.', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
 			}
 		}
 		/**
@@ -1295,10 +1295,10 @@ class AbstractExtendedHandler extends AbstractHandler {
 			$sql = $this->generalSQL;
 			$sql = str_replace('SELECT *', 'SELECT COUNT(*)', $sql);
 		} else {
-			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->itemName;
+			$sql = 'SELECT '.$field.'COUNT(*) FROM '.$this->table.' AS '.$this->itemName;
 		}
 		if (isset($criteria) && $criteria instanceof CriteriaElement) {
-			$sql .= ' ' . $criteria->renderWhere(true);
+			$sql .= ' '.$criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 			if ($criteria->groupby !== '') {
 				$sql .= $criteria->getGroupby();
@@ -1316,7 +1316,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		} else {
 			$ret = array();
 			while (list($id, $count) = $result->fetch(PDO::FETCH_NUM)) {
-				$ret[$id] = (int)$count;
+				$ret[$id] = (int) $count;
 			}
 		}
 
@@ -1364,9 +1364,9 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * */
 	public function updateAll($fieldname, $fieldvalue, $criteria = null)
 	{
-		$sql = 'UPDATE `' . $this->table . '` SET `' . $fieldname . '`=:fieldvalue';
+		$sql = 'UPDATE `'.$this->table.'` SET `'.$fieldname.'`=:fieldvalue';
 		if (isset($criteria) && $criteria instanceof CriteriaElement) {
-			$sql .= ' ' . $criteria->renderWhere(true);
+			$sql .= ' '.$criteria->renderWhere(true);
 			$args = $criteria->getBindData();
 		} else {
 			$args = [];
@@ -1397,7 +1397,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 			return false;
 		}
 		if ($quick) {
-			$sql = 'DELETE FROM `' . $this->table . '` ';
+			$sql = 'DELETE FROM `'.$this->table.'` ';
 			if ($criteria) {
 				$sql .= $criteria->renderWhere(true);
 				$args = $criteria->getBindData();
@@ -1434,7 +1434,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 		 * @var $criteria CriteriaElement
 		 */
 		$criteria = $obj->getCriteriaForSelectByID();
-		$sql = 'DELETE FROM `' . $this->table . '` ' . $criteria->renderWhere(true);
+		$sql = 'DELETE FROM `'.$this->table.'` '.$criteria->renderWhere(true);
 		$result = $this->db->perform($sql, $criteria->getBindData());
 		if (!$result) {
 			return false;
@@ -1525,7 +1525,7 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 */
 	public function getModuleItemString()
 	{
-		$ret = $this->moduleName . '_' . $this->_itemname;
+		$ret = $this->moduleName.'_'.$this->_itemname;
 		return $ret;
 	}
 
@@ -1557,10 +1557,10 @@ class AbstractExtendedHandler extends AbstractHandler {
 	public function enableUpload($allowedMimeTypes = false, $maxFileSize = false, $maxWidth = false, $maxHeight = false)
 	{
 		$this->uploadEnabled = true;
-		$this->_allowedMimeTypes = $allowedMimeTypes?:$this->_allowedMimeTypes;
-		$this->_maxFileSize = $maxFileSize?:$this->_maxFileSize;
-		$this->_maxWidth = $maxWidth?:$this->_maxWidth;
-		$this->_maxHeight = $maxHeight?:$this->_maxHeight;
+		$this->_allowedMimeTypes = $allowedMimeTypes ?: $this->_allowedMimeTypes;
+		$this->_maxFileSize = $maxFileSize ?: $this->_maxFileSize;
+		$this->_maxWidth = $maxWidth ?: $this->_maxWidth;
+		$this->_maxHeight = $maxHeight ?: $this->_maxHeight;
 	}
 
 }

@@ -63,12 +63,12 @@ class UserRankHandler extends AbstractExtendedHandler {
 			$rank = array(
 				'id' => 0,
 				'title' => '',
-				'image' => ICMS_UPLOAD_URL . 'blank.gif');
+				'image' => ICMS_UPLOAD_URL.'blank.gif');
 		} else {
 			$rank = array(
 				"id" => $rank_id,
 				"title" => $ranks[0]->rank_title,
-				"image" => $this->getImageUrl() . $ranks[0]->rank_image);
+				"image" => $this->getImageUrl().$ranks[0]->rank_image);
 		}
 
 		return $rank;
@@ -79,12 +79,12 @@ class UserRankHandler extends AbstractExtendedHandler {
 	 * @return	bool
 	 */
 	public function MoveAllRanksImagesToProperPath() {
-		$sql = 'SELECT rank_image FROM ' . $this->table;
+		$sql = 'SELECT rank_image FROM '.$this->table;
 		$Query = $this->query($sql, false);
 		foreach ($Query as $qpart) {
-			$file_orig = ICMS_UPLOAD_PATH . '/' . $qpart['rank_image'];
+			$file_orig = ICMS_UPLOAD_PATH.'/'.$qpart['rank_image'];
 			if (file_exists($file_orig)) {
-				\ImpressCMS\Core\File\Filesystem::copyRecursive($file_orig, $this->getImagePath() . $qpart['rank_image']);
+				\ImpressCMS\Core\File\Filesystem::copyRecursive($file_orig, $this->getImagePath().$qpart['rank_image']);
 			}
 		}
 

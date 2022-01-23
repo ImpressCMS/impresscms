@@ -85,10 +85,10 @@ class Highlighter {
 		if ($this->singlewords) {
 			$keywords = explode(' ', $this->preg_keywords);
 			foreach ($keywords as $keyword) {
-				$patterns[] = '/(?' . '>' . $keyword . '+)/si';
+				$patterns[] = '/(?'.'>'.$keyword.'+)/si';
 			}
 		} else {
-			$patterns[] = '/(?' . '>' . $this->preg_keywords . '+)/si';
+			$patterns[] = '/(?'.'>'.$this->preg_keywords.'+)/si';
 		}
 
 		$result = $replace_matches[0];
@@ -108,9 +108,9 @@ class Highlighter {
 	 * @access private
 	 */
 	private function highlight($buffer) {
-		$buffer = '>' . $buffer . '<';
+		$buffer = '>'.$buffer.'<';
 		$this->preg_keywords = preg_replace('/[^\w ]/si', '', $this->keywords);
-		$buffer = preg_replace_callback("/(\>(((?" . ">[^><]+)|(?R))*)\<)/is", array(&$this, 'replace'), $buffer);
+		$buffer = preg_replace_callback("/(\>(((?".">[^><]+)|(?R))*)\<)/is", array(&$this, 'replace'), $buffer);
 		$buffer = substr($buffer, 1, -1);
 		return $buffer;
 	}

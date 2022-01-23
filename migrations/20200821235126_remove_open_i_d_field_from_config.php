@@ -4,8 +4,8 @@ use Phoenix\Migration\AbstractMigration;
 
 class RemoveOpenIDFieldFromConfig extends AbstractMigration
 {
-    protected function up(): void
-    {
+	protected function up(): void
+	{
 		if ($this->tableColumnExists($this->prefix('users'), 'openid')) {
 			$this->table($this->prefix('users'))->dropColumn('openid')->save();
 		}
@@ -15,10 +15,10 @@ class RemoveOpenIDFieldFromConfig extends AbstractMigration
 		$this->delete($this->prefix('config'), [
 			'conf_name' => 'auth_openid'
 		]);
-    }
+	}
 
-    protected function down(): void
-    {
+	protected function down(): void
+	{
 		if (!$this->tableColumnExists($this->prefix('users'), 'openid')) {
 			$this->execute(
 				sprintf('ALTER TABLE %s ADD COLUMN `openid` varchar(255) NOT NULL default \'\'', $this->prefix('users'))
@@ -42,7 +42,7 @@ class RemoveOpenIDFieldFromConfig extends AbstractMigration
 			'conf_valuetype' => 'int',
 			'conf_order' => 1
 		]);
-    }
+	}
 
 	/**
 	 * Prefix table

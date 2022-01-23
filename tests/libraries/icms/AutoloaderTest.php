@@ -22,8 +22,8 @@ class AutoloaderTest extends TestCase {
      * Checks if all required static methods are available
      */
     public function testStaticMethodsAvailability() {
-         foreach ([ 'setup', 'split', 'register', 'import', 'autoload', 'classPath', 'registerLegacy' ] as $method) {
-             $this->assertTrue(method_exists('icms_Autoloader', $method), $method . ' doesn\'t exists for icms_Autoloader');
+         foreach (['setup', 'split', 'register', 'import', 'autoload', 'classPath', 'registerLegacy'] as $method) {
+             $this->assertTrue(method_exists('icms_Autoloader', $method), $method.' doesn\'t exists for icms_Autoloader');
          }
     }
 

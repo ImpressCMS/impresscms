@@ -99,7 +99,7 @@ class ImageElement extends SelectElement {
 				}
 			}
 		} elseif (is_int($cat)) {
-			$catlist = array_key_exists($cat, $catlist)? [$cat=>$catlist[$cat]] : [];
+			$catlist = array_key_exists($cat, $catlist) ? [$cat=>$catlist[$cat]] : [];
 		}
 
 		$image_handler = icms::handler('icms_image');
@@ -118,12 +118,12 @@ class ImageElement extends SelectElement {
 				}
 				foreach ($images as $i) {
 					if ($storetype == "db") {
-						$ret[$v]["/image.php?id=" . $i->image_id] = $i->image_nicename;
+						$ret[$v]["/image.php?id=".$i->image_id] = $i->image_nicename;
 					} else {
 						$categ_path = $imgcat_handler->getCategFolder($imgcat);
 						$categ_path = str_replace(ICMS_ROOT_PATH, '', $categ_path);
-						$path = (substr($categ_path, -1) != '/')?$categ_path . '/':$categ_path;
-						$ret[$v][$path . $i->image_name] = $i->image_nicename;
+						$path = (substr($categ_path, -1) != '/') ? $categ_path.'/' : $categ_path;
+						$ret[$v][$path.$i->image_name] = $i->image_nicename;
 					}
 				}
 			} else {
@@ -166,34 +166,34 @@ class ImageElement extends SelectElement {
 		$catlist_total = count($catlist);
 		$optIds = $this->getOptGroupsID();
 		$ret = "<select onchange='if(this.options[this.selectedIndex].value != \"\"){ document.getElementById(\""
-			. $this->getName() . '_img").src="' . ICMS_URL . '"+this.options[this.selectedIndex].value;}else{document.getElementById("' . $this->getName() . '_img").src="'
-			. ICMS_URL . "/images/blank.gif\";}'  size='" . $this->getSize() . "'" . $this->getExtra() . "";
+			. $this->getName().'_img").src="'.ICMS_URL.'"+this.options[this.selectedIndex].value;}else{document.getElementById("'.$this->getName().'_img").src="'
+			. ICMS_URL."/images/blank.gif\";}'  size='".$this->getSize()."'".$this->getExtra()."";
 		if ($this->isMultiple()) {
-			$ret .= " name='" . $this->getName() . "[]' id='" . $this->getName() . "[]' multiple='multiple'>\n";
+			$ret .= " name='".$this->getName()."[]' id='".$this->getName()."[]' multiple='multiple'>\n";
 		} else {
-			$ret .= " name='" . $this->getName() . "' id='" . $this->getName() . "'>\n";
+			$ret .= " name='".$this->getName()."' id='".$this->getName()."'>\n";
 		}
-		$ret .= "<option value=''>" . _SELECT . "</option>\n";
+		$ret .= "<option value=''>"._SELECT."</option>\n";
 		foreach ($this->getOptGroups() as $nome => $valores) {
-			$ret .= '\n<optgroup id="img_cat_' . $optIds[$nome] . '" label="' . $nome . '">';
+			$ret .= '\n<optgroup id="img_cat_'.$optIds[$nome].'" label="'.$nome.'">';
 			if (is_array($valores)) {
 				foreach ($valores as $value => $name) {
-					$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
+					$ret .= "<option value='".htmlspecialchars($value, ENT_QUOTES, _CHARSET)."'";
 					if (count($this->getValue()) > 0 && in_array($value, $this->getValue(), false)) {
 						$ret .= " selected='selected'";
 						$imagem = $value;
 					}
-					$ret .= '>' . $name . "</option>\n";
+					$ret .= '>'.$name."</option>\n";
 				}
 			}
 			$ret .= '</optgroup>\n';
 		}
-		$browse_url = ICMS_URL . '/modules/system/admin/images/browser.php';
+		$browse_url = ICMS_URL.'/modules/system/admin/images/browser.php';
 		$ret .= '</select>';
 		$ret .= ($catlist_total > 0)
-			?" <input type='button' value='" . _ADDIMAGE . "' onclick=\"window.open('$browse_url?target=" . $this->getName() . "','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">"
+			? " <input type='button' value='"._ADDIMAGE."' onclick=\"window.open('$browse_url?target=".$this->getName()."','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">"
 			: '';
-		$ret .= "<br /><img id='" . $this->getName() . "_img' src='" . ((!empty($imagem))? ICMS_URL.$imagem:ICMS_URL . '/images/blank.gif') . "'>";
+		$ret .= "<br /><img id='".$this->getName()."_img' src='".((!empty($imagem)) ? ICMS_URL.$imagem : ICMS_URL.'/images/blank.gif')."'>";
 		return $ret;
 	}
 }

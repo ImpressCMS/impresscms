@@ -139,7 +139,7 @@ class Module
 	 */
 	public function registerClassPath($isactive = null) {
 		//if ($this->dirname == "system") return;
-		$class_path = ICMS_MODULES_PATH . '/' . $this->dirname . '/class';
+		$class_path = ICMS_MODULES_PATH.'/'.$this->dirname.'/class';
 
 		// check if class path exists
 		if (!is_dir($class_path)) {
@@ -147,7 +147,7 @@ class Module
 		}
 
 		// check if module is active (only if applicable)
-		if ($isactive !== null && $this->isactive != (int)$isactive) {
+		if ($isactive !== null && $this->isactive != (int) $isactive) {
 			return;
 		}
 
@@ -155,7 +155,7 @@ class Module
 		if ($this->getVar('ipf')) {
 			$modname = ($this->getVar('modname') != '') ?
 				$this->getVar('modname') : $this->getVar('dirname');
-			Autoloader::register($class_path, 'mod_' . $modname);
+			Autoloader::register($class_path, 'mod_'.$modname);
 		} else {
 			Autoloader::register($class_path);
 		}
@@ -172,13 +172,13 @@ class Module
 		$this->setVar('name', $this->modinfo['name'], true);
 		$this->setVar('version', is_string($this->modinfo['version']) ? 0 : (int) (100 * ($this->modinfo['version'] + 0.001)), true);
 		$this->setVar('dirname', $this->modinfo['dirname'], true);
-		$hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1)?1:0;
-		$hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1)?1:0;
-		$hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1)?1:0;
-		$hasconfig = ((isset($this->modinfo['config']) && is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments']))?1:0;
-		$hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1)?1:0;
+		$hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1) ? 1 : 0;
+		$hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1) ? 1 : 0;
+		$hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1) ? 1 : 0;
+		$hasconfig = ((isset($this->modinfo['config']) && is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments'])) ? 1 : 0;
+		$hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1) ? 1 : 0;
 		// RMV-NOTIFY
-		$hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1)?1:0;
+		$hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1) ? 1 : 0;
 		$this->hasmain = $hasmain;
 		$this->hasadmin = $hasadmin;
 		$this->hassearch = $hassearch;
@@ -186,8 +186,8 @@ class Module
 		$this->hascomments = $hascomments;
 		// RMV-NOTIFY
 		$this->hasnotification = $hasnotification;
-		$this->setVar('modname', isset($this->modinfo['modname'])?$this->modinfo['modname']:"", true);
-		$ipf = (isset($this->modinfo['object_items']) && is_array($this->modinfo['object_items']))?1:0;
+		$this->setVar('modname', isset($this->modinfo['modname']) ? $this->modinfo['modname'] : "", true);
+		$ipf = (isset($this->modinfo['object_items']) && is_array($this->modinfo['object_items'])) ? 1 : 0;
 		$this->ipf = $ipf;
 	}
 
@@ -224,7 +224,7 @@ class Module
 	 */
 	public function mainLink() {
 		if ($this->hasmain == 1) {
-			$ret = '<a href="' . ICMS_URL . '/modules/' . $this->dirname . '/">' . $this->name . '</a>';
+			$ret = '<a href="'.ICMS_URL.'/modules/'.$this->dirname.'/">'.$this->name.'</a>';
 			return $ret;
 		}
 		return false;
@@ -251,10 +251,10 @@ class Module
 	public function loadAdminMenu() {
 		if ($this->getInfo('adminmenu')
 			&& $this->getInfo('adminmenu')
-			&& file_exists($this->getPath() . '/' . $this->getInfo('adminmenu'))
+			&& file_exists($this->getPath().'/'.$this->getInfo('adminmenu'))
 		) {
 			icms_loadLanguageFile($this->modname, 'modinfo');
-			include_once $this->getPath() . '/' . $this->getInfo('adminmenu');
+			include_once $this->getPath().'/'.$this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
 			if (isset($headermenu)) {
 				$this->adminheadermenu = & $headermenu;
@@ -269,7 +269,7 @@ class Module
 	 */
 	public function getPath(): string
 	{
-		return ICMS_MODULES_PATH . '/' . $this->dirname;
+		return ICMS_MODULES_PATH.'/'.$this->dirname;
 	}
 
 	/**
@@ -302,13 +302,13 @@ class Module
 	public function loadInfo($dirname, $verbose = true) {
 		global $icmsConfig;
 
-		$fullPath = ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . $dirname;
+		$fullPath = ICMS_MODULES_PATH.DIRECTORY_SEPARATOR.$dirname;
 
 		/**
 		 * @var CacheItemPoolInterface $cache
 		 */
 		$cache = icms::getInstance()->get('cache');
-		$cachedModuleInfo = $cache->getItem('module.' . $icmsConfig['language'] . '.' . $dirname);
+		$cachedModuleInfo = $cache->getItem('module.'.$icmsConfig['language'].'.'.$dirname);
 
 		if (!$cachedModuleInfo->isHit()) {
 			$modversion = [];
@@ -356,8 +356,8 @@ class Module
 		if ($this->hassearch != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
 			return false;
 		}
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $search['file'])) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $this->dirname . '/' . $search['file'];
+		if (file_exists(ICMS_ROOT_PATH.'/modules/'.$this->dirname.'/'.$search['file'])) {
+			include_once ICMS_ROOT_PATH.'/modules/'.$this->dirname.'/'.$search['file'];
 		} else {
 			return false;
 		}
@@ -406,34 +406,34 @@ class Module
 	 */
 	public function getAdminMenuItems() {
 		$inf = & $this->getInfo();
-		$url = ICMS_MODULES_URL . DIRECTORY_SEPARATOR . $this->dirname . DIRECTORY_SEPARATOR;
+		$url = ICMS_MODULES_URL.DIRECTORY_SEPARATOR.$this->dirname.DIRECTORY_SEPARATOR;
 		$rtn = [
-			'link' => $url . (isset($inf['adminindex'])?$inf['adminindex']:''),
+			'link' => $url.(isset($inf['adminindex']) ? $inf['adminindex'] : ''),
 			'title' => $this->name,
 			'dir' => $this->dirname,
 			'absolute' => 1,
 			'subs' => []
 		];
 		if (isset($inf['iconsmall']) && $inf['iconsmall'] != '') {
-			$rtn['small'] = $url . $inf['iconsmall'];
+			$rtn['small'] = $url.$inf['iconsmall'];
 		}
 		if (isset($inf['iconbig']) && $inf['iconbig'] != '') {
-			$rtn['iconbig'] = $url . $inf['iconbig'];
+			$rtn['iconbig'] = $url.$inf['iconbig'];
 		}
 		$this->loadAdminMenu();
 		if (is_array($this->adminmenu) && count($this->adminmenu) > 0) {
 			foreach ($this->adminmenu as $item) {
-				$item['link'] = $url . $item['link'];
+				$item['link'] = $url.$item['link'];
 				$rtn['subs'][] = $item;
 			}
 		}
 		if ($this->hasconfig || $this->hascomments) {
 			$rtn['subs'][] = [
 				'title' => _PREFERENCES,
-				'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $this->mid
+				'link' => ICMS_URL.'/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod='.$this->mid
 			];
 		}
-		$rtn['hassubs'] = (count($rtn['subs']) > 0)?1:0;
+		$rtn['hassubs'] = (count($rtn['subs']) > 0) ? 1 : 0;
 		if ($rtn['hassubs'] == 0) {
 			unset($rtn['subs']);
 		}
@@ -455,9 +455,9 @@ class Module
 	 */
 	public function setMessage($msg, $title = '', $render = false) {
 		$ret = '<div class="moduleMsg">';
-		if ($title != '') {$ret .= '<h4>' . $title . '</h4>'; }
+		if ($title != '') {$ret .= '<h4>'.$title.'</h4>'; }
 		if (is_array($msg)) {
-			foreach ($msg as $m) {$ret .= $m . '<br />'; }
+			foreach ($msg as $m) {$ret .= $m.'<br />'; }
 		} else {
 			$ret .= $msg;
 		}

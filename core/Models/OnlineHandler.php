@@ -85,7 +85,7 @@ class OnlineHandler extends AbstractExtendedHandler
 	public function write($userId, $userName, $time, $moduleId, $ip) {
 
 		$criteria = new CriteriaCompo();
-		$criteria->add(new CriteriaItem('online_uid', $userId = (int)$userId));
+		$criteria->add(new CriteriaItem('online_uid', $userId = (int) $userId));
 		if (!$userId) {
 			$criteria->add(new CriteriaItem('online_ip', $ip));
 		}
@@ -130,10 +130,10 @@ class OnlineHandler extends AbstractExtendedHandler
 		$moduleHandler = icms::handler('icms_module');
 
 		$result = $this->db->perform('SELECT u.uid uid, u.user_avatar avatar, o.online_ip ip, o.online_updated, m.name module, u.uname
- 				 FROM ' . $this->table . ' o
-				 LEFT JOIN ' . $userHandler->table . ' u ON o.online_uid = u.uid AND o.online_uid != 0
-				 LEFT JOIN ' . $moduleHandler->table . ' m ON o.online_module = m.mid AND o.online_module != 0 AND m.isactive = 1
-				 LIMIT ' . (int)$from . ', ' . (int)$limit);
+ 				 FROM ' . $this->table.' o
+				 LEFT JOIN ' . $userHandler->table.' u ON o.online_uid = u.uid AND o.online_uid != 0
+				 LEFT JOIN ' . $moduleHandler->table.' m ON o.online_module = m.mid AND o.online_module != 0 AND m.isactive = 1
+				 LIMIT ' . (int) $from.', '.(int) $limit);
 
 		if (!$result) {
 			return [];

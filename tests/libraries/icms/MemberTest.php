@@ -30,12 +30,12 @@ class MemberTest extends TestCase {
                 'icms_member_group_membership_Handler' => AbstractExtendedHandler::class,
                 'icms_member_group_membership_Object' => AbstractExtendedModel::class
             ] as $class => $must_be_instance_of) {
-                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
+                $this->assertTrue(class_exists($class, true), $class." class doesn't exist");
             if ($must_be_instance_of !== null) {
                 $instance = $this->getMockBuilder($class)
                     ->disableOriginalConstructor()
                     ->getMock();
-                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' is not instanceof ' . $must_be_instance_of);
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class.' is not instanceof '.$must_be_instance_of);
             }
         }
     }
@@ -120,7 +120,7 @@ class MemberTest extends TestCase {
                     ->disableOriginalConstructor()
                     ->getMock();
             foreach ($methods as $method) {
-                $this->assertTrue(method_exists($instance, $method), $method . ' doesn\'t exists for ' . $class);
+                $this->assertTrue(method_exists($instance, $method), $method.' doesn\'t exists for '.$class);
             }
         }
     }
@@ -139,7 +139,7 @@ class MemberTest extends TestCase {
             ]
         ] as $class => $methods) {
             foreach ($methods as $method) {
-                $this->assertTrue(method_exists($class, $method), $method . ' doesn\'t exists for ' . $class);
+                $this->assertTrue(method_exists($class, $method), $method.' doesn\'t exists for '.$class);
             }
         }
     }

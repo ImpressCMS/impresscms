@@ -100,7 +100,7 @@ class Notification extends AbstractExtendedModel {
 		$method = $user->notify_method;
 
 		$mailer = new MessageSender();
-		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
+		include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
 		switch ($method) {
 			case XOOPS_NOTIFICATION_METHOD_PM:
 				$mailer->usePM();
@@ -135,7 +135,7 @@ class Notification extends AbstractExtendedModel {
 		// If send-once-then-delete, delete notification
 		// If send-once-then-wait, disable notification
 
-		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
+		include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
 		$notification_handler = icms::handler('icms_data_notification');
 
 		if ($this->not_mode == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {

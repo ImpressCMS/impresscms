@@ -39,11 +39,11 @@ class Message {
 	public static function warning($msg, $title = '', $render = false) {
 		$ret = '<div class="warningMsg alert alert-warning" role="alert">';
 		if ($title) {
-			$ret .= '<h4>' . $title . '</h4>';
+			$ret .= '<h4>'.$title.'</h4>';
 		}
 		if (is_array($msg)) {
 			foreach ($msg as $m) {
-				$ret .= $m . '<br />';
+				$ret .= $m.'<br />';
 			}
 		} else {
 			$ret .= $msg;
@@ -68,11 +68,11 @@ class Message {
 	public static function error($msg, $title = '', $render = true) {
 		$ret = '<div class="errorMsg alert alert-danger" role="alert">';
 		if ($title) {
-			$ret .= '<h4>' . $title . '</h4>';
+			$ret .= '<h4>'.$title.'</h4>';
 		}
 		if (is_array($msg)) {
 			foreach ($msg as $m) {
-				$ret .= $m . '<br />';
+				$ret .= $m.'<br />';
 			}
 		} else {
 			$ret .= $msg;
@@ -97,11 +97,11 @@ class Message {
 	public static function result($msg, $title = '') {
 		echo 'div class="resultMsg alert alert-info" role="alert"';
 		if ($title) {
-			echo '<h4>' . $title . '</h4>';
+			echo '<h4>'.$title.'</h4>';
 		}
 		if (is_array($msg)) {
 			foreach ($msg as $m) {
-				echo $m . '<br />';
+				echo $m.'<br />';
 			}
 		} else {
 			echo $msg;
@@ -124,7 +124,7 @@ class Message {
 	 */
 	static public function confirm($hiddens, $action, $msg, $submit = '', $addtoken = true) {
 		$submit = $submit ? trim($submit) : _SUBMIT;
-		$form = new \icms_form_Theme('<div style="text-align: center">' . $msg . '</div>', '', $action, 'post', $addtoken);
+		$form = new \icms_form_Theme('<div style="text-align: center">'.$msg.'</div>', '', $action, 'post', $addtoken);
 		$form->setExtra('class="confirmMsg alert" role="alert"');
 		foreach ($hiddens as $name => $value) {
 			if (is_array($value)) {

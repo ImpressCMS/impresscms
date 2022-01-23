@@ -76,9 +76,9 @@ function imcms_get_base_domain($url) {
 	 domain = D1.D0 else domain = D1.D0 - these rules are simplified below.
 	 */
 	if (in_array($DOMAIN[0], $C_TLD) && in_array($DOMAIN[1], $G_TLD) && $DOMAIN[2] != 'www') {
-		$full_domain = $DOMAIN[2] . '.' . $DOMAIN[1] . '.' . $DOMAIN[0];
+		$full_domain = $DOMAIN[2].'.'.$DOMAIN[1].'.'.$DOMAIN[0];
 	} else {
-		$full_domain = $DOMAIN[1] . '.' . $DOMAIN[0];
+		$full_domain = $DOMAIN[1].'.'.$DOMAIN[0];
 	}
 	// did we succeed?
 	return $full_domain;

@@ -40,14 +40,14 @@ class ConfigSetupStep extends InstallConfigSetupStep
 		}
 
 		// now reinsert them with the new settings
-		$configs = (array)$module->getInfo('config');
+		$configs = (array) $module->getInfo('config');
 		if ($module->hascomments != 0) {
 			$this->includeCommentsConfig($configs);
 		}
 
 		if ($module->hasnotification != 0) {
 			// Main notification options
-			include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
+			include_once ICMS_INCLUDE_PATH.'/notification_constants.php';
 			$options = array(
 				'_NOT_CONFIG_DISABLE' => XOOPS_NOTIFICATION_DISABLE,
 				'_NOT_CONFIG_ENABLEBLOCK' => XOOPS_NOTIFICATION_ENABLEBLOCK,
@@ -76,8 +76,8 @@ class ConfigSetupStep extends InstallConfigSetupStep
 					if (!empty($event['invisible'])) {
 						continue;
 					}
-					$option_name = $category['title'] . ' : ' . $event['title'];
-					$option_value = $category['name'] . '-' . $event['name'];
+					$option_name = $category['title'].' : '.$event['title'];
+					$option_value = $category['name'].'-'.$event['name'];
 					$options[$option_name] = $option_value;
 				}
 			}

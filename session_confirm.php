@@ -38,20 +38,20 @@ if ($old_post) {
 
 	$hidden_str = '';
 	foreach ($old_post as $k => $v) {
-		$hidden_str .= "\t" . '      <input type="hidden" name="' . htmlspecialchars($k, ENT_QUOTES) . '" value="' . htmlspecialchars($v, ENT_QUOTES) . '" />' . "\n";
+		$hidden_str .= "\t".'      <input type="hidden" name="'.htmlspecialchars($k, ENT_QUOTES).'" value="'.htmlspecialchars($v, ENT_QUOTES).'" />'."\n";
 	}
 
 	echo '<html>
 		<head>
-		<meta http-equiv="Content-Type" content="text/html; charset='._CHARSET . '" />
-		<title>'.$icmsConfig['sitename'] . '</title>
+		<meta http-equiv="Content-Type" content="text/html; charset='._CHARSET.'" />
+		<title>'.$icmsConfig['sitename'].'</title>
 		</head>
 		<body>
 		<div style="text-align:center; background-color: #EBEBEB; border-top: 1px solid #FFFFFF; border-left: 1px solid #FFFFFF; border-right: 1px solid #AAAAAA; border-bottom: 1px solid #AAAAAA; font-weight : bold;">
-		  <h4>'._RETRYPOST . '</h4>
-		  <form action="'.$url4disp . '" method="POST">
-		  '.$hidden_str . '
-			<input type="submit" name="timeout_repost" value="'._SUBMIT . '" />
+		  <h4>'._RETRYPOST.'</h4>
+		  <form action="'.$url4disp.'" method="POST">
+		  '.$hidden_str.'
+			<input type="submit" name="timeout_repost" value="'._SUBMIT.'" />
 		  </form>
 		</div>
 		</body>
@@ -66,14 +66,14 @@ if ($old_post) {
 
 	echo '<html>
 		<head>
-		<meta http-equiv="Content-Type" content="text/html; charset='._CHARSET . '" />
-		<meta http-equiv="Refresh" content="'.$time . '; url=' . $url4disp . '" />
-		<title>'.$icmsConfig['sitename'] . '</title>
+		<meta http-equiv="Content-Type" content="text/html; charset='._CHARSET.'" />
+		<meta http-equiv="Refresh" content="'.$time.'; url='.$url4disp.'" />
+		<title>'.$icmsConfig['sitename'].'</title>
 		</head>
 		<body>
 		<div style="text-align:center; background-color: #EBEBEB; border-top: 1px solid #FFFFFF; border-left: 1px solid #FFFFFF; border-right: 1px solid #AAAAAA; border-bottom: 1px solid #AAAAAA; font-weight : bold;">
-		  <h4>'.$message . '</h4>
-		  <p>'.sprintf(_IFNOTRELOAD, $url4disp) . '</p>
+		  <h4>'.$message.'</h4>
+		  <p>'.sprintf(_IFNOTRELOAD, $url4disp).'</p>
 		</div>
 		</body>
 		</html>

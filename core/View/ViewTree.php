@@ -86,7 +86,7 @@ class ViewTree {
 		if (property_exists(__CLASS__, $name)) {
 			return $this->$name;
 		}
-		throw new RuntimeException("You tried to access a property $name that doesn't exist in " . __CLASS__);
+		throw new RuntimeException("You tried to access a property $name that doesn't exist in ".__CLASS__);
 	}
 
 	/**
@@ -98,13 +98,13 @@ class ViewTree {
 	public function getFirstChild($sel_id, $order = '') {
 		$sel_id = (int) $sel_id;
 		$arr = array();
-		$sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';
+		$sql = 'SELECT * FROM '.$this->table.' WHERE '.$this->pid.'="'.$sel_id.'"';
 		if ($order) {
-			$sql .= ' ORDER BY ' . $order;
+			$sql .= ' ORDER BY '.$order;
 		}
 		$result = $this->db->query($sql);
 		$count = $this->db->getRowsNum($result);
-		if ((int)$count === 0) {
+		if ((int) $count === 0) {
 			return $arr;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
@@ -121,9 +121,9 @@ class ViewTree {
 	public function getFirstChildId($sel_id) {
 		$sel_id = (int) $sel_id;
 		$idarray = [];
-		$result = $this->db->query('SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"');
+		$result = $this->db->query('SELECT '.$this->id.' FROM '.$this->table.' WHERE '.$this->pid.'="'.$sel_id.'"');
 		$count = $this->db->getRowsNum($result);
-		if ((int)$count === 0) {
+		if ((int) $count === 0) {
 			return $idarray;
 		}
 		while (list($id) = $this->db->fetchRow($result)) {
@@ -141,13 +141,13 @@ class ViewTree {
 	 */
 	public function getAllChildId($sel_id, $order = '', $idarray = []) {
 		$sel_id = (int) $sel_id;
-		$sql = 'SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';
+		$sql = 'SELECT '.$this->id.' FROM '.$this->table.' WHERE '.$this->pid.'="'.$sel_id.'"';
 		if ($order) {
-			$sql .= ' ORDER BY ' . $order;
+			$sql .= ' ORDER BY '.$order;
 		}
 		$result = $this->db->query($sql);
 		$count = $this->db->getRowsNum($result);
-		if ((int)$count === 0) {
+		if ((int) $count === 0) {
 			return $idarray;
 		}
 		while (list($r_id) = $this->db->fetchRow($result)) {
@@ -166,13 +166,13 @@ class ViewTree {
 	 */
 	public function getAllParentId($sel_id, $order = '', $idarray = []) {
 		$sel_id = (int) $sel_id;
-		$sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"';
+		$sql = 'SELECT '.$this->pid.' FROM '.$this->table.' WHERE '.$this->id.'="'.$sel_id.'"';
 		if ($order) {
-			$sql .= ' ORDER BY ' . $order;
+			$sql .= ' ORDER BY '.$order;
 		}
 		$result = $this->db->query($sql);
 		list($r_id) = $this->db->fetchRow($result);
-		if ((int)$r_id === 0) {
+		if ((int) $r_id === 0) {
 			return $idarray;
 		}
 		$idarray[] = $r_id;
@@ -190,14 +190,14 @@ class ViewTree {
 	 */
 	public function getPathFromId($sel_id, $title, $path = '') {
 		$sel_id = (int) $sel_id;
-		$result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"');
-		if ((int)$this->db->getRowsNum($result) === 0) {
+		$result = $this->db->query('SELECT '.$this->pid.', '.$title.' FROM '.$this->table.' WHERE '.$this->id.'="'.$sel_id.'"');
+		if ((int) $this->db->getRowsNum($result) === 0) {
 			return $path;
 		}
 		list($parentid, $name) = $this->db->fetchRow($result);
 		$name = DataFilter::htmlSpecialChars($name);
-		$path = '/' . $name . $path . '';
-		if ((int)$parentid === 0) {
+		$path = '/'.$name.$path.'';
+		if ((int) $parentid === 0) {
 			return $path;
 		}
 		$path = $this->getPathFromId($parentid, $title, $path);
@@ -217,12 +217,12 @@ class ViewTree {
 		if (empty($sel_name)) {
 			$sel_name = $this->id;
 		}
-		echo "<select name = '" . $sel_name . "'";
+		echo "<select name = '".$sel_name."'";
 		if ($onchange) {
-			echo " onchange='" . $onchange . "'";
+			echo " onchange='".$onchange."'";
 		}
 		echo ">\n";
-		$sql = 'SELECT ' . $this->id . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->pid . "='0'";
+		$sql = 'SELECT '.$this->id.', '.$title.' FROM '.$this->table.' WHERE '.$this->pid."='0'";
 		if ($order) {
 			$sql .= " ORDER BY $order";
 		}
@@ -240,11 +240,11 @@ class ViewTree {
 			$arr = $this->getChildTreeArray($catid, $order);
 			foreach ($arr as $option) {
 				$option['prefix'] = str_replace('.', '--', $option['prefix']);
-				$catpath = $option['prefix'] . '&nbsp;' . DataFilter::htmlSpecialChars($option[$title]);
+				$catpath = $option['prefix'].'&nbsp;'.DataFilter::htmlSpecialChars($option[$title]);
 				if ($option[$this->id] == $preset_id) {
 					$sel = " selected='selected'";
 				}
-				echo "<option value='" . $option[$this->id] . "'$sel>$catpath</option>\n";
+				echo "<option value='".$option[$this->id]."'$sel>$catpath</option>\n";
 				$sel = '';
 			}
 		}
@@ -263,17 +263,17 @@ class ViewTree {
 	 * @return string
 	 */
 	public function getNicePathFromId($sel_id, $title, $funcURL, $path = '', $separator = _BRDCRMB_SEP) {
-		$path = !empty($path)?$separator . $path:$path;
+		$path = !empty($path) ? $separator.$path : $path;
 		$sel_id = (int) $sel_id;
-		$sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"';
+		$sql = 'SELECT '.$this->pid.', '.$title.' FROM '.$this->table.' WHERE '.$this->id.'="'.$sel_id.'"';
 		$result = $this->db->query($sql);
-		if ((int)$this->db->getRowsNum($result) === 0) {
+		if ((int) $this->db->getRowsNum($result) === 0) {
 			return $path;
 		}
 		list($parentid, $name) = $this->db->fetchRow($result);
 		$name = DataFilter::htmlSpecialChars($name);
-		$path = '<a href="' . $funcURL . '&amp;' . $this->id . '=' . $sel_id . '">' . $name . '</a>' . $path . '';
-		if ((int)$parentid === 0) {
+		$path = '<a href="'.$funcURL.'&amp;'.$this->id.'='.$sel_id.'">'.$name.'</a>'.$path.'';
+		if ((int) $parentid === 0) {
 			return $path;
 		}
 		$path = $this->getNicePathFromId($parentid, $title, $funcURL, $path, $separator);
@@ -289,13 +289,13 @@ class ViewTree {
 	 */
 	public function getIdPathFromId($sel_id, $path = '') {
 		$sel_id = (int) $sel_id;
-		$result = $this->db->query('SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '="' . $sel_id . '"');
-		if ((int)$this->db->getRowsNum($result) === 0) {
+		$result = $this->db->query('SELECT '.$this->pid.' FROM '.$this->table.' WHERE '.$this->id.'="'.$sel_id.'"');
+		if ((int) $this->db->getRowsNum($result) === 0) {
 			return $path;
 		}
 		list($parentid) = $this->db->fetchRow($result);
-		$path = '/' . $sel_id . $path . '';
-		if ((int)$parentid === 0) {
+		$path = '/'.$sel_id.$path.'';
+		if ((int) $parentid === 0) {
 			return $path;
 		}
 		$path = $this->getIdPathFromId($parentid, $path);
@@ -310,13 +310,13 @@ class ViewTree {
 	 */
 	public function getAllChild($sel_id = 0, $order = '', $parray = []) {
 		$sel_id = (int) $sel_id;
-		$sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';
+		$sql = 'SELECT * FROM '.$this->table.' WHERE '.$this->pid.'="'.$sel_id.'"';
 		if ($order) {
-			$sql .= ' ORDER BY ' . $order;
+			$sql .= ' ORDER BY '.$order;
 		}
 		$result = $this->db->query($sql);
 		$count = $this->db->getRowsNum($result);
-		if ((int)$count === 0) {
+		if ((int) $count === 0) {
 			return $parray;
 		}
 		while ($row = $this->db->fetchArray($result)) {
@@ -335,17 +335,17 @@ class ViewTree {
 	 */
 	public function getChildTreeArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '') {
 		$sel_id = (int) $sel_id;
-		$sql = 'SELECT * FROM ' . $this->table . ' WHERE ' . $this->pid . '="' . $sel_id . '"';
+		$sql = 'SELECT * FROM '.$this->table.' WHERE '.$this->pid.'="'.$sel_id.'"';
 		if ($order) {
-			$sql .= ' ORDER BY ' . $order;
+			$sql .= ' ORDER BY '.$order;
 		}
 		$result = $this->db->query($sql);
 		$count = $this->db->getRowsNum($result);
-		if ((int)$count === 0) {
+		if ((int) $count === 0) {
 			return $parray;
 		}
 		while ($row = $this->db->fetchArray($result)) {
-			$row['prefix'] = $r_prefix . '.';
+			$row['prefix'] = $r_prefix.'.';
 			$parray[] = $row;
 			$parray = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
 		}

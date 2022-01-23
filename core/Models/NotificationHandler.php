@@ -43,7 +43,7 @@ use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 
-include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
+include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
 
 /**
  * Notification handler class.
@@ -157,7 +157,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 				$notification = & $this->create();
 				$notification->not_modid = $module_id;
 				$notification->not_category = $category;
-				$notification->not_itemid =  $item_id;
+				$notification->not_itemid = $item_id;
 				$notification->not_uid = $user_id;
 				$notification->not_event = $event;
 				$notification->not_mode = $mode;
@@ -274,7 +274,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 		if (!isset($module_id)) {
 			global $icmsModule;
 			$module = & $icmsModule;
-			$module_id = !empty($icmsModule)?$icmsModule->mid:0;
+			$module_id = !empty($icmsModule) ? $icmsModule->mid : 0;
 		} else {
 			$module_handler = icms::handler('icms_module');
 			$module = & $module_handler->get($module_id);
@@ -325,7 +325,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 		$tags = array();
 		if (!empty($not_config)) {
 			if (!empty($not_config['tags_file'])) {
-				$tags_file = ICMS_ROOT_PATH . '/modules/' . $module->dirname . '/' . $not_config['tags_file'];
+				$tags_file = ICMS_ROOT_PATH.'/modules/'.$module->dirname.'/'.$not_config['tags_file'];
 				if (file_exists($tags_file)) {
 					include_once $tags_file;
 					if (!empty($not_config['tags_func'])) {
@@ -338,7 +338,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 			}
 			// RMV-NEW
 			if (!empty($not_config['lookup_file'])) {
-				$lookup_file = ICMS_ROOT_PATH . '/modules/' . $module->dirname . '/' . $not_config['lookup_file'];
+				$lookup_file = ICMS_ROOT_PATH.'/modules/'.$module->dirname.'/'.$not_config['lookup_file'];
 				if (file_exists($lookup_file)) {
 					include_once $lookup_file;
 					if (!empty($not_config['lookup_func'])) {
@@ -351,16 +351,16 @@ class NotificationHandler extends AbstractExtendedHandler {
 			}
 		}
 
-		$tags['X_ITEM_NAME'] = !empty($item_info['name'])?$item_info['name']:'[' . _NOT_ITEMNAMENOTAVAILABLE . ']';
-		$tags['X_ITEM_URL']  = !empty($item_info['url'])?$item_info['url']:'[' . _NOT_ITEMURLNOTAVAILABLE . ']';
-		$tags['X_ITEM_TYPE'] = !empty($category_info['item_name'])?$category_info['title']:'[' . _NOT_ITEMTYPENOTAVAILABLE . ']';
+		$tags['X_ITEM_NAME'] = !empty($item_info['name']) ? $item_info['name'] : '['._NOT_ITEMNAMENOTAVAILABLE.']';
+		$tags['X_ITEM_URL']  = !empty($item_info['url']) ? $item_info['url'] : '['._NOT_ITEMURLNOTAVAILABLE.']';
+		$tags['X_ITEM_TYPE'] = !empty($category_info['item_name']) ? $category_info['title'] : '['._NOT_ITEMTYPENOTAVAILABLE.']';
 		$tags['X_MODULE'] = $module->name;
-		$tags['X_MODULE_URL'] = ICMS_URL . '/modules/' . $module->dirname . '/';
+		$tags['X_MODULE_URL'] = ICMS_URL.'/modules/'.$module->dirname.'/';
 		$tags['X_NOTIFY_CATEGORY'] = $category;
 		$tags['X_NOTIFY_EVENT'] = $event;
 
 		$template_dir = $event_info['mail_template_dir'];
-		$template = $event_info['mail_template'] . '.tpl';
+		$template = $event_info['mail_template'].'.tpl';
 		$subject = $event_info['mail_subject'];
 
 		foreach ($notifications as $notification) {
@@ -368,7 +368,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 				// user-specific tags
 				//$tags['X_UNSUBSCRIBE_URL'] = 'TODO';
 				// TODO: don't show unsubscribe link if it is 'one-time' ??
-				$tags['X_UNSUBSCRIBE_URL'] = ICMS_URL . '/notifications.php';
+				$tags['X_UNSUBSCRIBE_URL'] = ICMS_URL.'/notifications.php';
 				$tags = array_merge($tags, $extra_tags);
 
 				$notification->notifyUser($template_dir, $template, $subject, $tags);
@@ -518,7 +518,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 				return false;
 			}
 		}
-		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
+		include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
 		if (($style == 'block') && ($status == XOOPS_NOTIFICATION_ENABLEBLOCK || $status == XOOPS_NOTIFICATION_ENABLEBOTH)) {
 			return true;
 		}
@@ -540,7 +540,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 	public static function &categoryInfo($category_name = '', $module_id = null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
-			$module_id = !empty($icmsModule)?$icmsModule->mid:0;
+			$module_id = !empty($icmsModule) ? $icmsModule->mid : 0;
 			$module = & $icmsModule;
 		} else {
 			$module_handler = icms::handler('icms_module');
@@ -606,7 +606,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 	public static function &categoryEvents($category_name, $enabled_only, $module_id = null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
-			$module_id = !empty($icmsModule)?$icmsModule->mid:0;
+			$module_id = !empty($icmsModule) ? $icmsModule->mid : 0;
 			$module = & $icmsModule;
 		} else {
 			$module_handler = icms::handler('icms_module');
@@ -626,7 +626,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 
 		foreach ($not_config['event'] as $event) {
 			if ($event['category'] == $category_name) {
-				$event['mail_template_dir'] = ICMS_ROOT_PATH . '/modules/' . $module->dirname . '/language/' . $icmsConfig['language'] . '/mail_template/';
+				$event['mail_template_dir'] = ICMS_ROOT_PATH.'/modules/'.$module->dirname.'/language/'.$icmsConfig['language'].'/mail_template/';
 				if (!$enabled_only || self::eventEnabled($category, $event, $module)) {
 					$event_array[] = $event;
 				}
@@ -649,8 +649,8 @@ class NotificationHandler extends AbstractExtendedHandler {
 		if ($module->hascomments) {
 			$com_config = $module->getInfo('comments');
 			if (!empty($category['item_name']) && $category['item_name'] == $com_config['itemName']) {
-				$mail_template_dir = ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/';
-				include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
+				$mail_template_dir = ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/mail_template/';
+				include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 				$com_config = icms::$config->getConfigsByCat(0, $module_id);
 				if (!$enabled_only) {
 					$insert_comment = true;
@@ -798,7 +798,7 @@ class NotificationHandler extends AbstractExtendedHandler {
 				$sub_categories[] = $category;
 			} else {
 				$item_name = $category['item_name'];
-				$id = ($item_name != '' && isset($_GET[$item_name]))?(int) ($_GET[$item_name]):0;
+				$id = ($item_name != '' && isset($_GET[$item_name])) ? (int) ($_GET[$item_name]) : 0;
 				if ($id > 0) {
 					$category['item_id'] = $id;
 					$sub_categories[] = $category;
@@ -826,11 +826,11 @@ class NotificationHandler extends AbstractExtendedHandler {
 		switch ($type) {
 			case 'option_value':
 			case 'name':
-				return 'notify:' . $category['name'] . '-' . $event['name'];
+				return 'notify:'.$category['name'].'-'.$event['name'];
 				break;
 
 			case 'option_name':
-				return $category['name'] . '-' . $event['name'];
+				return $category['name'].'-'.$event['name'];
 				break;
 
 			default:

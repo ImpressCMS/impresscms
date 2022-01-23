@@ -140,8 +140,8 @@ class RadioElement extends AbstractFormElement {
 		}
 		$value = array();
 		foreach ($this->_options as $val => $name) {
-			$value[$encode? htmlspecialchars($val, ENT_QUOTES, _CHARSET):$val]
-				= ($encode > 1)? htmlspecialchars($name, ENT_QUOTES, _CHARSET):$name;
+			$value[$encode ? htmlspecialchars($val, ENT_QUOTES, _CHARSET) : $val]
+				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES, _CHARSET) : $name;
 		}
 		return $value;
 	}
@@ -153,7 +153,7 @@ class RadioElement extends AbstractFormElement {
 	 * @return	string  The delimiter
 	 */
 	public function getDelimeter($encode = false) {
-		return $encode? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)):$this->_delimeter;
+		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
 	}
 
 	/**
@@ -169,11 +169,11 @@ class RadioElement extends AbstractFormElement {
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
 		foreach ($ele_options as $value => $name) {
-			$ret .= "<input type='radio' name='" . $ele_name . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
-			if ((string)$value === (string)$ele_value) {
+			$ret .= "<input type='radio' name='".$ele_name."' value='".htmlspecialchars($value, ENT_QUOTES, _CHARSET)."'";
+			if ((string) $value === (string) $ele_value) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $ele_extra . ' />' . $name . $ele_delimeter . "\n";
+			$ret .= $ele_extra.' />'.$name.$ele_delimeter."\n";
 		}
 		return $ret;
 	}

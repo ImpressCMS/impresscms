@@ -45,8 +45,8 @@ namespace ImpressCMS\Core\Models;
  */
 class ConfigOptionHandler extends AbstractExtendedHandler {
 
-        public function __construct(&$db) {
-            parent::__construct($db, 'config_option', 'confop_id', 'confop_name', 'confop_value', 'icms', 'configoption', 'confop_id');
-        }
+		public function __construct(&$db) {
+			parent::__construct($db, 'config_option', 'confop_id', 'confop_name', 'confop_value', 'icms', 'configoption', 'confop_id');
+		}
 
 }

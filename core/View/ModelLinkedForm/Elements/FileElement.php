@@ -36,14 +36,14 @@ class FileElement extends \ImpressCMS\Core\View\Form\Elements\FileElement {
 	public function render() {
 		$ret = '';
 		if ($value = $this->_object->getVar($this->_key)) {
-			$ret .= '<div>' . _CO_ICMS_CURRENT_FILE
-				. "<a href='" . $this->_object->getUploadDir() . $value
-				. "' target='_blank' >" . $this->_object->getVar($this->_key) . '</a></div>';
+			$ret .= '<div>'._CO_ICMS_CURRENT_FILE
+				. "<a href='".$this->_object->getUploadDir().$value
+				. "' target='_blank' >".$this->_object->getVar($this->_key).'</a></div>';
 		}
 
-		$ret .= "<div><input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />
-		        <input type='file' name='" . $this->getName() . "' id='" . $this->getName() . "'" . $this->getExtra() . " />
-		        <input type='hidden' name='icms_upload_file[]' id='icms_upload_file[]' value='" . $this->getName() . "' /></div>";
+		$ret .= "<div><input type='hidden' name='MAX_FILE_SIZE' value='".$this->getMaxFileSize()."' />
+		        <input type='file' name='" . $this->getName()."' id='".$this->getName()."'".$this->getExtra()." />
+		        <input type='hidden' name='icms_upload_file[]' id='icms_upload_file[]' value='" . $this->getName()."' /></div>";
 
 		return $ret;
 	}

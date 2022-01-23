@@ -22,7 +22,7 @@ class UndefinedVariableException extends Exception
 	 */
 	public function __construct($variable, $code = 0, Throwable $previous = null)
 	{
-		parent::__construct($variable . ' is not defined but required', $code, $previous);
+		parent::__construct($variable.' is not defined but required', $code, $previous);
 	}
 
 }

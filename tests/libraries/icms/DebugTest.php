@@ -22,8 +22,8 @@ class DebugTest extends TestCase {
      * Checks if all required static methdos are available
      */
     public function testMethodsAvailability() {
-         foreach ([ 'message', 'vardump', 'setDeprecated' ] as $method) {
-             $this->assertTrue(method_exists('icms_core_Debug', $method), $method . ' doesm\'t exists');
+         foreach (['message', 'vardump', 'setDeprecated'] as $method) {
+             $this->assertTrue(method_exists('icms_core_Debug', $method), $method.' doesm\'t exists');
          }
     }
 

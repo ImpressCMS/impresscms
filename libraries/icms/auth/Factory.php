@@ -67,7 +67,7 @@ class icms_auth_Factory {
 				$auth_method = $icmsConfigAuth['auth_method'];
 			}
 
-			$class = 'icms_auth_method_' . ucfirst($auth_method);
+			$class = 'icms_auth_method_'.ucfirst($auth_method);
 			$auth_instance = new $class();
 			return $auth_instance;
 		}

@@ -29,7 +29,7 @@ abstract class DatabaseUtility implements DatabaseUtilityInterface {
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
 
 		if (preg_match($pattern, $query, $matches)) {
-			$replace = "\\1 " . $prefix . "_\\4\\5";
+			$replace = "\\1 ".$prefix."_\\4\\5";
 			$matches [0] = preg_replace($pattern, $replace, $query);
 			$query = $matches [0];
 			if (preg_match('/REFERENCES/', $query) or preg_match('/DROP FOREIGN KEY/', $query)) {
@@ -46,7 +46,7 @@ abstract class DatabaseUtility implements DatabaseUtilityInterface {
 			}
 			return $matches;
 		} elseif (preg_match($pattern2, $query, $matches)) {
-			$replace = "\\1 " . $prefix . "_\\4\\5";
+			$replace = "\\1 ".$prefix."_\\4\\5";
 			$matches [0] = preg_replace($pattern2, $replace, $query);
 
 			return $matches;

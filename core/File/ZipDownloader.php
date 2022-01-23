@@ -66,7 +66,7 @@ class ZipDownloader extends Downloader {
 		$fp = fopen($filepath, 'r');
 		$data = fread($fp, filesize($filepath));
 		fclose($fp);
-		$filename = (isset($newfilename) && trim($newfilename) != '')? trim($newfilename):$filepath;
+		$filename = (isset($newfilename) && trim($newfilename) != '') ? trim($newfilename) : $filepath;
 		$this->archiver->addFile($data, $filename, filemtime($filename));
 	}
 
@@ -81,7 +81,7 @@ class ZipDownloader extends Downloader {
 		$fp = fopen($filepath, 'rb');
 		$data = fread($fp, filesize($filepath));
 		fclose($fp);
-		$filename = (isset($newfilename) && trim($newfilename) != '')? trim($newfilename):$filepath;
+		$filename = (isset($newfilename) && trim($newfilename) != '') ? trim($newfilename) : $filepath;
 		$this->archiver->addFile($data, $filename, filemtime($filename));
 	}
 
@@ -114,7 +114,7 @@ class ZipDownloader extends Downloader {
 	 * @param   bool    $gzip     turn on gzip compression
 	 */
 	public function download($name, $gzip = true) {
-		parent::_header($name . $this->ext);
+		parent::_header($name.$this->ext);
 		echo $this->archiver->file();
 	}
 }

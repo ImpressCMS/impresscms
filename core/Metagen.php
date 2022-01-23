@@ -429,7 +429,7 @@ class Metagen
 	public function createMetaKeywords()
 	{
 		global $icmsModuleConfig;
-		$keywords = $this->findMetaKeywords($this->_original_title . ' ' . $this->_description, $this->_minChar);
+		$keywords = $this->findMetaKeywords($this->_original_title.' '.$this->_description, $this->_minChar);
 		if (isset($icmsModuleConfig, $icmsModuleConfig['moduleMetaKeywords']) && $icmsModuleConfig['moduleMetaKeywords']) {
 			$moduleKeywords = explode(',', $icmsModuleConfig['moduleMetaKeywords']);
 			$keywords = array_merge($keywords, $moduleKeywords);

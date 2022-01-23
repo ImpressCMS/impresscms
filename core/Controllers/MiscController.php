@@ -376,7 +376,7 @@ class MiscController
 		 */
 		$onlineHandler = icms::handler('icms_core_Online');
 
-		$start = isset($data['start']) ? (int)$data['start'] : 0;
+		$start = isset($data['start']) ? (int) $data['start'] : 0;
 		$limit = 20;
 
 		$count = $onlineHandler->getCount();

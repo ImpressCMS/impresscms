@@ -24,11 +24,11 @@ if (!defined('XOOPS_INSTALL')) {
 	exit();
 }
 
-$success = isset($_REQUEST['success'])?trim($_REQUEST['success']):false;
+$success = isset($_REQUEST['success']) ?trim($_REQUEST['success']) : false;
 if ($success) {
 	if (is_dir(__DIR__)) {
 		icms_core_Filesystem::deleteRecursive(__DIR__, true);
-		header('Location: ' . ICMS_URL . '/');
+		header('Location: '.ICMS_URL.'/');
 	}
 	$_SESSION = array();
 }

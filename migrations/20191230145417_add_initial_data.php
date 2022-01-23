@@ -35,7 +35,7 @@ class AddInitialData extends AbstractMigration
 		 */
 		$dbm = icms::getInstance()->get('db-connection-1');
 		$usersTable = $dbm->prefix('users');
-		if ($this->tableExists($usersTable) && ((int)($dbm->fetchCol('SELECT COUNT(*) FROM `' . $usersTable . '`;')[0]) > 0)) {
+		if ($this->tableExists($usersTable) && ((int) ($dbm->fetchCol('SELECT COUNT(*) FROM `'.$usersTable.'`;')[0]) > 0)) {
 			// skipping this migration if at least one user is found
 			return;
 		}
@@ -329,13 +329,13 @@ class AddInitialData extends AbstractMigration
 		]);
 
 		// system modules
-		if (!file_exists(ICMS_MODULES_PATH . '/system/language/' . $language . '/modinfo.php')) {
+		if (!file_exists(ICMS_MODULES_PATH.'/system/language/'.$language.'/modinfo.php')) {
 			$language = 'english';
 		}
-		include ICMS_MODULES_PATH . '/system/language/' . $language . '/modinfo.php';
+		include ICMS_MODULES_PATH.'/system/language/'.$language.'/modinfo.php';
 
 		$modversion = [];
-		include_once ICMS_ROOT_PATH . '/modules/system/icms_version.php';
+		include_once ICMS_ROOT_PATH.'/modules/system/icms_version.php';
 
 		// RMV-NOTIFY (updated for extra column in table)
 		/* do not alter the value for dbversion (the 3rd to last field) - all updates for
@@ -367,7 +367,7 @@ class AddInitialData extends AbstractMigration
 
 		$newtplid = 1;
 		foreach ($modversion['templates'] as $tplfile) {
-			if (file_exists(ICMS_MODULES_PATH . '/system/templates/' . $tplfile['file'])) {
+			if (file_exists(ICMS_MODULES_PATH.'/system/templates/'.$tplfile['file'])) {
 				$this->insertWithPrefix('tplfile', [
 					[
 						'tpl_refid' => 1,
@@ -383,7 +383,7 @@ class AddInitialData extends AbstractMigration
 				$this->insertWithPrefix('tplsource', [
 					[
 						'tpl_id' => $newtplid++,
-						'tpl_source' => file_get_contents(ICMS_MODULES_PATH . '/system/templates/' . $tplfile['file'])
+						'tpl_source' => file_get_contents(ICMS_MODULES_PATH.'/system/templates/'.$tplfile['file'])
 					]
 				]);
 			}
@@ -392,7 +392,7 @@ class AddInitialData extends AbstractMigration
 		$newbid = 0;
 		$newtplid = 0;
 		foreach ($modversion['blocks'] as $func_num => $newblock) {
-			if (file_exists(ICMS_MODULES_PATH . '/system/templates/blocks/' . $newblock['template'])) {
+			if (file_exists(ICMS_MODULES_PATH.'/system/templates/blocks/'.$newblock['template'])) {
 				if (in_array($newblock['template'], ['system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html', 'system_admin_block_warnings.html', 'system_admin_block_cp.html', 'system_admin_block_modules.html', 'system_block_newusers.html', 'system_block_online.html', 'system_block_waiting.html', 'system_block_topusers.html'])) {
 					$visible = 1;
 				} else {
@@ -457,7 +457,7 @@ class AddInitialData extends AbstractMigration
 				$this->insertWithPrefix('tplsource', [
 					[
 						'tpl_id' => ++$newtplid,
-						'tpl_source' => file_get_contents(ICMS_MODULES_PATH . '/system/templates/blocks/' . $newblock['template'])
+						'tpl_source' => file_get_contents(ICMS_MODULES_PATH.'/system/templates/blocks/'.$newblock['template'])
 					]
 				]);
 				$this->insertWithPrefix('group_permission', [
@@ -1897,7 +1897,7 @@ class AddInitialData extends AbstractMigration
 				'conf_catid' => $c,
 				'conf_name' => 'meta_copyright',
 				'conf_title' => '_MD_AM_METACOPYR',
-				'conf_value' => 'Copyright &copy; 2007-' . date('Y', time()),
+				'conf_value' => 'Copyright &copy; 2007-'.date('Y', time()),
 				'conf_desc' => '_MD_AM_METACOPYRDSC',
 				'conf_formtype' => 'textbox',
 				'conf_valuetype' => 'text',
@@ -2679,7 +2679,7 @@ class AddInitialData extends AbstractMigration
 				'conf_catid' => $c,
 				'conf_name' => 'adm_left_logo_url',
 				'conf_title' => '_MD_AM_LLOGOADM_URL',
-				'conf_value' => ICMS_URL . '/',
+				'conf_value' => ICMS_URL.'/',
 				'conf_desc' => '_MD_AM_LLOGOADM_URL_DESC',
 				'conf_formtype' => 'textbox',
 				'conf_valuetype' => 'text',

@@ -274,7 +274,7 @@ class MediaUploader {
 				}
 				$headers = $hdrs;
 				unset($hdrs);
-				if (!isset($headers['http'][1]) || ((int)$headers['http'][1] !== 200)) {
+				if (!isset($headers['http'][1]) || ((int) $headers['http'][1] !== 200)) {
 									return false;
 				}
 				if (!isset($headers['content-type'])) {
@@ -333,7 +333,7 @@ class MediaUploader {
 			$this->mediaType = $_FILES[$media_name]['type'][$index];
 			$this->mediaSize = $_FILES[$media_name]['size'][$index];
 			$this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
-			$this->mediaError = !empty($_FILES[$media_name]['error'][$index])?$_FILES[$media_name]['error'][$index]:0;
+			$this->mediaError = !empty($_FILES[$media_name]['error'][$index]) ? $_FILES[$media_name]['error'][$index] : 0;
 		} else {
 			if (!is_array($media_name)) {
 				$media_name = &$_FILES[$media_name];
@@ -351,7 +351,7 @@ class MediaUploader {
 			}
 		}
 		$this->errors = array();
-		if ((int)($this->mediaSize) < 0) {
+		if ((int) ($this->mediaSize) < 0) {
 			self::setErrors(_ER_UP_INVALIDFILESIZE);
 			return false;
 		}
@@ -419,7 +419,7 @@ class MediaUploader {
 			if (!isset($unique) || (isset($unique) && $unique !== true)) {
 				$this->prefix = (string) trim($value);
 			} elseif (isset($unique) && $unique == true) {
-				$this->prefix = (string) (trim($value)) . '_' . uniqid(rand(0, 32767), true);
+				$this->prefix = (string) (trim($value)).'_'.uniqid(rand(0, 32767), true);
 			}
 		} elseif (!isset($value) || $value == '') {
 			if (!isset($unique) || (isset($unique) && $unique !== true)) {
@@ -531,11 +531,11 @@ class MediaUploader {
 		if (isset($this->targetFileName)) {
 			$this->savedFileName = $this->targetFileName;
 		} elseif (isset($this->prefix) && $this->prefix !== '') {
-			$this->savedFileName = $this->prefix . '.' . strtolower($matched[1]);
+			$this->savedFileName = $this->prefix.'.'.strtolower($matched[1]);
 		} else {
 			$this->savedFileName = strtolower($this->mediaName);
 		}
-		$this->savedDestination = $this->uploadDir . '/' . $this->savedFileName;
+		$this->savedDestination = $this->uploadDir.'/'.$this->savedFileName;
 		if (is_uploaded_file($this->mediaTmpName)) {
 			if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
 				self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
@@ -664,8 +664,8 @@ class MediaUploader {
 		$patterns = array();
 		$replaces = array();
 		foreach ($this->extensionsToBeSanitized as $ext) {
-			$patterns[] = "/\." . preg_quote($ext, '/') . "\./i";
-			$replaces[] = "_" . $ext . ".";
+			$patterns[] = "/\.".preg_quote($ext, '/')."\./i";
+			$replaces[] = "_".$ext.".";
 		}
 		$this->mediaName = preg_replace($patterns, $replaces, $this->mediaName);
 	}
@@ -689,9 +689,9 @@ class MediaUploader {
 		} else {
 			$ret = '';
 			if (count($this->errors) > 0) {
-				$ret = '<h4>' . _ER_UP_ERRORSRETURNED . '</h4>';
+				$ret = '<h4>'._ER_UP_ERRORSRETURNED.'</h4>';
 				foreach ($this->errors as $error) {
-					$ret .= $error . '<br />';
+					$ret .= $error.'<br />';
 				}
 			}
 			return $ret;

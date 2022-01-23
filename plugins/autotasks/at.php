@@ -22,7 +22,7 @@ class IcmsAutoTasksAt extends icms_sys_autotasks_System {
 		if (!isset($_SERVER['COMSPEC']) && (!isset($_SERVER['ComSpec']))) {
 			return false;
 		}
-		return isset($_SERVER['COMSPEC'])?file_exists($_SERVER['COMSPEC']):file_exists($_SERVER['ComSpec']);
+		return isset($_SERVER['COMSPEC']) ?file_exists($_SERVER['COMSPEC']) : file_exists($_SERVER['ComSpec']);
 	}
 
 	/*
@@ -34,7 +34,7 @@ class IcmsAutoTasksAt extends icms_sys_autotasks_System {
 		if ($this->isEnabled()) {
 			$this->stop();
 		}
-		$rez = shell_exec('at ' . date('H:i', time() + $interval * 60 + 10) . ' ' . $this->getCommandLine());
+		$rez = shell_exec('at '.date('H:i', time() + $interval * 60 + 10).' '.$this->getCommandLine());
 		return (substr($rez, 0, 5) == 'Added');
 	}
 
@@ -47,7 +47,7 @@ class IcmsAutoTasksAt extends icms_sys_autotasks_System {
 		if ($id < 0) {
 			return false;
 		}
-		$rez = shell_exec('at ' . $id . ' /DELETE');
+		$rez = shell_exec('at '.$id.' /DELETE');
 		return true;
 	}
 
@@ -72,7 +72,7 @@ class IcmsAutoTasksAt extends icms_sys_autotasks_System {
 				$config_atasks['autotasks_helper_path'] .= '\\';
 			}
 		}
-		return (isset($_SERVER['COMSPEC'])?$_SERVER['COMSPEC']:$_SERVER['ComSpec']) . ' /C ' . str_replace(array('\\/', '/\\', '/'), array('/', '\\', '\\'), '"' . $config_atasks['autotasks_helper_path'] . str_replace(array('%path%', '%url%'), array(str_replace('/', '\\', ICMS_ROOT_PATH . '/include/autotasks.php'), ICMS_URL . '/include/autotasks.php'), $config_atasks['autotasks_helper']) . ' > NUL"');
+		return (isset($_SERVER['COMSPEC']) ? $_SERVER['COMSPEC'] : $_SERVER['ComSpec']).' /C '.str_replace(array('\\/', '/\\', '/'), array('/', '\\', '\\'), '"'.$config_atasks['autotasks_helper_path'].str_replace(array('%path%', '%url%'), array(str_replace('/', '\\', ICMS_ROOT_PATH.'/include/autotasks.php'), ICMS_URL.'/include/autotasks.php'), $config_atasks['autotasks_helper']).' > NUL"');
 	}
 
 	/*
@@ -98,7 +98,7 @@ class IcmsAutoTasksAt extends icms_sys_autotasks_System {
 		for ($i = 2; $i < $count[0]; $i++) {
 			$id		= (int) trim(substr($rez[$i], $pos[1], $pos[2] - $pos[1]));
 			$cmd	= str_replace(array('\\/', '/\\'), array('\\', '\\'), substr($rez[$i], $pos[$count[1] - 1]));
-			if ($cmd == '"' . $cmd_to_find . '"') {
+			if ($cmd == '"'.$cmd_to_find.'"') {
 				return $id;
 			}
 			if ($cmd == $cmd_to_find) {

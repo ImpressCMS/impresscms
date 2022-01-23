@@ -13,6 +13,6 @@ if (!defined('_CM_DOSMILEY')) {
 	icms_loadLanguageFile('core', 'comment');
 }
 
-$value = $default != 'notdefined'?$default:true;
+$value = $default != 'notdefined' ? $default : true;
 $this->initVar($varname, \ImpressCMS\Core\Properties\AbstractProperties::DTYPE_INTEGER, $value, false, null, "", false, _CM_DOSMILEY, '', false, true, $displayOnForm);
 $this->setControl($varname, 'yesno');

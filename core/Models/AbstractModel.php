@@ -88,7 +88,7 @@ class AbstractModel extends AbstractProperties {
 	public static function __callStatic($name, $arguments)
 	{
 		static $handlerInstance = null;
-		if ($handlerInstance === null && class_exists($handlerClass = static::class . 'Handler')) {
+		if ($handlerInstance === null && class_exists($handlerClass = static::class.'Handler')) {
 			$handlerInstance = new $handlerClass(
 				icms::getInstance()->get('xoopsDB')
 			);
@@ -257,7 +257,7 @@ class AbstractModel extends AbstractProperties {
 			}
 		} else {
 			if ($prefix) {
-				$err_str = '[' . $prefix . '] ' . $err_str;
+				$err_str = '['.$prefix.'] '.$err_str;
 			}
 			$this->_errors[] = trim($err_str);
 		}
@@ -270,9 +270,9 @@ class AbstractModel extends AbstractProperties {
 	 * @access public
 	 */
 	public function getHtmlErrors() {
-		$ret = '<h4>' . _ERROR . '</h4>';
+		$ret = '<h4>'._ERROR.'</h4>';
 		if (empty($this->_errors)) {
-			$ret .= _NONE . '<br />';
+			$ret .= _NONE.'<br />';
 		} else {
 			$ret .= implode('<br />', $this->_errors);
 		}

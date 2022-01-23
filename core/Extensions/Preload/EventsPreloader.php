@@ -57,9 +57,9 @@ class EventsPreloader {
 	public function addPreloadEvents($filename, $module = false)
 	{
 		if ($module) {
-			$filepath = ICMS_ROOT_PATH . "/modules/$module/preload/$filename.php";
+			$filepath = ICMS_ROOT_PATH."/modules/$module/preload/$filename.php";
 		} else {
-			$filepath = ICMS_PRELOAD_PATH . "/$filename.php";
+			$filepath = ICMS_PRELOAD_PATH."/$filename.php";
 		}
 		include_once $filepath;
 
@@ -154,7 +154,7 @@ class EventsPreloader {
 	 * @return	string name of the class
 	 */
 	public function getClassName($filename) {
-		return 'IcmsPreload' . ucfirst(str_replace('.php', '', $filename));
+		return 'IcmsPreload'.ucfirst(str_replace('.php', '', $filename));
 	}
 
 }

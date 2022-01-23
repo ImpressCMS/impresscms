@@ -72,7 +72,7 @@ class Simplerss extends SimplePie {
 
 		if (env('LOGGING_ENABLED', false)) {
 			$options[CURLOPT_VERBOSE] = true;
-			$options[CURLOPT_STDERR] = fopen(ICMS_LOGGING_PATH . '/curl.log', 'w+');
+			$options[CURLOPT_STDERR] = fopen(ICMS_LOGGING_PATH.'/curl.log', 'w+');
 		}
 
 		return $options;

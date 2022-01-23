@@ -25,7 +25,7 @@ class PreloadServiceProvider extends AbstractServiceProvider implements Bootable
 	 */
 	public function boot()
 	{
-		$this->getContainer()->add(PreloadHandler::class, function () {
+		$this->getContainer()->add(PreloadHandler::class, function() {
 			$preload = PreloadHandler::getInstance();
 			$preload->triggerEvent('startCoreBoot');
 			return $preload;

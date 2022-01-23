@@ -124,7 +124,7 @@ if (!function_exists('icms_cp_footer')) {
 if (!function_exists('themecenterposts')) {
 	function themecenterposts($title, $content)
 	{
-		echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $title . '</td></tr><tr><td><br />' . $content . '<br /></td></tr></table>';
+		echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'.$title.'</td></tr><tr><td><br />'.$content.'<br /></td></tr></table>';
 	}
 }
 
@@ -147,22 +147,22 @@ if (!function_exists('impresscms_get_adminmenu')) {
 				'link' => '#',
 				'menu' => [
 					[
-						'link' => ICMS_URL . '/admin.php',
+						'link' => ICMS_URL.'/admin.php',
 						'title' => _CPHOME,
 						'absolute' => 1,
-						'small' => ICMS_URL . '/modules/system/images/mini_cp.png',
+						'small' => ICMS_URL.'/modules/system/images/mini_cp.png',
 					],
 					[
 						'link' => ICMS_URL,
 						'title' => _YOURHOME,
 						'absolute' => 1,
-						'small' => ICMS_URL . '/modules/system/images/home.png',
+						'small' => ICMS_URL.'/modules/system/images/home.png',
 					],
 					[
-						'link' => ICMS_URL . '/user.php?op=logout',
+						'link' => ICMS_URL.'/user.php?op=logout',
 						'title' => _LOGOUT,
 						'absolute' => 1,
-						'small' => ICMS_URL . '/modules/system/images/logout.png',
+						'small' => ICMS_URL.'/modules/system/images/logout.png',
 					]
 				],
 			]
@@ -185,7 +185,7 @@ if (!function_exists('impresscms_get_adminmenu')) {
 		$admin_menu[] = array(
 			'id' => 'opsystem',
 			'text' => _SYSTEM,
-			'link' => ICMS_URL . '/modules/system/admin.php',
+			'link' => ICMS_URL.'/modules/system/admin.php',
 			'menu' => $menu,
 		);
 		#########################################################################
@@ -195,7 +195,7 @@ if (!function_exists('impresscms_get_adminmenu')) {
 		$admin_menu[] = [
 			'id' => 'modules',
 			'text' => _MODULES,
-			'link' => ICMS_URL . '/modules/system/admin.php?fct=modules',
+			'link' => ICMS_URL.'/modules/system/admin.php?fct=modules',
 			'menu' => $module_handler->getAdminMenuItems()
 		];
 
@@ -249,7 +249,7 @@ if (!function_exists('impresscms_get_adminmenu')) {
                             ],
                 */
 				[
-					'link' => ICMS_URL . '/admin.php?rssnews=1',
+					'link' => ICMS_URL.'/admin.php?rssnews=1',
 					'title' => _IMPRESSCMS_NEWS,
 					'absolute' => 1,
 					//'small' => ICMS_URL . '/images/impresscms.png',
@@ -294,7 +294,7 @@ if (!function_exists('xoops_module_write_admin_menu')) {
 		global $icmsConfig;
 
 		$cache = icms::getInstance()->get('cache');
-		$item = $cache->getItem('adminmenu-' . $icmsConfig['language']);
+		$item = $cache->getItem('adminmenu-'.$icmsConfig['language']);
 		$item->set($content);
 		return $cache->save($item);
 	}

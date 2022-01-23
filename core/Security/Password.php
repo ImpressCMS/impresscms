@@ -80,7 +80,7 @@ final class Password {
 			->getGenerator(
 				new Strength(Strength::MEDIUM)
 			)
-			->generateString($slength,'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+			->generateString($slength, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 	}
 
 	/**
@@ -242,7 +242,7 @@ final class Password {
 
 		$salt = self::createSalt();
 		$iterations = 5000;
-		$enc_type = (isset($icmsConfigUser['enc_type']) ? (int)$icmsConfigUser['enc_type'] : 23);
+		$enc_type = (isset($icmsConfigUser['enc_type']) ? (int) $icmsConfigUser['enc_type'] : 23);
 
 		return self::_encryptPassword($pass, $salt, $enc_type, $iterations);
 	}
@@ -259,11 +259,11 @@ final class Password {
 	 */
 	private function _encryptPassword($pass, $salt, $enc_type, $iterations) {
 		if ($enc_type == 20) {
-			return '$' . $enc_type . '$20$' . md5($pass); // this should never be used. should be removed???
+			return '$'.$enc_type.'$20$'.md5($pass); // this should never be used. should be removed???
 		} else {
-			$hash = '$' . $enc_type . '$' . $iterations . '$' . $salt . '-' . self::_rehash(
-				self::_rehash($salt, $iterations) .
-				self::_rehash($pass, $iterations) .
+			$hash = '$'.$enc_type.'$'.$iterations.'$'.$salt.'-'.self::_rehash(
+				self::_rehash($salt, $iterations).
+				self::_rehash($pass, $iterations).
 				self::_rehash($this->mainSalt, $iterations),
 										$iterations, $enc_type);
 
@@ -305,7 +305,7 @@ final class Password {
 								);
 
 		for ($i = 0; $i < $iterations; ++$i) {
-			$hashed = hash($type['encType'][$enc_type], $hash . $hash);
+			$hashed = hash($type['encType'][$enc_type], $hash.$hash);
 		}
 
 		return $hashed;
@@ -409,7 +409,7 @@ final class Password {
 		if ($enc_type == 0) {
 			return md5($pass);
 		} else {
-			$pass = $salt . md5($pass) . $this->mainSalt;
+			$pass = $salt.md5($pass).$this->mainSalt;
 
 			$type = array();
 			$type['encType'] = array(

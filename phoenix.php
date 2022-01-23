@@ -8,7 +8,7 @@ use ImpressCMS\Core\Models\ModuleHandler;
 
 define('ICMS_MIGRATION_MODE', true);
 
-require_once __DIR__ . '/mainfile.php';
+require_once __DIR__.'/mainfile.php';
 
 /**
  * @var icms_db_Connection $databaseConnection
@@ -21,23 +21,23 @@ $databaseConnection = icms::getInstance()->get('db-connection-1');
  */
 $modulesMigrations = [];
 foreach (ModuleHandler::getAvailable() as $dirName) {
-	$path = ICMS_MODULES_PATH . DIRECTORY_SEPARATOR . $dirName . DIRECTORY_SEPARATOR . 'migrations';
+	$path = ICMS_MODULES_PATH.DIRECTORY_SEPARATOR.$dirName.DIRECTORY_SEPARATOR.'migrations';
 	if (!file_exists($path) || !is_dir($path)) {
 		continue;
 	}
-	$modulesMigrations['module/' . $dirName] = $path;
+	$modulesMigrations['module/'.$dirName] = $path;
 }
 
 return [
 	'log_table_name' => $databaseConnection->prefix('migrations'),
 	'migration_dirs' => [
-		 'core' => __DIR__ . '/migrations',
+		 'core' => __DIR__.'/migrations',
 	] + $modulesMigrations,
 	'environments' => [
 		'local' => [
 			'adapter' => str_replace('pdo.', '', env('DB_TYPE', 'mysql')),
 			'host' => env('DB_HOST', '127.0.0.1'),
-			'port' => (int)env('DB_PORT', 3306),
+			'port' => (int) env('DB_PORT', 3306),
 			'username' => env('DB_USER'),
 			'password' => env('DB_PASS'),
 			'db_name' => env('DB_NAME', 'impresscms'),

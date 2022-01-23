@@ -40,13 +40,13 @@ class StopSpammer {
 	public function checkForField($field, $value) {
 		$spam = false;
 
-		$url = $this->api_url . $field . '=' . urlencode($value);
+		$url = $this->api_url.$field.'='.urlencode($value);
 		if (!ini_get('allow_url_fopen')) {
 			$output = '';
 			$ch = curl_init();
 			if (!curl_setopt($ch, CURLOPT_URL, "$url")) {
-				Debug::message($this->api_url . $field . '=' . $value);
-				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
+				Debug::message($this->api_url.$field.'='.$value);
+				echo "<script> alert('"._US_SERVER_PROBLEM_OCCURRED."'); window.history.go(-1); </script>\n";
 			}
 			curl_setopt($ch, CURLOPT_URL, "$url");
 			curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -60,8 +60,8 @@ class StopSpammer {
 		} else {
 			$file = fopen($url, "r");
 			if (!$file) {
-				Debug::message($this->api_url . $field . '=' . $value);
-				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
+				Debug::message($this->api_url.$field.'='.$value);
+				echo "<script> alert('"._US_SERVER_PROBLEM_OCCURRED."'); window.history.go(-1); </script>\n";
 			}
 			while (!feof($file)) {
 				$line = fgets($file, 1024);

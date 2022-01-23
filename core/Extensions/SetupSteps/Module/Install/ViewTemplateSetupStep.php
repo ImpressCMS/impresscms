@@ -75,7 +75,7 @@ class ViewTemplateSetupStep implements SetupStepInterface
 	protected function readTemplate(string $dirname, string $filename): string
 	{
 		$ret = '';
-		$file = ICMS_MODULES_PATH . '/' . $dirname . '/templates/' . $filename;
+		$file = ICMS_MODULES_PATH.'/'.$dirname.'/templates/'.$filename;
 		if (!file_exists($file)) {
 			return $ret;
 		}

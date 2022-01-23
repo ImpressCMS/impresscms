@@ -25,8 +25,8 @@ class PageElement extends TrayElement {
 	 */
 	public function __construct($object, $key) {
 		icms_loadLanguageFile('system', 'blocks', true);
-		parent::__construct(_AM_VISIBLEIN, ' ', $key . '_visiblein_tray');
-		$visible_label = new LabelElement('', '<select class="form-control" name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->getVar('visiblein')) . '</select>');
+		parent::__construct(_AM_VISIBLEIN, ' ', $key.'_visiblein_tray');
+		$visible_label = new LabelElement('', '<select class="form-control" name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">'.$this->getPageSelOptions($object->getVar('visiblein')).'</select>');
 		$this->addElement($visible_label);
 	}
 
@@ -47,22 +47,22 @@ class PageElement extends TrayElement {
 		$module_list = $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module) {
-			$mods .= '<optgroup label="' . $module->getVar('name') . '">';
+			$mods .= '<optgroup label="'.$module->getVar('name').'">';
 			$criteria = new CriteriaCompo(new CriteriaItem('page_moduleid', $module->getVar('mid')));
 			$criteria->add(new CriteriaItem('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$sel = '';
-			if (in_array($module->mid . '-0', $value)) {
+			if (in_array($module->mid.'-0', $value)) {
 				$sel = ' selected=selected';
 			}
-			$mods .= '<option value="' . $module->mid . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
+			$mods .= '<option value="'.$module->mid.'-0"'.$sel.'>'._AM_ALLPAGES.'</option>';
 			foreach ($pages as $page) {
 				$sel = '';
-				if (in_array($module->mid . '-' . $page->page_id, $value)) {
+				if (in_array($module->mid.'-'.$page->page_id, $value)) {
 					$sel = ' selected=selected';
 				}
-				$mods .= '<option value="' . $module->mid . '-' . $page->page_id . '"' . $sel . '>';
-				$mods .= $page->page_title . '</option>';
+				$mods .= '<option value="'.$module->mid.'-'.$page->page_id.'"'.$sel.'>';
+				$mods .= $page->page_title.'</option>';
 			}
 			$mods .= '</optgroup>';
 		}
@@ -73,19 +73,19 @@ class PageElement extends TrayElement {
 		$pages = $icms_page_handler->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0) {
-			$cont = '<optgroup label="' . $module->name . '">';
+			$cont = '<optgroup label="'.$module->name.'">';
 			$sel = '';
-			if (in_array($module->mid . '-0', $value)) {
+			if (in_array($module->mid.'-0', $value)) {
 				$sel = ' selected=selected';
 			}
-			$cont .= '<option value="' . $module->mid . '-0"' . $sel . '>' . _AM_ALLPAGES . '</option>';
+			$cont .= '<option value="'.$module->mid.'-0"'.$sel.'>'._AM_ALLPAGES.'</option>';
 			foreach ($pages as $page) {
 				$sel = '';
-				if (in_array($module->mid . '-' . $page->page_id, $value)) {
+				if (in_array($module->mid.'-'.$page->page_id, $value)) {
 					$sel = ' selected=selected';
 				}
-				$cont .= '<option value="' . $module->mid . '-' . $page->page_id . '"' . $sel . '>';
-				$cont .= $page->page_title . '</option>';
+				$cont .= '<option value="'.$module->mid.'-'.$page->page_id.'"'.$sel.'>';
+				$cont .= $page->page_title.'</option>';
 			}
 			$cont .= '</optgroup>';
 		}
@@ -96,9 +96,9 @@ class PageElement extends TrayElement {
 		if (in_array('0-0', $value, false)) {
 			$sel1 = ' selected=selected';
 		}
-		$ret = '<option value="0-1"' . $sel . '>' . _AM_TOPPAGE . '</option>';
-		$ret .= '<option value="0-0"' . $sel1 . '>' . _AM_ALLPAGES . '</option>';
-		$ret .= $cont . $mods;
+		$ret = '<option value="0-1"'.$sel.'>'._AM_TOPPAGE.'</option>';
+		$ret .= '<option value="0-0"'.$sel1.'>'._AM_ALLPAGES.'</option>';
+		$ret .= $cont.$mods;
 
 		return $ret;
 	}

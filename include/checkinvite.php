@@ -47,7 +47,7 @@ function load_invite_code($code) {
 	}
 	// update view time
 	$sql = sprintf(
-		'UPDATE ' . icms::$xoopsDB->prefix('invites') . ' SET view_date = %d WHERE invite_code = %s AND register_id = 0',
+		'UPDATE '.icms::$xoopsDB->prefix('invites').' SET view_date = %d WHERE invite_code = %s AND register_id = 0',
 		time(), icms::$xoopsDB->quoteString(addslashes($code))
 	);
 	$result = icms::$xoopsDB->queryF($sql);
@@ -86,7 +86,7 @@ function check_invite_code($code) {
 function update_invite_code($code, $new_id) {
 	// update register_id
 	$sql = sprintf(
-		'UPDATE ' . icms::$xoopsDB->prefix('invites') . ' SET register_id = %d WHERE invite_code = %s AND register_id = 0',
+		'UPDATE '.icms::$xoopsDB->prefix('invites').' SET register_id = %d WHERE invite_code = %s AND register_id = 0',
 		$new_id, icms::$xoopsDB->quoteString(addslashes($code))
 	);
 	$result = icms::$xoopsDB->query($sql);

@@ -112,7 +112,7 @@ class TextElement extends AbstractFormElement {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
+		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET) : $this->_value;
 	}
 
 	/**
@@ -130,11 +130,11 @@ class TextElement extends AbstractFormElement {
 	 * @return	string  HTML
 	 */
 	public function render() {
-		return "<input class='form-control' type='text' name='" . $this->getName()
-			. "' id='" . $this->getName()
-			. "' size='" . $this->getSize()
-			. "' maxlength='" . $this->getMaxlength()
-			. "' value='" . $this->getValue() . "'" . $this->getExtra()
+		return "<input class='form-control' type='text' name='".$this->getName()
+			. "' id='".$this->getName()
+			. "' size='".$this->getSize()
+			. "' maxlength='".$this->getMaxlength()
+			. "' value='".$this->getValue()."'".$this->getExtra()
 			. ' />';
 	}
 }

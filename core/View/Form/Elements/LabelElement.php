@@ -70,7 +70,7 @@ class LabelElement extends AbstractFormElement {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET):$this->_value;
+		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES, _CHARSET) : $this->_value;
 	}
 
 	/**

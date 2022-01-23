@@ -28,23 +28,23 @@ switch ($op) {
 		include 'header.php';
 		$stop = '';
 		if (!icms::$security->check()) {
-			$stop .= implode('<br />', icms::$security->getErrors()) . "<br />";
+			$stop .= implode('<br />', icms::$security->getErrors())."<br />";
 		}
 		$icmsCaptcha = icms_form_elements_captcha_Object::instance();
 		if (!$icmsCaptcha->verify()) {
-			$stop .= $icmsCaptcha->getMessage() . '<br />';
+			$stop .= $icmsCaptcha->getMessage().'<br />';
 
 		}
 		if (!checkEmail($email)) {
-			$stop .= _US_INVALIDMAIL . '<br />';
+			$stop .= _US_INVALIDMAIL.'<br />';
 		}
 		if (empty($stop)) {
 			$invite_code = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
-			$sql = sprintf('INSERT INTO ' . icms::$xoopsDB->prefix('invites') . '
+			$sql = sprintf('INSERT INTO '.icms::$xoopsDB->prefix('invites').'
 							(invite_code, from_id, invite_to, invite_date, extra_info) VALUES
 							(%s, %d, %s, %d, %s)',
 							icms::$xoopsDB->quoteString(addslashes($invite_code)),
-							is_object(icms::$user)? icms::$user->uid:0,
+							is_object(icms::$user) ? icms::$user->uid : 0,
 							icms::$xoopsDB->quoteString(addslashes($email)),
 							time(),
 							icms::$xoopsDB->quoteString(addslashes(serialize(array())))
@@ -57,9 +57,9 @@ switch ($op) {
 				$mailer->setTemplate('invite.tpl');
 				$mailer->assign('SITENAME', $icmsConfig['sitename']);
 				$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-				$mailer->assign('SITEURL', ICMS_URL . "/");
+				$mailer->assign('SITEURL', ICMS_URL."/");
 				$mailer->assign('USEREMAIL', $email);
-				$mailer->assign('REGISTERLINK', ICMS_URL . '/register.php?code=' . $invite_code);
+				$mailer->assign('REGISTERLINK', ICMS_URL.'/register.php?code='.$invite_code);
 				$mailer->setToEmails($email);
 				$mailer->setFromEmail($icmsConfig['adminmail']);
 				$mailer->setFromName($icmsConfig['sitename']);

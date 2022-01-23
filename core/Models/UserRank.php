@@ -52,7 +52,7 @@ class UserRank extends AbstractExtendedModel {
 	 * @return	string
 	 */
 	public function getCloneLink() {
-		return '<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=userrank&amp;op=clone&amp;rank_id=' . $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' . _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
+		return '<a href="'.ICMS_MODULES_URL.'/system/admin.php?fct=userrank&amp;op=clone&amp;rank_id='.$this->id().'"><img src="'.ICMS_IMAGES_SET_URL.'/actions/editcopy.png" style="vertical-align: middle;" alt="'._CO_ICMS_CUSTOMTAG_CLONE.'" title="'._CO_ICMS_CUSTOMTAG_CLONE.'" /></a>';
 	}
 
 	/**
@@ -60,7 +60,7 @@ class UserRank extends AbstractExtendedModel {
 	 * @return string
 	 */
 	public function getRankPicture() {
-		$ret = '<img src="' . $this->handler->getImageUrl() . $this->rank_image . '" />';
+		$ret = '<img src="'.$this->handler->getImageUrl().$this->rank_image.'" />';
 		return $ret;
 	}
 

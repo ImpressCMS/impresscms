@@ -25,7 +25,7 @@ class DataPageSetupStep implements SetupStepInterface
 		$criteria = new CriteriaCompo(
 			new CriteriaItem('page_moduleid', $module->getVar('mid'))
 		);
-		$pages = (int)$page_handler->getCount($criteria);
+		$pages = (int) $page_handler->getCount($criteria);
 		if ($pages === 0) {
 			return true;
 		}

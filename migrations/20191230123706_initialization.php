@@ -19,8 +19,8 @@ class Initialization extends AbstractMigration
 	/**
 	 * Does actions when migrating up
 	 */
-    protected function up(): void
-    {
+	protected function up(): void
+	{
 
 		if (!$this->tableExists($this->prefix('avatar'))) {
 			$this->table($this->prefix('avatar'), 'avatar_id')
@@ -622,14 +622,14 @@ class Initialization extends AbstractMigration
 		}
 
 
-    }
+	}
 
 	/**
 	 * Executes when migration goes down
 	 */
-    protected function down(): void
-    {
-    	foreach ([
+	protected function down(): void
+	{
+		foreach ([
 					 'avatar',
 					 'avatar_user_link',
 					 'block_module_link',
@@ -669,12 +669,12 @@ class Initialization extends AbstractMigration
 					 'xoopscomments',
 					 'xoopsnotifications'
 				 ] as $table) {
-    		$prefixedTable = $this->prefix($table);
+			$prefixedTable = $this->prefix($table);
 			if (!$this->tableExists($prefixedTable)) {
 				continue;
 			}
 			$this->table($prefixedTable)
 				->drop();
 		}
-    }
+	}
 }

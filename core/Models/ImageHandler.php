@@ -144,7 +144,7 @@ class ImageHandler extends AbstractExtendedHandler
 	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false, $sql = false, $debug = false)
 	{
 		if ($getbinary) {
-			$this->generalSQL = 'SELECT i.*, b.image_body FROM ' . $this->table . ' i LEFT JOIN ' . $this->imagebody_handler->table . ' b ON b.image_id=i.image_id';
+			$this->generalSQL = 'SELECT i.*, b.image_body FROM '.$this->table.' i LEFT JOIN '.$this->imagebody_handler->table.' b ON b.image_id=i.image_id';
 		} else {
 			$this->generalSQL = '';
 		}
@@ -176,11 +176,11 @@ class ImageHandler extends AbstractExtendedHandler
 		$criteria = new CriteriaCompo();
 		if ($imgcat_id !== null) {
 			$criteria->add(
-				new CriteriaItem('imgcat_id', (int)($imgcat_id))
+				new CriteriaItem('imgcat_id', (int) ($imgcat_id))
 			);
 		}
 		if ($image_display) {
-			$criteria->add(new CriteriaItem('image_display', (int)($image_display)));
+			$criteria->add(new CriteriaItem('image_display', (int) ($image_display)));
 		}
 		$images = &$this->getObjects($criteria, false, true, false, true);
 		$ret = array();

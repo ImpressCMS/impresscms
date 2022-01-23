@@ -30,7 +30,7 @@ class LegacyController
 	 */
 	public function proxy(ServerRequestInterface $request): ResponseInterface
 	{
-		$path = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $request->getUri()->getPath();
+		$path = ICMS_ROOT_PATH.DIRECTORY_SEPARATOR.$request->getUri()->getPath();
 
 		if (is_dir($path)) {
 			$path .= '/index.php';
@@ -66,7 +66,7 @@ class LegacyController
 				 * @var Filesystem $modulesFs
 				 */
 				$modulesFs = icms::getInstance()->get('filesystem.modules');
-				foreach ((array)$modulesFs->listContents(icms::$module->dirname . '/language/english/', true) as $file) {
+				foreach ((array) $modulesFs->listContents(icms::$module->dirname.'/language/english/', true) as $file) {
 					if (!($file instanceof FileAttributes)) {
 						continue;
 					}
@@ -82,12 +82,12 @@ class LegacyController
 
 			require $path;
 			$headers = [];
-			foreach(headers_list() as $header) {
+			foreach (headers_list() as $header) {
 				[$headerName, $headerValue] = explode(':', $header, 2);
 				$headerName = strtolower(trim($headerName));
 				$headerValue = trim($headerValue);
 				if ((strtolower($headerName) === 'location') && !filter_var($headerValue, FILTER_VALIDATE_URL) && $headerValue[0] !== '/') {
-					$headerValue = ICMS_URL . dirname($request->getUri()->getPath()) . '/' . $headerValue;
+					$headerValue = ICMS_URL.dirname($request->getUri()->getPath()).'/'.$headerValue;
 				}
 				$headers[$headerName] = $headerValue;
 			}
@@ -105,7 +105,7 @@ class LegacyController
 				'Content-Type' => mimetype_from_filename($path),
 				'Content-Length' => filesize($path),
 				'E-Tag' => sprintf('"%s"', sha1_file($path)),
-				'Last-Modified' => gmdate('D, d M Y H:i:s ', filemtime($path)) . 'GMT'
+				'Last-Modified' => gmdate('D, d M Y H:i:s ', filemtime($path)).'GMT'
 			],
 			fopen($path, 'rb')
 		);

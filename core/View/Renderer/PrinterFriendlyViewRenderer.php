@@ -57,7 +57,7 @@ class PrinterFriendlyViewRenderer {
 
 		$this->_tpl = new Template();
 
-		$this->_tpl->assign('icms_print_pageTitle', $this->_pageTitle?:$this->_title);
+		$this->_tpl->assign('icms_print_pageTitle', $this->_pageTitle ?: $this->_title);
 		$this->_tpl->assign('icms_print_title', $this->_title);
 		$this->_tpl->assign('icms_print_dsc', $this->_dsc);
 		$this->_tpl->assign('icms_print_content', $this->_content);

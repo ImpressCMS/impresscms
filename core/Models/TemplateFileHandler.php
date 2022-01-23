@@ -64,8 +64,8 @@ class TemplateFileHandler extends AbstractExtendedHandler {
 	 */
 	public function loadSource(TemplateFile &$tplfile) {
 		if (!$tplfile->getVar('tpl_source')) {
-			$sql = 'SELECT tpl_source FROM ' . $this->table
-				. " WHERE tpl_id='" . $tplfile->getVar('tpl_id') . "'";
+			$sql = 'SELECT tpl_source FROM '.$this->table
+				. " WHERE tpl_id='".$tplfile->getVar('tpl_id')."'";
 			if (!$result = $this->db->query($sql)) {
 				return false;
 			}
@@ -95,8 +95,8 @@ class TemplateFileHandler extends AbstractExtendedHandler {
 	 */
 	public function getModuleTplCount($tplset) {
 		$ret = array();
-		$sql = 'SELECT tpl_module, COUNT(tpl_id) AS count FROM ' . $this->db->prefix('tplfile')
-			. " WHERE tpl_tplset='" . $tplset . "' GROUP BY tpl_module";
+		$sql = 'SELECT tpl_module, COUNT(tpl_id) AS count FROM '.$this->db->prefix('tplfile')
+			. " WHERE tpl_tplset='".$tplset."' GROUP BY tpl_module";
 		$result = $this->db->query($sql);
 		if (!$result) {
 			return $ret;
@@ -180,13 +180,13 @@ class TemplateFileHandler extends AbstractExtendedHandler {
 		}
 		$tplNames = array();
 		foreach ($block_arr as $block) {
-			$tplNames[] = $block->template?: 'system_block_dummy.html';
+			$tplNames[] = $block->template ?: 'system_block_dummy.html';
 		}
 
 		$criteria = new CriteriaCompo(
 			new CriteriaItem(
 				'tpl_tplset',
-				'(' .
+				'('.
 				implode(
 					',',
 					array_map(
@@ -198,7 +198,7 @@ class TemplateFileHandler extends AbstractExtendedHandler {
 							]
 						)
 					)
-				) .
+				).
 				')',
 				'IN'
 			)
@@ -206,7 +206,7 @@ class TemplateFileHandler extends AbstractExtendedHandler {
 		$criteria->add(
 			new CriteriaItem(
 				'tpl_file',
-				'(' .
+				'('.
 				implode(
 					',',
 					array_map(
@@ -215,7 +215,7 @@ class TemplateFileHandler extends AbstractExtendedHandler {
 							$tplNames
 						)
 					)
-				) .
+				).
 				')',
 				'IN'
 			)

@@ -39,25 +39,25 @@ use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Models\GroupPermHandler;
 
 $xoopsOption['pagetype'] = 'user';
-$uid = (int)$_GET['uid'];
+$uid = (int) $_GET['uid'];
 
 if (icms_get_module_status("profile")) {
 	$module = icms::handler("icms_module")->getByDirName("profile", true);
 
-	if ($module->config['profile_social'] && file_exists(ICMS_MODULES_PATH . '/profile/index.php')) {
-		header('Location: ' . ICMS_MODULES_URL . '/profile/index.php?uid=' . $uid);
+	if ($module->config['profile_social'] && file_exists(ICMS_MODULES_PATH.'/profile/index.php')) {
+		header('Location: '.ICMS_MODULES_URL.'/profile/index.php?uid='.$uid);
 		exit();
-	} elseif (!$module->config['profile_social'] && file_exists(ICMS_MODULES_PATH . '/profile/userinfo.php')) {
-		header('Location: ' . ICMS_MODULES_URL . '/profile/userinfo.php?uid=' . $uid);
+	} elseif (!$module->config['profile_social'] && file_exists(ICMS_MODULES_PATH.'/profile/userinfo.php')) {
+		header('Location: '.ICMS_MODULES_URL.'/profile/userinfo.php?uid='.$uid);
 		exit();
 	}
 	unset($module);
 }
 
-include_once ICMS_MODULES_PATH . '/system/constants.php';
+include_once ICMS_MODULES_PATH.'/system/constants.php';
 
 if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object(icms::$user)) {
-	redirect_header(ICMS_URL . '/user.php', 3, _NOPERM);
+	redirect_header(ICMS_URL.'/user.php', 3, _NOPERM);
 }
 if ($uid <= 0) {
 	redirect_header('index.php', 3, _US_SELECTNG);
@@ -67,14 +67,14 @@ if ($uid <= 0) {
  * @var GroupPermHandler $gperm_handler
  */
 $gperm_handler = icms::handler('icms_member_groupperm');
-$groups = is_object(icms::$user)? icms::$user->getGroups():ICMS_GROUP_ANONYMOUS;
+$groups = is_object(icms::$user) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
 
 $isAdmin = $gperm_handler->checkRight('system_admin', 1, $groups);
 
 if (is_object(icms::$user)) {
 	if ($uid == icms::$user->uid) {
 		$xoopsOption['template_main'] = 'system_userinfo.html';
-		include ICMS_ROOT_PATH . '/header.php';
+		include ICMS_ROOT_PATH.'/header.php';
 		$icmsTpl->assign('user_ownpage', true);
 		icms_makeSmarty(array(
 			'user_ownpage' => true,
@@ -84,8 +84,8 @@ if (is_object(icms::$user)) {
 			'lang_inbox' => _US_INBOX,
 			'lang_logout' => _US_LOGOUT,
 			'lang_administration' => _CPHOME,
-			'user_candelete' => $icmsConfigUser['self_delete']? true : false,
-			'lang_deleteaccount' => $icmsConfigUser['self_delete']? _US_DELACCOUNT : ''));
+			'user_candelete' => $icmsConfigUser['self_delete'] ? true : false,
+			'lang_deleteaccount' => $icmsConfigUser['self_delete'] ? _US_DELACCOUNT : ''));
 		$thisUser = icms::$user;
 	} else {
 		$thisUser = icms::handler('icms_member')->getUser($uid);
@@ -93,7 +93,7 @@ if (is_object(icms::$user)) {
 			redirect_header('index.php', 3, _US_SELECTNG);
 		}
 		$xoopsOption['template_main'] = 'system_userinfo.html';
-		include ICMS_ROOT_PATH . '/header.php';
+		include ICMS_ROOT_PATH.'/header.php';
 		$icmsTpl->assign('user_ownpage', false);
 	}
 } else {
@@ -102,7 +102,7 @@ if (is_object(icms::$user)) {
 		redirect_header('index.php', 3, _US_SELECTNG);
 	}
 	$xoopsOption['template_main'] = 'system_userinfo.html';
-	include ICMS_ROOT_PATH . '/header.php';
+	include ICMS_ROOT_PATH.'/header.php';
 	$icmsTpl->assign('user_ownpage', false);
 }
 
@@ -118,10 +118,10 @@ $userrank = $thisUser->rank();
 $date = $thisUser->last_login;
 icms_makeSmarty(array(
 	'user_avatarurl' => $icmsConfigUser['avatar_allow_gravatar'] == true
-		?$thisUser->gravatar('G', $icmsConfigUser['avatar_width'])
-		: ICMS_UPLOAD_URL . '/' . $thisUser->user_avatar,
-	'user_websiteurl' => ($thisUser->getVar('url', 'E') == '')?''
-		: '<a href="' . $thisUser->getVar('url', 'E') . '" rel="external">' . $thisUser->url . '</a>',
+		? $thisUser->gravatar('G', $icmsConfigUser['avatar_width'])
+		: ICMS_UPLOAD_URL.'/'.$thisUser->user_avatar,
+	'user_websiteurl' => ($thisUser->getVar('url', 'E') == '') ? ''
+		: '<a href="'.$thisUser->getVar('url', 'E').'" rel="external">'.$thisUser->url.'</a>',
 	'lang_website' => _US_WEBSITE,
 	'user_realname' => $thisUser->name,
 	'lang_realname' => _US_REALNAME,
@@ -149,19 +149,19 @@ icms_makeSmarty(array(
 	'lang_lastlogin' => _US_LASTLOGIN,
 	'lang_notregistered' => _US_NOTREGISTERED,
 	'user_pmlink' => is_object(icms::$user)
-		?"<a class='cboxElement' href='" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . (int) $thisUser->uid . "'>
-		<input type='button' class='formButton' value='" . sprintf(_SENDPMTO, $thisUser->uname) . "' /></a>"
+		? "<a class='cboxElement' href='".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".(int) $thisUser->uid."'>
+		<input type='button' class='formButton' value='" . sprintf(_SENDPMTO, $thisUser->uname)."' /></a>"
 		: '',
-	'user_rankimage' => $userrank['image']?
-		'<img src="' . $userrank['image'] . '" alt="' . $userrank['title'] . '" />':'',
+	'user_rankimage' => $userrank['image'] ?
+		'<img src="'.$userrank['image'].'" alt="'.$userrank['title'].'" />' : '',
 	'user_ranktitle' => $userrank['title'],
-	'user_lastlogin' => !empty($date)? formatTimestamp($thisUser->last_login, 'm'):'',
+	'user_lastlogin' => !empty($date) ? formatTimestamp($thisUser->last_login, 'm') : '',
 	'icms_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->uname),
 	'user_email' => ($thisUser->user_viewemail == true
 			|| (is_object(icms::$user)
 			&& (icms::$user->isAdmin()
 			|| (icms::$user->uid == $thisUser->uid))))
-		?$thisUser->getVar('email', 'E')
+		? $thisUser->getVar('email', 'E')
 		: '&nbsp;',
 ));
 
@@ -186,21 +186,21 @@ foreach ($mids as $mid) {
 		if (is_array($results) && $count > 0) {
 			for ($i = 0; $i < $count; $i++) {
 				if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
-					$results[$i]['image'] = 'modules/' . $module->dirname . '/' . $results[$i]['image'];
+					$results[$i]['image'] = 'modules/'.$module->dirname.'/'.$results[$i]['image'];
 				} else {
-					$results[$i]['image'] = 'images/icons/' . $icmsConfig['language'] . '/posticon2.gif';
+					$results[$i]['image'] = 'images/icons/'.$icmsConfig['language'].'/posticon2.gif';
 				}
 				if (isset($results[$i]['link']) && $results[$i]['link'] != '') {
 					if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-						$results[$i]['link'] = "modules/" . $module->dirname . "/" . $results[$i]['link'];
+						$results[$i]['link'] = "modules/".$module->dirname."/".$results[$i]['link'];
 					}
 				}
 				$results[$i]['title'] = DataFilter::htmlSpecialChars($results[$i]['title']);
 				$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
 			}
 			if ($count == 5) {
-				$showall_link = '<a href="search.php?action=showallbyuser&amp;mid=' . (int) $mid .
-					'&amp;uid=' . (int) $thisUser->uid . '">' . _US_SHOWALL . '</a>';
+				$showall_link = '<a href="search.php?action=showallbyuser&amp;mid='.(int) $mid.
+					'&amp;uid='.(int) $thisUser->uid.'">'._US_SHOWALL.'</a>';
 			} else {
 				$showall_link = '';
 			}
@@ -213,4 +213,4 @@ foreach ($mids as $mid) {
 	}
 }
 
-include ICMS_ROOT_PATH . '/footer.php';
+include ICMS_ROOT_PATH.'/footer.php';

@@ -127,7 +127,7 @@ class icms_auth_method_ldap_Provisioning {
 			$newuser->unsetNew();
 			return $newuser;
 		} else {
-			redirect_header(ICMS_URL . '/user.php', 5, $newuser->getHtmlErrors());
+			redirect_header(ICMS_URL.'/user.php', 5, $newuser->getHtmlErrors());
 		}
 		return $ret;
 	}
@@ -154,7 +154,7 @@ class icms_auth_method_ldap_Provisioning {
 		if ($member_handler->insertUser($icmsUser)) {
 			return $icmsUser;
 		} else {
-			redirect_header(ICMS_URL . '/user.php', 5, $icmsUser->getHtmlErrors());
+			redirect_header(ICMS_URL.'/user.php', 5, $icmsUser->getHtmlErrors());
 		}
 		return $ret;
 	}

@@ -69,9 +69,9 @@ class GroupPermHandler extends AbstractExtendedHandler
 	 */
 	public function deleteByGroup($gperm_groupid, $gperm_modid = null)
 	{
-		$criteria = new CriteriaCompo(new CriteriaItem('gperm_groupid', (int)($gperm_groupid)));
+		$criteria = new CriteriaCompo(new CriteriaItem('gperm_groupid', (int) ($gperm_groupid)));
 		if (isset($gperm_modid)) {
-			$criteria->add(new CriteriaItem('gperm_modid', (int)$gperm_modid));
+			$criteria->add(new CriteriaItem('gperm_modid', (int) $gperm_modid));
 		}
 		return $this->deleteAll($criteria);
 	}
@@ -87,11 +87,11 @@ class GroupPermHandler extends AbstractExtendedHandler
 	 */
 	public function deleteByModule($gperm_modid, $gperm_name = null, $gperm_itemid = null)
 	{
-		$criteria = new CriteriaCompo(new CriteriaItem('gperm_modid', (int)$gperm_modid));
+		$criteria = new CriteriaCompo(new CriteriaItem('gperm_modid', (int) $gperm_modid));
 		if (isset($gperm_name)) {
 			$criteria->add(new CriteriaItem('gperm_name', $gperm_name));
 			if (isset($gperm_itemid)) {
-				$criteria->add(new CriteriaItem('gperm_itemid', (int)$gperm_itemid));
+				$criteria->add(new CriteriaItem('gperm_itemid', (int) $gperm_itemid));
 			}
 		}
 		return $this->deleteAll($criteria);
@@ -113,7 +113,7 @@ class GroupPermHandler extends AbstractExtendedHandler
 	{
 		$criteria = new CriteriaCompo(new CriteriaItem('gperm_modid', $gperm_modid));
 		$criteria->add(new CriteriaItem('gperm_name', $gperm_name));
-		$gperm_itemid = (int)$gperm_itemid;
+		$gperm_itemid = (int) $gperm_itemid;
 		if ($gperm_itemid > 0) {
 			$criteria->add(new CriteriaItem('gperm_itemid', $gperm_itemid));
 		}
@@ -171,7 +171,7 @@ class GroupPermHandler extends AbstractExtendedHandler
 	{
 		$ret = array();
 		$criteria = new CriteriaCompo(new CriteriaItem('gperm_name', $gperm_name));
-		$criteria->add(new CriteriaItem('gperm_modid', (int)$gperm_modid));
+		$criteria->add(new CriteriaItem('gperm_modid', (int) $gperm_modid));
 		if (is_array($gperm_groupid) && !empty($gperm_groupid)) {
 			$criteria2 = new CriteriaCompo();
 			foreach ($gperm_groupid as $gid) {
@@ -179,7 +179,7 @@ class GroupPermHandler extends AbstractExtendedHandler
 			}
 			$criteria->add($criteria2);
 		} else {
-			$criteria->add(new CriteriaItem('gperm_groupid', (int)$gperm_groupid));
+			$criteria->add(new CriteriaItem('gperm_groupid', (int) $gperm_groupid));
 		}
 		$perms = $this->getObjects($criteria, true);
 		foreach (array_keys($perms) as $i) {
@@ -200,8 +200,8 @@ class GroupPermHandler extends AbstractExtendedHandler
 	public function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1)
 	{
 		$criteria = new CriteriaCompo(new CriteriaItem('gperm_name', $gperm_name));
-		$criteria->add(new CriteriaItem('gperm_itemid', (int)$gperm_itemid));
-		$criteria->add(new CriteriaItem('gperm_modid', (int)$gperm_modid));
+		$criteria->add(new CriteriaItem('gperm_itemid', (int) $gperm_itemid));
+		$criteria->add(new CriteriaItem('gperm_modid', (int) $gperm_modid));
 		$perms = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($perms) as $i) {

@@ -103,7 +103,7 @@ class TableTree extends Table {
 				$space .= '&nbsp;';
 			}
 
-			$aColumn['value'] = $space . $value;
+			$aColumn['value'] = $space.$value;
 			$aColumn['class'] = $class;
 			$aColumn['width'] = $column->getWidth();
 			$aColumn['align'] = $column->getAlign();
@@ -115,7 +115,7 @@ class TableTree extends Table {
 
 		$aObject['columns'] = $aColumns;
 
-		$class = $class === 'even'?'odd':'even';
+		$class = $class === 'even' ? 'odd' : 'even';
 		$aObject['class'] = $class;
 
 		$actions = array();
@@ -143,7 +143,7 @@ class TableTree extends Table {
 
 		$childrenObjects = $this->getChildrenOf($object->id());
 
-		$this->_hasActions = $this->_hasActions? true : count($actions) > 0;
+		$this->_hasActions = $this->_hasActions ? true : count($actions) > 0;
 
 		if ($childrenObjects) {
 			$level++;

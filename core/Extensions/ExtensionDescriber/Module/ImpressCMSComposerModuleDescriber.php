@@ -18,7 +18,7 @@ class ImpressCMSComposerModuleDescriber implements ExtensionDescriberInterface
 	 */
 	public function canDescribe(string $path): bool
 	{
-		return file_exists($path . DIRECTORY_SEPARATOR . 'composer.json');
+		return file_exists($path.DIRECTORY_SEPARATOR.'composer.json');
 	}
 
 	/**
@@ -27,7 +27,7 @@ class ImpressCMSComposerModuleDescriber implements ExtensionDescriberInterface
 	public function describe(string $path): array
 	{
 		chdir($path);
-		putenv('COMPOSER_HOME=' . ICMS_STORAGE_PATH . '/composer');
+		putenv('COMPOSER_HOME='.ICMS_STORAGE_PATH.'/composer');
 		$composer = Factory::create(
 			new NullIO()
 		);
@@ -42,7 +42,7 @@ class ImpressCMSComposerModuleDescriber implements ExtensionDescriberInterface
 			'teammembers' => implode(
 				',',
 				array_map(
-					function ($author) {
+					function($author) {
 						return $author['name'];
 					},
 					$package->getAuthors()
@@ -82,7 +82,7 @@ class ImpressCMSComposerModuleDescriber implements ExtensionDescriberInterface
 			'hasComments' => isset($extra['comments']['itemName']),
 			'comments' => $extra['comments'] ?? null,
 			'templates' => $extra['templates'] ?? [],
-			'hasMain' => isset($extra['has_main'] ) && $extra['has_main'],
+			'hasMain' => isset($extra['has_main']) && $extra['has_main'],
 			'demo_site_url' => null,
 			'demo_site_name' => null,
 			'author_email' => null,

@@ -155,7 +155,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 				return $this->getMember($userDN, $uname, $pwd);
 			} else {
 				$session->destroy();
-				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $userDN . ')');
+				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)).'('.$userDN.')');
 			}
 		} else {
 			$this->setErrors(0, _AUTH_LDAP_SERVER_NOT_FOUND);
@@ -174,7 +174,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 		if (!$this->ldap_loginname_asdn) {
 			// Bind with the manager
 			if (!ldap_bind($this->_ds, $this->ldap_manager_dn, stripslashes($this->ldap_manager_pass))) {
-				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $this->ldap_manager_dn . ')');
+				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)).'('.$this->ldap_manager_dn.')');
 				return false;
 			}
 			$filter = $this->getFilter($uname);
@@ -186,7 +186,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 				$this->setErrors(0, sprintf(_AUTH_LDAP_USER_NOT_FOUND, $uname, $filter, $this->ldap_base_dn));
 			}
 		} else {
-			$userDN = $this->ldap_loginldap_attr . '=' . $uname . ',' . $this->ldap_base_dn;
+			$userDN = $this->ldap_loginldap_attr.'='.$uname.','.$this->ldap_base_dn;
 		}
 		return $userDN;
 	}
@@ -201,7 +201,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 		if ($this->ldap_filter_person != '') {
 			$filter = str_replace('@@loginname@@', $uname, $this->ldap_filter_person);
 		} else {
-			$filter = $this->ldap_loginldap_attr . '=' . $uname;
+			$filter = $this->ldap_loginldap_attr.'='.$uname;
 		}
 		return $filter;
 	}
@@ -220,7 +220,7 @@ class icms_auth_method_Ldap extends icms_auth_Object {
 		if ($entries['count'] > 0) {
 			$icmsUser = $provisHandler->sync($entries[0], $uname, $pwd);
 		} else {
-			$this->setErrors(0, sprintf('getMember - ' . _AUTH_LDAP_CANT_READ_ENTRY, $userdn));
+			$this->setErrors(0, sprintf('getMember - '._AUTH_LDAP_CANT_READ_ENTRY, $userdn));
 		}
 		return $icmsUser;
 	}

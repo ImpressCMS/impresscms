@@ -85,8 +85,8 @@ class CategoryHandler extends AbstractExtendedHandler {
 		if (!$this->allCategoriesId) {
 
 			$ret = array();
-			$sql = 'SELECT categoryid, parentid FROM ' . $this->table
-				. " AS " . $this->itemName . ' ORDER BY parentid';
+			$sql = 'SELECT categoryid, parentid FROM '.$this->table
+				. " AS ".$this->itemName.' ORDER BY parentid';
 
 			$result = $this->db->query($sql);
 

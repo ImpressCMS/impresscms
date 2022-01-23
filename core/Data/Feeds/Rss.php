@@ -47,9 +47,9 @@ class Rss {
 		$this->description = $icmsConfig['slogan'];
 		$this->pubDate = date('r', time());
 		$this->lastbuild = date('r', time());
-		$this->copyright = _COPYRIGHT . ' ' . formatTimestamp(time(), 'Y')
-			. ' ' . $icmsConfig['sitename'];
-		$this->ttl    = 60;
+		$this->copyright = _COPYRIGHT.' '.formatTimestamp(time(), 'Y')
+			. ' '.$icmsConfig['sitename'];
+		$this->ttl = 60;
 		$this->feeds = [];
 	}
 

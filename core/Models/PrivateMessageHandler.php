@@ -69,7 +69,7 @@ class PrivateMessageHandler extends AbstractExtendedHandler
 			return false;
 		}
 
-		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->table, (int)$pm->msg_id);
+		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->table, (int) $pm->msg_id);
 		if (!$this->db->queryF($sql)) {
 			return false;
 		}
@@ -91,7 +91,7 @@ class PrivateMessageHandler extends AbstractExtendedHandler
 		if (!isset($msgCount[$user->uid])) {
 			$criteria = new CriteriaCompo(new CriteriaItem('read_msg', 0));
 			$criteria->add(new CriteriaItem('to_userid', $user->uid));
-			$msgCount[$user->uid] = (int)$this->getCount($criteria);
+			$msgCount[$user->uid] = (int) $this->getCount($criteria);
 		}
 		return $msgCount[$user->uid];
 	}

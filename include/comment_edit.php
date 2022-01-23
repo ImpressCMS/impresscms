@@ -39,7 +39,7 @@
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
  */
-include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
+include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 $ph = icms::handler('icms_member_groupperm');
 
 if (('system' != $icmsModule->dirname
@@ -47,11 +47,11 @@ if (('system' != $icmsModule->dirname
 	|| (!is_object(icms::$user) && !$ph->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, array(ICMS_GROUP_ANONYMOUS)))
 	|| !is_object($icmsModule)
 ) {
-	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
+	redirect_header(ICMS_URL.'/user.php', 1, _NOPERM);
 }
 
 icms_loadLanguageFile('core', 'comment');
-$com_id = isset($_GET['com_id'])?(int) $_GET['com_id']:0;
+$com_id = isset($_GET['com_id']) ? (int) $_GET['com_id'] : 0;
 $com_mode = isset($_GET['com_mode'])
 	? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES, _CHARSET)
 	: '';
@@ -85,11 +85,11 @@ $com_pid = $comment->com_pid;
 $com_status = $comment->com_status;
 $com_rootid = $comment->com_rootid;
 if ($icmsModule->dirname != 'system') {
-	include ICMS_ROOT_PATH . '/header.php';
-	include ICMS_ROOT_PATH . '/include/comment_form.php';
-	include ICMS_ROOT_PATH . '/footer.php';
+	include ICMS_ROOT_PATH.'/header.php';
+	include ICMS_ROOT_PATH.'/include/comment_form.php';
+	include ICMS_ROOT_PATH.'/footer.php';
 } else {
 	icms_cp_header();
-	include ICMS_ROOT_PATH . '/include/comment_form.php';
+	include ICMS_ROOT_PATH.'/include/comment_form.php';
 	icms_cp_footer();
 }

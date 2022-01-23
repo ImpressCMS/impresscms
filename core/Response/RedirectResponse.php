@@ -93,9 +93,9 @@ class RedirectResponse implements ResponseInterface
 
 		if (!$isExternal && $this->needToAppendSID()) {
 			if (isset($parsed['query'])) {
-				$newUrl .= '?' . SID;
+				$newUrl .= '?'.SID;
 			} else {
-				$newUrl .= '&' . SID;
+				$newUrl .= '&'.SID;
 			}
 		} elseif (empty($newUrl)) {
 			$newUrl = './';

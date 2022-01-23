@@ -57,10 +57,10 @@ class TextMode {
 	public function render() {
 		global $icmsConfigCaptcha;
 		$form = $this->loadText()
-			. "&nbsp;&nbsp; <input type='text' name='" . $this->config['name']
-			."' id='" . $this->config['name']
-			. "' size='" . $icmsConfigCaptcha['captcha_num_chars']
-			. "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars']
+			. "&nbsp;&nbsp; <input type='text' name='".$this->config['name']
+			."' id='".$this->config['name']
+			. "' size='".$icmsConfigCaptcha['captcha_num_chars']
+			. "' maxlength='".$icmsConfigCaptcha['captcha_num_chars']
 			. "' value='' />";
 		$rule = constant('ICMS_CAPTCHA_RULE_TEXT');
 		if (!empty($rule)) {

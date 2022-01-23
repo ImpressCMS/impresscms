@@ -24,7 +24,7 @@ class XoopsInstallWizard {
 		}
 
 		// Load the main language file
-		$this->initLanguage(!@empty($_COOKIE['xo_install_lang'])?$_COOKIE['xo_install_lang']:'english');
+		$this->initLanguage(!@empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
 		// Setup pages
 		if ($this->no_php5) {
 			$this->pages[] = 'no_php5';
@@ -158,7 +158,7 @@ class XoopsInstallWizard {
 	}
 
 	function baseLocation() {
-		$proto = (@$_SERVER['HTTPS'] == 'on')?'https':'http';
+		$proto = (@$_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
 		$host	= $_SERVER['HTTP_HOST'];
 		$base	= substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
 		return "$proto://$host$base";
@@ -171,16 +171,16 @@ class XoopsInstallWizard {
 			} elseif ($page[0] === '-') {
 				$page = $this->currentPage - substr($page, 1);
 			} else {
-				$page = (int)array_search($page, $this->pages, false);
+				$page = (int) array_search($page, $this->pages, false);
 			}
 		}
 		$page = $this->pages[$page];
-		return $this->baseLocation() . "/page_$page.php";
+		return $this->baseLocation()."/page_$page.php";
 	}
 
 	function redirectToPage($page, $status = 303, $message = 'See other') {
 		$location = $this->pageURI($page);
-		$proto = !@empty($_SERVER['SERVER_PROTOCOL'])?$_SERVER['SERVER_PROTOCOL']:'HTTP/1.1';
+		$proto = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
 		header("$proto $status $message");
 		//header( "Status: $status $message" );
 		header("Location: $location");

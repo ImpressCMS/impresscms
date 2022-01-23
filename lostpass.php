@@ -82,14 +82,14 @@ if (empty($getuser)) {
 	if ($code != '' && $areyou == $code) {
 		$newpass = (new \RandomLib\Factory())->->getGenerator(
 			new \SecurityLib\Strength(\SecurityLib\Strength::MEDIUM)
-		)->generateString(8,'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+		)->generateString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 		$pass = $icmspass->encryptPass($newpass);
 		$mailer = new icms_messaging_Handler();
 		$mailer->useMail();
 		$mailer->setTemplate('lostpass2.tpl');
 		$mailer->assign('SITENAME', $icmsConfig['sitename']);
 		$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-		$mailer->assign('SITEURL', ICMS_URL . '/');
+		$mailer->assign('SITEURL', ICMS_URL.'/');
 		$mailer->assign('IP', $_SERVER['REMOTE_ADDR']);
 		$mailer->assign('NEWPWD', $newpass);
 		$mailer->setToUsers($getuser[0]);
@@ -119,9 +119,9 @@ if (empty($getuser)) {
 		$mailer->setTemplate('lostpass1.tpl');
 		$mailer->assign('SITENAME', $icmsConfig['sitename']);
 		$mailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-		$mailer->assign('SITEURL', ICMS_URL . '/');
+		$mailer->assign('SITEURL', ICMS_URL.'/');
 		$mailer->assign('IP', $_SERVER['REMOTE_ADDR']);
-		$mailer->assign('NEWPWD_LINK', ICMS_URL . '/lostpass.php?email=' . $email . '&code=' . $areyou);
+		$mailer->assign('NEWPWD_LINK', ICMS_URL.'/lostpass.php?email='.$email.'&code='.$areyou);
 		$mailer->setToUsers($getuser[0]);
 		$mailer->setFromEmail($icmsConfig['adminmail']);
 		$mailer->setFromName($icmsConfig['sitename']);

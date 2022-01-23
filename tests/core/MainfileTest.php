@@ -58,7 +58,7 @@ class MainfileTest extends TestCase
 		global $xoopsOption;
 
 		$xoopsOption['nocommon'] = true;
-		require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'mainfile.php';
+		require_once dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR.'mainfile.php';
 
 		parent::setUp();
 	}

@@ -81,17 +81,17 @@ class SiteClosedMiddleware implements MiddlewareInterface {
 			'template_canvas' => 'db:system_siteclosed.html',
 		], 503);
 		$response->assign('icms_theme', $themeSet);
-		$response->assign('icms_imageurl', ICMS_THEME_URL . '/' . $themeSet. '/');
-		$response->assign('icms_themecss', xoops_getcss($themeSet) );
-		$response->assign('lang_login', _LOGIN );
-		$response->assign('lang_username', _USERNAME );
-		$response->assign('lang_password', _PASSWORD );
-		$response->assign('lang_siteclosemsg', $this->siteClosedText );
-		$response->assign('icms_slogan',  htmlspecialchars($this->slogan,ENT_QUOTES, _CHARSET) );
-		$response->assign('icms_sitename', htmlspecialchars($this->siteName,ENT_QUOTES, _CHARSET) );
-		$response->assign('icms_dirname', $module ? $module->dirname : 'system' );
-		$response->assign('icms_pagetitle', $module ? $module->name : htmlspecialchars($this->slogan, ENT_QUOTES, _CHARSET) );
-		$response->assign('icms_requesturi', htmlspecialchars($requestUri, ENT_QUOTES, _CHARSET) );
+		$response->assign('icms_imageurl', ICMS_THEME_URL.'/'.$themeSet.'/');
+		$response->assign('icms_themecss', xoops_getcss($themeSet));
+		$response->assign('lang_login', _LOGIN);
+		$response->assign('lang_username', _USERNAME);
+		$response->assign('lang_password', _PASSWORD);
+		$response->assign('lang_siteclosemsg', $this->siteClosedText);
+		$response->assign('icms_slogan', htmlspecialchars($this->slogan, ENT_QUOTES, _CHARSET));
+		$response->assign('icms_sitename', htmlspecialchars($this->siteName, ENT_QUOTES, _CHARSET));
+		$response->assign('icms_dirname', $module ? $module->dirname : 'system');
+		$response->assign('icms_pagetitle', $module ? $module->name : htmlspecialchars($this->slogan, ENT_QUOTES, _CHARSET));
+		$response->assign('icms_requesturi', htmlspecialchars($requestUri, ENT_QUOTES, _CHARSET));
 
 		return $response;
 	}
@@ -108,7 +108,7 @@ class SiteClosedMiddleware implements MiddlewareInterface {
 			return false;
 		}
 		foreach ($user->getGroups() as $group) {
-			if (ICMS_GROUP_ADMIN === (int)$group || in_array($group, $this->allowedGroups, false)) {
+			if (ICMS_GROUP_ADMIN === (int) $group || in_array($group, $this->allowedGroups, false)) {
 				return true;
 			}
 		}

@@ -105,7 +105,7 @@ class TextAreaElement extends AbstractFormElement {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode? htmlspecialchars($this->_value):$this->_value;
+		return $encode ? htmlspecialchars($this->_value) : $this->_value;
 	}
 
 	/**
@@ -123,11 +123,11 @@ class TextAreaElement extends AbstractFormElement {
 	 * @return string HTML
 	 */
 	public function render() {
-		return "<textarea class='form-control' name='" . $this->getName()
-			. "' id='" . $this->getName() . '_tarea'
-			. "' rows='" . $this->getRows()
-			. "' cols='" . $this->getCols()
-			. "'" . $this->getExtra() . '>'
+		return "<textarea class='form-control' name='".$this->getName()
+			. "' id='".$this->getName().'_tarea'
+			. "' rows='".$this->getRows()
+			. "' cols='".$this->getCols()
+			. "'".$this->getExtra().'>'
 			. $this->getValue()
 			. '</textarea>';
 	}

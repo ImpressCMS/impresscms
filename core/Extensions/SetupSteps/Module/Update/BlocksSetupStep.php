@@ -67,7 +67,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 					foreach (
 						$db->fetchAll(
 							'SELECT bid, name
-							FROM ' . $db->prefix('newblocks') . '
+							FROM ' . $db->prefix('newblocks').'
 							WHERE mid=:mid AND func_num=:func_num AND show_func=:show_func AND func_file=:func_file',
 							[
 								'mid' => $module->mid,
@@ -80,7 +80,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 						$fcount++;
 						try {
 							$db->perform(
-								'UPDATE ' . $db->prefix('newblocks') . '
+								'UPDATE '.$db->prefix('newblocks').'
 									  SET name=:name, edit_func=:edit_func, content=:content, template=:template, last_modified=:last_modified
 									  WHERE bid=:bid', [
 								'name' => $this->getTranslatedName($block['name']),
@@ -103,7 +103,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 								if (empty($tplfile)) {
 									$tplfile_new = &$tplfile_handler->create();
 									$tplfile_new->tpl_module = $module->dirname;
-									$tplfile_new->tpl_refid = (int)$fblock['bid'];
+									$tplfile_new->tpl_refid = (int) $fblock['bid'];
 									$tplfile_new->tpl_tplset = 'default';
 									$tplfile_new->setVar('tpl_file', $block['template'], true);
 									$tplfile_new->tpl_type = 'block';
@@ -146,16 +146,16 @@ class BlocksSetupStep extends InstallBlockSetupStep
 								$bperm->gperm_name = 'block_read';
 								$bperm->gperm_modid = 1;
 								if (!$gperm_handler->insert($bperm)) {
-									$output->error(_MD_AM_BLOCK_ACCESS_FAIL . ' ' . $newbid, $mygroup);
+									$output->error(_MD_AM_BLOCK_ACCESS_FAIL.' '.$newbid, $mygroup);
 								} else {
-									$output->success(_MD_AM_BLOCK_ACCESS_ADDED . ' ' . $newbid, $mygroup);
+									$output->success(_MD_AM_BLOCK_ACCESS_ADDED.' '.$newbid, $mygroup);
 								}
 							}
 
 							if ($template) {
 								$tplfile = &$tplfile_handler->create();
 								$tplfile->tpl_module = $module->dirname;
-								$tplfile->tpl_refid = (int)$newbid;
+								$tplfile->tpl_refid = (int) $newbid;
 								$tplfile->setVar('tpl_source', $content, true);
 								$tplfile->tpl_tplset = 'default';
 								$tplfile->setVar('tpl_file', $block['template'], true);
@@ -178,7 +178,7 @@ class BlocksSetupStep extends InstallBlockSetupStep
 								}
 							}
 							$output->success(_MD_AM_BLOCK_CREATED, $this->getTranslatedName($block['name']), $newbid);
-							$db->perform('INSERT INTO ' . $db->prefix('block_module_link')
+							$db->perform('INSERT INTO '.$db->prefix('block_module_link')
 								. ' (block_id, module_id, page_id) VALUES (:bid, :mid, :pid);', [
 								'bid' => $newbid,
 								'mid' => 0,

@@ -66,13 +66,13 @@ class EditorElement extends TrayElement {
 		/**
 		 * @var EditorsRegistry $editorsRegistry
 		 */
-		$editorsRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+		$editorsRegistry = icms::getInstance()->get('\\'.EditorsRegistry::class);
 
 		$edtlist = $editorsRegistry->getList('content');
 		$option_select = new SelectElement('', $name, $value);
 		$querys = preg_replace('/editor=(.*?)&/', '', $_SERVER['QUERY_STRING']);
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
-				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&' . $querys . '\';
+				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&' . $querys.'\';
 			}"';
 		$option_select->setExtra($extra);
 		$option_select->addOptionArray($edtlist);

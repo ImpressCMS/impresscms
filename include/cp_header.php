@@ -15,5 +15,5 @@ define('ICMS_IN_ADMIN', 1);
 \icms_loadLanguageFile(icms::$module->dirname, 'admin');
 
 if (\icms::$module && !ModuleHandler::checkModuleAccess(\icms::$module, true)) {
-	return redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
+	return redirect_header(ICMS_URL."/user.php", 3, _NOPERM, FALSE);
 }

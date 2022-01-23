@@ -60,8 +60,8 @@ class File extends AbstractExtendedModel {
 
 	public function render() {
 		$url = str_replace('{ICMS_URL}', ICMS_URL, $this->getVar('url'));
-		$caption = $this->getVar('caption') ?:$url;
-		return "<a href='" . $url . "' title='" . $this->getVar('description') . "' target='_blank'>" . $caption . '</a>';
+		$caption = $this->getVar('caption') ?: $url;
+		return "<a href='".$url."' title='".$this->getVar('description')."' target='_blank'>".$caption.'</a>';
 	}
 
 }

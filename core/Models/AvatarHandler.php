@@ -92,16 +92,16 @@ class AvatarHandler extends AbstractExtendedHandler {
 		$ret = array();
 
 		$sql = 'SELECT a.*, COUNT(u.user_id) AS count FROM '
-			. $this->table . ' a LEFT JOIN '
-			. $this->db->prefix('avatar_user_link') . ' u ON u.avatar_id=a.avatar_id';
+			. $this->table.' a LEFT JOIN '
+			. $this->db->prefix('avatar_user_link').' u ON u.avatar_id=a.avatar_id';
 
 		if (isset($criteria) && is_subclass_of($criteria, \Imponeer\Database\Criteria\CriteriaElement::class)) {
-			$sql .= ' ' . $criteria->renderWhere();
+			$sql .= ' '.$criteria->renderWhere();
 			$sql .= ' GROUP BY a.avatar_id ORDER BY avatar_weight, avatar_id';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 
-			if ((int)$limit) {
+			if ((int) $limit) {
 				$sql .= ' LIMIT :start, :limit';
 			}
 
@@ -109,7 +109,7 @@ class AvatarHandler extends AbstractExtendedHandler {
 			foreach ($criteria->getBindData() as $key => $value) {
 				$query->bindValue($key, $value);
 			}
-			if ((int)$limit) {
+			if ((int) $limit) {
 				$query->bindValue('start', $start, PDO::PARAM_INT);
 				$query->bindValue('limit', $limit, PDO::PARAM_INT);
 			}
@@ -175,8 +175,8 @@ class AvatarHandler extends AbstractExtendedHandler {
 			return false;
 		}
 
-		$sql = "SELECT user_id FROM " . $this->db->prefix('avatar_user_link')
-			. " WHERE avatar_id='" . (int) $avatar->avatar_id . "'";
+		$sql = "SELECT user_id FROM ".$this->db->prefix('avatar_user_link')
+			. " WHERE avatar_id='".(int) $avatar->avatar_id."'";
 		if (!$result = $this->db->query($sql)) {
 			return $ret;
 		}
@@ -207,7 +207,7 @@ class AvatarHandler extends AbstractExtendedHandler {
 			$criteria->add(new CriteriaItem('avatar_type', $avatar_type));
 		}
 		if (isset($avatar_display)) {
-			$criteria->add(new CriteriaItem('avatar_display', (int)$avatar_display));
+			$criteria->add(new CriteriaItem('avatar_display', (int) $avatar_display));
 		}
 		$avatars = $this->getObjects($criteria, true);
 		$ret = array('blank.gif' => _NONE);
@@ -227,9 +227,9 @@ class AvatarHandler extends AbstractExtendedHandler {
 	public static function getListFromDir($avatar_dir = '') {
 		$avatars = [];
 		if ($avatar_dir) {
-			$avatars = Filesystem::getFileList(ICMS_ROOT_PATH . '/images/avatar/' . $avatar_dir . '/', $avatar_dir . '/', ['gif', 'jpg', 'png']);
+			$avatars = Filesystem::getFileList(ICMS_ROOT_PATH.'/images/avatar/'.$avatar_dir.'/', $avatar_dir.'/', ['gif', 'jpg', 'png']);
 		} else {
-			$avatars = Filesystem::getFileList(ICMS_ROOT_PATH . '/images/avatar/', '', ['gif', 'jpg', 'png']);
+			$avatars = Filesystem::getFileList(ICMS_ROOT_PATH.'/images/avatar/', '', ['gif', 'jpg', 'png']);
 		}
 		return $avatars;
 	}
@@ -241,10 +241,10 @@ class AvatarHandler extends AbstractExtendedHandler {
 	 */
 	public static function getAllFromDir() {
 		$avatars = array();
-		$dirlist = Filesystem::getDirList(ICMS_ROOT_PATH . '/images/avatar/');
+		$dirlist = Filesystem::getDirList(ICMS_ROOT_PATH.'/images/avatar/');
 		if (count($dirlist) > 0) {
 			foreach ($dirlist as $dir) {
-				$avatars[$dir] = & Filesystem::getFileList(ICMS_ROOT_PATH . '/images/avatar/' . $dir . '/', $dir . '/', ['gif', 'jpg', 'png']);
+				$avatars[$dir] = & Filesystem::getFileList(ICMS_ROOT_PATH.'/images/avatar/'.$dir.'/', $dir.'/', ['gif', 'jpg', 'png']);
 			}
 		} else {
 			return false;

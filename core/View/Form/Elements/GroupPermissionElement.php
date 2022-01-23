@@ -119,18 +119,18 @@ class GroupPermissionElement extends AbstractFormElement {
 			$tree = '<td valign="top">';
 			$prefix = '';
 			$this->_renderOptionTree($tree, $this->_optionTree[$topitem], $prefix);
-			$ret .= $tree . '</td>';
+			$ret .= $tree.'</td>';
 			$cols++;
 		}
 		$ret .= '</tr></table></td><td class="even" valign="top">';
 		foreach (array_keys($this->_optionTree) as $id) {
 			if (!empty ($id)) {
-				$option_ids[] = "'" . $ele_name . '[groups][' . $this->_groupId . '][' . $id . ']' . "'";
+				$option_ids[] = "'".$ele_name.'[groups]['.$this->_groupId.']['.$id.']'."'";
 			}
 		}
-		$checkallbtn_id = $ele_name . '[checkallbtn][' . $this->_groupId . ']';
+		$checkallbtn_id = $ele_name.'[checkallbtn]['.$this->_groupId.']';
 		$option_ids_str = implode(', ', $option_ids);
-		$ret .= _ALL . ' <input id="' . $checkallbtn_id . '" type="checkbox" value="" onclick="var optionids = new Array(' . $option_ids_str . "); xoopsCheckAllElements(optionids, '" . $checkallbtn_id . "');\" />";
+		$ret .= _ALL.' <input id="'.$checkallbtn_id.'" type="checkbox" value="" onclick="var optionids = new Array('.$option_ids_str."); xoopsCheckAllElements(optionids, '".$checkallbtn_id."');\" />";
 		$ret .= '</td></tr></table>';
 		return $ret;
 	}
@@ -146,31 +146,31 @@ class GroupPermissionElement extends AbstractFormElement {
 	 */
 	function _renderOptionTree(& $tree, $option, $prefix, $parentIds = array()) {
 		$ele_name = $this->getName();
-		$tree .= $prefix . '<input type="checkbox" name="' . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . ']" id="' . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . ']" onclick="';
+		$tree .= $prefix.'<input type="checkbox" name="'.$ele_name.'[groups]['.$this->_groupId.']['.$option['id'].']" id="'.$ele_name.'[groups]['.$this->_groupId.']['.$option['id'].']" onclick="';
 		// If there are parent elements, add javascript that will
 		// make them selecteded when this element is checked to make
 		// sure permissions to parent items are added as well.
 		foreach ($parentIds as $pid) {
-			$parent_ele = $ele_name . '[groups][' . $this->_groupId . '][' . $pid . ']';
-			$tree .= "var ele = xoopsGetElementById('" . $parent_ele . "'); if(ele.checked != true) {ele.checked = this.checked;}";
+			$parent_ele = $ele_name.'[groups]['.$this->_groupId.']['.$pid.']';
+			$tree .= "var ele = xoopsGetElementById('".$parent_ele."'); if(ele.checked != true) {ele.checked = this.checked;}";
 		}
 		// If there are child elements, add javascript that will
 		// make them unchecked when this element is unchecked to make
 		// sure permissions to child items are not added when there
 		// is no permission to this item.
 		foreach ($option['allchild'] as $cid) {
-			$child_ele = $ele_name . '[groups][' . $this->_groupId . '][' . $cid . ']';
-			$tree .= "var ele = xoopsGetElementById('" . $child_ele . "'); if(this.checked != true) {ele.checked = false;}";
+			$child_ele = $ele_name.'[groups]['.$this->_groupId.']['.$cid.']';
+			$tree .= "var ele = xoopsGetElementById('".$child_ele."'); if(this.checked != true) {ele.checked = false;}";
 		}
 		$tree .= '" value="1"';
 		if (in_array($option['id'], $this->_value, false)) {
 			$tree .= ' checked="checked"';
 		}
-		$tree .= ' />' . $option['name'] . '<input type="hidden" name="' . $ele_name . "[parents][" . $option['id'] . ']" value="' . implode(':', $parentIds) . '" /><input type="hidden" name="' . $ele_name . '[itemname][' . $option['id'] . ']" value="' . htmlspecialchars($option['name']) . "\" /><br />\n";
+		$tree .= ' />'.$option['name'].'<input type="hidden" name="'.$ele_name."[parents][".$option['id'].']" value="'.implode(':', $parentIds).'" /><input type="hidden" name="'.$ele_name.'[itemname]['.$option['id'].']" value="'.htmlspecialchars($option['name'])."\" /><br />\n";
 		if (isset ($option['children'])) {
 			foreach ($option['children'] as $child) {
 				$parentIds[] = $option['id'];
-				$this->_renderOptionTree($tree, $this->_optionTree[$child], $prefix . '&nbsp;-', $parentIds);
+				$this->_renderOptionTree($tree, $this->_optionTree[$child], $prefix.'&nbsp;-', $parentIds);
 			}
 		}
 	}

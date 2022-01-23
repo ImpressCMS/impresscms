@@ -100,7 +100,7 @@ class icms_auth_method_Ads extends icms_auth_method_Ldap {
 					return false;
 				}
 			} else {
-				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $userUPN . ')');
+				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)).'('.$userUPN.')');
 			}
 		} else {
 			$this->setErrors(0, _AUTH_LDAP_SERVER_NOT_FOUND);
@@ -119,7 +119,7 @@ class icms_auth_method_Ads extends icms_auth_method_Ldap {
 	 * @return userDN or false
 	 */
 	public function getUPN($uname) {
-		$userDN = $uname . "@" . $this->ldap_domain_name;
+		$userDN = $uname."@".$this->ldap_domain_name;
 		return $userDN;
 	}
 }

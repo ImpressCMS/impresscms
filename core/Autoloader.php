@@ -95,9 +95,9 @@ class Autoloader {
 	 */
 	public static function import($namespace, $required = true) {
 		if (!isset(self::$imported[$namespace])) {
-			$nspath = self::classPath($namespace, true, DIRECTORY_SEPARATOR . 'namespace.php');
+			$nspath = self::classPath($namespace, true, DIRECTORY_SEPARATOR.'namespace.php');
 			if ($nspath) {
-				include_once $nspath . DIRECTORY_SEPARATOR . 'namespace.php';
+				include_once $nspath.DIRECTORY_SEPARATOR.'namespace.php';
 				return self::$imported[$namespace] = true;
 			}
 			self::$imported[$namespace] = false;
@@ -136,18 +136,18 @@ class Autoloader {
 		if (strpos($class, "\\") || strpos($class, '_')) {
 			foreach (self::$localRepositories as $name => $info) {
 				list($len, $path) = $info;
-				if (!strncmp($name . "\\", $class, $len + 1) || !strncmp($name . '_', $class, $len + 1)) {
+				if (!strncmp($name."\\", $class, $len + 1) || !strncmp($name.'_', $class, $len + 1)) {
 					$localPath = substr($classPath, $len + 1);
-					if (file_exists($path . DIRECTORY_SEPARATOR . $localPath . $ext)) {
-						return $path . DIRECTORY_SEPARATOR . $localPath;
+					if (file_exists($path.DIRECTORY_SEPARATOR.$localPath.$ext)) {
+						return $path.DIRECTORY_SEPARATOR.$localPath;
 					}
 				}
 			}
 		}
 		// Search global repositories
 		foreach (self::$globalRepositories as $path) {
-			if (file_exists($path . DIRECTORY_SEPARATOR . $classPath . $ext)) {
-				return $path . DIRECTORY_SEPARATOR . $classPath;
+			if (file_exists($path.DIRECTORY_SEPARATOR.$classPath.$ext)) {
+				return $path.DIRECTORY_SEPARATOR.$classPath;
 			}
 		}
 		// Search include path
@@ -155,8 +155,8 @@ class Autoloader {
 		// We do this to make sure the string we get compensates for that
 		if ($useIncludePath) {
 			foreach (explode(PATH_SEPARATOR, get_include_path()) as $path) {
-				if (file_exists($path . DIRECTORY_SEPARATOR . $classPath . $ext)) {
-					return (DIRECTORY_SEPARATOR != '/' ? str_replace('/', DIRECTORY_SEPARATOR, $path):$path) . DIRECTORY_SEPARATOR . $classPath;
+				if (file_exists($path.DIRECTORY_SEPARATOR.$classPath.$ext)) {
+					return (DIRECTORY_SEPARATOR != '/' ? str_replace('/', DIRECTORY_SEPARATOR, $path) : $path).DIRECTORY_SEPARATOR.$classPath;
 				}
 			}
 		}
@@ -233,7 +233,7 @@ class Autoloader {
 			'icmsmetagen' => '/kernel/icmsmetagen.php',
 		];
 		if (array_key_exists($class, $legacyClassPath)) {
-			include_once ICMS_ROOT_PATH . $legacyClassPath[$class];
+			include_once ICMS_ROOT_PATH.$legacyClassPath[$class];
 		}
 	}
 }

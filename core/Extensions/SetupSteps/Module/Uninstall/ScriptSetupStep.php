@@ -22,7 +22,7 @@ class ScriptSetupStep extends InstallScriptSetupStep
 			return true;
 		}
 
-		include_once ICMS_MODULES_PATH . '/' . $module->getInfo('dirname') . '/' . $uninstall_script;
+		include_once ICMS_MODULES_PATH.'/'.$module->getInfo('dirname').'/'.$uninstall_script;
 
 		$is_IPF = $module->getInfo('object_items');
 		if (!empty($is_IPF)) {
@@ -35,9 +35,9 @@ class ScriptSetupStep extends InstallScriptSetupStep
 			}
 		}
 
-		if (function_exists($func = 'xoops_module_uninstall_' . $module_name)) {
+		if (function_exists($func = 'xoops_module_uninstall_'.$module_name)) {
 			$this->execFunc($func, $module, $output);
-		} elseif (function_exists($func = 'icms_module_uninstall_' . $module_name)) {
+		} elseif (function_exists($func = 'icms_module_uninstall_'.$module_name)) {
 			$this->execFunc($func, $module, $output);
 		}
 	}

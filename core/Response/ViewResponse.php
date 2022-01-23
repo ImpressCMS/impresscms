@@ -66,7 +66,7 @@ class ViewResponse implements ResponseInterface
 
 		if (isset($config['isAdminSide']) && $config['isAdminSide'] === true) {
 			if (icms::$user === null) {
-				redirect_header(ICMS_URL . '/user.php', 3, _NOPERM, false);
+				redirect_header(ICMS_URL.'/user.php', 3, _NOPERM, false);
 				return;
 			}
 			$this->addAdminMetas();
@@ -119,7 +119,7 @@ class ViewResponse implements ResponseInterface
 
 		if (isset($config['template_main']) && is_string($config['template_main'])) {
 			if (false === strpos($config['template_main'], ':')) {
-				$config['template_main'] = 'db:' . $config['template_main'];
+				$config['template_main'] = 'db:'.$config['template_main'];
 			}
 		} else {
 			$config['template_main'] = null;
@@ -143,8 +143,8 @@ class ViewResponse implements ResponseInterface
 			$tplConfig['plugins'] = ['icms_view_PageBuilder'];
 
 			if (!isset($tplConfig['canvasTemplate'])) {
-				$tplConfig['canvasTemplate'] = 'theme' . ((file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') ||
-						file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')) ? '_admin' : '') . '.html';
+				$tplConfig['canvasTemplate'] = 'theme'.((file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') ||
+						file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html')) ? '_admin' : '').'.html';
 			}
 
 			if (!isset($tplConfig['folderName'])) {
@@ -173,22 +173,22 @@ class ViewResponse implements ResponseInterface
 	 */
 	private function setDefaultMetas()
 	{
-		$jgrowl_css = ICMS_LIBRARIES_URL . '/jquery/jgrowl'
-			. ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '') . '.css';
+		$jgrowl_css = ICMS_LIBRARIES_URL.'/jquery/jgrowl'
+			. ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '').'.css';
 
 		$this->theme->metas['head']['stylesheet'] = [
-			ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css' => [
+			ICMS_LIBRARIES_URL.'/bootstrap/bootstrap.min.css' => [
 				'value' => [
 					'type' => 'text/css',
-					'href' => ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.css',
+					'href' => ICMS_LIBRARIES_URL.'/bootstrap/bootstrap.min.css',
 					'media' => 'screen'
 				],
 				'weight' => 0
 			],
-			ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css' => [
+			ICMS_LIBRARIES_URL.'/jquery/ui/css/ui-smoothness/ui.css' => [
 				'value' => [
 					'type' => 'text/css',
-					'href' => ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css',
+					'href' => ICMS_LIBRARIES_URL.'/jquery/ui/css/ui-smoothness/ui.css',
 					'media' => 'screen'
 				],
 				'weight' => 0
@@ -201,10 +201,10 @@ class ViewResponse implements ResponseInterface
 				],
 				'weight' => 0
 			],
-			ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css' => [
+			ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css' => [
 				'value' => [
 					'type' => 'text/css',
-					'href' => ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css',
+					'href' => ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css',
 					'media' => 'screen'
 				],
 				'weight' => 0
@@ -212,45 +212,45 @@ class ViewResponse implements ResponseInterface
 		];
 
 		$this->theme->metas['module']['script'] = [
-			ICMS_URL . '/include/xoops.js' => [
+			ICMS_URL.'/include/xoops.js' => [
 				'value' => [
 					'type' => 'text/javascript',
-					'src' => ICMS_URL . '/include/xoops.js'
+					'src' => ICMS_URL.'/include/xoops.js'
 				],
 				'weight' => 0
 			],
-			ICMS_URL . '/include/linkexternal.js' => [
+			ICMS_URL.'/include/linkexternal.js' => [
 				'value' => [
-					'src' => ICMS_URL . '/include/linkexternal.js',
+					'src' => ICMS_URL.'/include/linkexternal.js',
 					'type' => 'text/javascript'
 				],
 				'weight' => 0
 			],
-			ICMS_LIBRARIES_URL . '/jquery/jquery.js' => [
+			ICMS_LIBRARIES_URL.'/jquery/jquery.js' => [
 				'value' => [
 					'type' => 'text/javascript',
-					'src' => ICMS_LIBRARIES_URL . '/jquery/jquery.js'
+					'src' => ICMS_LIBRARIES_URL.'/jquery/jquery.js'
 				],
 				'weight' => 0
 			],
-			ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js' => [
+			ICMS_LIBRARIES_URL.'/jquery/ui/ui.min.js' => [
 				'value' => [
 					'type' => 'text/javascript',
-					'src' => ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js'
+					'src' => ICMS_LIBRARIES_URL.'/jquery/ui/ui.min.js'
 				],
 				'weight' => 0
 			],
-			ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.js' => [
+			ICMS_LIBRARIES_URL.'/bootstrap/bootstrap.min.js' => [
 				'value' => [
 					'type' => 'text/javascript',
-					'src' => ICMS_LIBRARIES_URL . '/bootstrap/bootstrap.min.js'
+					'src' => ICMS_LIBRARIES_URL.'/bootstrap/bootstrap.min.js'
 				],
 				'weight' => 0
 			],
-			ICMS_LIBRARIES_URL . '/jquery/colorbox/jquery.colorbox-min.js' => [
+			ICMS_LIBRARIES_URL.'/jquery/colorbox/jquery.colorbox-min.js' => [
 				'value' => [
 					'type' => 'text/javascript',
-					'src' => ICMS_LIBRARIES_URL . '/jquery/colorbox/jquery.colorbox-min.js'
+					'src' => ICMS_LIBRARIES_URL.'/jquery/colorbox/jquery.colorbox-min.js'
 				],
 				'weight' => 0
 			]
@@ -269,15 +269,15 @@ class ViewResponse implements ResponseInterface
 		global $icmsConfigPlugins;
 		if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 			foreach (array_filter($icmsConfigPlugins['sanitizer_plugins']) as $key) {
-				if (file_exists(ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.css')) {
-					$this->theme->addStylesheet(ICMS_PLUGINS_URL . '/textsanitizer/' . $key . '/' . $key . '.css', array('media' => 'screen'));
+				if (file_exists(ICMS_PLUGINS_PATH.'/textsanitizer/'.$key.'/'.$key.'.css')) {
+					$this->theme->addStylesheet(ICMS_PLUGINS_URL.'/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
 				} else {
-					include_once ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.php';
-					$func = 'style_' . $key;
+					include_once ICMS_PLUGINS_PATH.'/textsanitizer/'.$key.'/'.$key.'.php';
+					$func = 'style_'.$key;
 					if (function_exists($func)) {
 						$style_info = $func();
 						if (!empty($style_info)) {
-							if (!file_exists(ICMS_ROOT_PATH . '/' . $style_info)) {
+							if (!file_exists(ICMS_ROOT_PATH.'/'.$style_info)) {
 								$this->theme->addStylesheet('', array('media' => 'screen'), $style_info);
 							} else {
 								$this->theme->addStylesheet($style_info, array('media' => 'screen'));
@@ -344,11 +344,11 @@ class ViewResponse implements ResponseInterface
 		global $icmsConfig;
 
 		$cache = icms::getInstance()->get('cache');
-		$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
+		$cached_menu = $cache->getItem('adminmenu-'.$icmsConfig['language']);
 
 		if (!$cached_menu->isHit()) {
 			xoops_module_write_admin_menu(impresscms_get_adminmenu());
-			$cached_menu = $cache->getItem('adminmenu-' . $icmsConfig['language']);
+			$cached_menu = $cache->getItem('adminmenu-'.$icmsConfig['language']);
 		}
 
 		$admin_menu = $cached_menu->get();
@@ -486,7 +486,7 @@ class ViewResponse implements ResponseInterface
 					}
 				}
 			}
-			$this->theme->template->assign('modpath', ICMS_URL . '/modules/' . icms::$module->dirname);
+			$this->theme->template->assign('modpath', ICMS_URL.'/modules/'.icms::$module->dirname);
 			$this->theme->template->assign('modname', icms::$module->name);
 			$this->theme->template->assign('modid', icms::$module->mid);
 			$this->theme->template->assign('moddir', icms::$module->dirname);
@@ -515,7 +515,7 @@ class ViewResponse implements ResponseInterface
 	 */
 	private function addRedirectMessageScripts($redirect_message)
 	{
-		$this->theme->addScript(ICMS_LIBRARIES_URL . '/jquery/jgrowl.js', array('type' => 'text/javascript'));
+		$this->theme->addScript(ICMS_LIBRARIES_URL.'/jquery/jgrowl.js', array('type' => 'text/javascript'));
 		$this->theme->addScript('', array('type' => 'text/javascript'), '
 	if (!window.console || !console.firebug) {
 		var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd",
@@ -527,7 +527,7 @@ class ViewResponse implements ResponseInterface
 
 	(function($) {
 		$(document).ready(function() {
-			$.jGrowl("' . $redirect_message . '", {  life:5000 , position: "center", speed: "slow" });
+			$.jGrowl("' . $redirect_message.'", {  life:5000 , position: "center", speed: "slow" });
 		});
 	})(jQuery);
 	');
@@ -560,7 +560,7 @@ class ViewResponse implements ResponseInterface
 			global $xoTheme, $xoopsTpl;
 			$xoopsTpl = &$this;
 			$xoTheme = &$this->theme;
-			require_once ICMS_INCLUDE_PATH . '/notification_select.php';
+			require_once ICMS_INCLUDE_PATH.'/notification_select.php';
 		}
 	}
 

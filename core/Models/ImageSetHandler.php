@@ -108,7 +108,7 @@ class ImageSetHandler extends AbstractExtendedHandler {
 			$this->db->prefix('imgset_tplset_link')
 		);
 		if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
-			$sql .= ' ' . $criteria->renderWhere();
+			$sql .= ' '.$criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
@@ -202,7 +202,7 @@ class ImageSetHandler extends AbstractExtendedHandler {
 			$criteria = new CriteriaCompo();
 		}
 		if (isset($refid)) {
-			$criteria->add(new CriteriaItem('imgset_refid', (int)$refid));
+			$criteria->add(new CriteriaItem('imgset_refid', (int) $refid));
 		}
 		if (isset($tplset)) {
 			$criteria->add(new CriteriaItem('tplset_name', $tplset));

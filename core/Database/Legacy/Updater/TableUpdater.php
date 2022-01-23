@@ -116,7 +116,7 @@ class TableUpdater {
 	 */
 	function exists() {
 		$bRetVal = false;
-		$ret = $this->_db->queryF('SHOW TABLES FROM `' . env('DB_NAME') . "` LIKE '" . $this->name() . "'");
+		$ret = $this->_db->queryF('SHOW TABLES FROM `'.env('DB_NAME')."` LIKE '".$this->name()."'");
 		list ($m_table) = $this->_db->fetchRow($ret);
 		if ($m_table === strtolower($this->name())) {
 			$bRetVal = true;
@@ -153,7 +153,7 @@ class TableUpdater {
 	 */
 
 	function getExistingFieldsArray() {
-		$sql = 'SHOW COLUMNS FROM ' . $this->name();
+		$sql = 'SHOW COLUMNS FROM '.$this->name();
 		$result = $this->_db->queryF($sql);
 		while ($existing_field = $this->_db->fetchArray($result)) {
 			$fields[$existing_field['Field']] = $existing_field['Type'];
@@ -161,10 +161,10 @@ class TableUpdater {
 				$fields[$existing_field['Field']] .= ' NOT NULL';
 			}
 			if ($existing_field['Extra']) {
-				$fields[$existing_field['Field']] .= ' ' . $existing_field['Extra'];
+				$fields[$existing_field['Field']] .= ' '.$existing_field['Extra'];
 			}
 			if (!($existing_field['Default'] === null) && ($existing_field['Default'] || $existing_field['Default'] == '' || $existing_field['Default'] == 0)) {
-				$fields[$existing_field['Field']] .= " default '" . $existing_field['Default'] . "'";
+				$fields[$existing_field['Field']] .= " default '".$existing_field['Default']."'";
 			}
 		}
 		return $fields;
@@ -177,7 +177,7 @@ class TableUpdater {
 	 *
 	 */
 	function addData() {
-		$str = '(' . implode('), (', $this->getData()) . ')';
+		$str = '('.implode('), (', $this->getData()).')';
 		$query = sprintf('INSERT INTO %s VALUES %s', $this->name(), $str);
 
 		if ($this->force) {
@@ -186,9 +186,9 @@ class TableUpdater {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name());
 		} else {
-			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name());
 		}
 		return $ret;
 	}
@@ -297,7 +297,7 @@ class TableUpdater {
 	 */
 	function createTable() {
 		$query = $this->getStructure();
-		$query = 'CREATE TABLE `' . $this->name() . '` (' . $query . ')';
+		$query = 'CREATE TABLE `'.$this->name().'` ('.$query.')';
 
 		if ($this->force) {
 			$ret = $this->_db->queryF($query);
@@ -305,10 +305,10 @@ class TableUpdater {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE_ERR, $this->name()) . ' (' . $this->_db->error() . ')';
+			$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE_ERR, $this->name()).' ('.$this->_db->error().')';
 
 		} else {
-			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE, $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE, $this->name());
 		}
 		return $ret;
 	}
@@ -360,10 +360,10 @@ class TableUpdater {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE_ERR, $this->name()) . ' (' . $this->_db->error() . ')';
+			$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_DROP_TABLE_ERR, $this->name()).' ('.$this->_db->error().')';
 			return false;
 		} else {
-			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE, $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_DROP_TABLE, $this->name());
 			return true;
 		}
 	}
@@ -376,7 +376,7 @@ class TableUpdater {
 	 */
 	function alterTable() {
 		$ret = true;
-		$query = 'ALTER TABLE `' . $this->name() . '`';
+		$query = 'ALTER TABLE `'.$this->name().'`';
 		foreach ($this->getAlteredFields() as $alteredField) {
 			if (!$alteredField['newname']) {
 				$alteredField['newname'] = $alteredField['name'];
@@ -392,9 +392,9 @@ class TableUpdater {
 
 		if ($alteredField['showerror']) {
 			if (!$ret) {
-				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()) . ' (' . $this->_db->error() . ')';
+				$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()).' ('.$this->_db->error().')';
 			} else {
-				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_CHGFIELD, $alteredField['name'], $this->name());
+				$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_CHGFIELD, $alteredField['name'], $this->name());
 			}
 		}
 
@@ -420,7 +420,7 @@ class TableUpdater {
 	 */
 	function addNewFields() {
 		$ret = true;
-		$query = 'ALTER TABLE `' . $this->name() . '`';
+		$query = 'ALTER TABLE `'.$this->name().'`';
 		foreach ($this->getNewFields() as $newField) {
 			$query .= sprintf(' ADD `%s` %s,', $newField['name'], $newField['properties']);
 		}
@@ -432,9 +432,9 @@ class TableUpdater {
 		}
 
 		if (!$ret) {
-			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name());
 		} else {
-			$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name());
+			$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name());
 		}
 		return $ret;
 	}
@@ -460,9 +460,9 @@ class TableUpdater {
 		foreach ($this->getUpdateAll() as $item) {
 			$fieldname = $item['fieldname'];
 			$fieldvalue = $item['fieldvalue'];
-			$criteria = isset($item['criteria'])?$item['criteria']:null;
+			$criteria = isset($item['criteria']) ? $item['criteria'] : null;
 
-			$set_clause = $fieldname . ' = ';
+			$set_clause = $fieldname.' = ';
 			if (is_numeric($fieldvalue) || $item['fieldvalueIsOperation']) {
 				$set_clause .= $fieldvalue;
 			} elseif (is_array($fieldvalue)) {
@@ -470,9 +470,9 @@ class TableUpdater {
 			} else {
 				$set_clause .= $this->_db->quoteString($fieldvalue);
 			}
-			$sql = 'UPDATE ' . $this->name() . ' SET ' . $set_clause;
+			$sql = 'UPDATE '.$this->name().' SET '.$set_clause;
 			if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
-				$sql .= ' ' . $criteria->renderWhere();
+				$sql .= ' '.$criteria->renderWhere();
 			}
 			if ($this->force) {
 				$ret = $this->_db->queryF($sql);
@@ -480,9 +480,9 @@ class TableUpdater {
 				$ret = $this->_db->query($sql);
 			}
 			if (!$ret) {
-				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . ' (' . $this->_db->error() . ')';
+				$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()).' ('.$this->_db->error().')';
 			} else {
-				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name());
+				$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name());
 			}
 		}
 		return $ret;
@@ -509,17 +509,17 @@ class TableUpdater {
 		foreach ($this->getDeleteAll() as $item) {
 			$criteria = $item['criteria'] ?? null;
 			if (isset($criteria) && is_subclass_of($criteria, CriteriaElement::class)) {
-				$sql = 'DELETE FROM ' . $this->table;
-				$sql .= ' ' . $criteria->renderWhere();
+				$sql = 'DELETE FROM '.$this->table;
+				$sql .= ' '.$criteria->renderWhere();
 				if ($this->force) {
 					$result = $this->_db->queryF($sql);
 				} else {
 					$result = $this->_db->query($sql);
 				}
 				if (!$result) {
-					$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . ' (' . $this->_db->error() . ')';
+					$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()).' ('.$this->_db->error().')';
 				} else {
-					$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . ' (' . $this->_db->error() . ')';
+					$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()).' ('.$this->_db->error().')';
 				}
 			}
 			$ret = $result && $ret;
@@ -547,7 +547,7 @@ class TableUpdater {
 	function dropFields() {
 		$ret = true;
 		$str = implode(', DROP ', $this->getdropedFields());
-		$query = 'ALTER TABLE ' . $this->name() . ' DROP ' . $str;
+		$query = 'ALTER TABLE '.$this->name().' DROP '.$str;
 			if ($this->force) {
 				$ret = $ret && $this->_db->queryF($query);
 			} else {
@@ -555,9 +555,9 @@ class TableUpdater {
 			}
 
 			if (!$ret) {
-				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $str, $this->name()) . ' (' . $this->_db->error() . ')';
+				$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $str, $this->name()).' ('.$this->_db->error().')';
 			} else {
-				$this->_messages[] = '&nbsp;&nbsp;' . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $str, $this->name());
+				$this->_messages[] = '&nbsp;&nbsp;'.sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $str, $this->name());
 			}
 		return $ret;
 	}

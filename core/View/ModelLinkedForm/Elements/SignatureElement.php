@@ -23,7 +23,7 @@ class SignatureElement extends TrayElement {
 	 */
 	public function __construct($object, $key) {
 		$var = $object->getVarInfo($key);
-		parent::__construct($var['form_caption'], '<br /><br />', $key . '_signature_tray');
+		parent::__construct($var['form_caption'], '<br /><br />', $key.'_signature_tray');
 
 		icms_loadLanguageFile('core', 'user');
 		$signature_textarea = new DHTMLTextAreaElement('', $key, $object->getVar($key, 'e'));

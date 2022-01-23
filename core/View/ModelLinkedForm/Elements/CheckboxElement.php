@@ -85,17 +85,17 @@ class CheckboxElement extends \ImpressCMS\Core\View\Form\Elements\CheckboxElemen
 			$this->setName($ele_name);
 		}
 		foreach ($ele_options as $value => $name) {
-			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name
-				. "' id='" . $ele_name . '_item_' . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES, _CHARSET) . "'";
+			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='".$ele_name
+				. "' id='".$ele_name.'_item_'.$value."' value='".htmlspecialchars($value, ENT_QUOTES, _CHARSET)."'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value, false)) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $ele_extra . " /><label for='" . $ele_name . '_item_' . $value . "'>" . $name . '</label></span>' . $ele_delimeter;
+			$ret .= $ele_extra." /><label for='".$ele_name.'_item_'.$value."'>".$name.'</label></span>'.$ele_delimeter;
 		}
 		if (count($ele_options) > 1) {
 			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
-				. $ele_name . "_checkemall' class='checkemall' /><label for='"
-				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
+				. $ele_name."_checkemall' class='checkemall' /><label for='"
+				. $ele_name."_checkemall'>"._CHECKALL."</label></div>";
 		}
 		$ret .= '</div>';
 		return $ret;
@@ -109,20 +109,20 @@ class CheckboxElement extends \ImpressCMS\Core\View\Form\Elements\CheckboxElemen
 		$js = '';
 		$js .= 'var hasSelections = false;';
 		$eltname = $this->getName();
-		$eltmsg = empty($eltcaption)? sprintf(_FORM_ENTER, $eltname):sprintf(_FORM_ENTER, $eltcaption);
+		$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
 		$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
 		if (strpos($eltname, '[') === false) {
 			$eltname .= '[]';
 		}
 		$js .=
-		"for (var i = 0; i < myform['" . $eltname . "'].length; i++) {
-			if (myform['" . $eltname . "'][i].checked) {
+		"for (var i = 0; i < myform['".$eltname."'].length; i++) {
+			if (myform['" . $eltname."'][i].checked) {
 				hasSelections = true;
 			}
 		}
 		if (hasSelections == false) {
 			window.alert(\"{$eltmsg}\");
-			myform['" . $eltname . "'][0].focus();
+			myform['".$eltname."'][0].focus();
 			return false;
 		}\n";
 

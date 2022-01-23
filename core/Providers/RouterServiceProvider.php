@@ -58,7 +58,7 @@ class RouterServiceProvider extends AbstractServiceProvider
 	 */
 	public function register()
 	{
-		$this->leagueContainer->add('router', function () {
+		$this->leagueContainer->add('router', function() {
 			static $router = null;
 
 			if ($router === null) {
@@ -78,7 +78,7 @@ class RouterServiceProvider extends AbstractServiceProvider
 			return $router;
 		});
 
-		$this->leagueContainer->add('request', function () {
+		$this->leagueContainer->add('request', function() {
 			$basePath = parse_url(
 				env('URL'),
 				PHP_URL_PATH
@@ -95,7 +95,7 @@ class RouterServiceProvider extends AbstractServiceProvider
 					$basePath .= '/';
 				}
 				if ($basePath[0] !== '/') {
-					return '/' . $basePath;
+					return '/'.$basePath;
 				}
 				$request = ServerRequest::fromGlobals();
 				$uri = $request->getUri();
@@ -149,11 +149,11 @@ class RouterServiceProvider extends AbstractServiceProvider
 	protected function getControllerPaths(): array
 	{
 		$paths = [
-			ICMS_ROOT_PATH . '/core/Controllers'
+			ICMS_ROOT_PATH.'/core/Controllers'
 		];
 
 		foreach (ModuleHandler::getActive() as $moduleDir) {
-			$path = ICMS_MODULES_PATH . '/' . $moduleDir . '/Controllers';
+			$path = ICMS_MODULES_PATH.'/'.$moduleDir.'/Controllers';
 			if (is_dir($path)) {
 				$paths[] = $path;
 			}
@@ -215,8 +215,8 @@ class RouterServiceProvider extends AbstractServiceProvider
 		}
 
 		if ($configMain['gzip_compression']) {
-			$middleware[] = $this->container->get('\\' . GzipEncoder::class);
-			$middleware[] = $this->container->get('\\' . DeflateEncoder::class);
+			$middleware[] = $this->container->get('\\'.GzipEncoder::class);
+			$middleware[] = $this->container->get('\\'.DeflateEncoder::class);
 		}
 
 		if ($configMain['enable_badips']) {
@@ -224,7 +224,7 @@ class RouterServiceProvider extends AbstractServiceProvider
 			$middleware[] = (
 			new Firewall(
 				null,
-				$this->container->get('\\' . ResponseFactory::class)
+				$this->container->get('\\'.ResponseFactory::class)
 			)
 			)
 				->blacklist(
@@ -276,7 +276,7 @@ class RouterServiceProvider extends AbstractServiceProvider
 			return null;
 		}
 
-		return (count($parts) > 1) ? ('(' . implode('|', $parts) . ')') : $parts[0];
+		return (count($parts) > 1) ? ('('.implode('|', $parts).')') : $parts[0];
 	}
 
 	/**
@@ -332,10 +332,10 @@ class RouterServiceProvider extends AbstractServiceProvider
 			}
 
 			if ($pathsParts[count($pathsParts) - 1] === 'index.php') {
-				$paths[] = $prefix . '/' . implode('/', array_slice($pathsParts, 0, -1)) . '/';
+				$paths[] = $prefix.'/'.implode('/', array_slice($pathsParts, 0, -1)).'/';
 			}
 
-			$paths[] = $prefix . '/' . $path;
+			$paths[] = $prefix.'/'.$path;
 		}
 
 		return $paths;
@@ -400,7 +400,7 @@ class RouterServiceProvider extends AbstractServiceProvider
 				true,
 				['admin_header.php', 'icms_version.php'],
 				$ignoredExts,
-				static function (array $pathParts) {
+				static function(array $pathParts) {
 					return !in_array($pathParts[1], ['language', 'class', 'blocks', 'Extensions'], true);
 				}
 			);
@@ -411,7 +411,7 @@ class RouterServiceProvider extends AbstractServiceProvider
 
 		return implode(
 			'|',
-			array_map(function ($path) {
+			array_map(function($path) {
 				return preg_quote($path, '/');
 			}, $paths)
 		);

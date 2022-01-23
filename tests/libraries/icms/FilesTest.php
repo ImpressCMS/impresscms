@@ -23,10 +23,10 @@ class FilesTest extends TestCase {
                 'icms_file_TarDownloader' => 'icms_file_DownloadHandler',
                 'icms_file_ZipDownloader' => 'icms_file_DownloadHandler'
             ] as $class => $must_be_instance_of) {
-                $this->assertTrue(class_exists($class, true), $class . " class doesn't exist");
+                $this->assertTrue(class_exists($class, true), $class." class doesn't exist");
             if ($must_be_instance_of !== null) {
                 $instance = $this->getClassInstance($class);
-                $this->assertInstanceOf($must_be_instance_of, $instance, $class . ' is not instanceof ' . $must_be_instance_of);
+                $this->assertInstanceOf($must_be_instance_of, $instance, $class.' is not instanceof '.$must_be_instance_of);
             }
         }
     }
@@ -86,7 +86,7 @@ class FilesTest extends TestCase {
             ]
         ] as $class => $methods) {
             foreach ($methods as $method) {
-                $this->assertTrue(method_exists($class, $method), 'Static method ' . $method . ' doesn\'t exists for class ' . $class);
+                $this->assertTrue(method_exists($class, $method), 'Static method '.$method.' doesn\'t exists for class '.$class);
             }
         }
     }

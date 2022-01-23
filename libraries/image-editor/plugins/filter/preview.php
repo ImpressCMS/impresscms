@@ -31,7 +31,7 @@ if (!is_null($filter)) {
 			echo $img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->asString('png');
 		}
 	} else {
-		if ($resize && ($width > 400 || $height > 300)){
+		if ($resize && ($width > 400 || $height > 300)) {
 			echo $img->resize(400, 300)->applyFilter(constant($filter), implode(',', $args))->asString('png');
 		} else {
 			echo $img->applyFilter(constant($filter), implode(',', $args))->asString('png');

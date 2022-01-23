@@ -32,7 +32,7 @@ $vars = & $_SESSION['settings'];
 if (!isset($vars['DB_HOST']) || false !== @strpos($_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0')) {
 	$keys = array('DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT');
 	foreach ($keys as $k) {
-		$vars[$k] = defined("XOOPS_$k")? constant("XOOPS_$k"):'';
+		$vars[$k] = defined("XOOPS_$k") ? constant("XOOPS_$k") : '';
 	}
 	$vars['DB_PASS'] = '';
 }
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	foreach ($params as $name) {
 		$vars[$name] = $_POST[$name];
 	}
-	$vars['DB_PCONNECT'] = @$_POST['DB_PCONNECT']?1:0;
+	$vars['DB_PCONNECT'] = @$_POST['DB_PCONNECT'] ? 1 : 0;
 }
 
 $error = '';
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($
 		}
 		foreach ($vars as $key => $value) {
 			$_SESSION['settings'][$key] = $value;
-			putenv("$key=" . $value);
+			putenv("$key=".$value);
 			$_ENV[$key] = $value;
 			$_SERVER[$key] = $value;
 		}
@@ -94,7 +94,7 @@ function xoFormField($name, $value, $label, $help = '', $type = 'text') {
 
 	$field = "<label for='$name'>$label</label>\n";
 	if ($help) {
-		$field .= '<div class="xoform-help">' . $help . "</div>\n";
+		$field .= '<div class="xoform-help">'.$help."</div>\n";
 	}
 	$field .= "<div class='clear'>&nbsp;</div><input type='$type' name='$name' id='$name' value='$value' />";
 
@@ -105,7 +105,7 @@ function xoFormField($name, $value, $label, $help = '', $type = 'text') {
 ob_start();
 ?>
 <?php if (!empty($error)) {
-	echo '<div class="x2-note error">' . $error . "</div>\n";
+	echo '<div class="x2-note error">'.$error."</div>\n";
 }
 ?>
 <h3><?php echo LEGEND_CONNECTION; ?></h3>
@@ -118,7 +118,7 @@ ob_start();
 		if (!empty($option['selected'])) {
 			$selected = " selected='selected'";
 		}
-		echo "<option value='" . $option['type'] . "'" . $selected . ">" . $option['name'] . "</option>";
+		echo "<option value='".$option['type']."'".$selected.">".$option['name']."</option>";
  	}
 ?>
 </select> </label>
@@ -135,7 +135,7 @@ ob_start();
 <label> <?php echo htmlspecialchars(DB_PCONNECT_LABEL); ?> <input
 	class="checkbox" type="checkbox" name="DB_PCONNECT" value="1"
 	onclick="alert('<?php echo htmlspecialchars(DB_PCONNECT_HELPS); ?>');"
-	<?php echo $vars['DB_PCONNECT']?"'checked'":""; ?> />
+	<?php echo $vars['DB_PCONNECT'] ? "'checked'" : ""; ?> />
 <div class="xoform-help"><?php echo htmlspecialchars(DB_PCONNECT_HELP); ?></div>
 </label>
 	<?php

@@ -56,7 +56,7 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	 * @return string
 	 */
 	protected function getCacheFilename(): string {
-		return ICMS_CACHE_PATH . '/translations.php';
+		return ICMS_CACHE_PATH.'/translations.php';
 	}
 
 	/**
@@ -71,9 +71,9 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 			'/**',
 			' * This file is generated and updated automatically. Do not edit!',
 			' *',
-			' * @var ' . Translator::class . ' $translator',
-			' * @var ' . LoaderInterface::class . ' $translationLoader',
-			' * @var ' . Container::class . ' $container',
+			' * @var '.Translator::class.' $translator',
+			' * @var '.LoaderInterface::class.' $translationLoader',
+			' * @var '.Container::class.' $container',
 			' */',
 			'',
 		];
@@ -102,10 +102,10 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	 */
 	protected function getLanguageFolders(): array {
 		$folders = [
-			ICMS_ROOT_PATH . '/language/'
+			ICMS_ROOT_PATH.'/language/'
 		];
 		foreach (ModuleHandler::getActive() as $moduleName) {
-			$path = ICMS_ROOT_PATH . '/modules/' . $moduleName . '/language/';
+			$path = ICMS_ROOT_PATH.'/modules/'.$moduleName.'/language/';
 			if (file_exists($path) && is_dir($path)) {
 				$folders[] = $path;
 			}
@@ -149,13 +149,13 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 		return sprintf(
 			'$translator->addResource(%s, %s, %s, %s);',
 			var_export(
-				'.' . strtolower(
+				'.'.strtolower(
 					$fileInfo->getExtension()
 				),
 				true
 			),
 			var_export(
-				$fileInfo->getPath() . '/' . $fileInfo->getFileName(),
+				$fileInfo->getPath().'/'.$fileInfo->getFileName(),
 				true
 			),
 			var_export(
@@ -217,7 +217,7 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 	private function makeLoaderName(ReflectionClass $reflection): string {
 		$shortName = $reflection->getShortName();
 		if (substr($shortName, -strlen('FileLoader')) === 'FileLoader') {
-			return '.' . str_replace('FileLoader', '', $shortName);
+			return '.'.str_replace('FileLoader', '', $shortName);
 		}
 		return str_replace('Loader', '', $shortName);
 	}
@@ -237,9 +237,9 @@ class TranslatorServiceProvider extends AbstractServiceProvider implements Servi
 				mb_substr(
 					$fileInfo->getPath(),
 					mb_strlen(
-						$dirInfo->getPath() . '/' . $dirInfo->getFilename()
+						$dirInfo->getPath().'/'.$dirInfo->getFilename()
 					)
-				). '/' . $fileInfo->getBaseName('.' . $fileInfo->getExtension())
+				).'/'.$fileInfo->getBaseName('.'.$fileInfo->getExtension())
 			),
 			'.'
 		);

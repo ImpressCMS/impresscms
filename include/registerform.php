@@ -63,7 +63,7 @@ $reg_form->addElement(new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', 
 
 if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] != '') {
 	$disc_tray = new icms_form_elements_Tray(_US_DISCLAIMER, '<br />');
-	$disclaimer_html = '<div id="disclaimer">' . nl2br($icmsConfigUser['reg_disclaimer']) . '</div>';
+	$disclaimer_html = '<div id="disclaimer">'.nl2br($icmsConfigUser['reg_disclaimer']).'</div>';
 	$disc_text = new icms_form_elements_Label('', $disclaimer_html, 'disclaimer');
 	$disc_tray->addElement($disc_text);
 	$agree_chk = new icms_form_elements_Checkbox('', 'agree_disc', $agree_disc);

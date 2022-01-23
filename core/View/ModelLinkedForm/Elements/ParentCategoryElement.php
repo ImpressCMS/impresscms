@@ -25,7 +25,7 @@ class ParentCategoryElement extends \ImpressCMS\Core\View\Form\Elements\SelectEl
 
 		$addNoParent = $object->controls[$key]['addNoParent'] ?? true;
 		$criteria = new CriteriaCompo();
-		$criteria->setSort('weight, ' . $category_title_field);
+		$criteria->setSort('weight, '.$category_title_field);
 		$category_handler = icms_getModuleHandler('category', $object->handler->_moduleName);
 		$categories = $category_handler->getObjects($criteria);
 
@@ -58,7 +58,7 @@ class ParentCategoryElement extends \ImpressCMS\Core\View\Form\Elements\SelectEl
 	private function getOptionArray($tree, $fieldName, $key, &$ret, $prefix_curr = '') {
 		if ($key > 0) {
 			$value = $tree->_tree[$key]['obj']->getVar($tree->_myId);
-			$ret[$key] = $prefix_curr . $tree->_tree[$key]['obj']->getVar($fieldName);
+			$ret[$key] = $prefix_curr.$tree->_tree[$key]['obj']->getVar($fieldName);
 			$prefix_curr .= '-';
 		}
 

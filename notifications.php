@@ -114,7 +114,7 @@ if (in_array($op, $valid_op)) {
 					$not_config = $module->getInfo('notification');
 					$lookup_func = '';
 					if (!empty($not_config['lookup_file'])) {
-						$lookup_file = ICMS_ROOT_PATH . '/modules/' . $module->dirname . '/' . $not_config['lookup_file'];
+						$lookup_file = ICMS_ROOT_PATH.'/modules/'.$module->dirname.'/'.$not_config['lookup_file'];
 						if (file_exists($lookup_file)) {
 							include_once $lookup_file;
 							if (!empty($not_config['lookup_func']) && function_exists($not_config['lookup_func'])) {
@@ -136,7 +136,7 @@ if (in_array($op, $valid_op)) {
 					if (!empty($lookup_func)) {
 						$item_info = $lookup_func($category, $item);
 					} else {
-						$item_info = array('name'=>'[' . _NOT_NAMENOTAVAILABLE . ']', 'url'=>'');
+						$item_info = array('name'=>'['._NOT_NAMENOTAVAILABLE.']', 'url'=>'');
 					}
 					$modules[$modid]['categories'][$category]['items'][$item] = array('id' => $item,
 																						'name' => $item_info['name'],
@@ -157,7 +157,7 @@ if (in_array($op, $valid_op)) {
 				);
 			}
 			$xoopsOption['template_main'] = 'system_notification_list.html';
-			include ICMS_ROOT_PATH . '/header.php';
+			include ICMS_ROOT_PATH.'/header.php';
 			$xoopsTpl->assign('modules', $modules);
 			$user_info = array('uid' => icms::$user->uid);
 			$xoopsTpl->assign('user', $user_info);
@@ -173,7 +173,7 @@ if (in_array($op, $valid_op)) {
 			$xoopsTpl->assign('lang_itemname', _NOT_ITEMNAME);
 			$xoopsTpl->assign('lang_activenotifications', _NOT_ACTIVENOTIFICATIONS);
 			$xoopsTpl->assign('notification_token', icms::$security->createToken());
-			include ICMS_ROOT_PATH . '/footer.php';
+			include ICMS_ROOT_PATH.'/footer.php';
 
 			// TODO: another display mode... instead of one notification per line,
 			// show one line per item_id, with checkboxes for the available options...
@@ -196,11 +196,11 @@ if (in_array($op, $valid_op)) {
 			if (empty($_POST['del_not'])) {
 				redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
 			}
-			include ICMS_ROOT_PATH . '/header.php';
+			include ICMS_ROOT_PATH.'/header.php';
 			$hidden_vars = array('uid'=>$uid, 'delete_ok'=>1, 'del_not'=>$_POST['del_not']);
-			print '<h4>' . _NOT_DELETINGNOTIFICATIONS . '</h4>';
+			print '<h4>'._NOT_DELETINGNOTIFICATIONS.'</h4>';
 			icms_core_Message::confirm($hidden_vars, '', _NOT_RUSUREDEL);
-			include ICMS_ROOT_PATH . '/footer.php';
+			include ICMS_ROOT_PATH.'/footer.php';
 
 			// FIXME: There is a problem here... in icms_core_Message::confirm it treats arrays as
 			// optional radio arguments on the confirmation page... change this or

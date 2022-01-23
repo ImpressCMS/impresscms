@@ -54,7 +54,7 @@ class DateElement extends TextElement {
 	 * @param mixed		$value
 	 */
 	public function __construct($caption, $name, $size = 15, $value = 0) {
-		$value = !is_numeric($value)? time():(int) ($value);
+		$value = !is_numeric($value) ? time() : (int) ($value);
 		parent::__construct($caption, $name, $size, 25, $value);
 	}
 
@@ -67,13 +67,13 @@ class DateElement extends TextElement {
 		$ele_value = $this->getValue(false);
 		$jstime = formatTimestamp($ele_value, _SHORTDATESTRING);
 
-		include_once ICMS_ROOT_PATH . '/include/calendar' . ($icmsConfigPersona['use_jsjalali'] == true?'jalali':'') . 'js.php';
+		include_once ICMS_ROOT_PATH.'/include/calendar'.($icmsConfigPersona['use_jsjalali'] == true ? 'jalali' : '').'js.php';
 
 	if ($icmsConfigPersona['use_jsjalali']) {
-			include_once ICMS_ROOT_PATH . '/include/jalali.php';
+			include_once ICMS_ROOT_PATH.'/include/jalali.php';
 		}
 
-		$result = "<input type='text' class='datepick'  name='" . $ele_name . "' id='" . $ele_name . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . date(_SHORTDATESTRING, $ele_value) . "'" . $this->getExtra() . " />";
+		$result = "<input type='text' class='datepick'  name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date(_SHORTDATESTRING, $ele_value)."'".$this->getExtra()." />";
 
 		return $result;
 	}

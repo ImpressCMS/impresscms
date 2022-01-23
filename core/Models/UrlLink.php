@@ -38,7 +38,7 @@ class UrlLink extends AbstractExtendedModel {
 		$this->setControl('target', ['options' => ['_self' => _CO_ICMS_URLLINK_SELF,
 			'_blank' => _CO_ICMS_URLLINK_BLANK]]);
 
-                parent::__construct($handler, $data);
+				parent::__construct($handler, $data);
 	}
 
 	/**
@@ -68,9 +68,9 @@ class UrlLink extends AbstractExtendedModel {
 	 * @return string html
 	 */
 	public function render() {
-		$ret  = "<a href='" . $this->getVar('url') . "' target='" . $this->getVar('target') . "' ";
-		$ret .= "title='" . $this->getVar('description') . "'>";
-		$ret .= $this->getVar('caption') . "</a>";
+		$ret  = "<a href='".$this->getVar('url')."' target='".$this->getVar('target')."' ";
+		$ret .= "title='".$this->getVar('description')."'>";
+		$ret .= $this->getVar('caption')."</a>";
 		return $ret;
 	}
 }

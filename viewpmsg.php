@@ -74,7 +74,7 @@ if ($messenger_module && $messenger_module->isactive) {
 */
 
 if (!is_object(icms::$user)) {
-	$errormessage = _PM_SORRY . '<br />' . _PM_PLZREG . '';
+	$errormessage = _PM_SORRY.'<br />'._PM_PLZREG.'';
 	redirect_header('user.php', 2, $errormessage);
 }
 
@@ -96,7 +96,7 @@ if (!empty($delete_messages) && isset($msg_id)) {
 }
 
 $xoopsOption['template_main'] = 'system_viewmsgs.html';
-require ICMS_ROOT_PATH . '/header.php';
+require ICMS_ROOT_PATH.'/header.php';
 
 $criteria = new icms_db_criteria_Item('to_userid', (int) (icms::$user->uid));
 $criteria->setOrder('DESC');

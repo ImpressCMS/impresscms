@@ -41,13 +41,13 @@ use ImpressCMS\Core\DataFilter;
 
 $cform = new icms_form_Theme(_CM_POSTCOMMENT, "commentform", "postcomment.php", "post", true);
 if (!preg_match("/^re:/i", $subject)) {
-	$subject = "Re: " . DataFilter::icms_substr($subject, 0, 56);
+	$subject = "Re: ".DataFilter::icms_substr($subject, 0, 56);
 }
 $cform->addElement(new icms_form_elements_Text(_CM_TITLE, 'subject', 50, 255, $subject), true);
 $icons_radio = new icms_form_elements_Radio(_MESSAGEICON, 'icon', $icon);
-$subject_icons = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH . "/images/subject/", '', array('gif', 'jpg', 'png'));
+$subject_icons = icms_core_Filesystem::getFileList(ICMS_ROOT_PATH."/images/subject/", '', array('gif', 'jpg', 'png'));
 foreach ($subject_icons as $iconfile) {
-	$icons_radio->addOption($iconfile, '<img src="' . ICMS_IMAGES_URL . '/subject/' . $iconfile . '" alt="" />');
+	$icons_radio->addOption($iconfile, '<img src="'.ICMS_IMAGES_URL.'/subject/'.$iconfile.'" alt="" />');
 }
 $cform->addElement($icons_radio);
 $cform->addElement(new icms_form_elements_Dhtmltextarea(_CM_MESSAGE, 'message', $message, 10, 50), true);

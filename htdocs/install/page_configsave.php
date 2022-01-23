@@ -46,9 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if ($cfg_name == 'ROOT_PATH') {
 			continue;
 		}
-		$rez .= $cfg_name . '=' . $cfg_value . "\n";
+		$rez .= $cfg_name.'='.$cfg_value."\n";
 	}
-	$env_file = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . '.env';
+	$env_file = ICMS_ROOT_PATH.DIRECTORY_SEPARATOR.'.env';
 
 	@chmod($env_file, 0777);
 	if (file_put_contents($env_file, $rez, LOCK_EX) === false) {
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$wizard->redirectToPage('+1');
 		exit();
 	}
-	$content = '<p class="errorMsg">' . $error . '</p>';
+	$content = '<p class="errorMsg">'.$error.'</p>';
 	include 'install_tpl.php';
 	exit();
 }

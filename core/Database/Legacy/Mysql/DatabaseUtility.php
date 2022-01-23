@@ -127,14 +127,14 @@ class DatabaseUtility implements DatabaseUtilityInterface {
 			// ... then check for start of a string,...
 				$in_string    = true;
 				$string_start = $char;
-			} elseif ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i - 2] . $sql[$i - 1] == '--')) {
+			} elseif ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i - 2].$sql[$i - 1] == '--')) {
 			// for start of a comment (and remove this comment if found)...
 				// starting position of the comment depends on the comment type
-				$start_of_comment = (($sql[$i] == '#')?$i:$i - 2);
+				$start_of_comment = (($sql[$i] == '#') ? $i : $i - 2);
 				// if no "\n" exits in the remaining string, checks for "\r"
 				// (Mac eol style)
-				$end_of_comment   = (strpos(' ' . $sql, "\012", $i + 2))
-					?: strpos(' ' . $sql, "\015", $i + 2);
+				$end_of_comment   = (strpos(' '.$sql, "\012", $i + 2))
+					?: strpos(' '.$sql, "\015", $i + 2);
 				if (!$end_of_comment) {
 					// no eol found after '#', add the parsed part to the returned
 					// array and exit
@@ -145,7 +145,7 @@ class DatabaseUtility implements DatabaseUtilityInterface {
 					}
 					return true;
 				} else {
-					$sql     = substr($sql, 0, $start_of_comment) . ltrim(substr($sql, $end_of_comment));
+					$sql     = substr($sql, 0, $start_of_comment).ltrim(substr($sql, $end_of_comment));
 					$sql_len = strlen($sql);
 					$i--;
 				}
@@ -235,15 +235,15 @@ class DatabaseUtility implements DatabaseUtilityInterface {
 			// ... then check for start of a string,...
 				$in_string    = true;
 				$string_start = $char;
-			} elseif ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i - 2] . $sql[$i - 1] == '--')) {
+			} elseif ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i - 2].$sql[$i - 1] == '--')) {
 			// for start of a comment (and remove this comment if found)...
 				// starting position of the comment depends on the comment type
-				$start_of_comment = (($sql[$i] == '#')?$i:$i - 2);
+				$start_of_comment = (($sql[$i] == '#') ? $i : $i - 2);
 				// if no "\n" exits in the remaining string, checks for "\r"
 				// (Mac eol style)
-				$end_of_comment   = (strpos(' ' . $sql, "\012", $i + 2))
-					? strpos(' ' . $sql, "\012", $i + 2)
-					: strpos(' ' . $sql, "\015", $i + 2);
+				$end_of_comment   = (strpos(' '.$sql, "\012", $i + 2))
+					? strpos(' '.$sql, "\012", $i + 2)
+					: strpos(' '.$sql, "\015", $i + 2);
 				if (!$end_of_comment) {
 					// no eol found after '#', add the parsed part to the returned
 					// array and exit
@@ -254,7 +254,7 @@ class DatabaseUtility implements DatabaseUtilityInterface {
 					}
 					return true;
 				} else {
-					$sql     = substr($sql, 0, $start_of_comment) . ltrim(substr($sql, $end_of_comment));
+					$sql     = substr($sql, 0, $start_of_comment).ltrim(substr($sql, $end_of_comment));
 					$sql_len = strlen($sql);
 					$i--;
 				}
@@ -279,7 +279,7 @@ class DatabaseUtility implements DatabaseUtilityInterface {
 		$pattern = "/^(INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
 		if (preg_match($pattern, $query, $matches) || preg_match($pattern2, $query, $matches)) {
-			$replace = "\\1 " . $prefix . "_\\4\\5";
+			$replace = "\\1 ".$prefix."_\\4\\5";
 			$matches[0] = preg_replace($pattern, $replace, $query);
 			return $matches;
 		}

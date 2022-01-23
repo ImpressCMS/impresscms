@@ -229,11 +229,11 @@ class ModuleAboutRenderer {
 		$module_handler = icms::handler('icms_module');
 		$versioninfo = & $module_handler->get($icmsModule->mid);
 
-		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . ' ' . $versioninfo->getInfo('name'));
+		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle.' '.$versioninfo->getInfo('name'));
 
 		$this->_tpl = new Template();
 
-		$this->_tpl->assign('module_url', ICMS_URL . "/modules/" . $icmsModule->dirname . "/");
+		$this->_tpl->assign('module_url', ICMS_URL."/modules/".$icmsModule->dirname."/");
 		$this->_tpl->assign('module_image', $versioninfo->getInfo('image'));
 		$this->_tpl->assign('module_name', $versioninfo->getInfo('name'));
 		$this->_tpl->assign('module_version', $versioninfo->getInfo('version'));
@@ -241,7 +241,7 @@ class ModuleAboutRenderer {
 
 		// Left headings...
 		if ($versioninfo->getInfo('author_realname')) {
-			$author_name = $versioninfo->getInfo('author') . ' (' . $versioninfo->getInfo('author_realname') . ')';
+			$author_name = $versioninfo->getInfo('author').' ('.$versioninfo->getInfo('author_realname').')';
 		} else {
 			$author_name = $versioninfo->getInfo('author');
 		}
@@ -297,7 +297,7 @@ class ModuleAboutRenderer {
 		// Manual
 		$manual = $versioninfo->getInfo('manual');
 		if ($manual) {
-			$this->_tpl->assign('module_manual', isset($manual['wiki'])? array_map(array($this, 'sanitize'), $manual['wiki']):false);
+			$this->_tpl->assign('module_manual', isset($manual['wiki']) ? array_map(array($this, 'sanitize'), $manual['wiki']) : false);
 		}
 
 		// Warning
@@ -308,7 +308,7 @@ class ModuleAboutRenderer {
 
 		// For changelog thanks to 3Dev
 		//global $icmsModule;
-		$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/changelog.txt';
+		$filename = ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/changelog.txt';
 		if (is_file($filename)) {
 
 			$filesize = filesize($filename);
@@ -317,7 +317,7 @@ class ModuleAboutRenderer {
 			fclose($handle);
 		}
 
-		$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/docs/changelog.txt';
+		$filename = ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/docs/changelog.txt';
 		if (is_file($filename)) {
 
 			$filesize = filesize($filename);
@@ -327,16 +327,16 @@ class ModuleAboutRenderer {
 		}
 
 		// For license thanks to 3Dev
-		if (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/docs/license.txt')) {
-			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/docs/license.txt';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/docs/' . $icmsConfig['language'] . '_license.txt')) {
-			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/docs/' . $icmsConfig['language'] . '_license.txt';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license.txt')) {
-			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license.txt';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license/' . $icmsConfig['language'] . '_license.txt')) {
-			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license/' . $icmsConfig['language'] . '_license.txt';
-		} elseif (file_exists(ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license.txt')) {
-			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->dirname . '/license.txt';
+		if (file_exists(ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/docs/license.txt')) {
+			$filename = ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/docs/license.txt';
+		} elseif (file_exists(ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/docs/'.$icmsConfig['language'].'_license.txt')) {
+			$filename = ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/docs/'.$icmsConfig['language'].'_license.txt';
+		} elseif (file_exists(ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/license.txt')) {
+			$filename = ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/license.txt';
+		} elseif (file_exists(ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/license/'.$icmsConfig['language'].'_license.txt')) {
+			$filename = ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/license/'.$icmsConfig['language'].'_license.txt';
+		} elseif (file_exists(ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/license.txt')) {
+			$filename = ICMS_ROOT_PATH.'/modules/'.$icmsModule->dirname.'/license.txt';
 		}
 		if (is_file($filename)) {
 			$filesize = filesize($filename);

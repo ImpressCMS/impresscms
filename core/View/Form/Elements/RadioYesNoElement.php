@@ -56,8 +56,8 @@ class RadioYesNoElement extends RadioElement {
 	 */
 	public function __construct($caption, $name, $value = null, $yes = _YES, $no = _NO) {
 		parent::__construct($caption, $name, $value);
-		$this->addOption(1, '&nbsp;' . $yes . '&nbsp;');
-		$this->addOption(0, '&nbsp;' . $no);
+		$this->addOption(1, '&nbsp;'.$yes.'&nbsp;');
+		$this->addOption(0, '&nbsp;'.$no);
 	}
 }
 
