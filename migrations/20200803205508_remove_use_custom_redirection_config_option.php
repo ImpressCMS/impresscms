@@ -1,8 +1,8 @@
 <?php
 
-use Phoenix\Migration\AbstractMigration;
+use ImpressCMS\Core\Database\AbstractDatabaseMigration;
 
-class RemoveUseCustomRedirectionConfigOption extends AbstractMigration
+class RemoveUseCustomRedirectionConfigOption extends AbstractDatabaseMigration
 {
     protected function up(): void
     {
@@ -51,16 +51,4 @@ class RemoveUseCustomRedirectionConfigOption extends AbstractMigration
 			]
 		);
     }
-
-	/**
-	 * Prefix table
-	 *
-	 * @param string $table Table to prefix
-	 *
-	 * @return string
-	 */
-	private function prefix(string $table): string
-	{
-		return \icms::getInstance()->get('db-connection-1')->prefix($table);
-	}
 }

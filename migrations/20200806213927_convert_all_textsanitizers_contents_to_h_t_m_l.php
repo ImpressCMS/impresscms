@@ -1,8 +1,9 @@
 <?php
 
-use Phoenix\Migration\AbstractMigration;
+use Imponeer\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Database\AbstractDatabaseMigration;
 
-class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
+class ConvertAllTextsanitizersContentsToHTML extends AbstractDatabaseMigration
 {
 	protected function up(): void
 	{
@@ -115,7 +116,7 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 				return $text;
 			}
 			$userHandler = & icms::handler('icms_member');
-			$criteria = new icms_db_criteria_Item('uname', $text);
+			$criteria = new CriteriaItem('uname', $text);
 			$userId = $userHandler->getUsers($criteria);
 			if (!$userId) {
 				return $prefix . "@" . $text;
@@ -296,13 +297,10 @@ class ConvertAllTextsanitizersContentsToHTML extends AbstractMigration
 	 */
 	private function getAllTablesNames(): array
 	{
-		/**
-		 * @var icms_db_Connection $db
-		 */
-		$db = icms::getInstance()->get('db-connection-1');
+		$db = $this->getDatabaseConnection();
 
 		$query = $db->prepareWithValues('SHOW TABLES LIKE :rule;', [
-			'rule' => $db->prefix('') . '%'
+			'rule' => $this->prefix('') . '%'
 		]);
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_COLUMN);

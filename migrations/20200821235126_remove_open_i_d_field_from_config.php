@@ -1,8 +1,8 @@
 <?php
 
-use Phoenix\Migration\AbstractMigration;
+use ImpressCMS\Core\Database\AbstractDatabaseMigration;
 
-class RemoveOpenIDFieldFromConfig extends AbstractMigration
+class RemoveOpenIDFieldFromConfig extends AbstractDatabaseMigration
 {
     protected function up(): void
     {
@@ -43,16 +43,4 @@ class RemoveOpenIDFieldFromConfig extends AbstractMigration
 			'conf_order' => 1
 		]);
     }
-
-	/**
-	 * Prefix table
-	 *
-	 * @param string $table Table to prefix
-	 *
-	 * @return string
-	 */
-	private function prefix(string $table): string
-	{
-		return \icms::getInstance()->get('db-connection-1')->prefix($table);
-	}
 }

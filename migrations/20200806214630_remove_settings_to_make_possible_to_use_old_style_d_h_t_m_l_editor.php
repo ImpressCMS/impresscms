@@ -1,9 +1,9 @@
 <?php
 
+use ImpressCMS\Core\Database\AbstractDatabaseMigration;
 use ImpressCMS\Core\Extensions\Editors\EditorsRegistry;
-use Phoenix\Migration\AbstractMigration;
 
-class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractMigration
+class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractDatabaseMigration
 {
     protected function up(): void
     {
@@ -22,16 +22,16 @@ class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractMigra
 			]
 		);
 
-		if (!icms::getInstance()->has('\\' . EditorsRegistry::class)) {
+		if (!$this->getContainer()->has('\\' . EditorsRegistry::class)) {
 			icms::getInstance()->boot(false);
 		}
 
 		/**
 		 * @var EditorsRegistry $editorRegistry
 		 */
-		$editorRegistry = icms::getInstance()->get('\\' . EditorsRegistry::class);
+		$editorRegistry = $this->getContainer()->get('\\' . EditorsRegistry::class);
 
-		icms::getInstance()->get('cache')->clear();
+		$this->getContainer()->get('cache')->clear();
 
 		$this->update(
 			$this->prefix('config'),
@@ -80,16 +80,4 @@ class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractMigra
 		);
 		// We can't rollback default editor, so we doing here nothing about that
     }
-
-	/**
-	 * Prefix table
-	 *
-	 * @param string $table Table to prefix
-	 *
-	 * @return string
-	 */
-	private function prefix(string $table): string
-	{
-		return icms::getInstance()->get('db-connection-1')->prefix($table);
-	}
 }

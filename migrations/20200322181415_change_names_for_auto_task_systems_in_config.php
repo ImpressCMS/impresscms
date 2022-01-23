@@ -1,8 +1,8 @@
 <?php
 
-use Phoenix\Migration\AbstractMigration;
+use ImpressCMS\Core\Database\AbstractDatabaseMigration;
 
-class ChangeNamesForAutoTaskSystemsInConfig extends AbstractMigration
+class ChangeNamesForAutoTaskSystemsInConfig extends AbstractDatabaseMigration
 {
 	protected function up(): void
 	{
@@ -70,17 +70,5 @@ class ChangeNamesForAutoTaskSystemsInConfig extends AbstractMigration
 				'conf_value' => 'IcmsAutoTasksCron'
 			]
 		);
-	}
-
-	/**
-	 * Prefix table
-	 *
-	 * @param string $table Table to prefix
-	 *
-	 * @return string
-	 */
-	private function prefix(string $table): string
-	{
-		return \icms::getInstance()->get('db-connection-1')->prefix($table);
 	}
 }

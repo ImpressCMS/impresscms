@@ -1,9 +1,9 @@
 <?php
 
+use ImpressCMS\Core\Database\AbstractDatabaseMigration;
 use ImpressCMS\Core\Facades\Config;
-use Phoenix\Migration\AbstractMigration;
 
-class AddSessionExtensionSettingsOption extends AbstractMigration
+class AddSessionExtensionSettingsOption extends AbstractDatabaseMigration
 {
     protected function up(): void
     {
@@ -40,16 +40,4 @@ class AddSessionExtensionSettingsOption extends AbstractMigration
 			'UPDATE ' . $this->prefix('config') . ' SET conf_order = conf_order - 1 WHERE conf_order > 21'
 		);
     }
-
-	/**
-	 * Prefix table
-	 *
-	 * @param string $table Table to prefix
-	 *
-	 * @return string
-	 */
-	private function prefix(string $table): string
-	{
-		return icms::getInstance()->get('db-connection-1')->prefix($table);
-	}
 }

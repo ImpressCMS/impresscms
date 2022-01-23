@@ -1,23 +1,21 @@
 <?php
 
-use Phoenix\Migration\AbstractMigration;
+use ImpressCMS\Core\Database\AbstractDatabaseMigration;
 
-class SetupBlockLinks extends AbstractMigration
+class SetupBlockLinks extends AbstractDatabaseMigration
 {
+
     protected function up(): void
     {
-		/**
-		 * @var \icms_db_Connection $dbm
-		 */
-		$dbm = \icms::getInstance()->get('db-connection-1');
+		$dbm = $this->getDatabaseConnection();
 
-		if (((int)($dbm->fetchCol('SELECT COUNT(*) FROM `' . $dbm->prefix('block_module_link') . '`;')[0]) > 0)) {
+		if (((int)($dbm->fetchCol('SELECT COUNT(*) FROM `' . $this->prefix('block_module_link') . '`;')[0]) > 0)) {
 			// skipping this migration if at least one block_module_link is found
 			return;
 		}
 
 		// data for table 'block_module_link'
-		$sql = 'SELECT bid, side, template FROM ' . $dbm->prefix('newblocks');
+		$sql = 'SELECT bid, side, template FROM ' . $this->prefix('newblocks');
 		$result = $dbm->query($sql);
 
 		$links = [];
@@ -44,7 +42,10 @@ class SetupBlockLinks extends AbstractMigration
 			}
 		}
 
-		$this->insert($dbm->prefix('block_module_link'), $links);
+		$this->insert(
+			$this->prefix('block_module_link'),
+			$links
+		);
     }
 
     protected function down(): void
