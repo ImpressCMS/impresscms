@@ -505,6 +505,11 @@
     "bin-dir": "bin",
     "platform": {
       "php": "7.3.0"
+    },
+    "allow-plugins": {
+      "0.0.0/composer-include-files": true,
+      "typo3/class-alias-loader": true,
+      "impresscms/composer-addon-installer-plugin": true
     }
   },
   "scripts": {
