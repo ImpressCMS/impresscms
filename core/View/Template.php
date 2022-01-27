@@ -87,13 +87,13 @@ class Template extends Smarty
 			if ($plugin instanceof SmartyResourceInterface) {
 				$this->registerResource($name, $plugin);
 			} elseif ($plugin instanceof SmartyFunctionInterface) {
-				$this->register_function($name, [$plugin, 'execute']);
+				$this->registerPlugin('function', $name, [$plugin, 'execute']);
 			} elseif ($plugin instanceof SmartyBlockInterface) {
-				$this->register_block($name, [$plugin, 'execute']);
+				$this->registerPlugin('block', $name, [$plugin, 'execute']);
 			} elseif ($plugin instanceof SmartyCompilerInterface) {
-				$this->register_compiler_function($name, [$plugin, 'execute']);
+				$this->registerPlugin('compiler', $name,  [$plugin, 'execute']);
 			} else {
-				$this->register_modifier($name, [$plugin, 'execute']);
+				$this->registerPlugin('modifier', $name, [$plugin, 'execute']);
 			}
 		}
 
