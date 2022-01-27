@@ -166,8 +166,13 @@ class MessageSender {
 		$this->reset();
 	}
 
-	// reset all properties to default
-	public function reset() {
+	/**
+	 * Resets all properties to default
+	 *
+	 * @return $this
+	 */
+	public function reset(): MessageSender
+	{
 		$this->fromEmail = '';
 		$this->fromName = '';
 		$this->fromUser = null;
@@ -186,57 +191,153 @@ class MessageSender {
 		$this->templatedir = '';
 		// Change below to \r\n if you have problem sending mail
 		$this->LE = "\n";
+
+		return $this;
 	}
 
-	public function setTemplateDir($value) {
-		if (substr($value, -1, 1) !== '/') {
+	/**
+	 * Sets template dir
+	 *
+	 * @param string $value Template dir
+	 *
+	 * @return MessageSender
+	 */
+	public function setTemplateDir(string $value): MessageSender
+	{
+		if ($value[strlen($value) - 1] !== '/') {
 			$value .= '/';
 		}
 		$this->templatedir = $value;
+
+		return $this;
 	}
 
-	public function setTemplate($value) {
+	/**
+	 * Sets template
+	 *
+	 * @param string $value Template
+	 *
+	 * @return MessageSender
+	 */
+	public function setTemplate(string $value): MessageSender
+	{
 		$this->template = $value;
+
+		return $this;
 	}
 
-	public function setFromEmail($value) {
+	/**
+	 * Sets from name
+	 *
+	 * @param string $value From name
+	 *
+	 * @return MessageSender
+	 */
+	public function setFromEmail(string $value): MessageSender
+	{
 		$this->fromEmail = trim($value);
+
+		return $this;
 	}
 
-	public function setFromName($value) {
+	/**
+	 * Sets from name
+	 *
+	 * @param string $value From name
+	 */
+	public function setFromName(string $value): MessageSender
+	{
 		$this->fromName = trim($value);
+
+		return $this;
 	}
 
-	public function setFromUser(&$user) {
-		if (get_class($user) === User::class) {
-			$this->fromUser = & $user;
-		}
+	/**
+	 * Sets message author
+	 *
+	 * @param User $user Author
+	 *
+	 * @return $this
+	 */
+	public function setFromUser(User $user): MessageSender
+	{
+		$this->fromUser = & $user;
+
+		return $this;
 	}
 
-	public function setPriority($value) {
+	/**
+	 * Sets message priority
+	 *
+	 * @param int $value Priority
+	 *
+	 * @return $this
+	 */
+	public function setPriority($value): MessageSender
+	{
 		$this->priority = trim($value);
+
+		return $this;
 	}
 
-	public function setSubject($value) {
+	/**
+	 * Sets subject for message
+	 *
+	 * @param string $value Subject
+	 *
+	 * @return $this
+	 */
+	public function setSubject(string $value): MessageSender
+	{
 		$this->subject = trim($value);
+
+		return $this;
 	}
 
-	public function useMail() {
+	/**
+	 * Sets that sender use mail for the message
+	 *
+	 * @return $this
+	 */
+	public function useMail(): MessageSender
+	{
 		$this->isMail = true;
+
+		return $this;
 	}
 
-	public function usePM() {
+	/**
+	 * Sets that sender uses private messages for the message
+	 *
+	 * @return $this
+	 */
+	public function usePM(): MessageSender
+	{
 		$this->isPM = true;
+
+		return $this;
 	}
 
-	public function send($debug = false) {
+	/**
+	 * Sends message
+	 *
+	 * @param bool $debug Need to debug ?
+	 *
+	 * @return bool
+	 *
+	 * @throws Exception
+	 */
+	public function send(bool $debug = false): bool
+	{
 		global $icmsConfig;
 		if (empty($this->body) && empty($this->template)) {
 			if ($debug) {
 				$this->errors[] = _MAIL_MSGBODY;
 			}
 			return false;
-		} elseif ($this->template) {
+		}
+
+		if ($this->template) {
 			$path = ($this->templatedir)?$this->templatedir . '' . $this->template:(ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/' . $this->template);
 			if (!($fd = @fopen($path, 'r'))) {
 				if ($debug) {
@@ -328,34 +429,51 @@ class MessageSender {
 					}
 				}
 			}
-			flush();
 		}
-		if (count($this->errors) > 0) {
-			return false;
-		}
-		return true;
+		return count($this->errors) <= 0;
 	}
 
-	public function setBody($value)
+	/**
+	 * Sets body content;
+	 *
+	 * @param string $value Body
+	 *
+	 * @return $this
+	 */
+	public function setBody($value): MessageSender
 	{
 		$this->body = trim($value);
+
+		return $this;
 	}
 
-	public function assign($tag, $value = null)
+	/**
+	 * Assign value to template
+	 *
+	 * @param string|array<string, mixed> $tag Template tag to replace or with tags and valies
+	 * @param mixed $value Values
+	 *
+	 * @return $this
+	 */
+	public function assign($tag, $value = null): MessageSender
 	{
 		if (is_array($tag)) {
 			foreach ($tag as $k => $v) {
 				$this->assign($k, $v);
 			}
-		} else {
-			if (!empty($tag) && isset($value)) {
-				$tag = strtoupper(trim($tag));
-				// TEMPORARY FIXME: until the X_tags are all in here
-				//				if (substr($tag, 0, 2) != "X_") {
-				$this->assignedTags[$tag] = $value;
-				//				}
-			}
+
+			return $this;
 		}
+
+		if (!empty($tag) && isset($value)) {
+			$tag = strtoupper(trim($tag));
+			// TEMPORARY FIXME: until the X_tags are all in here
+			//				if (substr($tag, 0, 2) != "X_") {
+			$this->assignedTags[$tag] = $value;
+			//				}
+		}
+
+		return $this;
 	}
 
 	/**
@@ -402,44 +520,43 @@ class MessageSender {
 		$pm->from_userid = $this->fromUser->uid ?? icms::$user->uid;
 		$pm->msg_text = $body;
 		$pm->to_userid = $uid;
-		if (!$pm_handler->insert($pm)) {
-			return false;
-		}
-		return true;
+		return (bool)$pm_handler->insert($pm);
 	}
 
 	public function getErrors($ashtml = true) {
 		if (!$ashtml) {
 			return $this->errors;
-		} else {
-			if (!empty($this->errors)) {
-				$ret = '<h4>' . _ERRORS . '</h4>';
-				foreach ($this->errors as $error) {
-					$ret .= $error . '<br />';
-				}
-			} else {
-				$ret = '';
-			}
-			return $ret;
 		}
+
+		if (!empty($this->errors)) {
+			$ret = '<h4>' . _ERRORS . '</h4>';
+			foreach ($this->errors as $error) {
+				$ret .= $error . '<br />';
+			}
+		} else {
+			$ret = '';
+		}
+		return $ret;
 	}
 
 	public function getSuccess($ashtml = true) {
 		if (!$ashtml) {
 			return $this->success;
-		} else {
-			$ret = '';
-			if (!empty($this->success)) {
-				foreach ($this->success as $suc) {
-					$ret .= $suc . '<br />';
-				}
-			}
-			return $ret;
 		}
+
+		$ret = '';
+		if (!empty($this->success)) {
+			foreach ($this->success as $suc) {
+				$ret .= $suc . '<br />';
+			}
+		}
+		return $ret;
 	}
 
 	public function addHeaders($value) {
 		$this->headers[] = trim($value) . $this->LE;
+
+		return $this;
 	}
 
 	public function setToEmails($email) {
@@ -467,7 +584,14 @@ class MessageSender {
 		}
 	}
 
-	public function setToUsers(&$user)
+	/**
+	 * Set for whom to send a message
+	 *
+	 * @param User[]|User $user For whom to send
+	 *
+	 * @return $this
+	 */
+	public function setToUsers($user): MessageSender
 	{
 		if (!is_array($user)) {
 			if (get_class($user) === User::class) {
@@ -475,9 +599,11 @@ class MessageSender {
 			}
 		} else {
 			foreach ($user as $u) {
-				$this->setToUsers($u);
+				$this->toUsers[] = $u;
 			}
 		}
+
+		return $this;
 	}
 
 }
