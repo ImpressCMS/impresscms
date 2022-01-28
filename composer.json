@@ -138,8 +138,7 @@
   },
   "require-dev": {
     "imponeer/smarty-debug": "^1.0",
-    "phpunit/phpunit": "^9.4",
-    "roave/security-advisories": "dev-master"
+    "phpunit/phpunit": "^9.4"
   },
   "extra": {
     "providers": [
