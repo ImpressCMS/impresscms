@@ -787,7 +787,7 @@ class Protector {
 		if ($this->_done_dos) return true;
 
 		$ip4sql = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
-		$uri4sql = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_VALIDATE_URL);
+		$uri4sql = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
 		if (empty($ip4sql) || $ip4sql == '') return true;
 
 		// gargage collection
@@ -904,7 +904,7 @@ class Protector {
 	//
 	function check_brute_force() {
 		$ip4sql = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
-		$uri4sql = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_VALIDATE_URL);
+		$uri4sql = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
 		if (empty($ip4sql) || $ip4sql == '') return true;
 
 		$victim_uname = empty($_COOKIE['autologin_uname']) ? filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_STRING) : filter_input(INPUT_COOKIE, 'autologin_uname', FILTER_SANITIZE_STRING);
@@ -962,7 +962,7 @@ class Protector {
 		$this->_spam_check_point_recursive($_POST);
 
 		if ($this->_spamcount_uri >= $points4deny) {
-			$this->message .= filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_VALIDATE_URL) . " SPAM POINT: $this->_spamcount_uri\n";
+			$this->message .= filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING) . " SPAM POINT: $this->_spamcount_uri\n";
 			$this->output_log('URI SPAM', $uid, false, 128);
 			$ret = $this->call_filter('spamcheck_overrun');
 			if ($ret == false) exit();
