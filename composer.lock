@@ -3251,16 +3251,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "2.3.0",
+            "version": "2.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "499313f8b65f9a4dae1c779cd974d59a6fcf0f15"
+                "reference": "ca8e4c10535be5c59c03f491310b60b9d6a60e24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/499313f8b65f9a4dae1c779cd974d59a6fcf0f15",
-                "reference": "499313f8b65f9a4dae1c779cd974d59a6fcf0f15",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/ca8e4c10535be5c59c03f491310b60b9d6a60e24",
+                "reference": "ca8e4c10535be5c59c03f491310b60b9d6a60e24",
                 "shasum": ""
             },
             "require": {
@@ -3277,7 +3277,8 @@
                 "aws/aws-sdk-php": "^3.132.4",
                 "composer/semver": "^3.0",
                 "ext-fileinfo": "*",
-                "friendsofphp/php-cs-fixer": "^2.16",
+                "ext-ftp": "*",
+                "friendsofphp/php-cs-fixer": "^3.2",
                 "google/cloud-storage": "^1.23",
                 "phpseclib/phpseclib": "^2.0",
                 "phpstan/phpstan": "^0.12.26",
@@ -3316,7 +3317,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/2.3.0"
+                "source": "https://github.com/thephpleague/flysystem/tree/2.4.2"
             },
             "funding": [
                 {
@@ -3332,20 +3333,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-22T06:09:19+00:00"
+            "time": "2022-01-31T19:40:25+00:00"
         },
         {
             "name": "league/mime-type-detection",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/mime-type-detection.git",
-                "reference": "b38b25d7b372e9fddb00335400467b223349fd7e"
+                "reference": "aa70e813a6ad3d1558fc927863d47309b4c23e69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/b38b25d7b372e9fddb00335400467b223349fd7e",
-                "reference": "b38b25d7b372e9fddb00335400467b223349fd7e",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/aa70e813a6ad3d1558fc927863d47309b4c23e69",
+                "reference": "aa70e813a6ad3d1558fc927863d47309b4c23e69",
                 "shasum": ""
             },
             "require": {
@@ -3353,7 +3354,7 @@
                 "php": "^7.2 || ^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.18",
+                "friendsofphp/php-cs-fixer": "^3.2",
                 "phpstan/phpstan": "^0.12.68",
                 "phpunit/phpunit": "^8.5.8 || ^9.3"
             },
@@ -3376,7 +3377,7 @@
             "description": "Mime-type detection for Flysystem",
             "support": {
                 "issues": "https://github.com/thephpleague/mime-type-detection/issues",
-                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.8.0"
+                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.9.0"
             },
             "funding": [
                 {
@@ -3388,7 +3389,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-25T08:23:19+00:00"
+            "time": "2021-11-21T11:48:40+00:00"
         },
         {
             "name": "lulco/phoenix",
