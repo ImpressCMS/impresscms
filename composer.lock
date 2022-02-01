@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "775f6b776a1099ce395e7674673270a2",
+    "content-hash": "322e85bc90983f450d4882d384869adc",
     "packages": [
         {
             "name": "0.0.0/composer-include-files",
@@ -4460,24 +4460,29 @@
         },
         {
             "name": "phpexperts/laravel-env-polyfill",
-            "version": "v1.1.1",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpexpertsinc/Laravel57-env-polyfill.git",
-                "reference": "6f8209eb9c2cbb9581b9258b47504d86f912c3b3"
+                "url": "https://github.com/PHPExpertsInc/Laravel57-env-polyfill.git",
+                "reference": "e09e7dd710f6a3332406a3042f33d65541a34584"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/Laravel57-env-polyfill/zipball/6f8209eb9c2cbb9581b9258b47504d86f912c3b3",
-                "reference": "6f8209eb9c2cbb9581b9258b47504d86f912c3b3",
+                "url": "https://api.github.com/repos/PHPExpertsInc/Laravel57-env-polyfill/zipball/e09e7dd710f6a3332406a3042f33d65541a34584",
+                "reference": "e09e7dd710f6a3332406a3042f33d65541a34584",
                 "shasum": ""
             },
             "require": {
-                "0.0.0/composer-include-files": "^1.0",
+                "0.0.0/composer-include-files": "*",
                 "php": ">=7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "6.*"
+                "friendsofphp/php-cs-fixer": "*",
+                "phpexperts/dockerize": "*",
+                "phpexperts/skeleton": "*",
+                "phpstan/phpstan": "*",
+                "phpunit/phpunit": "9.*",
+                "squizlabs/php_codesniffer": "*"
             },
             "type": "library",
             "extra": {
@@ -4512,10 +4517,10 @@
                 "shim"
             ],
             "support": {
-                "issues": "https://github.com/phpexpertsinc/Laravel57-env-polyfill/issues",
-                "source": "https://github.com/phpexpertsinc/Laravel57-env-polyfill/tree/v1.1.1"
+                "issues": "https://github.com/PHPExpertsInc/Laravel57-env-polyfill/issues",
+                "source": "https://github.com/PHPExpertsInc/Laravel57-env-polyfill/tree/v1.5.0"
             },
-            "time": "2019-07-07T18:34:15+00:00"
+            "time": "2021-12-25T07:28:28+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -9610,5 +9615,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }
