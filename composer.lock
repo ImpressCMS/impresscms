@@ -2227,20 +2227,21 @@
         },
         {
             "name": "impresscms/composer-addon-installer-plugin",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/composer-addon-installer-plugin.git",
-                "reference": "9f4ba67805c412b317d8ace956c29dba1a330321"
+                "reference": "abaef15d5f987486c1f6bd1e45276bb5b0769ece"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/composer-addon-installer-plugin/zipball/9f4ba67805c412b317d8ace956c29dba1a330321",
-                "reference": "9f4ba67805c412b317d8ace956c29dba1a330321",
+                "url": "https://api.github.com/repos/ImpressCMS/composer-addon-installer-plugin/zipball/abaef15d5f987486c1f6bd1e45276bb5b0769ece",
+                "reference": "abaef15d5f987486c1f6bd1e45276bb5b0769ece",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
+                "php": ">7.2.5",
                 "phpexperts/laravel-env-polyfill": ">=1.0",
                 "vlucas/phpdotenv": ">=3.3.3"
             },
@@ -2269,9 +2270,9 @@
             "description": "This plugin allows the installation of ImpressCMS addons from composer",
             "support": {
                 "issues": "https://github.com/ImpressCMS/composer-addon-installer-plugin/issues",
-                "source": "https://github.com/ImpressCMS/composer-addon-installer-plugin/tree/v1.0.3"
+                "source": "https://github.com/ImpressCMS/composer-addon-installer-plugin/tree/v1.0.4"
             },
-            "time": "2021-10-14T20:21:46+00:00"
+            "time": "2021-10-16T14:33:48+00:00"
         },
         {
             "name": "impresscms/core-theme",
@@ -4461,24 +4462,29 @@
         },
         {
             "name": "phpexperts/laravel-env-polyfill",
-            "version": "v1.1.1",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpexpertsinc/Laravel57-env-polyfill.git",
-                "reference": "6f8209eb9c2cbb9581b9258b47504d86f912c3b3"
+                "url": "https://github.com/PHPExpertsInc/Laravel57-env-polyfill.git",
+                "reference": "e09e7dd710f6a3332406a3042f33d65541a34584"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpexpertsinc/Laravel57-env-polyfill/zipball/6f8209eb9c2cbb9581b9258b47504d86f912c3b3",
-                "reference": "6f8209eb9c2cbb9581b9258b47504d86f912c3b3",
+                "url": "https://api.github.com/repos/PHPExpertsInc/Laravel57-env-polyfill/zipball/e09e7dd710f6a3332406a3042f33d65541a34584",
+                "reference": "e09e7dd710f6a3332406a3042f33d65541a34584",
                 "shasum": ""
             },
             "require": {
-                "0.0.0/composer-include-files": "^1.0",
+                "0.0.0/composer-include-files": "*",
                 "php": ">=7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "6.*"
+                "friendsofphp/php-cs-fixer": "*",
+                "phpexperts/dockerize": "*",
+                "phpexperts/skeleton": "*",
+                "phpstan/phpstan": "*",
+                "phpunit/phpunit": "9.*",
+                "squizlabs/php_codesniffer": "*"
             },
             "type": "library",
             "extra": {
@@ -4513,10 +4519,10 @@
                 "shim"
             ],
             "support": {
-                "issues": "https://github.com/phpexpertsinc/Laravel57-env-polyfill/issues",
-                "source": "https://github.com/phpexpertsinc/Laravel57-env-polyfill/tree/v1.1.1"
+                "issues": "https://github.com/PHPExpertsInc/Laravel57-env-polyfill/issues",
+                "source": "https://github.com/PHPExpertsInc/Laravel57-env-polyfill/tree/v1.5.0"
             },
-            "time": "2019-07-07T18:34:15+00:00"
+            "time": "2021-12-25T07:28:28+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -5466,16 +5472,16 @@
         },
         {
             "name": "simplepie/simplepie",
-            "version": "1.5.6",
+            "version": "1.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplepie/simplepie.git",
-                "reference": "1c68e14ca3ac84346b6e6fe3c5eedf725d0f92c6"
+                "reference": "d1d80f37264c9f1ed7fa3434eca14d179cb689b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/1c68e14ca3ac84346b6e6fe3c5eedf725d0f92c6",
-                "reference": "1c68e14ca3ac84346b6e6fe3c5eedf725d0f92c6",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/d1d80f37264c9f1ed7fa3434eca14d179cb689b1",
+                "reference": "d1d80f37264c9f1ed7fa3434eca14d179cb689b1",
                 "shasum": ""
             },
             "require": {
@@ -5485,7 +5491,7 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.4.3 || ~6.5"
+                "yoast/phpunit-polyfills": "^1.0.1"
             },
             "suggest": {
                 "ext-curl": "",
@@ -5531,9 +5537,9 @@
             ],
             "support": {
                 "issues": "https://github.com/simplepie/simplepie/issues",
-                "source": "https://github.com/simplepie/simplepie/tree/1.5.6"
+                "source": "https://github.com/simplepie/simplepie/tree/1.5.8"
             },
-            "time": "2020-10-14T07:17:22+00:00"
+            "time": "2021-12-24T02:53:50+00:00"
         },
         {
             "name": "smarty/smarty",
