@@ -5695,16 +5695,16 @@
         },
         {
             "name": "sunrise/http-router",
-            "version": "v2.11.2",
+            "version": "v2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunrise-php/http-router.git",
-                "reference": "bb07efb885e4e9af3bfb7602669c81555dfb0ca2"
+                "reference": "c3db73a5c6d9b5616080c5d125cfbf1b5d881771"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunrise-php/http-router/zipball/bb07efb885e4e9af3bfb7602669c81555dfb0ca2",
-                "reference": "bb07efb885e4e9af3bfb7602669c81555dfb0ca2",
+                "url": "https://api.github.com/repos/sunrise-php/http-router/zipball/c3db73a5c6d9b5616080c5d125cfbf1b5d881771",
+                "reference": "c3db73a5c6d9b5616080c5d125cfbf1b5d881771",
                 "shasum": ""
             },
             "require": {
@@ -5768,7 +5768,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sunrise-php/http-router/issues",
-                "source": "https://github.com/sunrise-php/http-router/tree/v2.11.2"
+                "source": "https://github.com/sunrise-php/http-router/tree/v2.12.0"
             },
             "funding": [
                 {
@@ -5780,7 +5780,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-30T09:40:02+00:00"
+            "time": "2022-01-26T10:14:25+00:00"
         },
         {
             "name": "symfony/console",
