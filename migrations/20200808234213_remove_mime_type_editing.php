@@ -1,8 +1,8 @@
 <?php
 
-use Phoenix\Migration\AbstractMigration;
+use ImpressCMS\Core\Database\AbstractDatabaseMigration;
 
-class RemoveMimeTypeEditing extends AbstractMigration
+class RemoveMimeTypeEditing extends AbstractDatabaseMigration
 {
 	protected function up(): void
 	{
@@ -892,17 +892,5 @@ class RemoveMimeTypeEditing extends AbstractMigration
 					'dirname' => '',
 				],
 			]);
-	}
-
-	/**
-	 * Prefix table
-	 *
-	 * @param string $table Table to prefix
-	 *
-	 * @return string
-	 */
-	private function prefix(string $table): string
-	{
-		return \icms::getInstance()->get('db-connection-1')->prefix($table);
 	}
 }

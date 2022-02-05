@@ -1,10 +1,10 @@
 <?php
 
-use ImpressCMS\Core\Database\DatabaseConnection;
+use ImpressCMS\Core\Database\AbstractDatabaseMigration;
 use ImpressCMS\Core\Models\Block;
 use Phoenix\Migration\AbstractMigration;
 
-class AddInitialData extends AbstractMigration
+class AddInitialData extends AbstractDatabaseMigration
 {
 	protected function up(): void
 	{
@@ -30,12 +30,8 @@ class AddInitialData extends AbstractMigration
 			throw new RuntimeException('ICMS_URL must be not empty');
 		}
 
-		/**
-		 * @var DatabaseConnection $dbm
-		 */
-		$dbm = icms::getInstance()->get('db-connection-1');
-		$usersTable = $dbm->prefix('users');
-		if ($this->tableExists($usersTable) && ((int)($dbm->fetchCol('SELECT COUNT(*) FROM `' . $usersTable . '`;')[0]) > 0)) {
+		$usersTable = $this->prefix('users');
+		if ($this->tableExists($usersTable) && ((int)($this->getDatabaseConnection()->fetchCol('SELECT COUNT(*) FROM `' . $usersTable . '`;')[0]) > 0)) {
 			// skipping this migration if at least one user is found
 			return;
 		}

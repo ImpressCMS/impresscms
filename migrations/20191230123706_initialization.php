@@ -1,21 +1,9 @@
 <?php
 
-use Phoenix\Migration\AbstractMigration;
+use ImpressCMS\Core\Database\AbstractDatabaseMigration;
 
-class Initialization extends AbstractMigration
+class Initialization extends AbstractDatabaseMigration
 {
-
-	/**
-	 * Prefix table
-	 *
-	 * @param string $table Table to prefix
-	 *
-	 * @return string
-	 */
-	private function prefix(string $table): string {
-		return \icms::getInstance()->get('db-connection-1')->prefix($table);
-	}
-
 	/**
 	 * Does actions when migrating up
 	 */

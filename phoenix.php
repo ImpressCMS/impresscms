@@ -4,14 +4,16 @@
  * This file is used for configuring migrations service
  */
 
+use ImpressCMS\Core\Database\DatabaseConnection;
 use ImpressCMS\Core\Models\ModuleHandler;
+use Psr\Container\ContainerInterface;
 
 define('ICMS_MIGRATION_MODE', true);
 
 require_once __DIR__ . '/mainfile.php';
 
 /**
- * @var icms_db_Connection $databaseConnection
+ * @var DatabaseConnection $databaseConnection
  */
 $databaseConnection = icms::getInstance()->get('db-connection-1');
 
@@ -43,6 +45,9 @@ return [
 			'db_name' => env('DB_NAME', 'impresscms'),
 			'charset' => env('DB_CHARSET', 'utf8'),
 		],
+	],
+	'dependencies' => [
+		ContainerInterface::class => icms::getInstance(),
 	],
 	'default_environment ' => 'local',
 ];
