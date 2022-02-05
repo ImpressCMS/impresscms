@@ -151,6 +151,7 @@
       "\\ImpressCMS\\Core\\Providers\\ConfigServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\CacheServiceProvider",
       "\\ImpressCMS\\Core\\Providers\\TranslatorServiceProvider",
+      "\\ImpressCMS\\Core\\Providers\\CommandsProvider",
       "\\ImpressCMS\\Core\\Providers\\SmartyPluginsProvider",
       "\\ImpressCMS\\Core\\Providers\\SetupStepsProvider"
     ],
@@ -222,24 +223,6 @@
           "preload"
         ]
       },
-      "\\ImpressCMS\\Core\\Commands\\GenerateAppKeyCommand": {
-        "tags": [
-          "console.command"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Commands\\CacheClearCommand": {
-        "tags": [
-          "console.command"
-        ]
-      },
-      "\\Sunrise\\Http\\Router\\Command\\RouteListCommand": {
-        "arguments": [
-          "router"
-        ],
-        "tags": [
-          "console.command"
-        ]
-      },
       "\\ImpressCMS\\Core\\Extensions\\ExtensionDescriber\\Module\\ImpressCMSComposerModuleDescriber": {
         "tags": [
           "extension_describer.module"
@@ -278,6 +261,7 @@
       "\\ImpressCMS\\Core\\Commands\\ModuleUninstallCommand": {
         "tags": [
           "console.command"
+
         ]
       },
       "container": {
