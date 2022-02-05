@@ -269,8 +269,8 @@ class icms_core_Logger {
 	 */
 	function sanitizePath( $path) {
 		$path = str_replace(
-			array('\\', ICMS_ROOT_PATH, str_replace( '\\', '/', realpath(ICMS_ROOT_PATH))),
-			array('/', '', ''),
+			array('\\', ICMS_ROOT_PATH, ICMS_TRUST_PATH, str_replace( '\\', '/', realpath(ICMS_ROOT_PATH))),
+			array('/', '', 'TRUSTPATH', ''),
 			$path
 		);
 		return $path;
