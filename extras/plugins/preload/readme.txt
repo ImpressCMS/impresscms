@@ -29,4 +29,4 @@ Overwrite the file /path/of/your/site/plugins/preload/protector.php with the pro
 !!!DO NOT UPLOAD THIS README FILE - IT WILL CAUSE YOUR SITE TO ENCOUNTER ERRORS!!!
 ==================================
 The ImpressCMS Project
-http://www.impresscms.org
+https://www.impresscms.org
