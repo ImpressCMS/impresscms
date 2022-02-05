@@ -1,13 +1,16 @@
 # ImpressCMS ChangeLog
 
-## ImpressCMS 1.4.3 RC2
-* Date : 12 Jan 2022
+## ImpressCMS 1.4.3
+* Date : 06 Feb 2022
 * DB Version: 46
-* Build Version : 102
+* Build Version : 103
 
 This release contains mainly fixes for several security vulnerabilities that where found during HackerOne security Checks. 
 
 ## What's Changed
+* Changing filter method for request_uri to filter_sanitize_string by @skenow in https://github.com/ImpressCMS/impresscms/pull/1136
+* Fixed display of allowed admin IPs in protecter admin area by @skenow in https://github.com/ImpressCMS/impresscms/pull/1154
+* Making sure protector gets installed during the site installation by @skenow in https://github.com/ImpressCMS/impresscms/pull/1137
 * Fixed some warnings and notices in installer for newer PHP versions by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/882
 * Protector get_magic_quotes_gpc fix for php 7.4 by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/884
 * Smiles in misc.php now are escaped by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/890
