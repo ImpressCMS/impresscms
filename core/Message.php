@@ -13,10 +13,13 @@
 
 namespace ImpressCMS\Core;
 
+use ImpressCMS\Core\Response\ConfirmationResponse;
+
 /**
  * Create and display messages on the screen
  */
-class Message {
+class Message
+{
 
 	/* Since all the methods are static, there is no __construct necessary	 */
 
@@ -113,41 +116,21 @@ class Message {
 	/**
 	 * Will render (echo) the form so no return in this function
 	 *
-	 * @author	XOOPS - include/functions.php :: xoops_confirm()
-	 * @author	modified by skenow <skenow@impresscms.org>
-	 * @param	array $hiddens Array of Hidden values
-	 * @param	string $action The Form action
-	 * @param	string $msg The message in the confirm form
-	 * @param	string $submit The text on the submit button
-	 * @param	boolean $addtoken Whether or not to add a security token
-	 * @return	void
+	 * @param array $hiddens Array of Hidden values
+	 * @param string $action The Form action
+	 * @param string $msg The message in the confirm form
+	 * @param string $submit The text on the submit button
+	 * @param boolean $addtoken Whether or not to add a security token
+	 *
+	 * @return    void
+	 * @deprecated Use ConfirmationResponse if possible. This will be removed in the future.
+	 *
+	 * @author    XOOPS - include/functions.php :: xoops_confirm()
+	 * @author    modified by skenow <skenow@impresscms.org>
 	 */
-	static public function confirm($hiddens, $action, $msg, $submit = '', $addtoken = true) {
-		$submit = $submit ? trim($submit) : _SUBMIT;
-		$form = new \icms_form_Theme('<div style="text-align: center">' . $msg . '</div>', '', $action, 'post', $addtoken);
-		$form->setExtra('class="confirmMsg alert" role="alert"');
-		foreach ($hiddens as $name => $value) {
-			if (is_array($value)) {
-				foreach ($value as $caption => $newvalue) {
-					$form->addElement(
-						new \icms_form_elements_Radio($caption, $name, $newvalue)
-					);
-				}
-			} else {
-				$form->addElement(
-					new \icms_form_elements_Hidden($name, $value)
-				);
-			}
-		}
-		$buttonsTray = new \icms_form_elements_Tray(null);
-		$buttonsTray->setExtra('style="text-align: center;"');
-		$buttonsTray->addElement(
-			new \icms_form_elements_Button('', 'confirm_submit', $submit, 'submit')
-		);
-		$backButton = new \icms_form_elements_Button('', 'confirm_back', _CANCEL, 'button');
-		$backButton->setExtra('onclick="history.go(-1); return false;"');
-		$buttonsTray->addElement($backButton);
-		$form->addElement($buttonsTray);
-		echo $form->render();
+	public static function confirm($hiddens, $action, $msg, $submit = '', $addtoken = true): void
+	{
+		$response = new ConfirmationResponse($hiddens, $action, $msg, $submit, $addtoken);
+		echo $response->getForm()->render();
 	}
 }
