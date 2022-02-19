@@ -50,9 +50,9 @@ if (isset($_POST)) {
 $icmsAdminTpl = new icms_view_Tpl();
 $op = (isset($_GET['op']))
 
-	? trim(filter_input(INPUT_GET, 'op'))
+? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))
 	: ((isset($_POST['op']))
-		? trim(filter_input(INPUT_POST, 'op'))
+			? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING))
 		: 'list');
 
 if (isset($_GET['confcat_id'])) {

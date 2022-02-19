@@ -48,7 +48,7 @@ icms_loadLanguageFile('system', 'blocksadmin', TRUE);
 
 if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op')) : ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op')) : 'list');
+$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING)) : ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'list');
 
 
 if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
