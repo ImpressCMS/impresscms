@@ -1,0 +1,19 @@
+name: ON_PUSH
+
+on:
+  push:
+    branches:
+      - branches/impresscms_1.4
+
+jobs:
+  Document_Generator:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: 📝 ApiGen PHP Document Generator
+      uses: varunsridharan/action-apigen@2.0
+      with:
+        cached_apigen: 'yes'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
