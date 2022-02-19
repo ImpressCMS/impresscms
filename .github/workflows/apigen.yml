@@ -16,7 +16,7 @@ jobs:
       uses: varunsridharan/action-apigen@2.0
       with:
         cached_apigen: 'yes'
-        source_folder: '/github/workspace/htdocs/libraries/icms'
+        source_folder: 'htdocs/libraries/icms/'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
