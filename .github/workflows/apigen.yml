@@ -9,7 +9,9 @@ jobs:
   Document_Generator:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+      with:
+        ref: branches/impresscms_1.4
     - name: 📝 ApiGen PHP Document Generator
       uses: varunsridharan/action-apigen@2.0
       with:
