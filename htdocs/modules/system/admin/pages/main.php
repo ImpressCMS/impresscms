@@ -51,9 +51,9 @@ $clean_op = '';
 $valid_op = array ('mod', 'changedField', 'addpage', 'del', 'status', '');
 
 if (isset($_GET['op']))
-$clean_op = htmlentities($_GET['op']);
+$clean_op = filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING);
 if (isset($_POST ['op']))
-$clean_op = htmlentities($_POST['op']);
+	$clean_op = filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING);
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 $clean_page_id = isset($_GET['page_id']) ? (int) $_GET['page_id'] : 0;
