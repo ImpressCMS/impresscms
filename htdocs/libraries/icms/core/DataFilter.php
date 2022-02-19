@@ -419,7 +419,9 @@ class icms_core_DataFilter {
 				$filter = $filters[$key];
 			}
 			if (is_array($input[$key])) {
-				$output[$key] = self::checkVarArray($input[$key], array($key => $filter), FALSE);
+				// pass the filter type into the array and all members in it
+				$inner_filter = array_fill_keys(array_keys($input[$key]), $filter);
+				$output[$key] = self::checkVarArray($input[$key], $inner_filter, true);
 			} else {
 				$output[$key] = self::checkVar($input[$key], $filter, $options[0], $options[1]);
 			}
