@@ -44,19 +44,41 @@ $form = new icms_form_Theme(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailus
  * GET variables
  *
  * POST variables
- * memberslist_id
- * memberslist_uname
+ * (int) memberslist_id
+ * (str) memberslist_uname
  */
+
+/* default values */
+$memberlist_id = 0;
+$memberlist_uname = '';
+
+$filter_get = array();
+
+$filter_post = array('memberlist_id' => 'int', 'memberlist_uname' => 'str');
+
+/* filter the user input */
+if (!empty($_GET)) {
+	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
+	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
+}
+
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
+}
+
 // from finduser section
-if (!empty($_POST['memberslist_id'])) {
-	$user_count = count($_POST['memberslist_id']);
+if (!empty($memberslist_id)) {
+	$user_count = count($memberslist_id);
 	$display_names = "";
 	for ($i = 0; $i < $user_count; $i++) {
-		$uid_hidden = new icms_form_elements_Hidden("mail_to_user[]", $_POST['memberslist_id'][$i]);
+		$uid_hidden = new icms_form_elements_Hidden("mail_to_user[]", $memberslist_id[$i]);
 		$form->addElement($uid_hidden);
 		$display_names .= "<a href='" . ICMS_URL . "/userinfo.php?uid="
-			. $_POST['memberslist_id'][$i] . "' target='_blank'>"
-			. $_POST['memberslist_uname'][$_POST['memberslist_id'][$i]] . "</a>, ";
+			. $memberslist_id[$i] . "' target='_blank'>"
+			. $memberslist_uname[$memberslist_id][$i] . "</a>, ";
 		unset($uid_hidden);
 	}
 	$users_label = new icms_form_elements_Label(_AM_SENDTOUSERS2, substr($display_names, 0, -2));
