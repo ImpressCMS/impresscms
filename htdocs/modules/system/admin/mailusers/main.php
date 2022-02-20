@@ -38,6 +38,9 @@
  * @version		SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
  * @todo	scrub the input arrays (GET and POST)
  */
+if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+	exit("Access Denied");
+}
 
 /*
  * GET variables
@@ -105,9 +108,6 @@ if (!empty($_POST)) {
 	extract($clean_POST);
 }
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
-	exit("Access Denied");
-} else {
 	$limit = 100;
 
 	if (!icms::$security->check() || $op == "form") {
