@@ -46,10 +46,38 @@ $icmsAdminTpl = new icms_view_Tpl();
 include_once ICMS_MODULES_PATH . "/system/admin/modulesadmin/modulesadmin.php";
 icms_loadLanguageFile('system', 'blocksadmin', TRUE);
 
-if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-$op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING)) : ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'list');
+/* default values */
+$op = 'list';
 
+/* Set filters */
+$filter_get = array();
+
+$filter_post = array(
+	'newname' => 'str',
+	'oldname' => 'str',
+	'newstatus' => 'int',
+	'oldstatus' => 'int',
+	'weight' => 'int',
+	'oldweight' => 'int',
+	'module' => 'str',
+	'fct' => 'str',
+	'op' => 'str',
+	'confirm_submit' => 'str',
+	'confirm_back' => 'str'
+);
+
+/* filter the user input */
+if (!empty($_GET)) {
+	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
+	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
+	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
+	extract($clean_GET);
+}
+
+if (!empty($_POST)) {
+	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
+	extract($clean_POST);
+}
 
 if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
 	if (!icms::$security->check()) {
