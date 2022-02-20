@@ -120,9 +120,7 @@ if (!empty($_POST)) {
 		include ICMS_MODULES_PATH . "/system/admin/mailusers/mailform.php";
 		$form->display();
 		icms_cp_footer();
-	}
-
-	if ($op == "send" && !empty($mail_send_to)) {
+	} elseif ($op == "send" && !empty($mail_send_to)) {
 		$added = array();
 		$added_id = array();
 		$criteria = array();
