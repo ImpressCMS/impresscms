@@ -122,7 +122,7 @@ if (!empty($_POST)) {
 		icms_cp_footer();
 	}
 
-	if ($op == "send" && !empty($mail_send_to)) {
+	if (icms::$security->check() && $op == "send" && !empty($mail_send_to)) {
 		$added = array();
 		$added_id = array();
 		$criteria = array();
