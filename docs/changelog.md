@@ -1,5 +1,16 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 1.4.4
+* Date : 20 Feb 2022
+* DB Version: 46
+* Build Version : 104
+
+This release fixes a security vulnerability that was found in ImpressCMS 1.4.3. 
+
+### Security Fix
+Applying the filters to inner elements of arrays by @skenow https://github.com/ImpressCMS/impresscms/pull/1162
+
+
 ## ImpressCMS 1.4.3
 * Date : 06 Feb 2022
 * DB Version: 46
@@ -7,7 +18,7 @@
 
 This release contains mainly fixes for several security vulnerabilities that where found during HackerOne security Checks. 
 
-## What's Changed
+### What's Changed
 * Changing filter method for request_uri to filter_sanitize_string by @skenow in https://github.com/ImpressCMS/impresscms/pull/1136
 * Fixed display of allowed admin IPs in protecter admin area by @skenow in https://github.com/ImpressCMS/impresscms/pull/1154
 * Making sure protector gets installed during the site installation by @skenow in https://github.com/ImpressCMS/impresscms/pull/1137

@@ -1,0 +1,22 @@
+name: ApiGen for 1.4
+
+on:
+  push:
+    branches:
+      - branches/impresscms_1.4
+
+jobs:
+  Document_Generator:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: branches/impresscms_1.4
+    - name: 📝 ApiGen PHP Document Generator
+      uses: varunsridharan/action-apigen@2.0
+      with:
+        cached_apigen: 'yes'
+        source_folder: 'htdocs/libraries/icms/'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
