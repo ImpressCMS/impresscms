@@ -136,7 +136,7 @@ if (isset($_GET['sortsel'])) {
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch($clean_op) {
 		case 'visible' :
-			$icms_block_handler->changeVisible($bid);
+			$icms_block_handler->changeVisible($clean_bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset($_GET['sortsel'])) {
 				$rtn .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
@@ -149,7 +149,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "up" :
-			$icms_block_handler->upWeight($bid);
+			$icms_block_handler->upWeight($clean_bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset($_GET['sortsel'])) {
 				$rtn .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
@@ -162,7 +162,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "down" :
-			$icms_block_handler->downWeight($bid);
+			$icms_block_handler->downWeight($clean_bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset($_GET['sortsel'])) {
 				$rtn .= '&amp;sortsel=' . $sortsel . '&amp;ordersel=' . $ordersel . '&amp;limitsel=' . $limitsel . '&amp;startbid=' . $startbid;
