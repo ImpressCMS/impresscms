@@ -52,7 +52,7 @@ $uid = 0;
  * possible input variables
  * since this is a gateway to all the submodules, we'll have to defer some checks to them
  */
-$filter_get = array('fct' => 'str', 'op' => 'str', 'uid' => 'str');
+$filter_get = array('fct' => 'str', 'op' => 'str', 'uid' => 'int');
 
 /* filter the user input */
 if (!empty($_GET)) {
