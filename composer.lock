@@ -2093,16 +2093,16 @@
         },
         {
             "name": "imponeer/symfony-translations-constants-loader",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/symfony-translations-constants-loader.git",
-                "reference": "136edc0de6aeba3bf2d36dc27b8f25e34a9bd0c5"
+                "reference": "dea4e144cbdbb7cb4af32989e4b3bccb68be14c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/136edc0de6aeba3bf2d36dc27b8f25e34a9bd0c5",
-                "reference": "136edc0de6aeba3bf2d36dc27b8f25e34a9bd0c5",
+                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/dea4e144cbdbb7cb4af32989e4b3bccb68be14c8",
+                "reference": "dea4e144cbdbb7cb4af32989e4b3bccb68be14c8",
                 "shasum": ""
             },
             "require": {
@@ -2141,9 +2141,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/symfony-translations-constants-loader/issues",
-                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.0"
+                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.1"
             },
-            "time": "2020-11-11T01:06:42+00:00"
+            "time": "2022-03-26T21:25:17+00:00"
         },
         {
             "name": "impresscms/codemirror-integration",
@@ -6960,16 +6960,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v5.4.5",
+            "version": "v5.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "7e4d52d39e5d86f3f04bef46fa29a1091786bc73"
+                "reference": "a7ca9fdfffb0174209440c2ffa1dee228e15d95b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/7e4d52d39e5d86f3f04bef46fa29a1091786bc73",
-                "reference": "7e4d52d39e5d86f3f04bef46fa29a1091786bc73",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/a7ca9fdfffb0174209440c2ffa1dee228e15d95b",
+                "reference": "a7ca9fdfffb0174209440c2ffa1dee228e15d95b",
                 "shasum": ""
             },
             "require": {
@@ -7037,7 +7037,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v5.4.5"
+                "source": "https://github.com/symfony/translation/tree/v5.4.6"
             },
             "funding": [
                 {
@@ -7053,7 +7053,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-09T15:49:12+00:00"
+            "time": "2022-03-02T12:56:28+00:00"
         },
         {
             "name": "symfony/translation-contracts",
