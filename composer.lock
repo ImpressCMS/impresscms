@@ -1907,16 +1907,16 @@
         },
         {
             "name": "imponeer/smarty-includeq",
-            "version": "v1.1",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-includeq.git",
-                "reference": "5d6b69591af4dae60d44589537cb36dafea2d626"
+                "reference": "992e162e68deea00f3d133414b6f72765e33a790"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-includeq/zipball/5d6b69591af4dae60d44589537cb36dafea2d626",
-                "reference": "5d6b69591af4dae60d44589537cb36dafea2d626",
+                "url": "https://api.github.com/repos/imponeer/smarty-includeq/zipball/992e162e68deea00f3d133414b6f72765e33a790",
+                "reference": "992e162e68deea00f3d133414b6f72765e33a790",
                 "shasum": ""
             },
             "require": {
@@ -1948,9 +1948,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-includeq/issues",
-                "source": "https://github.com/imponeer/smarty-includeq/tree/v1.1"
+                "source": "https://github.com/imponeer/smarty-includeq/tree/v1.1.1"
             },
-            "time": "2022-01-23T11:56:10+00:00"
+            "time": "2022-03-26T20:55:33+00:00"
         },
         {
             "name": "imponeer/smarty-sunrise-http-router",
