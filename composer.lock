@@ -1630,16 +1630,16 @@
         },
         {
             "name": "imponeer/criteria",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/criteria.git",
-                "reference": "541fb99fd8741e593dc214a0a722e06df54e2604"
+                "reference": "ca483cce93bb6586ac9bcec3ccf4132fa26d0e13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/criteria/zipball/541fb99fd8741e593dc214a0a722e06df54e2604",
-                "reference": "541fb99fd8741e593dc214a0a722e06df54e2604",
+                "url": "https://api.github.com/repos/imponeer/criteria/zipball/ca483cce93bb6586ac9bcec3ccf4132fa26d0e13",
+                "reference": "ca483cce93bb6586ac9bcec3ccf4132fa26d0e13",
                 "shasum": ""
             },
             "require": {
@@ -1673,9 +1673,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/criteria/issues",
-                "source": "https://github.com/imponeer/criteria/tree/v1.0.0"
+                "source": "https://github.com/imponeer/criteria/tree/v1.0.1"
             },
-            "time": "2021-02-25T23:57:18+00:00"
+            "time": "2022-03-26T21:28:27+00:00"
         },
         {
             "name": "imponeer/editor-contracts",
@@ -4031,16 +4031,16 @@
         },
         {
             "name": "myclabs/php-enum",
-            "version": "1.8.0",
+            "version": "1.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/php-enum.git",
-                "reference": "46cf3d8498b095bd33727b13fd5707263af99421"
+                "reference": "b942d263c641ddb5190929ff840c68f78713e937"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/46cf3d8498b095bd33727b13fd5707263af99421",
-                "reference": "46cf3d8498b095bd33727b13fd5707263af99421",
+                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/b942d263c641ddb5190929ff840c68f78713e937",
+                "reference": "b942d263c641ddb5190929ff840c68f78713e937",
                 "shasum": ""
             },
             "require": {
@@ -4050,7 +4050,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.5",
                 "squizlabs/php_codesniffer": "1.*",
-                "vimeo/psalm": "^4.5.1"
+                "vimeo/psalm": "^4.6.2"
             },
             "type": "library",
             "autoload": {
@@ -4075,7 +4075,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/php-enum/issues",
-                "source": "https://github.com/myclabs/php-enum/tree/1.8.0"
+                "source": "https://github.com/myclabs/php-enum/tree/1.8.3"
             },
             "funding": [
                 {
@@ -4087,7 +4087,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-15T16:11:48+00:00"
+            "time": "2021-07-05T08:18:36+00:00"
         },
         {
             "name": "narrowspark/http-emitter",
