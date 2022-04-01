@@ -4164,23 +4164,24 @@
         },
         {
             "name": "old-xoops-libraries/php-downloader",
-            "version": "1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OldXoopsLibraries/php-downloader.git",
-                "reference": "95e0d6a7d886fbfea6e9450e6bc86a8541290fd4"
+                "reference": "297048f3549eaef509bcf7db5705303e185857e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OldXoopsLibraries/php-downloader/zipball/95e0d6a7d886fbfea6e9450e6bc86a8541290fd4",
-                "reference": "95e0d6a7d886fbfea6e9450e6bc86a8541290fd4",
+                "url": "https://api.github.com/repos/OldXoopsLibraries/php-downloader/zipball/297048f3549eaef509bcf7db5705303e185857e7",
+                "reference": "297048f3549eaef509bcf7db5705303e185857e7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~3.7"
+                "phpunit/phpunit": "4.8.28",
+                "roave/security-advisories": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -4196,9 +4197,9 @@
             "description": "Some classes from php-downloader v1.0 by www.ipunkt.biz package that were used in Xoops but can't be found outside",
             "support": {
                 "issues": "https://github.com/OldXoopsLibraries/php-downloader/issues",
-                "source": "https://github.com/OldXoopsLibraries/php-downloader/tree/master"
+                "source": "https://github.com/OldXoopsLibraries/php-downloader/tree/v1.0.2"
             },
-            "time": "2018-01-29T12:09:44+00:00"
+            "time": "2022-03-26T21:31:01+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
