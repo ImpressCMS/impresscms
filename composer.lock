@@ -5703,16 +5703,16 @@
         },
         {
             "name": "sunrise/http-router",
-            "version": "v2.13.0",
+            "version": "v2.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunrise-php/http-router.git",
-                "reference": "9f07a5dc1546b68577614aa464eb5828a87100fa"
+                "reference": "459948edb739b21aaca7db24e778e318b31fa158"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunrise-php/http-router/zipball/9f07a5dc1546b68577614aa464eb5828a87100fa",
-                "reference": "9f07a5dc1546b68577614aa464eb5828a87100fa",
+                "url": "https://api.github.com/repos/sunrise-php/http-router/zipball/459948edb739b21aaca7db24e778e318b31fa158",
+                "reference": "459948edb739b21aaca7db24e778e318b31fa158",
                 "shasum": ""
             },
             "require": {
@@ -5728,7 +5728,7 @@
                 "doctrine/annotations": "^1.6",
                 "phpunit/phpunit": "7.5.20|9.5.0",
                 "sunrise/coding-standard": "1.0.0",
-                "sunrise/http-factory": "1.1.0",
+                "sunrise/http-factory": "2.0.0",
                 "symfony/console": "^4.4",
                 "symfony/event-dispatcher": "^4.4"
             },
@@ -5753,11 +5753,11 @@
             "authors": [
                 {
                     "name": "Anatoly Fenric",
-                    "email": "anatoly@fenric.ru",
-                    "homepage": "https://anatoly.fenric.ru/"
+                    "email": "afenric@gmail.com",
+                    "homepage": "https://github.com/fenric"
                 }
             ],
-            "description": "Sunrise // HTTP router for PHP 7.1+ (incl. PHP 8 with attributes) based on PSR-7 and PSR-15 with support for annotations and OpenApi Specification",
+            "description": "HTTP router for PHP 7.1+ based on PSR-7 and PSR-15 with support for annotations/attributes and OpenAPI (Swagger) Specification",
             "homepage": "https://github.com/sunrise-php/http-router",
             "keywords": [
                 "PHP7",
@@ -5767,17 +5767,17 @@
                 "http",
                 "middlewares",
                 "openapi",
-                "php-attributes",
                 "php8",
                 "psr-15",
                 "psr-7",
+                "request-handler",
                 "router",
                 "sunrise",
                 "swagger"
             ],
             "support": {
                 "issues": "https://github.com/sunrise-php/http-router/issues",
-                "source": "https://github.com/sunrise-php/http-router/tree/v2.13.0"
+                "source": "https://github.com/sunrise-php/http-router/tree/v2.16.1"
             },
             "funding": [
                 {
@@ -5789,7 +5789,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-20T16:13:55+00:00"
+            "time": "2022-04-19T18:58:13+00:00"
         },
         {
             "name": "symfony/console",
