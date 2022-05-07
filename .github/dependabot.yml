@@ -12,11 +12,6 @@ updates:
       - "composer"
       - "dependencies"
     versioning-strategy: lockfile-only
-    ignore:
-      - dependency-name: composer/composer
-        versions:
-          - "> 1.10.13"
-          - "< 2"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
