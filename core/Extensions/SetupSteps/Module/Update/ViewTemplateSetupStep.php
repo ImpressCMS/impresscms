@@ -25,7 +25,7 @@ class ViewTemplateSetupStep extends InstallViewTemplateSetupStep
 		if (is_array($deltpl)) {
 			$xoopsDelTpl = new Template();
 			// clear cache files
-			$xoopsDelTpl->clear_cache(null, 'mod_' . $module->dirname);
+			$xoopsDelTpl->clearCache(null, 'mod_' . $module->dirname);
 			// delete template file entry in db
 			$dcount = count($deltpl);
 			for ($i = 0; $i < $dcount; $i++) {

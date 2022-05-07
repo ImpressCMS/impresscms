@@ -38,6 +38,14 @@
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Response\RedirectResponse;
 use ImpressCMS\Core\Response\ViewResponse;
+use Sil\PhpEnv\Env;
+
+if (!function_exists('env')) {
+	function env(string $key, $defaultValue = null)
+	{
+		return Env::get($key, $defaultValue);
+	}
+}
 
 if (!function_exists('xoops_header')) {
 	/**

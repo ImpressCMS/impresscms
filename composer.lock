@@ -1,20 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "93f785675f00b6155f828b3a3cfc8eaf",
-    "packages": [
-        {
-            "name": "0.0.0/composer-include-files",
-            "version": "1.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
-                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
-            },
-            "dist": {
+  "_readme": [
+	"This file locks the dependencies of your project to a known state",
+	"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+	"This file is @generated automatically"
+  ],
+  "content-hash": "5b776f246920e2848c3b1ca4f985b16d",
+  "packages": [
+	{
+	  "name": "0.0.0/composer-include-files",
+	  "version": "1.6.0",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
+		"reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
+	  },
+	  "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
                 "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
@@ -2364,14 +2364,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/system-module.git",
-                "reference": "33b660bb15e6a26e58ec17aa1e3f24e76e38a7b9"
+			  "reference": "875f445d4b81922e21b2c3f3b4c8e02df6fb00b5"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/system-module/zipball/33b660bb15e6a26e58ec17aa1e3f24e76e38a7b9",
-                "reference": "33b660bb15e6a26e58ec17aa1e3f24e76e38a7b9",
-                "shasum": ""
-            },
+			  "type": "zip",
+			  "url": "https://api.github.com/repos/ImpressCMS/system-module/zipball/875f445d4b81922e21b2c3f3b4c8e02df6fb00b5",
+			  "reference": "875f445d4b81922e21b2c3f3b4c8e02df6fb00b5",
+			  "shasum": ""
+			},
             "require": {
                 "typo3/class-alias-loader": "^1.1"
             },
@@ -2850,9 +2850,9 @@
             },
             "autoload": {
                 "psr-4": {
-                    "ImpressCMS\\Modules\\System\\Extensions\\": "./Extensions/",
-                    "ImpressCMS\\Modules\\System\\Models\\": "./Models/"
-                }
+				  "ImpressCMS\\Modules\\System\\Models\\": "./Models/",
+				  "ImpressCMS\\Modules\\System\\Extensions\\": "./Extensions/"
+				}
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2863,7 +2863,7 @@
                 "issues": "https://github.com/ImpressCMS/system-module/issues",
                 "source": "https://github.com/ImpressCMS/system-module/tree/main"
             },
-            "time": "2021-11-11T07:12:25+00:00"
+		  "time": "2021-12-29T23:36:25+00:00"
         },
         {
             "name": "intervention/image",
@@ -5459,26 +5459,64 @@
                 }
             ],
             "description": "PHAR file format utilities, for when PHP phars you up",
-            "keywords": [
-                "phar"
-            ],
-            "support": {
-                "issues": "https://github.com/Seldaek/phar-utils/issues",
-                "source": "https://github.com/Seldaek/phar-utils/tree/master"
-            },
-            "time": "2020-07-07T18:42:57+00:00"
-        },
-        {
-            "name": "simplepie/simplepie",
-            "version": "1.5.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/simplepie/simplepie.git",
-                "reference": "d1d80f37264c9f1ed7fa3434eca14d179cb689b1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/d1d80f37264c9f1ed7fa3434eca14d179cb689b1",
+		  "keywords": [
+			"phar"
+		  ],
+		  "support": {
+			"issues": "https://github.com/Seldaek/phar-utils/issues",
+			"source": "https://github.com/Seldaek/phar-utils/tree/master"
+		  },
+		  "time": "2020-07-07T18:42:57+00:00"
+		},
+	{
+	  "name": "silinternational/php-env",
+	  "version": "2.1.1",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/silinternational/php-env.git",
+		"reference": "3906403fde599b04b82fd51b2c0ddc3a04fdd47e"
+	  },
+	  "dist": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/silinternational/php-env/zipball/3906403fde599b04b82fd51b2c0ddc3a04fdd47e",
+		"reference": "3906403fde599b04b82fd51b2c0ddc3a04fdd47e",
+		"shasum": ""
+	  },
+	  "require": {
+		"php": ">=5.4"
+	  },
+	  "require-dev": {
+		"johnkary/phpunit-speedtrap": "1.*",
+		"phpunit/phpunit": "^6.1"
+	  },
+	  "type": "library",
+	  "autoload": {
+		"psr-4": {
+		  "Sil\\PhpEnv\\": "src/"
+		}
+	  },
+	  "notification-url": "https://packagist.org/downloads/",
+	  "license": [
+		"MIT"
+	  ],
+	  "description": "Simple PHP library for getting (or requiring) environment variables, designed to handle true, false, and null more intelligently. If desired, an environment variable's value can be split into an array automatically.",
+	  "support": {
+		"issues": "https://github.com/silinternational/php-env/issues",
+		"source": "https://github.com/silinternational/php-env/tree/master"
+	  },
+	  "time": "2017-08-31T12:44:44+00:00"
+	},
+	{
+	  "name": "simplepie/simplepie",
+	  "version": "1.5.8",
+	  "source": {
+		"type": "git",
+		"url": "https://github.com/simplepie/simplepie.git",
+		"reference": "d1d80f37264c9f1ed7fa3434eca14d179cb689b1"
+	  },
+	  "dist": {
+		"type": "zip",
+		"url": "https://api.github.com/repos/simplepie/simplepie/zipball/d1d80f37264c9f1ed7fa3434eca14d179cb689b1",
                 "reference": "d1d80f37264c9f1ed7fa3434eca14d179cb689b1",
                 "shasum": ""
             },
