@@ -213,7 +213,7 @@ class Template extends Smarty
 			$tpl->caching = 2;
 			for ($i = 0; $i < $count; $i++) {
 				if ($block_arr[$i]->template != '') {
-					$tpl->clear_cache('db:' . $block_arr[$i]->template, 'blk_' . $block_arr[$i]->bid);
+					$tpl->clearCache('db:' . $block_arr[$i]->template, 'blk_' . $block_arr[$i]->bid);
 				}
 			}
 		}
