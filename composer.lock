@@ -286,25 +286,25 @@
         },
         {
             "name": "aura/sql",
-            "version": "3.0.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/auraphp/Aura.Sql.git",
-                "reference": "2be02d5dfd9fdee6df199de1a19572aa490bb744"
+                "reference": "88d8b8ed1bcfd588a649fdc7e7ac89ec047abbca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/Aura.Sql/zipball/2be02d5dfd9fdee6df199de1a19572aa490bb744",
-                "reference": "2be02d5dfd9fdee6df199de1a19572aa490bb744",
+                "url": "https://api.github.com/repos/auraphp/Aura.Sql/zipball/88d8b8ed1bcfd588a649fdc7e7ac89ec047abbca",
+                "reference": "88d8b8ed1bcfd588a649fdc7e7ac89ec047abbca",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0",
-                "psr/log": "^1.0"
+                "psr/log": "^1.0 || ^2.0"
             },
             "require-dev": {
                 "pds/skeleton": "~1.0",
-                "phpunit/phpunit": "~5.0"
+                "yoast/phpunit-polyfills": "~1.0"
             },
             "type": "library",
             "autoload": {
@@ -337,9 +337,9 @@
             ],
             "support": {
                 "issues": "https://github.com/auraphp/Aura.Sql/issues",
-                "source": "https://github.com/auraphp/Aura.Sql/tree/3.x"
+                "source": "https://github.com/auraphp/Aura.Sql/tree/3.1.0"
             },
-            "time": "2018-06-11T12:57:42+00:00"
+            "time": "2022-04-28T05:11:23+00:00"
         },
         {
             "name": "aura/sqlschema",
@@ -9679,5 +9679,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
