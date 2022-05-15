@@ -38,7 +38,7 @@ define("_CAL_TUE", "Die");
 define("_CAL_WED", "Mi");
 define("_CAL_THU", "Do");
 define("_CAL_FRI", "Fr");
-define("_CAL_SAT", "Sa");
+define("_CAL_SAT", "SA");
 // First day of the week. "0" means display Sunday first, "1" means display Monday first, etc...
 define("_CAL_FIRSTDAY", "1");
 define("_CAL_JAN", "Jan");
@@ -49,9 +49,9 @@ define("_CAL_JUN", "Juni");
 define("_CAL_JUL", "Jul");
 define("_CAL_AUG", "Aug");
 define("_CAL_SEP", "Sept");
-define("_CAL_OCT", "Okt");
+define("_CAL_OCT", "Okt.");
 define("_CAL_NOV", "Nov");
-define("_CAL_DEC", "Dez");
+define("_CAL_DEC", "Dez.");
 // Direction of the calendar, ltr for left to right and rtl for roght to left (for Persian, Arabic, etc.)
 define("_CAL_DIRECTION", "ltr");
 define("_CAL_AM", "am");
