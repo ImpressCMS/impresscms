@@ -63,6 +63,7 @@
     "http-interop/http-factory-guzzle": "^1.0",
     "imponeer/criteria": "^1.0",
     "imponeer/editor-contracts": "^1.0",
+    "imponeer/env": "^1.0",
     "imponeer/smarty-db-resource": "^2.0",
     "imponeer/smarty-foreachq": "^1.0",
     "imponeer/smarty-image": "^1.0",
@@ -94,7 +95,6 @@
     "php-console/php-console": "^3.1",
     "phpmailer/phpmailer": "^6.0.7",
     "phpseclib/bcmath_compat": "^2.0",
-    "silinternational/php-env": "^2.1",
     "simplepie/simplepie": "^1.5",
     "smarty/smarty": "^4.0",
     "smottt/wideimage": "^v1.1.3",
@@ -322,7 +322,6 @@
       "php": "7.3.0"
     },
     "allow-plugins": {
-      "0.0.0/composer-include-files": true,
       "typo3/class-alias-loader": true,
       "impresscms/composer-addon-installer-plugin": true
     }
