@@ -1,14 +1,36 @@
-[![license](https://img.shields.io/badge/license-GPLv2-brightgreen.svg)](https://raw.githubusercontent.com/ImpressCMS/impresscms/branches/impresscms_1.5/docs/license.txt) [![GitHub release](https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=86400&logo=github&logoColor=white&label=latest%20release)](github.com/ImpressCMS/impresscms/releases/latest) [![GitHub tag (latest SemVer pre-release)](https://img.shields.io/packagist/vpre/impresscms/impresscms.svg?label=preview&logo=github)](https://github.com/ImpressCMS/impresscms/releases) [![GitHub issues](https://img.shields.io/github/issues-raw/ImpressCMS/impresscms.svg?maxAge=3600&logo=github&logoColor=white)](https://github.com/ImpressCMS/impresscms/issues) [![Build Status](https://img.shields.io/travis/ImpressCMS/impresscms.svg?branch=branches/impresscms_1.5&maxAge=3600&logo=travis)](https://travis-ci.org/ImpressCMS/impresscms) [![Test Coverage](https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/test_coverage)](https://codeclimate.com/github/ImpressCMS/impresscms/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/maintainability)](https://codeclimate.com/github/ImpressCMS/impresscms/maintainability) [![Website](https://img.shields.io/website-up-down-green-red/https/naereen.github.io.svg?maxAge=3600)](https://impresscms.org/) [![Twitter Follow](https://img.shields.io/twitter/follow/ImpressCMS.svg?color=%2338A1F3&label=twitter&style=flat&logo=twitter)](https://twitter.com/ImpressCMS) [![FaceBook](https://img.shields.io/badge/facebook-%3F%3F%3F-%233C5A99.svg?logo=facebook)](https://www.facebook.com/ImpressCMS/) [![Slack](http://invite.impresscms.org/badge.svg)](http://invite.impresscms.org)
+![](https://github.com/ImpressCMS/impresscms/blob/HEAD/htdocs/uploads/imagemanager/logos/img482278e29e81c.png?raw=true)
 
-# ImpressCMS 1.5.0
+<p align="center">
+<a href="https://github.com/ImpressCMS/impresscms/blob/HEAD/LICENSE"><img src="https://img.shields.io/badge/dynamic/json.svg?label=license&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2FImpressCMS%2Fimpresscms%2FHEAD%2Fcomposer.json&amp;query=license" alt="license" /></a> <a href="//github.com/ImpressCMS/impresscms/releases/latest"><img src="https://img.shields.io/github/release/ImpressCMS/impresscms.svg?maxAge=86400&amp;logo=github&amp;logoColor=white&amp;label=latest%20release" alt="GitHub release" /></a> <a href="https://github.com/ImpressCMS/impresscms/releases"><img src="https://img.shields.io/packagist/vpre/impresscms/impresscms.svg?label=preview&amp;logo=github" alt="GitHub tag (latest SemVer pre-release)" /></a> <a href="https://codeclimate.com/github/ImpressCMS/impresscms/test_coverage"><img src="https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/test_coverage" alt="Test Coverage" /></a> <a href="https://codeclimate.com/github/ImpressCMS/impresscms/maintainability"><img src="https://api.codeclimate.com/v1/badges/b27536db6688e64deef8/maintainability" alt="Maintainability" /></a> <a href="https://twitter.com/ImpressCMS"><img src="https://img.shields.io/twitter/follow/ImpressCMS.svg?color=%2338A1F3&amp;label=twitter&amp;style=flat&amp;logo=twitter" alt="Twitter Follow" /></a> <a href="https://www.facebook.com/ImpressCMS/"><img src="https://img.shields.io/badge/facebook-%3F%3F%3F-%233C5A99.svg?logo=facebook" alt="FaceBook" /></a> <a href="http://invite.impresscms.org"><img src="http://invite.impresscms.org/badge.svg" alt="Slack" /></a> <a title="Crowdin" target="_self" href="https://impresscms.crowdin.com/impresscms"><img src="https://badges.crowdin.net/e/f7817e813865fde0509c454ad1ee4c11/localized.svg" /></a>
+</p>
 
-ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool. ImpressCMS is a powerful system that gets outstanding results and it is free!
+ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool.
 
-Starting with the 1.5 branch of ImpressCMS, we only support PHP versions 7.3, 7.4 and 8.0.
+ImpressCMS has these features:
+<details>
+	<summary>📦 Modules support</summary>
+	<blockquote>Website content is managed by separate content modules/web applications. Simply install the module which has the features you need: a news module, forum module, photo album module, there are many many third party modules to choose from.</blockquote>
+</details>
+<details>
+	<summary>🗃️ Database-driven</summary>
+	<blockquote>ImpressCMS uses a database to store the data required for running your ImpressCMS site. MySQL and MariaDB is currently supported. Support for other DBMS's is coming soon.</blockquote>
+</details>
+<details>
+	<summary>🌈 Theme-based skinnable interface</summary>
+	<blockquote>ImpressCMS is driven by a powerful theme system. Both admins and users can change the look of the entire web site with just a click of a mouse. There are also hundreds of quality themes available for download!</blockquote>
+</details>
+<details>
+	<summary>👥 Versatile Group Permissions System</summary>
+	<blockquote>Powerful and user-friendly permissions system which enables administrators to set permissions by group for any registered or all anoymous users.</blockquote>
+</details>
+<details>
+	<summary>🌐 Multi-byte Language Support</summary>
+	<blockquote>Fully supports multi-byte languages, including Japanese, Simplified and Traditional Chinese, Korean, etc.</blockquote>
+</details>
 
-### What can you do with it?
+## What can you do with it?
 
-ImpressCMS can be used for many types of web sites. The system is highly scalable and it can be used for example as an intranet for a company with 20,000 employees as well as for building a simple 5-page website for the promotion of your company. 
+ImpressCMS can be used for many types of websites. The system is highly scalable and it can be used for example as an intranet for a company with 20,000 employees as well as for building a simple 5-page website for the promotion of your company.
 The system is extremely useful for managing online communities because it has the ability to create user groups and assign permissions for managing content to each different group.
 
 For each type of website ImpressCMS offers different functionality with a collection of free modules that are available on [https://www.impresscms.org/modules/downloads/](https://www.impresscms.org/modules/downloads/). A few examples of what you can do with them:
@@ -17,45 +39,39 @@ For each type of website ImpressCMS offers different functionality with a collec
 * Let visitors contact you through a state of the art customizable contact form
 * Create and manage articles
 * Add a forum to your site
-* Sell products through your web site using an online store
+* Sell products through your website using an online store
 * ...and many more
 
-### List of key features
 
-#### :package: Fully modularized
+## Installation
 
-Website content is managed by separate content modules/web applications. Simply install the module which has the features you need: a news module, forum module, photo album module, there are many many third party modules to choose from.
+To install and use this package, we recommend to use [Composer](https://getcomposer.org):
 
-#### :earth_africa: Supported World-wide
+```bash
+composer create-project -s dev impresscms/impresscms
+```
 
-ImpressCMS was created and is maintained by a team of hard-working volunteers working from all over the world. The ImpressCMS community has support sites around the world for support of non-English speaking users.
+More detailed installation instructions are available [on the ImpressCMS site](https://www.impresscms.org/modules/simplywiki/index.php?page=Installing_ImpressCMS_2)
 
-#### 🗃️ Database-driven
+## Do you need any help?
 
-ImpressCMS uses a database to store the data required for running your ImpressCMS site. MySQL and MariaDB is currently supported. Support for other DBMS's is coming soon.
-
-#### :rainbow: Theme-based skinnable interface
-
-ImpressCMS is driven by a powerful theme system. Both admins and users can change the look of the entire web site with just a click of a mouse. There are also hundreds of quality themes available for download!
-
-#### :busts_in_silhouette: Versatile Group Permissions System
-
-Powerful and user-friendly permissions system which enables administrators to set permissions by group for any registered or all anoymous users.
-
-#### :globe_with_meridians: Multi-byte Language Support
-
-Fully supports multi-byte languages, including Japanese, Simplified and Traditional Chinese, Korean, etc.
-
-### Do you need any help?
-
-You can find our official documentation at [our wiki](https://www.impresscms.org/modules/simplywiki/). 
+You can find our official documentation at [our wiki](https://www.impresscms.org/modules/simplywiki/).
 
 Also, help could be found on [our official forums](https://www.impresscms.org/modules/iforum/).
 
-### How to contribute?
+## How to contribute?
 
 Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us a [pull request](https://github.com/ImpressCMS/impresscms/pulls)
 
-All development for 1.5 version happens on the *branches/impresscms_1.5* branch, so it is always the most up-to-date. 
+All active development branches are named in format `MAJOR.MINOR.x`. So if you want to fix or add something new, you should branch from most similar looking branch. F.e.: if you want to do with latest **1.5** code, you need to branch from `1.5.x` branch.
 
-If you are going to be submitting a pull request, please branch from *branches/impresscms_1.5*, and submit your pull request back to same branch.
+If you not sure how can be possible to work with Git or/and GitHub, try [interactive GitHub tutorial](https://skills.github.com).
+
+## License
+
+<a href="https://app.fossa.io/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms?ref=badge_large"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms.svg?type=large" alt="FOSSA Status" align="right" /></a>
+ImpressCMS is licensed right now in <a href="https://github.com/ImpressCMS/impresscms/blob/HEAD/LICENSE">GPL 2.0 license</a> but is depended on libraries that uses other compatible open source licenses.
+
+Quick summary what GPL 2.0 really means can be found at [TLDRLegal website](https://tldrlegal.com/license/gnu-general-public-license-v2).
+
+We use FOSSA to detect if there are any incompatibilities and if there is any solve them. The graphic on the right is used to iliustrate what licenses are used when project is installed.
