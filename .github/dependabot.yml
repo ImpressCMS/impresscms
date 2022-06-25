@@ -7,24 +7,23 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
-      time: "11:00"
     labels:
       - "composer"
       - "dependencies"
     versioning-strategy: lockfile-only
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-      time: "11:00"
     labels:
       - "dependencies"
       - "infrastructure"
+
   - package-ecosystem: gitsubmodule
     directory: "/"
     schedule:
       interval: "monthly"
-      time: "11:00"
     labels:
       - "dependencies"
       - "submodules"
