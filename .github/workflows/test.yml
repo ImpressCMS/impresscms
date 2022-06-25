@@ -55,10 +55,10 @@ jobs:
           chmod +x ./cc-test-reporter
         continue-on-error: true
       - name: Install PHP
-        uses: shivammathur/setup-php@master
+        uses: shivammathur/setup-php@2.19.1
         with:
           php-version: ${{ matrix.php }}
-          extensions: curl, gd, pdo_mysql, json, mbstring, pcre, session
+          extensions: curl, gd, pdo_mysql, pdo_sqlsrv, json, mbstring, pcre, session
           ini-values: post_max_size=256M
           coverage: none
           tools: composer:v${{ matrix.composer }}
