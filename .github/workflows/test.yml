@@ -2,17 +2,17 @@ name: Tests
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-    paths:
-      - .github/workflows/test.yml
-      - '**.js'
-      - '**.php'
-      - composer.lock
-      - composer.json
+#    branches:
+#      - master
+#  pull_request:
+#    branches:
+#      - master
+#    paths:
+#      - .github/workflows/test.yml
+#      - '**.js'
+#      - '**.php'
+#      - composer.lock
+#      - composer.json
 
 jobs:
   run:
@@ -48,44 +48,28 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
       - name: Setup CodeClimate
         run: |
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
         continue-on-error: true
       - name: Install PHP
-        uses: shivammathur/setup-php@master
+        uses: shivammathur/setup-php@2.19.1
         with:
           php-version: ${{ matrix.php }}
           extensions: curl, gd, pdo_mysql, json, mbstring, pcre, session
           ini-values: post_max_size=256M
           coverage: none
           tools: composer:v${{ matrix.composer }}
-      - name: Install Composer dependencies (with dev)
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-        continue-on-error: ${{ matrix.experimental }}
-      - name: Installing ImpressCMS
-        env:
-          URL: http://localhost
-          DB_TYPE: pdo.mysql
-          DB_HOST: 127.0.0.1
-          DB_USER: root
-          DB_PASS: icms
-          DB_PCONNECT: 0
-          DB_NAME: icms
-          DB_CHARSET: utf8
-          DB_COLLATION: utf8_general_ci
-          DB_PREFIX: icms
-          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-          INSTALL_ADMIN_PASS: test
-          INSTALL_ADMIN_LOGIN: test
-          INSTALL_ADMIN_NAME: test
-          INSTALL_ADMIN_EMAIL: noreply@impresscms.org
-          INSTALL_LANGUAGE: english
-        run: |
-          chmod -R 777 ./storage
-          ./bin/phoenix migrate -vvv
+      - name: Installing ImpressCMS...
+        id: install_icms
+        uses: impresscms-dev/install-impresscms-action@v0.1
+        with:
+          database_name: icms
+          database_user: root
+          database_password: icms
+          database_port: ${{ job.services.mysql.ports['3306'] }}
         continue-on-error: ${{ matrix.experimental }}
       - name: Prepare CodeClimate
         run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter before-build
@@ -104,9 +88,8 @@ jobs:
           DB_COLLATION: utf8_general_ci
           DB_PREFIX: icms
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          APP_KEY: ${{ steps.install_icms.outputs.app_key }}
         run: |
-          export APP_KEY=`php ./bin/console generate:app:key`
-          ls tests/ -la
           ./bin/phpunit --testdox
         #  mv ./storage/log/clover.xml ./clover.xml
         continue-on-error: ${{ matrix.experimental }}
