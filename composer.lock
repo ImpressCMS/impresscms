@@ -1,20 +1,20 @@
 {
-  "_readme": [
-	"This file locks the dependencies of your project to a known state",
-	"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-	"This file is @generated automatically"
-  ],
-  "content-hash": "78af278cb2fd6289b233f33f36b95d1d",
-  "packages": [
-	{
-	  "name": "0.0.0/composer-include-files",
-	  "version": "1.6.0",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
-		"reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
-	  },
-	  "dist": {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "78af278cb2fd6289b233f33f36b95d1d",
+    "packages": [
+        {
+            "name": "0.0.0/composer-include-files",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
+                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
+            },
+            "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
                 "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
@@ -1852,71 +1852,71 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-			  "MIT"
-			],
-		  "description": "Interfaces for building PHP classes that lets to easier make web editor integrations in your content management systems",
-		  "support": {
-			"issues": "https://github.com/imponeer/editor-contracts/issues",
-			"source": "https://github.com/imponeer/editor-contracts/tree/v1.0.0"
-		  },
-		  "time": "2021-10-12T09:36:43+00:00"
-		},
-	{
-	  "name": "imponeer/env",
-	  "version": "v1.0.0",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/imponeer/env.git",
-		"reference": "3efe70bdd2e9abfedbb4a1d0ae85902e791b0748"
-	  },
-	  "dist": {
-		"type": "zip",
-		"url": "https://api.github.com/repos/imponeer/env/zipball/3efe70bdd2e9abfedbb4a1d0ae85902e791b0748",
-		"reference": "3efe70bdd2e9abfedbb4a1d0ae85902e791b0748",
-		"shasum": ""
-	  },
-	  "require": {
-		"php": ">=7.2",
-		"silinternational/php-env": "^2.1"
-	  },
-	  "require-dev": {
-		"fakerphp/faker": "^1.19",
-		"phpunit/phpunit": ">=8"
-	  },
-	  "type": "library",
-	  "autoload": {
-		"files": [
-		  "src/functions.php"
-		]
-	  },
-	  "notification-url": "https://packagist.org/downloads/",
-	  "license": [
-		"MIT"
-	  ],
-	  "authors": [
-		{
-		  "name": "Raimondas Rimkevičius (aka MekDrop)",
-		  "email": "mekdrop@impresscms.org"
-		}
-	  ],
-	  "description": "Small helper dealing with environment variables",
-	  "support": {
-		"issues": "https://github.com/imponeer/env/issues",
-		"source": "https://github.com/imponeer/env/tree/v1.0.0"
-	  },
-	  "time": "2022-06-11T09:01:18+00:00"
-	},
-	{
-	  "name": "imponeer/smarty-db-resource",
-	  "version": "v2.1.1",
-	  "source": {
-		"type": "git",
-		"url": "https://github.com/imponeer/smarty-db-resource.git",
-		"reference": "8f7b482e598dd312004e443963e62d100ea28bb7"
-	  },
-	  "dist": {
-		"type": "zip",
-		"url": "https://api.github.com/repos/imponeer/smarty-db-resource/zipball/8f7b482e598dd312004e443963e62d100ea28bb7",
+                "MIT"
+            ],
+            "description": "Interfaces for building PHP classes that lets to easier make web editor integrations in your content management systems",
+            "support": {
+                "issues": "https://github.com/imponeer/editor-contracts/issues",
+                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.0"
+            },
+            "time": "2021-10-12T09:36:43+00:00"
+        },
+        {
+            "name": "imponeer/env",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/env.git",
+                "reference": "3efe70bdd2e9abfedbb4a1d0ae85902e791b0748"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/env/zipball/3efe70bdd2e9abfedbb4a1d0ae85902e791b0748",
+                "reference": "3efe70bdd2e9abfedbb4a1d0ae85902e791b0748",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "silinternational/php-env": "^2.1"
+            },
+            "require-dev": {
+                "fakerphp/faker": "^1.19",
+                "phpunit/phpunit": ">=8"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raimondas Rimkevičius (aka MekDrop)",
+                    "email": "mekdrop@impresscms.org"
+                }
+            ],
+            "description": "Small helper dealing with environment variables",
+            "support": {
+                "issues": "https://github.com/imponeer/env/issues",
+                "source": "https://github.com/imponeer/env/tree/v1.0.0"
+            },
+            "time": "2022-06-11T09:01:18+00:00"
+        },
+        {
+            "name": "imponeer/smarty-db-resource",
+            "version": "v2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imponeer/smarty-db-resource.git",
+                "reference": "8f7b482e598dd312004e443963e62d100ea28bb7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imponeer/smarty-db-resource/zipball/8f7b482e598dd312004e443963e62d100ea28bb7",
                 "reference": "8f7b482e598dd312004e443963e62d100ea28bb7",
                 "shasum": ""
             },
@@ -4728,16 +4728,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.6.0",
+            "version": "v6.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "e43bac82edc26ca04b36143a48bde1c051cfd5b1"
+                "reference": "9400f305a898f194caff5521f64e5dfa926626f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/e43bac82edc26ca04b36143a48bde1c051cfd5b1",
-                "reference": "e43bac82edc26ca04b36143a48bde1c051cfd5b1",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/9400f305a898f194caff5521f64e5dfa926626f3",
+                "reference": "9400f305a898f194caff5521f64e5dfa926626f3",
                 "shasum": ""
             },
             "require": {
@@ -4749,8 +4749,8 @@
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "doctrine/annotations": "^1.2",
-                "php-parallel-lint/php-console-highlighter": "^0.5.0",
-                "php-parallel-lint/php-parallel-lint": "^1.3.1",
+                "php-parallel-lint/php-console-highlighter": "^1.0.0",
+                "php-parallel-lint/php-parallel-lint": "^1.3.2",
                 "phpcompatibility/php-compatibility": "^9.3.5",
                 "roave/security-advisories": "dev-latest",
                 "squizlabs/php_codesniffer": "^3.6.2",
@@ -4794,7 +4794,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.6.0"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.6.3"
             },
             "funding": [
                 {
@@ -4802,7 +4802,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-28T15:31:21+00:00"
+            "time": "2022-06-20T09:21:02+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -9951,5 +9951,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-  "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
