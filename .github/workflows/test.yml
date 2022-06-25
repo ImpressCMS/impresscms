@@ -55,7 +55,7 @@ jobs:
           chmod +x ./cc-test-reporter
         continue-on-error: true
       - name: Install PHP
-        uses: shivammathur/setup-php@2.19.1
+        uses: shivammathur/setup-php@master
         with:
           php-version: ${{ matrix.php }}
           extensions: curl, gd, pdo_mysql, json, mbstring, pcre, session
