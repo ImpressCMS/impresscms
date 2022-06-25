@@ -70,6 +70,7 @@ jobs:
           database_user: root
           database_password: icms
           database_port: ${{ job.services.mysql.ports['3306'] }}
+          database_prefix: icms
         continue-on-error: ${{ matrix.experimental }}
       - name: Prepare CodeClimate
         run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter before-build
