@@ -243,27 +243,6 @@
           "extension_describer.theme"
         ]
       },
-      "\\ImpressCMS\\Core\\Commands\\TemplatesCacheClearCommand": {
-        "tags": [
-          "console.command"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Commands\\ModuleInstallCommand": {
-        "tags": [
-          "console.command"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Commands\\ModuleUpdateCommand": {
-        "tags": [
-          "console.command"
-        ]
-      },
-      "\\ImpressCMS\\Core\\Commands\\ModuleUninstallCommand": {
-        "tags": [
-          "console.command"
-
-        ]
-      },
       "container": {
         "class": "\\icms"
       },
@@ -323,7 +302,8 @@
     },
     "allow-plugins": {
       "typo3/class-alias-loader": true,
-      "impresscms/composer-addon-installer-plugin": true
+      "impresscms/composer-addon-installer-plugin": true,
+      "0.0.0/composer-include-files": false
     }
   },
   "scripts": {

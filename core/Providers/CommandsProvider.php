@@ -7,9 +7,9 @@ use ImpressCMS\Core\Commands\GenerateAppKeyCommand;
 use ImpressCMS\Core\Commands\ModuleInstallCommand;
 use ImpressCMS\Core\Commands\ModuleUninstallCommand;
 use ImpressCMS\Core\Commands\ModuleUpdateCommand;
+use ImpressCMS\Core\Commands\RoutesListCommand;
 use ImpressCMS\Core\Commands\TemplatesCacheClearCommand;
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use Sunrise\Http\Router\Command\RouteListCommand;
 
 /**
  * Provides system console commands
@@ -38,11 +38,11 @@ class CommandsProvider extends AbstractServiceProvider
 			->add(CacheClearCommand::class)
 			->addTag(self::CONSOLE_COMMAND_TAG)
 		;
+
 		$this->leagueContainer
-			->add(RouteListCommand::class)
-			->addArgument('router')
-			->addTag(self::CONSOLE_COMMAND_TAG)
-		;
+			->add(RoutesListCommand::class)
+			->addTag(self::CONSOLE_COMMAND_TAG);
+
 		$this->leagueContainer
 			->add(TemplatesCacheClearCommand::class)
 			->addTag(self::CONSOLE_COMMAND_TAG)
