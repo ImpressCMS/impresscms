@@ -1,8 +1,6 @@
 <?php
 
-
 namespace ImpressCMS\Core\Commands;
-
 
 use Defuse\Crypto\Key;
 use Symfony\Component\Console\Command\Command;
@@ -31,7 +29,9 @@ class GenerateAppKeyCommand extends Command
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$output->writeln(Key::createNewRandomKey()->saveToAsciiSafeString());
+		$output->writeln(
+			Key::createNewRandomKey()->saveToAsciiSafeString()
+		);
 
 		return 0;
 	}

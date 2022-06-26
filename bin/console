@@ -11,11 +11,10 @@ set_time_limit(0);
 
 global $xoopsOption;
 $xoopsOption = [
-		'nocommon' => 1
+  'nocommon' => 1
 ];
 require dirname(__DIR__) . '/mainfile.php';
 icms::getInstance()->boot(false);
-
 icms_loadLanguageFile('core', 'global');
 icms_loadCommonLanguageFile();
 
@@ -23,7 +22,7 @@ $cd = getcwd();
 chdir(dirname(__DIR__));
 
 $composer = Factory::create(
-		new NullIO()
+	new NullIO()
 );
 
 $version = $composer->getPackage()->getVersion();
@@ -33,11 +32,11 @@ chdir($cd);
 $application = new Application('ImpressCMS Console', $version);
 try {
 	$application->addCommands(
-			icms::getInstance()->get('console.command')
+		icms::getInstance()->get('console.command')
 	);
 } catch (NotFoundException $exception) {
 
 }
 $application->run(
-		new ArgvInput()
+	new ArgvInput()
 );
