@@ -1,14 +1,15 @@
 <?php
 
-
 namespace ImpressCMS\Core\Commands;
 
+use icms;
 use ImpressCMS\Core\Models\ModuleHandler;
-use ImpressCMS\Core\SetupSteps\OutputDecorator;
+use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use function icms_loadLanguageFile;
 
 /**
  * Command that uninstall module
@@ -40,14 +41,14 @@ class ModuleUninstallCommand extends Command
 			return 1;
 		}
 
-		\icms::getInstance()->registerCommonServiceVariables();
+		icms::getInstance()->registerCommonServiceVariables();
 
-		\icms_loadLanguageFile('system', 'modules', true);
+		icms_loadLanguageFile('system', 'modules', true);
 
 		/**
 		 * @var ModuleHandler $module_handler
 		 */
-		$module_handler = \icms::handler('icms_module');
+		$module_handler = icms::handler('icms_module');
 		if ($module_handler->uninstall(
 			$modName,
 			new OutputDecorator($output)
