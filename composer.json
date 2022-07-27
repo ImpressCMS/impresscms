@@ -55,7 +55,7 @@
     "composer/composer": ">=1.10.22 || >=2.0.13",
     "defuse/php-encryption": "^2.2",
     "doctrine/annotations": "^1.13",
-    "dompdf/dompdf": "^1.2.1",
+    "dompdf/dompdf": "^2.0.0",
     "ellipse/cookie-encryption": "^1.0",
     "erusev/parsedown": "^1.7",
     "ezyang/htmlpurifier": "^4.10",
