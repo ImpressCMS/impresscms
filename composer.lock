@@ -1611,16 +1611,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.2.1",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "c94a94f120803a18554c1805ef2e539f8285f9a2"
+                "reference": "13388f00956b1503577598873fffb5ae994b5737"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/c94a94f120803a18554c1805ef2e539f8285f9a2",
-                "reference": "c94a94f120803a18554c1805ef2e539f8285f9a2",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/13388f00956b1503577598873fffb5ae994b5737",
+                "reference": "13388f00956b1503577598873fffb5ae994b5737",
                 "shasum": ""
             },
             "require": {
@@ -1644,7 +1644,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -1706,7 +1706,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.2.1"
+                "source": "https://github.com/guzzle/psr7/tree/2.4.0"
             },
             "funding": [
                 {
@@ -1722,7 +1722,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-20T21:55:58+00:00"
+            "time": "2022-06-20T21:43:11+00:00"
         },
         {
             "name": "http-interop/http-factory-guzzle",
@@ -2057,16 +2057,16 @@
         },
         {
             "name": "imponeer/smarty-image",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-image.git",
-                "reference": "7bff82bc4034e7d8f715a28b416a6ab238156184"
+                "reference": "b468a5f060f42e840fe19f6e63ab81ec209ca558"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-image/zipball/7bff82bc4034e7d8f715a28b416a6ab238156184",
-                "reference": "7bff82bc4034e7d8f715a28b416a6ab238156184",
+                "url": "https://api.github.com/repos/imponeer/smarty-image/zipball/b468a5f060f42e840fe19f6e63ab81ec209ca558",
+                "reference": "b468a5f060f42e840fe19f6e63ab81ec209ca558",
                 "shasum": ""
             },
             "require": {
@@ -2100,9 +2100,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-image/issues",
-                "source": "https://github.com/imponeer/smarty-image/tree/v1.1.1"
+                "source": "https://github.com/imponeer/smarty-image/tree/v1.1.2"
             },
-            "time": "2022-03-26T20:50:11+00:00"
+            "time": "2022-07-25T11:37:47+00:00"
         },
         {
             "name": "imponeer/smarty-includeq",
@@ -3066,16 +3066,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "2.7.1",
+            "version": "2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "744ebba495319501b873a4e48787759c72e3fb8c"
+                "reference": "04be355f8d6734c826045d02a1079ad658322dad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/744ebba495319501b873a4e48787759c72e3fb8c",
-                "reference": "744ebba495319501b873a4e48787759c72e3fb8c",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/04be355f8d6734c826045d02a1079ad658322dad",
+                "reference": "04be355f8d6734c826045d02a1079ad658322dad",
                 "shasum": ""
             },
             "require": {
@@ -3118,8 +3118,8 @@
             "authors": [
                 {
                     "name": "Oliver Vogel",
-                    "email": "oliver@olivervogel.com",
-                    "homepage": "http://olivervogel.com/"
+                    "email": "oliver@intervention.io",
+                    "homepage": "https://intervention.io/"
                 }
             ],
             "description": "Image handling and manipulation library with support for Laravel integration",
@@ -3134,11 +3134,11 @@
             ],
             "support": {
                 "issues": "https://github.com/Intervention/image/issues",
-                "source": "https://github.com/Intervention/image/tree/2.7.1"
+                "source": "https://github.com/Intervention/image/tree/2.7.2"
             },
             "funding": [
                 {
-                    "url": "https://www.paypal.me/interventionphp",
+                    "url": "https://paypal.me/interventionio",
                     "type": "custom"
                 },
                 {
@@ -3146,7 +3146,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-16T16:49:26+00:00"
+            "time": "2022-05-21T17:30:32+00:00"
         },
         {
             "name": "ircmaxell/random-lib",
