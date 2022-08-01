@@ -2195,16 +2195,16 @@
         },
         {
             "name": "imponeer/smarty-translate",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-translate.git",
-                "reference": "390fe20fa7c0ea85532ac41344787f3ecc49c0f8"
+                "reference": "c6695074b3865ea7c72789934bf7ae343a5fb203"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/390fe20fa7c0ea85532ac41344787f3ecc49c0f8",
-                "reference": "390fe20fa7c0ea85532ac41344787f3ecc49c0f8",
+                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/c6695074b3865ea7c72789934bf7ae343a5fb203",
+                "reference": "c6695074b3865ea7c72789934bf7ae343a5fb203",
                 "shasum": ""
             },
             "require": {
@@ -2237,9 +2237,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-translate/issues",
-                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.1"
+                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.2"
             },
-            "time": "2022-03-26T21:04:47+00:00"
+            "time": "2022-07-25T11:15:36+00:00"
         },
         {
             "name": "imponeer/smarty-xo",
