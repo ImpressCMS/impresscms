@@ -7,57 +7,6 @@
     "content-hash": "1ca00d0c95f76bd29edcd3b7c72dbaa4",
     "packages": [
         {
-            "name": "0.0.0/composer-include-files",
-            "version": "1.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hopeseekr-contribs/composer-include-files.git",
-                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hopeseekr-contribs/composer-include-files/zipball/6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
-                "reference": "6e6d0a52e05b31061367a9fe58b6d9b104d79ca4",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0 || ^2.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "ComposerIncludeFiles\\Plugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "ComposerIncludeFiles\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tim Robertson",
-                    "email": "funkjedi@gmail.com"
-                },
-                {
-                    "name": "Theodore R. Smith",
-                    "email": "theodore@phpexperts.pro"
-                }
-            ],
-            "description": "Include files at a higher priority than autoload files. Useful for overriding Laravel helpers.",
-            "homepage": "https://github.com/funkjedi/composer-include-files",
-            "keywords": [
-                "autoload",
-                "composer"
-            ],
-            "support": {
-                "source": "https://github.com/hopeseekr-contribs/composer-include-files/tree/1.6.0"
-            },
-            "time": "2020-07-09T12:26:27+00:00"
-        },
-        {
             "name": "apix/cache",
             "version": "1.3.5",
             "source": {
@@ -2292,16 +2241,16 @@
         },
         {
             "name": "imponeer/symfony-translations-constants-loader",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/symfony-translations-constants-loader.git",
-                "reference": "dea4e144cbdbb7cb4af32989e4b3bccb68be14c8"
+                "reference": "3de01fbacd7f8f611804078a7327c1e78f2feb56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/dea4e144cbdbb7cb4af32989e4b3bccb68be14c8",
-                "reference": "dea4e144cbdbb7cb4af32989e4b3bccb68be14c8",
+                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/3de01fbacd7f8f611804078a7327c1e78f2feb56",
+                "reference": "3de01fbacd7f8f611804078a7327c1e78f2feb56",
                 "shasum": ""
             },
             "require": {
@@ -2340,9 +2289,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/symfony-translations-constants-loader/issues",
-                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.1"
+                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.2"
             },
-            "time": "2022-03-26T21:25:17+00:00"
+            "time": "2022-07-25T22:00:37+00:00"
         },
         {
             "name": "impresscms/codemirror-integration",
@@ -2423,23 +2372,23 @@
         },
         {
             "name": "impresscms/composer-addon-installer-plugin",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/composer-addon-installer-plugin.git",
-                "reference": "abaef15d5f987486c1f6bd1e45276bb5b0769ece"
+                "reference": "aa4e6d6294f6e9a4c48556a4f34f6bfdab9918fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/composer-addon-installer-plugin/zipball/abaef15d5f987486c1f6bd1e45276bb5b0769ece",
-                "reference": "abaef15d5f987486c1f6bd1e45276bb5b0769ece",
+                "url": "https://api.github.com/repos/ImpressCMS/composer-addon-installer-plugin/zipball/aa4e6d6294f6e9a4c48556a4f34f6bfdab9918fe",
+                "reference": "aa4e6d6294f6e9a4c48556a4f34f6bfdab9918fe",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
+                "imponeer/env": "^1.0.0",
                 "php": ">7.2.5",
-                "phpexperts/laravel-env-polyfill": ">=1.0",
-                "vlucas/phpdotenv": ">=3.3.3"
+                "vlucas/phpdotenv": "^3.3.4"
             },
             "require-dev": {
                 "composer/composer": "^1.10.23 || ^2.1.9"
@@ -2466,9 +2415,9 @@
             "description": "This plugin allows the installation of ImpressCMS addons from composer",
             "support": {
                 "issues": "https://github.com/ImpressCMS/composer-addon-installer-plugin/issues",
-                "source": "https://github.com/ImpressCMS/composer-addon-installer-plugin/tree/v1.0.4"
+                "source": "https://github.com/ImpressCMS/composer-addon-installer-plugin/tree/v1.0.5"
             },
-            "time": "2021-10-16T14:33:48+00:00"
+            "time": "2022-07-02T14:53:08+00:00"
         },
         {
             "name": "impresscms/core-theme",
@@ -4131,16 +4080,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "2.7.0",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "5579edf28aee1190a798bfa5be8bc16c563bd524"
+                "reference": "720488632c590286b88b80e62aa3d3d551ad4a50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/5579edf28aee1190a798bfa5be8bc16c563bd524",
-                "reference": "5579edf28aee1190a798bfa5be8bc16c563bd524",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/720488632c590286b88b80e62aa3d3d551ad4a50",
+                "reference": "720488632c590286b88b80e62aa3d3d551ad4a50",
                 "shasum": ""
             },
             "require": {
@@ -4160,11 +4109,10 @@
                 "guzzlehttp/psr7": "^2.2",
                 "mongodb/mongodb": "^1.8",
                 "php-amqplib/php-amqplib": "~2.4 || ^3",
-                "php-console/php-console": "^3.1.3",
                 "phpspec/prophecy": "^1.15",
                 "phpstan/phpstan": "^0.12.91",
                 "phpunit/phpunit": "^8.5.14",
-                "predis/predis": "^1.1",
+                "predis/predis": "^1.1 || ^2.0",
                 "rollbar/rollbar": "^1.3 || ^2 || ^3",
                 "ruflin/elastica": "^7",
                 "swiftmailer/swiftmailer": "^5.3|^6.0",
@@ -4184,7 +4132,6 @@
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "mongodb/mongodb": "Allow sending log messages to a MongoDB server (via library)",
                 "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
-                "php-console/php-console": "Allow sending log messages to Google Chrome",
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
                 "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
@@ -4219,7 +4166,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/2.7.0"
+                "source": "https://github.com/Seldaek/monolog/tree/2.8.0"
             },
             "funding": [
                 {
@@ -4231,7 +4178,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-09T08:59:12+00:00"
+            "time": "2022-07-24T11:55:47+00:00"
         },
         {
             "name": "myclabs/php-enum",
@@ -4668,70 +4615,6 @@
             "time": "2019-07-25T03:43:28+00:00"
         },
         {
-            "name": "phpexperts/laravel-env-polyfill",
-            "version": "v1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHPExpertsInc/Laravel57-env-polyfill.git",
-                "reference": "e09e7dd710f6a3332406a3042f33d65541a34584"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHPExpertsInc/Laravel57-env-polyfill/zipball/e09e7dd710f6a3332406a3042f33d65541a34584",
-                "reference": "e09e7dd710f6a3332406a3042f33d65541a34584",
-                "shasum": ""
-            },
-            "require": {
-                "0.0.0/composer-include-files": "*",
-                "php": ">=7.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "*",
-                "phpexperts/dockerize": "*",
-                "phpexperts/skeleton": "*",
-                "phpstan/phpstan": "*",
-                "phpunit/phpunit": "9.*",
-                "squizlabs/php_codesniffer": "*"
-            },
-            "type": "library",
-            "extra": {
-                "include_files": [
-                    "src/env-shim.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP Experts, Inc.",
-                    "homepage": "https://www.phpexperts.pro/"
-                },
-                {
-                    "name": "Theodore R. Smith",
-                    "homepage": "https://www.linkedin.com/in/hopeseekr"
-                },
-                {
-                    "name": "Taylor Otwell",
-                    "homepage": "https://www.laravel.com/"
-                }
-            ],
-            "description": "Backward compatible support for Laravel's pre-5.8 env() function.",
-            "homepage": "https://github/phpexpertsinc/",
-            "keywords": [
-                "5.7",
-                "env",
-                "laravel",
-                "shim"
-            ],
-            "support": {
-                "issues": "https://github.com/PHPExpertsInc/Laravel57-env-polyfill/issues",
-                "source": "https://github.com/PHPExpertsInc/Laravel57-env-polyfill/tree/v1.5.0"
-            },
-            "time": "2021-12-25T07:28:28+00:00"
-        },
-        {
             "name": "phpmailer/phpmailer",
             "version": "v6.6.3",
             "source": {
@@ -4811,29 +4694,33 @@
         },
         {
             "name": "phpoption/phpoption",
-            "version": "1.8.1",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/php-option.git",
-                "reference": "eab7a0df01fe2344d172bff4cd6dbd3f8b84ad15"
+                "reference": "dc5ff11e274a90cc1c743f66c9ad700ce50db9ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/eab7a0df01fe2344d172bff4cd6dbd3f8b84ad15",
-                "reference": "eab7a0df01fe2344d172bff4cd6dbd3f8b84ad15",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/dc5ff11e274a90cc1c743f66c9ad700ce50db9ab",
+                "reference": "dc5ff11e274a90cc1c743f66c9ad700ce50db9ab",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0 || ^8.0"
+                "php": "^7.2.5 || ^8.0"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.4.1",
-                "phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.5.19 || ^9.5.8"
+                "bamarni/composer-bin-plugin": "^1.8",
+                "phpunit/phpunit": "^8.5.28 || ^9.5.21"
             },
             "type": "library",
             "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": true
+                },
                 "branch-alias": {
-                    "dev-master": "1.8-dev"
+                    "dev-master": "1.9-dev"
                 }
             },
             "autoload": {
@@ -4866,7 +4753,7 @@
             ],
             "support": {
                 "issues": "https://github.com/schmittjoh/php-option/issues",
-                "source": "https://github.com/schmittjoh/php-option/tree/1.8.1"
+                "source": "https://github.com/schmittjoh/php-option/tree/1.9.0"
             },
             "funding": [
                 {
@@ -4878,7 +4765,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-04T23:24:31+00:00"
+            "time": "2022-07-30T15:51:26+00:00"
         },
         {
             "name": "phpseclib/bcmath_compat",
@@ -6120,16 +6007,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v5.4.10",
+            "version": "v5.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "4d671ab4ddac94ee439ea73649c69d9d200b5000"
+                "reference": "535846c7ee6bc4dd027ca0d93220601456734b10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/4d671ab4ddac94ee439ea73649c69d9d200b5000",
-                "reference": "4d671ab4ddac94ee439ea73649c69d9d200b5000",
+                "url": "https://api.github.com/repos/symfony/console/zipball/535846c7ee6bc4dd027ca0d93220601456734b10",
+                "reference": "535846c7ee6bc4dd027ca0d93220601456734b10",
                 "shasum": ""
             },
             "require": {
@@ -6199,7 +6086,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.4.10"
+                "source": "https://github.com/symfony/console/tree/v5.4.11"
             },
             "funding": [
                 {
@@ -6215,7 +6102,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-26T13:00:04+00:00"
+            "time": "2022-07-22T10:42:43+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -7050,16 +6937,16 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "24d9dc654b83e91aa59f9d167b131bc3b5bea24c"
+                "reference": "4b426aac47d6427cc1a1d0f7e2ac724627f5966c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/24d9dc654b83e91aa59f9d167b131bc3b5bea24c",
-                "reference": "24d9dc654b83e91aa59f9d167b131bc3b5bea24c",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/4b426aac47d6427cc1a1d0f7e2ac724627f5966c",
+                "reference": "4b426aac47d6427cc1a1d0f7e2ac724627f5966c",
                 "shasum": ""
             },
             "require": {
@@ -7113,7 +7000,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/service-contracts/tree/v2.5.1"
+                "source": "https://github.com/symfony/service-contracts/tree/v2.5.2"
             },
             "funding": [
                 {
@@ -7129,7 +7016,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-13T20:07:29+00:00"
+            "time": "2022-05-30T19:17:29+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -7195,16 +7082,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v5.4.10",
+            "version": "v5.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "4432bc7df82a554b3e413a8570ce2fea90e94097"
+                "reference": "5eb661e49ad389e4ae2b6e4df8d783a8a6548322"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/4432bc7df82a554b3e413a8570ce2fea90e94097",
-                "reference": "4432bc7df82a554b3e413a8570ce2fea90e94097",
+                "url": "https://api.github.com/repos/symfony/string/zipball/5eb661e49ad389e4ae2b6e4df8d783a8a6548322",
+                "reference": "5eb661e49ad389e4ae2b6e4df8d783a8a6548322",
                 "shasum": ""
             },
             "require": {
@@ -7261,7 +7148,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v5.4.10"
+                "source": "https://github.com/symfony/string/tree/v5.4.11"
             },
             "funding": [
                 {
@@ -7277,7 +7164,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-26T15:57:47+00:00"
+            "time": "2022-07-24T16:15:25+00:00"
         },
         {
             "name": "symfony/translation",
