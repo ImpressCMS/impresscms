@@ -1961,21 +1961,21 @@
         },
         {
             "name": "imponeer/smarty-extensions-contracts",
-            "version": "v2.0",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-extensions-contracts.git",
-                "reference": "b8561fbedf369048ef8d600b0103be97f7595778"
+                "reference": "4193b74dc31ed29db4605a9cc42835fa1038177a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/b8561fbedf369048ef8d600b0103be97f7595778",
-                "reference": "b8561fbedf369048ef8d600b0103be97f7595778",
+                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/4193b74dc31ed29db4605a9cc42835fa1038177a",
+                "reference": "4193b74dc31ed29db4605a9cc42835fa1038177a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.3",
-                "smarty/smarty": "~3.1 || ~4.0"
+                "smarty/smarty": "^3.1.45 || ^4.0"
             },
             "type": "library",
             "autoload": {
@@ -2004,9 +2004,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-extensions-contracts/issues",
-                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0"
+                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0.2"
             },
-            "time": "2021-12-01T08:36:47+00:00"
+            "time": "2022-07-25T11:18:42+00:00"
         },
         {
             "name": "imponeer/smarty-foreachq",
@@ -2195,16 +2195,16 @@
         },
         {
             "name": "imponeer/smarty-translate",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-translate.git",
-                "reference": "390fe20fa7c0ea85532ac41344787f3ecc49c0f8"
+                "reference": "c6695074b3865ea7c72789934bf7ae343a5fb203"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/390fe20fa7c0ea85532ac41344787f3ecc49c0f8",
-                "reference": "390fe20fa7c0ea85532ac41344787f3ecc49c0f8",
+                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/c6695074b3865ea7c72789934bf7ae343a5fb203",
+                "reference": "c6695074b3865ea7c72789934bf7ae343a5fb203",
                 "shasum": ""
             },
             "require": {
@@ -2237,9 +2237,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-translate/issues",
-                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.1"
+                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.2"
             },
-            "time": "2022-03-26T21:04:47+00:00"
+            "time": "2022-07-25T11:15:36+00:00"
         },
         {
             "name": "imponeer/smarty-xo",
@@ -7378,16 +7378,16 @@
         },
         {
             "name": "symfony/translation-contracts",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation-contracts.git",
-                "reference": "1211df0afa701e45a04253110e959d4af4ef0f07"
+                "reference": "136b19dd05cdf0709db6537d058bcab6dd6e2dbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/1211df0afa701e45a04253110e959d4af4ef0f07",
-                "reference": "1211df0afa701e45a04253110e959d4af4ef0f07",
+                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/136b19dd05cdf0709db6537d058bcab6dd6e2dbe",
+                "reference": "136b19dd05cdf0709db6537d058bcab6dd6e2dbe",
                 "shasum": ""
             },
             "require": {
@@ -7436,7 +7436,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/translation-contracts/tree/v2.5.1"
+                "source": "https://github.com/symfony/translation-contracts/tree/v2.5.2"
             },
             "funding": [
                 {
@@ -7452,7 +7452,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-02T09:53:40+00:00"
+            "time": "2022-06-27T16:58:25+00:00"
         },
         {
             "name": "true/punycode",
@@ -9955,5 +9955,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
