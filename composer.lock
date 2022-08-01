@@ -1961,21 +1961,21 @@
         },
         {
             "name": "imponeer/smarty-extensions-contracts",
-            "version": "v2.0",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-extensions-contracts.git",
-                "reference": "b8561fbedf369048ef8d600b0103be97f7595778"
+                "reference": "4193b74dc31ed29db4605a9cc42835fa1038177a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/b8561fbedf369048ef8d600b0103be97f7595778",
-                "reference": "b8561fbedf369048ef8d600b0103be97f7595778",
+                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/4193b74dc31ed29db4605a9cc42835fa1038177a",
+                "reference": "4193b74dc31ed29db4605a9cc42835fa1038177a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.3",
-                "smarty/smarty": "~3.1 || ~4.0"
+                "smarty/smarty": "^3.1.45 || ^4.0"
             },
             "type": "library",
             "autoload": {
@@ -2004,9 +2004,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-extensions-contracts/issues",
-                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0"
+                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0.2"
             },
-            "time": "2021-12-01T08:36:47+00:00"
+            "time": "2022-07-25T11:18:42+00:00"
         },
         {
             "name": "imponeer/smarty-foreachq",
@@ -2106,16 +2106,16 @@
         },
         {
             "name": "imponeer/smarty-includeq",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-includeq.git",
-                "reference": "992e162e68deea00f3d133414b6f72765e33a790"
+                "reference": "8131bf6a955d6293bfd8c8e2459f85ca668ff1c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-includeq/zipball/992e162e68deea00f3d133414b6f72765e33a790",
-                "reference": "992e162e68deea00f3d133414b6f72765e33a790",
+                "url": "https://api.github.com/repos/imponeer/smarty-includeq/zipball/8131bf6a955d6293bfd8c8e2459f85ca668ff1c4",
+                "reference": "8131bf6a955d6293bfd8c8e2459f85ca668ff1c4",
                 "shasum": ""
             },
             "require": {
@@ -2147,9 +2147,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-includeq/issues",
-                "source": "https://github.com/imponeer/smarty-includeq/tree/v1.1.1"
+                "source": "https://github.com/imponeer/smarty-includeq/tree/v1.1.2"
             },
-            "time": "2022-03-26T20:55:33+00:00"
+            "time": "2022-07-25T11:11:26+00:00"
         },
         {
             "name": "imponeer/smarty-sunrise-http-router",
@@ -6219,7 +6219,7 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
@@ -6266,7 +6266,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v2.5.1"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v2.5.2"
             },
             "funding": [
                 {
@@ -7281,16 +7281,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v5.4.9",
+            "version": "v5.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "1639abc1177d26bcd4320e535e664cef067ab0ca"
+                "reference": "7a1a8f6bbff269f434a83343a0a5d36a4f8cfa21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/1639abc1177d26bcd4320e535e664cef067ab0ca",
-                "reference": "1639abc1177d26bcd4320e535e664cef067ab0ca",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/7a1a8f6bbff269f434a83343a0a5d36a4f8cfa21",
+                "reference": "7a1a8f6bbff269f434a83343a0a5d36a4f8cfa21",
                 "shasum": ""
             },
             "require": {
@@ -7358,7 +7358,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v5.4.9"
+                "source": "https://github.com/symfony/translation/tree/v5.4.11"
             },
             "funding": [
                 {
@@ -7374,20 +7374,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-06T12:33:37+00:00"
+            "time": "2022-07-20T13:00:38+00:00"
         },
         {
             "name": "symfony/translation-contracts",
-            "version": "v2.5.1",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation-contracts.git",
-                "reference": "1211df0afa701e45a04253110e959d4af4ef0f07"
+                "reference": "136b19dd05cdf0709db6537d058bcab6dd6e2dbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/1211df0afa701e45a04253110e959d4af4ef0f07",
-                "reference": "1211df0afa701e45a04253110e959d4af4ef0f07",
+                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/136b19dd05cdf0709db6537d058bcab6dd6e2dbe",
+                "reference": "136b19dd05cdf0709db6537d058bcab6dd6e2dbe",
                 "shasum": ""
             },
             "require": {
@@ -7436,7 +7436,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/translation-contracts/tree/v2.5.1"
+                "source": "https://github.com/symfony/translation-contracts/tree/v2.5.2"
             },
             "funding": [
                 {
@@ -7452,7 +7452,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-02T09:53:40+00:00"
+            "time": "2022-06-27T16:58:25+00:00"
         },
         {
             "name": "true/punycode",
@@ -9955,5 +9955,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
