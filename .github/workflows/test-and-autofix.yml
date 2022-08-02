@@ -113,10 +113,135 @@ jobs:
       - test
 
     steps:
-      - name: Checkout code...
+name: Tests & Autofix
+
+on:
+  push:
+    branches:
+      - 2.*
+  pull_request:
+    branches:
+      - 2.*
+    paths:
+      - .github/workflows/test-and-autofix.yml
+      - '**.js'
+      - '**.php'
+      - composer.lock
+      - composer.json
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      max-parallel: 3
+      matrix:
+        os:
+          - ubuntu-latest
+          #- windows-latest # Todo: make it work also for windows
+          #- macOS-latest # Todo: make it work also for macos
+        php:
+          - 7.3
+          - 7.4
+          - 8.0
+          - 8.1
+        database:
+          - mysql:5.6
+          - mariadb:10.1
+        composer:
+          - 2
+        experimental: [false]
+    name: Test - php:${{ matrix.php }}; ${{ matrix.database }}; ${{ matrix.os }}; composer:${{ matrix.composer }}
+    services:
+      mysql:
+        image: ${{ matrix.database }}
+        env:
+          MYSQL_ROOT_PASSWORD: icms
+          MYSQL_DATABASE: icms
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - name: Checkout
         uses: actions/checkout@v3
+      - name: Setup CodeClimate
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+        continue-on-error: true
+      - name: Install PHP
+        uses: shivammathur/setup-php@2.21.1
         with:
-          ref: ${{ github.head_ref }}
+          php-version: ${{ matrix.php }}
+          extensions: curl, gd, pdo_mysql, json, mbstring, pcre, session
+          ini-values: post_max_size=256M
+          coverage: none
+          tools: composer:v${{ matrix.composer }}
+      - name: Installing ImpressCMS...
+        id: install_icms
+        uses: impresscms-dev/install-impresscms-action@v0.1.2
+        with:
+          database_name: icms
+          database_user: root
+          database_password: icms
+          database_port: ${{ job.services.mysql.ports['3306'] }}
+          database_prefix: icms
+        continue-on-error: ${{ matrix.experimental }}
+      - name: Prepare CodeClimate
+        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter before-build
+        if: ${{ success() }}
+        continue-on-error: true
+      - name: Testing with PHPUnit
+        env:
+          URL: http://localhost
+          DB_TYPE: pdo.mysql
+          DB_HOST: 127.0.0.1
+          DB_USER: root
+          DB_PASS: icms
+          DB_PCONNECT: 0
+          DB_NAME: icms
+          DB_CHARSET: utf8
+          DB_COLLATION: utf8_general_ci
+          DB_PREFIX: icms
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          APP_KEY: ${{ steps.install_icms.outputs.app_key }}
+        run: |
+          ./bin/phpunit --testdox
+        #  mv ./storage/log/clover.xml ./clover.xml
+        continue-on-error: ${{ matrix.experimental }}
+      - name: Deleting vendor/
+        run: rm -rf vendor/
+        continue-on-error: ${{ matrix.experimental }}
+      - name: Install Composer dependencies (without dev)
+        run: composer install --no-progress --no-dev --no-suggest --prefer-dist --optimize-autoloader
+        continue-on-error: ${{ matrix.experimental }}
+  #      - name: Commiting CodeClimate data
+  #        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover -r ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
+  #        if: ${{ success() }}
+  #        continue-on-error: true
+
+  autofix:
+
+    runs-on: ubuntu-latest
+    name: Autofix some files if needed
+    needs:
+      - test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Updating composer.lock...
+        run: composer update --lock
+        shell: bash
+
+      - name: Auto committing composer.lock changes...
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automatically composer.lock updated
+          file_pattern: composer.lock
+          skip_fetch: true
+          skip_checkout: true
 
       - name: Updating composer.lock...
         run: composer update --lock
