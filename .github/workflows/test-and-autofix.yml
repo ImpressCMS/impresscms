@@ -15,7 +15,7 @@ on:
       - composer.json
 
 jobs:
-  
+
   autofix:
 
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
 
@@ -38,7 +38,7 @@ jobs:
           file_pattern: composer.lock
           skip_fetch: true
           skip_checkout: true
-  
+
   test:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
