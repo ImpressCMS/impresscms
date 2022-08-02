@@ -16,33 +16,9 @@ on:
 
 jobs:
 
-  autofix:
-
-    runs-on: ubuntu-latest
-    name: Autofix some files if needed
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}
-
-      - name: Updating composer.lock...
-        run: composer update --lock
-        shell: bash
-
-      - name: Auto committing composer.lock changes...
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Automatically composer.lock updated
-          file_pattern: composer.lock
-          skip_fetch: true
-          skip_checkout: true
-
   test:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
-    needs: autofix
     strategy:
       max-parallel: 3
       matrix:
@@ -129,3 +105,28 @@ jobs:
   #        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $? -t clover -r ad1f334232dc545de86fbe07abfd55145ebc0be0530cc25f4ebab9bec35b67e7
   #        if: ${{ success() }}
   #        continue-on-error: true
+
+  autofix:
+
+    runs-on: ubuntu-latest
+    name: Autofix some files if needed
+    needs: test
+    if: ${{ !contains(github.ref, '.') }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Updating composer.lock...
+        run: composer update --lock
+        shell: bash
+
+      - name: Auto committing composer.lock changes...
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automatically composer.lock updated
+          file_pattern: composer.lock
+          skip_fetch: true
+          skip_checkout: true
