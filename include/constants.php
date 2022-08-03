@@ -10,7 +10,7 @@ if (!function_exists('env')) {
 }
 
 define('ICMS_ROOT_PATH', dirname(__DIR__));
-define('ICMS_URL', rtrim(env('URL'), '/'));
+define('ICMS_URL', rtrim((string)env('URL', 'http://localhost'), '/'));
 
 /**#@+
  * Creating ICMS specific constants
