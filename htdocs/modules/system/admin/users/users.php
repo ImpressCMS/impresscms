@@ -70,10 +70,10 @@ function displayUsers() {
 	$user_select_tray->addElement($user_select);
 	$user_select_nav = new icms_form_elements_Label('', $nav->renderNav(4));
 	$user_select_tray->addElement($user_select_nav);
-	
+
 	$op_select = new icms_form_elements_Select('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER, 'delUser'=>_AM_DELUSER));
-	
+
 	$submit_button = new icms_form_elements_Button('', 'submit', _AM_GO, 'submit');
 	$fct_hidden = new icms_form_elements_Hidden('fct', 'users');
 	$editform->addElement($user_select_tray);
@@ -117,8 +117,6 @@ function displayUsers() {
 	$name_value = '';
 	$email_value = '';
 	$email_cbox_value = 0;
-	$openid_value = '';
-	$openid_cbox_value = 0;
 	$url_value = '';
 	$timezone_value = $icmsConfig['default_TZ'];
 	$icq_value = '';
@@ -173,8 +171,6 @@ function modifyUser($user) {
 		$name_value = $user->getVar('name', 'E');
 		$email_value = $user->getVar('email', 'E');
 		$email_cbox_value = $user->getVar('user_viewemail') ? 1 : 0;
-		$openid_value = $user->getVar('openid', 'E');
-		$openid_cbox_value = $user->getVar('user_viewoid') ? 1 : 0;
 		$url_value = $user->getVar('url', 'E');
 		$temp = $user->getVar('theme');
 		$timezone_value = $user->getVar('timezone_offset');
@@ -252,15 +248,13 @@ function modifyUser($user) {
  * @param $timezone_offset
  * @param $user_mailok
  * @param $language
- * @param $openid
- * @param $user_viewoid
  * @param $pass_expired
  * @param $groups
  */
 function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim,
 					$user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar,
 					$user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method,
-					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $user_viewoid,
+					$notify_mode, $timezone_offset, $user_mailok, $language,
 					$pass_expired, $groups = array()
 					) {
 	global $icmsConfig, $icmsModule, $icmsConfigUser;
@@ -276,9 +270,6 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		$edituser->setVar('uname', $uname);
 		$edituser->setVar('login_name', $login_name);
 		$edituser->setVar('email', $email);
-		$edituser->setVar('openid', $openid);
-		$user_viewoid = (isset($user_viewoid) && $user_viewoid == 1) ? 1 : 0;
-		$edituser->setVar('user_viewoid', $user_viewoid);
 		$url = isset($url) ? formatURL($url) : '';
 		$edituser->setVar('url', $url);
 		$edituser->setVar('user_icq', $user_icq);

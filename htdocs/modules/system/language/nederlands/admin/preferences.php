@@ -247,7 +247,7 @@ define("_MD_AM_LDAP_PROVIS_UPD","Handhaaf ImpressCMS account onderhoud");
 define("_MD_AM_LDAP_PROVIS_UPD_DESC","De ImpressCMS gebruikers account wordt altijd gesynchroniseerd door middel van de verificatie server");
 
 //lang constants for secure password
-define("_MD_AM_PASSLEVEL","Minimale beveiligingsniveau");		
+define("_MD_AM_PASSLEVEL","Minimale beveiligingsniveau");
 define("_MD_AM_PASSLEVEL_DESC","Defineer welk beveiligingsniveau u wilt voor de wachtwoorden van uw gebruikers. Het is aangeraden dit niet te laag of te hoog in te stellen, wees verstandig.");
 define("_MD_AM_PASSLEVEL1","Zeer zwak(onveilig)");
 define("_MD_AM_PASSLEVEL2","Zwak");
@@ -347,7 +347,7 @@ define('_MD_AM_ALLWHTSIGDSC', 'Wanneer sommmige aanvallers een externe afbeeldin
 define('_MD_AM_ALLWSHOWSIG', 'Wilt u uw gebruikers toestaan om een handtekening te gebruiken in hun profiel en posten, op uw website?');
 define('_MD_AM_ALLWSHOWSIGDSC', 'Wanneer u deze optie inschakeld dan zijn uw gebruikers instaat om een persoonlijke handtekening toe te voegen onder hun posten, wanneer zij dat wensen.');
 // < personalizações > fabio - Sat Apr 28 11:55:00 BRT 2007 11:55:00
-define("_MD_AM_PERSON","Personalisering");		
+define("_MD_AM_PERSON","Personalisering");
 define("_MD_AM_GOOGLE_ANA","Google Analytcs");
 define("_MD_AM_GOOGLE_ANA_DESC",'Geef hier de van Google verkregen ID-code in om het eigendom van de website te bevestigen. Hiermee kunt u de volledige statistieken en fouten pagina zien. Vul het rode deel van de id-code in, zoals: UA - <font color=#FF0000><b>xxxxxxxxxxxx-x</b></font>".<br />Meer informatie op <a href="http://www.google.com/webmasters/" target="_blank">http://www.google.com/webmasters</a>.');
 define("_MD_AM_LLOGOADM","Administratiemenu linker logo");
@@ -403,12 +403,10 @@ define("_MD_AM_LASTCHARS_DESC","Aantal karakters dat wordt getoond in het einde 
 define("_MD_AM_SIGMAXLENGTH","Maximum aantal karakters in gebruikers handtekeningen?");
 define("_MD_AM_SIGMAXLENGTHDSC","Hier kunt u de lengte van uw gebruikers handtekeningen instellen.<br /> iedere karakter meer zal genegeerd worden.<br /><i>Wees voorzichtig, lange handtekeningen kunnen vaak de layout verstoren...</i>");
 
-define("_MD_AM_AUTHOPENID","OpenID authenticatie inschakelen");
-define("_MD_AM_AUTHOPENIDDSC","Selecteer Ja om OpenID authenticatie mogelijk te maken. Dit  zal gebruikers toestaan in te loggen met hun OpenID account. Voor meer informatie over deOpenID Integratie in ImpressCMS, bezoekt u alstublieft <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID/nl'>onze wiki</a>.");
 define("_MD_AM_USE_GOOGLE_ANA","Google Analytics toestaan?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
 
-// added in 1.1.2 
+// added in 1.1.2
 define("_MD_AM_UNABLEENCCLOSED","Bijwerken van de database is mislukt, U kunt de wachtwoord encriptie niet wijzigen terwijl de website gesloten is");
 
 ######################## Added in 1.2 ###################################

@@ -169,27 +169,7 @@ define('_US_REGFORM_WARNING', '尽量使用一个安全的密码。尝试使用�
 define('_US_CHANGE_PASSWORD', '更改密码?');
 define('_US_POSTSNOTENOUGH','对不起，需要最少<b>%s</b>条留言，才能更新头像.');
 define('_US_UNCHOOSEAVT', '只有达到这个数量，才能从下面表中选择头像');
-
-// openid
-define('_US_OPENID_NOPERM', '没有权限');
-define('_US_OPENID_FORM_CAPTION', 'OpenID');
-define('_US_OPENID_FORM_DSC', '');
-define('_US_OPENID_EXISTING_USER', '已存在用户');
-define('_US_OPENID_EXISTING_USER_LOGIN_BELOW', '如果你已注册过，请在下面输入用户名和密码以便和OpenID绑定');
-define('_US_OPENID_NON_MEMBER_DSC', '如果现在还没有帐号，请输入新帐号的用户名，以便和OpenID绑定');
-define('_US_OPENID_YOUR', 'OpenID帐号');
-define('_US_OPENID_LINKED_AUTH_FAILED', '不是有效的用户名或密码，请重试');
-define('_US_OPENID_LINKED_AUTH_NOT_ACTIVATED', '用户帐户未激活，请激活并重试');
-define('_US_OPENID_LINKED_AUTH_CANNOT_SAVE', '对不起，发生错误，用户帐户及授权OpenID不能更新');
-define('_US_OPENID_NEW_USER_UNAME_TOO_SHORT', '用户名太短，请重新输入');
-define('_US_OPENID_NEW_USER_UNAME_EXISTS', '用户名已存在，请重新输入');
-define('_US_OPENID_NEW_USER_CANNOT_INSERT', '对不起，发生错误，不能创建新帐户，请重试');
-define('_US_OPENID_NEW_USER_CANNOT_INSERT_INGROUP', '对不起，发生错误，用户不能添加到该组，请联系管理员');
-define('_US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED', '最新创建的用户未被激活');
-define('_US_OPENID_NEW_USER_CREATED', '新用户 %s 已创建，将自动登录...');
-define('_US_OPENID_LINKED_DONE', 'OpenID已与用户名%S绑定，请登录...');
 define('_US_ALREADY_LOGED_IN', '你已登录，请登出后再注册');
-define('_US_ALLOWVIEWEMAILOPENID','OpenID对其他用户可见');
 define('_US_SERVER_PROBLEM_OCCURRED','检测滥发广告黑名单时发生错误!');
 define('_US_INVALIDIP','出错: 你的IP地址不允许注册');
 
@@ -205,7 +185,3 @@ define('_US_MULTLOGIN', '不能登录!! <br />
          - 在你关闭浏览器窗口时，没有登出<br />
         </p>
            请稍等并重试，如果还不能登录，请联系管理员');
-define("_US_OPENID_LOGIN", "使用OpenID登录");
-define("_US_OPENID_URL", "OpenID URL:");
-define("_US_OPENID_NORMAL_LOGIN", "使用常规登录");
-?>

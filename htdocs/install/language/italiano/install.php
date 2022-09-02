@@ -20,7 +20,6 @@ define( "SERVER_API", "API Server" );
 define( "PHP_EXTENSION", "Estensioni %s" );
 define( "CHAR_ENCODING", "Codifica carattere" );
 define( "XML_PARSING", "XML parsing" );
-define( "OPEN_ID", "OpenID" );
 define( "REQUIREMENTS", "Requisiti" );
 define( "_PHP_VERSION", "Versione PHP" );
 define( "RECOMMENDED_SETTINGS", "Impostazioni raccomandate" );

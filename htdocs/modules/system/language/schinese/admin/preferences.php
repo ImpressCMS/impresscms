@@ -406,8 +406,6 @@ define("_MD_AM_LASTCHARS_DESC","URL地址结尾显示的字符数<br /><i>此选
 define("_MD_AM_SIGMAXLENGTH","用户签名的最大字符数");
 define("_MD_AM_SIGMAXLENGTHDSC","设置用户的签名最大字符数<br /> 超过此长度的字符将会被忽略<br /><i>注意：长签名常常会因此设置而破坏</i>");
 
-define("_MD_AM_AUTHOPENID","启用 OpenID 授权");
-define("_MD_AM_AUTHOPENIDDSC","选择 Yes 启用 OpenID 授权。用户可以使用他们的 OpenID 帐户登陆网站。关于ImpressCMS与OpenID集成的详细信息，可访问<a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>我们的wiki</a>.");
 define("_MD_AM_USE_GOOGLE_ANA"," 启用Google分析吗?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
 
@@ -436,7 +434,7 @@ define("_MD_AM_CAPTCHA_BGNUM","背景图像");
 define("_MD_AM_CAPTCHA_BGNUMDSC","背景图像生成数量");
 define("_MD_AM_CAPTCHA_POLPNT","多边形点数");
 define("_MD_AM_CAPTCHA_POLPNTDSC","需生成的多边形的点数");
-define("_MD_AM_BAR","条状"); 
+define("_MD_AM_BAR","条状");
 define("_MD_AM_CIRCLE","圆圈");
 define("_MD_AM_LINE","直线");
 define("_MD_AM_RECTANGLE","矩形");
@@ -516,7 +514,7 @@ define("_MD_AM_PURIFIER_HTML_ALLOWELEDSC","允许发布的HTML标签。在此输
 define("_MD_AM_PURIFIER_HTML_ALLOWATTR","允许的标签属性");
 define("_MD_AM_PURIFIER_HTML_ALLOWATTRDSC","允许被使用的HTML标签属性。在此输入的标签属性将不会被过滤。应当仅允许较为安全的标签属性。<br /><br />按照如下格式定义标签属性:<br />标签.属性 (比如: div.class) 则允许使用div标签定义类属性. 也可使用大类定义: 如*.class 将会允许在任何属性下使用此类标签.");
 define("_MD_AM_PURIFIER_HTML_FORBIDELE","禁止的标签");
-define("_MD_AM_PURIFIER_HTML_FORBIDELEDSC","此项是 HTML.允许使用标签的逆向使用, 并会覆盖原有的属性设置.");    
+define("_MD_AM_PURIFIER_HTML_FORBIDELEDSC","此项是 HTML.允许使用标签的逆向使用, 并会覆盖原有的属性设置.");
 define("_MD_AM_PURIFIER_HTML_FORBIDATTR","禁止的属性");
 define("_MD_AM_PURIFIER_HTML_FORBIDATTRDSC"," 此项类似 HTML 允许属性, 为以后能兼容XML, 将使用不同的语法.<br />使用tag@attr.来代替tag.attr. 如不允许使用在标签中使用href属性, 可设置为 a@href.<br />也通过 attr 或 *@attr来禁止使用全局属性 (两者皆可; 后者可在HTML允许属性下使用).<br /><br />警告: 此指令作为对HTML禁止标签的补充, accordingly, 请在使用这些指令前清楚要做些什么.");
 define("_MD_AM_PURIFIER_HTML_MAXIMGLENGTH","最大图片长度");

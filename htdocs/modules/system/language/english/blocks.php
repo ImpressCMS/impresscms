@@ -37,10 +37,6 @@ define("_MB_SYSTEM_PRIVPOLICY", "Privacy Policy");
  * Added in 1.2
  */
 
-// openid
-define("_MB_SYSTEM_OPENID_LOGIN", "Login with your OpenID");
-define("_MB_SYSTEM_OPENID_URL", "Your OpenID URL:");
-define("_MB_SYSTEM_OPENID_NORMAL_LOGIN", "Go back to normal login");
 define("_MB_SYSTEM_TOTAL_USERS", "Total Users");
 define("_MB_SYSTEM_ACT_USERS", "Active Users");
 define("_MB_SYSTEM_INACT_USERS", "Inactive Users");

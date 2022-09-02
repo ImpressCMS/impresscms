@@ -173,28 +173,7 @@ define('_US_REGFORM_WARNING', 'Om u te registreren op de website dient u een vei
 define('_US_CHANGE_PASSWORD', 'Wachtwoord wijzigen?');
 define('_US_POSTSNOTENOUGH','Sorry, uw moet tenminste <b>%s</b> postingen/berichten hebben gedaan, om het uploaden van een eigen avatar/pasfoto mogelijk te maken.');
 define('_US_UNCHOOSEAVT', 'Totdat u dit aantal bereikt kunt u een avatar/pasfoto uit de onderstaade lijst selecteren.');
-
-// openid
-define('_US_OPENID_NOPERM', 'Geen toegang.'); //No permission
-define('_US_OPENID_FORM_CAPTION', 'OpenID');
-define('_US_OPENID_FORM_DSC', '');
-define('_US_OPENID_EXISTING_USER', 'Bestaande gebruiker');
-define('_US_OPENID_EXISTING_USER_LOGIN_BELOW', 'Wanneer u een bestaande gebruiker bent, log dan hieronder in met uw gebruikersnaam en wachtwoord om uw gebruikersaccount te koppelen met deze OpenID.');
-define('_US_OPENID_NOM_MEMBER', 'Nog geen account ?');
-define('_US_OPENID_NON_MEMBER_DSC', 'Wanneer u nog geen gebruikersaccount op deze website heeft, vul dan alstublieft de door u gewenste gebruikersnaam in er wordt dan een gebruikersaccount aangemaakt dat gekoppeld is met deze OpenID.');
-define('_US_OPENID_YOUR', 'Uw OpenID');
-define('_US_OPENID_LINKED_AUTH_FAILED', 'De door u ingevoerde gebruikersnaam en wachtwoord komen niet overeen met een geldige gebruiker. Probeert u het alstublieft nogmaals.');
-define('_US_OPENID_LINKED_AUTH_NOT_ACTIVATED', 'Het gebruikersaccount waarmee u inlogt is nog niet geactiveerd. Activeer uw accoutn en probeer het daarna nogmaals.');
-define('_US_OPENID_LINKED_AUTH_CANNOT_SAVE', 'Sorry, er is een fout opgetreden. Het was niet mogelijk niet mogelijk om dit gebruikersaccount bij tewerken met de geauthenticeerde OpenID.');
-define('_US_OPENID_NEW_USER_UNAME_TOO_SHORT', 'De gebruikersnaam die u heeft ingvuld is te kort. Probeert u het alstublieft nogmaals.');
-define('_US_OPENID_NEW_USER_UNAME_EXISTS', 'De gebruikersnaam die u heeft ingvuld is reeds in gebruik. Probeert u het alstublieft nogmaals.');
-define('_US_OPENID_NEW_USER_CANNOT_INSERT', 'Sorry, er is een fout opgetreden. Het was niet mogelijk de nieuwe gebruiker aan te maken. Probeert u het alstublieft nogmaals.');
-define('_US_OPENID_NEW_USER_CANNOT_INSERT_INGROUP', 'Sorry, er is een fout opgetreden. Het was niet mogelijk de nieuwe gebruiker toe te voegen aan de juiste groep(en). Neemt alstublieft contact op met de beheerder van deze website.');
-define('_US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED', 'De nieuw aangemaakte gebruiker is niet geactiveerd.');
-define('_US_OPENID_NEW_USER_CREATED', 'Een nieuwe gebruiker is aangemaakt met de gebruikersnaam %s. Uw wordt automatisch ingelogd...');
-define('_US_OPENID_LINKED_DONE', 'Uw OpenID is gekoppeld met de gebruiker %S. Uw wordt ingelogd...');
 define('_US_ALREADY_LOGED_IN', 'U bent reeds ingelogd. U kunt zich niet registreren zolang u bent ingelogd op deze website');
-define('_US_ALLOWVIEWEMAILOPENID','Sta toe dat andere gebruikers mijn emailadres en OpenID kunnen zien');
 define('_US_SERVER_PROBLEM_OCCURRED','Er was een probleem tijdens de controle tav spammers lijsten!');
 define('_US_INVALIDIP','FOUT: Het is met dit IP adres niet toegestaan te registreren');
 
@@ -210,7 +189,3 @@ define('_US_MULTLOGIN', 'Het was niet mogelijk in te loggen op de website!! <br 
          - U heeft de website verlaten of uw browser afgesloten zonder uit te loggen.<br />
         </p>
         Wacht een paar minuten en probeer het nogmaals. Wanneer het probleem zich nog voordoet neem dan contact op met de beheerder van de website.');
-define("_US_OPENID_LOGIN", "Login met uw OpenID");
-define("_US_OPENID_URL", "Uw OpenID URL:");
-define("_US_OPENID_NORMAL_LOGIN", "Ga terug naar normale loginprocedure");
-?>

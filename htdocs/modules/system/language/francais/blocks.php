@@ -35,10 +35,6 @@ define('_MB_SYSTEM_PRIVPOLICY', 'Politique de confidentialit&eacute;');
  * Added in 1.2
  */
 
-// openid
-define('_MB_SYSTEM_OPENID_LOGIN', 'Connexion/Enregistration');
-define('_MB_SYSTEM_OPENID_URL', 'Votre URL OpenID:');
-define('_MB_SYSTEM_OPENID_NORMAL_LOGIN', 'Cloturer Login');
 define('_MB_SYSTEM_TOTAL_USERS', 'Nombre totale d\' utilisateurs');
 define('_MB_SYSTEM_ACT_USERS', 'Utilisateurs actifs');
 define('_MB_SYSTEM_INACT_USERS', 'Utilisateurs inactifs');

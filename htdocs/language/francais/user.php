@@ -1,8 +1,8 @@
 <?php
 //traduction CPascalWeb
-// ATTENTION ! ce Code  %s  fait partie du script PHP il ne doit pas Ítre modifier ou effacer .
+// ATTENTION ! ce Code  %s  fait partie du script PHP il ne doit pas √™tre modifier ou effacer .
 
-// fichier user.php 
+// fichier user.php
 define('_US_NOTREGISTERED',"Vous n'&ecirc;tes pas encore membre de notre site ? Inscrivez-vous maintenant en <a href=\"register.php\">cliquant ici</a> !");
 define('_US_LOSTPASSWORD','Mot de passe perdu?');
 define('_US_NOPROBLEM',"Pas de probl&egrave;me. Entrez simplement l'adresse Email que vous avez fournie pour cr&eacute;er votre compte.");
@@ -51,16 +51,16 @@ define('_US_UNEEDAGREE', "Vous devez accepter la mise en garde afin de pouvoir v
 define('_US_NOREGISTER','D&eacute;sol&eacute;, nous avons actuellement ferm&eacute; toutes nouvelles inscriptions');
 
 
-// ce code   %s   c'est le nom de l'utilisateur 
+// ce code   %s   c'est le nom de l'utilisateur
 define('_US_USERKEYFOR',"Cl&eacute; d'activation membre pour %s");
 
 define('_US_YOURREGISTERED',"Vous &ecirc;tes maintenant enregistr&eacute;. Un Email contenant une cl&eacute; d'activation de votre compte a &eacute;t&eacute; envoy&eacute; &agrave; l'adresse Email que vous avez fournie. Merci de suivre les instructions de ce Email pour activer votre compte. ");
 define('_US_YOURREGMAILNG',"Vous &ecirc;tes maintenant enregistr&eacute;. Cependant, nous sommes dans l'incapacit&eacute; d'envoyer le mail d'activation &agrave; votre adresse Email en raison d'une erreur interne survenue sur notre serveur. Nous sommes d&eacute;sol&eacute;s pour cet inconv&eacute;nient, merci d'envoyer un Email de notification au(x) webmaster(s) du site.");
 define('_US_YOURREGISTERED2',"Vous &ecirc;tes maintenant enregistr&eacute;. Merci de patienter afin que votre compte soit activ&eacute; par un des adminstrateurs. Vous recevrez un Email lorsqu'il aura &eacute;t&eacute; activ&eacute;. Ceci peut prendre quelques jours, merci d'&ecirc;tre patient.");
 
-// ce code   %s   c'est le nom du site 
+// ce code   %s   c'est le nom du site
 define('_US_NEWUSERREGAT','Nouveau membre inscrit sur %s');
-// ce code   %s   c'est le nom de l'utilisateur 
+// ce code   %s   c'est le nom de l'utilisateur
 define('_US_HASJUSTREG',"%s vient juste de s'inscrire!");
 
 define('_US_INVALIDMAIL','Votre adresse Email est invalide.');
@@ -80,31 +80,31 @@ define('_US_SORRYNOTFOUND',"D&eacute;sol&eacute;, aucune info membre corresponda
 define('_US_USERINVITE', 'Invitation membres');
 define('_US_INVITENONE','ERREUR: L\'inscription est sur invitation seulement !');
 define('_US_INVITEINVALID','ERREUR: Code d\'invitation incorrect !');
-define('_US_INVITEEXPIRED','ERREUR: Code d\'invitation est d&eacute;j‡ utilis&eacute; ou a expir&eacute;.');
+define('_US_INVITEEXPIRED','ERREUR: Code d\'invitation est d&eacute;j√† utilis&eacute; ou a expir&eacute;.');
 
 define('_US_INVITEBYMEMBER','Seul un membre peut inviter de nouveaux membres, merci de demander un mail d\'invitation a un des membres.');
 define('_US_INVITEMAILERR','D&eacute;sol&eacute; ! nous n\'avons pas pu traiter votre demande d\'enregistrement en raison d\'une erreur interne sur notre serveur. Nous sommes d&eacute;sol&eacute;s pour le d&eacute;rangement, merci d\'essayer de nouveau et si le probl&egrave;me persiste, contatez le webmaster par mail pour l\'informer de la situation. <br />');
 define('_US_INVITEDBERR','D&eacute;sol&eacute; ! nous n\'avons pas pu traiter votre demande d\'enregistrement en raison d\'une erreur interne. Nous sommes d&eacute;sol&eacute;s pour le d&eacute;rangement, merci d\'essayer de nouveau et si le probl&egrave;me persiste, contatez le webmaster par mail pour l\'informer de la situation. <br />');
-define('_US_INVITESENT','D\'ici quelques minutes vous allez recevoir un mail de confirmation d\'inscription ‡ l\'adresse que vous avez indiquer. merci de suivre les instructions contenues dans ce mail pour enregistrer votre compte.');
-//ce code   %s   c'est le nom du site 
+define('_US_INVITESENT','D\'ici quelques minutes vous allez recevoir un mail de confirmation d\'inscription √† l\'adresse que vous avez indiquer. merci de suivre les instructions contenues dans ce mail pour enregistrer votre compte.');
+//ce code   %s   c'est le nom du site
 define('_US_INVITEREGLINK','Inscription sur invitation de %s');
 
 
-//ce code   %s   c'est le nom du site                                     
+//ce code   %s   c'est le nom du site
 define('_US_NEWPWDREQ','Demande de nouveau mot de passe sur %s');
 define('_US_YOURACCOUNT', 'Votre compte sur %s');
 
 define('_US_MAILPWDNG','mot de passe: Impossible de mettre &agrave; jour. Contactez l\'Administrateur');
-define('_US_RESETPWDNG','R&eacute;initialisation du mot de passe: Impossible de mettre ‡ jour. Contactez l\'Administrateur');
+define('_US_RESETPWDNG','R&eacute;initialisation du mot de passe: Impossible de mettre √† jour. Contactez l\'Administrateur');
 
 define('_US_RESETPWDREQ','R&eacute;initialisation du mot de passe demander: %s');
-define('_US_MAILRESETPWDNG','R&eacute;initialisation du mot de passe: Impossible de mettre ‡ jour. Contactez l\'Administrateur');
+define('_US_MAILRESETPWDNG','R&eacute;initialisation du mot de passe: Impossible de mettre √† jour. Contactez l\'Administrateur');
 define('_US_NEWPASSWORD','Nouveau mot de passe');
 define('_US_YOURUSERNAME','Votre nom d\'utilisateur');
 define('_US_CURRENTPASS','Votre mot de passe actuel');
 define('_US_BADPWD','Mot de passe incorrect, le mot de passe ne peut pas contenir le nom de l\'utilisateur.');
 
-//ce code   %s   c'est le nom de l'utilisateur 
+//ce code   %s   c'est le nom de l'utilisateur
 define('_US_PWDMAILED','Le nouveau mot de passe a &eacute;t&eacute; envoy&eacute; vers votre bo&icirc;te email. Veuillez suivre les indications fournies dans le message.');
 define('_US_CONFMAIL','Le message contenant vos nouvelles informations d\'acc&egrave;s vous a &eacute;t&eacute; envoy&eacute; par Email.');
 define('_US_ACTVMAILNG', 'Echec d\'envoi du mail de notification &agrave; %s');
@@ -136,7 +136,7 @@ define('_US_BASICINFO','Informations de base');
 define('_US_MOREABOUT','Plus &agrave; propos de moi');
 define('_US_SHOWALL','Afficher tout');
 
-// Fichier  edituser.php 
+// Fichier  edituser.php
 define('_US_PROFILE','Profil');
 define('_US_REALNAME','Votre nom r&eacute;el');
 define('_US_SHOWSIG','Toujours attacher ma signature');
@@ -167,37 +167,17 @@ define('_US_PRESSLOGIN', 'Pressez le bouton ci-dessous pour vous connecter');
 define('_US_ADMINNO', 'Utilisateur dans le groupe de webmasters ne peuvent &ecirc;tre enlev&eacute;s');
 define('_US_GROUPS', 'Groupe utilisateurs');
 
-define('_US_YOURREGISTRATION', 'Votre inscription ‡ %s');
+define('_US_YOURREGISTRATION', 'Votre inscription √† %s');
 define('_US_WELCOMEMSGFAILED', 'Erreur lors de l\'envoi de l\'Email de Bienvenue.');
-define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification ‡ admin sur l\'enregistrement d\'un nouvel utilisateur a &eacute;chou&eacute;.');
+define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification √† admin sur l\'enregistrement d\'un nouvel utilisateur a &eacute;chou&eacute;.');
 define('_US_REGFORM_NOJAVASCRIPT', 'Pour vous connecter sur le site, il est n&eacute;cessaire que votre navigateur accepte le javascript.');
-define('_US_REGFORM_WARNING', 'Pour vous inscrire sur le site vous avez besoin d\'utiliser un mot de passe plus s&eacute;curis&eacute;, plus complexes mais facile ‡ m&eacute;moriser pour vous. Essayez de cr&eacute;er votre mot de passe en utilisant un m&eacute;lange de lettres (majuscules et minuscules), de chiffres et de symboles.');
+define('_US_REGFORM_WARNING', 'Pour vous inscrire sur le site vous avez besoin d\'utiliser un mot de passe plus s&eacute;curis&eacute;, plus complexes mais facile √† m&eacute;moriser pour vous. Essayez de cr&eacute;er votre mot de passe en utilisant un m&eacute;lange de lettres (majuscules et minuscules), de chiffres et de symboles.');
 define('_US_CHANGE_PASSWORD', 'Changer le mot de passe ?');
 define('_US_POSTSNOTENOUGH','D&eacute;sol&eacute;, vous devez avoir au moins<b>%s</b> posts, pour pouvoir en t&eacute;l&eacute;charger votre avatar.');
 define('_US_UNCHOOSEAVT', 'En attendant, nous vous proposons de choisir un avatar de la liste ci-dessous.');
 
-// systÈme d'authentification OpenID (a revoir)
-define('_US_OPENID_NOPERM', 'Aucune autorisation.');
-define('_US_OPENID_FORM_CAPTION', 'OpenID');
-define('_US_OPENID_FORM_DSC', '');
-define('_US_OPENID_EXISTING_USER', 'Utilisateur enregistr&eacute;');
-define('_US_OPENID_EXISTING_USER_LOGIN_BELOW', 'Si vous &ecirc;tes un utilisateur enregistr&eacute;, identifiez vous ci-dessous avec votre nom d\'utilisateur et mot de passe afin d\'associer votre compte d\'utilisateur avec ce OpenID.');
-define('_US_OPENID_NOM_MEMBER', 'Pas encore de compte ?');
-define('_US_OPENID_NON_MEMBER_DSC', 'Si vous n\'avez pas encore de compte sur ce site, merci d\'entrer le pseudo que vous souhaitez utiliser et nous allons cr&eacute;er un compte pour vous, associ&eacute;s ‡ cette OpenID.');
-define('_US_OPENID_YOUR', 'Votre OpenID');
-define('_US_OPENID_LINKED_AUTH_FAILED', 'Le nom d\'utilisateur et le mot de passe entr&eacute; ne correspond ‡ aucun utilisateur valide. Merci de r&eacute;essayez ‡ nouveau.');
-define('_US_OPENID_LINKED_AUTH_NOT_ACTIVATED', 'Le compte utilisateur avec lequel vous vous &ecirc;tes identifier n\'a pas encore &eacute;t&eacute; activ&eacute;. Merci d\'activer votre compte, puis r&eacute;essayez.');
-define('_US_OPENID_LINKED_AUTH_CANNOT_SAVE', 'D&eacute;sol&eacute;, une erreur s\'est produite. Il n\'a pas &eacute;t&eacute; possible de mettre ‡ jour ce compte d\'utilisateur avec l\'authentification OpenID.');
-define('_US_OPENID_NEW_USER_UNAME_TOO_SHORT', 'Le nom d\'utilisateur que vous avez inscrit est trop court. Merci de le modifier puis de r&eacute;essayez ‡ nouveau.');
-define('_US_OPENID_NEW_USER_UNAME_EXISTS', 'D&eacute;sol&eacute;, le nom d\'utilisateur vous avez inscrit est d&eacute;j‡ utilis&eacute;. Merci de le modifier puis de r&eacute;essayez ‡ nouveau.');
-define('_US_OPENID_NEW_USER_CANNOT_INSERT', 'D&eacute;sol&eacute;, une erreur s\'est produite. Il n\'a pas &eacute;t&eacute; possible de cr&eacute;er ce compte. Merci de r&eacute;essayez ‡ nouveau.');
-define('_US_OPENID_NEW_USER_CANNOT_INSERT_INGROUP', 'D&eacute;sol&eacute;, une erreur s\'est produite. Il n\'est pas possible d\'ajouter ce nouvel utilisateur dans ce groupe. Merci de contactez le webmaster ou un administrateur du site.');
-define('_US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED', 'L\'utilisateur nouvellement cr&eacute;&eacute; n\'a pas &eacute;t&eacute; activ&eacute;.');
-define('_US_OPENID_NEW_USER_CREATED', 'Un nouvel utilisateur a &eacute;t&eacute; cr&eacute;&eacute; avec le nom d\'utilisateur %s. Automatiquement en vous connectant...');
-define('_US_OPENID_LINKED_DONE', 'Votre OpenID a &eacute;t&eacute; li&eacute; avec l\'utilisateur %S. vous identifiant dans...');
-define('_US_ALREADY_LOGED_IN', 'Vous &ecirc;tes d&eacute;j‡ connect&eacute;, nous sommes d&eacute;sol&eacute;, mais, vous ne pouvez vous inscrire pendant que vous &ecirc;tes connect&eacute; sur le site');
-define('_US_ALLOWVIEWEMAILOPENID','Autoriser les autres utilisateurs ‡ voir mon OpenID');
-define('_US_SERVER_PROBLEM_OCCURRED','Il y a eu un problËme pendant le contrÙle de la liste spam!');
+define('_US_ALREADY_LOGED_IN', 'Vous &ecirc;tes d&eacute;j√† connect&eacute;, nous sommes d&eacute;sol&eacute;, mais, vous ne pouvez vous inscrire pendant que vous &ecirc;tes connect&eacute; sur le site');
+define('_US_SERVER_PROBLEM_OCCURRED','Il y a eu un probl√®me pendant le contr√¥le de la liste spam!');
 define('_US_INVALIDIP','ERREUR: Cette adresse IP n\'a pas l\' autorisation de s\'enregistrer');
 
 ######################## Added in 1.2 ###################################
@@ -207,12 +187,8 @@ define('_US_NICKNAME','Nom d\'affichage');
 define('_US_MULTLOGIN', 'Impossible de vous connecter au site!! <br />
         <p align="left" style="color:red;">
         Causes possibles:<br />
-         - Vous Ítes dÈj‡ connectÈ au site.<br />
-         - Quelqu\'un d\'autre s\'est connectÈ avec votre login et mot de passe.<br />
-         - Vous avez laissÈ le site ou vous avez fermÈ votre navigateur sans utiliser le bouton \'Sortir\'.<br />
+         - Vous √™tes d√©j√† connect√© au site.<br />
+         - Quelqu\'un d\'autre s\'est connect√© avec votre login et mot de passe.<br />
+         - Vous avez laiss√© le site ou vous avez ferm√© votre navigateur sans utiliser le bouton \'Sortir\'.<br />
         </p>
-        Re-essayez dans quelques minutes. En cas ou le problËme persiste, veuillez contacter l\'administrateur du site.');
-define("_US_OPENID_LOGIN", "Connection avec votre OpenID");
-define("_US_OPENID_URL", "Votre URL OpenID :");
-define("_US_OPENID_NORMAL_LOGIN", "Passer de nouveau au login normal");
-?>
+        Re-essayez dans quelques minutes. En cas ou le probl√®me persiste, veuillez contacter l\'administrateur du site.');

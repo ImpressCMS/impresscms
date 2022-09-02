@@ -63,7 +63,7 @@ class icms_auth_Object {
 	 *
 	 * @abstract need to be written in the derived class
 	 * @return bool whether user is authenticated
-	 * @todo	Cannot declare this as abstract until the OpenID method is compliant
+	 * @todo	Cannot declare this as abstract until the OpenID method is compliant -- quid now that OpenID is no longer there?
 	 */
 	public function authenticate($uname, $pwd = null) {
 	}

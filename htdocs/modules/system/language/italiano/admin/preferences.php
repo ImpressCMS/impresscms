@@ -248,7 +248,7 @@ define("_MD_AM_LDAP_FIELD_MAPPING_DESC", "Definisci qui la corrispondenza tra il
 		"<br />per esempio : email=mail" .
 		"<br />Separate ciascuna coppia di campi con <b>|</b>" .
 		"<br /><br />!! Per utenti esperti !!");
-		
+
 define("_MD_AM_LDAP_PROVIS_UPD", "Tieni aggiornata la gestione dell'account ImpressCMS");
 define("_MD_AM_LDAP_PROVIS_UPD_DESC", "L'account utente ImpressCMS verr&agrave; sempre sincronizzato con il server di autenticazione");
 
@@ -409,8 +409,6 @@ define("_MD_AM_LASTCHARS_DESC","Quanti caratteri mostrare alla fine di una URL?<
 define("_MD_AM_SIGMAXLENGTH","Massimo numero di caratteri nella firma utenti?");
 define("_MD_AM_SIGMAXLENGTHDSC","Puoi scegliere la lunghezza della firma dei tuoi utenti.<br /> Ogni carattere che supera questo valore sar&agrave; ignorato.<br /><i>Sii cauto perch&eacute; le firme lunghe possono creare problemi di design al sito.</i>");
 
-define("_MD_AM_AUTHOPENID","Attiva autenticazione OpenID");
-define("_MD_AM_AUTHOPENIDDSC","Seleziona Sì per abilitare l'autenticazione OpenID. Questa permette agli utenti di fare login nel sito usando la loro iscrizione OpenID. Per informazioni complete sull'integrazione OpenID in ImpressCMS visitare <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'> il  wiki (in inglese)</a>.");
 define("_MD_AM_USE_GOOGLE_ANA","Attivare Google Analytics?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
 
