@@ -119,7 +119,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				"INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq,
 				user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts,
 				attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method,
-				notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, user_viewoid,
+				notify_mode, user_occ, bio, user_intrest, user_mailok, language,
                 pass_expired, login_name)
 				VALUES ('%u', %s, %s, %s, %s, %s, '%u',
 				%s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u',
@@ -157,8 +157,6 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				$this->db->quoteString($user_intrest),
 				(int) $user_mailok,
 				$this->db->quoteString($language),
-				$this->db->quoteString($openid),
-				(int) $user_viewoid,
 				(int) $pass_expired,
 				$this->db->quoteString($login_name)
 			);
@@ -169,8 +167,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				user_yim = %s, user_msnm = %s, posts = %d, pass = %s, attachsig = '%u', rank = '%u',
 				level= '%s', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u',
 				uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s,
-				user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, user_viewoid = '%u',
-                pass_expired = '%u', login_name = %s WHERE uid = '%u'",
+				user_intrest = %s, user_mailok = '%u', language = %s, pass_expired = '%u', login_name = %s WHERE uid = '%u'",
 				$this->db->prefix('users'),
 				$this->db->quoteString($uname),
 				$this->db->quoteString($name),
@@ -201,8 +198,6 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				$this->db->quoteString($user_intrest),
 				(int) $user_mailok,
 				$this->db->quoteString($language),
-				$this->db->quoteString($openid),
-				(int) $user_viewoid,
 				(int) $pass_expired,
 				$this->db->quoteString($login_name),
 				(int) $uid

@@ -1,7 +1,7 @@
 <?php
 // fichier:  .../modules/install/makedata.php
 //              .../modules/system//include/update.php
-//Gestion des préférences des modules systéme, paramétres généraux etc...
+//Gestion des prï¿½fï¿½rences des modules systï¿½me, paramï¿½tres gï¿½nï¿½raux etc...
 define("_AM_DBUPDATED","Base de donn&eacute;es mise &agrave; jour avec succ&egrave;s !");
 define("_MD_AM_SITEPREF","Pr&eacute;f&eacute;rences du site");
 define("_MD_AM_SITENAME","Nom du site");
@@ -204,7 +204,7 @@ define("_MD_AM_LDAP_USERS_BYPASS_DESC", "Authentification directe dans base de d
 define("_MD_AM_LDAP_USETLS", " TLS connexion");
 define("_MD_AM_LDAP_USETLS_DESC", "Utilisez un TLS (Transport Layer Security=transports de s&eacute;curit&eacute; de la couche) de connection. pour l'utilisation standard de TLS c'est le port 389<br />" .
 								  " et dans LDAP doit &ecirc;tre r&eacute;gl&eacute; sur 3.");
-								  
+
 define("_MD_AM_LDAP_LOGINLDAP_ATTR","Code utilis&eacute; pour rechercher un utilisateur");
 define("_MD_AM_LDAP_LOGINLDAP_ATTR_D","Quand l'utilisation du nom de connexion dans l'option DN est plac&eacute;e &agrave; oui, il doit correspondre &agrave; celui du site");
 define("_MD_AM_LDAP_LOGINNAME_ASDN", "Nom de login pr&eacute;sent dans le DN");
@@ -233,7 +233,7 @@ define("_MD_AM_LDAP_FIELD_MAPPING_DESC", "Correspondance entre les champ de la b
 define("_MD_AM_LDAP_PROVIS_UPD", "maintenez l'approvisionnement de compte");
 define("_MD_AM_LDAP_PROVIS_UPD_DESC", "Le compte d'utilisateur du site est toujours synchronis&eacute; avec le Serveur d'Authentification");
 
-//niveau de sécurité du mot de passe
+//niveau de sï¿½curitï¿½ du mot de passe
 define("_MD_AM_PASSLEVEL","Niveau de s&eacute;curit&eacute; minimum");
 define("_MD_AM_PASSLEVEL_DESC","D&eacute;finir quel niveau de s&eacute;curit&eacute; pour le mot de passe de l'utilisateur. Il est recommand&eacute; de ne pas fixer trop faible ou trop fort, &ecirc;tre raisonnable. ");
 define("_MD_AM_PASSLEVEL1","peut s&ucirc;r");
@@ -324,7 +324,7 @@ define("_MD_AM_CONT_SHOWPINFO","Afficher les informations ?");
 define("_MD_AM_CONT_SHOWPINFODSC","Afficher le nom de l'auteur, la date de publication sur la page de l'article.");
 define("_MD_AM_CONT_ACTSEO","Utilisez le titre de la page plut&ocirc;t que l'identifiant dans l'url ?");
 define("_MD_AM_CONT_ACTSEODSC","Am&eacute;liore le seo donc le r&eacute;f&eacute;rencement, au lieu d'avoir une URL basic exemple: http//www.../../content.php?page=<b>item01255dsq</b>. Vous aurez une URL du style http//www.../../content.php?page=<b>cpascalwebbienvenue</b> .");
-//Captcha - sécurité anti-spam avec image
+//Captcha - sï¿½curitï¿½ anti-spam avec image
 define('_MD_AM_USECAPTCHA', 'Activ&eacute; la s&eacute;curit&eacute; anti-spam ?');
 define('_MD_AM_USECAPTCHADSC', 'la s&eacute;curit&eacute; CAPTCHA (anti-spam) affiche un code al&eacute;atoire de chiffres et de lettres sur le formulaire avant la validation.');
 define('_MD_AM_USECAPTCHAFORM', 'Activ&eacute; la s&eacute;curit&eacute; anti-spam ?');
@@ -389,13 +389,6 @@ define("_MD_AM_HIDDENCONTENT","Utilisez un Tags pour masquer certains contenus ?
 define("_MD_AM_HIDDENCONTENTDSC","Utiliser un tag pour cacher certains contenus de votre site aux utilisateurs anonymes.<br />Les utilisateurs anonymes devront s'inscrire pour pouvoir voir ce contenu.<br /><i>Si vous d&eacute;sactivez cette option, tout le contenu entre ce Tag s'affichera comme d'habitude</i>");
 define("_MD_AM_SIGMAXLENGTH","Nombre maximum de caract&egrave;res dans les signatures ?");
 define("_MD_AM_SIGMAXLENGTHDSC","Nombre maximum de caract&egrave;res dans les signatures des utilisateurs.<br /> Tous les caract&egrave;res en plus du nombre indiquer sera ignor&eacute;.<br /><i>Attention, des signatures trop longues peuvent souvent modifier le design du th&eacute;me du site.</i>");
-/*
-define("_MD_AM_AUTORESIZE","Auto resize larger avatars?");
-define("_MD_AM_AUTORESIZE_DESC","If YES, if the avatar sent have the width or height greater than that set will be automatically resized (keeping the ratio of the image) and the upload will be allowed. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.");
-*/
-define("_MD_AM_AUTHOPENID","Activer l'authentication OpenID ?");
-define("_MD_AM_AUTHOPENIDDSC","Cela permet aux utilisateurs de se connecter sur le site en utilisant leur compte OpenID. Pour obtenir des renseignements complets sur l'int&eacute;gration de OpenID dans ImpressCMS, merci de visiter <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>notre wiki</a>.");
+
 define("_MD_AM_USE_GOOGLE_ANA"," Activer Google Analytics ?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
-
-?>

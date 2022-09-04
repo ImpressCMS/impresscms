@@ -107,11 +107,9 @@ class icms_member_user_Object extends icms_core_Object {
 		$this->initVar('user_mailok', XOBJ_DTYPE_INT, 1, false);
 
 		$this->initVar('language', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('openid', XOBJ_DTYPE_TXTBOX, '', false, 255);
-		$this->initVar('user_viewoid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('pass_expired', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
-		
+
 		// for backward compatibility
 		if (isset($id)) {
 			if (is_array($id)) {
@@ -559,22 +557,10 @@ class icms_member_user_Object extends icms_core_Object {
 		return $this->getVar('language');
 	}
 	/* no occurrences found in the core */
-	function openid()
-	{
-		icms_core_Debug::setDeprecated('$this->getVar("openid")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->getVar('openid');
-	}
-	/* no occurrences found in the core */
 	function pass_expired()
 	{
 		icms_core_Debug::setDeprecated('$this->getVar("pass_expired")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('pass_expired');
-	}
-	/* all occurrences replaced in the core */
-	function user_viewoid()
-	{
-		icms_core_Debug::setDeprecated('$this->getVar("user_viewoid")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->getVar('user_viewoid');
 	}
 
 	/**

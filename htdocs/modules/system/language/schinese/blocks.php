@@ -37,10 +37,6 @@ define("_MB_SYSTEM_PRIVPOLICY", "隐私条款");
  * Added in 1.2
  */
 
-// openid
-define("_MB_SYSTEM_OPENID_LOGIN", "使用OpenID登录");
-define("_MB_SYSTEM_OPENID_URL", "OpenID URL:");
-define("_MB_SYSTEM_OPENID_NORMAL_LOGIN", "返回常规登录");
 define("_MB_SYSTEM_TOTAL_USERS", "共有用户");
 define("_MB_SYSTEM_ACT_USERS", "已激活用户");
 define("_MB_SYSTEM_INACT_USERS", "未激活用户");

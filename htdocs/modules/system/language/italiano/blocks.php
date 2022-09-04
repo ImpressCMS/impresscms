@@ -66,10 +66,6 @@ if (!defined('_CT_ON')){define('_CT_ON','il');}
  * Added in 1.2
  */
 
-// openid
-define("_MB_SYSTEM_OPENID_LOGIN", "Login con il tuo OpenID");
-define("_MB_SYSTEM_OPENID_URL", "Il tuo OpenID URL:");
-define("_MB_SYSTEM_OPENID_NORMAL_LOGIN", "Torna al login normale");
 define("_MB_SYSTEM_TOTAL_USERS", "Totale Utenti");
 define("_MB_SYSTEM_ACT_USERS", "Utenti attivi");
 define("_MB_SYSTEM_INACT_USERS", "Utenti non attivi");

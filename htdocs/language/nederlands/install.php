@@ -17,7 +17,6 @@ define( "SERVER_API", "Server API" );
 define( "PHP_EXTENSION", "%s extensie" );
 define( "CHAR_ENCODING", "Character encoding" );
 define( "XML_PARSING", "XML parsing" );
-define( "OPEN_ID", "OpenID" );
 define( "REQUIREMENTS", "Systeemeissen" );
 define( "_PHP_VERSION", "PHP versie" );
 define( "RECOMMENDED_SETTINGS", "Aanbevolen instellingen" );
@@ -25,7 +24,7 @@ define( "RECOMMENDED_EXTENSIONS", "Aanbevolen extensies" );
 define( "SETTING_NAME", "Naam instelling" );
 define( "RECOMMENDED", "Aanbevolen" );
 define( "CURRENT", "Huidige" );
-define( "RECOMMENDED_EXTENSIONS_MSG", "Deze extensies zijn niet vereist voor normaal gebruik, ze kunnen noodzakelijk zijn om 
+define( "RECOMMENDED_EXTENSIONS_MSG", "Deze extensies zijn niet vereist voor normaal gebruik, ze kunnen noodzakelijk zijn om
 sommige specifieke opties (zoals de meerdere-talen of RSS ondersteuning) te kunnen gebruiken. Vandaar, dat het s aanbevolen om ze te installeren." );
 define( "NONE", "Geen" );
 define( "SUCCESS", "Succesvol" );

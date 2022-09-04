@@ -124,8 +124,6 @@ icms_makeSmarty(array(
 	'lang_realname' => _US_REALNAME,
 	'lang_avatar' => _US_AVATAR,
 	'lang_allaboutuser' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
-	'user_alwopenid' => $icmsConfigAuth['auth_openid'],
-	'lang_openid', $icmsConfigAuth['auth_openid'] == TRUE ? _US_OPENID_FORM_CAPTION : '',
 	'lang_email' => _US_EMAIL,
 	'lang_privmsg' => _US_PM,
 	'lang_icq' => _US_ICQ,
@@ -171,13 +169,6 @@ icms_makeSmarty(array(
 			&& (icms::$user->isAdmin()
 			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid')))))
 		? $thisUser->getVar('email', 'E')
-		: '&nbsp;',
-	'user_openid' => ($icmsConfigAuth['auth_openid'] == TRUE
-			&& ($thisUser->getVar('user_viewoid') == TRUE
-			|| (is_object(icms::$user)
-			&& (icms::$user->isAdmin()
-			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid'))))))
-		? $thisUser->getVar('openid', 'E')
 		: '&nbsp;'
 ));
 

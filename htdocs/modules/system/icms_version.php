@@ -187,7 +187,6 @@ $modversion['templates'] = array (
 		array ('file' => 'system_block_dummy.html','description' => ''),
 		array ('file' => 'system_privpolicy.html','description' => ''),
 		array ('file' => 'system_error.html','description' => ''),
-		array ('file' => 'system_openid.html','description' => ''),
 		array ('file' => 'system_adm_blockspadmin.html','description' => ''),
 		array ('file' => 'system_adm_pagemanager_index.html','description' => ''),
 		array ('file' => 'system_adm_blocksadmin.html','description' => ''),

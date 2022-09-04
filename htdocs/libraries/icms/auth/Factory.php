@@ -69,16 +69,9 @@ class icms_auth_Factory {
 			} else {
 				$auth_method = $icmsConfigAuth['auth_method'];
 
-				// However if auth_method is XOOPS, and openid login is activated and a user is trying to authenticate with his openid
-
 				/*
 				 * @todo we need to add this in the preference
 				 */
-				$config_to_enable_openid = true;
-
-				if ($icmsConfigAuth['auth_method'] == 'xoops' && $config_to_enable_openid && (isset($_REQUEST['openid_identity']) || isset($_SESSION['openid_response']))) {
-					$auth_method = 'openid';
-				}
 			}
 			// Verify if uname allow to bypass LDAP auth
 			if (in_array($uname, $icmsConfigAuth['ldap_users_bypass'])) $auth_method = 'xoops';

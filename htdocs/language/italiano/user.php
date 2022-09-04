@@ -174,27 +174,7 @@ define('_US_CHANGE_PASSWORD', 'Cambia Password?');
 define('_US_POSTSNOTENOUGH','Spiacente, per inviare il tuo avatar personalizzato devi avere almeno <b>%s</b> posts.');
 define('_US_UNCHOOSEAVT', 'Finch&eacute; non raggiungi questo numero di posts non potrai scegliere un avatar da questa lista sottostante.');
 
-// openid
-define('_US_OPENID_NOPERM', 'Nessun permesso.');
-define('_US_OPENID_FORM_CAPTION', 'OpenID');
-define('_US_OPENID_FORM_DSC', '');
-define('_US_OPENID_EXISTING_USER', 'Utente esistente');
-define('_US_OPENID_EXISTING_USER_LOGIN_BELOW', 'Se tu sei un utente gi&agrave; iscritto, fai il login inserendo qui sotto il tuo nome utente e password per associare la tua iscrizione con questo OpenID.');
-define('_US_OPENID_NOM_MEMBER', 'Ancora nessun account?');
-define('_US_OPENID_NON_MEMBER_DSC', 'Se non ha ancora nessun account per questo sito, sei pregato di inserire il nome utente che desideri utilizzare e creeremo una utenza associatata con il tuo OpenID.');
-define('_US_OPENID_YOUR', 'Il tuo OpenID');
-define('_US_OPENID_LINKED_AUTH_FAILED', 'Il nome utente e la password che hai inserito non corrisponde a nessun utente valido. Sei pregato di provare ancora.');
-define('_US_OPENID_LINKED_AUTH_NOT_ACTIVATED', 'L\'utenza con la quale stai facendo login non &egrave; stata attivata. Sei pregato di attivare il tuo account e poi provare ancora.');
-define('_US_OPENID_LINKED_AUTH_CANNOT_SAVE', 'Spiacenti, si &egrave; verificato un errore. Non &egrave; stato possibile aggiornare questo utente con l\'autenticazione OpenID.');
-define('_US_OPENID_NEW_USER_UNAME_TOO_SHORT', 'Il nome utente che hai inserito &egrave; troppo breve. Sei pregato di provare ancora.');
-define('_US_OPENID_NEW_USER_UNAME_EXISTS', 'Il nome utente che tu hai inserito &egrave; gi&agrave; in uso. Sei pregato di provare ancora.');
-define('_US_OPENID_NEW_USER_CANNOT_INSERT', 'Spiacente, si &egrave; verificato un errore e non &egrave; stato possibile creare un nuovo utente. Sei pregato di provare ancora.');
-define('_US_OPENID_NEW_USER_CANNOT_INSERT_INGROUP', 'Spiacente, si &egrave; verificato un errore. Non &egrave; possibile aggiungere il nuovo utente al giusto gruppo. Sei pregato di contattare l\'amministratore del sito.');
-define('_US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED', 'Il nuovo utente creato non &egrave; stato ancora attivato.');
-define('_US_OPENID_NEW_USER_CREATED', 'Un nuovo utente &egrave; stato creato con il nome utente %s. Login automatico in corso ...');
-define('_US_OPENID_LINKED_DONE', 'Il tuo OpenID &egrave; stato linkato con l\'utente %S. Login in corso ...');
 define('_US_ALREADY_LOGED_IN', 'Tu sei un utente registrato e, siamo spiacenti per questo, non &egrave; possibile registrarti finch&eacute; sei loggato.');
-define('_US_ALLOWVIEWEMAILOPENID','Permetto agli altri utenti di vedere il mio OpenID');
 define('_US_SERVER_PROBLEM_OCCURRED','Si è verificato un problema nel controllo della lista degli spammer!');
 define('_US_INVALIDIP','ERROR: A questo indirizzo IP non è consentito registrarsi');
 
@@ -210,7 +190,3 @@ define('_US_MULTLOGIN', 'Non è possibile fare il login sul sito!<br />
          - Hai lasciato il sito o chiuso la finestra del browser senza cliccare il bottone "Esci".<br />
         </p>
         Attendi alcuni minuti e prova ancora. Se il problema persiste contatta l\'amministratore del sito.');
-define("_US_OPENID_LOGIN", "Login con il tuo OpenID");
-define("_US_OPENID_URL", "Il tuo OpenID URL:");
-define("_US_OPENID_NORMAL_LOGIN", "Usa il tuo normale login");
-

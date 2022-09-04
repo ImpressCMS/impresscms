@@ -193,7 +193,45 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$temp = $pwd->encryptPass($adminpass);
 	$regdate = time();
 	// RMV-NOTIFY (updated for extra columns in user table)
-	$dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'iTheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '','', 0, 0, 1, '".addslashes($adminlogin_name)."')");
+	// `uid`,
+	//  `name`,
+	//  `uname`,
+	//  `email`,
+	//  `url`,
+	//  `user_avatar`,
+	//  `user_regdate`,
+	//  `user_icq`,
+	//  `user_from`,
+	//  `user_sig`,
+	//  `user_viewemail`,
+	//  `actkey`,
+	//  `user_aim`,
+	//  `user_yim`,
+	//  `user_msnm`,
+	//  `pass`,
+	//  `posts`,
+	//  `attachsig`,
+	//  `rank`,
+	//  `level`,
+	//  `theme`,
+	//  `timezone_offset`
+	//  `last_login`,
+	//  `umode`,
+	//  `uorder`,
+	//  `notify_method`,
+	//  `notify_mode`,
+	//  `user_occ`,
+	//  `bio`,
+	//  `user_intrest`,
+	//  `user_mailok`,
+	//  `language`,
+	//  `salt`,
+	//  `pass_expired`,
+	//  `enc_type`,
+
+	$dbm->insert('users', " VALUES (1, '', '".addslashes($adminname)."', '".addslashes($adminmail)."', '".XOOPS_URL."/', 'blank.gif', '".$regdate."', '', '', '', 0, '', '', '', '', '".$temp."', 0, 0, 7, 5, 'iTheme', '0.0', ".time().", 'thread', 0, 1, 0, '', '', '', '0', '".addslashes($language)."', 0, 0, 1, '".addslashes($adminlogin_name)."')");
+
+
 
 	// data for table 'block_module_link'
 	$sql = 'SELECT bid, side, template FROM '.$dbm->prefix('newblocks');
@@ -431,8 +469,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			. ", (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_LDAP', 'ldap', $i)"
 			. ", (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_AD', 'ads', $i)");
 	// ----------
-	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'auth_openid','_MD_AM_AUTHOPENID','0','_MD_AM_AUTHOPENIDDSC','yesno','int', " . $p++ . ")"
-		. ", (" . ++$i . ",0,$c,'ldap_port','_MD_AM_LDAP_PORT','389','_MD_AM_LDAP_PORT','textbox','int', " . $p++ . ")"
+	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'ldap_port','_MD_AM_LDAP_PORT','389','_MD_AM_LDAP_PORT','textbox','int', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_server','_MD_AM_LDAP_SERVER','your directory server','_MD_AM_LDAP_SERVER_DESC','textbox','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_base_dn','_MD_AM_LDAP_BASE_DN','dc=icms,dc=org','_MD_AM_LDAP_BASE_DN_DESC','textbox','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_manager_dn','_MD_AM_LDAP_MANAGER_DN','manager_dn','_MD_AM_LDAP_MANAGER_DN_DESC','textbox','text', " . $p++ . ")"

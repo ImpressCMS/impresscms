@@ -9,7 +9,6 @@ define( "SERVER_API", "Server API" );
 define( "PHP_EXTENSION", "%s extension" );
 define( "CHAR_ENCODING", "Encodage des caract&egrave;res" );
 define( "XML_PARSING", "l'analyse XML" );
-define( "OPEN_ID", "OpenID" );
 define( "REQUIREMENTS", "Exigences" );
 define( "_PHP_VERSION", "version PHP" );
 define( "RECOMMENDED_SETTINGS", "Configuration recommand&eacute;e" );
@@ -31,9 +30,9 @@ define( "INSTALL_OUTOF", " sur " );
 define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org\">Le projet ImpressCMS</a>" );
 
 define( "LANGUAGE_SELECTION", "S&eacute;lection de la langue" );
-define( "LANGUAGE_SELECTION_TITLE", "Choisissez la langue de l'assistance");	
+define( "LANGUAGE_SELECTION_TITLE", "Choisissez la langue de l'assistance");
 define( "INTRODUCTION", "Introduction" );
-define( "INTRODUCTION_TITLE", "Bienvenue dans l'assistance d'installation" );	
+define( "INTRODUCTION_TITLE", "Bienvenue dans l'assistance d'installation" );
 define( "CONFIGURATION_CHECK", "Configuration du serveur" );
 define( "CONFIGURATION_CHECK_TITLE", "V&eacute;rification de la configuration de votre serveur" );
 define( "PATHS_SETTINGS", "Configuration des chemins" );
@@ -209,12 +208,12 @@ define("_MD_AM_MULTLOGINMSG_TXT",'Impossible de vous connectez avec ce nom d\'ut
 define("_MD_AM_RSSLOCALLINK_DESC",'https://www.impresscms.org/modules/news/rss.php'); //Lien vers le RRS de soutien local site
 define("_INSTALL_LOCAL_SITE",'https://www.impresscms.org/'); //Lien vers le site de support local
 define("_LOCAOL_STNAME",'ImpressCMS'); //Lien vers le site de support local
-define("_LOCAL_SLOCGAN",'Make a lasting impression'); 
+define("_LOCAL_SLOCGAN",'Make a lasting impression');
 define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">ImpressCMS Projet</a>'); //Lien footer (pied de page) pour le soutien local site
-define("_LOCAL_SENSORTXT",'#OOPS#'); 
+define("_LOCAL_SENSORTXT",'#OOPS#');
 define("_ADM_USE_RTL","0"); // tourner à 1 si votre langue est droite à gauche
-define("_DEF_LANG_TAGS",'fr,en'); 
-define("_DEF_LANG_NAMES",'french,english'); 
+define("_DEF_LANG_TAGS",'fr,en');
+define("_DEF_LANG_NAMES",'french,english');
 define("_LOCAL_LANG_NAMES",'Fran&ccedil;ais,English');
 define("_EXT_DATE_FUNC","0"); // changement de 0 à 1, si cette langue a une fonction étendue date
 
