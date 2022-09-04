@@ -193,7 +193,46 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$temp = $pwd->encryptPass($adminpass);
 	$regdate = time();
 	// RMV-NOTIFY (updated for extra columns in user table)
-	$dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'iTheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '','', 0, 0, 1, '".addslashes($adminlogin_name)."')");
+
+	$dbm->insert('users', " VALUES (1,                     // `uid`,
+	'',                                                    //  `name`,
+	'".addslashes($adminname)."',                          //  `uname`,
+	'".addslashes($adminmail)."',                          //  `email`,
+	'".XOOPS_URL."/',                                      //  `url`,
+	'blank.gif',                                           //  `user_avatar`,
+	'".$regdate."',                                        //  `user_regdate`,
+	'',                                                    //  `user_icq`,
+	'',                                                    //  `user_from`,
+	'',                                                    //  `user_sig`,
+	0,                                                     //  `user_viewemail`,
+	'',                                                    //  `actkey`,
+	'',                                                    //  `user_aim`,
+	'',                                                    //  `user_yim`,
+	'',                                                    //  `user_msnm`,
+	'".$temp."',                                           //  `pass`,
+	0,                                                     //  `posts`,
+	0,                                                     //  `attachsig`,
+	7,                                                     //  `rank`,
+	5,                                                     //  `level`,
+	'iTheme',                                              //  `theme`,
+	'0.0',                                                 //  `timezone_offset`
+	".time().",                                            //  `last_login`,
+	'thread',                                              //  `umode`,
+	0,                                                     //  `uorder`,
+	1,                                                     //  `notify_method`,
+	0,                                                     //  `notify_mode`,
+	'',                                                    //  `user_occ`,
+	'',                                                    //  `bio`,
+	'',                                                    //  `user_intrest`,
+	'0',                                                   //  `user_mailok`,
+	'".addslashes($language)."',                           //  `language`,
+	 0,                                                   //  `salt`,
+	 0,                                                   //  `pass_expired`,
+	  1,                                                   //  `enc_type`,
+	  '".addslashes($adminlogin_name)."')		//  `login_name`
+	  ");
+
+
 
 	// data for table 'block_module_link'
 	$sql = 'SELECT bid, side, template FROM '.$dbm->prefix('newblocks');
