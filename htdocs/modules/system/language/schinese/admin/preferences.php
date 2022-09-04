@@ -214,7 +214,7 @@ define("_MD_AM_LDAP_MANAGER_PASS_DESC", "允许搜索的用户的密码");
 define("_MD_AM_LDAP_VERSION", "LDAP 版本协议");
 define("_MD_AM_LDAP_VERSION_DESC", "LDAP 版本协定: 2 或 3");
 define("_MD_AM_LDAP_USERS_BYPASS", " 用户可以绕过LDAP认证");
-define("_MD_AM_LDAP_USERS_BYPASS_DESC", "以ImpressCMS方式验证的用户<br />以“ |”符号将每个用户隔开);
+define("_MD_AM_LDAP_USERS_BYPASS_DESC", "以ImpressCMS方式验证的用户<br />以“ |”符号将每个用户隔开");
 
 define("_MD_AM_LDAP_USETLS", " 使用TLS连接");
 define("_MD_AM_LDAP_USETLS_DESC", "使用 TLS (Transport Layer Security-传输层安全) 连接. TLS 使用标准的 389 端口<br />且LDAP版本为3");
