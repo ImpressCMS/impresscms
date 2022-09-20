@@ -33,19 +33,23 @@ class RemoveSettingsToMakePossibleToUseOldStyleDHTMLEditor extends AbstractDatab
 
 		$this->getContainer()->get('cache')->clear();
 
-		$this->update(
-			$this->prefix('config'),
-			[
-				'conf_value' => key(
-					$editorRegistry->getList('content')
-				)
-			],
-			[
-				'conf_value' => 'dhtmltextarea',
-				'conf_name' => 'editor_default',
-				'conf_catid' => 1,
-			]
-		);
+		$editorsList = $editorRegistry->getList('content');
+
+		if (!empty($editorsList)) {
+			$this->update(
+				$this->prefix('config'),
+				[
+					'conf_value' => key(
+						$editorRegistry->getList('content')
+					)
+				],
+				[
+					'conf_value' => 'dhtmltextarea',
+					'conf_name' => 'editor_default',
+					'conf_catid' => 1,
+				]
+			);
+		}
     }
 
     protected function down(): void
