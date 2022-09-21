@@ -3,6 +3,7 @@
 
 use Composer\Factory;
 use Composer\IO\NullIO;
+use League\Container\ContainerAwareInterface;
 use League\Container\Exception\NotFoundException;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -31,9 +32,15 @@ chdir($cd);
 
 $application = new Application('ImpressCMS Console', $version);
 try {
-	$application->addCommands(
-		icms::getInstance()->get('console.command')
-	);
+	$container = icms::getInstance();
+	$commands = $container->get('console.command');
+	foreach ($commands as $command) {
+		if ($command instanceof ContainerAwareInterface) {
+			$command->setContainer($container);
+		}
+	}
+
+	$application->addCommands($commands);
 } catch (NotFoundException $exception) {
 
 }
