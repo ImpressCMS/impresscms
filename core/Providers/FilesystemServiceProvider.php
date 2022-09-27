@@ -16,6 +16,20 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 	/**
 	 * @inheritdoc
 	 */
+	protected $provides = [
+		'filesystem.root',
+		'filesystem.cache',
+		'filesystem.modules',
+		'filesystem.uploads',
+		'filesystem.themes',
+		'filesystem.public',
+		'filesystem.compiled',
+		'filesystem.libraries',
+	];
+	
+	/**
+	 * @inheritdoc
+	 */
 	public function register()
 		// TODO: make this more compact by using an iterator over the $provides array
 	{
