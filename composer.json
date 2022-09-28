@@ -292,7 +292,6 @@
     }
   },
   "config": {
-    "optimize-autoloader": true,
     "sort-packages": true,
     "bin-dir": "bin",
     "platform": {
