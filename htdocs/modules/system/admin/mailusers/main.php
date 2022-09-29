@@ -110,7 +110,7 @@ if (!empty($_POST)) {
 
 	$limit = 100;
 
-	if (!icms::$security->check() || $op == "form") {
+	if (!icms::$security->check() || $op === "form") {
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_MODULES_URL . '/system/admin/mailusers/images/mailusers_big.png)">' . _MD_AM_MLUS . '</div><br />';
 		if ($op != "form" && $error_msg = icms::$security->getErrors(TRUE)) {
@@ -120,7 +120,9 @@ if (!empty($_POST)) {
 		include ICMS_MODULES_PATH . "/system/admin/mailusers/mailform.php";
 		$form->display();
 		icms_cp_footer();
-	} elseif ($op == "send" && !empty($mail_send_to)) {
+	}
+	elseif ($op === "send" && !empty($mail_send_to))
+	{
 		$added = array();
 		$added_id = array();
 		$criteria = array();
@@ -190,8 +192,6 @@ if (!empty($_POST)) {
 				$criteria_object->add($crit, 'AND');
 			}
 			$member_handler = icms::handler('icms_member');
-			// may not need this since we're now using checkVarArray
-			// $groups = empty($mail_to_group) ? array() : array_map('intval', $mail_to_group);
 			$getusers = $member_handler->getUsersByGroupLink($groups, $criteria_object, TRUE);
 			$count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
 			foreach ($getusers as $getuser) {
@@ -292,4 +292,4 @@ if (!empty($_POST)) {
 		}
 		icms_cp_footer();
 	}
-}
+
