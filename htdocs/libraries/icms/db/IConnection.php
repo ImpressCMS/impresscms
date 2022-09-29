@@ -21,9 +21,13 @@
 interface icms_db_IConnection {
 
 	/**
-	 * Public contructor
+	 * the class constructor. Based upon PDO
+	 * @param string $dsn
+	 * @param string $user
+	 * @param string $pwd
+	 * @param array $options
 	 */
-	public function __construct($dsn, $user, $pwd, $options = array());
+	public function __construct(string $dsn, string $user,string $pwd, array $options);
 
 	/**
 	 * Set the value of a database connection attribute.
@@ -31,14 +35,14 @@ interface icms_db_IConnection {
 	 * @param mixed $value
 	 * @return bool
 	*/
-	public function setAttribute($attribute, $value);
+	public function setAttribute(int $attribute, $value);
 
 	/**
 	 * Return the value of a database connection attribute.
 	 * @param int $attribute
 	 * @return mixed
 	*/
-	public function getAttribute($attribute);
+	public function getAttribute(int $attribute);
 
 	/**
 	 * Last error as an SQLSTATE, a five characters alphanumeric identifier.
@@ -58,7 +62,7 @@ interface icms_db_IConnection {
 	 * @param int $type
 	 * @return string
 	*/
-	public function quote($string, $type = PDO::PARAM_STR);
+	public function quote(string $string, int $type = PDO::PARAM_STR);
 
 	/**
 	 * Safely escape the string, but strips the outer quotes
@@ -66,7 +70,7 @@ interface icms_db_IConnection {
 	 *
 	 * @param	string	string to be escaped
 	*/
-	public function escape($string);
+	public function escape(string $string);
 
 	/**
 	 * Turns off autocommit mode and starts recording transaction.
@@ -90,29 +94,28 @@ interface icms_db_IConnection {
 	 * Prepares an SQL statement
 	 * @param string $sql
 	 * @param array $options
-	 * @return icms_db_Statement
 	*/
-	public function prepare($sql, $options = array());
+	public function prepare(string $query, array $options = []);
 
 	/**
 	 * Executes an SQL statement and returns the number of affected rows.
 	 * @param string $sql
 	 * @return int
 	*/
-	public function exec($sql);
+	public function exec(string $sql);
 
 	/**
 	 * Executes an SQL statement and returns a result set as a IStatement object.
-	 * @param string $sql
-	 * @return icms_db_Statement
+	 *
 	*/
-	public function query();
+	// public function query(string $statement, int $mode = PDO::ATTR_DEFAULT_FETCH_MODE, $arg3 = null, array $ctorargs = []);
+	public function query($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, ...$fetch_mode_args);
 
 	/**
 	 * Returns the ID of the last inserted row or the last value from a sequence object.
-	 * @param string $name
+	 * @param string|null $name
 	 * @return string
 	*/
-	public function lastInsertId($name = NULL);
+	public function lastInsertId(string $name = NULL);
 
 }
