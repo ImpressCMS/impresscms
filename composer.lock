@@ -1882,16 +1882,16 @@
         },
         {
             "name": "imponeer/env",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/env.git",
-                "reference": "3efe70bdd2e9abfedbb4a1d0ae85902e791b0748"
+                "reference": "990048673c8ba4ea09ad667aa10dedd68458b41d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/env/zipball/3efe70bdd2e9abfedbb4a1d0ae85902e791b0748",
-                "reference": "3efe70bdd2e9abfedbb4a1d0ae85902e791b0748",
+                "url": "https://api.github.com/repos/imponeer/env/zipball/990048673c8ba4ea09ad667aa10dedd68458b41d",
+                "reference": "990048673c8ba4ea09ad667aa10dedd68458b41d",
                 "shasum": ""
             },
             "require": {
@@ -1921,9 +1921,9 @@
             "description": "Small helper dealing with environment variables",
             "support": {
                 "issues": "https://github.com/imponeer/env/issues",
-                "source": "https://github.com/imponeer/env/tree/v1.0.0"
+                "source": "https://github.com/imponeer/env/tree/v1.0.1"
             },
-            "time": "2022-06-11T09:01:18+00:00"
+            "time": "2022-09-13T19:55:20+00:00"
         },
         {
             "name": "imponeer/smarty-db-resource",
@@ -2167,16 +2167,16 @@
         },
         {
             "name": "imponeer/smarty-sunrise-http-router",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-sunrise-http-router.git",
-                "reference": "cc8f4f70e4aec644adf19e0958f7dab9677e8616"
+                "reference": "cf252f42efa80cba9729acb466baaa1bc187c77e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-sunrise-http-router/zipball/cc8f4f70e4aec644adf19e0958f7dab9677e8616",
-                "reference": "cc8f4f70e4aec644adf19e0958f7dab9677e8616",
+                "url": "https://api.github.com/repos/imponeer/smarty-sunrise-http-router/zipball/cf252f42efa80cba9729acb466baaa1bc187c77e",
+                "reference": "cf252f42efa80cba9729acb466baaa1bc187c77e",
                 "shasum": ""
             },
             "require": {
@@ -2203,9 +2203,9 @@
             "description": "Smarty extensions to use with amazing router from sunrise-php",
             "support": {
                 "issues": "https://github.com/imponeer/smarty-sunrise-http-router/issues",
-                "source": "https://github.com/imponeer/smarty-sunrise-http-router/tree/v1.1.1"
+                "source": "https://github.com/imponeer/smarty-sunrise-http-router/tree/v1.1.2"
             },
-            "time": "2022-07-25T21:45:07+00:00"
+            "time": "2022-09-13T19:55:55+00:00"
         },
         {
             "name": "imponeer/smarty-translate",
