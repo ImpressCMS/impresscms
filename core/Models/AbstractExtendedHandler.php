@@ -27,6 +27,7 @@ use ImpressCMS\Core\IPF\Module;
 use ImpressCMS\Core\Properties\AbstractProperties;
 use ImpressCMS\Core\Security\PermissionsManager;
 use PDO;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Persistable Object Handlder
@@ -304,10 +305,15 @@ class AbstractExtendedHandler extends AbstractHandler {
 	 * @param string|false $description description of the control that will be displayed in the form
 	 */
 	public function addPermission($perm_name, $caption, $description = false) {
+		/**
+		 * @var TranslatorInterface $translator
+		 */
+		$translator = \icms::getInstance()->get('translator');
+
 		$this->permissionsArray[] = [
 			'perm_name' => $perm_name,
-			'caption' => $caption,
-			'description' => $description
+			'caption' => $translator->trans($caption, [], $this->itemName),
+			'description' => $description ? $translator->trans($description, [], $this->itemName) : false,
 		];
 	}
 
