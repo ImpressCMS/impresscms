@@ -1975,16 +1975,16 @@
         },
         {
             "name": "imponeer/smarty-extensions-contracts",
-            "version": "v2.0.2",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-extensions-contracts.git",
-                "reference": "4193b74dc31ed29db4605a9cc42835fa1038177a"
+                "reference": "205e1edfce7ff78a719103db83806cdf99a4c0cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/4193b74dc31ed29db4605a9cc42835fa1038177a",
-                "reference": "4193b74dc31ed29db4605a9cc42835fa1038177a",
+                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/205e1edfce7ff78a719103db83806cdf99a4c0cf",
+                "reference": "205e1edfce7ff78a719103db83806cdf99a4c0cf",
                 "shasum": ""
             },
             "require": {
@@ -2018,9 +2018,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-extensions-contracts/issues",
-                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0.2"
+                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0.3"
             },
-            "time": "2022-07-25T11:18:42+00:00"
+            "time": "2022-09-12T23:15:31+00:00"
         },
         {
             "name": "imponeer/smarty-foreachq",
@@ -2209,16 +2209,16 @@
         },
         {
             "name": "imponeer/smarty-translate",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-translate.git",
-                "reference": "c6695074b3865ea7c72789934bf7ae343a5fb203"
+                "reference": "9152803d17484b1eff8dc1335f2ed1a02757dfe1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/c6695074b3865ea7c72789934bf7ae343a5fb203",
-                "reference": "c6695074b3865ea7c72789934bf7ae343a5fb203",
+                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/9152803d17484b1eff8dc1335f2ed1a02757dfe1",
+                "reference": "9152803d17484b1eff8dc1335f2ed1a02757dfe1",
                 "shasum": ""
             },
             "require": {
@@ -2251,9 +2251,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-translate/issues",
-                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.2"
+                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.3"
             },
-            "time": "2022-07-25T11:15:36+00:00"
+            "time": "2022-09-13T10:18:58+00:00"
         },
         {
             "name": "imponeer/smarty-xo",
@@ -2306,16 +2306,16 @@
         },
         {
             "name": "imponeer/symfony-translations-constants-loader",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/symfony-translations-constants-loader.git",
-                "reference": "3de01fbacd7f8f611804078a7327c1e78f2feb56"
+                "reference": "27688b57e61675a09671222b3a462fc58aaeb884"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/3de01fbacd7f8f611804078a7327c1e78f2feb56",
-                "reference": "3de01fbacd7f8f611804078a7327c1e78f2feb56",
+                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/27688b57e61675a09671222b3a462fc58aaeb884",
+                "reference": "27688b57e61675a09671222b3a462fc58aaeb884",
                 "shasum": ""
             },
             "require": {
@@ -2354,9 +2354,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/symfony-translations-constants-loader/issues",
-                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.2"
+                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.3"
             },
-            "time": "2022-07-25T22:00:37+00:00"
+            "time": "2022-09-13T19:47:08+00:00"
         },
         {
             "name": "impresscms/codemirror-integration",
