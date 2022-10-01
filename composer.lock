@@ -1857,16 +1857,16 @@
         },
         {
             "name": "imponeer/editor-contracts",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/editor-contracts.git",
-                "reference": "65c987a5c3aecb94797b0c5d86fe132a83168dbe"
+                "reference": "0cbd4f2ba9889c6e8e4ad8e28ea4a4d5a3e41a4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/65c987a5c3aecb94797b0c5d86fe132a83168dbe",
-                "reference": "65c987a5c3aecb94797b0c5d86fe132a83168dbe",
+                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/0cbd4f2ba9889c6e8e4ad8e28ea4a4d5a3e41a4b",
+                "reference": "0cbd4f2ba9889c6e8e4ad8e28ea4a4d5a3e41a4b",
                 "shasum": ""
             },
             "require": {
@@ -1886,9 +1886,9 @@
             "description": "Interfaces for building PHP classes that lets to easier make web editor integrations in your content management systems",
             "support": {
                 "issues": "https://github.com/imponeer/editor-contracts/issues",
-                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.1"
+                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.2"
             },
-            "time": "2022-07-25T11:23:59+00:00"
+            "time": "2022-09-12T23:20:13+00:00"
         },
         {
             "name": "imponeer/env",
@@ -2177,16 +2177,16 @@
         },
         {
             "name": "imponeer/smarty-sunrise-http-router",
-            "version": "v1.1.1",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-sunrise-http-router.git",
-                "reference": "cc8f4f70e4aec644adf19e0958f7dab9677e8616"
+                "reference": "cf252f42efa80cba9729acb466baaa1bc187c77e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-sunrise-http-router/zipball/cc8f4f70e4aec644adf19e0958f7dab9677e8616",
-                "reference": "cc8f4f70e4aec644adf19e0958f7dab9677e8616",
+                "url": "https://api.github.com/repos/imponeer/smarty-sunrise-http-router/zipball/cf252f42efa80cba9729acb466baaa1bc187c77e",
+                "reference": "cf252f42efa80cba9729acb466baaa1bc187c77e",
                 "shasum": ""
             },
             "require": {
@@ -2213,9 +2213,9 @@
             "description": "Smarty extensions to use with amazing router from sunrise-php",
             "support": {
                 "issues": "https://github.com/imponeer/smarty-sunrise-http-router/issues",
-                "source": "https://github.com/imponeer/smarty-sunrise-http-router/tree/v1.1.1"
+                "source": "https://github.com/imponeer/smarty-sunrise-http-router/tree/v1.1.2"
             },
-            "time": "2022-07-25T21:45:07+00:00"
+            "time": "2022-09-13T19:55:55+00:00"
         },
         {
             "name": "imponeer/smarty-translate",
