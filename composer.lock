@@ -1635,16 +1635,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "13388f00956b1503577598873fffb5ae994b5737"
+                "reference": "69568e4293f4fa993f3b0e51c9723e1e17c41379"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/13388f00956b1503577598873fffb5ae994b5737",
-                "reference": "13388f00956b1503577598873fffb5ae994b5737",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/69568e4293f4fa993f3b0e51c9723e1e17c41379",
+                "reference": "69568e4293f4fa993f3b0e51c9723e1e17c41379",
                 "shasum": ""
             },
             "require": {
@@ -1658,15 +1658,19 @@
                 "psr/http-message-implementation": "1.0"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.4.1",
+                "bamarni/composer-bin-plugin": "^1.8.1",
                 "http-interop/http-factory-tests": "^0.9",
-                "phpunit/phpunit": "^8.5.8 || ^9.3.10"
+                "phpunit/phpunit": "^8.5.29 || ^9.5.23"
             },
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
             },
             "type": "library",
             "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                },
                 "branch-alias": {
                     "dev-master": "2.4-dev"
                 }
@@ -1730,7 +1734,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.4.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.4.1"
             },
             "funding": [
                 {
@@ -1746,7 +1750,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-20T21:43:11+00:00"
+            "time": "2022-08-28T14:45:39+00:00"
         },
         {
             "name": "http-interop/http-factory-guzzle",
@@ -2034,16 +2038,16 @@
         },
         {
             "name": "imponeer/smarty-foreachq",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-foreachq.git",
-                "reference": "4a3c3fde67c202f2fe0783dccec365e5fd70165e"
+                "reference": "8a7dafec64ed89b6591a4f093f965fff0c4f484d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-foreachq/zipball/4a3c3fde67c202f2fe0783dccec365e5fd70165e",
-                "reference": "4a3c3fde67c202f2fe0783dccec365e5fd70165e",
+                "url": "https://api.github.com/repos/imponeer/smarty-foreachq/zipball/8a7dafec64ed89b6591a4f093f965fff0c4f484d",
+                "reference": "8a7dafec64ed89b6591a4f093f965fff0c4f484d",
                 "shasum": ""
             },
             "require": {
@@ -2075,22 +2079,22 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-foreachq/issues",
-                "source": "https://github.com/imponeer/smarty-foreachq/tree/v1.1.2"
+                "source": "https://github.com/imponeer/smarty-foreachq/tree/v1.1.3"
             },
-            "time": "2022-07-25T11:58:50+00:00"
+            "time": "2022-09-13T07:56:30+00:00"
         },
         {
             "name": "imponeer/smarty-image",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-image.git",
-                "reference": "b468a5f060f42e840fe19f6e63ab81ec209ca558"
+                "reference": "1e4c5fd36ab2e38047189a78bfa1792eee32162b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-image/zipball/b468a5f060f42e840fe19f6e63ab81ec209ca558",
-                "reference": "b468a5f060f42e840fe19f6e63ab81ec209ca558",
+                "url": "https://api.github.com/repos/imponeer/smarty-image/zipball/1e4c5fd36ab2e38047189a78bfa1792eee32162b",
+                "reference": "1e4c5fd36ab2e38047189a78bfa1792eee32162b",
                 "shasum": ""
             },
             "require": {
@@ -2124,9 +2128,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-image/issues",
-                "source": "https://github.com/imponeer/smarty-image/tree/v1.1.2"
+                "source": "https://github.com/imponeer/smarty-image/tree/v1.1.3"
             },
-            "time": "2022-07-25T11:37:47+00:00"
+            "time": "2022-09-13T09:51:28+00:00"
         },
         {
             "name": "imponeer/smarty-includeq",
@@ -4430,23 +4434,23 @@
         },
         {
             "name": "old-xoops-libraries/php-downloader",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OldXoopsLibraries/php-downloader.git",
-                "reference": "297048f3549eaef509bcf7db5705303e185857e7"
+                "reference": "ff80b03b3647048cb86a04070dc715cc002751d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OldXoopsLibraries/php-downloader/zipball/297048f3549eaef509bcf7db5705303e185857e7",
-                "reference": "297048f3549eaef509bcf7db5705303e185857e7",
+                "url": "https://api.github.com/repos/OldXoopsLibraries/php-downloader/zipball/ff80b03b3647048cb86a04070dc715cc002751d8",
+                "reference": "ff80b03b3647048cb86a04070dc715cc002751d8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.8.28",
+                "phpunit/phpunit": "4.8.36",
                 "roave/security-advisories": "dev-master"
             },
             "type": "library",
@@ -4463,9 +4467,9 @@
             "description": "Some classes from php-downloader v1.0 by www.ipunkt.biz package that were used in Xoops but can't be found outside",
             "support": {
                 "issues": "https://github.com/OldXoopsLibraries/php-downloader/issues",
-                "source": "https://github.com/OldXoopsLibraries/php-downloader/tree/v1.0.2"
+                "source": "https://github.com/OldXoopsLibraries/php-downloader/tree/v1.0.3"
             },
-            "time": "2022-03-26T21:31:01+00:00"
+            "time": "2022-09-13T21:59:41+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
