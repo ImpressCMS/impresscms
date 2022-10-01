@@ -1882,16 +1882,16 @@
         },
         {
             "name": "imponeer/env",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/env.git",
-                "reference": "3efe70bdd2e9abfedbb4a1d0ae85902e791b0748"
+                "reference": "990048673c8ba4ea09ad667aa10dedd68458b41d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/env/zipball/3efe70bdd2e9abfedbb4a1d0ae85902e791b0748",
-                "reference": "3efe70bdd2e9abfedbb4a1d0ae85902e791b0748",
+                "url": "https://api.github.com/repos/imponeer/env/zipball/990048673c8ba4ea09ad667aa10dedd68458b41d",
+                "reference": "990048673c8ba4ea09ad667aa10dedd68458b41d",
                 "shasum": ""
             },
             "require": {
@@ -1921,9 +1921,9 @@
             "description": "Small helper dealing with environment variables",
             "support": {
                 "issues": "https://github.com/imponeer/env/issues",
-                "source": "https://github.com/imponeer/env/tree/v1.0.0"
+                "source": "https://github.com/imponeer/env/tree/v1.0.1"
             },
-            "time": "2022-06-11T09:01:18+00:00"
+            "time": "2022-09-13T19:55:20+00:00"
         },
         {
             "name": "imponeer/smarty-db-resource",
@@ -1975,16 +1975,16 @@
         },
         {
             "name": "imponeer/smarty-extensions-contracts",
-            "version": "v2.0.2",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-extensions-contracts.git",
-                "reference": "4193b74dc31ed29db4605a9cc42835fa1038177a"
+                "reference": "205e1edfce7ff78a719103db83806cdf99a4c0cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/4193b74dc31ed29db4605a9cc42835fa1038177a",
-                "reference": "4193b74dc31ed29db4605a9cc42835fa1038177a",
+                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/205e1edfce7ff78a719103db83806cdf99a4c0cf",
+                "reference": "205e1edfce7ff78a719103db83806cdf99a4c0cf",
                 "shasum": ""
             },
             "require": {
@@ -2018,9 +2018,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-extensions-contracts/issues",
-                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0.2"
+                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0.3"
             },
-            "time": "2022-07-25T11:18:42+00:00"
+            "time": "2022-09-12T23:15:31+00:00"
         },
         {
             "name": "imponeer/smarty-foreachq",
@@ -2209,16 +2209,16 @@
         },
         {
             "name": "imponeer/smarty-translate",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-translate.git",
-                "reference": "c6695074b3865ea7c72789934bf7ae343a5fb203"
+                "reference": "9152803d17484b1eff8dc1335f2ed1a02757dfe1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/c6695074b3865ea7c72789934bf7ae343a5fb203",
-                "reference": "c6695074b3865ea7c72789934bf7ae343a5fb203",
+                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/9152803d17484b1eff8dc1335f2ed1a02757dfe1",
+                "reference": "9152803d17484b1eff8dc1335f2ed1a02757dfe1",
                 "shasum": ""
             },
             "require": {
@@ -2251,22 +2251,22 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-translate/issues",
-                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.2"
+                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.3"
             },
-            "time": "2022-07-25T11:15:36+00:00"
+            "time": "2022-09-13T10:18:58+00:00"
         },
         {
             "name": "imponeer/smarty-xo",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-xo.git",
-                "reference": "f9628031fdf496bf8b28ff3d44834d26db83e8fb"
+                "reference": "ceffbd20b525078856cc2928d312c4804c0e3b35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-xo/zipball/f9628031fdf496bf8b28ff3d44834d26db83e8fb",
-                "reference": "f9628031fdf496bf8b28ff3d44834d26db83e8fb",
+                "url": "https://api.github.com/repos/imponeer/smarty-xo/zipball/ceffbd20b525078856cc2928d312c4804c0e3b35",
+                "reference": "ceffbd20b525078856cc2928d312c4804c0e3b35",
                 "shasum": ""
             },
             "require": {
@@ -2300,9 +2300,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-xo/issues",
-                "source": "https://github.com/imponeer/smarty-xo/tree/v1.1.2"
+                "source": "https://github.com/imponeer/smarty-xo/tree/v1.1.3"
             },
-            "time": "2022-07-25T11:27:47+00:00"
+            "time": "2022-09-13T10:07:54+00:00"
         },
         {
             "name": "imponeer/symfony-translations-constants-loader",
