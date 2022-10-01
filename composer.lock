@@ -1882,16 +1882,16 @@
         },
         {
             "name": "imponeer/env",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/env.git",
-                "reference": "3efe70bdd2e9abfedbb4a1d0ae85902e791b0748"
+                "reference": "990048673c8ba4ea09ad667aa10dedd68458b41d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/env/zipball/3efe70bdd2e9abfedbb4a1d0ae85902e791b0748",
-                "reference": "3efe70bdd2e9abfedbb4a1d0ae85902e791b0748",
+                "url": "https://api.github.com/repos/imponeer/env/zipball/990048673c8ba4ea09ad667aa10dedd68458b41d",
+                "reference": "990048673c8ba4ea09ad667aa10dedd68458b41d",
                 "shasum": ""
             },
             "require": {
@@ -1921,9 +1921,9 @@
             "description": "Small helper dealing with environment variables",
             "support": {
                 "issues": "https://github.com/imponeer/env/issues",
-                "source": "https://github.com/imponeer/env/tree/v1.0.0"
+                "source": "https://github.com/imponeer/env/tree/v1.0.1"
             },
-            "time": "2022-06-11T09:01:18+00:00"
+            "time": "2022-09-13T19:55:20+00:00"
         },
         {
             "name": "imponeer/smarty-db-resource",
@@ -2120,16 +2120,16 @@
         },
         {
             "name": "imponeer/smarty-includeq",
-            "version": "v1.1.2",
+            "version": "v1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-includeq.git",
-                "reference": "8131bf6a955d6293bfd8c8e2459f85ca668ff1c4"
+                "reference": "7ed28da9747f94d116b7aeef84efdcec19169f65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-includeq/zipball/8131bf6a955d6293bfd8c8e2459f85ca668ff1c4",
-                "reference": "8131bf6a955d6293bfd8c8e2459f85ca668ff1c4",
+                "url": "https://api.github.com/repos/imponeer/smarty-includeq/zipball/7ed28da9747f94d116b7aeef84efdcec19169f65",
+                "reference": "7ed28da9747f94d116b7aeef84efdcec19169f65",
                 "shasum": ""
             },
             "require": {
@@ -2161,9 +2161,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-includeq/issues",
-                "source": "https://github.com/imponeer/smarty-includeq/tree/v1.1.2"
+                "source": "https://github.com/imponeer/smarty-includeq/tree/v1.1.4"
             },
-            "time": "2022-07-25T11:11:26+00:00"
+            "time": "2022-09-13T11:16:11+00:00"
         },
         {
             "name": "imponeer/smarty-sunrise-http-router",
