@@ -137,7 +137,11 @@ class BlocksSetupStep extends InstallBlockSetupStep
 							$output->error(_MD_AM_CREATE_FAIL, $this->getTranslatedName($block['name']));
 						} else {
 							$newbid = $newBlock->bid;
-							$groups = &icms::$user->getGroups();
+							if (icms::$user) {
+								$groups = &icms::$user->getGroups();
+							} else {
+								$groups = [ICMS_GROUP_ADMIN];
+							}
 							$gperm_handler = icms::handler('icms_member_groupperm');
 							foreach ($groups as $mygroup) {
 								$bperm = &$gperm_handler->create();

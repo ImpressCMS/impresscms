@@ -41,6 +41,7 @@ use icms;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Facades\Aura;
+use ImpressCMS\Core\Facades\Member;
 use ImpressCMS\Core\Messaging\MessageSender;
 
 /**
@@ -332,6 +333,9 @@ class User extends AbstractExtendedModel {
 	public function &getGroups()
 	{
 		if (empty($this->_groups)) {
+			/**
+			 * @var Member $member_handler
+			 */
 			$member_handler = icms::handler('icms_member');
 			$this->_groups = $member_handler->getGroupsByUser($this->uid);
 		}
