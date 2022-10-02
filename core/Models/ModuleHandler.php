@@ -210,6 +210,9 @@ class ModuleHandler extends AbstractExtendedHandler
 			return false;
 		}
 
+		/**
+		 * @var Module $module
+		 */
 		$module = &$this->create();
 		$module->loadInfoAsVar($dirname);
 		$module->registerClassPath();
