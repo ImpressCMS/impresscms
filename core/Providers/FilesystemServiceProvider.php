@@ -16,6 +16,20 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 	/**
 	 * @inheritdoc
 	 */
+	protected $provides = [
+		'filesystem.root',
+		'filesystem.cache',
+		'filesystem.modules',
+		'filesystem.uploads',
+		'filesystem.themes',
+		'filesystem.public',
+		'filesystem.compiled',
+		'filesystem.libraries',
+	];
+
+	/**
+	 * @inheritdoc
+	 */
 	public function register()
 		// TODO: make this more compact by using an iterator over the $provides array
 	{
@@ -35,7 +49,7 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 		});
 		$this->getContainer()->add('filesystem.cache', function () {
 			return new Filesystem(
-				new LocalFilesystemAdapter(ICMS_ROOT_PATH, PortableVisibilityConverter::fromArray([
+				new LocalFilesystemAdapter(ICMS_CACHE_PATH, PortableVisibilityConverter::fromArray([
 					'file' => [
 						'public' => 0640,
 						'private' => 0604,
@@ -49,7 +63,7 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 		});
 		$this->getContainer()->add('filesystem.modules', function () {
 			return new Filesystem(
-				new LocalFilesystemAdapter(ICMS_ROOT_PATH, PortableVisibilityConverter::fromArray([
+				new LocalFilesystemAdapter(ICMS_MODULES_PATH, PortableVisibilityConverter::fromArray([
 					'file' => [
 						'public' => 0640,
 						'private' => 0604,
@@ -63,7 +77,7 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 		});
 		$this->getContainer()->add('filesystem.uploads', function () {
 			return new Filesystem(
-				new LocalFilesystemAdapter(ICMS_ROOT_PATH, PortableVisibilityConverter::fromArray([
+				new LocalFilesystemAdapter(ICMS_UPLOAD_PATH, PortableVisibilityConverter::fromArray([
 					'file' => [
 						'public' => 0640,
 						'private' => 0604,
@@ -77,7 +91,7 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 		});
 		$this->getContainer()->add('filesystem.themes', function () {
 			return new Filesystem(
-				new LocalFilesystemAdapter(ICMS_ROOT_PATH, PortableVisibilityConverter::fromArray([
+				new LocalFilesystemAdapter(ICMS_THEME_PATH, PortableVisibilityConverter::fromArray([
 					'file' => [
 						'public' => 0640,
 						'private' => 0604,
@@ -91,7 +105,7 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 		});
 		$this->getContainer()->add('filesystem.public', function () {
 			return new Filesystem(
-				new LocalFilesystemAdapter(ICMS_ROOT_PATH, PortableVisibilityConverter::fromArray([
+				new LocalFilesystemAdapter(ICMS_PUBLIC_PATH, PortableVisibilityConverter::fromArray([
 					'file' => [
 						'public' => 0640,
 						'private' => 0604,
@@ -105,7 +119,7 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 		});
 		$this->getContainer()->add('filesystem.compiled', function () {
 			return new Filesystem(
-				new LocalFilesystemAdapter(ICMS_ROOT_PATH, PortableVisibilityConverter::fromArray([
+				new LocalFilesystemAdapter(ICMS_COMPILE_PATH, PortableVisibilityConverter::fromArray([
 					'file' => [
 						'public' => 0640,
 						'private' => 0604,
@@ -119,7 +133,7 @@ class FilesystemServiceProvider extends AbstractServiceProvider
 		});
 		$this->getContainer()->add('filesystem.libraries', function () {
 			return new Filesystem(
-				new LocalFilesystemAdapter(ICMS_ROOT_PATH, PortableVisibilityConverter::fromArray([
+				new LocalFilesystemAdapter(ICMS_LIBRARIES_PATH, PortableVisibilityConverter::fromArray([
 					'file' => [
 						'public' => 0640,
 						'private' => 0604,
