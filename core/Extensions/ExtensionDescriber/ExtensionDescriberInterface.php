@@ -24,8 +24,8 @@ interface ExtensionDescriberInterface
 	 *
 	 * @param string $path Path where extension located
 	 *
-	 * @return array
+	 * @return DescribedItemInfoInterface
 	 */
-	public function describe(string $path): array;
+	public function describe(string $path): DescribedItemInfoInterface;
 
 }
