@@ -35,6 +35,14 @@ class icms_BootstrapEventHandler {
 		icms::$logger->startTime('Module init');
 	}
 
+	/**
+	 * Create variables necessary for XOOPS / ICMS < 1.4 BC
+	 * @param array $params
+	 * @param icms_Event $event
+	 */
+	static public function backwardCompatibility($params, $event) {
+
+	}
 }
 
 icms_BootstrapEventHandler::setup();
