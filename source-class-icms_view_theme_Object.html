@@ -85,11 +85,6 @@
 
 						</li>
 				<li>
-					<a href="package-core.Kernel.html">
-						Kernel					</a>
-
-						</li>
-				<li>
 					<a href="package-Core.Logger.html">
 						Logger					</a>
 
@@ -497,7 +492,6 @@
 				<li><a href="class-icms_core_Debug.html">icms_core_Debug</a></li>
 				<li><a href="class-icms_core_Filesystem.html">icms_core_Filesystem</a></li>
 				<li><a href="class-icms_core_HTMLFilter.html">icms_core_HTMLFilter</a></li>
-				<li><a href="class-icms_core_Kernel.html" class="deprecated">icms_core_Kernel</a></li>
 				<li><a href="class-icms_core_Logger.html">icms_core_Logger</a></li>
 				<li><a href="class-icms_core_Message.html">icms_core_Message</a></li>
 				<li><a href="class-icms_core_Object.html">icms_core_Object</a></li>
@@ -1163,12 +1157,12 @@
 </span></span><span id="438" class="l"><span class="php-comment">     * @return void
 </span></span><span id="439" class="l"><span class="php-comment">     **/</span>
 </span><span id="440" class="l">    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addScript(<span class="php-var">$src</span> = <span class="php-quote">''</span>, <span class="php-var">$attributes</span> = <span class="php-keyword1">array</span>(), <span class="php-var">$content</span> = <span class="php-quote">''</span>, <span class="php-var">$zone</span> = <span class="php-quote">'module'</span>, <span class="php-var">$weight</span> = <span class="php-num">0</span>) {
-</span><span id="441" class="l">        <span class="php-keyword1">global</span> <span class="php-var">$xoops</span>;
+</span><span id="441" class="l">
 </span><span id="442" class="l">        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$attributes</span>)) {
 </span><span id="443" class="l">            <span class="php-var">$attributes</span> = <span class="php-keyword1">array</span>();
 </span><span id="444" class="l">        }
 </span><span id="445" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$src</span>)) {
-</span><span id="446" class="l">            <span class="php-var">$attributes</span>[<span class="php-quote">'src'</span>] = <span class="php-var">$xoops</span>-&gt;url(<span class="php-var">$this</span>-&gt;resourcePath(<span class="php-var">$src</span>));
+</span><span id="446" class="l">            <span class="php-var">$attributes</span>[<span class="php-quote">'src'</span>] = icms::url(<span class="php-var">$this</span>-&gt;resourcePath(<span class="php-var">$src</span>));
 </span><span id="447" class="l">        }
 </span><span id="448" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$content</span>)) {
 </span><span id="449" class="l">            <span class="php-var">$attributes</span>[<span class="php-quote">'_'</span>] = <span class="php-var">$content</span>;
@@ -1190,12 +1184,12 @@
 </span></span><span id="465" class="l"><span class="php-comment">     * @return void
 </span></span><span id="466" class="l"><span class="php-comment">     **/</span>
 </span><span id="467" class="l">    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addStylesheet(<span class="php-var">$src</span> = <span class="php-quote">''</span>, <span class="php-var">$attributes</span> = <span class="php-keyword1">array</span>(), <span class="php-var">$content</span> = <span class="php-quote">''</span>, <span class="php-var">$zone</span> = <span class="php-quote">'module'</span>, <span class="php-var">$weight</span> = <span class="php-num">0</span>) {
-</span><span id="468" class="l">        <span class="php-keyword1">global</span> <span class="php-var">$xoops</span>;
+</span><span id="468" class="l">
 </span><span id="469" class="l">        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$attributes</span>)) {
 </span><span id="470" class="l">            <span class="php-var">$attributes</span> = <span class="php-keyword1">array</span>();
 </span><span id="471" class="l">        }
 </span><span id="472" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$src</span>)) {
-</span><span id="473" class="l">            <span class="php-var">$attributes</span>[<span class="php-quote">'href'</span>] = <span class="php-var">$xoops</span>-&gt;url(<span class="php-var">$this</span>-&gt;resourcePath(<span class="php-var">$src</span>));
+</span><span id="473" class="l">            <span class="php-var">$attributes</span>[<span class="php-quote">'href'</span>] = icms::url(<span class="php-var">$this</span>-&gt;resourcePath(<span class="php-var">$src</span>));
 </span><span id="474" class="l">        }
 </span><span id="475" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$attributes</span>[<span class="php-quote">'type'</span>])) {
 </span><span id="476" class="l">            <span class="php-var">$attributes</span>[<span class="php-quote">'type'</span>] = <span class="php-quote">'text/css'</span>;
@@ -1215,7 +1209,7 @@
 </span></span><span id="490" class="l"><span class="php-comment">     * @param   int $weight Sort factor - lower weights are loaded first
 </span></span><span id="491" class="l"><span class="php-comment">     */</span>
 </span><span id="492" class="l">    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addLink(<span class="php-var">$rel</span>, <span class="php-var">$href</span> = <span class="php-quote">''</span>, <span class="php-var">$attributes</span> = <span class="php-keyword1">array</span>(), <span class="php-var">$zone</span> = <span class="php-quote">'module'</span>, <span class="php-var">$weight</span> = <span class="php-num">0</span>) {
-</span><span id="493" class="l">        <span class="php-keyword1">global</span> <span class="php-var">$xoops</span>;
+</span><span id="493" class="l">
 </span><span id="494" class="l">
 </span><span id="495" class="l">        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$attributes</span>)) {
 </span><span id="496" class="l">            <span class="php-var">$attributes</span> = <span class="php-keyword1">array</span>();
@@ -1432,7 +1426,7 @@
 </span></span><span id="707" class="l"><span class="php-comment">     * @return string
 </span></span><span id="708" class="l"><span class="php-comment">     */</span>
 </span><span id="709" class="l">    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resourcePath(<span class="php-var">$path</span>) {
-</span><span id="710" class="l">        <span class="php-keyword1">global</span> <span class="php-var">$xoops</span>;
+</span><span id="710" class="l">
 </span><span id="711" class="l">        <span class="php-keyword1">if</span> (<span class="php-keyword2">substr</span>(<span class="php-var">$path</span>, <span class="php-num">0</span>, <span class="php-num">1</span>) == <span class="php-quote">'/'</span>) {
 </span><span id="712" class="l">            <span class="php-var">$path</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$path</span>, <span class="php-num">1</span>);
 </span><span id="713" class="l">        }
@@ -1450,6 +1444,6 @@
 </div>
 </div>
 <script src="resources/combined.js?58699d70ee1015ed63e509c64f4dd9d3b29ddbbe"></script>
-<script src="elementlist.js?b08074509f9bba7124505e29f2376bbbccd72249"></script>
+<script src="elementlist.js?a18c3be43b9689dbea8e5f99d9bcca04f4dfdd4e"></script>
 </body>
 </html>
