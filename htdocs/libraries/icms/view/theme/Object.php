@@ -438,12 +438,12 @@ class icms_view_theme_Object {
 	 * @return void
 	 **/
 	public function addScript($src = '', $attributes = array(), $content = '', $zone = 'module', $weight = 0) {
-		global $xoops;
+
 		if (empty($attributes))	{
 			$attributes = array();
 		}
 		if (!empty($src)) {
-			$attributes['src'] = $xoops->url($this->resourcePath($src));
+			$attributes['src'] = icms::url($this->resourcePath($src));
 		}
 		if (!empty($content)) {
 			$attributes['_'] = $content;
@@ -465,12 +465,12 @@ class icms_view_theme_Object {
 	 * @return void
 	 **/
 	public function addStylesheet($src = '', $attributes = array(), $content = '', $zone = 'module', $weight = 0) {
-		global $xoops;
+
 		if (empty($attributes)) {
 			$attributes = array();
 		}
 		if (!empty($src)) {
-			$attributes['href'] = $xoops->url($this->resourcePath($src));
+			$attributes['href'] = icms::url($this->resourcePath($src));
 		}
 		if (!isset($attributes['type'])) {
 			$attributes['type'] = 'text/css';
@@ -490,7 +490,7 @@ class icms_view_theme_Object {
 	 * @param 	int	$weight	Sort factor - lower weights are loaded first
 	 */
 	public function addLink($rel, $href = '', $attributes = array(), $zone = 'module', $weight = 0) {
-		global $xoops;
+
 
 		if (empty($attributes)) {
 			$attributes = array();
@@ -707,7 +707,7 @@ class icms_view_theme_Object {
 	 * @return string
 	 */
 	public function resourcePath($path) {
-		global $xoops;
+
 		if (substr($path, 0, 1) == '/') {
 			$path = substr($path, 1);
 		}
