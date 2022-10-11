@@ -154,35 +154,24 @@ class icms_core_DataFilter {
 	}
 
 	/**
-	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP5.3.0
 	 * @param   string  $text the text to apply the slashes to
 	 * 			string  $param which characters to apply the escaping to.
 	 * @return  string
-	 *@todo 	Remove magic_quotes_gpc and magic_quotes_runtime -
-	 * 			they will always return FALSE in PHP 5.4
 	 *
-	 * Add slashes to the text if magic_quotes_gpc is turned off.
-	 *
+	 * Add slashes to the text if magic_quotes_gpc is turned off (and that should be always on >= PHP 5.4!!!).
 	 */
-	static public function addSlashes(string $text, string $param = null ) {
-		if (!get_magic_quotes_gpc()) {
-			$text = addcslashes($text, $param);
-		}
-		return $text;
+	public static function addSlashes(string $text, string $param = null ) {
+		return addcslashes($text, $param);
 	}
 
 	/**
 	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP5.3.0
-	 *		does that mean we can remove this function once 5.3 is minimum req?
-	 * if magic_quotes_gpc is on, strip back slashes
+	 * 		 (and that should be always on >= PHP 5.4!!!)
 	 *
 	 * @param	string  $text
 	 * @return   string
 	 */
-	static public function stripSlashesGPC($text) {
-		if (get_magic_quotes_gpc()) {
-			$text = stripslashes($text);
-		}
+	public static function stripSlashesGPC($text) {
 		return $text;
 	}
 
