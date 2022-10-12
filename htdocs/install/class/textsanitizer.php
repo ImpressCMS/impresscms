@@ -71,15 +71,16 @@ class TextSanitizer {
 		return preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $text);
 	}
 
-	/** @todo    get_magic_quotes_gpc is removed in PHP 5.4 */
+	/**
+	 * @deprecated 2.0 use addslashes instead 
+	 */
 	function addSlashes($text)
 	{
 		return addslashes($text);
 	}
 
-	/*
-	 * if magic_quotes_gpc is on, stirip back slashes
-	 * @todo	get_magic_quotes_gpc is removed in PHP 5.4
+	/**
+	 * @deprecated 2.0 do not use this at all! 
 	 */
 	function &stripSlashesGPC($text)
 	{

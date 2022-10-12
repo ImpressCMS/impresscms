@@ -1,13 +1,14 @@
 <?php
 
-namespace ImpressCMS\Core\Extensions\SetupSteps\Module\Install;
+namespace ImpressCMS\Core\Extensions\SetupSteps\Theme\Install;
 
 use Exception;
 use Generator;
-use icms_module_Object;
+use ImpressCMS\Core\Extensions\ExtensionDescriber\ThemeInfo;
 use ImpressCMS\Core\Extensions\SetupSteps\AddonAssetsTrait;
 use ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator;
 use ImpressCMS\Core\Extensions\SetupSteps\SetupStepInterface;
+use ImpressCMS\Core\Extensions\SetupSteps\Theme\ThemeSetupStepInterface;
 use ImpressCMS\Core\Models\Module;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
@@ -18,18 +19,26 @@ use League\Flysystem\StorageAttributes;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Copies module assets to public path
+ * Copies theme assets to public path
  *
- * @package ImpressCMS\Core\SetupSteps\Module\Install
+ * @package ImpressCMS\Core\SetupSteps\Theme\Install
  */
-class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
+class CopyAssetsSetupStep implements ThemeSetupStepInterface, ContainerAwareInterface
 {
 	use ContainerAwareTrait, AddonAssetsTrait;
 
 	/**
 	 * @inheritDoc
 	 */
-	public function execute(Module $module, OutputDecorator $output, ...$params): bool
+	public function getPriority(): int
+	{
+		return 100;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function execute(ThemeInfo $info, OutputDecorator $output, ...$params): bool
 	{
 		/**
 		 * @var TranslatorInterface $trans
@@ -43,12 +52,12 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		$output->msg(
 			$trans->trans('ADDONS_COPY_ASSETS_DELETE_OLD', [], 'addons')
 		);
-		$this->recreateAssetsPublicFolderPath('modules/' . $module->dirname, 'modules');
+		$this->recreateAssetsPublicFolderPath($info->path, 'themes');
 
 		$assetsCopier = $this->copyAllAssets(
-			(array)$module->getInfo('assets'),
-			$module->dirname,
-			'modules'
+			$info->assets,
+			$info->path,
+			'themes'
 		);
 		foreach ($assetsCopier as $assetPath) {
 			$output->msg(
@@ -59,13 +68,5 @@ class CopyAssetsSetupStep implements SetupStepInterface, ContainerAwareInterface
 		$output->decrIndent();
 
 		return true;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getPriority(): int
-	{
-		return 100;
 	}
 }

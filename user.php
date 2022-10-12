@@ -39,9 +39,8 @@
 
 $xoopsOption['pagetype'] = 'user';
 
-$op = (isset($_GET['op']))
-	? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))
-	: ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'main');
+$op = trim((string)filter_input(INPUT_REQUEST, 'op'));
+$op = in_array($op, ['resetpass', 'login', 'logout', 'actv', 'delete', 'main'], true) ? $op : 'main';
 
 $redirect = $_GET['xoops_redirect'] ?? $_POST['xoops_redirect'] ?? false;
 

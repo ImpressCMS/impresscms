@@ -2,6 +2,8 @@
 
 namespace ImpressCMS\Core\Extensions\SetupSteps;
 
+use ImpressCMS\Core\Extensions\ExtensionDescriber\DescribedItemInfoInterface;
+use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
 use ImpressCMS\Core\Models\Module;
 
 /**
@@ -11,17 +13,6 @@ use ImpressCMS\Core\Models\Module;
  */
 interface SetupStepInterface
 {
-
-	/**
-	 * Execute setup step
-	 *
-	 * @param Module $module Current module that is installing
-	 * @param OutputDecorator $output Output where to print messages
-	 * @param array $params Extra params
-	 *
-	 * @return bool
-	 */
-	public function execute(Module $module, OutputDecorator $output, ...$params): bool;
 
 	/**
 	 * Get priority to use this step

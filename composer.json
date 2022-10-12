@@ -103,7 +103,6 @@
     "symfony/polyfill-iconv": "^1.12",
     "symfony/polyfill-php80": "^1.23",
     "symfony/translation": "^5.1",
-    "true/punycode": "^2.1",
     "tuupola/server-timing-middleware": ">=0.8.2",
     "typo3/class-alias-loader": "^1.1",
     "vlucas/phpdotenv": "^3.3.3"
@@ -293,7 +292,6 @@
     }
   },
   "config": {
-    "optimize-autoloader": true,
     "sort-packages": true,
     "bin-dir": "bin",
     "platform": {

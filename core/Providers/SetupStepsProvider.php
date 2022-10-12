@@ -15,6 +15,10 @@ class SetupStepsProvider extends AbstractServiceProvider
 	public const SETUP_STEP_MODULE_UPDATE = "setup_step.module.update";
 	public const SETUP_STEP_MODULE_UNINSTALL = "setup_step.module.uninstall";
 
+	public const SETUP_STEP_THEME_INSTALL = "setup_step.theme.install";
+	public const SETUP_STEP_THEME_UPDATE = "setup_step.theme.update";
+	public const SETUP_STEP_THEME_UNINSTALL = "setup_step.theme.uninstall";
+
 	/**
 	 * @inheritdoc
 	 */
@@ -22,6 +26,9 @@ class SetupStepsProvider extends AbstractServiceProvider
 		self::SETUP_STEP_MODULE_INSTALL,
 		self::SETUP_STEP_MODULE_UPDATE,
 		self::SETUP_STEP_MODULE_UNINSTALL,
+		self::SETUP_STEP_THEME_INSTALL,
+		self::SETUP_STEP_THEME_UPDATE,
+		self::SETUP_STEP_THEME_UNINSTALL,
 	];
 
 	/**
@@ -32,6 +39,10 @@ class SetupStepsProvider extends AbstractServiceProvider
 		$this->addModuleInstallSteps();
 		$this->addModuleUpdateSteps();
 		$this->addModuleUninstallSteps();
+
+		$this->addThemeInstallSteps();
+		$this->addThemeUpdateSteps();
+		$this->addThemeUninstallSteps();
 	}
 
 	protected function addModuleInstallSteps(): void
@@ -179,6 +190,30 @@ class SetupStepsProvider extends AbstractServiceProvider
 			->add(\ImpressCMS\Core\Extensions\SetupSteps\Module\Uninstall\CacheClearSetupStep::class)
 			->addArgument('cache')
 			->addTag(self::SETUP_STEP_MODULE_UNINSTALL)
+		;
+	}
+
+	protected function addThemeInstallSteps(): void
+	{
+		$this->leagueContainer
+			->add(\ImpressCMS\Core\Extensions\SetupSteps\Theme\Install\CopyAssetsSetupStep::class)
+			->addTag(self::SETUP_STEP_THEME_INSTALL)
+		;
+	}
+
+	protected function addThemeUpdateSteps(): void
+	{
+		$this->leagueContainer
+			->add(\ImpressCMS\Core\Extensions\SetupSteps\Theme\Update\CopyAssetsSetupStep::class)
+			->addTag(self::SETUP_STEP_THEME_UPDATE)
+		;
+	}
+
+	protected function addThemeUninstallSteps(): void
+	{
+		$this->leagueContainer
+			->add(\ImpressCMS\Core\Extensions\SetupSteps\Theme\Uninstall\CopyAssetsSetupStep::class)
+			->addTag(self::SETUP_STEP_THEME_UNINSTALL)
 		;
 	}
 }

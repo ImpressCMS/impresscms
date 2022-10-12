@@ -39,6 +39,7 @@ namespace ImpressCMS\Core\Models;
 use icms;
 use ImpressCMS\Core\Autoloader;
 use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
+use ImpressCMS\Core\Extensions\ExtensionDescriber\ModuleInfo;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -311,7 +312,7 @@ class Module
 		$cachedModuleInfo = $cache->getItem('module.' . $icmsConfig['language'] . '.' . $dirname);
 
 		if (!$cachedModuleInfo->isHit()) {
-			$modversion = [];
+			$modversion = null;
 			/**
 			 * @var ExtensionDescriberInterface $extensionDescriber
 			 */
@@ -319,7 +320,11 @@ class Module
 				if (!$extensionDescriber->canDescribe($fullPath)) {
 					continue;
 				}
-				$modversion += $extensionDescriber->describe($fullPath);
+
+				if ($modversion === null) {
+					$modversion = $extensionDescriber->describe($fullPath);
+					break;
+				}
 			}
 
 			$cachedModuleInfo->set($modversion);

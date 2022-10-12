@@ -9,6 +9,9 @@ use ImpressCMS\Core\Commands\ModuleUninstallCommand;
 use ImpressCMS\Core\Commands\ModuleUpdateCommand;
 use ImpressCMS\Core\Commands\RoutesListCommand;
 use ImpressCMS\Core\Commands\TemplatesCacheClearCommand;
+use ImpressCMS\Core\Commands\ThemeInstallCommand;
+use ImpressCMS\Core\Commands\ThemeUninstallCommand;
+use ImpressCMS\Core\Commands\ThemeUpdateCommand;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 /**
@@ -57,6 +60,18 @@ class CommandsProvider extends AbstractServiceProvider
 		;
 		$this->leagueContainer
 			->add(ModuleUninstallCommand::class)
+			->addTag(self::CONSOLE_COMMAND_TAG)
+		;
+		$this->leagueContainer
+			->add(ThemeInstallCommand::class)
+			->addTag(self::CONSOLE_COMMAND_TAG)
+		;
+		$this->leagueContainer
+			->add(ThemeUpdateCommand::class)
+			->addTag(self::CONSOLE_COMMAND_TAG)
+		;
+		$this->leagueContainer
+			->add(ThemeUninstallCommand::class)
 			->addTag(self::CONSOLE_COMMAND_TAG)
 		;
     }
