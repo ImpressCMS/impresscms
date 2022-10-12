@@ -125,9 +125,26 @@ class BlocksSetupStep extends InstallBlockSetupStep
 							$output->error(_MD_AM_CREATE_FAIL, $this->getTranslatedName($block['name']));
 						} else {
 							$newbid = $newBlock->bid;
+
+							if (icms::$user) {
+								$groups = &icms::$user->getGroups();
+							} else {
+								$groups = [ICMS_GROUP_ADMIN];
+							}
+							$gperm_handler = icms::handler('icms_member_groupperm');
+							foreach ($groups as $mygroup) {
+								$bperm = &$gperm_handler->create();
+								$bperm->gperm_groupid = $mygroup;
+								$bperm->gperm_itemid = $newbid;
+								$bperm->gperm_name = 'block_read';
+								$bperm->gperm_modid = 1;
+								if (!$gperm_handler->insert($bperm)) {
+									$output->error(_MD_AM_BLOCK_ACCESS_FAIL . ' ' . $newbid, $mygroup);
+
 							foreach ($this->getGroupsIdsForModule($info->mid) as $mygroup) {
 								if ($this->createBlockReadPermission($mygroup, $newbid)) {
 									$output->success(_MD_AM_BLOCK_ACCESS_ADDED, $newbid, $mygroup);
+
 								} else {
 									$output->error(_MD_AM_BLOCK_ACCESS_FAIL, $newbid, $mygroup);
 								}
