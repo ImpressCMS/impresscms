@@ -1,5 +1,4 @@
-ImpressCMS Language ChangeLog
-=============================
+# ImpressCMS Language ChangeLog
 
 This is the changelog documenting the changes in the language constant for every release of ImpressCMS.
 
@@ -9,12 +8,18 @@ Legend :
   -  a constant was removed OR a whole file was removed
   #  Directory / Folders guide
 
-ImpressCMS 2.0
-=======================================================
-# Directory: modules/system/language/english/admin
-=======================================================
-+ tags.php
----------------------------
+# ImpressCMS 2.0
+## ImpressCMS 2.0 Alpha 13
+### Directory: language/english
+#### addons.php
+* +define('ADDONS_COPY_ASSETS_INFO', 'Updating assets...');
+* +define('ADDONS_COPY_ASSETS_DELETE_OLD', 'Deleting old public assets content...');
+* +define('ADDONS_COPY_ASSETS_COPYING', 'Copying \'%file%\'...');
+* +define('ADDONS_COPY_ASSETS_DELETING', 'Deleting assets...');
+
+## Before ImpressCMS 2.0 Alpha 8
+### Directory: modules/system/language/english/admin
+#### tags.php
 + define("_CO_SYSTEM_TAGS", "Tags");
 + define("_CO_SYSTEM_TAGS_DSC", "Tags Described");
 + define("_CO_SYSTEM_TAGS_EXPLAIN_TITLE", "Tags Explained");
