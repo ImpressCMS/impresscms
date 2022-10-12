@@ -814,8 +814,7 @@ class DataFilter
 	public static function codeSanitizer($str, $image = 1)
 	{
 		$str = self::htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
-		$str = self::codeDecode($str, $image);
-		return $str;
+		return self::codeDecode($str, $image);
 	}
 
 	/**
@@ -933,8 +932,7 @@ class DataFilter
 		$length_text = ($pos_close) ? $pos_close - $length_open : 0;
 		$str_internal = ($length_text) ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
 
-		$buffer = $str_open . $str_internal . $str_close;
-		return $buffer;
+		return $str_open . $str_internal . $str_close;
 	}
 
 	/**
@@ -1083,8 +1081,7 @@ class DataFilter
 			$strs[$i] = ($action) ? substr($strs[$i], $pos_st, $pos_i - $pos_st - strlen($trimmarker)) . $trimmarker : $strs[$i];
 			$strs[$i] = ($hasML) ? '[' . $tags[$i] . ']' . $strs[$i] . '[/' . $tags[$i] . ']' : $strs[$i];
 		}
-		$str = implode('', $strs);
-		return $str;
+		return implode('', $strs);
 	}
 
 // -------- Private Functions --------
@@ -1105,13 +1102,6 @@ class DataFilter
 				$data = filter_var($data, FILTER_SANITIZE_URL);
 
 				switch ($options1) {
-					case 'scheme':
-						$valid = filter_var($data, FILTER_VALIDATE_URL);
-						break;
-
-					case 'host':
-						$valid = filter_var($data, FILTER_VALIDATE_URL);
-						break;
 
 					case 'path':
 						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED);
@@ -1121,6 +1111,8 @@ class DataFilter
 						$valid = filter_var($data, FILTER_VALIDATE_URL, FILTER_FLAG_QUERY_REQUIRED);
 						break;
 
+					case 'scheme':
+					case 'host':
 					default:
 						$valid = filter_var($data, FILTER_VALIDATE_URL);
 						break;
@@ -1132,7 +1124,6 @@ class DataFilter
 					return $data;
 				}
 				return false;
-				break;
 
 			case 'email': // returns False if email is invalid, returns $string if valid
 				global $icmsConfigUser;
@@ -1158,63 +1149,48 @@ class DataFilter
 					$data = str_replace(['@', '.'], [' at ', ' dot '], $data);
 				}
 				return $data;
-				break;
 
 			case 'ip': // returns False if IP is invalid, returns TRUE if valid
 				switch ($options1) {
 					case 'ipv4':
 						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
-						break;
 
 					case 'ipv6':
 						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
-						break;
 
 					case 'rfc':
 						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE);
-						break;
 
 					case 'res':
 						return filter_var($data, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE);
-						break;
 
 					default:
 						return filter_var($data, FILTER_VALIDATE_IP);
-						break;
 				}
-				break;
 
 			case 'str': // returns $string
 				switch ($options1) {
 					case 'noencode':
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-						break;
+						return filter_var($data, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 					case 'striplow':
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
-						break;
+						return filter_var($data, FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW);
 
 					case 'striphigh':
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-						break;
+						return filter_var($data, FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_HIGH);
 
 					case 'encodelow':
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-						break;
+						return filter_var($data, FILTER_UNSAFE_RAW, FILTER_FLAG_ENCODE_LOW);
 
 					case 'encodehigh':
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH);
-						break;
+						return filter_var($data, FILTER_UNSAFE_RAW, FILTER_FLAG_ENCODE_HIGH);
 
 					case 'encodeamp':
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
-						break;
+						return filter_var($data, FILTER_UNSAFE_RAW, FILTER_FLAG_ENCODE_AMP);
 
 					default:
-						return filter_var($data, FILTER_SANITIZE_STRING);
-						break;
+						return htmlspecialchars($data);
 				}
-				break;
 
 			case 'int': // returns $int, returns FALSE if $opt1 & 2 set & $data is not inbetween values of $opt1 & 2
 				if (isset($options1, $options2) && is_int($options1) && is_int($options2)) {
@@ -1223,30 +1199,24 @@ class DataFilter
 					));
 
 					return filter_var($data, FILTER_VALIDATE_INT, $option);
-				} else {
-					return filter_var($data, FILTER_VALIDATE_INT);
 				}
-				break;
+
+				return filter_var($data, FILTER_VALIDATE_INT);
 
 			case 'special': // returns $string
 				switch ($options1) {
 					case 'striplow':
 						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_LOW);
-						break;
 
 					case 'striphigh':
 						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
-						break;
 
 					case 'encodehigh':
 						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_ENCODE_HIGH);
-						break;
 
 					default:
 						return filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS);
-						break;
 				}
-				break;
 
 			case 'html': // returns $string
 				switch ($options1) {
@@ -1254,11 +1224,9 @@ class DataFilter
 					default:
 						$data = self::stripSlashesGPC($data);
 						return self::filterHTMLinput($data);
-						break;
 
 					case 'output':
 						return self::filterHTMLdisplay($data);
-						break;
 
 					case 'edit':
 						$filtered = strpos($data, '<!-- input filtered -->');
@@ -1266,13 +1234,11 @@ class DataFilter
 							$data = str_replace(['<!-- input filtered -->', '<!-- filtered with htmlpurifier -->'], '', $data);
 						}
 						return htmlspecialchars($data, ENT_QUOTES, _CHARSET, false);
-						break;
 
 					case 'print':
 						// do nothing yet
 						break;
 				}
-				break;
 
 			case 'text': // returns $string
 				switch ($options1) {
@@ -1280,7 +1246,6 @@ class DataFilter
 					default:
 						$data = self::stripSlashesGPC($data);
 						return self::filterTextareaInput($data);
-						break;
 
 					case 'output':
 						$data = self::stripSlashesGPC($data);
@@ -1291,7 +1256,6 @@ class DataFilter
 						// do nothing yet
 						break;
 				}
-				break;
 		}
 	}
 
