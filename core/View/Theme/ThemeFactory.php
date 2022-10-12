@@ -36,6 +36,7 @@ namespace ImpressCMS\Core\View\Theme;
 
 use icms;
 use ImpressCMS\Core\Extensions\ExtensionDescriber\ExtensionDescriberInterface;
+use ImpressCMS\Core\Extensions\ExtensionDescriber\ThemeInfo;
 use League\Flysystem\Filesystem;
 use League\Flysystem\StorageAttributes;
 use Psr\Cache\CacheItemPoolInterface;
@@ -94,35 +95,25 @@ class ThemeFactory {
 	 *
 	 * @param string $path Path where is theme located
 	 *
-	 * @return array
+	 * @return ThemeInfo
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	protected static function getThemeInfo(string $path) {
-		global $icmsConfig;
+	public static function getThemeInfo(string $path): ?ThemeInfo
+	{
+		$fullPath = ICMS_THEME_PATH . DIRECTORY_SEPARATOR . $path;
 
+		$info = null;
 		/**
-		 * @var CacheItemPoolInterface $cache
+		 * @var ExtensionDescriberInterface $extensionDescriber
 		 */
-		$cache = icms::getInstance()->get('cache');
-		$cachedThemeInfo = $cache->getItem('theme.' . $icmsConfig['language'] . '.' . sha1($path));
-
-		if (!$cachedThemeInfo->isHit()) {
-			$info = [];
-			/**
-			 * @var ExtensionDescriberInterface $extensionDescriber
-			 */
-			foreach (icms::getInstance()->get('extension_describer.theme') as $extensionDescriber) {
-				if (!$extensionDescriber->canDescribe($path)) {
-					continue;
-				}
-				$info += $extensionDescriber->describe($path);
+		foreach (icms::getInstance()->get('extension_describer.theme') as $extensionDescriber) {
+			if (!$extensionDescriber->canDescribe($fullPath)) {
+				continue;
 			}
 
-			$cachedThemeInfo->set($info);
-			$cache->save($cachedThemeInfo);
-		} else {
-			$info = $cachedThemeInfo->get();
+			$info = $extensionDescriber->describe($fullPath);
+			break;
 		}
 
 		return $info;

@@ -16,6 +16,11 @@ $xoopsOption = [
 ];
 require dirname(__DIR__) . '/mainfile.php';
 icms::getInstance()->boot(false);
+
+global $icmsConfig;
+if (!isset($icmsConfig['language'])) {
+	$icmsConfig['language'] = 'english';
+}
 icms_loadLanguageFile('core', 'global');
 icms_loadCommonLanguageFile();
 

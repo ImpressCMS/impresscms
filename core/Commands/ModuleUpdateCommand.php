@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ImpressCMS\Core\Commands;
 
 use ImpressCMS\Core\Models\ModuleHandler;
@@ -36,14 +35,18 @@ class ModuleUpdateCommand extends Command
 	{
 		\icms::getInstance()->registerCommonServiceVariables();
 
+		$moduleName = $input->getArgument('module');
+
 		\icms_loadLanguageFile('system', 'modules', true);
+		\icms_loadLanguageFile($moduleName, 'common', false);
+		\icms_loadLanguageFile($moduleName, 'modinfo', false);
 
 		/**
 		 * @var ModuleHandler $module_handler
 		 */
 		$module_handler = \icms::handler('icms_module');
 		if ($module_handler->update(
-			$input->getArgument('module'),
+			$moduleName,
 			new \ImpressCMS\Core\Extensions\SetupSteps\OutputDecorator($output)
 		)) {
 			$output->writeln('Module updated successfully');
