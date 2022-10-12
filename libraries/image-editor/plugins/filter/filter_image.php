@@ -15,14 +15,17 @@ use WideImage\WideImage;
 $xoopsOption['nodebug'] = 1;
 
 /* 3 critical parameters must exist - and must be safe */
-$image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
+$image_path = $_GET['image_path'];
 $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
-$filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
+$filter = $_GET['filter'] ?? '';
 
 /* prevent remote file inclusion */
 $valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) == 0) {
+if (!empty($image_path)) {
 	$image_path = realpath($image_path);
+	if (!str_starts_with($image_path, $valid_path)) {
+		$image_path = null;
+	}
 } else {
 	$image_path = null;
 }
@@ -50,7 +53,6 @@ $filters = array (
 		'IMG_FILTER_SEPIA'
 );
 
-$filter = isset($_GET['filter']) ? filter_var($_GET['filter'], FILTER_SANITIZE_STRING) : null;
 if (!in_array($filter, $filters)) $filter = null;
 
 if (!isset($image_path) || !isset($image_url)) {

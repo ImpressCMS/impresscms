@@ -41,27 +41,26 @@ $xoopsOption['pagetype'] = "search";
 
 include 'mainfile.php';
 
-if ($icmsConfigSearch['enable_search'] == false) {
+if (!$icmsConfigSearch['enable_search']) {
 	header('Location: ' . ICMS_URL . '/');
 	exit();
 }
 
-$search_limiter = (($icmsConfigSearch['enable_deep_search'] == false)?$icmsConfigSearch['num_shallow_search']:false);
+$search_limiter = ($icmsConfigSearch['enable_deep_search'] ? false : $icmsConfigSearch['num_shallow_search']);
 $xoopsOption['template_main'] = 'system_search.html';
 include ICMS_ROOT_PATH . '/header.php';
 
-$action = (isset($_GET['action']))? trim(filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING))
-	: ((isset($_POST['action']))? trim(filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING)):'search');
-$query = (isset($_GET['query']))? trim(filter_input(INPUT_GET, 'query', FILTER_SANITIZE_STRING))
-	: ((isset($_POST['query']))? trim(filter_input(INPUT_POST, 'query', FILTER_SANITIZE_STRING)):'');
-$andor = (isset($_GET['andor']))? trim(filter_input(INPUT_GET, 'andor', FILTER_SANITIZE_STRING))
-	: ((isset($_POST['andor']))? trim(filter_input(INPUT_POST, 'andor', FILTER_SANITIZE_STRING)):'AND');
-$mid = (isset($_GET['mid']))? trim(filter_input(INPUT_GET, 'mid', FILTER_VALIDATE_INT))
-	: ((isset($_POST['mid']))? trim(filter_input(INPUT_POST, 'mid', FILTER_VALIDATE_INT)):0);
-$uid = (isset($_GET['uid']))? trim(filter_input(INPUT_GET, 'uid', FILTER_VALIDATE_INT))
-	: ((isset($_POST['uid']))? trim(filter_input(INPUT_POST, 'uid', FILTER_VALIDATE_INT)):0);
-$start = (isset($_GET['start']))? trim(filter_input(INPUT_GET, 'start', FILTER_VALIDATE_INT))
-	: ((isset($_POST['start']))? trim(filter_input(INPUT_POST, 'start', FILTER_VALIDATE_INT)):0);
+$action = (string)filter_input(INPUT_REQUEST, 'action');
+$action = in_array($action, ['results', 'showall', 'showallbyuser', 'search'], true) ? $action : 'search';
+
+$query = filter_input(INPUT_REQUEST, 'query', FILTER_SANITIZE_STRING);
+
+$andor = (string)filter_input(INPUT_REQUEST, 'andor');
+$andor = in_array($andor, ['AND', 'OR', 'exact'], true) ? $andor : 'AND';
+
+$mid = (int)filter_input(INPUT_REQUEST, 'mid', FILTER_VALIDATE_INT);
+$uid = (int)filter_input(INPUT_REQUEST, 'uid', FILTER_VALIDATE_INT);
+$start = (int)filter_input(INPUT_REQUEST, 'start', FILTER_VALIDATE_INT);
 
 $xoopsTpl->assign("start", $start + 1);
 
@@ -100,9 +99,6 @@ if ($action == 'search') {
 	exit();
 }
 
-if ($andor != "OR" && $andor != "exact" && $andor != "AND") {
-	$andor = "AND";
-}
 if ($andor == 'OR') {
 	$label_andor = _SR_ANY;
 }
@@ -157,7 +153,7 @@ if ($action != 'showallbyuser') {
 			}
 		}
 
-		if (count($queries) == 0) {
+		if (count($queries) === 0) {
 			redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, icms_conv_nr2local($icmsConfigSearch['keyword_min'])));
 			exit();
 		}
@@ -200,7 +196,7 @@ switch ($action) {
 		$criteria->add(new icms_db_criteria_Item('isactive', 1));
 		$criteria->add(new icms_db_criteria_Item('mid', "(" . implode(',', $available_modules) . ")", 'IN'));
 		$modules = & $module_handler->getObjects($criteria, true);
-		$mids = isset($_REQUEST['mids'])?$_REQUEST['mids']:array();
+		$mids = $_REQUEST['mids'] ?? [];
 		if (empty($mids) || !is_array($mids)) {
 			unset($mids);
 			$mids = array_keys($modules);
