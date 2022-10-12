@@ -15,13 +15,16 @@ use WideImage\WideImage;
 $xoopsOption['nodebug'] = 1;
 
 /* 2 critical parameters must exist - and must be safe */
-$image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
+$image_path = $_GET['image_path'];
 $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
 
 /* prevent remote file inclusion */
 $valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) == 0) {
+if (!empty($image_path)) {
 	$image_path = realpath($image_path);
+	if (!str_starts_with($image_path, $valid_path)) {
+		$image_path = null;
+	}
 } else {
 	$image_path = null;
 }
