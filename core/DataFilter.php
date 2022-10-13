@@ -57,13 +57,6 @@ class DataFilter
 	 */
 	static public $allSmileys = [];
 
-	/**
-	 *
-	 */
-	public function __construct()
-	{
-	}
-
 // -------- Public Functions --------
 
 	/**
@@ -160,14 +153,13 @@ class DataFilter
 	}
 
 	/**
-	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP5.3.0
-	 * @param string $text
-	 * @return  string
-	 * @todo    Remove magic_quotes_gpc and magic_quotes_runtime -
-	 *            they will always return FALSE in PHP 5.4
-	 *
 	 * Add slashes to the text if magic_quotes_gpc is turned off.
 	 *
+	 * @param string $text
+	 *
+	 * @return  string
+	 *
+	 * @deprecated 2.0 Use \addslashes instead!
 	 */
 	public static function addSlashes($text)
 	{
@@ -175,12 +167,10 @@ class DataFilter
 	}
 
 	/**
-	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP5.3.0
-	 *        does that mean we can remove this function once 5.3 is minimum req?
-	 * if magic_quotes_gpc is on, strip back slashes
-	 *
 	 * @param string $text
 	 * @return   string
+	 *
+	 * @deprecated 2.0 This function does nothing. So do not use it in the future!
 	 */
 	public static function stripSlashesGPC($text)
 	{
