@@ -101,72 +101,28 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	$CleanWritingFolders = FALSE;
 
 	/* check for previous release's upgrades - dbversion < this major release's initial version */
-	if ($dbVersion < 47) include 'update-14.php';
+	if ($dbVersion < 45) include 'update-13.php';
 
-	/* Begin upgrade to version 1.5 */
-	if (!$abortUpdate) {
-		$newDbVersion = 47;
-	}
+	/* Begin upgrade to version 1.4 */
+	if (!$abortUpdate) $newDbVersion = 45;
 	try {
 		if ($dbVersion < $newDbVersion) {
+			// Remove the banners table
 
+			// Remove the data entry for the banners submodule
+			$table = new icms_db_legacy_updater_Table('config');
+			$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX conf_mod_cat_id, ADD INDEX mod_cat_order(conf_modid, conf_catid, conf_order)", 'Successfully altered the indexes on table config', '');
+			unset($table);
 
-			// Remove all the legacy files that are were removed in 1.5.0
-			//$table = new icms_db_legacy_updater_Table('config');
-			//$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX conf_mod_cat_id, ADD INDEX mod_cat_order(conf_modid, conf_catid, conf_order)", 'Successfully altered the indexes on table config', '');
-			//unset($table);
+			// Remove the 'banners.php' file in the root
+			icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . 'banners.php');
+			// Remove the 'banners' subfolder in the modules/system/admin
+			icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/modules/system/admin/banners", true);
+			icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . "/modules/system/admin/banners.php");
 
-			// TODO: make a generic file removal function.
-			// Remove the 'deprecated' files in the root and all OpenID related files
-			$removeFiles_150 =[
+			// Remove the system template files that are no longer necessary
+			icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/modules/system/templates/admin", true);
 
-			];
-
-			$removeFolders_150 =[
-				"ICMS_ROOT_PATH . '/kernel'",
-				"ICMS_ROOT_PATH . '/class'"];
-
-			$removeOpenIDfiles =[
-				"ICMS_ROOT_PATH . '/modules/system/templates/system_openid.html'",
-				"ICMS_ROOT_PATH . 'try_auth.php'",
-				"ICMS_ROOT_PATH . 'finish_auth.php'",
-				"ICMS_ROOT_PATH . '/libraries/icms/auth/Openid.php'"
-			];
-			$removeOpenIDfolders = [
-				"ICMS_ROOT_PATH . '/libraries/phpopenid'"
-			];
-
-
-			// first, remove the files and the folders that contain deprecated classes.
-				foreach ($removeFiles_150 as $filetoremove) {
-					//icms_core_Filesystem::deleteFile($filetoremove);
-					echo $filetoremove;
-				}
-				foreach ($removeFolders_150 as $foldertoremove) {
-					//icms_core_Filesystem::deleteRecursive($foldertoremove, true);
-					echo $foldertoremove;
-				}
-				// Second, check if the TinyMCE is used as editor, if not, remove those files as well
-			if ($icmsConfig['editor_default'] !== 'tinymce'){
-				//icms_core_Filesystem::deleteRecursive("ICMS_ROOT_PATH . '/editors/tinymce'", true);
-				echo 'removing TinyMCE';
-			}
-			else
-			{
-				echo 'TinyMCE is in use, cannot delete. WARNING : TinyMCE is old and no longer supported'
-			}
-			// Third, check if openID is configured as login method. If not, remove.
-			if(!defined('ICMS_INCLUDE_OPENID') )
-			{
-				foreach ($removeOpenIDfiles as $filetoremove) {
-					//icms_core_Filesystem::deleteFile($filetoremove);
-					echo $filetoremove;
-				}
-				foreach ($removeOpenIDfolders as $foldertoremove) {
-					//icms_core_Filesystem::deleteRecursive($foldertoremove, true);
-					echo $foldertoremove;
-				}
-			}
 			/* Finish up this portion of the db update */
 
 			if (!$abortUpdate) {
@@ -175,6 +131,28 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			}
 		}
 	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
+	/* upgrade steps for 1.4.3 */
+	if (!$abortUpdate) $newDbVersion = 46;
+	try {
+		/* things specific to this release */
+		if ($dbVersion < $newDbVersion) {
+
+		/** should we throw an exception? The old methods would set $abortUpdate and exit
+		 * if the steps weren't successful
+		 */
+		}
+
+		/* Finish up this portion of the update */
+		if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+		}
+	}
+
 	catch (Exception $e) {
 		echo $e->getMessage();
 	}
