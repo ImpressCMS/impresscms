@@ -79,7 +79,6 @@ class icms_core_Session {
 					$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0;
 					icms_setCookieVar($icmsConfig['session_name'], session_id(),
 						time()+(60*$icmsConfig['session_expire']));
-					//setcookie($icmsConfig['session_name'], session_id(), time()+(60*$icmsConfig['session_expire']), '/', '', $secure, 1);
 				}
 				$user->setGroups($_SESSION['xoopsUserGroups']);
 				if (!isset($_SESSION['UserLanguage']) || empty($_SESSION['UserLanguage'])) {
@@ -256,7 +255,6 @@ class icms_core_Session {
 					? $icmsConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime'));
 		$session_id = empty($sess_id) ? session_id() : $sess_id;
 		icms_setCookieVar($session_name, $session_id, $session_expire ? time() + $session_expire : 0);
-		//setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', $secure, 0);
 	}
 
 	/**
@@ -321,7 +319,6 @@ class icms_core_Session {
 		$_SESSION = array();
 		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
 			icms_setCookieVar($icmsConfig['session_name'], '', time()- 3600);
-			//setcookie($icmsConfig['session_name'], '', time()- 3600, '/',  '', 0, 0);
 		}
 		// clear entry from online users table
 		if ($uid > 0) {
