@@ -154,7 +154,7 @@ if (FALSE != $user) {
 	$_SESSION['xoopsUserGroups'] = $user->getGroups();
 
 	if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
-		setcookie($icmsConfig['session_name'], session_id(), time()+(60 * $icmsConfig['session_expire']), '/',  '', 0);
+		icms_setCookieVar($icmsConfig['session_name'], session_id(), time()+(60 * $icmsConfig['session_expire']));
 	}
 
 	$_SESSION['xoopsUserLastLogin'] = $user->getVar('last_login');
@@ -176,10 +176,10 @@ if (FALSE != $user) {
 
 	if (!empty($_POST['rememberme'])) {
 		$expire = time() + (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800) ; // 1 week default
-		setcookie('autologin_uname', $user->getVar('login_name'), $expire, $icms_cookie_path, '', $secure, 0);
+		icms_setCookieVar('autologin_uname', $user->getVar('login_name'), $expire);
 		$Ynj = date('Y-n-j') ;
-		setcookie('autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
-		$expire, $icms_cookie_path, '', $secure, 0);
+		icms_setCookieVar('autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
+			$expire);
 	}
 	// end of autologin hack V3.1 GIJ
 
