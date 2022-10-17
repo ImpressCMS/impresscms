@@ -66,7 +66,7 @@ if (! preg_match('?' . preg_quote(ICMS_ROOT_PATH, '?') . '(/common/)?', $_SERVER
 		// set by GET (other than all)
 		$easiestml_lang = $_GET['lang'];
 		$easiestml_charset = $easiestml_charsets[$offset];
-		setcookie('lang', $easiestml_lang, time() + EASIESTML_COOKIELIFETIME, $xoops_cookie_path, '', 0);
+		icms_setCookieVar('lang', $easiestml_lang, time() + EASIESTML_COOKIELIFETIME);
 	} else if (! empty($_COOKIE['lang']) && ($offset = array_search($_COOKIE['lang'], $easiestml_langs)) !== false) {
 		// set by COOKIE (other than all)
 		$easiestml_lang = $_COOKIE['lang'];

@@ -827,8 +827,9 @@ function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>'
  */
 function icms_setCookieVar($name, $value, $time = 0)
 {
-	if($time == 0) {$time = time() + 3600 * 24 * 365;}
-	setcookie($name, $value, $time, '/');
+	if($time === 0) {$time = time() + 3600 * 24 * 365;}
+	setcookie($name, $value, ['expires' => $time, 'path' => '/' ,'secure' => strpos(ICMS_URL, 'https') === 0, 'httponly' => true]);
+
 }
 
 /**

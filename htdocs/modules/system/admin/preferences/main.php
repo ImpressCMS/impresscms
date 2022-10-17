@@ -681,7 +681,7 @@ switch ($op) {
 		unset($saved_config_items);
 
 		if (! empty($use_mysession) && $icmsConfig['use_mysession'] == 0 && $session_name != '') {
-			setcookie($session_name, session_id(), time() +(60 *(int) $session_expire), '/', '', 0);
+			icms_setCookieVar($session_name, session_id(), time() +(60 *(int) $session_expire));
 		}
 
 		// Clean cached files, may take long time
