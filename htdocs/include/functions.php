@@ -1171,13 +1171,11 @@ function getDbValue(&$db, $table, $field, $condition = '')
  * @param string $value - $variable that is being escaped for query.
  * @return string
  * @todo Move to a static class method - Database or Filter
- * @todo	get_magic_quotes_gpc is removed in PHP 5.4
  */
 function icms_escapeValue($value, $quotes = true)
 {
 	if(is_string($value))
 	{
-		if(get_magic_quotes_gpc) {$value = stripslashes($value);}
 		$value = icms::$xoopsDB->escape($value);
 		if($quotes) {$value = '"'.$value.'"';}
 	}

@@ -135,7 +135,7 @@ function getDbCollations($link, $charset) {
 		}
 	}
 
-	return $collations [$charset];
+	return isset($collations[$charset]) ? $collations[$charset] : [];
 }
 
 function validateDbCharset($link, &$charset, &$collation) {
