@@ -101,7 +101,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	$CleanWritingFolders = FALSE;
 
 	/* check for previous release's upgrades - dbversion < this major release's initial version */
-	if ($dbVersion < 47) include 'update-14.php';
+	if ($dbVersion < 46) include 'update-14.php';
 
 	/* Begin upgrade to version 1.5 */
 	if (!$abortUpdate) {
@@ -118,53 +118,45 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 			// TODO: make a generic file removal function.
 			// Remove the 'deprecated' files in the root and all OpenID related files
-			$removeFiles_150 =[
-
-			];
 
 			$removeFolders_150 =[
-				"ICMS_ROOT_PATH . '/kernel'",
-				"ICMS_ROOT_PATH . '/class'"];
+				ICMS_ROOT_PATH . '/kernel',
+				ICMS_ROOT_PATH . '/class'];
 
 			$removeOpenIDfiles =[
-				"ICMS_ROOT_PATH . '/modules/system/templates/system_openid.html'",
-				"ICMS_ROOT_PATH . 'try_auth.php'",
-				"ICMS_ROOT_PATH . 'finish_auth.php'",
-				"ICMS_ROOT_PATH . '/libraries/icms/auth/Openid.php'"
+				ICMS_ROOT_PATH . '/modules/system/templates/system_openid.html',
+				ICMS_ROOT_PATH . '/try_auth.php',
+				ICMS_ROOT_PATH . '/finish_auth.php',
+				ICMS_ROOT_PATH . '/libraries/icms/auth/Openid.php'
 			];
 			$removeOpenIDfolders = [
-				"ICMS_ROOT_PATH . '/libraries/phpopenid'"
+				ICMS_ROOT_PATH . '/libraries/phpopenid'
 			];
 
 
 			// first, remove the files and the folders that contain deprecated classes.
-				foreach ($removeFiles_150 as $filetoremove) {
-					//icms_core_Filesystem::deleteFile($filetoremove);
-					echo $filetoremove;
-				}
-				foreach ($removeFolders_150 as $foldertoremove) {
-					//icms_core_Filesystem::deleteRecursive($foldertoremove, true);
-					echo $foldertoremove;
-				}
-				// Second, check if the TinyMCE is used as editor, if not, remove those files as well
+			foreach ($removeFolders_150 as $foldertoremove) {
+				echo icms_core_Filesystem::deleteRecursive($foldertoremove, true). '</br>';
+			}
+			// Second, check if the TinyMCE is used as editor, if not, remove those files as well
 			if ($icmsConfig['editor_default'] !== 'tinymce'){
-				//icms_core_Filesystem::deleteRecursive("ICMS_ROOT_PATH . '/editors/tinymce'", true);
-				echo 'removing TinyMCE';
+				icms_core_Filesystem::deleteRecursive("ICMS_ROOT_PATH . '/editors/tinymce'", true);
+				echo 'removing TinyMCE' . '</br>';
 			}
 			else
 			{
-				echo 'TinyMCE is in use, cannot delete. WARNING : TinyMCE is old and no longer supported'
+				echo 'TinyMCE is in use, cannot delete. WARNING : TinyMCE is old and no longer supported' . '</br>';
 			}
 			// Third, check if openID is configured as login method. If not, remove.
 			if(!defined('ICMS_INCLUDE_OPENID') )
 			{
 				foreach ($removeOpenIDfiles as $filetoremove) {
-					//icms_core_Filesystem::deleteFile($filetoremove);
-					echo $filetoremove;
+					icms_core_Filesystem::deleteFile($filetoremove);
+					echo 'Removed ' . $filetoremove . '</br>';
 				}
 				foreach ($removeOpenIDfolders as $foldertoremove) {
-					//icms_core_Filesystem::deleteRecursive($foldertoremove, true);
-					echo $foldertoremove;
+					icms_core_Filesystem::deleteRecursive($foldertoremove, true);
+					echo 'Removed' . $foldertoremove . '</br>';
 				}
 			}
 			/* Finish up this portion of the db update */
