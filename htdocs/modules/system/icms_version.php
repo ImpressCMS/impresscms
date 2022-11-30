@@ -64,11 +64,11 @@ $modversion = array (
 		'image' => "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version' => "Beta",
-		'status' => "beta",
-		'date' => "30 Sep 2022",
+	'status_version' => "Final",
+		'status' => "final",
+		'date' => "01 Dec 2022",
 		'author_word' => "",
-		'warning' => _CO_ICMS_WARNING_BETA,
+		'warning' => _CO_ICMS_WARNING_FINAL,
 
 		/**
 		 * Contributors
