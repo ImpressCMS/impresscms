@@ -319,7 +319,7 @@ function b_system_topposters_show($options) {
 	$criteria->setSort('posts');
 	$criteria->setLimit($limit);
 	$member_handler = icms::handler('icms_member');
-	$topposters =& $member_handler->getUsers($criteria);
+	$topposters = $member_handler->getUsers($criteria);
 	$count = count($topposters);
 	for ($i = 0; $i < $count; $i++) {
 		if ($options[1] == 1) {

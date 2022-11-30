@@ -38,149 +38,60 @@
  * @author		malanciault <marcan@impresscms.org)
  * @version		$Id: update.php 12313 2013-09-15 21:14:35Z skenow $
  */
-icms_loadLanguageFile('core', 'databaseupdater');
 
-/**
- * Automatic update of the system module
- *
- * @param object $module reference to the module object
- * @param int $oldversion The old version of the database
- * @param int $dbVersion The database version
- * @return mixed
- */
-function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = NULL) {
-	global $icmsConfig, $xoTheme;
+/* check for previous release's upgrades - dbversion < this major release's initial version */
+if($dbVersion < 45) include 'update-13.php';
 
-	$from_112 = $abortUpdate = FALSE;
+/* Begin upgrade to version 1.4 */
+if (!$abortUpdate) $newDbVersion = 45;
+try {
+	if ($dbVersion < $newDbVersion) {
+		// Remove the banners table
 
-	$oldversion = $module->getVar('version');
-	if ($oldversion < 120) {
-		$result = icms::$xoopsDB->query("SELECT t1.tpl_id FROM " . icms::$xoopsDB->prefix('tplfile') . " t1, " . icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
+		// Remove the data entry for the banners submodule
+		$table = new icms_db_legacy_updater_Table('config');
+		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX conf_mod_cat_id, ADD INDEX mod_cat_order(conf_modid, conf_catid, conf_order)", 'Successfully altered the indexes on table config', '');
+		unset($table);
 
-		$tplids = array ();
-		while (list($tplid) = icms::$xoopsDB->fetchRow($result)) {
-			$tplids[] = $tplid;
-		}
+		// Remove the 'banners.php' file in the root
+		icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . 'banners.php');
+		// Remove the 'banners' subfolder in the modules/system/admin
+		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/modules/system/admin/banners", true);
+		icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . "/modules/system/admin/banners.php");
 
-		if (count($tplids) > 0) {
-			$tplfile_handler = icms::handler('icms_view_template_file');
-			$duplicate_files = $tplfile_handler->getObjects(new icms_db_criteria_Item('tpl_id', "(" . implode(',', $tplids) . ")", "IN"));
+		// Remove the system template files that are no longer necessary
+		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/modules/system/templates/admin", true);
 
-			if (count($duplicate_files) > 0) {
-				foreach (array_keys($duplicate_files) as $i) {
-					$tplfile_handler->delete($duplicate_files[$i]);
-				}
-			}
-		}
-	}
+		/* Finish up this portion of the db update */
 
-	$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-
-	ob_start();
-
-	$dbVersion = $module->getDBVersion();
-	echo sprintf(_DATABASEUPDATER_CURRENTVER, icms_conv_nr2local($dbVersion)) . '<br />';
-	echo "<code>" . sprintf(_DATABASEUPDATER_UPDATE_TO, icms_conv_nr2local(ICMS_SYSTEM_DBVERSION)) . "<br />";
-
-	/**
-	 * DEVELOPER, PLEASE NOTE !!!
-	 *
-	 * Everytime we add a new upgrade block here, the dbversion of the System Module will get
-	 * incremented. It is very important to modify the ICMS_SYSTEM_DBVERSION accordingly
-	 * in htdocs/include/version.php
-	 *
-	 * When we start a new major release, move all the previous version's upgrade scripts to
-	 * a separate file, to minimize file size and memory usage. When creating the new file, be sure to
-	 * check for the need to include earlier update files. Only check for the previous file here,
-	 * cascading the checks in each file.
-	 *
-	 * Every release should run this once, even if only to make sure the module's version
-	 * gets updated. It also clears the templates_c and cache folders.
-	 */
-
-	$CleanWritingFolders = FALSE;
-
-	/* check for previous release's upgrades - dbversion < this major release's initial version */
-	if ($dbVersion < 45) include 'update-13.php';
-
-	/* Begin upgrade to version 1.4 */
-	if (!$abortUpdate) $newDbVersion = 45;
-	try {
-		if ($dbVersion < $newDbVersion) {
-			// Remove the banners table
-
-			// Remove the data entry for the banners submodule
-			$table = new icms_db_legacy_updater_Table('config');
-			$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX conf_mod_cat_id, ADD INDEX mod_cat_order(conf_modid, conf_catid, conf_order)", 'Successfully altered the indexes on table config', '');
-			unset($table);
-
-			// Remove the 'banners.php' file in the root
-			icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . 'banners.php');
-			// Remove the 'banners' subfolder in the modules/system/admin
-			icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/modules/system/admin/banners", true);
-			icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . "/modules/system/admin/banners.php");
-
-			// Remove the system template files that are no longer necessary
-			icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH . "/modules/system/templates/admin", true);
-
-			/* Finish up this portion of the db update */
-
-			if (!$abortUpdate) {
-				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
-			}
-		}
-	}
-	catch (Exception $e) {
-		echo $e->getMessage();
-	}
-
-	/* upgrade steps for 1.4.3 */
-	if (!$abortUpdate) $newDbVersion = 46;
-	try {
-		/* things specific to this release */
-		if ($dbVersion < $newDbVersion) {
-
-		/** should we throw an exception? The old methods would set $abortUpdate and exit
-		 * if the steps weren't successful
-		 */
-		}
-
-		/* Finish up this portion of the update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 		}
 	}
+}
+catch (Exception $e) {
+	echo $e->getMessage();
+}
 
-	catch (Exception $e) {
-		echo $e->getMessage();
+/* upgrade steps for 1.4.3 */
+if (!$abortUpdate) $newDbVersion = 46;
+try {
+	/* things specific to this release */
+	if ($dbVersion < $newDbVersion) {
+
+		/** should we throw an exception? The old methods would set $abortUpdate and exit
+		 * if the steps weren't successful
+		 */
 	}
 
-	/**
-	 * This portion of the upgrade must remain as the last section of code to execute
-	 * Place all release upgrade steps above this point
-	 */
-
-	echo "</code>";
-	if ($abortUpdate) {
-		icms_core_Message::error(sprintf(_DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local($newDbVersion)), _DATABASEUPDATER_UPDATE_DB, TRUE);
+	/* Finish up this portion of the update */
+	if (!$abortUpdate) {
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 	}
-	if ($from_112 && !$abortUpdate) {
-		/* will this work anymore? It depends on having the content module as part of the release */
-		echo _DATABASEUPDATER_MSG_FROM_112;
-		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
-	}
+}
 
-	$feedback = ob_get_clean();
-	if (method_exists($module, "setMessage")) {
-		$module->messages = $module->setMessage($feedback);
-	} else {
-		echo $feedback;
-	}
-
-	return icms_core_Filesystem::cleanFolders(array (
-		'templates_c' => ICMS_COMPILE_PATH . "/",
-		'cache' => ICMS_CACHE_PATH . "/"
-	), $CleanWritingFolders);
+catch (Exception $e) {
+	echo $e->getMessage();
 }
