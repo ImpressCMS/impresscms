@@ -72,9 +72,9 @@ define("_ALIGN","Uitlijnen");
 define("_LEFT","Links");
 define("_CENTER","Midden");
 define("_RIGHT","Rechts");
-define("_FORM_ENTER", "Bestandsnaam %s");  
+define("_FORM_ENTER", "Bestandsnaam %s");
 // %s represents file name
-define("_MUSTWABLE","Bestand %s moet overschrijfbaar zijn op de server!");  
+define("_MUSTWABLE","Bestand %s moet overschrijfbaar zijn op de server!");
 // Module info
 define('_PREFERENCES', 'Instellingen');
 define("_VERSION", "Versie");
@@ -289,7 +289,7 @@ define('_ENTERYOUTUBEURL', 'Voer YouTube url in:');
 define('_ENTERHEIGHT', 'Voer frame\'s hoogte in');
 define('_ENTERWIDTH', 'Voer frame\'s breedte in');
 define('_ENTERMEDIAURL', 'Voer media url in:');
-// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"	
+// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"
 // insert double '\' before 't', 'r', 'n'
 define("_TODAY", "\V\a\\n\d\a\a\g G:i");
 define("_YESTERDAY", "\G\i\s\\t\e\\r\e\\n G:i");
@@ -303,3 +303,7 @@ define('_CONFIGURE', 'Instellen');
 
 // added in 1.4.0
 define("_OUTDATED_PHP", "Uw huidige PHP versie (%s) wordt niet langer onderhouden. Gelieve up te graden voor veiligheidsredenen!");
+
+// added in 1.5.0
+define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE is selected as the default editor for at least 1 module - change it and then remove it from your server');
+define('_TinyMCE_PRESENT_WARNING', 'TinyMCE is present - remove it from your server');

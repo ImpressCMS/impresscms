@@ -323,3 +323,10 @@ define("_FILTERS_MSG4","Output Filter (HTMLPurifier): ");
 
 // added in 1.4.0
 define("_OUTDATED_PHP", "Your current PHP version (%s) is no longer maintained. Please upgrade for security reasons!");
+
+// added in 1.5.0
+define('_FCK_DEFAULT_WARNING', 'FCKeditor is selected as the default editor for at least 1 module - change it and then remove it from your server');
+define('_FCK_PRESENT_WARNING', 'FCKeditor is present - remove it from your server');
+
+define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE is selected as the default editor for at least 1 module - change it and then remove it from your server');
+define('_TinyMCE_PRESENT_WARNING', 'TinyMCE is present - remove it from your server');

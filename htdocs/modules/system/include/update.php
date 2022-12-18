@@ -133,20 +133,33 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 				ICMS_ROOT_PATH . '/libraries/phpopenid'
 			];
 
-
+			// Determine if FCKeditor is in use and remove it if it is not
+			$config_handler = icms::handler('icms_config');
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item('conf_value', 'FCKeditor'));
+			$config = $config_handler->getConfigs($criteria);
+			$confcount = count($config);
+			
+			if ($confcount == 0) {
+				icms_core_Filesystem::deleteRecursive(ICMS_EDITOR_PATH . '/FCKeditor', true);
+			}
+			
+			// Determine if TinyMCE is in use and remove it if it is not
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item('conf_value', 'tinymce'));
+			$config = $config_handler->getConfigs($criteria);
+			$confcount = count($config);
+			
+			if ($confcount == 0) {
+				icms_core_Filesystem::deleteRecursive(ICMS_EDITOR_PATH . '/tinymce', true);
+			}
+			
 			// first, remove the files and the folders that contain deprecated classes.
 			foreach ($removeFolders_150 as $foldertoremove) {
 				echo icms_core_Filesystem::deleteRecursive($foldertoremove, true). '</br>';
 			}
-			// Second, check if the TinyMCE is used as editor, if not, remove those files as well
-			if ($icmsConfig['editor_default'] !== 'tinymce'){
-				icms_core_Filesystem::deleteRecursive("ICMS_ROOT_PATH . '/editors/tinymce'", true);
-				echo 'removing TinyMCE' . '</br>';
-			}
-			else
-			{
-				echo 'TinyMCE is in use, cannot delete. WARNING : TinyMCE is old and no longer supported' . '</br>';
-			}
+
+			
 			// Third, check if openID is configured as login method. If not, remove.
 			if(!defined('ICMS_INCLUDE_OPENID') )
 			{

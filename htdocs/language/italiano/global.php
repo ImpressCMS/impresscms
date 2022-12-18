@@ -289,7 +289,7 @@ define('_ENTERYOUTUBEURL', 'Inserisci URL YouTube:');
 define('_ENTERHEIGHT', 'Inserisci altezza frame');
 define('_ENTERWIDTH', 'Inserisci larghezza frame');
 define('_ENTERMEDIAURL', 'Inserisci URL media:');
-// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"	
+// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"
 // insert double '\' before 't', 'r', 'n'
 define("_TODAY", "\O\g\g\i G:i");
 define("_YESTERDAY", "\I\e\r\i G:i");
@@ -326,3 +326,10 @@ define("_FILTERS_MSG4","Output Filter (HTMLPurifier): ");
 
 // added in 1.4.0
 define("_OUTDATED_PHP", "La vostra versione di PHP (%s) non è piu mantenuto. Si prega di fare l'update per ragioni di securità!");
+
+define('_FCK_DEFAULT_WARNING', 'FCKeditor is selected as the default editor for at least 1 module - change it and then remove it from your server');
+define('_FCK_PRESENT_WARNING', 'FCKeditor is present - remove it from your server');
+
+// added in 1.5.0
+define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE is selected as the default editor for at least 1 module - change it and then remove it from your server');
+define('_TinyMCE_PRESENT_WARNING', 'TinyMCE is present - remove it from your server');
