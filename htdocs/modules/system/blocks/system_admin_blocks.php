@@ -74,6 +74,37 @@ function b_system_admin_warnings_show() {
 	if (version_compare( phpversion(), '7.2', '<'))
 		array_push($block['msg'], icms_core_Message::warning(sprintf(_OUTDATED_PHP, phpversion())), '', FALSE);
 
+	// ## Test for FCKeditor - it's old, unmaintained, and a security hazard
+	$editorhandler = new icms_plugins_EditorHandler();
+	
+	$config_handler = icms::handler('icms_config');
+	$criteria = new icms_db_criteria_Compo();
+	$criteria->add(new icms_db_criteria_Item('conf_value', 'FCKeditor'));
+	$config = $config_handler->getConfigs($criteria);
+	$confcount = count($config);
+	
+	if ($confcount > 0) {
+		array_push($block['msg'], icms_core_Message::error(_FCK_DEFAULT_WARNING), '', false);
+	} else {
+		if (in_array('FCKeditor', array_flip($editorhandler->getList()))) {
+			array_push($block['msg'], icms_core_Message::error(_FCK_PRESENT_WARNING), '', false);
+		}
+	}
+
+	// ## Test for TinyMCE - included version has a security hazard. We aren't maintaining it
+	$criteria = new icms_db_criteria_Compo();
+	$criteria->add(new icms_db_criteria_Item('conf_value', 'tinymce'));
+	$config = $config_handler->getConfigs($criteria);
+	$confcount = count($config);
+	
+	if ($confcount > 0) {
+		array_push($block['msg'], icms_core_Message::error(_TinyMCE_DEFAULT_WARNING), '', false);
+	} else {
+		if (in_array('tinymce', array_flip($editorhandler->getList()))) {
+			array_push($block['msg'], icms_core_Message::error(_TinyMCE_PRESENT_WARNING), '', false);
+		}
+	}
+	
 	if (count($block['msg']) > 0) {
 		return $block;
 	}

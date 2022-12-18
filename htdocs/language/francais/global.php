@@ -40,14 +40,14 @@ define("_ADD","Ajouter");
 define("_REPLY","R&eacute;pondre");
 define("_DATE","Date");
 
-//fichier admin_functions.php  
+//fichier admin_functions.php
 define("_MAIN","Principal");
 define("_MANUAL","Manuel");
 define("_INFO","Info");
 define("_CPHOME","Administration");
 define("_YOURHOME","Accueil");
 
-//Fichier misc.php ( pop up qui est en ligne ?)      
+//Fichier misc.php ( pop up qui est en ligne ?)
 define("_WHOSONLINE","Actuellement en ligne");
 define('_GUESTS', 'Invit&eacute;s');
 define('_MEMBERS', 'Membres');
@@ -55,10 +55,10 @@ define("_ONLINEPHRASE","<b>%s</b> visiteurs en ligne");
 define("_ONLINEPHRASEX","dont <b>%s</b> sur <b>%s</b>");
 define("_CLOSE","Fermer");
 
-//Fichier module.textsanitizer.php  
+//Fichier module.textsanitizer.php
 define("_QUOTEC","Citation:");
 
-//Fichier admin.php 
+//Fichier admin.php
 define("_NOPERM","D&eacute;sol&eacute;, vous n'avez pas les droits pour acc&eacute;der &agrave; cette zone.");
 
 // Frases Communs
@@ -75,7 +75,7 @@ define("_RIGHT","Droite");
 define("_FORM_ENTER", "Merci d'entrer %s");
 //ce code  %s  represente le nom du fichier
 define("_MUSTWABLE","Le fichier %s doit &ecirc;tre accessible en &eacute;criture sur le serveur !");
-// Infos module 
+// Infos module
 define('_PREFERENCES', 'Pr&eacute;f&eacute;rences');
 define("_VERSION", "Version");
 define("_DESCRIPTION", "Description");
@@ -122,19 +122,19 @@ define('_NOCACHE', 'Pas de Cache');
 define('_CLONE', 'Cloner');
 define('_INVISIBLE', 'Invisible');
 
-//Fichier class/xoopsform/formmatchoption.php 
+//Fichier class/xoopsform/formmatchoption.php
 define("_STARTSWITH", "Commen&ccedil;ant par");
 define("_ENDSWITH", "Finissant par");
 define("_MATCHES", "Correspondant &agrave;");
 define("_CONTAINS", "Contenant");
 
-//Fichier commentform.php  
+//Fichier commentform.php
 define("_REGISTER","Enregistrement");
 
 //Fichier  xoopscodes.php
-define("_SIZE","TAILLE"); 
-define("_FONT","POLICE"); 
-define("_COLOR","COULEUR"); 
+define("_SIZE","TAILLE");
+define("_FONT","POLICE");
+define("_COLOR","COULEUR");
 define("_EXAMPLE","EXEMPLE");
 define("_ENTERURL","Entrez l'URL du lien que vous voulez ajouter:");
 define("_ENTERWEBTITLE","Entrez le titre du site web:");
@@ -241,7 +241,7 @@ define("_BLOCK", "Blocs");
 define("_WARNINGUPDATESYSTEM","F&eacute;licitations, votre site est a jour avec la derni&egrave;re version d'ImpressCMS ! <br />Il faut maintenant cliquer ici pour mettre &agrave; jour votre script syst&egrave;me.<br />mis &agrave; jour.");
 
 //  montre le site local de soutien dans le menu admin du site.
-define('_IMPRESSCMS_LOCAL_SUPPORT','http://www.impresscms.org'); 
+define('_IMPRESSCMS_LOCAL_SUPPORT','http://www.impresscms.org');
 define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','site de support');
 define("_ALLEFTCON","Entrer le texte qui doit &ecirc;tre align&eacute; sur le c�t&eacute; Gauche. ");
 define("_ALCENTERCON","Entrer le texte qui doit &ecirc;tre align&eacute; au Centre. ");
@@ -254,7 +254,7 @@ define('_MODABOUT_ABOUT', '&Agrave; propos de');
 define('_PDF_LOCAL_FONT', '');
 define('_CALENDAR_TYPE','gregorian'); //cette valeur est pour le calendrier local Java utilis� dans ce syst�me, si vous n'�tes pas s�r , laissez cette valeur comme elle est !
 define('_CALENDAR','Calendrier');
-define('_RETRYPOST','D&eacute;sol&eacute;, un temps mort a eu lieu. Voulez-vous post&eacute; de nouveau ?'); 
+define('_RETRYPOST','D&eacute;sol&eacute;, un temps mort a eu lieu. Voulez-vous post&eacute; de nouveau ?');
 
 ############# added since 1.2 #############
 define('_QSEARCH','Recherche Rapide');
@@ -279,7 +279,7 @@ define('_TOGGLETINY','Changer Editeur');
 define("_ENTERHTMLCODE","Entrer les codes HTML que vous voulez rajouter.");
 define("_ENTERPHPCODE","Entrer les codes PHP que vous voulez rajouter.");
 define("_ENTERCSSCODE","Entrer les codes CSS que vous voulez rajouter.");
-define("_ENTERJSCODE","Entrer le code JavaScript que vous voulez rajouter."); 
+define("_ENTERJSCODE","Entrer le code JavaScript que vous voulez rajouter.");
 define("_ENTERWIKICODE","Entrer le terme wiki que vous voulez rajouter.");
 define("_ENTERLANGCONTENT","Entrer le texte que vous voulez mettre en %s.");
 define('_LANGNAME', 'Français');
@@ -287,7 +287,7 @@ define('_ENTERYOUTUBEURL', 'Entrer l\'addresse YouTube:');
 define('_ENTERHEIGHT', 'Entrer la hauteur de la corniche');
 define('_ENTERWIDTH', 'Entrer le largeur de la corniche');
 define('_ENTERMEDIAURL', 'Entrer l\'url du media :');
-// !!IMPORTANT!! inserer '\' avant chaque charactere réservé: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"	
+// !!IMPORTANT!! inserer '\' avant chaque charactere réservé: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"
 // insert double '\' before 't', 'r', 'n'
 define("_TODAY", "\Au\j\o\u\\r\d\\'\h\u\i G:i");
 define("_YESTERDAY", "\H\i\e\\r G:i");
@@ -301,3 +301,10 @@ define('_CONFIGURE', 'Paramétriser');?>
 
 // rajouté en 1.4.0
 define("_OUTDATED_PHP", "Votre version actuelle de PHP (%s) n'est plus maintenu. Veuillez vous mettre à jour pour des raisons de sécurité!");
+
+// rajouté en 1.5.0
+define('_FCK_DEFAULT_WARNING', 'FCKeditor is selected as the default editor for at least 1 module - change it and then remove it from your server');
+define('_FCK_PRESENT_WARNING', 'FCKeditor is present - remove it from your server');
+
+define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE is selected as the default editor for at least 1 module - change it and then remove it from your server');
+define('_TinyMCE_PRESENT_WARNING', 'TinyMCE is present - remove it from your server');
