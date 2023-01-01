@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "20f33de1a9dc16ea691228d1536b88c5",
+    "content-hash": "54f74c036edbbafb8813bc229727414c",
     "packages": [
         {
             "name": "apix/cache",
@@ -235,25 +235,26 @@
         },
         {
             "name": "aura/sql",
-            "version": "3.1.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/auraphp/Aura.Sql.git",
-                "reference": "88d8b8ed1bcfd588a649fdc7e7ac89ec047abbca"
+                "reference": "995db7a252e5425b7db969736b12939e95cdaaa8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/Aura.Sql/zipball/88d8b8ed1bcfd588a649fdc7e7ac89ec047abbca",
-                "reference": "88d8b8ed1bcfd588a649fdc7e7ac89ec047abbca",
+                "url": "https://api.github.com/repos/auraphp/Aura.Sql/zipball/995db7a252e5425b7db969736b12939e95cdaaa8",
+                "reference": "995db7a252e5425b7db969736b12939e95cdaaa8",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0",
+                "ext-pdo": "*",
+                "php": ">=7.2",
                 "psr/log": "^1.0 || ^2.0"
             },
             "require-dev": {
                 "pds/skeleton": "~1.0",
-                "yoast/phpunit-polyfills": "~1.0"
+                "phpunit/phpunit": "^8.0|^9.5"
             },
             "type": "library",
             "autoload": {
@@ -286,9 +287,9 @@
             ],
             "support": {
                 "issues": "https://github.com/auraphp/Aura.Sql/issues",
-                "source": "https://github.com/auraphp/Aura.Sql/tree/3.1.0"
+                "source": "https://github.com/auraphp/Aura.Sql/tree/4.0.0"
             },
-            "time": "2022-04-28T05:11:23+00:00"
+            "time": "2021-11-24T05:03:25+00:00"
         },
         {
             "name": "aura/sqlschema",
