@@ -1,35 +1,23 @@
 <?php
 
-// Loads environment data
-use Dotenv\Dotenv;
+use ImpressCMS\Core\Data\BootConfig;
 
-Dotenv::create(dirname(__DIR__))->safeLoad();
+/**
+ * @var BootConfig $bootConfig
+ */
+$bootConfig = icms::getInstance()->get(BootConfig::class);
 
-if (!function_exists('env')) {
+if (!$bootConfig->isEnvDataExists()) {
 	return;
 }
 
-define('ICMS_ROOT_PATH', dirname(__DIR__));
-define('ICMS_URL', rtrim((string)env('URL', 'http://localhost'), '/'));
-
-/**#@+
- * Creating ICMS specific constants
- */
-define('ICMS_PLUGINS_PATH', ICMS_ROOT_PATH . '/plugins');
-define('ICMS_PLUGINS_URL', ICMS_URL . '/plugins');
-define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH . '/preloads');
-// ImpressCMS Modules path & url
-define('ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules');
-define('ICMS_MODULES_URL', ICMS_URL . '/modules');
-/**#@-*/
-
-// ################# Creation of the ImpressCMS Libraries ##############
 /**
- * @todo The definition of the library path needs to be in mainfile
+ * @deprecated Using directly constants now is deprecated. Will be removed this in the future.
  */
-// ImpressCMS Third Party Libraries folder
-define('ICMS_LIBRARIES_PATH', ICMS_ROOT_PATH . '/libraries');
-define('ICMS_LIBRARIES_URL', ICMS_URL . '/libraries');
+foreach ($bootConfig->toArray() as $name => $value) {
+	define('ICMS_' . strtoupper($name), $value);
+}
+
 /**#@+
  * Constants
  */
@@ -50,45 +38,3 @@ define('XOOPS_MATCH_START', 0);
 define('XOOPS_MATCH_END', 1);
 define('XOOPS_MATCH_EQUAL', 2);
 define('XOOPS_MATCH_CONTAIN', 3);
-
-if (!defined('ICMS_PUBLIC_PATH')) {
-	$path = env('public_path');
-	if (empty($path)) {
-		foreach (['public_html', 'htdocs', 'wwwroot'] as $dirname) {
-			if (file_exists(ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $dirname)) {
-				$path = $dirname;
-				break;
-			}
-		}
-		if (empty($path)) {
-			throw new Exception('You need to define relative "public_path" in .env file before using this tool');
-		}
-		unset($dirname);
-	}
-	define('ICMS_PUBLIC_PATH', ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . $path);
-	unset($dirname);
-}
-
-define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH . '/include');
-define('ICMS_INCLUDE_URL', ICMS_ROOT_PATH . '/include');
-define('ICMS_UPLOAD_PATH', ICMS_PUBLIC_PATH . '/uploads');
-define('ICMS_UPLOAD_URL', ICMS_URL . '/uploads');
-define('ICMS_THEME_PATH', ICMS_ROOT_PATH . '/themes');
-define('ICMS_THEME_URL', ICMS_URL . '/themes');
-define('ICMS_STORAGE_PATH', ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . 'storage');
-define('ICMS_CACHE_PATH', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'cache');
-define('ICMS_LOGGING_PATH', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'log');
-define('ICMS_PURIFIER_CACHE', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'htmlpurifier');
-define('ICMS_COMPILE_PATH', ICMS_STORAGE_PATH . DIRECTORY_SEPARATOR . 'templates_c');
-define('ICMS_IMAGES_URL', ICMS_URL . '/images');
-define('ICMS_EDITOR_PATH', ICMS_PUBLIC_PATH . '/editors');
-define('ICMS_EDITOR_URL', ICMS_URL . '/editors');
-define('ICMS_IMANAGER_FOLDER_PATH', ICMS_UPLOAD_PATH . '/imagemanager');
-define('ICMS_IMANAGER_FOLDER_URL', ICMS_UPLOAD_URL . '/imagemanager');
-/**#@-*/
-
-/**
- * @todo make this $icms_images_setname as an option in preferences...
- */
-$icms_images_setname = 'kfaenza';
-define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
