@@ -71,7 +71,7 @@
     "imponeer/smarty-translate": "^1.0",
     "imponeer/smarty-xo": "^1.0",
     "imponeer/symfony-translations-constants-loader": "^1.0",
-    "impresscms/codemirror-integration": "v0.2.3",
+    "impresscms/codemirror-integration": "^0.2.3",
     "impresscms/composer-addon-installer-plugin": ">1.0.2",
     "impresscms/core-theme": "dev-main",
     "impresscms/itheme-theme": "dev-main",
