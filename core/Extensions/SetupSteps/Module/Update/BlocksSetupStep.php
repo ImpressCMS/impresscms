@@ -131,20 +131,18 @@ class BlocksSetupStep extends InstallBlockSetupStep
 							} else {
 								$groups = [ICMS_GROUP_ADMIN];
 							}
-							$gperm_handler = icms::handler('icms_member_groupperm');
+
 							foreach ($groups as $mygroup) {
-								$bperm = &$gperm_handler->create();
-								$bperm->gperm_groupid = $mygroup;
-								$bperm->gperm_itemid = $newbid;
-								$bperm->gperm_name = 'block_read';
-								$bperm->gperm_modid = 1;
-								if (!$gperm_handler->insert($bperm)) {
+								if (!$this->createBlockReadPermission($mygroup, $newbid)) {
 									$output->error(_MD_AM_BLOCK_ACCESS_FAIL . ' ' . $newbid, $mygroup);
+								} else {
+									$output->success(_MD_AM_BLOCK_ACCESS_ADDED . ' ' . $newbid, $mygroup);
+								}
+							}
 
 							foreach ($this->getGroupsIdsForModule($info->mid) as $mygroup) {
 								if ($this->createBlockReadPermission($mygroup, $newbid)) {
 									$output->success(_MD_AM_BLOCK_ACCESS_ADDED, $newbid, $mygroup);
-
 								} else {
 									$output->error(_MD_AM_BLOCK_ACCESS_FAIL, $newbid, $mygroup);
 								}
@@ -178,32 +176,55 @@ class BlocksSetupStep extends InstallBlockSetupStep
 				}
 			}
 
-			$block_arr = $newBlocksHandler->getByModule($info->mid);
-			foreach ($block_arr as $block) {
-				if (!in_array($block->show_func, $showfuncs, false) || !in_array($block->func_file, $funcfiles, false)) {
-					if (!$newBlocksHandler->delete($block)) {
-						$output->error(_MD_AM_BLOCK_DELETE_FAIL, $block->name, $block->bid);
-					} else {
-						$output->success(_MD_AM_BLOCK_DELETED, $block->name, $block->bid);
-						if ($block->template) {
-							$tplfiles = $tplfile_handler->find(null, 'block', $block->bid);
-							if (is_array($tplfiles)) {
-								foreach ($tplfiles as $k => $kValue) {
-									if (!$tplfile_handler->delete($tplfiles[$k])) {
-										$output->error(_MD_AM_BLOCK_TMPLT_DELETE_FAILED, $kValue->tpl_file, $kValue->tpl_id);
-									} else {
-										$output->success(_MD_AM_BLOCK_TMPLT_DELETED, $kValue->tpl_file, $kValue->tpl_id);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+			$this->deleteModuleBlocks($info->mid, $output, $showfuncs, $funcfiles);
 		}
 		$output->resetIndent();
 
 		return true;
+	}
+
+	protected function deleteModuleBlocks(int $moduleId, OutputDecorator $output, $showfuncs, $funcfiles)
+	{
+		/**
+		 * @var BlockHandler $newBlocksHandler
+		 */
+		$newBlocksHandler = icms::handler('icms_view_block');
+
+		$block_arr = $newBlocksHandler->getByModule($moduleId);
+		foreach ($block_arr as $block) {
+			if (!in_array($block->show_func, $showfuncs, false) || !in_array($block->func_file, $funcfiles, false)) {
+				if (!$newBlocksHandler->delete($block)) {
+					$output->error(_MD_AM_BLOCK_DELETE_FAIL, $block->name, $block->bid);
+				} else {
+					$output->success(_MD_AM_BLOCK_DELETED, $block->name, $block->bid);
+					if ($block->template) {
+						$this->deleteBlockTemplateFiles($block->bid, $output);
+					}
+				}
+			}
+		}
+	}
+
+	protected function deleteBlockTemplateFiles(int $blockId, OutputDecorator $output): void
+	{
+		/**
+		 * @var TemplateFileHandler $tplfile_handler
+		 */
+		$tplfile_handler = &icms::handler('icms_view_template_file');
+
+		$tplfiles = $tplfile_handler->find(null, 'block', $blockId);
+
+		if (!is_array($tplfiles)) {
+			return;
+		}
+
+		foreach ($tplfiles as $k => $kValue) {
+			if (!$tplfile_handler->delete($tplfiles[$k])) {
+				$output->error(_MD_AM_BLOCK_TMPLT_DELETE_FAILED, $kValue->tpl_file, $kValue->tpl_id);
+			} else {
+				$output->success(_MD_AM_BLOCK_TMPLT_DELETED, $kValue->tpl_file, $kValue->tpl_id);
+			}
+		}
 	}
 
 	protected function createBlockReadPermission(int $userGroupId, int $blockId): bool
