@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36e33490da534de539eb0ffe111193e2",
+    "content-hash": "74dbd9af87f3e76257e740dbef4fffe4",
     "packages": [
         {
             "name": "apix/cache",
@@ -1861,16 +1861,16 @@
         },
         {
             "name": "imponeer/editor-contracts",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/editor-contracts.git",
-                "reference": "007006f3cd5e885b8f0a5810276ffe565221585d"
+                "reference": "172a28aa79a61dc59fc211edfbe0355fe2e15a64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/007006f3cd5e885b8f0a5810276ffe565221585d",
-                "reference": "007006f3cd5e885b8f0a5810276ffe565221585d",
+                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/172a28aa79a61dc59fc211edfbe0355fe2e15a64",
+                "reference": "172a28aa79a61dc59fc211edfbe0355fe2e15a64",
                 "shasum": ""
             },
             "require": {
@@ -1890,9 +1890,9 @@
             "description": "Interfaces for building PHP classes that lets to easier make web editor integrations in your content management systems",
             "support": {
                 "issues": "https://github.com/imponeer/editor-contracts/issues",
-                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.4"
+                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.5"
             },
-            "time": "2022-11-07T11:04:22+00:00"
+            "time": "2022-12-19T11:07:11+00:00"
         },
         {
             "name": "imponeer/env",
@@ -2374,23 +2374,23 @@
         },
         {
             "name": "impresscms/codemirror-integration",
-            "version": "v0.1",
+            "version": "v0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/codemirror-integration.git",
-                "reference": "c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f"
+                "reference": "5d4c24e09c3d581aa79cb97c54eef8b6a86279cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/codemirror-integration/zipball/c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f",
-                "reference": "c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f",
+                "url": "https://api.github.com/repos/ImpressCMS/codemirror-integration/zipball/5d4c24e09c3d581aa79cb97c54eef8b6a86279cf",
+                "reference": "5d4c24e09c3d581aa79cb97c54eef8b6a86279cf",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "imponeer/editor-contracts": "^1.0",
                 "imponeer/symfony-translations-constants-loader": "^1.0",
-                "npm-asset/codemirror": "^5.63",
+                "npm-asset/codemirror": "^6.0",
                 "php": ">=7.3",
                 "symfony/translation": "^5.1"
             },
@@ -2445,9 +2445,9 @@
             "description": "Integrates CodeMirror with ImpressCMS",
             "support": {
                 "issues": "https://github.com/ImpressCMS/codemirror-integration/issues",
-                "source": "https://github.com/ImpressCMS/codemirror-integration/tree/v0.1"
+                "source": "https://github.com/ImpressCMS/codemirror-integration/tree/v0.2.3"
             },
-            "time": "2021-10-13T10:26:34+00:00"
+            "time": "2022-11-07T11:06:43+00:00"
         },
         {
             "name": "impresscms/composer-addon-installer-plugin",
@@ -4454,10 +4454,10 @@
         },
         {
             "name": "npm-asset/codemirror",
-            "version": "5.63.3",
+            "version": "6.65.7",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/codemirror/-/codemirror-5.63.3.tgz"
+                "url": "https://registry.npmjs.org/codemirror/-/codemirror-6.65.7.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -9883,5 +9883,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
