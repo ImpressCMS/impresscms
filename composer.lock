@@ -1989,16 +1989,16 @@
         },
         {
             "name": "imponeer/smarty-extensions-contracts",
-            "version": "v2.0.3",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-extensions-contracts.git",
-                "reference": "205e1edfce7ff78a719103db83806cdf99a4c0cf"
+                "reference": "20bd8079b7332a8237e55f3c80a990cd4d0f8cff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/205e1edfce7ff78a719103db83806cdf99a4c0cf",
-                "reference": "205e1edfce7ff78a719103db83806cdf99a4c0cf",
+                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/20bd8079b7332a8237e55f3c80a990cd4d0f8cff",
+                "reference": "20bd8079b7332a8237e55f3c80a990cd4d0f8cff",
                 "shasum": ""
             },
             "require": {
@@ -2032,9 +2032,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-extensions-contracts/issues",
-                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0.3"
+                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0.5"
             },
-            "time": "2022-09-12T23:15:31+00:00"
+            "time": "2022-12-01T11:01:29+00:00"
         },
         {
             "name": "imponeer/smarty-foreachq",
@@ -2223,16 +2223,16 @@
         },
         {
             "name": "imponeer/smarty-translate",
-            "version": "v1.1.3",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-translate.git",
-                "reference": "9152803d17484b1eff8dc1335f2ed1a02757dfe1"
+                "reference": "e1f7dd9adc620802609a482a15fcf1abc63e8f4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/9152803d17484b1eff8dc1335f2ed1a02757dfe1",
-                "reference": "9152803d17484b1eff8dc1335f2ed1a02757dfe1",
+                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/e1f7dd9adc620802609a482a15fcf1abc63e8f4b",
+                "reference": "e1f7dd9adc620802609a482a15fcf1abc63e8f4b",
                 "shasum": ""
             },
             "require": {
@@ -2265,9 +2265,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-translate/issues",
-                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.3"
+                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.6"
             },
-            "time": "2022-09-13T10:18:58+00:00"
+            "time": "2022-12-01T09:01:30+00:00"
         },
         {
             "name": "imponeer/smarty-xo",
@@ -5972,16 +5972,16 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v4.2.1",
+            "version": "v4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "ffa2b81a8e354a49fd8a2f24742dc9dc399e8007"
+                "reference": "c02e9e135ea719b91f457a0072748ded0e852e7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/ffa2b81a8e354a49fd8a2f24742dc9dc399e8007",
-                "reference": "ffa2b81a8e354a49fd8a2f24742dc9dc399e8007",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/c02e9e135ea719b91f457a0072748ded0e852e7d",
+                "reference": "c02e9e135ea719b91f457a0072748ded0e852e7d",
                 "shasum": ""
             },
             "require": {
@@ -6032,9 +6032,9 @@
             "support": {
                 "forum": "https://github.com/smarty-php/smarty/discussions",
                 "issues": "https://github.com/smarty-php/smarty/issues",
-                "source": "https://github.com/smarty-php/smarty/tree/v4.2.1"
+                "source": "https://github.com/smarty-php/smarty/tree/v4.3.0"
             },
-            "time": "2022-09-14T10:59:01+00:00"
+            "time": "2022-11-22T21:47:32+00:00"
         },
         {
             "name": "smottt/wideimage",
