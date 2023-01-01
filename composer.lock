@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36e33490da534de539eb0ffe111193e2",
+    "content-hash": "20f33de1a9dc16ea691228d1536b88c5",
     "packages": [
         {
             "name": "apix/cache",
@@ -1635,16 +1635,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.4.1",
+            "version": "2.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "69568e4293f4fa993f3b0e51c9723e1e17c41379"
+                "reference": "67c26b443f348a51926030c83481b85718457d3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/69568e4293f4fa993f3b0e51c9723e1e17c41379",
-                "reference": "69568e4293f4fa993f3b0e51c9723e1e17c41379",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/67c26b443f348a51926030c83481b85718457d3d",
+                "reference": "67c26b443f348a51926030c83481b85718457d3d",
                 "shasum": ""
             },
             "require": {
@@ -1734,7 +1734,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.4.1"
+                "source": "https://github.com/guzzle/psr7/tree/2.4.3"
             },
             "funding": [
                 {
@@ -1750,7 +1750,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-28T14:45:39+00:00"
+            "time": "2022-10-26T14:07:24+00:00"
         },
         {
             "name": "http-interop/http-factory-guzzle",
@@ -1812,16 +1812,16 @@
         },
         {
             "name": "imponeer/criteria",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/criteria.git",
-                "reference": "af21918cc36f49335557382051136c3d88039e7c"
+                "reference": "d0cc4727f0176cff47721c0cf934c8cf129fcfb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/criteria/zipball/af21918cc36f49335557382051136c3d88039e7c",
-                "reference": "af21918cc36f49335557382051136c3d88039e7c",
+                "url": "https://api.github.com/repos/imponeer/criteria/zipball/d0cc4727f0176cff47721c0cf934c8cf129fcfb6",
+                "reference": "d0cc4727f0176cff47721c0cf934c8cf129fcfb6",
                 "shasum": ""
             },
             "require": {
@@ -1855,22 +1855,22 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/criteria/issues",
-                "source": "https://github.com/imponeer/criteria/tree/v1.0.4"
+                "source": "https://github.com/imponeer/criteria/tree/v1.0.5"
             },
-            "time": "2022-10-02T12:25:56+00:00"
+            "time": "2022-12-01T09:01:30+00:00"
         },
         {
             "name": "imponeer/editor-contracts",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/editor-contracts.git",
-                "reference": "007006f3cd5e885b8f0a5810276ffe565221585d"
+                "reference": "172a28aa79a61dc59fc211edfbe0355fe2e15a64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/007006f3cd5e885b8f0a5810276ffe565221585d",
-                "reference": "007006f3cd5e885b8f0a5810276ffe565221585d",
+                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/172a28aa79a61dc59fc211edfbe0355fe2e15a64",
+                "reference": "172a28aa79a61dc59fc211edfbe0355fe2e15a64",
                 "shasum": ""
             },
             "require": {
@@ -1890,9 +1890,9 @@
             "description": "Interfaces for building PHP classes that lets to easier make web editor integrations in your content management systems",
             "support": {
                 "issues": "https://github.com/imponeer/editor-contracts/issues",
-                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.4"
+                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.5"
             },
-            "time": "2022-11-07T11:04:22+00:00"
+            "time": "2022-12-19T11:07:11+00:00"
         },
         {
             "name": "imponeer/env",
@@ -1989,16 +1989,16 @@
         },
         {
             "name": "imponeer/smarty-extensions-contracts",
-            "version": "v2.0.3",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-extensions-contracts.git",
-                "reference": "205e1edfce7ff78a719103db83806cdf99a4c0cf"
+                "reference": "20bd8079b7332a8237e55f3c80a990cd4d0f8cff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/205e1edfce7ff78a719103db83806cdf99a4c0cf",
-                "reference": "205e1edfce7ff78a719103db83806cdf99a4c0cf",
+                "url": "https://api.github.com/repos/imponeer/smarty-extensions-contracts/zipball/20bd8079b7332a8237e55f3c80a990cd4d0f8cff",
+                "reference": "20bd8079b7332a8237e55f3c80a990cd4d0f8cff",
                 "shasum": ""
             },
             "require": {
@@ -2032,9 +2032,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-extensions-contracts/issues",
-                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0.3"
+                "source": "https://github.com/imponeer/smarty-extensions-contracts/tree/v2.0.5"
             },
-            "time": "2022-09-12T23:15:31+00:00"
+            "time": "2022-12-01T11:01:29+00:00"
         },
         {
             "name": "imponeer/smarty-foreachq",
@@ -2085,16 +2085,16 @@
         },
         {
             "name": "imponeer/smarty-image",
-            "version": "v1.1.3",
+            "version": "v1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-image.git",
-                "reference": "1e4c5fd36ab2e38047189a78bfa1792eee32162b"
+                "reference": "fdb77d49d66d5c75ef6532de546a1fa62ace25e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-image/zipball/1e4c5fd36ab2e38047189a78bfa1792eee32162b",
-                "reference": "1e4c5fd36ab2e38047189a78bfa1792eee32162b",
+                "url": "https://api.github.com/repos/imponeer/smarty-image/zipball/fdb77d49d66d5c75ef6532de546a1fa62ace25e5",
+                "reference": "fdb77d49d66d5c75ef6532de546a1fa62ace25e5",
                 "shasum": ""
             },
             "require": {
@@ -2128,9 +2128,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-image/issues",
-                "source": "https://github.com/imponeer/smarty-image/tree/v1.1.3"
+                "source": "https://github.com/imponeer/smarty-image/tree/v1.1.5"
             },
-            "time": "2022-09-13T09:51:28+00:00"
+            "time": "2022-12-01T17:01:25+00:00"
         },
         {
             "name": "imponeer/smarty-includeq",
@@ -2223,16 +2223,16 @@
         },
         {
             "name": "imponeer/smarty-translate",
-            "version": "v1.1.3",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-translate.git",
-                "reference": "9152803d17484b1eff8dc1335f2ed1a02757dfe1"
+                "reference": "e1f7dd9adc620802609a482a15fcf1abc63e8f4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/9152803d17484b1eff8dc1335f2ed1a02757dfe1",
-                "reference": "9152803d17484b1eff8dc1335f2ed1a02757dfe1",
+                "url": "https://api.github.com/repos/imponeer/smarty-translate/zipball/e1f7dd9adc620802609a482a15fcf1abc63e8f4b",
+                "reference": "e1f7dd9adc620802609a482a15fcf1abc63e8f4b",
                 "shasum": ""
             },
             "require": {
@@ -2265,22 +2265,22 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-translate/issues",
-                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.3"
+                "source": "https://github.com/imponeer/smarty-translate/tree/v1.1.6"
             },
-            "time": "2022-09-13T10:18:58+00:00"
+            "time": "2022-12-01T09:01:30+00:00"
         },
         {
             "name": "imponeer/smarty-xo",
-            "version": "v1.1.3",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-xo.git",
-                "reference": "ceffbd20b525078856cc2928d312c4804c0e3b35"
+                "reference": "97da1c2749af297b3db91e7002c3376fcce7eafd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-xo/zipball/ceffbd20b525078856cc2928d312c4804c0e3b35",
-                "reference": "ceffbd20b525078856cc2928d312c4804c0e3b35",
+                "url": "https://api.github.com/repos/imponeer/smarty-xo/zipball/97da1c2749af297b3db91e7002c3376fcce7eafd",
+                "reference": "97da1c2749af297b3db91e7002c3376fcce7eafd",
                 "shasum": ""
             },
             "require": {
@@ -2314,22 +2314,22 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-xo/issues",
-                "source": "https://github.com/imponeer/smarty-xo/tree/v1.1.3"
+                "source": "https://github.com/imponeer/smarty-xo/tree/v1.1.6"
             },
-            "time": "2022-09-13T10:07:54+00:00"
+            "time": "2022-12-01T07:01:26+00:00"
         },
         {
             "name": "imponeer/symfony-translations-constants-loader",
-            "version": "v1.0.3",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/symfony-translations-constants-loader.git",
-                "reference": "27688b57e61675a09671222b3a462fc58aaeb884"
+                "reference": "7a9047558fc97fd5d31d5190f471031ecb032780"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/27688b57e61675a09671222b3a462fc58aaeb884",
-                "reference": "27688b57e61675a09671222b3a462fc58aaeb884",
+                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/7a9047558fc97fd5d31d5190f471031ecb032780",
+                "reference": "7a9047558fc97fd5d31d5190f471031ecb032780",
                 "shasum": ""
             },
             "require": {
@@ -2368,29 +2368,29 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/symfony-translations-constants-loader/issues",
-                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.3"
+                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.5"
             },
-            "time": "2022-09-13T19:47:08+00:00"
+            "time": "2022-12-01T14:08:35+00:00"
         },
         {
             "name": "impresscms/codemirror-integration",
-            "version": "v0.1",
+            "version": "v0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/codemirror-integration.git",
-                "reference": "c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f"
+                "reference": "5d4c24e09c3d581aa79cb97c54eef8b6a86279cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/codemirror-integration/zipball/c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f",
-                "reference": "c7b3442c0ebb1f91b96b60132fd8bd3b41b2933f",
+                "url": "https://api.github.com/repos/ImpressCMS/codemirror-integration/zipball/5d4c24e09c3d581aa79cb97c54eef8b6a86279cf",
+                "reference": "5d4c24e09c3d581aa79cb97c54eef8b6a86279cf",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "imponeer/editor-contracts": "^1.0",
                 "imponeer/symfony-translations-constants-loader": "^1.0",
-                "npm-asset/codemirror": "^5.63",
+                "npm-asset/codemirror": "^6.0",
                 "php": ">=7.3",
                 "symfony/translation": "^5.1"
             },
@@ -2445,9 +2445,9 @@
             "description": "Integrates CodeMirror with ImpressCMS",
             "support": {
                 "issues": "https://github.com/ImpressCMS/codemirror-integration/issues",
-                "source": "https://github.com/ImpressCMS/codemirror-integration/tree/v0.1"
+                "source": "https://github.com/ImpressCMS/codemirror-integration/tree/v0.2.3"
             },
-            "time": "2021-10-13T10:26:34+00:00"
+            "time": "2022-11-07T11:06:43+00:00"
         },
         {
             "name": "impresscms/composer-addon-installer-plugin",
@@ -4454,10 +4454,10 @@
         },
         {
             "name": "npm-asset/codemirror",
-            "version": "5.63.3",
+            "version": "6.65.7",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/codemirror/-/codemirror-5.63.3.tgz"
+                "url": "https://registry.npmjs.org/codemirror/-/codemirror-6.65.7.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -5972,16 +5972,16 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v4.2.1",
+            "version": "v4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "ffa2b81a8e354a49fd8a2f24742dc9dc399e8007"
+                "reference": "c02e9e135ea719b91f457a0072748ded0e852e7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/ffa2b81a8e354a49fd8a2f24742dc9dc399e8007",
-                "reference": "ffa2b81a8e354a49fd8a2f24742dc9dc399e8007",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/c02e9e135ea719b91f457a0072748ded0e852e7d",
+                "reference": "c02e9e135ea719b91f457a0072748ded0e852e7d",
                 "shasum": ""
             },
             "require": {
@@ -6032,9 +6032,9 @@
             "support": {
                 "forum": "https://github.com/smarty-php/smarty/discussions",
                 "issues": "https://github.com/smarty-php/smarty/issues",
-                "source": "https://github.com/smarty-php/smarty/tree/v4.2.1"
+                "source": "https://github.com/smarty-php/smarty/tree/v4.3.0"
             },
-            "time": "2022-09-14T10:59:01+00:00"
+            "time": "2022-11-22T21:47:32+00:00"
         },
         {
             "name": "smottt/wideimage",
@@ -7544,16 +7544,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v5.4.12",
+            "version": "v5.4.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "42ecc77eb4f229ce2df702a648ec93b8478d76ae"
+                "reference": "f0ed07675863aa6e3939df8b1bc879450b585cab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/42ecc77eb4f229ce2df702a648ec93b8478d76ae",
-                "reference": "42ecc77eb4f229ce2df702a648ec93b8478d76ae",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/f0ed07675863aa6e3939df8b1bc879450b585cab",
+                "reference": "f0ed07675863aa6e3939df8b1bc879450b585cab",
                 "shasum": ""
             },
             "require": {
@@ -7621,7 +7621,7 @@
             "description": "Provides tools to internationalize your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/translation/tree/v5.4.12"
+                "source": "https://github.com/symfony/translation/tree/v5.4.14"
             },
             "funding": [
                 {
@@ -7637,7 +7637,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-02T15:52:22+00:00"
+            "time": "2022-10-07T08:01:20+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -9883,5 +9883,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
