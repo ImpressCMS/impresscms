@@ -2,6 +2,7 @@
 namespace ImpressCMS\Core\Database;
 
 use Aura\Sql\ExtendedPdo;
+use BadMethodCallException;
 use ImpressCMS\Core\Event;
 use PDOStatement;
 
@@ -11,6 +12,8 @@ use PDOStatement;
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package    ICMS\Database
+ *
+ * @method mixed|PDOStatement query(string $query, ...$fetch) Executes an SQL statement and returns a result set as an SQL statement object
  */
 class DatabaseConnection extends ExtendedPdo implements DatabaseConnectionInterface, LegacyDatabaseConnectionInterface
 {
@@ -42,20 +45,17 @@ class DatabaseConnection extends ExtendedPdo implements DatabaseConnectionInterf
 		return substr($this->quote($string), 1, -1);
 	}
 
-	/**
-	 * Executes an SQL statement and returns a result set as an SQL statement object
-	 * @see PDO::query()
-	 * @param string $statement
-	 * @param array $fetch
-	 * @return mixed|PDOStatement
-	 */
-	public function query($statement, ...$fetch)
+	public function __call($name, $arguments)
 	{
-		if (func_num_args() === 3) {
-			return $this->queryF($statement, $fetch[0], $fetch[1]);
+		if ($name === 'query') {
+			if (func_num_args() === 3) {
+				return $this->queryF($arguments[0], $arguments[1], $arguments[2]);
+			}
+
+			return call_user_func_array(['parent', 'query'], func_get_args());
 		}
 
-		return call_user_func_array(['parent', 'query'], func_get_args());
+		throw new BadMethodCallException($name);
 	}
 
 	/**
