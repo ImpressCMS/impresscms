@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "20f33de1a9dc16ea691228d1536b88c5",
+    "content-hash": "c1f7d18209bc425bed0e953743a63612",
     "packages": [
         {
             "name": "apix/cache",
@@ -3684,58 +3684,6 @@
             "time": "2022-01-07T22:30:57+00:00"
         },
         {
-            "name": "m6web/firewall",
-            "version": "v1.0.3",
-            "target-dir": "M6Web/Component/Firewall",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/M6Web/Firewall.git",
-                "reference": "3ba2b48788176c8b25288bc5320a75c94d6c0b36"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/M6Web/Firewall/zipball/3ba2b48788176c8b25288bc5320a75c94d6c0b36",
-                "reference": "3ba2b48788176c8b25288bc5320a75c94d6c0b36",
-                "shasum": ""
-            },
-            "require": {
-                "ext-bcmath": "*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "atoum/atoum": "^2.8|^3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "M6Web\\Component\\Firewall": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "M6Web",
-                    "email": "opensource@m6web.fr",
-                    "homepage": "http://tech.m6web.fr/"
-                }
-            ],
-            "description": "Library providing IP filtering features",
-            "keywords": [
-                "IP",
-                "filtering",
-                "firewall"
-            ],
-            "support": {
-                "issues": "https://github.com/M6Web/Firewall/issues",
-                "source": "https://github.com/M6Web/Firewall/tree/v1.0.3"
-            },
-            "abandoned": true,
-            "time": "2019-10-15T08:29:16+00:00"
-        },
-        {
             "name": "masterminds/html5",
             "version": "2.7.6",
             "source": {
@@ -4049,21 +3997,21 @@
         },
         {
             "name": "middlewares/firewall",
-            "version": "v2.0.2",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/middlewares/firewall.git",
-                "reference": "f5a5f8b49d4486f1c90bcf8d9f0e8451dc09cf82"
+                "reference": "93470775678ecf36bd5eca54d4d0229ef7bbe469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/firewall/zipball/f5a5f8b49d4486f1c90bcf8d9f0e8451dc09cf82",
-                "reference": "f5a5f8b49d4486f1c90bcf8d9f0e8451dc09cf82",
+                "url": "https://api.github.com/repos/middlewares/firewall/zipball/93470775678ecf36bd5eca54d4d0229ef7bbe469",
+                "reference": "93470775678ecf36bd5eca54d4d0229ef7bbe469",
                 "shasum": ""
             },
             "require": {
-                "m6web/firewall": "^1.0",
                 "middlewares/utils": "^3.0",
+                "mlocati/ip-lib": "^1.18",
                 "php": "^7.2 || ^8.0",
                 "psr/http-server-middleware": "^1.0"
             },
@@ -4071,7 +4019,7 @@
                 "friendsofphp/php-cs-fixer": "^2.0",
                 "laminas/laminas-diactoros": "^2.3",
                 "oscarotero/php-cs-fixer-config": "^1.0",
-                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan": "^0.12 || ^1.0",
                 "phpunit/phpunit": "^8|^9",
                 "squizlabs/php_codesniffer": "^3.0"
             },
@@ -4100,9 +4048,9 @@
             ],
             "support": {
                 "issues": "https://github.com/middlewares/firewall/issues",
-                "source": "https://github.com/middlewares/firewall/tree/v2.0.2"
+                "source": "https://github.com/middlewares/firewall/tree/v2.0.3"
             },
-            "time": "2020-12-02T00:06:04+00:00"
+            "time": "2022-10-04T09:47:14+00:00"
         },
         {
             "name": "middlewares/referrer-spam",
@@ -4225,6 +4173,77 @@
                 "source": "https://github.com/middlewares/utils/tree/v3.3.0"
             },
             "time": "2021-07-04T17:56:23+00:00"
+        },
+        {
+            "name": "mlocati/ip-lib",
+            "version": "1.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mlocati/ip-lib.git",
+                "reference": "c77bd0b1f3e3956c7e9661e75cb1f54ed67d95d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mlocati/ip-lib/zipball/c77bd0b1f3e3956c7e9661e75cb1f54ed67d95d2",
+                "reference": "c77bd0b1f3e3956c7e9661e75cb1f54ed67d95d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "ext-pdo_sqlite": "*",
+                "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.5 || ^8.5 || ^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "IPLib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michele Locati",
+                    "email": "mlocati@gmail.com",
+                    "homepage": "https://github.com/mlocati",
+                    "role": "Author"
+                }
+            ],
+            "description": "Handle IPv4, IPv6 addresses and ranges",
+            "homepage": "https://github.com/mlocati/ip-lib",
+            "keywords": [
+                "IP",
+                "address",
+                "addresses",
+                "ipv4",
+                "ipv6",
+                "manage",
+                "managing",
+                "matching",
+                "network",
+                "networking",
+                "range",
+                "subnet"
+            ],
+            "support": {
+                "issues": "https://github.com/mlocati/ip-lib/issues",
+                "source": "https://github.com/mlocati/ip-lib/tree/1.18.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/mlocati",
+                    "type": "github"
+                },
+                {
+                    "url": "https://paypal.me/mlocati",
+                    "type": "other"
+                }
+            ],
+            "time": "2022-01-13T18:05:33+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -9883,5 +9902,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
