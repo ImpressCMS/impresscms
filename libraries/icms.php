@@ -23,6 +23,7 @@ use ImpressCMS\Core\Extensions\Preload\EventsPreloader;
 use ImpressCMS\Core\Models\User;
 use League\Container\Container;
 use League\Container\Definition\DefinitionInterface;
+use League\Container\Exception\NotFoundException;
 
 /**
  * ICMS Kernel / Services manager
@@ -372,4 +373,22 @@ final class icms extends Container {
 		}
 		return $this->definitions->getDefinition($serviceName);
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function get($id, bool $new = false)
+	{
+		try {
+			return parent::get($id, $new);
+		} catch (NotFoundException $exception) {
+			if (class_exists($id)) {
+				$this->add($id);
+				return parent::get($id, $new);
+			}
+
+			throw $exception;
+		}
+	}
+
 }

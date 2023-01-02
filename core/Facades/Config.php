@@ -37,6 +37,7 @@ namespace ImpressCMS\Core\Facades;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Database\DatabaseConnectionInterface;
 use ImpressCMS\Core\Models\ConfigItem;
 use ImpressCMS\Core\Models\ConfigItemHandler;
 use ImpressCMS\Core\Models\ConfigOption;
@@ -56,7 +57,6 @@ use ImpressCMS\Core\Models\ConfigOptionHandler;
  */
 class Config extends AbstractFacade
 {
-	static protected $instance;
 
 	/**
 	 * Main (default) category
@@ -156,9 +156,9 @@ class Config extends AbstractFacade
 	/**
 	 * Constructor
 	 *
-	 * @param object  &$db reference to database object
+	 * @param DatabaseConnectionInterface $db reference to database object
 	 */
-	public function __construct(&$db)
+	public function __construct(DatabaseConnectionInterface $db)
 	{
 		$this->_cHandler = new ConfigItemHandler($db);
 		$this->_oHandler = new ConfigOptionHandler($db);

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54f74c036edbbafb8813bc229727414c",
+    "content-hash": "25bf9c555ea8b8f48ec8f11bfa9894ab",
     "packages": [
         {
             "name": "apix/cache",
@@ -2505,12 +2505,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/core-theme.git",
-                "reference": "d0932edce60123244b0bd99d31fd05848e33b3b4"
+                "reference": "c42d19f154985aa8135d3743d19f0a55c61e8e71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/core-theme/zipball/d0932edce60123244b0bd99d31fd05848e33b3b4",
-                "reference": "d0932edce60123244b0bd99d31fd05848e33b3b4",
+                "url": "https://api.github.com/repos/ImpressCMS/core-theme/zipball/c42d19f154985aa8135d3743d19f0a55c61e8e71",
+                "reference": "c42d19f154985aa8135d3743d19f0a55c61e8e71",
                 "shasum": ""
             },
             "require": {
@@ -2541,7 +2541,7 @@
                 "issues": "https://github.com/ImpressCMS/core-theme/issues",
                 "source": "https://github.com/ImpressCMS/core-theme/tree/main"
             },
-            "time": "2021-10-12T22:55:40+00:00"
+            "time": "2022-11-07T11:06:43+00:00"
         },
         {
             "name": "impresscms/itheme-theme",
@@ -2549,12 +2549,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/iTheme-theme.git",
-                "reference": "5765533bea46e74f53cd3362e069280e4efda6fc"
+                "reference": "9bfcb7cedad41544891ec9e8923792911a129225"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/iTheme-theme/zipball/5765533bea46e74f53cd3362e069280e4efda6fc",
-                "reference": "5765533bea46e74f53cd3362e069280e4efda6fc",
+                "url": "https://api.github.com/repos/ImpressCMS/iTheme-theme/zipball/9bfcb7cedad41544891ec9e8923792911a129225",
+                "reference": "9bfcb7cedad41544891ec9e8923792911a129225",
                 "shasum": ""
             },
             "require": {
@@ -2585,7 +2585,7 @@
                 "issues": "https://github.com/ImpressCMS/iTheme-theme/issues",
                 "source": "https://github.com/ImpressCMS/iTheme-theme/tree/main"
             },
-            "time": "2021-09-30T07:19:01+00:00"
+            "time": "2022-09-19T11:17:50+00:00"
         },
         {
             "name": "impresscms/system-module",
@@ -2593,12 +2593,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/system-module.git",
-                "reference": "875f445d4b81922e21b2c3f3b4c8e02df6fb00b5"
+                "reference": "a356030e2b443cd214e5b0c81f84e25cd8e103d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/system-module/zipball/875f445d4b81922e21b2c3f3b4c8e02df6fb00b5",
-                "reference": "875f445d4b81922e21b2c3f3b4c8e02df6fb00b5",
+                "url": "https://api.github.com/repos/ImpressCMS/system-module/zipball/a356030e2b443cd214e5b0c81f84e25cd8e103d1",
+                "reference": "a356030e2b443cd214e5b0c81f84e25cd8e103d1",
                 "shasum": ""
             },
             "require": {
@@ -3092,7 +3092,7 @@
                 "issues": "https://github.com/ImpressCMS/system-module/issues",
                 "source": "https://github.com/ImpressCMS/system-module/tree/main"
             },
-            "time": "2021-12-29T23:36:25+00:00"
+            "time": "2022-11-01T16:39:06+00:00"
         },
         {
             "name": "intervention/image",
@@ -3685,58 +3685,6 @@
             "time": "2022-01-07T22:30:57+00:00"
         },
         {
-            "name": "m6web/firewall",
-            "version": "v1.0.3",
-            "target-dir": "M6Web/Component/Firewall",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/M6Web/Firewall.git",
-                "reference": "3ba2b48788176c8b25288bc5320a75c94d6c0b36"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/M6Web/Firewall/zipball/3ba2b48788176c8b25288bc5320a75c94d6c0b36",
-                "reference": "3ba2b48788176c8b25288bc5320a75c94d6c0b36",
-                "shasum": ""
-            },
-            "require": {
-                "ext-bcmath": "*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "atoum/atoum": "^2.8|^3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "M6Web\\Component\\Firewall": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "M6Web",
-                    "email": "opensource@m6web.fr",
-                    "homepage": "http://tech.m6web.fr/"
-                }
-            ],
-            "description": "Library providing IP filtering features",
-            "keywords": [
-                "IP",
-                "filtering",
-                "firewall"
-            ],
-            "support": {
-                "issues": "https://github.com/M6Web/Firewall/issues",
-                "source": "https://github.com/M6Web/Firewall/tree/v1.0.3"
-            },
-            "abandoned": true,
-            "time": "2019-10-15T08:29:16+00:00"
-        },
-        {
             "name": "masterminds/html5",
             "version": "2.7.6",
             "source": {
@@ -4050,21 +3998,21 @@
         },
         {
             "name": "middlewares/firewall",
-            "version": "v2.0.2",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/middlewares/firewall.git",
-                "reference": "f5a5f8b49d4486f1c90bcf8d9f0e8451dc09cf82"
+                "reference": "93470775678ecf36bd5eca54d4d0229ef7bbe469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/middlewares/firewall/zipball/f5a5f8b49d4486f1c90bcf8d9f0e8451dc09cf82",
-                "reference": "f5a5f8b49d4486f1c90bcf8d9f0e8451dc09cf82",
+                "url": "https://api.github.com/repos/middlewares/firewall/zipball/93470775678ecf36bd5eca54d4d0229ef7bbe469",
+                "reference": "93470775678ecf36bd5eca54d4d0229ef7bbe469",
                 "shasum": ""
             },
             "require": {
-                "m6web/firewall": "^1.0",
                 "middlewares/utils": "^3.0",
+                "mlocati/ip-lib": "^1.18",
                 "php": "^7.2 || ^8.0",
                 "psr/http-server-middleware": "^1.0"
             },
@@ -4072,7 +4020,7 @@
                 "friendsofphp/php-cs-fixer": "^2.0",
                 "laminas/laminas-diactoros": "^2.3",
                 "oscarotero/php-cs-fixer-config": "^1.0",
-                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan": "^0.12 || ^1.0",
                 "phpunit/phpunit": "^8|^9",
                 "squizlabs/php_codesniffer": "^3.0"
             },
@@ -4101,9 +4049,9 @@
             ],
             "support": {
                 "issues": "https://github.com/middlewares/firewall/issues",
-                "source": "https://github.com/middlewares/firewall/tree/v2.0.2"
+                "source": "https://github.com/middlewares/firewall/tree/v2.0.3"
             },
-            "time": "2020-12-02T00:06:04+00:00"
+            "time": "2022-10-04T09:47:14+00:00"
         },
         {
             "name": "middlewares/referrer-spam",
@@ -4226,6 +4174,77 @@
                 "source": "https://github.com/middlewares/utils/tree/v3.3.0"
             },
             "time": "2021-07-04T17:56:23+00:00"
+        },
+        {
+            "name": "mlocati/ip-lib",
+            "version": "1.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mlocati/ip-lib.git",
+                "reference": "c77bd0b1f3e3956c7e9661e75cb1f54ed67d95d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mlocati/ip-lib/zipball/c77bd0b1f3e3956c7e9661e75cb1f54ed67d95d2",
+                "reference": "c77bd0b1f3e3956c7e9661e75cb1f54ed67d95d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "ext-pdo_sqlite": "*",
+                "phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.5 || ^8.5 || ^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "IPLib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michele Locati",
+                    "email": "mlocati@gmail.com",
+                    "homepage": "https://github.com/mlocati",
+                    "role": "Author"
+                }
+            ],
+            "description": "Handle IPv4, IPv6 addresses and ranges",
+            "homepage": "https://github.com/mlocati/ip-lib",
+            "keywords": [
+                "IP",
+                "address",
+                "addresses",
+                "ipv4",
+                "ipv6",
+                "manage",
+                "managing",
+                "matching",
+                "network",
+                "networking",
+                "range",
+                "subnet"
+            ],
+            "support": {
+                "issues": "https://github.com/mlocati/ip-lib/issues",
+                "source": "https://github.com/mlocati/ip-lib/tree/1.18.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/mlocati",
+                    "type": "github"
+                },
+                {
+                    "url": "https://paypal.me/mlocati",
+                    "type": "other"
+                }
+            ],
+            "time": "2022-01-13T18:05:33+00:00"
         },
         {
             "name": "monolog/monolog",
