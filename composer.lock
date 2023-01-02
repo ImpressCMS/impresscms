@@ -355,24 +355,24 @@
         },
         {
             "name": "cerdic/css-tidy",
-            "version": "v1.7.3",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Cerdic/CSSTidy.git",
-                "reference": "919411b2c16ab985f7c61e0d9bb6c35d080f6cf6"
+                "reference": "436c69db9e0951760ca54b6b123d61c89ab3e918"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Cerdic/CSSTidy/zipball/919411b2c16ab985f7c61e0d9bb6c35d080f6cf6",
-                "reference": "919411b2c16ab985f7c61e0d9bb6c35d080f6cf6",
+                "url": "https://api.github.com/repos/Cerdic/CSSTidy/zipball/436c69db9e0951760ca54b6b123d61c89ab3e918",
+                "reference": "436c69db9e0951760ca54b6b123d61c89ab3e918",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.4.0 || ^7"
+                "php": "^7.1 || ^8"
             },
             "require-dev": {
                 "pear/text_diff": "^1.2",
-                "simpletest/simpletest": "^1.1"
+                "simpletest/simpletest": "dev-master"
             },
             "bin": [
                 "bin/pcsstidy"
@@ -398,9 +398,9 @@
             "description": "CSSTidy is a CSS minifier",
             "support": {
                 "issues": "https://github.com/Cerdic/CSSTidy/issues",
-                "source": "https://github.com/Cerdic/CSSTidy/tree/v1.7.3"
+                "source": "https://github.com/Cerdic/CSSTidy/tree/v2.0.3"
             },
-            "time": "2020-11-03T13:08:18+00:00"
+            "time": "2022-09-14T13:26:35+00:00"
         },
         {
             "name": "composer/ca-bundle",
