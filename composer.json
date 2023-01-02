@@ -72,7 +72,7 @@
     "imponeer/smarty-xo": "^1.0",
     "imponeer/symfony-translations-constants-loader": "^1.0",
     "impresscms/codemirror-integration": "^0.2.3",
-    "impresscms/composer-addon-installer-plugin": ">1.0.2",
+    "impresscms/composer-addon-installer-plugin": "^1.0.6",
     "impresscms/core-theme": "dev-main",
     "impresscms/itheme-theme": "dev-main",
     "impresscms/system-module": "dev-main",
@@ -105,7 +105,7 @@
     "symfony/translation": "^5.1",
     "tuupola/server-timing-middleware": ">=0.8.2",
     "typo3/class-alias-loader": "^1.1",
-    "vlucas/phpdotenv": "^3.3.3"
+    "vlucas/phpdotenv": "^5.5"
   },
   "suggest": {
     "ext-xml": "Faster way then with PHP scripts to handle XML documents",
