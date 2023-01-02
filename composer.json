@@ -50,7 +50,7 @@
     "aura/session": "^2.1",
     "aura/sql": "^4.0",
     "aura/sqlschema": "^2.0",
-    "cerdic/css-tidy": "^1.5",
+    "cerdic/css-tidy": "^2.0",
     "composer/composer": ">=1.10.22 || >=2.0.13",
     "defuse/php-encryption": "^2.2",
     "doctrine/annotations": "^1.13",
