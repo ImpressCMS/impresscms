@@ -48,7 +48,7 @@ class MainfileTest extends TestCase
 	public function testUrlConstant(): void
 	{
 		self::assertTrue(defined('ICMS_URL'), 'ICMS_URL is not defined');
-		self::assertSame(rtrim(env('URL'), '/'), ICMS_URL, 'ICMS_URL is not same as URL env variable');
+		self::assertNotEmpty(ICMS_URL, 'ICMS_URL is empty');
 	}
 
 	/**

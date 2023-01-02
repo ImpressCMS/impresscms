@@ -40,6 +40,7 @@ namespace ImpressCMS\Core\Facades;
 use ImpressCMS\Core\Database\Criteria\CriteriaCompo;
 use ImpressCMS\Core\Database\Criteria\CriteriaElement;
 use ImpressCMS\Core\Database\Criteria\CriteriaItem;
+use ImpressCMS\Core\Database\DatabaseConnectionInterface;
 use ImpressCMS\Core\Database\Legacy\Updater\TableUpdater;
 use ImpressCMS\Core\DataFilter;
 use ImpressCMS\Core\Models\Group;
@@ -83,7 +84,7 @@ class Member extends AbstractFacade {
 	/**
 	 * constructor
 	 */
-	public function __construct(&$db) {
+	public function __construct(DatabaseConnectionInterface $db) {
 		$this->_gHandler = new GroupHandler($db);
 		$this->_uHandler = new UserHandler($db);
 		$this->_mHandler = new GroupMembershipHandler($db);
