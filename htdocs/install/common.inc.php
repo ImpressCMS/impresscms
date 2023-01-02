@@ -30,10 +30,10 @@ date_default_timezone_set(@date_default_timezone_get());
 
 /* we need this so we can use icms_core_Logger during the install to trap errors */
 if (defined('INSTALLER_INCLUDE_MAIN')) {
-	require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . "mainfile.php";
+	require_once dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . "mainfile.php";
 }
 
-require_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+require_once dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 // installer common functions
 require_once 'include/functions.php';
@@ -43,7 +43,7 @@ $errorHandler = icms_core_Logger::instance();
 error_reporting(E_ALL);
 
 try {
-	\Dotenv\Dotenv::create(ICMS_ROOT_PATH)->load();
+	\Dotenv\Dotenv::createImmutable(ICMS_ROOT_PATH)->load();
 } catch (Exception $ex) {
 	// Reading .env file failed but that is not out business
 }

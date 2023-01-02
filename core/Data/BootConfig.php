@@ -22,7 +22,7 @@ class BootConfig
 	public function __construct()
 	{
 		if (empty($this->config)) {
-			Dotenv::create($this->resolveRootPath())->safeLoad();
+			Dotenv::createImmutable($this->resolveRootPath())->safeLoad();
 
 			$this->updateMainData();
 		}
