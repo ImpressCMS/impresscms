@@ -2504,12 +2504,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/core-theme.git",
-                "reference": "d0932edce60123244b0bd99d31fd05848e33b3b4"
+                "reference": "c42d19f154985aa8135d3743d19f0a55c61e8e71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/core-theme/zipball/d0932edce60123244b0bd99d31fd05848e33b3b4",
-                "reference": "d0932edce60123244b0bd99d31fd05848e33b3b4",
+                "url": "https://api.github.com/repos/ImpressCMS/core-theme/zipball/c42d19f154985aa8135d3743d19f0a55c61e8e71",
+                "reference": "c42d19f154985aa8135d3743d19f0a55c61e8e71",
                 "shasum": ""
             },
             "require": {
@@ -2540,7 +2540,7 @@
                 "issues": "https://github.com/ImpressCMS/core-theme/issues",
                 "source": "https://github.com/ImpressCMS/core-theme/tree/main"
             },
-            "time": "2021-10-12T22:55:40+00:00"
+            "time": "2022-11-07T11:06:43+00:00"
         },
         {
             "name": "impresscms/itheme-theme",
@@ -2548,12 +2548,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/iTheme-theme.git",
-                "reference": "5765533bea46e74f53cd3362e069280e4efda6fc"
+                "reference": "9bfcb7cedad41544891ec9e8923792911a129225"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/iTheme-theme/zipball/5765533bea46e74f53cd3362e069280e4efda6fc",
-                "reference": "5765533bea46e74f53cd3362e069280e4efda6fc",
+                "url": "https://api.github.com/repos/ImpressCMS/iTheme-theme/zipball/9bfcb7cedad41544891ec9e8923792911a129225",
+                "reference": "9bfcb7cedad41544891ec9e8923792911a129225",
                 "shasum": ""
             },
             "require": {
@@ -2584,7 +2584,7 @@
                 "issues": "https://github.com/ImpressCMS/iTheme-theme/issues",
                 "source": "https://github.com/ImpressCMS/iTheme-theme/tree/main"
             },
-            "time": "2021-09-30T07:19:01+00:00"
+            "time": "2022-09-19T11:17:50+00:00"
         },
         {
             "name": "impresscms/system-module",
@@ -2592,12 +2592,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/system-module.git",
-                "reference": "875f445d4b81922e21b2c3f3b4c8e02df6fb00b5"
+                "reference": "a356030e2b443cd214e5b0c81f84e25cd8e103d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/system-module/zipball/875f445d4b81922e21b2c3f3b4c8e02df6fb00b5",
-                "reference": "875f445d4b81922e21b2c3f3b4c8e02df6fb00b5",
+                "url": "https://api.github.com/repos/ImpressCMS/system-module/zipball/a356030e2b443cd214e5b0c81f84e25cd8e103d1",
+                "reference": "a356030e2b443cd214e5b0c81f84e25cd8e103d1",
                 "shasum": ""
             },
             "require": {
@@ -3091,7 +3091,7 @@
                 "issues": "https://github.com/ImpressCMS/system-module/issues",
                 "source": "https://github.com/ImpressCMS/system-module/tree/main"
             },
-            "time": "2021-12-29T23:36:25+00:00"
+            "time": "2022-11-01T16:39:06+00:00"
         },
         {
             "name": "intervention/image",
@@ -9883,5 +9883,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
