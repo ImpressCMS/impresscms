@@ -353,7 +353,7 @@ ob_start();
 
 <?php
 if (!empty ($error)) {
-	echo '<div class="x2-note error">' . $error . "</div>\n";
+	echo '<div class="x2-note error">' . htmlentities($error) . "</div>\n";
 }
 ?>
 	<script type="text/javascript" src="prototype.js"></script>
