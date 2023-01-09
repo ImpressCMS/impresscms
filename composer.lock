@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc4b10edd81e0c6c3b7c2321c9370a31",
+    "content-hash": "75a52371d12e91980de9cd884863f890",
     "packages": [
         {
             "name": "apix/cache",
@@ -2101,16 +2101,16 @@
         },
         {
             "name": "imponeer/smarty-foreachq",
-            "version": "v1.1.4",
+            "version": "v1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-foreachq.git",
-                "reference": "c062aaf66e9d870cb018e218b14705978d133857"
+                "reference": "678349f3c846ccf39dd0850bcc4435119c28ce16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-foreachq/zipball/c062aaf66e9d870cb018e218b14705978d133857",
-                "reference": "c062aaf66e9d870cb018e218b14705978d133857",
+                "url": "https://api.github.com/repos/imponeer/smarty-foreachq/zipball/678349f3c846ccf39dd0850bcc4435119c28ce16",
+                "reference": "678349f3c846ccf39dd0850bcc4435119c28ce16",
                 "shasum": ""
             },
             "require": {
@@ -2142,9 +2142,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-foreachq/issues",
-                "source": "https://github.com/imponeer/smarty-foreachq/tree/v1.1.4"
+                "source": "https://github.com/imponeer/smarty-foreachq/tree/v1.1.5"
             },
-            "time": "2022-10-02T12:24:23+00:00"
+            "time": "2022-12-01T11:01:27+00:00"
         },
         {
             "name": "imponeer/smarty-image",
