@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc4b10edd81e0c6c3b7c2321c9370a31",
+    "content-hash": "75a52371d12e91980de9cd884863f890",
     "packages": [
         {
             "name": "apix/cache",
@@ -6213,22 +6213,22 @@
         },
         {
             "name": "sunrise/http-router",
-            "version": "v2.16.1",
+            "version": "v2.16.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sunrise-php/http-router.git",
-                "reference": "459948edb739b21aaca7db24e778e318b31fa158"
+                "reference": "06d05af92f49890516aa33b49252fa1051813cf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunrise-php/http-router/zipball/459948edb739b21aaca7db24e778e318b31fa158",
-                "reference": "459948edb739b21aaca7db24e778e318b31fa158",
+                "url": "https://api.github.com/repos/sunrise-php/http-router/zipball/06d05af92f49890516aa33b49252fa1051813cf8",
+                "reference": "06d05af92f49890516aa33b49252fa1051813cf8",
                 "shasum": ""
             },
             "require": {
                 "fig/http-message-util": "^1.1",
                 "php": "^7.1|^8.0",
-                "psr/container": "^1.0",
+                "psr/container": "^1.0 || ^2.0",
                 "psr/http-message": "^1.0",
                 "psr/http-server-handler": "^1.0",
                 "psr/http-server-middleware": "^1.0",
@@ -6239,7 +6239,7 @@
                 "phpunit/phpunit": "7.5.20|9.5.0",
                 "sunrise/coding-standard": "1.0.0",
                 "sunrise/http-factory": "2.0.0",
-                "symfony/console": "^4.4",
+                "symfony/console": "^5.4",
                 "symfony/event-dispatcher": "^4.4"
             },
             "type": "library",
@@ -6287,7 +6287,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sunrise-php/http-router/issues",
-                "source": "https://github.com/sunrise-php/http-router/tree/v2.16.1"
+                "source": "https://github.com/sunrise-php/http-router/tree/v2.16.2"
             },
             "funding": [
                 {
@@ -6299,7 +6299,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-19T18:58:13+00:00"
+            "time": "2023-01-01T22:28:23+00:00"
         },
         {
             "name": "symfony/console",
