@@ -172,7 +172,7 @@ function select_db($db_name)
 }
 
 if ($_SERVER ['REQUEST_METHOD'] == 'GET' && isset ($_GET ['charset']) && @$_GET ['action'] == 'updateCollation') {
-	echo xoFormFieldCollation('DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $_GET ['charset']);
+	echo xoFormFieldCollation('DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, htmlentities($_GET ['charset']));
 	exit ();
 }
 
