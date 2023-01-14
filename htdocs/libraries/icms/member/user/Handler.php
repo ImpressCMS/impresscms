@@ -109,106 +109,84 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
 		if (!is_a($user, 'icms_member_user_Object')) {return FALSE;}
 		if (!$user->isDirty()) {return TRUE;}
-		if (!$user->cleanVars()) {return FALSE;}
-		foreach ($user->cleanVars as $k => $v) {${$k} = $v;}
+		if (!$user->cleanVars()) {
+			return FALSE;
+		}
 
-		// RMV-NOTIFY
+		$dataToSave = [];
+		foreach ($user->getVars() as $var => $varInfo) {
+			if (!isset($user->cleanVars[$var])) {
+				continue;
+			}
+
+			$currentValue = $user->cleanVars[$var];
+
+			switch ($varInfo['data_type']) {
+				case XOBJ_DTYPE_INT:
+					$dataToSave[$var] = (int)$currentValue;
+				break;
+				case XOBJ_DTYPE_OTHER:
+					if ($var === 'timezone_offset') {
+						$dataToSave[$var] = (float)$currentValue;
+					} else {
+						$dataToSave[$var] = $this->db->quoteString($currentValue);
+					}
+				break;
+				default:
+					$dataToSave[$var] = $this->db->quoteString($currentValue);
+				break;
+			}
+		}
+
 		if ($user->isNew()) {
-			$uid = $this->db->genId($this->db->prefix('users') . '_uid_seq');
-			$sql = sprintf(
-				"INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq,
-				user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts,
-				attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method,
-				notify_mode, user_occ, bio, user_intrest, user_mailok, language,
-                pass_expired, login_name)
-				VALUES ('%u', %s, %s, %s, %s, %s, '%u',
-				%s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u',
-				'%u', '%u', %s, %s, %s, '%u', %s, %s, '%u', '%u', %s)",
-				$this->db->prefix('users'),
-				(int) $uid,
-				$this->db->quoteString($uname),
-				$this->db->quoteString($name),
-				$this->db->quoteString($email),
-				$this->db->quoteString($url),
-				$this->db->quoteString($user_avatar),
-				time(),
-				$this->db->quoteString($user_icq),
-				$this->db->quoteString($user_from),
-				$this->db->quoteString($user_sig),
-				(int) $user_viewemail,
-				$this->db->quoteString($actkey),
-				$this->db->quoteString($user_aim),
-				$this->db->quoteString($user_yim),
-				$this->db->quoteString($user_msnm),
-				$this->db->quoteString($pass),
-				(int) $posts,
-				(int) $attachsig,
-				(int) $rank,
-				(int) $level,
-				$this->db->quoteString($theme),
-				$this->db->quoteString((float) $timezone_offset),
-				0,
-				$this->db->quoteString($umode),
-				(int) $uorder,
-				(int) $notify_method,
-				(int) $notify_mode,
-				$this->db->quoteString($user_occ),
-				$this->db->quoteString($bio),
-				$this->db->quoteString($user_intrest),
-				(int) $user_mailok,
-				$this->db->quoteString($language),
-				(int) $pass_expired,
-				$this->db->quoteString($login_name)
-			);
+			$dataToSave['last_login'] = 0;
+			$dataToSave['user_regdate'] = time();
+
+			$sql = 'INSERT INTO `' . $this->db->prefix('users') . '`(';
+			$first = true;
+			foreach (array_keys($dataToSave) as $columnName) {
+				if ($first) {
+					$first = false;
+				} else {
+					$sql .= ', ';
+				}
+
+				$sql .= "`" . $columnName . "`";
+			}
+			$sql .= ') VALUE(';
+			$first = true;
+			foreach ($dataToSave as $columnValue) {
+				if ($first) {
+					$first = false;
+				} else {
+					$sql .= ', ';
+				}
+
+				$sql .= $columnValue;
+			}
+			$sql .= ');';
 		} else {
-			$sql = sprintf(
-				"UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s,
-				user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s,
-				user_yim = %s, user_msnm = %s, posts = %d, pass = %s, attachsig = '%u', rank = '%u',
-				level= '%s', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u',
-				uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s,
-				user_intrest = %s, user_mailok = '%u', language = %s, pass_expired = '%u', login_name = %s WHERE uid = '%u'",
-				$this->db->prefix('users'),
-				$this->db->quoteString($uname),
-				$this->db->quoteString($name),
-				$this->db->quoteString($email),
-				$this->db->quoteString($url),
-				$this->db->quoteString($user_avatar),
-				$this->db->quoteString($user_icq),
-				$this->db->quoteString($user_from),
-				$this->db->quoteString($user_sig),
-				$user_viewemail,
-				$this->db->quoteString($user_aim),
-				$this->db->quoteString($user_yim),
-				$this->db->quoteString($user_msnm),
-				(int) $posts,
-				$this->db->quoteString($pass),
-				(int) $attachsig,
-				(int) $rank,
-				(int) $level,
-				$this->db->quoteString($theme),
-				$this->db->quoteString((float) $timezone_offset),
-				$this->db->quoteString($umode),
-				(int) $last_login,
-				(int) $uorder,
-				(int) $notify_method,
-				(int) $notify_mode,
-				$this->db->quoteString($user_occ),
-				$this->db->quoteString($bio),
-				$this->db->quoteString($user_intrest),
-				(int) $user_mailok,
-				$this->db->quoteString($language),
-				(int) $pass_expired,
-				$this->db->quoteString($login_name),
-				(int) $uid
-			);
+			$sql = 'UPDATE `' . $this->db->prefix('users') . '` SET ';
+			$first = true;
+			foreach ($dataToSave as $columnName => $columnValue) {
+				if ($first) {
+					$first = false;
+				} else {
+					$sql .= ', ';
+				}
+
+				$sql .= "`" . $columnName . "`=" . $columnValue;
+			}
+			$sql .= ' WHERE `uid`=' . (int)$user->cleanVars['uid'];
 		}
 		if (FALSE != $force) {
 			$result = $this->db->queryF($sql);
 		} else {
 			$result = $this->db->query($sql);
 		}
-		if (!$result) {return FALSE;}
+		if (!$result) {
+			return FALSE;
+		}
 		if ($user->isNew()) {
 			$uid = $this->db->getInsertId();
 			$user->assignVar('uid', $uid);
