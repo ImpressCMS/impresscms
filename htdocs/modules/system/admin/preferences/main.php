@@ -566,6 +566,7 @@ switch ($op) {
 		$purifier_style_updated = FALSE;
 		$saved_config_items = array();
 		if ($count > 0) {
+			$config_handler = icms::handler('icms_config');
 			for ($i = 0; $i < $count; $i++) {
 				$config = & $config_handler->getConfig($conf_ids[$i]);
 				$new_value = & ${$config->getVar('conf_name')};
