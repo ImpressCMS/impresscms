@@ -99,12 +99,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 	// system modules
 
-	if (file_exists('../modules/system/language/'.$language.'/modinfo.php')) {
-		include '../modules/system/language/'.$language.'/modinfo.php';
-	} else {
-		include '../modules/system/language/english/modinfo.php';
+	if (!file_exists('../modules/system/language/'.$language.'/modinfo.php')) {
 		$language = 'english';
 	}
+	include_once '../modules/system/language/'.$language.'/modinfo.php';
+	include_once '../modules/system/language/'.$language.'/common.php';
 
 	$modversion = array();
 	include_once '../modules/system/xoops_version.php';
