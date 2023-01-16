@@ -1923,21 +1923,21 @@
         },
         {
             "name": "imponeer/criteria",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/criteria.git",
-                "reference": "d0cc4727f0176cff47721c0cf934c8cf129fcfb6"
+                "reference": "5ec1db53607d3fa0cf2d5c5171ff5a55f9b185a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/criteria/zipball/d0cc4727f0176cff47721c0cf934c8cf129fcfb6",
-                "reference": "d0cc4727f0176cff47721c0cf934c8cf129fcfb6",
+                "url": "https://api.github.com/repos/imponeer/criteria/zipball/5ec1db53607d3fa0cf2d5c5171ff5a55f9b185a0",
+                "reference": "5ec1db53607d3fa0cf2d5c5171ff5a55f9b185a0",
                 "shasum": ""
             },
             "require": {
                 "myclabs/php-enum": "^1.8",
-                "php": ">=7.3"
+                "php": "^7.3 || ^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.5"
@@ -1966,9 +1966,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/criteria/issues",
-                "source": "https://github.com/imponeer/criteria/tree/v1.0.5"
+                "source": "https://github.com/imponeer/criteria/tree/v1.0.6"
             },
-            "time": "2022-12-01T09:01:30+00:00"
+            "time": "2023-01-03T22:32:05+00:00"
         },
         {
             "name": "imponeer/editor-contracts",
