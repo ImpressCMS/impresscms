@@ -107,7 +107,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	include_once '../language/' . $language . '/global.php';
 	
 	$modversion = array();
-	include_once '../modules/system/xoops_version.php';
+	include_once '../modules/system/icms_version.php';
 	$time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
