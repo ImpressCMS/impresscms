@@ -104,7 +104,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	}
 	include_once '../modules/system/language/'.$language.'/modinfo.php';
 	include_once '../modules/system/language/'.$language.'/common.php';
-
+	include_once '../language/' . $language . '/global.php';
+	
 	$modversion = array();
 	include_once '../modules/system/xoops_version.php';
 	$time = time();
