@@ -43,7 +43,7 @@ include 'mainfile.php';
 
 $op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING)) : ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'main');
 
-$redirect = isset($_GET['xoops_redirect']) ? $_GET['xoops_redirect'] : isset($_POST['xoops_redirect']) ? $_POST['xoops_redirect'] : FALSE;
+$redirect = (isset($_GET['xoops_redirect']) ? $_GET['xoops_redirect'] : isset($_POST['xoops_redirect'])) ? $_POST['xoops_redirect'] : FALSE;
 if ($redirect) {
 	$redirect = htmlspecialchars(trim($redirect), ENT_QUOTES);
 	$isExternal = FALSE;
