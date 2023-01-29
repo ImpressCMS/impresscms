@@ -66,6 +66,13 @@ class csstidy_print {
 	 */
 	public $output_css_plain = '';
 
+	public $css;
+	public $template;
+	public $tokens;
+	public $charset;
+	public $import;
+	public $namespace;
+
 	/**
 	 * Constructor
 	 * @param array $css contains the class csstidy
@@ -219,20 +226,25 @@ class csstidy_print {
 			$output .= $template[0] . '@namespace ' . $template[5] . $this->namespace . $template[6] . $template[13];
 		}
 
-		$in_at_out = '';
+		$in_at_out = [];
 		$out = & $output;
+		$indent_level = 0;
 
 		foreach ($this->tokens as $key => $token) {
 			switch ($token[0]) {
 				case AT_START:
 					$out .= $template[0] . $this->_htmlsp($token[1], $plain) . $template[1];
-					$out = & $in_at_out;
+					$indent_level++;
+					if (!isset($in_at_out[$indent_level])) {
+						$in_at_out[$indent_level] = '';
+					}
+					$out = & $in_at_out[$indent_level];
 					break;
 
 				case SEL_START:
 					if ($this->parser->get_cfg('lowercase_s'))
 						$token[1] = strtolower($token[1]);
-					$out .= ( $token[1]{0} !== '@') ? $template[2] . $this->_htmlsp($token[1], $plain) : $template[0] . $this->_htmlsp($token[1], $plain);
+					$out .= ( $token[1][0] !== '@') ? $template[2] . $this->_htmlsp($token[1], $plain) : $template[0] . $this->_htmlsp($token[1], $plain);
 					$out .= $template[3];
 					break;
 
@@ -261,12 +273,28 @@ class csstidy_print {
 					break;
 
 				case AT_END:
-					$out = & $output;
-					$in_at_out = str_replace("\n\n", "\r\n", $in_at_out); // don't fill empty lines
-					$in_at_out = str_replace("\n", "\n" . $template[10], $in_at_out);
-					$in_at_out = str_replace("\r\n", "\n\n", $in_at_out);
-					$out .= $template[10] . $in_at_out . $template[9];
-					$in_at_out = '';
+					if (strlen($template[10])) {
+						// indent the bloc we are closing
+						$out = str_replace("\n\n", "\r\n", $out); // don't fill empty lines
+						$out = str_replace("\n", "\n" . $template[10], $out);
+						$out = str_replace("\r\n", "\n\n", $out);
+					}
+					if ($indent_level > 1) {
+						$out = & $in_at_out[$indent_level-1];
+					}
+					else {
+						$out = & $output;
+					}
+					$out .= $template[10] . $in_at_out[$indent_level];
+					if ($this->_seeknocomment($key, 1) != AT_END) {
+						$out .= $template[9];
+					}
+					else {
+						$out .= rtrim($template[9]);
+					}
+
+					unset($in_at_out[$indent_level]);
+					$indent_level--;
 					break;
 
 				case IMPORTANT_COMMENT:
@@ -332,7 +360,10 @@ class csstidy_print {
 			if (intval($medium) < DEFAULT_AT) {
 				// un medium vide (contenant @font-face ou autre @) ne produit aucun conteneur
 				if (strlen(trim($medium))) {
-					$this->parser->_add_token(AT_START, $medium, true);
+					$parts_to_open = explode('{', $medium);
+					foreach ($parts_to_open as $part) {
+						$this->parser->_add_token(AT_START, $part, true);
+					}
 				}
 			} elseif ($default_media) {
 				$this->parser->_add_token(AT_START, $default_media, true);
@@ -372,7 +403,10 @@ class csstidy_print {
 			if (intval($medium) < DEFAULT_AT) {
 				// un medium vide (contenant @font-face ou autre @) ne produit aucun conteneur
 				if (strlen(trim($medium))) {
-					$this->parser->_add_token(AT_END, $medium, true);
+					$parts_to_close = explode('{', $medium);
+					foreach (array_reverse($parts_to_close) as $part) {
+						$this->parser->_add_token(AT_END, $part, true);
+					}
 				}
 			} elseif ($default_media) {
 				$this->parser->_add_token(AT_END, $default_media, true);
