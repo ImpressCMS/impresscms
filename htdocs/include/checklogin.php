@@ -53,11 +53,7 @@ $pass = !isset($_POST['pass']) ? '' : substr(trim($_POST['pass']), 0, 32);
 /* make sure redirect stays within domain and isn't open to exploit */
 if (!isset($redirect)) {
 
-	$redirect = isset($_GET['xoops_redirect'])
-		? $_GET['xoops_redirect']
-		: isset($_POST['xoops_redirect'])
-			? $_POST['xoops_redirect']
-			: ICMS_URL;
+	$redirect = (isset($_GET['xoops_redirect']) ? $_GET['xoops_redirect'] : isset($_POST['xoops_redirect'])) ? $_POST['xoops_redirect'] : ICMS_URL;
 
 		$redirect = htmlspecialchars(trim($redirect));
 		if ($redirect !== htmlspecialchars($_SERVER['REQUEST_URI'])) $redirect = ICMS_URL;
