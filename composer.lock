@@ -1972,16 +1972,16 @@
         },
         {
             "name": "imponeer/editor-contracts",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/editor-contracts.git",
-                "reference": "172a28aa79a61dc59fc211edfbe0355fe2e15a64"
+                "reference": "b37a10b797b533da0a3d554dbd79b2bb1a9024ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/172a28aa79a61dc59fc211edfbe0355fe2e15a64",
-                "reference": "172a28aa79a61dc59fc211edfbe0355fe2e15a64",
+                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/b37a10b797b533da0a3d554dbd79b2bb1a9024ec",
+                "reference": "b37a10b797b533da0a3d554dbd79b2bb1a9024ec",
                 "shasum": ""
             },
             "require": {
@@ -2001,9 +2001,9 @@
             "description": "Interfaces for building PHP classes that lets to easier make web editor integrations in your content management systems",
             "support": {
                 "issues": "https://github.com/imponeer/editor-contracts/issues",
-                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.5"
+                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.6"
             },
-            "time": "2022-12-19T11:07:11+00:00"
+            "time": "2023-01-09T11:05:31+00:00"
         },
         {
             "name": "imponeer/env",
