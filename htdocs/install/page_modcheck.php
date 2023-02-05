@@ -71,7 +71,7 @@ function imCheckRequirements()
 	$requirement['server_api']['status']=true;
 
 	$requirement['php_version']['description']=_PHP_VERSION;
-	if (version_compare( phpversion(), '5.6', '>=')) {
+	if (version_compare( phpversion(), '7.0', '>=')) {
 		$requirement['php_version']['status']=1;
 	} else {
 		$requirement['php_version']['status']=0;
@@ -98,6 +98,11 @@ function imCheckRequirements()
 	$requirement['file_upload']['result']=xoDiagBoolSetting( 'file_uploads', true ) ? SUCCESS : FAILED;
 	$requirement['file_upload']['status']=xoDiagBoolSetting( 'file_uploads', true ) ? true : false;
 
+	$requirement['gd']['description']="GD Extension";
+	$requirement['gd']['result']=extension_loaded( 'GD' ) ? SUCCESS : FAILED;
+	$requirement['gd']['status']=extension_loaded( 'GD' ) ? true : false;
+	
+	
 	return $requirement;
 }
 
