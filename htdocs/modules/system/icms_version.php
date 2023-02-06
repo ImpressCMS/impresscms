@@ -94,7 +94,8 @@ $modversion['autotasks'][] = array ('enabled' => TRUE,'name' => _MI_SYSTEM_REMOV
 /**
  * Manual
  */
-$modversion['manual']['wiki'][] = "<a href='https://www.impresscms.org/modules/simplywiki/index.php?page=Administration' target='_blank'>Manual</a>";
+ */
+$modversion['manual']['wiki'][] = "<a href='https://www.impresscms.org/modules/simplywiki/index.php?page=Administration" . _LANGCODE . "' target='_blank'>" . _LANGNAME . "</a>";
 
 /**
  * Administrative information
