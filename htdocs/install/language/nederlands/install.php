@@ -20,108 +20,107 @@ define( "SERVER_API", "Server API" );
 define( "PHP_EXTENSION", "%s extension" );
 define( "CHAR_ENCODING", "Character encoding" );
 define( "XML_PARSING", "XML parsing" );
-define( "REQUIREMENTS", "Requirements" );
-define( "_PHP_VERSION", "PHP version" );
-define( "RECOMMENDED_SETTINGS", "Recommended settings" );
-define( "RECOMMENDED_EXTENSIONS", "Recommended extensions" );
-define( "SETTING_NAME", "Setting name" );
-define( "RECOMMENDED", "Recommended" );
-define( "CURRENT", "Current" );
-define( "RECOMMENDED_EXTENSIONS_MSG", "These extensions are not required for normal use, but may be necessary to exploit
-	some specific features (like the multi-language or RSS support). Thus, it is recommended to have them installed." );
-define( "NONE", "None" );
-define( "SUCCESS", "Success" );
-define( "WARNING", "Warning" );
-define( "FAILED", "Failed" );
+define( "REQUIREMENTS", "Vereisten" );
+define( "_PHP_VERSION", "PHP versie" );
+define( "RECOMMENDED_SETTINGS", "Aanbevolen instellingen" );
+define( "RECOMMENDED_EXTENSIONS", "Aanbevolen extensies" );
+define( "SETTING_NAME", "Instelling benaming" );
+define( "RECOMMENDED", "Aanbevolen" );
+define( "CURRENT", "Huidig" );
+define( "RECOMMENDED_EXTENSIONS_MSG", "Deze extensies zijn niet vereist voor gewoon gebruik, maar kunnen nodig zijn om bepaalde functionaliteiten (zoals ondersteuning voor meerdere talen of RSS ondersteuning). Het is daardoor aanbevolen ze geïnstalleerd te hebben." );
+define( "NONE", "Geen" );
+define( "SUCCESS", "Succes" );
+define( "WARNING", "Waarschuwing" );
+define( "FAILED", "Gefaald" );
 
 // Titles (main and pages)
-define( "XOOPS_INSTALL_WIZARD", " %s - Installation Wizard" );
-define( "INSTALL_STEP", "Step" );
-define( "INSTALL_H3_STEPS", "Steps" );
-define( "INSTALL_OUTOF", " out of " );
-define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"https://www.impresscms.org\" target=\"_blank\">The ImpressCMS Project</a>" );
+define( "XOOPS_INSTALL_WIZARD", " %s - Installatie Wizard" );
+define( "INSTALL_STEP", "Stap" );
+define( "INSTALL_H3_STEPS", "Stappen" );
+define( "INSTALL_OUTOF", " van " );
+define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"https://www.impresscms.org\" target=\"_blank\">Het ImpressCMS Project</a>" );
 
-define( "LANGUAGE_SELECTION", "Language selection" );
-define( "LANGUAGE_SELECTION_TITLE", "Choose your language");		// L128
-define( "INTRODUCTION", "Introduction" );
-define( "INTRODUCTION_TITLE", "Welcome to the ImpressCMS installation assistant" );		// L0
-define( "CONFIGURATION_CHECK", "Configuration check" );
-define( "CONFIGURATION_CHECK_TITLE", "Checking your server configuration" );
-define( "PATHS_SETTINGS", "Paths settings" );
-define( "PATHS_SETTINGS_TITLE", "Paths settings" );
-define( "DATABASE_CONNECTION", "Database connection" );
-define( "DATABASE_CONNECTION_TITLE", "Database connection" );
-define( "DATABASE_CONFIG", "Database configuration" );
-define( "DATABASE_CONFIG_TITLE", "Database configuration" );
-define( "CONFIG_SAVE", "Configuration save" );
-define( "CONFIG_SAVE_TITLE", "Saving your system configuration" );
-define( "TABLES_CREATION", "Tables creation" );
-define( "TABLES_CREATION_TITLE", "Database tables creation" );
-define( "INITIAL_SETTINGS", "Initial settings" );
-define( "INITIAL_SETTINGS_TITLE", "Please enter your initial settings" );
-define( "DATA_INSERTION", "Data insertion" );
-define( "DATA_INSERTION_TITLE", "Saving your settings to the database" );
-define( "WELCOME", "Welcome" );
-define( "NO_PHP5", "No PHP 5" );
-define( "WELCOME_TITLE", "Installation of ImpressCMS completed" );		// L0
-define( "MODULES_INSTALL", "Install modules" );
-define( "MODULES_INSTALL_TITLE", "Installation of modules " );
-define( "NO_PHP5_TITLE", "No PHP 5" );
-define( "NO_PHP5_CONTENT","PHP 5.5.0 minimum is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.5.0 (5.6.0 + is recommended) before attempting to install again.");
-define( "SAFE_MODE", "Safe Mode On" );
-define( "SAFE_MODE_TITLE", "Safe Mode On" );
-define( "SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again." );
+define( "LANGUAGE_SELECTION", "Taalkeuze" );
+define( "LANGUAGE_SELECTION_TITLE", "Kies uw taal");		// L128
+define( "INTRODUCTION", "Inleiding" );
+define( "INTRODUCTION_TITLE", "Welcome bij de ImpressCMS installatie assistent" );		// L0
+define( "CONFIGURATION_CHECK", "Configuratie controle" );
+define( "CONFIGURATION_CHECK_TITLE", "Controle van uw server instellingen" );
+define( "PATHS_SETTINGS", "Paden instellingen" );
+define( "PATHS_SETTINGS_TITLE", "Paden instellingen" );
+define( "DATABASE_CONNECTION", "Database verbinding" );
+define( "DATABASE_CONNECTION_TITLE", "Database verbinding" );
+define( "DATABASE_CONFIG", "Database instellingen" );
+define( "DATABASE_CONFIG_TITLE", "Database instellingen" );
+define( "CONFIG_SAVE", "Configuratie opslaan" );
+define( "CONFIG_SAVE_TITLE", "Uw systeem configuratie opslaan" );
+define( "TABLES_CREATION", "Tabellen aanmaken" );
+define( "TABLES_CREATION_TITLE", "Database tabellen aanmaken" );
+define( "INITIAL_SETTINGS", "Start instellingen" );
+define( "INITIAL_SETTINGS_TITLE", "Geef uw begin instellingen in" );
+define( "DATA_INSERTION", "Data toevoegen" );
+define( "DATA_INSERTION_TITLE", "Uw instellingen worden opgeslagen in de database" );
+define( "WELCOME", "Welkome" );
+define( "NO_PHP5", "Geen PHP 7" );
+define( "WELCOME_TITLE", "Installatie van ImpressCMS compleet" );		// L0
+define( "MODULES_INSTALL", "Installatie van modules" );
+define( "MODULES_INSTALL_TITLE", "Installatie van modules " );
+define( "NO_PHP5_TITLE", "Geen PHP 7" );
+define( "NO_PHP5_CONTENT","PHP 7.0.0 is minimaal vereist (PHP 7.4+ is sterk aanbevolen) om ImpressCMS correct te laten werken. De installatie kan niet verder gaan. Contacteer aub uw hosting aanbieder om uw PHP te upgraden naar een versie die nieuwer is dan 7.0 (PHP 7.4+ is aanbevolen) vooraleer de installatie opnieuw op te starten.");
+define( "SAFE_MODE", "Safe Modus aan" );
+define( "SAFE_MODE_TITLE", "Safe Modus aan" );
+define( "SAFE_MODE_CONTENT", "ImpressCMS heeft vastgesteld dat PHP in 'safe modus' werkt. Hierdoor kan uw installatie niet verdergaan. Contacteer uw hosting aanbieder om uw PHP instellingen aan te passen vooraleer de installatie te herstarten." );
 
 // Settings (labels and help text)
 define( "XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path" ); // L55
-define( "XOOPS_ROOT_PATH_HELP", "This is the physical path of the ImpressCMS documents folder, the very web root of your ImpressCMS application" ); // L59
-define( "_INSTALL_TRUST_PATH_HELP", "This is the physical location of your ImpressCMS trust path. The trust path is a folder where ImpressCMS and its modules will store some sensible code and information for more security. It is recommended that this folder be outside of the web root, making it not accessible by a browser. If the folder does not exist, ImpressCMS will try and create it. If this is not possible, you will need to create it.<br /><br /><a target='_blank' href='https://www.impresscms.org/modules/simplywiki/index.php?page=Trust_Path'>Click here</a> to learn more about the Trust path." ); // L59
+define( "XOOPS_ROOT_PATH_HELP", "Dit is de fysieke locatie van de ImpressCMS documenten folder, de basisfolder van uw ImpressCMS applicatie" ); // L59
+define( "_INSTALL_TRUST_PATH_HELP", "Dit is de fysieke locatie van uw ImpressCMS Trust Path. Het Trust Path is de folder waar ImpressCMS en zijn modules gevoelige informatie opslaat voor bijkomende beveiliging. Het wordt sterk aangeraden om deze folder buiten de root folder te plaatsen, waardoor hij niet van de buitenwereld kan bereikt worden. Indien deze folder niet bestaat, zal ImpressCMS proberen hem aan te maken. Als dit niet mogelijk is, zal die handmatig moeten worden aangemaakt.<br /><br /><a target='_blank' href='https://www.impresscms.org/modules/simplywiki/index.php?page=Trust_Path'>Klik hier</a> voor meer informatie rond het Trust path." ); // L59
 
-define( "XOOPS_URL_LABEL", "Website location (URL)" ); // L56
-define( "XOOPS_URL_HELP", "Main URL that will be used to access your ImpressCMS installation" ); // L58
+define( "XOOPS_URL_LABEL", "Website locatie (URL)" ); // L56
+define( "XOOPS_URL_HELP", "Het basis URL dat zal gebruikt worden om uw ImpressCMS installatie te bereiken" ); // L58
 
-define( "LEGEND_CONNECTION", "Server connection" );
+define( "LEGEND_CONNECTION", "Server verbinding" );
 define( "LEGEND_DATABASE", "Database" ); // L51
 
 define( "DB_HOST_LABEL", "Server hostname" );	// L27
-define( "DB_HOST_HELP",  "Hostname of the database server. If you are unsure, <em>localhost</em> works in most cases"); // L67
-define( "DB_USER_LABEL", "User name" );	// L28
-define( "DB_USER_HELP",  "Name of the user account that will be used to connect to the database server"); // L65
-define( "DB_PASS_LABEL", "Password" );	// L52
-define( "DB_PASS_HELP",  "Password of your database user account"); // L68
-define( "DB_NAME_LABEL", "Database name" );	// L29
-define( "DB_NAME_HELP",  "The name of database on the host. The installer will attempt to create a database if one does not exist"); // L64
-define( "DB_CHARSET_LABEL", "Database character set, we STRONGLY recommend you to use UTF-8 as default." );
+define( "DB_HOST_HELP",  "Hostname van de database server. Als u niet zeker bent, dan werkt <em>localhost</em> in de meeste gevallen"); // L67
+define( "DB_USER_LABEL", "Gebruikersnaam" );	// L28
+define( "DB_USER_HELP",  "Gebruikersnaam die wordt gebruikt voor toegang tot de database server"); // L65
+define( "DB_PASS_LABEL", "Pasword" );	// L52
+define( "DB_PASS_HELP",  "Pasword van uw database gebruikersaccount"); // L68
+define( "DB_NAME_LABEL", "Database naam" );	// L29
+define( "DB_NAME_HELP",  "De naam van de database op de database server.Het installatieprogramma zal proberen er een aan te maken als er geen database bestaat"); // L64
+define( "DB_CHARSET_LABEL", "Database karakter set. We raden UTF-8 aan." );
 define( "DB_CHARSET_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.");
 define( "DB_COLLATION_LABEL", "Database collation" );
-define( "DB_COLLATION_HELP",  "A collation is a set of rules for comparing characters in a character set.");
-define( "DB_PREFIX_LABEL", "Table prefix" );	// L30
-define( "DB_PREFIX_HELP",  "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
-define( "DB_PCONNECT_LABEL", "Use persistent connection" );	// L54
+define( "DB_COLLATION_HELP",  "Een collation is een set regels die gebruikt worden om karakters te vergelijking.");
+define( "DB_PREFIX_LABEL", "Tabel prefix" );	// L30
+define( "DB_PREFIX_HELP",  "Deze prefix zal toegevoegd worden aan alle nieuwe tabellen die worden aangemaakt om zo naam conflicten te vermijden tussen meerdere ImpressCMS installaties in dezelfde database. Als je niet zeker bent, behoud wat is voorgesteld"); // L63
+define( "DB_PCONNECT_LABEL", "Gebruik persistente verbinding" );	// L54
 
 define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
-define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. If you are unsure, just keep the default"); // L97
+define( "DB_SALT_HELP",  "Deze salt key zal worden gebruikt om paswoorden te beveiligen, en is nodig om totaal unieke en veilige paswoorden te bekomen. Verander deze sleutel niet, anders worden alle paswoorden onmiddellijk niet meer geldig. In geval van twijfel, behoud de voorgestelde waarde"); // L97
 
 define( "LEGEND_ADMIN_ACCOUNT", "Administrator account" );
 define( "ADMIN_LOGIN_LABEL", "Admin login" ); // L37
 define( "ADMIN_EMAIL_LABEL", "Admin e-mail" ); // L38
-define( "ADMIN_PASS_LABEL", "Admin password" ); // L39
-define( "ADMIN_CONFIRMPASS_LABEL", "Confirm password" ); // L74
-define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
+define( "ADMIN_PASS_LABEL", "Admin paswoord" ); // L39
+define( "ADMIN_CONFIRMPASS_LABEL", "Bevestig paswoord" ); // L74
+define( "ADMIN_SALT_LABEL", "Pasword Salt Key" ); // L99
 
 // Buttons
-define( "BUTTON_PREVIOUS", "Previous" ); // L42
-define( "BUTTON_NEXT", "Next" ); // L47
-define( "BUTTON_FINISH", "Finish" );
-define( "BUTTON_REFRESH", "Refresh" );
-define( "BUTTON_SHOW_SITE", "Show my site" );
+define( "BUTTON_PREVIOUS", "Vorige" ); // L42
+define( "BUTTON_NEXT", "Volgende" ); // L47
+define( "BUTTON_FINISH", "Einde" );
+define( "BUTTON_REFRESH", "Herlaad" );
+define( "BUTTON_SHOW_SITE", "Toon mijn website" );
 
 // Messages
-define( "XOOPS_FOUND", "%s found" );
-define( "CHECKING_PERMISSIONS", "Checking file and directory permissions..." ); // L82
-define( "IS_NOT_WRITABLE", "%s is NOT writable." ); // L83
-define( "IS_WRITABLE", "%s is writable." ); // L84
-define( "ALL_PERM_OK", "All Permissions are correct." );
+define( "XOOPS_FOUND", "%s gevonden" );
+define( "CHECKING_PERMISSIONS", "Controle bestand en folder toegangsrechten ..." ); // L82
+define( "IS_NOT_WRITABLE", "%s is NIET schrijfbaar." ); // L83
+define( "IS_WRITABLE", "%s is schrijfbaar." ); // L84
+define( "ALL_PERM_OK", "Alle toegangen zijn in orde." );
 
 define( "READY_CREATE_TABLES", "No ImpressCMS tables were detected.<br />The installer is now ready to create the ImpressCMS system tables.<br />Press <em>next</em> to proceed." );
 define( "XOOPS_TABLES_FOUND", "The ImpressCMS system tables already exists in your database.<br />Press <em>next</em> to go to the next step." ); // L131
