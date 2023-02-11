@@ -6,7 +6,7 @@ $content .= '
 </p>
 <p>
 	ImpressCMS est diffus&eacute sous les termes de la
-	<a href="http://www.gnu.org/copyleft/gpl.html" rel="external">GNU General Public License (GPL)</a>
+	<a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.fr.html" rel="external">GNU General Public License (GPL)</a>
 	donc il est libre d\'utilisation et de toutes modifications.
 	Il peut &ecirc;tre redistribuer librement tant que vous respecter les termes de distribution GPL.
 </p>
