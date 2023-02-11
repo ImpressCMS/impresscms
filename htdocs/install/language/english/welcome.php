@@ -7,15 +7,15 @@ $content .= '
 </p>
 <p>
 	ImpressCMS is released under the terms of the
-	<a href="http://www.gnu.org/copyleft/gpl.html" rel="external">GNU General Public License (GPL)</a>
+	<a href="https://www.gnu.org/copyleft/gpl.html" rel="external">GNU General Public License (GPL)</a>
 	and is free to use and modify.
 	It is free to redistribute as long as you abide by the distribution terms of the GPL.
 </p>
 <h3>Requirements</h3>
 <ul>
-	<li>- WWW Server: <a href="http://www.apache.org/" rel="external">Apache</a>, NGinx, IIS, Roxen, etc</li>
-	<li>- Script: <a href="http://www.php.net/" rel="external">PHP</a> 5.5+ and 16mb minimum memory allocation - PHP7 not yet supported!</li>
-	<li>- Database: <a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 or higher, <a href="https://mariadb.org/" rel="external">MariaDB</a> 5.1 or higher</li>
+	<li>- WWW Server: <a href="https://www.apache.org/" rel="external">Apache</a>, NGinx, IIS, Roxen, etc</li>
+	<li>- Script: <a href="https://www.php.net/" rel="external">PHP</a> 7.0+ and 16mb minimum memory allocation - PHP 8 is supported!</li>
+	<li>- Database: <a href="https://www.mysql.com/" rel="external">MySQL</a> 4.1.0 or higher, <a href="https://mariadb.org/" rel="external">MariaDB</a> 5.1 or higher</li>
 </ul>
 <h3>Before you install</h3>
 <ul>
