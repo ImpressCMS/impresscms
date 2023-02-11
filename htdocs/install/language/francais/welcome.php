@@ -13,8 +13,8 @@ $content .= '
 <h3>Il faut au minimum</h3>
 <ul>
 	<li>WWW Server (<a href="http://www.apache.org/" rel="external">Apache</a>, IIS, Roxen, etc)</li>
-	<li><a href="http://www.php.net/" rel="external">PHP</a> 5.1 ou plus (5.2 ou plus recommand&eacute;)</li>
-	<li><a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 ou plus</li>
+	<li><a href="http://www.php.net/" rel="external">PHP</a> 7.0+ avec 16Mo de mémoire minimum. PHP 8.0 est supporté!</li>
+	<li><a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 ou MariaDB 5.1 ou plus recent</li>
 </ul>
 <h3>Avant d\'installer</h3>
 <ul>
