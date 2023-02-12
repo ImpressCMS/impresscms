@@ -6,15 +6,15 @@ $content .= '
 </p>
 <p>
 	ImpressCMS est diffus&eacute sous les termes de la
-	<a href="http://www.gnu.org/copyleft/gpl.html" rel="external">GNU General Public License (GPL)</a>
+	<a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.fr.html" rel="external">GNU General Public License (GPL)</a>
 	donc il est libre d\'utilisation et de toutes modifications.
 	Il peut &ecirc;tre redistribuer librement tant que vous respecter les termes de distribution GPL.
 </p>
 <h3>Il faut au minimum</h3>
 <ul>
 	<li>WWW Server (<a href="http://www.apache.org/" rel="external">Apache</a>, IIS, Roxen, etc)</li>
-	<li><a href="http://www.php.net/" rel="external">PHP</a> 5.1 ou plus (5.2 ou plus recommand&eacute;)</li>
-	<li><a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 ou plus</li>
+	<li><a href="http://www.php.net/" rel="external">PHP</a> 7.0+ avec 16Mo de mémoire minimum. PHP 8.0 est supporté!</li>
+	<li><a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 ou MariaDB 5.1 ou plus recent</li>
 </ul>
 <h3>Avant d\'installer</h3>
 <ul>

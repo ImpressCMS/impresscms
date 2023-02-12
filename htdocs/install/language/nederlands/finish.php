@@ -10,7 +10,7 @@ $content .=
 "</ul>
 
 <h3>Schrijf in op onze nieuwsbrief</h3>
-<p>Vergeet alstublieft niet om uw in te schrijven op de <a href='http://eepurl.com/dqXVIb' target='_blank'>ImpressCMS nieuwsbrief</a> (in het Engels), voor het laatste nieuws rond modules, themas, belangrijke updates en meer!</p>
+<p>Vergeet alstublieft niet om uw in te schrijven op de <a href='https://eepurl.com/dqXVIb' target='_blank'>ImpressCMS nieuwsbrief</a> (in het Engels), voor het laatste nieuws rond modules, themas, belangrijke updates en meer!</p>
 
 <h3>Uw nieuwe website</h3>
 <p>De startpagina van uw site is beschikbaar door te klikken op de knop hieronder en de wizard af te sluiten.</p>

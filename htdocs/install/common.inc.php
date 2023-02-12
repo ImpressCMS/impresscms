@@ -65,7 +65,7 @@ class XoopsInstallWizard {
 			$_SERVER['REQUEST_URI'] = htmlentities($_SERVER['PHP_SELF']);
 		}
 
-		if (PHP_VERSION_ID < 50500) {
+		if (PHP_VERSION_ID < 70000) {
 			$this->no_php5 = true;
 		}
 		/*		 elseif (ini_get('safe_mode') == 1 || strtolower(ini_get('safe_mode')) == 'on') {
