@@ -60,7 +60,7 @@ function b_system_admin_warnings_show() {
 		}
 	}
 	if (file_exists(ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php') && file_exists(ICMS_PLUGINS_PATH . '/csstidy/.unlock_css_optimiser')) {
-		array_push($block['msg'], icms_core_Message::error(sprintf(_CSSTIDY_VULN, 'plugins/csstidy/css_optimiser.php'), false));
+		array_push($block['msg'], icms_core_Message::error(sprintf(_CSSTIDY_VULN, 'plugins/csstidy/css_optimiser.php'), '', false));
 	}
 
 	if ($protector_is_active == 0) {
