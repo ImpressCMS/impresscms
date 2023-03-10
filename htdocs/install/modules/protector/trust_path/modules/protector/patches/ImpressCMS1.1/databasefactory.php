@@ -30,7 +30,7 @@ class icms_db_legacy_Factory {
 	 *
 	 * Makes nothing.
 	 */
-	function icms_db_legacy_Factory() {}
+	function __construct() {}
 
 	/**
 	 * Get a reference to the only instance of database class and connects to DB
