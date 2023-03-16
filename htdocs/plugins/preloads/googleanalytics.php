@@ -53,7 +53,7 @@ class IcmsPreloadGoogleanalytics extends icms_preload_Item {
 
 	function insertGA4Tag(string $GA4tag)
 	{
-		$icmsTheme->addScript('https://www.googletagmanager.com/gtag/js?id=' . $GA4tag, ['async'], '', 'module', 2000);
+		$icmsTheme->addScript('https://www.googletagmanager.com/gtag/js?id=' . $GA4tag, ['async' => 'async'], '', 'module', 2000);
 		$icmsTheme->addScript('', '', 'window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag(\'js\', new Date());
