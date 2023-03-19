@@ -55,7 +55,6 @@ $icmsAdminTpl->assign('lang_php_version', PHP_VERSION);
 $icmsAdminTpl->assign('lang_mysql_version', icms::$xoopsDB->getServerVersion());
 $icmsAdminTpl->assign('lang_server_api', PHP_SAPI);
 $icmsAdminTpl->assign('lang_os_name', PHP_OS);
-$icmsAdminTpl->assign('safe_mode', ini_get('safe_mode') ? _CO_ICMS_ON : _CO_ICMS_OFF);
 $icmsAdminTpl->assign('register_globals', ini_get('register_globals') ? _CO_ICMS_ON : _CO_ICMS_OFF);
 $icmsAdminTpl->assign('allow_url_fopen', ini_get('allow_url_fopen') ? _CO_ICMS_ON : _CO_ICMS_OFF);
 $icmsAdminTpl->assign('fsockopen', function_exists('fsockopen') ? _CO_ICMS_ON : _CO_ICMS_OFF);
