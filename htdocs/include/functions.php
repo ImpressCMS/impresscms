@@ -812,10 +812,29 @@ function icms_html2text($document)
  * @return string
  * @todo Remove this and replace with the proper data filter and HTML Purifier
  */
-function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload'))
-{
+function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload')) {
 	if(empty($aDisabledAttributes)) return strip_tags($sSource, implode('', $aAllowedTags));
-	return preg_replace('/<(.*?)>/ie', "'<' . preg_replace(array('/javascript:[^\"\']*/i', '/(".implode('|', $aDisabledAttributes).")[ \\t\\n]*=[ \\t\\n]*[\"\'][^\"\']*[\"\']/i', '/\s+/'), array('', '', ' '), stripslashes('\\1')) . '>'", strip_tags($sSource, implode('', $aAllowedTags)));
+
+	$rtrn = preg_replace_callback(
+		'/<(.*?)>/i',
+		function ($matches){
+			return '<' .
+					preg_replace(
+							array(
+									'/javascript:[^\"\']*/i',
+									'/(". implode('|', $aDisabledAttributes).")[ \\t\\n]*=[ \\t\\n]*[\"\'][^\"\']*[\"\']/i',
+									'/\s+/'),
+							array(
+									'',
+									'',
+									' '),
+							stripslashes($matches[1]))
+							. '>';
+							
+		},
+		strip_tags($body, implode('', $aAllowedTags))
+		);
+	return $rtrn;
 }
 
 /**
@@ -977,17 +996,18 @@ function StopXSS($text)
  * @return string	$text The purified text
  * @todo Remove and replace with the proper data filter and HTML Purifier
  */
-function icms_sanitizeContentCss($text)
-{
-	if(preg_match_all('/(.*?)\{(.*?)\}/ie',$text,$css))
-	{
+function icms_sanitizeContentCss($text) {
+	if (preg_match_all('/(.*?)\{(.*?)\}/i', $text, $css)) {
 		$css = $css[0];
 		$perm = $not_perm = array();
-		foreach($css as $k=>$v)
-		{
-			if(!preg_match('/^\#impress_content(.*?)/ie',$v)) {$css[$k] = '#impress_content '.icms_cleanTags(trim($v),array())."\r\n";}
-			else {$css[$k] = icms_cleanTags(trim($v),array())."\r\n";}
+		foreach($css as $k=>$v) {
+			if(!preg_match('/^\#impress_content(.*?)/i', $v)) {
+				$css[$k] = '#impress_content ' . icms_cleanTags(trim($v), array()) . "\r\n";
+			} else {
+				$css[$k] = icms_cleanTags(trim($v),array()) . "\r\n";
+			}
 		}
+		
 		$text = implode($css);
 	}
 	return $text;
