@@ -2156,16 +2156,16 @@
         },
         {
             "name": "imponeer/smarty-foreachq",
-            "version": "v1.1.5",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/smarty-foreachq.git",
-                "reference": "678349f3c846ccf39dd0850bcc4435119c28ce16"
+                "reference": "930758a14cdd596d23be67360a4eff0a3a4262e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/smarty-foreachq/zipball/678349f3c846ccf39dd0850bcc4435119c28ce16",
-                "reference": "678349f3c846ccf39dd0850bcc4435119c28ce16",
+                "url": "https://api.github.com/repos/imponeer/smarty-foreachq/zipball/930758a14cdd596d23be67360a4eff0a3a4262e3",
+                "reference": "930758a14cdd596d23be67360a4eff0a3a4262e3",
                 "shasum": ""
             },
             "require": {
@@ -2197,9 +2197,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/smarty-foreachq/issues",
-                "source": "https://github.com/imponeer/smarty-foreachq/tree/v1.1.5"
+                "source": "https://github.com/imponeer/smarty-foreachq/tree/v1.1.6"
             },
-            "time": "2022-12-01T11:01:27+00:00"
+            "time": "2023-04-01T11:57:34+00:00"
         },
         {
             "name": "imponeer/smarty-image",
