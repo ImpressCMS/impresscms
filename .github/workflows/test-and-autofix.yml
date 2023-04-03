@@ -65,7 +65,7 @@ jobs:
           tools: composer:v${{ matrix.composer }}
       - name: Installing ImpressCMS...
         id: install_icms
-        uses: impresscms-dev/install-impresscms-action@v0.1.4
+        uses: impresscms-dev/install-impresscms-action@v0.1.5
         with:
           database_name: icms
           database_user: root
