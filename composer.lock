@@ -2492,16 +2492,16 @@
         },
         {
             "name": "impresscms/codemirror-integration",
-            "version": "v0.2.3",
+            "version": "v0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/codemirror-integration.git",
-                "reference": "5d4c24e09c3d581aa79cb97c54eef8b6a86279cf"
+                "reference": "d1aadfbd1a9859eb220c786e3236a71d2c76d631"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/codemirror-integration/zipball/5d4c24e09c3d581aa79cb97c54eef8b6a86279cf",
-                "reference": "5d4c24e09c3d581aa79cb97c54eef8b6a86279cf",
+                "url": "https://api.github.com/repos/ImpressCMS/codemirror-integration/zipball/d1aadfbd1a9859eb220c786e3236a71d2c76d631",
+                "reference": "d1aadfbd1a9859eb220c786e3236a71d2c76d631",
                 "shasum": ""
             },
             "require": {
@@ -2563,9 +2563,9 @@
             "description": "Integrates CodeMirror with ImpressCMS",
             "support": {
                 "issues": "https://github.com/ImpressCMS/codemirror-integration/issues",
-                "source": "https://github.com/ImpressCMS/codemirror-integration/tree/v0.2.3"
+                "source": "https://github.com/ImpressCMS/codemirror-integration/tree/v0.2.4"
             },
-            "time": "2022-11-07T11:06:43+00:00"
+            "time": "2023-04-03T12:02:36+00:00"
         },
         {
             "name": "impresscms/composer-addon-installer-plugin",
