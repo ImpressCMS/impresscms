@@ -598,6 +598,7 @@ class icms_core_Object {
 						if (!($cleanv > 0)) {
 							$cleanv = strtotime($cleanv);
 						}
+						if ($cleanv === false) $cleanv = 0;
 						break;
 
 					default:
