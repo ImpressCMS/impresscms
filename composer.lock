@@ -2014,16 +2014,16 @@
         },
         {
             "name": "imponeer/env",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/env.git",
-                "reference": "f2082d8aa44b409fc4abf989e777d89c938510c2"
+                "reference": "1ab620620eba2ad6d8e7369c40508002e81c3815"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/env/zipball/f2082d8aa44b409fc4abf989e777d89c938510c2",
-                "reference": "f2082d8aa44b409fc4abf989e777d89c938510c2",
+                "url": "https://api.github.com/repos/imponeer/env/zipball/1ab620620eba2ad6d8e7369c40508002e81c3815",
+                "reference": "1ab620620eba2ad6d8e7369c40508002e81c3815",
                 "shasum": ""
             },
             "require": {
@@ -2032,7 +2032,7 @@
             },
             "require-dev": {
                 "fakerphp/faker": "^1.19",
-                "phpunit/phpunit": ">=8"
+                "phpunit/phpunit": "^8"
             },
             "type": "library",
             "autoload": {
@@ -2053,9 +2053,9 @@
             "description": "Small helper dealing with environment variables",
             "support": {
                 "issues": "https://github.com/imponeer/env/issues",
-                "source": "https://github.com/imponeer/env/tree/v1.0.5"
+                "source": "https://github.com/imponeer/env/tree/v1.0.6"
             },
-            "time": "2023-02-01T00:54:40+00:00"
+            "time": "2023-04-11T13:28:32+00:00"
         },
         {
             "name": "imponeer/smarty-db-resource",
