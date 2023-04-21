@@ -1730,7 +1730,6 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
  */
 function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
 	if (!$moduleName) {
-		global $icmsModule;
 		$moduleName = icms::$module->getVar('dirname');
 	}
 	$icmsModule = icms_getModuleInfo($moduleName);
