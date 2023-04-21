@@ -1593,8 +1593,8 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 	// if $module_dir is not specified
 	if (!isset($module_dir)) {
 		//if a module is loaded
-		if (isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {
-			$module_dir = $GLOBALS['icmsModule']->getVar('dirname');
+		if (isset(icms::$module) && is_object(icms::$module)) {
+			$module_dir = icms::$module->getVar('dirname');
 		} else {
 			trigger_error(_CORE_NOMODULE, E_USER_ERROR);
 		}
