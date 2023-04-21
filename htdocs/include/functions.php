@@ -1731,7 +1731,7 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
 function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
 	if (!$moduleName) {
 		global $icmsModule;
-		$moduleName = $icmsModule->getVar('dirname');
+		$moduleName = icms::$module->getVar('dirname');
 	}
 	$icmsModule = icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = icms_getModuleConfig($moduleName);
