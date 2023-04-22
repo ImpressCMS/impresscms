@@ -64,7 +64,7 @@ if (XOOPS_COMMENT_APPROVENONE != icms::$module->config['com_rule']) {
 			if (is_object(icms::$user)) {
 				$com_mode = icms::$user->getVar('umode');
 			} else {
-				$com_mode = icms::config['com_mode'];
+				$com_mode = $icmsConfig['com_mode'];
 			}
 		}
 		$xoopsTpl->assign('comment_mode', $com_mode);
@@ -86,9 +86,9 @@ if (XOOPS_COMMENT_APPROVENONE != icms::$module->config['com_rule']) {
 		}
 		// admins can view all comments and IPs, others can only view approved(active) comments
 		if (is_object(icms::$user) && icms::$user->isAdmin(icms::$module->getVar('mid'))) {
-			$admin_view = TRUE;
+			$admin_view = true;
 		} else {
-			$admin_view = FALSE;
+			$admin_view = false;
 		}
 
 		$com_id = isset($_GET['com_id']) ? (int) $_GET['com_id'] : 0;
@@ -122,24 +122,24 @@ if (XOOPS_COMMENT_APPROVENONE != icms::$module->config['com_rule']) {
 			$xoopsTpl->assign('comment_url', $comment_url . $comment_config['itemName'] . '=' . $com_itemid . '&amp;com_mode=thread&amp;com_order=' . $com_order);
 			if (!empty($com_id) && !empty($com_rootid) && ($com_id != $com_rootid)) {
 				// Show specific thread tree
-				$comments =& $comment_handler->getThread($com_rootid, $com_id);
-				if (FALSE != $comments) {
+				$comments = $comment_handler->getThread($com_rootid, $com_id);
+				if (false != $comments) {
 					$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
 					$renderer->setComments($comments);
 					$renderer->renderThreadView($com_id, $admin_view);
 				}
 			} else {
 				// Show all threads
-				$top_comments =& $comment_handler->getTopComments(
+				$top_comments = $comment_handler->getTopComments(
 					icms::$module->getVar('mid'), $com_itemid, $com_dborder
 				);
 				$c_count = count($top_comments);
 				if ($c_count> 0) {
 					for ($i = 0; $i < $c_count; $i++) {
-						$comments =& $comment_handler->getThread(
+						$comments = $comment_handler->getThread(
 							$top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id')
 						);
-						if (FALSE != $comments) {
+						if (false != $comments) {
 							$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
 							$renderer->setComments($comments);
 							$renderer->renderThreadView($top_comments[$i]->getVar('com_id'), $admin_view);
@@ -150,11 +150,11 @@ if (XOOPS_COMMENT_APPROVENONE != icms::$module->config['com_rule']) {
 			}
 		} else {
 			// Show all threads
-			$top_comments =& $comment_handler->getTopComments(icms::$module->getVar('mid'), $com_itemid, $com_dborder);
+			$top_comments = $comment_handler->getTopComments(icms::$module->getVar('mid'), $com_itemid, $com_dborder);
 			$c_count = count($top_comments);
 			if ($c_count> 0) {
 				for ($i = 0; $i < $c_count; $i++) {
-					$comments =& $comment_handler->getThread(
+					$comments = $comment_handler->getThread(
 						$top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id')
 					);
 					$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
@@ -192,7 +192,7 @@ if (XOOPS_COMMENT_APPROVENONE != icms::$module->config['com_rule']) {
 		if (!empty(icms::$module->config['com_anonpost']) || is_object(icms::$user)) {
 			$postcomment_link = 'comment_new.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode;
 
-			$xoopsTpl->assign('anon_canpost', TRUE);
+			$xoopsTpl->assign('anon_canpost', true);
 		}
 		$link_extra = '';
 		if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
