@@ -42,20 +42,20 @@
  * @version	$Id: comment_view.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
+if (!defined('ICMS_ROOT_PATH') || !is_object(icms::$module)) {
 	exit();
 }
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 include_once ICMS_MODULES_PATH . '/system/constants.php';
 
-if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
+if (XOOPS_COMMENT_APPROVENONE != icms::$module->config['com_rule']) {
 
 	$gperm_handler = icms::handler('icms_member_groupperm');
 	$groups = (icms::$user) ? icms::$user -> getGroups() : ICMS_GROUP_ANONYMOUS;
 	$xoopsTpl->assign('xoops_iscommentadmin', $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $groups));
 
 	icms_loadLanguageFile('core', 'comment');
-	$comment_config = $icmsModule->getInfo('comments');
+	$comment_config = icms::$module->getInfo('comments');
 	$com_itemid = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? (int) $_GET[$comment_config['itemName']] : 0;
 
 	if ($com_itemid > 0) {
@@ -64,7 +64,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			if (is_object(icms::$user)) {
 				$com_mode = icms::$user->getVar('umode');
 			} else {
-				$com_mode = $icmsConfig['com_mode'];
+				$com_mode = icms::config['com_mode'];
 			}
 		}
 		$xoopsTpl->assign('comment_mode', $com_mode);
@@ -85,7 +85,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			$com_dborder = 'ASC';
 		}
 		// admins can view all comments and IPs, others can only view approved(active) comments
-		if (is_object(icms::$user) && icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+		if (is_object(icms::$user) && icms::$user->isAdmin(icms::$module->getVar('mid'))) {
 			$admin_view = TRUE;
 		} else {
 			$admin_view = FALSE;
@@ -95,7 +95,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		$com_rootid = isset($_GET['com_rootid']) ? (int) $_GET['com_rootid'] : 0;
 		$comment_handler = icms::handler('icms_data_comment');
 		if ($com_mode == 'flat') {
-			$comments =& $comment_handler->getByItemId($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
+			$comments =& $comment_handler->getByItemId(icms::$module->getVar('mid'), $com_itemid, $com_dborder);
 			$renderer =& icms_data_comment_Renderer::instance($xoopsTpl);
 			$renderer->setComments($comments);
 			$renderer->renderFlatView($admin_view);
@@ -131,7 +131,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			} else {
 				// Show all threads
 				$top_comments =& $comment_handler->getTopComments(
-					$icmsModule->getVar('mid'), $com_itemid, $com_dborder
+					icms::$module->getVar('mid'), $com_itemid, $com_dborder
 				);
 				$c_count = count($top_comments);
 				if ($c_count> 0) {
@@ -150,7 +150,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			}
 		} else {
 			// Show all threads
-			$top_comments =& $comment_handler->getTopComments($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
+			$top_comments =& $comment_handler->getTopComments(icms::$module->getVar('mid'), $com_itemid, $com_dborder);
 			$c_count = count($top_comments);
 			if ($c_count> 0) {
 				for ($i = 0; $i < $c_count; $i++) {
@@ -189,7 +189,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		}
 		unset($postcomment_link);
 		$navbar .= '>'. _NEWESTFIRST .'</option></select><input type="hidden" name="' . $comment_config['itemName'] . '" value="' . $com_itemid . '" /> <input type="submit" value="'. _CM_REFRESH .'" class="formButton" />';
-		if (!empty($icmsModuleConfig['com_anonpost']) || is_object(icms::$user)) {
+		if (!empty(icms::$module->config['com_anonpost']) || is_object(icms::$user)) {
 			$postcomment_link = 'comment_new.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode;
 
 			$xoopsTpl->assign('anon_canpost', TRUE);

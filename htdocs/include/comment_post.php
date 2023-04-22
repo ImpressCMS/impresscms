@@ -42,12 +42,12 @@
  * @version	$Id: comment_post.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
+if (!defined('ICMS_ROOT_PATH') || !is_object(icms::$module)) {
 	exit();
 }
 icms_loadLanguageFile('core', 'comment');
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
-if ('system' == $icmsModule->getVar('dirname')) {
+if ('system' == icms::$module->getVar('dirname')) {
 	$com_id = isset($_POST['com_id']) ? (int) $_POST['com_id'] : 0;
 	if (empty($com_id)) {
 		exit();
@@ -64,11 +64,11 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	unset($comment);
 } else {
 	$com_id = isset($_POST['com_id']) ? (int) $_POST['com_id'] : 0;
-	if (XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule']) {
+	if (XOOPS_COMMENT_APPROVENONE == icms::$module->config['com_rule']) {
 		exit();
 	}
-	$comment_config = $icmsModule->getInfo('comments');
-	$com_modid = $icmsModule->getVar('mid');
+	$comment_config = icms::$module->getInfo('comments');
+	$com_modid = icms::$module->getVar('mid');
 	$redirect_page = $comment_config['pageName'].'?';
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 		$extra_params = '';
@@ -81,7 +81,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	}
 	$redirect_page .= $comment_config['itemName'];
 	$comment_url = $redirect_page;
-	$moddir = $icmsModule->getVar('dirname');
+	$moddir = icms::$module->getVar('dirname');
 }
 $op = '';
 if (!empty($_POST)) {
@@ -140,7 +140,7 @@ switch ($op) {
 		$noname = isset($noname) ? (int) $noname : 0;
 		// without this, the comment text is empty when previewing the comment
 		$com_text = icms_core_DataFilter::checkVar($_POST['com_text'], 'html', 'output');
-		if ($icmsModule->getVar('dirname') != 'system') {
+		if (icms::$module->getVar('dirname') != 'system') {
 			include ICMS_ROOT_PATH . '/header.php';
 			//themecenterposts($com_title, $p_comment);
 			echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'.$com_title.'</td></tr><tr><td><br />'.$p_comment.'<br /></td></tr></table>';
@@ -232,7 +232,7 @@ switch ($op) {
 					$notify_event = 'comment';
 				} else {
 					//$dohtml = 0;
-					switch ($icmsModuleConfig['com_rule']) {
+					switch (icms::$module->config['com_rule']) {
 						case XOOPS_COMMENT_APPROVEALL:
 						case XOOPS_COMMENT_APPROVEUSER:
 							$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
@@ -250,7 +250,7 @@ switch ($op) {
 							break;
 					}
 				}
-				if (!empty($icmsModuleConfig['com_anonpost']) && !empty($noname)) {
+				if (!empty(icms::$module->config['com_anonpost']) && !empty($noname)) {
 					$uid = 0;
 				} else {
 					$uid = icms::$user->getVar('uid');
@@ -258,14 +258,14 @@ switch ($op) {
 			} else {
 				$dohtml = 0;
 				$uid = 0;
-				if ($icmsModuleConfig['com_anonpost'] != 1) {
+				if (icms::$module->config['com_anonpost'] != 1) {
 					redirect_header($redirect_page . '=' . $com_itemid . '&amp;com_id=' . $com_id . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order,
 					1, _NOPERM);
 				}
 			}
 
 			if ($uid == 0) {
-				switch ($icmsModuleConfig['com_rule']) {
+				switch (icms::$module->config['com_rule']) {
 					case XOOPS_COMMENT_APPROVEALL:
 						$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
 						$add_userpost = TRUE;
@@ -385,11 +385,11 @@ switch ($op) {
 				// point to a viewable page (i.e. not the system administration
 				// module).
 				$comment_tags = array();
-				if ('system' == $icmsModule->getVar('dirname')) {
+				if ('system' == icms::$module->getVar('dirname')) {
 					$module_handler = icms::handler('icms_module');
 					$not_module =& $module_handler->get($not_modid);
 				} else {
-					$not_module =& $icmsModule;
+					$not_module =& icms::$module;
 				}
 				if (!isset($comment_url)) {
 					$com_config =& $not_module->getInfo('comments');
