@@ -33,4 +33,4 @@ define('_CO_ICMS_RATING_NOT_FOUND', 'De geselecteerde beoordeling is niet gevond
 define('_CO_ICMS_RATINGS_CREATED', 'De beoordeling is succesvol aangemaakt.');
 define('_CO_ICMS_RATINGS_MODIFIED', 'De beoordeling is succesvol aangepast.');
 define('_CO_ICMS_RATING_EXPLAIN_TITLE', 'Wat zijn beoordelingen ?');
-define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature in ImpressCMS. With using this tool, you can add a new rating method to your modules, and control the results through this section! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=Rating_feature">Rating Features</a>.');
+define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature in ImpressCMS. With using this tool, you can add a new rating method to your modules, and control the results through this section! Complete documentation of this feature can be found here: <a rel="external" href="https://wiki.impresscms.org/index.php?title=Ratings">Rating Features</a>.');

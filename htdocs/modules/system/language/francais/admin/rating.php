@@ -33,4 +33,4 @@ define('_CO_ICMS_RATING_NOT_FOUND', 'La cotation selectionnée n\'a pas été tr
 define('_CO_ICMS_RATINGS_CREATED', 'La cotation a ete créée');
 define('_CO_ICMS_RATINGS_MODIFIED', 'La cotation a été adaptée');
 define('_CO_ICMS_RATING_EXPLAIN_TITLE', 'Quelles sont les cotations?');
-define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature in ImpressCMS. With using this tool, you can add a new rating method to your modules, and control the results through this section! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=Rating_feature">Rating Features</a>.');
+define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature in ImpressCMS. With using this tool, you can add a new rating method to your modules, and control the results through this section! Complete documentation of this feature can be found here: <a rel="external" href="https://wiki.impresscms.org/index.php?title=Ratings">Rating Features</a>.');
