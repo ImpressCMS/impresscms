@@ -1,13 +1,13 @@
 <?php
 
 /**
-* $Id: rating.php 159 2007-12-17 16:44:05Z malanciault $
-* Module: SmartContent
-* Author: The SmartFactory <www.smartfactory.ca>
-* Licence: GNU
-*/
+ * $Id: rating.php 159 2007-12-17 16:44:05Z malanciault $
+ * Module: SmartContent
+ * Author: The SmartFactory <www.smartfactory.ca>
+ * Licence: GNU
+ */
 if (!defined("XOOPS_ROOT_PATH")) {
- 	die("XOOPS root path not defined");
+	die("XOOPS root path not defined");
 }
 
 define('_CO_ICMS_RATING_RATE_IT', 'Vota!');
@@ -32,4 +32,4 @@ define('_CO_ICMS_RATING_NOT_FOUND', 'La votazione selezionata non &egrave; stata
 define('_CO_ICMS_RATINGS_CREATED', 'La votazione &egrave; stata creata con successo.');
 define('_CO_ICMS_RATINGS_MODIFIED', 'La votazione &egrave; stata modificata con successo.');
 define('_CO_ICMS_RATING_EXPLAIN_TITLE', 'Cosa sono le votazioni?');
-define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature beign added ImpressCMS. With using this tool, you will be able to add a new rating method to your modules, and control the results through this section! Documentation for this feature can be found here: <a rel="external" href="https://www.impresscms.org/modules/simplywiki/index.php?page=Ratings">Rating Features</a>. Let us know how you would like to see this developed');
+define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature being added ImpressCMS. With using this tool, you will be able to add a new rating method to your modules, and control the results through this section! Documentation for this feature can be found here: <a rel="external" href="https://www.impresscms.org/modules/simplywiki/index.php?page=Ratings">Rating Features</a>. Let us know how you would like to see this developed');
