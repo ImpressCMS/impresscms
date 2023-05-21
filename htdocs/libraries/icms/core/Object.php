@@ -1,48 +1,48 @@
 <?php
 // $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
+// ------------------------------------------------------------------------ //
+// XOOPS - PHP Content Management System //
+// Copyright (c) 2000 XOOPS.org //
+// <http://www.xoops.org/> //
+// ------------------------------------------------------------------------ //
+// This program is free software; you can redistribute it and/or modify //
+// it under the terms of the GNU General Public License as published by //
+// the Free Software Foundation; either version 2 of the License, or //
+// (at your option) any later version. //
+// //
+// You may not change or alter any portion of this comment or credits //
+// of supporting developers from this source code or any supporting //
+// source code which is considered copyrighted (c) material of the //
+// original comment or credit authors. //
+// //
+// This program is distributed in the hope that it will be useful, //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the //
+// GNU General Public License for more details. //
+// //
+// You should have received a copy of the GNU General Public License //
+// along with this program; if not, write to the Free Software //
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA //
+// ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu) //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
+// Project: The XOOPS Project //
 // ------------------------------------------------------------------------- //
 /**
  * Manage Objects
  *
- * @copyright	Copyright (c) 2000 XOOPS.org
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @category	ICMS
- * @package		Core
- * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
+ * @copyright Copyright (c) 2000 XOOPS.org
+ * @copyright http://www.impresscms.org/ The ImpressCMS Project
+ * @license LICENSE.txt
+ * @category ICMS
+ * @package Core
+ * @version SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-/**#@+
+/**
+ * #@+
  * Object datatype
- *
- **/
+ */
 define('XOBJ_DTYPE_TXTBOX', 1);
 define('XOBJ_DTYPE_TXTAREA', 2);
 define('XOBJ_DTYPE_INT', 3);
@@ -64,21 +64,24 @@ define('XOBJ_DTYPE_FILE', 204);
 define('XOBJ_DTYPE_IMAGE', 205);
 define('XOBJ_DTYPE_FORM_SECTION', 210);
 define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
-/**#@-*/
+
+/**
+ * #@-
+ */
 
 /**
  * Base class for all objects in the kernel (and beyond)
  *
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @category	ICMS
- * @package		Core
+ * @category ICMS
+ * @package Core
  *
- * @since		XOOPS
- * @author		Kazumi Ono (AKA onokazu)
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- * 				You should have received a copy of XOOPS_copyrights.txt with
- * 				this file. If not, you may obtain a copy from xoops.org
+ * @since XOOPS
+ * @author Kazumi Ono (AKA onokazu)
+ * @copyright copyright (c) 2000-2003 XOOPS.org
+ *            You should have received a copy of XOOPS_copyrights.txt with
+ *            this file. If not, you may obtain a copy from xoops.org
  */
 class icms_core_Object {
 
@@ -87,7 +90,7 @@ class icms_core_Object {
 	 *
 	 * @var array
 	 * @access public
-	 **/
+	 */
 	public $vars = array();
 
 	/**
@@ -114,7 +117,7 @@ class icms_core_Object {
 	 */
 	protected $_isNewConfig = false;
 
-    /**
+	/**
 	 * has any of the values been modified?
 	 *
 	 * @var bool
@@ -141,12 +144,13 @@ class icms_core_Object {
 	 * constructor
 	 *
 	 * normally, this is called from child classes only
+	 *
 	 * @access public
 	 */
-	public function __construct() {
-	}
+	public function __construct() {}
 
-	/**#@+
+	/**
+	 * #@+
 	 * used for new/clone objects
 	 *
 	 * @access public
@@ -154,15 +158,21 @@ class icms_core_Object {
 	public function setNew() {
 		$this->_isNew = true;
 	}
+
 	public function unsetNew() {
 		$this->_isNew = false;
 	}
+
 	public function isNew() {
 		return $this->_isNew;
 	}
-	/**#@-*/
 
-	/**#@+
+	/**
+	 * #@-
+	 */
+
+	/**
+	 * #@+
 	 * used for new config objects when installing/updating module(s)
 	 *
 	 * @access public
@@ -170,51 +180,56 @@ class icms_core_Object {
 	public function setNewConfig() {
 		$this->_isNewConfig = true;
 	}
+
 	public function unsetNewConfig() {
 		$this->_isNewConfig = false;
 	}
+
 	public function isNewConfig() {
 		return $this->_isNewConfig;
 	}
-	/**#@-*/
 
-    /**#@+
+	/**
+	 * #@-
+	 */
+
+	/**
+	 * #@+
 	 * mark modified objects as dirty
 	 *
 	 * used for modified objects only
+	 *
 	 * @access public
 	 */
 	public function setDirty() {
 		$this->_isDirty = true;
 	}
+
 	public function unsetDirty() {
 		$this->_isDirty = false;
 	}
+
 	public function isDirty() {
 		return $this->_isDirty;
 	}
-	/**#@-*/
+
+	/**
+	 * #@-
+	 */
 
 	/**
 	 * initialize variables for the object
 	 *
 	 * @access public
 	 * @param string $key
-	 * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
+	 * @param int $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
 	 * @param mixed
-	 * @param bool $required  require html form input?
-	 * @param int $maxlength  for XOBJ_DTYPE_TXTBOX type only
-	 * @param string $option  does this data have any select options?
+	 * @param bool $required require html form input?
+	 * @param int $maxlength for XOBJ_DTYPE_TXTBOX type only
+	 * @param string $option does this data have any select options?
 	 */
 	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
-		$this->vars[$key] = array(
-			'value' => $value,
-			'required' => $required,
-			'data_type' => $data_type,
-			'maxlength' => $maxlength,
-			'changed' => false,
-			'options' => $options
-		);
+		$this->vars[$key] = array('value' => $value, 'required' => $required, 'data_type' => $data_type, 'maxlength' => $maxlength, 'changed' => false, 'options' => $options);
 	}
 
 	/**
@@ -226,7 +241,7 @@ class icms_core_Object {
 	 */
 	public function assignVar($key, $value) {
 		if (isset($value) && isset($this->vars[$key])) {
-			$this->vars[$key]['value'] =& $value;
+			$this->vars[$key]['value'] = &$value;
 		}
 	}
 
@@ -252,7 +267,7 @@ class icms_core_Object {
 	 */
 	public function setVar($key, $value, $not_gpc = false) {
 		if (!empty($key) && isset($value) && isset($this->vars[$key])) {
-			$this->vars[$key]['value'] =& $value;
+			$this->vars[$key]['value'] = &$value;
 			$this->vars[$key]['not_gpc'] = $not_gpc;
 			$this->vars[$key]['changed'] = true;
 			$this->setDirty();
@@ -283,7 +298,7 @@ class icms_core_Object {
 	 * @param array $var_arr associative array of values to assign
 	 * @param string $pref prefix (only keys starting with the prefix will be set)
 	 */
-	public function setFormVars($var_arr=null, $pref='xo_', $not_gpc=false) {
+	public function setFormVars($var_arr = null, $pref = 'xo_', $not_gpc = false) {
 		$len = strlen($pref);
 		foreach ($var_arr as $key => $value) {
 			if ($pref == substr($key, 0, $len)) {
@@ -374,11 +389,11 @@ class icms_core_Object {
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html && (!is_int($ret) && !empty($ret))) {
-                            if ($br) { // have to use this whilst ever there's a zillion editors in the core
-                                return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
-                            } else {
-                                return icms_core_DataFilter::checkVar($ret, 'html', 'output');
-                            }
+							if ($br) { // have to use this whilst ever there's a zillion editors in the core
+								return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
+							} else {
+								return icms_core_DataFilter::checkVar($ret, 'html', 'output');
+							}
 						} else {
 							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
 						}
@@ -397,7 +412,7 @@ class icms_core_Object {
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-                            return icms_core_DataFilter::checkVar($ret, 'html', 'input');
+							return icms_core_DataFilter::checkVar($ret, 'html', 'input');
 						} else {
 							return icms_core_DataFilter::checkVar($ret, 'text', 'input');
 						}
@@ -405,13 +420,13 @@ class icms_core_Object {
 
 					case 'f':
 					case 'formpreview':
-                        $filtered = strpos($ret, '<!-- input filtered -->');
-                        if ($filtered !== FALSE) {
-                            $ret = str_replace('<!-- input filtered -->', '', $ret);
-                            $ret = str_replace('<!-- filtered with htmlpurifier -->', '', $ret);
-                        }
+						$filtered = strpos($ret, '<!-- input filtered -->');
+						if ($filtered !== FALSE) {
+							$ret = str_replace('<!-- input filtered -->', '', $ret);
+							$ret = str_replace('<!-- filtered with htmlpurifier -->', '', $ret);
+						}
 
-                        return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -466,7 +481,7 @@ class icms_core_Object {
 								if (in_array($i, $selected)) {
 									$ret[] = $op;
 								}
-								$i++;
+								$i++ ;
 							}
 							return implode(', ', $ret);
 						case 'e':
@@ -477,7 +492,6 @@ class icms_core_Object {
 						default:
 							break 1;
 					}
-
 				}
 				break;
 		}
@@ -501,8 +515,7 @@ class icms_core_Object {
 
 		foreach ($this->vars as $k => $v) {
 			$cleanv = $v['value'];
-			if (!$v['changed'] || $this->_isNewConfig || (!is_int($cleanv) && empty($cleanv))) {
-			} else {
+			if (!$v['changed'] || $this->_isNewConfig || (!is_int($cleanv) && empty($cleanv))) {} else {
 				$cleanv = is_string($cleanv) ? trim($cleanv) : $cleanv;
 				switch ($v['data_type']) {
 					case XOBJ_DTYPE_TXTBOX:
@@ -528,10 +541,10 @@ class icms_core_Object {
 						}
 						if (!$v['not_gpc']) {
 							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
-                            $cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
+							$cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						} else {
-							//$cleanv = icms_core_DataFilter::censorString($cleanv);
-                            $cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
+							// $cleanv = icms_core_DataFilter::censorString($cleanv);
+							$cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						}
 						break;
 
@@ -553,7 +566,7 @@ class icms_core_Object {
 						break;
 
 					case XOBJ_DTYPE_FLOAT:
-						$cleanv = icms_float($cleanv);
+						$cleanv = icms_currency($cleanv);
 						break;
 
 					case XOBJ_DTYPE_EMAIL:
@@ -605,7 +618,7 @@ class icms_core_Object {
 						break;
 				}
 			}
-			$this->cleanVars[$k] =& $cleanv;
+			$this->cleanVars[$k] = &$cleanv;
 			unset($cleanv);
 		}
 		if (count($this->_errors) > 0) {
