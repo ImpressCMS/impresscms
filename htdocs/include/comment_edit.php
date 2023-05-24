@@ -47,10 +47,10 @@ defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
 include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 $ph = icms::handler('icms_member_groupperm');
 
-if (('system' != $icmsModule->getVar('dirname')
-		&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
+if (('system' != icms::$module->getVar('dirname')
+		&& XOOPS_COMMENT_APPROVENONE == icms::$module->config['com_rule'])
 	|| (!is_object(icms::$user) && !$ph->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, array(ICMS_GROUP_ANONYMOUS)))
-	|| !is_object($icmsModule)
+		|| !is_object(icms::$module)
 ) {
 	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
 }
@@ -89,7 +89,7 @@ $com_text = $comment->getVar('com_text', 'E');
 $com_pid = $comment->getVar('com_pid');
 $com_status = $comment->getVar('com_status');
 $com_rootid = $comment->getVar('com_rootid');
-if ($icmsModule->getVar('dirname') != 'system') {
+if (icms::$module->getVar('dirname') != 'system') {
 	include ICMS_ROOT_PATH . '/header.php';
 	include ICMS_ROOT_PATH . '/include/comment_form.php';
 	include ICMS_ROOT_PATH . '/footer.php';

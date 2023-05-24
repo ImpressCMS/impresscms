@@ -42,15 +42,15 @@
  * @version	$Id: comment_reply.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
+if (!defined('ICMS_ROOT_PATH') || !is_object(icms::$module)) {
 	exit();
 }
 
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
-if (('system' != $icmsModule->getVar('dirname')
-	&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
-	|| (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost'])
-	|| !is_object($icmsModule)) {
+if (('system' != icms::$module->getVar('dirname')
+		&& XOOPS_COMMENT_APPROVENONE == icms::$module->config['com_rule'])
+		|| (!is_object(icms::$user) && !icms::$module->config['com_anonpost'])
+		|| !is_object(icms::$module)) {
 	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
 }
 

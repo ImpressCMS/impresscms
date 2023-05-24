@@ -5,10 +5,10 @@
  * The English localization is solely for demonstration
  */
 // Do not change the class name
-class XoopsMailerLocal extends XoopsMailer {
+class XoopsMailerLocal extends icms_messaging_EmailHandler {
 
-	function XoopsMailerLocal(){
-		$this->XoopsMailer();
+	function __construct(){
+		parent::__construct();
 		// It is supposed no need to change the charset
 		$this->charSet = strtolower( _CHARSET );
 		// You MUST specify the language code value so that the file exists: XOOPS_ROOT_PAT/class/mail/phpmailer/language/lang-["your-language-code"].php
@@ -31,4 +31,3 @@ class XoopsMailerLocal extends XoopsMailer {
 		return $text;
 	}
 }
-?>

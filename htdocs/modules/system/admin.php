@@ -75,7 +75,7 @@ $filter_post = array('fct' => 'str');
 
 if (!empty($_POST)) {
 	$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
-	extract($clean_POST);
+	if (!empty($clean_POST)) extract($clean_POST);
 }
 
 if ($fct == 'users') {

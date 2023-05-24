@@ -1,14 +1,13 @@
 <?php
 /**
-* rating definations
-*
-* @copyright      http://www.impresscms.org/ The ImpressCMS Project
-* @license         LICENSE.txt
-* @package	ratings
-* @author		marcan <macrcan@impresscms.org>
-* @version		$Id$
-*/
-
+ * rating definations
+ *
+ * @copyright http://www.impresscms.org/ The ImpressCMS Project
+ * @license LICENSE.txt
+ * @package ratings
+ * @author marcan <macrcan@impresscms.org>
+ * @version $Id$
+ */
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 define('_CO_ICMS_RATING_RATE_IT', 'Coter !');
@@ -33,4 +32,4 @@ define('_CO_ICMS_RATING_NOT_FOUND', 'La cotation selectionnée n\'a pas été tr
 define('_CO_ICMS_RATINGS_CREATED', 'La cotation a ete créée');
 define('_CO_ICMS_RATINGS_MODIFIED', 'La cotation a été adaptée');
 define('_CO_ICMS_RATING_EXPLAIN_TITLE', 'Quelles sont les cotations?');
-define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature in ImpressCMS. With using this tool, you can add a new rating method to your modules, and control the results through this section! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=Rating_feature">Rating Features</a>.');
+define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature being added ImpressCMS. With using this tool, you will be able to add a new rating method to your modules, and control the results through this section! Documentation for this feature can be found here: <a rel="external" href="https://www.impresscms.org/modules/simplywiki/index.php?page=Ratings">Rating Features</a>. Let us know how you would like to see this developed');
