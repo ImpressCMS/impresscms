@@ -1,6 +1,6 @@
-# ImpressCMS 1.5.0 (2.0.0)
+# ImpressCMS 2.0.0
 
-ImpressCMS 1.5 realizes the majority of the original scope of the 2.0 release, started 10 years ago. It will be renamed 2.0.0. The focus is on providing compatibility with newer version of PHP (PHP7.x and PHP 8.x) and code cleanup. Existing modules that are compatible with the newer PHP versions should still work. This version, ImpressCMS 1.5.0/2.0.0, does require PHP versions 7.4 and above, and contains several corrections and security improvements compared to the previous release.
+This release of ImpressCMS realizes the majority of the original scope of the 2.0 release, started 10 years ago. It has been renamed 2.0.0. The focus is on providing compatibility with newer version of PHP (PHP7.x and PHP 8.x) and code cleanup. Existing modules that are compatible with the newer PHP versions should still work. This version, ImpressCMS 2.0.0, does require PHP versions 7.3 and above, and contains several corrections and security improvements compared to the previous release. Because of this requirement, the only database connection type is PDO, If your site is using the MySQL connection type, you will need to switch prior to moving to this version.
 
 ## Installation
 
