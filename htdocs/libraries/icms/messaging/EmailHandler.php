@@ -44,6 +44,8 @@ require_once ICMS_LIBRARIES_PATH . '/phpmailer/PHPMailer.php';
 require_once ICMS_LIBRARIES_PATH . '/phpmailer/SMTP.php';
 require_once ICMS_LIBRARIES_PATH . '/phpmailer/Exception.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 /**
  * Mailer Class.
  *
@@ -54,7 +56,7 @@ require_once ICMS_LIBRARIES_PATH . '/phpmailer/Exception.php';
  * @package Core
  * @subpackage Mail
  */
-class icms_messaging_EmailHandler extends PHPMailer\PHPMailer\PHPMailer {
+class icms_messaging_EmailHandler extends PHPMailer {
 
 	/**
 	 * "from" address
