@@ -35,7 +35,6 @@
  * @subpackage Email
  * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version SVN: $Id: EmailHandler.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 /**
@@ -43,6 +42,7 @@
  */
 require_once ICMS_LIBRARIES_PATH . '/phpmailer/PHPMailer.php';
 require_once ICMS_LIBRARIES_PATH . '/phpmailer/SMTP.php';
+require_once ICMS_LIBRARIES_PATH . '/phpmailer/Exception.php';
 
 /**
  * Mailer Class.
