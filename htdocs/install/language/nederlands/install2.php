@@ -5,7 +5,7 @@ define("_INSTALL_WEBMASTERD","Webmasters van deze website");
 define("_INSTALL_REGUSERS","Geregistreerde gebruikers");
 define("_INSTALL_REGUSERSD","Registered Users groep");
 define("_INSTALL_ANONUSERS","Anonieme gebruikers");
-define("_INSTALL_ANONUSERSD","Groep van anonieme ge"bruikers");
+define("_INSTALL_ANONUSERSD","Groep van anonieme gebruikers");
 
 define("_INSTALL_L165","De site is op dit moment gesloten voor onderhoud. Kom later terug aub.");
 

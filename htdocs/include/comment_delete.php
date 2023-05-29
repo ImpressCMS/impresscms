@@ -42,7 +42,7 @@
  * @version	$Id: comment_delete.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
+if (!defined('ICMS_ROOT_PATH') || !is_object(icms::$module)) {
 	exit();
 }
 include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
@@ -59,7 +59,7 @@ if (!empty($_POST)) {
 
 }
 
-if ('system' == $icmsModule->getVar('dirname')) {
+if ('system' == icms::$module->getVar('dirname')) {
 	$comment_handler = icms::handler('icms_data_comment');
 	$comment =& $comment_handler->get($com_id);
 	$module_handler = icms::handler('icms_module');
@@ -70,11 +70,11 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	$moddir = $module->getVar('dirname');
 	unset($comment);
 } else {
-	if (XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule']) {
+	if (XOOPS_COMMENT_APPROVENONE == icms::$module->config['com_rule']) {
 		exit();
 	}
-	$comment_config = $icmsModule->getInfo('comments');
-	$com_modid = $icmsModule->getVar('mid');
+	$comment_config = icms::$module->getInfo('comments');
+	$com_modid = icms::$module->getVar('mid');
 	$redirect_page = $comment_config['pageName'] . '?';
 	$comment_confirm_extra = array();
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
@@ -93,7 +93,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 		}
 	}
 	$redirect_page .= $comment_config['itemName'];
-	$moddir = $icmsModule->getVar('dirname');
+	$moddir = icms::$module->getVar('dirname');
 }
 
 $accesserror = false;
