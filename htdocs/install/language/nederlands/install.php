@@ -227,7 +227,7 @@ define('_CORE_PASSLEVEL1','Te kort');
 define('_CORE_PASSLEVEL2','Zwak');
 define('_CORE_PASSLEVEL3','Goed');
 define('_CORE_PASSLEVEL4','Sterk');
-define('DB_PCONNECT_HELP', "Blijvende connecties kunnen interessant zijn voor tragere internet verbindingen. Ze zijn voor de meeste installaties niet nodig. Standaard is \'Neen\', kies \'Neen\' als u niet zeker bent.); // L69
+define('DB_PCONNECT_HELP', "Blijvende connecties kunnen interessant zijn voor tragere internet verbindingen. Ze zijn voor de meeste installaties niet nodig. Standaard is \'Neen\', kies \'Neen\' als u niet zeker bent."); // L69
 define( 'DB_PCONNECT_HELPS',  'Blijvende connecties kunnen interessant zijn voor tragere internet verbindingen. Ze zijn voor de meeste installaties niet nodig.'); // L69
 
 // Added in 1.3

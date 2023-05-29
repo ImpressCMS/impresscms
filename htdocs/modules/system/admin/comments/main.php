@@ -33,7 +33,7 @@
  * @subpackage Comments
  * @version SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
  */
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmin(icms::$module->getVar('mid'))) {
 	exit("Access Denied");
 } else {
 	/*
@@ -152,7 +152,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 				$class = ($class == 'odd') ? 'even' : 'odd';
 				$poster_uname = $icmsConfig['anonymous'];
 				if ($comments[$i]->getVar('com_uid') > 0) {
-					$poster = &$member_handler->getUser($comments[$i]->getVar('com_uid'));
+					$poster = icms::handler('icms_member')->getUser($comments[$i]->getVar('com_uid'));
 					if (is_object($poster)) {
 						$poster_uname = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $comments[$i]->getVar('com_uid') . '">' . $poster->getVar('uname') . '</a>';
 					}

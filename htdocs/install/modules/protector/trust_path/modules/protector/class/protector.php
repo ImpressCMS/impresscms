@@ -3,21 +3,16 @@
 class Protector {
 	var $mydirname;
 	var $_conn = null;
-	var $_conf = array ();
+	var $_conf = array();
 	var $_conf_serialized = '';
-	var $_bad_globals = array ();
+	var $_bad_globals = array();
 	var $message = '';
 	var $warning = false;
 	var $error = false;
-	var $_doubtful_requests = array ();
-	var $_bigumbrella_doubtfuls = array ();
-	var $_dblayertrap_doubtfuls = array ();
-	var $_dblayertrap_doubtful_needles = array (
-		'information_schema',
-		'select',
-		"'",
-		'"',
-	);
+	var $_doubtful_requests = array();
+	var $_bigumbrella_doubtfuls = array();
+	var $_dblayertrap_doubtfuls = array();
+	var $_dblayertrap_doubtful_needles = array('information_schema', 'select', "'", '"');
 	var $_logged = false;
 	var $_done_badext = false;
 	var $_done_intval = false;
@@ -45,7 +40,7 @@ class Protector {
 		// Preferences from configs/cache
 		$this->_conf_serialized = @file_get_contents($this->get_filepath4confighcache());
 		$this->_conf = @unserialize($this->_conf_serialized);
-		if (empty($this->_conf)) $this->_conf = array ();
+		if (empty($this->_conf)) $this->_conf = array();
 
 		if (!empty($this->_conf['global_disabled'])) return true;
 
@@ -60,32 +55,7 @@ class Protector {
 		// $_SERVER['PHP_SELF'] = strtr( @$_SERVER['PHP_SELF'] , array( '<' => '%3C' , '>' => '%3E' , "'" => '%27' , '"' => '%22' ) ) ;
 		// if( ! empty( $_SERVER['PATH_INFO'] ) ) $_SERVER['PATH_INFO'] = strtr( @$_SERVER['PATH_INFO'] , array( '<' => '%3C' , '>' => '%3E' , "'" => '%27' , '"' => '%22' ) ) ;
 
-		$this->_bad_globals = array (
-			'GLOBALS',
-			'_SESSION',
-			'HTTP_SESSION_VARS',
-			'_GET',
-			'HTTP_GET_VARS',
-			'_POST',
-			'HTTP_POST_VARS',
-			'_COOKIE',
-			'HTTP_COOKIE_VARS',
-			'_SERVER',
-			'HTTP_SERVER_VARS',
-			'_REQUEST',
-			'_ENV',
-			'_FILES',
-			'xoopsDB',
-			'xoopsUser',
-			'xoopsUserId',
-			'xoopsUserGroups',
-			'xoopsUserIsAdmin',
-			'xoopsConfig',
-			'icmsConfig',
-			'xoopsOption',
-			'xoopsModule',
-			'xoopsModuleConfig'
-		);
+		$this->_bad_globals = array('GLOBALS', '_SESSION', '_GET', '_POST', '_COOKIE', '_SERVER', '_REQUEST', '_ENV', '_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'icmsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig');
 
 		$this->_initial_recursive($_GET, 'G');
 		$this->_initial_recursive($_POST, 'P');
@@ -144,7 +114,7 @@ class Protector {
 		if (!$result || icms::$xoopsDB->getRowsNum($result) < 5) {
 			return false;
 		}
-		$db_conf = array ();
+		$db_conf = array();
 		while (list($key, $val) = icms::$xoopsDB->fetchRow($result)) {
 			$db_conf[$key] = $val;
 		}
@@ -288,8 +258,8 @@ class Protector {
 
 	function get_bad_ips($with_jailed_time = false) {
 		list($bad_ips_serialized) = @file(self::get_filepath4badips());
-		$bad_ips = empty($bad_ips_serialized) ? array () : @unserialize($bad_ips_serialized);
-		if (!is_array($bad_ips) || isset($bad_ips[0])) $bad_ips = array ();
+		$bad_ips = empty($bad_ips_serialized) ? array() : @unserialize($bad_ips_serialized);
+		if (!is_array($bad_ips) || isset($bad_ips[0])) $bad_ips = array();
 
 		// expire jailed_time
 		$pos = 0;
@@ -312,8 +282,8 @@ class Protector {
 
 	function get_group1_ips($with_info = false) {
 		list($group1_ips_serialized) = @file(self::get_filepath4group1ips());
-		$group1_ips = empty($group1_ips_serialized) ? array () : @unserialize($group1_ips_serialized);
-		if (!is_array($group1_ips)) $group1_ips = array ();
+		$group1_ips = empty($group1_ips_serialized) ? array() : @unserialize($group1_ips_serialized);
+		if (!is_array($group1_ips)) $group1_ips = array();
 
 		if ($with_info) {
 			$group1_ips = array_flip($group1_ips);
@@ -438,7 +408,7 @@ class Protector {
 	function dblayertrap_init($force_override = false) {
 		if (!empty($GLOBALS['xoopsOption']['nocommon']) || defined('_LEGACY_PREVENT_EXEC_COMMON_') || defined('_LEGACY_PREVENT_LOAD_CORE_')) return; // skip
 
-		$this->_dblayertrap_doubtfuls = array ();
+		$this->_dblayertrap_doubtfuls = array();
 		$this->_dblayertrap_check_recursive($_GET);
 		$this->_dblayertrap_check_recursive($_POST);
 		$this->_dblayertrap_check_recursive($_COOKIE);
@@ -465,15 +435,12 @@ class Protector {
 	}
 
 	function bigumbrella_init() {
-		$this->_bigumbrella_doubtfuls = array ();
+		$this->_bigumbrella_doubtfuls = array();
 		$this->_bigumbrella_check_recursive($_GET);
 		$this->_bigumbrella_check_recursive(@$_SERVER['PHP_SELF']);
 
 		if (!empty($this->_bigumbrella_doubtfuls)) {
-			ob_start(array (
-				$this,
-				'bigumbrella_outputcheck'
-			));
+			ob_start(array($this, 'bigumbrella_outputcheck'));
 		}
 	}
 
@@ -501,8 +468,6 @@ class Protector {
 	}
 
 	function intval_allrequestsendid() {
-		global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
-
 		if ($this->_done_intval)
 			return true;
 		else
@@ -511,7 +476,7 @@ class Protector {
 		foreach ($_GET as $key => $val) {
 			if (substr($key, -2) == 'id' && !is_array($_GET[$key])) {
 				$newval = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
-				$_GET[$key] = $HTTP_GET_VARS[$key] = $newval;
+				$_GET[$key] = $newval;
 				if ($_REQUEST[$key] == $_GET[$key]) {
 					$_REQUEST[$key] = $newval;
 				}
@@ -520,7 +485,7 @@ class Protector {
 		foreach ($_POST as $key => $val) {
 			if (substr($key, -2) == 'id' && !is_array($_POST[$key])) {
 				$newval = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
-				$_POST[$key] = $HTTP_POST_VARS[$key] = $newval;
+				$_POST[$key] = $newval;
 				if ($_REQUEST[$key] == $_POST[$key]) {
 					$_REQUEST[$key] = $newval;
 				}
@@ -529,7 +494,7 @@ class Protector {
 		foreach ($_COOKIE as $key => $val) {
 			if (substr($key, -2) == 'id' && !is_array($_COOKIE[$key])) {
 				$newval = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
-				$_COOKIE[$key] = $HTTP_COOKIE_VARS[$key] = $newval;
+				$_COOKIE[$key] = $newval;
 				if ($_REQUEST[$key] == $_COOKIE[$key]) {
 					$_REQUEST[$key] = $newval;
 				}
@@ -540,8 +505,6 @@ class Protector {
 	}
 
 	function eliminate_dotdot() {
-		global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
-
 		if ($this->_done_dotdot)
 			return true;
 		else
@@ -555,7 +518,7 @@ class Protector {
 				$this->output_log($this->last_error_type, 0, false, 64);
 				$sanitized_val = str_replace(chr(0), '', $val);
 				if (substr($sanitized_val, -2) != ' .') $sanitized_val .= ' .';
-				$_GET[$key] = $HTTP_GET_VARS[$key] = $sanitized_val;
+				$_GET[$key] = $sanitized_val;
 				if ($_REQUEST[$key] == $_GET[$key]) {
 					$_REQUEST[$key] = $sanitized_val;
 				}
@@ -605,8 +568,6 @@ class Protector {
 	}
 
 	function replace_doubtful($key, $val) {
-		global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
-
 		$index_expression = '';
 		$indexes = explode('_', $key);
 		$base_array = array_shift($indexes);
@@ -614,15 +575,12 @@ class Protector {
 		switch ($base_array) {
 			case 'G':
 				$main_ref = &$this->get_ref_from_base64index($_GET, $indexes);
-				$legacy_ref = &$this->get_ref_from_base64index($HTTP_GET_VARS, $indexes);
 				break;
 			case 'P':
 				$main_ref = &$this->get_ref_from_base64index($_POST, $indexes);
-				$legacy_ref = &$this->get_ref_from_base64index($HTTP_POST_VARS, $indexes);
 				break;
 			case 'C':
 				$main_ref = &$this->get_ref_from_base64index($_COOKIE, $indexes);
-				$legacy_ref = &$this->get_ref_from_base64index($HTTP_COOKIE_VARS, $indexes);
 				break;
 			default:
 				exit();
@@ -633,7 +591,6 @@ class Protector {
 			$request_ref = $val;
 		}
 		$main_ref = $val;
-		$legacy_ref = $val;
 	}
 
 	function check_uploaded_files() {
@@ -643,35 +600,9 @@ class Protector {
 			$this->_done_badext = true;
 
 		// extensions never uploaded
-		$bad_extensions = array (
-			'php',
-			'phtml',
-			'phtm',
-			'php3',
-			'php4',
-			'cgi',
-			'pl',
-			'asp'
-		);
+		$bad_extensions = array('php', 'phtml', 'phtm', 'php3', 'php4', 'cgi', 'pl', 'asp');
 		// extensions needed image check (anti-IE Content-Type XSS)
-		$image_extensions = array (
-			1 => 'gif',
-			2 => 'jpg',
-			3 => 'png',
-			4 => 'swf',
-			5 => 'psd',
-			6 => 'bmp',
-			7 => 'tif',
-			8 => 'tif',
-			9 => 'jpc',
-			10 => 'jp2',
-			11 => 'jpx',
-			12 => 'jb2',
-			13 => 'swc',
-			14 => 'iff',
-			15 => 'wbmp',
-			16 => 'xbm'
-		);
+		$image_extensions = array(1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'swf', 5 => 'psd', 6 => 'bmp', 7 => 'tif', 8 => 'tif', 9 => 'jpc', 10 => 'jp2', 11 => 'jpx', 12 => 'jb2', 13 => 'swc', 14 => 'iff', 15 => 'wbmp', 16 => 'xbm');
 
 		foreach ($_FILES as $_file) {
 			if (!empty($_file['error'])) continue;
@@ -769,10 +700,7 @@ class Protector {
 
 		foreach ($this->_doubtful_requests as $key => $val) {
 
-			$str = str_replace(array (
-				'/*',
-				'*/'
-			), '', preg_replace('?/\*.+\*/?sU', '', $val));
+			$str = str_replace(array('/*', '*/'), '', preg_replace('?/\*.+\*/?sU', '', $val));
 			if (preg_match('/\sUNION\s+(ALL|SELECT)/i', $str)) {
 				$this->message .= "Pattern like SQL injection found. ($val)\n";
 				if ($sanitize) $this->replace_doubtful($key, preg_replace('/union/i', 'uni-on', $val));
@@ -986,7 +914,6 @@ class Protector {
 	}
 
 	function disable_features() {
-		global $HTTP_POST_VARS, $HTTP_GET_VARS, $HTTP_COOKIE_VARS;
 
 		// disable "Notice: Undefined index: ..."
 		$error_reporting_level = error_reporting(0);
@@ -1047,7 +974,7 @@ class Protector {
 
 			// comment comment_post.php
 			if (isset($_POST['com_dopreview']) && !strstr(substr(@$_SERVER['HTTP_REFERER'], -16), 'comment_post.php')) {
-				$HTTP_POST_VARS['dohtml'] = $_POST['dohtml'] = 0;
+				$_POST['dohtml'] = 0;
 			}
 			// tpl preview
 			if (substr(@$_SERVER['SCRIPT_NAME'], -24) == 'modules/system/admin.php' && ($_GET['fct'] == 'tplsets' || $_POST['fct'] == 'tplsets')) {
