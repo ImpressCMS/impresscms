@@ -19,19 +19,19 @@ class IcmsPreloadGoogleanalytics extends icms_preload_Item {
 
 
         try {
-
-            if ($icmsConfigMetaFooter['use_google_analytics'] && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
-				if(substr( $icmsConfigMetaFooter['use_google_analytics'], 0, 2 ) === "G-")
+            if ($icmsConfigMetaFooter['use_google_analytics'])
+			{
+				if(isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') 
 				{
-					$this->insertGA4Tag($icmsConfigMetaFooter['use_google_analytics']);
+					if(substr( $icmsConfigMetaFooter['use_google_analytics'], 0, 2 ) === "G-")
+					{
+						$this->insertGA4Tag($icmsConfigMetaFooter['google_analytics']);
+					}
+					else
+					{
+						$this->insertUniversalAnalyticsTag($icmsConfigMetaFooter['google_analytics']);
+					}
 				}
-				else
-				{
-					$this->insertUniversalAnalyticsTag($icmsConfigMetaFooter['use_google_analytics']);
-				}
-            }
-            else {
-                echo 'error getting icmsConfigMetaFooter';
             }
         }
         catch (Exception $e) {
