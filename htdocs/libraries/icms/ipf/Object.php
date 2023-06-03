@@ -758,7 +758,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @return mixed formatted value of the variable
 	 */
 	public function getVar($key, $format = 's') {
-		$myts = = icms_core_Textsanitizer::getInstance();
+		$myts = icms_core_Textsanitizer::getInstance();
 
 		$ret = $this->vars[$key]['value'];
 
