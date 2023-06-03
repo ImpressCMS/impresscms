@@ -1,63 +1,61 @@
 <?php
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
+// ------------------------------------------------------------------------ //
+// XOOPS - PHP Content Management System //
+// Copyright (c) 2000 XOOPS.org //
+// <http://www.xoops.org/> //
+// ------------------------------------------------------------------------ //
+// This program is free software; you can redistribute it and/or modify //
+// it under the terms of the GNU General Public License as published by //
+// the Free Software Foundation; either version 2 of the License, or //
+// (at your option) any later version. //
+// //
+// You may not change or alter any portion of this comment or credits //
+// of supporting developers from this source code or any supporting //
+// source code which is considered copyrighted (c) material of the //
+// original comment or credit authors. //
+// //
+// This program is distributed in the hope that it will be useful, //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the //
+// GNU General Public License for more details. //
+// //
+// You should have received a copy of the GNU General Public License //
+// along with this program; if not, write to the Free Software //
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA //
+// ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu) //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
+// Project: The XOOPS Project //
 // ------------------------------------------------------------------------- //
 /**
  * ImpressCMS Block Persistable Class
  *
- * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * @category	ICMS
- * @package		View
- * @subpackage	Block
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @version		SVN: $Id: Handler.php 12313 2013-09-15 21:14:35Z skenow $
+ * @copyright The ImpressCMS Project <http://www.impresscms.org>
+ * @license GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ * @category ICMS
+ * @package View
+ * @subpackage Block
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @version SVN: $Id: Handler.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * ImpressCMS Core Block Object Handler Class
  *
- * @copyright	The ImpressCMS Project <http://www.impresscms.org>
- * @license		GNU GPL v2
- * @category	ICMS
- * @package		View
- * @subpackage	Block
- * @since		ImpressCMS 1.2
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @copyright The ImpressCMS Project <http://www.impresscms.org>
+ * @license GNU GPL v2
+ * @category ICMS
+ * @package View
+ * @subpackage Block
+ * @since ImpressCMS 1.2
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class icms_view_block_Handler extends icms_ipf_Handler {
-
 	private $block_positions;
 	private $modules_name;
 
-	public function __construct(& $db) {
+	public function __construct(&$db) {
 		parent::__construct($db, 'block', 'bid', 'title', 'content', 'icms');
 		$this->className = 'icms_view_block_Object';
 		$this->table = $this->db->prefix('newblocks');
@@ -72,12 +70,12 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * @return array
 	 */
 	public function getBlockPositions($full = false) {
-		if (!count($this->block_positions)) {
+		if (!is_array($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
 			$icms_blockposition_handler = icms::handler('icms_view_block_position');
-			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
-			//			$result = $this->db->query($sql);
-			//			while ($row = $this->db->fetchArray($result)) {
+			// $sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
+			// $result = $this->db->query($sql);
+			// while ($row = $this->db->fetchArray($result)) {
 			$block_positions = $icms_blockposition_handler->getObjects();
 			foreach ($block_positions as $bp) {
 				$this->block_positions[$bp->getVar('id')]['pname'] = $bp->getVar('pname');
@@ -89,7 +87,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		}
 		if (!$full) {
 			foreach ($this->block_positions as $k => $block_position) {
-				$rtn[ $k ] = $block_position['pname'];
+				$rtn[$k] = $block_position['pname'];
 			}
 		} else {
 			$rtn = $this->block_positions;
@@ -130,29 +128,29 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 */
 	public function getAllBlocks($rettype = "object", $side = null, $visible = null, $orderby = "side, weight, bid", $isactive = 1) {
 		$ret = array();
-		$where_query = " WHERE isactive='". (int) $isactive . "'";
+		$where_query = " WHERE isactive='" . (int) $isactive . "'";
 
 		if (isset($side)) {
 			// get both sides in sidebox? (some themes need this)
 			$tp = ($side == -2) ? 'L' : (($side == -6) ? 'C' : '');
 			if ($tp != '') {
-			 	$q_side = "";
+				$q_side = "";
 				$icms_blockposition_handler = icms::handler('icms_view_block_position');
 				$criteria = new icms_db_criteria_Compo();
 				$criteria->add(new icms_db_criteria_Item('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach ($blockpositions as $bp) {
-					$q_side .= "side='". (int) $bp->getVar('id') . "' OR ";
+					$q_side .= "side='" . (int) $bp->getVar('id') . "' OR ";
 				}
-				$q_side = "('" . substr($q_side, 0, strlen($q_side)-4) . "')";
+				$q_side = "('" . substr($q_side, 0, strlen($q_side) - 4) . "')";
 			} else {
-				$q_side = "side='". (int) $side . "'";
+				$q_side = "side='" . (int) $side . "'";
 			}
-			$where_query .= " AND ". $q_side;
+			$where_query .= " AND " . $q_side;
 		}
 
 		if (isset($visible)) {
-			$where_query .= " AND visible='". (int) $visible . "'";
+			$where_query .= " AND visible='" . (int) $visible . "'";
 		}
 		$where_query .= " ORDER BY $orderby";
 		switch ($rettype) {
@@ -213,11 +211,9 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 */
 	public function getAllByGroupModule($groupid, $module_id = '0-0', $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
 		// TODO: use $this->getObjects($criteria);
-
-		$isactive = (int)$isactive;
+		$isactive = (int) $isactive;
 		$ret = array();
-		$sql = "SELECT DISTINCT gperm_itemid FROM " . $this->db->prefix('group_permission')
-			. " WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
+		$sql = "SELECT DISTINCT gperm_itemid FROM " . $this->db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
 		if (is_array($groupid)) {
 			$gid = array_map('intval', $groupid);
 			$sql .= " AND gperm_groupid IN (" . implode(',', $gid) . ")";
@@ -233,9 +229,8 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		}
 
 		if (!empty($blockids)) {
-			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks') . " b, " . $this->db->prefix('block_module_link')
-				. " m WHERE m.block_id=b.bid";
-			$sql .= " AND b.isactive='" . $isactive."'";
+			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks') . " b, " . $this->db->prefix('block_module_link') . " m WHERE m.block_id=b.bid";
+			$sql .= " AND b.isactive='" . $isactive . "'";
 			if (isset($visible)) {
 				$sql .= " AND b.visible='" . (int) ($visible) . "'";
 			}
@@ -244,20 +239,20 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 			$module_id = (int) $arr[0];
 			$page_id = (int) $arr[1];
 			if ($module_id == 0) {
-				//Entire Site
+				// Entire Site
 				if ($page_id == 0) {
-					//All pages
+					// All pages
 					$sql .= " AND m.module_id='0' AND m.page_id=0";
-				} elseif ($page_id == 1) { //Top Page
+				} elseif ($page_id == 1) { // Top Page
 					$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='0' AND m.page_id=1))";
 				}
 			} else {
-				//Specific Module (including system)
+				// Specific Module (including system)
 				if ($page_id == 0) {
-					//All pages of this module
+					// All pages of this module
 					$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=0))";
 				} else {
-					//Specific Page of this module
+					// Specific Page of this module
 					$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=$page_id))";
 				}
 			}
@@ -267,11 +262,13 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 			$result = $this->db->query($sql);
 
 			// old method of gathering block data. Since this could result in a whole bunch of queries, a new method was introduced
-			/*while ($myrow = $this->db->fetchArray($result)) {
-				$block =& $this->get($myrow['bid']);
-				$ret[$myrow['bid']] =& $block;
-				unset($block);
-			}*/
+			/*
+			 * while ($myrow = $this->db->fetchArray($result)) {
+			 * $block =& $this->get($myrow['bid']);
+			 * $ret[$myrow['bid']] =& $block;
+			 * unset($block);
+			 * }
+			 */
 
 			if ($this->db->getRowsNum($result) > 0) {
 				unset($blockids);
@@ -282,7 +279,6 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 			}
 		}
 		return $ret;
-
 	}
 
 	/**
@@ -306,8 +302,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 				$bids[] = $myrow['bid'];
 			}
 		}
-		$sql = "SELECT DISTINCT(p.gperm_itemid) from " . $this->db->prefix('group_permission') . " p, "
-			. $this->db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
+		$sql = "SELECT DISTINCT(p.gperm_itemid) from " . $this->db->prefix('group_permission') . " p, " . $this->db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
 		$grouped = array();
 		if ($result = $this->db->query($sql)) {
 			while ($myrow = $this->db->fetchArray($result)) {
@@ -316,11 +311,10 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		}
 		$non_grouped = array_diff($bids, $grouped);
 		if (!empty($non_grouped)) {
-			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks') . " b, "
-				. $this->db->prefix('block_module_link') . " m WHERE m.block_id=b.bid";
-			$sql .= " AND b.isactive='". (int) $isactive . "'";
+			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks') . " b, " . $this->db->prefix('block_module_link') . " m WHERE m.block_id=b.bid";
+			$sql .= " AND b.isactive='" . (int) $isactive . "'";
 			if (isset($visible)) {
-				$sql .= " AND b.visible='" .  (int) $visible . "'";
+				$sql .= " AND b.visible='" . (int) $visible . "'";
 			}
 			$module_id = (int) $module_id;
 			if (!empty($module_id)) {
@@ -341,11 +335,13 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 			$result = $this->db->query($sql);
 
 			// old method of gathering block data. Since this could result in a whole bunch of queries, a new method was introduced
-			/*while ($myrow = $this->db->fetchArray($result)) {
-				$block =& $this->get($myrow['bid']);
-				$ret[$myrow['bid']] =& $block;
-				unset($block);
-			}*/
+			/*
+			 * while ($myrow = $this->db->fetchArray($result)) {
+			 * $block =& $this->get($myrow['bid']);
+			 * $ret[$myrow['bid']] =& $block;
+			 * unset($block);
+			 * }
+			 */
 
 			if ($this->db->getRowsNum($result) > 0) {
 				unset($blockids);
@@ -369,13 +365,12 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * @param unknown_type $debug
 	 * @return unknown
 	 */
-	public function insert(& $obj, $force = false, $checkObject = true, $debug = false) {
+	public function insert(&$obj, $force = false, $checkObject = true, $debug = false) {
 		$new = $obj->isNew();
 		$obj->setVar('last_modified', time());
 		$obj->setVar('isactive', true);
 		if (!$new) {
-			$sql = sprintf("DELETE FROM %s WHERE block_id = '%u'",
-				$this->db->prefix('block_module_link'), (int) $obj->getVar('bid'));
+			$sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $this->db->prefix('block_module_link'), (int) $obj->getVar('bid'));
 			if (false != $force) {
 				$this->db->queryF($sql);
 			} else {
@@ -416,11 +411,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 					$page = explode('-', $bmid);
 					$mid = $page[0];
 					$pageid = $page[1];
-					$sql = "INSERT INTO " . $this->db->prefix('block_module_link')
-						. " (block_id, module_id, page_id) VALUES ('"
-						. (int) $obj->getVar("bid") . "', '"
-						. (int) $mid . "', '"
-						. (int) $pageid . "')";
+					$sql = "INSERT INTO " . $this->db->prefix('block_module_link') . " (block_id, module_id, page_id) VALUES ('" . (int) $obj->getVar("bid") . "', '" . (int) $mid . "', '" . (int) $pageid . "')";
 					if (false != $force) {
 						$this->db->queryF($sql);
 					} else {
@@ -431,10 +422,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 				$page = explode('-', $obj->getVar('visiblein', 'e'));
 				$mid = $page[0];
 				$pageid = $page[1];
-				$sql = "INSERT INTO " . $this->db->prefix('block_module_link') . " (block_id, module_id, page_id) VALUES ('"
-					. (int) $obj->getVar("bid") . "', '"
-					. (int) $mid . "', '"
-					. (int) $pageid . "')";
+				$sql = "INSERT INTO " . $this->db->prefix('block_module_link') . " (block_id, module_id, page_id) VALUES ('" . (int) $obj->getVar("bid") . "', '" . (int) $mid . "', '" . (int) $pageid . "')";
 				if (false != $force) {
 					$this->db->queryF($sql);
 				} else {
@@ -443,13 +431,11 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 			}
 		}
 		return $status;
-
 	}
 
 	public function &get($id, $as_object = true, $debug = false, $criteria = false) {
 		$obj = parent::get($id, $as_object, $debug, $criteria);
-		$sql = "SELECT module_id, page_id FROM " . $this->db->prefix('block_module_link')
-			. " WHERE block_id='" . (int) $obj->getVar('bid') . "'";
+		$sql = "SELECT module_id, page_id FROM " . $this->db->prefix('block_module_link') . " WHERE block_id='" . (int) $obj->getVar('bid') . "'";
 		$result = $this->db->query($sql);
 		$modules = $bcustomp = array();
 		while ($row = $this->db->fetchArray($result)) {
@@ -471,13 +457,12 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
 		$criteria->setSort('weight');
 		$ret = $this->getObjects($criteria, true, true);
-		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link')
-			. " WHERE block_id IN (" . implode(',', array_keys($ret)) . ") ORDER BY block_id";
+		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link') . " WHERE block_id IN (" . implode(',', array_keys($ret)) . ") ORDER BY block_id";
 		$result = $this->db->query($sql);
 		$modules = array();
 		$last_block_id = 0;
 		while ($row = $this->db->fetchArray($result)) {
-			$modules[] = (int)($row['module_id']) . '-' . (int)($row['page_id']);
+			$modules[] = (int) ($row['module_id']) . '-' . (int) ($row['page_id']);
 			$ret[$row['block_id']]->setVar('visiblein', $modules);
 			if ($row['block_id'] != $last_block_id) $modules = array();
 			$last_block_id = $row['block_id'];
@@ -503,7 +488,6 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		}
 		$count = $this->handler->getCount($criteria);
 		return $count;
-
 	}
 
 	/**
@@ -512,19 +496,19 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * This is added back in for backwards compatibility. Note - this only selects blocks form
 	 * the system module
 	 *
-	 * @param $side   0: sideblock - left
+	 * @param $side 0: sideblock - left
 	 *        1: sideblock - right
 	 *        2: sideblock - left and right
 	 *        3: centerblock - left
 	 *        4: centerblock - right
 	 *        5: centerblock - center
 	 *        6: centerblock - left, right, center
-	 * @param $groupid   groupid (can be an array)
-	 * @param $visible   0: not visible 1: visible
-	 * @param $orderby   order of the blocks
-	 * @return 		array of block objects
-	 * @deprecated	Use getObjects() instead
-	 * @todo		Remove in version 1.4
+	 * @param $groupid groupid (can be an array)
+	 * @param $visible 0: not visible 1: visible
+	 * @param $orderby order of the blocks
+	 * @return array of block objects
+	 * @deprecated Use getObjects() instead
+	 * @todo Remove in version 1.4
 	 */
 	public function getAllBlocksByGroup($groupid, $asobject = TRUE, $side = NULL, $visible = NULL, $orderby = "b.weight,b.bid", $isactive = 1) {
 		$ret = array();
@@ -534,15 +518,13 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		} else {
 			$sql = "SELECT b.* ";
 		}
-		$sql .= "FROM " . $this->db->prefix("newblocks")
-			. " b LEFT JOIN " . $this->db->prefix("group_permission")
-			. " l ON l.gperm_itemid=b.bid WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
+		$sql .= "FROM " . $this->db->prefix("newblocks") . " b LEFT JOIN " . $this->db->prefix("group_permission") . " l ON l.gperm_itemid=b.bid WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
 
 		if (is_array($groupid)) {
 			$sql .= " AND (l.gperm_groupid='" . (int) $groupid[0] . "'";
 			$size = count($groupid);
-			if ($size  > 1) {
-				for ($i = 1; $i < $size; $i++) {
+			if ($size > 1) {
+				for ($i = 1; $i < $size; $i++ ) {
 					$sql .= " OR l.gperm_groupid='" . (int) $groupid[$i] . "'";
 				}
 			}
