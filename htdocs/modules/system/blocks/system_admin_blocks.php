@@ -227,7 +227,7 @@ function b_system_admin_modules_show() {
 	}
 
 	// If there is any module listed, then show the block.
-	if (is_array($block['mods']) && count($block['mods'] > 0)) return $block;
+	if (count($block['mods']) > 0) return $block;
 }
 
 /**
