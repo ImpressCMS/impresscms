@@ -3,25 +3,24 @@
  * ImpressCMS Block Persistable Class for Configure
  *
  *
- * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * @since 		ImpressCMS 1.2
- * @package 	Administration
- * @subpackage	Blocks
- * @version		SVN: $Id: blocksadmin.php 11281 2011-06-23 14:08:32Z phoenyx $
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @author		Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
+ * @copyright The ImpressCMS Project <http://www.impresscms.org>
+ * @license GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ * @since ImpressCMS 1.2
+ * @package Administration
+ * @subpackage Blocks
+ * @version SVN: $Id: blocksadmin.php 11281 2011-06-23 14:08:32Z phoenyx $
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
  */
-
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * System Block Configuration Object Class
- * 
- * @package		Administration
- * @subpackage	Blocks
- * @since 		ImpressCMS 1.2
- * @author 		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ *
+ * @package Administration
+ * @subpackage Blocks
+ * @since ImpressCMS 1.2
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class SystemBlocksadmin extends icms_view_block_Object {
 
@@ -30,7 +29,7 @@ class SystemBlocksadmin extends icms_view_block_Object {
 	 *
 	 * @param SystemBlocksadminHandler $handler
 	 */
-	public function __construct(& $handler) {
+	public function __construct(&$handler) {
 		parent::__construct($handler);
 
 		$this->initNonPersistableVar('visiblein', XOBJ_DTYPE_OTHER, 'visiblein', FALSE, FALSE, FALSE, TRUE);
@@ -50,22 +49,9 @@ class SystemBlocksadmin extends icms_view_block_Object {
 
 		$this->setControl('name', 'label');
 		$this->setControl('visible', 'yesno');
-		$this->setControl('bcachetime', array(
-			'itemHandler' => 'blocksadmin',
-			'method' => 'getBlockCacheTimeArray',
-			'module' => 'system'
-			));
-		$this->setControl('side', array(
-			'itemHandler' => 'blocksadmin',
-			'method' => 'getBlockPositionArray',
-			'module' => 'system'
-			));
-		$this->setControl('c_type', array(
-			'itemHandler' => 'blocksadmin',
-			'method' => 'getContentTypeArray',
-			'module' => 'system',
-			'onSelect' => 'submit'
-			));
+		$this->setControl('bcachetime', array('itemHandler' => 'blocksadmin', 'method' => 'getBlockCacheTimeArray', 'module' => 'system'));
+		$this->setControl('side', array('itemHandler' => 'blocksadmin', 'method' => 'getBlockPositionArray', 'module' => 'system'));
+		$this->setControl('c_type', array('itemHandler' => 'blocksadmin', 'method' => 'getContentTypeArray', 'module' => 'system', 'onSelect' => 'submit'));
 
 		$this->setControl('visiblein', 'page');
 		$this->setControl('options', 'blockoptions');
@@ -73,6 +59,7 @@ class SystemBlocksadmin extends icms_view_block_Object {
 
 	/**
 	 * Creates custom accessors for properties
+	 *
 	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getVar()
 	 */
 	public function getVar($key, $format = 's') {
@@ -101,6 +88,7 @@ class SystemBlocksadmin extends icms_view_block_Object {
 		}
 		return $rtn;
 	}
+
 	/**
 	 * Custom accessor for mid property
 	 */
@@ -160,10 +148,11 @@ class SystemBlocksadmin extends icms_view_block_Object {
 	}
 
 	/**
-	 * Overrides parent method 
+	 * Overrides parent method
+	 *
 	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getAdminViewItemLink()
 	 */
-	public function getAdminViewItemLink() {
+	public function getAdminViewItemLink($onlyUrl = false) {
 		$rtn = $this->getVar('title');
 		return $rtn;
 	}
@@ -178,7 +167,7 @@ class SystemBlocksadmin extends icms_view_block_Object {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getDeleteItemLink($onlyUrl=FALSE, $withimage=TRUE, $userSide=FALSE) {
+	public function getDeleteItemLink($onlyUrl = FALSE, $withimage = TRUE, $userSide = FALSE) {
 		$ret = ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=del&" . $this->handler->keyName . "=" . $this->getVar($this->handler->keyName);
 		if ($onlyUrl) {
 			if ($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
@@ -204,7 +193,7 @@ class SystemBlocksadmin extends icms_view_block_Object {
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
-	public function getForm($form_caption, $form_name, $form_action=FALSE, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=FALSE, $captcha=FALSE) {
+	public function getForm($form_caption, $form_name, $form_action = FALSE, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = FALSE, $captcha = FALSE) {
 		if (!$this->isNew() && $this->getVar('block_type') != 'C') {
 			$this->hideFieldFromForm('content');
 			$this->hideFieldFromForm('c_type');
@@ -215,13 +204,12 @@ class SystemBlocksadmin extends icms_view_block_Object {
 	}
 
 	/**
-	 * 
 	 */
 	public function getSideControl() {
 		$control = new icms_form_elements_Select('', 'block_side[]', $this->getVar('side', 'e'));
 		$positions = $this->handler->getBlockPositions(TRUE);
 		$block_positions = array();
-		foreach ($positions as $k=>$position) {
+		foreach ($positions as $k => $position) {
 			$block_positions[$k] = defined($position['title']) ? constant($position['title']) : $position['title'];
 		}
 		$control->addOptionArray($block_positions);
@@ -230,14 +218,12 @@ class SystemBlocksadmin extends icms_view_block_Object {
 	}
 
 	/**
-	 * 
 	 */
 	public function getWeightControl() {
 		$control = new icms_form_elements_Text('', 'block_weight[]', 5, 10, $this->getVar('weight', 'e'));
 		$control->setExtra('style="text-align:center;"');
 		return $control->render();
 	}
-
 }
 
 /**
@@ -247,11 +233,10 @@ class SystemBlocksadmin extends icms_view_block_Object {
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class SystemBlocksadminHandler extends icms_view_block_Handler {
-
 	private $block_positions;
 	private $modules_name;
 
-	public function __construct(& $db) {
+	public function __construct(&$db) {
 		icms_ipf_Handler::__construct($db, 'blocksadmin', 'bid', 'title', 'content', 'system');
 		$this->table = $this->db->prefix('newblocks');
 
@@ -265,14 +250,13 @@ class SystemBlocksadminHandler extends icms_view_block_Handler {
 		return $rtn;
 	}
 
-	//	public function getVisibleInArray() {
-	//		/* TODO: To be implemented... */
-	//  }
-
+	// public function getVisibleInArray() {
+	// /* TODO: To be implemented... */
+	// }
 	public function getBlockPositionArray() {
 		$block_positions = $this->getBlockPositions(TRUE);
 		$rtn = array();
-		foreach ($block_positions as $k=>$v) {
+		foreach ($block_positions as $k => $v) {
 			$rtn[$k] = (defined($block_positions[$k]['title'])) ? constant($block_positions[$k]['title']) : $block_positions[$k]['title'];
 		}
 		return $rtn;
@@ -288,9 +272,9 @@ class SystemBlocksadminHandler extends icms_view_block_Handler {
 	}
 
 	public function getModulesArray($full = FALSE) {
-		if (!count($this->modules_name)) {
+		if (!is_array($this->modules_name)) {
 			$icms_module_handler = icms::handler('icms_module');
-			$installed_modules =& $icms_module_handler->getObjects();
+			$installed_modules = &$icms_module_handler->getObjects();
 			$this->modules_name[0]['name'] = _NONE;
 			$this->modules_name[0]['dirname'] = '';
 			foreach ($installed_modules as $module) {
@@ -352,7 +336,7 @@ class SystemBlocksadminHandler extends icms_view_block_Handler {
 
 	public function changeVisible($bid) {
 		$blockObj = $this->get($bid);
-		if ($blockObj->getVar('visible' , 'n')) {
+		if ($blockObj->getVar('visible', 'n')) {
 			$blockObj->setVar('visible', 0);
 		} else {
 			$blockObj->setVar('visible', 1);
@@ -375,7 +359,7 @@ class SystemBlocksadminHandler extends icms_view_block_Handler {
 		$options = "";
 		ksort($_POST['options']);
 		foreach ($_POST['options'] as $opt) {
-			if ($options != "")	$options .= '|';
+			if ($options != "") $options .= '|';
 			$options .= $opt;
 		}
 		$obj->setVar('options', $options);
