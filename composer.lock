@@ -1976,16 +1976,16 @@
         },
         {
             "name": "imponeer/editor-contracts",
-            "version": "v1.0.6",
+            "version": "v1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/editor-contracts.git",
-                "reference": "b37a10b797b533da0a3d554dbd79b2bb1a9024ec"
+                "reference": "1a759e729ef292fead4c828b08f4e59da1d54156"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/b37a10b797b533da0a3d554dbd79b2bb1a9024ec",
-                "reference": "b37a10b797b533da0a3d554dbd79b2bb1a9024ec",
+                "url": "https://api.github.com/repos/imponeer/editor-contracts/zipball/1a759e729ef292fead4c828b08f4e59da1d54156",
+                "reference": "1a759e729ef292fead4c828b08f4e59da1d54156",
                 "shasum": ""
             },
             "require": {
@@ -2005,9 +2005,9 @@
             "description": "Interfaces for building PHP classes that lets to easier make web editor integrations in your content management systems",
             "support": {
                 "issues": "https://github.com/imponeer/editor-contracts/issues",
-                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.6"
+                "source": "https://github.com/imponeer/editor-contracts/tree/v1.0.7"
             },
-            "time": "2023-01-09T11:05:31+00:00"
+            "time": "2023-05-29T11:59:44+00:00"
         },
         {
             "name": "imponeer/env",
@@ -2489,16 +2489,16 @@
         },
         {
             "name": "impresscms/codemirror-integration",
-            "version": "v0.2.5",
+            "version": "v0.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ImpressCMS/codemirror-integration.git",
-                "reference": "b9d3a74269192fa2ab2063c95523c1fc2c2631eb"
+                "reference": "66e31e6737146a3d980a67d0353e9b8bea1c81d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ImpressCMS/codemirror-integration/zipball/b9d3a74269192fa2ab2063c95523c1fc2c2631eb",
-                "reference": "b9d3a74269192fa2ab2063c95523c1fc2c2631eb",
+                "url": "https://api.github.com/repos/ImpressCMS/codemirror-integration/zipball/66e31e6737146a3d980a67d0353e9b8bea1c81d5",
+                "reference": "66e31e6737146a3d980a67d0353e9b8bea1c81d5",
                 "shasum": ""
             },
             "require": {
@@ -2560,9 +2560,9 @@
             "description": "Integrates CodeMirror with ImpressCMS",
             "support": {
                 "issues": "https://github.com/ImpressCMS/codemirror-integration/issues",
-                "source": "https://github.com/ImpressCMS/codemirror-integration/tree/v0.2.5"
+                "source": "https://github.com/ImpressCMS/codemirror-integration/tree/v0.2.6"
             },
-            "time": "2023-04-24T12:02:18+00:00"
+            "time": "2023-05-29T12:02:10+00:00"
         },
         {
             "name": "impresscms/composer-addon-installer-plugin",
