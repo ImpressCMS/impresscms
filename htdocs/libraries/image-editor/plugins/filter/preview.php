@@ -2,6 +2,7 @@
 $xoopsOption['nodebug'] = 1;
 if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+use WideImage\WideImage;
 
 $file = $_GET['file'];
 $resize = isset($_GET['resize']) ? (int) $_GET['resize'] : 1;
@@ -31,7 +32,7 @@ if (!is_null($filter)) {
 			echo $img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->asString('png');
 		}
 	} else {
-		if ($resize && ($width > 400 || $height > 300)){
+		if ($resize && ($width > 400 || $height > 300)) {
 			echo $img->resize(400, 300)->applyFilter(constant($filter), implode(',', $args))->asString('png');
 		} else {
 			echo $img->applyFilter(constant($filter), implode(',', $args))->asString('png');

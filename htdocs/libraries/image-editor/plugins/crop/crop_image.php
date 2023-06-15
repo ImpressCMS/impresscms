@@ -11,6 +11,7 @@
  */
 $xoopsOption['nodebug'] = 1;
 require_once '../../../../mainfile.php';
+use WideImage\WideImage;
 
 /* 2 critical parameters must exist - and must be safe */
 $image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
@@ -34,7 +35,6 @@ if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . ba
 if (!isset($image_path) || !isset($image_url)) {
 	echo "alert('" . _ERROR . "');";
 } else {
-	include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 
 	$x = (int) $_GET['x'];
 	$y = (int) $_GET['y'];
