@@ -1,41 +1,42 @@
 <?php
+
 // $Id: system_blocks.php 12313 2013-09-15 21:14:35Z skenow $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
+// ------------------------------------------------------------------------ //
+// XOOPS - PHP Content Management System //
+// Copyright (c) 2000 XOOPS.org //
+// <http://www.xoops.org/> //
+// ------------------------------------------------------------------------ //
+// This program is free software; you can redistribute it and/or modify //
+// it under the terms of the GNU General Public License as published by //
+// the Free Software Foundation; either version 2 of the License, or //
+// (at your option) any later version. //
+// //
+// You may not change or alter any portion of this comment or credits //
+// of supporting developers from this source code or any supporting //
+// source code which is considered copyrighted (c) material of the //
+// original comment or credit authors. //
+// //
+// This program is distributed in the hope that it will be useful, //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the //
+// GNU General Public License for more details. //
+// //
+// You should have received a copy of the GNU General Public License //
+// along with this program; if not, write to the Free Software //
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA //
+// ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu) //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
+// Project: The XOOPS Project //
 // ------------------------------------------------------------------------- //
 /**
  * Good ol' system blocks
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		LICENSE.txt
- * @package		System
- * @subpackage	Blocks
- * @version		SVN: $Id: system_blocks.php 12313 2013-09-15 21:14:35Z skenow $
+ * @copyright http://www.impresscms.org/ The ImpressCMS Project
+ * @license LICENSE.txt
+ * @package System
+ * @subpackage Blocks
+ * @version SVN: $Id: system_blocks.php 12313 2013-09-15 21:14:35Z skenow $
  */
 /**
  * Shows which users and guests are online
@@ -45,7 +46,7 @@
 function b_system_online_show() {
 	global $icmsModule;
 	$online_handler = icms::handler('icms_core_Online');
-	mt_srand((double)microtime()*1000000);
+	mt_srand((double) microtime() * 1000000);
 	// set gc probabillity to 10% for now..
 	if (mt_rand(1, 100) < 11) {
 		$online_handler->gc(300);
@@ -68,13 +69,11 @@ function b_system_online_show() {
 		$block = array();
 		$guests = 0;
 		$members = '';
-		for ($i = 0; $i < $total; $i++) {
+		for ($i = 0; $i < $total; $i++ ) {
 			if ($onlines[$i]['online_uid'] > 0) {
-				$members .= ' <a href="' . ICMS_URL . '/userinfo.php?uid=' . $onlines[$i]['online_uid']
-					. '" title="' . $onlines[$i]['online_uname'] . '\'s ' . _PROFILE . '">'
-					. $onlines[$i]['online_uname'] . '</a>, ';
+				$members .= ' <a href="' . ICMS_URL . '/userinfo.php?uid=' . $onlines[$i]['online_uid'] . '" title="' . $onlines[$i]['online_uname'] . '\'s ' . _PROFILE . '">' . $onlines[$i]['online_uname'] . '</a>, ';
 			} else {
-				$guests++;
+				$guests++ ;
 			}
 		}
 		$block['online_total'] = sprintf(_ONLINEPHRASE, $total);
@@ -114,8 +113,7 @@ function b_system_login_show() {
 		$block['lang_registernow'] = _MB_SYSTEM_RNOW;
 		$block['lang_rememberme'] = _MB_SYSTEM_REMEMBERME;
 		if ($icmsConfig['use_ssl'] == 1 && $icmsConfig['sslloginlink'] != '') {
-			$block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('"
-				. $icmsConfig['sslloginlink'] . "', 'ssllogin', 300, 200);\">" . _MB_SYSTEM_SECURE . "</a>";
+			$block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('" . $icmsConfig['sslloginlink'] . "', 'ssllogin', 300, 200);\">" . _MB_SYSTEM_SECURE . "</a>";
 		}
 
 		if ($icmsConfigUser['allow_register'] == 1) {
@@ -136,7 +134,9 @@ function b_system_login_show() {
  * @return array $block the main menu block array
  */
 function b_system_main_show() {
-	global $icmsModule, $icmsConfigUser;
+	global $icmsConfigUser;
+	$icmsModule = icms::$module;
+
 	$block = array();
 	$block['lang_home'] = _MB_SYSTEM_HOME;
 	if ($icmsConfigUser['priv_dpolicy'] == 1) {
@@ -159,9 +159,7 @@ function b_system_main_show() {
 			$sublinks = $modules[$i]->subLink();
 			if ((count($sublinks) > 0) && (!empty($icmsModule)) && ($i == $icmsModule->getVar('mid'))) {
 				foreach ($sublinks as $sublink) {
-					$block['modules'][$i]['sublinks'][] = array(
-						'name' => $sublink['name'],
-						'url' => ICMS_MODULES_URL . '/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']);
+					$block['modules'][$i]['sublinks'][] = array('name' => $sublink['name'], 'url' => ICMS_MODULES_URL . '/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']);
 				}
 			} else {
 				$block['modules'][$i]['sublinks'] = array();
@@ -218,37 +216,40 @@ function b_system_info_show($options) {
 	$block = array();
 	if (!empty($options[3])) {
 		$block['showgroups'] = TRUE;
-		$result = icms::$xoopsDB->query("SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM "
-			. icms::$xoopsDB->prefix("groups_users_link") . " l LEFT JOIN " . icms::$xoopsDB->prefix("users")
-			. " u ON l.uid=u.uid LEFT JOIN " . icms::$xoopsDB->prefix("groups")
-			. " g ON l.groupid=g.groupid WHERE g.group_type='Admin' ORDER BY l.groupid, u.uid");
+		$result = icms::$xoopsDB->query("SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM " . icms::$xoopsDB->prefix("groups_users_link") . " l LEFT JOIN " . icms::$xoopsDB->prefix("users") . " u ON l.uid=u.uid LEFT JOIN " . icms::$xoopsDB->prefix("groups") . " g ON l.groupid=g.groupid WHERE g.group_type='Admin' ORDER BY l.groupid, u.uid");
 		if (icms::$xoopsDB->getRowsNum($result) > 0) {
 			$prev_caption = "";
 			$i = 0;
-			while  ($userinfo = icms::$xoopsDB->fetchArray($result)) {
+			while ($userinfo = icms::$xoopsDB->fetchArray($result)) {
 				if ($prev_caption != $userinfo['groupname']) {
 					$prev_caption = $userinfo['groupname'];
 					$block['groups'][$i]['name'] = icms_core_DataFilter::htmlSpecialChars($userinfo['groupname']);
 				}
 				if (isset(icms::$user) && is_object(icms::$user)) {
-					$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $userinfo['uid'] . "','pmlite',800,680);\"><img src=\"" . ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] . "/pm_small.gif\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+					$block['groups'][$i]['users'][] = array(
+						'id' => $userinfo['uid'],
+						'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']),
+						'msglink' => "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $userinfo['uid'] . "','pmlite',800,680);\"><img src=\"" . ICMS_URL . "/images/icons/" . $GLOBALS["icmsConfig"]["language"] . "/pm_small.gif\" width=\"27px\" height=\"17px\" alt=\"\" /></a>",
+						'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
 				} else {
 					if ($userinfo['user_viewemail']) {
-						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => '<a href="mailto:' . $userinfo['email'] . '"><img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/em_small.gif" width="16px" height="14px" alt="" /></a>', 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+						$block['groups'][$i]['users'][] = array(
+							'id' => $userinfo['uid'],
+							'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']),
+							'msglink' => '<a href="mailto:' . $userinfo['email'] . '"><img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/em_small.gif" width="16px" height="14px" alt="" /></a>',
+							'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
 					} else {
 						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => icms_core_DataFilter::htmlSpecialChars($userinfo['uname']), 'msglink' => '&nbsp;', 'avatar' => ICMS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
 					}
 				}
-				$i++;
+				$i++ ;
 			}
 		}
 	} else {
 		$block['showgroups'] = FALSE;
 	}
 	$block['logourl'] = ICMS_URL . '/images/' . $options[2];
-	$block['recommendlink'] = "<a href=\"javascript:openWithSelfMain('"
-		. ICMS_URL . "/misc.php?action=showpopups&amp;type=friend&amp;op=sendform&amp;t=" . time()
-		. "','friend'," . $options[0] . "," . $options[1] . ")\">" . _MB_SYSTEM_RECO . "</a>";
+	$block['recommendlink'] = "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/misc.php?action=showpopups&amp;type=friend&amp;op=sendform&amp;t=" . time() . "','friend'," . $options[0] . "," . $options[1] . ")\">" . _MB_SYSTEM_RECO . "</a>";
 	return $block;
 }
 
@@ -270,7 +271,7 @@ function b_system_newmembers_show($options) {
 	$member_handler = icms::handler('icms_member');
 	$newmembers = $member_handler->getUsers($criteria);
 	$count = count($newmembers);
-	for ($i = 0; $i < $count; $i++) {
+	for ($i = 0; $i < $count; $i++ ) {
 		if ($options[1] == 1) {
 			if ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != '') {
 				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $newmembers[$i]->getVar('user_avatar');
@@ -312,7 +313,7 @@ function b_system_topposters_show($options) {
 	$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('level', 0, '>'));
 	$limit = (!empty($options[0])) ? $options[0] : 10;
 	$size = count($options);
-	for ($i = 2; $i < $size; $i++) {
+	for ($i = 2; $i < $size; $i++ ) {
 		$criteria->add(new icms_db_criteria_Item('rank', $options[$i], '<>'));
 	}
 	$criteria->setOrder('DESC');
@@ -321,7 +322,7 @@ function b_system_topposters_show($options) {
 	$member_handler = icms::handler('icms_member');
 	$topposters = $member_handler->getUsers($criteria);
 	$count = count($topposters);
-	for ($i = 0; $i < $count; $i++) {
+	for ($i = 0; $i < $count; $i++ ) {
 		if ($options[1] == 1) {
 			if ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != '') {
 				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL . '/' . $topposters[$i]->getVar('user_avatar');
@@ -388,7 +389,7 @@ function b_system_comments_show($options) {
 		$com['icon'] = ($com['icon'] != '') ? $com['icon'] : 'icon1.gif';
 		$com['time'] = formatTimestamp($comments[$i]->getVar('com_created'), 'm');
 		if ($comments[$i]->getVar('com_uid') > 0) {
-			$poster =& $member_handler->getUser($comments[$i]->getVar('com_uid'));
+			$poster = &$member_handler->getUser($comments[$i]->getVar('com_uid'));
 			if (is_object($poster)) {
 				$com['poster'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $comments[$i]->getVar('com_uid') . '">' . $poster->getVar('uname') . '</a>';
 			} else {
@@ -397,7 +398,7 @@ function b_system_comments_show($options) {
 		} else {
 			$com['poster'] = $GLOBALS['icmsConfig']['anonymous'];
 		}
-		$block['comments'][] =& $com;
+		$block['comments'][] = &$com;
 		unset($com);
 	}
 	return $block;
@@ -421,7 +422,7 @@ function b_system_notification_show() {
 	// Now build the a nested associative array of info to pass
 	// to the block template.
 	$block = array();
-	$categories =& $notification_handler->subscribableCategoryInfo();
+	$categories = &$notification_handler->subscribableCategoryInfo();
 	if (empty($categories)) {
 		return FALSE;
 	}
@@ -437,7 +438,7 @@ function b_system_notification_show() {
 				continue;
 			}
 			$subscribed = in_array($event['name'], $subscribed_events) ? 1 : 0;
-			$section['events'][$event['name']] = array('name'=>$event['name'], 'title'=>$event['title'], 'caption'=>$event['caption'], 'description'=>$event['description'], 'subscribed'=>$subscribed);
+			$section['events'][$event['name']] = array('name' => $event['name'], 'title' => $event['title'], 'caption' => $event['caption'], 'description' => $event['description'], 'subscribed' => $subscribed);
 		}
 		$block['categories'][$category['name']] = $section;
 	}
@@ -445,7 +446,7 @@ function b_system_notification_show() {
 	$block['target_page'] = "notification_update.php";
 	// FIXME: better or more standardized way to do this?
 	$script_url = explode('/', $_SERVER['PHP_SELF']);
-	$script_name = $script_url[count($script_url)-1];
+	$script_name = $script_url[count($script_url) - 1];
 	$block['redirect_script'] = $script_name;
 	$block['submit_button'] = _NOT_UPDATENOW;
 	$block['notification_token'] = icms::$security->createToken();
@@ -471,7 +472,7 @@ function b_system_multilanguage_show() {
  * @return string $form The edit comments form HTML string
  */
 function b_system_comments_edit($options) {
-	$inputtag = "<input type='text' name='options[]' value='". (int) $options[0] . "' />";
+	$inputtag = "<input type='text' name='options[]' value='" . (int) $options[0] . "' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAYC, $inputtag);
 	return $form;
 }
@@ -483,7 +484,7 @@ function b_system_comments_edit($options) {
  * @return string $form The edit top posters form HTML string
  */
 function b_system_topposters_edit($options) {
-	$inputtag = "<input type='text' name='options[]' value='". (int) $options[0] . "' />";
+	$inputtag = "<input type='text' name='options[]' value='" . (int) $options[0] . "' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAY, $inputtag);
 	$form .= "<br />" . _MB_SYSTEM_DISPLAYA . "&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
 	if ($options[1] == 1) {
@@ -499,7 +500,7 @@ function b_system_topposters_edit($options) {
 	$size = count($options);
 	foreach ($ranks as $k => $v) {
 		$sel = "";
-		for ($i = 2; $i < $size; $i++) {
+		for ($i = 2; $i < $size; $i++ ) {
 			if ($k == $options[$i]) {
 				$sel = " selected='selected'";
 			}
@@ -585,7 +586,7 @@ function b_system_themes_show($options) {
 	}
 	$block = array();
 	if ($options[0] == 1) {
-		$block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"" . ICMS_THEME_URL . "/" . $icmsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"". (int) $options[1] . "\" /><br /><select id=\"theme_select\" name=\"theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'theme_select', 'themes', '/shot.gif', '" . ICMS_URL . "');\">" . $theme_options . "</select><input type=\"submit\" value=\"" . _GO . "\" />";
+		$block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"" . ICMS_THEME_URL . "/" . $icmsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"" . (int) $options[1] . "\" /><br /><select id=\"theme_select\" name=\"theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'theme_select', 'themes', '/shot.gif', '" . ICMS_URL . "');\">" . $theme_options . "</select><input type=\"submit\" value=\"" . _GO . "\" />";
 	} else {
 		$block['theme_select'] = '<select name="theme_select" onchange="submit();" size="3">' . $theme_options . '</select>';
 	}
@@ -601,7 +602,6 @@ function b_system_themes_show($options) {
  * @return string $form The edit themes form HTML string
  */
 function b_system_themes_edit($options) {
-
 	$chk = "";
 	$form = _MB_SYSTEM_THSHOW . "&nbsp;";
 	if ($options[0] == 1) {
@@ -617,8 +617,10 @@ function b_system_themes_edit($options) {
 	$form .= "<input type='text' name='options[1]' value='" . $options[1] . "' />";
 	return $form;
 }
+
 /**
  * Gathers and displays the current user's bookmarks
+ *
  * @since 1.2
  * @return array Array of bookmark links for the current user
  */
@@ -633,7 +635,7 @@ function b_system_bookmarks_show() {
 	// Get an array of all notifications for the selected user
 
 	$notification_handler = icms::handler('icms_data_notification');
-	$notifications =& $notification_handler->getByUser(icms::$user->getVar('uid'));
+	$notifications = &$notification_handler->getByUser(icms::$user->getVar('uid'));
 
 	// Generate the info for the template
 
@@ -648,7 +650,7 @@ function b_system_bookmarks_show() {
 			$prev_modid = $modid;
 
 			$prev_item = -1;
-			$module =& $module_handler->get($modid);
+			$module = &$module_handler->get($modid);
 			$module_name = $module->getVar('name');
 			// Get the lookup function, if exists
 			$not_config = $module->getInfo('notification');
@@ -671,12 +673,12 @@ function b_system_bookmarks_show() {
 			if (!empty($lookup_func)) {
 				$item_info = $lookup_func($category, $item);
 			} else {
-				$item_info = array('name'=>'[' . _NOT_NAMENOTAVAILABLE . ']', 'url'=>'');
+				$item_info = array('name' => '[' . _NOT_NAMENOTAVAILABLE . ']', 'url' => '');
 			}
 		}
 
 		if ($n->getVar('not_event') == 'bookmark') {
-			$block[$module_name][] = array('name'=>$item_info['name'], 'url'=>$item_info['url']);
+			$block[$module_name][] = array('name' => $item_info['name'], 'url' => $item_info['url']);
 		}
 	}
 
@@ -684,6 +686,7 @@ function b_system_bookmarks_show() {
 }
 
 /**
+ *
  * @param array $options block config options
  */
 function b_system_social_show($options) {
@@ -692,202 +695,156 @@ function b_system_social_show($options) {
 
 	$i = 0;
 	if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://twitter.com/home?status='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
-			'image' => "twitter.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.facebook.com/sharer.php?u='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
-			'image' => "facebook.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.myspace.com/Modules/PostTo/Pages/?t='+encodeURIComponent(document.title)+'&amp;c='+encodeURIComponent(document.title)+'&amp;u='+encodeURIComponent(location.href)+'&amp;popup=yes'",
-			'image' => "myspace.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://del.icio.us/post?v=2&amp;url='+encodeURIComponent(location.href)+'&amp;notes=&amp;tags=&amp;title='+encodeURIComponent(document.title)",
-			'image' => "del.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
-			'image' => "ask.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.mister-wong.de/index.php?action=addurl&amp;bm_url='+encodeURIComponent(location.href)+'&amp;bm_notice=&amp;bm_description='+encodeURIComponent(document.title)+'&amp;bm_tags='",
-			'image' => "wong.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.webnews.de/einstellen?url='+encodeURIComponent(document.location)+'&amp;title='+encodeURIComponent(document.title)",
-			'image' => "webnews.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.icio.de/add.php?url='+encodeURIComponent(location.href)",
-			'image' => "icio.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://beta.oneview.de/quickadd/neu/addBookmark.jsf?URL='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
-			'image' => "oneview.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.newsider.de/submit.php?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
-			'image' => "newsider.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.folkd.com/submit/'+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
-			'image' => "folkd.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://yigg.de/neu?exturl='+encodeURIComponent(location.href)",
-			'image' => "yigg.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://linkarena.com/bookmarks/addlink/?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;desc=&amp;tags='",
-			'image' => "linkarena.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://digg.com/submit?phase=2&amp;url='+encodeURIComponent(location.href)+'&amp;bodytext=&amp;tags=&amp;title='+encodeURIComponent(document.title)",
-			'image' => "digg.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://reddit.com/submit?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
-			'image' => "reddit.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.simpy.com/simpy/LinkAdd.do?title='+encodeURIComponent(document.title)+'&amp;tags=&amp;note=&amp;href='+encodeURIComponent(location.href)",
-			'image' => "simpy.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.stumbleupon.com/submit?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
-			'image' => "stumbleupon.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://slashdot.org/bookmark.pl?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
-			'image' => "slashdot.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://myweb2.search.yahoo.com/myresults/bookmarklet?t='+encodeURIComponent(document.title)+'&amp;d=&amp;tag=&amp;u='+encodeURIComponent(location.href)",
-			'image' => "yahoo.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.spurl.net/spurl.php?v=3&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;url='+encodeURIComponent(document.location.href)",
-			'image' => "spurl.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.google.com/bookmarks/mark?op=add&amp;bkmk='+encodeURIComponent(location.href)+'&amp;annotation=&amp;labels=&amp;title='+encodeURIComponent(document.title)",
-			'image' => "google.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Tag=&amp;Url='+encodeURIComponent(location.href)+'&amp;Title='+encodeURIComponent(document.title)",
-			'image' => "blinklist.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://blogmarks.net/my/new.php?mini=1&amp;simple=1&amp;url='+encodeURIComponent(location.href)+'&amp;content=&amp;public-tags=&amp;title='+encodeURIComponent(document.title)",
-			'image' => "blogmarks.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.diigo.com/post?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;tag=&amp;comments='",
-			'image' => "diigo.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://technorati.com/faves?add='+encodeURIComponent(location.href)+'&amp;tag='",
-			'image' => "technorati.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.newsvine.com/_wine/save?popoff=1&amp;u='+encodeURIComponent(location.href)+'&amp;tags=&amp;blurb='+encodeURIComponent(document.title)",
-			'image' => "newsvine.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.blinkbits.com/bookmarklets/save.php?v=1&amp;title='+encodeURIComponent(document.title)+'&amp;source_url='+encodeURIComponent(location.href)+'&amp;source_image_url=&amp;rss_feed_url=&amp;rss_feed_url=&amp;rss2member=&amp;body='",
-			'image' => "blinkbits.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.netvouz.com/action/submitBookmark?url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
-			'image' => "netvouz.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.propeller.com/submit/?url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
-			'image' => "propeller.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://buzz.yahoo.com/submit/?submitUrl='+encodeURIComponent(location.href)+'&amp;submitHeadline='+encodeURIComponent(document.title)+'&amp;popup=yes'",
-			'image' => "buzz.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://sphinn.com/submit.php?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
-			'image' => "sphinn.gif"
-		);
-		$i++;
-		if ($options[$i]) $block['provider'][$i] = array(
-			'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
-			'link'  => "'http://www.jumptags.com/add/?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
-			'image' => "jumptags.gif"
-		);
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://twitter.com/home?status='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "twitter.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.facebook.com/sharer.php?u='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "facebook.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.myspace.com/Modules/PostTo/Pages/?t='+encodeURIComponent(document.title)+'&amp;c='+encodeURIComponent(document.title)+'&amp;u='+encodeURIComponent(location.href)+'&amp;popup=yes'",
+		'image' => "myspace.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://del.icio.us/post?v=2&amp;url='+encodeURIComponent(location.href)+'&amp;notes=&amp;tags=&amp;title='+encodeURIComponent(document.title)",
+		'image' => "del.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "ask.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.mister-wong.de/index.php?action=addurl&amp;bm_url='+encodeURIComponent(location.href)+'&amp;bm_notice=&amp;bm_description='+encodeURIComponent(document.title)+'&amp;bm_tags='",
+		'image' => "wong.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.webnews.de/einstellen?url='+encodeURIComponent(document.location)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "webnews.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array('title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i), 'link' => "'http://www.icio.de/add.php?url='+encodeURIComponent(location.href)", 'image' => "icio.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://beta.oneview.de/quickadd/neu/addBookmark.jsf?URL='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "oneview.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.newsider.de/submit.php?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "newsider.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array('title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i), 'link' => "'http://www.folkd.com/submit/'+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)", 'image' => "folkd.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array('title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i), 'link' => "'http://yigg.de/neu?exturl='+encodeURIComponent(location.href)", 'image' => "yigg.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://linkarena.com/bookmarks/addlink/?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;desc=&amp;tags='",
+		'image' => "linkarena.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://digg.com/submit?phase=2&amp;url='+encodeURIComponent(location.href)+'&amp;bodytext=&amp;tags=&amp;title='+encodeURIComponent(document.title)",
+		'image' => "digg.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array('title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i), 'link' => "'http://reddit.com/submit?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)", 'image' => "reddit.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.simpy.com/simpy/LinkAdd.do?title='+encodeURIComponent(document.title)+'&amp;tags=&amp;note=&amp;href='+encodeURIComponent(location.href)",
+		'image' => "simpy.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.stumbleupon.com/submit?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "stumbleupon.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://slashdot.org/bookmark.pl?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "slashdot.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://myweb2.search.yahoo.com/myresults/bookmarklet?t='+encodeURIComponent(document.title)+'&amp;d=&amp;tag=&amp;u='+encodeURIComponent(location.href)",
+		'image' => "yahoo.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.spurl.net/spurl.php?v=3&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;url='+encodeURIComponent(document.location.href)",
+		'image' => "spurl.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.google.com/bookmarks/mark?op=add&amp;bkmk='+encodeURIComponent(location.href)+'&amp;annotation=&amp;labels=&amp;title='+encodeURIComponent(document.title)",
+		'image' => "google.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Tag=&amp;Url='+encodeURIComponent(location.href)+'&amp;Title='+encodeURIComponent(document.title)",
+		'image' => "blinklist.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://blogmarks.net/my/new.php?mini=1&amp;simple=1&amp;url='+encodeURIComponent(location.href)+'&amp;content=&amp;public-tags=&amp;title='+encodeURIComponent(document.title)",
+		'image' => "blogmarks.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.diigo.com/post?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;tag=&amp;comments='",
+		'image' => "diigo.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array('title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i), 'link' => "'http://technorati.com/faves?add='+encodeURIComponent(location.href)+'&amp;tag='", 'image' => "technorati.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.newsvine.com/_wine/save?popoff=1&amp;u='+encodeURIComponent(location.href)+'&amp;tags=&amp;blurb='+encodeURIComponent(document.title)",
+		'image' => "newsvine.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.blinkbits.com/bookmarklets/save.php?v=1&amp;title='+encodeURIComponent(document.title)+'&amp;source_url='+encodeURIComponent(location.href)+'&amp;source_image_url=&amp;rss_feed_url=&amp;rss_feed_url=&amp;rss2member=&amp;body='",
+		'image' => "blinkbits.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.netvouz.com/action/submitBookmark?url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "netvouz.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.propeller.com/submit/?url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "propeller.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://buzz.yahoo.com/submit/?submitUrl='+encodeURIComponent(location.href)+'&amp;submitHeadline='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "buzz.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://sphinn.com/submit.php?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "sphinn.gif");
+	$i++ ;
+	if ($options[$i]) $block['provider'][$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK . constant('_MB_SYSTEM_SOCIAL_PROVIDER_' . $i),
+		'link' => "'http://www.jumptags.com/add/?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "jumptags.gif");
 
-		$block['imagepath'] = ICMS_IMAGES_URL . '/icons/social/';
-		return $block;
+	$block['imagepath'] = ICMS_IMAGES_URL . '/icons/social/';
+	return $block;
 }
 
 /**
+ *
  * @param array $options block config options
  * @return string $form The edit social bookmarks form HTML string
  */

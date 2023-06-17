@@ -1,32 +1,31 @@
 <?php
+
 /**
  *
- *
- * @copyright	The ImpressCMS Project - http://www.impresscms.org/
- * @license		GNU General Public License (GPL) - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @since		2.0
- * @category	ICMS
- * @package		Database
- * @subpackage	MySQL
+ * @copyright The ImpressCMS Project - http://www.impresscms.org/
+ * @license GNU General Public License (GPL) - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @since 2.0
+ * @category ICMS
+ * @package Database
+ * @subpackage MySQL
  */
 
 /**
  *
+ * @copyright The ImpressCMS Project - http://www.impresscms.org/
  *
- * @copyright	The ImpressCMS Project - http://www.impresscms.org/
- *
- * @category	ICMS
- * @package		Database
- * @subpackage	MySQL
+ * @category ICMS
+ * @package Database
+ * @subpackage MySQL
  */
 class icms_db_mysql_Connection extends PDO implements icms_db_IConnection {
 
 	/**
-	 *  Safely escape the string, but strips the outer quotes
+	 * Safely escape the string, but strips the outer quotes
 	 *
 	 * @see icms_db_IConnection::escape()
-	 * @param	string	$string
-	 * @return	string
+	 * @param string $string
+	 * @return string
 	 */
 	public function escape($string) {
 		return substr($this->quote($string), 1, -1);
@@ -42,7 +41,7 @@ class icms_db_mysql_Connection extends PDO implements icms_db_IConnection {
 		$args = func_get_args();
 		$sql = $args[0];
 		// the use of icms_db_IConnection is correct - without it, the query count in debug is not correct
-		$result = call_user_func_array(array('parent', 'query'), $args);
+		$result = call_user_func_array(array(parent::class, 'query'), $args);
 
 		// trigger events for the debug console - see plugins/preloads/debug_mode.php
 		if ($result) {
