@@ -61,7 +61,8 @@ class icms_core_Session {
 	static public function service() {
 		global $icmsConfig;
 		$instance = new icms_core_Session(icms::$xoopsDB);
-		session_set_save_handler(array($instance, 'open'), array($instance, 'close'), array($instance, 'read'), array($instance, 'write'), array($instance, 'destroy'), array($instance, 'gc'));
+		session_set_save_handler(array($instance, 'open'), array($instance, 'close'), array($instance, 'read'),
+			array($instance, 'write'), array($instance, 'destroy'), array($instance, 'gc'));
 		$sslpost_name = isset($_POST[$icmsConfig['sslpost_name']]) ? $_POST[$icmsConfig['sslpost_name']] : "";
 		$instance->sessionStart($sslpost_name);
 
@@ -186,7 +187,7 @@ class icms_core_Session {
 	 * @return bool
 	 */
 	public function write($sess_id, $sess_data) {
-		return self::writeSession($sess_id, $sess_data) ? true : false;
+		return (bool) self::writeSession($sess_id, $sess_data);
 	}
 
 	/**
@@ -196,7 +197,7 @@ class icms_core_Session {
 	 * @return bool
 	 */
 	public function destroy($sess_id) {
-		return self::destroySession($sess_id) ? true : false;
+		return (bool) self::destroySession($sess_id);
 	}
 
 	/**
@@ -206,7 +207,7 @@ class icms_core_Session {
 	 * @return bool
 	 */
 	public function gc($expire) {
-		return self::gcSession($expire) ? true : false;
+		return (bool) self::gcSession($expire);
 	}
 
 	/**
@@ -214,7 +215,9 @@ class icms_core_Session {
 	 */
 	public function gc_force() {
 		if (rand(1, 100) < 11) {
-			$expiration = empty($GLOBALS['icmsConfig']['session_expire']) ? @ini_get('session.gc_maxlifetime') : $GLOBALS['icmsConfig']['session_expire'] * 60;
+			$expiration = empty($GLOBALS['icmsConfig']['session_expire'])
+				? @ini_get('session.gc_maxlifetime')
+				: $GLOBALS['icmsConfig']['session_expire'] * 60;
 			$this->gc($expiration);
 		}
 	}
@@ -253,8 +256,13 @@ class icms_core_Session {
 	public function update_cookie($sess_id = null, $expire = null) {
 		global $icmsConfig;
 		$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
-		$session_name = ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') ? $icmsConfig['session_name'] : session_name();
-		$session_expire = $expire !== NULL ? (int) $expire : (($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') ? $icmsConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime'));
+		$session_name = ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '')
+			? $icmsConfig['session_name'] : session_name();
+		$session_expire = $expire !== null
+			? (int) $expire
+			: (($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '')
+				? $icmsConfig['session_expire'] * 60
+				: ini_get('session.cookie_lifetime'));
 		$session_id = empty($sess_id) ? session_id() : $sess_id;
 		icms_setCookieVar($session_name, $session_id, $session_expire ? time() + $session_expire : 0);
 	}
@@ -460,7 +468,8 @@ class icms_core_Session {
 		$sql = sprintf("UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s", icms::$xoopsDB->prefix('session'), time(), $sess_data, $sess_id);
 		icms::$xoopsDB->queryF($sql);
 		if (!icms::$xoopsDB->getAffectedRows()) {
-			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)" . " VALUES (%s, '%u', %s, %s)", icms::$xoopsDB->prefix('session'), $sess_id, time(), icms::$xoopsDB->quoteString($_SERVER['REMOTE_ADDR']), $sess_data);
+			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)" . " VALUES (%s, '%u', %s, %s)",
+				icms::$xoopsDB->prefix('session'), $sess_id, time(), icms::$xoopsDB->quoteString($_SERVER['REMOTE_ADDR']), $sess_data);
 			return icms::$xoopsDB->queryF($sql);
 		}
 		return true;
