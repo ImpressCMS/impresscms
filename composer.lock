@@ -2435,16 +2435,16 @@
         },
         {
             "name": "imponeer/symfony-translations-constants-loader",
-            "version": "v1.0.6",
+            "version": "v1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/symfony-translations-constants-loader.git",
-                "reference": "dd0c3cc6e624c64fddd27f2fa8dfbb744f6b85a8"
+                "reference": "44c3e3549720b808eca3ceb9a178c265cc5c6eab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/dd0c3cc6e624c64fddd27f2fa8dfbb744f6b85a8",
-                "reference": "dd0c3cc6e624c64fddd27f2fa8dfbb744f6b85a8",
+                "url": "https://api.github.com/repos/imponeer/symfony-translations-constants-loader/zipball/44c3e3549720b808eca3ceb9a178c265cc5c6eab",
+                "reference": "44c3e3549720b808eca3ceb9a178c265cc5c6eab",
                 "shasum": ""
             },
             "require": {
@@ -2483,9 +2483,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/symfony-translations-constants-loader/issues",
-                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.6"
+                "source": "https://github.com/imponeer/symfony-translations-constants-loader/tree/v1.0.7"
             },
-            "time": "2023-04-01T15:03:27+00:00"
+            "time": "2023-07-01T14:13:26+00:00"
         },
         {
             "name": "impresscms/codemirror-integration",
