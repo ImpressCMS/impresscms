@@ -35,6 +35,11 @@
 
 						</li>
 				<li>
+					<a href="package-Auth.Openid.html">
+						Openid					</a>
+
+						</li>
+				<li>
 					<a href="package-Auth.Xoops.html">
 						Xoops					</a>
 
@@ -81,6 +86,11 @@
 				<li>
 					<a href="package-Core.Filters.html">
 						Filters					</a>
+
+						</li>
+				<li>
+					<a href="package-core.Kernel.html">
+						Kernel					</a>
 
 						</li>
 				<li>
@@ -554,8 +564,8 @@
 				<b>License:</b>
 				<a href="LICENSE.txt">LICENSE.txt</a><br>
 				<b>Author:</b>
-				Kazumi Ono <a href="ma&#105;&#108;&#116;&#111;&#58;&#111;&#110;&#111;&#107;&#97;&#122;&#x75;&#x40;&#x78;&#x6f;&#x6f;&#x70;&#x73;&#x2e;&#x6f;&#x72;&#x67;">&#111;&#110;&#111;&#107;&#97;&#122;&#x75;&#x40;&#x78;&#x6f;&#x6f;&#x70;&#x73;&#x2e;&#x6f;&#x72;&#x67;</a><br>
-			<b>Located at</b> <a href="source-class-icms_module_Object.html#42-380" title="Go to source code">module/Object.php</a>
+				Kazumi Ono  <a href="ma&#105;&#108;&#116;&#111;&#58;&#111;&#110;&#111;&#107;&#97;&#122;&#x75;&#x40;&#x78;&#x6f;&#x6f;&#x70;&#x73;&#x2e;&#x6f;&#x72;&#x67;">&#111;&#110;&#111;&#107;&#97;&#122;&#x75;&#x40;&#x78;&#x6f;&#x6f;&#x70;&#x73;&#x2e;&#x6f;&#x72;&#x67;</a><br>
+			<b>Located at</b> <a href="source-class-icms_module_Object.html#42-403" title="Go to source code">module/Object.php</a>
 		<br>
 	</div>
 
@@ -575,7 +585,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-icms_module_Object.html#81-103" title="Go to source code">__construct</a>( )</code>
+		<code><a href="source-class-icms_module_Object.html#79-101" title="Go to source code">__construct</a>( )</code>
 
 		<div class="description short">
 			<p>Constructor</p>
@@ -607,7 +617,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_launch">#</a>
-		<code><a href="source-class-icms_module_Object.html#105-112" title="Go to source code">launch</a>( )</code>
+		<code><a href="source-class-icms_module_Object.html#103-110" title="Go to source code">launch</a>( )</code>
 
 		<div class="description short">
 			<p>Initializes the module/application.
@@ -641,7 +651,7 @@ to setup its global structures.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_registerClassPath">#</a>
-		<code><a href="source-class-icms_module_Object.html#114-139" title="Go to source code">registerClassPath</a>( <span>boolean <var>$isactive</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-icms_module_Object.html#112-138" title="Go to source code">registerClassPath</a>( <span>boolean <var>$isactive</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			<p>register class path with autoloader
@@ -657,7 +667,7 @@ notice: this function may not be used for the system module</p>
 				<div class="list"><dl>
 					<dt><var>$isactive</var></dt>
 					<dd><p>if TRUE, the class path is only registered if the module is active
-       if FALSE, the class path is only registered if the module is inactive</p></dd>
+                            if FALSE, the class path is only registered if the module is inactive</p></dd>
 				</dl></div>
 
 
@@ -679,7 +689,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_loadInfoAsVar">#</a>
-		<code><a href="source-class-icms_module_Object.html#141-171" title="Go to source code">loadInfoAsVar</a>( <span>string <var>$dirname</var></span>, <span>boolean <var>$verbose</var> = <span class="php-keyword1">true</span></span> )</code>
+		<code><a href="source-class-icms_module_Object.html#140-168" title="Go to source code">loadInfoAsVar</a>( <span>string <var>$dirname</var></span>, <span>boolean <var>$verbose</var> = <span class="php-keyword1">true</span></span> )</code>
 
 		<div class="description short">
 			<p>Load module info</p>
@@ -716,7 +726,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getInfo">#</a>
-		<code><a href="source-class-icms_module_Object.html#173-192" title="Go to source code">getInfo</a>( <span>string <var>$name</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-icms_module_Object.html#170-185" title="Go to source code">getInfo</a>( <span>string <var>$name</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Get module info</p>
@@ -735,7 +745,7 @@ notice: this function may not be used for the system module</p>
 				<h4>Returns</h4>
 				<div class="list">
 					array|string<br><p>Array of module information.
-        If $name is set, returns a single module information item as string.</p>
+If <code><a href="class-icms_module_Object.html#_name" class="deprecated">icms_module_Object::name()</a></code> is set, returns a single module information item as string.</p>
 				</div>
 
 
@@ -756,7 +766,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getDBVersion">#</a>
-		<code><a href="source-class-icms_module_Object.html#194-202" title="Go to source code">getDBVersion</a>( )</code>
+		<code><a href="source-class-icms_module_Object.html#187-195" title="Go to source code">getDBVersion</a>( )</code>
 
 		<div class="description short">
 			<p>Retreive the database version of this module</p>
@@ -790,7 +800,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_mainLink">#</a>
-		<code><a href="source-class-icms_module_Object.html#204-215" title="Go to source code">mainLink</a>( )</code>
+		<code><a href="source-class-icms_module_Object.html#197-208" title="Go to source code">mainLink</a>( )</code>
 
 		<div class="description short">
 			<p>Get a link to the modules main page</p>
@@ -824,7 +834,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_subLink">#</a>
-		<code><a href="source-class-icms_module_Object.html#217-230" title="Go to source code">subLink</a>( )</code>
+		<code><a href="source-class-icms_module_Object.html#210-223" title="Go to source code">subLink</a>( )</code>
 
 		<div class="description short">
 			<p>Get links to the subpages</p>
@@ -858,7 +868,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_loadAdminMenu">#</a>
-		<code><a href="source-class-icms_module_Object.html#232-243" title="Go to source code">loadAdminMenu</a>( )</code>
+		<code><a href="source-class-icms_module_Object.html#225-234" title="Go to source code">loadAdminMenu</a>( )</code>
 
 		<div class="description short">
 			<p>Load the admin menu for the module</p>
@@ -888,7 +898,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getAdminMenu">#</a>
-		<code><a href="source-class-icms_module_Object.html#245-255" title="Go to source code">getAdminMenu</a>( )</code>
+		<code><a href="source-class-icms_module_Object.html#236-244" title="Go to source code">getAdminMenu</a>( )</code>
 
 		<div class="description short">
 			<p>Get the admin menu for the module</p>
@@ -922,7 +932,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getAdminHeaderMenu">#</a>
-		<code><a href="source-class-icms_module_Object.html#257-267" title="Go to source code">getAdminHeaderMenu</a>( )</code>
+		<code><a href="source-class-icms_module_Object.html#246-254" title="Go to source code">getAdminHeaderMenu</a>( )</code>
 
 		<div class="description short">
 			<p>Get the admin header menu for the module</p>
@@ -956,7 +966,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_loadInfo">#</a>
-		<code><a href="source-class-icms_module_Object.html#269-291" title="Go to source code">loadInfo</a>( <span>string <var>$dirname</var></span>, <span>boolean <var>$verbose</var> = <span class="php-keyword1">true</span></span> )</code>
+		<code><a href="source-class-icms_module_Object.html#256-276" title="Go to source code">loadInfo</a>( <span>string <var>$dirname</var></span>, <span>boolean <var>$verbose</var> = <span class="php-keyword1">true</span></span> )</code>
 
 		<div class="description short">
 			<p>Load the module info for this module</p>
@@ -997,7 +1007,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_search">#</a>
-		<code><a href="source-class-icms_module_Object.html#293-321" title="Go to source code">search</a>( <span>string <var>$term</var> = <span class="php-quote">''</span></span>, <span>string <var>$andor</var> = <span class="php-quote">'AND'</span></span>, <span>integer <var>$limit</var> = <span class="php-num">0</span></span>, <span>integer <var>$offset</var> = <span class="php-num">0</span></span>, <span>integer <var>$userid</var> = <span class="php-num">0</span></span> )</code>
+		<code><a href="source-class-icms_module_Object.html#278-304" title="Go to source code">search</a>( <span>string <var>$term</var> = <span class="php-quote">''</span></span>, <span>string <var>$andor</var> = <span class="php-quote">'AND'</span></span>, <span>integer <var>$limit</var> = <span class="php-num">0</span></span>, <span>integer <var>$offset</var> = <span class="php-num">0</span></span>, <span>integer <var>$userid</var> = <span class="php-num">0</span></span> )</code>
 
 		<div class="description short">
 			<p>Search contents within a module</p>
@@ -1044,7 +1054,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_displayAdminMenu">#</a>
-		<code><a href="source-class-icms_module_Object.html#323-347" title="Go to source code">displayAdminMenu</a>( <span>integer <var>$currentoption</var> = <span class="php-num">0</span></span>, <span>string <var>$breadcrumb</var> = <span class="php-quote">''</span></span>, <span>boolean <var>$submenus</var> = <span class="php-keyword1">false</span></span>, <span>integer <var>$currentsub</var> = -<span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-icms_module_Object.html#306-334" title="Go to source code">displayAdminMenu</a>( <span>integer <var>$currentoption</var> = <span class="php-num">0</span></span>, <span>string <var>$breadcrumb</var> = <span class="php-quote">''</span></span>, <span>boolean <var>$submenus</var> = <span class="php-keyword1">false</span></span>, <span>integer <var>$currentsub</var> = -<span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			<p>Displays the (good old) adminmenu</p>
@@ -1077,7 +1087,151 @@ notice: this function may not be used for the system module</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="setMessage" id="_setMessage">
+	<tr data-order="mid" id="_mid" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_mid">#</a>
+		<code><a href="source-class-icms_module_Object.html#336-344" title="Go to source code">mid</a>( )</code>
+
+		<div class="description short">
+			<p>For backward compatibility only!</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>For backward compatibility only!</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						Use $this->getVar('mid') instead<br>
+				</div>
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="dirname" id="_dirname" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_dirname">#</a>
+		<code><a href="source-class-icms_module_Object.html#345-353" title="Go to source code">dirname</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						Use getVar('dirname') instead<br>
+						Use $this->getVar('mid') instead<br>
+				</div>
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="name" id="_name" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_name">#</a>
+		<code><a href="source-class-icms_module_Object.html#354-362" title="Go to source code">name</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						Use getVar('name') instead<br>
+						Use $this->getVar('mid') instead<br>
+				</div>
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getByDirName" id="_getByDirName" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			&amp;
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getByDirName">#</a>
+		<code><a href="source-class-icms_module_Object.html#363-374" title="Go to source code">getByDirName</a>( <span>unknown_type <var>$dirname</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						Use the handler method instead<br>
+						Use $this->getVar('mid') instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dirname</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setMessage" id="_setMessage" class="deprecated">
 
 		<td class="attributes"><code>
 			 public 
@@ -1089,7 +1243,7 @@ notice: this function may not be used for the system module</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setMessage">#</a>
-		<code><a href="source-class-icms_module_Object.html#349-379" title="Go to source code">setMessage</a>( <span>string <var>$msg</var></span>, <span>string <var>$title</var> = <span class="php-quote">''</span></span>, <span>boolean <var>$render</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-icms_module_Object.html#376-402" title="Go to source code">setMessage</a>( <span>string <var>$msg</var></span>, <span>string <var>$title</var> = <span class="php-quote">''</span></span>, <span>boolean <var>$render</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			<p>Modules Message Function</p>
@@ -1098,6 +1252,10 @@ notice: this function may not be used for the system module</p>
 		<div class="description detailed hidden">
 			<p>Modules Message Function</p>
 
+				<h4>Deprecated</h4>
+				<div class="list">
+						Use $this->getVar('mid') instead<br>
+				</div>
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
@@ -1177,7 +1335,7 @@ notice: this function may not be used for the system module</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-icms_module_Object.html#51-56" title="Go to source code"><var>$config</var></a>
+				<a href="source-class-icms_module_Object.html#51-55" title="Go to source code"><var>$config</var></a>
 
 			<div class="description short">
 				<p>Module configuration</p>
@@ -1202,7 +1360,7 @@ notice: this function may not be used for the system module</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-icms_module_Object.html#57-61" title="Go to source code"><var>$modinfo</var></a>
+				<a href="source-class-icms_module_Object.html#56-59" title="Go to source code"><var>$modinfo</var></a>
 
 			<div class="description short">
 				
@@ -1227,7 +1385,7 @@ notice: this function may not be used for the system module</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-icms_module_Object.html#62-67" title="Go to source code"><var>$adminmenu</var></a>
+				<a href="source-class-icms_module_Object.html#60-65" title="Go to source code"><var>$adminmenu</var></a>
 
 			<div class="description short">
 				<p>AdminMenu of the module</p>
@@ -1252,7 +1410,7 @@ notice: this function may not be used for the system module</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-icms_module_Object.html#68-73" title="Go to source code"><var>$adminheadermenu</var></a>
+				<a href="source-class-icms_module_Object.html#66-71" title="Go to source code"><var>$adminheadermenu</var></a>
 
 			<div class="description short">
 				<p>Header menu on admin of the module</p>
@@ -1277,7 +1435,7 @@ notice: this function may not be used for the system module</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-icms_module_Object.html#74-79" title="Go to source code"><var>$messages</var></a>
+				<a href="source-class-icms_module_Object.html#72-77" title="Go to source code"><var>$messages</var></a>
 
 			<div class="description short">
 				<p>array for messages</p>
@@ -1320,6 +1478,6 @@ notice: this function may not be used for the system module</p>
 </div>
 </div>
 <script src="resources/combined.js?58699d70ee1015ed63e509c64f4dd9d3b29ddbbe"></script>
-<script src="elementlist.js?a18c3be43b9689dbea8e5f99d9bcca04f4dfdd4e"></script>
+<script src="elementlist.js?8ff63a4a66ead89744ef571ab98dc03c0488bb0a"></script>
 </body>
 </html>

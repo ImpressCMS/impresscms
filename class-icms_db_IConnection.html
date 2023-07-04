@@ -35,6 +35,11 @@
 
 						</li>
 				<li>
+					<a href="package-Auth.Openid.html">
+						Openid					</a>
+
+						</li>
+				<li>
 					<a href="package-Auth.Xoops.html">
 						Xoops					</a>
 
@@ -81,6 +86,11 @@
 				<li>
 					<a href="package-Core.Filters.html">
 						Filters					</a>
+
+						</li>
+				<li>
+					<a href="package-core.Kernel.html">
+						Kernel					</a>
 
 						</li>
 				<li>
@@ -545,12 +555,531 @@
 				<a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GNU General Public License (GPL)</a><br>
 				<b>Since:</b>
 				1.4<br>
-			<b>Located at</b> <a href="source-class-icms_db_IConnection.html#14-23" title="Go to source code">db/IConnection.php</a>
+			<b>Located at</b> <a href="source-class-icms_db_IConnection.html#14-118" title="Go to source code">db/IConnection.php</a>
 		<br>
 	</div>
 
 
 
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#23-26" title="Go to source code">__construct</a>( <span> <var>$dsn</var></span>, <span> <var>$user</var></span>, <span> <var>$pwd</var></span>, <span> <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Public contructor</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Public contructor</p>
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setAttribute" id="_setAttribute">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setAttribute">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#28-34" title="Go to source code">setAttribute</a>( <span>integer <var>$attribute</var></span>, <span>mixed <var>$value</var></span> )</code>
+
+		<div class="description short">
+			<p>Set the value of a database connection attribute.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set the value of a database connection attribute.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$attribute</var></dt>
+					<dd></dd>
+					<dt><var>$value</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getAttribute" id="_getAttribute">
+
+		<td class="attributes"><code>
+			 public 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getAttribute">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#36-41" title="Go to source code">getAttribute</a>( <span>integer <var>$attribute</var></span> )</code>
+
+		<div class="description short">
+			<p>Return the value of a database connection attribute.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Return the value of a database connection attribute.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$attribute</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="errorCode" id="_errorCode">
+
+		<td class="attributes"><code>
+			 public 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_errorCode">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#43-47" title="Go to source code">errorCode</a>( )</code>
+
+		<div class="description short">
+			<p>Last error as an SQLSTATE, a five characters alphanumeric identifier.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Last error as an SQLSTATE, a five characters alphanumeric identifier.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="errorInfo" id="_errorInfo">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_errorInfo">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#49-53" title="Go to source code">errorInfo</a>( )</code>
+
+		<div class="description short">
+			<p>Get an array of error information about the last operation.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get an array of error information about the last operation.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="quote" id="_quote">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_quote">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#55-61" title="Go to source code">quote</a>( <span>string <var>$string</var></span>, <span>integer <var>$type</var> = PDO::PARAM_STR</span> )</code>
+
+		<div class="description short">
+			<p>Places quotes around the input string and escapes special characters within the input string.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Places quotes around the input string and escapes special characters within the input string.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$string</var></dt>
+					<dd></dd>
+					<dt><var>$type</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="escape" id="_escape">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_escape">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#63-69" title="Go to source code">escape</a>( <span>string <var>$string</var></span> )</code>
+
+		<div class="description short">
+			<p>Safely escape the string, but strips the outer quotes
+This is a legacy method</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Safely escape the string, but strips the outer quotes
+This is a legacy method</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$string</var></dt>
+					<dd>to be escaped</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="beginTransaction" id="_beginTransaction">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_beginTransaction">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#71-75" title="Go to source code">beginTransaction</a>( )</code>
+
+		<div class="description short">
+			<p>Turns off autocommit mode and starts recording transaction.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Turns off autocommit mode and starts recording transaction.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="commit" id="_commit">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_commit">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#77-81" title="Go to source code">commit</a>( )</code>
+
+		<div class="description short">
+			<p>Commits current transaction.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Commits current transaction.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="rollBack" id="_rollBack">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_rollBack">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#83-87" title="Go to source code">rollBack</a>( )</code>
+
+		<div class="description short">
+			<p>Rolls back current transaction.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Rolls back current transaction.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="prepare" id="_prepare">
+
+		<td class="attributes"><code>
+			 public 
+
+			icms_db_Statement
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_prepare">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#89-95" title="Go to source code">prepare</a>( <span>string <var>$sql</var></span>, <span>array <var>$options</var> = <span class="php-keyword1">array</span>()</span> )</code>
+
+		<div class="description short">
+			<p>Prepares an SQL statement</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Prepares an SQL statement</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sql</var></dt>
+					<dd></dd>
+					<dt><var>$options</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					icms_db_Statement
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="exec" id="_exec">
+
+		<td class="attributes"><code>
+			 public 
+
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_exec">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#97-102" title="Go to source code">exec</a>( <span>string <var>$sql</var></span> )</code>
+
+		<div class="description short">
+			<p>Executes an SQL statement and returns the number of affected rows.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Executes an SQL statement and returns the number of affected rows.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sql</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					integer
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="query" id="_query">
+
+		<td class="attributes"><code>
+			 public 
+
+			icms_db_Statement
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_query">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#104-109" title="Go to source code">query</a>( <span>string <var>$sql</var>,…</span> )</code>
+
+		<div class="description short">
+			<p>Executes an SQL statement and returns a result set as a IStatement object.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Executes an SQL statement and returns a result set as a IStatement object.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$sql</var>,…</dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					icms_db_Statement
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="lastInsertId" id="_lastInsertId">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_lastInsertId">#</a>
+		<code><a href="source-class-icms_db_IConnection.html#111-116" title="Go to source code">lastInsertId</a>( <span>string <var>$name</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Returns the ID of the last inserted row or the last value from a sequence object.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the ID of the last inserted row or the last value from a sequence object.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
 
 
 
@@ -577,6 +1106,6 @@
 </div>
 </div>
 <script src="resources/combined.js?58699d70ee1015ed63e509c64f4dd9d3b29ddbbe"></script>
-<script src="elementlist.js?a18c3be43b9689dbea8e5f99d9bcca04f4dfdd4e"></script>
+<script src="elementlist.js?8ff63a4a66ead89744ef571ab98dc03c0488bb0a"></script>
 </body>
 </html>
