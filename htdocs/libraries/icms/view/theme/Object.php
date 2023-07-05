@@ -210,6 +210,7 @@ class icms_view_theme_Object {
 				$this->addMeta('meta', substr($name, 5), $value);
 			} elseif (substr($name, 0, 6) == 'footer') {
 				$values = $value;
+/*
 				if ($icmsConfigMetaFooter['use_google_analytics'] == TRUE && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
 
 					$values = $value . "<script>
@@ -223,6 +224,7 @@ class icms_view_theme_Object {
 
 </script>";
 				}
+*/
 				$this->template->assign("xoops_$name", $values);
 				$this->template->assign("icms_$name", $values);
 			} else {
