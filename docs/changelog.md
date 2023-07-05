@@ -1,5 +1,12 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 1.4.5
+* Date : 05 Jul 2023
+* DB Version: 46
+* Build Version : 105
+
+This release makes ImpressCMS work with Google Analytics 4
+
 ## ImpressCMS 1.4.4
 * Date : 01 Mar 2022
 * DB Version: 46
