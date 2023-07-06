@@ -36,7 +36,7 @@ ImpressCMS uses a database to store the data required for running your ImpressCM
 
 #### :rainbow: Theme-based skinnable interface
 
-ImpressCMS is driven by a powerfull theme system. Both admins and users can change the look of the entire web site with just a click of a mouse. There are also hundreds of quality themes available for download!
+ImpressCMS is driven by a powerful theme system. Both admins and users can change the look of the entire web site with just a click of a mouse. There are also hundreds of quality themes available for download!
 
 #### :busts_in_silhouette: Versatile Group Permissions System
 
