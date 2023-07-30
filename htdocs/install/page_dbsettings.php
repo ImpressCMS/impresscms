@@ -130,7 +130,7 @@ function getDbCharsets($link) {
 function getDbCollations($link, $charset) {
 	static $collations = array( );
 
-	if ($result = exec_query("SHOW COLLATION WHERE Charset=" . quote_sql($charset, $link), $link)) {
+	if ($result = exec_query("SHOW COLLATION WHERE Charset=" . quote_sql($charset), $link)) {
 		while ($row = fetch_assoc($result)) {
 			$collations [$charset] [$row ["Collation"]] = $row ["Default"]?1:0;
 		}
@@ -264,7 +264,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 		if ($db_exist && $vars['DB_CHARSET']) {
 			/* Attempt to set the character set and collation to the selected */
 
-			$sql = "ALTER DATABASE " . sanitize_database( $vars ['DB_NAME']) . " DEFAULT CHARACTER SET " . quote_sql($vars ['DB_CHARSET'], $link) . ($vars ['DB_COLLATION']?" COLLATE " . quote_sql($vars ['DB_COLLATION'], $link):"");
+			$sql = "ALTER DATABASE " . sanitize_database( $vars ['DB_NAME']) . " DEFAULT CHARACTER SET " . quote_sql($vars ['DB_CHARSET']) . ($vars ['DB_COLLATION']?" COLLATE " . quote_sql($vars ['DB_COLLATION']):"");
 			if (!exec_query($sql, $link)) {
 				/* if the alter statement fails, set the constants to match existing */
 				$sql = "USE " . sanitize_database($vars["DB_NAME"]);
