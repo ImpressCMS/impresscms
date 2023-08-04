@@ -64,12 +64,12 @@ define( "INITIAL_SETTINGS_TITLE", "Sei pregato di inserire le impostazioni inizi
 define( "DATA_INSERTION", "Inserimento dati" );
 define( "DATA_INSERTION_TITLE", "Salvataggio delle tue impostazioni in corso" );
 define( "WELCOME", "Benvenuto/a" );
-define( "NO_PHP5", "PHP 5 non disponibile" );
+define( "NO_PHP5", "PHP 7 non disponibile" );
 define( "WELCOME_TITLE", "Installazione di ImpressCMS completata" );		// L0
 define( "MODULES_INSTALL", "Installazione moduli" );
 define( "MODULES_INSTALL_TITLE", "Installazione di moduli " );
-define( "NO_PHP5_TITLE", "PHP 5 non disponibile" );
-define( "NO_PHP5_CONTENT","PHP 5.6 &egrave; indispensabile per il buon funzionamento di ImpressCMS (PHP 7.2 è consigliato) - La tua insallazione non pu&ograve; continuare. Sei pregato di chiedere al tuo amministratore del serveer di aggiornare l'ambiente a PHP5 prima di provare a installare ancora. ");
+define( "NO_PHP5_TITLE", "PHP 7 non disponibile" );
+define( "NO_PHP5_CONTENT","PHP 7.4 &egrave; indispensabile per il buon funzionamento di ImpressCMS (PHP 8.1 è consigliato) - La tua insallazione non pu&ograve; continuare. Sei pregato di chiedere al tuo amministratore del serveer di aggiornare l'ambiente almeno a PHP 7.4 - 8.1 consigliato prima di provare a installare ancora. ");
 define( "SAFE_MODE", "Safe Mode On" );
 define( "SAFE_MODE_TITLE", "Safe Mode On" );
 define( "SAFE_MODE_CONTENT", "ImpressCMS ha trovato che PHP sta usando l'impostazione Safe Mode. A causa di ci&ograve; la tua installazione non pu&ograve; continuare. Sei pregato di chiedere al tuo hosting di cambiare questa impostazione a OFF prima di riprovare a installare." );
