@@ -66,7 +66,7 @@ define( "WELCOME_TITLE", "Installatie van ImpressCMS compleet" );		// L0
 define( "MODULES_INSTALL", "Installatie van modules" );
 define( "MODULES_INSTALL_TITLE", "Installatie van modules " );
 define( "NO_PHP5_TITLE", "Geen PHP 7" );
-define( "NO_PHP5_CONTENT","PHP 7.0.0 is minimaal vereist (PHP 7.4+ is sterk aanbevolen) om ImpressCMS correct te laten werken. De installatie kan niet verder gaan. Contacteer aub uw hosting aanbieder om uw PHP te upgraden naar een versie die nieuwer is dan 7.0 (PHP 7.4+ is aanbevolen) vooraleer de installatie opnieuw op te starten.");
+define( "NO_PHP5_CONTENT","PHP 7.4 is minimaal vereist (PHP 8.1 is sterk aanbevolen) om ImpressCMS correct te laten werken. De installatie kan niet verder gaan. Contacteer aub uw hosting aanbieder om uw PHP te upgraden naar een versie die nieuwer is dan 7.4 (PHP 8.1 is aanbevolen) vooraleer de installatie opnieuw op te starten.");
 define( "SAFE_MODE", "Safe Modus aan" );
 define( "SAFE_MODE_TITLE", "Safe Modus aan" );
 define( "SAFE_MODE_CONTENT", "ImpressCMS heeft vastgesteld dat PHP in 'safe modus' werkt. Hierdoor kan uw installatie niet verdergaan. Contacteer uw hosting aanbieder om uw PHP instellingen aan te passen vooraleer de installatie te herstarten." );
