@@ -2,63 +2,41 @@
 /**
  * googleanalytics ga4.php
  * Created by david on 13/02/2022 22:41
- *
+ * Modified by skenow on 11 June 2023
  */
 
 /**
  * preload class to include the Google Analytics V4 tag in the Head of the webpage, after replacing the smarty variable with the GA4 property code
  * This can certainly be improved by checking whether we can, based on the preferences by our users (GDPR and cookies)
  */
-class IcmsPreloadGoogleanalytics extends icms_preload_Item {
+class IcmsPreloadGa4 extends IcmsPreloadItem {
 
-    function eventBeforeFooter()
-    {
-        global $xoopsTpl;
-        global $icmsTheme;
-        global $icmsConfigMetaFooter;
+	function eventBeforeFooter() {
+		global $xoopsTpl;
+		global $icmsTheme;
+		global $icmsConfigMetaFooter;
+		global $xoTheme;
 
+		try {
 
-        try {
-            if ($icmsConfigMetaFooter['use_google_analytics'])
-			{
-				if(isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') 
-				{
-					if(substr( $icmsConfigMetaFooter['use_google_analytics'], 0, 2 ) === "G-")
-					{
-						$this->insertGA4Tag($icmsConfigMetaFooter['google_analytics']);
-					}
-					else
-					{
-						$this->insertUniversalAnalyticsTag($icmsConfigMetaFooter['google_analytics']);
-					}
+			if ($icmsConfigMetaFooter['use_google_analytics'] == TRUE && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
+				if (substr($icmsConfigMetaFooter['google_analytics'], 0, 2 ) === "G-") {
+					$tagvalue = $icmsConfigMetaFooter['google_analytics'];
+				} else {
+					$tagvalue = 'UA-' . $icmsConfigMetaFooter['google_analytics'];
 				}
-            }
-        }
-        catch (Exception $e) {
-            echo $e->getMessage();
-        }
-    }
-
-	function insertUniversalAnalyticsTag(string $UAtag)
-	{
-		$icmsTheme->addScript('', '', '(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
-
-  ga(\'create\', \'UA-' . $UAtag  . '\', \'auto\');
-  ga(\'send\', \'pageview\');', 'module', '2001');
-
-	}
-
-	function insertGA4Tag(string $GA4tag)
-	{
-		$icmsTheme->addScript('https://www.googletagmanager.com/gtag/js?id=' . $GA4tag, ['async' => 'async'], '', 'module', 2000);
-		$icmsTheme->addScript('', '', 'window.dataLayer = window.dataLayer || [];
+				$xoTheme->addScript('https://www.googletagmanager.com/gtag/js?id=' . $tagvalue, ['async'=>'async'], '', 'module', 2000);
+				$xoTheme->addScript('', '', 'window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag(\'js\', new Date());
 
-    gtag(\'config\', \'' . $GA4tag . '\');', 'module', '2001');
-
+    gtag(\'config\', \'' . $tagvalue . '\');', 'module', '2001');
+			} else {
+				echo 'error getting icmsConfigMetaFooter';
+			}
+		}
+		catch (Exception $e) {
+			echo $e->getMessage();
+		}
 	}
 }
