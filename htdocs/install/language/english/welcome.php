@@ -14,7 +14,7 @@ $content .= '
 <h3>Requirements</h3>
 <ul>
 	<li>- WWW Server: <a href="https://www.apache.org/" rel="external">Apache</a>, NGinx, IIS, Roxen, etc</li>
-	<li>- Script: <a href="https://www.php.net/" rel="external">PHP</a> 7.0+ and 16mb minimum memory allocation - PHP 8 is supported!</li>
+	<li>- Script: <a href="https://www.php.net/" rel="external">PHP</a> 7.4+ and 16mb minimum memory allocation - PHP 8.1 is recommended!</li>
 	<li>- Database: <a href="https://www.mysql.com/" rel="external">MySQL</a> 4.1.0 or higher, <a href="https://mariadb.org/" rel="external">MariaDB</a> 5.1 or higher</li>
 </ul>
 <h3>Before you install</h3>
