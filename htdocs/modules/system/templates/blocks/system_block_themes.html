@@ -1,7 +1,11 @@
 <div style="text-align: center;">
 <form action="index.php" method="post">
 <div>
-<{$block.theme_select}>
+	<select name="theme_select" onchange="submit();" size="3">
+	<{foreach item=theme from=$block.theme_select}>
+	<option value="<{$theme.folder}>"> <{$theme.name}></option>
+	<{/foreach}>
+	</select>
 </div>
 </form>
 </div>
