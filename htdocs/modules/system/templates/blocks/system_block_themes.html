@@ -3,7 +3,7 @@
 <div>
 	<select name="theme_select" onchange="submit();" size="3">
 	<{foreach item=theme from=$block.theme_select}>
-	<option value="<{$theme.folder}>"> <{$theme.name}></option>
+	<option value="<{$theme.folder}>"> <{if $theme.option>0}><img src="<{$theme.image}>"><br/><{/if}><{$theme.name}></option>
 	<{/foreach}>
 	</select>
 </div>
