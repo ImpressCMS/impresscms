@@ -51,7 +51,7 @@ function resize_delpreview(){
 function resizeCompleted(ajaxIndex,buttonObj)
 {
 	buttonObj.style.visibility='';
-	eval(resizeScriptAjaxObjects[ajaxIndex].response)
+	eval(resizeScriptAjaxObjects[ajaxIndex].response);
 	resizeScriptAjaxObjects[ajaxIndex] = false;
 	resize_hideProgressBar();
 }
