@@ -49,6 +49,7 @@ switch ($vars['DB_TYPE']) {
 		}
 		break;
 }
+
 if (isset($error)) {
 	$wizard->redirectToPage('-1', $error);
 	exit ();
@@ -135,7 +136,7 @@ function getDbCollations($link, $charset) {
 		}
 	}
 
-	return isset($collations[$charset]) ? $collations[$charset] : [];
+	return $collations[$charset] ?? [];
 }
 
 function validateDbCharset($link, &$charset, &$collation) {
@@ -168,10 +169,13 @@ function getDBVersion($link) {
 	if ($link instanceof PDO) {
 		return $link->getAttribute(PDO::ATTR_SERVER_VERSION);
 	}
-	return mysql_get_server_info($link);
+	else
+	{
+	echo 'error getting DB version';
+	}
 }
 
-function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset) {
+function xoFormFieldCollation($name, $value, $label, $link, $charset, $help = '') {
 	if (version_compare(getDBVersion($link), "4.1.0", "lt")) {
 		return "";
 	}
@@ -207,35 +211,35 @@ function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset
 	return $field;
 }
 
-function xoFormBlockCollation($name, $value, $label, $help = '', $link, $charset) {
+function xoFormBlockCollation($name, $value, $label, $link, $charset, $help = '') {
 	$block = '<div id="' . $name . '_div">';
-	$block .= xoFormFieldCollation($name, $value, $label, $help, $link, $charset);
+	$block .= xoFormFieldCollation($name, $value, $label,  $link, $charset, $help);
 	$block .= '</div>';
 
 	return $block;
 }
 
 function select_db($db_name, $link) {
-	if ($link instanceof PDO) {
+	//if ($link instanceof PDO) {
 		try {
 			$link->exec("use `" . $db_name . '`;');
 			return true;
 		} catch (PDOException $ex) {
 			return false;
 		}
-	}
-	return @mysql_select_db($db_name, $link);
+	//}
+	//else return @mysql_select_db($db_name, $link);
 }
 
 if ($_SERVER ['REQUEST_METHOD'] == 'GET' && isset ($_GET ['charset']) && @$_GET ['action'] == 'updateCollation') {
-	echo xoFormFieldCollation('DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $_GET ['charset']);
+	echo xoFormFieldCollation('DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, $link, $_GET ['charset'],DB_COLLATION_HELP);
 	exit ();
 }
 
 if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 	$params = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT');
 	foreach ($params as $name) {
-		$vars [$name] = isset ($_POST [$name])?$_POST [$name]:"";
+		$vars [$name] = $_POST [$name] ?? "";
 	}
 }
 
@@ -314,7 +318,7 @@ function xoFormField($name, $value, $label, $maxlength, $help = '') {
 	return $field;
 }
 
-function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
+function xoFormFieldCharset($name, $value, $label, $link, $help = '') {
 	if (version_compare(getDBVersion($link), "4.1.0", "lt")) {
 		return "";
 	}
@@ -382,9 +386,9 @@ if (!empty ($error)) {
 			?> <?php
 			echo xoFormField('DB_SALT', $vars ['DB_SALT'], DB_SALT_LABEL, 255, DB_SALT_HELP);
 			?> <?php
-			echo xoFormFieldCharset('DB_CHARSET', $vars ['DB_CHARSET'], DB_CHARSET_LABEL, DB_CHARSET_HELP, $link);
+			echo xoFormFieldCharset('DB_CHARSET', $vars ['DB_CHARSET'], DB_CHARSET_LABEL, $link, DB_CHARSET_HELP);
 			?> <?php
-			echo xoFormBlockCollation('DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $vars ['DB_CHARSET']);
+			echo xoFormBlockCollation('DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, $link, $vars ['DB_CHARSET'], DB_COLLATION_HELP, );
 			?></fieldset>
 	</div>
 <?php

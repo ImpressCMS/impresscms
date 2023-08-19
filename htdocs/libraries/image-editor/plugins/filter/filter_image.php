@@ -11,12 +11,12 @@
  */
 $xoopsOption['nodebug'] = 1;
 require_once '../../../../mainfile.php';
+use WideImage\WideImage;
 
 /* 3 critical parameters must exist - and must be safe */
 $image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
 $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
 $filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
-
 
 /* prevent remote file inclusion */
 $valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
@@ -35,19 +35,18 @@ if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . ba
 
 /* possible filter entries */
 $filters = array(
-		'IMG_FILTER_NEGATE',
-		'IMG_FILTER_GRAYSCALE',
-		'IMG_FILTER_BRIGHTNESS',
-		'IMG_FILTER_CONTRAST',
-		'IMG_FILTER_COLORIZE',
-		'IMG_FILTER_EDGEDETECT',
-		'IMG_FILTER_EMBOSS',
-		'IMG_FILTER_GAUSSIAN_BLUR',
-		'IMG_FILTER_SELECTIVE_BLUR',
-		'IMG_FILTER_MEAN_REMOVAL',
-		'IMG_FILTER_SMOOTH',
-		'IMG_FILTER_SEPIA'
-);
+	'IMG_FILTER_NEGATE',
+	'IMG_FILTER_GRAYSCALE',
+	'IMG_FILTER_BRIGHTNESS',
+	'IMG_FILTER_CONTRAST',
+	'IMG_FILTER_COLORIZE',
+	'IMG_FILTER_EDGEDETECT',
+	'IMG_FILTER_EMBOSS',
+	'IMG_FILTER_GAUSSIAN_BLUR',
+	'IMG_FILTER_SELECTIVE_BLUR',
+	'IMG_FILTER_MEAN_REMOVAL',
+	'IMG_FILTER_SMOOTH',
+	'IMG_FILTER_SEPIA');
 
 $filter = isset($_GET['filter']) ? filter_var($_GET['filter'], FILTER_SANITIZE_STRING) : null;
 if (!in_array($filter, $filters)) $filter = null;
@@ -55,11 +54,11 @@ if (!in_array($filter, $filters)) $filter = null;
 if (!isset($image_path) || !isset($image_url)) {
 	echo "alert('" . _ERROR . "');";
 } else {
-	/* this goes here instead of the initial conditions
-	 * because errors occur when previewing the filter effect */
-	if (!isset($filter)) exit;
-
-	include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
+	/*
+	 * this goes here instead of the initial conditions
+	 * because errors occur when previewing the filter effect
+	 */
+	if (!isset($filter)) exit();
 
 	$args = array();
 
@@ -74,45 +73,45 @@ if (!isset($image_path) || !isset($image_url)) {
 	}
 
 	$save = isset($_GET['save']) ? (int) $_GET['save'] : 0;
-	$del  = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
+	$del = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
 
 	$img = WideImage::load($image_path);
 	$arr = explode('/', $image_path);
-	$arr[count($arr)-1] = 'filter_' . $arr[count($arr)-1];
+	$arr[count($arr) - 1] = 'filter_' . $arr[count($arr) - 1];
 	$temp_img_path = implode('/', $arr);
 	$arr = explode('/', $image_url);
-	$arr[count($arr)-1] = 'filter_' . $arr[count($arr)-1];
+	$arr[count($arr) - 1] = 'filter_' . $arr[count($arr) - 1];
 	$temp_img_url = implode('/', $arr);
 
 	if ($del) {
 		@unlink($temp_img_path);
-		exit;
+		exit();
 	}
 
 	if ($filter == 'IMG_FILTER_SEPIA') {
 		$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->saveToFile($temp_img_path);
-	}else{
+	} else {
 		$img->applyFilter(constant($filter), implode(',', $args))->saveToFile($temp_img_path);
 	}
 
 	if ($save) {
 		if (!@unlink($image_path)) {
 			echo "alert('" . _ERROR . "');";
-			exit;
+			exit();
 		}
 		if (!@copy($temp_img_path, $image_path)) {
 			echo "alert('" . _ERROR . "');";
-			exit;
+			exit();
 		}
 		if (!@unlink($temp_img_path)) {
 			echo "alert('" . _ERROR . "');";
-			exit;
+			exit();
 		}
 		echo 'window.location.reload( true );';
 	} else {
 		$width = $img->getWidth();
 		$height = $img->getHeight();
-		echo "var w = window.open('".$temp_img_url."','crop_image_preview','width=".($width+20).",height=".($height+20).",resizable=yes');";
+		echo "var w = window.open('" . $temp_img_url . "','crop_image_preview','width=" . ($width + 20) . ",height=" . ($height + 20) . ",resizable=yes');";
 		echo "w.onunload = function (){filter_delpreview();}";
 	}
 }

@@ -11,12 +11,12 @@
  */
 $xoopsOption['nodebug'] = 1;
 require_once '../../../../mainfile.php';
+use WideImage\WideImage;
 
 /* 3 critical parameters must exist - and must be safe */
 $image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
 $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
 $filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
-
 
 /* prevent remote file inclusion */
 $valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
@@ -36,8 +36,6 @@ if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . ba
 if (!isset($image_path) || !isset($image_url)) {
 	echo "alert('" . _ERROR . "');";
 } else {
-	include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
-
 	$fit = 'inside';
 	$width = null;
 	$height = null;
@@ -61,19 +59,19 @@ if (!isset($image_path) || !isset($image_url)) {
 	}
 
 	$save = isset($_GET['save']) ? (int) $_GET['save'] : 0;
-	$del  = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
+	$del = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
 
 	$img = WideImage::load($image_path);
 	$arr = explode('/', $image_path);
-	$arr[count($arr)-1] = 'resize_' . $arr[count($arr)-1];
+	$arr[count($arr) - 1] = 'resize_' . $arr[count($arr) - 1];
 	$temp_img_path = implode('/', $arr);
 	$arr = explode('/', $image_url);
-	$arr[count($arr)-1] = 'resize_' . $arr[count($arr)-1];
+	$arr[count($arr) - 1] = 'resize_' . $arr[count($arr) - 1];
 	$temp_img_url = implode('/', $arr);
 
 	if ($del) {
 		@unlink($temp_img_path);
-		exit;
+		exit();
 	}
 
 	$img->resize($width, $height, $fit)->saveToFile($temp_img_path);
@@ -81,19 +79,19 @@ if (!isset($image_path) || !isset($image_url)) {
 	if ($save) {
 		if (!@unlink($image_path)) {
 			echo "alert('" . _ERROR . "');";
-			exit;
+			exit();
 		}
 		if (!@copy($temp_img_path, $image_path)) {
 			echo "alert('" . _ERROR . "');";
-			exit;
+			exit();
 		}
 		if (!@unlink($temp_img_path)) {
 			echo "alert('" . _ERROR . "');";
-			exit;
+			exit();
 		}
 		echo 'window.location.reload( true );';
 	} else {
-		echo "var w = window.open('".$temp_img_url."','resize_image_preview','width=".($width+20).",height=".($height+20).",resizable=yes');";
+		echo "var w = window.open('" . $temp_img_url . "','resize_image_preview','width=" . ($width + 20) . ",height=" . ($height + 20) . ",resizable=yes');";
 		echo "w.onunload = function (){resize_delpreview();}";
 	}
 }

@@ -14,7 +14,7 @@ $content .= '
 <h3>Requisiti di sistema</h3>
 <ul>
 	<li>WWW Server (<a href="http://www.apache.org/" target="_blank">Apache</a>, IIS, Roxen, ecc.)</li>
-	<li><a href="http://www.php.net/" target="_blank">PHP</a> 7.0 o maggiore (8.0 è supportato!) e 16MB minimo di allocazione di memoria </li>
+	<li><a href="http://www.php.net/" target="_blank">PHP</a> 7.4 o maggiore (8.1 è consigliato!) e 16MB minimo di allocazione di memoria </li>
 	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> 4.1.0 o maggiore oppure MariaDB 5.1 o maggiore</li>
 </ul>
 <h3>Prima di installare</h3>

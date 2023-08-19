@@ -1158,7 +1158,8 @@ class icms_core_DataFilter {
 			case 'str': // returns $string
 				switch ($options1) {
 					case "noencode":
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+						//return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+						return htmlspecialchars($data,ENT_NOQUOTES);
 						break;
 
 					case "striplow":
@@ -1182,7 +1183,7 @@ class icms_core_DataFilter {
 						break;
 
 					default:
-						return filter_var($data, FILTER_SANITIZE_STRING);
+						return htmlspecialchars($data,ENT_NOQUOTES);
 						break;
 				}
 				break;

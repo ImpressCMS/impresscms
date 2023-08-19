@@ -210,19 +210,6 @@ class icms_view_theme_Object {
 				$this->addMeta('meta', substr($name, 5), $value);
 			} elseif (substr($name, 0, 6) == 'footer') {
 				$values = $value;
-				if ($icmsConfigMetaFooter['use_google_analytics'] == TRUE && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
-
-					$values = $value . "<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-" . $icmsConfigMetaFooter['google_analytics'] . "', 'auto');
-  ga('send', 'pageview');
-
-</script>";
-				}
 				$this->template->assign("xoops_$name", $values);
 				$this->template->assign("icms_$name", $values);
 			} else {
