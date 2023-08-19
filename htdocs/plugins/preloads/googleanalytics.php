@@ -9,7 +9,7 @@
  * preload class to include the Google Analytics V4 tag in the Head of the webpage, after replacing the smarty variable with the GA4 property code
  * This can certainly be improved by checking whether we can, based on the preferences by our users (GDPR and cookies)
  */
-class IcmsPreloadGa4 extends IcmsPreloadItem {
+class IcmsPreloadGa4 extends icms_preload_Item {
 
 	function eventBeforeFooter() {
 		global $xoopsTpl;
