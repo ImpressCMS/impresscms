@@ -1,32 +1,32 @@
 <?php
 // $Id: main.php 12460 2014-06-25 03:35:37Z skenow $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
+// ------------------------------------------------------------------------ //
+// XOOPS - PHP Content Management System //
+// Copyright (c) 2000 XOOPS.org //
+// <http://www.xoops.org/> //
+// ------------------------------------------------------------------------ //
+// This program is free software; you can redistribute it and/or modify //
+// it under the terms of the GNU General Public License as published by //
+// the Free Software Foundation; either version 2 of the License, or //
+// (at your option) any later version. //
+// //
+// You may not change or alter any portion of this comment or credits //
+// of supporting developers from this source code or any supporting //
+// source code which is considered copyrighted (c) material of the //
+// original comment or credit authors. //
+// //
+// This program is distributed in the hope that it will be useful, //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the //
+// GNU General Public License for more details. //
+// //
+// You should have received a copy of the GNU General Public License //
+// along with this program; if not, write to the Free Software //
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA //
+// ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu) //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
+// Project: The XOOPS Project //
 // ------------------------------------------------------------------------- //
 
 /**
@@ -34,14 +34,14 @@
  *
  * System tool that allow manage images to use in the site
  *
- * @category	ICMS
- * @package		Administration
- * @subpackage	Images
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.2
- * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
- * @version		SVN: $Id: main.php 12460 2014-06-25 03:35:37Z skenow $
+ * @category ICMS
+ * @package Administration
+ * @subpackage Images
+ * @copyright The ImpressCMS Project http://www.impresscms.org/
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since 1.2
+ * @author Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
+ * @version SVN: $Id: main.php 12460 2014-06-25 03:35:37Z skenow $
  */
 
 /* check user permissions before proceeding */
@@ -49,30 +49,25 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 	exit(_NOPERM);
 }
 
+use WideImage\WideImage as WideImage;
+
 /* set filter types, if not strings */
-$filter_get = array(
-		'limit' => 'int',
-		'start' => 'int',
-		'imgcat_id' => 'int',
-		'image_id' => 'int',
-		'uid' => 'int',
-);
+$filter_get = array('limit' => 'int', 'start' => 'int', 'imgcat_id' => 'int', 'image_id' => 'int', 'uid' => 'int');
 
 $filter_post = array(
-		'limit' => 'int',
-		'start' => 'int',
-		'imgcat_id' => 'int',
-		'image_id' => 'int',
-		'uid' => 'int',
-		'imgcat_pid' => 'int',
-		'imgcat_maxsize' => 'int',
-		'imgcat_maxwidth' => 'int',
-		'imgcat_maxheight' => 'int',
-		'imgcat_display' => 'int',
-		'imgcat_weight' => 'int',
-		'readgroup' => 'int',
-		'writegroup' => 'int',
-);
+	'limit' => 'int',
+	'start' => 'int',
+	'imgcat_id' => 'int',
+	'image_id' => 'int',
+	'uid' => 'int',
+	'imgcat_pid' => 'int',
+	'imgcat_maxsize' => 'int',
+	'imgcat_maxwidth' => 'int',
+	'imgcat_maxheight' => 'int',
+	'imgcat_display' => 'int',
+	'imgcat_weight' => 'int',
+	'readgroup' => 'int',
+	'writegroup' => 'int');
 
 /* set default values for variables */
 $start = $imgcat_id = $image_id = $uid = 0;
@@ -84,7 +79,7 @@ $limit = 15;
 /* filter the user input */
 if (!empty($_GET)) {
 	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
-	if (isset($_GET['filter_post'])) unset ($_GET['filter_post']);
+	if (isset($_GET['filter_post'])) unset($_GET['filter_post']);
 	$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
 	extract($clean_GET);
 }
@@ -145,9 +140,9 @@ switch ($op) {
 	case 'delfile':
 		icms_cp_header();
 		$image_handler = icms::handler('icms_image');
-		$image =& $image_handler->get($image_id);
+		$image = &$image_handler->get($image_id);
 		$imgcat_handler = icms::handler('icms_image_category');
-		$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
+		$imagecategory = &$imgcat_handler->get($image->getVar('imgcat_id'));
 		$src = '<img src="' . ICMS_MODULES_URL . "/system/admin/images/preview.php?file=" . $image->getVar('image_name') . '" title="' . $image->getVar('image_nicename') . '" /><br />';
 		echo '<div style="margin:5px;" align="center">' . $src . '</div>';
 		icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMG);
@@ -166,7 +161,6 @@ switch ($op) {
 		$msg = isset($_GET['msg']) ? urldecode($_GET['msg']) : NULL;
 		redir($imgcat_id, filter_var($msg, FILTER_SANITIZE_ENCODED));
 		break;
-
 }
 
 /**
@@ -181,7 +175,7 @@ function imanager_index($imgcat_id = NULL) {
 		$groups = array(ICMS_GROUP_ANONYMOUS);
 		$admin = FALSE;
 	} else {
-		$groups =& icms::$user->getGroups();
+		$groups = &icms::$user->getGroups();
 		$admin = (!icms::$user->isAdmin(1)) ? FALSE : TRUE;
 	}
 
@@ -204,7 +198,7 @@ function imanager_index($imgcat_id = NULL) {
 	}
 	$id = (NULL !== $imgcat_id ? $imgcat_id : 0);
 	$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $id));
-	$imagecategorys =& $imgcat_handler->getObjects($criteriaRead);
+	$imagecategorys = &$imgcat_handler->getObjects($criteriaRead);
 	$criteriaWrite = new icms_db_criteria_Compo();
 	if (is_array($groups) && !empty($groups)) {
 		$criteriaWrite->add($criteriaTray);
@@ -212,7 +206,7 @@ function imanager_index($imgcat_id = NULL) {
 		$criteriaWrite->add(new icms_db_criteria_Item('gperm_modid', 1));
 	}
 	$criteriaWrite->add(new icms_db_criteria_Item('imgcat_pid', $id));
-	$imagecategorysWrite =& $imgcat_handler->getObjects($criteriaWrite);
+	$imagecategorysWrite = &$imgcat_handler->getObjects($criteriaWrite);
 
 	$icmsAdminTpl->assign('lang_imanager_title', _IMGMANAGER);
 	$icmsAdminTpl->assign('lang_imanager_catid', _MD_IMAGECATID);
@@ -250,7 +244,7 @@ function imanager_index($imgcat_id = NULL) {
 	$count = $msize = $subs = $nwrite = array();
 	$hasnwrite = array();
 	$icmsAdminTpl->assign('catcount', $catcount = count($imagecategorys));
-	for ($i = 0; $i < $catcount; $i++) {
+	for ($i = 0; $i < $catcount; $i++ ) {
 		$nwrite[$i] = is_writable($imgcat_handler->getCategFolder($imagecategorys[$i]));
 		if (!$nwrite[$i]) {
 			$hasnwrite[] = $imagecategorys[$i]->getVar('imgcat_name');
@@ -269,11 +263,11 @@ function imanager_index($imgcat_id = NULL) {
 		}
 		$id = (NULL !== $imgcat_id ? $imgcat_id : 0);
 		$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategorys[$i]->getVar('imgcat_id')));
-		$subs[$i]  = count($imgcat_handler->getObjects($criteriaRead));
+		$subs[$i] = count($imgcat_handler->getObjects($criteriaRead));
 	}
 	$hasnwrite = implode(', ', $hasnwrite);
 	$scount = array();
-	foreach ($subs as $k=>$v) {
+	foreach ($subs as $k => $v) {
 		$criteriaRead = new icms_db_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
 			$criteriaTray = new icms_db_criteria_Compo();
@@ -288,7 +282,7 @@ function imanager_index($imgcat_id = NULL) {
 		$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategorys[$k]->getVar('imgcat_id')));
 		$ssubs = $imgcat_handler->getObjects($criteriaRead);
 		$sc = 0;
-		foreach ($ssubs as $id=>$va) {
+		foreach ($ssubs as $id => $va) {
 			$sc += $image_handler->getCount(new icms_db_criteria_Item('imgcat_id', $va->getVar('imgcat_id')));
 		}
 		$scount[$k] = $sc;
@@ -346,7 +340,7 @@ function imanager_index($imgcat_id = NULL) {
 	$fname = new icms_form_elements_Text(_MD_IMGCATFOLDERNAME, 'imgcat_foldername', 50, 255, '');
 	$fname->setDescription('<span style="color:#ff0000;">' . _MD_IMGCATFOLDERNAME_DESC . '<br />' . _MD_STRTYOPENG . '</span>');
 	$js = 'var fname = document.getElementById("imgcat_foldername");';
-	$js .= 'if (fname.disabled == false && fname.value == "") {alert("' . sprintf(_FORM_ENTER, _MD_IMGCATFOLDERNAME ) . '"); return false;}';
+	$js .= 'if (fname.disabled == false && fname.value == "") {alert("' . sprintf(_FORM_ENTER, _MD_IMGCATFOLDERNAME) . '"); return false;}';
 	$fname->customValidationCode[] = $js;
 	$form->addElement($fname, TRUE);
 	$form->addElement(new icms_form_elements_Hidden('op', 'addcat'));
@@ -365,8 +359,8 @@ function imanager_index($imgcat_id = NULL) {
 /**
  * Logic and rendering for listing images within a category
  *
- * @param int $imgcat_id	Unique ID of the image category to list
- * @param int $start		Starting location for long lists
+ * @param int $imgcat_id Unique ID of the image category to list
+ * @param int $start Starting location for long lists
  */
 function imanager_listimg($imgcat_id, $start = 0) {
 	global $icmsAdminTpl, $query, $limit;
@@ -375,7 +369,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$groups = array(ICMS_GROUP_ANONYMOUS);
 		$admin = FALSE;
 	} else {
-		$groups =& icms::$user->getGroups();
+		$groups = &icms::$user->getGroups();
 		$admin = (!icms::$user->isAdmin(1)) ? FALSE : TRUE;
 	}
 
@@ -385,9 +379,9 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		redirect_header('admin.php?fct=images', 1, '');
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = &$imgcat_handler->get($imgcat_id);
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
-	$categ_url  = $imgcat_handler->getCategFolder($imagecategory, 1, 'url');
+	$categ_url = $imgcat_handler->getCategFolder($imagecategory, 1, 'url');
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1, '');
 	}
@@ -434,7 +428,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 	}
 	$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategory->getVar('imgcat_id')));
 	$subcats = $imgcat_handler->getObjects($criteriaRead);
-	$subs  = count($subcats);
+	$subs = count($subcats);
 	$icmsAdminTpl->assign('cat_subs', $subs);
 
 	$image_handler = icms::handler('icms_image');
@@ -453,7 +447,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 	$criteriaRead->add(new icms_db_criteria_Item('imgcat_pid', $imagecategory->getVar('imgcat_id')));
 	$ssubs = $imgcat_handler->getObjects($criteriaRead);
 	$sc = 0;
-	foreach ($ssubs as $id=>$va) {
+	foreach ($ssubs as $id => $va) {
 		$sc += $image_handler->getCount(new icms_db_criteria_Item('imgcat_id', $va->getVar('imgcat_id')));
 	}
 	$scount = $sc;
@@ -489,7 +483,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 	$criteria->setOrder('DESC');
 	$criteria->setSort('image_weight');
 	$criteria->setLimit($limit);
-	$images =& $image_handler->getObjects($criteria, TRUE, TRUE);
+	$images = &$image_handler->getObjects($criteria, TRUE, TRUE);
 
 	$icmsAdminTpl->assign('imgcount', $imgcount);
 
@@ -526,7 +520,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		}
 		$arrimg[$i]['src'] = $src . '?' . time();
 		$src_lightbox = ICMS_MODULES_URL . "/system/admin/images/preview.php?file=" . $images[$i]->getVar('image_name');
-		$preview_url = '<a href="' . $src_lightbox . '" rel="lightbox[categ' . $images[$i]->getVar('imgcat_id') . ']" title="' . $images[$i]->getVar('image_nicename') . '"><img src="'. ICMS_IMAGES_SET_URL . '/actions/viewmag.png" alt="' . _PREVIEW . '" title="' . _PREVIEW . '" /></a>';
+		$preview_url = '<a href="' . $src_lightbox . '" rel="lightbox[categ' . $images[$i]->getVar('imgcat_id') . ']" title="' . $images[$i]->getVar('image_nicename') . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" alt="' . _PREVIEW . '" title="' . _PREVIEW . '" /></a>';
 		$arrimg[$i]['preview_link'] = $preview_url;
 
 		$extra_perm = array("image/jpeg", "image/jpeg", "image/png", "image/gif");
@@ -588,7 +582,7 @@ function imanager_addcat() {
 
 	$imgcat_foldername = preg_replace('/[?".<>\|\s]/', '_', $imgcat_foldername);
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->create();
+	$imagecategory = &$imgcat_handler->create();
 	$imagecategory->setVar('imgcat_pid', $imgcat_pid);
 	$imagecategory->setVar('imgcat_name', $imgcat_name);
 	$imagecategory->setVar('imgcat_maxsize', $imgcat_maxsize);
@@ -610,8 +604,7 @@ function imanager_addcat() {
 			if (!icms_core_Filesystem::mkdir($categ_path)) {
 				redirect_header('admin.php?fct=images', 1, _MD_FAILADDCAT);
 			} else {
-				if ($fh = @fopen($categ_path . '/index.html', 'w'))
-					fwrite($fh, '<script>history.go(-1);</script>');
+				if ($fh = @fopen($categ_path . '/index.html', 'w')) fwrite($fh, '<script>history.go(-1);</script>');
 				@fclose($fh);
 			}
 		}
@@ -632,7 +625,7 @@ function imanager_addcat() {
 	}
 
 	foreach ($readgroup as $rgroup) {
-		$imagecategoryperm =& $imagecategoryperm_handler->create();
+		$imagecategoryperm = &$imagecategoryperm_handler->create();
 		$imagecategoryperm->setVar('gperm_groupid', $rgroup);
 		$imagecategoryperm->setVar('gperm_itemid', $newid);
 		$imagecategoryperm->setVar('gperm_name', 'imgcat_read');
@@ -650,7 +643,7 @@ function imanager_addcat() {
 	}
 
 	foreach ($writegroup as $wgroup) {
-		$imagecategoryperm =& $imagecategoryperm_handler->create();
+		$imagecategoryperm = &$imagecategoryperm_handler->create();
 		$imagecategoryperm->setVar('gperm_groupid', $wgroup);
 		$imagecategoryperm->setVar('gperm_itemid', $newid);
 		$imagecategoryperm->setVar('gperm_name', 'imgcat_write');
@@ -663,14 +656,15 @@ function imanager_addcat() {
 
 /**
  * Logic and rendering for editing an image category
- * @param int $imgcat_id	Unique ID of the image category to edit
+ *
+ * @param int $imgcat_id Unique ID of the image category to edit
  */
 function imanager_editcat($imgcat_id) {
 	if ($imgcat_id <= 0) {
 		redirect_header('admin.php?fct=images', 1);
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = &$imgcat_handler->get($imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1);
 	}
@@ -706,7 +700,7 @@ function imanager_updatecat() {
 	}
 
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = &$imgcat_handler->get($imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1);
 	}
@@ -734,7 +728,7 @@ function imanager_updatecat() {
 		array_push($readgroup, ICMS_GROUP_ADMIN);
 	}
 	foreach ($readgroup as $rgroup) {
-		$imagecategoryperm =& $imagecategoryperm_handler->create();
+		$imagecategoryperm = &$imagecategoryperm_handler->create();
 		$imagecategoryperm->setVar('gperm_groupid', $rgroup);
 		$imagecategoryperm->setVar('gperm_itemid', $imgcat_id);
 		$imagecategoryperm->setVar('gperm_name', 'imgcat_read');
@@ -749,7 +743,7 @@ function imanager_updatecat() {
 		array_push($writegroup, ICMS_GROUP_ADMIN);
 	}
 	foreach ($writegroup as $wgroup) {
-		$imagecategoryperm =& $imagecategoryperm_handler->create();
+		$imagecategoryperm = &$imagecategoryperm_handler->create();
 		$imagecategoryperm->setVar('gperm_groupid', $wgroup);
 		$imagecategoryperm->setVar('gperm_itemid', $imgcat_id);
 		$imagecategoryperm->setVar('gperm_name', 'imgcat_write');
@@ -762,7 +756,8 @@ function imanager_updatecat() {
 
 /**
  * Logic and rendering for deleting an image category
- * @param int $imgcat_id	Unique ID for the image category to be deleted
+ *
+ * @param int $imgcat_id Unique ID for the image category to be deleted
  */
 function imanager_delcatok($imgcat_id) {
 	if (!icms::$security->check()) {
@@ -774,7 +769,7 @@ function imanager_delcatok($imgcat_id) {
 		redirect_header('admin.php?fct=images', 1, '1');
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = &$imgcat_handler->get($imgcat_id);
 
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1, '2');
@@ -786,7 +781,7 @@ function imanager_delcatok($imgcat_id) {
 	}
 
 	$image_handler = icms::handler('icms_image');
-	$images =& $image_handler->getObjects(new icms_db_criteria_Item('imgcat_id', $imgcat_id), TRUE, FALSE);
+	$images = &$image_handler->getObjects(new icms_db_criteria_Item('imgcat_id', $imgcat_id), TRUE, FALSE);
 
 	$errors = array();
 
@@ -840,11 +835,11 @@ function imanager_reordercateg() {
 	$err = 0;
 	if ($count > 0) {
 		$imgcat_handler = icms::handler('icms_image_category');
-		foreach ($_POST['imgcat_weight'] as $k=>$v) {
+		foreach ($_POST['imgcat_weight'] as $k => $v) {
 			$cat = $imgcat_handler->get((int) $k);
 			$cat->setVar('imgcat_weight', (int) $v);
 			if (!$imgcat_handler->insert($cat)) {
-				$err++;
+				$err++ ;
 			}
 		}
 		if ($err) {
@@ -868,7 +863,7 @@ function imanager_addfile() {
 	global $imgcat_id, $image_display, $image_weight, $image_nicename;
 
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get((int) $imgcat_id);
+	$imagecategory = &$imgcat_handler->get((int) $imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1);
 	}
@@ -883,13 +878,13 @@ function imanager_addfile() {
 	$uploader->setPrefix('img');
 	$err = array();
 	$ucount = count($_POST['xoops_upload_file']);
-	for ($i = 0; $i < $ucount; $i++) {
+	for ($i = 0; $i < $ucount; $i++ ) {
 		if ($uploader->fetchMedia($_POST['xoops_upload_file'][$i])) {
 			if (!$uploader->upload()) {
 				$err[] = $uploader->getErrors();
 			} else {
 				$image_handler = icms::handler('icms_image');
-				$image =& $image_handler->create();
+				$image = &$image_handler->create();
 				$image->setVar('image_name', $uploader->getSavedFileName());
 				$image->setVar('image_nicename', $image_nicename);
 				$image->setVar('image_mimetype', $uploader->getMediaType());
@@ -943,8 +938,8 @@ function imanager_updateimage() {
 	if ($count > 0) {
 		$image_handler = icms::handler('icms_image');
 		$error = array();
-		for ($i = 0; $i < $count; $i++) {
-			$image =& $image_handler->get($image_id[$i]);
+		for ($i = 0; $i < $count; $i++ ) {
+			$image = &$image_handler->get($image_id[$i]);
 			if (!is_object($image)) {
 				$error[] = sprintf(_FAILGETIMG, $image_id[$i]);
 				continue;
@@ -965,10 +960,10 @@ function imanager_updateimage() {
 			}
 			if ($changedCat) {
 				$imgcat_handler = icms::handler('icms_image_category');
-				$imagecategory  =& $imgcat_handler->get((int) $imgcat_id[$i]);
+				$imagecategory = &$imgcat_handler->get((int) $imgcat_id[$i]);
 				$dest_categ_path = $imgcat_handler->getCategFolder($imagecategory);
 				if ($imagecategory->getVar('imgcat_storetype') != 'db') {
-					$oldimgcategory =& $imgcat_handler->get((int) $oldcat);
+					$oldimgcategory = &$imgcat_handler->get((int) $oldcat);
 					$src_categ_path = $imgcat_handler->getCategFolder($oldimgcategory);
 					$src = $src_categ_path . '/' . $image->getVar('image_name');
 					$dest = $dest_categ_path . '/' . $image->getVar('image_name');
@@ -998,8 +993,9 @@ function imanager_updateimage() {
 
 /**
  * Logic and rendering for deleting an image
- * @param int $image_id	Unique ID for the image to be deleted
- * @param int $redir	Optional. If set, the image category to display after deleting the image
+ *
+ * @param int $image_id Unique ID for the image to be deleted
+ * @param int $redir Optional. If set, the image category to display after deleting the image
  */
 function imanager_delfileok($image_id, $redir = NULL) {
 	if (!icms::$security->check()) {
@@ -1010,12 +1006,12 @@ function imanager_delfileok($image_id, $redir = NULL) {
 		redirect_header('admin.php?fct=images', 1);
 	}
 	$image_handler = icms::handler('icms_image');
-	$image =& $image_handler->get($image_id);
+	$image = &$image_handler->get($image_id);
 	if (!is_object($image)) {
 		redirect_header('admin.php?fct=images', 1);
 	}
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory  =& $imgcat_handler->get((int) $image->getVar('imgcat_id'));
+	$imagecategory = &$imgcat_handler->get((int) $image->getVar('imgcat_id'));
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
 		icms_cp_header();
@@ -1034,7 +1030,8 @@ function imanager_delfileok($image_id, $redir = NULL) {
 
 /**
  * Function and script to display the add image form
- * @param int $imgcat_id	Unique ID for the image category for the new image
+ *
+ * @param int $imgcat_id Unique ID for the image category for the new image
  */
 function showAddImgForm($imgcat_id) {
 	$imgcat_handler = icms::handler('icms_image_category');
@@ -1071,20 +1068,20 @@ function imanager_clone() {
 	global $imgcat_id, $image_nicename, $image_display, $image_weight, $image_id;
 
 	$imgcat_handler = icms::handler('icms_image_category');
-	$imagecategory =& $imgcat_handler->get($imgcat_id);
+	$imagecategory = &$imgcat_handler->get($imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1);
 	}
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 
 	$image_handler = icms::handler('icms_image');
-	$image =& $image_handler->get($image_id);
-	if (($ext = strrpos($image->getVar('image_name'), '.' )) !== FALSE) {
-		$ext = strtolower(substr($image->getVar('image_name'), $ext + 1 ));
+	$image = &$image_handler->get($image_id);
+	if (($ext = strrpos($image->getVar('image_name'), '.')) !== FALSE) {
+		$ext = strtolower(substr($image->getVar('image_name'), $ext + 1));
 	}
 
 	$imgname = 'img' . icms_random_str(12) . '.' . $ext;
-	$newimg =& $image_handler->create();
+	$newimg = &$image_handler->create();
 	$newimg->setVar('image_name', $imgname);
 	$newimg->setVar('image_nicename', $image_nicename);
 	$newimg->setVar('image_mimetype', $image->getVar('image_mimetype'));
@@ -1129,7 +1126,7 @@ function imanager_clone() {
  * @param str $style
  * @return str
  */
-function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='font-weight:bold'") {
+function adminNav($id = NULL, $separador = "/", $list = FALSE, $style = "style='font-weight:bold'") {
 	$admin_url = ICMS_MODULES_URL . "/system/admin.php?fct=images";
 	if ($id === FALSE) {
 		return FALSE;
@@ -1137,7 +1134,7 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
 		if ($id > 0) {
 			$id = (int) $id;
 			$imgcat_handler = icms::handler('icms_image_category');
-			$imagecategory =& $imgcat_handler->get($id);
+			$imagecategory = &$imgcat_handler->get($id);
 			if ($imagecategory->getVar('imgcat_id') > 0) {
 				if ($list) {
 					$ret = $imagecategory->getVar('imgcat_name');
@@ -1147,7 +1144,7 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
 				if ($imagecategory->getVar('imgcat_pid') == 0) {
 					return "<a href='" . $admin_url . "'>" . _MD_IMGMAIN . "</a> $separador " . $ret;
 				} elseif ($imagecategory->getVar('imgcat_pid') > 0) {
-					$ret = adminNav($imagecategory->getVar('imgcat_pid'), $separador) . " $separador ". $ret;
+					$ret = adminNav($imagecategory->getVar('imgcat_pid'), $separador) . " $separador " . $ret;
 				}
 			}
 		} else {
@@ -1159,8 +1156,9 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
 
 /**
  * Alias for the redirect_header function
- * @param int $imgcat_id	Unique ID for the image category to display after the redirect
- * @param str $msg			Message to display in the redirect page/message box
+ *
+ * @param int $imgcat_id Unique ID for the image category to display after the redirect
+ * @param str $msg Message to display in the redirect page/message box
  */
 function redir($imgcat_id, $msg = NULL) {
 	redirect_header('admin.php?fct=images&op=listimg&imgcat_id=' . (int) $imgcat_id, 2, $msg);
