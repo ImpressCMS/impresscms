@@ -26,20 +26,6 @@ echo "<dl><dt>'ICMS_TRUST_PATH' : ";
 echo "<img src='" . ICMS_URL . '/' . htmlspecialchars($relative_path) . "/modules/protector/public_check.png' width='40' height='20' alt='' style='border:1px solid black;' /><br /><a href='" . ICMS_URL . '/' . htmlspecialchars($relative_path) . "/modules/protector/public_check.php'>" . _AM_ADV_TRUSTPATHPUBLICLINK . "</a></dt>\n";
 echo "<dd>" . _AM_ADV_TRUSTPATHPUBLIC . "</dd></dl>";
 
-// register_globals
-echo "<dl><dt>'register_globals' : ";
-$safe = !ini_get("register_globals");
-if ($safe) {
-	echo "off &nbsp; <span style='color:green;font-weight:bold;'>ok</span></dt>\n";
-} else {
-	echo "on  &nbsp; <span style='color:red;font-weight:bold;'>" . _AM_ADV_NOTSECURE . "</span></dt>\n";
-	echo "<dd>" . _AM_ADV_REGISTERGLOBALS . "<br /><br />
-			" . ICMS_ROOT_PATH . "/.htaccess<br /><br />
-			<b>php_flag &nbsp; register_globals &nbsp; off</b>
-		</dd>";
-}
-echo "</dl>\n";
-
 // allow_url_fopen
 echo "<dl><dt>'allow_url_fopen' : ";
 $safe = !ini_get("allow_url_fopen");

@@ -812,10 +812,29 @@ function icms_html2text($document)
  * @return string
  * @todo Remove this and replace with the proper data filter and HTML Purifier
  */
-function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload'))
-{
+function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload')) {
 	if(empty($aDisabledAttributes)) return strip_tags($sSource, implode('', $aAllowedTags));
-	return preg_replace('/<(.*?)>/ie', "'<' . preg_replace(array('/javascript:[^\"\']*/i', '/(".implode('|', $aDisabledAttributes).")[ \\t\\n]*=[ \\t\\n]*[\"\'][^\"\']*[\"\']/i', '/\s+/'), array('', '', ' '), stripslashes('\\1')) . '>'", strip_tags($sSource, implode('', $aAllowedTags)));
+
+	$rtrn = preg_replace_callback(
+		'/<(.*?)>/i',
+		function ($matches){
+			return '<' .
+					preg_replace(
+							array(
+									'/javascript:[^\"\']*/i',
+									'/(". implode('|', $aDisabledAttributes).")[ \\t\\n]*=[ \\t\\n]*[\"\'][^\"\']*[\"\']/i',
+									'/\s+/'),
+							array(
+									'',
+									'',
+									' '),
+							stripslashes($matches[1]))
+							. '>';
+							
+		},
+		strip_tags($body, implode('', $aAllowedTags))
+		);
+	return $rtrn;
 }
 
 /**
@@ -977,17 +996,18 @@ function StopXSS($text)
  * @return string	$text The purified text
  * @todo Remove and replace with the proper data filter and HTML Purifier
  */
-function icms_sanitizeContentCss($text)
-{
-	if(preg_match_all('/(.*?)\{(.*?)\}/ie',$text,$css))
-	{
+function icms_sanitizeContentCss($text) {
+	if (preg_match_all('/(.*?)\{(.*?)\}/i', $text, $css)) {
 		$css = $css[0];
 		$perm = $not_perm = array();
-		foreach($css as $k=>$v)
-		{
-			if(!preg_match('/^\#impress_content(.*?)/ie',$v)) {$css[$k] = '#impress_content '.icms_cleanTags(trim($v),array())."\r\n";}
-			else {$css[$k] = icms_cleanTags(trim($v),array())."\r\n";}
+		foreach($css as $k=>$v) {
+			if(!preg_match('/^\#impress_content(.*?)/i', $v)) {
+				$css[$k] = '#impress_content ' . icms_cleanTags(trim($v), array()) . "\r\n";
+			} else {
+				$css[$k] = icms_cleanTags(trim($v),array()) . "\r\n";
+			}
 		}
+		
 		$text = implode($css);
 	}
 	return $text;
@@ -1573,8 +1593,8 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 	// if $module_dir is not specified
 	if (!isset($module_dir)) {
 		//if a module is loaded
-		if (isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {
-			$module_dir = $GLOBALS['icmsModule']->getVar('dirname');
+		if (isset(icms::$module) && is_object(icms::$module)) {
+			$module_dir = icms::$module->getVar('dirname');
 		} else {
 			trigger_error(_CORE_NOMODULE, E_USER_ERROR);
 		}
@@ -1710,8 +1730,7 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
  */
 function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
 	if (!$moduleName) {
-		global $icmsModule;
-		$moduleName = $icmsModule->getVar('dirname');
+		$moduleName = icms::$module->getVar('dirname');
 	}
 	$icmsModule = icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = icms_getModuleConfig($moduleName);

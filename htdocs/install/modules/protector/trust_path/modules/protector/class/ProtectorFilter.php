@@ -33,7 +33,7 @@ class ProtectorFilterHandler {
 	var $filters_base = '';
 	var $filters_byconfig = '';
 
-	function ProtectorFilterHandler() {
+	function __construct() {
 		$this->protector = &Protector::getInstance();
 		$this->filters_base = dirname(__DIR__) . '/filters_enabled';
 		$this->filters_byconfig = dirname(__DIR__) . '/filters_byconfig';

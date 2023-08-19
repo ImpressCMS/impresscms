@@ -4,15 +4,14 @@
  *
  * This page checks if the ImpressCMS install runs the latest released version
  *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		System
- * @subpackage	Version
- * @since		1.0
- * @author		malanciault <marcan@impresscms.org)
- * @version		SVN: $Id: main.php 12403 2014-01-26 21:35:08Z skenow $
+ * @copyright The ImpressCMS Project http://www.impresscms.org/
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package System
+ * @subpackage Version
+ * @since 1.0
+ * @author malanciault <marcan@impresscms.org)
+ * @version SVN: $Id: main.php 12403 2014-01-26 21:35:08Z skenow $
  */
-
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin()) {
 	exit("Access Denied");
 }
@@ -26,7 +25,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
  */
 if (isset($_GET['mid'])) {
 	include_once ICMS_MODULES_PATH . '/system/admin/version/module_info.php';
-	exit;
+	exit();
 }
 
 /**
@@ -56,9 +55,7 @@ $icmsAdminTpl->assign('lang_php_version', PHP_VERSION);
 $icmsAdminTpl->assign('lang_mysql_version', icms::$xoopsDB->getServerVersion());
 $icmsAdminTpl->assign('lang_server_api', PHP_SAPI);
 $icmsAdminTpl->assign('lang_os_name', PHP_OS);
-$icmsAdminTpl->assign('safe_mode', ini_get('safe_mode') ? _CO_ICMS_ON : _CO_ICMS_OFF);
 $icmsAdminTpl->assign('register_globals', ini_get('register_globals') ? _CO_ICMS_ON : _CO_ICMS_OFF);
-$icmsAdminTpl->assign('magic_quotes_gpc', ini_get('magic_quotes_gpc') ? _CO_ICMS_ON : _CO_ICMS_OFF);
 $icmsAdminTpl->assign('allow_url_fopen', ini_get('allow_url_fopen') ? _CO_ICMS_ON : _CO_ICMS_OFF);
 $icmsAdminTpl->assign('fsockopen', function_exists('fsockopen') ? _CO_ICMS_ON : _CO_ICMS_OFF);
 $icmsAdminTpl->assign('allow_call_time_pass_reference', ini_get('allow_call_time_pass_reference') ? _CO_ICMS_ON : _CO_ICMS_OFF);

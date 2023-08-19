@@ -1,56 +1,55 @@
 <?php
 /*
- You may not change or alter any portion of this comment or credits
- of supporting developers from this source code or any supporting source code
- which is considered copyrighted (c) material of the original comment or credit authors.
- 
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-*/
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 /**
  * Installer mainfile creation page
  *
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright   The XOOPS project http://www.xoops.org/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package		installer
- * @since       2.3.0
- * @author		Haruki Setoyama  <haruki@planewave.org>
- * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
- * @author		Skalpa Keo <skalpa@xoops.org>
- * @author		Taiwen Jiang <phppp@users.sourceforge.net>
- * @version		$Id: page_configsave.php 12329 2013-09-19 13:53:36Z skenow $
+ * @copyright The XOOPS project http://www.xoops.org/
+ * @license http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package installer
+ * @since 2.3.0
+ * @author Haruki Setoyama <haruki@planewave.org>
+ * @author Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author Skalpa Keo <skalpa@xoops.org>
+ * @author Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version $Id: page_configsave.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
 /**
- *
  */
 require_once 'common.inc.php';
-if (!defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined('XOOPS_INSTALL')) exit();
 
-$wizard->setPage( 'configsave' );
+$wizard->setPage('configsave');
 $pageHasForm = true;
 $pageHasHelp = false;
 
-$vars =& $_SESSION['settings'];
+$vars = &$_SESSION['settings'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$error = '';
 	// let's try and put the db info in the trust path
 	$sdata_file_name = md5($vars['ROOT_PATH'] . time()) . '.php';
 
-	if (!copy( $vars['ROOT_PATH'] . '/install/templates/sdata.dist.php', $vars['TRUST_PATH'] . '/' . $sdata_file_name )) {
+	if (!copy($vars['ROOT_PATH'] . '/install/templates/sdata.dist.php', $vars['TRUST_PATH'] . '/' . $sdata_file_name)) {
 		// we were not able to create the sdata file in trust path so we will use the old method
 		$error = true;
 	} else {
 		clearstatcache();
-		if (! $file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, "r" )) {
+		if (!$file = fopen($vars['TRUST_PATH'] . '/' . $sdata_file_name, "r")) {
 			$error = ERR_READ_SDATA;
 		} else {
-			$content = fread( $file, filesize( $vars['TRUST_PATH'] . '/' . $sdata_file_name ) );
+			$content = fread($file, filesize($vars['TRUST_PATH'] . '/' . $sdata_file_name));
 			fclose($file);
 
 			$sdata_rewrite = array();
@@ -62,19 +61,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$sdata_rewrite['DB_SALT'] = $vars['DB_SALT'];
 
 			foreach ($sdata_rewrite as $key => $val) {
-				if (preg_match( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content )) {
-					$val = addcslashes( $val, '\$"\'' );
-					$content = preg_replace( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/",
-						"define( 'SDATA_$key', '$val' )", $content );
+				if (preg_match("/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
+					$val = addcslashes($val, '\$"\'');
+					$content = preg_replace("/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define( 'SDATA_$key', '$val' )", $content);
 				} else {
-					//$this->error = true;
-					//$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<b>$val</b>")."<br />\n";
+					// $this->error = true;
+					// $this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<b>$val</b>")."<br />\n";
 				}
 			}
-			if (!$file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, "w" )) {
+			if (!$file = fopen($vars['TRUST_PATH'] . '/' . $sdata_file_name, "w")) {
 				$error = ERR_WRITE_SDATA;
 			} else {
-				if (fwrite( $file, $content ) == -1) {
+				if (fwrite($file, $content) == -1) {
 					$error = ERR_WRITE_SDATA;
 				}
 				fclose($file);
@@ -94,17 +92,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$dbinfo_in_trust_path = false;
 	}
 
-	if (!copy( $vars['ROOT_PATH'] . '/install/templates/mainfile.dist.php', $vars['ROOT_PATH'] . '/mainfile.php' )) {
+	if (!copy($vars['ROOT_PATH'] . '/install/templates/mainfile.dist.php', $vars['ROOT_PATH'] . '/mainfile.php')) {
 		$error = ERR_COPY_MAINFILE;
 	} else {
 		clearstatcache();
 
-		$rewrite = array( 'GROUP_ADMIN' => 1, 'GROUP_USERS' => 2, 'GROUP_ANONYMOUS' => 3 );
-		$rewrite = array_merge( $rewrite, $vars );
-		if (! $file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', "r" )) {
+		$rewrite = array('GROUP_ADMIN' => 1, 'GROUP_USERS' => 2, 'GROUP_ANONYMOUS' => 3);
+		$rewrite = array_merge($rewrite, $vars);
+		if (!$file = fopen($vars['ROOT_PATH'] . '/mainfile.php', "r")) {
 			$error = ERR_READ_MAINFILE;
 		} else {
-			$content = fread( $file, filesize( $vars['ROOT_PATH'] . '/mainfile.php' ) );
+			$content = fread($file, filesize($vars['ROOT_PATH'] . '/mainfile.php'));
 			fclose($file);
 
 			if ($dbinfo_in_trust_path) {
@@ -116,28 +114,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 
 			foreach ($rewrite as $key => $val) {
-				if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_$key)\\2,\s*([0-9]+)\s*\)/", $content )) {
-					$content = preg_replace( "/(define\()([\"'])(XOOPS_$key)\\2,\s*([0-9]+)\s*\)/",
-						"define( 'XOOPS_$key', $val )", $content );
+				if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_$key)\\2,\s*([0-9]+)\s*\)/", $content)) {
+					$content = preg_replace("/(define\()([\"'])(XOOPS_$key)\\2,\s*([0-9]+)\s*\)/", "define( 'XOOPS_$key', $val )", $content);
 				} elseif ($dbinfo_in_trust_path && isset($sdata_rewrite[$key])) {
-					if (preg_match( "/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content )) {
-						$val = addslashes( $val );
-						$content = preg_replace( "/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/",
-							"define( 'XOOPS_$key', $val )", $content );
+					if (preg_match("/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
+						$val = addslashes($val);
+						$content = preg_replace("/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define( 'XOOPS_$key', $val )", $content);
 					}
-				} elseif (preg_match( "/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content )) {
-					$val = addslashes( $val );
-					$content = preg_replace( "/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/",
-						"define( 'XOOPS_$key', '$val' )", $content );
+				} elseif (preg_match("/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
+					$val = addslashes($val);
+					$content = preg_replace("/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define( 'XOOPS_$key', '$val' )", $content);
 				} else {
-					//$this->error = true;
-					//$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<b>$val</b>")."<br />\n";
+					// $this->error = true;
+					// $this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<b>$val</b>")."<br />\n";
 				}
 			}
-			if (!$file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', "w" )) {
+			if (!$file = fopen($vars['ROOT_PATH'] . '/mainfile.php', "w")) {
 				$error = ERR_WRITE_MAINFILE;
 			} else {
-				if (fwrite( $file, $content ) == -1) {
+				if (fwrite($file, $content) == -1) {
 					$error = ERR_WRITE_MAINFILE;
 				}
 				fclose($file);
@@ -145,30 +140,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 	}
 
-	if (ini_get('safe_mode') == 0 || strtolower(ini_get('safe_mode')) == 'off')
-	{
-		// creating the required folders in trust_path
-		if (!icms_core_Filesystem::mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))) {
-			/**
-			 * @todo trap error
-			 */
-		}
-		if (is_dir($vars['TRUST_PATH'] . '/cache/htmlpurifier'))
-		{
-			if (!icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/HTML', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))
-				&& !icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/CSS', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))
-				&& !icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/URI', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' ))
-				&& !icms_core_Filesystem::mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/Test', 0777, '', array('[', '?', '"', '<', '>', '|', ' ' )))
-			{
-				/**
-				 * @todo trap error
-				 */
-			}
+	// creating the required folders in trust_path
+	if (!icms_core_Filesystem::mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier', 0777, '', array('[', '?', '"', '<', '>', '|', ' '))) {
+	/**
+	 *
+	 * @todo trap error
+	 */
+	}
+	if (is_dir($vars['TRUST_PATH'] . '/cache/htmlpurifier')) {
+		if (!icms_core_Filesystem::mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier/HTML', 0777, '', array('[', '?', '"', '<', '>', '|', ' ')) && !icms_core_Filesystem::mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier/CSS', 0777, '', array('[', '?', '"', '<', '>', '|', ' ')) && !icms_core_Filesystem::mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier/URI', 0777, '', array(
+			'[',
+			'?',
+			'"',
+			'<',
+			'>',
+			'|',
+			' ')) && !icms_core_Filesystem::mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier/Test', 0777, '', array('[', '?', '"', '<', '>', '|', ' '))) {
+		/**
+		 *
+		 * @todo trap error
+		 */
 		}
 	}
 
-	if (empty( $error )) {
-		$wizard->redirectToPage( '+1' );
+	if (empty($error)) {
+		$wizard->redirectToPage('+1');
 		exit();
 	}
 	$content = '<p class="errorMsg">' . $error . '</p>';
@@ -178,11 +174,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ob_start();
 ?>
-<p class="x2-note"><?php echo READY_SAVE_MAINFILE; ?></p>
+<p class="x2-note"><?php
+
+echo READY_SAVE_MAINFILE;
+?></p>
 <dl style="height: 200px; overflow: auto; border: 1px solid #D0D0D0">
-<?php foreach ( $vars as $k => $v) {
+<?php
+
+foreach ($vars as $k => $v) {
 	echo "<dt>XOOPS_$k</dt><dd>$v</dd>";
-} ?>
+}
+?>
 </dl>
 
 <?php
