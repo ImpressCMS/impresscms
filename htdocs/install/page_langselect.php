@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (!in_array($lang, $languages)) {
 		$lang = 'english';
 	}
-	setcookie( 'xo_install_lang', $lang, null, null, null );
+	setcookie( 'xo_install_lang', $lang, time() + 3600, '/', null );
 
 	$wizard->redirectToPage( '+1' );
 	exit();

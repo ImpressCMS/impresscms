@@ -54,8 +54,8 @@ define( "NO_PHP5", "No PHP 5" );
 define( "WELCOME_TITLE", "Installation du site compl&eacute;te" );		// L0
 define( "MODULES_INSTALL", "Installation des scripts" );
 define( "MODULES_INSTALL_TITLE", "Installation des scripts " );
-define( "NO_PHP5_TITLE", "No PHP 5" );
-define( "NO_PHP5_CONTENT","PHP version 5.6 est requis, et PHP 7.2 est conseillé pour un bon fonctionnement.");
+define( "NO_PHP5_TITLE", "No PHP 7" );
+define( "NO_PHP5_CONTENT","PHP version 7.4.0 est requis, et PHP 8.1 est conseillé pour un bon fonctionnement.");
 define( "SAFE_MODE", "Safe Mode On" );
 define( "SAFE_MODE_TITLE", "Safe Mode On" );
 define( "SAFE_MODE_CONTENT", "L installation ne peut pas continuer parce que ImpressCMS a détecté que PHP tourne en mode 'Safe'. Veuillez contacter votre fournisseur de hébergement pour rectifier la situation." );

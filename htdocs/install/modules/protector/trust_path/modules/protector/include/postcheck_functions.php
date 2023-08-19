@@ -84,7 +84,7 @@ function protector_postcommon() {
 
 	// check session hi-jacking
 	$ips = explode('.', @$_SESSION['protector_last_ip']);
-	$protector_last_numip = (int) ips[0] * 0x1000000 + (int) $ips[1] * 0x10000 + (int) $ips[2] * 0x100 + (int) $ips[3];
+	$protector_last_numip = (int) $ips[0] * 0x1000000 + (int) $ips[1] * 0x10000 + (int) $ips[2] * 0x100 + (int) $ips[3];
 	$ips = explode('.', $_SERVER['REMOTE_ADDR']);
 	$remote_numip = (int) $ips[0] * 0x1000000 + (int) $ips[1] * 0x10000 + (int) $ips[2] * 0x100 + (int) $ips[3];
 	$shift = 32 - @$conf['session_fixed_topbit'];
