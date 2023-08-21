@@ -19,7 +19,7 @@ $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
 
 /* prevent remote file inclusion */
 $valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) == 0) {
+if (!empty($image_path) && strncmp(realpath($image_path), $image_path, strlen($valid_path)) == 0) {
 	$image_path = realpath($image_path);
 } else {
 	$image_path = null;

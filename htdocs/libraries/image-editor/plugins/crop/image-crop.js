@@ -314,7 +314,7 @@ function cropScript_executeCrop(buttonObj)
 function cropScript_cropCompleted(ajaxIndex,buttonObj)
 {
 	buttonObj.style.visibility='';
-	eval(cropScriptAjaxObjects[ajaxIndex].response)
+	eval(cropScriptAjaxObjects[ajaxIndex].response);
 	cropScriptAjaxObjects[ajaxIndex] = false;
 	crop_hideProgressBar();
 }

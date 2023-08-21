@@ -20,7 +20,7 @@ $filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
 
 /* prevent remote file inclusion */
 $valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) == 0) {
+if (!empty($image_path) && strncmp(realpath($image_path), $image_path, strlen($valid_path)) == 0) {
 	$image_path = realpath($image_path);
 } else {
 	$image_path = null;
