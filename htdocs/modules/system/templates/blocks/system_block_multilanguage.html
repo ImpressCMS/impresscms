@@ -1,3 +1,6 @@
 <div style="margin-left: auto; margin-right: auto; text-align: center;">
-	<{$block.ml_tag}>
+	<{foreach item=language from=$block.ml_tag}>
+	<a href="?lang=<{$language.tag}>">
+		<img src='<{$language.image}>' alt="<{$language.name}>"></a>
+	<{/foreach}>
 </div>
