@@ -7,7 +7,6 @@
  * @license LICENSE.txt
  * @package System
  * @subpackage Symlinks
- * @version SVN: $Id: pages.php 11175 2011-04-15 10:53:22Z m0nty_ $
  */
 
 /**
@@ -57,7 +56,7 @@ class SystemPages extends icms_data_page_Object {
 	 *
 	 * @return string
 	 */
-	public function getAdminViewItemLink($icmsObj, $onlyUrl = false, $withimage = false) {
+	public function getAdminViewItemLink($onlyUrl = false) {
 		$rtn = $this->getVar('page_title');
 		return $rtn;
 	}
