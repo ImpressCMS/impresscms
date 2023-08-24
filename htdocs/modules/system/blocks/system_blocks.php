@@ -460,13 +460,14 @@ function b_system_notification_show() {
  */
 function b_system_multilanguage_show()
 {
-	global $icmsConfigMultilang;
+	global $icmsConfigMultilang, $icmsConfig;
 
 	$block = array();
 
+
 	$language_tags = explode(',', $icmsConfigMultilang['ml_tags']);
 	$language_names = explode(',', $icmsConfigMultilang['ml_captions']);
-
+	$block['current_language'] = $icmsConfig['language'];
 	foreach ($language_tags as $tagkey=>$language_tag) {
 		$block['ml_tag'][$tagkey]['tag'] = $language_tag;
 
