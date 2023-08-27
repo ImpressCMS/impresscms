@@ -108,8 +108,8 @@ class SystemPagesHandler extends icms_data_page_Handler {
 	 * @param boolean $full
 	 * @return array
 	 */
-	public function getModulesArray($full = FALSE) {
-		if (!count($this->modules_name)) {
+	public function getModulesArray($full = false) {
+		if (!is_array($this->modules_name) || !count($this->modules_name)) {
 			$icms_module_handler = icms::handler('icms_module');
 			$installed_modules = &$icms_module_handler->getObjects();
 			foreach ($installed_modules as $module) {
