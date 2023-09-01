@@ -1928,16 +1928,16 @@
         },
         {
             "name": "imponeer/criteria",
-            "version": "v1.0.7",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/criteria.git",
-                "reference": "de4e2f5a1d9689e14cc38ddc32d88c56d4a4406a"
+                "reference": "2305c482c46d45ab7591f49ebfc9614eda1f3499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/criteria/zipball/de4e2f5a1d9689e14cc38ddc32d88c56d4a4406a",
-                "reference": "de4e2f5a1d9689e14cc38ddc32d88c56d4a4406a",
+                "url": "https://api.github.com/repos/imponeer/criteria/zipball/2305c482c46d45ab7591f49ebfc9614eda1f3499",
+                "reference": "2305c482c46d45ab7591f49ebfc9614eda1f3499",
                 "shasum": ""
             },
             "require": {
@@ -1971,9 +1971,9 @@
             ],
             "support": {
                 "issues": "https://github.com/imponeer/criteria/issues",
-                "source": "https://github.com/imponeer/criteria/tree/v1.0.7"
+                "source": "https://github.com/imponeer/criteria/tree/v1.0.8"
             },
-            "time": "2023-04-01T09:57:41+00:00"
+            "time": "2023-07-01T10:00:29+00:00"
         },
         {
             "name": "imponeer/editor-contracts",
