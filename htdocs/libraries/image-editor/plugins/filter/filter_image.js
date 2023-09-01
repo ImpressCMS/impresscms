@@ -97,7 +97,7 @@ function filter_delpreview(){
 
 	filterScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	filterScriptAjaxObjects[ajaxIndex].onCompletion = function(){ 	
-		eval(filterScriptAjaxObjects[ajaxIndex].response)
+		eval(filterScriptAjaxObjects[ajaxIndex].response);
 	    filterScriptAjaxObjects[ajaxIndex] = false;
 	    filter_hideProgressBar(); 
 	};	// Specify function that will be executed after file has been found

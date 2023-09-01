@@ -75,7 +75,7 @@ if (!empty($target) && !empty($type)) {
 if (!empty($op) && $op == 'cancel') {
 	/* make sure the file is in the temp folder and prevent arbitrary deletes of any file */
 	$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-	if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) == 0) {
+	if (!empty($image_path) && strncmp(realpath($image_path), $image_path, strlen($valid_path)) == 0) {
 		$image_path = realpath($image_path);
 	} else {
 		$image_path = NULL;

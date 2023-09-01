@@ -7,7 +7,6 @@
  * @license LICENSE.txt
  * @package System
  * @subpackage Symlinks
- * @version SVN: $Id: pages.php 11175 2011-04-15 10:53:22Z m0nty_ $
  */
 
 /**
@@ -57,7 +56,7 @@ class SystemPages extends icms_data_page_Object {
 	 *
 	 * @return string
 	 */
-	public function getAdminViewItemLink($icmsObj, $onlyUrl = false, $withimage = false) {
+	public function getAdminViewItemLink($onlyUrl = false) {
 		$rtn = $this->getVar('page_title');
 		return $rtn;
 	}
@@ -109,8 +108,8 @@ class SystemPagesHandler extends icms_data_page_Handler {
 	 * @param boolean $full
 	 * @return array
 	 */
-	public function getModulesArray($full = FALSE) {
-		if (!count($this->modules_name)) {
+	public function getModulesArray($full = false) {
+		if (!is_array($this->modules_name) || !count($this->modules_name)) {
 			$icms_module_handler = icms::handler('icms_module');
 			$installed_modules = &$icms_module_handler->getObjects();
 			foreach ($installed_modules as $module) {
