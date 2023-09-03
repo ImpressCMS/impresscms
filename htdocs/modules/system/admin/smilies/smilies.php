@@ -94,6 +94,7 @@ function SmilesAdmin() {
 	} else {
 		echo _AM_CNRFTSD;
 	}
+	if (!$smiles) $smiles = array();
 	$smiles['smile_code'] = '';
 	$smiles['smile_url'] = 'blank.gif';
 	$smiles['smile_desc'] = '';
