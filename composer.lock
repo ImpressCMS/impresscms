@@ -4600,16 +4600,16 @@
         },
         {
             "name": "old-xoops-libraries/php-downloader",
-            "version": "v1.0.8",
+            "version": "v1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OldXoopsLibraries/php-downloader.git",
-                "reference": "da25042ec2ad0b20a4c36f668cf4bb93cbab0506"
+                "reference": "d1bfef9eec8de1e1d6a9a8f83c571ea6a863801c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OldXoopsLibraries/php-downloader/zipball/da25042ec2ad0b20a4c36f668cf4bb93cbab0506",
-                "reference": "da25042ec2ad0b20a4c36f668cf4bb93cbab0506",
+                "url": "https://api.github.com/repos/OldXoopsLibraries/php-downloader/zipball/d1bfef9eec8de1e1d6a9a8f83c571ea6a863801c",
+                "reference": "d1bfef9eec8de1e1d6a9a8f83c571ea6a863801c",
                 "shasum": ""
             },
             "require": {
@@ -4633,9 +4633,9 @@
             "description": "Some classes from php-downloader v1.0 by www.ipunkt.biz package that were used in Xoops but can't be found outside",
             "support": {
                 "issues": "https://github.com/OldXoopsLibraries/php-downloader/issues",
-                "source": "https://github.com/OldXoopsLibraries/php-downloader/tree/v1.0.8"
+                "source": "https://github.com/OldXoopsLibraries/php-downloader/tree/v1.0.9"
             },
-            "time": "2023-04-01T17:10:21+00:00"
+            "time": "2023-07-01T16:37:25+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
