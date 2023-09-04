@@ -169,6 +169,7 @@ class icms_core_DataFilter {
 	 *
 	 * @param string $text
 	 * @return string
+	 * @deprecated we shouldn't be using this as a 'filter'
 	 */
 	public static function stripSlashesGPC($text) {
 		return $text;
@@ -442,7 +443,6 @@ class icms_core_DataFilter {
 		icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
 		$text = self::htmlSpecialChars($text);
-		$text = self::stripSlashesGPC($text);
 
 		icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
 
@@ -1221,7 +1221,6 @@ class icms_core_DataFilter {
 				switch ($options1) {
 					case 'input':
 					default:
-						$data = self::stripSlashesGPC($data);
 						return self::filterHTMLinput($data);
 						break;
 
@@ -1248,12 +1247,10 @@ class icms_core_DataFilter {
 				switch ($options1) {
 					case 'input':
 					default:
-						$data = self::stripSlashesGPC($data);
 						return self::filterTextareaInput($data);
 						break;
 
 					case 'output':
-						$data = self::stripSlashesGPC($data);
 						return self::filterTextareaDisplay($data);
 						break;
 
