@@ -458,10 +458,24 @@ function b_system_notification_show() {
  *
  * @return array $block the block array
  */
-function b_system_multilanguage_show() {
-	$block = array();
-	$block['ml_tag'] = '[mlimg]';
+function b_system_multilanguage_show()
+{
+	global $icmsConfigMultilang, $icmsConfig;
 
+	$block = array();
+
+
+	$language_tags = explode(',', $icmsConfigMultilang['ml_tags']);
+	$language_names = explode(',', $icmsConfigMultilang['ml_captions']);
+	$block['current_language'] = $icmsConfig['language'];
+	foreach ($language_tags as $tagkey=>$language_tag) {
+		$block['ml_tag'][$tagkey]['tag'] = $language_tag;
+
+	}
+	foreach ($language_names as $namekey=>$language_name){
+		$block['ml_tag'][$namekey]['name'] = $language_name;
+		$block['ml_tag'][$namekey]['image'] = ICMS_URL . '/images/flags/' . strtolower($language_name) . '.gif';
+	}
 	return $block;
 }
 
