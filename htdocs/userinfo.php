@@ -42,7 +42,7 @@ include 'mainfile.php';
 $uid = (int) $_GET['uid'];
 
 if (icms_get_module_status("profile")) {
-	$module = icms::handler("icms_module")->getByDirName("profile", TRUE);
+	$module = icms::handler("icms_module")->getByDirName("profile", true);
 
 	if ($module->config['profile_social'] && file_exists(ICMS_MODULES_PATH . '/profile/index.php')) {
 		header('Location: ' . ICMS_MODULES_URL . '/profile/index.php?uid=' . $uid);
@@ -73,15 +73,15 @@ if (is_object(icms::$user)) {
 	if ($uid == icms::$user->getVar('uid')) {
 		$xoopsOption['template_main'] = 'system_userinfo.html';
 		include ICMS_ROOT_PATH . '/header.php';
-		$icmsTpl->assign('user_ownpage', TRUE);
+		$icmsTpl->assign('user_ownpage', true);
 		icms_makeSmarty(array(
-            'user_ownpage' => TRUE,
+            'user_ownpage' => true,
             'lang_editprofile' => _US_EDITPROFILE,
             'lang_avatar' => _US_AVATAR,
             'lang_notifications' => _US_NOTIFICATIONS,
             'lang_inbox' => _US_INBOX,
             'lang_logout' => _US_LOGOUT,
-            'user_candelete' => $icmsConfigUser['self_delete'] ? TRUE : FALSE,
+            'user_candelete' => $icmsConfigUser['self_delete'] ? true : false,
             'lang_deleteaccount' => $icmsConfigUser['self_delete'] ? _US_DELACCOUNT : ''));
 		$thisUser = icms::$user;
 	} else {
@@ -91,7 +91,7 @@ if (is_object(icms::$user)) {
 		}
 		$xoopsOption['template_main'] = 'system_userinfo.html';
 		include ICMS_ROOT_PATH . '/header.php';
-		$icmsTpl->assign('user_ownpage', FALSE);
+		$icmsTpl->assign('user_ownpage', false);
 	}
 } else {
 	$thisUser = icms::handler('icms_member')->getUser($uid);
@@ -100,7 +100,7 @@ if (is_object(icms::$user)) {
 	}
 	$xoopsOption['template_main'] = 'system_userinfo.html';
 	include ICMS_ROOT_PATH . '/header.php';
-	$icmsTpl->assign('user_ownpage', FALSE);
+	$icmsTpl->assign('user_ownpage', false);
 }
 
 if (is_object(icms::$user) && $isAdmin) {
@@ -114,7 +114,7 @@ if (is_object(icms::$user) && $isAdmin) {
 $userrank = $thisUser->rank();
 $date = $thisUser->getVar('last_login');
 icms_makeSmarty(array(
-	'user_avatarurl' => $icmsConfigUser['avatar_allow_gravatar'] == TRUE
+	'user_avatarurl' => $icmsConfigUser['avatar_allow_gravatar'] == true
 		? $thisUser->gravatar('G', $icmsConfigUser['avatar_width'])
 		: ICMS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar'),
 	'user_websiteurl' => ($thisUser->getVar('url', 'E') == '') ? ''
@@ -164,7 +164,7 @@ icms_makeSmarty(array(
 	'user_ranktitle' => $userrank['title'],
 	'user_lastlogin' => !empty($date) ? formatTimestamp($thisUser->getVar('last_login'), 'm') : '',
 	'icms_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
-	'user_email' => ($thisUser->getVar('user_viewemail') == TRUE
+	'user_email' => ($thisUser->getVar('user_viewemail') == true
 			|| (is_object(icms::$user)
 			&& (icms::$user->isAdmin()
 			|| (icms::$user->getVar('uid') == $thisUser->getVar('uid')))))
@@ -172,11 +172,12 @@ icms_makeSmarty(array(
 		: '&nbsp;'
 ));
 
-if ($icmsConfigUser['allwshow_sig'] == TRUE && strlen(trim($thisUser->getVar('user_sig', 'N'))) > 0) {
-   	icms_makeSmarty(array(
-		'user_showsignature' => TRUE,
+if ($icmsConfigUser['allwshow_sig'] == true && strlen(trim($thisUser->getVar('user_sig', 'N'))) > 0) {
+	$sigtype = ($icmsConfigUser['allow_htsig'] == 0) ? 'text' : 'html';
+	icms_makeSmarty(array(
+		'user_showsignature' => true,
 		'lang_signature' => _US_SIGNATURE,
-		'user_signature' => icms_core_DataFilter::checkVar($thisUser->getVar('user_sig', 'N'), 'html', 'output')
+		'user_signature' => icms_core_DataFilter::checkVar($thisUser->getVar('user_sig', 'N'), $sigtype, 'output')
 	));
 }
 
