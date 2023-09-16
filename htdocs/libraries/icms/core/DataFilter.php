@@ -442,7 +442,7 @@ class icms_core_DataFilter {
 	static public function filterTextareaInput($text) {
 		icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
-		$text = self::htmlSpecialChars($text);
+		$text = self::htmlSpecialChars(strip_tags($text));
 
 		icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
 
