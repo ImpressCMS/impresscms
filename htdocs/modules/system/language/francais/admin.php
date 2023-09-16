@@ -5,7 +5,6 @@
 define('_INVALID_ADMIN_FUNCTION', 'Fonction administration non valide');
 // Admin Module Names
 define('_MD_AM_ADGS', 'Groupes');
-define('_MD_AM_BANS', 'Banni&egrave;res');
 define('_MD_AM_BKAD', 'Blocs');
 define('_MD_AM_MDAD', 'Modules');
 define('_MD_AM_SMLS', 'Emotic&ocirc;nes');

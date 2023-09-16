@@ -6,7 +6,6 @@ define('_INVALID_ADMIN_FUNCTION', 'Invalid Admin Function');
 
 // Admin Module Names
 define('_MD_AM_ADGS','Groups');
-define('_MD_AM_BANS','Banners');
 define('_MD_AM_BKAD','Blocks');
 define('_MD_AM_MDAD','Modules Admin');
 define('_MD_AM_SMLS','Smilies');
@@ -47,7 +46,6 @@ define("_MD_AM_GROUPS_USERSANDGROUPS", "Users and Groups");
 define('_MD_AM_ADSENSES_DSC', 'Adsenses are tags that you can define and use anywhere on your website.');
 define('_MD_AM_AUTOTASKS_DSC', 'Auto Tasks allow you to create a schedule of actions that the system will perform automatically.');
 define('_MD_AM_AVATARS_DSC', 'Manage the avatars available to the users of your website.');
-define('_MD_AM_BANS_DSC', 'Manage ad campaigns and advertiser accounts.');
 define('_MD_AM_BKPOSAD_DSC', 'Manage and create blocks positions that are used within the themes on your website.');
 define('_MD_AM_BKAD_DSC', 'Manage and create blocks used throughout your website.');
 define('_MD_AM_COMMENTS_DSC', 'Manage the comments made by users on your website.');

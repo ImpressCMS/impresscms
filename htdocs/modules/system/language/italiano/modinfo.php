@@ -37,7 +37,6 @@ define('_MI_SYSTEM_BNAME18', "Condividi questa pagina!");
 
 
 // Names of admin menu items
-define("_MI_SYSTEM_ADMENU1","Banners");
 define("_MI_SYSTEM_ADMENU2","Blocchi");
 define("_MI_SYSTEM_ADMENU3","Gruppi");
 define("_MI_SYSTEM_ADMENU5","Moduli");
@@ -52,7 +51,7 @@ define("_MI_SYSTEM_ADMENU14", "Avatars");
 define("_MI_SYSTEM_ADMENU15", "Templates");
 define("_MI_SYSTEM_ADMENU16", "Commenti");
 
-// Version Added 
+// Version Added
 define("_MI_SYSTEM_ADMENU17", "Versione");
 define("_MI_SYSTEM_ADMENU18", "Pagine statiche");
 define("_MI_SYSTEM_ADMENU19", "Posizioni blocchi");

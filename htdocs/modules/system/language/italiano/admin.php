@@ -12,7 +12,6 @@ define('_MD_AM_CONFIG','Configurazione del sistema');
 
 // Admin Module Names
 define('_MD_AM_ADGS','Gruppi');
-define('_MD_AM_BANS','Banners');
 define('_MD_AM_BKAD','Blocchi');
 define('_MD_AM_MDAD','Moduli');
 define('_MD_AM_SMLS','Faccine');
@@ -52,7 +51,6 @@ define("_MD_AM_GROUPS_USERSANDGROUPS", "Utenti e gruppi");
 define('_MD_AM_ADSENSES_DSC', 'Adsenses sono tags che puoi definire e usare ovunque nel sito.');
 define('_MD_AM_AUTOTASKS_DSC', 'Le funzioni automatiche permettono di creare una scaletta di azioni che il sistema eseguirà automaticamente.');
 define('_MD_AM_AVATARS_DSC', 'Amministra gli avatars disponibili per gli utenti del tuo sito.');
-define('_MD_AM_BANS_DSC', 'Amministra le campagne pubblicitarie e le utenze degli inserzionisti.');
 define('_MD_AM_BKPOSAD_DSC', 'Amministra e crea posizioni per i blocchi che sono utilizzate nel tuo sito web.');
 define('_MD_AM_BKAD_DSC', 'Amministra e crea blocchi che sono utlizzati nel tuo sito web.');
 define('_MD_AM_COMMENTS_DSC', 'Amministra i commenti degli utenti sul tuo sito web.');

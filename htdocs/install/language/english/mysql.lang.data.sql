@@ -38,7 +38,6 @@ INSERT INTO smiles VALUES (1, ':-D', 'smil3dbd4d4e4c4f2.gif', 'Very Happy', 1)
 
 INSERT INTO icmspage VALUES (2, 1, 'Admin Control Panel', 'admin.php', 1)
 , (3, 1, 'Avatars', 'modules/system/admin.php?fct=avatars*', 1)
-, (4, 1, 'Banners', 'modules/system/admin.php?fct=banners*', 1)
 , (5, 1, 'Blocks Admin', 'modules/system/admin.php?fct=blocksadmin*', 1)
 , (6, 1, 'Block Positions', 'modules/system/admin.php?fct=blockspadmin*', 1)
 , (7, 1, 'Comments', 'modules/system/admin.php?fct=comments*', 1)

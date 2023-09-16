@@ -35,7 +35,6 @@ define('_MI_SYSTEM_BNAME17', "相关文章");
 define('_MI_SYSTEM_BNAME18', "分享本网页!");
 
 // Names of admin menu items
-define("_MI_SYSTEM_ADMENU1","广告");
 define("_MI_SYSTEM_ADMENU2","区块");
 define("_MI_SYSTEM_ADMENU3","群组");
 define("_MI_SYSTEM_ADMENU5","模块");

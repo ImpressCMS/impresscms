@@ -31,7 +31,6 @@ define('_MI_SYSTEM_BNAME17', 'Contenus associ&eacute;s');
 
 define('_MI_SYSTEM_BNAME18', 'Partagez cette page !');
 // Names of admin menu items
-define('_MI_SYSTEM_ADMENU1', 'Banni&egrave;res');
 define('_MI_SYSTEM_ADMENU2', 'Blocs');
 define('_MI_SYSTEM_ADMENU3', 'Groupes');
 define('_MI_SYSTEM_ADMENU5', 'Modules');
