@@ -1158,31 +1158,31 @@ class icms_core_DataFilter {
 				switch ($options1) {
 					case "noencode":
 						//return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-						return htmlspecialchars($data,ENT_NOQUOTES);
+						return htmlspecialchars(strip_tags($data), ENT_NOQUOTES);
 						break;
 
 					case "striplow":
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
+						return filter_var(strip_tags($data), FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW);
 						break;
 
 					case "striphigh":
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+						return filter_var(strip_tags($data), FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_HIGH);
 						break;
 
 					case "encodelow":
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+						return filter_var(strip_tags($data), FILTER_UNSAFE_RAW, FILTER_FLAG_ENCODE_LOW);
 						break;
 
 					case "encodehigh":
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH);
+						return filter_var(strip_tags($data), FILTER_UNSAFE_RAW, FILTER_FLAG_ENCODE_HIGH);
 						break;
 
 					case "encodeamp":
-						return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
+						return filter_var(strip_tags($data), FILTER_UNSAFE_RAW, FILTER_FLAG_ENCODE_AMP);
 						break;
 
 					default:
-						return htmlspecialchars($data,ENT_NOQUOTES);
+						return htmlspecialchars(strip_tags($data), ENT_NOQUOTES);
 						break;
 				}
 				break;
