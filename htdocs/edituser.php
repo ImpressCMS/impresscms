@@ -235,7 +235,7 @@ switch ($op) {
 			$edituser->setVar('user_from', $user_from);
 			if ($icmsConfigUser['allwshow_sig'] == 1) {
 				if ($icmsConfigUser['allow_htsig'] == 0) {
-					$signature = strip_tags(icms_core_DataFilter::checkVar($user_sig, 'text', 'input'));
+					$signature = icms_core_DataFilter::checkVar($user_sig, 'text', 'input');
 					$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) $icmsConfigUser['sig_max_length']));
 				} else {
 					$signature = icms_core_DataFilter::checkVar($user_sig, 'html', 'input');
