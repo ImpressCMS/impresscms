@@ -34,7 +34,6 @@ define("_MD_AM_SESSNAME","Naam sessie");
 define("_MD_AM_SESSNAMEDSC","De naam van de sessie (alleen geldig indien de <i>Gebruik eigen sessie</i> optie is ingeschakeld)");
 define("_MD_AM_SESSEXPIRE","Sessie duur");
 define("_MD_AM_SESSEXPIREDSC","Maximale duur van inactiviteit tijdens een sessie.<br />(alleen mogelijk indien <i>Gebruik PHP native sessie</i> is uitgeschakeld)");
-define("_MD_AM_BANNERS","Activeer reclame banners?");
 define("_MD_AM_MYIP","Uw IP adres");
 define("_MD_AM_MYIPDSC","Dit IP adres zal niet meegeteld worden bij de reclame banners");
 define("_MD_AM_ALWDHTML","Toegestane HTML code in alle berichten");

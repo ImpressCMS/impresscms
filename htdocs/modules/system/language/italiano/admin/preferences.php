@@ -40,7 +40,6 @@ define('_MD_AM_SESSNAME','Nome sessione');
 define('_MD_AM_SESSNAMEDSC','Il nome personalizzato della sessione. <br />(Valido solo se \'Utilizza sessioni personalizzate\' &egrave; attivo)');
 define('_MD_AM_SESSEXPIRE','Durata della sessione');
 define('_MD_AM_SESSEXPIREDSC','Durata massima della sessione in minuti.<br />(Valido solo se \'Utilizza sessioni personalizzate\' &egrave; attivo). Funziona solo se si utilizza PHP4.2.0 o successive.)');
-define('_MD_AM_BANNERS','Attiva visualizzazione dei banners?');
 define('_MD_AM_MYIP','Il tuo indirizzo IP fisso (se ne hai uno)');
 define('_MD_AM_MYIPDSC','Questo IP non verr&agrave; conteggiato per i clicks dei banners');
 define('_MD_AM_ALWDHTML','I tag HTML sono consentiti in tutti i messaggi.');

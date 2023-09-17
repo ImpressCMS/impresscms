@@ -33,7 +33,6 @@ define("_MD_AM_SESSNAME","Nom de la session.");
 define("_MD_AM_SESSNAMEDSC","Valide uniquement lorsque l'option 'Utiliser une session personnalis&eacute;e' est active");
 define("_MD_AM_SESSEXPIRE","Expiration de la session");
 define("_MD_AM_SESSEXPIREDSC","Dur&eacute;e maximum de la session en minutes, uniquement si 'Utiliser une session personnalis&eacute;e' est active.");
-define("_MD_AM_BANNERS","Activer l'affichage des banni&egrave;res?");
 define("_MD_AM_MYIP","Votre adresse IP");
 define("_MD_AM_MYIPDSC","Cette IP ne sera pas compt&eacute;e pour l'affichage des banni&egrave;res");
 define("_MD_AM_ALWDHTML","Autoris&eacute;es le code HTML dans tous les postes ?");

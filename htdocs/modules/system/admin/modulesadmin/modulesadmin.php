@@ -138,9 +138,6 @@ function xoops_module_install($dirname) {
 		'groups_users_link',
 		'group_permission',
 		'online',
-		'bannerclient',
-		'banner',
-		'bannerfinish',
 		'priv_msgs',
 		'ranks',
 		'session',
@@ -152,9 +149,7 @@ function xoops_module_install($dirname) {
 		'tplset',
 		'tplsource',
 		'xoopsnotifications',
-		'banner',
-		'bannerclient',
-		'bannerfinish');
+);
 	$module_handler = icms::handler('icms_module');
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module = &$module_handler->create();
@@ -624,9 +619,6 @@ function xoops_module_uninstall($dirname) {
 		'groups_users_link',
 		'group_permission',
 		'online',
-		'bannerclient',
-		'banner',
-		'bannerfinish',
 		'priv_msgs',
 		'ranks',
 		'session',
@@ -638,9 +630,7 @@ function xoops_module_uninstall($dirname) {
 		'tplset',
 		'tplsource',
 		'xoopsnotifications',
-		'banner',
-		'bannerclient',
-		'bannerfinish');
+);
 
 	$db = &icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');

@@ -31,7 +31,6 @@ define('_MI_SYSTEM_BNAME17', 'Gerelateerde inhoud');
 
 define('_MI_SYSTEM_BNAME18', 'Deel deze pagina!');
 // Names of admin menu items
-define('_MI_SYSTEM_ADMENU1', 'Banners');
 define('_MI_SYSTEM_ADMENU2', 'Blokken');
 define('_MI_SYSTEM_ADMENU3', 'Groepen');
 define('_MI_SYSTEM_ADMENU5', 'Modules');

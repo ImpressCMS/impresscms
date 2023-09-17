@@ -6,7 +6,6 @@ define('_INVALID_ADMIN_FUNCTION', '无效管理命令');
 
 // Admin Module Names
 define('_MD_AM_ADGS','群组');
-define('_MD_AM_BANS','广告条');
 define('_MD_AM_BKAD','区块');
 define('_MD_AM_MDAD','模块管理');
 define('_MD_AM_SMLS','表情');

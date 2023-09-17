@@ -38,7 +38,6 @@ INSERT INTO smiles VALUES (17, ':idea:', 'smil3dbd4e7853679.gif', 'Ik heb een id
 
 INSERT INTO icmspage VALUES (2, 1, 'Admin beheer Pagina', 'admin.php', 1);
 INSERT INTO icmspage VALUES (3, 1, 'Avatars', 'modules/system/admin.php?fct=avatars*', 1);
-INSERT INTO icmspage VALUES (4, 1, 'Banners', 'modules/system/admin.php?fct=banners*', 1);
 INSERT INTO icmspage VALUES (5, 1, 'Blokken beheer', 'modules/system/admin.php?fct=blocksadmin*', 1);
 INSERT INTO icmspage VALUES (6, 1, 'Blok Posities', 'modules/system/admin.php?fct=blockspadmin*', 1);
 INSERT INTO icmspage VALUES (7, 1, 'Reacties', 'modules/system/admin.php?fct=comments*', 1);

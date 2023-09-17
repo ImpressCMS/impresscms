@@ -5,7 +5,6 @@
 define('_INVALID_ADMIN_FUNCTION', 'Ongeldige Admin Functie');
 // Admin Module Names
 define('_MD_AM_ADGS', 'Gebruiker groepen');
-define('_MD_AM_BANS', 'Banners');
 define('_MD_AM_BKAD', 'Blokken');
 define('_MD_AM_MDAD', 'Modules');
 define('_MD_AM_SMLS', 'Smilies');
@@ -44,7 +43,6 @@ define('_MD_AM_GROUPS_USERSANDGROUPS', 'Gebruikers en Groepen');
 define('_MD_AM_ADSENSES_DSC', 'Adsenses zijn tags die zelf kunnen gedefinieerd worden, en die overal op de website kunnen gebruikt worden.');
 define('_MD_AM_AUTOTASKS_DSC', 'Auto Tasks laten toe om acties te plannen om automatisch door het systeem te laten uitgevoeren');
 define('_MD_AM_AVATARS_DSC', 'Beheer de portretten die beschikbaar zijn voor de website gebruikers');
-define('_MD_AM_BANS_DSC', 'Beheer advertentie campagnes en adverteerder rekeningen');
 define('_MD_AM_BKPOSAD_DSC', 'Beheer en creëer blok posities die gebruikt worden door de thema\'s van de website');
 define('_MD_AM_BKAD_DSC', 'Beheer en creëer blokken om te gebruiker doorheen de website');
 define('_MD_AM_COMMENTS_DSC', 'Beheer commentaren gemaakt door website bezoekers');
