@@ -331,6 +331,10 @@ class icms_module_Object extends icms_core_Object {
 	 * @return datatype description
 	 */
 	public function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1) {
+		if(!is_array($submenus))
+		{
+			$submenus=[];
+		}
 		icms_loadLanguageFile(icms::$module->getVar('dirname'), 'modinfo');
 		icms_loadLanguageFile(icms::$module->getVar('dirname'), 'admin');
 		$tpl = new icms_view_Tpl();
