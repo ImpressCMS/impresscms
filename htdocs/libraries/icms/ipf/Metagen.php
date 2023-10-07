@@ -55,14 +55,14 @@ class icms_ipf_Metagen {
 	 * @param string $categoryPath
 	 *
 	 */
-	public function __construct($title, $keywords=false, $description=false, $categoryPath=false) {
+	public function __construct($title, $keywords = false, $description = false, $categoryPath = false) {
 		$this->_myts = icms_core_Textsanitizer::GetInstance();
 		$this->setCategoryPath($categoryPath);
 		$this->setTitle($title);
 		$this->setDescription($description);
 
 		if (!$keywords) {
-            $keywords = $this->createMetaKeywords();
+			$keywords = $this->createMetaKeywords();
 		}
 
 		/*		$myts = icms_core_Textsanitizer::getInstance();
@@ -96,7 +96,7 @@ class icms_ipf_Metagen {
 	 * @var string $withExt do we add an html extension or not
 	 * @return string sort_url for the article
 	 */
-	public function generateSeoTitle($title='', $withExt=true) {
+	public function generateSeoTitle($title='', $withExt = true) {
 		// Transformation de la chaine en minuscule
 		// Codage de la chaine afin d'�viter les erreurs 500 en cas de caract�res impr�vus
 		$title   = rawurlencode(strtolower($title));
@@ -117,7 +117,7 @@ class icms_ipf_Metagen {
 		$tableau = array_filter($tableau, array($this, "emptyString")); // Supprime les chaines vides du tableau
 		$title   = implode("-", $tableau); // Transforme un tableau en chaine de caract�res s�par� par un tiret
 
-		if (sizeof($title) > 0) {
+		if (strlen($title) > 0) {
 			if ($withExt) {
 				$title .= '.html';
 			}
@@ -274,7 +274,7 @@ class icms_ipf_Metagen {
 
 	/**
 	 * Generates a list of keywords from the provided text
-	 * @param steing $text Text to parse
+	 * @param string $text Text to parse
 	 * @param int $minChar Minimum word length for the keywords
 	 * @return array An array of keywords
 	 */
@@ -291,7 +291,7 @@ class icms_ipf_Metagen {
 
 		$originalKeywords = preg_split ('/[^a-zA-Z\'"-]+/', $text, -1, PREG_SPLIT_NO_EMPTY);
 
-		foreach ( $originalKeywords as $originalKeyword) {
+		foreach ($originalKeywords as $originalKeyword) {
 			$secondRoundKeywords = explode("'", $originalKeyword);
 			foreach ( $secondRoundKeywords as $secondRoundKeyword) {
 				if (strlen($secondRoundKeyword) >= $minChar) {
@@ -365,8 +365,8 @@ class icms_ipf_Metagen {
 	 */
 	public function createMetaTags() {
 		global $xoopsTpl, $xoTheme;
-        $this->_keywords = preg_replace("(<!--.*?-->)", '', $this->_keywords); // stops html comments appearing in meta key
-        
+		$this->_keywords = preg_replace("(<!--.*?-->)", '', $this->_keywords); // stops html comments appearing in meta key
+
 		if (is_object($xoTheme)) {
 			$xoTheme->addMeta('meta', 'keywords', $this->_keywords);
 			$xoTheme->addMeta('meta', 'description', $this->_description);
@@ -377,6 +377,4 @@ class icms_ipf_Metagen {
 		}
 		$xoopsTpl->assign('icms_pagetitle', $this->_title);
 	}
-
 }
-
