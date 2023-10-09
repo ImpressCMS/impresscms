@@ -2013,16 +2013,16 @@
         },
         {
             "name": "imponeer/env",
-            "version": "v1.0.7",
+            "version": "v1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imponeer/env.git",
-                "reference": "e09311e14e3f4c1005ed898dde60fb64f808654a"
+                "reference": "3897db6c59bbb88bf80715e936284b1f790d165b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imponeer/env/zipball/e09311e14e3f4c1005ed898dde60fb64f808654a",
-                "reference": "e09311e14e3f4c1005ed898dde60fb64f808654a",
+                "url": "https://api.github.com/repos/imponeer/env/zipball/3897db6c59bbb88bf80715e936284b1f790d165b",
+                "reference": "3897db6c59bbb88bf80715e936284b1f790d165b",
                 "shasum": ""
             },
             "require": {
@@ -2052,9 +2052,9 @@
             "description": "Small helper dealing with environment variables",
             "support": {
                 "issues": "https://github.com/imponeer/env/issues",
-                "source": "https://github.com/imponeer/env/tree/v1.0.7"
+                "source": "https://github.com/imponeer/env/tree/v1.0.8"
             },
-            "time": "2023-07-01T00:25:07+00:00"
+            "time": "2023-10-01T00:37:44+00:00"
         },
         {
             "name": "imponeer/smarty-db-resource",
