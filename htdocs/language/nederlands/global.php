@@ -160,9 +160,9 @@ define('_DAYS', '%s dagen');
 define('_WEEK', '1 week');
 define('_MONTH', '1 maand');
 
-define("_DATESTRING","j/n/Y G:i:s");
-define("_MEDIUMDATESTRING","j/n/Y G:i");
-define("_SHORTDATESTRING","j/n/Y");
+define("_DATESTRING","j-n-Y G:i:s");
+define("_MEDIUMDATESTRING","j-n-Y G:i");
+define("_SHORTDATESTRING","j-n-Y");
 /*
 The following characters are recognized in the format string:
 a - "am" or "pm"
