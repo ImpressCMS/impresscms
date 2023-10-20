@@ -301,9 +301,34 @@ define('_UP', 'Boven');
 define('_DOWN', 'Onders');
 define('_CONFIGURE', 'Instellen');
 
+// Added in 1.2.2
+define('_CSSTIDY_VULN', 'OPGELET: Het bestand  %s is aanwezig op uw server. <br />Gelieve het handmatig te verwijderen');
+define('_FILE_DELETED', 'Het bestand %s werd verwijderd');
+
+// added in 1.3
+define('_CHECKALL', 'Alles controleren');
+define('_COPYRIGHT', 'Copyright');
+define("_LONGDATESTRING", "F jS Y, h:iA");
+define('_AUTHOR', 'Auteur');
+define("_CREDITS", "Credits");
+define("_LICENSE", "Licentie");
+define("_LOCAL_FOOTER",'Mogelijk gemaakt door ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.be/\" rel=\"external\">ImpressCMS</a>'); //footer Link to local support site
+define("_BLOCK_ID", "Block ID");
+define('_IMPRESSCMS_PROJECT','Ontwikkelproject');
+
+// added in 1.3.5
+define("_FILTERS","Filters");
+define("_FILTER","Filter");
+define("_FILTERS_MSG1","Invoer filter : ");
+define("_FILTERS_MSG2","Invoer filter (HTMLPurifier): ");
+define("_FILTERS_MSG3","Uitvoer filter : ");
+define("_FILTERS_MSG4","Uitvoer filter (HTMLPurifier): ");
+
 // added in 1.4.0
 define("_OUTDATED_PHP", "Uw huidige PHP versie (%s) wordt niet langer onderhouden. Gelieve up te graden voor veiligheidsredenen!");
 
 // added in 1.5.0
-define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE is selected as the default editor for at least 1 module - change it and then remove it from your server');
-define('_TinyMCE_PRESENT_WARNING', 'TinyMCE is present - remove it from your server');
+define('_FCK_DEFAULT_WARNING', 'FCKEditor is voor minstens één module gekozen als editor. Kies een andere editor en verwijder TinyMCE handmatig van uw server');
+define('_FCK_PRESENT_WARNING', 'FCKEditor is aanwezig op de server - Verwijder het handmatig');
+define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE is voor minstens één module gekozen als editor. Kies een andere editor en verwijder TinyMCE handmatig van uw server');
+define('_TinyMCE_PRESENT_WARNING', 'TinyMCE is aanwezig op de server - Verwijder het handmatig');
