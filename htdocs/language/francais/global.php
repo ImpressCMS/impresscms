@@ -299,12 +299,35 @@ define('_UP', 'Haut');
 define('_DOWN', 'Bas');
 define('_CONFIGURE', 'Paramétriser');?>
 
+// Added in 1.2.2
+define('_CSSTIDY_VULN', 'ATTENTION: Le fichier %s est présent sur votre server. <br />Veuillez effaçer le fichier manuellement');
+define('_FILE_DELETED', 'Le fichier %s a été effacé');
+
+// added in 1.3
+define('_CHECKALL', 'Vérifier tout');
+define('_COPYRIGHT', 'Copyright');
+define("_LONGDATESTRING", "F jS Y, h:iA");
+define('_AUTHOR', 'Auteur');
+define("_CREDITS", "Credits");
+define("_LICENSE", "License");
+define("_LOCAL_FOOTER",'Rendu possible par ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.fr/\" rel=\"external\">ImpressCMS</a>'); //footer Link to local support site
+define("_BLOCK_ID", "Identifiant Block");
+define('_IMPRESSCMS_PROJECT','Projet de développement');
+
+// added in 1.3.5
+define("_FILTERS","Filtres");
+define("_FILTER","Filtre");
+define("_FILTERS_MSG1","Filter de saisie: ");
+define("_FILTERS_MSG2","Filter de saisie (HTMLPurifier): ");
+define("_FILTERS_MSG3","Filtre de sortie: ");
+define("_FILTERS_MSG4","Filtre de sortie (HTMLPurifier): ");
+
 // rajouté en 1.4.0
 define("_OUTDATED_PHP", "Votre version actuelle de PHP (%s) n'est plus maintenu. Veuillez vous mettre à jour pour des raisons de sécurité!");
 
-// rajouté en 1.5.0
-define('_FCK_DEFAULT_WARNING', 'FCKeditor is selected as the default editor for at least 1 module - change it and then remove it from your server');
-define('_FCK_PRESENT_WARNING', 'FCKeditor is present - remove it from your server');
+// rajouté en 2.0.0
+define('_FCK_DEFAULT_WARNING', 'FCKeditor est l'éditeur par défaut pour au moins un de vos modules. Changez votre éditeur et effacez FCKEditor de votre serveur manuellement');
+define('_FCK_PRESENT_WARNING', 'FCKeditor est présent - veuillez l'effacer de votre serveur manuellement');
 
-define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE is selected as the default editor for at least 1 module - change it and then remove it from your server');
-define('_TinyMCE_PRESENT_WARNING', 'TinyMCE is present - remove it from your server');
+define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE est l'éditeur par défaut pour au moins un de vos modules. Changez votre éditeur et effacez FCKEditor de votre serveur manuellement');
+define('_TinyMCE_PRESENT_WARNING', 'TinyMCE est présent - veuillez l'effacer de votre serveur manuellement');
