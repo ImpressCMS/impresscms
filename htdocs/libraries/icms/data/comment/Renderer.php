@@ -358,7 +358,7 @@ class icms_data_comment_Renderer {
 		if ($poster['id'] > 0) {
 			$com_poster =& $this->_memberHandler->getUser($poster_id);
 			if (is_object($com_poster)) {
-				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->getVar('uname') . '</a>';
+				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $com_poster->getVar('hash_uid') . '">' . $com_poster->getVar('uname') . '</a>';
 				return $poster;
 			}
 		}
@@ -378,7 +378,7 @@ class icms_data_comment_Renderer {
 		if ($poster['id'] > 0) {
 			$com_poster =& $this->_memberHandler->getUser($poster['id']);
 			if (is_object($com_poster)) {
-				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->getVar('uname') . '</a>';
+				$poster['uname'] = '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $com_poster->getVar('hash_uid') . '">' . $com_poster->getVar('uname') . '</a>';
 				$poster_rank = $com_poster->rank();
 				$poster['rank_image'] = $poster_rank['image'];
 				$poster['rank_title'] = $poster_rank['title'];

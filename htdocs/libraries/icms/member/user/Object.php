@@ -74,6 +74,7 @@ class icms_member_user_Object extends icms_core_Object {
 	 */
 	public function __construct($id = null) {
 		$this->initVar('uid', XOBJ_DTYPE_INT, null, false);
+		$this->initVar('hash_uid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, false, 60);
 		$this->initVar('uname', XOBJ_DTYPE_TXTBOX, null, true, 255);
 		$this->initVar('email', XOBJ_DTYPE_TXTBOX, null, true, 60);

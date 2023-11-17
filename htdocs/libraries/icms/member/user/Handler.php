@@ -190,6 +190,13 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		if ($user->isNew()) {
 			$uid = $this->db->getInsertId();
 			$user->assignVar('uid', $uid);
+			$hash_uid = hash('sha256', $uid);
+			$user->assignVar('hash_uid', $hash_uid);
+			$sql = sprintf(
+				"UPDATE %s SET hash_uid = '%s' WHERE uid = '%u'",
+				$this->db->prefix('users'), $hash_uid, (int) $uid
+			);
+			$result = $this->db->query($sql);
 		}
 		return TRUE;
 	}
@@ -418,7 +425,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				$fullname2 = $user->getVar('name');
 				if (($name) && !empty($fullname2)) $fullname = $user->getVar('name');
 				if (!empty($fullname)) $linkeduser = $fullname . "[";
-                $linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $uid . '"' . $author . '>';
+                $linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $user->getVar('hash_uid') . '"' . $author . '>';
 				$linkeduser .= icms_core_DataFilter::htmlSpecialChars($username) . "</a>";
 				if (!empty($fullname)) $linkeduser .= "]";
 

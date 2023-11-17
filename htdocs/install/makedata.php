@@ -194,6 +194,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$regdate = time();
 	// RMV-NOTIFY (updated for extra columns in user table)
 	// `uid`,
+	// `hash_uid`,
 	//  `name`,
 	//  `uname`,
 	//  `email`,
@@ -229,7 +230,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	//  `pass_expired`,
 	//  `enc_type`,
 
-	$dbm->insert('users', " VALUES (1, '', '".addslashes($adminname)."', '".addslashes($adminmail)."', '".XOOPS_URL."/', 'blank.gif', '".$regdate."', '', '', '', 0, '', '', '', '', '".$temp."', 0, 0, 7, 5, 'iTheme', '0.0', ".time().", 'thread', 0, 1, 0, '', '', '', '0', '".addslashes($language)."', 0, 0, 1, '".addslashes($adminlogin_name)."')");
+	$hash_uid = hash('sha256', 1);
+	$dbm->insert('users', " VALUES (1,'".$hash_uid."', '', '".addslashes($adminname)."', '".addslashes($adminmail)."', '".XOOPS_URL."/', 'blank.gif', '".$regdate."', '', '', '', 0, '', '', '', '', '".$temp."', 0, 0, 7, 5, 'iTheme', '0.0', ".time().", 'thread', 0, 1, 0, '', '', '', '0', '".addslashes($language)."', 0, 0, 1, '".addslashes($adminlogin_name)."')");
 
 
 
