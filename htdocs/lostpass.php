@@ -82,7 +82,7 @@ if (empty($getuser)) {
 } else {
 	$icmspass = new icms_core_Password();
 
-	$areyou = substr($getuser[0]->getVar('pass'), -5) . $getuser[0]->getVar('last_login');
+	$areyou = hash('sha1',substr($getuser[0]->getVar('pass'), -5) . $getuser[0]->getVar('last_login'));
 	if ($code != '' && $areyou == $code) {
 		$newpass = $icmspass->createSalt(8);
 		$pass = $icmspass->encryptPass($newpass);
@@ -114,8 +114,9 @@ if (empty($getuser)) {
 			exit();
 		}
 		redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), false);
-		// If no Code, send it
-	} else {
+
+	// If no Code, send it
+	} elseif ($code == '') {
 		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass1.tpl');
@@ -138,5 +139,9 @@ if (empty($getuser)) {
 		echo '</h4>';
 		/** Include footer.php to complete page rendering */
 		include 'footer.php';
+		
+		// code is set and doesn't match - expired or attempt to guess/hack
+	} else {
+		redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 	}
 }
