@@ -292,4 +292,3 @@ if (!empty($_POST)) {
 		}
 		icms_cp_footer();
 	}
-}
