@@ -99,6 +99,24 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
+	 * retrieve a user from hash_uid
+	 *
+	 * @param string $hash_uid hash_uid of the user
+	 * @return mixed reference to the {@link icms_member_user_Object} object, FALSE if failed
+	 */
+	public function &getHash($hash_uid) {
+		$user = FALSE;
+		$sql = "SELECT * FROM " . $this->db->prefix('users') . " WHERE hash_uid = '" . $hash_uid . "'";
+		if (!$result = $this->db->query($sql)) {return $user;}
+		$numrows = $this->db->getRowsNum($result);
+		if ($numrows == 1) {
+			$user = new icms_member_user_Object();
+			$user->assignVars($this->db->fetchArray($result));
+		}
+		return $user;
+	}
+
+	/**
 	 * insert a new user in the database
 	 *
 	 * @param object $user reference to the {@link icms_member_user_Object} object

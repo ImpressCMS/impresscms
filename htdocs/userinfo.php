@@ -39,7 +39,7 @@
 
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
-$hash_uid = (int) $_GET['uid'];
+$hash_uid = $_GET['uid'];
 
 if (icms_get_module_status("profile")) {
 	$module = icms::handler("icms_module")->getByDirName("profile", true);
@@ -85,7 +85,7 @@ if (is_object(icms::$user)) {
             'lang_deleteaccount' => $icmsConfigUser['self_delete'] ? _US_DELACCOUNT : ''));
 		$thisUser = icms::$user;
 	} else {
-		$thisUser = icms::handler('icms_member')->getUser($uid);
+		$thisUser = icms::handler('icms_member')->getUserHash($hash_uid);
 		if (!is_object($thisUser) || !$thisUser->isActive()) {
 			redirect_header('index.php', 3, _US_SELECTNG);
 		}
@@ -94,7 +94,7 @@ if (is_object(icms::$user)) {
 		$icmsTpl->assign('user_ownpage', false);
 	}
 } else {
-	$thisUser = icms::handler('icms_member')->getUser($uid);
+	$thisUser = icms::handler('icms_member')->getUserHash($hash_uid);
 	if (!is_object($thisUser) || !$thisUser->isActive()) {
 		redirect_header('index.php', 3, _US_SELECTNG);
 	}
