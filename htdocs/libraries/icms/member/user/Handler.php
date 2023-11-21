@@ -190,9 +190,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		if ($user->isNew()) {
 			$uid = $this->db->getInsertId();
 			$user->assignVar('uid', $uid);
-			$bytes = random_bytes(16);
-			$secret_key = bin2hex($bytes);
-			$hash_uid = hash_hmac('sha256', $uid, $secret_key);
+			$hash_uid = bin2hex(random_bytes(32));
 			$user->assignVar('hash_uid', $hash_uid);
 			$sql = sprintf(
 				"UPDATE %s SET hash_uid = '%s' WHERE uid = '%u'",
