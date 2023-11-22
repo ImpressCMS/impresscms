@@ -35,6 +35,11 @@
 
 						</li>
 				<li>
+					<a href="package-Auth.Openid.html">
+						Openid					</a>
+
+						</li>
+				<li>
 					<a href="package-Auth.Xoops.html">
 						Xoops					</a>
 
@@ -81,6 +86,11 @@
 				<li>
 					<a href="package-Core.Filters.html">
 						Filters					</a>
+
+						</li>
+				<li>
+					<a href="package-core.Kernel.html">
+						Kernel					</a>
 
 						</li>
 				<li>
@@ -543,8 +553,8 @@ Released under GNU Public License</p>
 				<b>License:</b>
 				<a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GNU General Public License (GPL)</a><br>
 				<b>Author:</b>
-				Kazumi Ono <a href="ma&#105;&#108;&#116;&#111;&#58;&#111;&#110;&#111;&#107;&#97;&#122;&#x75;&#x40;&#x78;&#x6f;&#x6f;&#x70;&#x73;&#x2e;&#x6f;&#x72;&#x67;">&#111;&#110;&#111;&#107;&#97;&#122;&#x75;&#x40;&#x78;&#x6f;&#x6f;&#x70;&#x73;&#x2e;&#x6f;&#x72;&#x67;</a><br>
-			<b>Located at</b> <a href="source-class-icms_core_Session.html#41-506" title="Go to source code">core/Session.php</a>
+				Kazumi Ono  <a href="ma&#105;&#108;&#116;&#111;&#58;&#111;&#110;&#111;&#107;&#97;&#122;&#x75;&#x40;&#x78;&#x6f;&#x6f;&#x70;&#x73;&#x2e;&#x6f;&#x72;&#x67;">&#111;&#110;&#111;&#107;&#97;&#122;&#x75;&#x40;&#x78;&#x6f;&#x6f;&#x70;&#x73;&#x2e;&#x6f;&#x72;&#x67;</a><br>
+			<b>Located at</b> <a href="source-class-icms_core_Session.html#40-507" title="Go to source code">core/Session.php</a>
 		<br>
 	</div>
 
@@ -564,7 +574,7 @@ Released under GNU Public License</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_service">#</a>
-		<code><a href="source-class-icms_core_Session.html#56-89" title="Go to source code">service</a>( )</code>
+		<code><a href="source-class-icms_core_Session.html#55-92" title="Go to source code">service</a>( )</code>
 
 		<div class="description short">
 			<p>Initialize the session service</p>
@@ -598,7 +608,7 @@ Released under GNU Public License</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-icms_core_Session.html#140-149" title="Go to source code">__construct</a>( <span>object <var>&amp; $db</var></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#143-151" title="Go to source code">__construct</a>( <span>object <var>&amp; $db</var></span> )</code>
 
 		<div class="description short">
 			<p>Constructor</p>
@@ -612,7 +622,7 @@ Released under GNU Public License</p>
 				<div class="list"><dl>
 					<dt><var>$db</var></dt>
 					<dd><p>reference to the XoopsDatabase object
-       Do we need this $db reference now we're using icms::$xoopsDB?????</p></dd>
+Do we need this $db reference now we're using icms::$xoopsDB?????</p></dd>
 				</dl></div>
 
 
@@ -634,7 +644,7 @@ Released under GNU Public License</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_open">#</a>
-		<code><a href="source-class-icms_core_Session.html#151-160" title="Go to source code">open</a>( <span>string <var>$save_path</var></span>, <span>string <var>$session_name</var></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#153-161" title="Go to source code">open</a>( <span>string <var>$save_path</var></span>, <span>string <var>$session_name</var></span> )</code>
 
 		<div class="description short">
 			<p>Open a session</p>
@@ -675,7 +685,7 @@ Released under GNU Public License</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_close">#</a>
-		<code><a href="source-class-icms_core_Session.html#162-170" title="Go to source code">close</a>( )</code>
+		<code><a href="source-class-icms_core_Session.html#163-170" title="Go to source code">close</a>( )</code>
 
 		<div class="description short">
 			<p>Close a session</p>
@@ -702,14 +712,14 @@ Released under GNU Public License</p>
 		<td class="attributes"><code>
 			 public 
 
-			string
+			array
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_read">#</a>
-		<code><a href="source-class-icms_core_Session.html#172-180" title="Go to source code">read</a>( <span>string <var>$sess_id</var></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#172-179" title="Go to source code">read</a>( <span>string <var>$sess_id</var></span> )</code>
 
 		<div class="description short">
 			<p>Read a session from the database</p>
@@ -727,7 +737,7 @@ Released under GNU Public License</p>
 
 				<h4>Returns</h4>
 				<div class="list">
-					string<br>Session data
+					array<br>Session data
 				</div>
 
 
@@ -748,7 +758,7 @@ Released under GNU Public License</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_write">#</a>
-		<code><a href="source-class-icms_core_Session.html#182-191" title="Go to source code">write</a>( <span>string <var>$sess_id</var></span>, <span>string <var>$sess_data</var></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#181-189" title="Go to source code">write</a>( <span>string <var>$sess_id</var></span>, <span>string <var>$sess_data</var></span> )</code>
 
 		<div class="description short">
 			<p>Inserts a session into the database</p>
@@ -789,7 +799,7 @@ Released under GNU Public License</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_destroy">#</a>
-		<code><a href="source-class-icms_core_Session.html#193-201" title="Go to source code">destroy</a>( <span>string <var>$sess_id</var></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#191-198" title="Go to source code">destroy</a>( <span>string <var>$sess_id</var></span> )</code>
 
 		<div class="description short">
 			<p>Destroy a session</p>
@@ -828,7 +838,7 @@ Released under GNU Public License</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_gc">#</a>
-		<code><a href="source-class-icms_core_Session.html#203-211" title="Go to source code">gc</a>( <span>integer <var>$expire</var></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#200-207" title="Go to source code">gc</a>( <span>integer <var>$expire</var></span> )</code>
 
 		<div class="description short">
 			<p>Garbage Collector</p>
@@ -867,7 +877,7 @@ Released under GNU Public License</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_gc_force">#</a>
-		<code><a href="source-class-icms_core_Session.html#213-223" title="Go to source code">gc_force</a>( )</code>
+		<code><a href="source-class-icms_core_Session.html#209-219" title="Go to source code">gc_force</a>( )</code>
 
 		<div class="description short">
 			<p>Force gc for situations where gc is registered but not executed</p>
@@ -897,7 +907,7 @@ Released under GNU Public License</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_icms_sessionRegenerateId">#</a>
-		<code><a href="source-class-icms_core_Session.html#225-246" title="Go to source code">icms_sessionRegenerateId</a>( <span>boolean <var>$regenerate</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#221-241" title="Go to source code">icms_sessionRegenerateId</a>( <span>boolean <var>$regenerate</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			<p>Update the current session id with a newly generated one
@@ -938,7 +948,7 @@ To be refactored</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_update_cookie">#</a>
-		<code><a href="source-class-icms_core_Session.html#248-268" title="Go to source code">update_cookie</a>( <span>string <var>$sess_id</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$expire</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#243-260" title="Go to source code">update_cookie</a>( <span>string <var>$sess_id</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$expire</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Update cookie status for current session
@@ -981,7 +991,7 @@ To be refactored</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_createFingerprint">#</a>
-		<code><a href="source-class-icms_core_Session.html#270-282" title="Go to source code">createFingerprint</a>( )</code>
+		<code><a href="source-class-icms_core_Session.html#262-273" title="Go to source code">createFingerprint</a>( )</code>
 
 		<div class="description short">
 			<p>Creates a Fingerprint of the current User Session
@@ -1019,7 +1029,7 @@ To be refactored</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_checkFingerprint">#</a>
-		<code><a href="source-class-icms_core_Session.html#284-301" title="Go to source code">checkFingerprint</a>( )</code>
+		<code><a href="source-class-icms_core_Session.html#275-291" title="Go to source code">checkFingerprint</a>( )</code>
 
 		<div class="description short">
 			<p>Compares the Fingerprint stored in $_SESSION['icms_fprint'] by creating a new Fingerprint.
@@ -1057,7 +1067,7 @@ To be refactored</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_sessionOpen">#</a>
-		<code><a href="source-class-icms_core_Session.html#304-309" title="Go to source code">sessionOpen</a>( <span> <var>$regenerate</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#294-299" title="Go to source code">sessionOpen</a>( <span> <var>$regenerate</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			
@@ -1087,7 +1097,7 @@ To be refactored</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_removeExpiredCustomSession">#</a>
-		<code><a href="source-class-icms_core_Session.html#311-316" title="Go to source code">removeExpiredCustomSession</a>( <span> <var>$sess</var></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#301-308" title="Go to source code">removeExpiredCustomSession</a>( <span> <var>$sess</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1117,7 +1127,7 @@ To be refactored</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_sessionClose">#</a>
-		<code><a href="source-class-icms_core_Session.html#318-341" title="Go to source code">sessionClose</a>( <span>string <var>$uid</var></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#310-332" title="Go to source code">sessionClose</a>( <span>string <var>$uid</var></span> )</code>
 
 		<div class="description short">
 			<p>Closes the Session &amp; removes Session Cookies for specified User Id
@@ -1158,7 +1168,7 @@ To be refactored</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_sessionStart">#</a>
-		<code><a href="source-class-icms_core_Session.html#343-375" title="Go to source code">sessionStart</a>( <span>string <var>$sslpost_name</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-icms_core_Session.html#334-367" title="Go to source code">sessionStart</a>( <span>string <var>$sslpost_name</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Creates Session ID &amp; Starts the session
@@ -1209,7 +1219,7 @@ removes Expired Custom Sessions after session Start</p>
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-icms_core_Session.html#100-112" title="Go to source code"><var>$securityLevel</var></a>
+				<a href="source-class-icms_core_Session.html#105-116" title="Go to source code"><var>$securityLevel</var></a>
 
 			<div class="description short">
 				<p>Security checking level
@@ -1246,7 +1256,7 @@ Possible value:
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-icms_core_Session.html#114-130" title="Go to source code"><var>$ipv6securityLevel</var></a>
+				<a href="source-class-icms_core_Session.html#118-134" title="Go to source code"><var>$ipv6securityLevel</var></a>
 
 			<div class="description short">
 				<p>Security checking level for IPv6 Address types
@@ -1256,10 +1266,10 @@ Possible value:
 2 - check browser and IPv6 aaaa:bbbb;
 3 - check browser and IPv6 aaaa:bbbb:cccc;
 4 - check browser and IPv6 aaaa:bbbb:cccc:dddd;
-5 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee;
-6 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff;
-7 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff:gggg; (recommended)
-8 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff:gggg:hhhh;</p>
+ 5 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee;
+ 6 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff;
+ 7 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff:gggg; (recommended)
+ 8 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff:gggg:hhhh;</p>
 			</div>
 
 			<div class="description detailed hidden">
@@ -1269,11 +1279,7 @@ Possible value:
 1 - check browser characteristics (HTTP_USER_AGENT);
 2 - check browser and IPv6 aaaa:bbbb;
 3 - check browser and IPv6 aaaa:bbbb:cccc;
-4 - check browser and IPv6 aaaa:bbbb:cccc:dddd;
-5 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee;
-6 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff;
-7 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff:gggg; (recommended)
-8 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff:gggg:hhhh;</p>
+4 - check browser and IPv6 aaaa:bbbb:cccc:dddd; 5 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee; 6 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff; 7 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff:gggg; (recommended) 8 - check browser and IPv6 aaaa:bbbb:cccc:dddd:eeee:ffff:gggg:hhhh;</p>
 
 			</div>
 		</td>
@@ -1291,7 +1297,7 @@ Possible value:
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-icms_core_Session.html#132-138" title="Go to source code"><var>$enableRegenerateId</var></a>
+				<a href="source-class-icms_core_Session.html#136-141" title="Go to source code"><var>$enableRegenerateId</var></a>
 
 			<div class="description short">
 				<p>Enable regenerate_id</p>
@@ -1324,6 +1330,6 @@ Possible value:
 </div>
 </div>
 <script src="resources/combined.js?58699d70ee1015ed63e509c64f4dd9d3b29ddbbe"></script>
-<script src="elementlist.js?a18c3be43b9689dbea8e5f99d9bcca04f4dfdd4e"></script>
+<script src="elementlist.js?8ff63a4a66ead89744ef571ab98dc03c0488bb0a"></script>
 </body>
 </html>

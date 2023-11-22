@@ -35,6 +35,11 @@
 
 						</li>
 				<li>
+					<a href="package-Auth.Openid.html">
+						Openid					</a>
+
+						</li>
+				<li>
 					<a href="package-Auth.Xoops.html">
 						Xoops					</a>
 
@@ -81,6 +86,11 @@
 				<li>
 					<a href="package-Core.Filters.html">
 						Filters					</a>
+
+						</li>
+				<li>
+					<a href="package-core.Kernel.html">
+						Kernel					</a>
 
 						</li>
 				<li>
@@ -566,7 +576,7 @@
 				Gustavo Pilla (aka nekro) <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#x6e;&#101;&#107;&#x72;&#111;&#64;&#x69;&#x6d;&#112;r&#x65;&#115;&#115;&#x63;&#x6d;&#115;.&#x6f;&#114;&#103;">&#x6e;&#101;&#107;&#x72;&#111;&#64;&#x69;&#x6d;&#112;r&#x65;&#115;&#115;&#x63;&#x6d;&#115;.&#x6f;&#114;&#103;</a><br>
 				<b>Since:</b>
 				ImpressCMS 1.2<br>
-			<b>Located at</b> <a href="source-class-icms_view_block_Object.html#45-218" title="Go to source code">view/block/Object.php</a>
+			<b>Located at</b> <a href="source-class-icms_view_block_Object.html#45-429" title="Go to source code">view/block/Object.php</a>
 		<br>
 	</div>
 
@@ -743,6 +753,581 @@
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="buildContent" id="_buildContent">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_buildContent">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#219-235" title="Go to source code">buildContent</a>( <span> <var>$position</var></span>, <span> <var>$content</var> = <span class="php-quote">&quot;&quot;</span></span>, <span> <var>$contentdb</var> = <span class="php-quote">&quot;&quot;</span></span> )</code>
+
+		<div class="description short">
+			<p>Aligns the content of a block
+If position is 0, content in DB is positioned
+before the original content
+If position is 1, content in DB is positioned
+after the original content</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Aligns the content of a block
+If position is 0, content in DB is positioned
+before the original content
+If position is 1, content in DB is positioned
+after the original content</p>
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="buildTitle" id="_buildTitle">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_buildTitle">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#237-253" title="Go to source code">buildTitle</a>( <span>string <var>$originaltitle</var></span>, <span>string <var>$newtitle</var> = <span class="php-quote">&quot;&quot;</span></span> )</code>
+
+		<div class="description short">
+			<p>Build Block Title</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Build Block Title</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$originaltitle</var></dt>
+					<dd></dd>
+					<dt><var>$newtitle</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getBlockPositions" id="_getBlockPositions" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBlockPositions">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#255-267" title="Go to source code">getBlockPositions</a>( <span>boolean <var>$full</var> = <span class="php-keyword1">FALSE</span></span> )</code>
+
+		<div class="description short">
+			<p>Get Block Positions</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get Block Positions</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						use the handler method, instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$full</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="load" id="_load" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_load">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#269-280" title="Go to source code">load</a>( <span>integer <var>$id</var></span> )</code>
+
+		<div class="description short">
+			<p>Load a Block</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Load a Block</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						use the handler method, instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$id</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="store" id="_store" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_store">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#282-294" title="Go to source code">store</a>( <span>boolean <var>$force</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			<p>Save this block</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Save this block</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						use the handler method 'insert', instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$force</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					integer
+				</div>
+
+
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-icms_ipf_Object.html#_store">icms_ipf_Object::store()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="delete" id="_delete" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_delete">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#296-307" title="Go to source code">delete</a>( <span>boolean <var>$force</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			<p>Delete this block</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Delete this block</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						use the handler method, instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$force</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean
+				</div>
+
+
+
+				<h4>Overrides</h4>
+				<div class="list"><code><a href="class-icms_ipf_Object.html#_delete">icms_ipf_Object::delete()</a></code></div>
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getAllBlocksByGroup" id="_getAllBlocksByGroup" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getAllBlocksByGroup">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#309-330" title="Go to source code">getAllBlocksByGroup</a>( <span> <var>$groupid</var></span>, <span> <var>$asobject</var> = <span class="php-keyword1">TRUE</span></span>, <span> <var>$side</var> = <span class="php-keyword1">NULL</span></span>, <span> <var>$visible</var> = <span class="php-keyword1">NULL</span></span>, <span> <var>$orderby</var> = <span class="php-quote">&quot;b.weight, b.bid&quot;</span></span>, <span> <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
+
+		<div class="description short">
+			<p>Get all the blocks that match the supplied parameters</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get all the blocks that match the supplied parameters</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						use icms_view_block_Handler->getObjects, instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$groupid</var></dt>
+					<dd><p>sideblock - left
+    1: sideblock - right
+    2: sideblock - left and right
+    3: centerblock - left
+    4: centerblock - right
+    5: centerblock - center
+    6: centerblock - left, right, center</p></dd>
+					<dt><var>$asobject</var></dt>
+					<dd>(can be an array)</dd>
+					<dt><var>$side</var></dt>
+					<dd>not visible 1: visible</dd>
+					<dt><var>$visible</var></dt>
+					<dd>of the blocks</dd>
+					<dt><var>$orderby</var></dt>
+					<dd></dd>
+					<dt><var>$isactive</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>of block objects
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getAllBlocks" id="_getAllBlocks" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			unknown
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getAllBlocks">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#332-350" title="Go to source code">getAllBlocks</a>( <span>unknown_type <var>$rettype</var> = <span class="php-quote">&quot;object&quot;</span></span>, <span>unknown_type <var>$side</var> = <span class="php-keyword1">NULL</span></span>, <span>unknown_type <var>$visible</var> = <span class="php-keyword1">NULL</span></span>, <span>unknown_type <var>$orderby</var> = <span class="php-quote">&quot;side, weight, bid&quot;</span></span>, <span>unknown_type <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
+
+		<div class="description short">
+			<p>Get All Blocks</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get All Blocks</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						use the handler method, instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$rettype</var></dt>
+					<dd></dd>
+					<dt><var>$side</var></dt>
+					<dd></dd>
+					<dt><var>$visible</var></dt>
+					<dd></dd>
+					<dt><var>$orderby</var></dt>
+					<dd></dd>
+					<dt><var>$isactive</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					unknown
+				</div>
+
+
+				<h4>Since</h4>
+				<div class="list">
+						XOOPS<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getByModule" id="_getByModule" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			unknown
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getByModule">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#352-367" title="Go to source code">getByModule</a>( <span>integer <var>$moduleid</var></span>, <span>boolean <var>$asobject</var> = <span class="php-keyword1">TRUE</span></span> )</code>
+
+		<div class="description short">
+			<p>Get Block By Module ID (mid)</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get Block By Module ID (mid)</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						use the handler method, instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$moduleid</var></dt>
+					<dd></dd>
+					<dt><var>$asobject</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					unknown
+				</div>
+
+
+				<h4>Since</h4>
+				<div class="list">
+						XOOPS<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getAllByGroupModule" id="_getAllByGroupModule" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			unknown
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getAllByGroupModule">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#369-388" title="Go to source code">getAllByGroupModule</a>( <span>integer <var>$groupid</var></span>, <span>integer <var>$module_id</var> = <span class="php-quote">'0-0'</span></span>, <span>boolean <var>$toponlyblock</var> = <span class="php-keyword1">FALSE</span></span>, <span>boolean <var>$visible</var> = <span class="php-keyword1">NULL</span></span>, <span>string <var>$orderby</var> = <span class="php-quote">'b.weight, b.bid'</span></span>, <span>booelan <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
+
+		<div class="description short">
+			<p>Get All Blocks By Group and Module</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get All Blocks By Group and Module</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						use the handler method, instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$groupid</var></dt>
+					<dd></dd>
+					<dt><var>$module_id</var></dt>
+					<dd></dd>
+					<dt><var>$toponlyblock</var></dt>
+					<dd></dd>
+					<dt><var>$visible</var></dt>
+					<dd></dd>
+					<dt><var>$orderby</var></dt>
+					<dd></dd>
+					<dt><var>$isactive</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					unknown
+				</div>
+
+
+				<h4>Since</h4>
+				<div class="list">
+						XOOPS<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getNonGroupedBlocks" id="_getNonGroupedBlocks" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getNonGroupedBlocks">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#390-406" title="Go to source code">getNonGroupedBlocks</a>( <span>integer <var>$module_id</var> = <span class="php-num">0</span></span>, <span>unknown_type <var>$toponlyblock</var> = <span class="php-keyword1">FALSE</span></span>, <span>boolean <var>$visible</var> = <span class="php-keyword1">NULL</span></span>, <span>string <var>$orderby</var> = <span class="php-quote">'b.weight, b.bid'</span></span>, <span>boolean <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
+
+		<div class="description short">
+			<p>Get Non Grouped Blocks</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get Non Grouped Blocks</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						use the handler method, instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$module_id</var></dt>
+					<dd></dd>
+					<dt><var>$toponlyblock</var></dt>
+					<dd></dd>
+					<dt><var>$visible</var></dt>
+					<dd></dd>
+					<dt><var>$orderby</var></dt>
+					<dd></dd>
+					<dt><var>$isactive</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="countSimilarBlocks" id="_countSimilarBlocks" class="deprecated">
+
+		<td class="attributes"><code>
+			 public 
+
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_countSimilarBlocks">#</a>
+		<code><a href="source-class-icms_view_block_Object.html#408-427" title="Go to source code">countSimilarBlocks</a>( <span>integer <var>$moduleId</var></span>, <span>integer <var>$funcNum</var></span>, <span>string <var>$showFunc</var> = <span class="php-keyword1">NULL</span></span> )</code>
+
+		<div class="description short">
+			<p>Count Similar Blocks</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Count Similar Blocks</p>
+
+<p>This method has been implemented in the block handler, because is was thought as usefull.</p>
+
+				<h4>Deprecated</h4>
+				<div class="list">
+						use the handler method, instead<br>
+				</div>
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$moduleId</var></dt>
+					<dd></dd>
+					<dt><var>$funcNum</var></dt>
+					<dd></dd>
+					<dt><var>$showFunc</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					integer
+				</div>
+
+
+				<h4>Since</h4>
+				<div class="list">
+						XOOPS<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	</table>
 
 	<table class="summary inherited">
@@ -752,7 +1337,6 @@
 			<a href="class-icms_ipf_Object.html#_IcmsPersistableObject">IcmsPersistableObject()</a>, 
 			<a href="class-icms_ipf_Object.html#_accessGranted">accessGranted()</a>, 
 			<a href="class-icms_ipf_Object.html#_closeFormSection">closeFormSection()</a>, 
-			<a href="class-icms_ipf_Object.html#_delete">delete()</a>, 
 			<a href="class-icms_ipf_Object.html#_displayFieldOnSingleView">displayFieldOnSingleView()</a>, 
 			<a href="class-icms_ipf_Object.html#_displaySingleObject">displaySingleObject()</a>, 
 			<a href="class-icms_ipf_Object.html#_doDisplayFieldOnSingleView">doDisplayFieldOnSingleView()</a>, 
@@ -800,7 +1384,6 @@
 			<a href="class-icms_ipf_Object.html#_setType">setType()</a>, 
 			<a href="class-icms_ipf_Object.html#_setVarInfo">setVarInfo()</a>, 
 			<a href="class-icms_ipf_Object.html#_showFieldOnForm">showFieldOnForm()</a>, 
-			<a href="class-icms_ipf_Object.html#_store">store()</a>, 
 			<a href="class-icms_ipf_Object.html#_storeFileObj">storeFileObj()</a>, 
 			<a href="class-icms_ipf_Object.html#_storeUrlLinkObj">storeUrlLinkObj()</a>, 
 			<a href="class-icms_ipf_Object.html#_summary">summary()</a>, 
@@ -886,6 +1469,6 @@
 </div>
 </div>
 <script src="resources/combined.js?58699d70ee1015ed63e509c64f4dd9d3b29ddbbe"></script>
-<script src="elementlist.js?a18c3be43b9689dbea8e5f99d9bcca04f4dfdd4e"></script>
+<script src="elementlist.js?8ff63a4a66ead89744ef571ab98dc03c0488bb0a"></script>
 </body>
 </html>

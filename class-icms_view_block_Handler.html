@@ -35,6 +35,11 @@
 
 						</li>
 				<li>
+					<a href="package-Auth.Openid.html">
+						Openid					</a>
+
+						</li>
+				<li>
 					<a href="package-Auth.Xoops.html">
 						Xoops					</a>
 
@@ -81,6 +86,11 @@
 				<li>
 					<a href="package-Core.Filters.html">
 						Filters					</a>
+
+						</li>
+				<li>
+					<a href="package-core.Kernel.html">
+						Kernel					</a>
 
 						</li>
 				<li>
@@ -566,7 +576,7 @@
 				Gustavo Pilla (aka nekro) <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#x6e;&#101;&#107;&#x72;&#111;&#64;&#x69;&#x6d;&#112;r&#x65;&#115;&#115;&#x63;&#x6d;&#115;.&#x6f;&#114;&#103;">&#x6e;&#101;&#107;&#x72;&#111;&#64;&#x69;&#x6d;&#112;r&#x65;&#115;&#115;&#x63;&#x6d;&#115;.&#x6f;&#114;&#103;</a><br>
 				<b>Since:</b>
 				ImpressCMS 1.2<br>
-			<b>Located at</b> <a href="source-class-icms_view_block_Handler.html#43-572" title="Go to source code">view/block/Handler.php</a>
+			<b>Located at</b> <a href="source-class-icms_view_block_Handler.html#44-592" title="Go to source code">view/block/Handler.php</a>
 		<br>
 	</div>
 
@@ -586,7 +596,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-icms_view_block_Handler.html#58-62" title="Go to source code">__construct</a>( <span>object <var>&amp; $db</var></span>, <span>string <var>$itemname</var>,…</span>, <span>string <var>$keyname</var>,…</span>, <span>string <var>$idenfierName</var>,…</span>, <span>string <var>$summaryName</var>,…</span>, <span>string <var>$modulename</var>,…</span> )</code>
+		<code><a href="source-class-icms_view_block_Handler.html#60-64" title="Go to source code">__construct</a>( <span>object <var>&amp; $db</var></span>, <span>string <var>$itemname</var>,…</span>, <span>string <var>$keyname</var>,…</span>, <span>string <var>$idenfierName</var>,…</span>, <span>string <var>$summaryName</var>,…</span>, <span>string <var>$modulename</var>,…</span> )</code>
 
 		<div class="description short">
 			<p>Constructor - called from child classes</p>
@@ -637,7 +647,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getBlockPositions">#</a>
-		<code><a href="source-class-icms_view_block_Handler.html#66-96" title="Go to source code">getBlockPositions</a>( <span>boolean <var>$full</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-icms_view_block_Handler.html#68-98" title="Go to source code">getBlockPositions</a>( <span>boolean <var>$full</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			<p>getBlockPositions</p>
@@ -676,7 +686,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getByModule">#</a>
-		<code><a href="source-class-icms_view_block_Handler.html#98-114" title="Go to source code">getByModule</a>( <span>unknown_type <var>$mid</var></span>, <span>boolean <var>$asObject</var> = <span class="php-keyword1">true</span></span> )</code>
+		<code><a href="source-class-icms_view_block_Handler.html#100-116" title="Go to source code">getByModule</a>( <span>unknown_type <var>$mid</var></span>, <span>boolean <var>$asObject</var> = <span class="php-keyword1">true</span></span> )</code>
 
 		<div class="description short">
 			<p>getByModule</p>
@@ -721,7 +731,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getAllBlocks">#</a>
-		<code><a href="source-class-icms_view_block_Handler.html#116-197" title="Go to source code">getAllBlocks</a>( <span>string <var>$rettype</var> = <span class="php-quote">&quot;object&quot;</span></span>, <span>string <var>$side</var> = <span class="php-keyword1">null</span></span>, <span>boolean <var>$visible</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$orderby</var> = <span class="php-quote">&quot;side, weight, bid&quot;</span></span>, <span>boolean <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-icms_view_block_Handler.html#118-199" title="Go to source code">getAllBlocks</a>( <span>string <var>$rettype</var> = <span class="php-quote">&quot;object&quot;</span></span>, <span>string <var>$side</var> = <span class="php-keyword1">null</span></span>, <span>boolean <var>$visible</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$orderby</var> = <span class="php-quote">&quot;side, weight, bid&quot;</span></span>, <span>boolean <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			<p>getAllBlocks</p>
@@ -768,7 +778,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getAllByGroupModule">#</a>
-		<code><a href="source-class-icms_view_block_Handler.html#199-282" title="Go to source code">getAllByGroupModule</a>( <span>unknown_type <var>$groupid</var></span>, <span>unknown_type <var>$module_id</var> = <span class="php-quote">'0-0'</span></span>, <span>unknown_type <var>$toponlyblock</var> = <span class="php-keyword1">false</span></span>, <span>unknown_type <var>$visible</var> = <span class="php-keyword1">null</span></span>, <span>unknown_type <var>$orderby</var> = <span class="php-quote">'b.weight, b.bid'</span></span>, <span>unknown_type <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-icms_view_block_Handler.html#201-286" title="Go to source code">getAllByGroupModule</a>( <span>unknown_type <var>$groupid</var></span>, <span>unknown_type <var>$module_id</var> = <span class="php-quote">'0-0'</span></span>, <span>unknown_type <var>$toponlyblock</var> = <span class="php-keyword1">false</span></span>, <span>unknown_type <var>$visible</var> = <span class="php-keyword1">null</span></span>, <span>unknown_type <var>$orderby</var> = <span class="php-quote">'b.weight, b.bid'</span></span>, <span>unknown_type <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			<p>getAllByGroupModule gets all blocks visible on a page, based on group permissions</p>
@@ -817,7 +827,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getNonGroupedBlocks">#</a>
-		<code><a href="source-class-icms_view_block_Handler.html#284-355" title="Go to source code">getNonGroupedBlocks</a>( <span>unknown_type <var>$module_id</var> = <span class="php-num">0</span></span>, <span>unknown_type <var>$toponlyblock</var> = <span class="php-keyword1">false</span></span>, <span>unknown_type <var>$visible</var> = <span class="php-keyword1">null</span></span>, <span>unknown_type <var>$orderby</var> = <span class="php-quote">'b.weight, b.bid'</span></span>, <span>unknown_type <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-icms_view_block_Handler.html#288-359" title="Go to source code">getNonGroupedBlocks</a>( <span>unknown_type <var>$module_id</var> = <span class="php-num">0</span></span>, <span>unknown_type <var>$toponlyblock</var> = <span class="php-keyword1">false</span></span>, <span>unknown_type <var>$visible</var> = <span class="php-keyword1">null</span></span>, <span>unknown_type <var>$orderby</var> = <span class="php-quote">'b.weight, b.bid'</span></span>, <span>unknown_type <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			<p>getNonGroupedBlocks</p>
@@ -864,7 +874,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_insert">#</a>
-		<code><a href="source-class-icms_view_block_Handler.html#357-434" title="Go to source code">insert</a>( <span>unknown_type <var>&amp; $obj</var></span>, <span>unknown_type <var>$force</var> = <span class="php-keyword1">false</span></span>, <span>unknown_type <var>$checkObject</var> = <span class="php-keyword1">true</span></span>, <span>unknown_type <var>$debug</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-icms_view_block_Handler.html#361-447" title="Go to source code">insert</a>( <span>unknown_type <var>&amp; $obj</var></span>, <span>unknown_type <var>$force</var> = <span class="php-keyword1">false</span></span>, <span>unknown_type <var>$checkObject</var> = <span class="php-keyword1">true</span></span>, <span>unknown_type <var>$debug</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			<p>Save a icms_view_block_Object Object</p>
@@ -913,7 +923,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_get">#</a>
-		<code><a href="source-class-icms_view_block_Handler.html#436-446" title="Go to source code">get</a>( <span>mixed <var>$id</var></span>, <span>boolean <var>$as_object</var> = <span class="php-keyword1">true</span></span>, <span> <var>$debug</var> = <span class="php-keyword1">false</span></span>, <span> <var>$criteria</var> = <span class="php-keyword1">false</span></span> )</code>
+		<code><a href="source-class-icms_view_block_Handler.html#449-460" title="Go to source code">get</a>( <span>mixed <var>$id</var></span>, <span>boolean <var>$as_object</var> = <span class="php-keyword1">true</span></span>, <span> <var>$debug</var> = <span class="php-keyword1">false</span></span>, <span> <var>$criteria</var> = <span class="php-keyword1">false</span></span> )</code>
 
 		<div class="description short">
 			<p>retrieve a <code><a href="class-icms_ipf_Object.html">icms_ipf_Object</a></code></p>
@@ -960,7 +970,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getCountSimilarBlocks">#</a>
-		<code><a href="source-class-icms_view_block_Handler.html#473-491" title="Go to source code">getCountSimilarBlocks</a>( <span> <var>$moduleId</var></span>, <span> <var>$funcNum</var></span>, <span> <var>$showFunc</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-icms_view_block_Handler.html#488-507" title="Go to source code">getCountSimilarBlocks</a>( <span> <var>$moduleId</var></span>, <span> <var>$funcNum</var></span>, <span> <var>$showFunc</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			
@@ -990,7 +1000,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getAllBlocksByGroup">#</a>
-		<code><a href="source-class-icms_view_block_Handler.html#493-571" title="Go to source code">getAllBlocksByGroup</a>( <span> <var>$groupid</var></span>, <span> <var>$asobject</var> = <span class="php-keyword1">TRUE</span></span>, <span> <var>$side</var> = <span class="php-keyword1">NULL</span></span>, <span> <var>$visible</var> = <span class="php-keyword1">NULL</span></span>, <span> <var>$orderby</var> = <span class="php-quote">&quot;b.weight,b.bid&quot;</span></span>, <span> <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
+		<code><a href="source-class-icms_view_block_Handler.html#509-591" title="Go to source code">getAllBlocksByGroup</a>( <span> <var>$groupid</var></span>, <span> <var>$asobject</var> = <span class="php-keyword1">TRUE</span></span>, <span> <var>$side</var> = <span class="php-keyword1">NULL</span></span>, <span> <var>$visible</var> = <span class="php-keyword1">NULL</span></span>, <span> <var>$orderby</var> = <span class="php-quote">&quot;b.weight,b.bid&quot;</span></span>, <span> <var>$isactive</var> = <span class="php-num">1</span></span> )</code>
 
 		<div class="description short">
 			<p>get all the blocks that match the supplied parameters</p>
@@ -1142,6 +1152,6 @@ the system module</p>
 </div>
 </div>
 <script src="resources/combined.js?58699d70ee1015ed63e509c64f4dd9d3b29ddbbe"></script>
-<script src="elementlist.js?a18c3be43b9689dbea8e5f99d9bcca04f4dfdd4e"></script>
+<script src="elementlist.js?8ff63a4a66ead89744ef571ab98dc03c0488bb0a"></script>
 </body>
 </html>
