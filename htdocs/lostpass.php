@@ -97,7 +97,7 @@ if (empty($getuser)) {
 		$xoopsMailer->setToUsers($getuser[0]);
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename'] . ' (' . ICMS_URL . ')'));
+		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename'], ICMS_URL));
 		if (!$xoopsMailer->send()) {
 			echo $xoopsMailer->getErrors();
 		}
@@ -128,7 +128,7 @@ if (empty($getuser)) {
 		$xoopsMailer->setToUsers($getuser[0]);
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename'] . ' (' . ICMS_URL . ')'));
+		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename'], ICMS_URL));
 		/** Include header.php to start page rendering */
 		include 'header.php';
 		if (!$xoopsMailer->send()) {

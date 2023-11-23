@@ -84,18 +84,18 @@ define('_US_INVITEBYMEMBER','Alleen een bestaand lid kan nieuwe leden uitnodigen
 define('_US_INVITEMAILERR','Door een interne server fout was het niet mogelijk om een email aan u te verzenden met daarin de registratie link. Excusses voor het ongemak, probeert u het alstublieft nogmaals. Bestaat het probleem nog, neem dan contact op met de beheerder van de website om hem of haar op de hoogte te brengen van de situatie. <br />');
 define('_US_INVITEDBERR','Door een interne fout was het niet mogelijk om u wregistratieverzoek uit te voeren. Excusses voor het ongemak, probeert u het alstublieft nogmaals. Bestaat het probleem nog, neem dan contact op met de beheerder van de website om hem of haar op de hoogte te brengen van de situatie. <br />');
 define('_US_INVITESENT','Een e-mail, die de registratie link bevat, is verzonden naar het e-mailadres dat u heeft opgegeven. Volg alstublieft de instructie op die in de e-mail staan om u als lid te registreren. Dit kan een paar minuten duren, een ogenblik geduld alstublieft.');
-// %s is your site name
-define('_US_INVITEREGLINK','Uitnodiging om u te registreren op %s');
+// %s (%s) is your site name (site URL)
+define('_US_INVITEREGLINK','Uitnodiging om u te registreren op %s (%s)');
 
 
-// %s is your site name
-define('_US_NEWPWDREQ','Verzoek tot een nieuw wachtwoord voor %s');
-define('_US_YOURACCOUNT', 'Uw account op %s');
+// %s (%s) is your site name (site URL)
+define('_US_NEWPWDREQ','Verzoek tot een nieuw wachtwoord voor %s (%s)');
+define('_US_YOURACCOUNT', 'Uw account op %s (%s)');
 
 define('_US_MAILPWDNG','mail_wachtwoord: Kan gebruiker niet bijwerken. Neem contact op met de webmaster.');
 define('_US_RESETPWDNG','reset_wachtwoord: Kan gebruiker invoer niet bijwerken. Neem contact op met de webmaster');
 
-define('_US_RESETPWDREQ','Verzoek wachtwoord reset op %s');
+define('_US_RESETPWDREQ','Verzoek wachtwoord reset op %s (%s)');
 define('_US_MAILRESETPWDNG','reset_wachtwoord: Kan gebruiker invoer niet bijwerken. Neem contact op met de webmaster');
 define('_US_NEWPASSWORD','Nieuw wachtwoord');
 define('_US_YOURUSERNAME','Uw gebruikersnaam');

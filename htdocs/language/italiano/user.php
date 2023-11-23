@@ -84,18 +84,18 @@ define('_US_INVITEBYMEMBER','Solo un utente registrato pu&ograve; invitare nuovi
 define('_US_INVITEMAILERR','Non siamo in grado di inviare la mail contenente il link di registrazione a causa di un errore interno dovuto al nostro server. Siamo spiacenti per l\'inconveniente, ti preghiamo di provare ancora e, se il problema persiste, di contattare l\'amministratore del sito con una email notificando la situazione. <br />');
 define('_US_INVITEDBERR','Non siamo in grado di procedere nella tua richiesta di registrazione a causa di un errore interno. Siamo spiacenti, ti preghiamo di provare ancora e se il problema persiste, di contattare l\'amministratore del sito con una email notificando la situazione. <br />');
 define('_US_INVITESENT','Una email contenente il link di registrazione &egrave; stata inviata all\'account email indicato. Si prega di seguire le istruzioni contenute per registrare la tua iscrizione. Ci&ograve; impiegher&agrave; qualche minuto di pazienza nell\'attesa.');
-// %s is your site name
-define('_US_INVITEREGLINK','Invito alla iscrizione da parte di %s');
+// %s (%s) is your site name (site URL)
+define('_US_INVITEREGLINK','Invito alla iscrizione da parte di %s (%s)');
 
 
-// %s is your site name
-define("_US_NEWPWDREQ","Nuova password richiesta su %s");
-define('_US_YOURACCOUNT', 'Il tuo account su %s');
+// %s (%s) is your site name (site URL)
+define("_US_NEWPWDREQ","Nuova password richiesta su %s (%s)");
+define('_US_YOURACCOUNT', 'Il tuo account su %s (%s)');
 
 define("_US_MAILPWDNG","mail_password: aggiornamento non riuscito. Contatta l'amministratore.");
 define('_US_RESETPWDNG','reset_password: aggiornamento della password non riuscito. Contatta l\'amministratore');
 
-define('_US_RESETPWDREQ','Richiesta di ripristino della password su %s');
+define('_US_RESETPWDREQ','Richiesta di ripristino della password su %s (%s)');
 define('_US_MAILRESETPWDNG','reset_password: aggiornamento dati utente non riuscito. Contatta l\'amministratore');
 define('_US_NEWPASSWORD','Nuova password');
 define('_US_YOURUSERNAME','Il tuo nome utente');
