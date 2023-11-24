@@ -82,17 +82,19 @@ define('_US_INVITEBYMEMBER','Only an existing member can invite new members; ple
 define('_US_INVITEMAILERR','We were unable to send the mail with registration link to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
 define('_US_INVITEDBERR','We were unable to process your registration request due to an internal error. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
 define('_US_INVITESENT','An email containing registration link has been sent to the email account you provided. Please follow the instructions in the mail to register your account. This could take few minutes so please be patient.');
-// %s is your site name
-define('_US_INVITEREGLINK','Registration invitation from %s');
 
-// %s is your site name
-define('_US_NEWPWDREQ','New Password Request at %s');
-define('_US_YOURACCOUNT', 'Your account at %s');
+// %s (%s) is your site name (site URL)
+define('_US_INVITEREGLINK','Registration invitation from %s (%s)');
+
+// %s (%s) is your site name (site URL)
+define('_US_NEWPWDREQ','New Password Request at %s (%s)');
+define('_US_YOURACCOUNT', 'Your account at %s (%s)');
 
 define('_US_MAILPWDNG','mail_password: could not update user entry. Contact the Administrator');
 define('_US_RESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
 
-define('_US_RESETPWDREQ','Reset Password Request at %s');
+// %s (%s) is your site name (site URL)
+define('_US_RESETPWDREQ','Reset Password Request at %s (%s)');
 define('_US_MAILRESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
 define('_US_NEWPASSWORD','New Password');
 define('_US_YOURUSERNAME','Your Username');
@@ -173,7 +175,7 @@ define('_US_UNCHOOSEAVT', 'Until you reach this amount you can choose avatar fro
 
 define('_US_ALREADY_LOGED_IN', 'You already are logged in, we are sorry but, you can\'t register while you\'re logged in the site');
 define('_US_SERVER_PROBLEM_OCCURRED','There was an issue while checking for spammers list!');
-define('_US_INVALIDIP','ERROR: This IP adress is not allowed to register');
+define('_US_INVALIDIP','ERROR: This IP address is not allowed to register');
 
 ######################## Added in 1.2 ###################################
 define('_US_LOGIN_NAME', "Login Name");

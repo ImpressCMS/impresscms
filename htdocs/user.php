@@ -164,7 +164,7 @@ switch ($op) {
 						$icmsMailer->setToUsers($thisuser);
 						$icmsMailer->setFromEmail($icmsConfig['adminmail']);
 						$icmsMailer->setFromName($icmsConfig['sitename']);
-						$icmsMailer->setSubject(sprintf(_US_YOURACCOUNT, $icmsConfig['sitename']));
+						$icmsMailer->setSubject(sprintf(_US_YOURACCOUNT, $icmsConfig['sitename'], ICMS_URL));
 						include 'header.php';
 						if (!$icmsMailer->send()) {
 							printf(_US_ACTVMAILNG, $thisuser->getVar('uname'));

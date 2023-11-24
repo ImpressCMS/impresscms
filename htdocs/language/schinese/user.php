@@ -81,17 +81,17 @@ define('_US_INVITEBYMEMBER','只有现有会员才能邀请新会员; 请要求�
 define('_US_INVITEMAILERR','服务器出错，含有注册链接的邮件未能发送。由此带来的不便，我们深表歉意。请再试一次，如还有问题，请发送邮件向管理员反映 <br />');
 define('_US_INVITEDBERR','因为内部错误，你的注册请求未能执行。请再试一次，如还有问题，请发送邮件向管理员反映。 <br />');
 define('_US_INVITESENT','一封含有注册链接的邮件已发送去你所提交的电子邮箱，请依照邮件中的提示完成注册。');
-// %s is your site name
-define('_US_INVITEREGLINK','来自 %s 的注册邀请');
+// %s (%s) is your site name (site URL)
+define('_US_INVITEREGLINK','来自 %s (%s) 的注册邀请');
 
-// %s is your site name
-define('_US_NEWPWDREQ',' %s 的新密码请求');
-define('_US_YOURACCOUNT', '你在  %s 的帐号');
+// %s (%s) is your site name (site URL)
+define('_US_NEWPWDREQ',' %s (%s) 的新密码请求');
+define('_US_YOURACCOUNT', '你在  %s (%s) 的帐号');
 
 define('_US_MAILPWDNG','邮箱密码：不能更新，请联系管理员');
 define('_US_RESETPWDNG','重设密码：不能更新，请联系管理员');
 
-define('_US_RESETPWDREQ',' %s 的重设密码请求');
+define('_US_RESETPWDREQ',' %s (%s) 的重设密码请求');
 define('_US_MAILRESETPWDNG','重设密码：不能更新，请联系管理员');
 define('_US_NEWPASSWORD','新密码');
 define('_US_YOURUSERNAME','你的用户名');
