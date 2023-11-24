@@ -1,13 +1,16 @@
 # ImpressCMS ChangeLog
 
 ## ImpressCMS 1.4.6 RC
-* Date : 21 Novl 2023
+* Date : 24 Nov 2023
 * DB Version: 46
 * Build Version : 106
 
 ### Bugfix
 * Breaking bug in the mail function in [PR 1539](https://github.com/ImpressCMS/impresscms/pull/1539)
 
+### Updates
+* update jQuery 3.7.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1543
+* update GeSHI to 1.0.9.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1542
 
 ## ImpressCMS 1.4.5
 * Date : 05 Jul 2023
