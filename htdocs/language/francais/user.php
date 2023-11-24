@@ -87,7 +87,7 @@ define('_US_INVITEMAILERR','D&eacute;sol&eacute; ! nous n\'avons pas pu traiter 
 define('_US_INVITEDBERR','D&eacute;sol&eacute; ! nous n\'avons pas pu traiter votre demande d\'enregistrement en raison d\'une erreur interne. Nous sommes d&eacute;sol&eacute;s pour le d&eacute;rangement, merci d\'essayer de nouveau et si le probl&egrave;me persiste, contatez le webmaster par mail pour l\'informer de la situation. <br />');
 define('_US_INVITESENT','D\'ici quelques minutes vous allez recevoir un mail de confirmation d\'inscription à l\'adresse que vous avez indiquer. merci de suivre les instructions contenues dans ce mail pour enregistrer votre compte.');
 //ce code   %s (%s)  c'est le nom du site (SITE_URL)
-define('_US_INVITEREGLINK','Inscription sur invitation de %s (%s)');
+define('_US_INVITEREGLINK','Invitation d\'inscription sur %s (%s)');
 
 
 //ce code   %s (%s)   c'est le nom du site. (site URL)
@@ -97,7 +97,7 @@ define('_US_YOURACCOUNT', 'Votre compte sur %s (%s)');
 define('_US_MAILPWDNG','mot de passe: Impossible de mettre &agrave; jour. Contactez l\'Administrateur');
 define('_US_RESETPWDNG','R&eacute;initialisation du mot de passe: Impossible de mettre à jour. Contactez l\'Administrateur');
 
-define('_US_RESETPWDREQ','R&eacute;initialisation du mot de passe demander: %s (%s)');
+define('_US_RESETPWDREQ','R&eacute;initialisation du mot de passe demand&eacute;: %s (%s)');
 define('_US_MAILRESETPWDNG','R&eacute;initialisation du mot de passe: Impossible de mettre à jour. Contactez l\'Administrateur');
 define('_US_NEWPASSWORD','Nouveau mot de passe');
 define('_US_YOURUSERNAME','Votre nom d\'utilisateur');

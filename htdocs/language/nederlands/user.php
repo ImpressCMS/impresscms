@@ -105,7 +105,7 @@ define('_US_BADPWD','Fout wachtwoord, het wachtwoord mag niet de gebruikersnaam 
 // %s is a username
 define('_US_PWDMAILED','Wachtwoord van %s is verstuurd.');
 define('_US_CONFMAIL','Bevestigings e-mail voor %s is verzonden.');
-define('_US_ACTVMAILNG', 'Verzenden van mededelings e-mail naar %s is mislukt');
+define('_US_ACTVMAILNG', 'FOUT: Verzenden van mededelings e-mail naar %s is mislukt');
 define('_US_ACTVMAILOK', 'Mededelings e-mail naar %s is verzonden.');
 
 //%%%%%%		File Name userinfo.php 		%%%%%
@@ -166,9 +166,9 @@ define('_US_ADMINNO', 'Gebruikers in de webmastergroep kunnen niet verwijderd wo
 define('_US_GROUPS', 'Gebruikersgroepen');
 
 define('_US_YOURREGISTRATION', 'Uw registratie op %s');
-define('_US_WELCOMEMSGFAILED', 'Er is een fout opgetreden tijdens het versturen van de welkoms email.');
-define('_US_NEWUSERNOTIFYADMINFAIL', 'Berichtgeving naar de website beheerder over een nieuwe gebruikersregistratie is mislukt.');
-define('_US_REGFORM_NOJAVASCRIPT', 'Om in te loggen op de website is het noodzakelijk dat het gebruik van Java is ingeschakeld in uw browser.');
+define('_US_WELCOMEMSGFAILED', 'Er is een fout opgetreden tijdens het versturen van de welkomstmail.');
+define('_US_NEWUSERNOTIFYADMINFAIL', 'FOUT : Berichtgeving naar de website beheerder over een nieuwe gebruikersregistratie is mislukt.');
+define('_US_REGFORM_NOJAVASCRIPT', 'Om in te loggen op de website is het noodzakelijk dat het gebruik van Javascript is ingeschakeld in uw browser.');
 define('_US_REGFORM_WARNING', 'Om u te registreren op de website dient u een veilig wachtwoord te gebruiken. Probeer een wachtwoord te maken met letters en cijfers (Hoofd en kleine letters), nummers en symbolen. Probeer een zo complex mogelijk, maar toch te onthouden wachtwoord te maken.');
 define('_US_CHANGE_PASSWORD', 'Wachtwoord wijzigen?');
 define('_US_POSTSNOTENOUGH','Sorry, uw moet tenminste <b>%s</b> postingen/berichten hebben gedaan, om het uploaden van een eigen avatar/pasfoto mogelijk te maken.');
