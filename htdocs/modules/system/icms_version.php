@@ -66,7 +66,7 @@ $modversion = array (
 /**  Development information */
 	'status_version' => "RC",
 		'status' => "rc",
-		'date' => "21 Nov 2023",
+		'date' => "24 Nov 2023",
 		'author_word' => "",
 		'warning' => _CO_ICMS_WARNING_RC,
 
