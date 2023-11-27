@@ -10,6 +10,7 @@
  * @version		$Id: version.php 12500 2015-06-15 20:03:56Z fiammy $
  */
 
+
 define('ICMS_VERSION_NAME', 'ImpressCMS 1.4.6');
 
 // For backward compatibility with XOOPS

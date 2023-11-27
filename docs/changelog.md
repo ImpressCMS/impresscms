@@ -7,6 +7,7 @@
 
 ### Bugfix
 * Fix fatal error in mailusers by @skenow in https://github.com/ImpressCMS/impresscms/pull/1539
+
 ### Updates
 * update jQuery 3.7.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1543
 * update GeSHI to 1.0.9.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1542
@@ -26,7 +27,7 @@ This release makes ImpressCMS work with Google Analytics 4
 This release fixes a security vulnerability that was found in ImpressCMS 1.4.3.
 
 ### Security Fix
-Applying the filters to inner elements of arrays by @skenow https://github.com/ImpressCMS/impresscms/pull/1162
+Applying the filters to inner elements of arrays by @skenow [PR 1162](https://github.com/ImpressCMS/impresscms/pull/1162)
 
 
 ## ImpressCMS 1.4.3
