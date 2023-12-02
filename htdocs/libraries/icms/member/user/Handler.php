@@ -106,7 +106,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &getHash($hash_uid) {
 		$user = FALSE;
-		$sql = "SELECT * FROM " . $this->db->prefix('users') . " WHERE hash_uid = '" . $hash_uid . "'";
+		$sql = "SELECT * FROM " . $this->db->prefix('users') . " WHERE hash_uid = " . $this->db->quoteString($hash_uid) . " LIMIT 1";
 		if (!$result = $this->db->query($sql)) {return $user;}
 		$numrows = $this->db->getRowsNum($result);
 		if ($numrows == 1) {
@@ -208,7 +208,8 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		if ($user->isNew()) {
 			$uid = $this->db->getInsertId();
 			$user->assignVar('uid', $uid);
-			$hash_uid = bin2hex(random_bytes(32));
+			$secret_string = bin2hex(random_bytes(16));
+			$hash_uid = hash_hmac('sha256', $uid, $secret_string);
 			$user->assignVar('hash_uid', $hash_uid);
 			$sql = sprintf(
 				"UPDATE %s SET hash_uid = '%s' WHERE uid = '%u'",

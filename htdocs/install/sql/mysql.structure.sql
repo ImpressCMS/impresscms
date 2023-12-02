@@ -529,7 +529,8 @@ CREATE TABLE users (
   `login_name` varchar(255) NOT NULL default '',
   PRIMARY KEY (`uid`),
   KEY `uname` (`uname`(10)),
-  UNIQUE KEY `login_name` (`login_name`(10))
+  UNIQUE KEY `login_name` (`login_name`(10)),
+  UNIQUE KEY `hash_uid` (`hash_uid`)
 );
 
 #

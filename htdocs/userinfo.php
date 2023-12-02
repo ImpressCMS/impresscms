@@ -39,7 +39,7 @@
 
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
-$hash_uid = $_GET['uid'];
+$hash_uid = (string) $_GET['uid'];
 
 if (icms_get_module_status("profile")) {
 	$module = icms::handler("icms_module")->getByDirName("profile", true);

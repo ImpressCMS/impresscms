@@ -230,7 +230,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	//  `pass_expired`,
 	//  `enc_type`,
 
-	$hash_uid = bin2hex(random_bytes(32));
+	$secret_string = bin2hex(random_bytes(16));
+	$hash_uid = hash_hmac('sha256', 1, $secret_string);
 	$dbm->insert('users', " VALUES (1,'".$hash_uid."', '', '".addslashes($adminname)."', '".addslashes($adminmail)."', '".XOOPS_URL."/', 'blank.gif', '".$regdate."', '', '', '', 0, '', '', '', '', '".$temp."', 0, 0, 7, 5, 'iTheme', '0.0', ".time().", 'thread', 0, 1, 0, '', '', '', '0', '".addslashes($language)."', 0, 0, 1, '".addslashes($adminlogin_name)."')");
 
 
