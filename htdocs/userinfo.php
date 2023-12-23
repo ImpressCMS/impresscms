@@ -39,7 +39,8 @@
 
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
-$hash_uid = (string) $_GET['uid'];
+$dirty_hash_uid = (string) $_GET['uid'];
+$hash_uid = icms_core_DataFilter::checkVar($dirty_hash_uid, 'str');
 
 if (icms_get_module_status("profile")) {
 	$module = icms::handler("icms_module")->getByDirName("profile", true);
