@@ -492,18 +492,18 @@ function &icms_getModuleInfo($moduleName = false)
 		$ret =& $icmsModules[$moduleName];
 		return $ret;
 	}
-	global $icmsModule;
+	
 	if(!$moduleName)
 	{
-		if(isset($icmsModule) && is_object($icmsModule))
+		if(isset(icms::$module) && is_object(icms::$module))
 		{
-			$icmsModules[$icmsModule->getVar('dirname')] = & $icmsModule;
-			return $icmsModules[$icmsModule->getVar('dirname')];
+			$icmsModules[icms::$module->getVar('dirname')] = & icms::$module;
+			return $icmsModules[icms::$module->getVar('dirname')];
 		}
 	}
 	if(!isset($icmsModules[$moduleName]))
 	{
-		if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsModules[$moduleName] = & $icmsModule;}
+		if(isset(icms::$module) && is_object(icms::$module) && icms::$module->getVar('dirname') == $moduleName) {$icmsModules[$moduleName] = & icms::$module;}
 		else
 		{
 			$hModule = icms::handler('icms_module');
@@ -529,13 +529,13 @@ function &icms_getModuleConfig($moduleName = false)
 		$ret = & $icmsConfigs[$moduleName];
 		return $ret;
 	}
-	global $icmsModule, $icmsModuleConfig;
+	global  $icmsModuleConfig;
 	if(!$moduleName)
 	{
-		if(isset($icmsModule) && is_object($icmsModule))
+		if(isset(icms::$module) && is_object(icms::$module))
 		{
-			$icmsConfigs[$icmsModule->getVar('dirname')] = & $icmsModuleConfig;
-			return $icmsConfigs[$icmsModule->getVar('dirname')];
+			$icmsConfigs[icms::$module->getVar('dirname')] = & $icmsModuleConfig;
+			return $icmsConfigs[icms::$module->getVar('dirname')];
 		}
 	}
 	// if we still did not found the icmsModule, this is because there is none
@@ -544,7 +544,7 @@ function &icms_getModuleConfig($moduleName = false)
 		$ret = false;
 		return $ret;
 	}
-	if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsConfigs[$moduleName] = & $icmsModuleConfig;}
+	if(isset(icms::$module) && is_object(icms::$module) && icms::$module->getVar('dirname') == $moduleName) {$icmsConfigs[$moduleName] = & $icmsModuleConfig;}
 	else
 	{
 		$module = & icms_getModuleInfo($moduleName);
@@ -588,8 +588,8 @@ function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefi
  */
 function icms_getCurrentModuleName()
 {
-	global $icmsModule;
-	if(is_object($icmsModule)) {return $icmsModule->getVar('dirname');}
+
+	if(is_object(icms::$module)) {return icms::$module->getVar('dirname');}
 	else {return false;}
 }
 
@@ -605,8 +605,8 @@ function icms_userIsAdmin($module = false)
 	static $icms_isAdmin;
 	if(!$module)
 	{
-		global $icmsModule;
-		$module = $icmsModule->getVar('dirname');
+		
+		$module = icms::$module->getVar('dirname');
 	}
 	if(isset ($icms_isAdmin[$module])) {return $icms_isAdmin[$module];}
 	if(!icms::$user)
@@ -615,9 +615,9 @@ function icms_userIsAdmin($module = false)
 		return $icms_isAdmin[$module];
 	}
 	$icms_isAdmin[$module] = false;
-	$icmsModule = icms_getModuleInfo($module);
-	if(!is_object($icmsModule)) {return false;}
-	$module_id = $icmsModule->getVar('mid');
+//	$icmsModule = icms_getModuleInfo($module);
+//	if(!is_object($icmsModule)) {return false;}
+	$module_id = icms::$module->getVar('mid');
 	$icms_isAdmin[$module] = icms::$user->isAdmin($module_id);
 	return $icms_isAdmin[$module];
 }
@@ -1639,9 +1639,9 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
  * @todo Move to a static class method - HTTP or URI
  */
 function icms_getModuleAdminLink($moduleName=false) {
-	global $icmsModule;
-	if (!$moduleName && (isset ($icmsModule) && is_object($icmsModule))) {
-		$moduleName = $icmsModule->getVar('dirname');
+	
+	if (!$moduleName && (isset (icms::$module) && is_object(icms::$module))) {
+		$moduleName = icms::$module->getVar('dirname');
 	}
 	$ret = '';
 	if ($moduleName) {
@@ -1732,14 +1732,14 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
 	if (!$moduleName) {
 		$moduleName = icms::$module->getVar('dirname');
 	}
-	$icmsModule = icms_getModuleInfo($moduleName);
+	//$icmsModule = icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = icms_getModuleConfig($moduleName);
-	if (!isset ($icmsModule)) {
+	if (!isset (icms::$module)) {
 		return '';
 	}
 
 	if (!$withLink) {
-		return $icmsModule->getVar('name');
+		return icms::$module->getVar('name');
 	} else {
 		$seoMode = icms_getModuleModeSEO($moduleName);
 		if ($seoMode == 'rewrite') {
@@ -1750,7 +1750,7 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
 		} else {
 			$ret = ICMS_URL . '/modules/' . $moduleName . '/';
 		}
-		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
+		return '<a href="' . $ret . '">' . icms::$module->getVar('name') . '</a>';
 	}
 }
 
@@ -1797,8 +1797,8 @@ function icms_random_str($numchar){
  * @todo Move to a static class method - module
  */
 function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
-	global $icmsModule;
-	$icmsModule->displayAdminMenu( $currentoption, $icmsModule -> name() . ' | ' . $breadcrumb );
+	
+	icms::$module->displayAdminMenu( $currentoption, icms::$module->name() . ' | ' . $breadcrumb );
 }
 
 /**
@@ -1816,7 +1816,7 @@ function icms_loadCommonLanguageFile() {
  * @todo Move to a static class method - Module
  */
 function icms_getModuleNameForSEO($moduleName = false) {
-	$icmsModule = & icms_getModuleInfo($moduleName);
+	
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
 	if (isset ($icmsModuleConfig['seo_module_name'])) {
 		return $icmsModuleConfig['seo_module_name'];
@@ -1833,7 +1833,7 @@ function icms_getModuleNameForSEO($moduleName = false) {
  * @todo Move to a static class method - Module
  */
 function icms_getModuleModeSEO($moduleName = false) {
-	$icmsModule = & icms_getModuleInfo($moduleName);
+	
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
 	return isset ($icmsModuleConfig['seo_mode']) ? $icmsModuleConfig['seo_mode'] : false;
 }
@@ -1846,7 +1846,7 @@ function icms_getModuleModeSEO($moduleName = false) {
  * @todo Move to a static class method - Module
  */
 function icms_getModuleIncludeIdSEO($moduleName = false) {
-	$icmsModule = & icms_getModuleInfo($moduleName);
+	
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
 	return !empty ($icmsModuleConfig['seo_inc_id']);
 }
@@ -1989,10 +1989,10 @@ function icms_makeSmarty($items) {
  */
 function icms_moduleAction($dirname = 'system')
 {
-	global $icmsModule;
+	
 	$ret = @(
 	// action module 'system'
-	!empty($icmsModule) && 'system' == $icmsModule->getVar('dirname', 'n')
+	!empty(icms::$module) && 'system' == icms::$module->getVar('dirname', 'n')
 	&&
 	// current dirname
 	($dirname == $_POST['dirname'] || $dirname == $_POST['module'])
@@ -2014,11 +2014,11 @@ function icms_moduleAction($dirname = 'system')
 if (!function_exists("mod_constant")) {
 	function mod_constant($name)
 	{
-		global $icmsModule;
+		
 		if (!empty($GLOBALS["VAR_PREFIXU"]) && @defined($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name))) {
 			return CONSTANT($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name));
-		} elseif (!empty($icmsModule) && @defined(strtoupper($icmsModule->getVar("dirname", "n")."_".$name))) {
-			return CONSTANT(strtoupper($icmsModule->getVar("dirname", "n")."_".$name));
+		} elseif (!empty(icms::$module) && @defined(strtoupper(icms::$module->getVar("dirname", "n")."_".$name))) {
+			return CONSTANT(strtoupper(icms::$module->getVar("dirname", "n")."_".$name));
 		} elseif (defined(strtoupper($name))) {
 			return CONSTANT(strtoupper($name));
 		} else {
@@ -2035,7 +2035,7 @@ if (!function_exists("mod_constant")) {
  * @todo Move to a static class method
  */
 function icms_collapsableBar($id = '', $title = '', $dsc = '') {
-	global $icmsModule;
+	
 	echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"togglecollapse('" . $id . "'); toggleIcon('" . $id . "_icon')\";>";
 	echo "<img id='" . $id . "_icon' src=" . ICMS_URL . "/images/close12.gif alt='' /></a>&nbsp;" . $title . "</h3>";
 	echo "<div id='" . $id . "'>";
@@ -2053,7 +2053,7 @@ function icms_collapsableBar($id = '', $title = '', $dsc = '') {
  * @todo Move to a static class method
  */
 function icms_ajaxCollapsableBar($id = '', $title = '', $dsc = '') {
-	global $icmsModule;
+	
 	$onClick = "ajaxtogglecollapse('$id')";
 	//$onClick = "togglecollapse('$id'); toggleIcon('" . $id . "_icon')";
 	echo '<h3 style="border: 1px solid; color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; " onclick="' . $onClick . '">';
@@ -2132,11 +2132,10 @@ function icms_getUnameFromUserEmail($email = '')
  * @todo Move to a static class method - text area?
  */
 function icms_need_do_br($moduleName=false) {
-	global $icmsConfig, $icmsModule;
+	global $icmsConfig;
 
-	if (!$moduleName) {
-		global $icmsModule;
-		$theModule = $icmsModule;
+	if (!$moduleName) {		
+		$theModule = icms::$module;
 		$moduleName = $theModule->getVar('dirname');
 	} else {
 		$theModule = icms_getModuleInfo($moduleName);
