@@ -57,7 +57,7 @@
 
 // @TODO: allow 'GET' also so we can process 'unsubscribe' requests??
 
-if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
+if (!defined('ICMS_ROOT_PATH') || !is_object(icms::$module)) {
 	exit();
 }
 
