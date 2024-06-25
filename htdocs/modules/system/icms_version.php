@@ -153,7 +153,7 @@ $modversion['blocks'][] = array(
 	'description' => '',
 	'show_func' => 'b_system_social_show',
 	'edit_func' => 'b_system_social_edit',
-	'options' => '1|1|1|1|0|0|0|0|0|0|0|0|0|1|0|0|0|0|1|0|1|0|0|1|0|0|0|0|0|0|0|0',
+	'options' => '1|1|1|1|1|1|1',
 	'template' => 'system_block_socialbookmark.html');
 
 $modversion['blocks'][] = array('file' => 'system_admin_blocks.php', 'name' => _MI_SYSTEM_BNAME101, 'description' => '', 'show_func' => 'b_system_admin_warnings_show', 'template' => 'system_admin_block_warnings.html');
