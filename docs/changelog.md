@@ -1,5 +1,21 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 2.0.0 beta 1
+* Date : 16 Jul 2024
+* DB Version: 47
+* Build Version : 108
+
+The first 2.0.0 beta release after the renumbering of the different branches. This version should be feature-complete, but thorough verifications need to be done for the upgrade process and the compatibility with different modules.
+
+## ImpressCMS 1.4.6
+* Date : 01 Mar 2022
+* DB Version: 46
+* Build Version : 104
+
+## ImpressCMS 1.4.5
+* Date : 01 Mar 2022
+* DB Version: 46
+* Build Version : 104
 ## ImpressCMS 1.4.4
 * Date : 01 Mar 2022
 * DB Version: 46
