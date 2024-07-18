@@ -42,7 +42,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 icms::$logger->stopTime('Module init');
 icms::$logger->startTime('ICMS output init');
 
-global $xoopsOption, $icmsConfig, $icmsModule;
+global $xoopsOption, $icmsConfig;
 $xoopsOption['theme_use_smarty'] = 1;
 
 if (@$xoopsOption['template_main']) {
@@ -145,7 +145,7 @@ if (@is_object($xoTheme->plugins['icms_view_PageBuilder'])) {
 	$xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter']) || !empty($aggreg->blocks['page_topleft']) || !empty($aggreg->blocks['page_topright']));
 }
 
-if ($icmsModule) $xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$icmsModule->getVar('mid', 'n')];
+if (icms::$module) $xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][icms::$module->getVar('mid', 'n')];
 
 // Assigning the selected language as a smarty var
 $xoopsTpl->assign('icmsLang', $icmsConfig['language']);
