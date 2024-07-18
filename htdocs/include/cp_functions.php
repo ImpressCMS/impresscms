@@ -66,7 +66,7 @@ define('XOOPS_CPFUNC_LOADED', 1);
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header() {
-	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule, $xoopsModule, $xoopsTpl, $xoopsOption, $icmsTheme, $xoTheme, $icmsConfigMultilang, $icmsAdminTpl;
+	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $xoopsModule, $xoopsTpl, $xoopsOption, $icmsTheme, $xoTheme, $icmsConfigMultilang, $icmsAdminTpl;
 
 	icms::$logger->stopTime('Module init');
 	icms::$logger->startTime('ImpressCMS CP Output Init');
@@ -306,8 +306,8 @@ function icms_cp_header() {
 	/**
 	 * Loading options of the current module.
 	 */
-	if ($icmsModule) {
-		if ($icmsModule->getVar('dirname') == 'system') {
+	if (icms::$module) {
+		if (icms::$module->getVar('dirname') == 'system') {
 			if (isset($sysprefs) && count($sysprefs) > 0) {
 				// remove the grouping for the system module preferences (first layer)
 				$sysprefs_tmp = array();
@@ -327,7 +327,7 @@ function icms_cp_header() {
 			}
 		} else {
 			foreach ($mods as $mod) {
-				if ($mod['dir'] == $icmsModule->getVar('dirname')) {
+				if ($mod['dir'] == icms::$module->getVar('dirname')) {
 					$m = $mod; // Getting info of the current module
 					break;
 				}
@@ -343,10 +343,10 @@ function icms_cp_header() {
 				}
 			}
 		}
-		$icmsAdminTpl->assign('modpath', ICMS_URL . '/modules/' . $icmsModule->getVar('dirname'));
-		$icmsAdminTpl->assign('modname', $icmsModule->getVar('name'));
-		$icmsAdminTpl->assign('modid', $icmsModule->getVar('mid'));
-		$icmsAdminTpl->assign('moddir', $icmsModule->getVar('dirname'));
+		$icmsAdminTpl->assign('modpath', ICMS_URL . '/modules/' . icms::$module->getVar('dirname'));
+		$icmsAdminTpl->assign('modname', icms::$module->getVar('name'));
+		$icmsAdminTpl->assign('modid', icms::$module->getVar('mid'));
+		$icmsAdminTpl->assign('moddir', icms::$module->getVar('dirname'));
 		$icmsAdminTpl->assign('lang_prefs', _PREFERENCES);
 	}
 
