@@ -274,7 +274,7 @@ class SystemBlocksadminHandler extends icms_view_block_Handler {
 	public function getModulesArray($full = FALSE) {
 		if (!is_array($this->modules_name)) {
 			$icms_module_handler = icms::handler('icms_module');
-			$installed_modules = &$icms_module_handler->getObjects();
+			$installed_modules = $icms_module_handler->getObjects();
 			$this->modules_name[0]['name'] = _NONE;
 			$this->modules_name[0]['dirname'] = '';
 			foreach ($installed_modules as $module) {
