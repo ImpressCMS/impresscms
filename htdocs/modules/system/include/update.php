@@ -105,17 +105,13 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 	/* Begin upgrade to version 1.5 */
 	if (!$abortUpdate) {
-		$newDbVersion = 47;
+		$newDbVersion = 48;
 	}
 	try {
 		if ($dbVersion < $newDbVersion) {
 
 
 			// Remove all the legacy files that are were removed in 1.5.0
-			//$table = new icms_db_legacy_updater_Table('config');
-			//$icmsDatabaseUpdater->runQuery("ALTER TABLE `" . $table->name() . "` DROP INDEX conf_mod_cat_id, ADD INDEX mod_cat_order(conf_modid, conf_catid, conf_order)", 'Successfully altered the indexes on table config', '');
-			//unset($table);
-
 			// TODO: make a generic file removal function.
 			// Remove the 'deprecated' files in the root and all OpenID related files
 
@@ -172,6 +168,24 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 					echo 'Removed' . $foldertoremove . '</br>';
 				}
 			}
+
+			// remove old banners tables
+			$tablestodrop = array('banner', 'bannerclient', 'bannerfinish');
+			foreach ($tablestodrop as $table) {
+				$tableObj = new icms_db_legacy_updater_Table($table);
+				if ($tableObj->exists()) {
+					$tableObj->dropTable();
+				}
+			}
+			
+			// remove the banner config item
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item('conf_name', 'banners'));
+			$config = $config_handler->getConfigs($criteria);
+			if (count($config) > 0) {
+				$config_handler->deleteConfig($config[0]);
+			}
+			
 			/* Finish up this portion of the db update */
 
 			if (!$abortUpdate) {
