@@ -48,10 +48,10 @@ icms_loadLanguageFile('core', 'databaseupdater');
  * @param int $dbVersion The database version
  * @return mixed
  */
-function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = NULL) {
+function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = null) {
 	global $icmsConfig, $xoTheme;
 
-	$from_112 = $abortUpdate = FALSE;
+	$from_112 = $abortUpdate = false;
 
 	$oldversion = $module->getVar('version');
 	if ($oldversion < 120) {
