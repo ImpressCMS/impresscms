@@ -98,18 +98,15 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	 * gets updated. It also clears the templates_c and cache folders.
 	 */
 
-	$CleanWritingFolders = FALSE;
+	$CleanWritingFolders = false;
 
 	/* check for previous release's upgrades - dbversion < this major release's initial version */
 	if ($dbVersion < 46) include 'update-14.php';
 
-	/* Begin upgrade to version 1.5 */
-	if (!$abortUpdate) {
-		$newDbVersion = 48;
-	}
+	/* Begin upgrade to version 2.0.0 beta 1 */
+	if (!$abortUpdate) $newDbVersion = 47;
 	try {
 		if ($dbVersion < $newDbVersion) {
-
 
 			// Remove all the legacy files that are were removed in 1.5.0
 			// TODO: make a generic file removal function.
@@ -154,11 +151,9 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			foreach ($removeFolders_150 as $foldertoremove) {
 				echo icms_core_Filesystem::deleteRecursive($foldertoremove, true). '</br>';
 			}
-
 			
 			// Third, check if openID is configured as login method. If not, remove.
-			if(!defined('ICMS_INCLUDE_OPENID') )
-			{
+			if(!defined('ICMS_INCLUDE_OPENID')) {
 				foreach ($removeOpenIDfiles as $filetoremove) {
 					icms_core_Filesystem::deleteFile($filetoremove);
 					echo 'Removed ' . $filetoremove . '</br>';
@@ -168,30 +163,50 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 					echo 'Removed' . $foldertoremove . '</br>';
 				}
 			}
+		}
+		
+		/* Finish up this portion of the db update */
+		if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+		}
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
 
-			// remove old banners tables
-			$tablestodrop = array('banner', 'bannerclient', 'bannerfinish');
-			foreach ($tablestodrop as $table) {
-				$tableObj = new icms_db_legacy_updater_Table($table);
-				if ($tableObj->exists()) {
-					$tableObj->dropTable();
-				}
+	/* Begin upgrade to version 2.0.0 beta 2 */
+	if (!$abortUpdate) $newDbVersion = 48;
+	try {
+		// remove old banners tables
+		$tablestodrop = array('banner', 'bannerclient', 'bannerfinish');
+		foreach ($tablestodrop as $table) {
+			$tableObj = new icms_db_legacy_updater_Table($table);
+			if ($tableObj->exists()) {
+				$tableObj->dropTable();
 			}
-			
-			// remove the banner config item
-			$criteria = new icms_db_criteria_Compo();
-			$criteria->add(new icms_db_criteria_Item('conf_name', 'banners'));
-			$config = $config_handler->getConfigs($criteria);
-			if (count($config) > 0) {
-				$config_handler->deleteConfig($config[0]);
-			}
-			
-			/* Finish up this portion of the db update */
-
-			if (!$abortUpdate) {
-				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
-			}
+		}
+		
+		// remove the banner config item
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item('conf_name', 'banners'));
+		$config = $config_handler->getConfigs($criteria);
+		if (count($config) > 0) {
+			$config_handler->deleteConfig($config[0]);
+		}
+		
+		// remove the openid config item
+		$criteria = new icms_db_criteria_Compo();
+		$criteria->add(new icms_db_criteria_Item('conf_name', 'auth_openid'));
+		$config = $config_handler->getConfigs($criteria);
+		if (count($config) > 0) {
+			$config_handler->deleteConfig($config[0]);
+		}
+		
+		/* Finish up this portion of the db update */
+		if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 		}
 	}
 	catch (Exception $e) {
