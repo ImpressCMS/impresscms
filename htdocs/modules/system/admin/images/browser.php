@@ -894,10 +894,9 @@ function icmsPopupHeader() {
 	<link rel="icon" type="image/png" href="' . ICMS_URL . '/favicon.ico" />
 	';
 	if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
-		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/xoops_rtl.css" />';
+
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_MODULES_URL . '/system/style_rtl.css" />';
 	} else {
-		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms.css" />';
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_MODULES_URL . '/system/style.css" />';
 	}
 
