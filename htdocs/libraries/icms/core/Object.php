@@ -553,7 +553,7 @@ class icms_core_Object {
 						break;
 
 					case XOBJ_DTYPE_FLOAT:
-						$cleanv = icms_float($cleanv);
+						$cleanv = icms_currency($cleanv);
 						break;
 
 					case XOBJ_DTYPE_EMAIL:
