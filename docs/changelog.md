@@ -1,14 +1,33 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 1.4.6
+* Date : 27 Nov 2023
+* DB Version: 46
+* Build Version : 107
+
+### Bugfix
+* Fix fatal error in mailusers by @skenow in https://github.com/ImpressCMS/impresscms/pull/1539
+
+### Updates
+* update jQuery 3.7.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1543
+* update GeSHI to 1.0.9.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1542
+
+## ImpressCMS 1.4.5
+* Date : 05 Jul 2023
+* DB Version: 46
+* Build Version : 105
+
+This release makes ImpressCMS work with Google Analytics 4
+
 ## ImpressCMS 1.4.4
 * Date : 01 Mar 2022
 * DB Version: 46
 * Build Version : 104
 
-This release fixes a security vulnerability that was found in ImpressCMS 1.4.3. 
+This release fixes a security vulnerability that was found in ImpressCMS 1.4.3.
 
 ### Security Fix
-Applying the filters to inner elements of arrays by @skenow https://github.com/ImpressCMS/impresscms/pull/1162
+Applying the filters to inner elements of arrays by @skenow [PR 1162](https://github.com/ImpressCMS/impresscms/pull/1162)
 
 
 ## ImpressCMS 1.4.3
@@ -16,7 +35,7 @@ Applying the filters to inner elements of arrays by @skenow https://github.com/I
 * DB Version: 46
 * Build Version : 103
 
-This release contains mainly fixes for several security vulnerabilities that where found during HackerOne security Checks. 
+This release contains mainly fixes for several security vulnerabilities that where found during HackerOne security Checks.
 
 ### What's Changed
 * Changing filter method for request_uri to filter_sanitize_string by @skenow in https://github.com/ImpressCMS/impresscms/pull/1136
