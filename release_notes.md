@@ -1,7 +1,7 @@
-# ImpressCMS 1.4.5
+# ImpressCMS 1.4.7
 
 ImpressCMS 1.4 is a intermediate release between the legacy 1.3 series and the upcoming 2.0 release. The focus is on providing compatibility with newer version of PHP (PHP7.x, PHP 8.x in the future) and code cleanup. Existing modules that are compatible with the newer PHP versions should still work.
-This version, ImpressCMS 1.4.5, drops support for PHP versions below 7.0 and contains several corrections and security improvements compared to the previous release.
+This version, ImpressCMS 1.4.7, contains a specific correction for a regression concerning the deprecation of the icms_float class.
 
 ## Installation
 
