@@ -13,7 +13,7 @@ $content .= '
 <h3>Il faut au minimum</h3>
 <ul>
 	<li>WWW Server (<a href="http://www.apache.org/" rel="external">Apache</a>, IIS, Roxen, etc)</li>
-	<li><a href="http://www.php.net/" rel="external">PHP</a> 5.1 ou plus (5.2 ou plus recommand&eacute;)</li>
+	<li><a href="http://www.php.net/" rel="external">PHP</a> 7.2 ou plus (7.4 fortement recommand&eacute; - PHP 8 pas encore supporté)</li>
 	<li><a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 ou plus</li>
 </ul>
 <h3>Avant d\'installer</h3>

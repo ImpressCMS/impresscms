@@ -20,7 +20,6 @@ define( "SERVER_API", "Server API" );
 define( "PHP_EXTENSION", "%s extension" );
 define( "CHAR_ENCODING", "Character encoding" );
 define( "XML_PARSING", "XML parsing" );
-define( "OPEN_ID", "OpenID" );
 define( "REQUIREMENTS", "Requirements" );
 define( "_PHP_VERSION", "PHP version" );
 define( "RECOMMENDED_SETTINGS", "Recommended settings" );
@@ -63,12 +62,12 @@ define( "INITIAL_SETTINGS_TITLE", "Please enter your initial settings" );
 define( "DATA_INSERTION", "Data insertion" );
 define( "DATA_INSERTION_TITLE", "Saving your settings to the database" );
 define( "WELCOME", "Welcome" );
-define( "NO_PHP5", "No PHP 5" );
+define( "NO_PHP5", "Incompatible PHP version" );
 define( "WELCOME_TITLE", "Installation of ImpressCMS completed" );		// L0
 define( "MODULES_INSTALL", "Install modules" );
 define( "MODULES_INSTALL_TITLE", "Installation of modules " );
-define( "NO_PHP5_TITLE", "No PHP 5" );
-define( "NO_PHP5_CONTENT","PHP 5.6.0 minimum is required (PHP 7.2 is recommended) for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.5.0 (5.6.0 + is recommended) before attempting to install again.");
+define( "NO_PHP5_TITLE", "Incompatible PHP version" );
+define( "NO_PHP5_CONTENT","PHP 7.2+ (ImpressCMS 1.4.x does not yet support PHP 8) is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to version 7.4.0 of PHP before attempting to install again.");
 define( "SAFE_MODE", "Safe Mode On" );
 define( "SAFE_MODE_TITLE", "Safe Mode On" );
 define( "SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again." );
@@ -218,9 +217,9 @@ define("_LOCAL_SLOCGAN",'Make a lasting impression'); //Link to local support si
 define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
 define("_LOCAL_SENSORTXT",'#OOPS#'); //Add local translation
 define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
-define("_DEF_LANG_TAGS",'en,de'); //Add local translation
-define("_DEF_LANG_NAMES",'english,german'); //Add local translation
-define("_LOCAL_LANG_NAMES",'English,Deutsch'); //Add local translation
+define("_DEF_LANG_TAGS",'en,de,nl,it,fr'); //Add local translation
+define("_DEF_LANG_NAMES",'English,german, dutch, italian, french'); //Add local translation
+define("_LOCAL_LANG_NAMES",'English,Deutsch,Nederlands,Italiano, Français'); //Add local translation
 define("_EXT_DATE_FUNC","0"); // change 0 to 1 if this language has an extended date function
 
 ######################## Added in 1.2 ###################################

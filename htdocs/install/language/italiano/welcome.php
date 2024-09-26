@@ -1,5 +1,4 @@
 <?php
-// $Id: welcome.php 565 2006-06-23 06:39:22Z skalpa $
 $content .= '
 <p>
 	ImpressCMS &egrave; un sistema di pubblicazione Web scritto in PHP. &Egrave; lo strumento ideale per
@@ -14,7 +13,7 @@ $content .= '
 <h3>Requisiti di sistema</h3>
 <ul>
 	<li>WWW Server (<a href="http://www.apache.org/" target="_blank">Apache</a>, IIS, Roxen, ecc.)</li>
-	<li><a href="http://www.php.net/" target="_blank">PHP</a> 5.2 o maggiore (5.3 o maggiore è supportato) e 16MB minimo di allocazione di memoria </li>
+	<li><a href="http://www.php.net/" target="_blank">PHP</a> 7.2 o maggiore (7.4 è consigliato - PHP 8 non è sopportato)</li>
 	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> 4.1.0 o maggiore</li>
 </ul>
 <h3>Prima di installare</h3>
@@ -27,4 +26,3 @@ $content .= '
 	<li>Nel vostro browser Internet attivare i permessi per cookies e JavaScript.</li>
 </ul>
 ';
-?>

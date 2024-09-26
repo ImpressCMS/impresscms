@@ -20,7 +20,6 @@ define( "SERVER_API", "API Server" );
 define( "PHP_EXTENSION", "Estensioni %s" );
 define( "CHAR_ENCODING", "Codifica carattere" );
 define( "XML_PARSING", "XML parsing" );
-define( "OPEN_ID", "OpenID" );
 define( "REQUIREMENTS", "Requisiti" );
 define( "_PHP_VERSION", "Versione PHP" );
 define( "RECOMMENDED_SETTINGS", "Impostazioni raccomandate" );
@@ -65,12 +64,12 @@ define( "INITIAL_SETTINGS_TITLE", "Sei pregato di inserire le impostazioni inizi
 define( "DATA_INSERTION", "Inserimento dati" );
 define( "DATA_INSERTION_TITLE", "Salvataggio delle tue impostazioni in corso" );
 define( "WELCOME", "Benvenuto/a" );
-define( "NO_PHP5", "PHP 5 non disponibile" );
+define( "NO_PHP5", "Versione PHP non compatibile" );
 define( "WELCOME_TITLE", "Installazione di ImpressCMS completata" );		// L0
 define( "MODULES_INSTALL", "Installazione moduli" );
 define( "MODULES_INSTALL_TITLE", "Installazione di moduli " );
-define( "NO_PHP5_TITLE", "PHP 5 non disponibile" );
-define( "NO_PHP5_CONTENT","PHP 5.6 &egrave; indispensabile per il buon funzionamento di ImpressCMS (PHP 7.2 è consigliato) - La tua insallazione non pu&ograve; continuare. Sei pregato di chiedere al tuo amministratore del serveer di aggiornare l'ambiente a PHP5 prima di provare a installare ancora. ");
+define( "NO_PHP5_TITLE", "Versione PHP non compatibile" );
+define( "NO_PHP5_CONTENT","PHP 7.2+ &egrave; indispensabile per il buon funzionamento di ImpressCMS (PHP 7.4 è consigliato - PHP 8 non è sopportato) - La tua insallazione non pu&ograve; continuare. Sei pregato di chiedere al tuo amministratore del server di aggiornare l'ambiente PHP prima di provare a installare ancora. ");
 define( "SAFE_MODE", "Safe Mode On" );
 define( "SAFE_MODE_TITLE", "Safe Mode On" );
 define( "SAFE_MODE_CONTENT", "ImpressCMS ha trovato che PHP sta usando l'impostazione Safe Mode. A causa di ci&ograve; la tua installazione non pu&ograve; continuare. Sei pregato di chiedere al tuo hosting di cambiare questa impostazione a OFF prima di riprovare a installare." );
@@ -221,9 +220,9 @@ define("_LOCAL_SLOCGAN",'Make a lasting impression'); //Link to local support si
 define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
 define("_LOCAL_SENSORTXT",'#OOPS#'); //Add local translation
 define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
-define("_DEF_LANG_TAGS",'en,fr'); //Add local translation
-define("_DEF_LANG_NAMES",'english,french'); //Add local translation
-define("_LOCAL_LANG_NAMES",'English,Français'); //Add local translation
+define("_DEF_LANG_TAGS",'en,fr,it,nl,de'); //Add local translation
+define("_DEF_LANG_NAMES",'english,french,italian,dutch,german'); //Add local translation
+define("_LOCAL_LANG_NAMES",'English,Français,Italiano,Nederlands,Deutsch'); //Add local translation
 define("_EXT_DATE_FUNC","0"); // change 0 to 1 if this language has an extended date function
 
 ######################## Added in 1.2 ###################################
@@ -234,4 +233,6 @@ define('_CORE_PASSLEVEL3','Buona');
 define('_CORE_PASSLEVEL4','Forte');
 define('DB_PCONNECT_HELP', "Le connessioni persistenti sono utili con connessioni internet lente. Non sono generalmente richieste per la maggior parte delle installazioni. Default è 'NO'. Scegli 'NO' se non sei sicuro"); // L69
 define( "DB_PCONNECT_HELPS",  "Le connessioni persistenti sono utili con connessioni internet lente. Non sono generalmente richieste per la maggior parte delle installazioni."); // L69
-?>
+
+// Added in 1.3
+define("FILE_PERMISSIONS", "Diritti d'accesso");
