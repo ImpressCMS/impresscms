@@ -1,13 +1,28 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 2.0.0 beta 2
+* Date: 26 Sept 2024
+* DB Version: 48
+* Build Version: 109
+### What's Changed
+#### Improvements
+* Remove data for bannerclient from install  by @skenow in https://github.com/ImpressCMS/impresscms/pull/1558
+* Remove banner tables and config item by @skenow in https://github.com/ImpressCMS/impresscms/pull/1559
+* cleanup icms.css by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1563
+* Third batch of $icmsModule removals by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1555
+* Update version.php to new 2.0.0 beta 2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1554
+* Icmsmodule cleanup part2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1567
+#### Updates
+* upgrade Ckeditor 4.22.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1570
+
 ## ImpressCMS 2.0.0 beta 1
 * Date : 16 Jul 2024
 * DB Version: 47
 * Build Version : 108
 
 The first 2.0.0 beta release after the renumbering of the different branches. This version should be feature-complete, but thorough verifications need to be done for the upgrade process and the compatibility with different modules.
-## What's Changed
-### Bugfixes
+### What's Changed
+#### Bugfixes
 * Fix mailuser by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1288
 * Fixes DB interfaces incompatibilies between different PHP versions by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1321
 * Fixes DB crash if DB encoding value is empty by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1322
@@ -27,7 +42,7 @@ The first 2.0.0 beta release after the renumbering of the different branches. Th
 * Security fix : upgrade Jquery 3.7.0 & jQuery UI 1.13.2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1490
 * Fix 1.5.x symlink errors by @skenow in https://github.com/ImpressCMS/impresscms/pull/1498
 
-### Updates
+#### Updates
 * upgrade cssTidy to 2.0.3, with support for PHP 8 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1398
 * upgrade simplepie to 1.8.0 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1405
 * Update 1.5.x mimunum requirements by @skenow in https://github.com/ImpressCMS/impresscms/pull/1409
@@ -38,7 +53,7 @@ The first 2.0.0 beta release after the renumbering of the different branches. Th
 * Update to HTMLPurifier 4.15 by @skenow in https://github.com/ImpressCMS/impresscms/pull/1492
 * Update language constants for users by @skenow in https://github.com/ImpressCMS/impresscms/pull/1544
 
-### Improvements
+#### Improvements
 * improve theme selector by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1485
 * Move analytics code to preload by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1429
 * Smiley adminstration input filtering by @skenow in https://github.com/ImpressCMS/impresscms/pull/1500
@@ -47,14 +62,14 @@ The first 2.0.0 beta release after the renumbering of the different branches. Th
 * Format code, use strlen instead of sizeof on a string by @skenow in https://github.com/ImpressCMS/impresscms/pull/1517
 * Date notation fixes for europe in Dutch translations by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1524
  
-### 🚀 Features
+#### 🚀 Features
 * Cookie hardening by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1331
 * get installer working on PHP 8.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1476
 * Making sure password reset key is unique and temporary by @skenow in https://github.com/ImpressCMS/impresscms/pull/1527
 * language switcher refactoring by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1496
 * Add current theme info into the theme block by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1513
 
-### 🧰 Maintenance
+#### 🧰 Maintenance
 * Updated branch references & readme by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1223
 * Delete htdocs/editors/tinymce directory by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1273
 * Remove openid by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1274
