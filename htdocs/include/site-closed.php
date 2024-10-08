@@ -42,9 +42,9 @@ if (!$allowed) {
 		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
 		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
-		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
-			? $icmsModule->getVar('name')
+		'icms_dirname' => @icms::$module ? icms::$module->getVar('dirname') : 'system',
+		'icms_pagetitle' => isset(icms::$module) && is_object(icms::$module)
+			? icms::$module->getVar('name')
 			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'lang_login' => _LOGIN,
 		'lang_username' => _USERNAME,

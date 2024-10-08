@@ -166,7 +166,7 @@ class icms_view_theme_Object {
 				'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
 				'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 				'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-				'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
+				'icms_dirname' => @icms::$module ? icms::$module->getVar('dirname') : 'system',
 				'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
 						? $icmsModule->getVar('name')
 						: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES)
