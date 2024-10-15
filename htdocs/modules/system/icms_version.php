@@ -64,9 +64,9 @@ $modversion = array(
 	'image' => "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version' => "Beta 2",
+	'status_version' => "Beta 3",
 	'status' => "beta",
-	'date' => "25 Sept 2024",
+	'date' => "15 Oct 2024",
 	'author_word' => "",
 	'warning' => _CO_ICMS_WARNING_BETA,
 
