@@ -99,6 +99,24 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
+	 * retrieve a user from hash_uid
+	 *
+	 * @param string $hash_uid hash_uid of the user
+	 * @return mixed reference to the {@link icms_member_user_Object} object, FALSE if failed
+	 */
+	public function &getHash($hash_uid) {
+		$user = FALSE;
+		$sql = "SELECT * FROM " . $this->db->prefix('users') . " WHERE hash_uid = " . $this->db->quoteString($hash_uid) . " LIMIT 1";
+		if (!$result = $this->db->query($sql)) {return $user;}
+		$numrows = $this->db->getRowsNum($result);
+		if ($numrows == 1) {
+			$user = new icms_member_user_Object();
+			$user->assignVars($this->db->fetchArray($result));
+		}
+		return $user;
+	}
+
+	/**
 	 * insert a new user in the database
 	 *
 	 * @param object $user reference to the {@link icms_member_user_Object} object
@@ -190,6 +208,14 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		if ($user->isNew()) {
 			$uid = $this->db->getInsertId();
 			$user->assignVar('uid', $uid);
+			$secret_string = bin2hex(random_bytes(16));
+			$hash_uid = hash_hmac('sha256', $uid, $secret_string);
+			$user->assignVar('hash_uid', $hash_uid);
+			$sql = sprintf(
+				"UPDATE %s SET hash_uid = '%s' WHERE uid = '%u'",
+				$this->db->prefix('users'), $hash_uid, (int) $uid
+			);
+			$result = $this->db->query($sql);
 		}
 		return TRUE;
 	}
@@ -418,7 +444,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				$fullname2 = $user->getVar('name');
 				if (($name) && !empty($fullname2)) $fullname = $user->getVar('name');
 				if (!empty($fullname)) $linkeduser = $fullname . "[";
-                $linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $uid . '"' . $author . '>';
+                $linkeduser .= '<a href="' . ICMS_URL . '/userinfo.php?uid=' . $user->getVar('hash_uid') . '"' . $author . '>';
 				$linkeduser .= icms_core_DataFilter::htmlSpecialChars($username) . "</a>";
 				if (!empty($fullname)) $linkeduser .= "]";
 
