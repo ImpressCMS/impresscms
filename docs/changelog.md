@@ -4,7 +4,7 @@
 * Date: 15 Oct 2024
 * DB Version: 48
 * Build Version: 110
-## What's Changed
+### What's Changed
 * fix indirect variable handling in IPF select form element by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1574
 * Remove use of $icmsModule in notification Handler.php by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1576
 * fix the module update by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1572
