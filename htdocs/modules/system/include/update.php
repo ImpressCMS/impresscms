@@ -49,7 +49,7 @@ icms_loadLanguageFile('core', 'databaseupdater');
  * @return mixed
  */
 function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = null) {
-	global $icmsConfig, $xoTheme;
+	global $xoTheme;
 
 	$from_112 = $abortUpdate = false;
 
@@ -127,31 +127,31 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			];
 
 			// Determine if FCKeditor is in use and remove it if it is not
-			$config_handler = icms::handler('icms_config');
+			//$config_handler = icms::handler('icms_config');
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->add(new icms_db_criteria_Item('conf_value', 'FCKeditor'));
-			$config = $config_handler->getConfigs($criteria);
+			$config = icms::$config->getConfigs($criteria);
 			$confcount = count($config);
-			
+
 			if ($confcount == 0) {
 				icms_core_Filesystem::deleteRecursive(ICMS_EDITOR_PATH . '/FCKeditor', true);
 			}
-			
+
 			// Determine if TinyMCE is in use and remove it if it is not
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->add(new icms_db_criteria_Item('conf_value', 'tinymce'));
-			$config = $config_handler->getConfigs($criteria);
+			$config = icms::$config->getConfigs($criteria);
 			$confcount = count($config);
-			
+
 			if ($confcount == 0) {
 				icms_core_Filesystem::deleteRecursive(ICMS_EDITOR_PATH . '/tinymce', true);
 			}
-			
+
 			// first, remove the files and the folders that contain deprecated classes.
 			foreach ($removeFolders_150 as $foldertoremove) {
 				echo icms_core_Filesystem::deleteRecursive($foldertoremove, true). '</br>';
 			}
-			
+
 			// Third, check if openID is configured as login method. If not, remove.
 			if(!defined('ICMS_INCLUDE_OPENID')) {
 				foreach ($removeOpenIDfiles as $filetoremove) {
@@ -164,7 +164,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				}
 			}
 		}
-		
+
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
@@ -188,23 +188,23 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 						$tableObj->dropTable();
 					}
 				}
-			
+
 			// remove the banner config item
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->add(new icms_db_criteria_Item('conf_name', 'banners'));
-			$config = $config_handler->getConfigs($criteria);
+			$config = icms::$config->getConfigs($criteria);
 			if (count($config) > 0) {
-				$config_handler->deleteConfig($config[0]);
+				icms::$config->deleteConfig($config[0]);
 			}
-			
+
 			// remove the openid config item
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->add(new icms_db_criteria_Item('conf_name', 'auth_openid'));
-			$config = $config_handler->getConfigs($criteria);
+			$config = icms::$config->getConfigs($criteria);
 			if (count($config) > 0) {
-				$config_handler->deleteConfig($config[0]);
+				icms::$config->deleteConfig($config[0]);
 			}
-			
+
 			/* Finish up this portion of the db update */
 			if (!$abortUpdate) {
 				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');

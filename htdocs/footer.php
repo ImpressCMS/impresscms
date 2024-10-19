@@ -43,7 +43,7 @@ defined('ICMS_ROOT_PATH') || die('ICMS root path not defined');
 
 if (defined("XOOPS_FOOTER_INCLUDED")) exit();
 
-global $xoopsOption, $icmsConfigMetaFooter, $xoopsTpl, $icmsModule;
+global $xoopsOption, $icmsConfigMetaFooter, $xoopsTpl;
 
 /** Set the constant XOOPS_FOOTER_INCLUDED to 1 - this file has been included */
 define("XOOPS_FOOTER_INCLUDED", 1);
@@ -74,7 +74,7 @@ if (isset($xoopsOption['theme_use_smarty']) && $xoopsOption['theme_use_smarty'] 
 	xoops_footer();
 } else {
 	// RMV-NOTIFY
-	if (is_object($icmsModule) && $icmsModule->getVar('hasnotification') == 1 && is_object(icms::$user)) {
+	if (is_object(icms::$module) && icms::$module->getVar('hasnotification') == 1 && is_object(icms::$user)) {
 		/** Require the notifications area */
 		require_once 'include/notification_select.php';
 	}

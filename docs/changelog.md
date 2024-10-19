@@ -1,15 +1,131 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 2.0.0 beta 2
+* Date: 26 Sept 2024
+* DB Version: 48
+* Build Version: 109
+### What's Changed
+#### Improvements
+* Remove data for bannerclient from install  by @skenow in https://github.com/ImpressCMS/impresscms/pull/1558
+* Remove banner tables and config item by @skenow in https://github.com/ImpressCMS/impresscms/pull/1559
+* cleanup icms.css by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1563
+* Third batch of $icmsModule removals by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1555
+* Update version.php to new 2.0.0 beta 2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1554
+* Icmsmodule cleanup part2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1567
+#### Updates
+* upgrade Ckeditor 4.22.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1570
+
+## ImpressCMS 2.0.0 beta 1
+* Date : 16 Jul 2024
+* DB Version: 47
+* Build Version : 108
+
+The first 2.0.0 beta release after the renumbering of the different branches. This version should be feature-complete, but thorough verifications need to be done for the upgrade process and the compatibility with different modules.
+### What's Changed
+#### Bugfixes
+* Fix mailuser by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1288
+* Fixes DB interfaces incompatibilies between different PHP versions by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1321
+* Fixes DB crash if DB encoding value is empty by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1322
+* Fix: notice undefined index  utf8 in htdocs/install/page_dbsettings.php on line 138 by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1323
+* Fix XSS via DB_CHARSET parameter (H1 #1825770) by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1381
+* Fixed #1345 - 'undefined constant in PHP 8 on install/page_tablesfill.php page' by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1388
+* Fixed bug when saving system preference by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1389
+* Fixed #1090 - user creating and editing by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1390
+* Including necessary language file to prevent installation errors in PHP8 by @skenow in https://github.com/ImpressCMS/impresscms/pull/1396
+* Fix ternary expression for php8 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1397
+* Csstidy warning update - include check for unlock file by @skenow in https://github.com/ImpressCMS/impresscms/pull/1416
+* Errors in the Nederlands install language files by @skenow in https://github.com/ImpressCMS/impresscms/pull/1415
+* 1.5.x php7+ by @skenow in https://github.com/ImpressCMS/impresscms/pull/1430
+* Return correct types for custom session handlers by @skenow in https://github.com/ImpressCMS/impresscms/pull/1464
+* Fixes fatal error in googleanalytics preload by @skenow in https://github.com/ImpressCMS/impresscms/pull/1487
+* Image editor fixes - crop, resize, filter plugins by @skenow in https://github.com/ImpressCMS/impresscms/pull/1489
+* Security fix : upgrade Jquery 3.7.0 & jQuery UI 1.13.2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1490
+* Fix 1.5.x symlink errors by @skenow in https://github.com/ImpressCMS/impresscms/pull/1498
+
+#### Updates
+* upgrade cssTidy to 2.0.3, with support for PHP 8 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1398
+* upgrade simplepie to 1.8.0 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1405
+* Update 1.5.x mimunum requirements by @skenow in https://github.com/ImpressCMS/impresscms/pull/1409
+* Updating PHPMailer for PHP8 support by @skenow in https://github.com/ImpressCMS/impresscms/pull/1453
+* PHP8 compliance updates by @skenow in https://github.com/ImpressCMS/impresscms/pull/1459
+* Update to HTMLPurifier for PHP8 compliance by @skenow in https://github.com/ImpressCMS/impresscms/pull/1458
+* Updating WideImage for PHP8 compliance by @skenow in https://github.com/ImpressCMS/impresscms/pull/1465
+* Update to HTMLPurifier 4.15 by @skenow in https://github.com/ImpressCMS/impresscms/pull/1492
+* Update language constants for users by @skenow in https://github.com/ImpressCMS/impresscms/pull/1544
+
+#### Improvements
+* improve theme selector by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1485
+* Move analytics code to preload by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1429
+* Smiley adminstration input filtering by @skenow in https://github.com/ImpressCMS/impresscms/pull/1500
+* Updates to DataFilter - string filters for PHP8 and signature filtering by @skenow in https://github.com/ImpressCMS/impresscms/pull/1507
+* bool to countable in module object by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1510
+* Format code, use strlen instead of sizeof on a string by @skenow in https://github.com/ImpressCMS/impresscms/pull/1517
+* Date notation fixes for europe in Dutch translations by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1524
+ 
+#### 🚀 Features
+* Cookie hardening by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1331
+* get installer working on PHP 8.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1476
+* Making sure password reset key is unique and temporary by @skenow in https://github.com/ImpressCMS/impresscms/pull/1527
+* language switcher refactoring by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1496
+* Add current theme info into the theme block by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1513
+
+#### 🧰 Maintenance
+* Updated branch references & readme by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1223
+* Delete htdocs/editors/tinymce directory by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1273
+* Remove openid by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1274
+* align syntax of DB interface and mysql implementation with PDO by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1287
+* prepare for 1.5.0 beta by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1286
+* Cleanup all deprecated files and functions in the core by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1320
+* Remove get_magic_quotes_gpc calls by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1327
+* removing files from previous versions that are no longer there by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1330
+* replace create_function with anonymous function by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1342
+* Changes to make the upgrade actually work by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1344
+* Implementing new test for TinyMCE and restoring the tests for FCKeditor by @skenow in https://github.com/ImpressCMS/impresscms/pull/1351
+* Remove Slack badge from README in 1.5.x branch by @MekDrop in https://github.com/ImpressCMS/impresscms/pull/1354
+* Adapt install texts for PHP requirements by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1483
+* Remove all references to banners by @skenow in https://github.com/ImpressCMS/impresscms/pull/1509
+* Cleanup social provider list by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1553
+* replace $icmsModule with icms::$module in about page by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1497
+
+
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v1.4.6...v2.0.0_beta_1
+
+[![Download ImpressCMS](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/impresscms/files/v2.0.0_beta_1/v2.0.0%20beta%201%20source%20code.zip/download)
+
+## ImpressCMS 1.4.6
+* Date : 23 Nov 2023
+* DB Version: 46
+* Build Version : 104
+
+### Bugfixes
+* Fix fatal error in mailusers by @skenow in https://github.com/ImpressCMS/impresscms/pull/1539
+### Updates
+* update jQuery 3.7.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1543
+* update GeSHI to 1.0.9.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1542
+
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v1.4.5...v1.4.6
+## ImpressCMS 1.4.5
+* Date : 06 Jul 2023
+* DB Version: 46
+* Build Version : 104
+
+This changes the in-built Universal Analytics integration to the new Google Analytics 4.
+
+There are no other changes with regards to ImpressCMS 1.4.4.
 ## ImpressCMS 1.4.4
-* Date : 01 Mar 2022
+* Date : 09 Mar 2022
 * DB Version: 46
 * Build Version : 104
 
 This release fixes a security vulnerability that was found in ImpressCMS 1.4.3. 
 
 ### Security Fix
-Applying the filters to inner elements of arrays by @skenow https://github.com/ImpressCMS/impresscms/pull/1162
+* Applying the filters to inner elements of arrays by @skenow in https://github.com/ImpressCMS/impresscms/pull/1162
+* Additional input filtering - mailusers, findusers, checkVarArray inner elements by @skenow in https://github.com/ImpressCMS/impresscms/pull/1163
+* Filtering updates for blocksadmin and mailusers by @skenow in https://github.com/ImpressCMS/impresscms/pull/1164
+* Prepare 1.4.4 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1171
 
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v1.4.3...v1.4.4
 
 ## ImpressCMS 1.4.3
 * Date : 06 Feb 2022
