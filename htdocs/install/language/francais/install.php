@@ -9,7 +9,6 @@ define( "SERVER_API", "Server API" );
 define( "PHP_EXTENSION", "%s extension" );
 define( "CHAR_ENCODING", "Encodage des caract&egrave;res" );
 define( "XML_PARSING", "l'analyse XML" );
-define( "OPEN_ID", "OpenID" );
 define( "REQUIREMENTS", "Exigences" );
 define( "_PHP_VERSION", "version PHP" );
 define( "RECOMMENDED_SETTINGS", "Configuration recommand&eacute;e" );
@@ -51,12 +50,12 @@ define( "INITIAL_SETTINGS_TITLE", "Veuillez entrer votre configuration initiale"
 define( "DATA_INSERTION", "Insertion de donn&eacute;es" );
 define( "DATA_INSERTION_TITLE", "Sauvegarde de votre configuration dans la base de donn&eacute;es" );
 define( "WELCOME", "Bienvenue" );
-define( "NO_PHP5", "No PHP 5" );
+define( "NO_PHP5", "Version PHP incompatible" );
 define( "WELCOME_TITLE", "Installation du site compl&eacute;te" );		// L0
 define( "MODULES_INSTALL", "Installation des scripts" );
 define( "MODULES_INSTALL_TITLE", "Installation des scripts " );
-define( "NO_PHP5_TITLE", "No PHP 5" );
-define( "NO_PHP5_CONTENT","PHP version 5.6 est requis, et PHP 7.2 est conseillé pour un bon fonctionnement.");
+define( "NO_PHP5_TITLE", "Version PHP incompatible" );
+define( "NO_PHP5_CONTENT","PHP version 7.2 est requis, et PHP 7.4 est fortement conseillé pour un bon fonctionnement. ImpressCMS 1.4 ne supporte pas encore PHP 8.");
 define( "SAFE_MODE", "Safe Mode On" );
 define( "SAFE_MODE_TITLE", "Safe Mode On" );
 define( "SAFE_MODE_CONTENT", "L installation ne peut pas continuer parce que ImpressCMS a détecté que PHP tourne en mode 'Safe'. Veuillez contacter votre fournisseur de hébergement pour rectifier la situation." );
@@ -201,21 +200,33 @@ define("WELCOME_ANONYMOUS","Bienvenue sur votre site internet !");
 define("_MD_AM_MULTLOGINMSG_TXT",'Impossible de vous connectez avec ce nom d\'utilisateur et mot de passe sur le site!! <br />
         <p align="left" style="color:red;">
         Causes possibles:<br />
-         - Vous êtes déjà inscrit sur le site.<br />
-         - Quelqu\'un d\'autre est connecté sur le site en utilisant votre nom d\'utilisateur et mot de passe.<br />
-         - Vous avez quitter le site ou fermez la fenêtre du navigateur sans cliquer sur le bouton de déconnexion.<br />
+         <ul>
+		 <li>Vous êtes déjà inscrit sur le site.</li>
+         <li>Quelqu\'un d\'autre est connecté sur le site en utilisant votre nom d\'utilisateur et mot de passe.</li>
+         <li>Vous avez quitté le site ou fermé la fenêtre du navigateur sans cliquer sur le bouton de déconnexion.</li>
+		 </ul>
         </p>
         Effacez les traces de votre navigateur (historique, cookies, sessions etc... Si le problème persiste contactez le webmasteur du site.');
 define("_MD_AM_RSSLOCALLINK_DESC",'https://www.impresscms.org/modules/news/rss.php'); //Lien vers le RRS de soutien local site
-define("_INSTALL_LOCAL_SITE",'https://www.impresscms.org/'); //Lien vers le site de support local
+define("_INSTALL_LOCAL_SITE",'https://www.impresscms.fr/'); //Lien vers le site de support local
 define("_LOCAOL_STNAME",'ImpressCMS'); //Lien vers le site de support local
-define("_LOCAL_SLOCGAN",'Make a lasting impression'); 
-define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">ImpressCMS Projet</a>'); //Lien footer (pied de page) pour le soutien local site
+define("_LOCAL_SLOCGAN",'Impressionnez votre public'); 
+define("_LOCAL_FOOTER",'Fonctionne avec ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">ImpressCMS Projet</a>'); //Lien footer (pied de page) pour le soutien local site
 define("_LOCAL_SENSORTXT",'#OOPS#'); 
 define("_ADM_USE_RTL","0"); // tourner à 1 si votre langue est droite à gauche
-define("_DEF_LANG_TAGS",'fr,en'); 
-define("_DEF_LANG_NAMES",'french,english'); 
-define("_LOCAL_LANG_NAMES",'Fran&ccedil;ais,English');
+define("_DEF_LANG_TAGS",'fr,en,nl,it, de'); 
+define("_DEF_LANG_NAMES",'french,english,dutch,italian,german'); 
+define("_LOCAL_LANG_NAMES",'Fran&ccedil;ais,English,Nederlands,Italiano,Deutsch');
 define("_EXT_DATE_FUNC","0"); // changement de 0 à 1, si cette langue a une fonction étendue date
 
-?>
+######################## Added in 1.2 ###################################
+define( "ADMIN_DISPLAY_LABEL", "Nom affiché de l'administrateur" ); // L37
+define('_CORE_PASSLEVEL1','Trop court');
+define('_CORE_PASSLEVEL2','Faible');
+define('_CORE_PASSLEVEL3','Bon');
+define('_CORE_PASSLEVEL4','Fort');
+define('DB_PCONNECT_HELP', "Des connexions persistentes peuvent être utiles en cas de connectivité lente à internet. Elles ne sont pas requises habituellement pour la majorité des installations. Valeur par défaut est 'NON'. Selectionnez 'NON' si vous êtes incertain"); // L69
+define( "DB_PCONNECT_HELPS",  "Des connexions persistentes peuvent être utiles en cas de connectivité lente à internet. Elles ne sont pas requises habituellement pour la majorité des installations. "); // L69
+
+// Added in 1.3
+define("FILE_PERMISSIONS", "Permissions fichiers");
