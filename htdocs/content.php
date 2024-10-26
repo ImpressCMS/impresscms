@@ -21,7 +21,6 @@ define ( "CONTENT_ADMIN_URL", CONTENT_URL . 'admin/' );
 $mhandler = icms::handler('icms_module');
 $xoopsModule = $mhandler->getByDirname(CONTENT_DIRNAME);
 include_once ICMS_ROOT_PATH . '/modules/content/include/common.php';
-$icmsModule = $xoopsModule;
 icms_loadLanguageFile('content', 'common');
 icms_loadLanguageFile('content', 'main');
 $icmsModuleConfig = $contentConfig;

@@ -659,6 +659,7 @@ function imanager_addfile() {
 	} else {
 		$updir = $categ_path;
 	}
+	// TODO: make the list of accepted image filetypes configurable
 	$uploader = new icms_file_MediaUploadHandler($updir, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
 	$uploader->setPrefix('img');
 	$err = array();
@@ -875,6 +876,7 @@ function imanager_clone() {
  * Just echoes the whole HTML
  */
 function icmsPopupHeader() {
+	//TODO: make the image manager header use a template instead of hardcoded HTML
 	global $icmsConfig;
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset=' . _CHARSET);
@@ -894,10 +896,9 @@ function icmsPopupHeader() {
 	<link rel="icon" type="image/png" href="' . ICMS_URL . '/favicon.ico" />
 	';
 	if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
-		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/xoops_rtl.css" />';
+
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_MODULES_URL . '/system/style_rtl.css" />';
 	} else {
-		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms.css" />';
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_MODULES_URL . '/system/style.css" />';
 	}
 
@@ -914,6 +915,7 @@ function icmsPopupHeader() {
  * Just echoes the whole HTML
  */
 function icmsPopupFooter() {
+	//TODO: make the image manager footer use a a template instead of hardcoded HTML
 	echo "</div>";
 	echo '<div style="float: right; padding:11px;"><input type="button" id="cancel" name="cancel" value="' . _CLOSE . '" onclick="window.close();" /></div><br style="clear:both;" />';
 	echo "</div></body></html>";

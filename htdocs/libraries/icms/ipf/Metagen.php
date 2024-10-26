@@ -351,7 +351,7 @@ class icms_ipf_Metagen {
 	 *
 	 */
 	public function buildAutoMetaTags() {
-		global $icmsModule, $icmsModuleConfig;
+		global $icmsModuleConfig;
 
 		$this->_keywords = $this->createMetaKeywords();
 		$this->_meta_description = $this->createMetaDescription();

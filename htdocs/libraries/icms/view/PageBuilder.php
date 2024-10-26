@@ -99,7 +99,7 @@ class icms_view_PageBuilder {
 	 *
 	 */
 	public function retrieveBlocks() {
-		global $xoops, $icmsModule, $icmsConfig;
+		global $xoops, $icmsConfig;
 
 		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		self::getPage();
@@ -150,7 +150,7 @@ class icms_view_PageBuilder {
 	 * @return void
 	 */
 	static public function getPage() {
-		global $icmsConfig, $icmsModule;
+		global $icmsConfig;
 
 		if (is_array(self::$modid)) return self::$modid;
 
@@ -186,9 +186,9 @@ class icms_view_PageBuilder {
 			$isStart = ($startMod == $mid.'-'.$pid);
 		} else {
 			// we don't have a sym-link for this page
-			if (is_object($icmsModule)) {
-				$mid = (int) $icmsModule->getVar('mid');
-				$dirname = $icmsModule->getVar('dirname');
+			if (is_object(icms::$module)) {
+				$mid = (int) icms::$module->getVar('mid');
+				$dirname = icms::$module->getVar('dirname');
 				$isStart = (substr($_SERVER['PHP_SELF'], -9) == 'index.php' && $startMod == $dirname);
 			} else {
 				$mid = 1;
