@@ -209,6 +209,17 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			if (count($config) > 0) {
 				icms::$config->deleteConfig($config[0]);
 			}
+			
+			// remove columns from the users table
+			$tabletoupdate = 'users';
+			$columnstoremove = array('openid', 'user_viewoid');
+			$table = new icms_db_legacy_updater_Table($tabletoupdate);
+			foreach ($columnstoremove as $column) {
+				if ($table->fieldExists($column)) {
+					$table->addDropedField($column);
+				}
+			}
+			$table->dropFields();
 
 			/* Finish up this portion of the db update */
 			if (!$abortUpdate) {
