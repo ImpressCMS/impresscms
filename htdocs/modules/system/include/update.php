@@ -212,7 +212,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			
 			// remove columns from the users table
 			$tabletoupdate = 'users';
-			$columnstoremove = array('openid', 'user_viewoid');
+			$columnstoremove = ['openid', 'user_viewoid'];
 			$table = new icms_db_legacy_updater_Table($tabletoupdate);
 			foreach ($columnstoremove as $column) {
 				if ($table->fieldExists($column)) {
