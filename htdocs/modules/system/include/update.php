@@ -204,7 +204,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 					icms::$config->deleteConfig($config[0]);
 				}
 			}
-				
+
 			// remove columns from the users table
 			$tabletoupdate = 'users';
 			$columnstoremove = ['openid', 'user_viewoid'];
@@ -216,6 +216,15 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			}
 			if ($table->getDropedFields()) {
 				$table->dropFields();
+			}
+
+			// remove the content.php file if the module is not installed
+			$module_handler = icms::handler('icms_module');
+			$installed_mods = $module_handler->getList();
+			
+			if (!in_array('content', $installed_mods)) {
+				$filetoremove = ICMS_ROOT_PATH . '/content.php';
+				icms_core_Filesystem::deleteFile($filetoremove);
 			}
 			
 			/* Finish up this portion of the db update */
