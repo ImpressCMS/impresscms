@@ -75,5 +75,6 @@ CKEDITOR.editorConfig = function( config ) {
 			':lol:', ':-x', ':-p', ':oops:', ':cry:', ':evil:', ':roll:',
 			';-)', ':pint:', ':hammer:', ':idea:' ];
 	
+	config.allowedContent = true;
 	config.versionCheck = false;
 };
