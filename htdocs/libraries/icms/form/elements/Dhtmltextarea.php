@@ -83,10 +83,10 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	public function __construct($caption, $name, $value, $rows=5, $cols=50, $hiddentext="xoopsHiddenText", $options = array()) {
 		parent::__construct($caption, $name, $value, $rows, $cols);
 		$this->_hiddenText = $hiddentext;
-		global $icmsConfig, $icmsModule;
+		global $icmsConfig;
 
 		$groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
-		$moduleid = (is_object($icmsModule) && $name != 'com_text') ? $icmsModule->getVar('mid') : 1;
+		$moduleid = (is_object(icms::$module) && $name != 'com_text') ? icms::$module->getVar('mid') : 1;
 
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $icmsConfig['editor_default']) {
 			$editor_default = $options['editor'];
@@ -95,7 +95,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		}
 
 		$gperm_handler = icms::handler('icms_member_groupperm');
-		if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, FALSE)) {
+		if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)) {
 			include ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php";
 			$this->htmlEditor = array($editorversion['class'], ICMS_EDITOR_PATH . "/" . $editorversion['dirname'] . "/" . $editorversion['file']);
 		}
@@ -109,7 +109,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 			if (class_exists($class)) {
 				$this->htmlEditor = new $class($options);
 			} else {
-				$this->htmlEditor = FALSE;
+				$this->htmlEditor = false;
 			}
 		}
 	}
@@ -121,10 +121,10 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 */
 	public function render() {
 		global $icmsConfigPlugins, $icmsConfigMultilang;
-		$editor = FALSE;
+		$editor = false;
 		if ($this->htmlEditor && is_object($this->htmlEditor)) {
 			if (!isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
-				$editor = TRUE;
+				$editor = true;
 			}
 		}
 		if ($editor) {
