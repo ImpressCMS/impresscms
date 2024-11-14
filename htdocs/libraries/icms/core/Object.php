@@ -131,7 +131,7 @@ class icms_core_Object {
 	 * @var array
 	 * @access private
 	 */
-	private $_errors = array();
+	protected $_errors = array();
 
 	/**
 	 * additional filters registered dynamically by a child class object
