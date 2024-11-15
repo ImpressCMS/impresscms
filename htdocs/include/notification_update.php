@@ -57,7 +57,7 @@
 
 // @TODO: allow 'GET' also so we can process 'unsubscribe' requests??
 
-if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
+if (!defined('ICMS_ROOT_PATH') || !is_object(icms::$module)) {
 	exit();
 }
 
@@ -80,7 +80,7 @@ if (!icms::$security->check()) {
 
 $update_list = $_POST['not_list'];
 
-$module_id = $icmsModule->getVar('mid');
+$module_id = icms::$module->getVar('mid');
 $user_id = is_object(icms::$user) ? icms::$user->getVar('uid') : 0;
 
 // For each event, update the notification depending on the status.

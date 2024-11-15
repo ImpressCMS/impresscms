@@ -43,9 +43,9 @@
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
+include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 $xoops_notification = array();
-$xoops_notification['show'] = isset($icmsModule) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline') ? 1 : 0;
+$xoops_notification['show'] = isset(icms::$module) && is_object(icms::$user) && icms_data_notification_Handler::isEnabled('inline') ? 1 : 0;
 if ($xoops_notification['show']) {
 	icms_loadLanguageFile('core', 'notification');
 	$notification_handler = icms::handler('icms_data_notification');
@@ -58,9 +58,9 @@ if ($xoops_notification['show']) {
 			$section['description'] = $category['description'];
 			$section['itemid'] = $category['item_id'];
 			$section['events'] = array();
-			$subscribed_events = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], $icmsModule->getVar('mid'), icms::$user->getVar('uid'));
+			$subscribed_events = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], icms::$module->getVar('mid'), icms::$user->getVar('uid'));
 			foreach ($notification_handler->categoryEvents($category['name'], true) as $event) {
-				if (!empty($event['admin_only']) && !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+				if (!empty($event['admin_only']) && !icms::$user->isAdmin(icms::$module->getVar('mid'))) {
 					continue;
 				}
 				if (!empty($event['invisible'])) {
