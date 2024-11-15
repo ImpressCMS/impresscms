@@ -44,7 +44,6 @@
  * @return mixed $block or FALSE if no users were online
  */
 function b_system_online_show() {
-	global $icmsModule;
 	$online_handler = icms::handler('icms_core_Online');
 	mt_srand((double) microtime() * 1000000);
 	// set gc probabillity to 10% for now..
@@ -58,8 +57,8 @@ function b_system_online_show() {
 		$uid = 0;
 		$uname = '';
 	}
-	if (is_object($icmsModule)) {
-		$online_handler->write($uid, $uname, time(), $icmsModule->getVar('mid'), $_SERVER['REMOTE_ADDR']);
+	if (is_object(icms::$module)) {
+		$online_handler->write($uid, $uname, time(), icms::$module->getVar('mid'), $_SERVER['REMOTE_ADDR']);
 	} else {
 		$online_handler->write($uid, $uname, time(), 0, $_SERVER['REMOTE_ADDR']);
 	}
@@ -77,9 +76,9 @@ function b_system_online_show() {
 			}
 		}
 		$block['online_total'] = sprintf(_ONLINEPHRASE, $total);
-		if (is_object($icmsModule)) {
-			$mytotal = $online_handler->getCount(new icms_db_criteria_Item('online_module', $icmsModule->getVar('mid')));
-			$block['online_total'] .= ' (' . sprintf(_ONLINEPHRASEX, $mytotal, $icmsModule->getVar('name')) . ')';
+		if (is_object(icms::$module)) {
+			$mytotal = $online_handler->getCount(new icms_db_criteria_Item('online_module', icms::$module->getVar('mid')));
+			$block['online_total'] .= ' (' . sprintf(_ONLINEPHRASEX, $mytotal, icms::$module->getVar('name')) . ')';
 		}
 		$block['lang_members'] = _MEMBERS;
 		$block['lang_guests'] = _GUESTS;
@@ -135,7 +134,6 @@ function b_system_login_show() {
  */
 function b_system_main_show() {
 	global $icmsConfigUser;
-	$icmsModule = icms::$module;
 
 	$block = array();
 	$block['lang_home'] = _MB_SYSTEM_HOME;
@@ -157,7 +155,7 @@ function b_system_main_show() {
 			$block['modules'][$i]['name'] = $modules[$i]->getVar('name');
 			$block['modules'][$i]['directory'] = $modules[$i]->getVar('dirname');
 			$sublinks = $modules[$i]->subLink();
-			if ((count($sublinks) > 0) && (!empty($icmsModule)) && ($i == $icmsModule->getVar('mid'))) {
+			if ((count($sublinks) > 0) && (!empty(icms::$module)) && ($i == icms::$module->getVar('mid'))) {
 				foreach ($sublinks as $sublink) {
 					$block['modules'][$i]['sublinks'][] = array('name' => $sublink['name'], 'url' => ICMS_MODULES_URL . '/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']);
 				}
@@ -412,11 +410,10 @@ function b_system_comments_show($options) {
  * @return array $block the block array
  */
 function b_system_notification_show() {
-	global $icmsConfig, $icmsModule;
 	icms_loadLanguageFile('core', 'notification');
 	// Notification must be enabled, and user must be logged in
 	if (empty(icms::$user) || !icms_data_notification_Handler::isEnabled('block')) {
-		return FALSE; // do not display block
+		return false; // do not display block
 	}
 	$notification_handler = icms::handler('icms_data_notification');
 	// Now build the a nested associative array of info to pass
@@ -424,7 +421,7 @@ function b_system_notification_show() {
 	$block = array();
 	$categories = &$notification_handler->subscribableCategoryInfo();
 	if (empty($categories)) {
-		return FALSE;
+		return false;
 	}
 	foreach ($categories as $category) {
 		$section['name'] = $category['name'];
@@ -432,9 +429,9 @@ function b_system_notification_show() {
 		$section['description'] = $category['description'];
 		$section['itemid'] = $category['item_id'];
 		$section['events'] = array();
-		$subscribed_events = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], $icmsModule->getVar('mid'), icms::$user->getVar('uid'));
-		foreach ($notification_handler->categoryEvents($category['name'], TRUE) as $event) {
-			if (!empty($event['admin_only']) && !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+		$subscribed_events = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], icms::$module->getVar('mid'), icms::$user->getVar('uid'));
+		foreach ($notification_handler->categoryEvents($category['name'], true) as $event) {
+			if (!empty($event['admin_only']) && !icms::$user->isAdmin(icms::$module->getVar('mid'))) {
 				continue;
 			}
 			$subscribed = in_array($event['name'], $subscribed_events) ? 1 : 0;

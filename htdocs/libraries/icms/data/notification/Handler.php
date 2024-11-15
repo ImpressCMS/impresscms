@@ -691,9 +691,9 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	 * @param  int	 $module_id  ID of the module  (default current module)
 	 * @return bool
 	 */
-	static public function isEnabled($style, $module_id=null) {
-		if (isset($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
-			$status = $GLOBALS['xoopsModuleConfig']['notification_enabled'];
+	static public function isEnabled($style, $module_id = null) {
+		if (isset(icms::$module->config['notification_enabled'])) {
+			$status = icms::$module->config['notification_enabled'];
 		} else {
 			if (!isset($module_id)) {
 				return false;
