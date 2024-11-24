@@ -154,7 +154,7 @@ class icms_view_theme_Object {
 		$this->template->currentTheme =& $this;
 		$this->template->assign_by_ref('xoTheme', $this);
 
-		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule;
+		global $icmsConfig, $icmsConfigMetaFooter;
 		$this->template->assign(
 			array(
 				'icms_style' => ICMS_URL . '/icms' . ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? '_rtl' : '') . '.css',
@@ -167,8 +167,8 @@ class icms_view_theme_Object {
 				'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 				'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 				'icms_dirname' => @icms::$module ? icms::$module->getVar('dirname') : 'system',
-				'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
-						? $icmsModule->getVar('name')
+				'icms_pagetitle' => isset(icms::$module) && is_object(icms::$module)
+						? icms::$module->getVar('name')
 						: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES)
 			)
 		);
@@ -185,11 +185,11 @@ class icms_view_theme_Object {
 		));
 		if (isset(icms::$user) && is_object(icms::$user)) {
 			$this->template->assign(array(
-	        	'icms_isuser' => TRUE,
+	        	'icms_isuser' => true,
 	        	'icms_userid' => icms::$user->getVar('uid'),
 	        	'icms_uname' => icms::$user->getVar('uname'),
 	        	'icms_isadmin' => icms::$user->isAdmin(),
-	        	'xoops_isuser' => TRUE,
+	        	'xoops_isuser' => true,
 	        	'xoops_userid' => icms::$user->getVar('uid'),
 	        	'xoops_uname' => icms::$user->getVar('uname'),
 	        	'xoops_isadmin' => icms::$user->isAdmin(),
@@ -197,10 +197,10 @@ class icms_view_theme_Object {
 			);
 		} else {
 			$this->template->assign(
-				array('icms_isuser' => FALSE,
-					'icms_isadmin' => FALSE,
-					'xoops_isuser' => FALSE,
-					'xoops_isadmin' => FALSE
+				array('icms_isuser' => false,
+					'icms_isadmin' => false,
+					'xoops_isuser' => false,
+					'xoops_isadmin' => false
 				)
 			);
 		}
@@ -233,7 +233,7 @@ class icms_view_theme_Object {
 				unset($this->plugins[$k]);
 			}
 		}
-		return TRUE;
+		return true;
 	}
 	/**#@-*/
 
@@ -285,11 +285,10 @@ class icms_view_theme_Object {
 	 * @return  bool
 	 */
 	public function checkCache() {
-		global $xoopsModule, $icmsModule;
 
 		if ($_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime) {
 			$template = $this->contentTemplate ? $this->contentTemplate : 'db:system_dummy.html';
-			$dirname = $icmsModule->getVar('dirname', 'n');
+			$dirname = icms::$module->getVar('dirname', 'n');
 
 			$this->template->caching = 2;
 			$this->template->cache_lifetime = $this->contentCacheLifetime;
@@ -302,11 +301,11 @@ class icms_view_theme_Object {
 
 			if ($this->template->is_cached($template, $this->contentCacheId)) {
 				icms::$logger->addExtra($template, sprintf(_REGENERATES, $this->contentCacheLifetime));
-				$this->render(NULL, NULL, $template);
-				return TRUE;
+				$this->render(null, null, $template);
+				return true;
 			}
 		}
-		return FALSE;
+		return false;
 	}
 
 	/**
