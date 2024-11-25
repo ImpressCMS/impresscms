@@ -66,7 +66,7 @@ $modversion = array(
 /**  Development information */
 	'status_version' => "Beta 3",
 	'status' => "beta",
-	'date' => "19 Nov 2024",
+	'date' => "26 Nov 2024",
 	'author_word' => "",
 	'warning' => _CO_ICMS_WARNING_BETA,
 
