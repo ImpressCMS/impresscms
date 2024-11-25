@@ -18,7 +18,7 @@ include_once ICMS_ROOT_PATH . "/modules/system/admin/rating/class/rating.php" ;
 
 icms_loadLanguageFile('system', 'rating', true);
 
-$module_dirname = $icmsModule->dirname();
+$module_dirname = icms::$module->getVar('dirname');
 
 // Retreive the IcmsObject Rating plugin for the current module if it exists
 $icms_rating_handler = icms_getModuleHandler('rating', 'system');
@@ -63,7 +63,7 @@ if (isset($_POST['icms_rating_submit'])) {
 	$ratingObj->setVar('itemid', $rating_itemid);
 	$ratingObj->setVar('uid', icms::$user->getVar('uid'));
 	$ratingObj->setVar('date', time());
-	$ratingObj->setVar('rate', $_POST['icms_rating_value']);
+	$ratingObj->setVar('rate', (int) $_POST['icms_rating_value']);
 	if (!$icms_rating_handler->insert($ratingObj)) {
 		if (icms::$xoopsDB->errno() == 1062) {
 			$message = _CO_ICMS_RATING_DUPLICATE_ENTRY;
@@ -76,5 +76,3 @@ if (isset($_POST['icms_rating_submit'])) {
 	redirect_header('', 3, $message);
 	exit;
 }
-
-?>
