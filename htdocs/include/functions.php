@@ -603,19 +603,24 @@ function icms_getCurrentModuleName()
 function icms_userIsAdmin($module = false)
 {
 	static $icms_isAdmin;
-	if(!$module)
+	if (!$module)
 	{
 		$module = icms::$module->getVar('dirname');
 	}
-	if(isset ($icms_isAdmin[$module])) {return $icms_isAdmin[$module];}
-	if(!icms::$user)
+	if (isset ($icms_isAdmin[$module]))
+	{
+		return $icms_isAdmin[$module];
+	}
+	if (!icms::$user)
 	{
 		$icms_isAdmin[$module] = false;
 		return $icms_isAdmin[$module];
 	}
 	$icms_isAdmin[$module] = false;
 	$icmsModuleInfo = icms_getModuleInfo($module);
-	if(!is_object($icmsModuleInfo)) {return false;}
+	if (!is_object($icmsModuleInfo)) {
+		return false;
+	}
 	$module_id = $icmsModuleInfo->getVar('mid');
 	$icms_isAdmin[$module] = icms::$user->isAdmin($module_id);
 	return $icms_isAdmin[$module];
