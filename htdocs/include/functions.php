@@ -607,7 +607,7 @@ function icms_userIsAdmin($module = false)
 	{
 		$module = icms::$module->getVar('dirname');
 	}
-	if (isset ($icms_isAdmin[$module]))
+	if (isset($icms_isAdmin[$module]))
 	{
 		return $icms_isAdmin[$module];
 	}
