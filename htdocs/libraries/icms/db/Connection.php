@@ -38,7 +38,7 @@ class icms_db_Connection extends PDO implements icms_db_IConnection {
 	 * @see PDO::query()
 	 * @return
 	 */
-	public function query() {
+	public function query($statement, $fetchMode =  null, ...$fetch_mode_args) {
 		$args = func_get_args();
 		$sql = $args[0];
 		// the use of icms_db_IConnection is correct - without it, the query count in debug is not correct
