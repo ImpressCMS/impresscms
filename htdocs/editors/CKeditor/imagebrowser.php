@@ -158,7 +158,7 @@ function imanager_index($imgcat_id = NULL) {
 		$admin = false;
 	} else {
 		$groups = &icms::$user->getGroups();
-		$admin = (!icms::$user->isAdmin(1)) ? false : true;
+		$admin = !!icms::$user->isAdmin(1);
 	}
 
 	if (!is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
