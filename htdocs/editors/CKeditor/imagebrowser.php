@@ -85,7 +85,7 @@ if (!is_object(icms::$user)) {
 	$admin = false;
 } else {
 	$groups = &icms::$user->getGroups();
-	$admin = (!icms::$user->isAdmin(1)) ? false : true;
+	$admin = !!icms::$user->isAdmin(1);
 }
 if (!$admin) {
 	exit(IMANAGER_NOPERM);
@@ -350,7 +350,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$admin = false;
 	} else {
 		$groups = &icms::$user->getGroups();
-		$admin = (!icms::$user->isAdmin(1)) ? false : true;
+		$admin = !!icms::$user->isAdmin(1);
 	}
 
 	$query = !empty($query) ? $query : NULL;
