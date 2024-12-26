@@ -101,7 +101,7 @@ h6 {font-size: .8em;}
 	font-weight: bold;
 	padding-bottom: 3px;
 	border-bottom: 1px dashed #8DBDE1;
-	
+
 }
 
 /* ---------- Column left/right rules ---------- */
@@ -116,7 +116,7 @@ h6 {font-size: .8em;}
 
 /* ------ Main content ------ */
 
-#xo-canvas-content {	
+#xo-canvas-content {
 	line-height: 1.3em;
 	z-index: 0;
 	padding-top: 8px;
@@ -136,6 +136,70 @@ h6 {font-size: .8em;}
 	width: 100%;
 }
 
+.CPbigTitle{
+	font-size: 20px;
+	color: #1E90FF;
+	background: no-repeat left top;
+	font-weight: bold;
+	height: 40px;
+	vertical-align: middle;
+	padding: 10px 0 0 50px;
+	border-bottom: 3px solid #1E90FF;
+}
+.CPindexOptions{
+	padding: 4px;
+	vertical-align: top;
+}
+.CPmediumTitle{
+	font-weight: bold;
+	font-size: 14px;
+	color: #FF4500;
+}
+div.cpicon{
+	margin: 3px;
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+div.cpicon a {
+	display: inline-block;
+	height: 70px !important;
+	height: 70px;
+	width: 70px !important;
+	width: 70px;
+	vertical-align: middle;
+	text-decoration : none;
+	border: 1px solid #CCCCCC;
+	padding: 2px 5px 1px 5px;
+	margin: 0;
+	margin-bottom:4px;
+	color: #666666;
+}
+
+div.cpicon a:hover{
+	background-color: #FFF6C1;
+	border: 1px solid #FF9900;
+	color: #1E90FF;
+}
+
+div.cpicon img { margin-top: 1px; margin-bottom: 1px; width: 32px; height: 32px;}
+div.cpicon span {
+	font-size: 11px;
+	font-weight: bold;
+	display: block;
+	overflow: hidden;
+}
+div.cpicon span.uno{
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: underline;
+	color: Blue;
+}
+div.cpicon span.unor{
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: underline;
+	color: #CC0000;
+}
 /* ---------- Redirect ------------ */
 #xo-redirect {
 	margin: 40px 0;
@@ -154,24 +218,24 @@ h6 {font-size: .8em;}
 #xo-siteclose-login {
 	width: 270px;
 	margin-left: auto;
-	margin-right: auto; 	
-	border:1px solid #DDDDFF;	
+	margin-right: auto;
+	border:1px solid #DDDDFF;
 	margin-top: 40px;
 	margin-bottom: 20px;
 }
 #xo-siteclose-login h2 {
 	background-color: #f2f2f2;
 	font-weight: bold;
-	font-size: 1em; 
+	font-size: 1em;
 	color: white;
-	padding: 2px;	
+	padding: 2px;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	text-align: center;	
+	text-align: center;
 }
 #xo-siteclose-login form {
 	padding: 0px;
-	margin: 0px;	
+	margin: 0px;
 }
 #xo-siteclose-login div{
 	padding: 6px;
@@ -187,7 +251,7 @@ h6 {font-size: .8em;}
 }
 #xo-siteclose-login div.button {
 	text-align: right;
-	clear: both;	
+	clear: both;
 	padding-right: 0px;
 }
 /* ---------- Footer rules ---------- */
