@@ -13,6 +13,8 @@
 if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
+use WideImage\WideImage;
+
 $icmsTpl = new icms_view_Tpl();
 
 /* mirror this file - modules/system/admin/images/browser.php - and adjust for paths and URLS */
