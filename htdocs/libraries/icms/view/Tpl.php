@@ -75,24 +75,16 @@ class icms_view_Tpl extends Smarty {
 			SMARTY_DIR . 'plugins',
 		);
 
-		// For backwars compatibility...
-		if (file_exists(ICMS_ROOT_PATH . '/class/smarty/plugins')) {
-			$this->plugins_dir[] = ICMS_ROOT_PATH . '/class/smarty/plugins';
-		}
-
-		if (file_exists(ICMS_ROOT_PATH . '/class/smarty/xoops_plugins')) {
-			$this->plugins_dir[] = ICMS_ROOT_PATH . '/class/smarty/xoops_plugins';
-		}
-
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
 			$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->getVar('mid') : 1;
+			$moduleid = (isset(icms::$module) && is_object(icms::$module)) ? icms::$module->getVar('mid') : 1;
 			$gperm_handler = icms::handler('icms_member_groupperm');
 			if ($icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
 			}
 		}
+		
 		parent::__construct();
 		if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 			$this->assign('icms_rtl', true);

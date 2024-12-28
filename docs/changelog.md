@@ -1,5 +1,27 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 2.0.0 beta 3
+* Date: 26 Nov 2024
+* DB Version: 48
+* Build Version: 110
+
+## What's Changed
+* fix indirect variable handling in IPF select form element by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1574
+* Remove use of $icmsModule in notification Handler.php by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1576
+* fix the module update by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1572
+* some last lingering $icmsModule uses by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1573
+* Adding codeclimate configuration by @skenow in https://github.com/ImpressCMS/impresscms/pull/1582
+* Adding automatic upgrades for 2 core tables by @skenow in https://github.com/ImpressCMS/impresscms/pull/1585
+* Remove old columns from the users table Resolves #1561 by @skenow in https://github.com/ImpressCMS/impresscms/pull/1588
+* handle if columns to remove from users table have already been removed by @skenow in https://github.com/ImpressCMS/impresscms/pull/1590
+* Remove content file and delete during an upgrade if the module is not installed by @skenow in https://github.com/ImpressCMS/impresscms/pull/1592
+* Removing extra code block for users table fields by @skenow in https://github.com/ImpressCMS/impresscms/pull/1591
+* Convert to current global for $icmsModule by @skenow in https://github.com/ImpressCMS/impresscms/pull/1595
+* Small bug fixes by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1594
+
+
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.0_beta_2...v2.0.0_beta3
+
 ## ImpressCMS 2.0.0 beta 2
 * Date: 26 Sept 2024
 * DB Version: 48

@@ -40,11 +40,12 @@
 /**
  * load the base class
  */
-require_once ICMS_LIBRARIES_PATH . '/phpmailer/PHPMailer.php';
-require_once ICMS_LIBRARIES_PATH . '/phpmailer/SMTP.php';
-require_once ICMS_LIBRARIES_PATH . '/phpmailer/Exception.php';
+require_once ICMS_LIBRARIES_PATH . '/phpmailer/src/Exception.php';
+require_once ICMS_LIBRARIES_PATH . '/phpmailer/src/PHPMailer.php';
+require_once ICMS_LIBRARIES_PATH . '/phpmailer/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 /**
  * Mailer Class.
