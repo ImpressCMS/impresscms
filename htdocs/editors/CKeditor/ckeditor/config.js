@@ -7,9 +7,9 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here.
 	// For complete reference see:
 	// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
-	
+
 	// Different toolbars, based on the user's group
-	
+
 	/*
 	 * Basic Config (ANONYMOUS TOOLBAR)
 	 */
@@ -74,7 +74,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.smiley_descriptions = [ ':-D', ':-)', ':-(', ':-o', ':-?', '8-)',
 			':lol:', ':-x', ':-p', ':oops:', ':cry:', ':evil:', ':roll:',
 			';-)', ':pint:', ':hammer:', ':idea:' ];
-	
+
 	config.allowedContent = true;
 	config.versionCheck = false;
 };
