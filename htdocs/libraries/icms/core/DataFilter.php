@@ -159,7 +159,7 @@ class icms_core_DataFilter {
 	 *        string $param which characters to apply the escaping to.
 	 * @return string Add slashes to the text if magic_quotes_gpc is turned off (and that should be always on >= PHP 5.4!!!).
 	 */
-	public static function addSlashes(string $text, string $param = null) {
+	public static function addSlashes(string $text, ?string $param = null) {
 		return addcslashes($text, $param);
 	}
 
