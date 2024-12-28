@@ -1,18 +1,19 @@
 <?php
 
 class IcmsInstallWizard {
-	protected array $pages = array();
-	protected array $pagesNames = array();
-	protected array $pagesTitles = array();
-	protected int $currentPage = 0;
-	protected string $currentPageName;
-	protected int $lastpage;
-	protected int $secondlastpage;
-	protected string $language = 'english';
-	protected bool $no_php5 = false;
-	protected bool $safe_mode = false;
+	public array $pages = array();
+	public array $pagesNames = array();
+	public array $pagesTitles = array();
+	public array $titles = array();
+	public int $currentPage = 0;
+	public string $currentPageName;
+	public string $lastpage;
+	public string $secondlastpage = '';
+	public string $language = 'english';
+	public bool $no_php5 = false;
+	public bool $safe_mode = false;
 
-	function xoInit(): bool {
+	public function xoInit(): bool {
 		if (!$this->checkAccess()) {
 			return false;
 		}
@@ -20,7 +21,7 @@ class IcmsInstallWizard {
 			$_SERVER['REQUEST_URI'] = htmlentities($_SERVER['PHP_SELF']);
 		}
 
-		if (PHP_VERSION_ID < 74000) {
+		if (PHP_VERSION_ID < 70400) {
 			$this->no_php5 = true;
 		}
 		/*
@@ -101,7 +102,7 @@ class IcmsInstallWizard {
 		return true;
 	}
 
-	function checkAccess():bool {
+	public function checkAccess(): bool {
 		if (INSTALL_USER && INSTALL_PASSWORD) {
 			if (!isset($_SERVER['PHP_AUTH_USER'])) {
 				header('WWW-Authenticate: Basic realm="ImpressCMS Installer"');
@@ -123,7 +124,7 @@ class IcmsInstallWizard {
 		return true;
 	}
 
-	function loadLangFile($file) {
+	public function loadLangFile($file) {
 		if (file_exists("./language/$this->language/$file.php")) {
 			include_once "./language/$this->language/$file.php";
 		} else {
@@ -131,7 +132,7 @@ class IcmsInstallWizard {
 		}
 	}
 
-	function initLanguage($language) {
+	public function initLanguage($language) {
 		$language = preg_replace('/[^A-Za-z]+/', '', $language);
 		if (!file_exists("./language/$language/install.php")) {
 			$language = 'english';
@@ -140,7 +141,7 @@ class IcmsInstallWizard {
 		$this->loadLangFile('install');
 	}
 
-	function setPage($page) {
+	public function setPage($page): string {
 		/**
 		 * If server is PHP 4, display the php4 page and stop the install
 		 */
@@ -168,7 +169,7 @@ class IcmsInstallWizard {
 		return $this->currentPage;
 	}
 
-	function baseLocation(): string {
+	public function baseLocation(): string {
 		$proto = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on')) ? 'https' : 'http';
 		$host = htmlentities($_SERVER['HTTP_HOST']);
 		$server_php_self = htmlentities($_SERVER['PHP_SELF']);
@@ -176,10 +177,10 @@ class IcmsInstallWizard {
 		return "$proto://$host$base";
 	}
 
-	function pageURI($page) : string {
+	public function pageURI($page): string {
 		if (!(int) $page[0]) {
 			if ($page[0] === '+') {
-				$page = $this->currentPage . substr($page, 1);
+				$page = $this->currentPage + substr($page, 1);
 			} elseif ($page[0] === '-') {
 				$page = $this->currentPage - substr($page, 1);
 			} else {
@@ -190,10 +191,11 @@ class IcmsInstallWizard {
 		return $this->baseLocation() . "/page_$page.php";
 	}
 
-	function redirectToPage($page, $status = 303, $message = 'See other') {
+	public function redirectToPage($page, $status = 303, $message = 'See other') {
 		$location = $this->pageURI($page);
 		$proto = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
 		header("$proto $status $message");
+		// header( "Status: $status $message" );
 		header("Location: $location");
 	}
 }
