@@ -2,8 +2,11 @@
 
 class IcmsInstallWizard {
 	var $pages = array();
+	var $pagesNames = array();
+	var $pagesTitles = array();
 	var $titles = array();
 	var $currentPage = 0;
+	var $currentPageName;
 	var $lastpage;
 	var $secondlastpage;
 	var $language = 'english';
@@ -18,7 +21,7 @@ class IcmsInstallWizard {
 			$_SERVER['REQUEST_URI'] = htmlentities($_SERVER['PHP_SELF']);
 		}
 
-		if (PHP_VERSION_ID < 70000) {
+		if (PHP_VERSION_ID < 74000) {
 			$this->no_php5 = true;
 		}
 		/*
