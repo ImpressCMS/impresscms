@@ -1,19 +1,18 @@
 <?php
 
 class IcmsInstallWizard {
-	var $pages = array();
-	var $pagesNames = array();
-	var $pagesTitles = array();
-	var $titles = array();
-	var $currentPage = 0;
-	var $currentPageName;
-	var $lastpage;
-	var $secondlastpage;
-	var $language = 'english';
-	var $no_php5 = false;
-	var $safe_mode = false;
+	protected array $pages = array();
+	protected array $pagesNames = array();
+	protected array $pagesTitles = array();
+	protected int $currentPage = 0;
+	protected string $currentPageName;
+	protected int $lastpage;
+	protected int $secondlastpage;
+	protected string $language = 'english';
+	protected bool $no_php5 = false;
+	protected bool $safe_mode = false;
 
-	function xoInit() {
+	function xoInit(): bool {
 		if (!$this->checkAccess()) {
 			return false;
 		}
@@ -102,7 +101,7 @@ class IcmsInstallWizard {
 		return true;
 	}
 
-	function checkAccess() {
+	function checkAccess():bool {
 		if (INSTALL_USER && INSTALL_PASSWORD) {
 			if (!isset($_SERVER['PHP_AUTH_USER'])) {
 				header('WWW-Authenticate: Basic realm="ImpressCMS Installer"');
@@ -169,7 +168,7 @@ class IcmsInstallWizard {
 		return $this->currentPage;
 	}
 
-	function baseLocation() {
+	function baseLocation(): string {
 		$proto = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on')) ? 'https' : 'http';
 		$host = htmlentities($_SERVER['HTTP_HOST']);
 		$server_php_self = htmlentities($_SERVER['PHP_SELF']);
@@ -177,10 +176,10 @@ class IcmsInstallWizard {
 		return "$proto://$host$base";
 	}
 
-	function pageURI($page) {
+	function pageURI($page) : string {
 		if (!(int) $page[0]) {
 			if ($page[0] === '+') {
-				$page = $this->currentPage + substr($page, 1);
+				$page = $this->currentPage . substr($page, 1);
 			} elseif ($page[0] === '-') {
 				$page = $this->currentPage - substr($page, 1);
 			} else {
@@ -195,7 +194,6 @@ class IcmsInstallWizard {
 		$location = $this->pageURI($page);
 		$proto = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
 		header("$proto $status $message");
-		// header( "Status: $status $message" );
 		header("Location: $location");
 	}
 }
