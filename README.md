@@ -4,12 +4,16 @@
 ![GitHub Release](https://img.shields.io/github/v/release/impresscms/impresscms?include_prereleases&display_name=release&logo=github&style=flat-square)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms.svg?type=shield&issueType=license&style=flat-square)](https://app.fossa.com/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms?ref=badge_shield&issueType=license&style=flat-square)
 ![Code Climate coverage](https://img.shields.io/codeclimate/coverage-letter/ImpressCMS/impresscms?logo=codeclimate&style=flat-square)
-![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/ImpressCMS/impresscms?logo=codeclimate&style=flat-square) 
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/ImpressCMS/impresscms?logo=codeclimate&style=flat-square)
 
 ![Mastodon Follow](https://img.shields.io/mastodon/follow/109613696614549139?domain=https%3A%2F%2Fphpc.social&style=flat-square&logo=mastodon)
 <a href="https://www.facebook.com/ImpressCMS/"><img src="https://img.shields.io/badge/facebook-%3F%3F%3F-%233C5A99.svg?logo=facebook&style=flat-square" alt="FaceBook" /></a> <a title="Crowdin" target="_self" href="https://impresscms.crowdin.com/impresscms"><img src="https://badges.crowdin.net/e/f7817e813865fde0509c454ad1ee4c11/localized.svg" /></a>
+# ImpressCMS 2.0
+ImpressCMS is a community developed Content Management System build on PHP and MySQL.
 
-ImpressCMS is a community developed Content Management System. With this tool maintaining the content of a website becomes as easy as writing a word document. ImpressCMS is the ideal tool for a wide range of users: from business to community users, from large enterprises to people who want a simple, easy to use blogging tool.
+This tool makes maintaining a website as easy as writing a word document.
+
+ImpressCMS is the ideal tool for multi-lingual websites : both the user interface and the content itself can handle multiple languages.
 
 ImpressCMS has these features:
 <details>
@@ -50,7 +54,7 @@ For each type of website ImpressCMS offers different functionality with a collec
 
 ## Installation
 
-To install and use this package, transfer this package to your web server, putting the contents of the htdocs/ folder in your web root, and follow the steps of the installer. 
+To install and use this package, transfer this package to your web server, putting the contents of the htdocs/ folder in your web root, and follow the steps of the installer.
 
 More detailed installation instructions are available [on the ImpressCMS site](https://www.impresscms.org/modules/simplywiki/index.php?page=Installation)
 
@@ -62,13 +66,15 @@ Also, help could be found on [our official forums](https://www.impresscms.org/mo
 
 ## How to contribute?
 ### Code contribution
-Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us a [pull request](https://github.com/ImpressCMS/impresscms/pulls)
+Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us a [pull request](https://github.com/ImpressCMS/impresscms/pulls). If you plan on working on more than just a simple bugfix, discuss your plans first on the forums.
 
-All active development branches are named in format `MAJOR.MINOR.x`. So if you want to fix or add something new, you should branch from most similar looking branch. F.e.: if you want to do with latest **1.5** code, you need to branch from `1.5.x` branch.
+All active development branches are named in format `MAJOR.MINOR.x`. So if you want to fix or add something new, you should branch from most similar looking branch.
+
+E.g.: if you want to do with latest **2.0** code, you need to branch from `2.0.x` branch.
 
 If you not sure how can be possible to work with Git or/and GitHub, try [interactive GitHub tutorial](https://skills.github.com).
 ### Translation
-ImpressCMS is built to work with multiple languages, for the user interface of the administration interface to the content managed on the site. 
+ImpressCMS is built to work with multiple languages, for the user interface of the administration interface to the content managed on the site.
 
 We use Crowdin to manage our translations, please check out [https://impresscms.crowdin.com](https://impresscms.crowdin.com/u/projects/1)
 ## License
