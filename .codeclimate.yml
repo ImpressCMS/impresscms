@@ -119,3 +119,4 @@ plugins:
     config:
       file_extensions:
         - php
+      rulesets: "cleancode, codesize, design, naming, unusedcode"
