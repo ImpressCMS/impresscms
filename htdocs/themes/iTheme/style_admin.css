@@ -50,7 +50,6 @@ h5 {font-size: .9em;}
 h6 {font-size: .8em;}
 
 /* ------ Header rules ------ */
-
 #xo-header {
 	clear: both;
 	height: 78px;
@@ -59,27 +58,22 @@ h6 {font-size: .8em;}
 	margin-left: 35px;
 	margin-right: 35px;
 }
-
 #xo-headerlogo {
 	float: left;
 }
-
 #xo-headerbanner {
 	position:relative;
 	top:10px;
 	right:20px;
 	float: right;
 }
-
 /* ------ Header top menu navigation rules ------ */
-
 #xo-globalnav {
 	clear: both;
 	padding-left: 11px;
 	margin-top: 40px;
 	padding-bottom: 7px;
 }
-
 #xo-globalnav a {
 	text-decoration: none;
 	text-align: center;
@@ -90,18 +84,16 @@ h6 {font-size: .8em;}
 	padding-bottom: 7px;
 	padding-top: 2px;
 }
-
 #xo-globalnav a:hover {
 	color: #fff;
 	border-top: 4px solid #F3AC03;
 }
-
 #controlbar {
 	color: #F3AC03;
 	font-weight: bold;
 	padding-bottom: 3px;
 	border-bottom: 1px dashed #8DBDE1;
-	
+
 }
 
 /* ---------- Column left/right rules ---------- */
@@ -115,8 +107,7 @@ h6 {font-size: .8em;}
 #xo-canvas-leftcolumn a:hover {}
 
 /* ------ Main content ------ */
-
-#xo-canvas-content {	
+#xo-canvas-content {
 	line-height: 1.3em;
 	z-index: 0;
 	padding-top: 8px;
@@ -131,47 +122,107 @@ h6 {font-size: .8em;}
 /* ---------- Module display rules ---------- */
 
 #xo-content {
-	padding: 15px 1%;
 	float: left;
+	padding: 15px 1%;
 	width: 100%;
 }
-
+.CPbigTitle{
+	background: no-repeat left top;
+	border-bottom: 3px solid #1E90FF;
+	color: #1E90FF;
+	font-size: 20px;
+	font-weight: bold;
+	height: 40px;
+	padding: 10px 0 0 50px;
+	vertical-align: middle;
+}
+.CPindexOptions{
+	padding: 4px;
+	vertical-align: top;
+}
+.CPmediumTitle{
+	color: #FF4500;
+	font-weight: bold;
+	font-size: 14px;
+}
+div.cpicon{
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 3px;
+	text-align: center;
+}
+div.cpicon a {
+	border: 1px solid #CCCCCC;
+	color: #666666;
+	display: inline-block;
+	height: 70px !important;
+	margin: 0 0 4px;
+	padding: 2px 5px 1px 5px;
+	text-decoration : none;
+	vertical-align: middle;
+	width: 70px !important;
+}
+div.cpicon a:hover{
+	background-color: #FFF6C1;
+	border: 1px solid #FF9900;
+	color: #1E90FF;
+}
+div.cpicon img {
+	height: 32px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	width: 32px;
+}
+div.cpicon span {
+	display: block;
+	font-size: 11px;
+	font-weight: bold;
+	overflow: hidden;
+}
+div.cpicon span.uno{
+	color: blue;
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: underline;
+}
+div.cpicon span.unor{
+	color: #CC0000;
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: underline;
+}
 /* ---------- Redirect ------------ */
 #xo-redirect {
-	margin: 40px 0;
-	margin-left: auto;
-	margin-right: auto;
-	width: 85%;
 	background-color: #F2F2F2;
+	border: 2px solid #DDDDFF;
 	color: #222;
-	text-align: center;
 	font-weight: bold;
+	margin: 40px auto;
 	padding: 10px;
 	text-align: center;
-	border: 2px solid #DDDDFF;
+	width: 85%;
 }
 /* ---------- Site close ------------ */
 #xo-siteclose-login {
 	width: 270px;
 	margin-left: auto;
-	margin-right: auto; 	
-	border:1px solid #DDDDFF;	
+	margin-right: auto;
+	border:1px solid #DDDDFF;
 	margin-top: 40px;
 	margin-bottom: 20px;
 }
 #xo-siteclose-login h2 {
 	background-color: #f2f2f2;
-	font-weight: bold;
-	font-size: 1em; 
 	color: white;
-	padding: 2px;	
+	font-weight: bold;
+	font-size: 1em;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	text-align: center;	
+	padding: 2px;
+	text-align: center;
 }
 #xo-siteclose-login form {
+	margin: 0px;
 	padding: 0px;
-	margin: 0px;	
 }
 #xo-siteclose-login div{
 	padding: 6px;
@@ -186,19 +237,18 @@ h6 {font-size: .8em;}
 	padding-bottom: 3px;
 }
 #xo-siteclose-login div.button {
-	text-align: right;
-	clear: both;	
+	clear: both;
 	padding-right: 0px;
+	text-align: right;
 }
 /* ---------- Footer rules ---------- */
 #xo-footer {
+	background: #59b9e4 url(img/foot_bg.jpg) repeat-x;
+	color: #666;
+	font-size: 70%;
+	margin-top: 5px;
 	padding-top: 10px;
 	text-align: center;
-	font-size: 70%;
-	color: #666;
-	margin-top: 5px;
-	background: url(img/foot_bg.jpg) repeat-x;
-	background-color: #59b9e4;
 }
 
 #xo-footer a {
@@ -212,7 +262,7 @@ h6 {font-size: .8em;}
 /* ----------  mode debug  ---------- */
 
 #xo-logger-output {
-	font-size:			80%;
+	font-size:	80%;
 }
 
 /* ---------- Image Manager / Folder not writeable ------------ */
