@@ -169,12 +169,12 @@ define("ERR_CHARSET_NOT_SET", "Set di caratteri di default non &egrave; adatto p
 //
 define('_INSTALL_SELECT_MODS_INTRO', 'Nella lista sottostante si prega di selezionare i moduli che si desidera installare su questo sito.
 Tutti i moduli installati saranno accessibili dal gruppo amministratori e dagli utenti registrati.
-In caso vogliate dare ai visitatori anonimi del sito (utenti non registrati o utenti che non hanno ancora fatto il login) accesso a uno o pi&ugrave; di questi moduli installati si prega di abilitare il gruppo anonimi dal pannello amministrativo una volta completata questa installazione. <br /><br />Per maggiori informazioni riguardanti il gruppo amministrativo si prega di visitare il <a href="http://wiki.impresscms.org/index.php?title=Permissions" rel="external">wiki</a>.');
+In caso vogliate dare ai visitatori anonimi del sito (utenti non registrati o utenti che non hanno ancora fatto il login) accesso a uno o pi&ugrave; di questi moduli installati si prega di abilitare il gruppo anonimi dal pannello amministrativo una volta completata questa installazione. <br /><br />Per maggiori informazioni riguardanti il gruppo amministrativo si prega di visitare il <a href="http://wiki.impresscms.org/index.php?title=Permissions" rel="external">wiki</a>.' );
 
-define("_INSTALL_SELECT_MODULES", 'Seleziona i moduli da installare');
-define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Seleziona i moduli visibili ai visitatori');
+define("_INSTALL_SELECT_MODULES", 'Seleziona i moduli da installare' );
+define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Seleziona i moduli visibili ai visitatori' );
 define("_INSTALL_IMPOSSIBLE_MOD_INSTALL", "Il modulo %s non può essere installato." );
-define("_INSTALL_ERRORS", 'Errori');
+define("_INSTALL_ERRORS", 'Errori' );
 define("_INSTALL_MOD_ALREADY_INSTALLED", "Il module %s &#232; stato già installato" );
 define("_INSTALL_FAILED_TO_EXECUTE", "Esecuzione fallita " );
 define("_INSTALL_EXECUTED_SUCCESSFULLY", "Eseguito correttamente" );
@@ -205,32 +205,31 @@ define("TRUST_PATH_SUCCESSFULLY_CREATED", "Il percorso sicuro &#232; stato creat
 // welcome custom blocks
 define("WELCOME_WEBMASTER", "Benvenuto Webmaster !" );
 define("WELCOME_ANONYMOUS", "Benvenuto in un sito 'powered by ImpressCMS'!" );
-define("_MD_AM_MULTLOGINMSG_TXT",'Non &egrave; stato possibile fare login al sito!! <br />
+define("_MD_AM_MULTLOGINMSG_TXT", 'Non &egrave; stato possibile fare login al sito!! <br />
         <p align="left" style="color:red;">
         Possibili cause:<br />
          - Sei gi&agrave; loggato al sito.<br />
          - Qualcun altro &egrave; loggato nel sito e usa il tuo nome utente e password.<br />
          - Hai lasciato il sito o hai chiuso la finestra del browser senza clickare il bottone del logout.<br />
         </p>
-        Attendi qualche minuto e prova pi&ugrave; tardi. Se il problema continua a persistere contatta un amministratore del sito.');
-define("_MD_AM_RSSLOCALLINK_DESC",'http://www.impresscms.org/modules/news/rss.php'); //Link to the rrs of local support site
-define("_INSTALL_LOCAL_SITE",'https://www.impresscms.org/'); //Link to local support site
-define("_LOCAOL_STNAME",'ImpressCMS'); //Link to local support site
-define("_LOCAL_SLOCGAN",'Make a lasting impression'); //Link to local support site
-define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
-define("_LOCAL_SENSORTXT",'#OOPS#'); //Add local translation
+        Attendi qualche minuto e prova pi&ugrave; tardi. Se il problema continua a persistere contatta un amministratore del sito.' );
+define("_MD_AM_RSSLOCALLINK_DESC", 'http://www.impresscms.org/modules/news/rss.php' ); //Link to the rrs of local support site
+define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/' ); //Link to local support site
+define("_LOCAOL_STNAME", 'ImpressCMS' ); //Link to local support site
+define("_LOCAL_SLOCGAN", 'Make a lasting impression' ); //Link to local support site
+define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>' ); //footer Link to local support site
+define("_LOCAL_SENSORTXT", '#OOPS#' ); //Add local translation
 define("_ADM_USE_RTL", "0" ); // turn this to 1 if your language is right to left
-define("_DEF_LANG_TAGS",'en,fr,it,nl'); //Add local translation
-define("_DEF_LANG_NAMES",'english,french,italian,dutch'); //Add local translation
-define("_LOCAL_LANG_NAMES", 'English,français,Italiano,Nederlands'); //Add local translation
+define("_DEF_LANG_TAGS", 'en,fr,it,nl' ); //Add local translation
+define("_DEF_LANG_NAMES", 'english,french,italian,dutch' ); //Add local translation
+define("_LOCAL_LANG_NAMES", 'English,français,Italiano,Nederlands' ); //Add local translation
 define("_EXT_DATE_FUNC", "0" ); // change 0 to 1 if this language has an extended date function
 
 ######################## Added in 1.2 ###################################
 define("ADMIN_DISPLAY_LABEL", "Nome amministratore visualizzato" ); // L37
-define('_CORE_PASSLEVEL1','Troppo breve');
-define('_CORE_PASSLEVEL2','Debole');
-define('_CORE_PASSLEVEL3','Buona');
-define('_CORE_PASSLEVEL4','Forte');
+define('_CORE_PASSLEVEL1', 'Troppo breve' );
+define('_CORE_PASSLEVEL2', 'Debole' );
+define('_CORE_PASSLEVEL3', 'Buona' );
+define('_CORE_PASSLEVEL4', 'Forte' );
 define('DB_PCONNECT_HELP', "Le connessioni persistenti sono utili con connessioni internet lente. Non sono generalmente richieste per la maggior parte delle installazioni. Default è 'NO'. Scegli 'NO' se non sei sicuro" ); // L69
 define("DB_PCONNECT_HELPS",  "Le connessioni persistenti sono utili con connessioni internet lente. Non sono generalmente richieste per la maggior parte delle installazioni." ); // L69
-?>

@@ -216,17 +216,17 @@ define("_LOCAL_SLOCGAN", 'Maak een blijvende indruk'); //Link to local support s
 define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">Het ImpressCMS Project</a>'); //footer Link to local support site
 define("_LOCAL_SENSORTXT", '#OOPS#'); //Add local translation
 define("_ADM_USE_RTL", "0" ); // turn this to 1 if your language is right to left
-define("_DEF_LANG_TAGS",'en,fr,it,nl'); //Add local translation
-define("_DEF_LANG_NAMES",'english,french,italian,dutch'); //Add local translation
+define("_DEF_LANG_TAGS", 'en,fr,it,nl'); //Add local translation
+define("_DEF_LANG_NAMES", 'english,french,italian,dutch'); //Add local translation
 define("_LOCAL_LANG_NAMES", 'English,français,Italiano,Nederlands'); //Add local translation
 define("_EXT_DATE_FUNC", "0" ); // change 0 to 1 if this language has an extended date function
 
 ######################## Added in 1.2 ###################################
 define("ADMIN_DISPLAY_LABEL", "Beheerder weergavenaam" ); // L37
-define('_CORE_PASSLEVEL1','Te kort');
-define('_CORE_PASSLEVEL2','Zwak');
-define('_CORE_PASSLEVEL3','Goed');
-define('_CORE_PASSLEVEL4','Sterk');
+define('_CORE_PASSLEVEL1', 'Te kort');
+define('_CORE_PASSLEVEL2', 'Zwak');
+define('_CORE_PASSLEVEL3', 'Goed');
+define('_CORE_PASSLEVEL4', 'Sterk');
 define('DB_PCONNECT_HELP', "Blijvende connecties kunnen interessant zijn voor tragere internet verbindingen. Ze zijn voor de meeste installaties niet nodig. Standaard is \'Neen\', kies \'Neen\' als u niet zeker bent." ); // L69
 define( 'DB_PCONNECT_HELPS',  'Blijvende connecties kunnen interessant zijn voor tragere internet verbindingen. Ze zijn voor de meeste installaties niet nodig.'); // L69
 

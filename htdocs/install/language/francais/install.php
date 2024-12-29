@@ -197,7 +197,7 @@ define("TRUST_PATH_SUCCESSFULLY_CREATED", "Le dossier de s&eacute;curit&eacute; 
 // welcome custom blocks
 define("WELCOME_WEBMASTER", "Bienvenue Webmaster !" );
 define("WELCOME_ANONYMOUS", "Bienvenue sur votre site internet !" );
-define("_MD_AM_MULTLOGINMSG_TXT",'Impossible de vous connectez avec ce nom d\'utilisateur et mot de passe sur le site!! <br />
+define("_MD_AM_MULTLOGINMSG_TXT", 'Impossible de vous connectez avec ce nom d\'utilisateur et mot de passe sur le site!! <br />
         <p align="left" style="color:red;">
         Causes possibles:<br />
          - Vous êtes déjà inscrit sur le site.<br />
@@ -205,15 +205,14 @@ define("_MD_AM_MULTLOGINMSG_TXT",'Impossible de vous connectez avec ce nom d\'ut
          - Vous avez quitter le site ou fermez la fenêtre du navigateur sans cliquer sur le bouton de déconnexion.<br />
         </p>
         Effacez les traces de votre navigateur (historique, cookies, sessions etc... Si le problème persiste contactez le webmasteur du site.');
-define("_MD_AM_RSSLOCALLINK_DESC",'https://www.impresscms.org/modules/news/rss.php'); //Lien vers le RRS de soutien local site
-define("_INSTALL_LOCAL_SITE",'https://www.impresscms.org/'); //Lien vers le site de support local
-define("_LOCAOL_STNAME",'ImpressCMS'); //Lien vers le site de support local
-define("_LOCAL_SLOCGAN",'Make a lasting impression');
-define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">ImpressCMS Projet</a>'); //Lien footer (pied de page) pour le soutien local site
-define("_LOCAL_SENSORTXT",'#OOPS#');
+define("_MD_AM_RSSLOCALLINK_DESC", 'https://www.impresscms.org/modules/news/rss.php'); //Lien vers le RRS de soutien local site
+define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/'); //Lien vers le site de support local
+define("_LOCAOL_STNAME", 'ImpressCMS'); //Lien vers le site de support local
+define("_LOCAL_SLOCGAN", 'Make a lasting impression');
+define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">ImpressCMS Projet</a>'); //Lien footer (pied de page) pour le soutien local site
+define("_LOCAL_SENSORTXT", '#OOPS#');
 define("_ADM_USE_RTL", "0" ); // tourner à 1 si votre langue est droite à gauche
-define("_DEF_LANG_TAGS",'en,fr,it,nl'); //Add local translation
-define("_DEF_LANG_NAMES",'english,french,italian,dutch'); //Add local translation
+define("_DEF_LANG_TAGS", 'en,fr,it,nl'); //Add local translation
+define("_DEF_LANG_NAMES", 'english,french,italian,dutch'); //Add local translation
 define("_LOCAL_LANG_NAMES", 'English,français,Italiano,Nederlands'); //Add local translation
 define("_EXT_DATE_FUNC", "0" ); // changement de 0 à 1, si cette langue a une fonction étendue date
-

@@ -202,7 +202,7 @@ define("TRUST_PATH_SUCCESSFULLY_CREATED", "The trust path was successfully creat
 // welcome custom blocks
 define("WELCOME_WEBMASTER", "Welcome Webmaster !" );
 define("WELCOME_ANONYMOUS", "Welcome to an ImpressCMS powered website !" );
-define("_MD_AM_MULTLOGINMSG_TXT",'It was not possible to login on the site!! <br />
+define("_MD_AM_MULTLOGINMSG_TXT", 'It was not possible to login on the site!! <br />
         <p align="left" style="color:red;">
         Possible causes:<br />
          - You are already logged in on the site.<br />
@@ -210,24 +210,24 @@ define("_MD_AM_MULTLOGINMSG_TXT",'It was not possible to login on the site!! <br
          - You left the site or close the browser window without clicking the logout button.<br />
         </p>
         Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
-define("_MD_AM_RSSLOCALLINK_DESC",'https://www.impresscms.org/modules/news/rss.php'); //Link to the rrs of local support site
-define("_INSTALL_LOCAL_SITE",'https://www.impresscms.org/'); //Link to local support site
-define("_LOCAOL_STNAME",'ImpressCMS'); //Link to local support site
-define("_LOCAL_SLOCGAN",'Make a lasting impression'); //Link to local support site
-define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
-define("_LOCAL_SENSORTXT",'#OOPS#'); //Add local translation
+define("_MD_AM_RSSLOCALLINK_DESC", 'https://www.impresscms.org/modules/news/rss.php'); //Link to the rrs of local support site
+define("_INSTALL_LOCAL_SITE", 'https://www.impresscms.org/'); //Link to local support site
+define("_LOCAOL_STNAME", 'ImpressCMS'); //Link to local support site
+define("_LOCAL_SLOCGAN", 'Make a lasting impression'); //Link to local support site
+define("_LOCAL_FOOTER", 'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"https://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
+define("_LOCAL_SENSORTXT", '#OOPS#'); //Add local translation
 define("_ADM_USE_RTL", "0" ); // turn this to 1 if your language is right to left
-define("_DEF_LANG_TAGS",'en,fr,it,nl'); //Add local translation
-define("_DEF_LANG_NAMES",'english,french,italian,dutch'); //Add local translation
+define("_DEF_LANG_TAGS", 'en,fr,it,nl'); //Add local translation
+define("_DEF_LANG_NAMES", 'english,french,italian,dutch'); //Add local translation
 define("_LOCAL_LANG_NAMES", 'English,français,Italiano,Nederlands'); //Add local translation
 define("_EXT_DATE_FUNC", "0" ); // change 0 to 1 if this language has an extended date function
 
 ######################## Added in 1.2 ###################################
 define("ADMIN_DISPLAY_LABEL", "Admin Display Name" ); // L37
-define('_CORE_PASSLEVEL1','Too short');
-define('_CORE_PASSLEVEL2','Weak');
-define('_CORE_PASSLEVEL3','Good');
-define('_CORE_PASSLEVEL4','Strong');
+define('_CORE_PASSLEVEL1', 'Too short');
+define('_CORE_PASSLEVEL2', 'Weak');
+define('_CORE_PASSLEVEL3', 'Good');
+define('_CORE_PASSLEVEL4', 'Strong');
 define('DB_PCONNECT_HELP', "Persistent connections are useful with slower internet connections. They are not generally required for most installations. Default is 'NO'. Choose 'NO' if you are unsure" ); // L69
 define("DB_PCONNECT_HELPS",  "Persistent connections are useful with slower internet connections. They are not generally required for most installations." ); // L69
 
