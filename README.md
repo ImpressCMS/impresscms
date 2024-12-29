@@ -2,12 +2,19 @@
 
 ![GitHub Release](https://img.shields.io/github/v/release/impresscms/impresscms?display_name=release&logo=github&style=flat-square)
 ![GitHub Release](https://img.shields.io/github/v/release/impresscms/impresscms?include_prereleases&display_name=release&logo=github&style=flat-square)
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms.svg?type=shield&issueType=license&style=flat-square)](https://app.fossa.com/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms?ref=badge_shield&issueType=license&style=flat-square)
 ![Code Climate coverage](https://img.shields.io/codeclimate/coverage-letter/ImpressCMS/impresscms?logo=codeclimate&style=flat-square)
-![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/ImpressCMS/impresscms?logo=codeclimate&style=flat-square)
+
+
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/ImpressCMS/impresscms?logo=codeclimate&style=flat-square) <a title="Crowdin" target="_self" href="https://impresscms.crowdin.com/impresscms"><img src="https://badges.crowdin.net/e/f7817e813865fde0509c454ad1ee4c11/localized.svg" /></a>
 
 ![Mastodon Follow](https://img.shields.io/mastodon/follow/109613696614549139?domain=https%3A%2F%2Fphpc.social&style=flat-square&logo=mastodon)
-<a href="https://www.facebook.com/ImpressCMS/"><img src="https://img.shields.io/badge/facebook-%3F%3F%3F-%233C5A99.svg?logo=facebook&style=flat-square" alt="FaceBook" /></a> <a title="Crowdin" target="_self" href="https://impresscms.crowdin.com/impresscms"><img src="https://badges.crowdin.net/e/f7817e813865fde0509c454ad1ee4c11/localized.svg" /></a>
+<a href="https://www.facebook.com/ImpressCMS/">
+<img src="https://img.shields.io/badge/facebook-%3F%3F%3F-%233C5A99.svg?logo=facebook&style=flat-square" alt="FaceBook" /></a>
+
+
+
 # ImpressCMS 2.0
 ImpressCMS is a community developed Content Management System build on PHP and MySQL.
 
