@@ -50,20 +50,20 @@ define( "INITIAL_SETTINGS_TITLE", "Veuillez entrer votre configuration initiale"
 define( "DATA_INSERTION", "Insertion de donn&eacute;es" );
 define( "DATA_INSERTION_TITLE", "Sauvegarde de votre configuration dans la base de donn&eacute;es" );
 define( "WELCOME", "Bienvenue" );
-define( "NO_PHP5", "No PHP 5" );
+define( "NO_PHP5", "Pas de PHP 7.4" );
 define( "WELCOME_TITLE", "Installation du site compl&eacute;te" );		// L0
 define( "MODULES_INSTALL", "Installation des scripts" );
 define( "MODULES_INSTALL_TITLE", "Installation des scripts " );
-define( "NO_PHP5_TITLE", "No PHP 7" );
-define( "NO_PHP5_CONTENT","PHP version 7.4.0 est requis, et PHP 8.1 est conseillé pour un bon fonctionnement.");
+define( "NO_PHP5_TITLE", "Minimum PHP 7.4" );
+define( "NO_PHP5_CONTENT","PHP version 7.4.0 est requis, et PHP 8.3 est conseillé pour un bon fonctionnement.");
 define( "SAFE_MODE", "Safe Mode On" );
 define( "SAFE_MODE_TITLE", "Safe Mode On" );
 define( "SAFE_MODE_CONTENT", "L installation ne peut pas continuer parce que ImpressCMS a détecté que PHP tourne en mode 'Safe'. Veuillez contacter votre fournisseur de hébergement pour rectifier la situation." );
 
 // Settings (labels and help text)
 define( "XOOPS_ROOT_PATH_LABEL", "Chemin physique de la racine de votre site" ); // L55
-define( "XOOPS_ROOT_PATH_HELP", "C'est est le chemin de la racine de votre site" ); // L59
-define( "_INSTALL_TRUST_PATH_HELP", "C'est le chemin physique du dossier de s&eacute;curit&eacute; (trust path) de votre site. Le dossier de s&eacute;curit&eacute; est un dossier o&ugrave; certains scripts est sauvegard&eacute; (donn&eacute;es et fichiers sensibles). Il est recommand&eacute; que ce dossier soit &agrave; l'ext&eacute;rieur de la racine web (donc non accesible par un navigateur). Si le dossier n'existe pas, l'assistant d'installation tentera de la cr&eacute;&eacute;. Si c'est impossible, vous devrez le cr&eacute;er manuellement." ); // L59
+define( "XOOPS_ROOT_PATH_HELP", "Ceci est le chemin de la racine de votre site" ); // L59
+define( "_INSTALL_TRUST_PATH_HELP", "Ceci le chemin physique du dossier de s&eacute;curit&eacute; (trust path) de votre site. Le dossier de s&eacute;curit&eacute; est un dossier o&ugrave; certains scripts est sauvegard&eacute; (donn&eacute;es et fichiers sensibles). Il est recommand&eacute; que ce dossier soit &agrave; l'ext&eacute;rieur de la racine web (donc non accesible par un navigateur). Si le dossier n'existe pas, l'assistant d'installation tentera de la cr&eacute;&eacute;. Si c'est impossible, vous devrez le cr&eacute;er manuellement." ); // L59
 
 define( "XOOPS_URL_LABEL", "Adresse du site (URL)" ); // L56
 define( "XOOPS_URL_HELP", "Adresse principale de votre site" ); // L58
@@ -73,7 +73,7 @@ define( "LEGEND_DATABASE", "Base de donn&eacute;es" ); // L51
 
 define( "DB_HOST_LABEL", "Nom du serveur (Habituellement localhost ou un nom d'hôte fourni par votre hebergeur)" );	// L27
 define( "DB_HOST_HELP",  "Nom du serveur de la base de donn&eacute;es. Si vous n'&ecirc;tes pas s&ucirc;r, <em>localhost</em> fonctionne dans la plupart des cas"); // L67
-define( "DB_USER_LABEL", " Nom d'utilisateur (Soit root ou un identifiant fourni par votre hebergeur)" );	// L28
+define( "DB_USER_LABEL", "Nom de l'utilisateur (Soit root ou un identifiant fourni par votre hebergeur)" );	// L28
 define( "DB_USER_HELP",  "Nom pour se connecter au serveur de la base de donn&eacute;es"); // L65
 define( "DB_PASS_LABEL", "Mot de passe (mot de passe utiliser pour acceder a votre base de donnees.)");	// L52
 define( "DB_PASS_HELP",  "Mot de passe pour se connecter au serveur de la base de donn&eacute;es"); // L68
