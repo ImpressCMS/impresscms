@@ -50,7 +50,6 @@ h5 {font-size: .9em;}
 h6 {font-size: .8em;}
 
 /* ------ Header rules ------ */
-
 #xo-header {
 	clear: both;
 	height: 78px;
@@ -59,27 +58,22 @@ h6 {font-size: .8em;}
 	margin-left: 35px;
 	margin-right: 35px;
 }
-
 #xo-headerlogo {
 	float: left;
 }
-
 #xo-headerbanner {
 	position:relative;
 	top:10px;
 	right:20px;
 	float: right;
 }
-
 /* ------ Header top menu navigation rules ------ */
-
 #xo-globalnav {
 	clear: both;
 	padding-left: 11px;
 	margin-top: 40px;
 	padding-bottom: 7px;
 }
-
 #xo-globalnav a {
 	text-decoration: none;
 	text-align: center;
@@ -90,12 +84,10 @@ h6 {font-size: .8em;}
 	padding-bottom: 7px;
 	padding-top: 2px;
 }
-
 #xo-globalnav a:hover {
 	color: #fff;
 	border-top: 4px solid #F3AC03;
 }
-
 #controlbar {
 	color: #F3AC03;
 	font-weight: bold;
@@ -115,7 +107,6 @@ h6 {font-size: .8em;}
 #xo-canvas-leftcolumn a:hover {}
 
 /* ------ Main content ------ */
-
 #xo-canvas-content {
 	line-height: 1.3em;
 	z-index: 0;
@@ -135,7 +126,6 @@ h6 {font-size: .8em;}
 	padding: 15px 1%;
 	width: 100%;
 }
-
 .CPbigTitle{
 	background: no-repeat left top;
 	border-bottom: 3px solid #1E90FF;
@@ -171,14 +161,17 @@ div.cpicon a {
 	vertical-align: middle;
 	width: 70px !important;
 }
-
 div.cpicon a:hover{
 	background-color: #FFF6C1;
 	border: 1px solid #FF9900;
 	color: #1E90FF;
 }
-
-div.cpicon img { margin-top: 1px; margin-bottom: 1px; width: 32px; height: 32px;}
+div.cpicon img {
+	height: 32px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	width: 32px;
+}
 div.cpicon span {
 	display: block;
 	font-size: 11px;
@@ -219,17 +212,17 @@ div.cpicon span.unor{
 }
 #xo-siteclose-login h2 {
 	background-color: #f2f2f2;
+	color: white;
 	font-weight: bold;
 	font-size: 1em;
-	color: white;
-	padding: 2px;
 	margin-top: 0px;
 	margin-bottom: 0px;
+	padding: 2px;
 	text-align: center;
 }
 #xo-siteclose-login form {
-	padding: 0px;
 	margin: 0px;
+	padding: 0px;
 }
 #xo-siteclose-login div{
 	padding: 6px;
@@ -244,19 +237,18 @@ div.cpicon span.unor{
 	padding-bottom: 3px;
 }
 #xo-siteclose-login div.button {
-	text-align: right;
 	clear: both;
 	padding-right: 0px;
+	text-align: right;
 }
 /* ---------- Footer rules ---------- */
 #xo-footer {
+	background: #59b9e4 url(img/foot_bg.jpg) repeat-x;
+	color: #666;
+	font-size: 70%;
+	margin-top: 5px;
 	padding-top: 10px;
 	text-align: center;
-	font-size: 70%;
-	color: #666;
-	margin-top: 5px;
-	background: url(img/foot_bg.jpg) repeat-x;
-	background-color: #59b9e4;
 }
 
 #xo-footer a {
@@ -270,7 +262,7 @@ div.cpicon span.unor{
 /* ----------  mode debug  ---------- */
 
 #xo-logger-output {
-	font-size:			80%;
+	font-size:	80%;
 }
 
 /* ---------- Image Manager / Folder not writeable ------------ */
