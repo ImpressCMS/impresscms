@@ -1,5 +1,23 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 2.0.0 Release Candidate
+* Date: 29 Dec 2024
+* DB Version: 48
+* Build Version: 111
+
+## What's Changed
+* fix:the $icmsModule mentioned here was a local variable and should no… by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1598
+* Fix:Fix the CKEditor Image Manager that couldn't find WideImage by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1601
+* fix:make addslashes parameter nullable by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1600
+* Upgrade PHPMailer to PHPMailer 6.9.3 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1596
+* Ckeditor custom config by @skenow in https://github.com/ImpressCMS/impresscms/pull/1605
+* fix: Improve Database compatibility with PHP 7.4 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1597
+* fix:add array declarations to installer  by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1604
+* Fix: Add missing css to admin css by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1602
+
+
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.0_beta_3...v2.0.0_rc
+
 ## ImpressCMS 2.0.0 beta 3
 * Date: 26 Nov 2024
 * DB Version: 48
@@ -83,7 +101,7 @@ The first 2.0.0 beta release after the renumbering of the different branches. Th
 * bool to countable in module object by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1510
 * Format code, use strlen instead of sizeof on a string by @skenow in https://github.com/ImpressCMS/impresscms/pull/1517
 * Date notation fixes for europe in Dutch translations by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1524
- 
+
 #### 🚀 Features
 * Cookie hardening by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1331
 * get installer working on PHP 8.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1476
@@ -139,7 +157,7 @@ There are no other changes with regards to ImpressCMS 1.4.4.
 * DB Version: 46
 * Build Version : 104
 
-This release fixes a security vulnerability that was found in ImpressCMS 1.4.3. 
+This release fixes a security vulnerability that was found in ImpressCMS 1.4.3.
 
 ### Security Fix
 * Applying the filters to inner elements of arrays by @skenow in https://github.com/ImpressCMS/impresscms/pull/1162
@@ -154,7 +172,7 @@ This release fixes a security vulnerability that was found in ImpressCMS 1.4.3.
 * DB Version: 46
 * Build Version : 103
 
-This release contains mainly fixes for several security vulnerabilities that where found during HackerOne security Checks. 
+This release contains mainly fixes for several security vulnerabilities that where found during HackerOne security Checks.
 
 ### What's Changed
 * Changing filter method for request_uri to filter_sanitize_string by @skenow in https://github.com/ImpressCMS/impresscms/pull/1136
