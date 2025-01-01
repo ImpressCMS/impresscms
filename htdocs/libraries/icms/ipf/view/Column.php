@@ -36,6 +36,10 @@ class icms_ipf_view_Column {
 	public $_extraParams;
 	public $_sortable;
 	public $_customCaption;
+	/**
+	 * @var false|unknown_type
+	 */
+	private $_param;
 
 	/**
 	 * Constructor
