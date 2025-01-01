@@ -139,7 +139,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @var array
 	 */
-	public $permissionsArray = false;
+	public $permissionsArray = array();
 
 	public $generalSQL = false;
 
