@@ -816,8 +816,7 @@ class icms_ipf_Object extends icms_core_Object {
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						$ret = formatTimestamp($ret, _DATESTRING);
-						return $ret;
+						return formatTimestamp($ret, _DATESTRING);
 						break 1;
 
 					case 'n':
@@ -839,8 +838,7 @@ class icms_ipf_Object extends icms_core_Object {
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						$ret = formatTimestamp($ret, _SHORTDATESTRING);
-						return $ret;
+						return formatTimestamp($ret, _SHORTDATESTRING);
 						break 1;
 
 					case 'n':
@@ -862,8 +860,7 @@ class icms_ipf_Object extends icms_core_Object {
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						$ret = formatTimestamp($ret, 'G:i');
-						return $ret;
+						return formatTimestamp($ret, 'G:i');
 						break 1;
 
 					case 'n':
