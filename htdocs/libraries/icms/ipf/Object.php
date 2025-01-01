@@ -773,7 +773,7 @@ class icms_ipf_Object extends icms_core_Object {
 						$ret = icms_core_DataFilter::htmlSpecialChars($ret);
 
 						if (method_exists($myts, 'formatForML')) {
-							return $ts->formatForML($ret);
+							return $myts->formatForML($ret);
 						} else {
 							return $ret;
 						}
