@@ -103,6 +103,7 @@ class icms_ipf_view_Column {
 	}
 
 	public function getCustomMethodForValue() {
+		return $this->_customMethodForValue;
 	}
 }
 
