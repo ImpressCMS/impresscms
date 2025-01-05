@@ -20,9 +20,8 @@
 	],
 	"require": {
 		"php": ">=5.5.0",
-		"simplepie/simplepie": "1.3.1",
+		"simplepie/simplepie": "1.8.1",
 		"ezyang/htmlpurifier": "4.6.*",
-		"vlucas/phpdotenv": "^2.4",
 		"tecnickcom/tcpdf": "6.*",
 		"ext-curl": "*",
 		"ext-gd": "*",
@@ -30,6 +29,9 @@
 		"ext-mbstring": "*",
 		"ext-pcre": "*",
 		"ext-session": "*"
+	},
+	"require-dev": {
+		"spatie/ray": "*"
 	},
 	"suggest": {
 		"ext-iconv": "Iconv is needed to handle conversions between charsets",

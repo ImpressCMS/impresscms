@@ -87,7 +87,7 @@ function showRSS() {
 	$feed = new icms_feeds_Simplerss();
 	$feed->set_feed_url($rssurl);
 	$feed->set_cache_duration(3600);
-	$feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_NONE);
+	$feed->set_autodiscovery_level(\Simplepie\Simplepie::LOCATOR_NONE);
 	$feed->init();
 	$feed->handle_content_type();
 
