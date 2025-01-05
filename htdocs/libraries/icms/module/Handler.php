@@ -38,6 +38,7 @@
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
+use \Composer\InstalledVersions;
 
 /**
  * Module handler class.
@@ -306,9 +307,11 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param   boolean $id_as_key  Use the ID as key into the array
 	 * @return  array	Array of objects - installed module
 	 */
-	public function getObjects($criteria = NULL, $id_as_key = FALSE) {
+	public function getObjects($criteria = NULL, $id_as_key = FALSE): array
+	{
 		$ret = array();
 		$limit = $start = 0;
+
 		$sql = "SELECT * FROM " . $this->db->prefix('modules');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
@@ -339,7 +342,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @return  int
 	 */
-	public function getCount($criteria = NULL) {
+	public function getCount($criteria = NULL): int
+	{
 		$sql = "SELECT COUNT(*) FROM " . $this->db->prefix('modules');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
@@ -358,7 +362,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 *      if FALSE, array keys will be module id
 	 * @return  array
 	 */
-	public function getList($criteria = NULL, $dirname_as_key = FALSE) {
+	public function getList($criteria = NULL, $dirname_as_key = FALSE): array
+	{
 		$ret = array();
 		$modules = $this->getObjects($criteria, TRUE);
 		foreach (array_keys($modules) as $i) {
@@ -380,7 +385,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @since	1.3
 	 * @return	array	List of folder names in the modules directory
 	 */
-	static public function getAvailable() {
+	static public function getAvailableOld() {
 		$dirtyList = $cleanList = array();
 		$dirtyList = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . '/');
 		foreach ($dirtyList as $item) {
@@ -388,6 +393,27 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 				$cleanList[$item] = $item;
 			} elseif (file_exists(ICMS_MODULES_PATH . '/' . $item . '/xoops_version.php')) {
 				$cleanList[$item] = $item;
+			}
+		}
+		return $cleanList;
+	}
+
+	/**
+	 * retrieve the available packages that have package types defined in the value list
+	 * @return array
+	 */
+	static public function getAvailable(): array
+	{
+		$package_types = ['impresscms-theme', 'impresscms-module'];
+
+		$dirtyList = $cleanList = array();
+		foreach($package_types as $package_type) {
+			$dirtyList = \Composer\InstalledVersions::getInstalledPackagesByType($package_type);
+			foreach ($dirtyList as $item) {
+
+				$cleanList[$item]['Name'] = $item;
+				$cleanList[$item]['Version'] = InstalledVersions::getVersion($item);
+				$cleanList[$item]['PrettyVersion'] = InstalledVersions::getPrettyVersion($item);
 			}
 		}
 		return $cleanList;
