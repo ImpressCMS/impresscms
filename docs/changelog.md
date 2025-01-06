@@ -1,64 +1,9 @@
 # ImpressCMS ChangeLog
 
-## ImpressCMS 2.0.0 Release Candidate
-* Date: 29 Dec 2024
+## ImpressCMS 2.0.0 
+* Date : 06 Jan 2025
 * DB Version: 48
-* Build Version: 111
-
-## What's Changed
-* fix:the $icmsModule mentioned here was a local variable and should no… by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1598
-* Fix:Fix the CKEditor Image Manager that couldn't find WideImage by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1601
-* fix:make addslashes parameter nullable by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1600
-* Upgrade PHPMailer to PHPMailer 6.9.3 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1596
-* Ckeditor custom config by @skenow in https://github.com/ImpressCMS/impresscms/pull/1605
-* fix: Improve Database compatibility with PHP 7.4 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1597
-* fix:add array declarations to installer  by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1604
-* Fix: Add missing css to admin css by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1602
-
-
-**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.0_beta_3...v2.0.0_rc
-
-## ImpressCMS 2.0.0 beta 3
-* Date: 26 Nov 2024
-* DB Version: 48
-* Build Version: 110
-
-## What's Changed
-* fix indirect variable handling in IPF select form element by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1574
-* Remove use of $icmsModule in notification Handler.php by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1576
-* fix the module update by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1572
-* some last lingering $icmsModule uses by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1573
-* Adding codeclimate configuration by @skenow in https://github.com/ImpressCMS/impresscms/pull/1582
-* Adding automatic upgrades for 2 core tables by @skenow in https://github.com/ImpressCMS/impresscms/pull/1585
-* Remove old columns from the users table Resolves #1561 by @skenow in https://github.com/ImpressCMS/impresscms/pull/1588
-* handle if columns to remove from users table have already been removed by @skenow in https://github.com/ImpressCMS/impresscms/pull/1590
-* Remove content file and delete during an upgrade if the module is not installed by @skenow in https://github.com/ImpressCMS/impresscms/pull/1592
-* Removing extra code block for users table fields by @skenow in https://github.com/ImpressCMS/impresscms/pull/1591
-* Convert to current global for $icmsModule by @skenow in https://github.com/ImpressCMS/impresscms/pull/1595
-* Small bug fixes by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1594
-
-
-**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.0_beta_2...v2.0.0_beta3
-
-## ImpressCMS 2.0.0 beta 2
-* Date: 26 Sept 2024
-* DB Version: 48
-* Build Version: 109
-### What's Changed
-#### Improvements
-* Remove data for bannerclient from install  by @skenow in https://github.com/ImpressCMS/impresscms/pull/1558
-* Remove banner tables and config item by @skenow in https://github.com/ImpressCMS/impresscms/pull/1559
-* cleanup icms.css by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1563
-* Third batch of $icmsModule removals by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1555
-* Update version.php to new 2.0.0 beta 2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1554
-* Icmsmodule cleanup part2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1567
-#### Updates
-* upgrade Ckeditor 4.22.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1570
-
-## ImpressCMS 2.0.0 beta 1
-* Date : 16 Jul 2024
-* DB Version: 47
-* Build Version : 108
+* Build Version : 112
 
 The first 2.0.0 beta release after the renumbering of the different branches. This version should be feature-complete, but thorough verifications need to be done for the upgrade process and the compatibility with different modules.
 ### What's Changed
@@ -81,7 +26,21 @@ The first 2.0.0 beta release after the renumbering of the different branches. Th
 * Image editor fixes - crop, resize, filter plugins by @skenow in https://github.com/ImpressCMS/impresscms/pull/1489
 * Security fix : upgrade Jquery 3.7.0 & jQuery UI 1.13.2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1490
 * Fix 1.5.x symlink errors by @skenow in https://github.com/ImpressCMS/impresscms/pull/1498
-
+* fix indirect variable handling in IPF select form element by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1574
+* fix the module update by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1572
+* Remove old columns from the users table Resolves #1561 by @skenow in https://github.com/ImpressCMS/impresscms/pull/1588
+* handle if columns to remove from users table have already been removed by @skenow in https://github.com/ImpressCMS/impresscms/pull/1590
+* Remove content file and delete during an upgrade if the module is not installed by @skenow in https://github.com/ImpressCMS/impresscms/pull/1592
+* Removing extra code block for users table fields by @skenow in https://github.com/ImpressCMS/impresscms/pull/1591
+* Convert to current global for $icmsModule by @skenow in https://github.com/ImpressCMS/impresscms/pull/1595
+* Small bug fixes by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1594
+* fix: Improve Database compatibility with PHP 7.4 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1597
+* fix:add array declarations to installer  by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1604
+* Fix: Add missing css to admin css by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1602
+* fix:the $icmsModule mentioned here was a local variable and should no… by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1598
+* Fix:Fix the CKEditor Image Manager that couldn't find WideImage by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1601
+* fix:make addslashes parameter nullable by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1600
+    
 #### Updates
 * upgrade cssTidy to 2.0.3, with support for PHP 8 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1398
 * upgrade simplepie to 1.8.0 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1405
@@ -92,6 +51,8 @@ The first 2.0.0 beta release after the renumbering of the different branches. Th
 * Updating WideImage for PHP8 compliance by @skenow in https://github.com/ImpressCMS/impresscms/pull/1465
 * Update to HTMLPurifier 4.15 by @skenow in https://github.com/ImpressCMS/impresscms/pull/1492
 * Update language constants for users by @skenow in https://github.com/ImpressCMS/impresscms/pull/1544
+* upgrade Ckeditor 4.22.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1570
+* Upgrade PHPMailer to PHPMailer 6.9.3 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1596
 
 #### Improvements
 * improve theme selector by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1485
@@ -101,6 +62,17 @@ The first 2.0.0 beta release after the renumbering of the different branches. Th
 * bool to countable in module object by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1510
 * Format code, use strlen instead of sizeof on a string by @skenow in https://github.com/ImpressCMS/impresscms/pull/1517
 * Date notation fixes for europe in Dutch translations by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1524
+* Remove data for bannerclient from install  by @skenow in https://github.com/ImpressCMS/impresscms/pull/1558
+* Remove banner tables and config item by @skenow in https://github.com/ImpressCMS/impresscms/pull/1559
+* cleanup icms.css by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1563
+* Third batch of $icmsModule removals by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1555
+* Update version.php to new 2.0.0 beta 2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1554
+* Icmsmodule cleanup part2 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1567
+* Remove use of $icmsModule in notification Handler.php by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1576
+* some last lingering $icmsModule uses by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1573
+* Adding codeclimate configuration by @skenow in https://github.com/ImpressCMS/impresscms/pull/1582
+* Adding automatic upgrades for 2 core tables by @skenow in https://github.com/ImpressCMS/impresscms/pull/1585
+
 
 #### 🚀 Features
 * Cookie hardening by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1331
@@ -127,10 +99,7 @@ The first 2.0.0 beta release after the renumbering of the different branches. Th
 * Cleanup social provider list by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1553
 * replace $icmsModule with icms::$module in about page by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1497
 
-
-**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v1.4.6...v2.0.0_beta_1
-
-[![Download ImpressCMS](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/impresscms/files/v2.0.0_beta_1/v2.0.0%20beta%201%20source%20code.zip/download)
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v1.4.6...v2.0.0
 
 ## ImpressCMS 1.4.6
 * Date : 23 Nov 2023
