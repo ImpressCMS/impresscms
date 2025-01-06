@@ -8,7 +8,7 @@
  * @since Xoops
  * @author phppp
  */
-define('ICMS_VERSION_NAME', 'ImpressCMS 2.0.0 Release Candidate');
+define('ICMS_VERSION_NAME', 'ImpressCMS 2.0.0');
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
@@ -21,16 +21,16 @@ define('XOOPS_VERSION', ICMS_VERSION_NAME);
  * 10 = Final
  */
 
-define('ICMS_VERSION_STATUS', 3);
+define('ICMS_VERSION_STATUS', 10);
 
 /**
  * Build number
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-// 1.5.0 RC = 107; new 2.0.0 Beta 3=110
+// 1.5.0 RC = 107; new 2.0.0 Beta 3=110, new 2.0.0 RC = 111
 
-define('ICMS_VERSION_BUILD', 111);
+define('ICMS_VERSION_BUILD', 112);
 
 /**
  * Latest dbversion of the System Module
