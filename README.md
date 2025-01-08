@@ -15,7 +15,7 @@
 
 
 
-# ImpressCMS 2.0
+# ImpressCMS 2.0.1
 ImpressCMS is a community developed Content Management System build on PHP and MySQL.
 
 This tool makes maintaining a website as easy as writing a word document.
