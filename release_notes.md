@@ -9,7 +9,9 @@ This version, ImpressCMS 2.0.0, does require PHP versions 7.4 and above, and con
 Unzip the contents of the 'htdocs' folder in the root folder of your site, and go in a browser to the address of your site. ImpressCMS will detect that no configuration is present, and will start the installation procedure to help you setup your site on your webserver.
 
 ## Update
-ImpressCMS 2.0 only has overlapping PHP version support with ImpressCMS 1.4.6. When updating from a previous version in the 1.4 or even 1.3 series, first do an upgrade to ImpressCMS 1.4.6 before continuing. When upgrading your PHP, please verify that the modules you use are compatible!
+ImpressCMS 2.0 only has overlapping PHP version support with ImpressCMS starting 1.4.2. When updating from a previous version in the 1.4 or even 1.3 series, first do an upgrade to at least ImpressCMS 1.4.2 before continuing. When upgrading your PHP, please verify that the modules you use are compatible!
+
+Depending on the version you are upgrading from, you can safely remove the /kernel and /class folders after a succesful upgrade, those are no longer needed.
 
 ## Known issues
 
