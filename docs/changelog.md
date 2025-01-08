@@ -1,11 +1,21 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 2.0.1 
+* Date : 08 Jan 2025
+* DB Version: 48
+* Build Version : 113
+
+Yes, a quick update to fix an embarassing typo that broke the system module. 
+### What's Changed
+#### Bugfixes
+* Fix typo by @fiammybe in https://github.com/ImpressCMS/impresscms/issues/1614
+
 ## ImpressCMS 2.0.0 
 * Date : 06 Jan 2025
 * DB Version: 48
 * Build Version : 112
 
-The first 2.0.0 beta release after the renumbering of the different branches. This version should be feature-complete, but thorough verifications need to be done for the upgrade process and the compatibility with different modules.
+ImpressCMS 2.0.0 final. This release rises the minimal PHP version to PHP 7.4, and supports up to PHP 8.4 included.
 ### What's Changed
 #### Bugfixes
 * Fix mailuser by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1288
