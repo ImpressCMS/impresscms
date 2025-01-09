@@ -11,7 +11,7 @@ Unzip the contents of the 'htdocs' folder in the root folder of your site, and g
 ## Update
 ImpressCMS 2.0 only has overlapping PHP version support with ImpressCMS starting 1.4.2. When updating from a previous version in the 1.4 or even 1.3 series, first do an upgrade to at least ImpressCMS 1.4.2 before continuing. When upgrading your PHP, please verify that the modules you use are compatible!
 
-Depending on the version you are upgrading from, you can safely remove the /kernel and /class folders after a succesful upgrade, those are no longer needed.
+Depending on the version you are upgrading from, you can safely remove the /kernel and /class folders after a successful upgrade, those are no longer needed.
 
 ## Known issues
 
