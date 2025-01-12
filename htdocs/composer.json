@@ -19,7 +19,7 @@
 		}
 	],
 	"require": {
-		"php": ">=5.5.0",
+		"php": ">=7.4.0",
 		"simplepie/simplepie": "1.8.1",
 		"ezyang/htmlpurifier": "v4.18.0",
 		"tecnickcom/tcpdf": "6.*",
