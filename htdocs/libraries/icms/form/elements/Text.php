@@ -135,13 +135,6 @@ class icms_form_elements_Text extends icms_form_Element {
 	 * @return	string  HTML
 	 */
 	public function render() {
-//		return "<input type='text' name='" . $this->getName()
-//			. "' id='" . $this->getName()
-//			. "' size='" . $this->getSize()
-//			. "' maxlength='" . $this->getMaxlength()
-//			. "' value='" . $this->getValue() . "'" . $this->getExtra()
-//			. " />";
-
 		$this->_tpl = new icms_view_Tpl();
 		$this->_tpl->assign('ele_name', $this->getName());
 		$this->_tpl->assign('ele_id', $this->getName());
