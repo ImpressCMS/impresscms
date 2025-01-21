@@ -762,6 +762,7 @@ class icms_ipf_Object extends icms_core_Object {
 
 		$ret = $this->vars[$key]['value'];
 
+
 		switch ($this->vars[$key]['data_type']) {
 
 			case XOBJ_DTYPE_TXTBOX:
@@ -772,7 +773,7 @@ class icms_ipf_Object extends icms_core_Object {
 						$ret = icms_core_DataFilter::htmlSpecialChars($ret);
 
 						if (method_exists($myts, 'formatForML')) {
-							return $ts->formatForML($ret);
+							return $myts->formatForML($ret);
 						} else {
 							return $ret;
 						}
@@ -815,8 +816,7 @@ class icms_ipf_Object extends icms_core_Object {
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						$ret = formatTimestamp($ret, _DATESTRING);
-						return $ret;
+						return formatTimestamp($ret, _DATESTRING);
 						break 1;
 
 					case 'n':
@@ -838,8 +838,7 @@ class icms_ipf_Object extends icms_core_Object {
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						$ret = formatTimestamp($ret, _SHORTDATESTRING);
-						return $ret;
+						return formatTimestamp($ret, _SHORTDATESTRING);
 						break 1;
 
 					case 'n':
@@ -861,8 +860,7 @@ class icms_ipf_Object extends icms_core_Object {
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						$ret = formatTimestamp($ret, 'G:i');
-						return $ret;
+						return formatTimestamp($ret, 'G:i');
 						break 1;
 
 					case 'n':
@@ -946,11 +944,13 @@ class icms_ipf_Object extends icms_core_Object {
 				break;
 
 			case XOBJ_DTYPE_SIMPLE_ARRAY:
-				$ret = &explode('|', $ret);
+				$explode = explode('|', $ret);
+				$ret = &$explode;
 				break;
 
 			case XOBJ_DTYPE_ARRAY:
-				$ret = &unserialize($ret);
+				$unserialize = unserialize($ret);
+				$ret = &$unserialize;
 				break;
 
 			case XOBJ_DTYPE_SOURCE:
@@ -986,7 +986,8 @@ class icms_ipf_Object extends icms_core_Object {
 					switch (strtolower($format)) {
 						case 's':
 						case 'show':
-							$selected = explode('|', $ret);
+						$explode = explode('|', $ret);
+							$selected = $explode;
 							$options = explode('|', $this->vars[$key]['options']);
 							$i = 1;
 							$ret = array();
@@ -1000,7 +1001,8 @@ class icms_ipf_Object extends icms_core_Object {
 
 						case 'e':
 						case 'edit':
-							$ret = explode('|', $ret);
+						$explode = explode('|', $ret);
+							$ret = $explode;
 							break 1;
 
 						default:

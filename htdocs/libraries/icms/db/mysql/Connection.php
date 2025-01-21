@@ -38,7 +38,7 @@ class icms_db_mysql_Connection extends PDO implements icms_db_IConnection {
 	 */
 	// public function query($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, $arg3 = null, array $ctorargs = []) {
              //PDO::query(string $query, ?int $fetchMode = null, mixed ...$fetchModeArgs): PDOStatement|false
-	public function query($statement, $fetchMode = PDO::ATTR_DEFAULT_FETCH_MODE, ...$fetch_mode_args) {
+	public function query($query, $fetchMode = PDO::ATTR_DEFAULT_FETCH_MODE, ...$fetch_mode_args) {
 		$mode = $fetchMode;
 		$args = func_get_args();
 		$sql = $args[0];
