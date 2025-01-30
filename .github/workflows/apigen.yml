@@ -3,7 +3,7 @@ name: ApiGen
 on:
   push:
     branches:
-      - 1.5.x
+      - 2.0.x
 
 jobs:
   Document_Generator:
