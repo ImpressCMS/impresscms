@@ -226,16 +226,17 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				$filetoremove = ICMS_ROOT_PATH . '/content.php';
 				icms_core_Filesystem::deleteFile($filetoremove);
 			}
+			/* Finish up this portion of the db update */
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
 		}
 	}
 	catch (Exception $e) {
 		echo $e->getMessage();
 	}
-	/* Finish up this portion of the db update */
-	if (!$abortUpdate) {
-		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
-	}
+
 	/**
 	 * This portion of the upgrade must remain as the last section of code to execute
 	 * Place all release upgrade steps above this point
