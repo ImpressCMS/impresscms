@@ -12,7 +12,7 @@
  * @author malanciault <marcan@impresscms.org)
  * @version SVN: $Id: main.php 12403 2014-01-26 21:35:08Z skenow $
  */
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin()) {
+if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmin()) {
 	exit("Access Denied");
 }
 
@@ -32,7 +32,7 @@ if (isset($_GET['mid'])) {
  * Now here is the version checker :-)
  */
 global $icmsAdminTpl, $xoTheme;
-$icmsVersionChecker = icms_core_Versionchecker::getInstance();
+$icmsVersionChecker = icms_core_Versioncheckergithub::getInstance();
 icms_cp_header();
 if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('update_available', TRUE);
