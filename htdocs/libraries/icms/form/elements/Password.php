@@ -164,15 +164,15 @@ class icms_form_elements_Password extends icms_form_Element {
 	 */
 	public function render() {
 
-		$this->_tpl = new icms_view_Tpl();
-		$this->_tpl->assign('ele_name', $this->getName());
-		$this->_tpl->assign('ele_class', $this->getClassName());
-		$this->_tpl->assign('ele_id', $this->getName());
-		$this->_tpl->assign('ele_size', $this->getSize());
-		$this->_tpl->assign('ele_maxlength', $this->getMaxlength());
-		$this->_tpl->assign('ele_value', $this->getValue());
-		$this->_tpl->assign('ele_extra', $this->getExtra());
-		$this->_tpl->assign('ele_autocomplete', $this->autoComplete);
+		$this->tpl = new icms_view_Tpl();
+		$this->tpl->assign('ele_name', $this->getName());
+		$this->tpl->assign('ele_class', $this->getClassName());
+		$this->tpl->assign('ele_id', $this->getName());
+		$this->tpl->assign('ele_size', $this->getSize());
+		$this->tpl->assign('ele_maxlength', $this->getMaxlength());
+		$this->tpl->assign('ele_value', $this->getValue());
+		$this->tpl->assign('ele_extra', $this->getExtra());
+		$this->tpl->assign('ele_autocomplete', $this->autoComplete);
 
 		$element_html_template = $this->_customTemplate ? $this->_customTemplate : strtolower(static::class) . '_display.html';
 		return $this->_tpl->fetch('db:' . $element_html_template);
