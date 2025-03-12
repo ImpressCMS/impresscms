@@ -116,15 +116,15 @@ class icms_form_elements_Button extends icms_form_Element {
 	 * @return	string
 	 */
 	public function render() {
-	$this->_tpl = new icms_view_Tpl();
-	$this->_tpl->assign('type', $this->getType());
-	$this->_tpl->assign('name', $this->getName());
-	$this->_tpl->assign('id', $this->getName());
-	$this->_tpl->assign('value', $this->getValue());
-	$this->_tpl->assign('extra', $this->getExtra());
+	$this->tpl = new icms_view_Tpl();
+	$this->tpl->assign('type', $this->getType());
+	$this->tpl->assign('name', $this->getName());
+	$this->tpl->assign('id', $this->getName());
+	$this->tpl->assign('value', $this->getValue());
+	$this->tpl->assign('extra', $this->getExtra());
 
 	$element_html_template = $this->_customTemplate ? $this->_customTemplate : strtolower(static::class) . '_display.html';
 	
-	return $this->_tpl->fetch('db:' . $element_html_template);
+	return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
