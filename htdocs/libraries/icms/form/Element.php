@@ -120,8 +120,8 @@ abstract class icms_form_Element {
 	/**
 	 * template for this field
 	 */
-	protected icms_view_Tpl $_tpl;
-	protected string $_customTemplate = "";
+	protected icms_view_Tpl $tpl;
+	protected string $customTemplate = "";
 
 	/**#@-*/
 
