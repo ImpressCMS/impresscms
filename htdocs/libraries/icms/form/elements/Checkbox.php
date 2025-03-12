@@ -198,15 +198,15 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 			$this->setName($ele_name);
 		}
 
-		$this->_tpl = new icms_view_Tpl();
-		$this->_tpl->assign('ele_name', $ele_name);
-		$this->_tpl->assign('ele_id', $ele_name);
-		$this->_tpl->assign('ele_value', $ele_value);
-		$this->_tpl->assign('ele_options', $ele_options);
-		$this->_tpl->assign('ele_extra', $ele_extra);
-		$this->_tpl->assign('ele_delimeter', $ele_delimeter);
+		$this->tpl = new icms_view_Tpl();
+		$this->tpl->assign('ele_name', $ele_name);
+		$this->tpl->assign('ele_id', $ele_name);
+		$this->tpl->assign('ele_value', $ele_value);
+		$this->tpl->assign('ele_options', $ele_options);
+		$this->tpl->assign('ele_extra', $ele_extra);
+		$this->tpl->assign('ele_delimeter', $ele_delimeter);
 
 		$element_html_template = $this->_customTemplate ? $this->_customTemplate : strtolower(static::class) . '_display.html';
-		return $this->_tpl->fetch('db:' . $element_html_template);
+		return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
