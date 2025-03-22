@@ -46,7 +46,7 @@ defined("ICMS_ROOT_PATH") || die("ICMS root path not defined");
  */
 $modversion = array(
 	'name' => _MI_SYSTEM_NAME,
-	'version' => '2.0.0b3',
+	'version' => '2.0.1',
 	'description' => _MI_SYSTEM_DESC,
 	'author' => "fiammybe",
 	'credits' => "The ImpressCMS Project",
@@ -64,11 +64,11 @@ $modversion = array(
 	'image' => "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version' => "Beta 3",
-	'status' => "beta",
-	'date' => "26 Nov 2024",
-	'author_word' => "",
-	'warning' => _CO_ICMS_WARNING_BETA,
+	'status_version' => "2.0.1 Final",
+	'status' => "Final",
+	'date' => "08 Jan 2025",
+	'author_word' => "Fixing a typo in the system module",
+	'warning' => _CO_ICMS_WARNING_FINAL,
 
 	/**
 	 * Contributors
@@ -83,6 +83,8 @@ $modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinf
 $modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=489]Mekdrop[/url]";
 
 $modversion['people']['testers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
+$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
+$modversion['people']['developers'][] = "[url=https://www.impresscms.org/userinfo.php?uid=489]Mekdrop[/url]";
 $modversion['people']['translators'][] = "";
 $modversion['people']['documenters'][] = "[url=https://www.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
 $modversion['people']['documenters'][] = "[url=https://www.impresscms.org/userinfo.php?uid=1102]fiammybe[/url]";
@@ -218,4 +220,9 @@ $modversion['templates'] = array(
 	array('file' => 'system_popup_imagemanager_editimg.html', 'description' => ''),
 	array('file' => 'system_popup_imagemanager_img.html', 'description' => ''),
 	array('file' => 'system_popup_imagemanager_imglist.html', 'description' => ''),
-	array('file' => 'system_popup_imagemanager.html', 'description' => ''));
+	array('file' => 'system_popup_imagemanager.html', 'description' => ''),
+	array('file' => 'icms_form_elements_button_display.html', 'description' => 'Display template for a button'),
+	array('file' => 'icms_form_elements_checkbox_display.html', 'description' => 'Display template for a checkbox'),
+	array('file' => 'icms_form_elements_text_display.html', 'description' => 'Display template for a text'),
+	array('file' => 'icms_form_elements_password_display.html', 'description' => 'Display template for a password field')
+);

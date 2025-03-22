@@ -63,6 +63,7 @@ class icms_view_Tpl extends Smarty {
 	public $template_dir = ICMS_THEME_PATH;
 	public $cache_dir = ICMS_CACHE_PATH;
 	public $compile_dir = ICMS_COMPILE_PATH;
+	public icms_view_theme_Object $currentTheme;
 
 	public function __construct() {
 		global $icmsConfig;

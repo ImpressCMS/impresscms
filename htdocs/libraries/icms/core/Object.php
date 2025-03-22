@@ -138,7 +138,7 @@ class icms_core_Object {
 	 *
 	 * @access private
 	 */
-	private $_filters = array();
+	protected $_filters = array();
 
 	/**
 	 * constructor

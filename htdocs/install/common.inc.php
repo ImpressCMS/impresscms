@@ -30,12 +30,6 @@ define('XOOPS_INSTALL', 1);
  */
 date_default_timezone_set(@date_default_timezone_get());
 
-if (!defined('PHP_VERSION_ID')) {
-	$version = explode('.', PHP_VERSION);
-
-	define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
-}
-
 include_once '../include/version.php';
 // including a few functions - core
 include_once '../include/functions.php';
@@ -47,8 +41,6 @@ require_once '../libraries/icms/Autoloader.php';
 icms_Autoloader::setup();
 
 error_reporting(E_ALL);
-
-
 
 $pageHasHelp = false;
 $pageHasForm = false;
