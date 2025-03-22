@@ -186,9 +186,10 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 * @return    string
 	 */
 	public function render() {
-		$ret = "<div class='grouped'>";
+
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue();
+
 		$ele_options = $this->getOptions();
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
@@ -196,20 +197,16 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 			$ele_name = $ele_name . "[]";
 			$this->setName($ele_name);
 		}
-		foreach ($ele_options as $value => $name) {
-			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name
-				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
-			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
-				$ret .= " checked='checked'";
-			}
-			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . "</label></span>" . $ele_delimeter;
-		}
-		if (count($ele_options) > 1) {
-			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
-				. $ele_name	. "_checkemall' class='checkemall' /><label for='"
-				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
-		}
-		$ret .= "</div>";
-		return $ret;
+
+		$this->tpl = new icms_view_Tpl();
+		$this->tpl->assign('ele_name', $ele_name);
+		$this->tpl->assign('ele_id', $ele_name);
+		$this->tpl->assign('ele_value', $ele_value);
+		$this->tpl->assign('ele_options', $ele_options);
+		$this->tpl->assign('ele_extra', $ele_extra);
+		$this->tpl->assign('ele_delimeter', $ele_delimeter);
+
+		$element_html_template = $this->_customTemplate ? $this->_customTemplate : strtolower(static::class) . '_display.html';
+		return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
