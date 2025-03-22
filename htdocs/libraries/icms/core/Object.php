@@ -515,7 +515,8 @@ class icms_core_Object {
 
 		foreach ($this->vars as $k => $v) {
 			$cleanv = $v['value'];
-			if (!$v['changed'] || $this->_isNewConfig || (!is_int($cleanv) && empty($cleanv))) {} else {
+			if (!$v['changed'] || $this->_isNewConfig || (!is_int($cleanv) && empty($cleanv) && !is_array($cleanv))) {
+			} else {
 				$cleanv = is_string($cleanv) ? trim($cleanv) : $cleanv;
 				switch ($v['data_type']) {
 					case XOBJ_DTYPE_TXTBOX:
