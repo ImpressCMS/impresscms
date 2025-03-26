@@ -445,6 +445,13 @@ class icms_core_Object {
     } catch (\Throwable $e) {
         $ret = [];
     }
+        $ret = unserialize($data);
+        if ($ret === false) {
+            $ret = [];
+        }
+    } catch (\Throwable $e) {
+        $ret = [];
+    }
 				break;
 
 			case XOBJ_DTYPE_SOURCE:
