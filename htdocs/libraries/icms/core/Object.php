@@ -437,21 +437,14 @@ class icms_core_Object {
 				break;
 
 			case XOBJ_DTYPE_ARRAY:
-	try {
-        $ret = unserialize($data);
-        if ($ret === false) {
-            $ret = [];
-        }
-    } catch (\Throwable $e) {
-        $ret = [];
-    }
-        $ret = unserialize($data);
-        if ($ret === false) {
-            $ret = [];
-        }
-    } catch (\Throwable $e) {
-        $ret = [];
-    }
+				try {
+			        $ret = unserialize($data);
+			        if ($ret === false) {
+			            $ret = [];
+			        }
+			    } catch (\Throwable $e) {
+			        $ret = [];
+			    }
 				break;
 
 			case XOBJ_DTYPE_SOURCE:
