@@ -428,6 +428,19 @@ class icms_core_Filesystem {
 		}
 	}
 
+	/**
+	 * return the number of files in a directory
+	 *
+	 * @param $dirname the name of the directory
+	 * @param $prefix prefix to add to the beginning of the file names
+	 * @param array $extension array of extensions you want the files  to count
+	 * @param $hideDot hide files starting with a dot
+	 * @return int the number of files in the directory according to the parameters
+	 */
+	static public function getFileCount($dirname, $prefix = '', array $extension = array(), $hideDot = FALSE) {
+		return count(self::getFileList($dirname, $prefix, $extension, $hideDot));
+	}
+	
 /* These will not be in the final release, but are only placeholders while the refactoring
  * is being completed
  */
