@@ -437,7 +437,8 @@ class icms_core_Filesystem {
 	 * @param $hideDot hide files starting with a dot
 	 * @return int the number of files in the directory according to the parameters
 	 */
-	static public function getFileCount($dirname, $prefix = '', array $extension = array(), $hideDot = FALSE) {
+	static public function getFileCount($dirname, $prefix = '', array $extension = array(), $hideDot = FALSE): int
+	{
 		return count(self::getFileList($dirname, $prefix, $extension, $hideDot));
 	}
 	
