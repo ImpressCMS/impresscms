@@ -163,14 +163,18 @@ class icms_form_elements_Password extends icms_form_Element {
 	 * @return	string	HTML
 	 */
 	public function render() {
-		global $icmsConfigUser;
-		$ele_name = $this->getName();
-		return "<input class='" . $this->getClassName()
-			. "' type='password' name='" . $ele_name
-			. "' id='" . $ele_name
-			. "' size='" . $this->getSize()
-			. "' maxlength='" . $this->getMaxlength()
-			. "' value='" . $this->getValue() . "'" . $this->getExtra() . " " . ($this->autoComplete ? "" : "autocomplete='off' ")
-			. "/>";
+
+		$this->tpl = new icms_view_Tpl();
+		$this->tpl->assign('ele_name', $this->getName());
+		$this->tpl->assign('ele_class', $this->getClassName());
+		$this->tpl->assign('ele_id', $this->getName());
+		$this->tpl->assign('ele_size', $this->getSize());
+		$this->tpl->assign('ele_maxlength', $this->getMaxlength());
+		$this->tpl->assign('ele_value', $this->getValue());
+		$this->tpl->assign('ele_extra', $this->getExtra());
+		$this->tpl->assign('ele_autocomplete', $this->autoComplete);
+
+		$element_html_template = $this->_customTemplate ? $this->_customTemplate : strtolower(static::class) . '_display.html';
+		return $this->_tpl->fetch('db:' . $element_html_template);
 	}
 }

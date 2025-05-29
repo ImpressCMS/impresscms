@@ -1,0 +1,15 @@
+<div class="grouped">
+	<{foreach from=$ele_options item=option name=checkbox}>
+	<span class="icms_checkboxoption">
+		<input type="checkbox" name="<{$ele_name}>" id="<{$ele_id}>_item_<{$smarty.foreach.checkbox.iteration}>" value="<{$smarty.foreach.checkbox.iteration}>">
+		<label for="<{$ele_id}>_item_<{$smarty.foreach.checkbox.iteration}>"><{$option}></label>
+	</span>
+	&nbsp;
+	<{/foreach}>
+	<{if $smarty.foreach.checkbox.total gt 1 }>
+	<div class='icms_checkboxoption'>
+		<input type='checkbox' id='<{$ele_name}>_checkemall' class='checkemall' />
+		<label for='<{$ele_name}>_checkemall'><{$smarty.const._CHECKALL}></label>
+	</div>
+	<{/if}>
+</div>
