@@ -32,7 +32,6 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 	 * Additional data arrays for GitHub-specific information
 	 */
 	public $installed = array();
-	public $latest = array();
 
 	/**
 	 * Constructor
@@ -78,18 +77,22 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 
 		if (!empty($github_data) && is_array($github_data) && isset($github_data[0])) {
 			$latest_release = $github_data[0];
+
+			// Populate the latest array with the new structure
+			$this->latest['version_name'] = $latest_release['name'];
+			$this->latest['build'] = $latest_release['id'];
+			$this->latest['status'] = 10; // Assume final for GitHub releases
+			$this->latest['url'] = isset($latest_release['assets'][0]) ? $latest_release['assets'][0]['browser_download_url'] : $latest_release['html_url'];
+			$this->latest['changelog'] = $latest_release['body'];
+
+			// Keep GitHub-specific data in separate arrays for backward compatibility
 			$this->latest['title'] = $latest_release['name'];
 			$this->latest['version'] = $latest_release['tag_name'];
-			$this->latest['build'] = $latest_release['id'];
 			$this->latest['description'] = $latest_release['body'];
-			$this->latest['link'] = isset($latest_release['assets'][0]) ? $latest_release['assets'][0]['browser_download_url'] : $latest_release['html_url'];
+			$this->latest['link'] = $this->latest['url'];
 
-			// Set the base class properties
-			$this->latest_version_name = $this->latest['title'];
-			$this->latest_changelog = $this->latest['description'];
-			$this->latest_build = $this->latest['build'];
-			$this->latest_url = $this->latest['link'];
-			$this->latest_status = 10; // Assume final for GitHub releases
+			// Sync legacy properties for backward compatibility
+			$this->syncLegacyProperties();
 		} else {
 			$this->errors[] = _AM_VERSION_CHECK_RSSDATA_EMPTY;
 			return false;

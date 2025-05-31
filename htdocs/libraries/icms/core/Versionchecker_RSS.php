@@ -57,16 +57,20 @@ class icms_core_Versionchecker_RSS extends icms_core_Versionchecker {
 			$this->errors[] = _AM_VERSION_CHECK_RSSDATA_EMPTY;
 			return false;
 		}
-		
-		$this->latest_version_name = $versionInfo['title'];
-		$this->latest_changelog = $versionInfo['description'];
-		$build_info = explode('|', $versionInfo['guid']);
-		$this->latest_build = $build_info[0];
-		$this->latest_status = $build_info[1];
 
-		if ($this->latest_build > ICMS_VERSION_BUILD) {
+		// Populate the latest array with the new structure
+		$this->latest['version_name'] = $versionInfo['title'];
+		$this->latest['changelog'] = $versionInfo['description'];
+		$build_info = explode('|', $versionInfo['guid']);
+		$this->latest['build'] = $build_info[0];
+		$this->latest['status'] = $build_info[1];
+		$this->latest['url'] = $versionInfo['link'];
+
+		// Sync legacy properties for backward compatibility
+		$this->syncLegacyProperties();
+
+		if ($this->latest['build'] > ICMS_VERSION_BUILD) {
 			// There is an update available
-			$this->latest_url = $versionInfo['link'];
 			return true;
 		}
 		return false;

@@ -35,45 +35,31 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	public $cache_time=1;
 
 	/*
-	 * Name of the latest version
-	 * @public $latest_version_name string
-	 */
-	public $latest_version_name;
-
-	/*
 	 * Name of installed version
-	 * @private $installed_version_name string
+	 * @public $installed_version_name string
 	 */
 	public $installed_version_name;
 
 	/*
-	 * Number of the latest build
-	 * @public $latest_build integer
+	 * Latest version information array
+	 * @public $latest array
 	 */
+	public $latest = array(
+		'version_name' => null,
+		'build' => null,
+		'status' => null,
+		'url' => null,
+		'changelog' => null
+	);
+
+	/*
+	 * Legacy properties for backward compatibility
+	 * @deprecated Use $latest array instead
+	 */
+	public $latest_version_name;
 	public $latest_build;
-
-	/*
-	 * Status of the latest build
-	 *
-	 * 1  = Alpha
-	 * 2  = Beta
-	 * 3  = RC
-	 * 10 = Final
-	 *
-	 * @public $latest_status integer
-	 */
 	public $latest_status;
-
-	/*
-	 * URL of the latest release
-	 * @public $latest_url string
-	 */
 	public $latest_url;
-
-	/*
-	 * Changelog of the latest release
-	 * @public $latest_changelog string
-	 */
 	public $latest_changelog;
 
 	/**
@@ -124,12 +110,24 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	}
 
 	/**
+	 * Synchronize legacy properties with the latest array
+	 * This ensures backward compatibility
+	 */
+	protected function syncLegacyProperties() {
+		$this->latest_version_name = $this->latest['version_name'];
+		$this->latest_build = $this->latest['build'];
+		$this->latest_status = $this->latest['status'];
+		$this->latest_url = $this->latest['url'];
+		$this->latest_changelog = $this->latest['changelog'];
+	}
+
+	/**
 	 * Get the latest version name
 	 *
 	 * @return	string
 	 */
 	public function getLatestVersionName() {
-		return $this->latest_version_name;
+		return $this->latest['version_name'];
 	}
 
 	/**
@@ -147,7 +145,7 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	 * @return	int
 	 */
 	public function getLatestBuild() {
-		return $this->latest_build;
+		return $this->latest['build'];
 	}
 
 	/**
@@ -156,7 +154,7 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	 * @return	int
 	 */
 	public function getLatestStatus() {
-		return $this->latest_status;
+		return $this->latest['status'];
 	}
 
 	/**
@@ -165,7 +163,7 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	 * @return	string
 	 */
 	public function getLatestUrl() {
-		return $this->latest_url;
+		return $this->latest['url'];
 	}
 
 	/**
@@ -174,6 +172,15 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	 * @return	string
 	 */
 	public function getLatestChangelog() {
-		return $this->latest_changelog;
+		return $this->latest['changelog'];
+	}
+
+	/**
+	 * Get the complete latest version information array
+	 *
+	 * @return	array
+	 */
+	public function getLatest() {
+		return $this->latest;
 	}
 }
