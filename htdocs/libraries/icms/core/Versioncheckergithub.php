@@ -28,24 +28,19 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 	 */
 	public $version_url = "https://api.github.com/repos/ImpressCMS/impresscms/releases/latest";
 
-	/*
-	 * Additional data arrays for GitHub-specific information
-	 */
-	public $installed = array();
+
 
 	/**
 	 * Constructor
 	 *
 	 * @return    void
-	 *
 	 */
 	public function __construct()
 	{
 		parent::__construct();
-		$this->installed_version_name = ICMS_VERSION_NAME;
-		$this->installed['version'] = ICMS_VERSION_NAME;
-		$this->installed['build'] = ICMS_VERSION_BUILD;
-		$this->installed['status'] = ICMS_VERSION_STATUS;
+
+		// Add GitHub-specific fields to the installed array
+		$this->installed['version'] = ICMS_VERSION_NAME; // GitHub-specific field for tag comparison
 	}
 
 	/**

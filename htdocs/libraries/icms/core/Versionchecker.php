@@ -35,10 +35,14 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	public $cache_time=1;
 
 	/*
-	 * Name of installed version
-	 * @public $installed_version_name string
+	 * Installed version information array
+	 * @public $installed array
 	 */
-	public $installed_version_name;
+	public $installed = array(
+		'version_name' => null,
+		'build' => null,
+		'status' => null
+	);
 
 	/*
 	 * Latest version information array
@@ -54,8 +58,9 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 
 	/*
 	 * Legacy properties for backward compatibility
-	 * @deprecated Use $latest array instead
+	 * @deprecated Use $installed and $latest arrays instead
 	 */
+	public $installed_version_name;
 	public $latest_version_name;
 	public $latest_build;
 	public $latest_status;
@@ -66,10 +71,15 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	 * Constructor
 	 *
 	 * @return	void
-	 *
 	 */
 	public function __construct() {
-		$this->installed_version_name = ICMS_VERSION_NAME;
+		// Initialize installed version information
+		$this->installed['version_name'] = ICMS_VERSION_NAME;
+		$this->installed['build'] = defined('ICMS_VERSION_BUILD') ? ICMS_VERSION_BUILD : null;
+		$this->installed['status'] = defined('ICMS_VERSION_STATUS') ? ICMS_VERSION_STATUS : null;
+
+		// Sync legacy property for backward compatibility
+		$this->installed_version_name = $this->installed['version_name'];
 	}
 
 	/**
@@ -110,10 +120,14 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	}
 
 	/**
-	 * Synchronize legacy properties with the latest array
+	 * Synchronize legacy properties with the installed and latest arrays
 	 * This ensures backward compatibility
 	 */
 	protected function syncLegacyProperties() {
+		// Sync installed legacy property
+		$this->installed_version_name = $this->installed['version_name'];
+
+		// Sync latest legacy properties
 		$this->latest_version_name = $this->latest['version_name'];
 		$this->latest_build = $this->latest['build'];
 		$this->latest_status = $this->latest['status'];
@@ -136,7 +150,16 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	 * @return	string
 	 */
 	public function getInstalledVersionName() {
-		return $this->installed_version_name;
+		return $this->installed['version_name'];
+	}
+
+	/**
+	 * Get the complete installed version information array
+	 *
+	 * @return	array
+	 */
+	public function getInstalled() {
+		return $this->installed;
 	}
 
 	/**

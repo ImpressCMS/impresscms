@@ -50,6 +50,13 @@ interface icms_core_VersioncheckerInterface {
 	public function getInstalledVersionName();
 
 	/**
+	 * Get the complete installed version information array
+	 *
+	 * @return	array
+	 */
+	public function getInstalled();
+
+	/**
 	 * Get the latest build number
 	 *
 	 * @return	int
