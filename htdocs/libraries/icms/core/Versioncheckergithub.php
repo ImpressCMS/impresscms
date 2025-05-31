@@ -14,83 +14,39 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
  * @package		Core
- * @subpackage	VersionChecker
- * @since		1.0
- * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Versionchecker.php 11603 2012-02-26 08:45:50Z fiammy $
+ * @subpackage	VersionCheckergithub
+ * @since		2.0
+ * @author		fiammybe <david.j@impresscms.org>
+ * @todo		turn this into a generic way of testing for new updates from github, also for themes, modules, ...
  */
-class icms_core_Versioncheckergithub extends icms_core_Versionchecker {
+class icms_core_Versioncheckergithub extends icms_core_Versionchecker
+{
 
 	/*
-	 * errors
-	 * @public $errors array
-	 */
-	public $errors = array();
-
-	/*
-	 * URL of the XML containing version information
-	 * @public $version_xml string
+	 * URL of the GitHub API containing version information
+	 * @public $version_url string
 	 */
 	public $version_url = "https://api.github.com/repos/ImpressCMS/impresscms/releases/latest";
 
 	/*
-	 * Time before fetching the $version_xml again and store it in $cache_version_xml
-	 * @public $cache_time integer
-	 * @todo set this to a day at least or make it configurable in System Admin > Preferences
+	 * Additional data arrays for GitHub-specific information
 	 */
-	public $cache_time=1;
-
-	/*
-	 * Name of the latest version
-	 * @public $latest_version_name string
-	 */
-	public $latest_version_name;
-
-	/*
-	 * Name of installed version
-	 * @private $installed_version_name string
-	 */
-	public $installed_version_name;
-
-	/*
-	 * Number of the latest build
-	 * @public $latest_build integer
-	 */
-	public $latest_build;
-
-	/*
-	 * Status of the latest build
-	 *
-	 * 1  = Alpha
-	 * 2  = Beta
-	 * 3  = RC
-	 * 10 = Final
-	 *
-	 * @public $latest_status integer
-	 */
-	public $latest_status;
-
-	/*
-	 * URL of the latest release
-	 * @public $latest_url string
-	 */
-	public $latest_url;
-
-	/*
-	 * Changelog of the latest release
-	 * @public $latest_changelog string
-	 */
-	public $latest_changelog;
+	public $installed = array();
+	public $latest = array();
 
 	/**
 	 * Constructor
 	 *
-	 * @return	void
+	 * @return    void
 	 *
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		$this->installed_version_name = ICMS_VERSION_NAME;
+		$this->installed['version'] = ICMS_VERSION_NAME;
+		$this->installed['build'] = ICMS_VERSION_BUILD;
+		$this->installed['status'] = ICMS_VERSION_STATUS;
 	}
 
 	/**
@@ -99,10 +55,11 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker {
 	 * @static
 	 * @staticvar object
 	 *
-	 * @return	object
+	 * @return    object
 	 *
 	 */
-	static public function &getInstance() {
+	static public function &getInstance()
+	{
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new self();
@@ -111,58 +68,71 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker {
 	}
 
 	/**
-	 * Check for a newer version of ImpressCMS
+	 * Check for a newer version of ImpressCMS using GitHub API
 	 *
-	 * @return	TRUE if there is an update, FALSE if no update OR errors occured
-	 *
+	 * @return	bool	TRUE if there is an update, FALSE if no update OR errors occurred
 	 */
-	public function check(): bool
-    {
+	public function check() {
+		// get the release data from the github API
+		$github_data = $this->get_latest('ImpressCMS', 'impresscms');
 
-		// Create a new instance of the SimplePie object
-	$github_data = json_decode(file_get_contents($this->version_url));
+		if (!empty($github_data) && is_array($github_data) && isset($github_data[0])) {
+			$latest_release = $github_data[0];
+			$this->latest['title'] = $latest_release['name'];
+			$this->latest['version'] = $latest_release['tag_name'];
+			$this->latest['build'] = $latest_release['id'];
+			$this->latest['description'] = $latest_release['body'];
+			$this->latest['link'] = isset($latest_release['assets'][0]) ? $latest_release['assets'][0]['browser_download_url'] : $latest_release['html_url'];
 
-		if (!$github_data->error) {
-			$versionInfo['title'] = $github_data['name'];
-			$versionInfo['link'] = $github_data['assets']['0']['browser_download_url'];
-			$versionInfo['description'] = $github_data['body'];
-			$versionInfo['guid'] = $github_data['id'];
+			// Set the base class properties
+			$this->latest_version_name = $this->latest['title'];
+			$this->latest_changelog = $this->latest['description'];
+			$this->latest_build = $this->latest['build'];
+			$this->latest_url = $this->latest['link'];
+			$this->latest_status = 10; // Assume final for GitHub releases
 		} else {
 			$this->errors[] = _AM_VERSION_CHECK_RSSDATA_EMPTY;
 			return false;
 		}
-		$this->latest_version_name = $versionInfo['title'];
-		$this->latest_changelog = $versionInfo['description'];
-		$build_info = explode('|', $versionInfo['guid']);
 
-		$this->latest_build = $build_info[0];
-		$this->latest_status = $build_info[1];
-
-		if (version_compare(substr(ICMS_VERSION_NAME,10), substr($github_data['tag_name'],1),'lt')) {
+		if (version_compare(substr(ICMS_VERSION_NAME, 10), substr($this->latest['version'], 1), 'lt')) {
 			// There is an update available
-			$this->latest_url = $versionInfo['link'];
 			return true;
 		}
 		return false;
 	}
 
-	/**
-	 * Gets all the error messages
-	 *
-	 * @param	$ashtml	bool	return as html?
-	 * @return	mixed
-	 */
-	public function getErrors($ashtml=true) {
-		if (!$ashtml) {
-			return $this->errors;
-		} else {
-			$ret = '';
-			if (count($this->errors) > 0) {
-				foreach ($this->errors as $error) {
-					$ret .= $error.'<br />';
-				}
-			}
-			return $ret;
+
+
+	private function get_latest($owner = 'ImpressCMS', $repo = 'impresscms') : array
+	{
+		$url = "https://api.github.com/repos/$owner/$repo/releases";
+
+		// Create a stream context
+		$options = [
+			'http' => [
+				'method' => 'GET',
+				'header' => [
+					'User-Agent: PHP'
+				]
+			]
+		];
+
+		$context = stream_context_create($options);
+
+		// Call the GitHub API
+		$response = file_get_contents($url, false, $context);
+
+		// Check for errors
+		if ($response === FALSE) {
+			// Return empty array on error
+			return array();
 		}
+
+		// Decode the JSON response
+		$releases = json_decode($response, true);
+
+		// Return releases or empty array if decode failed
+		return is_array($releases) ? $releases : array();
 	}
 }
