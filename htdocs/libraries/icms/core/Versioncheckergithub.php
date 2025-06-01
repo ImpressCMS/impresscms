@@ -133,4 +133,18 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 		// Return releases or empty array if decode failed
 		return is_array($releases) ? $releases : array();
 	}
+	public function getLatestVersionNumber() : string {
+		return trim(substr($this->getLatestVersionName(), 1));
+	}
+	public function getInstalledVersionNumber() : string {
+		return trim(substr($this->getInstalledVersionName(), 10));
+	}
+	/**
+	 * @inheritDoc
+	 */
+	public function hasUpdate(): bool
+	{
+
+		return version_compare($this->getLatestVersionNumber(),$this->getInstalledVersionNumber(), '>');
+	}
 }

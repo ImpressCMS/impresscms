@@ -91,6 +91,14 @@ class icms_core_Versionchecker_RSS extends icms_core_Versionchecker {
 		}
 		return $instance;
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function hasUpdate(): bool
+	{
+		// TODO: Implement hasUpdate() method.
+	}
 }
 
 /**

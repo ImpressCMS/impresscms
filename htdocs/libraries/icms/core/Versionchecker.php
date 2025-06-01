@@ -38,7 +38,7 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	 * Installed version information array
 	 * @public $installed array
 	 */
-	public $installed = array(
+	public array $installed = array(
 		'version_name' => null,
 		'build' => null,
 		'status' => null
@@ -48,7 +48,7 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	 * Latest version information array
 	 * @public $latest array
 	 */
-	public $latest = array(
+	public array $latest = array(
 		'version_name' => null,
 		'build' => null,
 		'status' => null,
@@ -66,6 +66,9 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	public $latest_status;
 	public $latest_url;
 	public $latest_changelog;
+	/**
+	 * @var array|null[]
+	 */
 
 	/**
 	 * Constructor
@@ -99,6 +102,10 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	 */
 	abstract public function check();
 
+	/**
+	 * @return bool TRUE if there is an update, FALSE if no update
+	 */
+	abstract public function hasUpdate(): bool;
 	/**
 	 * Gets all the error messages
 	 *
