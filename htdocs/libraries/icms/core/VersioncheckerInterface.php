@@ -85,6 +85,17 @@ interface icms_core_VersioncheckerInterface {
 	public function getLatestChangelog();
 
 	/**
+	 * Get the installed version number
+	 * @return string
+	 */
+	public function getInstalledVersionNumber() : string;
+	/**
+	 * Get the latest version number
+	 * @return string
+	 */
+	public function getLatestVersionNumber() : string;
+
+	/**
 	 * Get the complete latest version information array
 	 *
 	 * @return	array

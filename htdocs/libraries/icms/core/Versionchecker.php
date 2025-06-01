@@ -206,9 +206,21 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	}
 
 	/**
-	 * Get the complete latest version information array
-	 *
-	 * @return	array
+	 * Get the latest version number
+	 * @return string
+	 */
+	public function getLatestVersionNumber() : string {
+		return trim(substr($this->getLatestVersionName(), 1));
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getInstalledVersionNumber() : string {
+		return trim(substr($this->getInstalledVersionName(), 10));
+	}
+	/**
+	 * @inheritDoc
 	 */
 	public function getLatest() {
 		return $this->latest;
