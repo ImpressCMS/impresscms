@@ -524,11 +524,247 @@ class icms_core_Backup {
 	}
 
 	/**
+	 * Restore a backup from ZIP file
+	 *
+	 * @param string $backupName Backup filename to restore
+	 * @param bool $createBackupBeforeRestore Create a backup before restoring
+	 * @return bool Success status
+	 */
+	public function restoreBackup($backupName, $createBackupBeforeRestore = true) {
+		$backupPath = $this->backupDir . '/' . $backupName;
+
+		if (!file_exists($backupPath)) {
+			$this->errors[] = "Backup file not found: " . $backupName;
+			return false;
+		}
+
+		// Check if ZipArchive is available
+		if (!class_exists('ZipArchive')) {
+			$this->errors[] = "ZipArchive extension is not available. Cannot restore backup.";
+			return false;
+		}
+
+		// Create a backup before restoring if requested
+		if ($createBackupBeforeRestore) {
+			$this->messages[] = "Creating backup before restore...";
+			$preRestoreBackup = 'pre-restore-' . date('Y-m-d-H-i-s');
+			$preRestorePath = $this->createBackup($preRestoreBackup, true);
+
+			if (!$preRestorePath) {
+				$this->errors[] = "Failed to create pre-restore backup. Restoration aborted for safety.";
+				return false;
+			}
+			$this->messages[] = "Pre-restore backup created: " . basename($preRestorePath);
+		}
+
+		// Set execution time limit for large restores
+		set_time_limit(0);
+
+		$this->messages[] = "Starting restoration from: " . $backupName;
+		$this->messages[] = "Target directory: " . $this->sourceDir;
+
+		try {
+			return $this->restoreFromZip($backupPath);
+		} catch (Exception $e) {
+			$this->errors[] = "Restoration failed: " . $e->getMessage();
+			return false;
+		}
+	}
+
+	/**
+	 * Restore files from ZIP backup
+	 *
+	 * @param string $backupPath Path to backup ZIP file
+	 * @return bool Success status
+	 */
+	private function restoreFromZip($backupPath) {
+		$zip = new ZipArchive();
+		$result = $zip->open($backupPath);
+
+		if ($result !== TRUE) {
+			$this->errors[] = "Cannot open backup ZIP file (Error code: " . $result . ")";
+			return false;
+		}
+
+		$fileCount = 0;
+		$totalFiles = $zip->numFiles;
+		$this->messages[] = "Backup contains " . $totalFiles . " files";
+
+		// Extract files one by one for better control and progress feedback
+		for ($i = 0; $i < $totalFiles; $i++) {
+			$stat = $zip->statIndex($i);
+			if ($stat === false) {
+				$this->messages[] = "Warning: Could not get info for file at index " . $i;
+				continue;
+			}
+
+			$filename = $stat['name'];
+			$targetPath = $this->sourceDir . '/' . $filename;
+
+			// Skip directories (they'll be created automatically)
+			if (substr($filename, -1) === '/') {
+				continue;
+			}
+
+			// Create target directory if it doesn't exist
+			$targetDir = dirname($targetPath);
+			if (!is_dir($targetDir)) {
+				if (!icms_core_Filesystem::mkdir($targetDir, 0755, '')) {
+					$this->messages[] = "Warning: Could not create directory: " . $targetDir;
+					continue;
+				}
+			}
+
+			// Extract the file
+			$fileContent = $zip->getFromIndex($i);
+			if ($fileContent === false) {
+				$this->messages[] = "Warning: Could not extract file: " . $filename;
+				continue;
+			}
+
+			// Write the file
+			if (file_put_contents($targetPath, $fileContent) !== false) {
+				$fileCount++;
+
+				// Set file permissions if available
+				if (isset($stat['external_attr'])) {
+					$perms = ($stat['external_attr'] >> 16) & 0777;
+					if ($perms > 0) {
+						chmod($targetPath, $perms);
+					}
+				}
+
+				// Progress feedback
+				if ($fileCount % 100 === 0) {
+					$this->messages[] = "Restored " . $fileCount . " of " . $totalFiles . " files";
+					// Flush output to show progress
+					if (ob_get_level()) {
+						ob_flush();
+						flush();
+					}
+				}
+			} else {
+				$this->messages[] = "Warning: Could not write file: " . $targetPath;
+			}
+		}
+
+		$zip->close();
+
+		$this->messages[] = "Restoration completed successfully";
+		$this->messages[] = "Files restored: " . $fileCount . " of " . $totalFiles;
+
+		return true;
+	}
+
+	/**
+	 * Get information about a backup file
+	 *
+	 * @param string $backupName Backup filename
+	 * @return array|false Backup information or false on error
+	 */
+	public function getBackupInfo($backupName) {
+		$backupPath = $this->backupDir . '/' . $backupName;
+
+		if (!file_exists($backupPath)) {
+			$this->errors[] = "Backup file not found: " . $backupName;
+			return false;
+		}
+
+		$info = array(
+			'name' => $backupName,
+			'path' => $backupPath,
+			'size' => filesize($backupPath),
+			'size_formatted' => $this->formatFileSize(filesize($backupPath)),
+			'created' => filemtime($backupPath),
+			'created_formatted' => date('Y-m-d H:i:s', filemtime($backupPath)),
+			'files' => 0,
+			'valid_zip' => false
+		);
+
+		// Check if it's a valid ZIP and get file count
+		if (class_exists('ZipArchive')) {
+			$zip = new ZipArchive();
+			if ($zip->open($backupPath) === TRUE) {
+				$info['valid_zip'] = true;
+				$info['files'] = $zip->numFiles;
+				$zip->close();
+			}
+		}
+
+		return $info;
+	}
+
+	/**
+	 * List files in a backup without extracting
+	 *
+	 * @param string $backupName Backup filename
+	 * @param int $limit Maximum number of files to list (0 = no limit)
+	 * @return array|false Array of file information or false on error
+	 */
+	public function listBackupContents($backupName, $limit = 100) {
+		$backupPath = $this->backupDir . '/' . $backupName;
+
+		if (!file_exists($backupPath)) {
+			$this->errors[] = "Backup file not found: " . $backupName;
+			return false;
+		}
+
+		if (!class_exists('ZipArchive')) {
+			$this->errors[] = "ZipArchive extension is not available.";
+			return false;
+		}
+
+		$zip = new ZipArchive();
+		$result = $zip->open($backupPath);
+
+		if ($result !== TRUE) {
+			$this->errors[] = "Cannot open backup ZIP file (Error code: " . $result . ")";
+			return false;
+		}
+
+		$files = array();
+		$totalFiles = $zip->numFiles;
+		$maxFiles = ($limit > 0) ? min($limit, $totalFiles) : $totalFiles;
+
+		for ($i = 0; $i < $maxFiles; $i++) {
+			$stat = $zip->statIndex($i);
+			if ($stat !== false) {
+				$files[] = array(
+					'name' => $stat['name'],
+					'size' => $stat['size'],
+					'size_formatted' => $this->formatFileSize($stat['size']),
+					'compressed_size' => $stat['comp_size'],
+					'modified' => date('Y-m-d H:i:s', $stat['mtime']),
+					'is_directory' => (substr($stat['name'], -1) === '/')
+				);
+			}
+		}
+
+		$zip->close();
+
+		return array(
+			'files' => $files,
+			'total_files' => $totalFiles,
+			'showing' => count($files),
+			'truncated' => ($limit > 0 && $totalFiles > $limit)
+		);
+	}
+
+	/**
 	 * Check if user has permission to create backups
 	 *
 	 * @return bool
 	 */
 	public static function canCreateBackup() {
+		return is_object(icms::$user) && icms::$user->isAdmin();
+	}
+
+	/**
+	 * Check if user has permission to restore backups
+	 *
+	 * @return bool
+	 */
+	public static function canRestoreBackup() {
 		return is_object(icms::$user) && icms::$user->isAdmin();
 	}
 }

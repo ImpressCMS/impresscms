@@ -73,6 +73,29 @@ switch ($action) {
 			$error = "Permission denied or invalid file";
 		}
 		break;
+
+	case 'restore':
+		if (icms_core_Backup::canRestoreBackup() && isset($_POST['backup_file'])) {
+			$filename = basename($_POST['backup_file']); // Security: only filename, no path
+			$createPreBackup = isset($_POST['create_pre_backup']) ? (bool)$_POST['create_pre_backup'] : true;
+
+			if ($backup->restoreBackup($filename, $createPreBackup)) {
+				$message = "Backup restored successfully: " . $filename;
+			} else {
+				$error = "Failed to restore backup: " . $backup->getErrors(true);
+			}
+		} else {
+			$error = "Permission denied or invalid backup file";
+		}
+		break;
+
+	case 'info':
+		if (isset($_GET['file'])) {
+			$filename = basename($_GET['file']); // Security: only filename, no path
+			$backupInfo = $backup->getBackupInfo($filename);
+			$backupContents = $backup->listBackupContents($filename, 50); // Show first 50 files
+		}
+		break;
 }
 
 // Get list of backups
@@ -139,8 +162,12 @@ icms_cp_header();
 					<td style="padding: 8px; border: 1px solid #ddd;"><?php echo $backupInfo['size_formatted']; ?></td>
 					<td style="padding: 8px; border: 1px solid #ddd;"><?php echo $backupInfo['created_formatted']; ?></td>
 					<td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+						<?php if (icms_core_Backup::canRestoreBackup()): ?>
+						<a href="?action=info&file=<?php echo urlencode($backupInfo['name']); ?>" style="color: blue;">Info</a> |
+						<a href="javascript:void(0);" onclick="showRestoreForm('<?php echo htmlspecialchars($backupInfo['name'], ENT_QUOTES); ?>');" style="color: green;">Restore</a>
+						<?php endif; ?>
 						<?php if (icms_core_Backup::canCreateBackup()): ?>
-						<a href="?action=delete&file=<?php echo urlencode($backupInfo['name']); ?>"
+						| <a href="?action=delete&file=<?php echo urlencode($backupInfo['name']); ?>"
 						   onclick="return confirm('Are you sure you want to delete this backup?');"
 						   style="color: red;">Delete</a>
 						<?php else: ?>
@@ -166,6 +193,105 @@ icms_cp_header();
 	<p><strong>Excluded Files:</strong> *.log, *.tmp, .DS_Store, Thumbs.db</p>
 	<p><strong>Maximum File Size:</strong> 50MB</p>
 </div>
+
+<!-- Restore Form (Hidden by default) -->
+<div id="restoreForm" style="display: none; margin-top: 20px;">
+	<div class="head" style="padding: 2px; margin-bottom: 5px;">
+		<strong>Restore Backup</strong>
+	</div>
+	<div class="even">
+		<form method="post" action="" onsubmit="return confirmRestore();">
+			<input type="hidden" name="action" value="restore" />
+			<input type="hidden" name="backup_file" id="restore_backup_file" value="" />
+
+			<p><strong>Selected Backup:</strong> <span id="restore_backup_name"></span></p>
+
+			<div style="margin: 10px 0;">
+				<label>
+					<input type="checkbox" name="create_pre_backup" value="1" checked="checked" />
+					Create a backup before restoring (recommended)
+				</label>
+			</div>
+
+			<div style="margin: 10px 0;">
+				<strong style="color: red;">Warning:</strong> This will overwrite your current installation files.
+				Make sure you have a recent backup before proceeding.
+			</div>
+
+			<input type="submit" value="Restore Backup" class="formButton" style="background-color: #ff6600;" />
+			<input type="button" value="Cancel" class="formButton" onclick="hideRestoreForm();" />
+		</form>
+	</div>
+</div>
+
+<?php if (isset($backupInfo) && $backupInfo): ?>
+<!-- Backup Information Display -->
+<div class="head" style="padding: 2px; margin-bottom: 5px; margin-top: 20px;">
+	<strong>Backup Information: <?php echo htmlspecialchars($backupInfo['name']); ?></strong>
+</div>
+
+<div class="odd">
+	<p><strong>File:</strong> <?php echo htmlspecialchars($backupInfo['name']); ?></p>
+	<p><strong>Size:</strong> <?php echo $backupInfo['size_formatted']; ?></p>
+	<p><strong>Created:</strong> <?php echo $backupInfo['created_formatted']; ?></p>
+	<p><strong>Files:</strong> <?php echo number_format($backupInfo['files']); ?></p>
+	<p><strong>Valid ZIP:</strong> <?php echo $backupInfo['valid_zip'] ? 'Yes' : 'No'; ?></p>
+
+	<?php if (isset($backupContents) && $backupContents): ?>
+	<h4>Contents (showing first <?php echo $backupContents['showing']; ?> of <?php echo number_format($backupContents['total_files']); ?> files):</h4>
+	<div style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9;">
+		<?php foreach ($backupContents['files'] as $file): ?>
+			<?php if (!$file['is_directory']): ?>
+			<div style="margin: 2px 0; font-family: monospace; font-size: 12px;">
+				<?php echo htmlspecialchars($file['name']); ?>
+				<span style="color: #666;">(<?php echo $file['size_formatted']; ?>)</span>
+			</div>
+			<?php endif; ?>
+		<?php endforeach; ?>
+		<?php if ($backupContents['truncated']): ?>
+		<div style="margin-top: 10px; font-style: italic; color: #666;">
+			... and <?php echo number_format($backupContents['total_files'] - $backupContents['showing']); ?> more files
+		</div>
+		<?php endif; ?>
+	</div>
+	<?php endif; ?>
+
+	<p style="margin-top: 15px;">
+		<a href="?" class="formButton">← Back to Backup List</a>
+	</p>
+</div>
+<?php endif; ?>
+
+<script type="text/javascript">
+function showRestoreForm(backupName) {
+	document.getElementById('restore_backup_file').value = backupName;
+	document.getElementById('restore_backup_name').textContent = backupName;
+	document.getElementById('restoreForm').style.display = 'block';
+	document.getElementById('restoreForm').scrollIntoView();
+}
+
+function hideRestoreForm() {
+	document.getElementById('restoreForm').style.display = 'none';
+}
+
+function confirmRestore() {
+	var backupName = document.getElementById('restore_backup_name').textContent;
+	var createPreBackup = document.querySelector('input[name="create_pre_backup"]').checked;
+
+	var message = 'Are you sure you want to restore from backup "' + backupName + '"?\n\n';
+	message += 'This will overwrite your current installation files.\n';
+
+	if (createPreBackup) {
+		message += '\nA backup of your current installation will be created first.';
+	} else {
+		message += '\nWARNING: No backup will be created before restoring!';
+	}
+
+	message += '\n\nThis operation may take several minutes to complete.';
+
+	return confirm(message);
+}
+</script>
 
 <?php
 icms_cp_footer();
