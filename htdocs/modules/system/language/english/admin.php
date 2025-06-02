@@ -22,6 +22,7 @@ define('_MD_AM_COMMENTS', 'Comments');
 define('_MD_AM_BKPOSAD','Block Positions');
 define('_MD_AM_PAGES','Symlink Manager');
 define('_MD_AM_CUSTOMTAGS', 'Custom Tags');
+define('_MD_AM_BACKUP', 'Backup Manager');
 
 // Group permission phrases
 define('_MD_AM_PERMADDNG', 'Could not add %s permission to %s for group %s');
@@ -64,3 +65,4 @@ define('_MD_AM_TPLSETS_DSC', 'Templates are sets of html/css files that render t
 define('_MD_AM_RANK_DSC', 'User ranks are picture, used to make difference between users in different levels of your website!');
 define('_MD_AM_VRSN_DSC', 'Use this tool to check your system for updates.');
 define('_MD_AM_PREF_DSC',"ImpressCMS Site Preferences");
+define('_MD_AM_BACKUP_DSC', 'Create and manage ZIP backups of your ImpressCMS installation.');
