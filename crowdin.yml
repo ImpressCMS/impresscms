@@ -5,3 +5,7 @@ files:
     translation: /htdocs/language/%two_letters_code%/%file_name%
   - source: /htdocs/install/language/english/*
     translation: /htdocs/install/language/%two_letters_code%/%original_file_name%
+  - source: /htdocs/modules/system/language/english/*
+    translation: /htdocs/modules/system/language/%two_letters_code%/%original_file_name%
+  - source: /htdocs/modules/system/language/english/admin/
+    translation: /htdocs/modules/system/language/%two_letters_code%/admin/%original_file_name%
