@@ -142,7 +142,7 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 	/**
 	 * @inheritDoc
 	 */
-	public function hasUpdate(): bool2
+	public function hasUpdate(): bool
 	{
 		return version_compare($this->getLatestVersionNumber(),$this->getInstalledVersionNumber(), '>');
 	}
