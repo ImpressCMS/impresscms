@@ -4,4 +4,4 @@ files:
   - source: /htdocs/language/english/*
     translation: /htdocs/language/%two_letters_code%/%file_name%
   - source: /htdocs/install/language/english/*
-    translation: /htdocs/install/language/%two_letters_code%/%original_file_name%
+    translation: /htdocs/install/language/%two_letters_code%/%file_name%
