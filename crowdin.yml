@@ -1,5 +1,5 @@
 files:
-  - source: /htdocs/language/english/mail_template
+  - source: /htdocs/language/english/mail_template/*
     translation: /htdocs/language/%two_letters_code%/mail_template/%file_name%
   - source: /htdocs/language/english/*
     translation: /htdocs/language/%two_letters_code%/%file_name%
