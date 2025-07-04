@@ -1,4 +1,4 @@
-# ImpressCMS 2.0.2
+# ImpressCMS 2.0.2 beta
 
 This release of ImpressCMS realizes the majority of the original scope of the 2.0 release, defined almost 10 years ago. The focus is on providing compatibility with newer version of PHP (PHP7.4 up until PHP 8.4) and code cleanup. Existing modules that are compatible with the newer PHP versions should still work, as long as they are not using any of the deprecated functions that have been removed in this release.  
 
