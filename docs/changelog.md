@@ -1,7 +1,7 @@
 # ImpressCMS ChangeLog
 
 ## ImpressCMS 2.0.2 beta
-* Date : 03 July 2025
+* Date : 04 July 2025
 * DB Version : 48
 * Build Version : 114
 
