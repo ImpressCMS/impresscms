@@ -124,11 +124,14 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	 *
 	 * @return	string
 	 */
-	public function renderWhere() {
-		$ret = $this->render();
-		$ret = ($ret != '') ? 'WHERE ' . $ret : $ret;
-		return $ret;
-	}
+public function renderWhere(): ?string
+{
+    $ret = $this->render();
+    if ($ret !== '') {
+        return 'WHERE ' . $ret;
+    }
+    return null;
+}
 
 	/**
 	 * Generate an LDAP filter from criteria
