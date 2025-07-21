@@ -106,18 +106,6 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 	{
 		$url = "https://api.github.com/repos/$owner/$repo/releases";
 
-		// Create a stream context
-		$options = [
-			'http' => [
-				'method' => 'GET',
-				'header' => [
-					'User-Agent: PHP'
-				]
-			]
-		];
-
-		$context = stream_context_create($options);
-
 		// Call the GitHub API
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
