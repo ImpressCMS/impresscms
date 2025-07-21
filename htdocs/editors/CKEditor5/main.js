@@ -229,7 +229,7 @@ const editorConfig = {
 	htmlSupport: {
 		allow: [
 			{
-				name: /^.*$/,
+				name: /.*/,
 				styles: true,
 				attributes: true,
 				classes: true
@@ -330,17 +330,7 @@ const editorConfig = {
 };
 
 ClassicEditor.create(document.querySelector('textarea'), editorConfig).then(editor => {
-    htmlSupport: {
-        allow: [
-                {
-                    name: /.*/,
-                    attributes: true,
-                    classes: true,
-                    styles: true
-                }
-        ]    
-    }
-	const wordCount = editor.plugins.get('WordCount');
+ 	const wordCount = editor.plugins.get('WordCount');
 	document.querySelector('.editor').appendChild(wordCount.wordCountContainer);
 
 	return editor;
