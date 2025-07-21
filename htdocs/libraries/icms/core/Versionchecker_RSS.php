@@ -36,7 +36,7 @@ class icms_core_Versionchecker_RSS extends icms_core_Versionchecker {
 		$feed = new icms_feeds_Simplerss();
 		$feed->set_feed_url($this->version_xml);
 		$feed->set_cache_duration(0);
-		$feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_NONE);
+		$feed->set_autodiscovery_level(\SimplePie\SimplePie::LOCATOR_NONE);
 		$feed->init();
 		$feed->handle_content_type();
 
@@ -97,15 +97,13 @@ class icms_core_Versionchecker_RSS extends icms_core_Versionchecker {
 	 */
 	public function hasUpdate(): bool
 	{
-		// TODO: Implement hasUpdate() method.
+		if ($this->latest['build'] > ICMS_VERSION_BUILD) {
+			// There is an update available
+			return true;
+		}
+		else
+        {
+            return false;
+        }
 	}
-}
-
-/**
- * Backward compatibility alias
- *
- * @deprecated Use icms_core_Versionchecker_RSS instead
- */
-if (!class_exists('icms_core_Versionchecker_Original')) {
-	class_alias('icms_core_Versionchecker_RSS', 'icms_core_Versionchecker_Original');
 }
