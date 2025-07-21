@@ -97,13 +97,6 @@ class icms_core_Versionchecker_RSS extends icms_core_Versionchecker {
 	 */
 	public function hasUpdate(): bool
 	{
-		if ($this->latest['build'] > ICMS_VERSION_BUILD) {
-			// There is an update available
-			return true;
-		}
-		else
-        {
-            return false;
-        }
+	    return $this->latest['build'] > ICMS_VERSION_BUILD;
 	}
 }
