@@ -1,14 +1,14 @@
 <?php
 /**
- * Abstract base class for version checkers
+ * Class used to determine if the core, or modules, need to be updated
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * Abstract base class for version checkers
+ * IcmsVersionChecker
  *
- * Provides common functionality for checking if the ImpressCMS install is up to date
+ * Class used to check if the ImpressCMS install is up to date
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -19,7 +19,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id: Versionchecker.php 11603 2012-02-26 08:45:50Z fiammy $
  */
-abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInterface {
+class icms_core_Versionchecker {
 
 	/*
 	 * errors
@@ -28,61 +28,68 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	public $errors = array();
 
 	/*
-	 * Time before fetching the version information again and store it in cache
+	 * URL of the XML containing version information
+	 * @public $version_xml string
+	 */
+	public $version_xml = "http://www.impresscms.org/impresscms_version_branch13.xml";
+
+	/*
+	 * Time before fetching the $version_xml again and store it in $cache_version_xml
 	 * @public $cache_time integer
 	 * @todo set this to a day at least or make it configurable in System Admin > Preferences
 	 */
 	public $cache_time=1;
 
 	/*
-	 * Installed version information array
-	 * @public $installed array
+	 * Name of the latest version
+	 * @public $latest_version_name string
 	 */
-	public array $installed = array(
-		'version_name' => null,
-		'build' => null,
-		'status' => null
-	);
+	public $latest_version_name;
 
 	/*
-	 * Latest version information array
-	 * @public $latest array
-	 */
-	public array $latest = array(
-		'version_name' => null,
-		'build' => null,
-		'status' => null,
-		'url' => null,
-		'changelog' => null
-	);
-
-	/*
-	 * Legacy properties for backward compatibility
-	 * @deprecated Use $installed and $latest arrays instead
+	 * Name of installed version
+	 * @private $installed_version_name string
 	 */
 	public $installed_version_name;
-	public $latest_version_name;
-	public $latest_build;
-	public $latest_status;
-	public $latest_url;
-	public $latest_changelog;
-	/**
-	 * @var array|null[]
+
+	/*
+	 * Number of the latest build
+	 * @public $latest_build integer
 	 */
+	public $latest_build;
+
+	/*
+	 * Status of the latest build
+	 *
+	 * 1  = Alpha
+	 * 2  = Beta
+	 * 3  = RC
+	 * 10 = Final
+	 *
+	 * @public $latest_status integer
+	 */
+	public $latest_status;
+
+	/*
+	 * URL of the latest release
+	 * @public $latest_url string
+	 */
+	public $latest_url;
+
+	/*
+	 * Changelog of the latest release
+	 * @public $latest_changelog string
+	 */
+	public $latest_changelog;
 
 	/**
 	 * Constructor
 	 *
 	 * @return	void
+	 *
 	 */
 	public function __construct() {
-		// Initialize installed version information
-		$this->installed['version_name'] = ICMS_VERSION_NAME;
-		$this->installed['build'] = defined('ICMS_VERSION_BUILD') ? ICMS_VERSION_BUILD : null;
-		$this->installed['status'] = defined('ICMS_VERSION_STATUS') ? ICMS_VERSION_STATUS : null;
-
-		// Sync legacy property for backward compatibility
-		$this->installed_version_name = $this->installed['version_name'];
+		$this->installed_version_name = ICMS_VERSION_NAME;
 	}
 
 	/**
@@ -92,27 +99,70 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 	 * @staticvar object
 	 *
 	 * @return	object
+	 *
 	 */
-	abstract static public function &getInstance();
+	static public function &getInstance() {
+		static $instance;
+		if (!isset($instance)) {
+			$instance = new self();
+		}
+		return $instance;
+	}
 
 	/**
 	 * Check for a newer version of ImpressCMS
 	 *
-	 * @return	bool	TRUE if there is an update, FALSE if no update OR errors occurred
+	 * @return	TRUE if there is an update, FALSE if no update OR errors occured
+	 *
 	 */
-	abstract public function check();
+	public function check() {
 
-	/**
-	 * @return bool TRUE if there is an update, FALSE if no update
-	 */
-	abstract public function hasUpdate(): bool;
+		// Create a new instance of the SimplePie object
+		$feed = new icms_feeds_Simplerss();
+		$feed->set_feed_url($this->version_xml);
+		$feed->set_cache_duration(0);
+		$feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_NONE);
+		$feed->init();
+		$feed->handle_content_type();
+
+		if (!$feed->error) {
+			$versionInfo['title'] = $feed->get_title();
+			$versionInfo['link'] = $feed->get_link();
+			$versionInfo['image_url'] = $feed->get_image_url();
+			$versionInfo['image_title'] = $feed->get_image_title();
+			$versionInfo['image_link'] = $feed->get_image_link();
+			$feed_item = $feed->get_item(0);
+			$versionInfo['description'] = $feed_item->get_description();
+			$versionInfo['permalink'] = $feed_item->get_permalink();
+			$versionInfo['title'] = $feed_item->get_title();
+			$versionInfo['content'] = $feed_item->get_content();
+			$guidArray = $feed_item->get_item_tags('', 'guid');
+			$versionInfo['guid'] = $guidArray[0]['data'];
+		} else {
+			$this->errors[] = _AM_VERSION_CHECK_RSSDATA_EMPTY;
+			return false;
+		}
+		$this->latest_version_name = $versionInfo['title'];
+		$this->latest_changelog = $versionInfo['description'];
+		$build_info = explode('|', $versionInfo['guid']);
+		$this->latest_build = $build_info[0];
+		$this->latest_status = $build_info[1];
+
+		if ($this->latest_build > ICMS_VERSION_BUILD) {
+			// There is an update available
+			$this->latest_url = $versionInfo['link'];
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Gets all the error messages
 	 *
-	 * @param	bool	$ashtml	return as html?
+	 * @param	$ashtml	bool	return as html?
 	 * @return	mixed
 	 */
-	public function getErrors($ashtml = true) {
+	public function getErrors($ashtml=true) {
 		if (!$ashtml) {
 			return $this->errors;
 		} else {
@@ -124,105 +174,5 @@ abstract class icms_core_Versionchecker implements icms_core_VersioncheckerInter
 			}
 			return $ret;
 		}
-	}
-
-	/**
-	 * Synchronize legacy properties with the installed and latest arrays
-	 * This ensures backward compatibility
-	 */
-	protected function syncLegacyProperties() {
-		// Sync installed legacy property
-		$this->installed_version_name = $this->installed['version_name'];
-
-		// Sync latest legacy properties
-		$this->latest_version_name = $this->latest['version_name'];
-		$this->latest_build = $this->latest['build'];
-		$this->latest_status = $this->latest['status'];
-		$this->latest_url = $this->latest['url'];
-		$this->latest_changelog = $this->latest['changelog'];
-	}
-
-	/**
-	 * Get the latest version name
-	 *
-	 * @return	string
-	 */
-	public function getLatestVersionName() {
-		return $this->latest['version_name'];
-	}
-
-	/**
-	 * Get the installed version name
-	 *
-	 * @return	string
-	 */
-	public function getInstalledVersionName() {
-		return $this->installed['version_name'];
-	}
-
-	/**
-	 * Get the complete installed version information array
-	 *
-	 * @return	array
-	 */
-	public function getInstalled() {
-		return $this->installed;
-	}
-
-	/**
-	 * Get the latest build number
-	 *
-	 * @return	int
-	 */
-	public function getLatestBuild() {
-		return $this->latest['build'];
-	}
-
-	/**
-	 * Get the latest version status
-	 *
-	 * @return	int
-	 */
-	public function getLatestStatus() {
-		return $this->latest['status'];
-	}
-
-	/**
-	 * Get the latest version URL
-	 *
-	 * @return	string
-	 */
-	public function getLatestUrl() {
-		return $this->latest['url'];
-	}
-
-	/**
-	 * Get the latest changelog
-	 *
-	 * @return	string
-	 */
-	public function getLatestChangelog() {
-		return $this->latest['changelog'];
-	}
-
-	/**
-	 * Get the latest version number
-	 * @return string
-	 */
-	public function getLatestVersionNumber() : string {
-		return trim(substr($this->getLatestVersionName(), 1));
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getInstalledVersionNumber() : string {
-		return trim(substr($this->getInstalledVersionName(), 10));
-	}
-	/**
-	 * @inheritDoc
-	 */
-	public function getLatest() {
-		return $this->latest;
 	}
 }
