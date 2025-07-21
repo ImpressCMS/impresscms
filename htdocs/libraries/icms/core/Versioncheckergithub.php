@@ -119,13 +119,18 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 		$context = stream_context_create($options);
 
 		// Call the GitHub API
-		$response = file_get_contents($url, false, $context);
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'PHP');
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		$response = curl_exec($ch);
 
-		// Check for errors
-		if ($response === FALSE) {
-			// Return empty array on error
-			return array();
+		if ($response === FALSE || curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
+		    curl_close($ch);
+		    return array();
 		}
+		curl_close($ch);
 
 		// Decode the JSON response
 		$releases = json_decode($response, true);
