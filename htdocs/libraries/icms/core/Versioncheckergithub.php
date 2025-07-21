@@ -126,8 +126,11 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 		$response = curl_exec($ch);
 
-		if ($response === FALSE || curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
+		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		if ($response === FALSE || $http_code !== 200) {
+		    $error = curl_error($ch);
 		    curl_close($ch);
+		    $this->errors[] = "GitHub API error: " . ($error ?: "HTTP $http_code");
 		    return array();
 		}
 		curl_close($ch);
