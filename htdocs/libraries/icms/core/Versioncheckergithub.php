@@ -19,7 +19,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		fiammybe <david.j@impresscms.org>
  * @todo		turn this into a generic way of testing for new updates from github, also for themes, modules, ...
  */
-class icms_core_Versioncheckergithub extends icms_core_Versionchecker
+class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements icms_core_VersioncheckerInterface
 {
 
 	/*
@@ -27,7 +27,8 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 	 * @public $version_url string
 	 */
 	public $version_url = "https://api.github.com/repos/ImpressCMS/impresscms/releases/latest";
-
+    public $installed = array();
+    public $latest = array();
 
 
 	/**
@@ -39,8 +40,25 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 	{
 		parent::__construct();
 
-		// Add GitHub-specific fields to the installed array
-		$this->installed['version'] = ICMS_VERSION_NAME; // GitHub-specific field for tag comparison
+		// Initialize arrays with default values
+		$this->latest = array(
+			'version_name' => '',
+			'version' => '',
+			'build' => 0,
+			'status' => 0,
+			'url' => '',
+			'changelog' => '',
+			'title' => '',
+			'description' => '',
+			'link' => ''
+		);
+
+		$this->installed = array(
+			'version_name' => ICMS_VERSION_NAME,
+			'version' => ICMS_VERSION_NAME,
+			'build' => defined('ICMS_VERSION_BUILD') ? ICMS_VERSION_BUILD : 0,
+			'status' => defined('ICMS_VERSION_STATUS') ? ICMS_VERSION_STATUS : 10
+		);
 	}
 
 	/**
@@ -66,7 +84,8 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 	 *
 	 * @return	bool	TRUE if there is an update, FALSE if no update OR errors occurred
 	 */
-	public function check() {
+	public function check(): bool
+    {
 		// get the release data from the github API
 		$github_data = $this->get_latest('ImpressCMS', 'impresscms');
 
@@ -87,17 +106,14 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 			$this->latest['link'] = $this->latest['url'];
 
 			// Sync legacy properties for backward compatibility
-			$this->syncLegacyProperties();
+			//$this->syncLegacyProperties();
 		} else {
 			$this->errors[] = _AM_VERSION_CHECK_RSSDATA_EMPTY;
 			return false;
 		}
 
-		if (version_compare(substr(ICMS_VERSION_NAME, 10), substr($this->latest['version'], 1), 'lt')) {
-			// There is an update available
-			return true;
-		}
-		return false;
+		// Use the hasUpdate method for consistent version comparison
+		return $this->hasUpdate();
 	}
 
 
@@ -130,16 +146,97 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker
 		return is_array($releases) ? $releases : array();
 	}
 	public function getLatestVersionNumber() : string {
-		return trim(substr($this->getLatestVersionName(), 1));
+		$versionName = $this->getLatestVersionName();
+		if (empty($versionName)) {
+			return '';
+		}
+		// Remove 'v' prefix if present (e.g., "v2.0.1" -> "2.0.1")
+		return trim(ltrim($versionName, 'v'));
 	}
+
 	public function getInstalledVersionNumber() : string {
-		return trim(substr($this->getInstalledVersionName(), 10));
+		$versionName = $this->getInstalledVersionName();
+		if (empty($versionName)) {
+			return '';
+		}
+		// Remove "ImpressCMS " prefix if present (e.g., "ImpressCMS 2.0.1" -> "2.0.1")
+		return trim(str_replace('ImpressCMS ', '', $versionName));
 	}
+
+    public function getLatestVersionName() : string {
+		return isset($this->latest['version_name']) ? $this->latest['version_name'] : '';
+	}
+
+    public function getInstalledVersionName() : string {
+		return isset($this->installed['version_name']) ? $this->installed['version_name'] : '';
+	}
+
+	/**
+	 * Get the complete installed version information array
+	 *
+	 * @return	array
+	 */
+	public function getInstalled() {
+		return $this->installed;
+	}
+
+	/**
+	 * Get the latest build number
+	 *
+	 * @return	int
+	 */
+	public function getLatestBuild() {
+		return isset($this->latest['build']) ? (int)$this->latest['build'] : 0;
+	}
+
+	/**
+	 * Get the latest version status
+	 *
+	 * @return	int
+	 */
+	public function getLatestStatus() {
+		return isset($this->latest['status']) ? (int)$this->latest['status'] : 0;
+	}
+
+	/**
+	 * Get the latest version URL
+	 *
+	 * @return	string
+	 */
+	public function getLatestUrl() {
+		return isset($this->latest['url']) ? $this->latest['url'] : '';
+	}
+
+	/**
+	 * Get the latest changelog
+	 *
+	 * @return	string
+	 */
+	public function getLatestChangelog() {
+		return isset($this->latest['changelog']) ? $this->latest['changelog'] : '';
+	}
+
+	/**
+	 * Get the complete latest version information array
+	 *
+	 * @return	array
+	 */
+	public function getLatest() {
+		return $this->latest;
+	}
+
 	/**
 	 * @inheritDoc
 	 */
 	public function hasUpdate(): bool
 	{
-		return version_compare($this->getLatestVersionNumber(),$this->getInstalledVersionNumber(), '>');
+		$latestVersion = $this->getLatestVersionNumber();
+		$installedVersion = $this->getInstalledVersionNumber();
+
+		if (empty($latestVersion) || empty($installedVersion)) {
+			return false;
+		}
+
+		return version_compare($latestVersion, $installedVersion, '>');
 	}
 }

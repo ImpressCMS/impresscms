@@ -40,8 +40,8 @@ icms_cp_header();
 if ($icmsVersionChecker->check()) {
 
 
-	$icmsAdminTpl->assign('latest', $icmsVersionChecker->getLatest());
-	$icmsAdminTpl->assign('installed', $icmsVersionChecker->getInstalled());
+	$icmsAdminTpl->assign('latest', $icmsVersionChecker->getLatestVersionNumber());
+	$icmsAdminTpl->assign('installed', $icmsVersionChecker->getInstalledVersionNumber());
 	$icmsAdminTpl->assign('update_available', $icmsVersionChecker->hasUpdate());
 //	if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest['status'] < 10) {
 //		// I'm running a final release so make sure to notify the user that the update is not a final
