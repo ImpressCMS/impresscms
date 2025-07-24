@@ -42,6 +42,10 @@ defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 // -- Include common functions and constants file
 require_once ICMS_ROOT_PATH . "/include/constants.php";
+
+// Load Composer autoloader early
+require_once ICMS_ROOT_PATH . '/vendor/autoload.php';
+
 include_once ICMS_INCLUDE_PATH . "/functions.php";
 include_once ICMS_INCLUDE_PATH . "/debug_functions.php";
 include_once ICMS_INCLUDE_PATH . "/version.php";
