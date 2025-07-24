@@ -120,7 +120,8 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 
 	private function get_latest($owner = 'ImpressCMS', $repo = 'impresscms') : array
 	{
-		$url = "https://api.github.com/repos/$owner/$repo/releases";
+		$url= $this->version_url;
+		//$url = "https://api.github.com/repos/$owner/$repo/releases";
 
 		// Call the GitHub API
 		$ch = curl_init();
@@ -238,5 +239,16 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 		}
 
 		return version_compare($latestVersion, $installedVersion, '>');
+	}
+	public function hasLatest(): bool
+	{
+		$latestVersion = $this->getLatestVersionNumber();
+		$installedVersion = $this->getInstalledVersionNumber();
+
+		if (empty($latestVersion) || empty($installedVersion)) {
+			return false;
+		}
+
+		return version_compare($latestVersion, $installedVersion, '=');
 	}
 }

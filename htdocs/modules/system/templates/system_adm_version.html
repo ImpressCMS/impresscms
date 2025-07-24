@@ -22,6 +22,12 @@
 	    <h2><{$latest.version_name}> <{$smarty.const._AM_VERSION_CHANGELOG}></h2>
    		<p><{$latest.changelog}></p>
     </div>
+<{elseif $has_latest == "1"}>
+<div class="even">
+	<div class="errorMsg">
+		<strong><{$smarty.const._AM_VERSION_LATEST_VERSION}></strong><br />
+	</div>
+</div>
 <{else}>
 	<div class="even">
 		<{if $errors}>
