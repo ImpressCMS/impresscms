@@ -174,7 +174,7 @@ class icms_form_elements_Password extends icms_form_Element {
 		$this->tpl->assign('ele_extra', $this->getExtra());
 		$this->tpl->assign('ele_autocomplete', $this->autoComplete);
 
-		$element_html_template = $this->_customTemplate ? $this->_customTemplate : strtolower(static::class) . '_display.html';
-		return $this->_tpl->fetch('db:' . $element_html_template);
+		$element_html_template = $this->_customTemplate ? $this->customTemplate : 'icms_form_elements_password_display.html';
+		return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
