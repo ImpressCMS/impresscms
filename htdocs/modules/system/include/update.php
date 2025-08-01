@@ -44,7 +44,7 @@ icms_loadLanguageFile('core', 'databaseupdater');
 if (is_object(icms::$module)) {
 	define('SYSTEM_DB_VERSION', icms::$module->getDBVersion());
 } else {
-	define('SYSTEM_DB_VERSION', 0);
+	define('SYSTEM_DB_VERSION', 48);
 }
 
 /**
