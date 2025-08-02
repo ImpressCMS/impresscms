@@ -329,9 +329,16 @@ const editorConfig = {
 	}
 };
 
-ClassicEditor.create(document.querySelector('textarea'), editorConfig).then(editor => {
- 	const wordCount = editor.plugins.get('WordCount');
-	document.querySelector('.editor').appendChild(wordCount.wordCountContainer);
-
-	return editor;
+let id = '';
+$('textarea').each(function() {
+      id = $(this).attr('id');
+      if (id != '') {
+        ClassicEditor
+            .create(document.querySelector('#' + id ), editorConfig)
+            .then(editor => {
+             	const wordCount = editor.plugins.get('WordCount');
+    	        document.querySelector( '#' + id ).appendChild(wordCount.wordCountContainer);
+    	        return editor;
+            });       
+    };
 });
