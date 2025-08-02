@@ -336,6 +336,7 @@ $('textarea').each(function() {
         ClassicEditor
             .create(document.querySelector('#' + id ), editorConfig)
             .then(editor => {
+				editor.ui.view.editable.element.style.height = '400px';
              	const wordCount = editor.plugins.get('WordCount');
     	        document.querySelector( '#' + id ).appendChild(wordCount.wordCountContainer);
     	        return editor;
