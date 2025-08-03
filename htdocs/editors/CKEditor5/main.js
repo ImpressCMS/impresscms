@@ -330,7 +330,7 @@ const editorConfig = {
 };
 
 let id = '';
-$('textarea').each(function() {
+$('.ckeditor').each(function() {
       id = $(this).attr('id');
       if (id != '') {
         ClassicEditor

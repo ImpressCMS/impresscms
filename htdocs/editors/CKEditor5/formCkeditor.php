@@ -39,7 +39,7 @@ $this->rootpath = substr(dirname($current_path), strlen(ICMS_ROOT_PATH));
 			}
 		}
 		parent::__construct(@$this->_caption, @$this->_name, @$this->_value);
-		parent::setExtra("style='width: " . $this->_width . "; height: " . $this->_height . ";'");
+		parent::setExtra("class=ckeditor style='width: " . $this->_width . "; height: " . $this->_height . ";'");
 	}
 
 	/**
@@ -83,8 +83,8 @@ $this->rootpath = substr(dirname($current_path), strlen(ICMS_ROOT_PATH));
 	         }
 	    }
 */
-		$xoTheme->addStylesheet('editors/CKEditor5/style.css'); 
-		$xoTheme->addStylesheet('editors/CKEditor5/ckeditor5/ckeditor5.css'); 
+		$xoTheme->addStylesheet('editors/CKEditor5/style.css');
+		$xoTheme->addStylesheet('editors/CKEditor5/ckeditor5/ckeditor5.css');
 		$xoTheme->addScript('', array('type' => 'importmap'), '{
 			"imports": {
 				"ckeditor5": "' . ICMS_URL . '/editors/CKEditor5/ckeditor5/ckeditor5.js",
@@ -95,4 +95,3 @@ $this->rootpath = substr(dirname($current_path), strlen(ICMS_ROOT_PATH));
 		return parent::render();
 	}
 }
-
