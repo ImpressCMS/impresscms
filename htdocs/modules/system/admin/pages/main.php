@@ -42,6 +42,7 @@ function editpage($page_id = 0, $clone = FALSE) {
 	$icmsAdminTpl->display('db:system_adm_pagemanager_index.html');
 }
 
+global $icmsAdminTpl, $icms_page_handler;
 $icms_page_handler = icms_getModuleHandler('pages');
 /* Use a naming convention that indicates the source of the content of the variable */
 $clean_op = '';
@@ -51,7 +52,7 @@ $clean_op = '';
 $valid_op = array ('mod', 'changedField', 'addpage', 'del', 'status', '');
 
 if (isset($_GET['op']))
-$clean_op = filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING);
+	$clean_op = filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING);
 if (isset($_POST ['op']))
 	$clean_op = filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING);
 
@@ -68,6 +69,7 @@ $clean_page_id = isset($_POST['page_id']) ? (int) $_POST['page_id'] : $clean_pag
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch ($clean_op) {
 		case 'status' :
+			global $icms_page_handler;
 			$icms_page_handler->changeStatus( $clean_page_id );
 			$rtn = '/modules/system/admin.php?fct=pages';
 			if (isset($_GET['rtn'])) {
@@ -89,16 +91,19 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "addpage" :
+			global $icms_page_handler;
 			$controller = new icms_ipf_Controller($icms_page_handler);
 			$controller->storeFromDefaultForm(_AM_SYSTEM_PAGES_CREATED, _AM_SYSTEM_PAGES_MODIFIED);
 			break;
 
 		case "del" :
+			global $icms_page_handler;
 			$controller = new icms_ipf_Controller ($icms_page_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		default :
+			global $icmsAdminTpl, $icms_page_handler;
 			icms_cp_header();
 			$objectTable = new icms_ipf_view_Table($icms_page_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column('page_status', 'center', FALSE, 'getCustomPageStatus'));
