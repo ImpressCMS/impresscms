@@ -41,7 +41,11 @@
 icms_loadLanguageFile('core', 'databaseupdater');
 
 // this needs to be the latest db version - and the constant must start with the module's dirname
-define('SYSTEM_DB_VERSION', icms::$module->getDBVersion());
+if (is_object(icms::$module)) {
+	define('SYSTEM_DB_VERSION', icms::$module->getDBVersion());
+} else {
+	define('SYSTEM_DB_VERSION', 48);
+}
 
 /**
  * Automatic update of the system module
