@@ -26,7 +26,7 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 			$current_path = str_replace(strpos($current_path, "\\\\", 2) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
 		}
 
-$this->rootpath = substr(dirname($current_path), strlen(ICMS_ROOT_PATH));
+		$this->rootpath = substr(dirname($current_path), strlen(ICMS_ROOT_PATH));
 		
 		if (is_array($configs)) {
 			$vars = array_keys(get_object_vars($this));
