@@ -93,6 +93,7 @@ function editblock($bid = 0, $clone = FALSE) {
 	$icmsAdminTpl->display('db:system_adm_blocksadmin.html');
 }
 
+global $icmsAdminTpl, $icms_block_handler;
 $icms_block_handler = icms_getModuleHandler('blocksadmin');
 /** Use a naming convention that indicates the source of the content of the variable */
 $clean_op = '';
@@ -136,6 +137,7 @@ if (isset($_GET['sortsel'])) {
 if (in_array($clean_op, $valid_op, TRUE)) {
 	switch($clean_op) {
 		case 'visible' :
+			global $icms_block_handler;
 			$icms_block_handler->changeVisible($clean_bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset($_GET['sortsel'])) {
@@ -149,6 +151,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "up" :
+			global $icms_block_handler;
 			$icms_block_handler->upWeight($clean_bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset($_GET['sortsel'])) {
@@ -162,6 +165,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "down" :
+			global $icms_block_handler;
 			$icms_block_handler->downWeight($clean_bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset($_GET['sortsel'])) {
@@ -186,17 +190,20 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "addblock" :
+			global $icms_block_handler;
 			$controller = new icms_ipf_Controller($icms_block_handler);
 			$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSADMIN_CREATED, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
 			break;
 
 		case "del" :
+			global $icms_block_handler;
 			$controller = new icms_ipf_Controller($icms_block_handler);
 			$controller->handleObjectDeletion();
 
 			break;
 
 		case "change_blocks" :
+			global $icms_block_handler;
 			foreach ($_POST['SystemBlocksadmin_objects'] as $k => $v) {
 				$changed = FALSE;
 				$obj = $icms_block_handler->get($v);
@@ -226,6 +233,7 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		default :
+			global $icmsAdminTpl, $icms_block_handler;
 			icms_cp_header();
 			$objectTable = new icms_ipf_view_Table($icms_block_handler);
 			$objectTable->addColumn(new icms_ipf_view_Column('visible', 'center'));

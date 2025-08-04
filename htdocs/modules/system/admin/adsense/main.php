@@ -42,6 +42,7 @@ function editadsense($showmenu = FALSE, $adsenseid = 0, $clone = FALSE) {
 }
 
 icms_loadLanguageFile('system', 'common');
+global $icmsAdminTpl, $icms_adsense_handler;
 
 $icms_adsense_handler = icms_getModuleHandler("adsense", "system");
 /*
@@ -84,16 +85,19 @@ switch ($op) {
 		break;
 
 	case "addadsense":
+		global $icms_adsense_handler;
 		$controller = new icms_ipf_Controller($icms_adsense_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_ADSENSES_CREATED, _CO_ICMS_ADSENSES_MODIFIED);
 		break;
 
 	case "del":
+		global $icms_adsense_handler;
 		$controller = new icms_ipf_Controller($icms_adsense_handler);
 		$controller->handleObjectDeletion();
 		break;
 
 	default:
+		global $icmsAdminTpl, $icms_adsense_handler;
 		icms_cp_header();
 		$objectTable = new icms_ipf_view_Table($icms_adsense_handler);
 		$objectTable->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT));
