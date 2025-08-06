@@ -127,7 +127,7 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_USERAGENT, 'PHP');
+		curl_setopt($ch, CURLOPT_USERAGENT, 'ImpressCMS-VersionChecker/2.0');
 	    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 	    $response = curl_exec($ch);
