@@ -128,20 +128,26 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'PHP');
-		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-		$response = curl_exec($ch);
+	    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+	    $response = curl_exec($ch);
 
-		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		if ($response === FALSE || $http_code !== 200) {
-		    $error = curl_error($ch);
-		    curl_close($ch);
-		    $this->errors[] = "GitHub API error: " . ($error ?: "HTTP $http_code");
-		    return array();
-		}
-		curl_close($ch);
+	    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	    if ($response === FALSE || $http_code !== 200) {
+	        $error = curl_error($ch);
+	        curl_close($ch);
+	        $this->errors[] = "GitHub API error: " . ($error ?: "HTTP $http_code");
+	        return array();
+	    }
+	    curl_close($ch);
 
-		// Decode the JSON response
-		$releases = json_decode($response, true);
+	    // Decode the JSON response
+	    $releases = json_decode($response, true);
+    
+	    if (json_last_error() !== JSON_ERROR_NONE) {
+	        $this->errors[] = "JSON decode error: " . json_last_error_msg();
+	        return array();
+	    }
 
 		// Return releases or empty array if decode failed
 		return is_array($releases) ? $releases : array();
