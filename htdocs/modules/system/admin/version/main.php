@@ -43,10 +43,7 @@ if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('installed', $icmsVersionChecker->installed);
 	$icmsAdminTpl->assign('update_available', $icmsVersionChecker->hasUpdate());
 	$icmsAdminTpl->assign('latest_installed', $icmsVersionChecker->hasLatest());
-//	if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest['status'] < 10) {
-//		// I'm running a final release so make sure to notify the user that the update is not a final
-//		$icmsAdminTpl->assign('not_a_final_comment', TRUE);
-//	}
+
 } else {
 
 	$checkerErrors = $icmsVersionChecker->getErrors(TRUE);
