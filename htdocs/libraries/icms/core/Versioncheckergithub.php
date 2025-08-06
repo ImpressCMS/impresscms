@@ -89,8 +89,8 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 		// get the release data from the github API
 		$github_data = $this->get_latest('ImpressCMS', 'impresscms');
 
-		if (!empty($github_data) && is_array($github_data) && isset($github_data[0])) {
-			$latest_release = $github_data[0];
+		if (!empty($github_data) && is_array($github_data)) {
+		    $latest_release = $github_data;
 
 			// Populate the latest array with the new structure
 			$this->latest['version_name'] = $latest_release['name'];
