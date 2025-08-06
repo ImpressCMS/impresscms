@@ -237,9 +237,18 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 		if (empty($latestVersion) || empty($installedVersion)) {
 			return false;
 		}
-
-		return version_compare($latestVersion, $installedVersion, '>');
+		else {
+		switch(version_compare($latestVersion, $installedVersion))
+		{
+			case 0:
+			case -1:
+			return false;
+			case 1:
+			return true;
+		}
+		}
 	}
+
 	public function hasLatest(): bool
 	{
 		$latestVersion = $this->getLatestVersionNumber();
