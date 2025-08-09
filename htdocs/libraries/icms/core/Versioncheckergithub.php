@@ -91,7 +91,6 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 
 		if (!empty($github_data) && is_array($github_data)) {
 		    $latest_release = $github_data;
-
 			// Populate the latest array with the new structure
 			$this->latest['version_name'] = $latest_release['name'];
 			$this->latest['build'] = $latest_release['id'];
@@ -118,10 +117,10 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 
 
 
-	private function get_latest($owner = 'ImpressCMS', $repo = 'impresscms') : array
+	private function get_latest($owner = 'ImpressCMS', $repo = 'impresscms')
 	{
-		$url= $this->version_url;
-		//$url = "https://api.github.com/repos/$owner/$repo/releases";
+		//$url= $this->version_url;
+		$url = "https://api.github.com/repos/$owner/$repo/releases/latest";
 
 		// Call the GitHub API
 		$ch = curl_init();
@@ -134,6 +133,7 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 
 	    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	    if ($response === FALSE || $http_code !== 200) {
+
 	        $error = curl_error($ch);
 	        curl_close($ch);
 	        $this->errors[] = "GitHub API error: " . ($error ?: "HTTP $http_code");
@@ -142,15 +142,15 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 	    curl_close($ch);
 
 	    // Decode the JSON response
-	    $releases = json_decode($response, true);
-    
+	    $release = json_decode($response, true);
+
 	    if (json_last_error() !== JSON_ERROR_NONE) {
 	        $this->errors[] = "JSON decode error: " . json_last_error_msg();
 	        return array();
 	    }
 
-		// Return releases or empty array if decode failed
-		return is_array($releases) ? $releases : array();
+		// Return release or empty array if decode failed
+		return $release ? $release : array();
 	}
 	public function getLatestVersionNumber() : string {
 		$versionName = $this->getLatestVersionName();
@@ -239,12 +239,11 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 	{
 		$latestVersion = $this->getLatestVersionNumber();
 		$installedVersion = $this->getInstalledVersionNumber();
-
 		if (empty($latestVersion) || empty($installedVersion)) {
 			return false;
 	    }
-    
-	    return version_compare($latestVersion, $installedVersion, '>');
+
+	    return version_compare($latestVersion, $installedVersion, ">");
 	}
 
 	public function hasLatest(): bool
