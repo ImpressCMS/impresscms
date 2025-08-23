@@ -41,6 +41,7 @@ if (!is_object(icms::$user) || !is_object(icms::$module) || !icms::$user->isAdmi
 	exit("Access Denied");
 }
 
+global $icmsAdminTpl;
 $icmsAdminTpl = new icms_view_Tpl();
 
 include_once ICMS_MODULES_PATH . "/system/admin/modulesadmin/modulesadmin.php";
@@ -112,11 +113,11 @@ if ($op == "confirm") {
 
 
 	echo "<h4 style='text-align:" . _GLOBAL_LEFT . ";'>" . _MD_AM_PCMFM . "</h4>"
-	. "<form action='admin.php' method='post'>"
-	. "<input type='hidden' name='fct' value='modulesadmin' />"
-	. "<input type='hidden' name='op' value='submit' />"
-	. "<table width='100%' border='0' cellspacing='1' class='outer'>"
-	. "<tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _MD_AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
+		. "<form action='admin.php' method='post'>"
+		. "<input type='hidden' name='fct' value='modulesadmin' />"
+		. "<input type='hidden' name='op' value='submit' />"
+		. "<table width='100%' border='0' cellspacing='1' class='outer'>"
+		. "<tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _MD_AM_ACTION . "</th><th>" . _MD_AM_ORDER . "</th></tr>";
 
 	$mcount = 0;
 	foreach ($module as $mid) {
@@ -155,19 +156,19 @@ if ($op == "confirm") {
 		}
 
 		echo "<input type='hidden' name='module[]' value='". (int) $mid
-		."' /><input type='hidden' name='oldname[" . $mid . "]' value='" . htmlspecialchars($oldname[$mid], ENT_QUOTES)
-		."' /><input type='hidden' name='newname[" . $mid . "]' value='" . htmlspecialchars($newname[$mid], ENT_QUOTES)
-		."' /><input type='hidden' name='oldstatus[" . $mid . "]' value='" . (int) $oldstatus[$mid]
-		."' /><input type='hidden' name='newstatus[" . $mid . "]' value='" . (int) $newstatus[$mid]
-		."' /><input type='hidden' name='oldweight[" . $mid . "]' value='" . (int) $oldweight[$mid]
-		."' /><input type='hidden' name='weight[" . $mid . "]' value='" . (int) $weight[$mid]
-		."' /></td></tr>";
+			."' /><input type='hidden' name='oldname[" . $mid . "]' value='" . htmlspecialchars($oldname[$mid], ENT_QUOTES)
+			."' /><input type='hidden' name='newname[" . $mid . "]' value='" . htmlspecialchars($newname[$mid], ENT_QUOTES)
+			."' /><input type='hidden' name='oldstatus[" . $mid . "]' value='" . (int) $oldstatus[$mid]
+			."' /><input type='hidden' name='newstatus[" . $mid . "]' value='" . (int) $newstatus[$mid]
+			."' /><input type='hidden' name='oldweight[" . $mid . "]' value='" . (int) $oldweight[$mid]
+			."' /><input type='hidden' name='weight[" . $mid . "]' value='" . (int) $weight[$mid]
+			."' /></td></tr>";
 	}
 
 	echo "<tr class='foot' align='center'><td colspan='3'><input type='submit' value='"
-	. _MD_AM_SUBMIT . "' />&nbsp;<input type='button' value='" . _MD_AM_CANCEL
-	. "' onclick='location=\"admin.php?fct=modulesadmin\"' />" . icms::$security->getTokenHTML()
-	. "</td></tr></table></form>";
+		. _MD_AM_SUBMIT . "' />&nbsp;<input type='button' value='" . _MD_AM_CANCEL
+		. "' onclick='location=\"admin.php?fct=modulesadmin\"' />" . icms::$security->getTokenHTML()
+		. "</td></tr></table></form>";
 
 	icms_cp_footer();
 	exit();

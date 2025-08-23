@@ -123,8 +123,8 @@ class icms_form_elements_Button extends icms_form_Element {
 	$this->tpl->assign('value', $this->getValue());
 	$this->tpl->assign('extra', $this->getExtra());
 
-	$element_html_template = $this->_customTemplate ? $this->_customTemplate : strtolower(static::class) . '_display.html';
-	
+	$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_button_display.html';
+
 	return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }

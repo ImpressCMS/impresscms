@@ -206,7 +206,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		$this->tpl->assign('ele_extra', $ele_extra);
 		$this->tpl->assign('ele_delimeter', $ele_delimeter);
 
-		$element_html_template = $this->_customTemplate ? $this->_customTemplate : strtolower(static::class) . '_display.html';
+		$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_checkbox_display.html';
 		return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
