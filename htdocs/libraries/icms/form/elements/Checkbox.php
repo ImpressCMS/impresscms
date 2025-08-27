@@ -197,6 +197,9 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 			$ele_name = $ele_name . "[]";
 			$this->setName($ele_name);
 		}
+		if (count($ele_value) > 0 && in_array($value, $ele_value)) {
+			$ele_ischecked = "'checked'";
+		}
 
 		$this->tpl = new icms_view_Tpl();
 		$this->tpl->assign('ele_name', $ele_name);
@@ -205,6 +208,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		$this->tpl->assign('ele_options', $ele_options);
 		$this->tpl->assign('ele_extra', $ele_extra);
 		$this->tpl->assign('ele_delimeter', $ele_delimeter);
+		$this->tpl->assign('checked', $ele_ischecked);
 
 		$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_checkbox_display.html';
 		return $this->tpl->fetch('db:' . $element_html_template);

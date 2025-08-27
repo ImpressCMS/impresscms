@@ -1,7 +1,7 @@
 <div class="grouped">
 	<{foreach from=$ele_options item=option name=checkbox}>
 	<span class="icms_checkboxoption">
-		<input type="checkbox" name="<{$ele_name}>" id="<{$ele_id}>_item_<{$smarty.foreach.checkbox.iteration}>" value="<{$smarty.foreach.checkbox.iteration}>">
+		<input type="checkbox" name="<{$ele_name}>" id="<{$ele_id}>_item_<{$smarty.foreach.checkbox.iteration}>" value="<{$smarty.foreach.checkbox.iteration}>" <{if $ele_ischecked='checked'}>checked="checked"<{/if}> >
 		<label for="<{$ele_id}>_item_<{$smarty.foreach.checkbox.iteration}>"><{$option}></label>
 	</span>
 	&nbsp;
