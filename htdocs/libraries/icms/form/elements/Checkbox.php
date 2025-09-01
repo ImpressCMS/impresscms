@@ -254,11 +254,11 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_checkbox_display.html';
 
 		// Try file template first (for testing), then fall back to database template
-		if (file_exists(ICMS_ROOT_PATH . '/templates/' . $element_html_template)) {
-			return $this->tpl->fetch('file:' . ICMS_ROOT_PATH . '/templates/' . $element_html_template);
-		} else {
-			return $this->tpl->fetch('db:' . $element_html_template);
+		$templatePath = defined('ICMS_ROOT_PATH') ? ICMS_ROOT_PATH . '/templates/' . $element_html_template : null;
+		if ($templatePath && file_exists($templatePath)) {
+		    return $this->tpl->fetch('file:' . $templatePath);
 		}
+		return $this->tpl->fetch('db:' . $element_html_template);
 	}
 
 	/**
