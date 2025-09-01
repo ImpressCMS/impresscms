@@ -1,0 +1,28 @@
+<{* Template for checkbox form element display *}>
+<{* This template works with the new unified checkbox options structure *}>
+
+<{if $ele_checkbox_options}>
+    <{* Use the new unified structure if available *}>
+    <{foreach from=$ele_checkbox_options item=option}>
+        <input type="checkbox" 
+               name="<{$ele_name}>" 
+               id="<{$ele_id}>_<{$option.value}>" 
+               value="<{$option.value}>" 
+               <{if $option.checked}>checked="checked"<{/if}>
+               <{$ele_extra}> />
+        <label for="<{$ele_id}>_<{$option.value}>"><{$option.label}></label>
+        <{if !$smarty.foreach.default.last}><{$ele_delimeter}><{/if}>
+    <{/foreach}>
+<{else}>
+    <{* Fallback to legacy structure for backward compatibility *}>
+    <{foreach from=$ele_options key=value item=label}>
+        <input type="checkbox" 
+               name="<{$ele_name}>" 
+               id="<{$ele_id}>_<{$value}>" 
+               value="<{$value}>" 
+               <{if $ele_value && in_array($value, $ele_value)}>checked="checked"<{/if}>
+               <{$ele_extra}> />
+        <label for="<{$ele_id}>_<{$value}>"><{$label}></label>
+        <{if !$smarty.foreach.default.last}><{$ele_delimeter}><{/if}>
+    <{/foreach}>
+<{/if}>
