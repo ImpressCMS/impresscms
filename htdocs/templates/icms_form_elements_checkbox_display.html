@@ -1,28 +1,38 @@
 <{* Template for checkbox form element display *}>
-<{* This template works with the new unified checkbox options structure *}>
+<{* This template works with both standard and IPF checkbox classes *}>
 
-<{if $ele_checkbox_options}>
-    <{* Use the new unified structure if available *}>
-    <{foreach from=$ele_checkbox_options item=option}>
-        <input type="checkbox" 
-               name="<{$ele_name}>" 
-               id="<{$ele_id}>_<{$option.value}>" 
-               value="<{$option.value}>" 
-               <{if $option.checked}>checked="checked"<{/if}>
-               <{$ele_extra}> />
-        <label for="<{$ele_id}>_<{$option.value}>"><{$option.label}></label>
-        <{if !$smarty.foreach.default.last}><{$ele_delimeter}><{/if}>
-    <{/foreach}>
-<{else}>
-    <{* Fallback to legacy structure for backward compatibility *}>
-    <{foreach from=$ele_options key=value item=label}>
-        <input type="checkbox" 
-               name="<{$ele_name}>" 
-               id="<{$ele_id}>_<{$value}>" 
-               value="<{$value}>" 
-               <{if $ele_value && in_array($value, $ele_value)}>checked="checked"<{/if}>
-               <{$ele_extra}> />
-        <label for="<{$ele_id}>_<{$value}>"><{$label}></label>
-        <{if !$smarty.foreach.default.last}><{$ele_delimeter}><{/if}>
-    <{/foreach}>
-<{/if}>
+<div class="grouped">
+	<{if $ele_checkbox_options}>
+		<{* Use the new unified structure if available *}>
+		<{foreach from=$ele_checkbox_options item=option name=checkbox}>
+		<span class="icms_checkboxoption">
+			<input type="checkbox" name="<{$ele_name}>" id="<{$ele_id}>_<{$option.value}>" value="<{$option.value}>" <{if $option.checked}>checked="checked"<{/if}> <{$ele_extra}> />
+			<label for="<{$ele_id}>_<{$option.value}>"><{$option.label}></label>
+		</span>
+		<{if !$smarty.foreach.checkbox.last}><{$ele_delimeter}><{/if}>
+		<{/foreach}>
+	<{else}>
+		<{* Fallback to legacy structure for backward compatibility *}>
+		<{foreach from=$ele_options key=value item=label name=checkbox}>
+		<span class="icms_checkboxoption">
+			<input type="checkbox" name="<{$ele_name}>" id="<{$ele_id}>_<{$value}>" value="<{$value}>" <{if $ele_value && in_array($value, $ele_value)}>checked="checked"<{/if}> <{$ele_extra}> />
+			<label for="<{$ele_id}>_<{$value}>"><{$label}></label>
+		</span>
+		<{if !$smarty.foreach.checkbox.last}><{$ele_delimeter}><{/if}>
+		<{/foreach}>
+	<{/if}>
+
+	<{* Check All functionality - show if more than one option *}>
+	<{assign var="option_count" value=0}>
+	<{if $ele_checkbox_options}>
+		<{assign var="option_count" value=$ele_checkbox_options|@count}>
+	<{elseif $ele_options}>
+		<{assign var="option_count" value=$ele_options|@count}>
+	<{/if}>
+	<{if $option_count gt 1}>
+	<div class='icms_checkboxoption'>
+		<input type='checkbox' id='<{$ele_name}>_checkemall' class='checkemall' />
+		<label for='<{$ele_name}>_checkemall'><{$smarty.const._CHECKALL}></label>
+	</div>
+	<{/if}>
+</div>

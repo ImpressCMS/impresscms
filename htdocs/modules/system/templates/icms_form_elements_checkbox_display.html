@@ -18,7 +18,15 @@
 		<{if !$smarty.foreach.checkbox.last}><{$ele_delimeter}><{/if}>
 		<{/foreach}>
 	<{/if}>
-	<{if $smarty.foreach.checkbox.total gt 1 }>
+
+	<{* Check All functionality - show if more than one option *}>
+	<{assign var="option_count" value=0}>
+	<{if $ele_checkbox_options}>
+		<{assign var="option_count" value=$ele_checkbox_options|@count}>
+	<{elseif $ele_options}>
+		<{assign var="option_count" value=$ele_options|@count}>
+	<{/if}>
+	<{if $option_count gt 1}>
 	<div class='icms_checkboxoption'>
 		<input type='checkbox' id='<{$ele_name}>_checkemall' class='checkemall' />
 		<label for='<{$ele_name}>_checkemall'><{$smarty.const._CHECKALL}></label>
