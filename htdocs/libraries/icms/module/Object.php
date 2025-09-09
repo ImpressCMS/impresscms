@@ -129,12 +129,57 @@ class icms_module_Object extends icms_core_Object {
 		// check if module is active (only if applicable)
 		if ($isactive !== NULL && $this->getVar("isactive") != (int) $isactive) return;
 
-		// register class path
+		// register class path with both legacy and Composer autoloaders
 		if ($this->getVar("ipf")) {
 			$modname = ($this->getVar("modname") != "") ? $this->getVar("modname") : $this->getVar("dirname");
-			icms_Autoloader::register($class_path, "mod_" . $modname);
+			$namespace = "mod_" . $modname;
+
+			// Register with legacy autoloader for backward compatibility
+			icms_Autoloader::register($class_path, $namespace);
+
+			// Register with Composer autoloader if available
+			$this->registerWithComposer($class_path, $namespace);
 		} else {
+			// Register with legacy autoloader
 			icms_Autoloader::register($class_path);
+
+			// Register with Composer autoloader if available
+			$this->registerWithComposer($class_path);
+		}
+	}
+
+	/**
+	 * Register module classes with Composer autoloader
+	 *
+	 * @param string $class_path Path to the module classes
+	 * @param string $namespace Optional namespace prefix
+	 */
+	private function registerWithComposer($class_path, $namespace = '') {
+		// Check if Composer autoloader is available
+		if (!class_exists('Composer\\Autoload\\ClassLoader', false)) {
+			return;
+		}
+
+		// Get the Composer autoloader instance
+		$autoloadFiles = spl_autoload_functions();
+		$composerLoader = null;
+
+		foreach ($autoloadFiles as $autoloader) {
+			if (is_array($autoloader) &&
+				is_object($autoloader[0]) &&
+				$autoloader[0] instanceof Composer\Autoload\ClassLoader) {
+				$composerLoader = $autoloader[0];
+				break;
+			}
+		}
+
+		if ($composerLoader) {
+			// Add PSR-0 mapping for module classes
+			if ($namespace) {
+				$composerLoader->add($namespace . '_', $class_path);
+			} else {
+				$composerLoader->add('', $class_path);
+			}
 		}
 	}
 

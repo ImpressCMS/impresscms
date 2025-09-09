@@ -111,11 +111,33 @@ abstract class icms {
 		self::$paths['www']		= array(ICMS_ROOT_PATH, ICMS_URL);
 		self::$paths['modules']	= array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
 		self::$paths['themes']	= array(ICMS_THEME_PATH, ICMS_THEME_URL);
-		// Initialize the autoloader
-		require_once dirname(__FILE__ ) . '/icms/Autoloader.php';
-		icms_Autoloader::setup();
+
+		// Initialize autoloading system
+		self::initializeAutoloading();
+
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
 		self::buildRelevantUrls();
+	}
+
+	/**
+	 * Initialize the autoloading system with Composer and legacy support
+	 */
+	static private function initializeAutoloading() {
+		// Try to load Composer autoloader first - now located in htdocs/vendor/
+		$composerAutoloadPath = ICMS_ROOT_PATH . '/vendor/autoload.php';
+		if (file_exists($composerAutoloadPath)) {
+			require_once $composerAutoloadPath;
+		}
+
+		// Load the compatibility bridge
+		require_once dirname(__FILE__) . '/icms/ComposerAutoloadBridge.php';
+
+		// Initialize legacy autoloader for backward compatibility
+		require_once dirname(__FILE__) . '/icms/Autoloader.php';
+		icms_Autoloader::setup();
+
+		// Initialize the bridge
+		icms_ComposerAutoloadBridge::initialize();
 	}
 
 	/**

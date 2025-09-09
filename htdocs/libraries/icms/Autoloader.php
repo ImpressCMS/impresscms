@@ -34,10 +34,19 @@ class icms_Autoloader {
 
 	/**
 	 * Initialize the autoloader, and register its autoload method
+	 *
+	 * @deprecated 1.5.0 The legacy icms_Autoloader is deprecated in favor of Composer's PSR-4 autoloader.
+	 *                   It is maintained for backward compatibility but will be removed in a future version.
+	 *                   New code should rely on Composer's autoloading system.
 	 * @return void
 	 */
 	static public function setup() {
 		if (!self::$initialized) {
+			// Log deprecation notice in debug mode
+			if (defined('ICMS_DEBUG') && ICMS_DEBUG) {
+				error_log('DEPRECATED: icms_Autoloader is deprecated. Use Composer autoloader instead.');
+			}
+
 			self::register(dirname(dirname(__FILE__)));
 			spl_autoload_register(array('icms_Autoloader', 'autoload'));
 			spl_autoload_register(array('icms_Autoloader', 'registerLegacy'));

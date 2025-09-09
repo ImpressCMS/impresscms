@@ -37,8 +37,20 @@ include_once '../include/functions.php';
 require_once 'include/functions.php';
 include_once './class/IcmsInstallWizard.php';
 
+// Initialize the modern autoloading system
+if (file_exists('../vendor/autoload.php')) {
+    require_once '../vendor/autoload.php';
+}
+
+// Load the compatibility bridge
+require_once '../libraries/icms/ComposerAutoloadBridge.php';
+
+// Initialize legacy autoloader for backward compatibility
 require_once '../libraries/icms/Autoloader.php';
 icms_Autoloader::setup();
+
+// Initialize the bridge
+icms_ComposerAutoloadBridge::initialize();
 
 error_reporting(E_ALL);
 
