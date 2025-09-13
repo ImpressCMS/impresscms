@@ -39,17 +39,18 @@
 
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
-$uid = (int) $_GET['uid'];
+$dirty_hash_uid = (string) $_GET['uid'];
+$hash_uid = icms_core_DataFilter::checkVar($dirty_hash_uid, 'str');
 
 if (icms_get_module_status("profile")) {
 	$module = icms::handler("icms_module")->getByDirName("profile", true);
 
 	if ($module->config['profile_social'] && file_exists(ICMS_MODULES_PATH . '/profile/index.php')) {
-		header('Location: ' . ICMS_MODULES_URL . '/profile/index.php?uid=' . $uid);
+		header('Location: ' . ICMS_MODULES_URL . '/profile/index.php?uid=' . $hash_uid);
 		exit();
 	}
 	elseif (!$module->config['profile_social'] && file_exists(ICMS_MODULES_PATH . '/profile/userinfo.php')) {
-		header('Location: ' . ICMS_MODULES_URL . '/profile/userinfo.php?uid=' . $uid);
+		header('Location: ' . ICMS_MODULES_URL . '/profile/userinfo.php?uid=' . $hash_uid);
 		exit();
 	}
 	unset($module);
@@ -60,9 +61,9 @@ include_once ICMS_MODULES_PATH . '/system/constants.php';
 if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object(icms::$user)) {
 	redirect_header(ICMS_URL . '/user.php', 3, _NOPERM);
 }
-if ($uid <= 0) {
-	redirect_header('index.php', 3, _US_SELECTNG);
-}
+// if ($uid <= 0) {
+// 	redirect_header('index.php', 3, _US_SELECTNG);
+// }
 
 $gperm_handler = icms::handler('icms_member_groupperm');
 $groups = is_object(icms::$user) ? icms::$user->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -70,7 +71,7 @@ $groups = is_object(icms::$user) ? icms::$user->getGroups() : XOOPS_GROUP_ANONYM
 $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
 
 if (is_object(icms::$user)) {
-	if ($uid == icms::$user->getVar('uid')) {
+	if ($hash_uid == icms::$user->getVar('hash_uid')) {
 		$xoopsOption['template_main'] = 'system_userinfo.html';
 		include ICMS_ROOT_PATH . '/header.php';
 		$icmsTpl->assign('user_ownpage', true);
@@ -85,7 +86,7 @@ if (is_object(icms::$user)) {
             'lang_deleteaccount' => $icmsConfigUser['self_delete'] ? _US_DELACCOUNT : ''));
 		$thisUser = icms::$user;
 	} else {
-		$thisUser = icms::handler('icms_member')->getUser($uid);
+		$thisUser = icms::handler('icms_member')->getUserHash($hash_uid);
 		if (!is_object($thisUser) || !$thisUser->isActive()) {
 			redirect_header('index.php', 3, _US_SELECTNG);
 		}
@@ -94,7 +95,7 @@ if (is_object(icms::$user)) {
 		$icmsTpl->assign('user_ownpage', false);
 	}
 } else {
-	$thisUser = icms::handler('icms_member')->getUser($uid);
+	$thisUser = icms::handler('icms_member')->getUserHash($hash_uid);
 	if (!is_object($thisUser) || !$thisUser->isActive()) {
 		redirect_header('index.php', 3, _US_SELECTNG);
 	}
