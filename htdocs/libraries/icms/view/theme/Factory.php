@@ -87,8 +87,9 @@ class icms_view_theme_Factory {
 			} elseif (!isset($options['folderName']) || empty($options['folderName']) || !$this->isThemeAllowed($options['folderName'])) {
 				$options['folderName'] = $this->defaultTheme;
 			}
-			$GLOBALS['icmsConfig']['theme_set'] = $options['folderName'];
 		}
+		// Always reflect the active theme in config for correct resource resolution (incl. admin)
+		$GLOBALS['icmsConfig']['theme_set'] = $options['folderName'];
 		$options['path'] =
 			(is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName']))
 			? ICMS_MODULES_PATH . '/system/themes/' . $options['folderName']
@@ -109,7 +110,7 @@ class icms_view_theme_Factory {
 	public function isThemeAllowed($name) {
 		return (empty($this->allowedThemes) || in_array($name, $this->allowedThemes));
 	}
-	
+
 	/**
 	 * Gets list of themes folder from themes directory, excluding any directories that do not have theme.html
 	 * @return	array
@@ -124,7 +125,7 @@ class icms_view_theme_Factory {
 		}
 		return $cleanList;
 	}
-	
+
 	/**
 	 * Gets list of administration themes folder from themes directory, excluding any directories that do not have theme_admin.html
 	 * @return	array
