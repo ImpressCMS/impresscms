@@ -600,13 +600,15 @@ class icms_ipf_view_Table {
 		$$quicksearch = '';
 
 		/* filter the user input - only allow specified variables */
+		$clean_GET = array();
+		$clean_POST = array();
 		if (!empty($_GET)) {
 			$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, true);
-			extract($clean_GET);
+			if (is_array($clean_GET)) { extract($clean_GET); }
 		}
 		if (!empty($_POST)) {
 			$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
-			extract($clean_POST);
+			if (is_array($clean_POST)) { extract($clean_POST); }
 		}
 
 		$server_vars = icms_core_DataFilter::checkVarArray($_SERVER, $filter_server, true);
