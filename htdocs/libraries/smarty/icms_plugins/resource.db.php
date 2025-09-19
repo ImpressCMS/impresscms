@@ -74,11 +74,8 @@ function smarty_resource_db_tplinfo( $tpl_name ) {
 	$module = $tplobj->getVar( 'tpl_module', 'n' );
 	$type = $tplobj->getVar( 'tpl_type', 'n' );
 	$blockpath = ( $type == 'block' ) ? 'blocks/' : '';
-	// First, check for an overloaded version within the selected theme folder (support both themes/ and modules/system/themes)
-	$themeBase = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $theme))
-		? ICMS_MODULES_PATH . '/system/themes/' . $theme
-		: ICMS_THEME_PATH . "/$theme";
-	$filepath = $themeBase . "/modules/$module/$blockpath$tpl_name";
+	// First, check for an overloaded version within the theme folder
+	$filepath = ICMS_THEME_PATH . "/$theme/modules/$module/$blockpath$tpl_name";
 	if ( !file_exists( $filepath ) ) {
 		// If no custom version exists, get the tpl from its default location
 		$filepath = ICMS_ROOT_PATH . "/modules/$module/templates/$blockpath$tpl_name";
