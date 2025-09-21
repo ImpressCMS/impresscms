@@ -104,18 +104,18 @@ function getDbCharsets($link) {
 		return $charsets;
 	}
 
-	$charsets ["utf8"] = "UTF-8 Unicode";
+	$charsets ["utf8mb4"] = "UTF-8 Unicode";
 	$ut8_available = false;
 	if ($result = exec_query("SHOW CHARSET", $link)) {
 		while ($row = fetch_assoc($result)) {
 			$charsets [$row ["Charset"]] = $row ["Description"];
-			if ($row ["Charset"] == "utf8") {
+			if ($row ["Charset"] == "utf8mb4") {
 				$ut8_available = true;
 			}
 		}
 	}
 	if (!$ut8_available) {
-		unset ($charsets ["utf8"]);
+		unset ($charsets ["utf8mb4"]);
 	}
 
 	return $charsets;
@@ -300,7 +300,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 
 if (@empty ($vars ['DB_NAME'])) {
 	// Fill with default values
-	$vars = array_merge($vars, array('DB_NAME' => '', 'DB_CHARSET' => 'utf8', 'DB_COLLATION' => '', 'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8), 'DB_SALT' => icms_core_Password::createSalt()));
+	$vars = array_merge($vars, array('DB_NAME' => '', 'DB_CHARSET' => 'utf8mb4', 'DB_COLLATION' => '', 'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8), 'DB_SALT' => icms_core_Password::createSalt()));
 }
 
 function xoFormField($name, $value, $label, $maxlength, $help = '') {
@@ -327,9 +327,9 @@ function xoFormFieldCharset($name, $value, $label, $link, $help = '') {
 	}
 
 	$charsets = array( );
-	if (isset ($chars ["utf8"])) {
-		$charsets ["utf8"] = $chars ["utf8"];
-		unset ($chars ["utf8"]);
+	if (isset ($chars ["utf8mb4"])) {
+		$charsets ["utf8mb4"] = $chars ["utf8mb4"];
+		unset ($chars ["utf8mb4"]);
 	}
 	ksort($chars);
 	$charsets = array_merge($charsets, $chars);
