@@ -91,11 +91,9 @@ function sanitize_database($database_name) {
 
 function quote_sql($sql) {
 	global $link;
-	if ($link instanceof PDO) {
+
 		return $link->quote($sql);
-	} else {
-		return '\'' . mysql_real_escape_string($sql) . '\'';
-	}
+
 }
 
 function getDbCharsets($link) {
