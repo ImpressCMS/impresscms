@@ -36,9 +36,32 @@ class icms_ipf_form_elements_Passwordtray extends icms_form_elements_Tray {
 	}
 
 	public function render() {
-		$ret = parent::render();
-		$ret .= "<input type='password' name='" . $this->_key . "2' id='" . $this->_key . "2' "
-			 .  "size='10' maxlength='32' value='' autocomplete='off' />";
-		return $ret;
+		// Use template-based rendering instead of direct HTML generation
+		$this->tpl = new icms_view_Tpl();
+
+		// Get rendered elements from parent tray
+		$tray_elements = array();
+		foreach ($this->getElements() as $element) {
+			$tray_elements[] = $element->render();
+		}
+
+		// Create second password field HTML
+		$second_password_field = "<input type='password' name='" . $this->_key . "2' id='" . $this->_key . "2' "
+			. "size='10' maxlength='32' value='' autocomplete='off' />";
+
+		// Assign template variables
+		$this->tpl->assign('tray_elements', $tray_elements);
+		$this->tpl->assign('tray_delimeter', $this->getDelimeter());
+		$this->tpl->assign('second_password_field', $second_password_field);
+
+		// Use template
+		$element_html_template = 'icms_form_elements_passwordtray_display.html';
+
+		// Try file template first (for testing), then fall back to database template
+		if (file_exists(ICMS_ROOT_PATH . '/templates/' . $element_html_template)) {
+			return $this->tpl->fetch('file:' . ICMS_ROOT_PATH . '/templates/' . $element_html_template);
+		} else {
+			return $this->tpl->fetch('db:' . $element_html_template);
+		}
 	}
 }
