@@ -1,4 +1,24 @@
 # ImpressCMS ChangeLog
+## ImpressCMS 2.0.2 Release Candidate
+* Date : 25 September 2025
+* DB Version : 48
+* Build Version : 115
+
+### What's Changed
+### Bugfixes
+* fix:reference to non-existant properties in templated form elements by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1646
+* Fix scope issues with global variables in ACP admin pages by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1645
+* Fix 1551 admin theme overrides use correct theme by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1654
+* Fix 1550 db collation prefill in mysql8+ by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1655
+* fix:templated checkbox doesn't take checked state into account by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1651
+* fix:github version check now handles newer installed versions than latest on github by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1648
+
+### New
+* Add a security policy to the repository by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1644
+* Testing for icms::$module before trying to check DB version by @skenow in https://github.com/ImpressCMS/impresscms/pull/1642
+* chore:upgrade to GeSHI 1.0.9.1 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1647
+* feat:Core versioncheck using GitHub by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1631
+* chore:no need to check for PHP_VERSION_ID anymore by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1652
 
 ## ImpressCMS 2.0.2 beta
 * Date : 04 July 2025
