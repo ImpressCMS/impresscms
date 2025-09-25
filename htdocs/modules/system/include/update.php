@@ -40,6 +40,13 @@
  */
 icms_loadLanguageFile('core', 'databaseupdater');
 
+// this needs to be the latest db version - and the constant must start with the module's dirname
+if (is_object(icms::$module)) {
+	define('SYSTEM_DB_VERSION', icms::$module->getDBVersion());
+} else {
+	define('SYSTEM_DB_VERSION', 48);
+}
+
 /**
  * Automatic update of the system module
  *
@@ -107,7 +114,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 * This can be done before any specific upgrade tasks are started
 	 */
 	$icmsDatabaseUpdater->automaticUpgrade('icms_data', array('file', 'urllink'));
-
+	$icmsDatabaseUpdater->moduleUpgrade($module);
+	
 	/* Begin upgrade to version 2.0.0 beta 1 */
 	if (!$abortUpdate) $newDbVersion = 47;
 	try {

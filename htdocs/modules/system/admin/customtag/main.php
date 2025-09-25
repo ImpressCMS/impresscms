@@ -21,8 +21,9 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
  * @param $clone are you cloning an existing custom tag?
  */
 function editcustomtag($customtagid = 0, $clone = FALSE) {
-	global $icms_customtag_handler, $icmsAdminTpl, $customtagid;
+	global $icmsAdminTpl;
 
+	$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 	icms_cp_header();
 	$customtagObj = $icms_customtag_handler->get($customtagid);
 
@@ -63,6 +64,7 @@ function editcustomtag($customtagid = 0, $clone = FALSE) {
 	}
 }
 icms_loadLanguageFile("system", "common");
+global $icmsAdminTpl, $icms_customtag_handler;
 
 $icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 
@@ -111,16 +113,19 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "addcustomtag":
+			global $icms_customtag_handler;
 			$controller = new icms_ipf_Controller($icms_customtag_handler);
 			$controller->storeFromDefaultForm(_CO_ICMS_CUSTOMTAG_CREATED, _CO_ICMS_CUSTOMTAG_MODIFIED);
 			break;
 
 		case "del":
+			global $icms_customtag_handler;
 			$controller = new icms_ipf_Controller($icms_customtag_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		default:
+			global $icms_customtag_handler;
 			icms_cp_header();
 
 			$objectTable = new icms_ipf_view_Table($icms_customtag_handler);

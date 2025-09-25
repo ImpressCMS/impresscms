@@ -1,5 +1,21 @@
 # ImpressCMS ChangeLog
 
+## ImpressCMS 2.0.2 beta
+* Date : 04 July 2025
+* DB Version : 48
+* Build Version : 114
+
+### What's Changed
+#### Bugfixes
+* In some cases, the update to version 48 was not persisted in the DB by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1616
+* icms_core_Object cleanVars and getVar errors with empty arrays by @skenow in https://github.com/ImpressCMS/impresscms/pull/1623
+* Remove duplicate code from icms_core_object by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1625
+* Search for user URL fixed by @skenow in https://github.com/ImpressCMS/impresscms/pull/1627
+#### New
+* Add function to count files in a directory to icms_core_Filesystem by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1626
+* Adding automatic update of the system module by @skenow in https://github.com/ImpressCMS/impresscms/pull/1629
+* Templated form elements by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1584
+  
 ## ImpressCMS 2.0.1 
 * Date : 08 Jan 2025
 * DB Version: 48

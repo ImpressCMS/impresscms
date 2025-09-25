@@ -135,12 +135,16 @@ class icms_form_elements_Text extends icms_form_Element {
 	 * @return	string  HTML
 	 */
 	public function render() {
-		return "<input type='text' name='" . $this->getName()
-			. "' id='" . $this->getName()
-			. "' size='" . $this->getSize()
-			. "' maxlength='" . $this->getMaxlength()
-			. "' value='" . $this->getValue() . "'" . $this->getExtra()
-			. " />";
+		$this->tpl = new icms_view_Tpl();
+		$this->tpl->assign('ele_name', $this->getName());
+		$this->tpl->assign('ele_id', $this->getName());
+		$this->tpl->assign('ele_size', $this->getSize());
+		$this->tpl->assign('ele_maxlength', $this->getMaxlength());
+		$this->tpl->assign('ele_value', $this->getValue());
+		$this->tpl->assign('ele_extra', $this->getExtra());
+
+		$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_text_display.html';
+		return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
 
