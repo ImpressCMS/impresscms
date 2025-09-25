@@ -53,12 +53,21 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 class icms_form_elements_Checkbox extends icms_form_Element {
 
 	/**
+	 * Unified checkbox options array
+	 * Each element contains: array('value' => string, 'label' => string, 'checked' => boolean)
+	 * @var array
+	 */
+	private $_checkboxOptions = array();
+
+	/**
+	 * @deprecated Use _checkboxOptions instead. Kept for backward compatibility.
 	 * Available options
 	 * @var array
 	 */
 	private $_options = array();
 
 	/**
+	 * @deprecated Use _checkboxOptions instead. Kept for backward compatibility.
 	 * pre-selected values in array
 	 * @var	array
 	 */
@@ -80,6 +89,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	public function __construct($caption, $name, $value = null, $delimeter = "&nbsp;") {
 		$this->setCaption($caption);
 		$this->setName($name);
+		$this->_checkboxOptions = array();
 		if (isset($value)) {
 			$this->setValue($value);
 		}
@@ -87,50 +97,61 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	}
 
 	/**
-	 * Get the "value"
+	 * Get the "value" - returns array of checked option values
 	 *
 	 * @param	bool    $encode   Would you like to sanitize the text?
 	 * @return	array
 	 */
 	public function getValue($encode = false) {
-		if (!$encode) {
-			return $this->_value;
+		$checkedValues = array();
+		foreach ($this->_checkboxOptions as $option) {
+			if ($option['checked']) {
+				$checkedValues[] = $encode ? htmlspecialchars($option['value'], ENT_QUOTES) : $option['value'];
+			}
 		}
-		$value = array();
-		foreach ($this->_value as $val) {
-			$value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
-		}
-		return $value;
+
+		// Backward compatibility: also populate _value array
+		$this->_value = $checkedValues;
+
+		return $checkedValues;
 	}
 
 	/**
-	 * Set the "value"
+	 * Set the "value" - marks specified option values as checked
 	 *
-	 * @param	array
+	 * @param	mixed $value Single value or array of values to mark as checked
 	 */
 	public function setValue($value) {
-		$this->_value = array();
-		if (is_array($value)) {
-			foreach ($value as $v) {
-				$this->_value[] = $v;
-			}
-		} else {
-			$this->_value[] = $value;
+		// Convert single value to array for consistent processing
+		$valuesToCheck = is_array($value) ? $value : array($value);
+
+		// Update checked state in unified options array
+		foreach ($this->_checkboxOptions as &$option) {
+			$option['checked'] = in_array($option['value'], $valuesToCheck);
 		}
+
+		// Backward compatibility: also update _value array
+		$this->_value = $valuesToCheck;
 	}
 
 	/**
 	 * Add an option
 	 *
-	 * @param	string  $value
-	 * @param	string  $name
+	 * @param	string  $value Option value
+	 * @param	string  $name  Option label (defaults to value if empty)
 	 */
 	public function addOption($value, $name = "") {
-		if ($name != "") {
-			$this->_options[$value] = $name;
-		} else {
-			$this->_options[$value] = $value;
-		}
+		$label = ($name != "") ? $name : $value;
+
+		// Add to unified options array
+		$this->_checkboxOptions[] = array(
+			'value' => $value,
+			'label' => $label,
+			'checked' => in_array($value, $this->_value)
+		);
+
+		// Backward compatibility: also update _options array
+		$this->_options[$value] = $label;
 	}
 
 	/**
@@ -153,19 +174,41 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 * @return	array   Associative array of value->name pairs
 	 */
 	public function getOptions($encode = false) {
+		$options = array();
+		foreach ($this->_checkboxOptions as $option) {
+			$val = $encode ? htmlspecialchars($option['value'], ENT_QUOTES) : $option['value'];
+			$name = ($encode > 1) ? htmlspecialchars($option['label'], ENT_QUOTES) : $option['label'];
+			$options[$val] = $name;
+		}
+
+		// Backward compatibility: also update _options array
 		if (!$encode) {
-			return $this->_options;
+			$this->_options = $options;
 		}
-		$value = array();
-		foreach ($this->_options as $val => $name) {
-			$value[$encode
-					? htmlspecialchars($val, ENT_QUOTES)
-					: $val]
-					= ($encode > 1)
-						? htmlspecialchars($name, ENT_QUOTES)
-						: $name;
+
+		return $options;
+	}
+
+	/**
+	 * Get the unified checkbox options array
+	 *
+	 * @param	bool    $encode To sanitize the text?
+	 * @return	array   Array of checkbox options with value, label, and checked state
+	 */
+	public function getCheckboxOptions($encode = false) {
+		if (!$encode) {
+			return $this->_checkboxOptions;
 		}
-		return $value;
+
+		$encodedOptions = array();
+		foreach ($this->_checkboxOptions as $option) {
+			$encodedOptions[] = array(
+				'value' => htmlspecialchars($option['value'], ENT_QUOTES),
+				'label' => htmlspecialchars($option['label'], ENT_QUOTES),
+				'checked' => $option['checked']
+			);
+		}
+		return $encodedOptions;
 	}
 
 	/**
@@ -186,14 +229,15 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 * @return    string
 	 */
 	public function render() {
-
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue();
-
 		$ele_options = $this->getOptions();
+		$ele_checkbox_options = $this->getCheckboxOptions();
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
-		if (count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]") {
+
+		// Add array notation to name if multiple options exist
+		if (count($ele_checkbox_options) > 1 && substr($ele_name, -2, 2) != "[]") {
 			$ele_name = $ele_name . "[]";
 			$this->setName($ele_name);
 		}
@@ -203,10 +247,47 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		$this->tpl->assign('ele_id', $ele_name);
 		$this->tpl->assign('ele_value', $ele_value);
 		$this->tpl->assign('ele_options', $ele_options);
+		$this->tpl->assign('ele_checkbox_options', $ele_checkbox_options);
 		$this->tpl->assign('ele_extra', $ele_extra);
 		$this->tpl->assign('ele_delimeter', $ele_delimeter);
 
 		$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_checkbox_display.html';
+
 		return $this->tpl->fetch('db:' . $element_html_template);
+	}
+
+	/**
+	 * Backward compatibility methods
+	 */
+
+	/**
+	 * Get legacy options array (for backward compatibility)
+	 * @deprecated Use getCheckboxOptions() instead
+	 * @return array
+	 */
+	public function getLegacyOptions() {
+		return $this->_options;
+	}
+
+	/**
+	 * Get legacy value array (for backward compatibility)
+	 * @deprecated Use getValue() instead
+	 * @return array
+	 */
+	public function getLegacyValue() {
+		return $this->_value;
+	}
+
+	/**
+	 * Set options using legacy format (for backward compatibility)
+	 * @deprecated Use addOption() or addOptionArray() instead
+	 * @param array $options
+	 */
+	public function setLegacyOptions($options) {
+		$this->_options = $options;
+		$this->_checkboxOptions = array();
+		foreach ($options as $value => $label) {
+			$this->addOption($value, $label);
+		}
 	}
 }
