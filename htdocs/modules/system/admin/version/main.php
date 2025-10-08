@@ -37,20 +37,17 @@ global $icmsAdminTpl;
 $icmsVersionChecker = icms_core_Versioncheckergithub::getInstance();
 icms_cp_header();
 
-if ($icmsVersionChecker->check()) {
-
+$icmsVersionChecker->check();
 	$icmsAdminTpl->assign('latest', $icmsVersionChecker->latest);
 	$icmsAdminTpl->assign('installed', $icmsVersionChecker->installed);
 	$icmsAdminTpl->assign('update_available', $icmsVersionChecker->hasUpdate());
 	$icmsAdminTpl->assign('latest_installed', $icmsVersionChecker->hasLatest());
 
-} else {
-
 	$checkerErrors = $icmsVersionChecker->getErrors(TRUE);
 	if ($checkerErrors) {
 		$icmsAdminTpl->assign('errors', $checkerErrors);
 	}
-}
+
 
 /* retrieve the PHP and OS information*/
 $sysinfo = array();

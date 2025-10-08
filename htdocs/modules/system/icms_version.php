@@ -64,11 +64,11 @@ $modversion = array(
 	'image' => "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version' => "2.0.2 Beta",
-	'status' => "Beta",
-	'date' => "04 Jul 2025",
-	'author_word' => "Multiple improvements",
-	'warning' => _CO_ICMS_WARNING_BETA,
+	'status_version' => "2.0.2",
+	'status' => "Final",
+	'date' => "01 October 2025",
+	'author_word' => "Multiple improvements and bugfixes",
+	'warning' => _CO_ICMS_WARNING_FINAL,
 
 	/**
 	 * Contributors
@@ -337,5 +337,6 @@ $modversion['templates'] = array(
 	array('file' => 'icms_form_elements_button_display.html', 'description' => 'Display template for a button'),
 	array('file' => 'icms_form_elements_checkbox_display.html', 'description' => 'Display template for a checkbox'),
 	array('file' => 'icms_form_elements_text_display.html', 'description' => 'Display template for a text'),
-	array('file' => 'icms_form_elements_password_display.html', 'description' => 'Display template for a password field')
+	array('file' => 'icms_form_elements_password_display.html', 'description' => 'Display template for a password field'),
+	array('file' => 'icms_form_elements_passwordtray_display.html', 'description' => 'Display template for a passwordtray')
 );
