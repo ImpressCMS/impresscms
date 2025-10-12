@@ -45,11 +45,11 @@ jobs:
           # Kopieer removed.txt naar de root van het ZIP-bestand
           cp removed.txt diff_files/removed.txt
 
-          # Maak een ZIP-bestand van de gewijzigde bestanden en removed.txt
-          zip -r diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}.zip diff_files
+          # Maak een ZIP-bestand van de inhoud van diff_files/, zonder de map zelf
+          (cd diff_files && zip -r ../diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}.zip .)
 
       - name: Upload ZIP-bestand als artifact
         uses: actions/upload-artifact@v4
         with:
-          name: diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}.zip
+          name: diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}
           path: diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}.zip
