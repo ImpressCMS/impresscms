@@ -1,0 +1,55 @@
+name: Generate Diff ZIP
+
+on:
+  workflow_dispatch:
+    inputs:
+      old_version:
+        description: 'Oude versie (bijv. v2.0.0)'
+        required: true
+      new_version:
+        description: 'Nieuwe versie (bijv. v2.0.2)'
+        required: true
+
+jobs:
+  generate-diff-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Haal de volledige geschiedenis op
+
+      - name: Maak diff ZIP-bestand en removed.txt
+        run: |
+          # Maak tijdelijke mappen voor de gewijzigde bestanden en removed.txt
+          mkdir -p diff_files
+
+          # Haal de commit hashes op voor de opgegeven versies
+          OLD_COMMIT=$(git rev-parse "${{ github.event.inputs.old_version }}")
+          NEW_COMMIT=$(git rev-parse "${{ github.event.inputs.new_version }}")
+
+          # Genereer een lijst van gewijzigde/toegevoegde bestanden (exclusief verwijderde), gefilterd op htdocs/
+          git diff --name-only --diff-filter=AMR "$OLD_COMMIT" "$NEW_COMMIT" | grep ^htdocs/ | sed 's|^htdocs/||' > changed_files.txt
+
+          # Genereer een lijst van verwijderde bestanden, gefilterd op htdocs/
+          git diff --name-only --diff-filter=D "$OLD_COMMIT" "$NEW_COMMIT" | grep ^htdocs/ | sed 's|^htdocs/||' > removed.txt
+
+          # Kopieer de gewijzigde/toegevoegde bestanden naar de tijdelijke map, met htdocs/ als root
+          while IFS= read -r file; do
+            if [ -f "htdocs/$file" ]; then
+              mkdir -p "diff_files/$(dirname "$file")"
+              cp "htdocs/$file" "diff_files/$file"
+            fi
+          done < changed_files.txt
+
+          # Kopieer removed.txt naar de root van het ZIP-bestand
+          cp removed.txt diff_files/removed.txt
+
+          # Maak een ZIP-bestand van de gewijzigde bestanden en removed.txt
+          zip -r diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}.zip diff_files
+
+      - name: Upload ZIP-bestand als artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}.zip
+          path: diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}.zip
