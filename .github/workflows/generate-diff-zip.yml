@@ -1,40 +1,40 @@
-name: Generate Diff ZIP
+name: Generate Diff Files
 
 on:
   workflow_dispatch:
     inputs:
       old_version:
-        description: 'Oude versie (bijv. v2.0.0)'
+        description: 'Old version (e.g. v2.0.0)'
         required: true
       new_version:
-        description: 'Nieuwe versie (bijv. v2.0.2)'
+        description: 'New version (e.g. v2.0.2)'
         required: true
 
 jobs:
-  generate-diff-zip:
+  generate-diff-files:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Haal de volledige geschiedenis op
+          fetch-depth: 0  # Fetch full history
 
-      - name: Maak diff ZIP-bestand en removed.txt
+      - name: Create diff files and removed.txt
         run: |
-          # Maak tijdelijke mappen voor de gewijzigde bestanden en removed.txt
+          # Create a temporary directory for changed files and removed.txt
           mkdir -p diff_files
 
-          # Haal de commit hashes op voor de opgegeven versies
+          # Get commit hashes for the specified versions
           OLD_COMMIT=$(git rev-parse "${{ github.event.inputs.old_version }}")
           NEW_COMMIT=$(git rev-parse "${{ github.event.inputs.new_version }}")
 
-          # Genereer een lijst van gewijzigde/toegevoegde bestanden (exclusief verwijderde), gefilterd op htdocs/
+          # Generate a list of modified/added files (excluding deleted), filtered to htdocs/
           git diff --name-only --diff-filter=AMR "$OLD_COMMIT" "$NEW_COMMIT" | grep ^htdocs/ | sed 's|^htdocs/||' > changed_files.txt
 
-          # Genereer een lijst van verwijderde bestanden, gefilterd op htdocs/
+          # Generate a list of deleted files, filtered to htdocs/
           git diff --name-only --diff-filter=D "$OLD_COMMIT" "$NEW_COMMIT" | grep ^htdocs/ | sed 's|^htdocs/||' > removed.txt
 
-          # Kopieer de gewijzigde/toegevoegde bestanden naar de tijdelijke map, met htdocs/ als root
+          # Copy modified/added files to the temporary directory, using htdocs/ as root
           while IFS= read -r file; do
             if [ -f "htdocs/$file" ]; then
               mkdir -p "diff_files/$(dirname "$file")"
@@ -42,14 +42,11 @@ jobs:
             fi
           done < changed_files.txt
 
-          # Kopieer removed.txt naar de root van het ZIP-bestand
+          # Copy removed.txt to the root of the diff_files directory
           cp removed.txt diff_files/removed.txt
 
-          # Maak een ZIP-bestand van de inhoud van diff_files/, zonder de map zelf
-          (cd diff_files && zip -r ../diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}.zip .)
-
-      - name: Upload ZIP-bestand als artifact
+      - name: Upload diff_files as artifact
         uses: actions/upload-artifact@v4
         with:
           name: diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}
-          path: diff_${{ github.event.inputs.old_version }}_to_${{ github.event.inputs.new_version }}.zip
+          path: diff_files/
