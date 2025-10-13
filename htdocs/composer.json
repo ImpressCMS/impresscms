@@ -4,7 +4,7 @@
     "type": "project",
     "keywords": ["cms", "content-management", "php", "mysql", "web"],
     "homepage": "https://www.impresscms.org/",
-    "license": "GPL-2.0-or-later",
+    "license": "GPL-2.0",
     "authors": [
         {
             "name": "The ImpressCMS Project",
