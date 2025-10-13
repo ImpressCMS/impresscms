@@ -7,11 +7,11 @@
  * It sets up necessary constants and autoloading without requiring
  * a full database connection or ImpressCMS installation.
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @copyright	https://www.impresscms.org/ The ImpressCMS Project
+ * @license		MIT
  * @category	ICMS
  * @package		Tests
- * @since		1.5
+ * @since		2.1
  */
 
 // Define the root path
@@ -83,7 +83,7 @@ if (!class_exists('icms_Event', false)) {
             // Mock implementation - does nothing in tests
             return true;
         }
-        
+
         public static function attach($object, $event, $callback)
         {
             // Mock implementation - does nothing in tests
@@ -100,7 +100,7 @@ if (!class_exists('icms', false)) {
         public static $xoopsDB = null;
         public static $logger = null;
         public static $config = [];
-        
+
         public static function getInstance()
         {
             static $instance = null;
@@ -124,12 +124,12 @@ if (!class_exists('icms_core_Logger', false)) {
             }
             return $instance;
         }
-        
+
         public function addQuery($sql, $error = null, $errno = null)
         {
             // Mock implementation
         }
-        
+
         public function addExtra($name, $msg)
         {
             // Mock implementation

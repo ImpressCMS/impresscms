@@ -3,8 +3,8 @@
 /**
  * Tests for icms_db_criteria_Item
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @copyright	https://www.impresscms.org/ The ImpressCMS Project
+ * @license		MIT
  * @category	ICMS
  * @package		Tests
  * @subpackage	Database
