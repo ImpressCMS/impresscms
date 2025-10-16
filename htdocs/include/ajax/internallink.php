@@ -33,9 +33,12 @@ if ($action === 'modules') {
     $out = [];
     foreach ($modules as $mid => $module) {
         if (!$module->getVar('isactive')) { continue; }
-        $modinfoLoaded = $moduleHandler->loadInfo($module->getVar('dirname'), false);
+        $dirname = (string) $module->getVar('dirname');
+        if ($dirname === 'system') { continue; }
+
+        $modinfoLoaded = $module->loadInfo((string) $module->getVar('dirname'), false);
         if (!$modinfoLoaded) { continue; }
-        $info = $module->modinfo;
+        $info = $module->getInfo();
         if (isset($info['object_items']) && is_array($info['object_items']) && count($info['object_items']) > 0) {
             // Permission: module_read
             $gperm = icms::handler('icms_member_groupperm');
@@ -72,6 +75,78 @@ if ($action === 'search') {
         $itemsFilter = array_filter(array_map('trim', explode(',', $itemsRaw)));
     }
 
+    // Special case: search across all modules
+    if ($moduleDir === '__all__') {
+        $moduleHandler = icms::handler('icms_module');
+        $modules = $moduleHandler->getObjects(null, true);
+        $gperm = icms::handler('icms_member_groupperm');
+        $groups = icms::$user->getGroups();
+
+        $pdo = icms::$xoopsDB instanceof icms_db_legacy_PdoDatabase ? icms::$xoopsDB->getConnection() : null;
+        if (!$pdo) {
+            jsonOut(['error' => 'Database not available'], 500);
+        }
+
+        $results = [];
+        $like = '%' . $q . '%';
+
+        foreach ($modules as $mid => $modObj) {
+            if (!$modObj->getVar('isactive')) { continue; }
+            $dirname = (string) $modObj->getVar('dirname');
+            if ($dirname === 'system') { continue; }
+            if (!$gperm->checkRight('module_read', (int) $mid, $groups)) { continue; }
+
+            $loaded = $modObj->loadInfo($dirname, false);
+            if (!$loaded) { continue; }
+            $info = $modObj->getInfo();
+            $items = isset($info['object_items']) && is_array($info['object_items']) ? $info['object_items'] : [];
+            if (!$items) { continue; }
+
+            foreach ($items as $itemName) {
+                $handler = icms_getModuleHandler($itemName, $dirname, null, true);
+                if (!$handler) { continue; }
+                $table = $handler->table;
+                $idField = $handler->keyName;
+                $titleField = $handler->identifierName;
+                if (!$table || !$idField || !$titleField) { continue; }
+                $baseUrl = $handler->_moduleUrl . $handler->_page . '?' . $idField . '=';
+
+                $sql = sprintf(
+                    'SELECT `%s` AS id, `%s` AS title FROM `%s` WHERE `%s` LIKE :q ORDER BY `%s` ASC LIMIT :lim',
+                    str_replace('`','', $idField),
+                    str_replace('`','', $titleField),
+                    str_replace('`','', $table),
+                    str_replace('`','', $titleField),
+                    str_replace('`','', $titleField)
+                );
+                try {
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(':q', $like, \PDO::PARAM_STR);
+                    $stmt->bindValue(':lim', $limit, \PDO::PARAM_INT);
+                    $stmt->execute();
+                } catch (\Throwable $e) {
+                    continue;
+                }
+                while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                    if (!isset($row['id'], $row['title'])) { continue; }
+                    $title = (string) $row['title'];
+                    if ($title === '') { continue; }
+                    $url = $baseUrl . urlencode((string)$row['id']);
+                    $results[] = [
+                        'title' => $title,
+                        'url' => $url,
+                        'module' => (string) $dirname,
+                        'moduleName' => (string) $modObj->getVar('name'),
+                        'item' => (string) $itemName
+                    ];
+                    if (count($results) >= $limit) { break 2; }
+                }
+            }
+        }
+
+        jsonOut(['results' => $results]);
+    }
+
     // Module and permission checks
     $moduleHandler = icms::handler('icms_module');
     $module = $moduleHandler->getByDirname($moduleDir, true);
@@ -85,11 +160,11 @@ if ($action === 'search') {
     }
 
     // Load object_items
-    $loaded = $moduleHandler->loadInfo($moduleDir, false);
+    $loaded = $module->loadInfo($moduleDir, false);
     if (!$loaded) {
         jsonOut(['results' => []]);
     }
-    $info = $module->modinfo;
+    $info = $module->getInfo();
     $items = isset($info['object_items']) && is_array($info['object_items']) ? $info['object_items'] : [];
     if (!$items) {
         jsonOut(['results' => []]);
@@ -146,6 +221,7 @@ if ($action === 'search') {
                 'title' => $title,
                 'url' => $url,
                 'module' => (string) $moduleDir,
+                'moduleName' => (string) $module->getVar('name'),
                 'item' => (string) $itemName
             ];
             if (count($results) >= $limit) { break; }

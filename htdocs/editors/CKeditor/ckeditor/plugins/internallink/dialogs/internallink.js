@@ -25,6 +25,8 @@
         var serviceBase = (window.ICMS_URL || '') + '/include/ajax/internallink.php';
         var csrfToken = window.ICMS_CSRF_TOKEN || '';
 
+        var ALL_VALUE = '__all__';
+
         function renderResults(list){
             var cont = document.getElementById(resultsElId);
             if(!cont) return;
@@ -51,7 +53,8 @@
                     items.forEach(function(el){ el.style.background = 'transparent'; });
                     li.style.background = '#d0e8f2';
                 };
-                li.textContent = item.title;
+                var modLabel = item.moduleName || item.module || '';
+                li.textContent = modLabel ? (item.title + ' — [' + modLabel + ']') : item.title;
                 ul.appendChild(li);
             });
             cont.appendChild(ul);
@@ -74,7 +77,7 @@
                     selectedItems = itemsVal.split(',').filter(function(x){ return x.length > 0; });
                 }
             }
-            var itemsParam = selectedItems.length > 0 ? '&items=' + encodeURIComponent(selectedItems.join(',')) : '';
+            var itemsParam = (mod !== ALL_VALUE && selectedItems.length > 0) ? '&items=' + encodeURIComponent(selectedItems.join(',')) : '';
             var tokenParam = csrfToken ? '&token=' + encodeURIComponent(csrfToken) : '';
             ajax(serviceBase + '?action=search&module=' + encodeURIComponent(mod) + '&q=' + encodeURIComponent(q) + itemsParam + tokenParam, function(err, data){
                 if(err){ renderResults([]); return; }
@@ -103,13 +106,21 @@
                                 if(!itemsSel) return;
                                 itemsSel.clear();
                                 var mod = modSel.getValue();
-                                modules.forEach(function(m){
-                                    if(m.dirname === mod && m.items){
-                                        m.items.forEach(function(item){
-                                            itemsSel.add(item, item);
-                                        });
-                                    }
-                                });
+                                // Handle "All Modules" special case: disable items selector
+                                var inputEl = itemsSel && itemsSel.getInputElement ? itemsSel.getInputElement().$ : null;
+                                if (mod === ALL_VALUE) {
+                                    itemsSel.clear();
+                                    if (inputEl) { inputEl.disabled = true; }
+                                } else {
+                                    if (inputEl) { inputEl.disabled = false; }
+                                    modules.forEach(function(m){
+                                        if(m.dirname === mod && m.items){
+                                            m.items.forEach(function(item){
+                                                itemsSel.add(item, item);
+                                            });
+                                        }
+                                    });
+                                }
                                 doSearch();
                             }
                         },
@@ -154,9 +165,13 @@
                     if(itemsSel) itemsSel.clear();
                     if(err || !data || !data.modules){ return; }
                     modules = data.modules;
+                    // Add special "All Modules" option at the top
+                    modSel.add('-- All Modules --', ALL_VALUE);
                     modules.forEach(function(m){
                         modSel.add(m.name, m.dirname);
                     });
+                    // Select "All Modules" by default
+                    modSel.setValue(ALL_VALUE);
                 });
             },
             onOk: function(){
