@@ -147,7 +147,7 @@
                 var itemsSel = dialog.getContentElement('tab-basic', 'items_select');
 
                 // Load modules once per open
-                var tokenParam = csrfToken ? '?token=' + encodeURIComponent(csrfToken) : '';
+                var tokenParam = csrfToken ? '&token=' + encodeURIComponent(csrfToken) : '';
                 ajax(serviceBase + '?action=modules' + tokenParam, function(err, data){
                     if(!modSel) return;
                     modSel.clear();
