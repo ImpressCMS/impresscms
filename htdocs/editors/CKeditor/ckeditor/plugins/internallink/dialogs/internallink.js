@@ -21,9 +21,7 @@
         var selected = { title: '', url: '' };
         var modules = [];
         var resultsElId = CKEDITOR.tools.getNextId();
-        var moduleSelectId = CKEDITOR.tools.getNextId();
-        var itemsSelectId = CKEDITOR.tools.getNextId();
-        var searchInputId = CKEDITOR.tools.getNextId();
+        var resultsContainerId = CKEDITOR.tools.getNextId();
         var serviceBase = (window.ICMS_URL || '') + '/include/ajax/internallink.php';
         var csrfToken = window.ICMS_CSRF_TOKEN || '';
 
@@ -32,7 +30,7 @@
             if(!cont) return;
             cont.innerHTML = '';
             if(!list || !list.length){
-                cont.innerHTML = '<div style="color:#666;">No results</div>';
+                cont.innerHTML = '<div style="color:#666;padding:10px;">No results</div>';
                 return;
             }
             var ul = document.createElement('ul');
@@ -41,11 +39,18 @@
             ul.style.padding = '0';
             list.forEach(function(item){
                 var li = document.createElement('li');
-                li.style.padding = '4px 6px';
+                li.style.padding = '6px 8px';
                 li.style.cursor = 'pointer';
-                li.onmouseover = function(){ li.style.background = '#eef'; };
+                li.style.borderBottom = '1px solid #eee';
+                li.onmouseover = function(){ li.style.background = '#e8f4f8'; };
                 li.onmouseout = function(){ li.style.background = 'transparent'; };
-                li.onclick = function(){ selected = { title: item.title, url: item.url }; };
+                li.onclick = function(){
+                    selected = { title: item.title, url: item.url };
+                    // Highlight selected item
+                    var items = cont.querySelectorAll('li');
+                    items.forEach(function(el){ el.style.background = 'transparent'; });
+                    li.style.background = '#d0e8f2';
+                };
                 li.textContent = item.title;
                 ul.appendChild(li);
             });
@@ -53,19 +58,20 @@
         }
 
         var doSearch = debounce(function(){
-            var modSel = document.getElementById(moduleSelectId);
-            var itemsSel = document.getElementById(itemsSelectId);
-            var qEl = document.getElementById(searchInputId);
+            var dialog = CKEDITOR.dialog.getCurrent();
+            if(!dialog) return;
+            var modSel = dialog.getContentElement('tab-basic', 'module_select');
+            var itemsSel = dialog.getContentElement('tab-basic', 'items_select');
+            var qEl = dialog.getContentElement('tab-basic', 'search_input');
             if(!modSel || !qEl) return;
-            var mod = modSel.value;
-            var q = qEl.value;
+            var mod = modSel.getValue();
+            var q = qEl.getValue();
             if(!mod || !q || q.length < 3){ renderResults([]); return; }
             var selectedItems = [];
             if(itemsSel){
-                for(var i = 0; i < itemsSel.options.length; i++){
-                    if(itemsSel.options[i].selected){
-                        selectedItems.push(itemsSel.options[i].value);
-                    }
+                var itemsVal = itemsSel.getValue();
+                if(itemsVal && itemsVal.length){
+                    selectedItems = itemsVal.split(',').filter(function(x){ return x.length > 0; });
                 }
             }
             var itemsParam = selectedItems.length > 0 ? '&items=' + encodeURIComponent(selectedItems.join(',')) : '';
@@ -78,63 +84,80 @@
 
         return {
             title: 'Insert Internal Link',
-            minWidth: 500,
-            minHeight: 300,
+            minWidth: 550,
+            minHeight: 400,
             contents: [
                 {
                     id: 'tab-basic',
                     label: 'Basic',
                     elements: [
-                        { type: 'html', id: 'module', html: '<label for="' + moduleSelectId + '">Module</label><br/><select id="' + moduleSelectId + '" style="width:100%"></select>' },
-                        { type: 'html', id: 'items', html: '<label for="' + itemsSelectId + '">Content Types (optional)</label><br/><select id="' + itemsSelectId + '" multiple style="width:100%;height:80px;"></select><div style="font-size:11px;color:#666;margin-top:4px;">Hold Ctrl/Cmd to select multiple</div>' },
-                        { type: 'html', id: 'search', html: '<label for="' + searchInputId + '">Search</label><br/><input id="' + searchInputId + '" type="text" style="width:100%" placeholder="Type at least 3 characters" />' },
-                        { type: 'html', id: 'results', html: '<div id="' + resultsElId + '" style="border:1px solid #ccc;height:150px;overflow:auto;margin-top:8px;"></div>' }
+                        {
+                            type: 'select',
+                            id: 'module_select',
+                            label: 'Module',
+                            items: [],
+                            onChange: function(){
+                                var dialog = CKEDITOR.dialog.getCurrent();
+                                var modSel = dialog.getContentElement('tab-basic', 'module_select');
+                                var itemsSel = dialog.getContentElement('tab-basic', 'items_select');
+                                if(!itemsSel) return;
+                                itemsSel.clear();
+                                var mod = modSel.getValue();
+                                modules.forEach(function(m){
+                                    if(m.dirname === mod && m.items){
+                                        m.items.forEach(function(item){
+                                            itemsSel.add(item, item);
+                                        });
+                                    }
+                                });
+                                doSearch();
+                            }
+                        },
+                        {
+                            type: 'select',
+                            id: 'items_select',
+                            label: 'Content Types (optional)',
+                            items: [],
+                            multiple: true,
+                            size: 4,
+                            onChange: function(){
+                                doSearch();
+                            }
+                        },
+                        {
+                            type: 'text',
+                            id: 'search_input',
+                            label: 'Search',
+                            onKeyUp: function(){
+                                doSearch();
+                            }
+                        },
+                        {
+                            type: 'html',
+                            id: 'results_container',
+                            html: '<div id="' + resultsElId + '" style="border:1px solid #ccc;height:150px;overflow:auto;margin-top:8px;background:#fff;"></div>'
+                        }
                     ]
                 }
             ],
             onShow: function(){
                 selected = { title: '', url: '' };
+                var dialog = CKEDITOR.dialog.getCurrent();
+                var modSel = dialog.getContentElement('tab-basic', 'module_select');
+                var itemsSel = dialog.getContentElement('tab-basic', 'items_select');
+
                 // Load modules once per open
                 var tokenParam = csrfToken ? '?token=' + encodeURIComponent(csrfToken) : '';
                 ajax(serviceBase + '?action=modules' + tokenParam, function(err, data){
-                    var sel = document.getElementById(moduleSelectId);
-                    var itemsSel = document.getElementById(itemsSelectId);
-                    if(!sel) return;
-                    sel.innerHTML = '';
-                    if(itemsSel) itemsSel.innerHTML = '';
+                    if(!modSel) return;
+                    modSel.clear();
+                    if(itemsSel) itemsSel.clear();
                     if(err || !data || !data.modules){ return; }
                     modules = data.modules;
                     modules.forEach(function(m){
-                        var opt = document.createElement('option');
-                        opt.value = m.dirname;
-                        opt.textContent = m.name;
-                        sel.appendChild(opt);
+                        modSel.add(m.name, m.dirname);
                     });
                 });
-                var modSel = document.getElementById(moduleSelectId);
-                if(modSel){
-                    modSel.onchange = function(){
-                        var itemsSel = document.getElementById(itemsSelectId);
-                        if(!itemsSel) return;
-                        itemsSel.innerHTML = '';
-                        var mod = modSel.value;
-                        modules.forEach(function(m){
-                            if(m.dirname === mod && m.items){
-                                m.items.forEach(function(item){
-                                    var opt = document.createElement('option');
-                                    opt.value = item;
-                                    opt.textContent = item;
-                                    itemsSel.appendChild(opt);
-                                });
-                            }
-                        });
-                        doSearch();
-                    };
-                }
-                var qEl = document.getElementById(searchInputId);
-                if(qEl){ qEl.onkeyup = doSearch; }
-                var itemsSel = document.getElementById(itemsSelectId);
-                if(itemsSel){ itemsSel.onchange = doSearch; }
             },
             onOk: function(){
                 if(!selected.url){ return; }
