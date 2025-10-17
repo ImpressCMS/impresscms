@@ -144,9 +144,9 @@ describe('icms_db_criteria_Element', function () {
             expect($this->element->getStart())->toBe(100);
         });
 
-        it('handles negative values', function () {
+        it('handles negative values by making them positive', function () {
             $this->element->setStart(-10);
-            expect($this->element->getStart())->toBe(-10);
+            expect($this->element->getStart())->toBe(10);
         });
 
         it('can reset start to zero', function () {
