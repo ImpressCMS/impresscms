@@ -112,8 +112,41 @@ class icmsFormCKEditor extends icms_form_elements_Textarea {
 
 		$ret = $xoTheme->addScript("/editors/CKeditor/ckeditor/ckeditor.js", array('type' => 'text/javascript'), '');
 		$ret .= $xoTheme->addScript("/editors/CKeditor/ckeditor/adapters/jquery.js", array('type' => 'text/javascript'), '');
+
+		// CSRF token for AJAX (pre-hashed value expected by validateToken)
+		$__tokenId = icms::$security->createToken(0);
+		$__tokenVal = md5($__tokenId . $_SERVER['HTTP_USER_AGENT'] . XOOPS_DB_PREFIX);
+
 		$ret .= $xoTheme->addScript('', array('type' => 'text/javascript'),
-			'var config = {filebrowserImageBrowseUrl: "' . ICMS_URL . '/editors/CKeditor/imagebrowser.php", toolbar: "' .  $toolbar . '"}; $(function() { $("#'.@$this->_name.'_tarea").ckeditor(config); $("#'.@$this->_name.'_tarea").parents("form").submit(function() { var data = $("#'.@$this->_name.'_tarea").html(); $("#'.@$this->_name.'_tarea").html(data); }); });');
+			'var config = {\n' .
+			'  filebrowserImageBrowseUrl: "' . ICMS_URL . '/editors/CKeditor/imagebrowser.php",\n' .
+			'  toolbar: "' .  $toolbar . '",\n' .
+			'  extraPlugins: "mentions,autocomplete,textmatch"\n' .
+			'};\n' .
+			'config.mentions = [{\n' .
+			'  marker: "@",\n' .
+			'  minChars: 1,\n' .
+			'  throttle: 200,\n' .
+			'  itemTemplate: "<li data-id=\"{id}\"><img src=\"{avatar}\" style=\"width:20px;height:20px;border-radius:50%;vertical-align:middle;margin-right:6px;\" alt=\"{name}\"> @{username} <small style=\"opacity:.7;\">{name}</small></li>",\n' .
+			'  outputTemplate: "@{username}",\n' .
+			'  feed: function(opts, callback) {\n' .
+			'    var xhr = new XMLHttpRequest();\n' .
+			'    var url = "' . ICMS_URL . '/include/ajax/mentions.php?q=" + encodeURIComponent(opts.query) + "&XOOPS_TOKEN_REQUEST=' . $__tokenVal . '";\n' .
+			'    xhr.onreadystatechange = function() {\n' .
+			'      if (xhr.readyState === 4) {\n' .
+			'        if (xhr.status === 200) {\n' .
+			'          try { var data = JSON.parse(xhr.responseText); callback(data || []); } catch(e) { callback([]); }\n' .
+			'        } else { callback([]); }\n' .
+			'      }\n' .
+			'    };\n' .
+			'    xhr.open("GET", url, true);\n' .
+			'    xhr.send();\n' .
+			'  }\n' .
+			'}];\n' .
+			'$(function() {\n' .
+			'  $("#'.@$this->_name.'_tarea").ckeditor(config);\n' .
+			'  $("#'.@$this->_name.'_tarea").parents("form").submit(function() { var data = $("#'.@$this->_name.'_tarea").html(); $("#'.@$this->_name.'_tarea").html(data); });\n' .
+			'});');
 		$ret .= parent::render();
 
 		$ret .= '<br clear="' . _GLOBAL_RIGHT . '" />';
