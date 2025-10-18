@@ -99,18 +99,16 @@ final class MentionService
     private static function parseAtUsernames(string $content): array
     {
         // Allow usernames like user.name, user_name, user-name, digits.
-        // Boundaries: start or non-word char before @, then capture, ensure not email domain (avoid in emails).
-        $pattern = '/(?<![\w@])@([A-Za-z0-9._-]{1,64})/u';
-        preg_match_all($pattern, $content, $m);
+        // Boundaries: start or non-word char before @.
+        // The negative lookahead `(?!\.[a-zA-Z]{2,})` prevents matching TLDs like .com, .org
+        // which helps to avoid matching email domains.
+        $pattern = '/(?<!\w)@([a-zA-Z0-9_.-]+(?!\.[a-zA-Z]{2,}))/u';
+        preg_match_all($pattern, strip_tags($content), $m);
         if (empty($m[1])) {
             return [];
         }
         $names = [];
         foreach ($m[1] as $name) {
-            // Skip obvious email parts like example.com
-            if (strpos($name, '.') !== false && preg_match('/^[A-Za-z0-9._-]+\.[A-Za-z]{2,}$/', $name)) {
-                continue;
-            }
             $names[strtolower($name)] = true;
         }
         return array_keys($names);
