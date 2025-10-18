@@ -133,14 +133,20 @@ config.mentions = [{
   outputTemplate: "<a href=\"{$icmsUrl}/userinfo.php?uid={id}\" class=\"mention\">@{username}</a>",
   feed: function(opts, callback) {
     var xhr = new XMLHttpRequest();
+    // The 'autocomplete' instance is available via `this` in the dataCallback context.
+    var requestId = this.autocomplete.model.lastRequestId;
     var url = "{$icmsUrl}/include/ajax/mentions.php?q=" + encodeURIComponent(opts.query) + "&XOOPS_TOKEN_REQUEST={$__tokenVal}";
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4) {
+        // Ensure this response corresponds to the latest request to avoid race conditions.
+        if (this.autocomplete.model.lastRequestId !== requestId) {
+          return;
+        }
         if (xhr.status === 200) {
           try { var data = JSON.parse(xhr.responseText); callback(data || []); } catch(e) { callback([]); }
         } else { callback([]); }
       }
-    };
+    }.bind({ autocomplete: this.autocomplete }); // Bind autocomplete instance to the handler.
     xhr.open("GET", url, true);
     xhr.send();
   }
