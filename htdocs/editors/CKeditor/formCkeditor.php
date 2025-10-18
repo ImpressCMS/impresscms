@@ -130,7 +130,7 @@ config.mentions = [{
   minChars: 1,
   throttle: 200,
   itemTemplate: "<li data-id=\"{id}\"><img src=\"{avatar}\" style=\"width:20px;height:20px;border-radius:50%;vertical-align:middle;margin-right:6px;\" alt=\"{name}\"> @{username} <small style=\"opacity:.7;\">{name}</small></li>",
-  outputTemplate: "@{username}",
+  outputTemplate: "<a href=\"{$icmsUrl}/userinfo.php?uid={id}\" class=\"mention\">@{username}</a>",
   feed: function(opts, callback) {
     var xhr = new XMLHttpRequest();
     var url = "{$icmsUrl}/include/ajax/mentions.php?q=" + encodeURIComponent(opts.query) + "&XOOPS_TOKEN_REQUEST={$__tokenVal}";
