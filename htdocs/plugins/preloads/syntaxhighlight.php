@@ -48,29 +48,25 @@ class IcmsPreloadSyntaxhighlight extends icms_preload_Item
         // Ensure GeSHi is available (keep library location unchanged)
         if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') {
             // If GeSHi missing, degrade gracefully by wrapping in <pre><code>
-            $text = self::applyFallback($text);
-            return $text;
+            return self::applyFallback($text);
         }
 
-        // Replace each supported language tag
-        $text = preg_replace_callback('/\[code_php](.*)\[\/code_php]/sU', function ($m) {
-            return self::highlight($m[1], 'php', 'icmsCodePhp', false);
-        }, $text);
+        $map = [
+            'php'  => ['lang' => 'php', 'class' => 'icmsCodePhp', 'pre' => false],
+            'js'   => ['lang' => 'javascript', 'class' => 'icmsCodeJs', 'pre' => false],
+            'css'  => ['lang' => 'css', 'class' => 'icmsCodeCss', 'pre' => false],
+            'html' => ['lang' => 'html4strict', 'class' => 'icmsCodeHtml', 'pre' => true],
+        ];
 
-        $text = preg_replace_callback('/\[code_js](.*)\[\/code_js]/sU', function ($m) {
-            return self::highlight($m[1], 'javascript', 'icmsCodeJs', false);
-        }, $text);
-
-        $text = preg_replace_callback('/\[code_css](.*)\[\/code_css]/sU', function ($m) {
-            return self::highlight($m[1], 'css', 'icmsCodeCss', false);
-        }, $text);
-
-        $text = preg_replace_callback('/\[code_html](.*)\[\/code_html]/sU', function ($m) {
-            // historically wrapped in <div><pre><code>
-            return self::highlight($m[1], 'html4strict', 'icmsCodeHtml', true);
-        }, $text);
-
-        return $text;
+        return preg_replace_callback(
+            '/\[code_(php|js|css|html)](.*?)\[\/code_\1]/si',
+            function ($m) use ($map) {
+                $tag = $m[1];
+                $config = $map[$tag];
+                return self::highlight($m[2], $config['lang'], $config['class'], $config['pre']);
+            },
+            $text
+        );
     }
 
     /**
