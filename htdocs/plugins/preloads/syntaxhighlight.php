@@ -10,18 +10,6 @@
 class IcmsPreloadSyntaxhighlight extends icms_preload_Item
 {
     /**
-     * After filtering plain textarea content
-     *
-     * @param array{0:string} $array [$text, $smiley, $icode, $image, $br]
-     * @return void
-     */
-//    public function eventBeforeDisplayHTMLarea(array $array): void
-//    {
-//        icms_core_debug::message("filter!");
-//		$array[0] = self::applyGeshi($array[0]);
-//    }
-
-    /**
      * After filtering HTML content
      *
      * @param array{0:string} $array [$html, 1, $br]
@@ -30,6 +18,17 @@ class IcmsPreloadSyntaxhighlight extends icms_preload_Item
     public function eventAfterFilterHTMLdisplay(array $array): void
     {
 		$array[0] = self::applyGeshi($array[0]);
+    }
+
+    /**
+     * After filtering textarea content (non-HTML flows)
+     *
+     * @param array{0:string} $array [$text, $smiley, $icode, $image, $br]
+     * @return void
+     */
+    public function eventAfterFilterTextareaDisplay(array $array): void
+    {
+        $array[0] = self::applyGeshi($array[0]);
     }
 
     /**
