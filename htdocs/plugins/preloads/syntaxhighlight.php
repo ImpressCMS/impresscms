@@ -80,8 +80,10 @@ class IcmsPreloadSyntaxhighlight extends icms_preload_Item
      */
     private static function highlight(string $raw, string $language, string $wrapperClass, bool $wrapPre): string
     {
+        $source = icms_core_DataFilter::undoHtmlSpecialChars($raw);
+
         // Guard against extremely large blocks (200 KB): use safe non-GeSHi wrapper
-        if (strlen($raw) > 200000) {
+        if (strlen($source) > 200000) {
             return self::wrapPlainBlock($raw, $wrapperClass, $wrapPre);
         }
 
