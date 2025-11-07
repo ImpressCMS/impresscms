@@ -40,8 +40,7 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 	 * @return	void
 	 */
 	public function eventAfterPreviewTarea($array) {
-		$array[0] = preg_replace_callback(array("/\[adsense](.*)\[\/adsense\]/sU"),
-			'icms_sanitizeAdsenses_callback', $array[0]);
+		$array[0] = self::replaceTagDeterministic($array[0], 'adsense', 'icms_sanitizeAdsenses_callback');
 	}
 
 	/**
@@ -60,8 +59,7 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 	 * @return	void
 	 */
 	public function eventAfterDisplayTarea($array) {
-		$array[0] = preg_replace_callback(array("/\[adsense](.*)\[\/adsense\]/sU"),
-			'icms_sanitizeAdsenses_callback', $array[0]);
+		$array[0] = self::replaceTagDeterministic($array[0], 'adsense', 'icms_sanitizeAdsenses_callback');
 	}
 
 	/**
@@ -81,4 +79,34 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 			$icmsTpl->assign('icmsAdsenses', $adsenses_array);
 		}
 	}
+
+	/**
+	 * Deterministically replace [tag]...[/tag] occurrences by invoking a preg-style callback.
+	 * Builds a $matches array like preg_replace_callback would: [0] full match, [1] inner.
+	 *
+	 * @param string   $text
+	 * @param string   $tag      e.g. 'adsense'
+	 * @param callable $callback e.g. 'icms_sanitizeAdsenses_callback'
+	 * @return string
+	 */
+	private static function replaceTagDeterministic(string $text, string $tag, $callback): string
+	{
+		$open = '[' . $tag . ']';
+		$close = '[/' . $tag . ']';
+		$pos = 0;
+		while (($start = strpos($text, $open, $pos)) !== false) {
+			$innerStart = $start + strlen($open);
+			$end = strpos($text, $close, $innerStart);
+			if ($end === false) {
+				break;
+			}
+			$inner = substr($text, $innerStart, $end - $innerStart);
+			$full = substr($text, $start, ($end + strlen($close)) - $start);
+			$replacement = call_user_func($callback, array($full, $inner));
+			$text = substr($text, 0, $start) . $replacement . substr($text, $end + strlen($close));
+			$pos = $start + strlen($replacement);
+		}
+		return $text;
+	}
 }
+
