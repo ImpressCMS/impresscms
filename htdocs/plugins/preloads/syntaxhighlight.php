@@ -15,7 +15,7 @@ class IcmsPreloadSyntaxhighlight extends icms_preload_Item
      * @param array{0:string} $array [$html, 1, $br]
      * @return void
      */
-    public function eventAfterFilterHTMLdisplay(array $array): void
+    public function eventAfterFilterHTMLdisplay(array &$array): void
     {
 		$array[0] = self::applyGeshi($array[0]);
     }
