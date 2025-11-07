@@ -18,9 +18,8 @@
  * @param string $text the search terms
  */
 function textsanitizer_syntaxhighlightphp($text) {
-	return preg_replace_callback("/\[code_php](.*)\[\/code_php\]/sU", function ($matches) {
-		return textsanitizer_geshi_php_highlight($matches[1]);
-	}, $text);
+	icms_core_Debug::setDeprecated('textsanitizer_syntaxhighlightcss is no longer in use, use the syntaxhighlighter preload IcmsPreloadSyntaxHighlight instead.');
+	return $text;
 }
 
 /**
@@ -28,24 +27,11 @@ function textsanitizer_syntaxhighlightphp($text) {
  *
  * @param $source
  */
-function textsanitizer_geshi_php_highlight( $source) {
-	if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
+function textsanitizer_geshi_php_highlight($source) {
+	icms_core_Debug::setDeprecated('textsanitizer_syntaxhighlightcss is no longer in use, use the syntaxhighlighter preload IcmsPreloadSyntaxHighlight instead.');
 	$source = icms_core_DataFilter::undoHtmlSpecialChars($source);
-
-	// Create the new GeSHi object, passing relevant stuff
-	$geshi = new GeSHi($source, 'php');
-	// Enclose the code in a <div>
-	$geshi->set_header_type(GESHI_HEADER_NONE);
-
-	// Sets the proper encoding charset other than "ISO-8859-1"
-	$geshi->set_encoding(_CHARSET);
-
-	$geshi->set_link_target ( "_blank" );
-
-	// Parse the code
-	$code = $geshi->parse_code();
-	$code = "<div class=\"icmsCodePhp\"><code>" . $code . "</code></div>";
-	return $code;
+	$code = htmlspecialchars($source, ENT_QUOTES, _CHARSET);
+	return "<div class=\"icmsCodePhp\"><code>" . $code . "</code></div>";
 }
 
 /**
@@ -56,7 +42,7 @@ function textsanitizer_geshi_php_highlight( $source) {
 function render_syntaxhighlightphp($ele_name) {
 	global $xoTheme;
 	$javascript='';
-	$dirname = basename(dirname(__FILE__));
+	$dirname = basename(__DIR__);
 	if (isset($xoTheme)) {
 		$xoTheme->addScript(
 			ICMS_URL.'/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
