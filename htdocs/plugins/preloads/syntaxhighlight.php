@@ -51,22 +51,22 @@ class IcmsPreloadSyntaxhighlight extends icms_preload_Item
             return self::applyFallback($text);
         }
 
-        $map = [
-            'php'  => ['lang' => 'php', 'class' => 'icmsCodePhp', 'pre' => false],
-            'js'   => ['lang' => 'javascript', 'class' => 'icmsCodeJs', 'pre' => false],
-            'css'  => ['lang' => 'css', 'class' => 'icmsCodeCss', 'pre' => false],
-            'html' => ['lang' => 'html4strict', 'class' => 'icmsCodeHtml', 'pre' => true],
-        ];
+        // Replace each supported language tag deterministically (no regex backtracking)
+        $text = self::replaceTag($text, 'code_php', function (string $raw): string {
+            return self::highlight($raw, 'php', 'icmsCodePhp', false);
+        });
+        $text = self::replaceTag($text, 'code_js', function (string $raw): string {
+            return self::highlight($raw, 'javascript', 'icmsCodeJs', false);
+        });
+        $text = self::replaceTag($text, 'code_css', function (string $raw): string {
+            return self::highlight($raw, 'css', 'icmsCodeCss', false);
+        });
+        $text = self::replaceTag($text, 'code_html', function (string $raw): string {
+            // historically wrapped in <div><pre><code>
+            return self::highlight($raw, 'html4strict', 'icmsCodeHtml', true);
+        });
 
-        return preg_replace_callback(
-            '/\[code_(php|js|css|html)](.*?)\[\/code_\1]/si',
-            function ($m) use ($map) {
-                $tag = $m[1];
-                $config = $map[$tag];
-                return self::highlight($m[2], $config['lang'], $config['class'], $config['pre']);
-            },
-            $text
-        );
+        return $text;
     }
 
     /**
@@ -80,6 +80,11 @@ class IcmsPreloadSyntaxhighlight extends icms_preload_Item
      */
     private static function highlight(string $raw, string $language, string $wrapperClass, bool $wrapPre): string
     {
+        // Guard against extremely large blocks (200 KB): use safe non-GeSHi wrapper
+        if (strlen($raw) > 200000) {
+            return self::wrapPlainBlock($raw, $wrapperClass, $wrapPre);
+        }
+
         $source = icms_core_DataFilter::undoHtmlSpecialChars($raw);
 
         $geshi = new GeSHi($source, $language);
@@ -94,6 +99,53 @@ class IcmsPreloadSyntaxhighlight extends icms_preload_Item
 
         return '<div class="' . $wrapperClass . '"><code>' . $code . '</code></div>';
     }
+    /**
+     * Deterministically replace [tag]...[/tag] occurrences without regex backtracking.
+     *
+     * @param string $text Input text
+     * @param string $tag BBCode tag name (e.g., 'code_php')
+     * @param callable(string):string $callback Receives raw inner content and returns replacement
+     * @return string
+     */
+    private static function replaceTag(string $text, string $tag, callable $callback): string
+    {
+        $open = '[' . $tag . ']';
+        $close = '[/' . $tag . ']';
+        $pos = 0;
+
+        while (($start = strpos($text, $open, $pos)) !== false) {
+            $innerStart = $start + strlen($open);
+            $end = strpos($text, $close, $innerStart);
+            if ($end === false) {
+                break;
+            }
+
+            $inner = substr($text, $innerStart, $end - $innerStart);
+            $replacement = $callback($inner);
+
+            $text = substr($text, 0, $start)
+                . $replacement
+                . substr($text, $end + strlen($close));
+            $pos = $start + strlen($replacement);
+        }
+
+        return $text;
+    }
+
+    /**
+     * Wrap plain code safely when GeSHi is unavailable or for oversized blocks.
+     */
+    private static function wrapPlainBlock(string $raw, string $cls, bool $pre): string
+    {
+        $src = icms_core_DataFilter::undoHtmlSpecialChars($raw);
+        $inner = htmlspecialchars($src, ENT_QUOTES, _CHARSET);
+        if ($pre) {
+            return '<div class="' . $cls . '"><pre><code>' . $inner . '</code></pre></div>';
+        }
+
+        return '<div class="' . $cls . '"><code>' . $inner . '</code></div>';
+    }
+
 
     /**
      * Fallback when GeSHi is not available.
@@ -103,27 +155,19 @@ class IcmsPreloadSyntaxhighlight extends icms_preload_Item
      */
     private static function applyFallback(string $text): string
     {
-        $wrap = function (string $raw, string $cls, bool $pre): string {
-            $src = icms_core_DataFilter::undoHtmlSpecialChars($raw);
-            $inner = htmlspecialchars($src, ENT_QUOTES, _CHARSET);
-            if ($pre) {
-                return '<div class="' . $cls . '"><pre><code>' . $inner . '</code></pre></div>';
-            }
-            return '<div class="' . $cls . '"><code>' . $inner . '</code></div>';
-        };
-
-        $text = preg_replace_callback('/\[code_php](.*)\[\/code_php]/sU', function ($m) use ($wrap) {
-            return $wrap($m[1], 'icmsCodePhp', false);
-        }, $text);
-        $text = preg_replace_callback('/\[code_js](.*)\[\/code_js]/sU', function ($m) use ($wrap) {
-            return $wrap($m[1], 'icmsCodeJs', false);
-        }, $text);
-        $text = preg_replace_callback('/\[code_css](.*)\[\/code_css]/sU', function ($m) use ($wrap) {
-            return $wrap($m[1], 'icmsCodeCss', false);
-        }, $text);
-        $text = preg_replace_callback('/\[code_html](.*)\[\/code_html]/sU', function ($m) use ($wrap) {
-            return $wrap($m[1], 'icmsCodeHtml', true);
-        }, $text);
+        // Deterministic fallback processing (no regex backtracking)
+        $text = self::replaceTag($text, 'code_php', function (string $raw): string {
+            return self::wrapPlainBlock($raw, 'icmsCodePhp', false);
+        });
+        $text = self::replaceTag($text, 'code_js', function (string $raw): string {
+            return self::wrapPlainBlock($raw, 'icmsCodeJs', false);
+        });
+        $text = self::replaceTag($text, 'code_css', function (string $raw): string {
+            return self::wrapPlainBlock($raw, 'icmsCodeCss', false);
+        });
+        $text = self::replaceTag($text, 'code_html', function (string $raw): string {
+            return self::wrapPlainBlock($raw, 'icmsCodeHtml', true);
+        });
 
         return $text;
     }
