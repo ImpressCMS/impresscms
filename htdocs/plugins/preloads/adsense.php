@@ -103,7 +103,7 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 			$inner = substr($text, $innerStart, $end - $innerStart);
 			$full = substr($text, $start, ($end + strlen($close)) - $start);
 			$replacement = call_user_func($callback, array($full, $inner));
-			$text = substr($text, 0, $start) . $replacement . substr($text, $end + strlen($close));
+			$text = substr_replace($text, $replacement, $start, ($end + strlen($close)) - $start);
 			$pos = $start + strlen($replacement);
 		}
 		return $text;
