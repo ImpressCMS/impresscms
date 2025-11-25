@@ -44,7 +44,7 @@ ImpressCMS is a community-developed PHP Content Management System (CMS) focused 
 │   └── mainfile.php       # Configuration bootstrap
 └── upgrade/               # Version upgrade scripts
 ```
-
+All the subfolders in the /htdocs/libraries folder are external includes, and should not be altered. The only exception is the 'icms' folder, the content of that folder are part of the project
 ## Key Files to Know
 
 | File | Purpose |
@@ -59,15 +59,11 @@ ImpressCMS is a community-developed PHP Content Management System (CMS) focused 
 ## Development Guidelines
 
 ### Code Style
-- **Indentation**: Tabs (4 spaces wide)
-- **Line endings**: LF (Unix-style)
-- **Charset**: UTF-8
-- Follow existing patterns in the codebase
-- See `.editorconfig` for detailed formatting rules
+- new and updated code should follow PSR-12 styling rules
 
 ### PHP Standards
 - **Minimum PHP**: 7.4
-- **Maximum PHP**: 8.4
+- **Maximum PHP**: 8.5
 - Use `icms::handler()` for service handlers
 - Use `icms::$module`, `icms::$user`, `icms::$db` for global services
 - Language constants are defined with `define()` in `htdocs/language/*/` files
