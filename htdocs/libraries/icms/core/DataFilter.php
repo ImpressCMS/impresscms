@@ -160,6 +160,11 @@ class icms_core_DataFilter {
 	 * @return string Add slashes to the text if magic_quotes_gpc is turned off (and that should be always on >= PHP 5.4!!!).
 	 */
 	public static function addSlashes(string $text, ?string $param = null) {
+		// Default to escaping the same characters as addslashes() for backwards compatibility
+		// This includes: single quote ('), double quote ("), backslash (\), and NUL (\0)
+		if ($param === null) {
+			$param = '\'"\\' . "\0";
+		}
 		return addcslashes($text, $param);
 	}
 
