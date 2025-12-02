@@ -50,6 +50,12 @@
 class icms_core_DataFilter {
 
 	/**
+	 * Default characters to escape in addSlashes() for backwards compatibility with PHP's addslashes()
+	 * Includes: single quote ('), double quote ("), backslash (\), and NUL (\0)
+	 */
+	const DEFAULT_ESCAPE_CHARS = "'\"\\\0";
+
+	/**
 	 *
 	 * @public	array
 	 */
@@ -161,9 +167,8 @@ class icms_core_DataFilter {
 	 */
 	public static function addSlashes(string $text, ?string $param = null) {
 		// Default to escaping the same characters as addslashes() for backwards compatibility
-		// This includes: single quote ('), double quote ("), backslash (\), and NUL (\0)
 		if ($param === null) {
-			$param = "'\"\\\0";
+			$param = self::DEFAULT_ESCAPE_CHARS;
 		}
 		return addcslashes($text, $param);
 	}
