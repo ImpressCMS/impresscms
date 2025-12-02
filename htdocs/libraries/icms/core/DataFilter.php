@@ -51,7 +51,8 @@ class icms_core_DataFilter {
 
 	/**
 	 * Default characters to escape in addSlashes() for backwards compatibility with PHP's addslashes()
-	 * Includes: single quote ('), double quote ("), backslash (\), and NUL (\0)
+	 * 
+	 * @var string Contains: ' (single quote), " (double quote), \ (backslash), and \0 (NUL byte)
 	 */
 	const DEFAULT_ESCAPE_CHARS = "'\"\\\0";
 
@@ -160,10 +161,15 @@ class icms_core_DataFilter {
 	}
 
 	/**
-	 *
-	 * @param string $text the text to apply the slashes to
-	 *        string $param which characters to apply the escaping to.
-	 * @return string Add slashes to the text if magic_quotes_gpc is turned off (and that should be always on >= PHP 5.4!!!).
+	 * Add slashes to escape special characters in text
+	 * 
+	 * When called without the second parameter, escapes characters that would be escaped by PHP's addslashes():
+	 * single quote ('), double quote ("), backslash (\), and NUL byte (\0)
+	 * 
+	 * @param string $text The text to apply the slashes to
+	 * @param string|null $param Optional. Which characters to apply the escaping to. 
+	 *                            If null (default), uses the same characters as addslashes() for backwards compatibility.
+	 * @return string The text with special characters escaped
 	 */
 	public static function addSlashes(string $text, ?string $param = null) {
 		// Default to escaping the same characters as addslashes() for backwards compatibility
