@@ -163,7 +163,7 @@ class icms_core_DataFilter {
 		// Default to escaping the same characters as addslashes() for backwards compatibility
 		// This includes: single quote ('), double quote ("), backslash (\), and NUL (\0)
 		if ($param === null) {
-			$param = '\'"\\' . "\0";
+			$param = "'\"\\\0";
 		}
 		return addcslashes($text, $param);
 	}
