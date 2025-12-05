@@ -28,12 +28,12 @@ In ImpressCMS, **symlinks** (also called "Pages") are **database records** that 
 ### Example Use Case:
 Instead of accessing a page via:
 ```
-http://yoursite.com/modules/news/article.php?id=123
+https://yoursite.com/modules/news/article.php?id=123
 ```
 
 You can create a symlink to access it via:
 ```
-http://yoursite.com/latest-news
+https://yoursite.com/latest-news
 ```
 
 ---
@@ -1040,8 +1040,9 @@ if ($page && canAccessSymlink($page)) {
 
 ```php
 <?php
-// BAD - Direct SQL (DO NOT USE)
-$sql = "SELECT * FROM " . $db->prefix('icmspage') . " WHERE page_url = '" . $url . "'";
+// BAD - Direct SQL (DO NOT USE - vulnerable to SQL injection)
+// NEVER construct SQL queries with string concatenation
+// $sql = "SELECT * FROM icmspage WHERE page_url = '" . $url . "'";
 
 // GOOD - Use handlers (they use prepared statements internally)
 $page_handler = icms::handler('icms_data_page');
@@ -1392,7 +1393,12 @@ class MultiLanguageRouter {
     
     public function __construct() {
         $this->page_handler = icms::handler('icms_data_page');
-        $this->current_language = icms::$module->config['language'];
+        
+        // Safely get current language
+        global $icmsConfig;
+        $this->current_language = isset($icmsConfig['language']) 
+            ? $icmsConfig['language'] 
+            : 'english';
     }
     
     /**
