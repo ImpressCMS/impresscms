@@ -71,6 +71,12 @@ You can find our official documentation at [our wiki](https://www.impresscms.org
 
 Also, help could be found on [our official forums](https://www.impresscms.org/modules/iforum/).
 
+### Developer Documentation
+
+For developers working with ImpressCMS, we provide additional guides:
+
+- **[Symlinks and Routing Guide](docs/symlinks-and-routing.md)** - Comprehensive guide on how to use ImpressCMS symlinks (database-driven URL mapping) to build custom routing systems
+
 ## How to contribute?
 ### Code contribution
 Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us a [pull request](https://github.com/ImpressCMS/impresscms/pulls). If you plan on working on more than just a simple bugfix, discuss your plans first on the forums.
