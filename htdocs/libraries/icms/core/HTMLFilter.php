@@ -70,7 +70,6 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
         }
 
         if ($icmsConfigPurifier['enable_purifier'] !== 0) {
-			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
 			if ($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0) {
 				require_once ICMS_PLUGINS_PATH . '/csstidy/class.csstidy.php';
 			}
@@ -92,12 +91,20 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 
 	/*
 	 * Get list of current custom Filters & return them as objects in array
-	 * Custom Filters are located in libraries/htmlpurifier/standalone/HTMLPurifier/Filter/
+	 * Custom Filters are located in libraries/htmlpurifier/standalone/HTMLPurifier/Filter/ (bundled)
+	 * or vendor/ezyang/htmlpurifier/library/HTMLPurifier/Filter/ (Composer)
 	 *
 	 * @return	object	array list of filter objects
 	 */
 	private static function getCustomFilterList() {
+		// Check bundled location first for backward compatibility
 		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
+
+		// Fall back to Composer location if bundled doesn't exist
+		if (!is_dir($dirPath)) {
+			$dirPath = ICMS_ROOT_PATH . '/vendor/ezyang/htmlpurifier/library/HTMLPurifier/Filter/';
+		}
+
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
 		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
 			$filterList = array();

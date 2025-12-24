@@ -22,7 +22,9 @@
 		"ext-pdo": "*",
 		"ext-session": "*",
 		"ext-xml": "*",
-		"ext-zlib": "*"
+		"ext-zlib": "*",
+		"composer/composer": "2.8.12",
+		"ezyang/htmlpurifier": "^4.19"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9.0",
