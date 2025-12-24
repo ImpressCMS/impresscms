@@ -38,11 +38,6 @@
  * @author Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version SVN: $Id: modulesadmin.php 12403 2014-01-26 21:35:08Z skenow $
  */
-
-use Composer\InstalledVersions;
-use Composer\Console\Application;
-use Composer\Package;
-
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
@@ -53,7 +48,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
  * @return NULL Assigns content to the template
  */
 function xoops_module_list() {
-	global $icmsAdminTpl;
+	global $icmsAdminTpl, $icmsConfig;
 
 	$icmsAdminTpl->assign('lang_madmin', _MD_AM_MODADMIN);
 	$icmsAdminTpl->assign('lang_module', _MD_AM_MODULE);
@@ -97,19 +92,20 @@ function xoops_module_list() {
 			'support_site_url' => $module->getInfo('support_site_url'));
 		$icmsAdminTpl->append('modules', $mod);
 		$listed_mods[] = $module->getVar('dirname');
-
 	}
 
-
-	$uninstalled = icms_module_Handler::getAvailable();
-
+	$dirlist = icms_module_Handler::getAvailable();
+	$uninstalled = array_diff($dirlist, $listed_mods);
 	foreach ($uninstalled as $file) {
-
-	$module = new \Composer\Package\Package('impresscms/itheme-theme', $file['Version'],$file['PrettyVersion']);
-
-	$mod = array('dirname' => $module->getTargetDir(), 'name' => $module->getName(), 'image' => '', 'version' => $module->getVersion(), 'status' => '');
-	$icmsAdminTpl->append('avmodules', $mod);
-	unset($module);
+		clearstatcache();
+		$file = trim($file);
+		$module = &$module_handler->create();
+		if (!$module->loadInfo($file, FALSE)) {
+			continue;
+		}
+		$mod = array('dirname' => $module->getInfo('dirname'), 'name' => $module->getInfo('name'), 'image' => $module->getInfo('image'), 'version' => $module->getInfo('version'), 'status' => $module->getInfo('status'));
+		$icmsAdminTpl->append('avmodules', $mod);
+		unset($module);
 	}
 
 	return $icmsAdminTpl->fetch('db:system_adm_modulesadmin.html');
@@ -153,7 +149,7 @@ function xoops_module_install($dirname) {
 		'tplset',
 		'tplsource',
 		'xoopsnotifications',
-);
+	);
 	$module_handler = icms::handler('icms_module');
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module = &$module_handler->create();
@@ -634,7 +630,7 @@ function xoops_module_uninstall($dirname) {
 		'tplset',
 		'tplsource',
 		'xoopsnotifications',
-);
+	);
 
 	$db = &icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');
