@@ -24,7 +24,8 @@
 		"ext-xml": "*",
 		"ext-zlib": "*",
 		"composer/composer": "2.8.12",
-		"ezyang/htmlpurifier": "^4.19"
+		"ezyang/htmlpurifier": "^4.19",
+		"simplepie/simplepie": "^1.9"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9.0",
