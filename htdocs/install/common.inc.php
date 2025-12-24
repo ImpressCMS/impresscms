@@ -43,8 +43,8 @@ include_once '../include/functions.php';
 require_once 'include/functions.php';
 include_once './class/IcmsInstallWizard.php';
 
-require_once '../libraries/icms/Autoloader.php';
-icms_Autoloader::setup();
+// replace the old line that required ../libraries/icms/Autoloader.php
+require_once __DIR__ . '/../vendor/autoload.php';
 
 error_reporting(E_ALL);
 
