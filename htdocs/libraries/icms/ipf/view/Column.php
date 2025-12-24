@@ -29,16 +29,13 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  */
 class icms_ipf_view_Column {
 
-	public $_keyname;
-	public $_align;
-	public $_width;
+	private $_keyname;
+	private $_align;
+	private $_width;
 	public $_customMethodForValue;
-	public $_extraParams;
-	public $_sortable;
-	public $_customCaption;
-	/**
-	 * @var false|unknown_type
-	 */
+	private $_extraParams;
+	private $_sortable;
+	private $_customCaption;
 	private $_param;
 
 	/**
@@ -101,6 +98,12 @@ class icms_ipf_view_Column {
 	public function getCustomCaption() {
 		return $this->_customCaption;
 	}
+	public function getParam() {
+		return $this->_param;
+	}
 
+	public function getCustomMethodForValue() {
+		return $this->_customMethodForValue;
+	}
 }
 

@@ -310,12 +310,12 @@ class icms_ipf_view_Table {
 					if (method_exists($object, 'initiateCustomFields')) {
 						// $object->initiateCustomFields();
 					}
-					if ($column->_keyname == 'checked') {
+					if ($column->getKeyName() == 'checked') {
 						$value = '<input type ="checkbox" name="selected_icms_persistableobjects[]" value="' . $object->id() . '" />';
-					} elseif ($column->_customMethodForValue && method_exists($object, $column->_customMethodForValue)) {
-						$method = $column->_customMethodForValue;
-						if ($column->_param) {
-							$value = $object->$method($column->_param);
+					} elseif ($column->getCustomMethodForValue() && method_exists($object, $column->getCustomMethodForValue())) {
+						$method = $column->getCustomMethodForValue();
+						if ($column->getParam()) {
+							$value = $object->$method($column->getParam());
 						} else {
 							$value = $object->$method();
 						}
@@ -751,7 +751,7 @@ class icms_ipf_view_Table {
 			$aColumn['align'] = $column->getAlign();
 			$aColumn['key'] = $column->getKeyName();
 
-			if ($column->_keyname == 'checked') {
+			if ($column->getKeyName() == 'checked') {
 				$aColumn['caption'] = '<input type ="checkbox" id="checkall_icmspersistableobjects" name="checkall_icmspersistableobjects"' . ' value="checkall_icmspersistableobjects" onclick="icms_checkall(window.document.form_' . $this->_id . ', \'selected_icmspersistableobjects\');" />';
 			} elseif ($column->getCustomCaption()) {
 				$aColumn['caption'] = $column->getCustomCaption();
@@ -768,7 +768,7 @@ class icms_ipf_view_Table {
 			} else {
 				$qs_param = '';
 			}
-			if (!$this->_enableColumnsSorting || $column->_keyname == 'checked' || !$column->_sortable) {
+			if (!$this->_enableColumnsSorting || $column->getKeyName() == 'checked' || !$column->isSortable()) {
 				$aColumn['caption'] = $aColumn['caption'];
 			} elseif ($getSort) {
 				$aColumn['caption'] = '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=' . $orderArray[$order]['neworder'] . $qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL . '/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';

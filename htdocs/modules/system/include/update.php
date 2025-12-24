@@ -40,6 +40,13 @@
  */
 icms_loadLanguageFile('core', 'databaseupdater');
 
+// this needs to be the latest db version - and the constant must start with the module's dirname
+if (is_object(icms::$module)) {
+	define('SYSTEM_DB_VERSION', icms::$module->getDBVersion());
+} else {
+	define('SYSTEM_DB_VERSION', 48);
+}
+
 /**
  * Automatic update of the system module
  *
@@ -102,12 +109,13 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	/* check for previous release's upgrades - dbversion < this major release's initial version */
 	if ($dbVersion < 46) include 'update-14.php';
-	
+
 	/* Begin automatic upgrades available with IPF-compliant objects
 	 * This can be done before any specific upgrade tasks are started
 	 */
 	$icmsDatabaseUpdater->automaticUpgrade('icms_data', array('file', 'urllink'));
-
+	$icmsDatabaseUpdater->moduleUpgrade($module);
+	
 	/* Begin upgrade to version 2.0.0 beta 1 */
 	if (!$abortUpdate) $newDbVersion = 47;
 	try {
@@ -182,17 +190,17 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	/* Begin upgrade to version 2.0.0 beta 2 */
 	if (!$abortUpdate) $newDbVersion = 48;
-		try {
-			/* things specific to this release */
-			if ($dbVersion < $newDbVersion) {
-				// remove old banners tables
-				$tablestodrop = ['banner', 'bannerclient', 'bannerfinish'];
-				foreach ($tablestodrop as $table) {
-					$tableObj = new icms_db_legacy_updater_Table($table);
-					if ($tableObj->exists()) {
-						$tableObj->dropTable();
-					}
+	try {
+		/* things specific to this release */
+		if ($dbVersion < $newDbVersion) {
+			// remove old banners tables
+			$tablestodrop = ['banner', 'bannerclient', 'bannerfinish'];
+			foreach ($tablestodrop as $table) {
+				$tableObj = new icms_db_legacy_updater_Table($table);
+				if ($tableObj->exists()) {
+					$tableObj->dropTable();
 				}
+			}
 
 			// remove unused config itmes
 			$itemstoremove = ['banners', 'auth_openid'];
@@ -226,7 +234,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				$filetoremove = ICMS_ROOT_PATH . '/content.php';
 				icms_core_Filesystem::deleteFile($filetoremove);
 			}
-        
 			/* Finish up this portion of the db update */
 			if (!$abortUpdate) {
 				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');

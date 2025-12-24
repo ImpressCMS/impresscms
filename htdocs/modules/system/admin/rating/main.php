@@ -50,8 +50,9 @@ function editrating($showmenu = FALSE, $ratingid = 0) {
 	}
 }
 icms_loadLanguageFile('system', 'common');
+global $icmsAdminTpl, $icms_rating_handler;
 
-$icms_rating_handler = icms_getmodulehandler('rating');
+$icms_rating_handler = icms_getModuleHandler('rating');
 
 /*
  * GET variables
@@ -105,13 +106,14 @@ switch ($op) {
 	 * break;
 	 */
 	case "del":
+		global $icms_rating_handler;
 		$controller = new icms_ipf_Controller($icms_rating_handler);
 		$controller->handleObjectDeletion();
 
 		break;
 
 	default:
-
+		global $icmsAdminTpl, $icms_rating_handler;
 		icms_cp_header();
 
 		$objectTable = new icms_ipf_view_Table($icms_rating_handler, false, array('delete'));
