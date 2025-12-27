@@ -56,7 +56,7 @@ abstract class icms_db_Factory {
 	 * @copyright	The ImpressCMS Project <http://www.impresscms.org>
 	 * @var 		icms_db_IConnection
 	 */
-	static protected $pdoInstance = FALSE;
+	static protected $pdoInstance = false;
 
 	/**
 	 * Legacy database adapter - it can represent a legacy database connection or a PDO connection.
@@ -64,7 +64,7 @@ abstract class icms_db_Factory {
 	 *
 	 * @var icms_db_legacy_Database
 	 */
-	static protected $xoopsInstance = FALSE;
+	static protected $xoopsInstance = false;
 
 	/**
 	 * Instanciate the PDO compatible DB adapter (if appropriate).
@@ -74,13 +74,13 @@ abstract class icms_db_Factory {
 	 * @throws RuntimeException
 	 */
 	public static function pdoInstance() {
-		if (self::$pdoInstance !== FALSE) {
+		if (self::$pdoInstance !== false) {
 			return self::$pdoInstance;
 		}
 		if (strpos(XOOPS_DB_TYPE, 'pdo.') !== 0) {
-			return self::$pdoInstance = NULL;
+			return self::$pdoInstance = null;
 		}
-		if (!class_exists('PDO', FALSE)) {
+		if (!class_exists('PDO', false)) {
 			throw new RuntimeException("PDO extension not available.");
 		}
 
@@ -97,7 +97,7 @@ abstract class icms_db_Factory {
 
 		/* this is an array of attributes to pass to the connection before it is established */
 		$options = array(
-				PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT, // default is ERRMODE_SILENT (returns error code, only)
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING, // default is ERRMODE_SILENT (returns error code, only)
 		);
 
 		/* Note: from PHP PDO connections documentation - http://www.php.net/manual/en/pdo.connections.php
@@ -117,9 +117,9 @@ abstract class icms_db_Factory {
 		* Please see this bug report for more information: https://bugs.php.net/bug.php?id=63176
 		*/
 		if (XOOPS_DB_PCONNECT == 1) {
-			$options[PDO::ATTR_PERSISTENT] = TRUE;
+			$options[PDO::ATTR_PERSISTENT] = true;
 		} else {
-			$options[PDO::ATTR_PERSISTENT] = FALSE;
+			$options[PDO::ATTR_PERSISTENT] = false;
 		}
 		$driver = substr(XOOPS_DB_TYPE, 4);
 		$dsn = $driver . ':' . ICMS_DB_DSN;
@@ -142,10 +142,10 @@ abstract class icms_db_Factory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	public static function instance() {
-		if (self::$xoopsInstance !== FALSE) return self::$xoopsInstance;
-		$allowWebChanges = defined('XOOPS_DB_PROXY') ? FALSE : TRUE;
+		if (self::$xoopsInstance !== false) return self::$xoopsInstance;
+		$allowWebChanges = defined('XOOPS_DB_PROXY') ? false : true;
 		if (strpos(XOOPS_DB_TYPE, 'pdo.') === 0) {
-			if (FALSE === self::$pdoInstance) self::pdoInstance();
+			if (false === self::$pdoInstance) self::pdoInstance();
 			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
 		} else {
 			if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
