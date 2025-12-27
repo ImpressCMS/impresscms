@@ -116,7 +116,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 				$this->rowCount = false; // added by claudia, ImpressCMS.org
 			} // added by claudia, ImpressCMS.org
 		} catch (PDOException $e) {
-			$this->logger->addQuery($query, $this->error(), $this->errno());
+			$this->logger->addQuery($sql, $this->error(), $this->errno());
 			return false;
 		}
 			
