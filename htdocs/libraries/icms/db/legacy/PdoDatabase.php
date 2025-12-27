@@ -290,4 +290,13 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 			$connection = $this->pdo;
 		return $connection->getAttribute(PDO::ATTR_SERVER_VERSION);
 	}
+	
+	/**
+	 * Enabling prepared statements
+	 *
+	 * @return PDOStatement|false
+	 */
+	public function prepare(string $query, array $options = []) {
+		return $this->pdo->prepare($query, $options);
+	}
 }
