@@ -116,9 +116,8 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 				$this->rowCount = false; // added by claudia, ImpressCMS.org
 			} // added by claudia, ImpressCMS.org
 		} catch (PDOException $e) {
-			$error = $e->errorInfo();
-			trigger_error("Error occurred: $error[0], $error[1], $error[2]");
-			return $result;
+			$this->logger->addQuery($query, $this->error(), $this->errno());
+			return false;
 		}
 			
 		return $result;
@@ -310,8 +309,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		try {
 			return $this->pdo->prepare($query, $options);
 		} catch (PDOException $e) {
-			$error = $e->errorInfo();
-			trigger_error("Error occurred: $error[0], $error[1], $error[2]");
+			$this->logger->addQuery($query, $this->error(), $this->errno());
 			return false;
 		}
 		
