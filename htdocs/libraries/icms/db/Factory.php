@@ -56,7 +56,7 @@ abstract class icms_db_Factory {
 	 * @copyright	The ImpressCMS Project <http://www.impresscms.org>
 	 * @var 		icms_db_IConnection
 	 */
-	static protected $pdoInstance = false;
+	protected static $pdoInstance = false;
 
 	/**
 	 * Legacy database adapter - it can represent a legacy database connection or a PDO connection.
@@ -64,7 +64,7 @@ abstract class icms_db_Factory {
 	 *
 	 * @var icms_db_legacy_Database
 	 */
-	static protected $xoopsInstance = false;
+	protected static $xoopsInstance = false;
 
 	/**
 	 * Instanciate the PDO compatible DB adapter (if appropriate).
@@ -142,10 +142,14 @@ abstract class icms_db_Factory {
 	 * @return      object  Reference to the only instance of database class
 	 */
 	public static function instance() {
-		if (self::$xoopsInstance !== false) return self::$xoopsInstance;
+		if (self::$xoopsInstance !== false) {
+			return self::$xoopsInstance;
+		}
 		$allowWebChanges = defined('XOOPS_DB_PROXY') ? false : true;
 		if (strpos(XOOPS_DB_TYPE, 'pdo.') === 0) {
-			if (false === self::$pdoInstance) self::pdoInstance();
+			if (false === self::$pdoInstance) {
+				self::pdoInstance();
+			}
 			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
 		} else {
 			if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
