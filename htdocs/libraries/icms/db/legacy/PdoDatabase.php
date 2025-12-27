@@ -298,6 +298,11 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 * @return PDOStatement|false
 	 */
 	public function prepare(string $query, array $options = []) {
+		// it's still a good idea to check for malicious SQL
+		if (false === icms_db_legacy_mysql_Utility::checkSQL($sql)) {
+			return $result;
+		}
+		
 		return $this->pdo->prepare($query, $options);
 	}
 }
