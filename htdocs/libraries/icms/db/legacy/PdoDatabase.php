@@ -115,8 +115,12 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 			} else { // added by claudia, ImpressCMS.org
 				$this->rowCount = false; // added by claudia, ImpressCMS.org
 			} // added by claudia, ImpressCMS.org
-		} catch (Exception $e) {
+		} catch (PDOException $e) {
+			$error = $e->errorInfo();
+			trigger_error("Error occurred: $error[0], $error[1], $error[2]");
+			return $result;
 		}
+			
 		return $result;
 	}
 
@@ -303,6 +307,13 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 			return false;
 		}
 		
-		return $this->pdo->prepare($query, $options);
+		try {
+			return $this->pdo->prepare($query, $options);
+		} catch (PDOException $e) {
+			$error = $e->errorInfo();
+			trigger_error("Error occurred: $error[0], $error[1], $error[2]");
+			return false;
+		}
+		
 	}
 }

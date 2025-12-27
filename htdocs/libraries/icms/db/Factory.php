@@ -97,7 +97,7 @@ abstract class icms_db_Factory {
 
 		/* this is an array of attributes to pass to the connection before it is established */
 		$options = array(
-				PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING, // default is ERRMODE_SILENT (returns error code, only)
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // as of PHP 8.0.0,  the default is ERRMODE_EXCEPTION
 		);
 
 		/* Note: from PHP PDO connections documentation - http://www.php.net/manual/en/pdo.connections.php
