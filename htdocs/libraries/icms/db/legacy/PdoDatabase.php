@@ -44,35 +44,35 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 */
 	protected $rowCount = 0;
 
-	public function __construct(object $connection,  bool $allowWebChanges = false) {
+	public function __construct($connection,  $allowWebChanges = false) {
 		parent::__construct($connection, $allowWebChanges);
 		$this->pdo = $connection;
 		$this->conn = & $this->pdo; // only for legacy support
 	}
 
-	public function connect(bool $selectdb = true) : bool {
+	public function connect($selectdb = true) {
 		return true;
 	}
 
-	public function close() : bool {
+	public function close() {
 		$this->pdo = null;
 		return true;
 	}
 
-	public function quoteString(string $string) : string|false {
+	public function quoteString($string) {
 		return $this->pdo->quote($string);
 	}
 
-	public function quote(string $string) : string|false {
+	public function quote($string) {
 		return $this->pdo->quote($string);
 	}
 
 	// Using a method that will be supported in PDO
-	public function escape(string $string) : string|false {
+	public function escape(string $string){
 		return $this->pdo->quote($string);
 	}
 
-	public function error() : string {
+	public function error() {
 		$error = $this->pdo->errorInfo();
 		return $error [2];
 	}
@@ -82,11 +82,11 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		return $error [1];
 	}
 
-	public function genId($sequence) : int {
+	public function genId($sequence) {
 		return 0; // will use auto_increment
 	}
 
-	public function query(string $sql, int $limit = 0, int $start = 0) : PDOStatement|false {
+	public function query($sql, $limit = 0, $start = 0) {
 		if (! $this->allowWebChanges && strtolower(substr(trim($sql), 0, 6)) != 'select') {
 			trigger_error(_CORE_DB_NOTALLOWEDINGET, E_USER_WARNING);
 			return false;
@@ -94,7 +94,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		return $this->queryF($sql, $limit, $start);
 	}
 
-	public function queryF(string $sql, int $limit = 0, int $start = 0) : PDOStatement|false {
+	public function queryF($sql, $limit = 0, $start = 0) {
 		$result = false;
 		/* Use Protector's db layer protection against possible SQLi
 		 * This needs to be done for legacy queries, since PDO only offers
@@ -124,15 +124,15 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		return $result;
 	}
 
-	public function getInsertId(?string $name = null) : string|false {
+	public function getInsertId($name = null) {
 		return $this->pdo->lastInsertId();
 	}
 
-	public function getAffectedRows() : int {
+	public function getAffectedRows() {
 		return $this->rowCount;
 	}
 
-	public function getFieldName($result, int $offset) {
+	public function getFieldName($result, $offset) {
 		if ($result) {
 			$column = $result->getColumnMeta($offset);
 			return $column['name'];
@@ -141,7 +141,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function getFieldType($result, int $offset) {
+	public function getFieldType($result, $offset) {
 		if ($result) {
 			$column = $result->getColumnMeta($offset);
 			return $column['mysql:decl_type'];
@@ -150,7 +150,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function getFieldsNum($result) : int {
+	public function getFieldsNum($result) {
 		if ($result) {
 			return $result->columnCount();
 		} else {
@@ -158,7 +158,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function fetchRow($result) : mixed {
+	public function fetchRow($result) {
 		if ($result) {
 			return $result->fetch(PDO::FETCH_NUM);
 		} else {
@@ -166,7 +166,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function fetchArray($result) : mixed {
+	public function fetchArray($result) {
 		if ($result) {
 			return $result->fetch(PDO::FETCH_ASSOC);
 		} else {
@@ -174,7 +174,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function fetchBoth($result) : mixed {
+	public function fetchBoth($result) {
 		if ($result) {
 			return $result->fetch(PDO::FETCH_BOTH);
 		} else {
@@ -182,7 +182,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function getRowsNum($result) : int {
+	public function getRowsNum($result) {
 		if ($result) {
 			return $result->rowCount();
 		} else {
@@ -190,7 +190,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function freeRecordSet($result) : bool {
+	public function freeRecordSet($result) {
 		if ($result) {
 			$result->closeCursor();
 			return true;
@@ -260,7 +260,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 *
 	 * @return bool FALSE if failed reading SQL file or TRUE if the file has been read and queries executed
 	 */
-	public function queryFromFile(string $file) : bool {
+	public function queryFromFile($file) {
 		if (false !== ($fp = fopen($file, 'r'))) {
 			
 			$sql_queries = trim(fread($fp, filesize($file)));
@@ -289,7 +289,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 *        	MySQL database connection link
 	 * @return mixed
 	 */
-	public function getServerVersion($connection = null) : mixed {
+ 	public function getServerVersion($connection = null) {
 		if (null === $connection) {
 			$connection = $this->pdo;
 		}
@@ -301,7 +301,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 *
 	 * @return PDOStatement|false
 	 */
-	public function prepare(string $query, array $options = []) : PDOStatement|false {
+	public function prepare(string $query, array $options = []) {
 		// it's still a good idea to check for malicious SQL
 		if (false === icms_db_legacy_mysql_Utility::checkSQL($query)) {
 			return false;
