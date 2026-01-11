@@ -4,13 +4,29 @@
 	"type": "project",
 	"keywords": ["cms", "content-management", "php", "mysql", "web"],
 	"homepage": "https://www.impresscms.org/",
-	"license": "GPL-2.0-or-later",
+	"license": "GPL-2.0",
 	"authors": [
 		{
-			"name": "The ImpressCMS Project",
-			"homepage": "https://www.impresscms.org/",
+			"name": "Marc-André Lanciault",
+			"homepage": "https://www.impresscms.org/userinfo.php?uid=168",
+			"role": "Developer"
+		},
+		{
+			"name": "Steve Kenow",
+			"homepage": "https://www.impresscms.org/userinfo.php?uid=54",
+			"role": "Developer"
+		},
+		{
+			"name": "David Janssens",
+			"homepage": "https://www.impresscms.org/userinfo.php?uid=1102",
+			"role": "Developer"
+		},
+		{
+			"name": "Raimondas Rimkevičius",
+			"homepage": "https://www.impresscms.org/userinfo.php?uid=489",
 			"role": "Developer"
 		}
+
 	],
 	"require": {
 		"php": ">=7.4.0",
@@ -29,8 +45,7 @@
 		"smottt/wideimage": "^1.1"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^9.0",
-		"squizlabs/php_codesniffer": "^3.0"
+
 	},
 	"autoload": {
 		"psr-4": {
@@ -42,11 +57,6 @@
 		"classmap": [
 			"libraries/icms.php"
 		]
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Icms\\Tests\\": "../tests/"
-		}
 	},
 	"config": {
 		"optimize-autoloader": true,
@@ -60,26 +70,7 @@
 		"vendor-dir": "vendor"
 	},
 	"scripts": {
-		"test": "phpunit",
-		"cs-check": "phpcs --standard=PSR12 libraries/icms/",
-		"cs-fix": "phpcbf --standard=PSR12 libraries/icms/",
-		"optimize-production": [
-			"composer dump-autoload --optimize --classmap-authoritative --apcu",
-			"@php -r \"echo 'Production autoloader optimized for ImpressCMS\\n';\""
-		],
-		"optimize-development": [
-			"composer dump-autoload --optimize",
-			"@php -r \"echo 'Development autoloader optimized for ImpressCMS\\n';\""
-		],
-		"post-autoload-dump": [
-			"@php -r \"echo 'Autoloader optimized for ImpressCMS\\n';\""
-		]
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "2.0.x-dev"
-		}
-	},
+
 	"minimum-stability": "stable",
 	"prefer-stable": true
 }
