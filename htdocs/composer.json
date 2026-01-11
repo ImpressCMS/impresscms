@@ -23,7 +23,7 @@
 		"ext-session": "*",
 		"ext-xml": "*",
 		"ext-zlib": "*",
-		"composer/composer": "2.8.12",
+		"composer/composer": "^2.8",
 		"ezyang/htmlpurifier": "^4.19",
 		"simplepie/simplepie": "^1.9",
 		"smottt/wideimage": "^1.1"
