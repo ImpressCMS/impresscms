@@ -15,7 +15,7 @@
 
 
 
-# ImpressCMS 2.0.2
+# ImpressCMS 2
 ImpressCMS is a community developed Content Management System build on PHP and MySQL with a focus on speed, support for multiple languages and security
 
 This tool makes maintaining a website as easy as writing a word document.
@@ -75,9 +75,9 @@ Also, help could be found on [our official forums](https://www.impresscms.org/mo
 ### Code contribution
 Open an [issue](https://github.com/ImpressCMS/impresscms/issues/new) or send us a [pull request](https://github.com/ImpressCMS/impresscms/pulls). If you plan on working on more than just a simple bugfix, discuss your plans first on the forums.
 
-All active development branches are named in format `MAJOR.MINOR.x`. So if you want to fix or add something new, you should branch from most similar looking branch.
+Active development is done in the 'main' branch. If you want to make contributions in a specific branche, those branches are named in format `MAJOR.MINOR.x`. So if you want to fix or add something new, you should probably create a PR for the main branch..
 
-E.g.: if you want to do with latest **2.0** code, you need to branch from `2.0.x` branch.
+E.g.: if you want to do with latest **2.1** code, you need to branch from `main` branch. If you want to make additions to the 1.4 branch, you should look for the `1.4.x` branch on Github.
 
 If you not sure how can be possible to work with Git or/and GitHub, try [interactive GitHub tutorial](https://skills.github.com).
 ### Translation
