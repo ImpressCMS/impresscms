@@ -1,24 +1,26 @@
 <?php
 
-class IcmsInstallWizard {
-	public array $pages = array();
-	public array $pagesNames = array();
-	public array $pagesTitles = array();
-	public array $titles = array();
+class IcmsInstallWizard
+{
+	public array $pages = [];
+	public array $pagesNames = [];
+	public array $pagesTitles = [];
+	public array $titles = [];
 	public int $currentPage = 0;
 	public string $currentPageName;
 	public string $lastpage;
-	public string $secondlastpage = '';
-	public string $language = 'english';
+	public string $secondlastpage = "";
+	public string $language = "english";
 	public bool $no_php5 = false;
 	public bool $safe_mode = false;
 
-	public function xoInit(): bool {
+	public function xoInit(): bool
+	{
 		if (!$this->checkAccess()) {
 			return false;
 		}
-		if (@empty($_SERVER['REQUEST_URI'])) {
-			$_SERVER['REQUEST_URI'] = htmlentities($_SERVER['PHP_SELF']);
+		if (@empty($_SERVER["REQUEST_URI"])) {
+			$_SERVER["REQUEST_URI"] = htmlentities($_SERVER["PHP_SELF"]);
 		}
 
 		if (PHP_VERSION_ID < 70400) {
@@ -31,28 +33,32 @@ class IcmsInstallWizard {
 		 */
 
 		// Load the main language file
-		$this->initLanguage(!@empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
+		$this->initLanguage(
+			!@empty($_COOKIE["xo_install_lang"])
+				? $_COOKIE["xo_install_lang"]
+				: "english",
+		);
 		// Setup pages
 		if ($this->no_php5) {
-			$this->pages[] = 'no_php5';
+			$this->pages[] = "no_php5";
 		} /*
 		 * elseif ($this->safe_mode) {
 		 * $this->pages[]= 'safe_mode';
 		 * }
-		 */
-		else {
-			$this->pages[] = 'langselect';
-			$this->pages[] = 'start';
-			$this->pages[] = 'modcheck';
-			$this->pages[] = 'pathsettings';
-			$this->pages[] = 'dbconnection';
-			$this->pages[] = 'dbsettings';
-			$this->pages[] = 'configsave';
-			$this->pages[] = 'tablescreate';
-			$this->pages[] = 'siteinit';
-			$this->pages[] = 'tablesfill';
-			$this->pages[] = 'modulesinstall';
-			$this->pages[] = 'end';
+		 */ else {
+			$this->pages[] = "langselect";
+			$this->pages[] = "start";
+			$this->pages[] = "modcheck";
+			$this->pages[] = "pathsettings";
+			$this->pages[] = "movevendor";
+			$this->pages[] = "dbconnection";
+			$this->pages[] = "dbsettings";
+			$this->pages[] = "configsave";
+			$this->pages[] = "tablescreate";
+			$this->pages[] = "siteinit";
+			$this->pages[] = "tablesfill";
+			$this->pages[] = "modulesinstall";
+			$this->pages[] = "end";
 		}
 
 		$this->lastpage = end($this->pages);
@@ -66,6 +72,7 @@ class IcmsInstallWizard {
 			$this->pagesNames[] = INTRODUCTION;
 			$this->pagesNames[] = CONFIGURATION_CHECK;
 			$this->pagesNames[] = PATHS_SETTINGS;
+			$this->pagesNames[] = MOVE_VENDOR;
 			$this->pagesNames[] = DATABASE_CONNECTION;
 			$this->pagesNames[] = DATABASE_CONFIG;
 			$this->pagesNames[] = CONFIG_SAVE;
@@ -85,6 +92,7 @@ class IcmsInstallWizard {
 			$this->pagesTitles[] = INTRODUCTION_TITLE;
 			$this->pagesTitles[] = CONFIGURATION_CHECK_TITLE;
 			$this->pagesTitles[] = PATHS_SETTINGS_TITLE;
+			$this->pagesTitles[] = MOVE_VENDOR_TITLE;
 			$this->pagesTitles[] = DATABASE_CONNECTION_TITLE;
 			$this->pagesTitles[] = DATABASE_CONFIG_TITLE;
 			$this->pagesTitles[] = CONFIG_SAVE_TITLE;
@@ -102,29 +110,31 @@ class IcmsInstallWizard {
 		return true;
 	}
 
-	public function checkAccess(): bool {
+	public function checkAccess(): bool
+	{
 		if (INSTALL_USER && INSTALL_PASSWORD) {
-			if (!isset($_SERVER['PHP_AUTH_USER'])) {
+			if (!isset($_SERVER["PHP_AUTH_USER"])) {
 				header('WWW-Authenticate: Basic realm="ImpressCMS Installer"');
-				header('HTTP/1.0 401 Unauthorized');
-				echo 'You can not access this ImpressCMS installer.';
+				header("HTTP/1.0 401 Unauthorized");
+				echo "You can not access this ImpressCMS installer.";
 				return false;
 			}
-			if (INSTALL_USER && $_SERVER['PHP_AUTH_USER'] !== INSTALL_USER) {
-				header('HTTP/1.0 401 Unauthorized');
-				echo 'You can not access this ImpressCMS installer.';
+			if (INSTALL_USER && $_SERVER["PHP_AUTH_USER"] !== INSTALL_USER) {
+				header("HTTP/1.0 401 Unauthorized");
+				echo "You can not access this ImpressCMS installer.";
 				return false;
 			}
-			if (INSTALL_PASSWD !== $_SERVER['PHP_AUTH_PW']) {
-				header('HTTP/1.0 401 Unauthorized');
-				echo 'You can not access this ImpressCMS installer.';
+			if (INSTALL_PASSWD !== $_SERVER["PHP_AUTH_PW"]) {
+				header("HTTP/1.0 401 Unauthorized");
+				echo "You can not access this ImpressCMS installer.";
 				return false;
 			}
 		}
 		return true;
 	}
 
-	public function loadLangFile($file) {
+	public function loadLangFile($file)
+	{
 		if (file_exists("./language/$this->language/$file.php")) {
 			include_once "./language/$this->language/$file.php";
 		} else {
@@ -132,35 +142,39 @@ class IcmsInstallWizard {
 		}
 	}
 
-	public function initLanguage($language) {
-		$language = preg_replace('/[^A-Za-z]+/', '', $language);
+	public function initLanguage($language)
+	{
+		$language = preg_replace("/[^A-Za-z]+/", "", $language);
 		if (!file_exists("./language/$language/install.php")) {
-			$language = 'english';
+			$language = "english";
 		}
 		$this->language = $language;
-		$this->loadLangFile('install');
+		$this->loadLangFile("install");
 	}
 
-	public function setPage($page): string {
+	public function setPage($page): string
+	{
 		/**
 		 * If server is PHP 4, display the php4 page and stop the install
 		 */
-		if ($this->no_php5 && $page != 'no_php5') {
-			header('location:page_no_php5.php');
+		if ($this->no_php5 && $page != "no_php5") {
+			header("location:page_no_php5.php");
 			exit();
 		}
 		/**
 		 * If server is in Safe Mode, display the safe_mode page and stop the install
 		 */
-		if ($this->safe_mode && $page !== 'safe_mode') {
-			header('location:page_safe_mode.php');
+		if ($this->safe_mode && $page !== "safe_mode") {
+			header("location:page_safe_mode.php");
 			exit();
 		}
 
 		if ((int) $page && $page >= 0 && $page < count($this->pages)) {
 			$this->currentPageName = $this->pages[$page];
 			$this->currentPage = $page;
-		} elseif (false !== ($index = array_search($page, $this->pages, false))) {
+		} elseif (
+			false !== ($index = array_search($page, $this->pages, false))
+		) {
 			$this->currentPageName = $page;
 			$this->currentPage = $index;
 		} else {
@@ -169,19 +183,24 @@ class IcmsInstallWizard {
 		return $this->currentPage;
 	}
 
-	public function baseLocation(): string {
-		$proto = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on')) ? 'https' : 'http';
-		$host = htmlentities($_SERVER['HTTP_HOST']);
-		$server_php_self = htmlentities($_SERVER['PHP_SELF']);
-		$base = substr($server_php_self, 0, strrpos($server_php_self, '/'));
+	public function baseLocation(): string
+	{
+		$proto =
+			isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === "on"
+				? "https"
+				: "http";
+		$host = htmlentities($_SERVER["HTTP_HOST"]);
+		$server_php_self = htmlentities($_SERVER["PHP_SELF"]);
+		$base = substr($server_php_self, 0, strrpos($server_php_self, "/"));
 		return "$proto://$host$base";
 	}
 
-	public function pageURI($page): string {
+	public function pageURI($page): string
+	{
 		if (!(int) $page[0]) {
-			if ($page[0] === '+') {
+			if ($page[0] === "+") {
 				$page = $this->currentPage + substr($page, 1);
-			} elseif ($page[0] === '-') {
+			} elseif ($page[0] === "-") {
 				$page = $this->currentPage - substr($page, 1);
 			} else {
 				$page = (int) array_search($page, $this->pages, false);
@@ -191,9 +210,12 @@ class IcmsInstallWizard {
 		return $this->baseLocation() . "/page_$page.php";
 	}
 
-	public function redirectToPage($page, $status = 303, $message = 'See other') {
+	public function redirectToPage($page, $status = 303, $message = "See other")
+	{
 		$location = $this->pageURI($page);
-		$proto = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
+		$proto = !@empty($_SERVER["SERVER_PROTOCOL"])
+			? $_SERVER["SERVER_PROTOCOL"]
+			: "HTTP/1.1";
 		header("$proto $status $message");
 		// header( "Status: $status $message" );
 		header("Location: $location");

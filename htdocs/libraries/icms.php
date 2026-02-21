@@ -24,98 +24,111 @@
  * @subpackage	icms
  * @since 		1.3
  */
-abstract class icms {
+abstract class icms
+{
 	/**
 	 * Preload handler
 	 * @var icms_preload_Handler
 	 */
-	static public $preload;
+	public static $preload;
 	/**
 	 * Security service
 	 * @var icms_core_Security
 	 */
-	static public $security;
+	public static $security;
 	/**
 	 * Logger
 	 * @var icms_core_Logger
 	 */
-	static public $logger;
+	public static $logger;
 	/**
 	 * Database connection
 	 * @var icms_db_IConnection
 	 */
-	static public $db;
+	public static $db;
 	/**
 	 * Legacy database connection
 	 * @var icms_db_legacy_Database
 	 */
-	static public $xoopsDB;
+	public static $xoopsDB;
 	/**
 	 * Configuration service
 	 * @var icms_config_Handler
 	 */
-	static public $config;
+	public static $config;
 	/**
 	 * Session service
 	 * @var icms_core_Session
 	 */
-	static public $session;
+	public static $session;
 	/**
 	 * Current user
 	 * @var icms_member_user_Object
 	 */
-	static public $user;
+	public static $user;
 	/**
 	 * Current module / application
 	 * @var icms_module_Object
 	 */
-	static public $module;
+	public static $module;
 	/**
 	 * Registered services definition
 	 * @var array
 	 */
-	static public $services = array(
-		'boot' => array(
-			'security'	=> array(array('icms_core_Security', 'service'), array()),
-			'logger'	=> array(array('icms_core_Logger', 'instance'), array()),
-			'db'		=> array(array('icms_db_Factory', 'pdoInstance'), array()),
-			'xoopsDB'	=> array(array('icms_db_Factory', 'instance'), array()),
-			'config'	=> array(array('icms_config_Handler', 'service'), array()),
-			'session'	=> array(array('icms_core_Session', 'service'), array()),
-		),
-		'optional' => array(),
-	);
+	public static $services = [
+		"boot" => [
+			"security" => [["icms_core_Security", "service"], []],
+			"logger" => [["icms_core_Logger", "instance"], []],
+			"db" => [["icms_db_Factory", "pdoInstance"], []],
+			"xoopsDB" => [["icms_db_Factory", "instance"], []],
+			"config" => [["icms_config_Handler", "service"], []],
+			"session" => [["icms_core_Session", "service"], []],
+		],
+		"optional" => [],
+	];
 
 	/**
 	 * ImpressCMS paths locations
 	 *
 	 * @var array
 	 */
-	static public $paths = array(
-		'www' => array(), 'modules' => array(), 'themes' => array(),
-	);
+	public static $paths = [
+		"www" => [],
+		"modules" => [],
+		"themes" => [],
+	];
 
 	/** @var array */
-	static public $urls = FALSE;
+	public static $urls = false;
 
 	/**
 	 * array of handlers
 	 * @var array
 	 */
-	static protected $handlers;
+	protected static $handlers;
 
 	/**
 	 * Initialize ImpressCMS before bootstrap
 	 */
-	static public function setup() {
-		self::$paths['www']		= array(ICMS_ROOT_PATH, ICMS_URL);
-		self::$paths['modules']	= array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
-		self::$paths['themes']	= array(ICMS_THEME_PATH, ICMS_THEME_URL);
+	public static function setup()
+	{
+		self::$paths["www"] = [ICMS_ROOT_PATH, ICMS_URL];
+		self::$paths["modules"] = [
+			ICMS_ROOT_PATH . "/modules",
+			ICMS_URL . "/modules",
+		];
+		self::$paths["themes"] = [ICMS_THEME_PATH, ICMS_THEME_URL];
 
-		// Use Composer's autoloader instead of custom autoloader
-		require_once ICMS_ROOT_PATH . '/vendor/autoload.php';
+		// Use Composer's autoloader - prefer trust path location for security.
+		// After installation the vendor directory lives in ICMS_TRUST_PATH (outside
+		// the web root).  Fall back to ICMS_ROOT_PATH for pre-install or legacy setups.
+		$_icms_autoload = file_exists(ICMS_TRUST_PATH . "/vendor/autoload.php")
+			? ICMS_TRUST_PATH . "/vendor/autoload.php"
+			: ICMS_ROOT_PATH . "/vendor/autoload.php";
+		require_once $_icms_autoload;
+		unset($_icms_autoload);
 
-		register_shutdown_function(array(__CLASS__, 'shutdown'));
+		register_shutdown_function([__CLASS__, "shutdown"]);
 		self::buildRelevantUrls();
 	}
 
@@ -123,13 +136,14 @@ abstract class icms {
 	 * Launch bootstrap and instanciate global services
 	 * @return void
 	 */
-	static public function boot() {
+	public static function boot()
+	{
 		// We just hardcode the preload first, as we need to trigger an event
 		self::$preload = icms_preload_Handler::getInstance();
-		self::$preload->triggerEvent('startCoreBoot');
+		self::$preload->triggerEvent("startCoreBoot");
 
-		foreach (self::$services['boot'] as $name => $definition) {
-			list($factory, $args) = $definition;
+		foreach (self::$services["boot"] as $name => $definition) {
+			[$factory, $args] = $definition;
 			self::loadService($name, $factory, $args);
 		}
 		//Cant do this here until common.php 100% refactored
@@ -143,10 +157,17 @@ abstract class icms {
 	 * @param array $args
 	 * @return object
 	 */
-	static public function loadService($name, $factory, $args = array()) {
-			self::$$name = self::create($factory, $args);
-			icms_Event::trigger('icms', 'loadService', null, array('name' => $name, 'service' => self::$$name));
-			icms_Event::trigger('icms', 'loadService-' . $name, null, array('name' => $name, 'service' => self::$$name));
+	public static function loadService($name, $factory, $args = [])
+	{
+		self::$$name = self::create($factory, $args);
+		icms_Event::trigger("icms", "loadService", null, [
+			"name" => $name,
+			"service" => self::$$name,
+		]);
+		icms_Event::trigger("icms", "loadService-" . $name, null, [
+			"name" => $name,
+			"service" => self::$$name,
+		]);
 	}
 
 	/**
@@ -157,21 +178,31 @@ abstract class icms {
 	 * process so it's the best place to cache the modules.
 	 * IPF based modules are definied in their own namespace.
 	 */
-	static public function launchModule() {
+	public static function launchModule()
+	{
 		$module_handler = icms::handler("icms_module");
 		$modules = $module_handler->getObjects();
-		foreach ($modules as $module) $module->registerClassPath(TRUE);
+		foreach ($modules as $module) {
+			$module->registerClassPath(true);
+		}
 
-		$isAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
-		self::loadService('module', array('icms_module_Handler', 'service'), array($isAdmin));
+		$isAdmin = defined("ICMS_IN_ADMIN") && (int) ICMS_IN_ADMIN;
+		self::loadService(
+			"module",
+			["icms_module_Handler", "service"],
+			[$isAdmin],
+		);
 	}
 
 	/**
 	 * Finalizes all processes as the script exits
 	 */
-	static public function shutdown() {
+	public static function shutdown()
+	{
 		// Ensure the session service can write data before the DB connection is closed
-		if (session_id()) session_write_close();
+		if (session_id()) {
+			session_write_close();
+		}
 		// Ensure the logger can decorate output before objects are destroyed
 		while (@ob_end_flush());
 	}
@@ -186,8 +217,10 @@ abstract class icms {
 	 * @param array $args Factory/Constructor arguments
 	 * @return object
 	 */
-	static public function create($factory, $args = array()) {
-		if (is_string($factory) && substr($factory, 0, 1) == '\\') {	// Class name
+	public static function create($factory, $args = [])
+	{
+		if (is_string($factory) && substr($factory, 0, 1) == "\\") {
+			// Class name
 			$class = substr($factory, 1);
 			if (!isset($args)) {
 				$instance = new $class();
@@ -207,17 +240,20 @@ abstract class icms {
 	 * @param 	boolean	$virtual
 	 * @return 	string
 	 */
-	static public function path($url, $virtual = FALSE) {
-		$path = '';
-		@list($root, $path) = explode('/', $url, 2);
+	public static function path($url, $virtual = false)
+	{
+		$path = "";
+		@[$root, $path] = explode("/", $url, 2);
 		if (!isset(self::$paths[$root])) {
-			list($root, $path) = array('www', $url);
+			[$root, $path] = ["www", $url];
 		}
 		if (!$virtual) {
 			// Returns a physical path
-			return self::$paths[$root][0] . '/' . $path;
+			return self::$paths[$root][0] . "/" . $path;
 		}
-		return !isset(self::$paths[$root][1]) ? '' : (self::$paths[$root][1] . '/' . $path );
+		return !isset(self::$paths[$root][1])
+			? ""
+			: self::$paths[$root][1] . "/" . $path;
 	}
 
 	/**
@@ -225,9 +261,9 @@ abstract class icms {
 	 * @param string $url
 	 * @return 	string
 	 */
-	static public function url(string $url): string
+	public static function url(string $url): string
 	{
-		return (FALSE !== strpos($url, '://' ) ? $url : self::path($url, TRUE ));
+		return false !== strpos($url, "://") ? $url : self::path($url, true);
 	}
 
 	/**
@@ -236,21 +272,22 @@ abstract class icms {
 	 * @param 	array	$params
 	 * @return 	string
 	 */
-	static public function buildUrl($url, $params = array()) {
-		if ($url == '.') {
-			$url = $_SERVER['REQUEST_URI'];
+	public static function buildUrl($url, $params = [])
+	{
+		if ($url == ".") {
+			$url = $_SERVER["REQUEST_URI"];
 		}
-		$split = explode('?', $url);
+		$split = explode("?", $url);
 		if (count($split) > 1) {
-			list($url, $query) = $split;
+			[$url, $query] = $split;
 			parse_str($query, $query);
 			$params = array_merge($query, $params);
 		}
 		if (!empty($params)) {
 			foreach ($params as $k => $v) {
-				$params[$k] = $k . '=' . rawurlencode($v);
+				$params[$k] = $k . "=" . rawurlencode($v);
 			}
-			$url .= '?' . implode('&', $params);
+			$url .= "?" . implode("&", $params);
 		}
 		return $url;
 	}
@@ -262,7 +299,8 @@ abstract class icms {
 	 * @param bool  $optional	Is the handler optional?
 	 * @return		object		$inst		The instance of the object that was created
 	 */
-	static public function &handler($name, $optional = FALSE ) {
+	public static function &handler($name, $optional = false)
+	{
 		if (!isset(self::$handlers[$name])) {
 			$class = $name . "Handler";
 			if (!class_exists($class)) {
@@ -271,24 +309,48 @@ abstract class icms {
 					// Try old style handler loading (should be removed later, in favor of the
 					// lookup table present in xoops_gethandler)
 					$lower = strtolower(trim($name));
-					if (file_exists($hnd_file = ICMS_ROOT_PATH.'/kernel/' . $lower . '.php')) {
+					if (
+						file_exists(
+							$hnd_file =
+								ICMS_ROOT_PATH . "/kernel/" . $lower . ".php",
+						)
+					) {
 						require_once $hnd_file;
-					} elseif (file_exists($hnd_file = ICMS_ROOT_PATH.'/class/' . $lower . '.php')) {
+					} elseif (
+						file_exists(
+							$hnd_file =
+								ICMS_ROOT_PATH . "/class/" . $lower . ".php",
+						)
+					) {
 						require_once $hnd_file;
 					}
-					if (!class_exists($class = 'Xoops' . ucfirst($lower) . 'Handler', FALSE)) {
-						if (!class_exists($class = 'Icms' . ucfirst($lower) . 'Handler', FALSE)) {
+					if (
+						!class_exists(
+							$class = "Xoops" . ucfirst($lower) . "Handler",
+							false,
+						)
+					) {
+						if (
+							!class_exists(
+								$class = "Icms" . ucfirst($lower) . "Handler",
+								false,
+							)
+						) {
 							// Not found at all
-							$class = FALSE;
+							$class = false;
 						}
 					}
 				}
 			}
-			self::$handlers[$name] = $class ? new $class(self::$xoopsDB) : FALSE;
+			self::$handlers[$name] = $class
+				? new $class(self::$xoopsDB)
+				: false;
 		}
 		if (!self::$handlers[$name] && !$optional) {
 			//trigger_error(sprintf("Handler <b>%s</b> does not exist", $name), E_USER_ERROR);
-			throw new RuntimeException(sprintf("Handler <b>%s</b> does not exist", $name));
+			throw new RuntimeException(
+				sprintf("Handler <b>%s</b> does not exist", $name),
+			);
 		}
 		return self::$handlers[$name];
 	}
@@ -297,40 +359,47 @@ abstract class icms {
 	 * Build URLs for global use throughout the application
 	 * @return 	array
 	 */
-	static protected function buildRelevantUrls() {
+	protected static function buildRelevantUrls()
+	{
 		if (!self::$urls) {
-			$http = strpos(ICMS_URL, "https://") === FALSE
-				? "http://"
-				: "https://";
+			$http =
+				strpos(ICMS_URL, "https://") === false ? "http://" : "https://";
 
 			/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */
-			$filters = array(
-					'SCRIPT_NAME' => 'str',
-					'HTTP_HOST' => 'str',
-					'QUERY_STRING' => 'str',
-					'HTTP_REFERER' => 'url',
+			$filters = [
+				"SCRIPT_NAME" => "str",
+				"HTTP_HOST" => "str",
+				"QUERY_STRING" => "str",
+				"HTTP_REFERER" => "url",
+			];
+
+			$clean_SERVER = icms_core_DataFilter::checkVarArray(
+				$_SERVER,
+				$filters,
+				false,
 			);
 
-			$clean_SERVER = icms_core_DataFilter::checkVarArray($_SERVER, $filters, false);
-
-			$phpself = $clean_SERVER['SCRIPT_NAME'];
-			$httphost = $clean_SERVER['HTTP_HOST'];
-			$querystring = $clean_SERVER['QUERY_STRING'];
-			if ($querystring != '' ) {
-				$querystring = '?' . $querystring;
+			$phpself = $clean_SERVER["SCRIPT_NAME"];
+			$httphost = $clean_SERVER["HTTP_HOST"];
+			$querystring = $clean_SERVER["QUERY_STRING"];
+			if ($querystring != "") {
+				$querystring = "?" . $querystring;
 			}
 			$currenturl = $http . $httphost . $phpself . $querystring;
-			self::$urls = array();
-			self::$urls['http'] = $http;
-			self::$urls['httphost'] = $httphost;
-			self::$urls['phpself'] = $phpself;
-			self::$urls['querystring'] = $querystring;
-			self::$urls['full_phpself'] = $http . $httphost . $phpself;
-			self::$urls['full'] = $currenturl;
+			self::$urls = [];
+			self::$urls["http"] = $http;
+			self::$urls["httphost"] = $httphost;
+			self::$urls["phpself"] = $phpself;
+			self::$urls["querystring"] = $querystring;
+			self::$urls["full_phpself"] = $http . $httphost . $phpself;
+			self::$urls["full"] = $currenturl;
 
-			$previouspage = '';
-			if (array_key_exists('HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER'])) {
-				self::$urls['previouspage'] = $clean_SERVER['HTTP_REFERER'];
+			$previouspage = "";
+			if (
+				array_key_exists("HTTP_REFERER", $_SERVER) &&
+				isset($_SERVER["HTTP_REFERER"])
+			) {
+				self::$urls["previouspage"] = $clean_SERVER["HTTP_REFERER"];
 			}
 			//self::$urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
 		}
