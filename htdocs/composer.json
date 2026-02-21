@@ -2,7 +2,13 @@
 	"name": "impresscms/impresscms",
 	"description": "ImpressCMS - A dynamic and user-friendly Content Management System",
 	"type": "project",
-	"keywords": ["cms", "content-management", "php", "mysql", "web"],
+	"keywords": [
+		"cms",
+		"content-management",
+		"php",
+		"mysql",
+		"web"
+	],
 	"homepage": "https://www.impresscms.org/",
 	"license": "GPL-2.0",
 	"authors": [
@@ -26,7 +32,6 @@
 			"homepage": "https://www.impresscms.org/userinfo.php?uid=489",
 			"role": "Developer"
 		}
-
 	],
 	"require": {
 		"php": ">=7.4.0",
@@ -44,9 +49,7 @@
 		"simplepie/simplepie": "^1.9",
 		"smottt/wideimage": "^1.1"
 	},
-	"require-dev": {
-
-	},
+	"require-dev": {},
 	"autoload": {
 		"psr-4": {
 			"Icms\\": "libraries/icms/"
@@ -69,8 +72,7 @@
 		"cache-dir": "var/cache/composer",
 		"vendor-dir": "vendor"
 	},
-	"scripts": {
-
+	"scripts": {},
 	"minimum-stability": "stable",
 	"prefer-stable": true
 }
