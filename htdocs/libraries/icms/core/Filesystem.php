@@ -560,7 +560,8 @@ class icms_core_Filesystem
 		$iterator = new RecursiveIteratorIterator(
 			new RecursiveDirectoryIterator(
 				$dirname,
-				RecursiveDirectoryIterator::SKIP_DOTS,
+				RecursiveDirectoryIterator::SKIP_DOTS |
+					RecursiveDirectoryIterator::FOLLOW_SYMLINKS,
 			),
 			RecursiveIteratorIterator::LEAVES_ONLY,
 		);
