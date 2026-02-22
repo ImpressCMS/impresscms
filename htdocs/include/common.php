@@ -50,9 +50,37 @@ $_icms_autoload_from_trustpath = false;
 if (file_exists(ICMS_TRUST_PATH . "/vendor/autoload.php")) {
 	$_icms_autoload = ICMS_TRUST_PATH . "/vendor/autoload.php";
 	$_icms_autoload_from_trustpath = true;
-} else {
+} elseif (file_exists(ICMS_ROOT_PATH . "/vendor/autoload.php")) {
 	$_icms_autoload = ICMS_ROOT_PATH . "/vendor/autoload.php";
+} else {
+	$_icms_autoload = null;
 }
+
+if ($_icms_autoload === null) {
+	die(
+		"<h1>ImpressCMS – Composer autoloader not found</h1>" .
+			"<p>The Composer autoloader (<code>vendor/autoload.php</code>) could not be located in any of the expected paths:</p>" .
+			"<ul>" .
+			"<li><code>" .
+			htmlspecialchars(
+				ICMS_TRUST_PATH . "/vendor/autoload.php",
+				ENT_QUOTES,
+				"UTF-8",
+			) .
+			"</code></li>" .
+			"<li><code>" .
+			htmlspecialchars(
+				ICMS_ROOT_PATH . "/vendor/autoload.php",
+				ENT_QUOTES,
+				"UTF-8",
+			) .
+			"</code></li>" .
+			"</ul>" .
+			"<p>To resolve this, run <code>composer install</code> inside the ImpressCMS root directory, " .
+			"or re-upload a complete ImpressCMS package that includes the <code>vendor/</code> directory.</p>"
+	);
+}
+
 require_once $_icms_autoload;
 unset($_icms_autoload);
 
