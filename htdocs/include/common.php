@@ -241,15 +241,21 @@ if ((int) $icmsConfig["closesite"] === 1) {
 
 icms::launchModule();
 
-if ($icmsConfigPersona["multi_login"]) {
+if (
+	isset($icmsConfigPersona["multi_login"]) &&
+	(int) $icmsConfigPersona["multi_login"] === 1
+) {
 	if (is_object(icms::$user)) {
 		$online_handler = icms::handler("icms_core_Online");
+		$remoteAddr = isset($_SERVER["REMOTE_ADDR"])
+			? $_SERVER["REMOTE_ADDR"]
+			: "";
 		$online_handler->write(
 			icms::$user->getVar("uid"),
 			icms::$user->getVar("uname"),
 			time(),
 			0,
-			$_SERVER["REMOTE_ADDR"],
+			$remoteAddr,
 		);
 	}
 }
