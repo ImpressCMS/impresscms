@@ -42,14 +42,116 @@ defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 // -- Include common functions and constants file
 require_once ICMS_ROOT_PATH . "/include/constants.php";
+
+// Load Composer autoloader - prefer trust path location for security.
+// After installation, the vendor directory lives in ICMS_TRUST_PATH (outside
+// the web root).  Fall back to ICMS_ROOT_PATH for pre-install or legacy setups.
+$_icms_autoload_from_trustpath = false;
+if (file_exists(ICMS_TRUST_PATH . "/vendor/autoload.php")) {
+	$_icms_autoload = ICMS_TRUST_PATH . "/vendor/autoload.php";
+	$_icms_autoload_from_trustpath = true;
+} elseif (file_exists(ICMS_ROOT_PATH . "/vendor/autoload.php")) {
+	$_icms_autoload = ICMS_ROOT_PATH . "/vendor/autoload.php";
+} else {
+	$_icms_autoload = null;
+}
+
+if ($_icms_autoload === null) {
+	die(
+		"<h1>ImpressCMS – Composer autoloader not found</h1>" .
+			"<p>The Composer autoloader (<code>vendor/autoload.php</code>) could not be located in any of the expected paths:</p>" .
+			"<ul>" .
+			"<li><code>" .
+			htmlspecialchars(
+				ICMS_TRUST_PATH . "/vendor/autoload.php",
+				ENT_QUOTES,
+				"UTF-8",
+			) .
+			"</code></li>" .
+			"<li><code>" .
+			htmlspecialchars(
+				ICMS_ROOT_PATH . "/vendor/autoload.php",
+				ENT_QUOTES,
+				"UTF-8",
+			) .
+			"</code></li>" .
+			"</ul>" .
+			"<p>To resolve this, run <code>composer install</code> inside the ImpressCMS root directory, " .
+			"or re-upload a complete ImpressCMS package that includes the <code>vendor/</code> directory.</p>"
+	);
+}
+
+require_once $_icms_autoload;
+unset($_icms_autoload);
+
+// When vendor lives in the trust path the Composer-generated autoloader files
+// compute $baseDir as dirname(dirname(__DIR__)) relative to trustpath/vendor/,
+// which resolves to trustpath/ instead of the web root.  Every icms_* class
+// lookup therefore targets trustpath/libraries/ – a directory that does not
+// exist because libraries/ always stays in ICMS_ROOT_PATH.
+//
+// Register a prepended SPL autoloader (runs before Composer's now-broken one)
+// that maps all three categories of ImpressCMS-native classes to the correct
+// ICMS_ROOT_PATH/libraries location:
+//
+//   "icms"     (classmap entry)  →  libraries/icms.php
+//   "icms_*"   (PSR-0 style)     →  libraries/<underscore/separated/path>.php
+//   "Icms\*"   (PSR-4 style)     →  libraries/icms/<Namespace/Path>.php
+if ($_icms_autoload_from_trustpath) {
+	$_icms_root_lib = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "libraries";
+	spl_autoload_register(
+		static function (string $class) use ($_icms_root_lib): void {
+			// Classmap: bare "icms" abstract base class → libraries/icms.php
+			if ($class === "icms") {
+				$file = $_icms_root_lib . DIRECTORY_SEPARATOR . "icms.php";
+				if (is_file($file)) {
+					require_once $file;
+				}
+				return;
+			}
+			// PSR-0: icms_core_DataFilter → libraries/icms/core/DataFilter.php
+			if (strncmp($class, "icms_", 5) === 0) {
+				$file =
+					$_icms_root_lib .
+					DIRECTORY_SEPARATOR .
+					str_replace("_", DIRECTORY_SEPARATOR, $class) .
+					".php";
+				if (is_file($file)) {
+					require_once $file;
+				}
+				return;
+			}
+			// PSR-4: Icms\Core\DataFilter → libraries/icms/Core/DataFilter.php
+			if (strncmp($class, "Icms\\", 5) === 0) {
+				$file =
+					$_icms_root_lib .
+					DIRECTORY_SEPARATOR .
+					"icms" .
+					DIRECTORY_SEPARATOR .
+					str_replace("\\", DIRECTORY_SEPARATOR, substr($class, 5)) .
+					".php";
+				if (is_file($file)) {
+					require_once $file;
+				}
+			}
+		},
+		true, // throw  (required SPL signature argument)
+		true, // prepend – run BEFORE Composer's broken path resolution
+	);
+	unset($_icms_root_lib);
+}
+unset($_icms_autoload_from_trustpath);
+
 include_once ICMS_INCLUDE_PATH . "/functions.php";
 include_once ICMS_INCLUDE_PATH . "/debug_functions.php";
 include_once ICMS_INCLUDE_PATH . "/version.php";
 
-if (!isset($xoopsOption)) $xoopsOption = array();
+if (!isset($xoopsOption)) {
+	$xoopsOption = [];
+}
 
 // load core language file before the initialization of the boot sequence
-icms_loadLanguageFile('core', 'theme');
+icms_loadLanguageFile("core", "theme");
 
 // -- Initialize kernel and launch bootstrap
 require_once ICMS_LIBRARIES_PATH . "/icms.php";
@@ -60,18 +162,26 @@ icms::boot();
 
 // Disable gzip compression if PHP is run under CLI mode or if multi-language is enabled
 // To be refactored
-if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) == 'cli' || $GLOBALS['icmsConfigMultilang']) {
-	$icmsConfig['gzip_compression'] = 0;
+if (
+	empty($_SERVER["SERVER_NAME"]) ||
+	substr(PHP_SAPI, 0, 3) === "cli" ||
+	$GLOBALS["icmsConfigMultilang"]
+) {
+	$icmsConfig["gzip_compression"] = 0;
 }
 
-if ($icmsConfig['gzip_compression'] == 1 && extension_loaded('zlib') && !ini_get('zlib.output_compression')) {
-	ini_set('zlib.output_compression', TRUE);
-	if (ini_get('zlib.output_compression_level') < 0) {
-		ini_set('zlib.output_compression_level', 6);
+if (
+	(int) $icmsConfig["gzip_compression"] === 1 &&
+	extension_loaded("zlib") &&
+	!ini_get("zlib.output_compression")
+) {
+	ini_set("zlib.output_compression", true);
+	if ((int) ini_get("zlib.output_compression_level") < 0) {
+		ini_set("zlib.output_compression_level", 6);
 	}
 	if (!zlib_get_coding_type()) {
-		ini_set('zlib.output_compression', FALSE);
-		ob_start('ob_gzhandler');
+		ini_set("zlib.output_compression", false);
+		ob_start("ob_gzhandler");
 	}
 }
 
@@ -79,44 +189,93 @@ if ($icmsConfig['gzip_compression'] == 1 && extension_loaded('zlib') && !ini_get
  * This address the strict compliance for PHP 5.3/5.4, but the rest of our timezone handling
  * can be improved beyond this. ~skenow
  */
-date_default_timezone_set(timezone_name_from_abbr("", $icmsConfig['default_TZ'] * 3600, 0));
+date_default_timezone_set(
+	timezone_name_from_abbr("", $icmsConfig["default_TZ"] * 3600, 0),
+);
 
 // -- Include site-wide lang file
-icms_loadLanguageFile('core', 'global');
-icms_loadLanguageFile('core', 'core');
-icms_loadLanguageFile('system', 'common');
-@define('_GLOBAL_LEFT', @_ADM_USE_RTL == 1 ? 'right' : 'left');
-@define('_GLOBAL_RIGHT', @_ADM_USE_RTL == 1 ? 'left' : 'right');
+icms_loadLanguageFile("core", "global");
+icms_loadLanguageFile("core", "core");
+icms_loadLanguageFile("system", "common");
+@define(
+	"_GLOBAL_LEFT",
+	defined("_ADM_USE_RTL") && _ADM_USE_RTL === 1 ? "right" : "left",
+);
+@define(
+	"_GLOBAL_RIGHT",
+	defined("_ADM_USE_RTL") && _ADM_USE_RTL === 1 ? "left" : "right",
+);
 
 // -- Include page-specific lang file
-if (isset($xoopsOption['pagetype']) && FALSE === strpos($xoopsOption['pagetype'], '.')) {
-	icms_loadLanguageFile('core', $xoopsOption['pagetype']);
+if (
+	isset($xoopsOption["pagetype"]) &&
+	false === strpos($xoopsOption["pagetype"], ".")
+) {
+	icms_loadLanguageFile("core", $xoopsOption["pagetype"]);
 }
 
 defined("XOOPS_USE_MULTIBYTES") or define("XOOPS_USE_MULTIBYTES", 0);
 
-if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_POST['xoops_theme_select'];
-	$_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
-} elseif (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_POST['theme_select'];
-	$_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
-} elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {
-	$icmsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
+if (
+	!empty($_POST["xoops_theme_select"]) &&
+	in_array($_POST["xoops_theme_select"], $icmsConfig["theme_set_allowed"])
+) {
+	$icmsConfig["theme_set"] = $_POST["xoops_theme_select"];
+	$_SESSION["xoopsUserTheme"] = $_POST["xoops_theme_select"];
+} elseif (
+	!empty($_POST["theme_select"]) &&
+	in_array($_POST["theme_select"], $icmsConfig["theme_set_allowed"])
+) {
+	$icmsConfig["theme_set"] = $_POST["theme_select"];
+	$_SESSION["xoopsUserTheme"] = $_POST["theme_select"];
+} elseif (
+	!empty($_SESSION["xoopsUserTheme"]) &&
+	in_array($_SESSION["xoopsUserTheme"], $icmsConfig["theme_set_allowed"])
+) {
+	$icmsConfig["theme_set"] = $_SESSION["xoopsUserTheme"];
 }
 
-if ($icmsConfig['closesite'] == 1) {
-	include ICMS_INCLUDE_PATH . '/site-closed.php';
+if ((int) $icmsConfig["closesite"] === 1) {
+	include ICMS_INCLUDE_PATH . "/site-closed.php";
 }
 
 icms::launchModule();
 
-if ($icmsConfigPersona['multi_login']) {
+if (
+	isset($icmsConfigPersona["multi_login"]) &&
+	(int) $icmsConfigPersona["multi_login"] === 1
+) {
 	if (is_object(icms::$user)) {
-		$online_handler = icms::handler('icms_core_Online');
-		$online_handler->write(icms::$user->getVar('uid'), icms::$user->getVar('uname'), time(), 0, $_SERVER['REMOTE_ADDR']);
+		$online_handler = icms::handler("icms_core_Online");
+		$remoteAddr = isset($_SERVER["REMOTE_ADDR"])
+			? $_SERVER["REMOTE_ADDR"]
+			: "";
+		if ($remoteAddr === "") {
+			// Record the condition with the on-screen message system (non-rendered)
+			// and also keep a stripped fallback in the PHP error log for diagnostics.
+			$uid = icms::$user->getVar("uid");
+			$uname = icms::$user->getVar("uname");
+			$msg = sprintf(
+				"ImpressCMS: REMOTE_ADDR missing when writing online presence (uid=%s, uname=%s)",
+				$uid,
+				$uname,
+			);
+			// Prefer the framework message API if available; do not render to output.
+			if (class_exists("icms_core_Message")) {
+				icms_core_Message::error($msg, "", false);
+			}
+			// Always write a stripped plain-text fallback to the system error log.
+			error_log(strip_tags($msg));
+		}
+		$online_handler->write(
+			icms::$user->getVar("uid"),
+			icms::$user->getVar("uname"),
+			time(),
+			0,
+			$remoteAddr,
+		);
 	}
 }
 
 // -- finalize boot process
-icms::$preload->triggerEvent('finishCoreBoot');
+icms::$preload->triggerEvent("finishCoreBoot");
