@@ -165,7 +165,7 @@ class icms_core_Filesystem
 		$dir = dir($source);
 		while (false !== ($entry = $dir->read())) {
 			// Skip pointers
-			if ($entry == "." || $entry == "..") {
+			if ($entry === "." || $entry === "..") {
 				continue;
 			}
 			// Deep copy directories
