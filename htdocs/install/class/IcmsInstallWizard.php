@@ -185,13 +185,35 @@ class IcmsInstallWizard
 
 	public function baseLocation(): string
 	{
+		// Determine protocol safely
 		$proto =
 			isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === "on"
 				? "https"
 				: "http";
-		$host = htmlentities($_SERVER["HTTP_HOST"]);
-		$server_php_self = htmlentities($_SERVER["PHP_SELF"]);
-		$base = substr($server_php_self, 0, strrpos($server_php_self, "/"));
+		// Host may be missing in some edge cases (CLI, weird server setups); default to localhost
+		$host = isset($_SERVER["HTTP_HOST"])
+			? htmlentities($_SERVER["HTTP_HOST"])
+			: "localhost";
+		// Try several server variables that may contain the script/request path
+		$server_php_self = "";
+		if (isset($_SERVER["PHP_SELF"]) && $_SERVER["PHP_SELF"] !== "") {
+			$server_php_self = htmlentities($_SERVER["PHP_SELF"]);
+		} elseif (
+			isset($_SERVER["REQUEST_URI"]) &&
+			$_SERVER["REQUEST_URI"] !== ""
+		) {
+			// Extract path portion only
+			$path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+			$server_php_self = $path !== null ? htmlentities($path) : "";
+		} elseif (
+			isset($_SERVER["SCRIPT_NAME"]) &&
+			$_SERVER["SCRIPT_NAME"] !== ""
+		) {
+			$server_php_self = htmlentities($_SERVER["SCRIPT_NAME"]);
+		}
+		// Fallback to empty base if no path information is available
+		$pos = $server_php_self !== "" ? strrpos($server_php_self, "/") : false;
+		$base = $pos !== false ? substr($server_php_self, 0, $pos) : "";
 		return "$proto://$host$base";
 	}
 
