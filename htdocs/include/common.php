@@ -164,19 +164,19 @@ icms::boot();
 // To be refactored
 if (
 	empty($_SERVER["SERVER_NAME"]) ||
-	substr(PHP_SAPI, 0, 3) == "cli" ||
+	substr(PHP_SAPI, 0, 3) === "cli" ||
 	$GLOBALS["icmsConfigMultilang"]
 ) {
 	$icmsConfig["gzip_compression"] = 0;
 }
 
 if (
-	$icmsConfig["gzip_compression"] == 1 &&
+	(int) $icmsConfig["gzip_compression"] === 1 &&
 	extension_loaded("zlib") &&
 	!ini_get("zlib.output_compression")
 ) {
 	ini_set("zlib.output_compression", true);
-	if (ini_get("zlib.output_compression_level") < 0) {
+	if ((int) ini_get("zlib.output_compression_level") < 0) {
 		ini_set("zlib.output_compression_level", 6);
 	}
 	if (!zlib_get_coding_type()) {
@@ -197,8 +197,14 @@ date_default_timezone_set(
 icms_loadLanguageFile("core", "global");
 icms_loadLanguageFile("core", "core");
 icms_loadLanguageFile("system", "common");
-@define("_GLOBAL_LEFT", @_ADM_USE_RTL == 1 ? "right" : "left");
-@define("_GLOBAL_RIGHT", @_ADM_USE_RTL == 1 ? "left" : "right");
+@define(
+	"_GLOBAL_LEFT",
+	defined("_ADM_USE_RTL") && _ADM_USE_RTL === 1 ? "right" : "left",
+);
+@define(
+	"_GLOBAL_RIGHT",
+	defined("_ADM_USE_RTL") && _ADM_USE_RTL === 1 ? "left" : "right",
+);
 
 // -- Include page-specific lang file
 if (
@@ -229,7 +235,7 @@ if (
 	$icmsConfig["theme_set"] = $_SESSION["xoopsUserTheme"];
 }
 
-if ($icmsConfig["closesite"] == 1) {
+if ((int) $icmsConfig["closesite"] === 1) {
 	include ICMS_INCLUDE_PATH . "/site-closed.php";
 }
 
