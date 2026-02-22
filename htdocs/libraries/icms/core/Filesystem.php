@@ -163,6 +163,7 @@ class icms_core_Filesystem
 
 		// Loop through the folder
 		$dir = dir($source);
+		$success = true;
 		while (false !== ($entry = $dir->read())) {
 			// Skip pointers
 			if ($entry === "." || $entry === "..") {
@@ -170,14 +171,18 @@ class icms_core_Filesystem
 			}
 			// Deep copy directories
 			if (is_dir("$source/$entry") && $dest !== "$source/$entry") {
-				self::copyRecursive("$source/$entry", "$dest/$entry");
+				if (!self::copyRecursive("$source/$entry", "$dest/$entry")) {
+					$success = false;
+				}
 			} else {
-				copy("$source/$entry", "$dest/$entry");
+				if (!copy("$source/$entry", "$dest/$entry")) {
+					$success = false;
+				}
 			}
 		}
 		// Clean up
 		$dir->close();
-		return true;
+		return $success;
 	}
 
 	/**
@@ -525,10 +530,11 @@ class icms_core_Filesystem
 	/**
 	 * return the number of files in a directory
 	 *
-	 * @param $dirname the name of the directory
-	 * @param $prefix prefix to add to the beginning of the file names
-	 * @param array $extension array of extensions you want the files  to count
-	 * @param $hideDot hide files starting with a dot
+	 * @param string $dirname    the name of the directory
+	 * @param string $prefix     prefix to add to the beginning of the file names
+	 * @param array  $extension  array of extensions you want the files to count
+	 * @param bool   $hideDot    hide files starting with a dot
+	 * @param bool   $recursive  when true, count files in all subdirectories as well
 	 * @return int the number of files in the directory according to the parameters
 	 */
 	public static function getFileCount(
@@ -536,10 +542,47 @@ class icms_core_Filesystem
 		$prefix = "",
 		array $extension = [],
 		$hideDot = false,
+		bool $recursive = false,
 	): int {
-		return count(
-			self::getFileList($dirname, $prefix, $extension, $hideDot),
+		if (!$recursive) {
+			return count(
+				self::getFileList($dirname, $prefix, $extension, $hideDot),
+			);
+		}
+
+		if (!is_dir($dirname)) {
+			return 0;
+		}
+
+		$extList = empty($extension) ? "" : implode("|\.", $extension);
+		$count = 0;
+
+		$iterator = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator(
+				$dirname,
+				RecursiveDirectoryIterator::SKIP_DOTS,
+			),
+			RecursiveIteratorIterator::LEAVES_ONLY,
 		);
+
+		foreach ($iterator as $file) {
+			if (!$file->isFile()) {
+				continue;
+			}
+			$filename = $file->getFilename();
+			if ($hideDot && substr($filename, 0, 1) === ".") {
+				continue;
+			}
+			if (
+				$extList !== "" &&
+				!preg_match("/(\." . $extList . ")$/i", $filename)
+			) {
+				continue;
+			}
+			$count++;
+		}
+
+		return $count;
 	}
 
 	/* These will not be in the final release, but are only placeholders while the refactoring
@@ -715,16 +758,54 @@ class icms_core_Filesystem
 			];
 		}
 
-		// Verify the copy completed by checking that autoload.php arrived.
-		if (!file_exists($dest . "/autoload.php")) {
+		// Verify the copy is complete and consistent:
+		// 1. autoload.php must exist in the destination.
+		// 2. Its SHA-1 must match the source (rules out a zero-byte or truncated file).
+		// 3. The total file count in dest must equal the source (rules out a partial tree).
+		$destAutoloadPath = $dest . "/autoload.php";
+		$srcAutoloadPath = $src . "/autoload.php";
+
+		$destAutoloadHash = file_exists($destAutoloadPath)
+			? @sha1_file($destAutoloadPath)
+			: false;
+		$srcAutoloadHash = file_exists($srcAutoloadPath)
+			? @sha1_file($srcAutoloadPath)
+			: false;
+
+		if (
+			$destAutoloadHash === false ||
+			$srcAutoloadHash === false ||
+			$destAutoloadHash !== $srcAutoloadHash
+		) {
+			self::deleteRecursive($dest, true);
+			return $base + [
+				"status" => "error_copy",
+				"message" => sprintf(
+					"The vendor copy to the trust path (%s) appears incomplete or corrupt " .
+						"(autoload.php is missing or does not match the source). " .
+						"The partial copy has been removed. " .
+						"Please retry or copy the vendor directory manually via FTP/SFTP.",
+					$dest,
+				),
+			];
+		}
+
+		// Count files recursively so that subdirectories at any depth are included.
+		$srcFileCount = self::getFileCount($src, "", [], false, true);
+		$destFileCount = self::getFileCount($dest, "", [], false, true);
+
+		if ($srcFileCount !== $destFileCount) {
 			self::deleteRecursive($dest, true);
 			return $base + [
 				"status" => "error_copy",
 				"message" => sprintf(
 					"The vendor copy to the trust path (%s) appears incomplete " .
-						"(autoload.php is missing). The partial copy has been removed. " .
+						"(source has %d file(s) but destination has %d). " .
+						"The partial copy has been removed. " .
 						"Please retry or copy the vendor directory manually via FTP/SFTP.",
 					$dest,
+					$srcFileCount,
+					$destFileCount,
 				),
 			];
 		}
