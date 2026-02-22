@@ -228,8 +228,33 @@ function buildPreviewHtml(
  */
 function buildResultHtml(array $result): string
 {
+	// Split the message into the human-readable summary (first line) and the
+	// optional multi-line debug detail that follows the first blank line.
+	$rawMessage = $result["message"];
+	$nlPos = strpos($rawMessage, "\n\n");
+
+	if ($nlPos !== false) {
+		$summary = substr($rawMessage, 0, $nlPos);
+		$detail = substr($rawMessage, $nlPos + 2);
+	} else {
+		$summary = $rawMessage;
+		$detail = "";
+	}
+
 	$html = '<div class="blokz">';
-	$html .= '<p class="errorMsg">' . $result["message"] . "</p>";
+	$html .=
+		'<p class="errorMsg">' .
+		htmlspecialchars($summary, ENT_QUOTES) .
+		"</p>";
+
+	if ($detail !== "") {
+		$html .=
+			'<pre style="background:#f8f8f8;border:1px solid #ccc;padding:8px;' .
+			'overflow:auto;font-size:0.85em;white-space:pre-wrap;word-break:break-all;">' .
+			htmlspecialchars($detail, ENT_QUOTES) .
+			"</pre>";
+	}
+
 	$html .=
 		'<div class="errorMsg" style="margin-top:8px;">' .
 		VENDOR_MOVE_MANUAL_INSTRUCTIONS .
