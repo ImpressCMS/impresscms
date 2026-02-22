@@ -250,6 +250,23 @@ if (
 		$remoteAddr = isset($_SERVER["REMOTE_ADDR"])
 			? $_SERVER["REMOTE_ADDR"]
 			: "";
+		if ($remoteAddr === "") {
+			// Record the condition with the on-screen message system (non-rendered)
+			// and also keep a stripped fallback in the PHP error log for diagnostics.
+			$uid = icms::$user->getVar("uid");
+			$uname = icms::$user->getVar("uname");
+			$msg = sprintf(
+				"ImpressCMS: REMOTE_ADDR missing when writing online presence (uid=%s, uname=%s)",
+				$uid,
+				$uname,
+			);
+			// Prefer the framework message API if available; do not render to output.
+			if (class_exists("icms_core_Message")) {
+				icms_core_Message::error($msg, "", false);
+			}
+			// Always write a stripped plain-text fallback to the system error log.
+			error_log(strip_tags($msg));
+		}
 		$online_handler->write(
 			icms::$user->getVar("uid"),
 			icms::$user->getVar("uname"),
