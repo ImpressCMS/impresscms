@@ -157,6 +157,14 @@ class icms_messaging_EmailHandler extends PHPMailer {
 	public $Port = 25;
 
 	/**
+	 * Directory where PHPMailer plugins are located
+	 *
+	 * @var string
+	 * @access public
+	 */
+	public $PluginDir = "";
+
+	/**
 	 * Constuctor
 	 *
 	 * @access public
