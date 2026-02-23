@@ -104,6 +104,12 @@ class icms_messaging_Handler {
 
 	private $templatedir;
 
+	// priority of mail
+	private $priority;
+
+	// line ending character
+	private $LE;
+
 	protected $charSet = 'utf-8';
 
 	protected $encoding = '8bit';
