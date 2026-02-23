@@ -108,6 +108,9 @@ class icms_messaging_Handler
 	// whether to send as HTML email
 	private $isHtml = false;
 
+	// alternative plain text body for HTML emails
+	private $altBody = "";
+
 	protected $charSet = "utf-8";
 
 	protected $encoding = "8bit";
@@ -143,6 +146,7 @@ class icms_messaging_Handler
 		$this->template = "";
 		$this->templatedir = "";
 		$this->isHtml = false;
+		$this->altBody = "";
 		// Change below to \r\n if you have problem sending mail
 		$this->LineEndingChar = "\n";
 	}
@@ -421,8 +425,16 @@ class icms_messaging_Handler
 		$this->multimailer->Body = $body;
 		$this->multimailer->CharSet = $this->charSet;
 		$this->multimailer->Encoding = $this->encoding;
-		// Configure PHPMailer for HTML or plain text mode
-		$this->multimailer->isHTML($this->isHtml);
+		// Configure PHPMailer for HTML or plain text mode.
+		// Always call isHTML() explicitly so the ContentType is correctly reset
+		// between successive sends on the same multimailer instance.
+		if ($this->isHtml) {
+			$this->multimailer->isHTML(true);
+			$this->multimailer->AltBody = $this->altBody;
+		} else {
+			$this->multimailer->isHTML(false);
+			$this->multimailer->AltBody = '';
+		}
 		if (!empty($this->fromName)) {
 			$this->multimailer->FromName = $this->multimailer->encodeFromName(
 				$this->fromName,
