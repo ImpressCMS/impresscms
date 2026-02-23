@@ -82,6 +82,12 @@ class icms_messaging_Handler {
 	// body of mail
 	private $body;
 
+	// whether to send as HTML email
+	private $isHtml;
+
+	// plain-text fallback body for HTML emails
+	private $altBody;
+
 	// error messages
 	private $errors;
 
@@ -107,7 +113,7 @@ class icms_messaging_Handler {
 		if (class_exists('XoopsMailerLocal')) {
 			$this->multimailer = new XoopsMailerLocal();
 		} else {
-			$this->multimailer = new icms_messaging_Handler();
+			$this->multimailer = new icms_messaging_EmailHandler();
 		}
 		$this->reset();
 	}
@@ -123,6 +129,8 @@ class icms_messaging_Handler {
 		$this->headers = array();
 		$this->subject = "";
 		$this->body = "";
+		$this->isHtml = false;
+		$this->altBody = '';
 		$this->errors = array();
 		$this->success = array();
 		$this->isMail = false;
@@ -171,12 +179,20 @@ class icms_messaging_Handler {
 		$this->body = trim($value);
 	}
 
+	public function setAltBody($value) {
+		$this->altBody = trim($value);
+	}
+
 	public function useMail() {
 		$this->isMail = true;
 	}
 
 	public function usePM() {
 		$this->isPM = true;
+	}
+
+	public function useHtml($isHtml = true) {
+		$this->isHtml = (bool) $isHtml;
 	}
 
 	public function send($debug = false) {
@@ -187,7 +203,18 @@ class icms_messaging_Handler {
 			}
 			return false;
 		} elseif ($this->template != "") {
-			$path = ($this->templatedir != "") ? $this->templatedir . "" . $this->template : (ICMS_ROOT_PATH . "/language/" . $icmsConfig['language'] . "/mail_template/" . $this->template);
+			$basedir = ($this->templatedir != "") ? $this->templatedir : (ICMS_ROOT_PATH . "/language/" . $icmsConfig['language'] . "/mail_template/");
+			// Auto-detect HTML mode: if an .html.tpl variant exists, use it and switch to HTML mode.
+			// This means callers never need to call useHtml() explicitly — just provide the template.
+			$htmlTemplate = preg_replace('/\.tpl$/i', '.html.tpl', $this->template);
+			$htmlPath = $basedir . $htmlTemplate;
+			if (is_readable($htmlPath)) {
+				$path = $htmlPath;
+				$this->isHtml = true;
+			} else {
+				$path = $basedir . $this->template;
+				$this->isHtml = false;
+			}
 			if (!($fd = @fopen($path, 'r'))) {
 				if ($debug) {
 					$this->errors[] = _MAIL_FAILOPTPL;
@@ -226,9 +253,13 @@ class icms_messaging_Handler {
 			$this->body = str_replace("{" . $k . "}", $v, $this->body);
 			$this->subject = str_replace("{" . $k . "}", $v, $this->subject);
 		}
-		$this->body = str_replace("\r\n", "\n", $this->body);
-		$this->body = str_replace("\r", "\n", $this->body);
-		$this->body = str_replace("\n", $this->LE, $this->body);
+		// Plain-text newline normalization must be skipped for HTML emails
+		// because HTML line endings are controlled by tags, not literal newlines
+		if (!$this->isHtml) {
+			$this->body = str_replace("\r\n", "\n", $this->body);
+			$this->body = str_replace("\r", "\n", $this->body);
+			$this->body = str_replace("\n", $this->LE, $this->body);
+		}
 
 		// send mail to specified mail addresses, if any
 		foreach ($this->toEmails as $mailaddr) {
@@ -323,6 +354,17 @@ class icms_messaging_Handler {
 		}
 		if (!empty($this->fromEmail)) {
 			$this->multimailer->Sender = $this->multimailer->From = $this->fromEmail;
+		}
+
+		// Set HTML or plain-text mode. Always call isHTML() explicitly so the
+		// ContentType is correctly reset between successive sends on the same
+		// multimailer instance (PHPMailer does not auto-reset it).
+		if ($this->isHtml) {
+			$this->multimailer->isHTML(true);
+			$this->multimailer->AltBody = $this->altBody;
+		} else {
+			$this->multimailer->isHTML(false);
+			$this->multimailer->AltBody = '';
 		}
 
 		$this->multimailer->ClearCustomHeaders();
