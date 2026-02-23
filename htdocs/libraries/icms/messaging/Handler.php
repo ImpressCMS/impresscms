@@ -207,10 +207,20 @@ class icms_messaging_Handler
 			}
 			return false;
 		} elseif ($this->template != "") {
-			$basedir = ($this->templatedir != "") ? $this->templatedir : (ICMS_ROOT_PATH . "/language/" . ($icmsConfig["language"] ?? "english") . "/mail_template/");
+			$basedir =
+				$this->templatedir != ""
+					? $this->templatedir
+					: ICMS_ROOT_PATH .
+						"/language/" .
+						($icmsConfig["language"] ?? "english") .
+						"/mail_template/";
 			// Auto-detect HTML mode: if an .html.tpl variant exists, use it and switch to HTML mode.
 			// This means callers never need to call useHtml() explicitly — just provide the template.
-			$htmlTemplate = preg_replace('/\.tpl$/i', '.html.tpl', $this->template);
+			$htmlTemplate = preg_replace(
+				'/\.tpl$/i',
+				".html.tpl",
+				$this->template,
+			);
 			$htmlPath = $basedir . $htmlTemplate;
 			if (is_readable($htmlPath)) {
 				$path = $htmlPath;
@@ -226,7 +236,10 @@ class icms_messaging_Handler
 			}
 			$fd = fopen($path, "r");
 			if ($fd === false) {
-				$errorMsg = sprintf(_MAIL_FAILOPTPL . " (Cannot open: %s)", $path);
+				$errorMsg = sprintf(
+					_MAIL_FAILOPTPL . " (Cannot open: %s)",
+					$path,
+				);
 				$this->errors[] = $errorMsg;
 				return false;
 			}
@@ -241,7 +254,7 @@ class icms_messaging_Handler
 			}
 			//$this->headers[] = "X-Mailer: PHP/" . phpversion();
 			//$this->headers[] = "Return-Path: " . $this->fromEmail;
-			$headers = join($this->LE, $this->headers);
+			$headers = join($this->LineEndingChar, $this->headers);
 		}
 
 		// TODO: we should have an option of no-reply for private messages and emails
@@ -265,7 +278,7 @@ class icms_messaging_Handler
 		}
 		$this->body = str_replace("\r\n", "\n", $this->body);
 		$this->body = str_replace("\r", "\n", $this->body);
-		$this->body = str_replace("\n", $this->LE, $this->body);
+		$this->body = str_replace("\n", $this->LineEndingChar, $this->body);
 
 		// send mail to specified mail addresses, if any
 		foreach ($this->toEmails as $mailaddr) {
@@ -476,7 +489,7 @@ class icms_messaging_Handler
 
 	public function addHeaders($value)
 	{
-		$this->headers[] = trim($value) . $this->LE;
+		$this->headers[] = trim($value) . $this->LineEndingChar;
 	}
 
 	public function setToEmails($email)
