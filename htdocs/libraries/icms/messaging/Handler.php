@@ -207,14 +207,18 @@ class icms_messaging_Handler
 			}
 			return false;
 		} elseif ($this->template != "") {
-			$path =
-				$this->templatedir != ""
-					? $this->templatedir . "" . $this->template
-					: ICMS_ROOT_PATH .
-						"/language/" .
-						$icmsConfig["language"] .
-						"/mail_template/" .
-						$this->template;
+			$basedir = ($this->templatedir != "") ? $this->templatedir : (ICMS_ROOT_PATH . "/language/" . ($icmsConfig["language"] ?? "english") . "/mail_template/");
+			// Auto-detect HTML mode: if an .html.tpl variant exists, use it and switch to HTML mode.
+			// This means callers never need to call useHtml() explicitly — just provide the template.
+			$htmlTemplate = preg_replace('/\.tpl$/i', '.html.tpl', $this->template);
+			$htmlPath = $basedir . $htmlTemplate;
+			if (is_readable($htmlPath)) {
+				$path = $htmlPath;
+				$this->isHtml = true;
+			} else {
+				$path = $basedir . $this->template;
+				$this->isHtml = false;
+			}
 			if (!($fd = @fopen($path, "r"))) {
 				if ($debug) {
 					$this->errors[] = _MAIL_FAILOPTPL;
