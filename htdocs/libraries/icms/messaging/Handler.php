@@ -115,7 +115,7 @@ class icms_messaging_Handler
 		if (class_exists("XoopsMailerLocal")) {
 			$this->multimailer = new XoopsMailerLocal();
 		} else {
-			$this->multimailer = new icms_messaging_Handler();
+			$this->multimailer = new icms_messaging_EmailHandler();
 		}
 		$this->reset();
 	}
