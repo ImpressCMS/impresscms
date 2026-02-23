@@ -196,6 +196,11 @@ class icms_messaging_Handler
 		$this->body = trim($value);
 	}
 
+	public function setAltBody($value)
+	{
+		$this->altBody = trim($value);
+	}
+
 	public function useMail()
 	{
 		$this->isMail = true;
@@ -204,6 +209,11 @@ class icms_messaging_Handler
 	public function usePM()
 	{
 		$this->isPM = true;
+	}
+
+	public function useHtml($isHtml = true)
+	{
+		$this->isHtml = (bool) $isHtml;
 	}
 
 	public function send($debug = false)
