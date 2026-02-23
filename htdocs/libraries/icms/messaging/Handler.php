@@ -103,7 +103,7 @@ class icms_messaging_Handler
 	private $priority;
 
 	// line ending character
-	private $LE;
+	private $LineEndingChar;
 
 	protected $charSet = "utf-8";
 
@@ -140,7 +140,7 @@ class icms_messaging_Handler
 		$this->template = "";
 		$this->templatedir = "";
 		// Change below to \r\n if you have problem sending mail
-		$this->LE = "\n";
+		$this->LineEndingChar = "\n";
 	}
 
 	public function setTemplateDir($value)
