@@ -105,6 +105,9 @@ class icms_messaging_Handler
 	// line ending character
 	private $LineEndingChar;
 
+	// whether to send as HTML email
+	private $isHtml = false;
+
 	protected $charSet = "utf-8";
 
 	protected $encoding = "8bit";
@@ -139,6 +142,7 @@ class icms_messaging_Handler
 		$this->assignedTags = [];
 		$this->template = "";
 		$this->templatedir = "";
+		$this->isHtml = false;
 		// Change below to \r\n if you have problem sending mail
 		$this->LineEndingChar = "\n";
 	}
@@ -417,6 +421,8 @@ class icms_messaging_Handler
 		$this->multimailer->Body = $body;
 		$this->multimailer->CharSet = $this->charSet;
 		$this->multimailer->Encoding = $this->encoding;
+		// Configure PHPMailer for HTML or plain text mode
+		$this->multimailer->isHTML($this->isHtml);
 		if (!empty($this->fromName)) {
 			$this->multimailer->FromName = $this->multimailer->encodeFromName(
 				$this->fromName,
