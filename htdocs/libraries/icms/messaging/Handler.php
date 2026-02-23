@@ -219,13 +219,19 @@ class icms_messaging_Handler
 				$path = $basedir . $this->template;
 				$this->isHtml = false;
 			}
-			if (!($fd = @fopen($path, "r"))) {
-				if ($debug) {
-					$this->errors[] = _MAIL_FAILOPTPL;
-				}
+			if (!is_readable($path)) {
+				$errorMsg = sprintf(_MAIL_FAILOPTPL . " (Path: %s)", $path);
+				$this->errors[] = $errorMsg;
+				return false;
+			}
+			$fd = fopen($path, "r");
+			if ($fd === false) {
+				$errorMsg = sprintf(_MAIL_FAILOPTPL . " (Cannot open: %s)", $path);
+				$this->errors[] = $errorMsg;
 				return false;
 			}
 			$this->setBody(fread($fd, filesize($path)));
+			fclose($fd);
 		}
 
 		// for sending mail only
