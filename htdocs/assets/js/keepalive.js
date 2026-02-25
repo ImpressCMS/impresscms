@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	function markActivity() {
 		lastActivity = Date.now();
 	}
-	
+
 	/*--- Detect user activity via DOM events ---------*/
 	document.addEventListener("pointerdown", markActivity, { passive: true });
 	document.addEventListener("keydown", markActivity);
@@ -63,9 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
 	/*--- Detect XHR activity --------------------------*/
 	const originalXHROpen = XMLHttpRequest.prototype.open;
 	XMLHttpRequest.prototype.open = function (...args) {
-		this.addEventListener("loadstart", function () {
-			lastActivity = Date.now();
-		});
+		// Attach the listener only once per XHR instance to avoid accumulation
+		if (!this.__keepaliveLoadstartAttached) {
+			this.__keepaliveLoadstartAttached = true;
+			this.addEventListener("loadstart", function () {
+				lastActivity = Date.now();
+			});
+		}
 		return originalXHROpen.apply(this, args);
 	};
 });
