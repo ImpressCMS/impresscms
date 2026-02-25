@@ -33,17 +33,26 @@ document.addEventListener("DOMContentLoaded", function () {
 		fetch(KEEPALIVE_URL, {
 			method: "GET",
 			credentials: "include",
-			/* ----- 4️⃣  Tell the browser not to cache the request -----*/
 			cache: "no-store",
 			headers: {
 				"X-Requested-With": "XMLHttpRequest",
 				"Cache-Control": "no-store", // extra safety for HTTP‑level caching
 			},
 		})
-			.then((r) => r.json())
-			.then((data) => console.log("Keepalive:", data))
-			.catch((err) => console.error("Keepalive error:", err));
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`HTTP ${response.status}`);
+				}
+				return response.json();
+			})
+			.then((data) => {
+				console.log("Keepalive:", data);
+			})
+			.catch((error) => {
+				console.error("Keepalive error:", error);
+			});
 	}
+
 	function markActivity() {
 		lastActivity = Date.now();
 	}
