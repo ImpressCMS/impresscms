@@ -5,15 +5,7 @@
 require_once __DIR__ . "/mainfile.php";
 
 /* ----- 1 Ensure icms::$user is set and not null ------------- */
-if (!isset(icms::$user) || !is_object(icms::$user)) {
-	http_response_code(403);
-	header("Content-Type: application/json");
-	echo json_encode(["error" => "Not authenticated"]);
-	exit();
-}
-
-// Reject guests – they don’t need a keep‑alive
-if (icms::$user->isGuest()) {
+if (!is_object(icms::$user) || icms::$user->isGuest()) {
 	http_response_code(403);
 	header("Content-Type: application/json");
 	echo json_encode(["error" => "Not authenticated"]);
