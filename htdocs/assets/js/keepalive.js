@@ -44,13 +44,21 @@ document.addEventListener("DOMContentLoaded", function () {
 			.then((data) => console.log("Keepalive:", data))
 			.catch((err) => console.error("Keepalive error:", err));
 	}
-
-	/*--- Detect fetch activity ------------------------*/
-	const originalFetch = window.fetch;
-	window.fetch = function (...args) {
+	function markActivity() {
 		lastActivity = Date.now();
-		return originalFetch.apply(this, args);
-	};
+	}
+	
+	/*--- Detect user activity via DOM events ---------*/
+	document.addEventListener("pointerdown", markActivity, { passive: true });
+	document.addEventListener("keydown", markActivity);
+	document.addEventListener("scroll", markActivity, { passive: true });
+	document.addEventListener("focus", markActivity);
+	/*--- Question : do we want the keepalive to pauze when the page is hidden? ---------*/
+	document.addEventListener("visibilitychange", function () {
+		if (!document.hidden) {
+			markActivity();
+		}
+	});
 
 	/*--- Detect XHR activity --------------------------*/
 	const originalXHROpen = XMLHttpRequest.prototype.open;
