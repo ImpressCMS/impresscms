@@ -9,7 +9,7 @@ class IcmsPreloadKeepalive extends icms_preload_Item
 	{
 		global $xoTheme;
 		/* ------------------------------------------------------------------
-		 *  1️⃣  Make sure a user object exists and is not a guest.
+		 *  Make sure a user object exists and is not a guest.
 		 * ------------------------------------------------------------------*/
 		// The core may still be booting, so icms::$user can be null.
 		// We guard against that before calling isGuest().
@@ -22,9 +22,20 @@ class IcmsPreloadKeepalive extends icms_preload_Item
 		}
 
 		/* ------------------------------------------------------------------
-		 *  2️⃣  Register the external script.
-		 * ------------------------------------------------------------------*/
-		// No inline JS – just enqueue the file.
-		$xoTheme->addScript(ICMS_URL . "/assets/js/keepalive.js");
+		 * Register the external script, attaching a unique id
+		 * and the keep‑alive endpoint as a data attribute.
+		*/
+		$keepaliveUrl = ICMS_URL . "/keepalive.php";
+
+		$xoTheme->addScript(
+			"assets/js/keepalive.js",
+			[
+				"id" => "keepalive-script",
+				"data-keepalive-url" => $keepaliveUrl,
+			],
+			"", // no inline content
+			"module",
+			0, // default weight
+		);
 	}
 }
