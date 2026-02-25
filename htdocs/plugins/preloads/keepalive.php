@@ -38,9 +38,9 @@ class IcmsPreloadKeepalive extends icms_preload_Item
 			0, // default weight
 		);
 	}
-	
-	public function eventAdminBeforeFooter()
+
+	public function eventAdminHeader()
 	{
-    	$this->eventBeforeFooter();
+		$this->eventBeforeFooter();
 	}
 }
