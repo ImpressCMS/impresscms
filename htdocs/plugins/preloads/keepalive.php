@@ -24,7 +24,7 @@ class IcmsPreloadKeepalive extends icms_preload_Item
 		/* ------------------------------------------------------------------
 		 * Register the external script, attaching a unique id
 		 * and the keep‑alive endpoint as a data attribute.
-		*/
+		 */
 		$keepaliveUrl = ICMS_URL . "/keepalive.php";
 
 		$xoTheme->addScript(
@@ -37,5 +37,10 @@ class IcmsPreloadKeepalive extends icms_preload_Item
 			"module",
 			0, // default weight
 		);
+	}
+	
+	public function eventAdminBeforeFooter()
+	{
+    	$this->eventBeforeFooter();
 	}
 }
