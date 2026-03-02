@@ -1,0 +1,77 @@
+{
+	"name": "impresscms/impresscms",
+	"description": "ImpressCMS - A dynamic and user-friendly Content Management System",
+	"type": "project",
+	"keywords": [
+		"cms",
+		"content-management",
+		"php",
+		"mysql",
+		"web"
+	],
+	"homepage": "https://www.impresscms.org/",
+	"authors": [
+		{
+			"name": "Marc-André Lanciault",
+			"homepage": "https://www.impresscms.org/userinfo.php?uid=168",
+			"role": "Developer"
+		},
+		{
+			"name": "Steve Kenow",
+			"homepage": "https://www.impresscms.org/userinfo.php?uid=54",
+			"role": "Developer"
+		},
+		{
+			"name": "David Janssens",
+			"homepage": "https://www.impresscms.org/userinfo.php?uid=1102",
+			"role": "Developer"
+		},
+		{
+			"name": "Raimondas Rimkevičius",
+			"homepage": "https://www.impresscms.org/userinfo.php?uid=489",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=7.4.0",
+		"ext-gd": "*",
+		"ext-json": "*",
+		"ext-mbstring": "*",
+		"ext-mysqli": "*",
+		"ext-pcre": "*",
+		"ext-pdo": "*",
+		"ext-session": "*",
+		"ext-xml": "*",
+		"ext-zlib": "*",
+		"composer/composer": "^2.8",
+		"ezyang/htmlpurifier": "^4.19",
+		"simplepie/simplepie": "^1.9",
+		"smottt/wideimage": "^1.1"
+	},
+	"require-dev": {},
+	"autoload": {
+		"psr-4": {
+			"Icms\\": "libraries/icms/"
+		},
+		"psr-0": {
+			"icms_": "libraries/"
+		},
+		"classmap": [
+			"libraries/icms.php"
+		]
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"classmap-authoritative": false,
+		"apcu-autoloader": true,
+		"sort-packages": true,
+		"allow-plugins": {
+			"*": false
+		},
+		"cache-dir": "var/cache/composer",
+		"vendor-dir": "vendor"
+	},
+	"scripts": {},
+	"minimum-stability": "stable",
+	"prefer-stable": true
+}
