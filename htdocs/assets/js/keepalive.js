@@ -17,39 +17,54 @@ document.addEventListener("DOMContentLoaded", function () {
 	/* Timestamp of the last detected user activity */
 	let lastActivity = Date.now();
 
+	/* Guard against concurrent in-flight requests */
+	let inflightController = null;
+
 	/*--- Initial ping -----------------------------------*/
 	sendKeepAlive();
 
-	/*--- Periodic ping – only after the idle interval */
+	/*--- Periodic ping – only when the user has been idle for a full interval.
+	 * Active users naturally refresh the session via normal page requests;
+	 * the keepalive is only needed when the tab is open but untouched.      */
 	setInterval(function () {
 		if (Date.now() - lastActivity >= KEEPALIVE_INTERVAL) {
 			sendKeepAlive();
-			lastActivity = Date.now(); // reset the counter
+			lastActivity = Date.now(); // reset so the next interval checks cleanly
 		}
 	}, KEEPALIVE_INTERVAL);
 
 	/*--- Send a GET request to the server -------------*/
 	function sendKeepAlive() {
+		// Abort any previous in-flight request to prevent accumulation
+		if (inflightController) {
+			inflightController.abort();
+		}
+		const controller = new AbortController();
+		inflightController = controller;
+
 		fetch(KEEPALIVE_URL, {
 			method: "GET",
 			credentials: "include",
 			cache: "no-store",
+			signal: controller.signal,
 			headers: {
 				"X-Requested-With": "XMLHttpRequest",
-				"Cache-Control": "no-store", // extra safety for HTTP‑level caching
+				"Cache-Control": "no-store",
 			},
 		})
 			.then((response) => {
+				inflightController = null;
 				if (!response.ok) {
-					throw new Error(`HTTP ${response.status}`);
+					throw new Error("HTTP " + response.status);
 				}
 				return response.json();
 			})
-			.then((data) => {
-				console.log("Keepalive:", data);
+			.then(function () {
+				// Response consumed silently; no data exposed to the browser console.
 			})
 			.catch((error) => {
-				console.error("Keepalive error:", error);
+				inflightController = null;
+				// Suppress AbortError – it is expected when a prior request is cancelled.
 			});
 	}
 
