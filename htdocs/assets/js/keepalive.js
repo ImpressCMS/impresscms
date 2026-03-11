@@ -1,41 +1,28 @@
-/*-------------------------------------------------------------
- * keepalive.js – Keeps an ImpressCMS session alive while the
- * user is interacting with the page.
- *-------------------------------------------------------------*/
+/* keepalive.js */
 
 document.addEventListener("DOMContentLoaded", function () {
-	/* 5 minutes in milliseconds */
-	const KEEPALIVE_INTERVAL = 5 * 60 * 1000;
+	/* 1 minute in milliseconds */
+	const KEEPALIVE_INTERVAL = 1 * 60 * 1000;
 
-	/* ----- Grab the URL that the preload injected ---------------*/
+	/* Keepalive URL */
 	const scriptTag = document.getElementById("keepalive-script");
-	const KEEPALIVE_URL =
-		scriptTag && scriptTag.dataset.keepaliveUrl
-			? scriptTag.dataset.keepaliveUrl
-			: "/keepalive.php"; // graceful fallback for older installations
+	const KEEPALIVE_URL = scriptTag ? scriptTag.dataset.keepaliveUrl : "";
 
-	/* Timestamp of the last detected user activity */
-	let lastActivity = Date.now();
+	if (!KEEPALIVE_URL) {
+		return;
+	}
 
-	/* Guard against concurrent in-flight requests */
+	/* Active request controller */
 	let inflightController = null;
 
-	/*--- Initial ping -----------------------------------*/
-	sendKeepAlive();
-
-	/*--- Periodic ping – only when the user has been idle for a full interval.
-	 * Active users naturally refresh the session via normal page requests;
-	 * the keepalive is only needed when the tab is open but untouched.      */
+	/* Periodic keepalive */
 	setInterval(function () {
-		if (Date.now() - lastActivity >= KEEPALIVE_INTERVAL) {
-			sendKeepAlive();
-			lastActivity = Date.now(); // reset so the next interval checks cleanly
-		}
+		sendKeepAlive();
 	}, KEEPALIVE_INTERVAL);
 
-	/*--- Send a GET request to the server -------------*/
+	/* Send keepalive request */
 	function sendKeepAlive() {
-		// Abort any previous in-flight request to prevent accumulation
+		// Abort previous request
 		if (inflightController) {
 			inflightController.abort();
 		}
@@ -53,47 +40,22 @@ document.addEventListener("DOMContentLoaded", function () {
 			},
 		})
 			.then((response) => {
-				inflightController = null;
+				if (inflightController === controller) {
+					inflightController = null;
+				}
 				if (!response.ok) {
 					throw new Error("HTTP " + response.status);
 				}
 				return response.json();
 			})
 			.then(function () {
-				// Response consumed silently; no data exposed to the browser console.
+				// Consume response
 			})
-			.catch((error) => {
-				inflightController = null;
-				// Suppress AbortError – it is expected when a prior request is cancelled.
+			.catch(() => {
+				if (inflightController === controller) {
+					inflightController = null;
+				}
+				// Ignore errors
 			});
 	}
-
-	function markActivity() {
-		lastActivity = Date.now();
-	}
-
-	/*--- Detect user activity via DOM events ---------*/
-	document.addEventListener("pointerdown", markActivity, { passive: true });
-	document.addEventListener("keydown", markActivity);
-	document.addEventListener("scroll", markActivity, { passive: true });
-	document.addEventListener("focus", markActivity);
-	/*--- Question : do we want the keepalive to pauze when the page is hidden? ---------*/
-	document.addEventListener("visibilitychange", function () {
-		if (!document.hidden) {
-			markActivity();
-		}
-	});
-
-	/*--- Detect XHR activity --------------------------*/
-	const originalXHROpen = XMLHttpRequest.prototype.open;
-	XMLHttpRequest.prototype.open = function (...args) {
-		// Attach the listener only once per XHR instance to avoid accumulation
-		if (!this.__keepaliveLoadstartAttached) {
-			this.__keepaliveLoadstartAttached = true;
-			this.addEventListener("loadstart", function () {
-				lastActivity = Date.now();
-			});
-		}
-		return originalXHROpen.apply(this, args);
-	};
 });
