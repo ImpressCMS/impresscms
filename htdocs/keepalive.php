@@ -1,13 +1,10 @@
 <?php
 // htdocs/keepalive.php
 
-// Bootstrap ImpressCMS so the session and user object are available
+// Bootstrap ImpressCMS
 require_once __DIR__ . "/mainfile.php";
 
-/* ----- 1  Restrict to GET requests only ---------------------------
- * POST, PUT, DELETE, etc. have no purpose here and a simple
- * cross-origin HTML form can issue a POST without a CORS preflight.
- * ------------------------------------------------------------------ */
+/* GET requests only */
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 	http_response_code(405);
 	header("Allow: GET");
@@ -16,14 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 	exit();
 }
 
-/* ----- 2  Enforce XHR-only access ---------------------------------
- * X-Requested-With is a non-simple CORS header.  A cross-origin page
- * must pass an OPTIONS preflight to include it; since we do not
- * advertise Access-Control-Allow-Headers, the preflight is refused
- * and the actual request is never sent by the browser.  Checking the
- * header server-side makes this protection explicit (OWASP "Custom
- * Request Headers" CSRF pattern) and independent of browser CORS.
- * ------------------------------------------------------------------ */
+/* X-Requested-With header check */
 if (xoops_getenv('HTTP_X_REQUESTED_WITH') !== 'XMLHttpRequest') {
 	http_response_code(400);
 	header("Content-Type: application/json");
@@ -31,13 +21,7 @@ if (xoops_getenv('HTTP_X_REQUESTED_WITH') !== 'XMLHttpRequest') {
 	exit();
 }
 
-/* ----- 3  Validate referer when present ---------------------------
- * We use icms::$security->checkReferer() as the reference, but
- * intentionally allow an empty referer to avoid blocking privacy-
- * oriented browsers or strict Referrer-Policy configurations.
- * We only reject when a referer IS present but comes from a
- * different origin.
- * ------------------------------------------------------------------ */
+/* Referer validation */
 $_keepaliveReferer = xoops_getenv('HTTP_REFERER');
 if ($_keepaliveReferer !== '' && strpos($_keepaliveReferer, ICMS_URL) !== 0) {
 	http_response_code(403);
@@ -47,7 +31,7 @@ if ($_keepaliveReferer !== '' && strpos($_keepaliveReferer, ICMS_URL) !== 0) {
 }
 unset($_keepaliveReferer);
 
-/* ----- 4  Ensure icms::$user is set and not a guest -------------- */
+/* Authenticated user only */
 if (!is_object(icms::$user) || icms::$user->isGuest()) {
 	http_response_code(403);
 	header("Content-Type: application/json");
@@ -55,11 +39,7 @@ if (!is_object(icms::$user) || icms::$user->isGuest()) {
 	exit();
 }
 
-/* ----- 5  Session-based rate limiting -----------------------------
- * Require at least 60 seconds between keepalive calls from the same
- * session.  This prevents a stolen-cookie holder from artificially
- * preventing session expiry and limits DB session-table write load.
- * ------------------------------------------------------------------ */
+/* Session rate limit */
 define('KEEPALIVE_MIN_INTERVAL', 60);
 if (
 	isset($_SESSION['keepalive_last']) &&
@@ -74,13 +54,13 @@ if (
 }
 $_SESSION['keepalive_last'] = time();
 
-/* ----- 6  Send security and no-cache headers --------------------- */
+/* Response headers */
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
 header("Expires: 0");
 header("X-Content-Type-Options: nosniff");
 
-/* ----- 7  Return the stable JSON payload ------------------------- */
+/* JSON response */
 header("Content-Type: application/json");
 echo json_encode(["status" => "ok"]);
 exit();
