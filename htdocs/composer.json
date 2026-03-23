@@ -33,7 +33,7 @@
 		}
 	],
 	"require": {
-		"php": ">=7.4.0",
+		"php": ">=8.2.0",
 		"ext-gd": "*",
 		"ext-json": "*",
 		"ext-mbstring": "*",
