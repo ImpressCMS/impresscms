@@ -63,7 +63,7 @@ All the subfolders in the /htdocs/libraries folder are external includes, and sh
 
 ### PHP Standards
 - **Minimum PHP**: 7.4
-- **Maximum PHP**: 8.5
+- **Maximum PHP**: 8.4
 - Use `icms::handler()` for service handlers
 - Use `icms::$module`, `icms::$user`, `icms::$db` for global services
 - Language constants are defined with `define()` in `htdocs/language/*/` files
