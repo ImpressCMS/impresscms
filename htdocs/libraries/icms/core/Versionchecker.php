@@ -3,7 +3,7 @@
  * Class used to determine if the core, or modules, need to be updated
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * IcmsVersionChecker
@@ -19,15 +19,15 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id: Versionchecker.php 11603 2012-02-26 08:45:50Z fiammy $
  */
-class icms_core_Versionchecker {
-
+class icms_core_Versionchecker
+{
 	/*
 	 * errors
 	 * @public $errors array
 	 */
-	public $errors = array();
-	public $installed = array();
-	public $latest = array();
+	public $errors = [];
+	public $installed = [];
+	public $latest = [];
 
 	/*
 	 * URL of the XML containing version information
@@ -40,7 +40,7 @@ class icms_core_Versionchecker {
 	 * @public $cache_time integer
 	 * @todo set this to a day at least or make it configurable in System Admin > Preferences
 	 */
-	public $cache_time=1;
+	public $cache_time = 1;
 
 	/*
 	 * Name of the latest version
@@ -90,7 +90,8 @@ class icms_core_Versionchecker {
 	 * @return	void
 	 *
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		$this->installed_version_name = ICMS_VERSION_NAME;
 	}
 
@@ -103,7 +104,8 @@ class icms_core_Versionchecker {
 	 * @return	object
 	 *
 	 */
-	static public function &getInstance() {
+	public static function &getInstance()
+	{
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new self();
@@ -117,42 +119,42 @@ class icms_core_Versionchecker {
 	 * @return	TRUE if there is an update, FALSE if no update OR errors occured
 	 *
 	 */
-	public function check() {
-
+	public function check()
+	{
 		// Create a new instance of the SimplePie object
 		$feed = new icms_feeds_Simplerss();
 		$feed->set_feed_url($this->version_xml);
 		$feed->set_cache_duration(0);
-		$feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_NONE);
+		$feed->set_autodiscovery_level(\SimplePie\SimplePie::LOCATOR_NONE);
 		$feed->init();
 		$feed->handle_content_type();
 
 		if (!$feed->error) {
-			$versionInfo['title'] = $feed->get_title();
-			$versionInfo['link'] = $feed->get_link();
-			$versionInfo['image_url'] = $feed->get_image_url();
-			$versionInfo['image_title'] = $feed->get_image_title();
-			$versionInfo['image_link'] = $feed->get_image_link();
+			$versionInfo["title"] = $feed->get_title();
+			$versionInfo["link"] = $feed->get_link();
+			$versionInfo["image_url"] = $feed->get_image_url();
+			$versionInfo["image_title"] = $feed->get_image_title();
+			$versionInfo["image_link"] = $feed->get_image_link();
 			$feed_item = $feed->get_item(0);
-			$versionInfo['description'] = $feed_item->get_description();
-			$versionInfo['permalink'] = $feed_item->get_permalink();
-			$versionInfo['title'] = $feed_item->get_title();
-			$versionInfo['content'] = $feed_item->get_content();
-			$guidArray = $feed_item->get_item_tags('', 'guid');
-			$versionInfo['guid'] = $guidArray[0]['data'];
+			$versionInfo["description"] = $feed_item->get_description();
+			$versionInfo["permalink"] = $feed_item->get_permalink();
+			$versionInfo["title"] = $feed_item->get_title();
+			$versionInfo["content"] = $feed_item->get_content();
+			$guidArray = $feed_item->get_item_tags("", "guid");
+			$versionInfo["guid"] = $guidArray[0]["data"];
 		} else {
 			$this->errors[] = _AM_VERSION_CHECK_RSSDATA_EMPTY;
 			return false;
 		}
-		$this->latest_version_name = $versionInfo['title'];
-		$this->latest_changelog = $versionInfo['description'];
-		$build_info = explode('|', $versionInfo['guid']);
+		$this->latest_version_name = $versionInfo["title"];
+		$this->latest_changelog = $versionInfo["description"];
+		$build_info = explode("|", $versionInfo["guid"]);
 		$this->latest_build = $build_info[0];
 		$this->latest_status = $build_info[1];
 
 		if ($this->latest_build > ICMS_VERSION_BUILD) {
 			// There is an update available
-			$this->latest_url = $versionInfo['link'];
+			$this->latest_url = $versionInfo["link"];
 			return true;
 		}
 		return false;
@@ -164,14 +166,15 @@ class icms_core_Versionchecker {
 	 * @param	$ashtml	bool	return as html?
 	 * @return	mixed
 	 */
-	public function getErrors($ashtml=true) {
+	public function getErrors($ashtml = true)
+	{
 		if (!$ashtml) {
 			return $this->errors;
 		} else {
-			$ret = '';
+			$ret = "";
 			if (count($this->errors) > 0) {
 				foreach ($this->errors as $error) {
-					$ret .= $error.'<br />';
+					$ret .= $error . "<br />";
 				}
 			}
 			return $ret;
