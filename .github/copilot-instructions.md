@@ -44,7 +44,7 @@ ImpressCMS is a community-developed PHP Content Management System (CMS) focused 
 │   └── mainfile.php       # Configuration bootstrap
 └── upgrade/               # Version upgrade scripts
 ```
-All the subfolders in the /htdocs/libraries folder are external includes, and should not be altered. The only exception is the 'icms' folder, the content of that folder are part of the project
+Many subfolders in the `/htdocs/libraries` folder are third-party/vendor libraries (for example `smarty/`, `phpmailer/`, and similar), and those should generally not be modified except when upgrading or fixing vendored code. Some subdirectories, such as `icms/`, `image-editor/`, and `paginationstyles/`, contain ImpressCMS core code and are part of the project and may be changed as needed.
 ## Key Files to Know
 
 | File | Purpose |
