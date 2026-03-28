@@ -59,7 +59,7 @@ Many subfolders in the `/htdocs/libraries` folder are third-party/vendor librari
 ## Development Guidelines
 
 ### Code Style
-- new and updated code should follow PSR-12 styling rules
+- New and updated code should follow PSR-12 styling rules.
 
 ### PHP Standards
 - **Minimum PHP**: 7.4
