@@ -199,6 +199,7 @@ Z - timezone offset in seconds (i.e. "-43200" to "43200")
 //%%%%%		LANGUAGE SPECIFIC SETTINGS   %%%%%
 define('_CHARSET', 'utf-8');
 define('_LANGCODE', 'it');
+define('_INTL_LOCALE', 'it_IT');
 
 // change 0 to 1 if this language is a multi-bytes language
 define("XOOPS_USE_MULTIBYTES", "0");
