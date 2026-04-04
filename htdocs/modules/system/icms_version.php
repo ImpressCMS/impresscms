@@ -64,7 +64,7 @@ $modversion = array(
 	'image' => "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version' => "2.0.3",
+	'status_version' => "2.0.3 beta",
 	'status' => "Beta",
 	'date' => "04 April 2026",
 	'author_word' => "Locale handling and regex hardening improvements",
