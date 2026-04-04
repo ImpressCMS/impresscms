@@ -1,4 +1,15 @@
 # ImpressCMS ChangeLog
+## ImpressCMS 2.0.3 Beta
+
+* Date : 04 April 2026
+* DB Version : 48
+* Build Version : 117
+
+### What's Changed
+### Bugfixes
+* apply deterministic refactor of regex patterns to counter ReDoS by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1671
+* Add Intl locale constants and apply locale after global language load by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1691
+
 ## ImpressCMS 2.0.2
 
 * Date : 01 October 2025
