@@ -1,15 +1,22 @@
 # ImpressCMS ChangeLog
 ## ImpressCMS 2.0.3 Beta
 
-* Date : 04 April 2026
+* Date : 05 April 2026
 * DB Version : 48
 * Build Version : 117
 
 ### What's Changed
-### Bugfixes
-* apply deterministic refactor of regex patterns to counter ReDoS by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1671
-* Add Intl locale constants and apply locale after global language load by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1691
+* fix:the DB update to v48 is now correctly positioned by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1619
+* fix:Correct condition in previewTarea by @skenow in https://github.com/ImpressCMS/impresscms/pull/1664
+* feat:Add conditional rendering for theme selection selector by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1669
+* feat:Add default escape characters to icms_core_DataFilter::addSlashes for backwards compatibility by @Copilot in https://github.com/ImpressCMS/impresscms/pull/1675
+* feat:Add copilot agent instructions by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1690
+* Fix:1687 remove unnecessary comment in admin tpl by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1692
+* Feat:Add locale constants to translation files to improve date and time display by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1691
+* fix:apply deterministic refactor of regex patterns to counter ReDoS by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1671
+* chore:Prepare release 2.0.3 beta by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1695
 
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.2...v2.0.3
 ## ImpressCMS 2.0.2
 
 * Date : 01 October 2025
