@@ -609,7 +609,7 @@ class icms_ipf_view_Table {
 		if (!empty($_POST)) {
 			$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
 			if (is_array($clean_POST)) {
-				extract($clean_POST);
+                extract($clean_POST);
 			}
 		}
 

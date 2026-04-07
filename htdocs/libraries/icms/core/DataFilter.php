@@ -414,10 +414,10 @@ class icms_core_DataFilter {
 
 		foreach (array_intersect_key($input, $filters) as $key => $value) {
 			$options[0] = $options[1] = '';
-			if (array_key_exists('options', $filters) && isset($filters[$key]['options'][0])) {
+			if (is_array($filters[$key]) && isset($filters[$key]['options'][0])) {
 				$options[0] = $filters[$key]['options'][0];
 			}
-			if (array_key_exists('options', $filters) && isset($filters[$key]['options'][1])) {
+			if (is_array($filters[$key]) && isset($filters[$key]['options'][1])) {
 				$options[1] = $filters[$key]['options'][1];
 			}
 			if (is_array($filters[$key])) {
