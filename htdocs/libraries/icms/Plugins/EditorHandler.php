@@ -1,4 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
+namespace Icms\Plugins;
+
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -47,7 +54,7 @@
  * @package		Plugins
  * @subpackage	Editor
  */
-class icms_plugins_EditorHandler {
+class EditorHandler {
 	private $root_path = "";
 	public $nohtml = FALSE;
 	public $allowed_editors = array();
@@ -106,13 +113,13 @@ class icms_plugins_EditorHandler {
 	public function &getList($noHtml = FALSE) {
 		static $list = null;
 		$cache_file = ICMS_CACHE_PATH . '/' . $this->_type . 'editor_list.php';
-		
+
 		if ($list === null && file_exists($cache_file)) {
 			$list = include($cache_file);
 		} else {
 			$list = array();
 			$order = array();
-			$_list = icms_core_Filesystem::getDirList($this->root_path . '/');
+			$_list = \icms_core_Filesystem::getDirList($this->root_path . '/');
 
 			foreach ($_list as $item) {
 				if (@include $this->root_path . '/' . $item . '/editor_registry.php') {
@@ -124,7 +131,7 @@ class icms_plugins_EditorHandler {
 
 			array_multisort($order, $list);
 			$contents = "<?php\n return " . var_export($list, TRUE) . "\n?>";
-			icms_core_Filesystem::writeFile($contents, $this->_type . 'editor_list', 'php', ICMS_CACHE_PATH);
+			\icms_core_Filesystem::writeFile($contents, $this->_type . 'editor_list', 'php', ICMS_CACHE_PATH);
 		}
 
 		$editors = array_keys($list);
@@ -204,7 +211,7 @@ class icms_plugins_EditorHandler {
 			return ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
 		}
 	}
-	
+
 	/**
 	 * Retrieve a list of the available editors, by type
 	 * @param	string	$type
@@ -215,3 +222,5 @@ class icms_plugins_EditorHandler {
 		return $editor->getList();
 	}
 }
+
+\class_alias(EditorHandler::class, 'icms_plugins_EditorHandler');

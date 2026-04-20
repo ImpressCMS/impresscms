@@ -74,10 +74,19 @@ if (!function_exists('icms_loadLanguageFile')) {
 // load legacy class names (icms_*) transparently through the PSR-4 namespace.
 $icmsRootLib = ICMS_LIBRARIES_PATH;
 $icmsRenameMap = [
-    'icms_core_Object'          => 'Icms\\Core\\Entity',
-    'icms_ipf_Object'           => 'Icms\\Ipf\\Entity',
-    'icms_ipf_category_Object'  => 'Icms\\Ipf\\Category\\Entity',
-    'icms_ipf_seo_Object'       => 'Icms\\Ipf\\Seo\\Entity',
+    'icms_core_Object'              => 'Icms\\Core\\Entity',
+    'icms_ipf_Object'               => 'Icms\\Ipf\\Entity',
+    'icms_ipf_category_Object'      => 'Icms\\Ipf\\Category\\Entity',
+    'icms_ipf_seo_Object'           => 'Icms\\Ipf\\Seo\\Entity',
+    'icms_data_avatar_Object'       => 'Icms\\Data\\Avatar\\Entity',
+    'icms_data_comment_Object'      => 'Icms\\Data\\Comment\\Entity',
+    'icms_data_file_Object'         => 'Icms\\Data\\File\\Entity',
+    'icms_data_notification_Object' => 'Icms\\Data\\Notification\\Entity',
+    'icms_data_page_Object'         => 'Icms\\Data\\Page\\Entity',
+    'icms_data_privmessage_Object'  => 'Icms\\Data\\Privmessage\\Entity',
+    'icms_data_urllink_Object'      => 'Icms\\Data\\Urllink\\Entity',
+    'icms_auth_Object'              => 'Icms\\Auth\\Entity',
+    'icms_plugins_Object'           => 'Icms\\Plugins\\Entity',
 ];
 spl_autoload_register(
     static function (string $class) use ($icmsRootLib, $icmsRenameMap): void {

@@ -1,4 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
+namespace Icms\Data\Comment;
+
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -47,7 +54,7 @@
  * @package		data
  * @subpackage	comment
  */
-class icms_data_comment_Renderer {
+class Renderer {
 
 	private $_tpl;
 	private $_comments = NULL;
@@ -67,7 +74,7 @@ class icms_data_comment_Renderer {
 		$this->_tpl =& $tpl;
 		$this->_useIcons = $use_icons;
 		$this->_doIconCheck = $do_iconcheck;
-		$this->_memberHandler = icms::handler('icms_member');
+		$this->_memberHandler = \icms::handler('icms_member');
 		$this->_statusText = array(
 			XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">' . _CM_PENDING . '</span>',
 			XOOPS_COMMENT_ACTIVE => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',
@@ -86,7 +93,7 @@ class icms_data_comment_Renderer {
 	static function &instance(&$tpl, $use_icons = TRUE, $do_iconcheck = FALSE) {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_data_comment_Renderer($tpl, $use_icons, $do_iconcheck);
+			$instance = new self($tpl, $use_icons, $do_iconcheck);
 		}
 		return $instance;
 	}
@@ -142,7 +149,7 @@ class icms_data_comment_Renderer {
 	 */
 	public function renderThreadView($comment_id = 0, $admin_view = FALSE, $show_nav = TRUE) {
 		// construct comment tree
-		$xot = new icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new \icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 
 		if (FALSE != $this->_useIcons) {
@@ -253,7 +260,7 @@ class icms_data_comment_Renderer {
 	 * @param boolean $admin_view
 	 */
 	public function renderNestView($comment_id = 0, $admin_view = FALSE) {
-		$xot = new icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new \icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 		if (FALSE != $this->_useIcons) {
 			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');
@@ -423,3 +430,5 @@ class icms_data_comment_Renderer {
 		return '<img src="' . ICMS_URL . '/images/icons/' . $GLOBALS["icmsConfig"]["language"] . '/no_posticon.gif" alt="" />';
 	}
 }
+
+\class_alias(Renderer::class, 'icms_data_comment_Renderer');

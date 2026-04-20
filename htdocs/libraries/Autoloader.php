@@ -40,10 +40,19 @@ if (!function_exists('icms_legacy_autoloader_register')) {
         // renamed (not just moved) during the refactor, e.g. when the modern
         // class name is not a direct PascalCase transform of the legacy one.
         $renameMap = [
-            'icms_core_Object'          => 'Icms\\Core\\Entity',
-            'icms_ipf_Object'           => 'Icms\\Ipf\\Entity',
-            'icms_ipf_category_Object'  => 'Icms\\Ipf\\Category\\Entity',
-            'icms_ipf_seo_Object'       => 'Icms\\Ipf\\Seo\\Entity',
+            'icms_core_Object'              => 'Icms\\Core\\Entity',
+            'icms_ipf_Object'               => 'Icms\\Ipf\\Entity',
+            'icms_ipf_category_Object'      => 'Icms\\Ipf\\Category\\Entity',
+            'icms_ipf_seo_Object'           => 'Icms\\Ipf\\Seo\\Entity',
+            'icms_data_avatar_Object'       => 'Icms\\Data\\Avatar\\Entity',
+            'icms_data_comment_Object'      => 'Icms\\Data\\Comment\\Entity',
+            'icms_data_file_Object'         => 'Icms\\Data\\File\\Entity',
+            'icms_data_notification_Object' => 'Icms\\Data\\Notification\\Entity',
+            'icms_data_page_Object'         => 'Icms\\Data\\Page\\Entity',
+            'icms_data_privmessage_Object'  => 'Icms\\Data\\Privmessage\\Entity',
+            'icms_data_urllink_Object'      => 'Icms\\Data\\Urllink\\Entity',
+            'icms_auth_Object'              => 'Icms\\Auth\\Entity',
+            'icms_plugins_Object'           => 'Icms\\Plugins\\Entity',
         ];
 
         spl_autoload_register(

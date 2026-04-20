@@ -1,4 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
+namespace Icms\Messaging;
+
 // $Id: Handler.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -51,7 +56,7 @@ icms_loadLanguageFile('core', 'mail');
  * @category	ICMS
  * @package		Messaging
  */
-class icms_messaging_Handler {
+class Handler {
 	/**
 	 * reference to a {@link icms_messaging_EmailHandler}
 	 * @var		icms_messaging_EmailHandler
@@ -105,9 +110,9 @@ class icms_messaging_Handler {
 	public function __construct() {
 		icms_loadLanguageFile('core', 'xoopsmailerlocal');
 		if (class_exists('XoopsMailerLocal')) {
-			$this->multimailer = new XoopsMailerLocal();
+			$this->multimailer = new \XoopsMailerLocal();
 		} else {
-			$this->multimailer = new icms_messaging_Handler();
+			$this->multimailer = new self();
 		}
 		$this->reset();
 	}
@@ -289,10 +294,10 @@ class icms_messaging_Handler {
 	}
 
 	public function sendPM($uid, $subject, $body) {
-		$pm_handler = icms::handler('icms_data_privmessage');
+		$pm_handler = \icms::handler('icms_data_privmessage');
 		$pm =& $pm_handler->create();
 		$pm->setVar("subject", $subject);
-		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : icms::$user->getVar('uid'));
+		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : \icms::$user->getVar('uid'));
 		$pm->setVar("msg_text", $body);
 		$pm->setVar("to_userid", $uid);
 		if (!$pm_handler->insert($pm)) {
@@ -413,7 +418,7 @@ class icms_messaging_Handler {
 	public function setToGroups($group) {
 		if (!is_array($group)) {
 			if (get_class($group) == "icms_member_group_Object") {
-				$member_handler = icms::handler('icms_member');
+				$member_handler = \icms::handler('icms_member');
 				$this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
 			}
 		} else {
@@ -424,3 +429,5 @@ class icms_messaging_Handler {
 	}
 
 }
+
+\class_alias(Handler::class, 'icms_messaging_Handler');

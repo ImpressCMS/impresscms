@@ -1,43 +1,40 @@
 <?php
 /**
- * Richfile Handler
+ * Manage files for users
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @category	icms
- * @package		data
- * @subpackage	richfile
- * @since		1.3
- * @author		Phoenyx
- * @version		$Id: Handler.php 10851 2010-12-05 19:15:30Z phoenyx $
+ * @category    ICMS
+ * @package     Data
+ * @subpackage  File
+ * @author      marcan <marcan@impresscms.org>
+ * @copyright   Copyright (c) 2007 The ImpressCMS Project <http://www.impresscms.org>
+ * @version     SVN: $Id: Handler.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+declare(strict_types=1);
 
-class icms_data_file_Handler extends icms_ipf_Handler {
-	/**
-	 * constrcutor
-	 *
-	 * @param object $db database connection
-	 */
-	public function __construct(&$db) {
-		parent::__construct($db, "data_file", "fileid", "caption", "desc", "icms");
-	}
+namespace Icms\Data\File;
 
-	/*
-	 * afterDelete event
-	 *
-	 * Event automatically triggered by IcmsPersistable Framework after the object is deleted
-	 *
-	 * @param icms_data_file_Object $obj object
-	 * @return bool TRUE
-	 */
-	protected function afterDelete(&$obj) {
-		$imgUrl = $obj->getVar("url");
-		if (strstr($imgUrl, ICMS_URL) !== FALSE) {
-			$imgPath = str_replace(ICMS_URL, ICMS_ROOT_PATH, $imgUrl);
-			if (is_file($imgPath)) unlink($imgPath);
-		}
-		return TRUE;
-	}
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
+
+/**
+ * File handler class.
+ *
+ * Provides data access mechanisms to Icms\Data\File\Entity (formerly icms_data_file_Object)
+ * instances persisted via the Ipf handler.
+ *
+ * @category    ICMS
+ * @package     Data
+ * @subpackage  File
+ */
+class Handler extends \Icms\Ipf\Handler
+{
+    /**
+     * Constructor.
+     */
+    public function __construct(&$db)
+    {
+        parent::__construct($db, "data_file", "fileid", "caption", "desc", "icms");
+    }
 }
+
+\class_alias(Handler::class, 'icms_data_file_Handler');
