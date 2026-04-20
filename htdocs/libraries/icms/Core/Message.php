@@ -14,11 +14,15 @@
  * @version	SVN: $Id: Message.php 12310 2013-09-13 21:33:58Z skenow $
  */
 
+declare(strict_types=1);
+
+namespace Icms\Core;
+
 /**
  * Create and display messages on the screen
  */
-class icms_core_Message {
-
+class Message
+{
 	/* Since all the methods are static, there is no __construct necessary	 */
 
 	/**
@@ -36,7 +40,7 @@ class icms_core_Message {
 	 * @param 		string $title
 	 * @param 		boolean $render
 	 */
-	static public function warning($msg, $title='', $render = FALSE) {
+	public static function warning($msg, string $title = '', bool $render = false) {
 		$ret = '<div class="warningMsg">';
 		if ($title != '') {
 			$ret .= '<h4>' . $title . '</h4>';
@@ -69,7 +73,7 @@ class icms_core_Message {
 	 * @param		boolean $render
 	 * @return		mixed
 	 */
-	static public function error($msg, $title = '', $render = true) {
+	public static function error($msg, string $title = '', bool $render = true) {
 		$ret = '<div class="errorMsg">';
 		if ($title != '') {
 			$ret .= '<h4>' . $title . '</h4>';
@@ -102,7 +106,7 @@ class icms_core_Message {
 	 * @param		string $title
 	 * @return		void
 	 */
-	static public function result($msg, $title='') {
+	public static function result($msg, string $title = ''): void {
 		echo '<div class="resultMsg">';
 		if ($title != '') {
 			echo '<h4>' . $title . '</h4>';
@@ -134,7 +138,7 @@ class icms_core_Message {
 	 * @param		boolean $addtoken Whether or not to add a security token
 	 * @return		void
 	 */
-	static public function confirm($hiddens, $action, $msg, $submit='', $addtoken = true) {
+	public static function confirm(array $hiddens, string $action, string $msg, string $submit = '', bool $addtoken = true): void {
 	$submit = ($submit != '') ? trim($submit) : _SUBMIT;
 	echo '<div class="confirmMsg">
 			<h4>' . $msg . '</h4>
@@ -152,7 +156,7 @@ class icms_core_Message {
 		}
 	}
 	if ($addtoken !== false) {
-		echo icms::$security->getTokenHTML();
+		echo \icms::$security->getTokenHTML();
 	}
 	echo '<input type="submit" name="confirm_submit" value="' . $submit
 		. '" /> <input type="button" name="confirm_back" value="' . _CANCEL
@@ -161,3 +165,5 @@ class icms_core_Message {
 
 	}
 }
+
+\class_alias(Message::class, 'icms_core_Message');

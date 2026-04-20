@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * RSS-based version checker implementation
  *
@@ -11,6 +12,8 @@
  * @author		marcan <marcan@impresscms.org>
  */
 
+namespace Icms\Core;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -18,7 +21,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * This class implements version checking using RSS feeds
  */
-class icms_core_Versionchecker_RSS extends icms_core_Versionchecker {
+class Versionchecker_RSS extends Versionchecker {
 
 	/**
 	 * URL of the XML containing version information
@@ -33,7 +36,7 @@ class icms_core_Versionchecker_RSS extends icms_core_Versionchecker {
 	 */
 	public function check() {
 		// Create a new instance of the SimplePie object
-		$feed = new icms_feeds_Simplerss();
+		$feed = new \icms_feeds_Simplerss();
 		$feed->set_feed_url($this->version_xml);
 		$feed->set_cache_duration(0);
 		$feed->set_autodiscovery_level(\SimplePie\SimplePie::LOCATOR_NONE);
@@ -84,7 +87,7 @@ class icms_core_Versionchecker_RSS extends icms_core_Versionchecker {
 	 *
 	 * @return	object
 	 */
-	static public function &getInstance() {
+	public static function &getInstance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new self();
@@ -100,3 +103,5 @@ class icms_core_Versionchecker_RSS extends icms_core_Versionchecker {
 	    return $this->latest['build'] > ICMS_VERSION_BUILD;
 	}
 }
+
+\class_alias(Versionchecker_RSS::class, 'icms_core_Versionchecker_RSS');

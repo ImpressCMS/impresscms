@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Interface for version checker implementations
  *
@@ -11,6 +12,8 @@
  * @author		ImpressCMS Core Team
  */
 
+namespace Icms\Core;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -18,7 +21,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  * Defines the contract that all version checker implementations must follow
  */
-interface icms_core_VersioncheckerInterface {
+interface VersioncheckerInterface {
 
 	/**
 	 * Check for a newer version
@@ -102,3 +105,5 @@ interface icms_core_VersioncheckerInterface {
 	 */
 	public function getLatest();
 }
+
+\class_alias(VersioncheckerInterface::class, 'icms_core_VersioncheckerInterface');

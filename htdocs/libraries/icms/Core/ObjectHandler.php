@@ -55,7 +55,12 @@
  *
  * @abstract
  */
-abstract class icms_core_ObjectHandler {
+
+declare(strict_types=1);
+
+namespace Icms\Core;
+
+abstract class ObjectHandler {
 
 	/**
 	 * holds referenced to {@link icms_db_legacy_Database} class object
@@ -73,7 +78,7 @@ abstract class icms_core_ObjectHandler {
 	* @param object $db reference to the {@link icms_db_legacy_Database} object
 	* @access protected
 	*/
-	function __construct(&$db) {
+	public function __construct(&$db) {
 		$this->db =& $db;
 	}
 
@@ -82,7 +87,7 @@ abstract class icms_core_ObjectHandler {
 	 *
 	 * @abstract
 	 */
-	abstract function &create();
+	abstract public function &create();
 
 	/**
 	 * gets a value object
@@ -90,7 +95,7 @@ abstract class icms_core_ObjectHandler {
 	 * @param int $int_id
 	 * @abstract
 	 */
-	abstract function &get($int_id);
+	abstract public function &get($int_id);
 
 	/**
 	 * insert/update object
@@ -98,7 +103,7 @@ abstract class icms_core_ObjectHandler {
 	 * @param object $object
 	 * @abstract
 	 */
-	abstract function insert(&$object);
+	abstract public function insert(&$object);
 
 	/**
 	 * delete object from database
@@ -106,6 +111,8 @@ abstract class icms_core_ObjectHandler {
 	 * @param object $object
 	 * @abstract
 	 */
-	abstract function delete(&$object);
+	abstract public function delete(&$object);
 
 }
+
+\class_alias(ObjectHandler::class, 'icms_core_ObjectHandler');

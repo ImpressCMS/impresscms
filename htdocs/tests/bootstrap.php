@@ -62,12 +62,24 @@ require_once $icmsTestsAutoloader;
 // Mirror the routing implemented in htdocs/include/common.php so tests can
 // load legacy class names (icms_*) transparently through the PSR-4 namespace.
 $icmsRootLib = ICMS_LIBRARIES_PATH;
+$icmsRenameMap = [
+    'icms_core_Object' => 'Icms\\Core\\Entity',
+];
 spl_autoload_register(
-    static function (string $class) use ($icmsRootLib): void {
+    static function (string $class) use ($icmsRootLib, $icmsRenameMap): void {
         if ($class === 'icms') {
             $file = $icmsRootLib . DIRECTORY_SEPARATOR . 'icms.php';
             if (is_file($file)) {
                 require_once $file;
+            }
+            return;
+        }
+        if (isset($icmsRenameMap[$class])) {
+            $target = $icmsRenameMap[$class];
+            if (class_exists($target, true) || interface_exists($target, true) || trait_exists($target, true)) {
+                if (!class_exists($class, false) && !interface_exists($class, false) && !trait_exists($class, false)) {
+                    class_alias($target, $class);
+                }
             }
             return;
         }
@@ -104,4 +116,4 @@ spl_autoload_register(
     true,
 );
 
-unset($icmsTestsHtdocs, $icmsTestsRepoRoot, $icmsTestsAutoloader, $icmsRootLib);
+unset($icmsTestsHtdocs, $icmsTestsRepoRoot, $icmsTestsAutoloader, $icmsRootLib, $icmsRenameMap);

@@ -36,8 +36,28 @@ if (!function_exists('icms_legacy_autoloader_register')) {
         $librariesDir = __DIR__;
         $icmsDir = $librariesDir . DIRECTORY_SEPARATOR . 'icms';
 
+        // Legacy name → modern PSR-4 class map for identifiers that were
+        // renamed (not just moved) during the refactor, e.g. when the modern
+        // class name is not a direct PascalCase transform of the legacy one.
+        $renameMap = [
+            'icms_core_Object' => 'Icms\\Core\\Entity',
+        ];
+
         spl_autoload_register(
-            static function (string $class) use ($librariesDir, $icmsDir): void {
+            static function (string $class) use ($librariesDir, $icmsDir, $renameMap): void {
+                if (isset($renameMap[$class])) {
+                    $target = $renameMap[$class];
+                    if (class_exists($target, true) || interface_exists($target, true) || trait_exists($target, true)) {
+                        if (
+                            !class_exists($class, false)
+                            && !interface_exists($class, false)
+                            && !trait_exists($class, false)
+                        ) {
+                            class_alias($target, $class);
+                        }
+                    }
+                    return;
+                }
                 // Classmap: bare "icms" abstract base class → libraries/icms.php
                 if ($class === 'icms') {
                     $file = $librariesDir . DIRECTORY_SEPARATOR . 'icms.php';

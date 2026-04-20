@@ -14,6 +14,10 @@
  * @version	$Id: Logger.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
+declare(strict_types=1);
+
+namespace Icms\Core;
+
 /**
  * Collects information for a page request
  *
@@ -28,7 +32,7 @@
  * @package		Core
  * @subpackage	Logger
  */
-class icms_core_Logger {
+class Logger {
 
 	public $queries = array();
 	public $blocks = array();
@@ -55,10 +59,10 @@ class icms_core_Logger {
 	 * @return  object icms_core_Logger  (@link icms_core_Logger) reference to the only instance
 	 * @static
 	 */
-	static public function &instance() {
+	public static function &instance() {
 		static $instance;
 		if (!isset( $instance )) {
-			$instance = new icms_core_Logger();
+			$instance = new self();
 			// Always catch errors, for security reasons
 			set_error_handler( array( $instance, "handleError" ) );
 			set_exception_handler(array($instance, 'handleException'));
@@ -75,7 +79,7 @@ class icms_core_Logger {
 	 * @todo		Remove in version 1.4 - no occurrences in the core
 	 */
 	public function activate($showErrors = false) {
-		icms_core_Debug::setDeprecated('$this->activated = ', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		Debug::setDeprecated('$this->activated = ', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$this->activated = $showErrors;
 	}
 
@@ -193,7 +197,7 @@ class icms_core_Logger {
 	 * @param Exception $exception
 	 */
 	public function handleException($exception) {
-		icms_loadLanguageFile('core', 'core');
+		\icms_loadLanguageFile('core', 'core');
 
 		$errstr = $exception->getMessage();
 		$trace = true;
@@ -241,7 +245,7 @@ class icms_core_Logger {
 				$errstr = substr($errstr, 8);
 			}
 
-			icms_loadLanguageFile('core', 'core');
+			\icms_loadLanguageFile('core', 'core');
 
 			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 			echo $errortext;
@@ -267,7 +271,7 @@ class icms_core_Logger {
 	 * @return string  $path   sanitized path
 	 * @access protected
 	 */
-	function sanitizePath( $path) {
+	protected function sanitizePath( $path) {
 		$path = str_replace(
 			array('\\', ICMS_ROOT_PATH, ICMS_TRUST_PATH, str_replace( '\\', '/', realpath(ICMS_ROOT_PATH))),
 			array('/', '', 'TRUSTPATH', ''),
@@ -284,10 +288,10 @@ class icms_core_Logger {
 	 */
 	public function render($output) {
 		$this->addExtra('Included files', count(get_included_files()) . ' files');
-		$this->addExtra(_CORE_MEMORYUSAGE, icms_conv_nr2local(icms_convert_size(memory_get_usage())) );
-		$groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
-		$moduleid = (isset(icms::$module) && is_object(icms::$module)) ? icms::$module->getVar('mid') : 1;
-		$gperm_handler = icms::handler('icms_member_groupperm');
+		$this->addExtra(_CORE_MEMORYUSAGE, \icms_conv_nr2local(\icms_convert_size(memory_get_usage())) );
+		$groups   = (is_object(\icms::$user)) ? \icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+		$moduleid = (isset(\icms::$module) && is_object(\icms::$module)) ? \icms::$module->getVar('mid') : 1;
+		$gperm_handler = \icms::handler('icms_member_groupperm');
 		if (!$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 			return $output;
 		}
@@ -310,7 +314,7 @@ class icms_core_Logger {
 	 * @access protected
 	 */
 	public function dump($mode = '') {
-		include ICMS_LIBRARIES_PATH . '/icms/core/Logger_render.php';
+		include ICMS_LIBRARIES_PATH . '/icms/Core/Logger_render.php';
 		return $ret;
 	}
 
@@ -336,7 +340,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpAll() {
-		icms_core_Debug::setDeprecated('$this->dump("")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		Debug::setDeprecated('$this->dump("")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->dump( '' );
 	}
 
@@ -348,7 +352,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpBlocks() {
-		icms_core_Debug::setDeprecated('$this->dump("blocks")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		Debug::setDeprecated('$this->dump("blocks")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->dump('blocks');
 	}
 
@@ -360,7 +364,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpExtra() {
-		icms_core_Debug::setDeprecated('$this->dump("extra")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		Debug::setDeprecated('$this->dump("extra")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->dump('extra');
 	}
 
@@ -372,7 +376,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpQueries() {
-		icms_core_Debug::setDeprecated('$this->dump("queries")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		Debug::setDeprecated('$this->dump("queries")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->dump('queries');
 	}
 
@@ -384,7 +388,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpFilters() {
-		icms_core_Debug::setDeprecated('$this->dump("filters")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		Debug::setDeprecated('$this->dump("filters")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->dump('filters');
 	}
 
@@ -398,8 +402,10 @@ class icms_core_Logger {
 	 * @todo		Remove in version 1.4 - no occurrences in the core
 	 */
 	public function renderErrors() {
-		icms_core_Debug::setDeprecated('$this->dump("errors")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		Debug::setDeprecated('$this->dump("errors")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->dump( 'errors' );
 	}
 
 }
+
+\class_alias(Logger::class, 'icms_core_Logger');

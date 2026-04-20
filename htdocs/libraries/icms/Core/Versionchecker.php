@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
 /**
  * Class used to determine if the core, or modules, need to be updated
  */
+
+namespace Icms\Core;
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
@@ -19,7 +22,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id: Versionchecker.php 11603 2012-02-26 08:45:50Z fiammy $
  */
-class icms_core_Versionchecker
+class Versionchecker
 {
 	/*
 	 * errors
@@ -122,7 +125,7 @@ class icms_core_Versionchecker
 	public function check()
 	{
 		// Create a new instance of the SimplePie object
-		$feed = new icms_feeds_Simplerss();
+		$feed = new \icms_feeds_Simplerss();
 		$feed->set_feed_url($this->version_xml);
 		$feed->set_cache_duration(0);
 		$feed->set_autodiscovery_level(\SimplePie\SimplePie::LOCATOR_NONE);
@@ -181,3 +184,5 @@ class icms_core_Versionchecker
 		}
 	}
 }
+
+\class_alias(Versionchecker::class, 'icms_core_Versionchecker');

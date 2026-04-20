@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System //
@@ -47,7 +48,9 @@
  * @subpackage Filters
  *
  */
-class icms_core_DataFilter {
+namespace Icms\Core;
+
+class DataFilter {
 
 	/**
 	 * Default characters to escape in addSlashes() for backwards compatibility with PHP's addslashes()
@@ -447,7 +450,7 @@ class icms_core_DataFilter {
 
 	/**
 	 * Filters textarea form data for INPUt to DB (text only!!)
-	 * For HTML please use icms_core_HTMLFilter::filterHTMLinput()
+	 * For HTML please use \icms_core_HTMLFilter::filterHTMLinput()
 	 *
 	 * @author vaughan montgomery (vaughan@impresscms.org)
 	 * @copyright (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
@@ -456,18 +459,18 @@ class icms_core_DataFilter {
 	 * @return string
 	 */
 	static public function filterTextareaInput($text) {
-		icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
+		\icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
 		$text = self::htmlSpecialChars(strip_tags($text));
 
-		icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
+		\icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
 
 		return $text;
 	}
 
 	/**
 	 * Filters textarea for DISPLAY purposes (text only!!)
-	 * For HTML please use icms_core_HTMLFilter::filterHTMLdisplay()
+	 * For HTML please use \icms_core_HTMLFilter::filterHTMLdisplay()
 	 *
 	 * @param string $text
 	 * @param bool $smiley allow smileys?
@@ -478,7 +481,7 @@ class icms_core_DataFilter {
 	 */
 	static public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
 		if($text) {
-			icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
+			\icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 
 		// neccessary for the time being until we rework the IPF & Data Object Types in 2.0
 
@@ -503,7 +506,7 @@ class icms_core_DataFilter {
 			}
 			$text = self::codeConv($text, $icode, $image);
 
-			icms::$preload->triggerEvent('afterFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
+			\icms::$preload->triggerEvent('afterFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 			return $text;
 		}
 	}
@@ -521,7 +524,7 @@ class icms_core_DataFilter {
 	 * @return string
 	 */
 	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1, $br = 0) {
-		icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, 1, 1, 1, $br));
+		\icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 
 		$html = str_replace('<!-- input filtered -->', '', $html);
 
@@ -530,7 +533,7 @@ class icms_core_DataFilter {
 		$html = self::codeDecode($html);
 		$html = self::codeConv($html, 1, 1);
 
-		$html = icms_core_HTMLFilter::filterHTML($html);
+		$html = \icms_core_HTMLFilter::filterHTML($html);
 
 		$purified = strpos($html, '<!-- filtered with htmlpurifier -->');
 		if ($purified === false && $br == 1) {
@@ -539,7 +542,7 @@ class icms_core_DataFilter {
 
 		$html .= '<!-- input filtered -->';
 
-		icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, 1, 1, 1, $br));
+		\icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 		return $html;
 	}
 
@@ -558,7 +561,7 @@ class icms_core_DataFilter {
 	static public function filterHTMLdisplay($html, $icode = 1, $br = 0) {
 		global $icmsConfig;
 
-		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
+		\icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
 
 		$ifiltered = strpos($html, '<!-- input filtered -->');
 		if ($ifiltered === false) {
@@ -567,7 +570,7 @@ class icms_core_DataFilter {
 			$html = self::codeDecode($html);
 			$html = self::codeConv($html, 1, 1);
 
-			$html = icms_core_HTMLFilter::filterHTML($html);
+			$html = \icms_core_HTMLFilter::filterHTML($html);
 
 			// $html .= '<!-- warning! output filtered only -->';
 
@@ -581,18 +584,18 @@ class icms_core_DataFilter {
 			$purified = strpos($html, '<!-- filtered with htmlpurifier -->');
 			if ($ifiltered === false) {
 				if ($purified === false) {
-					icms::$logger->addFilter(self::icms_substr($html, 0, 400), 3);
+					\icms::$logger->addFilter(self::icms_substr($html, 0, 400), 3);
 				} else {
 					$html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
-					icms::$logger->addFilter(self::icms_substr($html, 0, 400), 4);
+					\icms::$logger->addFilter(self::icms_substr($html, 0, 400), 4);
 				}
 			} else {
 				$html = str_replace('<!-- input filtered -->', '', $html);
 				if ($purified === false) {
-					icms::$logger->addFilter(self::icms_substr($html, 0, 400), 1);
+					\icms::$logger->addFilter(self::icms_substr($html, 0, 400), 1);
 				} else {
 					$html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
-					icms::$logger->addFilter(self::icms_substr($html, 0, 400), 2);
+					\icms::$logger->addFilter(self::icms_substr($html, 0, 400), 2);
 				}
 			}
 		} else {
@@ -603,7 +606,7 @@ class icms_core_DataFilter {
 		$html = self::makeClickable($html);
 		$html = self::censorString($html);
 
-		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, 1, $br));
+		\icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, 1, $br));
 		return $html;
 	}
 
@@ -745,7 +748,7 @@ class icms_core_DataFilter {
 	 *
 	 */
 	static public function censorString(&$text) {
-		$icmsConfigCensor = icms::$config->getConfigsByCat(ICMS_CONF_CENSOR);
+		$icmsConfigCensor = \icms::$config->getConfigsByCat(ICMS_CONF_CENSOR);
 		if ($icmsConfigCensor['censor_enable'] == true) {
 			$replacement = $icmsConfigCensor['censor_replace'];
 			if (!empty($icmsConfigCensor['censor_words'])) {
@@ -794,7 +797,7 @@ class icms_core_DataFilter {
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
 			$text = preg_replace_callback($patterns, function ($matches) use ($image) {
-				$code = icms_core_DataFilter::codeSanitizer($matches[1], ($image != 0) ? 1 : 0);
+				$code = \icms_core_DataFilter::codeSanitizer($matches[1], ($image != 0) ? 1 : 0);
 				return '<div class="icmsCode">' . $code . '</div>';
 			}, $text);
 		}
@@ -945,8 +948,8 @@ class icms_core_DataFilter {
 
 		$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
 
-		// Create the new GeSHi object, passing relevant stuff
-		$geshi = new GeSHi($text, $language);
+		// Create the new \GeSHi object, passing relevant stuff
+		$geshi = new \GeSHi($text, $language);
 
 		// Enclose the code in a <div>
 		$geshi->set_header_type(GESHI_HEADER_NONE);
@@ -1136,7 +1139,7 @@ class icms_core_DataFilter {
 						foreach ($icmsConfigUser['bad_emails'] as $be) {
 							if ((!empty($be) && preg_match('/' . $be . '/i', $data))) return false;
 						}
-						$icmsStopSpammers = new icms_core_StopSpammer();
+						$icmsStopSpammers = new \icms_core_StopSpammer();
 						if ($icmsStopSpammers->badEmail($data)) return false;
 					}
 				} else {
@@ -1309,8 +1312,8 @@ class icms_core_DataFilter {
 	 */
 	static private function priv_getSmileys($all = false) {
 		if (count(self::$allSmileys) == 0) {
-			if ($result = icms::$xoopsDB->query("SELECT * FROM " . icms::$xoopsDB->prefix('smiles'))) {
-				while ($smiley = icms::$xoopsDB->fetchArray($result)) {
+			if ($result = \icms::$xoopsDB->query("SELECT * FROM " . \icms::$xoopsDB->prefix('smiles'))) {
+				while ($smiley = \icms::$xoopsDB->fetchArray($result)) {
 					if ($smiley['display']) {
 						array_push(self::$displaySmileys, $smiley);
 					}
@@ -1321,3 +1324,5 @@ class icms_core_DataFilter {
 		return $all ? self::$allSmileys : self::$displaySmileys;
 	}
 }
+
+\class_alias(DataFilter::class, 'icms_core_DataFilter');

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * A static class for file system functions
  *
@@ -15,10 +16,12 @@
  * @since		1.3
  */
 
+namespace Icms\Core;
+
 /**
  * Perform filesystem actions
  */
-class icms_core_Filesystem
+class Filesystem
 {
 	/* Since all the methods are static, there is no __construct necessary	 */
 
@@ -296,13 +299,13 @@ class icms_core_Filesystem
 	public static function generateChecksum()
 	{
 		$rootdir = preg_replace("#[\|/]#", DIRECTORY_SEPARATOR, ICMS_ROOT_PATH);
-		$dir = new RecursiveDirectoryIterator($rootdir);
+		$dir = new \RecursiveDirectoryIterator($rootdir);
 		$checkfile =
 			preg_replace("#[\|/]#", DIRECTORY_SEPARATOR, ICMS_TRUST_PATH) .
 			DIRECTORY_SEPARATOR .
 			"checkfile.sha1";
 
-		$file = new SplFileObject($checkfile, "w");
+		$file = new \SplFileObject($checkfile, "w");
 		$cache_dir = preg_replace(
 			"#[\|/]#",
 			DIRECTORY_SEPARATOR,
@@ -314,7 +317,7 @@ class icms_core_Filesystem
 			ICMS_COMPILE_PATH,
 		);
 		$newline = "";
-		foreach (new RecursiveIteratorIterator($dir) as $name => $item) {
+		foreach (new \RecursiveIteratorIterator($dir) as $name => $item) {
 			$itemPath = $item->getPath();
 			$itemFilename = $item->getBasename();
 			$itemPerms = $item->getPerms();
@@ -352,7 +355,7 @@ class icms_core_Filesystem
 	 */
 	public static function validateChecksum()
 	{
-		$validationFile = new SplFileObject($checkfile);
+		$validationFile = new \SplFileObject($checkfile);
 		if ($validationFile->isReadable()) {
 			$currentHash = $currentPerms = [];
 			$cache_dir = preg_replace(
@@ -365,7 +368,7 @@ class icms_core_Filesystem
 				DIRECTORY_SEPARATOR,
 				ICMS_COMPILE_PATH,
 			);
-			foreach (new RecursiveIteratorIterator($dir) as $name => $item) {
+			foreach (new \RecursiveIteratorIterator($dir) as $name => $item) {
 				$itemPath = $item->getPath();
 				$itemFilename = $item->getBasename();
 				$itemPerms = $item->getPerms();
@@ -441,7 +444,7 @@ class icms_core_Filesystem
 		$hideDot = true,
 	) {
 		$dirList = [];
-		$iterator = new DirectoryIterator($dirname);
+		$iterator = new \DirectoryIterator($dirname);
 		foreach ($iterator as $file) {
 			if ($file->isDir() && !$file->isDot()) {
 				$filename = $file->getFilename();
@@ -484,7 +487,7 @@ class icms_core_Filesystem
 		} else {
 			$extList = implode("|\.", $extension);
 		}
-		$iterator = new DirectoryIterator($dirname);
+		$iterator = new \DirectoryIterator($dirname);
 		foreach ($iterator as $file) {
 			if ($file->isFile() && !$file->isDot()) {
 				$filename = $file->getFilename();
@@ -557,13 +560,13 @@ class icms_core_Filesystem
 		$extList = empty($extension) ? "" : implode("|\.", $extension);
 		$count = 0;
 
-		$iterator = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator(
+		$iterator = new \RecursiveIteratorIterator(
+			new \RecursiveDirectoryIterator(
 				$dirname,
-				RecursiveDirectoryIterator::SKIP_DOTS |
-					RecursiveDirectoryIterator::FOLLOW_SYMLINKS,
+				\RecursiveDirectoryIterator::SKIP_DOTS |
+					\RecursiveDirectoryIterator::FOLLOW_SYMLINKS,
 			),
-			RecursiveIteratorIterator::LEAVES_ONLY,
+			\RecursiveIteratorIterator::LEAVES_ONLY,
 		);
 
 		foreach ($iterator as $file) {
@@ -918,7 +921,7 @@ class icms_core_Filesystem
 
 	/**
 	 * Return a flat array of every file's path relative to $baseDir, using the
-	 * same RecursiveIteratorIterator / FOLLOW_SYMLINKS flags as getFileCount()
+	 * same \RecursiveIteratorIterator / FOLLOW_SYMLINKS flags as getFileCount()
 	 * so that the two methods always agree on what constitutes "a file".
 	 *
 	 * Paths use forward slashes and have no leading slash, e.g.
@@ -937,13 +940,13 @@ class icms_core_Filesystem
 		$baseDir = rtrim(str_replace("\\", "/", $baseDir), "/");
 		$result = [];
 
-		$iterator = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator(
+		$iterator = new \RecursiveIteratorIterator(
+			new \RecursiveDirectoryIterator(
 				$baseDir,
-				RecursiveDirectoryIterator::SKIP_DOTS |
-					RecursiveDirectoryIterator::FOLLOW_SYMLINKS,
+				\RecursiveDirectoryIterator::SKIP_DOTS |
+					\RecursiveDirectoryIterator::FOLLOW_SYMLINKS,
 			),
-			RecursiveIteratorIterator::LEAVES_ONLY,
+			\RecursiveIteratorIterator::LEAVES_ONLY,
 		);
 
 		foreach ($iterator as $file) {
@@ -959,3 +962,5 @@ class icms_core_Filesystem
 		return $result;
 	}
 }
+
+\class_alias(Filesystem::class, 'icms_core_Filesystem');

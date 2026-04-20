@@ -15,6 +15,10 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		SVN: $Id: StopSpammer.php 12310 2013-09-13 21:33:58Z skenow $
  */
+declare(strict_types=1);
+
+namespace Icms\Core;
+
 /**
  * Checks usernames, emails and ip addresses against a blacklist
  *
@@ -23,8 +27,8 @@
  * @package		Core
  *
  */
-class icms_core_StopSpammer {
-	private $api_url;
+class StopSpammer {
+	private string $api_url;
 
 	/**
 	 * Constructor
@@ -41,7 +45,7 @@ class icms_core_StopSpammer {
 	 * @param string $value value to validate
 	 * @return true if spammer was found with passed info
 	 */
-	public function checkForField($field, $value) {
+	public function checkForField(string $field, string $value): bool {
 		$spam = false;
 
 		$url = $this->api_url . $field . '=' . urlencode($value);
@@ -49,7 +53,7 @@ class icms_core_StopSpammer {
 			$output = '';
 			$ch = curl_init();
 			if (!curl_setopt($ch, CURLOPT_URL, "$url")) {
-				icms_core_Debug::message($this->api_url . $field . '=' . $value);
+				Debug::message($this->api_url . $field . '=' . $value);
 				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
 			}
 			curl_setopt($ch, CURLOPT_URL, "$url");
@@ -64,7 +68,7 @@ class icms_core_StopSpammer {
 		} else {
 			$file = fopen($url, "r");
 			if (!$file) {
-				icms_core_Debug::message($this->api_url . $field . '=' . $value);
+				Debug::message($this->api_url . $field . '=' . $value);
 				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
 			}
 			while (!feof($file)) {
@@ -85,7 +89,7 @@ class icms_core_StopSpammer {
 	 * @param string $username username to check
 	 * @return true if spammer was found with this username
 	 */
-	public function badUsername($username) {
+	public function badUsername(string $username): bool {
 		return $this->checkForField('username', $username);
 	}
 
@@ -95,7 +99,7 @@ class icms_core_StopSpammer {
 	 * @param string $email email to check
 	 * @return true if spammer was found with this email
 	 */
-	public function badEmail($email) {
+	public function badEmail(string $email): bool {
 		return $this->checkForField('email', $email);
 	}
 
@@ -105,7 +109,7 @@ class icms_core_StopSpammer {
 	 * @param string $ip ip to check
 	 * @return true if spammer was found with this IP
 	 */
-	public function badIP($ip) {
+	public function badIP(string $ip): bool {
 	    // return TRUE if it's not a valid IP
 	    if (!filter_var($ip, FILTER_VALIDATE_IP)) return TRUE;
 	    // return FALSE if it is a valid IPv6 address - only until IPv6 can be checked without error
@@ -115,3 +119,5 @@ class icms_core_StopSpammer {
 	    return $this->checkForField('ip', $ip);
 	}
 }
+
+\class_alias(StopSpammer::class, 'icms_core_StopSpammer');

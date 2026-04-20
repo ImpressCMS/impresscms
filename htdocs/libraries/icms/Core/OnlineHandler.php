@@ -46,7 +46,12 @@
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_core_OnlineHandler {
+
+declare(strict_types=1);
+
+namespace Icms\Core;
+
+class OnlineHandler {
 
 	/**
 	 * Database connection
@@ -75,7 +80,7 @@ class icms_core_OnlineHandler {
 	 *
 	 * @return	bool    TRUE on success
 	 */
-	public function write($uid, $uname, $time, $module, $ip) {
+	public function write($uid, string $uname, int $time, $module, string $ip): bool {
 		$uid = (int) $uid;
 		if ($uid > 0) {
 			$sql = "SELECT COUNT(*) FROM " . $this->db->prefix('online')
@@ -117,7 +122,7 @@ class icms_core_OnlineHandler {
 	 *
 	 * @return	bool    TRUE on success
 	 */
-	public function destroy($uid) {
+	public function destroy($uid): bool {
 		$sql = sprintf("DELETE FROM %s WHERE online_uid = '%u'", $this->db->prefix('online'), (int) ($uid));
 		if (!$result = $this->db->queryF($sql)) {
 			return false;
@@ -132,7 +137,7 @@ class icms_core_OnlineHandler {
 	 *
 	 * @param	int $expire Expiration time in seconds
 	 */
-	public function gc($expire) {
+	public function gc(int $expire): void {
 		$sql = sprintf("DELETE FROM %s WHERE online_updated < '%u'", $this->db->prefix('online'), time() - (int) ($expire));
 		$this->db->queryF($sql);
 	}
@@ -180,3 +185,5 @@ class icms_core_OnlineHandler {
 		return $ret;
 	}
 }
+
+\class_alias(OnlineHandler::class, 'icms_core_OnlineHandler');

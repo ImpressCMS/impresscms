@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 // $Id: Security.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -48,20 +49,23 @@
  * @author		Jan Pedersen <mithrandir@xoops.org>
  * @copyright	(c) 2000-2005 The Xoops Project - www.xoops.org
  */
-class icms_core_Security {
 
-	public $errors = array();
+namespace Icms\Core;
+
+class Security {
+
+	public array $errors = [];
 
 	/**
 	 * Initialize the icms::$security service
 	 */
-	static public function service() {
-		$instance = new icms_core_Security();
+	public static function service(): self {
+		$instance = new self();
 		$instance->checkSuperglobals();
 		if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$instance->checkReferer(XOOPS_DB_CHKREF)) {
 			define('XOOPS_DB_PROXY', 1);
 		}
-		icms_Event::attach('icms', 'loadService-config', array($instance, 'checkBadips'));
+		\icms_Event::attach('icms', 'loadService-config', array($instance, 'checkBadips'));
 		return $instance;
 	}
 
@@ -81,7 +85,7 @@ class icms_core_Security {
 	 *
 	 * @return bool
 	 */
-	public function check($clearIfValid = true, $token = false, $name = _CORE_TOKEN) {
+	public function check(bool $clearIfValid = true, $token = false, string $name = _CORE_TOKEN): bool {
 		return $this->validateToken($token, $clearIfValid, $name);
 	}
 
@@ -93,7 +97,7 @@ class icms_core_Security {
 	 *
 	 * @return string token value
 	 */
-	public function createToken($timeout = 0, $name = _CORE_TOKEN) {
+	public function createToken(int $timeout = 0, string $name = _CORE_TOKEN): string {
 		$this->garbageCollection($name);
 		if ($timeout == 0) {
 			$timeout = $GLOBALS['icmsConfig']['session_expire'] * 60; //session_expire is in minutes, we need seconds
@@ -117,10 +121,10 @@ class icms_core_Security {
 	 *
 	 * @return bool
 	 **/
-	public function validateToken($token = false, $clearIfValid = true, $name = _CORE_TOKEN) {
+	public function validateToken($token = false, bool $clearIfValid = true, string $name = _CORE_TOKEN): bool {
 		$token = ($token !== false) ? $token : ( isset($_REQUEST[$name . '_REQUEST']) ? $_REQUEST[$name . '_REQUEST'] : '' );
 		if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
-			icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
+			\icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
 			return false;
 		}
 		$validFound = false;
@@ -132,17 +136,17 @@ class icms_core_Security {
 						// token should be valid once, so clear it once validated
 						unset($token_data[$i]);
 					}
-					icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENISVALID);
+					\icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENISVALID);
 					$validFound = true;
 				} else {
 					$str = _CORE_TOKENEXPIRED;
 					$this->setErrors($str);
-					icms::$logger->addExtra(_CORE_TOKENVALID, $str);
+					\icms::$logger->addExtra(_CORE_TOKENVALID, $str);
 				}
 			}
 		}
 		if (!$validFound) {
-			icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENINVALID);
+			\icms::$logger->addExtra(_CORE_TOKENVALID, _CORE_TOKENINVALID);
 		}
 		$this->garbageCollection($name);
 		return $validFound;
@@ -153,7 +157,7 @@ class icms_core_Security {
 	 *
 	 * @param string $name session name
 	 **/
-	public function clearTokens($name = _CORE_TOKEN) {
+	public function clearTokens(string $name = _CORE_TOKEN): void {
 		$_SESSION[$name . '_SESSION'] = array();
 	}
 
@@ -164,7 +168,7 @@ class icms_core_Security {
 	 *
 	 * @return bool
 	 **/
-	public function filterToken($token) {
+	public function filterToken($token): bool {
 		return (!empty($token['expire']) && $token['expire'] >= time());
 	}
 
@@ -175,7 +179,7 @@ class icms_core_Security {
 	 *
 	 * @return void
 	 **/
-	public function garbageCollection($name = _CORE_TOKEN) {
+	public function garbageCollection(string $name = _CORE_TOKEN): void {
 		if (isset($_SESSION[$name . '_SESSION']) && count($_SESSION[$name . '_SESSION']) > 0) {
 			$_SESSION[$name . '_SESSION'] = array_filter($_SESSION[$name . '_SESSION'], array($this, 'filterToken'));
 		}
@@ -187,8 +191,8 @@ class icms_core_Security {
 	 *
 	 * @return bool
 	 **/
-	public function checkReferer($docheck = 1) {
-		$ref = xoops_getenv('HTTP_REFERER');
+	public function checkReferer(int $docheck = 1): bool {
+		$ref = \xoops_getenv('HTTP_REFERER');
 		if ($docheck == 0) {
 			return true;
 		}
@@ -206,7 +210,7 @@ class icms_core_Security {
 	 *
 	 * @return void
 	 **/
-	public function checkSuperglobals() {
+	public function checkSuperglobals(): void {
 		foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS',
 						'_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS',
 						'_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES',
@@ -229,7 +233,7 @@ class icms_core_Security {
 	 *
 	 * @return void
 	 **/
-	public function checkBadips() {
+	public function checkBadips(): void {
 		global $icmsConfig;
 		if ($icmsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
 			foreach ($icmsConfig['bad_ips'] as $bi) {
@@ -248,8 +252,8 @@ class icms_core_Security {
 	 *
 	 * @return string
 	 **/
-	public function getTokenHTML($name = _CORE_TOKEN) {
-		$token = new icms_form_elements_Hiddentoken($name);
+	public function getTokenHTML(string $name = _CORE_TOKEN): string {
+		$token = new \icms_form_elements_Hiddentoken($name);
 		return $token->render();
 	}
 
@@ -258,7 +262,7 @@ class icms_core_Security {
 	 *
 	 * @param   string  $error
 	 **/
-	public function setErrors($error) {
+	public function setErrors(string $error): void {
 		$this->errors[] = trim($error);
 	}
 
@@ -269,7 +273,7 @@ class icms_core_Security {
 	 *
 	 * @return    array|string    Array of array messages OR HTML string
 	 */
-	public function &getErrors($ashtml = false) {
+	public function &getErrors(bool $ashtml = false) {
 		if (!$ashtml) {
 			return $this->errors;
 		} else {
@@ -283,3 +287,5 @@ class icms_core_Security {
 		}
 	}
 }
+
+\class_alias(Security::class, 'icms_core_Security');

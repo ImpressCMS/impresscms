@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Class to Clean & Filter HTML for various uses.
  * Class uses external HTML Purifier for filtering.
@@ -20,9 +21,12 @@
  * @package		Core
  *
  */
-use \HTMLPurifier;
 
-class icms_core_HTMLFilter extends icms_core_DataFilter {
+namespace Icms\Core;
+
+use HTMLPurifier;
+
+class HTMLFilter extends \icms_core_DataFilter {
 
 	/**
 	 * variable used by HTML Filter Library
@@ -42,7 +46,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * @static      $instance
 	 * @staticvar   object
 	 **/
-	public static function getInstance() {
+	public static function getInstance(): self {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new self();
@@ -59,8 +63,8 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 *			HTMLPurifier, HTMLLawed etc, for now we just have HTMLPurifier.
 	 * @return   string
 	 **/
-	public static function filterHTML($html) {
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+	public static function filterHTML(string $html): string {
+		$icmsConfigPurifier = \icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
 
         $fcomment = '<!-- filtered with htmlpurifier -->';
 
@@ -96,7 +100,7 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 *
 	 * @return	object	array list of filter objects
 	 */
-	private static function getCustomFilterList() {
+	private static function getCustomFilterList(): array|string {
 		// Check bundled location first for backward compatibility
 		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
 
@@ -105,11 +109,11 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 			$dirPath = ICMS_ROOT_PATH . '/vendor/ezyang/htmlpurifier/library/HTMLPurifier/Filter/';
 		}
 
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+		$icmsConfigPurifier = \icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
 		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
 			$filterList = array();
 
-			$fileList = icms_core_Filesystem::getFileList($dirPath, '', array('php'), true);
+			$fileList = Filesystem::getFileList($dirPath, '', array('php'), true);
 			unset($fileList['ExtractStyleBlocks.php'], $fileList['YouTube.php']);
 			$fileList = array_values($fileList);
 
@@ -129,8 +133,8 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * Gets Custom Purifier configurations ** this function will improve in time **
 	 * @return  array    $icmsPurifierConf
 	 **/
-	protected static function getHTMLFilterConfig() {
-		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
+	protected static function getHTMLFilterConfig(): array {
+		$icmsConfigPurifier = \icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
 
         $IframeRegExp = $icmsConfigPurifier['purifier_URI_SafeIframeRegexp'];
         if ($IframeRegExp !== '') {
@@ -212,3 +216,5 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 		return parent::cleanArray($icmsPurifierConf);
 	}
 }
+
+\class_alias(HTMLFilter::class, 'icms_core_HTMLFilter');

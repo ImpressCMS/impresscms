@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 // $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System //
@@ -40,36 +41,6 @@
  */
 
 /**
- * #@+
- * Object datatype
- */
-define('XOBJ_DTYPE_TXTBOX', 1);
-define('XOBJ_DTYPE_TXTAREA', 2);
-define('XOBJ_DTYPE_INT', 3);
-define('XOBJ_DTYPE_URL', 4);
-define('XOBJ_DTYPE_EMAIL', 5);
-define('XOBJ_DTYPE_ARRAY', 6);
-define('XOBJ_DTYPE_OTHER', 7);
-define('XOBJ_DTYPE_SOURCE', 8);
-define('XOBJ_DTYPE_STIME', 9);
-define('XOBJ_DTYPE_MTIME', 10);
-define('XOBJ_DTYPE_LTIME', 11);
-
-define('XOBJ_DTYPE_SIMPLE_ARRAY', 101);
-define('XOBJ_DTYPE_CURRENCY', 200);
-define('XOBJ_DTYPE_FLOAT', 201);
-define('XOBJ_DTYPE_TIME_ONLY', 202);
-define('XOBJ_DTYPE_URLLINK', 203);
-define('XOBJ_DTYPE_FILE', 204);
-define('XOBJ_DTYPE_IMAGE', 205);
-define('XOBJ_DTYPE_FORM_SECTION', 210);
-define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
-
-/**
- * #@-
- */
-
-/**
  * Base class for all objects in the kernel (and beyond)
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -83,7 +54,40 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
  *            You should have received a copy of XOOPS_copyrights.txt with
  *            this file. If not, you may obtain a copy from xoops.org
  */
-class icms_core_Object {
+
+namespace Icms\Core;
+
+/**
+ * #@+
+ * Object datatype
+ */
+\define('XOBJ_DTYPE_TXTBOX', 1);
+\define('XOBJ_DTYPE_TXTAREA', 2);
+\define('XOBJ_DTYPE_INT', 3);
+\define('XOBJ_DTYPE_URL', 4);
+\define('XOBJ_DTYPE_EMAIL', 5);
+\define('XOBJ_DTYPE_ARRAY', 6);
+\define('XOBJ_DTYPE_OTHER', 7);
+\define('XOBJ_DTYPE_SOURCE', 8);
+\define('XOBJ_DTYPE_STIME', 9);
+\define('XOBJ_DTYPE_MTIME', 10);
+\define('XOBJ_DTYPE_LTIME', 11);
+
+\define('XOBJ_DTYPE_SIMPLE_ARRAY', 101);
+\define('XOBJ_DTYPE_CURRENCY', 200);
+\define('XOBJ_DTYPE_FLOAT', 201);
+\define('XOBJ_DTYPE_TIME_ONLY', 202);
+\define('XOBJ_DTYPE_URLLINK', 203);
+\define('XOBJ_DTYPE_FILE', 204);
+\define('XOBJ_DTYPE_IMAGE', 205);
+\define('XOBJ_DTYPE_FORM_SECTION', 210);
+\define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
+
+/**
+ * #@-
+ */
+
+class Entity {
 
 	/**
 	 * holds all variables(properties) of an object
@@ -91,7 +95,7 @@ class icms_core_Object {
 	 * @var array
 	 * @access public
 	 */
-	public $vars = array();
+	public array $vars = [];
 
 	/**
 	 * variables cleaned for store in DB
@@ -99,7 +103,7 @@ class icms_core_Object {
 	 * @var array
 	 * @access public
 	 */
-	public $cleanVars = array();
+	public array $cleanVars = [];
 
 	/**
 	 * is it a newly created object?
@@ -107,7 +111,7 @@ class icms_core_Object {
 	 * @var bool
 	 * @access private
 	 */
-	private $_isNew = false;
+	private bool $_isNew = false;
 
 	/**
 	 * is it a newly created config object?
@@ -115,7 +119,7 @@ class icms_core_Object {
 	 * @var bool
 	 * @access protected
 	 */
-	protected $_isNewConfig = false;
+	protected bool $_isNewConfig = false;
 
 	/**
 	 * has any of the values been modified?
@@ -123,7 +127,7 @@ class icms_core_Object {
 	 * @var bool
 	 * @access private
 	 */
-	private $_isDirty = false;
+	private bool $_isDirty = false;
 
 	/**
 	 * errors
@@ -131,14 +135,14 @@ class icms_core_Object {
 	 * @var array
 	 * @access private
 	 */
-	protected $_errors = array();
+	protected array $_errors = [];
 
 	/**
 	 * additional filters registered dynamically by a child class object
 	 *
 	 * @access private
 	 */
-	protected $_filters = array();
+	protected array $_filters = [];
 
 	/**
 	 * constructor
@@ -155,15 +159,15 @@ class icms_core_Object {
 	 *
 	 * @access public
 	 */
-	public function setNew() {
+	public function setNew(): void {
 		$this->_isNew = true;
 	}
 
-	public function unsetNew() {
+	public function unsetNew(): void {
 		$this->_isNew = false;
 	}
 
-	public function isNew() {
+	public function isNew(): bool {
 		return $this->_isNew;
 	}
 
@@ -177,15 +181,15 @@ class icms_core_Object {
 	 *
 	 * @access public
 	 */
-	public function setNewConfig() {
+	public function setNewConfig(): void {
 		$this->_isNewConfig = true;
 	}
 
-	public function unsetNewConfig() {
+	public function unsetNewConfig(): void {
 		$this->_isNewConfig = false;
 	}
 
-	public function isNewConfig() {
+	public function isNewConfig(): bool {
 		return $this->_isNewConfig;
 	}
 
@@ -201,15 +205,15 @@ class icms_core_Object {
 	 *
 	 * @access public
 	 */
-	public function setDirty() {
+	public function setDirty(): void {
 		$this->_isDirty = true;
 	}
 
-	public function unsetDirty() {
+	public function unsetDirty(): void {
 		$this->_isDirty = false;
 	}
 
-	public function isDirty() {
+	public function isDirty(): bool {
 		return $this->_isDirty;
 	}
 
@@ -228,7 +232,7 @@ class icms_core_Object {
 	 * @param int $maxlength for XOBJ_DTYPE_TXTBOX type only
 	 * @param string $option does this data have any select options?
 	 */
-	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
+	public function initVar(string $key, int $data_type, $value = null, bool $required = false, ?int $maxlength = null, string $options = ''): void {
 		$this->vars[$key] = array('value' => $value, 'required' => $required, 'data_type' => $data_type, 'maxlength' => $maxlength, 'changed' => false, 'options' => $options);
 	}
 
@@ -239,7 +243,7 @@ class icms_core_Object {
 	 * @param string $key name of the variable to assign
 	 * @param mixed $value value to assign
 	 */
-	public function assignVar($key, $value) {
+	public function assignVar(string $key, $value): void {
 		if (isset($value) && isset($this->vars[$key])) {
 			$this->vars[$key]['value'] = &$value;
 		}
@@ -251,7 +255,7 @@ class icms_core_Object {
 	 * @access public
 	 * @param array $var_array associative array of values to assign
 	 */
-	public function assignVars($var_arr) {
+	public function assignVars(array $var_arr): void {
 		foreach ($var_arr as $key => $value) {
 			$this->assignVar($key, $value);
 		}
@@ -265,7 +269,7 @@ class icms_core_Object {
 	 * @param mixed $value value to assign
 	 * @param bool $not_gpc
 	 */
-	public function setVar($key, $value, $not_gpc = false) {
+	public function setVar(string $key, $value, bool $not_gpc = false): void {
 		if (!empty($key) && isset($value) && isset($this->vars[$key])) {
 			$this->vars[$key]['value'] = &$value;
 			$this->vars[$key]['not_gpc'] = $not_gpc;
@@ -281,7 +285,7 @@ class icms_core_Object {
 	 * @param array $var_arr associative array of values to assign
 	 * @param bool $not_gpc
 	 */
-	public function setVars($var_arr, $not_gpc = false) {
+	public function setVars(array $var_arr, bool $not_gpc = false): void {
 		foreach ($var_arr as $key => $value) {
 			$this->setVar($key, $value, $not_gpc);
 		}
@@ -298,7 +302,7 @@ class icms_core_Object {
 	 * @param array $var_arr associative array of values to assign
 	 * @param string $pref prefix (only keys starting with the prefix will be set)
 	 */
-	public function setFormVars($var_arr = null, $pref = 'xo_', $not_gpc = false) {
+	public function setFormVars(?array $var_arr = null, string $pref = 'xo_', bool $not_gpc = false): void {
 		$len = strlen($pref);
 		foreach ($var_arr as $key => $value) {
 			if ($pref == substr($key, 0, $len)) {
@@ -313,7 +317,7 @@ class icms_core_Object {
 	 * @access public
 	 * @return array associative array of key->value pairs
 	 */
-	public function &getVars() {
+	public function &getVars(): array {
 		return $this->vars;
 	}
 
@@ -325,7 +329,7 @@ class icms_core_Object {
 	 * @param int $maxDepth Maximum level of recursion to use if some vars are objects themselves
 	 * @return array associative array of key->value pairs
 	 */
-	public function getValues($keys = null, $format = 's', $maxDepth = 1) {
+	public function getValues(?array $keys = null, string $format = 's', int $maxDepth = 1): array {
 		if (!isset($keys)) {
 			$keys = array_keys($this->vars);
 		}
@@ -352,7 +356,7 @@ class icms_core_Object {
 	 * @param string $format format to use for the output
 	 * @return mixed formatted value of the variable
 	 */
-	public function getVar($key, $format = 's') {
+	public function getVar(string $key, string $format = 's') {
 		$ret = $this->vars[$key]['value'];
 		switch ($this->vars[$key]['data_type']) {
 
@@ -362,14 +366,14 @@ class icms_core_Object {
 					case 'show':
 					case 'e':
 					case 'edit':
-						return icms_core_DataFilter::htmlSpecialchars($ret);
+						return \icms_core_DataFilter::htmlSpecialchars($ret);
 						break 1;
 
 					case 'p':
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						return icms_core_DataFilter::htmlSpecialchars(icms_core_DataFilter::stripSlashesGPC($ret));
+						return \icms_core_DataFilter::htmlSpecialchars(\icms_core_DataFilter::stripSlashesGPC($ret));
 						break 1;
 
 					case 'n':
@@ -390,18 +394,18 @@ class icms_core_Object {
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html && (!is_int($ret) && !empty($ret))) {
 							if ($br) { // have to use this whilst ever there's a zillion editors in the core
-								return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
+								return \icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
 							} else {
-								return icms_core_DataFilter::checkVar($ret, 'html', 'output');
+								return \icms_core_DataFilter::checkVar($ret, 'html', 'output');
 							}
 						} else {
-							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
+							return \icms_core_DataFilter::checkVar($ret, 'text', 'output');
 						}
 						break 1;
 
 					case 'e':
 					case 'edit':
-						return icms_core_DataFilter::checkVar($ret, 'html', 'edit');
+						return \icms_core_DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
@@ -412,9 +416,9 @@ class icms_core_Object {
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-							return icms_core_DataFilter::checkVar($ret, 'html', 'input');
+							return \icms_core_DataFilter::checkVar($ret, 'html', 'input');
 						} else {
-							return icms_core_DataFilter::checkVar($ret, 'text', 'input');
+							return \icms_core_DataFilter::checkVar($ret, 'text', 'input');
 						}
 						break 1;
 
@@ -426,7 +430,7 @@ class icms_core_Object {
 							$ret = str_replace('<!-- filtered with htmlpurifier -->', '', $ret);
 						}
 
-						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(\icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -455,17 +459,17 @@ class icms_core_Object {
 
 					case 'e':
 					case 'edit':
-						return icms_core_DataFilter::checkVar($ret, 'html', 'edit');
+						return \icms_core_DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
 					case 'preview':
-						return icms_core_DataFilter::stripSlashesGPC($ret);
+						return \icms_core_DataFilter::stripSlashesGPC($ret);
 						break 1;
 
 					case 'f':
 					case 'formpreview':
-						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(\icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -516,7 +520,7 @@ class icms_core_Object {
 	 * @return bool true if successful
 	 * @access public
 	 */
-	public function cleanVars() {
+	public function cleanVars(): bool {
 		$existing_errors = $this->getErrors();
 		$this->_errors = array();
 
@@ -536,9 +540,9 @@ class icms_core_Object {
 							break;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = icms_core_DataFilter::stripSlashesGPC(icms_core_DataFilter::censorString($cleanv));
+							$cleanv = \icms_core_DataFilter::stripSlashesGPC(\icms_core_DataFilter::censorString($cleanv));
 						} else {
-							$cleanv = icms_core_DataFilter::censorString($cleanv);
+							$cleanv = \icms_core_DataFilter::censorString($cleanv);
 						}
 						break;
 
@@ -548,17 +552,17 @@ class icms_core_Object {
 							break;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
-							$cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
+							$cleanv = \icms_core_DataFilter::stripSlashesGPC($cleanv);
+							$cleanv = \icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						} else {
-							// $cleanv = icms_core_DataFilter::censorString($cleanv);
-							$cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
+							// $cleanv = \icms_core_DataFilter::censorString($cleanv);
+							$cleanv = \icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						}
 						break;
 
 					case XOBJ_DTYPE_SOURCE:
 						if (!$v['not_gpc']) {
-							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
+							$cleanv = \icms_core_DataFilter::stripSlashesGPC($cleanv);
 						} else {
 							$cleanv = $cleanv;
 						}
@@ -570,11 +574,11 @@ class icms_core_Object {
 						break;
 
 					case XOBJ_DTYPE_CURRENCY:
-						$cleanv = icms_currency($cleanv);
+						$cleanv = \icms_currency($cleanv);
 						break;
 
 					case XOBJ_DTYPE_FLOAT:
-						$cleanv = icms_currency($cleanv);
+						$cleanv = \icms_currency($cleanv);
 						break;
 
 					case XOBJ_DTYPE_EMAIL:
@@ -582,12 +586,12 @@ class icms_core_Object {
 							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							break;
 						}
-						if ($cleanv != '' && !icms_core_DataFilter::checkVar($cleanv, 'email')) {
+						if ($cleanv != '' && !\icms_core_DataFilter::checkVar($cleanv, 'email')) {
 							$this->setErrors(_CORE_DB_INVALIDEMAIL);
 							break;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
+							$cleanv = \icms_core_DataFilter::stripSlashesGPC($cleanv);
 						}
 						break;
 
@@ -600,7 +604,7 @@ class icms_core_Object {
 							$cleanv = 'http://' . $cleanv;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
+							$cleanv = \icms_core_DataFilter::stripSlashesGPC($cleanv);
 						}
 						break;
 
@@ -644,7 +648,7 @@ class icms_core_Object {
 	 * @param string $filtername name of the filter
 	 * @access public
 	 */
-	public function registerFilter($filtername) {
+	public function registerFilter(string $filtername): void {
 		$this->_filters[] = $filtername;
 	}
 
@@ -653,7 +657,7 @@ class icms_core_Object {
 	 *
 	 * @access private
 	 */
-	private function _loadFilters() {}
+	private function _loadFilters(): void {}
 
 	/**
 	 * create a clone(copy) of the current object
@@ -678,7 +682,7 @@ class icms_core_Object {
 	 * @param string $value error to add
 	 * @access public
 	 */
-	public function setErrors($err_str) {
+	public function setErrors(string $err_str): void {
 		$this->_errors[] = trim($err_str);
 	}
 
@@ -688,7 +692,7 @@ class icms_core_Object {
 	 * @return array an array of errors
 	 * @access public
 	 */
-	public function getErrors() {
+	public function getErrors(): array {
 		return $this->_errors;
 	}
 
@@ -698,7 +702,7 @@ class icms_core_Object {
 	 * @return string html listing the errors
 	 * @access public
 	 */
-	public function getHtmlErrors() {
+	public function getHtmlErrors(): string {
 		$ret = '<h4>' . _ERROR . '</h4>';
 		if (!empty($this->_errors)) {
 			foreach ($this->_errors as $error) {
@@ -710,3 +714,5 @@ class icms_core_Object {
 		return $ret;
 	}
 }
+
+\class_alias(Entity::class, 'icms_core_Object');
