@@ -142,6 +142,7 @@ class DataFilter {
 	 * @return string
 	 */
 	static public function htmlSpecialChars($text) {
+		$text = is_scalar($text) ? (string) $text : '';
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), @htmlspecialchars($text, ENT_QUOTES, _CHARSET));
 	}
 
