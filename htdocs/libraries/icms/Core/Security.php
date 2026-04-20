@@ -102,7 +102,7 @@ class Security {
 		if ($timeout == 0) {
 			$timeout = $GLOBALS['icmsConfig']['session_expire'] * 60; //session_expire is in minutes, we need seconds
 		}
-		$token_id = md5(uniqid(rand(), true));
+		$token_id = md5(uniqid((string) rand(), true));
 		// save token data on the server
 		if (!isset($_SESSION[$name . '_SESSION'])) {
 			$_SESSION[$name . '_SESSION'] = array();
