@@ -33,7 +33,7 @@
 		}
 	],
 	"require": {
-		"php": ">=8.2.0",
+		"php": ">=8.2 <8.5",
 		"ext-gd": "*",
 		"ext-json": "*",
 		"ext-mbstring": "*",
@@ -43,12 +43,14 @@
 		"ext-session": "*",
 		"ext-xml": "*",
 		"ext-zlib": "*",
-		"composer/composer": "^2.8",
+		"composer/composer": "^2.9",
 		"ezyang/htmlpurifier": "^4.19",
 		"simplepie/simplepie": "^1.9",
-		"smottt/wideimage": "^1.1"
+		"smottt/wideimage": "^1.1.4"
 	},
-	"require-dev": {},
+	"require-dev": {
+		"phpunit/phpunit": "~11.5"
+	},
 	"autoload": {
 		"psr-4": {
 			"Icms\\": "libraries/icms/"
@@ -58,7 +60,15 @@
 		},
 		"classmap": [
 			"libraries/icms.php"
+		],
+		"files": [
+			"libraries/Autoloader.php"
 		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Icms\\Tests\\": "tests/"
+		}
 	},
 	"config": {
 		"optimize-autoloader": true,
@@ -71,7 +81,10 @@
 		"cache-dir": "var/cache/composer",
 		"vendor-dir": "vendor"
 	},
-	"scripts": {},
+	"scripts": {
+		"test": "phpunit",
+		"test-coverage": "phpunit --coverage-html var/coverage"
+	},
 	"minimum-stability": "stable",
 	"prefer-stable": true
 }
