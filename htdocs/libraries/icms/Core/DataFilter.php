@@ -117,6 +117,7 @@ class DataFilter {
 	 * @return bool
 	 */
 	static public function checkUrlString($text) {
+		$text = is_scalar($text) ? (string) $text : '';
 		// Check control code
 		if (preg_match("/[\0-\31]/", $text)) {
 			return false;
@@ -132,6 +133,7 @@ class DataFilter {
 	 * @return string
 	 */
 	static public function nl2Br($text) {
+		$text = is_scalar($text) ? (string) $text : '';
 		return preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $text);
 	}
 
@@ -153,6 +155,7 @@ class DataFilter {
 	 * @return string
 	 */
 	static public function undoHtmlSpecialChars($text) {
+		$text = is_scalar($text) ? (string) $text : '';
 		return htmlspecialchars_decode($text, ENT_QUOTES);
 	}
 
@@ -161,6 +164,7 @@ class DataFilter {
 	 * @param unknown_type $text
 	 */
 	static public function htmlEntities($text) {
+		$text = is_scalar($text) ? (string) $text : '';
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), @htmlentities($text, ENT_QUOTES, _CHARSET));
 	}
 
@@ -192,6 +196,7 @@ class DataFilter {
 	 * @deprecated we shouldn't be using this as a 'filter'
 	 */
 	public static function stripSlashesGPC($text) {
+		$text = is_scalar($text) ? (string) $text : '';
 		return $text;
 	}
 
@@ -460,6 +465,7 @@ class DataFilter {
 	 * @return string
 	 */
 	static public function filterTextareaInput($text) {
+		$text = is_scalar($text) ? (string) $text : '';
 		\icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
 		$text = self::htmlSpecialChars(strip_tags($text));
@@ -481,6 +487,7 @@ class DataFilter {
 	 * @return string
 	 */
 	static public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
+		$text = is_scalar($text) ? (string) $text : '';
 		if($text) {
 			\icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 
@@ -525,6 +532,7 @@ class DataFilter {
 	 * @return string
 	 */
 	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1, $br = 0) {
+		$html = is_scalar($html) ? (string) $html : '';
 		\icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 
 		$html = str_replace('<!-- input filtered -->', '', $html);
@@ -561,6 +569,7 @@ class DataFilter {
 	 */
 	static public function filterHTMLdisplay($html, $icode = 1, $br = 0) {
 		global $icmsConfig;
+		$html = is_scalar($html) ? (string) $html : '';
 
 		\icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
 
@@ -620,6 +629,7 @@ class DataFilter {
 	 * @return string
 	 */
 	static public function codeDecode(&$text, $allowimage = 1) {
+		$text = is_scalar($text) ? (string) $text : '';
 		$patterns = array();
 		$replacements = array();
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
@@ -696,6 +706,7 @@ class DataFilter {
 	 */
 	static public function makeClickable($text) {
 		global $icmsConfigPersona;
+		$text = is_scalar($text) ? (string) $text : '';
 		$text = ' ' . $text;
 		$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^,\r\n\"\(\)'<>]+)/i" /* , "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i" */
 		);
@@ -749,6 +760,7 @@ class DataFilter {
 	 *
 	 */
 	static public function censorString(&$text) {
+		$text = is_scalar($text) ? (string) $text : '';
 		$icmsConfigCensor = \icms::$config->getConfigsByCat(ICMS_CONF_CENSOR);
 		if ($icmsConfigCensor['censor_enable'] == true) {
 			$replacement = $icmsConfigCensor['censor_replace'];
@@ -777,6 +789,7 @@ class DataFilter {
 	 * Sanitizing of [code] tag
 	 */
 	static public function codePreConv($text, $imcode = 1) {
+		$text = is_scalar($text) ? (string) $text : '';
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
 			$text = preg_replace_callback($patterns, function ($match) {
@@ -795,6 +808,7 @@ class DataFilter {
 	 * @return string $text the converted text
 	 */
 	static public function codeConv($text, $imcode = 1, $image = 1) {
+		$text = is_scalar($text) ? (string) $text : '';
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
 			$text = preg_replace_callback($patterns, function ($matches) use ($image) {
@@ -813,6 +827,7 @@ class DataFilter {
 	 * @return string $str The sanitized decoded string
 	 */
 	static public function codeSanitizer($str, $image = 1) {
+		$str = is_scalar($str) ? (string) $str : '';
 		$str = self::htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
 		$str = self::codeDecode($str, $image);
 		return $str;
@@ -829,6 +844,7 @@ class DataFilter {
 	 */
 	static public function codeDecode_extended($text, $allowimage = 1) {
 		global $icmsConfigPlugins;
+		$text = is_scalar($text) ? (string) $text : '';
 		if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 			foreach ($icmsConfigPlugins['sanitizer_plugins'] as $item) {
 				$text = self::executeExtension($item, $text);
@@ -880,6 +896,7 @@ class DataFilter {
 	 */
 	static public function textsanitizer_syntaxhighlight(&$text) {
 		global $icmsConfigPlugins;
+		$text = is_scalar($text) ? (string) $text : '';
 		if ($icmsConfigPlugins['code_sanitizer'] == 'php') {
 			$text = self::undoHtmlSpecialChars($text);
 			$text = self::textsanitizer_php_highlight($text);
@@ -901,6 +918,7 @@ class DataFilter {
 	 * @return string $buffer the highlighted text
 	 */
 	static public function textsanitizer_php_highlight($text) {
+		$text = is_scalar($text) ? (string) $text : '';
 		$text = trim($text);
 		$addedtag_open = 0;
 		if (!strpos($text, '<?php') and (substr($text, 0, 5) != '<?php')) {
@@ -944,6 +962,7 @@ class DataFilter {
 	 */
 	static public function textsanitizer_geshi_highlight($text) {
 		global $icmsConfigPlugins;
+		$text = is_scalar($text) ? (string) $text : '';
 
 		if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php') return false;
 
@@ -975,6 +994,7 @@ class DataFilter {
 	 * @return string $text The trimmed text
 	 */
 	static public function icms_trim($text) {
+		$text = is_scalar($text) ? (string) $text : '';
 		if (function_exists('xoops_language_trim')) {
 			return xoops_language_trim($text);
 		}
@@ -992,6 +1012,7 @@ class DataFilter {
 	 * @return string
 	 */
 	static public function utf8_strrev($str, $reverse = false) {
+		$str = is_scalar($str) ? (string) $str : '';
 		preg_match_all('/./us', $str, $ar);
 		if ($reverse) {
 			return join('', array_reverse($ar[0]));
@@ -1032,6 +1053,7 @@ class DataFilter {
 	 */
 	static public function icms_substr($str, $start, $length, $trimmarker = '...') {
 		global $icmsConfigMultilang;
+		$str = is_scalar($str) ? (string) $str : '';
 
 		if ($icmsConfigMultilang['ml_enable']) {
 			$tags = explode(',', $icmsConfigMultilang['ml_tags']);
@@ -1096,6 +1118,7 @@ class DataFilter {
 	 * @return
 	 */
 	static private function priv_checkVar($data, $type, $options1, $options2) {
+		$data = is_scalar($data) ? (string) $data : '';
 		switch ($type) {
 			case "url": // returns False if URL invalid, returns $string if Valid
 				$data = filter_var($data, FILTER_SANITIZE_URL);
@@ -1300,6 +1323,7 @@ class DataFilter {
 	 * @return string
 	 */
 	static private function priv_smiley($message) {
+		$message = is_scalar($message) ? (string) $message : '';
 		$smileys = self::priv_getSmileys(true);
 		foreach ($smileys as $smile) {
 			$message = str_replace($smile['code'], '<img src="' . ICMS_UPLOAD_URL . '/' . htmlspecialchars($smile['smile_url']) . '" alt="" />', $message);
