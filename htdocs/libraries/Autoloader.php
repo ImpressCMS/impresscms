@@ -40,7 +40,10 @@ if (!function_exists('icms_legacy_autoloader_register')) {
         // renamed (not just moved) during the refactor, e.g. when the modern
         // class name is not a direct PascalCase transform of the legacy one.
         $renameMap = [
-            'icms_core_Object' => 'Icms\\Core\\Entity',
+            'icms_core_Object'          => 'Icms\\Core\\Entity',
+            'icms_ipf_Object'           => 'Icms\\Ipf\\Entity',
+            'icms_ipf_category_Object'  => 'Icms\\Ipf\\Category\\Entity',
+            'icms_ipf_seo_Object'       => 'Icms\\Ipf\\Seo\\Entity',
         ];
 
         spl_autoload_register(
@@ -110,6 +113,25 @@ if (!function_exists('icms_legacy_autoloader_register')) {
                         . '.php';
                     if (is_file($file)) {
                         require_once $file;
+                        // If the file has not been refactored yet and only
+                        // declares the legacy flat class name, alias the
+                        // modern namespaced name to it so the autoload chain
+                        // terminates and composer's PSR-4 loader does not
+                        // re-include the same file and trigger a redeclare.
+                        if (
+                            !class_exists($class, false)
+                            && !interface_exists($class, false)
+                            && !trait_exists($class, false)
+                        ) {
+                            $legacyName = 'icms_' . strtolower(str_replace('\\', '_', substr($class, 5)));
+                            if (
+                                class_exists($legacyName, false)
+                                || interface_exists($legacyName, false)
+                                || trait_exists($legacyName, false)
+                            ) {
+                                class_alias($legacyName, $class);
+                            }
+                        }
                     }
                 }
             },

@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Form control creating a checkbox element for an object derived from icms_ipf_Object
+ * Form control creating a checkbox element for an object derived from \icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,15 +13,17 @@
  * @version		$Id: Checkbox.php 12310 2013-09-13 21:33:58Z skenow $
  */
 
+namespace Icms\Ipf\Form\Elements;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
+class Checkbox extends \icms_form_elements_Checkbox {
 
 	private $_delimeter = "&nbsp;";
 
 	/**
 	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -48,9 +51,9 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 				if (isset($control['itemHandler'])) {
 					if (!isset($control['module'])) {
 						// Creating the specified core object handler
-						$control_handler = icms::handler($control['itemHandler']);
+						$control_handler = \icms::handler($control['itemHandler']);
 					} else {
-						$control_handler =& icms_getModuleHandler($control['itemHandler'], $control['module']);
+						$control_handler =& \icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}
 				} else {
 					$control_handler =& $object->handler;
@@ -110,3 +113,5 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 		return $js;
 	}
 }
+
+\class_alias(Checkbox::class, 'icms_ipf_form_elements_Checkbox');

@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Form control creating an autocomplete select box for an object derived from icms_ipf_Object
+ * Form control creating an autocomplete select box for an object derived from \icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,6 +13,8 @@
  * @version		$Id: Autocomplete.php 10846 2010-12-05 11:04:09Z phoenyx $
  */
 
+namespace Icms\Ipf\Form\Elements;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -20,10 +23,10 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * lookup):
  *
  * include "mainfile.php";
- * icms::$logger->disableLogger();
- * $sql = "SELECT * FROM " . icms::$xoopsDB->prefix("config") . " WHERE conf_name LIKE '%" . $_GET['term'] . "%'";
- * $result = icms::$xoopsDB->query($sql);
- * while ($myrow = icms::$xoopsDB->fetchArray($result)) $ret[] = array("item" => $myrow["conf_name"]);
+ * \icms::$logger->disableLogger();
+ * $sql = "SELECT * FROM " . \icms::$xoopsDB->prefix("config") . " WHERE conf_name LIKE '%" . $_GET['term'] . "%'";
+ * $result = \icms::$xoopsDB->query($sql);
+ * while ($myrow = \icms::$xoopsDB->fetchArray($result)) $ret[] = array("item" => $myrow["conf_name"]);
  * echo $_GET["callback"] . "(" . json_encode($ret) . ")";
  *
  * Important:
@@ -35,12 +38,12 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *  - use control parameter "delay" to specify the delay before the autocomplete function starts
  *    to work. Use with caution since it can result in high server load! (default: 500)
  */
-class icms_ipf_form_elements_Autocomplete extends icms_form_elements_Text {
+class Autocomplete extends \icms_form_elements_Text {
 	private $_file;
 
 	/**
 	 * Constructor
-	 * @param	icms_ipf_Object	$object	reference to targetobject (@link icms_ipf_Object)
+	 * @param	\icms_ipf_Object	$object	reference to targetobject (@link \icms_ipf_Object)
 	 * @param	string			$key	the form name
 	 */
 	public function __construct($object, $key) {
@@ -56,7 +59,7 @@ class icms_ipf_form_elements_Autocomplete extends icms_form_elements_Text {
 	/**
 	 * Prepare HTML for output
 	 *
-	 * @global	icms_view_theme_Object	$xoTheme	theme object
+	 * @global	\icms_view_theme_Object	$xoTheme	theme object
 	 * @return	string					$ret		the constructed HTML
 	 */
 	public function render() {
@@ -87,3 +90,5 @@ class icms_ipf_form_elements_Autocomplete extends icms_form_elements_Text {
 		return parent::render();
 	}
 }
+
+\class_alias(Autocomplete::class, 'icms_ipf_form_elements_Autocomplete');

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This class is responsible for some members functions
  *
@@ -14,6 +15,8 @@
  * @version		SVN: $Id: Handler.php 10868 2010-12-11 12:02:57Z phoenyx $
  */
 
+namespace Icms\Ipf\Member;
+
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
@@ -25,7 +28,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @package		Ipf
  * @subpackage	Member
  */
-class icms_ipf_member_Handler extends icms_member_Handler {
+class Handler extends \icms_member_Handler {
 
 	/**
 	 * constructor
@@ -33,7 +36,7 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 	 */
 	public function __construct(&$db) {
 		parent::__construct($db);
-		$this->_uHandler = new icms_member_user_Handler($db);
+		$this->_uHandler = new \icms_member_user_Handler($db);
 	}
 
 	// This function here below needs some changes to work under 1.2 Final. it's temporarily disabled.
@@ -180,7 +183,7 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 			} else {
 				$basename = strtolower($name[0]);
 			}
-			$basename = icms_core_DataFilter::icms_substr($basename, 0, 60, '');
+			$basename = \icms_core_DataFilter::icms_substr($basename, 0, 60, '');
 			//Prevent Duplication of Email Username and Name
 			if (!in_array($basename, $names)) {
 				$names[] = $basename;
@@ -193,10 +196,10 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 		while ($i < $count) {
 			$num = $this->genRandNumber();
 			if ($onbasename < 0 && $hasbasename) {
-				$names[] = icms_core_DataFilter::icms_substr($basename, 0, 58, '').$num;
+				$names[] = \icms_core_DataFilter::icms_substr($basename, 0, 58, '').$num;
 
 			} else {
-				$names[] = icms_core_DataFilter::icms_substr($emailname, 0, 58, ''). $num;
+				$names[] = \icms_core_DataFilter::icms_substr($emailname, 0, 58, ''). $num;
 			}
 			$i = count($names);
 			$onbasename = ~ $onbasename;
@@ -239,4 +242,6 @@ class icms_ipf_member_Handler extends icms_member_Handler {
 		}
 	}
 }
+
+\class_alias(Handler::class, 'icms_ipf_member_Handler');
 

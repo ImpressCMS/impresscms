@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -40,6 +41,8 @@
  * @version		$Id:Tree.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
+namespace Icms\Ipf;
+
 defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
 
 
@@ -53,7 +56,7 @@ defined('ICMS_ROOT_PATH') or die('ICMS root path not defined');
  * @package		Ipf
  * @subpackage	Tree
  */
-class icms_ipf_Tree {
+class Tree {
 
 	/**#@+
 	 * @access	private
@@ -229,3 +232,5 @@ class icms_ipf_Tree {
 	}
 
 }
+
+\class_alias(Tree::class, 'icms_ipf_Tree');

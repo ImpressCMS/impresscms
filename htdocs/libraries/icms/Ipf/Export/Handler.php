@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Class to easily export data from IcmsPersistables
  *
@@ -13,13 +14,15 @@
  * @version		SVN: $Id: Handler.php 11188 2011-04-16 03:29:27Z skenow $
  */
 
+namespace Icms\Ipf\Export;
+
 /**
  *
  * @category	ICMS
  * @package		Ipf
  * @subpackage	Export
  */
-class icms_ipf_export_Handler {
+class Handler {
 
 	public $handler;
 	public $criteria;
@@ -86,7 +89,7 @@ class icms_ipf_export_Handler {
 		$data = array();
 		$data['rows'] = $rows;
 		$data['columnsHeaders'] = $columnsHeaders;
-		$smartExportRenderer = new icms_ipf_export_Renderer($data, $this->filename, $this->filepath, $this->format, $this->options);
+		$smartExportRenderer = new Renderer($data, $this->filename, $this->filepath, $this->format, $this->options);
 		$smartExportRenderer->execute();
 	}
 
@@ -120,4 +123,6 @@ class icms_ipf_export_Handler {
 		}
 	}
 }
+
+\class_alias(Handler::class, 'icms_ipf_export_Handler');
 

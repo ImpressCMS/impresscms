@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Form control creating a textbox for an object derived from icms_ipf_Object
+ * Form control creating a textbox for an object derived from \icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,9 +13,11 @@
  * @version		$Id: Source.php 10866 2010-12-08 04:40:32Z skenow $
  */
 
+namespace Icms\Ipf\Form\Elements;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
+class Source extends \icms_form_elements_Textarea {
 	/*
 	 * Editor's class instance
 	 */
@@ -22,7 +25,7 @@ class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
 
 	/**
 	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -32,7 +35,7 @@ class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
 
 		$control = $object->getControl($key);
 
-		$editor_handler = icms_plugins_EditorHandler::getInstance('source');
+		$editor_handler = \icms_plugins_EditorHandler::getInstance('source');
 		$this->_editor = &$editor_handler->get($icmsConfig['sourceeditor_default'],
 			array('name' => $key,
 				'value' => $object->getVar($key, 'e'),
@@ -54,3 +57,5 @@ class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
 		}
 	}
 }
+
+\class_alias(Source::class, 'icms_ipf_form_elements_Source');

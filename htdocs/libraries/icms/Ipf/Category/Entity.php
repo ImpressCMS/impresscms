@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Contains the basic classe for managing a category object based on icms_ipf_Object
+ * Contains the basic classe for managing a category object based on Icms\Ipf\Entity
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -15,6 +16,8 @@
  * @todo		Properly set visibility of variables - in version 1.4
  */
 
+namespace Icms\Ipf\Category;
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
@@ -27,7 +30,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since 		1.1
  */
-class icms_ipf_category_Object extends icms_ipf_seo_Object {
+class Entity extends \Icms\Ipf\Seo\Entity {
 	/** Path that corresponds to the category */
 	private $_categoryPath;
 	/**
@@ -113,7 +116,7 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 */
 	public function getCategoryPath($withAllLink=true, $currentCategory=false)	{
 
-		$controller = new icms_ipf_Controller($this->handler);
+		$controller = new \Icms\Ipf\Controller($this->handler);
 
 		if (!$this->_categoryPath) {
 			if ($withAllLink && !$currentCategory) {
@@ -138,3 +141,5 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	}
 
 }
+
+\class_alias(Entity::class, 'icms_ipf_category_Object');

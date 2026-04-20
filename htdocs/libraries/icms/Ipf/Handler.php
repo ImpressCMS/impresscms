@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * icms_ipf_Handler
+ * Icms\Ipf\Handler (legacy icms_ipf_Handler)
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of derived class objects as well as some basic operations inherant to objects manipulation
@@ -18,6 +19,8 @@
  * @todo		Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
 
+namespace Icms\Ipf;
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * Persistable Object Handlder
@@ -26,7 +29,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @since		1.1
  * @todo		Properly name the vars using the naming conventions
  */
-class icms_ipf_Handler extends icms_core_ObjectHandler {
+class Handler extends \icms_core_ObjectHandler {
 
 	/**
 	 *
@@ -226,10 +229,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param str $perm_name
 	 */
 	public function setGrantedObjectsCriteria(&$criteria, $perm_name) {
-		$icmspermissions_handler = new icms_ipf_permission_Handler($this);
+		$icmspermissions_handler = new \icms_ipf_permission_Handler($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
-			$criteria->add(new icms_db_criteria_Item($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
+			$criteria->add(new \icms_db_criteria_Item($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
 			return true;
 		} else {
 			return false;
@@ -272,7 +275,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	public function getImagePath() {
 		$dir = $this->_uploadPath . $this->_itemname;
 		if (!file_exists($dir)) {
-			icms_core_Filesystem::mkdir($dir);
+			\icms_core_Filesystem::mkdir($dir);
 		}
 		return $dir . "/";
 	}
@@ -286,7 +289,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &get($id, $as_object = true, $debug = false, $criteria = false) {
 		if (!$criteria) {
-			$criteria = new icms_db_criteria_Compo();
+			$criteria = new \icms_db_criteria_Compo();
 		}
 		if (is_array($this->keyName)) {
 			foreach ($this->keyName as $i => $keyName) {
@@ -294,16 +297,16 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 				 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
-				//$criteria->add(new icms_db_criteria_Item($this->keyName[$i], ($id[$i]), '=', $this->_itemname));
-				$criteria->add(new icms_db_criteria_Item($keyName, $id[$i], '=', $this->_itemname));
+				//$criteria->add(new \icms_db_criteria_Item($this->keyName[$i], ($id[$i]), '=', $this->_itemname));
+				$criteria->add(new \icms_db_criteria_Item($keyName, $id[$i], '=', $this->_itemname));
 			}
 		} else {
-			//$criteria = new icms_db_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
+			//$criteria = new \icms_db_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
 			/**
 			 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 			 * Is the fact that we removed the intval() represents a security risk ?
 			 */
-			$criteria->add(new icms_db_criteria_Item($this->keyName, $id, '=', $this->_itemname));
+			$criteria->add(new \icms_db_criteria_Item($this->keyName, $id, '=', $this->_itemname));
 		}
 		$criteria->setLimit(1);
 		if ($debug) {
@@ -365,7 +368,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$start = $criteria->getStart();
 		}
 		if ($debug) {
-			icms_core_Debug::message($sql);
+			\icms_core_Debug::message($sql);
 		}
 
 		$result = $this->db->query($sql, $limit, $start);
@@ -399,7 +402,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 		}
 		if ($debug) {
-			icms_core_Debug::message($sql);
+			\icms_core_Debug::message($sql);
 		}
 
 		if ($force) {
@@ -511,7 +514,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 		$ret = array();
 		if ($criteria == null) {
-			$criteria = new icms_db_criteria_Compo();
+			$criteria = new \icms_db_criteria_Compo();
 		}
 
 		if ($criteria->getSort() == '') {
@@ -533,7 +536,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		}
 
 		if ($debug) {
-			icms_core_Debug::message($sql);
+			\icms_core_Debug::message($sql);
 		}
 
 		$result = $this->db->query($sql, $limit, $start);
@@ -544,7 +547,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		while ($myrow = $this->db->fetchArray($result)) {
 			//identifiers should be textboxes, so sanitize them like that
 			$ret[$myrow[$this->keyName]] = empty($this->identifierName) ? 1
-				: icms_core_DataFilter::checkVar($myrow[$this->identifierName], 'text', 'output');
+				: \icms_core_DataFilter::checkVar($myrow[$this->identifierName], 'text', 'output');
 		}
 		return $ret;
 	}
@@ -660,8 +663,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @return	bool	TRUE
 	 */
 	private function deleteGrantedPermissions($obj = NULL) {
-		$gperm_handler = icms::handler("icms_member_groupperm");
-		$module = icms::handler("icms_module")->getByDirname($this->_moduleName);
+		$gperm_handler = \icms::handler("icms_member_groupperm");
+		$module = \icms::handler("icms_module")->getByDirname($this->_moduleName);
 		$permissions = $this->getPermissions();
 		if ($permissions === FALSE) return TRUE;
 		foreach ($permissions as $permission) {
@@ -736,7 +739,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 		if ($obj->seoEnabled) {
 			// Auto create meta tags if empty
-			$icms_metagen = new icms_ipf_Metagen($obj->title(), $obj->getVar('meta_keywords'), $obj->summary());
+			$icms_metagen = new \icms_ipf_Metagen($obj->title(), $obj->getVar('meta_keywords'), $obj->summary());
 
 			if (!$obj->getVar('meta_keywords') || !$obj->getVar('meta_description')) {
 
@@ -832,7 +835,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		}
 
 		if ($debug) {
-			icms_core_Debug::message($sql);
+			\icms_core_Debug::message($sql);
 		}
 
 		if (false != $force) {
@@ -1049,3 +1052,4 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	}
 }
 
+\class_alias(Handler::class, 'icms_ipf_Handler');

@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * icms_ipf_export_Renderer class
+ * Icms\Ipf\Export\Renderer class
  *
  * Class that renders a set of data into a specific export format
  * @category	ICMS
@@ -10,6 +11,8 @@
  * @version		SVN: $Id: Renderer.php 10326 2010-07-11 18:54:25Z malanciault $
  */
 
+namespace Icms\Ipf\Export;
+
 /**
  * renders a set of data into a specific export format
  *
@@ -18,7 +21,7 @@
  * @subpackage	Export
  *
  */
-class icms_ipf_export_Renderer {
+class Renderer {
 
 	public $data;
 	public $format;
@@ -210,4 +213,6 @@ class icms_ipf_export_Renderer {
 		fclose($handle);
 	}
 }
+
+\class_alias(Renderer::class, 'icms_ipf_export_Renderer');
 

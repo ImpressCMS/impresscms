@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Form control creating an advanced file upload element
  *
@@ -12,15 +13,17 @@
  * @version		$Id: File.php 11454 2011-11-25 12:29:04Z sato-san $
  */
 
+namespace Icms\Ipf\Form\Elements;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class icms_ipf_form_elements_File extends icms_form_elements_File {
+class File extends \icms_form_elements_File {
 	private $_object;
 	private $_key;
 
 	/**
 	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -50,3 +53,5 @@ class icms_ipf_form_elements_File extends icms_form_elements_File {
 		return $ret;
 	}
 }
+
+\class_alias(File::class, 'icms_ipf_form_elements_File');

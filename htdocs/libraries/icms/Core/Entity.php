@@ -73,15 +73,15 @@ namespace Icms\Core;
 \define('XOBJ_DTYPE_MTIME', 10);
 \define('XOBJ_DTYPE_LTIME', 11);
 
-\define('XOBJ_DTYPE_SIMPLE_ARRAY', 101);
-\define('XOBJ_DTYPE_CURRENCY', 200);
-\define('XOBJ_DTYPE_FLOAT', 201);
-\define('XOBJ_DTYPE_TIME_ONLY', 202);
-\define('XOBJ_DTYPE_URLLINK', 203);
-\define('XOBJ_DTYPE_FILE', 204);
-\define('XOBJ_DTYPE_IMAGE', 205);
-\define('XOBJ_DTYPE_FORM_SECTION', 210);
-\define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
+if (!\defined('XOBJ_DTYPE_SIMPLE_ARRAY')) \define('XOBJ_DTYPE_SIMPLE_ARRAY', 101);
+if (!\defined('XOBJ_DTYPE_CURRENCY')) \define('XOBJ_DTYPE_CURRENCY', 200);
+if (!\defined('XOBJ_DTYPE_FLOAT')) \define('XOBJ_DTYPE_FLOAT', 201);
+if (!\defined('XOBJ_DTYPE_TIME_ONLY')) \define('XOBJ_DTYPE_TIME_ONLY', 202);
+if (!\defined('XOBJ_DTYPE_URLLINK')) \define('XOBJ_DTYPE_URLLINK', 203);
+if (!\defined('XOBJ_DTYPE_FILE')) \define('XOBJ_DTYPE_FILE', 204);
+if (!\defined('XOBJ_DTYPE_IMAGE')) \define('XOBJ_DTYPE_IMAGE', 205);
+if (!\defined('XOBJ_DTYPE_FORM_SECTION')) \define('XOBJ_DTYPE_FORM_SECTION', 210);
+if (!\defined('XOBJ_DTYPE_FORM_SECTION_CLOSE')) \define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
 
 /**
  * #@-

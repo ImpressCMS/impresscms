@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Form control creating 2 password textboxes to allow the user to enter twice his password, for an object derived from icms_ipf_Object
+ * Form control creating 2 password textboxes to allow the user to enter twice his password, for an object derived from \icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,24 +13,26 @@
  * @version		$Id: Passwordtray.php 10711 2010-10-10 17:11:29Z phoenyx $
  */
 
+namespace Icms\Ipf\Form\Elements;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class icms_ipf_form_elements_Passwordtray extends icms_form_elements_Tray {
+class Passwordtray extends \icms_form_elements_Tray {
 	private $_key;
 
 	/**
 	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key){
 		$var = $object->vars[$key];
 		$control = $object->controls[$key];
 
-		icms_loadLanguageFile('core', 'user');
+		\icms_loadLanguageFile('core', 'user');
 		parent::__construct($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
 
-		$password_box1 = new icms_form_elements_Password('', $key . '1', 10, 32, '', FALSE, "password_adv");
+		$password_box1 = new \icms_form_elements_Password('', $key . '1', 10, 32, '', FALSE, "password_adv");
 		$this->addElement($password_box1);
 
 		$this->_key = $key;
@@ -37,7 +40,7 @@ class icms_ipf_form_elements_Passwordtray extends icms_form_elements_Tray {
 
 	public function render() {
 		// Use template-based rendering instead of direct HTML generation
-		$this->tpl = new icms_view_Tpl();
+		$this->tpl = new \icms_view_Tpl();
 
 		// Get rendered elements from parent tray
 		$tray_elements = array();
@@ -65,3 +68,5 @@ class icms_ipf_form_elements_Passwordtray extends icms_form_elements_Tray {
 		}
 	}
 }
+
+\class_alias(Passwordtray::class, 'icms_ipf_form_elements_Passwordtray');

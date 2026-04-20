@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
 /**
- * icms_ipf_Metagen
+ * Icms\Ipf\Metagen (legacy icms_ipf_Metagen)
  *
- * Containing the class to manage meta informations of icms_ipf_Object
+ * Containing the class to manage meta informations of Icms\Ipf\Entity
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -13,6 +14,8 @@
  * @version		SVN: $Id: Metagen.php 12248 2013-08-09 08:56:21Z fiammy $
  */
 
+namespace Icms\Ipf;
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
@@ -21,7 +24,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @package		Ipf
  * @todo		Properly set visibility of variables - in version 2.0
  */
-class icms_ipf_Metagen {
+class Metagen {
 	/** @var object */
 	public $_myts;
 
@@ -56,7 +59,7 @@ class icms_ipf_Metagen {
 	 *
 	 */
 	public function __construct($title, $keywords = false, $description = false, $categoryPath = false) {
-		$this->_myts = icms_core_Textsanitizer::GetInstance();
+		$this->_myts = \icms_core_Textsanitizer::GetInstance();
 		$this->setCategoryPath($categoryPath);
 		$this->setTitle($title);
 		$this->setDescription($description);
@@ -65,7 +68,7 @@ class icms_ipf_Metagen {
 			$keywords = $this->createMetaKeywords();
 		}
 
-		/*		$myts = icms_core_Textsanitizer::getInstance();
+		/*		$myts = \icms_core_Textsanitizer::getInstance();
 		 if (method_exists($myts, 'formatForML')) {
 			$keywords = $myts->formatForML($keywords);
 			$description = $myts->formatForML($description);
@@ -133,7 +136,7 @@ class icms_ipf_Metagen {
 	 * @return string Converted text
 	 */
 	public function html2text($document) {
-		return icms_html2text($document);
+		return \icms_html2text($document);
 	}
 
 	/**
@@ -147,7 +150,7 @@ class icms_ipf_Metagen {
 		$this->_title = $this->purifyText($this->_title);
 		$this->_original_title = $this->_title;
 
-		$moduleName = is_object(icms::$module) ? icms::$module->getVar('name') : "";
+		$moduleName = is_object(\icms::$module) ? \icms::$module->getVar('name') : "";
 
 		$titleTag = array();
 
@@ -224,7 +227,7 @@ class icms_ipf_Metagen {
 		$description = preg_replace("/([^\r\n])\r\n([^\r\n])/", "\\1 \\2", $description);
 		$description = preg_replace("/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $description);
 		$description = preg_replace("/[ ]* [ ]*/", ' ', $description);
-		$description = icms_core_DataFilter::stripSlashesGPC($description);
+		$description = \icms_core_DataFilter::stripSlashesGPC($description);
 
 		$this->_description = $description;
 		$this->_meta_description = $this->createMetaDescription();
@@ -247,7 +250,7 @@ class icms_ipf_Metagen {
 	 * @return string The purified text
 	 */
 	public function purifyText($text, $keyword = false) {
-		return icms_purifyText($text, $keyword);
+		return \icms_purifyText($text, $keyword);
 	}
 
 	/**
@@ -287,7 +290,7 @@ class icms_ipf_Metagen {
 		$text = preg_replace("/([^\r\n])\r\n([^\r\n])/", "\\1 \\2", $text);
 		$text = preg_replace("/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $text);
 		$text = preg_replace("/[ ]* [ ]*/", ' ', $text);
-		$text = icms_core_DataFilter::stripSlashesGPC($text);
+		$text = \icms_core_DataFilter::stripSlashesGPC($text);
 
 		$originalKeywords = preg_split ('/[^a-zA-Z\'"-]+/', $text, -1, PREG_SPLIT_NO_EMPTY);
 
@@ -378,3 +381,5 @@ class icms_ipf_Metagen {
 		$xoopsTpl->assign('icms_pagetitle', $this->_title);
 	}
 }
+
+\class_alias(Metagen::class, 'icms_ipf_Metagen');

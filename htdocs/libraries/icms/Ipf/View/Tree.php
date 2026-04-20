@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Contains the classes responsible for displaying a tree table filled with icms_ipf_Object
+ * Contains the classes responsible for displaying a tree table filled with Icms\Ipf\Entity
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,12 +13,14 @@
  * @version		$Id: icmspersistabletreetable.php 19651 2010-06-26 06:15:15Z malanciault $
  */
 
+namespace Icms\Ipf\View;
+
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
 
 /**
- * icms_ipf_view_Tree base class
+ * Icms\Ipf\View\Tree base class
  *
- * Base class representing a table for displaying icms_ipf_Object tree objects
+ * Base class representing a table for displaying Icms\Ipf\Entity tree objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -28,7 +31,7 @@ defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id: icmspersistabletreetable.php 19651 2010-06-26 06:15:15Z malanciault $
  */
-class icms_ipf_view_Tree extends icms_ipf_view_Table {
+class Tree extends Table {
 
 	/**
 	 * Construct the tree object
@@ -129,7 +132,7 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 			}
 		}
 
-		$controller = new icms_ipf_Controller($this->_objectHandler);
+		$controller = new \Icms\Ipf\Controller($this->_objectHandler);
 
 		if (in_array('edit', $this->_actions)) {
 			$actions[] = $controller->getEditItemLink($object, false, true);
@@ -181,9 +184,11 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 	 *
 	 * @see icms_ipf_view_Table::fetchObjects()
 	 */
-	public function fetchObjects() {
+	public function fetchObjects($debug = false) {
 		$ret = $this->_objectHandler->getObjects($this->_criteria, 'parentid');
 		return $ret;
 
 	}
 }
+
+\class_alias(Tree::class, 'icms_ipf_view_Tree');

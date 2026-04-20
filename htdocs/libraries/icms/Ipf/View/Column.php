@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * icms_ipf_Object Table Listing
+ * Icms\Ipf\Entity Table Listing
  *
  * Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
  *
@@ -14,10 +15,12 @@
  * @version		SVN: $Id: Column.php 10326 2010-07-11 18:54:25Z malanciault $
  */
 
+namespace Icms\Ipf\View;
+
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
- * icms_ipf_view_Column class
+ * Icms\Ipf\View\Column class
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -27,7 +30,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  */
-class icms_ipf_view_Column {
+class Column {
 
 	private $_keyname;
 	private $_align;
@@ -106,4 +109,6 @@ class icms_ipf_view_Column {
 		return $this->_customMethodForValue;
 	}
 }
+
+\class_alias(Column::class, 'icms_ipf_view_Column');
 

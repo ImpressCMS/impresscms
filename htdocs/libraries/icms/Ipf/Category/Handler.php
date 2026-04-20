@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Contains the basic classe for managing a category object based on icms_ipf_Object
+ * Contains the basic classe for managing a category object based on Icms\Ipf\Entity
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -13,10 +14,12 @@
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
+namespace Icms\Ipf\Category;
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
- * Provides data access mechanisms to the icms_ipf_category_Object object
+ * Provides data access mechanisms to the Icms\Ipf\Category\Entity object
  * @copyright 	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
@@ -24,7 +27,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @subpackage	Category
  * @since 		1.1
  */
-class icms_ipf_category_Handler extends icms_ipf_Handler {
+class Handler extends \Icms\Ipf\Handler {
 	/** */
 	public $allCategoriesObj = false;
 	/** */
@@ -53,10 +56,10 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 	public function getAllCategoriesArray($parentid=0, $perm_name=false, $sort = 'parentid', $order='ASC') {
 
 		if (!$this->allCategoriesObj) {
-			$criteria = new icms_db_criteria_Compo();
+			$criteria = new \icms_db_criteria_Compo();
 			$criteria->setSort($sort);
 			$criteria->setOrder($order);
-			$userIsAdmin = is_object(icms::$user) && icms::$user->isAdmin();
+			$userIsAdmin = is_object(\icms::$user) && \icms::$user->isAdmin();
 
 			if ($perm_name && !$userIsAdmin) {
 				if (!$this->setGrantedObjectsCriteria($criteria, $perm_name)) {
@@ -119,4 +122,6 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 		}
 	}
 }
+
+\class_alias(Handler::class, 'icms_ipf_category_Handler');
 

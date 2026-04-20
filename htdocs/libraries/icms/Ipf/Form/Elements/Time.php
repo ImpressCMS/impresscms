@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Form control creating a textbox to enter time for an object derived from icms_ipf_Object
+ * Form control creating a textbox to enter time for an object derived from \icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,12 +13,14 @@
  * @version		$Id: Time.php 10711 2010-10-10 17:11:29Z phoenyx $
  */
 
+namespace Icms\Ipf\Form\Elements;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class icms_ipf_form_elements_Time extends icms_form_elements_Select {
+class Time extends \icms_form_elements_Select {
 	/**
 	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -34,3 +37,5 @@ class icms_ipf_form_elements_Time extends icms_form_elements_Select {
 		$this->addOptionArray($timearray);
 	}
 }
+
+\class_alias(Time::class, 'icms_ipf_form_elements_Time');

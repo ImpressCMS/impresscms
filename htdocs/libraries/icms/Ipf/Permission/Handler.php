@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * IcmsPermission
  *
@@ -14,6 +15,8 @@
  * @version		SVN: $Id: Handler.php 10897 2010-12-19 18:17:29Z phoenyx $
  */
 
+namespace Icms\Ipf\Permission;
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
@@ -23,7 +26,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @subpackage	Permission
  *
  */
-class icms_ipf_permission_Handler {
+class Handler {
 
 	/**
 	 *
@@ -54,7 +57,7 @@ class icms_ipf_permission_Handler {
 		if (!isset($groups[$gperm_name]) || ($id != null && !isset($groups[$gperm_name][$id]))) {
 			$icmsModule =& $this->handler->getModuleInfo();
 			//Get group permissions handler
-			$gperm_handler = icms::handler('icms_member_groupperm');
+			$gperm_handler = \icms::handler('icms_member_groupperm');
 
 			//Get groups allowed for an item id
 			$allowedgroups = $gperm_handler->getGroupIds($gperm_name, $id, $icmsModule->getVar('mid'));
@@ -84,15 +87,15 @@ class icms_ipf_permission_Handler {
 
 		$icmsModule =& $this->handler->getModuleInfo();
 
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('gperm_modid', $icmsModule->getVar('mid')));
+		$criteria = new \icms_db_criteria_Compo();
+		$criteria->add(new \icms_db_criteria_Item('gperm_modid', $icmsModule->getVar('mid')));
 
 		if ($gperm_name) {
-			$criteria->add(new icms_db_criteria_Item('gperm_name', $gperm_name));
+			$criteria->add(new \icms_db_criteria_Item('gperm_name', $gperm_name));
 		}
 
 		//Get group permissions handler
-		$gperm_handler = icms::handler('icms_member_groupperm');
+		$gperm_handler = \icms::handler('icms_member_groupperm');
 
 		$permissionsObj = $gperm_handler->getObjects($criteria);
 
@@ -126,10 +129,10 @@ class icms_ipf_permission_Handler {
 			if (is_object($icmsModule)) {
 
 				//Get group permissions handler
-				$gperm_handler = icms::handler('icms_member_groupperm');
+				$gperm_handler = \icms::handler('icms_member_groupperm');
 
 				//Get user's groups
-				$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+				$groups = is_object(\icms::$user) ? \icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 
 				//Get all allowed item ids in this module and for this user's groups
 				$userpermissions = $gperm_handler->getItemIds($gperm_name, $groups, $icmsModule->getVar('mid'));
@@ -165,7 +168,7 @@ class icms_ipf_permission_Handler {
 
 		$result = true;
 		$module_id = $icmsModule->getVar('mid');
-		$gperm_handler = icms::handler('icms_member_groupperm');
+		$gperm_handler = \icms::handler('icms_member_groupperm');
 
 		// First, if the permissions are already there, delete them
 		$gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
@@ -214,14 +217,16 @@ class icms_ipf_permission_Handler {
 	 * @return boolean : TRUE if user has access, FALSE if not
 	 **/
 	public function accessGranted($gperm_name, $gperm_itemid) {
-		$gperm_groupid = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$gperm_groupid = is_object(\icms::$user) ? \icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$icmsModule =& $this->handler->getModuleInfo();
 		$gperm_modid = $icmsModule->getVar('mid')   ;
 
 		//Get group permissions handler
-		$gperm_handler = icms::handler('icms_member_groupperm');
+		$gperm_handler = \icms::handler('icms_member_groupperm');
 
 		return $gperm_handler->checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid);
 	}
 }
+
+\class_alias(Handler::class, 'icms_ipf_permission_Handler');
 

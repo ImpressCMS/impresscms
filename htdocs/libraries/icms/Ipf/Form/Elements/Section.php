@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Form control creating a section in a form for an object derived from icms_ipf_Object
+ * Form control creating a section in a form for an object derived from \icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,9 +13,11 @@
  * @version		$Id: Section.php 10851 2010-12-05 19:15:30Z phoenyx $
  */
 
+namespace Icms\Ipf\Form\Elements;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class icms_ipf_form_elements_Section extends icms_form_Element {
+class Section extends \icms_form_Element {
 	/**
 	 * @var string
 	 * @access	private
@@ -31,7 +34,7 @@ class icms_ipf_form_elements_Section extends icms_form_Element {
 	/**
 	 * Constructor
 	 *
-	 * @param	icms_ipf_Object	$object	reference to targetobject (@link icms_ipf_Object)
+	 * @param	\icms_ipf_Object	$object	reference to targetobject (@link \icms_ipf_Object)
 	 * @param	string			$key	name of the form section
 	 */
 	public function __construct($object, $key) {
@@ -70,3 +73,5 @@ class icms_ipf_form_elements_Section extends icms_form_Element {
 		return $this->getValue();
 	}
 }
+
+\class_alias(Section::class, 'icms_ipf_form_elements_Section');

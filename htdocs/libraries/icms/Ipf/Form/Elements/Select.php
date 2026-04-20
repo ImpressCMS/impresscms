@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Form control creating a selectbox for an object derived from icms_ipf_Object
+ * Form control creating a selectbox for an object derived from \icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,14 +13,16 @@
  * @version		$Id: Select.php 11112 2011-03-24 23:43:48Z m0nty_ $
  */
 
+namespace Icms\Ipf\Form\Elements;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class icms_ipf_form_elements_Select extends icms_form_elements_Select {
+class Select extends \icms_form_elements_Select {
 	protected $_multiple = false;
 
 	/**
 	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -50,9 +53,9 @@ class icms_ipf_form_elements_Select extends icms_form_elements_Select {
 				if (isset($control['itemHandler'])) {
 					if (!isset($control['module'])) {
 						// Creating the specified core object handler
-						$control_handler = icms::handler($control['itemHandler']);
+						$control_handler = \icms::handler($control['itemHandler']);
 					} else {
-						$control_handler =& icms_getModuleHandler($control['itemHandler'], $control['module']);
+						$control_handler =& \icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}
 				} else {
 					$control_handler =& $object->handler;
@@ -71,3 +74,5 @@ class icms_ipf_form_elements_Select extends icms_form_elements_Select {
 		}
 	}
 }
+
+\class_alias(Select::class, 'icms_ipf_form_elements_Select');

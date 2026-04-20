@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Class representing a single row of a icms_ipf_view_Single
+ * Class representing a single row of a Icms\Ipf\View\Single
  *
  * @license		LICENSE.txt
  * @category	ICMS
@@ -8,12 +9,15 @@
  * @subpackage	View
  * @version		SVH: $Id: Row.php 10326 2010-07-11 18:54:25Z malanciault $
  */
+
+namespace Icms\Ipf\View;
+
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
- * icms_ipf_view_Row class
+ * Icms\Ipf\View\Row class
  *
- * Class representing a single row of a icms_ipf_view_Single
+ * Class representing a single row of a Icms\Ipf\View\Single
  *
  * @category	ICMS
  * @package		Ipf
@@ -21,7 +25,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author		marcan <marcan@smartfactory.ca>
  * @todo		Properly determine visibility of vars and methods and follow naming convention
  */
-class icms_ipf_view_Row {
+class Row {
 
 	/**
 	 * @var unknown_type
@@ -73,4 +77,6 @@ class icms_ipf_view_Row {
 		return $this->_header;
 	}
 }
+
+\class_alias(Row::class, 'icms_ipf_view_Row');
 

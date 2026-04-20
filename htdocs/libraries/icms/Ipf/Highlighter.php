@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file contains the keyhighlighter class that highlights the chosen keyword in the current output buffer.
  *
@@ -6,6 +7,8 @@
  * @package		Ipf
  * @subpackage	Keyhighlighter
  */
+
+namespace Icms\Ipf;
 
 /**
  * keyhighlighter class
@@ -21,7 +24,7 @@
  * @copyright	2004
  * @link 		http://setecastronomy.stufftoread.com
  */
-class icms_ipf_Highlighter {
+class Highlighter {
 
 	/**
 	 * @access private
@@ -109,3 +112,4 @@ class icms_ipf_Highlighter {
 	}
 }
 
+\class_alias(Highlighter::class, 'icms_ipf_Highlighter');

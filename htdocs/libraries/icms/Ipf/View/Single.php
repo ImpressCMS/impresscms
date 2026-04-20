@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Contains the basis classes for displaying a single icms_ipf_Object
+ * Contains the basis classes for displaying a single Icms\Ipf\Entity
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,10 +13,12 @@
  * @version		SVN: $Id: icmspersistablesingleview.php 19623 2010-06-25 14:59:15Z malanciault $
  */
 
+namespace Icms\Ipf\View;
+
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
- * icms_ipf_view_Single base class
+ * Icms\Ipf\View\Single base class
  *
  * Base class handling the display of a single object
  *
@@ -24,7 +27,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @subpackage	View
  * @author marcan <marcan@smartfactory.ca>
  */
-class icms_ipf_view_Single {
+class Single {
 
 	var $_object;
 	var $_userSide;
@@ -58,7 +61,7 @@ class icms_ipf_view_Single {
 	 */
 	public function render($fetchOnly = false, $debug = false) {
 
-		$this->_tpl = new icms_view_Tpl();
+		$this->_tpl = new \icms_view_Tpl();
 		$vars = $this->_object->vars;
 		$icms_object_array = array();
 
@@ -109,4 +112,6 @@ class icms_ipf_view_Single {
 		return $this->render(true, $debug);
 	}
 }
+
+\class_alias(Single::class, 'icms_ipf_view_Single');
 

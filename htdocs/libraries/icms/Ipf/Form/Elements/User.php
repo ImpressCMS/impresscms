@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * Form control creating a simple users selectbox for an object derived from icms_ipf_Object
+ * Form control creating a simple users selectbox for an object derived from \icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -12,14 +13,16 @@
  * @version		$Id: User.php 10756 2010-11-13 17:18:27Z malanciault $
  */
 
+namespace Icms\Ipf\Form\Elements;
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
-class icms_ipf_form_elements_User extends icms_form_elements_Select {
+class User extends \icms_form_elements_Select {
 	private $_multiple = false;
 
 	/**
 	 * Constructor
-	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
+	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
@@ -28,10 +31,10 @@ class icms_ipf_form_elements_User extends icms_form_elements_Select {
 
 		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'), $size, $this->_multiple);
 
-		$sql = "SELECT uid, uname FROM " . icms::$xoopsDB->prefix("users"). " ORDER BY uname ASC";
-		$result = icms::$xoopsDB->query($sql);
+		$sql = "SELECT uid, uname FROM " . \icms::$xoopsDB->prefix("users"). " ORDER BY uname ASC";
+		$result = \icms::$xoopsDB->query($sql);
 		if ($result) {
-			while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+			while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
 				$uArray[$myrow["uid"]] = $myrow["uname"];
 			}
 		}
@@ -39,3 +42,5 @@ class icms_ipf_form_elements_User extends icms_form_elements_Select {
 
 	}
 }
+
+\class_alias(User::class, 'icms_ipf_form_elements_User');

@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 /**
- * icms_ipf_Object Table Listing
+ * Icms\Ipf\Entity Table Listing
  *
  * Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
  *
@@ -9,12 +10,15 @@
  * @since 1.1
  * @author marcan <marcan@impresscms.org>
  */
+
+namespace Icms\Ipf\View;
+
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
- * icms_ipf_view_Table base class
+ * Icms\Ipf\View\Table base class
  *
- * Base class representing a table for displaying icms_ipf_Object objects
+ * Base class representing a table for displaying Icms\Ipf\Entity objects
  *
  * @copyright The ImpressCMS Project http://www.impresscms.org/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -23,7 +27,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author marcan <marcan@impresscms.org>
  * @todo Properly declare all vars with their visibility (private, protected, public) and follow naming convention
  */
-class icms_ipf_view_Table {
+class Table {
 	var $_id;
 	var $_objectHandler;
 	var $_columns;
@@ -73,7 +77,7 @@ class icms_ipf_view_Table {
 		$this->_objectHandler = $objectHandler;
 
 		if (!$criteria) {
-			$criteria = new icms_db_criteria_Compo();
+			$criteria = new \icms_db_criteria_Compo();
 		}
 		$this->_criteria = $criteria;
 		$this->_actions = $actions;
@@ -121,7 +125,7 @@ class icms_ipf_view_Table {
 	/**
 	 */
 	public function addPrinterFriendlyLink() {
-		$current_url = icms::$urls['full'];
+		$current_url = \icms::$urls['full'];
 		$this->_printerFriendlyPage = $current_url . '&print';
 	}
 
@@ -202,7 +206,7 @@ class icms_ipf_view_Table {
 	 * @param $actions
 	 */
 	public function addWithSelectedActions($actions = array()) {
-		$this->addColumn(new icms_ipf_view_Column('checked', 'center', 20, false, false, '&nbsp;'));
+		$this->addColumn(new \icms_ipf_view_Column('checked', 'center', 20, false, false, '&nbsp;'));
 		$this->_withSelectedActions = $actions;
 	}
 
@@ -461,7 +465,7 @@ class icms_ipf_view_Table {
 	 */
 	public function renderOptionSelection($limitsArray, $params_of_the_options_sel) {
 		// Rendering the form to select options on the table
-		$current_url = icms::$urls['full'];
+		$current_url = \icms::$urls['full'];
 
 		/**
 		 * What was $params_of_the_options_sel doing again ?
@@ -478,28 +482,28 @@ class icms_ipf_view_Table {
 		$ret['all']['caption'] = _CO_ICMS_LIMIT_ALL;
 		$ret['all']['selected'] = ('all' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['5']['caption'] = icms_conv_nr2local('5');
+		$ret['5']['caption'] = \icms_conv_nr2local('5');
 		$ret['5']['selected'] = ('5' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['10']['caption'] = icms_conv_nr2local('10');
+		$ret['10']['caption'] = \icms_conv_nr2local('10');
 		$ret['10']['selected'] = ('10' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['15']['caption'] = icms_conv_nr2local('15');
+		$ret['15']['caption'] = \icms_conv_nr2local('15');
 		$ret['15']['selected'] = ('15' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['20']['caption'] = icms_conv_nr2local('20');
+		$ret['20']['caption'] = \icms_conv_nr2local('20');
 		$ret['20']['selected'] = ('20' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['25']['caption'] = icms_conv_nr2local('25');
+		$ret['25']['caption'] = \icms_conv_nr2local('25');
 		$ret['25']['selected'] = ('25' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['30']['caption'] = icms_conv_nr2local('30');
+		$ret['30']['caption'] = \icms_conv_nr2local('30');
 		$ret['30']['selected'] = ('30' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['35']['caption'] = icms_conv_nr2local('35');
+		$ret['35']['caption'] = \icms_conv_nr2local('35');
 		$ret['35']['selected'] = ('35' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['40']['caption'] = icms_conv_nr2local('40');
+		$ret['40']['caption'] = \icms_conv_nr2local('40');
 		$ret['40']['selected'] = ('40' == $this->_limitsel) ? "selected='selected'" : "";
 		return $ret;
 	}
@@ -601,18 +605,18 @@ class icms_ipf_view_Table {
 
 		/* filter the user input - only allow specified variables */
 		if (!empty($_GET)) {
-			$clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, true);
+			$clean_GET = \icms_core_DataFilter::checkVarArray($_GET, $filter_get, true);
 			extract($clean_GET);
 		}
 		if (!empty($_POST)) {
-			$clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
+			$clean_POST = \icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
 			extract($clean_POST);
 		}
 
-		$server_vars = icms_core_DataFilter::checkVarArray($_SERVER, $filter_server, true);
+		$server_vars = \icms_core_DataFilter::checkVarArray($_SERVER, $filter_server, true);
 		$script_name = $server_vars['SCRIPT_NAME'];
 
-		$this->_tpl = new icms_view_Tpl();
+		$this->_tpl = new \icms_view_Tpl();
 
 		/**
 		 * We need access to the protected vars of the icms_ipf_Object for a few things in the table creation.
@@ -665,7 +669,7 @@ class icms_ipf_view_Table {
 
 					$this->setCookie('filtersel2', $this->_filtersel2);
 					if ($this->_filtersel2 !== 'default') {
-						$this->_criteria->add(new icms_db_criteria_Item($this->_filtersel, $this->_filtersel2));
+						$this->_criteria->add(new \icms_db_criteria_Item($this->_filtersel, $this->_filtersel2));
 					}
 				}
 			}
@@ -673,13 +677,13 @@ class icms_ipf_view_Table {
 		// Check if we have a quicksearch
 
 		if (!empty($$quicksearch)) {
-			$quicksearch_criteria = new icms_db_criteria_Compo();
+			$quicksearch_criteria = new \icms_db_criteria_Compo();
 			if (is_array($this->_quickSearch['fields'])) {
 				foreach ($this->_quickSearch['fields'] as $v) {
-					$quicksearch_criteria->add(new icms_db_criteria_Item($v, '%' . $$quicksearch . '%', 'LIKE'), 'OR');
+					$quicksearch_criteria->add(new \icms_db_criteria_Item($v, '%' . $$quicksearch . '%', 'LIKE'), 'OR');
 				}
 			} else {
-				$quicksearch_criteria->add(new icms_db_criteria_Item($this->_quickSearch['fields'], '%' . $$quicksearch . '%', 'LIKE'));
+				$quicksearch_criteria->add(new \icms_db_criteria_Item($this->_quickSearch['fields'], '%' . $$quicksearch . '%', 'LIKE'));
 			}
 			$this->_criteria->add($quicksearch_criteria);
 		}
@@ -717,14 +721,14 @@ class icms_ipf_view_Table {
 			$new_get_array[] = "limitsel=" . $this->_limitsel;
 			$otherParams = implode('&', $new_get_array);
 
-			$pagenav = new icms_view_PageNav($this->_objectHandler->getCount($this->_criteria), $this->_criteria->getLimit(), $this->_criteria->getStart(), 'start' . $this->_objectHandler->keyName, $otherParams);
+			$pagenav = new \icms_view_PageNav($this->_objectHandler->getCount($this->_criteria), $this->_criteria->getLimit(), $this->_criteria->getStart(), 'start' . $this->_objectHandler->keyName, $otherParams);
 			$this->_tpl->assign('icms_pagenav', $pagenav->renderNav());
 		}
 		$this->renderOptionSelection($limitsArray, $params_of_the_options_sel);
 
 		// retreive the current url and the query string
-		$current_url = icms::$urls['full_phpself'];
-		$query_string = icms::$urls['querystring'];
+		$current_url = \icms::$urls['full_phpself'];
+		$query_string = \icms::$urls['querystring'];
 		if ($query_string) {
 			$query_string = str_replace('?', '', $query_string);
 		}
@@ -823,4 +827,6 @@ class icms_ipf_view_Table {
 		return $this->render(true, $debug);
 	}
 }
+
+\class_alias(Table::class, 'icms_ipf_view_Table');
 

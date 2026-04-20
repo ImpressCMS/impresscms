@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This class is responsible for providing operations to an object for managing the object's manipulation
  *
@@ -15,6 +15,8 @@
  * @todo		Use language constants for messages
  */
 
+namespace Icms\Ipf;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -25,7 +27,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @subpackage	Controller
  *
  */
-class icms_ipf_Controller {
+class Controller {
 
 	/** */
 	public $handler;
@@ -167,7 +169,7 @@ class icms_ipf_Controller {
 		// Check if there were uploaded files
 		$uploaderResult = true;
 		if (isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file'])) {
-			$uploaderObj = new icms_file_MediaUploadHandler($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
+			$uploaderObj = new \icms_file_MediaUploadHandler($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
 			foreach ( $_FILES as $name=>$file_array) {
 				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), array_keys($icmsObj->vars))) {
 					if ($uploaderObj->fetchMedia($name)) {
@@ -229,7 +231,7 @@ class icms_ipf_Controller {
 
 		if ($storeResult) {
 			if ($this->handler->getPermissions()) {
-				$icmspermissions_handler = new icms_ipf_permission_Handler($this->handler);
+				$icmspermissions_handler = new \icms_ipf_permission_Handler($this->handler);
 				$icmspermissions_handler->storeAllPermissionsForId($icmsObj->id());
 			}
 		}
@@ -238,7 +240,7 @@ class icms_ipf_Controller {
 			return $icmsObj;
 		} else {
 			if (!$storeResult) {
-				redirect_header(icms::$urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header(\icms::$urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
 			} else {
 				$redirect_page = $redirect_page ? $redirect_page : icms_get_page_before_form();
 				redirect_header($redirect_page, 2, $redirect_msg);
@@ -356,7 +358,7 @@ class icms_ipf_Controller {
 		} else {
 			// no confirm: show deletion condition
 
-			icms_cp_header();
+			\icms_cp_header();
 
 			if (!$confirm_msg) {
 				$confirm_msg = _CO_ICMS_DELETE_CONFIRM;
@@ -366,14 +368,14 @@ class icms_ipf_Controller {
 						'op' => $op,
 						$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 						'confirm' => 1,
-						'redirect_page' => icms::$urls['previouspage']
+						'redirect_page' => \icms::$urls['previouspage']
 			);
 			if ($this->handler->_moduleName == 'system') {
 				$hiddens['fct'] = isset($_GET['fct']) ? $_GET['fct'] : false;
 			}
-			icms_core_Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
+			\icms_core_Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
-			icms_cp_footer();
+			\icms_cp_footer();
 
 		}
 		exit();
@@ -411,11 +413,11 @@ class icms_ipf_Controller {
 			}
 
 			ob_start();
-			icms_core_Message::confirm(array(
+			\icms_core_Message::confirm(array(
 				'op' => $op,
 				$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 				'confirm' => 1,
-					'redirect_page' => icms::$urls['previouspage']),
+					'redirect_page' => \icms::$urls['previouspage']),
 				xoops_getenv('SCRIPT_NAME'),
 				sprintf($confirm_msg ,
 				$icmsObj->getVar($this->handler->identifierName)),
@@ -621,8 +623,8 @@ class icms_ipf_Controller {
 		 $printlink = '<a href="' . $js . '"><img  src="' . ICMS_IMAGES_SET_URL . '/actions/fileprint.png" alt="" style="vertical-align: middle;"/></a>';
 
 		 $icmsModule = icms_getModuleInfo($icmsObj->handler->_moduleName);
-		 $link = icms::$urls['full']();
-		 $mid = icms::$module->getVar('mid');
+		 $link = \icms::$urls['full']();
+		 $mid = \icms::$module->getVar('mid');
 		 $friendlink = "<a href=\"javascript:openWithSelfMain('".SMARTOBJECT_URL."sendlink.php?link=" . $link . "&amp;mid=" . $mid . "', ',',',',',','sendmessage', 674, 500);\"><img src=\"".SMARTOBJECT_IMAGES_ACTIONS_URL . "mail_send.png\"  alt=\"" . _CO_ICMS_EMAIL . "\" title=\"" . _CO_ICMS_EMAIL . "\" style=\"vertical-align: middle;\"/></a>";
 
 		 $ret = '<span id="smartobject_print_button">' . $printlink . "&nbsp;</span>" . '<span id="smartobject_mail_button">' . $friendlink . '</span>';
@@ -639,3 +641,4 @@ class icms_ipf_Controller {
 	}
 }
 
+\class_alias(Controller::class, 'icms_ipf_Controller');

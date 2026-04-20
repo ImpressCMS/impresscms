@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Persistable object registry
  *
@@ -12,10 +13,12 @@
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
+namespace Icms\Ipf\Registry;
+
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
- * Registry of icms_ipf_Object
+ * Registry of Icms\Ipf\Entity
  *
  * Class responsible of caching objects to make them easily reusable without querying the database
  *
@@ -27,7 +30,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  */
-class icms_ipf_registry_Handler {
+class Handler {
 
 	/**
 	 *
@@ -46,7 +49,7 @@ class icms_ipf_registry_Handler {
 	static public function &getInstance() {
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_ipf_registry_Handler();
+			$instance = new self();
 		}
 		return $instance;
 	}
@@ -99,10 +102,10 @@ class icms_ipf_registry_Handler {
 	 */
 	public function addObjectsFromItemName($item, $modulename = false, $criteria = false) {
 		if (!$modulename) {
-			if (!is_object(icms::$module)) {
+			if (!is_object(\icms::$module)) {
 				return false;
 			} else {
-				$modulename = icms::$module->getVar("dirname");
+				$modulename = \icms::$module->getVar("dirname");
 			}
 		}
 		$object_handler = icms_getModuleHandler($item, $modulename);
@@ -121,10 +124,10 @@ class icms_ipf_registry_Handler {
 	 */
 	public function addListFromItemName($item, $modulename = false, $criteria = false) {
 		if (!$modulename) {
-			if (!is_object(icms::$module)) {
+			if (!is_object(\icms::$module)) {
 				return false;
 			} else {
-				$modulename = icms::$module->getVar("dirname");
+				$modulename = \icms::$module->getVar("dirname");
 			}
 		}
 		$object_handler = icms_getModuleHandler($item, $modulename);
@@ -142,10 +145,10 @@ class icms_ipf_registry_Handler {
 	 */
 	public function getObjects($itemname, $modulename) {
 		if (!$modulename) {
-			if (!is_object(icms::$module)) {
+			if (!is_object(\icms::$module)) {
 				return false;
 			} else {
-				$modulename = icms::$module->getVar("dirname");
+				$modulename = \icms::$module->getVar("dirname");
 			}
 		}
 		if (isset($this->_registryArray['objects'][$modulename][$itemname])) {
@@ -172,10 +175,10 @@ class icms_ipf_registry_Handler {
 	public function getList($itemname, $modulename) {
 		if (!$modulename) {
 
-			if (!is_object(icms::$module)) {
+			if (!is_object(\icms::$module)) {
 				return false;
 			} else {
-				$modulename = icms::$module->getVar("dirname");
+				$modulename = \icms::$module->getVar("dirname");
 			}
 		}
 		if (isset($this->_registryArray['list'][$modulename][$itemname])) {
@@ -201,10 +204,10 @@ class icms_ipf_registry_Handler {
 	 */
 	public function getSingleObject($itemname, $key, $modulename = false) {
 		if (!$modulename) {
-			if (!is_object(icms::$module)) {
+			if (!is_object(\icms::$module)) {
 				return false;
 			} else {
-				$modulename = icms::$module->getVar("dirname");
+				$modulename = \icms::$module->getVar("dirname");
 			}
 		}
 		if (isset($this->_registryArray['objects'][$modulename][$itemname][$key])) {
@@ -222,4 +225,6 @@ class icms_ipf_registry_Handler {
 		}
 	}
 }
+
+\class_alias(Handler::class, 'icms_ipf_registry_Handler');
 
