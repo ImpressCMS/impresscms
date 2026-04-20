@@ -572,7 +572,9 @@ class Table {
 	 * @param string $value
 	 */
 	protected function setCookie($fieldName, $value) {
-		setcookie('tbl_' . $fieldName, $value, time() + 3600 * 24 * 365, parse_url(ICMS_URL, PHP_URL_PATH), parse_url(ICMS_URL, PHP_URL_HOST), substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0, true);
+		$path = parse_url(ICMS_URL, PHP_URL_PATH) ?? '/';
+		$domain = parse_url(ICMS_URL, PHP_URL_HOST) ?? '';
+		setcookie('tbl_' . $fieldName, $value, time() + 3600 * 24 * 365, $path, $domain, substr(ICMS_URL, 0, 5) == 'https' ? true : false, true);
 	}
 
 	/**
