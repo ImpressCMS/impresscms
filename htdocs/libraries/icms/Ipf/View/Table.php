@@ -574,7 +574,7 @@ class Table {
 	protected function setCookie($fieldName, $value) {
 		$path = parse_url(ICMS_URL, PHP_URL_PATH) ?? '/';
 		$domain = parse_url(ICMS_URL, PHP_URL_HOST) ?? '';
-		setcookie('tbl_' . $fieldName, $value, time() + 3600 * 24 * 365, $path, $domain, substr(ICMS_URL, 0, 5) == 'https' ? true : false, true);
+		setcookie('tbl_' . $fieldName, (string) $value, time() + 3600 * 24 * 365, $path, $domain, substr(ICMS_URL, 0, 5) == 'https' ? true : false, true);
 	}
 
 	/**
