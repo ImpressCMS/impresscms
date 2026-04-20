@@ -286,7 +286,7 @@ switch ($op) {
 				/** Include the footer file to complete page rendering */
 				include ICMS_ROOT_PATH . '/footer.php';
 			} else {
-				redirect_header('userinfo.php?uid=' . $uid, 1, _US_PROFUPDATED);
+				redirect_header('userinfo.php?uid=' . icms::$user->getVar('hash_uid'), 1, _US_PROFUPDATED);
 			}
 			exit();
 	}
@@ -301,7 +301,7 @@ switch ($op) {
 			icms_PasswordMeter();
 		}
 
-		echo '<a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;
+		echo '<a href="userinfo.php?uid=' . icms::$user->getVar('hash_uid') . '">' . _US_PROFILE . '</a>&nbsp;
 			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br /><br />';
 		$form = new icms_form_Theme(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', TRUE);
 		$login_name_label = new icms_form_elements_Label(_US_LOGINNAME, icms::$user->getVar('login_name'));
@@ -440,7 +440,7 @@ switch ($op) {
 		/** Include the header that starts page rendering */
 		include ICMS_ROOT_PATH . '/header.php';
 		echo "<h4>" . _US_AVATAR . "</h4>";
-		echo '<p><a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>
+		echo '<p><a href="userinfo.php?uid=' . icms::$user->getVar('hash_uid') . '">' . _US_PROFILE . '</a>
 			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '</p>';
 		$oldavatar = icms::$user->getVar('user_avatar');
 		if (!empty($oldavatar) && $oldavatar != 'blank.gif') {
@@ -528,7 +528,7 @@ switch ($op) {
 						);
 						icms::$xoopsDB->query($sql);
 						$avt_handler->addUser($avatar->getVar('avatar_id'), (int) icms::$user->getVar('uid'));
-						redirect_header('userinfo.php?t=' . time() . '&amp;uid=' . (int) icms::$user->getVar('uid'), 0, _US_PROFUPDATED);
+						redirect_header('userinfo.php?t=' . time() . '&amp;uid=' . icms::$user->getVar('hash_uid'), 0, _US_PROFUPDATED);
 					}
 				}
 			}
@@ -595,6 +595,6 @@ switch ($op) {
 				}
 			}
 		}
-		redirect_header('userinfo.php?uid=' . $uid, 0, _US_PROFUPDATED);
+		redirect_header('userinfo.php?uid=' . icms::$user->getVar('hash_uid'), 0, _US_PROFUPDATED);
 	break;
 }
