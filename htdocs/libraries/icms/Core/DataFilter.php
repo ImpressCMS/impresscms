@@ -54,7 +54,7 @@ class DataFilter {
 
 	/**
 	 * Default characters to escape in addSlashes() for backwards compatibility with PHP's addslashes()
-	 * 
+	 *
 	 * @var string Contains: ' (single quote), " (double quote), \ (backslash), and \0 (NUL byte)
 	 */
 	const DEFAULT_ESCAPE_CHARS = "'\"\\\0";
@@ -165,12 +165,12 @@ class DataFilter {
 
 	/**
 	 * Add slashes to escape special characters in text
-	 * 
+	 *
 	 * When called without the second parameter, escapes characters that would be escaped by PHP's addslashes():
 	 * single quote ('), double quote ("), backslash (\), and NUL byte (\0)
-	 * 
+	 *
 	 * @param string $text The text to apply the slashes to
-	 * @param string|null $param Optional. Which characters to apply the escaping to. 
+	 * @param string|null $param Optional. Which characters to apply the escaping to.
 	 *                            If null (default), uses the same characters as addslashes() for backwards compatibility.
 	 * @return string The text with special characters escaped
 	 */
@@ -1177,6 +1177,11 @@ class DataFilter {
 				break;
 
 			case 'str': // returns $string
+				// Under PHP 8+ strip_tags() requires a string. Superglobals such as
+				// $_SERVER legitimately carry scalars (REQUEST_TIME, REQUEST_TIME_FLOAT),
+				// which used to coerce silently. Cast defensively so callers still
+				// get a sensible string output.
+				$data = is_scalar($data) ? (string) $data : '';
 				switch ($options1) {
 					case "noencode":
 						//return filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
