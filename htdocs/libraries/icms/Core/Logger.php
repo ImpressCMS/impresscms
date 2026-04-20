@@ -201,7 +201,7 @@ class Logger {
 
 		$errstr = $exception->getMessage();
 		$trace = true;
-		if (substr($errstr, 0, '8') == 'notrace:') {
+		if (substr($errstr, 0, 8) == 'notrace:') {
 			$trace = false;
 			$errstr = substr($errstr, 8);
 		}
@@ -240,7 +240,7 @@ class Logger {
 
 		if ($errno == E_USER_ERROR) {
 			$trace = true;
-			if (substr($errstr, 0, '8') == 'notrace:') {
+			if (substr($errstr, 0, 8) == 'notrace:') {
 				$trace = false;
 				$errstr = substr($errstr, 8);
 			}

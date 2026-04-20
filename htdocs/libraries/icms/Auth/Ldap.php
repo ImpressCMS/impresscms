@@ -89,7 +89,8 @@ class Ldap extends Entity
 
     public function cp1252_to_utf8($str)
     {
-        return strtr(utf8_encode($str), $this->cp1252_map);
+        // utf8_encode() was removed in PHP 8.2; mb_convert_encoding() is the direct replacement.
+        return strtr(mb_convert_encoding($str, 'UTF-8', 'ISO-8859-1'), $this->cp1252_map);
     }
 
     /**

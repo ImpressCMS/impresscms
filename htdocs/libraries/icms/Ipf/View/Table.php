@@ -248,7 +248,8 @@ class Table {
 	 * @todo Switch to dependency injection
 	 */
 	public function setSortOrder() {
-		$this->_sortsel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) ? filter_input(INPUT_GET, $this->_objectHandler->_itemname . '_' . 'sortsel', FILTER_SANITIZE_STRING) : $this->getDefaultSort();
+		// FILTER_SANITIZE_STRING was removed in PHP 8.1; strip_tags + FILTER_DEFAULT is the equivalent.
+		$this->_sortsel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) ? strip_tags((string) filter_input(INPUT_GET, $this->_objectHandler->_itemname . '_' . 'sortsel', FILTER_DEFAULT)) : $this->getDefaultSort();
 
 		$this->setCookie($this->_id . '_sortsel', $this->_sortsel);
 		$fieldsForSorting = $this->_tempObject->getFieldsForSorting($this->_sortsel);
@@ -259,7 +260,8 @@ class Table {
 			$this->_criteria->setSort($this->_objectHandler->_itemname . "." . $this->_sortsel);
 		}
 
-		$this->_ordersel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? filter_input(INPUT_GET, $this->_objectHandler->_itemname . '_' . 'ordersel', FILTER_SANITIZE_STRING) : $this->getDefaultOrder();
+		// FILTER_SANITIZE_STRING was removed in PHP 8.1; strip_tags + FILTER_DEFAULT is the equivalent.
+		$this->_ordersel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? strip_tags((string) filter_input(INPUT_GET, $this->_objectHandler->_itemname . '_' . 'ordersel', FILTER_DEFAULT)) : $this->getDefaultOrder();
 		// $this->_ordersel = isset($_POST['ordersel']) ? $_POST['ordersel'] :$this->_ordersel;
 		$this->setCookie($this->_id . '_ordersel', $this->_ordersel);
 		$this->getOrdersArray();

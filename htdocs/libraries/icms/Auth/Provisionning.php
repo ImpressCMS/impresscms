@@ -134,7 +134,8 @@ class Provisionning
         foreach ($tab_mapping as $mapping) {
             $fields = explode('=', trim($mapping));
             if ($fields[0] && $fields[1]) {
-                $newuser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
+                // utf8_decode() was removed in PHP 8.2; mb_convert_encoding() is the direct replacement.
+                $newuser->setVar(trim($fields[0]), mb_convert_encoding($datas[trim($fields[1])][0], 'ISO-8859-1', 'UTF-8'));
             }
         }
         if ($member_handler->insertUser($newuser)) {
@@ -167,7 +168,8 @@ class Provisionning
         foreach ($tab_mapping as $mapping) {
             $fields = explode('=', trim($mapping));
             if ($fields[0] && $fields[1]) {
-                $icmsUser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
+                // utf8_decode() was removed in PHP 8.2; mb_convert_encoding() is the direct replacement.
+                $icmsUser->setVar(trim($fields[0]), mb_convert_encoding($datas[trim($fields[1])][0], 'ISO-8859-1', 'UTF-8'));
             }
         }
         if ($member_handler->insertUser($icmsUser)) {
