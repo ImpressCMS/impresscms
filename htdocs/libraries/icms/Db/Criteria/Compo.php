@@ -1,10 +1,14 @@
 <?php
+declare(strict_types=1);
+
+namespace Icms\Db\Criteria;
+
 // $Id: Compo.php 12313 2013-09-15 21:14:35Z skenow $
-//  ------------------------------------------------------------------------ //
+//  ------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
 //                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
+//  ------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
 //  the Free Software Foundation; either version 2 of the License, or        //
@@ -23,7 +27,7 @@
 //  You should have received a copy of the GNU General Public License        //
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+//  ------------------------------------------------------------------ //
 // Author: Kazumi Ono (AKA onokazu)                                          //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
@@ -49,7 +53,7 @@
  * @version		SVN: $Id: Compo.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * Collection of multiple {@link icms_db_criteria_Element}s
@@ -61,27 +65,29 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_db_criteria_Compo extends icms_db_criteria_Element {
+class Compo extends \icms_db_criteria_Element
+{
 
 	/**
 	 * The elements of the collection
 	 * @var	array   Array of {@link icms_db_criteria_Element} objects
 	 */
-	public $criteriaElements = array();
+	public $criteriaElements = [];
 
 	/**
 	 * Conditions
 	 * @var	array
 	 */
-	public $conditions = array();
+	public $conditions = [];
 
 	/**
 	 * Constructor
 	 *
-	 * @param   object  $ele
-	 * @param   string  $condition
-	 **/
-	public function __construct($ele=null, $condition='AND') {
+	 * @param  mixed $ele
+	 * @param  string $condition
+	 */
+	public function __construct($ele = null, string $condition = 'AND')
+	{
 		if (isset($ele) && is_object($ele)) {
 			$this->add($ele, $condition);
 		}
@@ -90,12 +96,12 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	/**
 	 * Add an element
 	 *
-	 * @param   object  &$criteriaElement
-	 * @param   string  $condition
-	 *
-	 * @return  object  reference to this collection
-	 **/
-	public function &add($criteriaElement, $condition='AND') {
+	 * @param  object $criteriaElement
+	 * @param  string $condition
+	 * @return object reference to this collection
+	 */
+	public function add($criteriaElement, string $condition = 'AND')
+	{
 		$this->criteriaElements[] = $criteriaElement;
 		$this->conditions[] = $condition;
 		return $this;
@@ -104,9 +110,10 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	/**
 	 * Make the criteria into a query string
 	 *
-	 * @return	string
+	 * @return string
 	 */
-	public function render() {
+	public function render(): string
+	{
 		$ret = '';
 		$count = count($this->criteriaElements);
 		if ($count > 0) {
@@ -122,9 +129,10 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	/**
 	 * Make the criteria into a SQL "WHERE" clause
 	 *
-	 * @return	string
+	 * @return string
 	 */
-	public function renderWhere() {
+	public function renderWhere(): string
+	{
 		$ret = $this->render();
 		$ret = ($ret != '') ? 'WHERE ' . $ret : $ret;
 		return $ret;
@@ -136,7 +144,8 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	 * @return string
 	 * @author Nathan Dial ndial@trillion21.com
 	 */
-	public function renderLdap() {
+	public function renderLdap(): string
+	{
 		$retval = '';
 		$count = count($this->criteriaElements);
 		if ($count > 0) {
@@ -148,10 +157,11 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 				} elseif (strtoupper($cond) == 'OR') {
 					$op = '|';
 				}
-				$retval = "(" . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ")";
+				$retval = '(' . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ')';
 			}
 		}
 		return $retval;
 	}
 }
 
+\class_alias(Compo::class, 'icms_db_criteria_Compo');

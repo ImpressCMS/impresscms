@@ -1,10 +1,14 @@
 <?php
+declare(strict_types=1);
+
+namespace Icms\Db\Criteria;
+
 // $Id: Item.php 12313 2013-09-15 21:14:35Z skenow $
-//  ------------------------------------------------------------------------ //
+//  ------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
 //                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
+//  ------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
 //  the Free Software Foundation; either version 2 of the License, or        //
@@ -23,7 +27,7 @@
 //  You should have received a copy of the GNU General Public License        //
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+//  ------------------------------------------------------------------ //
 // Author: Kazumi Ono (AKA onokazu)                                          //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
@@ -45,7 +49,7 @@
  *
  * @version		SVN: $Id: Item.php 12313 2013-09-15 21:14:35Z skenow $
  */
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * A single criteria
@@ -57,25 +61,43 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_db_criteria_Item extends icms_db_criteria_Element {
+class Item extends \Element
+{
 
 	/**
-	 * @var	string
+	 * @var string
 	 */
-	private $_prefix;
-	private $_function;
-	private $_column;
-	private $_operator;
-	private $_value;
+	private string $_prefix;
+
+	/**
+	 * @var string
+	 */
+	private string $_function;
+
+	/**
+	 * @var string
+	 */
+	private string $_column;
+
+	/**
+	 * @var string
+	 */
+	private string $_operator;
+
+	/**
+	 * @var string
+	 */
+	private string $_value;
 
 	/**
 	 * Constructor
 	 *
-	 * @param   string  $column
-	 * @param   string  $value
-	 * @param   string  $operator
-	 **/
-	public function __construct($column, $value='', $operator='=', $prefix = '', $function = '') {
+	 * @param string $column
+	 * @param string $value
+	 * @param string $operator
+	 */
+	public function __construct(string $column, string $value = '', string $operator = '=', string $prefix = '', string $function = '')
+	{
 		$this->_prefix = $prefix;
 		$this->_function = $function;
 		$this->_column = $column;
@@ -86,23 +108,31 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	/**
 	 * Make a sql condition string
 	 *
-	 * @return  string
-	 **/
-	public function render() {
-		$clause = (!empty($this->_prefix) ? "{$this->_prefix}." : "") . $this->_column;
+	 * @return string
+	 */
+	public function render(): string
+	{
+		$clause = (!empty($this->_prefix) ? "{$this->_prefix}." : '') . $this->_column;
 		if (!empty($this->_function)) {
 			$clause = sprintf($this->_function, $clause);
 		}
-		if (in_array( strtoupper($this->_operator), array('IS NULL', 'IS NOT NULL'))) {
+		if (in_array(\strtoupper($this->_operator), ['IS NULL', 'IS NOT NULL'])) {
 			$clause .= ' ' . $this->_operator;
 		} else {
-			if ('' === ( $value = trim($this->_value) )) {
+			if ('' === trim($this->_value)) {
 				return '';
 			}
-			if (!in_array(strtoupper($this->_operator), array('IN', 'NOT IN'))) {
-				if (( substr($value, 0, 1) != '`' ) && ( substr($value, -1) != '`' )) {
-					$value = "'$value'";
-				} elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
+			if (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $this->_value) && (substr($this->_value, 0, 1) != '`' || substr($this->_value, -1) != '`')) {
+				$value = "'" . trim($this->_value) . "'";
+			} elseif (substr($this->_value, 0, 1) != '`' || substr($this->_value, -1) != '`') {
+				$value = "'" . trim($this->_value) . "'";
+			} else {
+				$value = $this->_value;
+			}
+			if ('' !== trim($this->_value) && !in_array(\strtoupper($this->_operator), ['IN', 'NOT IN'])) {
+				if ((substr(trim($this->_value), 0, 1) != '`') && (substr(trim($this->_value), -1) != '`')) {
+					$value = "'" . trim($this->_value) . "'";
+				} elseif (!\preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $this->_value)) {
 					$value = '``';
 				}
 			}
@@ -117,7 +147,8 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	 * @return string
 	 * @author Nathan Dial ndial@trillion21.com, improved by Pierre-Eric MENUET pemen@sourceforge.net
 	 */
-	public function renderLdap() {
+	public function renderLdap(): string
+	{
 		if ($this->_operator == '>') {
 			$this->_operator = '>=';
 		}
@@ -128,14 +159,12 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 		if ($this->_operator == '!=' || $this->_operator == '<>') {
 			$operator = '=';
 			$clause = "(!(" . $this->_column . $operator . $this->_value . "))";
-		}
-		else {
+		} else {
 			if ($this->_operator == 'IN') {
-				$newvalue = str_replace(array('(', ')'), '', $this->_value);
-				$tab = explode(',', $newvalue);
+				$newvalue = \str_replace(['(', ')'], '', $this->_value);
+				$tab = \explode(',', $newvalue);
 				foreach ($tab as $uid) {
-					$clause .= '(' . $this->_column . '=' . $uid
-					.')';
+					$clause .= '(' . $this->_column . '=' . $uid . ')';
 				}
 				$clause = '(|' . $clause . ')';
 			} else {
@@ -148,11 +177,13 @@ class icms_db_criteria_Item extends icms_db_criteria_Element {
 	/**
 	 * Make a SQL "WHERE" clause
 	 *
-	 * @return	string
+	 * @return string
 	 */
-	public function renderWhere() {
+	public function renderWhere(): string
+	{
 		$cond = $this->render();
-		return empty($cond) ? '' : "WHERE $cond";
+		return $cond == '' ? '' : "WHERE " . $cond;
 	}
 }
 
+\class_alias(Item::class, 'icms_db_criteria_Item');

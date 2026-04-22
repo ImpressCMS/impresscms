@@ -1,4 +1,5 @@
 <?php
+namespace Icms\Db\Mysql;
 
 /**
  *
@@ -10,49 +11,57 @@
  * @subpackage MySQL
  */
 
+declare(strict_types=1);
+
 /**
  *
  * @copyright The ImpressCMS Project - http://www.impresscms.org/
  *
- * @category ICMS
- * @package Database
- * @subpackage MySQL
+ * @category	ICMS
+ * @package		Database
+ * @subpackage	MySQL
  */
-class icms_db_mysql_Connection extends PDO implements icms_db_IConnection {
+class Connection extends \PDO implements \IConnection
+{
 
 	/**
 	 * Safely escape the string, but strips the outer quotes
 	 *
-	 * @see icms_db_IConnection::escape()
-	 * @param string $string
+	 * @see \IConnection::escape()
+	 * @param  string $string
 	 * @return string
 	 */
-	public function escape($string) {
+	public function escape(string $string): string
+	{
 		return substr($this->quote($string), 1, -1);
 	}
 
 	/**
 	 *
-	 * @see PDO::query()
-	 * @return
+	 * @see \PDO::query()
+	 * @param string $query
+	 * @param mixed|null $mode
+	 * @param mixed $arg3
+	 * @return \PDOStatement|false
 	 */
-	// public function query($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, $arg3 = null, array $ctorargs = []) {
-             //PDO::query(string $query, ?int $fetchMode = null, mixed ...$fetchModeArgs): PDOStatement|false
-	public function query($query, $fetchMode = PDO::ATTR_DEFAULT_FETCH_MODE, ...$fetch_mode_args) {
-		$mode = $fetchMode;
+	public function query(string $query, $mode = \PDO::ATTR_DEFAULT_FETCH_MODE, ...$fetch_mode_args)
+	{
+		$mode = $mode;
 		$args = func_get_args();
 		$sql = $args[0];
-		// the use of icms_db_IConnection is correct - without it, the query count in debug is not correct
-		$result = call_user_func_array(array(parent::class, 'query'), $args);
+		// the use of \IConnection is correct - without it, the query count in debug is not correct
+		$result = call_user_func_array(array(\self::class, 'query'), $args);
 
 		// trigger events for the debug console - see plugins/preloads/debug_mode.php
 		if ($result) {
-			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => NULL, 'error' => NULL));
+			\icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => null, 'error' => null));
 		} else {
 			$errorinfo = $this->errorInfo();
-			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
+			\icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
 		}
 
 		return $result;
 	}
 }
+
+\class_alias(Connection::class, 'icms_db_mysql_Connection');

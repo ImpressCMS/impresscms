@@ -1,15 +1,7 @@
 <?php
-/**
- * icms_db_IConnection interface definition
- *
- * @category	ICMS
- * @package		Database
- * @subpackage	Connection
- *
- * @copyright   The ImpressCMS Project <http://www.impresscms.org>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id$
- */
+declare(strict_types=1);
+
+namespace Icms\Db;
 
 /**
  * Interface for database adapters.
@@ -18,6 +10,9 @@
  *
  * @since 1.4
  */
-interface icms_db_IConnection {
+interface IConnection
+{
 
 }
+
+\class_alias(IConnection::class, 'icms_db_IConnection');

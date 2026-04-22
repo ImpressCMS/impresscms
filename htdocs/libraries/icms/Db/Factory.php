@@ -30,104 +30,110 @@
 /**
  * Establishes database class and connection
  *
- * @category	ICMS
- * @package		Database
+ * @category ICMS
+ * @package Database
  *
- * @copyright   The ImpressCMS Project <http://www.impresscms.org>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @copyright The ImpressCMS Project <http://www.impresscms.org>
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
+declare(strict_types=1);
+
+namespace Icms\Db;
+
 /**
+ * Establishes database class and connection
  *
- * @category	ICMS
- * @package		Database
+ * @category ICMS
+ * @package Database
  *
- * @copyright	copyright (c) 2000-2007 XOOPS.org
- * @copyright   The ImpressCMS Project <http://www.impresscms.org>
+ * @copyright copyright (c) 2000-2007 XOOPS.org
+ * @copyright The ImpressCMS Project <http://www.impresscms.org>
  *
  * @abstract
  */
-abstract class icms_db_Factory {
-
+abstract class Factory
+{
 	/**
-	 * PDO database adapter. It represents a PDO connection only
+	 *  PDO database adapter. It represents a PDO connection only
 	 * Access this as icms::$db
 	 *
-	 * @copyright	The ImpressCMS Project <http://www.impresscms.org>
-	 * @var 		icms_db_IConnection
+	 * @copyright The ImpressCMS Project <http://www.impresscms.org>
+	 * @var null|\IConnection
 	 */
-	static protected $pdoInstance = FALSE;
+	static protected $pdoInstance = null;
 
 	/**
 	 * Legacy database adapter - it can represent a legacy database connection or a PDO connection.
 	 * Access this as icms::$xoopsDB
 	 *
-	 * @var icms_db_legacy_Database
+	 * @var object
 	 */
-	static protected $xoopsInstance = FALSE;
+	static protected $xoopsInstance = false;
 
 	/**
 	 * Instanciate the PDO compatible DB adapter (if appropriate).
 	 *
-	 * @copyright	The ImpressCMS Project <http://www.impresscms.org>
+	 * @copyright The ImpressCMS Project <http://www.impresscms.org>
 	 *
-	 * @throws RuntimeException
+	 * @throws \RuntimeException
 	 */
-	public static function pdoInstance() {
-		if (self::$pdoInstance !== FALSE) {
+	public static function pdoInstance()
+	{
+		if (self::$pdoInstance !== null) {
 			return self::$pdoInstance;
 		}
-		if (strpos(XOOPS_DB_TYPE, 'pdo.') !== 0) {
-			return self::$pdoInstance = NULL;
+		if (strpos(\XOOPS_DB_TYPE, 'pdo.') !== 0) {
+			return self::$pdoInstance = null;
 		}
-		if (!class_exists('PDO', FALSE)) {
-			throw new RuntimeException("PDO extension not available.");
+		if (!class_exists(\PDO::class, false)) {
+			throw new \RuntimeException("PDO extension not available.");
 		}
 
 		// --> added by Claudia, ImpressCMS.org
-		$string_conn = "host=". XOOPS_DB_HOST . ";dbname=". XOOPS_DB_NAME;
-		if (defined ('ICMS_DB_PORT')) {
-			$string_conn .= ';port='. ICMS_DB_PORT;
+		$string_conn = "host=" . \XOOPS_DB_HOST . ";dbname=" . \XOOPS_DB_NAME;
+		if (\defined ('ICMS_DB_PORT')) {
+			$string_conn .= ';port='. \ICMS_DB_PORT;
 		}
-		if (XOOPS_DB_CHARSET) {
-			$string_conn .= ';charset=' . XOOPS_DB_CHARSET;
+		if (\XOOPS_DB_CHARSET) {
+			$string_conn .= ';charset=' . \XOOPS_DB_CHARSET;
 		}
 		define ('ICMS_DB_DSN', $string_conn);
 		// <--
 
 		/* this is an array of attributes to pass to the connection before it is established */
 		$options = array(
-				PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT, // default is ERRMODE_SILENT (returns error code, only)
+			\PDO::ATTR_ERRMODE => \PDO::ERRMODE_SILENT, // default is ERRMODE_SILENT (returns error code, only)
 		);
 
 		/* Note: from PHP PDO connections documentation - http://www.php.net/manual/en/pdo.connections.php
 		 *
-		* If you're using the PDO ODBC driver and your ODBC libraries support ODBC
-		* Connection Pooling (unixODBC and Windows are two that do; there may be more),
-		* then it's recommended that you don't use persistent PDO connections,
-		* and instead leave the connection caching to the ODBC Connection Pooling layer.
-		* The ODBC Connection Pool is shared with other modules in the process;
-		* if PDO is told to cache the connection, then that connection would never be returned
-		* to the ODBC connection pool, resulting in additional connections being created
-		* to service those other modules.
-		*
-		* If you are certain releases of PHP 5.4 you cannot use persistent connections
-		* when you have your own database class that derives from the native PDO object.
-		* If you do, you will get segmentation faults during the PHP process shutdown.
-		* Please see this bug report for more information: https://bugs.php.net/bug.php?id=63176
-		*/
-		if (XOOPS_DB_PCONNECT == 1) {
-			$options[PDO::ATTR_PERSISTENT] = TRUE;
+		 * If you're using the PDO ODBC driver and your ODBC libraries support ODBC
+		 * Connection Pooling (unixODBC and Windows are two that do; there may be more),
+		 * then it's recommended that you don't use persistent PDO connections,
+		 * and instead leave the connection caching to the ODBC Connection Pooling layer.
+		 * The ODBC Connection Pool is shared with other modules in the process;
+		 * if PDO is told to cache the connection, then that connection would never be returned
+		 * to the ODBC connection pool, resulting in additional connections being created
+		 * to service those other modules.
+		 *
+		 * If you are certain releases of PHP 5.4 you cannot use persistent connections
+		 * when you have your own database class that derives from the native PDO object.
+		 * If you do, you will get segmentation faults during the PHP process shutdown.
+		 * Please see this bug report for more information: https://bugs.php.net/bug.php?id=63176
+		 */
+		if (\XOOPS_DB_PCONNECT == 1) {
+			$options[\PDO::ATTR_PERSISTENT] = true;
 		} else {
-			$options[PDO::ATTR_PERSISTENT] = FALSE;
+			$options[\PDO::ATTR_PERSISTENT] = false;
 		}
-		$driver = substr(XOOPS_DB_TYPE, 4);
-		$dsn = $driver . ':' . ICMS_DB_DSN;
-		$class = "icms_db_{$driver}_Connection";
+		$driver = substr(\XOOPS_DB_TYPE, 4);
+		$dsn = $driver . ':' . \ICMS_DB_DSN;
+		$class = "\\Icms\\Db\\{$driver}\\Connection";
 		if (!class_exists($class)) {
-			$class = "icms_db_Connection";
+			$class = "\Icms\Db_Connection";
 		}
-		return self::$pdoInstance = new $class($dsn, XOOPS_DB_USER, XOOPS_DB_PASS, $options);
+		return self::$pdoInstance = new $class($dsn, \XOOPS_DB_USER, \XOOPS_DB_PASS, $options);
 	}
 	/**
 	 * Get a reference to the only instance of database class and connects to DB
@@ -135,37 +141,40 @@ abstract class icms_db_Factory {
 	 * if the class has not been instantiated yet, this will also take
 	 * care of that
 	 *
-	 * @copyright	copyright (c) 2000-2007 XOOPS.org
-	 * @author		modified by arcandier, The ImpressCMS Project
+	 * @copyright copyright (c) 2000-2007 XOOPS.org
+	 * @author modified by arcandier, The ImpressCMS Project
 	 *
 	 * @static
-	 * @return      object  Reference to the only instance of database class
+	 * @return object Reference to the only instance of database class
 	 */
-	public static function instance() {
-		if (self::$xoopsInstance !== FALSE) return self::$xoopsInstance;
-		$allowWebChanges = defined('XOOPS_DB_PROXY') ? FALSE : TRUE;
-		if (strpos(XOOPS_DB_TYPE, 'pdo.') === 0) {
-			if (FALSE === self::$pdoInstance) self::pdoInstance();
-			self::$xoopsInstance = new icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
+	public static function instance()
+	{
+		if (self::$xoopsInstance !== false) return self::$xoopsInstance;
+		$allowWebChanges = \defined('XOOPS_DB_PROXY') ? false : true;
+		if (strpos(\XOOPS_DB_TYPE, 'pdo.') === 0) {
+			if (false === self::$pdoInstance) self::pdoInstance();
+			self::$xoopsInstance = new \icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
 		} else {
-			if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
+			if (\defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
 				$class = XOOPS_DB_ALTERNATIVE;
 			} else {
-				$class = 'icms_db_legacy_' . XOOPS_DB_TYPE;
+				$class = 'icms_db_' . \XOOPS_DB_TYPE;
 				$class .= $allowWebChanges ? '_Safe' : '_Proxy';
 			}
 			self::$xoopsInstance = new $class();
 			/* during a new installation, the icms object does not exist */
-			//self::$xoopsInstance->setLogger(icms::$logger);
+			//self::$xoopsInstance->setLogger(\icms::$logger);
 			/* @todo remove the dependency on the logger class */
-			self::$xoopsInstance->setLogger(icms_core_Logger::instance());
+			self::$xoopsInstance->setLogger(\icms_core_Logger::instance());
 			if (!self::$xoopsInstance->connect()) {
 				/* this requires that include/functions.php has been loaded */
-				icms_loadLanguageFile('core', 'core');
+				\icms_loadLanguageFile('core', 'core');
 				trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);
 			}
 		}
-		self::$xoopsInstance->setPrefix(XOOPS_DB_PREFIX);
+		self::$xoopsInstance->setPrefix(\XOOPS_DB_PREFIX);
 		return self::$xoopsInstance;
 	}
 }
+
+\class_alias(Factory::class, 'icms_db_Factory');

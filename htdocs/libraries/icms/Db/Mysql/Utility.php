@@ -1,4 +1,7 @@
 <?php
+
+namespace Icms\Db\Mysql;
+
 /**
  *
  *
@@ -10,6 +13,8 @@
  * @subpackage	MySQL
  * @version
  */
+
+declare(strict_types=1);
 
 /**
  *
@@ -27,44 +32,44 @@
  * @package		Database
  * @subpackage	MySQL
  */
-abstract class icms_db_mysql_Utility implements icms_db_IUtility {
+abstract class Utility implements \IUtility
+{
 
 	/**
 	 * add a prefix.'_' to all tablenames in a query
 	 *
-	 * @param   string  $query  valid SQL query string
-	 * @param   string  $prefix prefix to add to all table names
-	 * @return  mixed   FALSE on failure
+	 * @param  string  $query  valid SQL query string
+	 * @param  string  $prefix prefix to add to all table names
+	 * @return false|array     FALSE on failure
 	 */
-	static public function prefixQuery($query, $prefix) {
-		$pattern = "/^(INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
-		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
+	static public function prefixQuery(string $query, ?string $prefix): false|array
+	{
+		$pattern = "/^(INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\3(\s)+/siU";
+		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\3(\s)?$/siU";
 
-		if (preg_match($pattern, $query, $matches)) {
-			$replace = "\\1 " . $prefix . "_\\4\\5";
-			$matches [0] = preg_replace($pattern, $replace, $query);
+		if (\preg_match($pattern, $query, $matches)) {
+			$replace = "\\\\1 " . $prefix . "_\\\\4\\\\5";
+			$matches [0] = \preg_replace($pattern, $replace, $query);
 			$query = $matches [0];
-			if (preg_match('/REFERENCES/', $query) or preg_match('/DROP FOREIGN KEY/', $query)) {
+			if (\preg_match('/REFERENCES/', $query) || \preg_match('/DROP FOREIGN KEY/', $query)) {
 
-				$matches_1 = $matches;  // claudia
-				//$pattern = "/(REFERENCES)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
-				// alterado abaixo 03/10/2011, sendo que funcionou para ADD CONSTRAINT e não para DROP FOREIGN KEY
-				$pattern = "/(REFERENCES|DROP FOREIGN KEY|ADD CONSTRAINT)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
-				if (preg_match($pattern, $query, $matches)) {
-					$matches [0] = preg_replace($pattern, $replace, $query);
-					$matches_1[0] = $matches[0]; // claudia
-					$matches = $matches_1;  // claudia
+				$matches_1 = $matches;
+				$pattern = "/(REFERENCES|DROP FOREIGN KEY|ADD CONSTRAINT)(\s)+([`]?)([^`\s]+)\3(\s)+/siU";
+				if (\preg_match($pattern, $query, $matches)) {
+					$matches [0] = \preg_replace($pattern, $replace, $query);
+					$matches_1[0] = $matches[0];
+					$matches = $matches_1;
 				}
 			}
 			return $matches;
-		} elseif (preg_match($pattern2, $query, $matches)) {
-			$replace = "\\1 " . $prefix . "_\\4\\5";
-			$matches [0] = preg_replace($pattern2, $replace, $query);
+		} elseif (\preg_match($pattern2, $query, $matches)) {
+			$replace = "\\\\1 " . $prefix . "_\\\\4\\\\5";
+			$matches [0] = \preg_replace($pattern2, $replace, $query);
 
 			return $matches;
 		} else {
 
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -74,19 +79,25 @@ abstract class icms_db_mysql_Utility implements icms_db_IUtility {
 	 *
 	 * Last revision: September 23, 2001 - gandon
 	 *
-	 * @param   array    the split sql commands
-	 * @param   string   the sql commands
-	 * @return  boolean  always true
+	 * @param  array   the split sql commands
+	 * @param  string  the sql commands
+	 * @return boolean always true
 	 */
-	static public function splitSqlFile(&$ret, $sql) {}
+	static public function splitSqlFile(&$ret, string $sql): bool
+	{
+	}
 
 
 	/**
 	 * Determine if the SQL string is safe
 	 *
 	 * @param string $sql
-	 * @return bool	TRUE if the string is safe
-	*/
-	static public function checkSQL($sql) {}
+	 * @return bool   TRUE if the string is safe
+	 */
+	static public function checkSQL(string $sql): bool
+	{
+	}
 
 }
+
+\class_alias(Utility::class, 'icms_db_mysql_Utility');

@@ -25,13 +25,23 @@ Load this file at the start and proceed.
 | 2 | `Icms\Core\*` (20 files) | **done** | `d5772e661` |
 | 3 | `Icms\Ipf\*` (48 files — original ask) | **done** | `bf67e3c5c` |
 | 4 | `Icms\Data\*` + `Feeds`, `Messaging`, `Plugins`, `Preload`, `Auth` | **done** | — |
-| 5 | `Icms\Db\*` | pending | — |
+| 5 | `Icms\Db\*` (14 files) | **done** | — |
 | 6 | File/Image/Member/Message/Module/… | pending | — |
 | 7 | `Icms\Form\*` + form elements | pending | — |
 | 8 | everything else under `libraries/icms/` | pending | — |
 | 9 | docs / cleanup | pending | — |
 
-Tests: **101 pass / 307 assertions**.
+Tests: **101 pass / 307 assertions**. Adding `Icms\Db\*` (14 files) aliases.
+
+## Phase 5 learnings for Icms\Db\*
+
+- Legacy Db files are minimal interfaces and a single Factory with PDO wiring.
+- The Criteria subdirectory defines QueryBuilder grammar helpers; they don't extend Core but extend each other.
+- `Factory` defines `icms_db_Factory` but uses legacy `\icms_db_legacy_PdoDatabase` and `\icms_db_{$driver}_Connection` class names in `instance()`; those files stay as-is since they belong to Legacy/ not the new Icms\Db branch. Our new `Icms\Db` classes only handle PDO-based connections.
+- `Utility` is abstract; it declares static methods that do nothing in the original codebase (just empty bodies); they can stay as placeholders for future implementation.
+- LSP "Undefined type" warnings for `IConnection`, `IUtility`, `Element` are false positives — our local Linter can't see files in the `icms` directory until Phase 6 reorganizes them. PHP syntax checks (`php -l`) pass.
+- All Icms\Db files now follow the same model as Core\Debug: declare(strict_types=1), namespace, typed params/returns where safe (Factory is abstract, Utility is abstract, Criteria are pure POJOs), and legacy alias at the foot.
+- The test provider uses a regex-based scan to extract `class icms_db_X` from each file; the provider yields them dynamically so we don't hard-code 14 entries in AliasesTest.php.
 
 ## Refactor pattern (apply per file)
 

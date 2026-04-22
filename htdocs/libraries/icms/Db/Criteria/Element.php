@@ -1,10 +1,14 @@
 <?php
+declare(strict_types=1);
+
+namespace Icms\Db\Criteria;
+
 // $Id: Element.php 12313 2013-09-15 21:14:35Z skenow $
-//  ------------------------------------------------------------------------ //
+//  ------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
 //                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
+//  ------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
 //  the Free Software Foundation; either version 2 of the License, or        //
@@ -23,7 +27,7 @@
 //  You should have received a copy of the GNU General Public License        //
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+//  ------------------------------------------------------------------ //
 // Author: Kazumi Ono (AKA onokazu)                                          //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
@@ -47,7 +51,7 @@
  * @version		SVN: $Id: Element.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * A criteria (grammar?) for a database query.
@@ -62,119 +66,131 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-abstract class icms_db_criteria_Element {
+abstract class Element
+{
 	/**
 	 * Sort order
-	 * @var	string
+	 * @var string
 	 */
-	public $order = 'ASC';
+	public string $order = 'ASC';
 
 	/**
-	 * @var	string
+	 * @var string
 	 */
-	public $sort = '';
+	public string $sort = '';
 
 	/**
 	 * Number of records to retrieve
-	 * @var	int
+	 * @var int
 	 */
-	public $limit = 0;
+	public int $limit = 0;
 
 	/**
 	 * Offset of first record
-	 * @var	int
+	 * @var int
 	 */
-	public $start = 0;
+	public int $start = 0;
 
 	/**
-	 * @var	string
+	 * @var string
 	 */
-	public $groupby = '';
+	public string $groupby = '';
 
 	/**
 	 * Constructor
-	 **/
-	public function __construct(){}
+	 */
+	public function __construct()
+	{
+	}
 
 	/**
 	 * Render the criteria element
 	 */
-	abstract public function render();
+	abstract public function render(): string;
 
 	/**#@+
 	 * Accessor
 	 */
 	/**
-	 * @param	string  $sort
+	 * @param string $sort
 	 */
-	public function setSort($sort) {
+	public function setSort(string $sort): void
+	{
 		$this->sort = $sort;
 	}
 
 	/**
-	 * @return	string
+	 * @return string
 	 */
-	public function getSort() {
+	public function getSort(): string
+	{
 		return $this->sort;
 	}
 
 	/**
-	 * @param	string  $order
+	 * @param string $order
 	 */
-	public function setOrder($order) {
-		if ('DESC' == strtoupper($order)) {
+	public function setOrder(string $order): void
+	{
+		if ('DESC' === strtoupper($order)) {
 			$this->order = 'DESC';
 		}
 	}
 
 	/**
-	 * @return	string
+	 * @return string
 	 */
-	public function getOrder() {
+	public function getOrder(): string
+	{
 		return $this->order;
 	}
 
 	/**
-	 * @param	int $limit
+	 * @param int $limit
 	 */
-	public function setLimit($limit=0) {
+	public function setLimit(int $limit = 0): void
+	{
 		$this->limit = (int) ($limit);
 	}
 
 	/**
-	 * @return	int
+	 * @return int
 	 */
-	public function getLimit() {
+	public function getLimit(): int
+	{
 		return $this->limit;
 	}
 
 	/**
-	 * @param	int $start
+	 * @param int $start
 	 */
-	public function setStart($start=0) {
+	public function setStart(int $start = 0): void
+	{
 		$this->start = (int) ($start);
 	}
 
 	/**
-	 * @return	int
+	 * @return int
 	 */
-	public function getStart() {
+	public function getStart(): int
+	{
 		return $this->start;
 	}
 
 	/**
-	 * @param	string  $group
+	 * @param string $group
 	 */
-	public function setGroupby($group) {
+	public function setGroupby(string $group): void
+	{
 		$this->groupby = $group;
 	}
 
 	/**
-	 * @return	string
+	 * @return string
 	 */
-	public function getGroupby() {
+	public function getGroupby(): string
+	{
 		return ' GROUP BY ' . $this->groupby;
 	}
 	/**#@-*/
 }
-
