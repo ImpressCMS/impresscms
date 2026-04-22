@@ -619,11 +619,16 @@ class Entity {
 					case XOBJ_DTYPE_STIME:
 					case XOBJ_DTYPE_MTIME:
 					case XOBJ_DTYPE_LTIME:
-						$cleanv = !is_string($cleanv) ? (int) $cleanv : strtotime($cleanv);
-						if (!($cleanv > 0)) {
-							$cleanv = strtotime($cleanv);
-						}
-						if ($cleanv === false) $cleanv = 0;
+												// Normalize time values: accept integer timestamps or parse string dates.
+												// Avoid passing non-string (int) values to strtotime() which in PHP 8+ is strict.
+												if (is_numeric($cleanv)) {
+													$cleanv = (int) $cleanv;
+												} elseif (is_string($cleanv) && $cleanv !== '') {
+													$ts = strtotime($cleanv);
+													$cleanv = ($ts === false) ? 0 : $ts;
+												} else {
+													$cleanv = 0;
+												}
 						break;
 
 					default:
