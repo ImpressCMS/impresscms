@@ -279,8 +279,12 @@ class Session {
 	 * @return string
 	 */
 	public function createFingerprint(): string {
-		$userAgent = $_SERVER['HTTP_USER_AGENT'];
-		$userIP = $_SERVER['REMOTE_ADDR'];
+		$userAgent = isset($_SERVER['HTTP_USER_AGENT'])
+			? (string) $_SERVER['HTTP_USER_AGENT']
+			: '';
+		$userIP = isset($_SERVER['REMOTE_ADDR'])
+			? (string) $_SERVER['REMOTE_ADDR']
+			: '';
 
 		return self::sessionFingerprint($userIP, $userAgent);
 	}
@@ -293,11 +297,15 @@ class Session {
 	 * @return bool
 	 */
 	public function checkFingerprint(): bool {
-		$userAgent = $_SERVER['HTTP_USER_AGENT'];
-		$userIP = $_SERVER['REMOTE_ADDR'];
+		$userAgent = isset($_SERVER['HTTP_USER_AGENT'])
+			? (string) $_SERVER['HTTP_USER_AGENT']
+			: '';
+		$userIP = isset($_SERVER['REMOTE_ADDR'])
+			? (string) $_SERVER['REMOTE_ADDR']
+			: '';
 		$sessFprint = self::sessionFingerprint($userIP, $userAgent);
 
-		if ($sessFprint == $_SESSION['icms_fprint']) {
+		if (isset($_SESSION['icms_fprint']) && $sessFprint == $_SESSION['icms_fprint']) {
 			return true;
 		} else {
 			return false;
@@ -379,7 +387,9 @@ class Session {
 	}
 
 	// Internal function. Returns sha256 from fingerprint.
-	private function sessionFingerprint(string $ip, string $userAgent): string {
+	private function sessionFingerprint(?string $ip, ?string $userAgent): string {
+		$ip = $ip ?? '';
+		$userAgent = $userAgent ?? '';
 		$securityLevel = (int) $this->securityLevel;
 		$ipv6securityLevel = (int) $this->ipv6securityLevel;
 
@@ -429,6 +439,9 @@ class Session {
 	 * @return string Session data
 	 */
 	private function readSession(string $sess_id): string {
+		$remoteAddr = isset($_SERVER['REMOTE_ADDR'])
+			? (string) $_SERVER['REMOTE_ADDR']
+			: '';
 		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s', \icms::$xoopsDB->prefix('session'), \icms::$xoopsDB->quoteString($sess_id));
 		if (false != $result = \icms::$xoopsDB->query($sql)) {
 			if (list($sess_data, $sess_ip) = \icms::$xoopsDB->fetchRow($result)) {
@@ -436,19 +449,19 @@ class Session {
 					/**
 					 * also cover IPv6 localhost string
 					 */
-					if ($_SERVER['REMOTE_ADDR'] == "::1") {
+					if ($remoteAddr == "::1") {
 						$pos = 3;
 					} else {
 						$pos = strpos($sess_ip, ":", $this->ipv6securityLevel - 1);
 					}
 
-					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
+					if ($remoteAddr === '' || strncmp($sess_ip, $remoteAddr, $pos)) {
 						$sess_data = '';
 					}
 				} elseif ($this->securityLevel > 1 && \icms_core_DataFilter::checkVar($sess_ip, 'ip', 'ipv4')) {
 					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
 
-					if (strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {
+					if ($remoteAddr === '' || strncmp($sess_ip, $remoteAddr, $pos)) {
 						$sess_data = '';
 					}
 				}

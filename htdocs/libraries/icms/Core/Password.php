@@ -65,8 +65,9 @@ final class Password {
 	public static function createSalt(int $slength = 64): string {
 		$salt = '';
 		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$microtime = function_exists('microtime') ? microtime() : time();
-		mt_srand((double)$microtime * 1000000);
+		// PHP 8+ requires an int seed; microtime(true) keeps legacy variability.
+		$seed = (int) (microtime(true) * 1000000);
+		mt_srand($seed);
 		for ($i=0; $i<=$slength; $i++)
 		$salt.= substr($base, mt_rand(0, strlen($base)), 1);
 

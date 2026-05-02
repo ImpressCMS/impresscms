@@ -441,14 +441,19 @@ class Entity {
 				break;
 
 			case XOBJ_DTYPE_ARRAY:
-				try {
-			        $ret = unserialize($data);
-			        if ($ret === false) {
-			            $ret = [];
-			        }
-			    } catch (\Throwable $e) {
-			        $ret = [];
-			    }
+				if (is_array($ret)) {
+					break;
+				}
+				if ($ret === null || $ret === '') {
+					$ret = [];
+					break;
+				}
+				$unserialized = @unserialize((string) $ret, ['allowed_classes' => false]);
+				if ($unserialized === false && (string) $ret !== 'b:0;') {
+					$ret = [];
+				} else {
+					$ret = $unserialized;
+				}
 				break;
 
 			case XOBJ_DTYPE_SOURCE:
@@ -531,6 +536,8 @@ class Entity {
 				$cleanv = is_string($cleanv) ? trim($cleanv) : $cleanv;
 				switch ($v['data_type']) {
 					case XOBJ_DTYPE_TXTBOX:
+						// Legacy callers may pass ints; normalize to string for PHP 8+ strictness.
+						$cleanv = is_scalar($cleanv) ? (string) $cleanv : '';
 						if ($v['required'] && $cleanv != '0' && $cleanv == '') {
 							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							break;
