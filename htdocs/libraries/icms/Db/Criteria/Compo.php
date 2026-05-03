@@ -65,7 +65,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class Compo extends \icms_db_criteria_Element
+class Compo extends Element
 {
 
 	/**
@@ -86,9 +86,10 @@ class Compo extends \icms_db_criteria_Element
 	 * @param  mixed $ele
 	 * @param  string $condition
 	 */
-	public function __construct($ele = null, string $condition = 'AND')
+	public function __construct($ele = null, ?string $condition = 'AND')
 	{
-		if (isset($ele) && is_object($ele)) {
+		$condition = $condition ?? 'AND';
+		if (isset($ele) && \is_object($ele)) {
 			$this->add($ele, $condition);
 		}
 	}
@@ -134,7 +135,7 @@ class Compo extends \icms_db_criteria_Element
 	public function renderWhere(): string
 	{
 		$ret = $this->render();
-		$ret = ($ret != '') ? 'WHERE ' . $ret : $ret;
+		$ret = ($ret !== '') ? 'WHERE ' . $ret : $ret;
 		return $ret;
 	}
 
@@ -151,10 +152,11 @@ class Compo extends \icms_db_criteria_Element
 		if ($count > 0) {
 			$retval = $this->criteriaElements[0]->renderLdap();
 			for ($i = 1; $i < $count; $i++) {
-				$cond = $this->conditions[$i];
-				if (strtoupper($cond) == 'AND') {
+				$cond = \strtoupper($this->conditions[$i]);
+				$op = '';
+				if ($cond === 'AND') {
 					$op = '&';
-				} elseif (strtoupper($cond) == 'OR') {
+				} elseif ($cond === 'OR') {
 					$op = '|';
 				}
 				$retval = '(' . $op . $retval . $this->criteriaElements[$i]->renderLdap() . ')';
