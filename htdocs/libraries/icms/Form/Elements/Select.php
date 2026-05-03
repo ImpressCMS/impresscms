@@ -27,194 +27,232 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+declare(strict_types=1);
+namespace Icms\Form\Elements;
+
+use Icms\Form\Element;
+
+
 /**
  * Creates a form select field (base class)
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @version		SVN: $Id: Select.php 12313 2013-09-15 21:14:35Z skenow $
+ * @copyright  http://www.impresscms.org/ The ImpressCMS Project
+ * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ *
+ * @category   ICMS
+ * @package    Form
+ * @subpackage Elements
+ * @version    SVN: $Id: Select.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
+
 /**
  * A select field
  *
- * @category	ICMS
- * @package     Form
- * @subpackage  Elements
+ * @package Form
+ * @subpackage Elements
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @author    Kazumi Ono <onokazu@xoops.org>
+ * @copyright copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Select extends icms_form_Element {
+class Select extends Element
+{
+    /**
+     * Options
+     *
+     * @var array<string,string>
+     */
+    private array $_options = [];
 
-	/**
-	 * Options
-	 * @var array
-	 */
-	private $_options = array();
+    /**
+     * Allow multiple selections?
+     *
+     * @var bool
+     */
+    private bool $_multiple = false;
 
-	/**
-	 * Allow multiple selections?
-	 * @var	bool
-	 */
-	private $_multiple = false;
+    /**
+     * Number of rows. "1" makes a dropdown list.
+     *
+     * @var int
+     */
+    private int $_size;
 
-	/**
-	 * Number of rows. "1" makes a dropdown list.
-	 * @var	int
-	 */
-	private $_size;
+    /**
+     * Pre-selected values
+     *
+     * @var array<string>
+     */
+    private array $_value = [];
 
-	/**
-	 * Pre-selcted values
-	 * @var	array
-	 */
-	private $_value = array();
+    /**
+     * Constructor
+     *
+     * @param string $caption Caption
+     * @param string $name "name" attribute
+     * @param mixed $value Pre-selected value (or array of them).
+     * @param int $size Number or rows. "1" makes a drop-down-list
+     * @param bool $multiple Allow multiple selections?
+     */
+    public function __construct(
+        string $caption,
+        string $name,
+        $value = null,
+        int $size = 1,
+        bool $multiple = false
+    ) {
+        $this->setCaption($caption);
+        $this->setName($name);
+        $this->_multiple = $multiple;
+        $this->_size = (int) $size;
+        if (is_array($value)) {
+            foreach ($value as $v) {
+                $this->_value[] = (string) $v;
+            }
+        } elseif ($value !== null) {
+            $this->_value[] = (string) $value;
+        }
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$name       "name" attribute
-	 * @param	mixed	$value	    Pre-selected value (or array of them).
-	 * @param	int		$size	    Number or rows. "1" makes a drop-down-list
-	 * @param	bool    $multiple   Allow multiple selections?
-	 */
-	public function __construct($caption, $name, $value = null, $size = 1, $multiple = false) {
-		$this->setCaption($caption);
-		$this->setName($name);
-		$this->_multiple = $multiple;
-		$this->_size = (int) ($size);
-		if (isset($value)) {
-			$this->setValue($value);
-		}
-	}
+    /**
+     * Are multiple selections allowed?
+     *
+     * @return bool
+     */
+    public function isMultiple(): bool
+    {
+        return $this->_multiple;
+    }
 
-	/**
-	 * Are multiple selections allowed?
-	 *
-	 * @return	bool
-	 */
-	public function isMultiple() {
-		return $this->_multiple;
-	}
+    /**
+     * Get the size
+     *
+     * @return int
+     */
+    public function getSize(): int
+    {
+        return $this->_size;
+    }
 
-	/**
-	 * Get the size
-	 *
-	 * @return	int
-	 */
-	public function getSize() {
-		return $this->_size;
-	}
+    /**
+     * Get an array of pre-selected values
+     *
+     * @param bool $encode To sanitize the text?
+     * @return array<string>
+     */
+    public function getValue(bool $encode = false): array
+    {
+        if (!$encode) {
+            return $this->_value;
+        }
+        $value = [];
+        foreach ($this->_value as $val) {
+            $value[] = htmlspecialchars((string) $val, ENT_QUOTES);
+        }
+        return $value;
+    }
 
-	/**
-	 * Get an array of pre-selected values
-	 *
-	 * @param	bool    $encode To sanitizer the text?
-	 * @return	array
-	 */
-	public function getValue($encode = false) {
-		if (!$encode) {
-			return $this->_value;
-		}
-		$value = array();
-		foreach ($this->_value as $val) {
-			$value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
-		}
-		return $value;
-	}
+    /**
+     * Set pre-selected values
+     *
+     * @param mixed $value
+     */
+    public function setValue($value): void
+    {
+        if (is_array($value)) {
+            foreach ($value as $v) {
+                $this->_value[] = (string) $v;
+            }
+        } else {
+            $this->_value[] = (string) $value;
+        }
+    }
 
-	/**
-	 * Set pre-selected values
-	 *
-	 * @param	$value	mixed
-	 */
-	public function setValue($value) {
-		if (is_array($value)) {
-			foreach ($value as $v) {
-				$this->_value[] = $v;
-			}
-		} else {
-			$this->_value[] = $value;
-		}
-	}
+    /**
+     * Add an option
+     *
+     * @param string $value "value" attribute
+     * @param string $name "name" attribute
+     */
+    public function addOption(string $value, string $name = ''): void
+    {
+        if ($name !== '') {
+            $this->_options[$value] = $name;
+        } else {
+            $this->_options[$value] = $value;
+        }
+    }
 
-	/**
-	 * Add an option
-	 *
-	 * @param	string  $value  "value" attribute
-	 * @param	string  $name   "name" attribute
-	 */
-	public function addOption($value, $name = ""){
-		if ($name != "") {
-			$this->_options[$value] = $name;
-		} else {
-			$this->_options[$value] = $value;
-		}
-	}
+    /**
+     * Add multiple options
+     *
+     * @param array<string,string> $options Associative array of value->name pairs
+     */
+    public function addOptionArray(array $options): void
+    {
+        if (is_array($options)) {
+            foreach ($options as $k => $v) {
+                $this->addOption((string) $k, (string) $v);
+            }
+        }
+    }
 
-	/**
-	 * Add multiple options
-	 *
-	 * @param	array   $options    Associative array of value->name pairs
-	 */
-	public function addOptionArray($options) {
-		if (is_array($options)) {
-			foreach ($options as $k=>$v) {
-				$this->addOption($k, $v);
-			}
-		}
-	}
+    /**
+     * Get an array with all the options
+     *
+     * Note: both name and value should be sanitized. However for backward compatibility, only value is sanitized for now.
+     *
+     * @param int $encode To sanitize the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
+     * @return array<string,string> Associative array of value->name pairs
+     */
+    public function getOptions(int $encode = 0): array
+    {
+        if ($encode === 0) {
+            return $this->_options;
+        }
 
-	/**
-	 * Get an array with all the options
-	 *
-	 * Note: both name and value should be sanitized. However for backward compatibility, only value is sanitized for now.
-	 *
-	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
-	 * @return	array   Associative array of value->name pairs
-	 */
-	public function getOptions($encode = false) {
-		if (!$encode) {
-			return $this->_options;
-		}
-		$value = array();
-		foreach ($this->_options as $val => $name) {
-			$value[$encode ? htmlspecialchars($val, ENT_QUOTES) : $val]
-				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
-		}
-		return $value;
-	}
+        $value = [];
+        foreach ($this->_options as $val => $name) {
+            $value[$encode === 1 ? htmlspecialchars((string) $val, ENT_QUOTES) : (string) $val]
+                = ($encode > 1) ? htmlspecialchars((string) $name, ENT_QUOTES) : (string) $name;
+        }
+        return $value;
+    }
 
-	/**
-	 * Prepare HTML for output
-	 *
-	 * @return	string  HTML
-	 */
-	public function render() {
-		$ele_name = $this->getName();
-		$ele_value = $this->getValue();
-		$ele_options = $this->getOptions();
-		$ret = "<select size='" . $this->getSize() . "' " . $this->getExtra();
-		if ($this->isMultiple() != false) {
-			$ret .= " name='" . $ele_name . "[]' id='" . $ele_name . "' multiple='multiple'>\n";
-		} else {
-			$ret .= " name='" . $ele_name . "' id='" . $ele_name . "'>\n";
-		}
-		foreach ( $ele_options as $value => $name ) {
-			$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
-			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
-				$ret .= " selected='selected'";
-			}
-			$ret .= ">" . $name . "</option>\n";
-		}
-		$ret .= "</select>";
-		return $ret;
-	}
+    /**
+     * Prepare HTML for output
+     *
+     * @return string HTML
+     */
+    public function render(): string
+    {
+        $eleName = $this->getName();
+        $eleValue = $this->getValue();
+        $eleOptions = $this->getOptions();
+        $ret = '<select size="' . $this->getSize() . '"' . $this->getExtra();
+
+        if ($this->isMultiple()) {
+            $ret .= ' name="' . htmlspecialchars($eleName, ENT_QUOTES) . '[]" id="' . htmlspecialchars($eleName, ENT_QUOTES) . '" multiple="multiple">';
+        } else {
+            $ret .= ' name="' . htmlspecialchars($eleName, ENT_QUOTES) . '" id="' . htmlspecialchars($eleName, ENT_QUOTES) . '">';
+        }
+
+        foreach ($eleOptions as $v => $n) {
+            $ret .= '<option value="' . htmlspecialchars((string) $v, ENT_QUOTES) . '"';
+            if (count($eleValue) > 0 && in_array((string) $v, (array) $eleValue, true)) {
+                $ret .= ' selected="selected"';
+            }
+            $ret .= '>' . htmlspecialchars((string) $n, ENT_QUOTES) . "</option>\n";
+        }
+        $ret .= '</select>';
+        return $ret;
+    }
 }
+
+/**
+ * Legacy class alias for backward compatibility
+ */
+class_alias(Select::class, 'icms_form_elements_Select');

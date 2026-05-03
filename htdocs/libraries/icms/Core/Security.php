@@ -100,7 +100,10 @@ class Security {
 	public function createToken(int $timeout = 0, string $name = _CORE_TOKEN): string {
 		$this->garbageCollection($name);
 		if ($timeout == 0) {
-			$timeout = $GLOBALS['icmsConfig']['session_expire'] * 60; //session_expire is in minutes, we need seconds
+			$sessionExpire = isset($GLOBALS['icmsConfig']['session_expire'])
+				? (int) $GLOBALS['icmsConfig']['session_expire']
+				: 15;
+			$timeout = $sessionExpire * 60; // session_expire is in minutes, we need seconds
 		}
 		$token_id = md5(uniqid((string) rand(), true));
 		// save token data on the server
@@ -109,7 +112,8 @@ class Security {
 		}
 		$token_data = array('id' => $token_id, 'expire' => time() + (int) ($timeout));
 		array_push($_SESSION[$name . '_SESSION'], $token_data);
-		return md5($token_id.$_SERVER['HTTP_USER_AGENT'].XOOPS_DB_PREFIX);
+		$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? (string) $_SERVER['HTTP_USER_AGENT'] : '';
+		return md5($token_id . $userAgent . XOOPS_DB_PREFIX);
 	}
 
 	/**
