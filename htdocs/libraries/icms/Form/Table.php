@@ -33,9 +33,10 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 
- * @package		Form
- * @version		SVN: $Id: Table.php 12313 2013-09-15 21:14:35Z skenow $
- */
+*/
+declare(strict_types=1);
+
+namespace Icms\Form;
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
@@ -44,37 +45,42 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * No styles and no JavaScript to check for required fields.
  *
- * @category	ICMS
- * @package     Form
+ * @copyright  http://www.impresscms.org/ The ImpressCMS Project
+ * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @author		Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @category   ICMS
+ * @package    Form
+ *
+ * @author     Kazumi Ono      <onokazu@xoops.org>
+ * @copyright  copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_Table extends icms_form_Base {
+class Table extends Form
+{
 	/**
 	 * Insert an empty row in the table to serve as a separator.
 	 *
-	 * @param	string  $extra  HTML to be displayed in the empty row.
-	 * @param	string	$class	CSS class name for <td> tag
+	 * @param string $extra    HTML to be displayed in the empty row.
+	 * @param string $class    CSS class name for <td> tag.
 	 */
-	public function insertBreak($extra = '', $class= '') {
-		$class = ($class != '') ? " class='$class'" : '';
-		//Fix for $extra tag not showing
+	public function insertBreak(string $extra = '', string $class = ''): void
+	{
+		$class = ($class !== '') ? " class='$class'" : '';
+		// Fix for $extra tag not showing
 		if ($extra) {
 			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
-			$this->addElement($extra);
 		} else {
 			$extra = "<tr><td colspan='2' $class>&nbsp;</td></tr>";
-			$this->addElement($extra);
 		}
+		$this->addElement($extra, false);
 	}
 
 	/**
-	 * create HTML to output the form as a table
+	 * Create HTML to output the form as a table
 	 *
-	 * @return	string  $ret  the constructed HTML
+	 * @return string $ret the constructed HTML
 	 */
-	public function render() {
+	public function render(): string
+	{
 		$ret = $this->getTitle() . "\n<form name='" . $this->getName()
 			. "' id='" . $this->getName()
 			. "' action='" . $this->getAction()
@@ -96,3 +102,8 @@ class icms_form_Table extends icms_form_Base {
 		return $ret;
 	}
 }
+
+/**
+ * Legacy class alias for backward compatibility
+ */
+class_alias(Table::class, 'icms_form_Table');

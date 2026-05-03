@@ -33,35 +33,38 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 
- * @category	ICMS
- * @package		Form
- * @version		SVN: $Id: Simple.php 12313 2013-09-15 21:14:35Z skenow $
- * @todo		this class is not used by the core; we will probably remove it in 1.4
- */
+*/
+namespace Icms\Form;
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * Form that will output as a simple HTML form with minimum formatting
  *
- * @category	ICMS
- * @package     Form
+ * @copyright  http://www.impresscms.org/ The ImpressCMS Project
+ * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @category   ICMS
+ * @package    Form
+ *
+ * @author     Kazumi Ono      <onokazu@xoops.org>
+ * @copyright  copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_Simple extends icms_form_Base {
+class Simple extends Form
+{
 	/**
 	 * This method is required - this method in the parent (abstract) class is also abstract
-	 * @param string $extra
 	 */
-	public function insertBreak($extra = NULL) {
+	public function insertBreak(?string $extra = null): void
+	{
 	}
+
 	/**
-	 * create HTML to output the form with minimal formatting
+	 * Create HTML to output the form with minimal formatting
 	 *
-	 * @return	string
+	 * @return string
 	 */
-	public function render() {
+	public function render(): string
+	{
 		$ret = $this->getTitle() . "\n<form name='" . $this->getName()
 			. "' id='" . $this->getName()
 			. "' action='" . $this->getAction()
@@ -78,3 +81,8 @@ class icms_form_Simple extends icms_form_Base {
 		return $ret;
 	}
 }
+
+/**
+ * Legacy class alias for backward compatibility
+ */
+class_alias(Simple::class, 'icms_form_Simple');
