@@ -147,6 +147,35 @@ if ($_icms_vendor_autoload === null) {
 
 unset($_icms_trust_path);
 
+if ($_icms_vendor_from_trustpath) {
+	$_icms_root_path = realpath(__DIR__ . "/..");
+	$_icms_bridge_path =
+		dirname(dirname($_icms_vendor_autoload)) . "/libraries/Autoloader.php";
+
+	if ($_icms_root_path !== false && !is_file($_icms_bridge_path)) {
+		$_icms_bridge_dir = dirname($_icms_bridge_path);
+		if (is_dir($_icms_bridge_dir) || @mkdir($_icms_bridge_dir, 0775, true)) {
+			$_icms_bridge_content =
+				"<?php\nrequire_once " .
+				var_export($_icms_root_path . "/libraries/Autoloader.php", true) .
+				";\n";
+			@file_put_contents($_icms_bridge_path, $_icms_bridge_content);
+			unset($_icms_bridge_content);
+		}
+		unset($_icms_bridge_dir);
+	}
+
+	if (!is_file($_icms_bridge_path)) {
+		header("Content-Type: text/plain; charset=utf-8");
+		echo "ImpressCMS Installer - Unable to prepare trust-path autoloader bridge\n\n";
+		echo "Expected file: " . $_icms_bridge_path . "\n";
+		echo "Please make sure the trust path is writable and retry.\n";
+		exit(1);
+	}
+
+	unset($_icms_root_path, $_icms_bridge_path);
+}
+
 require_once $_icms_vendor_autoload;
 unset($_icms_vendor_autoload);
 
