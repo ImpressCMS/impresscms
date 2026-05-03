@@ -96,12 +96,6 @@ abstract class Element
 	 */
 	public string $groupby = '';
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-	}
 
 	/**
 	 * Render the criteria element
@@ -194,3 +188,6 @@ abstract class Element
 	}
 	/**#@-*/
 }
+
+\class_alias(Element::class, 'icms_db_criteria_Element');
+
