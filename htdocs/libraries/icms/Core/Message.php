@@ -156,7 +156,12 @@ class Message
 		}
 	}
 	if ($addtoken !== false) {
-		echo \icms::$security->getTokenHTML();
+		try {
+			echo \icms::$security->getTokenHTML();
+		} catch (\Throwable $e) {
+			// Keep the confirmation buttons available even if token generation fails.
+			error_log('ImpressCMS confirm token generation failed: ' . $e->getMessage());
+		}
 	}
 	echo '<input type="submit" name="confirm_submit" value="' . $submit
 		. '" /> <input type="button" name="confirm_back" value="' . _CANCEL
