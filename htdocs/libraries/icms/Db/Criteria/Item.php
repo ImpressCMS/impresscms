@@ -61,7 +61,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class Item extends \Element
+class Item extends Element
 {
 
 	/**
@@ -96,13 +96,13 @@ class Item extends \Element
 	 * @param string $value
 	 * @param string $operator
 	 */
-	public function __construct(string $column, string $value = '', string $operator = '=', string $prefix = '', string $function = '')
+	public function __construct(?string $column, $value = '', ?string $operator = '=', ?string $prefix = '', ?string $function = '')
 	{
-		$this->_prefix = $prefix;
-		$this->_function = $function;
-		$this->_column = $column;
-		$this->_value = $value;
-		$this->_operator = $operator;
+		$this->_prefix = $prefix ?? '';
+		$this->_function = $function ?? '';
+		$this->_column = $column ?? '';
+		$this->_value = is_scalar($value) || $value === null ? (string) ($value ?? '') : '';
+		$this->_operator = $operator ?? '=';
 	}
 
 	/**
@@ -114,25 +114,30 @@ class Item extends \Element
 	{
 		$clause = (!empty($this->_prefix) ? "{$this->_prefix}." : '') . $this->_column;
 		if (!empty($this->_function)) {
-			$clause = sprintf($this->_function, $clause);
+			$clause = \sprintf($this->_function, $clause);
 		}
-		if (in_array(\strtoupper($this->_operator), ['IS NULL', 'IS NOT NULL'])) {
+		if (\in_array(\strtoupper($this->_operator), ['IS NULL', 'IS NOT NULL'], true)) {
 			$clause .= ' ' . $this->_operator;
 		} else {
-			if ('' === trim($this->_value)) {
+			$trimmedValue = \trim($this->_value);
+			if ($trimmedValue === '') {
 				return '';
 			}
-			if (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $this->_value) && (substr($this->_value, 0, 1) != '`' || substr($this->_value, -1) != '`')) {
-				$value = "'" . trim($this->_value) . "'";
-			} elseif (substr($this->_value, 0, 1) != '`' || substr($this->_value, -1) != '`') {
-				$value = "'" . trim($this->_value) . "'";
+
+			$isSimpleValue = \preg_match('/^[a-zA-Z0-9_.`-]*$/', $this->_value) === 1;
+			$valueLength = \strlen($this->_value);
+			$isBackticked = $valueLength >= 2
+				&& $this->_value[0] === '`'
+				&& $this->_value[$valueLength - 1] === '`';
+
+			if (\in_array(\strtoupper($this->_operator), ['IN', 'NOT IN'], true)) {
+				// IN / NOT IN expect a value list expression, e.g. "(1,2,3)".
+				$value = $trimmedValue;
 			} else {
-				$value = $this->_value;
-			}
-			if ('' !== trim($this->_value) && !in_array(\strtoupper($this->_operator), ['IN', 'NOT IN'])) {
-				if ((substr(trim($this->_value), 0, 1) != '`') && (substr(trim($this->_value), -1) != '`')) {
-					$value = "'" . trim($this->_value) . "'";
-				} elseif (!\preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $this->_value)) {
+				$value = $isBackticked ? $this->_value : "'" . $trimmedValue . "'";
+				if (!$isBackticked) {
+					$value = "'" . $trimmedValue . "'";
+				} elseif (!$isSimpleValue) {
 					$value = '``';
 				}
 			}
@@ -149,18 +154,19 @@ class Item extends \Element
 	 */
 	public function renderLdap(): string
 	{
-		if ($this->_operator == '>') {
-			$this->_operator = '>=';
+		$operator = $this->_operator;
+		if ($operator === '>') {
+			$operator = '>=';
 		}
-		if ($this->_operator == '<') {
-			$this->_operator = '<=';
+		if ($operator === '<') {
+			$operator = '<=';
 		}
 
-		if ($this->_operator == '!=' || $this->_operator == '<>') {
-			$operator = '=';
-			$clause = "(!(" . $this->_column . $operator . $this->_value . "))";
+		if ($operator === '!=' || $operator === '<>') {
+			$clause = "(!(" . $this->_column . '=' . $this->_value . "))";
 		} else {
-			if ($this->_operator == 'IN') {
+			$clause = '';
+			if ($operator === 'IN') {
 				$newvalue = \str_replace(['(', ')'], '', $this->_value);
 				$tab = \explode(',', $newvalue);
 				foreach ($tab as $uid) {
@@ -168,7 +174,7 @@ class Item extends \Element
 				}
 				$clause = '(|' . $clause . ')';
 			} else {
-				$clause = "(" . $this->_column . $this->_operator . $this->_value . ")";
+				$clause = "(" . $this->_column . $operator . $this->_value . ")";
 			}
 		}
 		return $clause;
@@ -182,7 +188,7 @@ class Item extends \Element
 	public function renderWhere(): string
 	{
 		$cond = $this->render();
-		return $cond == '' ? '' : "WHERE " . $cond;
+		return $cond === '' ? '' : 'WHERE ' . $cond;
 	}
 }
 
