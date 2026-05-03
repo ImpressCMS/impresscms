@@ -31,8 +31,8 @@ declare(strict_types=1);
 
 namespace Icms\Form\Elements\Select;
 
-use Icms\Form\Elements\Tray;
-use Icms\Form\Elements\Label;
+use icms_form_elements_Label as Label;
+use icms_form_elements_Tray as Tray;
 use Icms\Form\Elements\Select as SelectElement;
 
 /**
@@ -73,24 +73,26 @@ class User extends Tray
 		bool $multiple = false,
 		bool $showRemoved = false,
 		bool $justRemoved = false
-	): void {
+	)
+	{
 		$limit = 200;
 		$selectElement = new SelectElement('', $name, $value, $size, $multiple);
 
 		if ($includeAnon) {
 			$config = \Xoops\Core\Registry::getInstance()->getConfig();
 			$anonymous = $config->get('anonymous');
-			$selectElement->addOption(0, $anonymous ?? 'Anonymous');
+			$selectElement->addOption('0', $anonymous ?? 'Anonymous');
 		}
 
 		/** @var \Icms\Member\MemberHandler $memberHandler */
-		$memberHandler = \Icms::getHandler('member');
+		$memberHandler = \icms::handler('icms_member');
 		$userCount = $memberHandler->getUserCount();
 
-		// Normalize value to array
+		// Normalize value to an array of user IDs
 		$value = is_array($value)
 			? $value
-			: (empty($value) ? [] : [$value]);
+			: ($value === null ? [] : [$value]);
+		$value = array_values(array_map('intval', $value));
 
 		// Build criteria for user list
 		$criteria = new \Icms\Db\Criteria_Compo();
@@ -122,7 +124,7 @@ class User extends Tray
 		}
 
 		// Load language file
-		$this->loadLanguage('core', 'findusers');
+		\icms_loadLanguageFile('core', 'findusers');
 
 		$jsAddUsers = $this->getAddUsersScript($name, $multiple);
 		$actionTray = new Tray('', ' | ');
