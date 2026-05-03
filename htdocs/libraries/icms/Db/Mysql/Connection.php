@@ -1,5 +1,8 @@
 <?php
+declare(strict_types=1);
 namespace Icms\Db\Mysql;
+
+use Icms\Db\IConnection;
 
 /**
  *
@@ -11,7 +14,7 @@ namespace Icms\Db\Mysql;
  * @subpackage MySQL
  */
 
-declare(strict_types=1);
+
 
 /**
  *
@@ -21,7 +24,7 @@ declare(strict_types=1);
  * @package		Database
  * @subpackage	MySQL
  */
-class Connection extends \PDO implements \IConnection
+class Connection extends \PDO implements IConnection
 {
 
 	/**
@@ -44,20 +47,20 @@ class Connection extends \PDO implements \IConnection
 	 * @param mixed $arg3
 	 * @return \PDOStatement|false
 	 */
-	public function query(string $query, $mode = \PDO::ATTR_DEFAULT_FETCH_MODE, ...$fetch_mode_args)
+	public function query(string $query, ?int $fetchMode = null, mixed ...$fetchModeArgs): \PDOStatement|false
 	{
-		$mode = $mode;
-		$args = func_get_args();
-		$sql = $args[0];
-		// the use of \IConnection is correct - without it, the query count in debug is not correct
-		$result = call_user_func_array(array(\self::class, 'query'), $args);
+		if ($fetchMode === null) {
+			$result = parent::query($query);
+		} else {
+			$result = parent::query($query, $fetchMode, ...$fetchModeArgs);
+		}
 
 		// trigger events for the debug console - see plugins/preloads/debug_mode.php
 		if ($result) {
-			\icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => null, 'error' => null));
+			\icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $query, 'errorno' => null, 'error' => null));
 		} else {
 			$errorinfo = $this->errorInfo();
-			\icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
+			\icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $query, 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
 		}
 
 		return $result;

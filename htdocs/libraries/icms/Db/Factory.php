@@ -59,7 +59,7 @@ abstract class Factory
 	 * Access this as icms::$db
 	 *
 	 * @copyright The ImpressCMS Project <http://www.impresscms.org>
-	 * @var null|\IConnection
+	 * @var null|IConnection
 	 */
 	static protected $pdoInstance = null;
 
@@ -131,7 +131,7 @@ abstract class Factory
 		$dsn = $driver . ':' . \ICMS_DB_DSN;
 		$class = "\\Icms\\Db\\{$driver}\\Connection";
 		if (!class_exists($class)) {
-			$class = "\Icms\Db_Connection";
+			$class = "\Icms\Db\Connection";
 		}
 		return self::$pdoInstance = new $class($dsn, \XOOPS_DB_USER, \XOOPS_DB_PASS, $options);
 	}
@@ -152,7 +152,9 @@ abstract class Factory
 		if (self::$xoopsInstance !== false) return self::$xoopsInstance;
 		$allowWebChanges = \defined('XOOPS_DB_PROXY') ? false : true;
 		if (strpos(\XOOPS_DB_TYPE, 'pdo.') === 0) {
-			if (false === self::$pdoInstance) self::pdoInstance();
+			if (self::$pdoInstance === null) {
+				self::pdoInstance();
+			}
 			self::$xoopsInstance = new \icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
 		} else {
 			if (\defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
