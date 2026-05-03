@@ -81,6 +81,32 @@ if ($_icms_autoload === null) {
 	);
 }
 
+if ($_icms_autoload_from_trustpath) {
+	$_icms_bridge_path = ICMS_TRUST_PATH . "/libraries/Autoloader.php";
+	if (!is_file($_icms_bridge_path)) {
+		$_icms_bridge_dir = dirname($_icms_bridge_path);
+		if (is_dir($_icms_bridge_dir) || @mkdir($_icms_bridge_dir, 0775, true)) {
+			$_icms_bridge_content =
+				"<?php\nrequire_once " .
+				var_export(ICMS_ROOT_PATH . "/libraries/Autoloader.php", true) .
+				";\n";
+			@file_put_contents($_icms_bridge_path, $_icms_bridge_content);
+			unset($_icms_bridge_content);
+		}
+		unset($_icms_bridge_dir);
+	}
+	if (!is_file($_icms_bridge_path)) {
+		die(
+			"<h1>ImpressCMS - Trust path is not writable</h1>" .
+				"<p>Unable to create required file: <code>" .
+				htmlspecialchars($_icms_bridge_path, ENT_QUOTES, "UTF-8") .
+				"</code></p>" .
+				"<p>Grant write permissions to the trust path and reload this page.</p>"
+		);
+	}
+	unset($_icms_bridge_path);
+}
+
 require_once $_icms_autoload;
 unset($_icms_autoload);
 
