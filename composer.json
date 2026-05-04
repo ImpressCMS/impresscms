@@ -1,0 +1,23 @@
+{
+  "name": "impresscms/impresscms",
+  "description": "ImpressCMS Core",
+  "minimum-stability": "stable",
+  "license": "gpl-2.0",
+  "authors": [
+    {
+      "name": "fiammybe",
+      "email": "david.j@impresscms.org"
+    }
+  ],
+  "require": {
+  },
+  "scripts": {
+    "test": "@test:all",
+    "test:all": "phpunit --configuration phpunit.xml.dist",
+    "test:core": "phpunit --configuration phpunit.xml.dist --testsuite icms-core",
+    "test:ipf": "phpunit --configuration phpunit.xml.dist --testsuite icms-ipf"
+  },
+	"require-dev": {
+		  	"phpunit/phpunit": "^11.5"
+  }
+}
