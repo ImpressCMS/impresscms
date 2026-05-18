@@ -109,15 +109,19 @@ $GLOBALS['xoopsDB'] = new icms_db_legacy_Database();
 // ------------------------------------------------------------
 // 5. Mock some global ImpressCMS functions
 // ------------------------------------------------------------
-function icms_loadLanguageFile($name, $module = null)
-{
-	// No-op for tests
-	return true;
+if (!function_exists('icms_loadLanguageFile')) {
+	function icms_loadLanguageFile($name, $module = null)
+	{
+		// No-op for tests
+		return true;
+	}
 }
 
-function icms_getConfig($key)
-{
-	return null;
+if (!function_exists('icms_getConfig')) {
+	function icms_getConfig($key)
+	{
+		return null;
+	}
 }
 
 if (!class_exists('icms')) {
