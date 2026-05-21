@@ -2,7 +2,7 @@
   "name": "impresscms/impresscms",
   "description": "ImpressCMS Core",
   "minimum-stability": "stable",
-  "license": "gpl-2.0",
+  "license": "GPL-2.0-only",
   "authors": [
     {
       "name": "fiammybe",
