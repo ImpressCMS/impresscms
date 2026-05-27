@@ -518,13 +518,18 @@ class icms_core_Filesystem
 			$location = str_replace(DIRECTORY_SEPARATOR, "/", $location);
 		}
 		$file = $location . "/" . $filename . "." . $extension;
-		if ($fp = fopen($file, "wt")) {
-			if (fwrite($fp, $contents) == false) {
-				echo "failed write file";
-				return false;
-			}
-			fclose($fp);
+		$fp = fopen($file, "wt");
+		if ($fp === false) {
+			echo sprintf('Failed to open file for writing: %s', $file);
+			return false;
 		}
+		if (fwrite($fp, $contents) === false) {
+			fclose($fp);
+			echo sprintf('Failed to write contents to file: %s', $file);
+			return false;
+		}
+		fclose($fp);
+		return true;
 	}
 
 	/**
