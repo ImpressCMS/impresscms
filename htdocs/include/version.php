@@ -28,7 +28,7 @@ define("ICMS_VERSION_STATUS", 2);
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-// 1.5.0 RC = 107; new 2.0.0 Beta 3=110, new 2.0.0 RC = 111, new 2.0.1 final = 113, 2.0.2 beta=114, 2.0.2 RC = 115
+// 1.5.0 RC = 107; new 2.0.0 Beta 3=110, new 2.0.0 RC = 111, new 2.0.1 final = 113, 2.0.2 final = 116, 2.0.3 beta = 117
 
 define("ICMS_VERSION_BUILD", 130);
 

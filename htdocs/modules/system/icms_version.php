@@ -66,7 +66,7 @@ $modversion = [
 	/**  Development information */
 	"status_version" => "2.1.0",
 	"status" => "Beta",
-	"date" => "21 February 2026",
+	"date" => "27 May 2026",
 	"author_word" => "Introduce Composer for autoloading",
 	"warning" => _CO_ICMS_WARNING_BETA,
 

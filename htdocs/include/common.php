@@ -194,17 +194,14 @@ date_default_timezone_set(
 );
 
 // -- Include site-wide lang file
-icms_loadLanguageFile("core", "global");
-icms_loadLanguageFile("core", "core");
-icms_loadLanguageFile("system", "common");
-@define(
-	"_GLOBAL_LEFT",
-	defined("_ADM_USE_RTL") && _ADM_USE_RTL === 1 ? "right" : "left",
-);
-@define(
-	"_GLOBAL_RIGHT",
-	defined("_ADM_USE_RTL") && _ADM_USE_RTL === 1 ? "left" : "right",
-);
+icms_loadLanguageFile('core', 'global');
+if (defined('_INTL_LOCALE') && class_exists('Locale', false)) {
+	Locale::setDefault(_INTL_LOCALE);
+}
+icms_loadLanguageFile('core', 'core');
+icms_loadLanguageFile('system', 'common');
+@define('_GLOBAL_LEFT', @_ADM_USE_RTL == 1 ? 'right' : 'left');
+@define('_GLOBAL_RIGHT', @_ADM_USE_RTL == 1 ? 'left' : 'right');
 
 // -- Include page-specific lang file
 if (
@@ -278,4 +275,4 @@ if (
 }
 
 // -- finalize boot process
-icms::$preload->triggerEvent("finishCoreBoot");
+icms::$preload->triggerEvent('finishCoreBoot');

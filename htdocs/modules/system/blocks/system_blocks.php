@@ -589,6 +589,7 @@ function b_system_themes_show($options){
 	global $icmsConfig;
 
 	$block = array();
+	$block['theme_select'] = array();
 	$block['current_theme'] = $icmsConfig['theme_set'];
 	$block['theme_select'] = array();
 	foreach ($icmsConfig['theme_set_allowed'] as $theme) {
