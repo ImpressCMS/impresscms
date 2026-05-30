@@ -82,77 +82,7 @@ spl_autoload_register(function ($class) {
 });
 
 // ------------------------------------------------------------
-// 4. Provide a mock database layer
-// ------------------------------------------------------------
-class icms_db_legacy_Database
-{
-	public function query($sql)
-	{
-		// No real DB — return predictable dummy result
-		return true;
-	}
-
-	public function fetchArray($result)
-	{
-		return [];
-	}
-
-	public function escape($value)
-	{
-		return addslashes((string) $value);
-	}
-}
-
-// Global DB instance expected by legacy code
-$GLOBALS['xoopsDB'] = new icms_db_legacy_Database();
-
-// ------------------------------------------------------------
-// 5. Mock some global ImpressCMS functions
-// ------------------------------------------------------------
-if (!function_exists('icms_loadLanguageFile')) {
-	function icms_loadLanguageFile($name, $module = null)
-	{
-		// No-op for tests
-		return true;
-	}
-}
-
-if (!function_exists('icms_getConfig')) {
-	function icms_getConfig($key)
-	{
-		return null;
-	}
-}
-
-if (!class_exists('icms')) {
-	class icms
-	{
-		public static $config;
-	}
-}
-
-if (!isset(icms::$config)) {
-	icms::$config = new class {
-		public function getConfigsByCat($category)
-		{
-			return [
-				'censor_enable' => false,
-				'censor_replace' => '*',
-				'censor_words' => [],
-			];
-		}
-	};
-}
-
-if (!function_exists('icms_currency')) {
-	function icms_currency($value)
-	{
-		return (float) $value;
-	}
-}
-
-// ------------------------------------------------------------
-// 6. Ensure timezone and locale are stable
+// 4. Ensure timezone and locale are stable
 // ------------------------------------------------------------
 date_default_timezone_set('UTC');
 setlocale(LC_ALL, 'C');
