@@ -13,13 +13,11 @@ if (!defined('XOBJ_DTYPE_TXTBOX')) {
 
 require_once __DIR__ . '/../../fixtures/IcmsCoreFilesystemStub.php';
 require_once __DIR__ . '/../../fixtures/IcmsTestobjectObject.php';
-require_once __DIR__ . '/../../traits/CreatesPrefixingDatabaseMock.php';
+require_once __DIR__ . '/../../mocks/PrefixingDatabaseMock.php';
 
 #[CoversClass(icms_ipf_Handler::class)]
 final class IpfHandlerTest extends TestCase
 {
-	use CreatesPrefixingDatabaseMock;
-
 	private string $virtualUploadPath;
 
 	protected function setUp(): void
@@ -123,5 +121,10 @@ final class IpfHandlerTest extends TestCase
 		$this->assertDirectoryDoesNotExist(vfsStream::url('uploads/icms/testobject'));
 		$this->assertSame($expected, $handler->getImagePath());
 		$this->assertDirectoryExists(vfsStream::url('uploads/icms/testobject'));
+	}
+
+	private function createMockDb(): PrefixingDatabaseMock
+	{
+		return new PrefixingDatabaseMock();
 	}
 }
