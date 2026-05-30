@@ -5,6 +5,8 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+require_once __DIR__ . '/../../fixtures/IcmsObjectEnvironmentStubs.php';
+
 final class ObjectTest extends TestCase
 {
 	protected function setUp(): void
@@ -252,6 +254,5 @@ final class ObjectTest extends TestCase
 		}
 	}
 }
-
 
 

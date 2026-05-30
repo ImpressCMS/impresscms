@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -19,6 +20,8 @@ final class IpfHandlerTest extends TestCase
 {
 	use CreatesPrefixingDatabaseMock;
 
+	private string $virtualUploadPath;
+
 	protected function setUp(): void
 	{
 		if (!class_exists('icms_core_ObjectHandler')) {
@@ -34,6 +37,9 @@ final class IpfHandlerTest extends TestCase
 		if (!defined('ICMS_UPLOAD_URL')) {
 			define('ICMS_UPLOAD_URL', 'http://localhost/uploads');
 		}
+
+		vfsStream::setup('uploads');
+		$this->virtualUploadPath = vfsStream::url('uploads');
 	}
 
 	public function testConstructorResolvesClassNameAndSetsPaths(): void
@@ -111,8 +117,11 @@ final class IpfHandlerTest extends TestCase
 	{
 		$db = $this->createMockDb();
 		$handler = new icms_ipf_Handler($db, 'testobject', 'id', 'title', '', 'icms');
+		$handler->_uploadPath = $this->virtualUploadPath . '/icms/';
 
-		$expected = ICMS_UPLOAD_PATH . '/icms/testobject/';
+		$expected = $this->virtualUploadPath . '/icms/testobject/';
+		$this->assertDirectoryDoesNotExist(vfsStream::url('uploads/icms/testobject'));
 		$this->assertSame($expected, $handler->getImagePath());
+		$this->assertDirectoryExists(vfsStream::url('uploads/icms/testobject'));
 	}
 }
