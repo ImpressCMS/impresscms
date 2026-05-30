@@ -10,26 +10,15 @@ if (!defined('XOBJ_DTYPE_TXTBOX')) {
 	require_once ICMS_LIBRARIES_PATH . '/icms/core/Object.php';
 }
 
-// Stub filesystem to prevent side-effects during getImagePath tests.
-if (!class_exists('icms_core_Filesystem', false)) {
-	class icms_core_Filesystem
-	{
-		public static function mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = []): bool
-		{
-			return true;
-		}
-	}
-}
-
-// Test-double object that the handler will instantiate.
-// The name must match icms_ipf_Handler constructor resolution for modulename='icms' + itemname='testobject'.
-class icms_testobject_Object extends icms_ipf_Object
-{
-}
+require_once __DIR__ . '/../../fixtures/IcmsCoreFilesystemStub.php';
+require_once __DIR__ . '/../../fixtures/IcmsTestobjectObject.php';
+require_once __DIR__ . '/../../traits/CreatesPrefixingDatabaseMock.php';
 
 #[CoversClass(icms_ipf_Handler::class)]
 final class IpfHandlerTest extends TestCase
 {
+	use CreatesPrefixingDatabaseMock;
+
 	protected function setUp(): void
 	{
 		if (!class_exists('icms_core_ObjectHandler')) {
@@ -125,15 +114,5 @@ final class IpfHandlerTest extends TestCase
 
 		$expected = ICMS_UPLOAD_PATH . '/icms/testobject/';
 		$this->assertSame($expected, $handler->getImagePath());
-	}
-
-	private function createMockDb(): object
-	{
-		return new class {
-			public function prefix(string $table): string
-			{
-				return 'test_prefix_' . $table;
-			}
-		};
 	}
 }

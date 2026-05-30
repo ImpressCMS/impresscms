@@ -13,10 +13,49 @@ final class CoreObjectHandlerTest extends TestCase
 		}
 	}
 
+	private function createHandler(icms_db_legacy_Database $db): object
+	{
+		return new class ($db) extends icms_core_ObjectHandler {
+			public $lastCreated;
+			public $lastFetched;
+			public $lastInserted;
+			public $lastDeleted;
+
+			public function getDb()
+			{
+				return $this->db;
+			}
+
+			public function &create()
+			{
+				$this->lastCreated = (object) ['created' => true];
+				return $this->lastCreated;
+			}
+
+			public function &get($int_id)
+			{
+				$this->lastFetched = (object) ['id' => (int) $int_id];
+				return $this->lastFetched;
+			}
+
+			public function insert(&$object)
+			{
+				$this->lastInserted = $object;
+				return true;
+			}
+
+			public function delete(&$object)
+			{
+				$this->lastDeleted = $object;
+				return true;
+			}
+		};
+	}
+
 	public function testConstructorStoresDatabaseReference(): void
 	{
 		$db = new icms_db_legacy_Database();
-		$handler = new CoreObjectHandlerTestDouble($db);
+		$handler = $this->createHandler($db);
 
 		$this->assertSame($db, $handler->getDb());
 	}
@@ -24,7 +63,7 @@ final class CoreObjectHandlerTest extends TestCase
 	public function testCreateAndGetReturnObjectsByReference(): void
 	{
 		$db = new icms_db_legacy_Database();
-		$handler = new CoreObjectHandlerTestDouble($db);
+		$handler = $this->createHandler($db);
 
 		$created = &$handler->create();
 		$fetched = &$handler->get(42);
@@ -36,7 +75,7 @@ final class CoreObjectHandlerTest extends TestCase
 	public function testInsertAndDeleteReceiveObjectByReference(): void
 	{
 		$db = new icms_db_legacy_Database();
-		$handler = new CoreObjectHandlerTestDouble($db);
+		$handler = $this->createHandler($db);
 		$object = (object) ['id' => 7];
 
 		$this->assertTrue($handler->insert($object));
@@ -45,41 +84,3 @@ final class CoreObjectHandlerTest extends TestCase
 		$this->assertSame($object, $handler->lastDeleted);
 	}
 }
-
-final class CoreObjectHandlerTestDouble extends icms_core_ObjectHandler
-{
-	public $lastCreated;
-	public $lastFetched;
-	public $lastInserted;
-	public $lastDeleted;
-
-	public function getDb()
-	{
-		return $this->db;
-	}
-
-	public function &create()
-	{
-		$this->lastCreated = (object) ['created' => true];
-		return $this->lastCreated;
-	}
-
-	public function &get($int_id)
-	{
-		$this->lastFetched = (object) ['id' => (int) $int_id];
-		return $this->lastFetched;
-	}
-
-	public function insert(&$object)
-	{
-		$this->lastInserted = $object;
-		return true;
-	}
-
-	public function delete(&$object)
-	{
-		$this->lastDeleted = $object;
-		return true;
-	}
-}
-
