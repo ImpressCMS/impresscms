@@ -75,14 +75,16 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
         // Convert to lowercase
         $host = strtolower($host);
         
+        // Prevent directory traversal attempts - replace consecutive dots with single dot
+        while (strpos($host, '..') !== false) {
+            $host = str_replace('..', '.', $host);
+        }
+        
         // Remove any characters that aren't alphanumeric, dash, or dot
         $host = preg_replace('/[^a-z0-9\.\-]/', '', $host);
         
         // Remove leading/trailing dots and dashes
         $host = trim($host, '.-');
-        
-        // Prevent directory traversal attempts
-        $host = str_replace('..', '', $host);
         
         return $host;
     }
