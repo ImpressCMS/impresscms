@@ -15,7 +15,10 @@
  * @category    ICMS
  * @package	    Database
  */
-interface icms_db_legacy_IDatabase {
+declare(strict_types=1);
+namespace Icms\Db\Legacy;
+
+interface IDatabase {
 	/**
 	 * assign a {@link icms_core_Logger} object to the database
 	 *
@@ -28,7 +31,7 @@ interface icms_db_legacy_IDatabase {
 	 *
 	 * @param string $value table prefix
 	 */
-	public function setPrefix($value);
+	public function setPrefix(string $value);
 	/**
 	 * attach the prefix.'_' to a given tablename.
 	 *
@@ -37,14 +40,14 @@ interface icms_db_legacy_IDatabase {
 	 * @param string $tablename tablename
 	 * @return string prefixed tablename, just prefix if tablename is empty
 	 */
-	public function prefix($tablename='');
+	public function prefix(string $tablename=''): string;
 	/**
 	 * connect to the database
 	 *
 	 * @param bool $selectdb select the database now?
 	 * @return bool successful?
 	 */
-	public function connect($selectdb = true);
+	public function connect(bool $selectdb = true): bool;
 	/**
 	 * generate an ID for a new row
 	 *
@@ -54,26 +57,26 @@ interface icms_db_legacy_IDatabase {
 	 * @param string $sequence name of the sequence from which to get the next ID
 	 * @return int always 0, because mysql has support for autoincrement
 	 */
-	public function genId($sequence);
+	public function genId(string $sequence): int;
 	/**
 	 * Get a result row as an enumerated array
 	 *
 	 * @param resource $result
 	 * @return array the fetched rows
 	 */
-	public function fetchRow($result);
+	public function fetchRow($result): array;
 	/**
 	 * Fetch a result row as an associative array
 	 *
 	 * @return array the fetched associative array
 	 */
-	public function fetchArray($result);
+	public function fetchArray($result): array;
 	/**
 	 * Fetch a result row as an associative array and numerical array
 	 *
 	 * @return array the associative and numerical array
 	 */
-	public function fetchBoth($result);
+	public function fetchBoth($result): array;
 	/**
 	 * Get the ID generated from the previous INSERT operation
 	 *
@@ -86,13 +89,13 @@ interface icms_db_legacy_IDatabase {
 	 * @param resource query result
 	 * @return int the number of rows in the resultset
 	 */
-	public function getRowsNum($result);
+	public function getRowsNum($result): int;
 	/**
 	 * Get number of affected rows
 	 *
 	 * @return int number of affected rows
 	 */
-	public function getAffectedRows();
+	public function getAffectedRows(): int;
 	/**
 	 * Closes MySQL connection
 	 *
@@ -104,33 +107,33 @@ interface icms_db_legacy_IDatabase {
 	 * @param resource query result
 	 * @return bool TRUE on success or FALSE on failure.
 	 */
-	public function freeRecordSet($result);
+	public function freeRecordSet($result): bool;
 	/**
 	 * Returns the text of the error message from previous MySQL operation
 	 *
 	 * @return string Returns the error text from the last MySQL function, or '' (the empty string) if no error occurred.
 	 */
-	public function error();
+	public function error(): string;
 	/**
 	 * Returns the numerical value of the error message from previous MySQL operation
 	 *
 	 * @return int Returns the error number from the last MySQL function, or 0 (zero) if no error occurred.
 	 */
-	public function errno();
+	public function errno(): int;
 	/**
 	 * Returns escaped string text with single quotes around it to be safely stored in database
 	 *
 	 * @param string $str unescaped string text
 	 * @return string escaped string text with single quotes around
 	 */
-	public function quoteString($str);
+	public function quoteString($str): string;
 	/**
 	 * Quotes a string for use in a query using mysql_real_escape_string.
 	 *
 	 * @param string $str unescaped string text
 	 * @return string escaped string text using mysql_real_escape_string
 	 */
-	public function quote($string);
+	public function quote($string): string;
 	/**
 	 * perform a query on the database
 	 *
@@ -140,7 +143,7 @@ interface icms_db_legacy_IDatabase {
 	 * @return resource query result or FALSE if successful
 	 * or TRUE if successful and no result
 	 */
-	public function queryF($sql, $limit = 0, $start = 0);
+	public function queryF(string $sql, int $limit = 0, int $start = 0);
 	/**
 	 * perform a query
 	 *
@@ -152,7 +155,7 @@ interface icms_db_legacy_IDatabase {
 	 * @param int $start offset of first record to return
 	 *
 	 */
-	public function query($sql, $limit = 0, $start = 0);
+	public function query(string $sql, int $limit = 0, int $start = 0);
 	/**
 	 * Get field name
 	 *
@@ -160,7 +163,7 @@ interface icms_db_legacy_IDatabase {
 	 * @param int numerical field index
 	 * @return string the fieldname
 	 */
-	public function getFieldName($result, $offset);
+	public function getFieldName($result, $offset): string;
 	/**
 	 * Get field type
 	 *
@@ -168,13 +171,14 @@ interface icms_db_legacy_IDatabase {
 	 * @param int $offset numerical field index
 	 * @return string the fieldtype
 	 */
-	public function getFieldType($result, $offset);
+	public function getFieldType($result, int $offset): string;
 	/**
 	 * Get number of fields in result
 	 *
 	 * @param resource $result query result
 	 * @return int number of fields in the resultset
 	 */
-	public function getFieldsNum($result);
+	public function getFieldsNum($result): int;
 
 }
+\class_alias(IDatabase::class, 'icms_db_legacy_IDatabase');
