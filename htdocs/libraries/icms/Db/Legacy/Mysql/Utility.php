@@ -39,7 +39,9 @@
  *
  * @version		SVN: $Id: Utility.php 12403 2014-01-26 21:35:08Z skenow $
  */
+declare(strict_types=1);
 
+namespace Icms\Db\Legacy\Mysql;
 /**
  * Provide some utility methods for databases
  *
@@ -49,7 +51,7 @@
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
+class Utility implements \Icms\Db\IUtility {
 
 	/**
 	 * Creates a new utility object
@@ -176,7 +178,8 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
 	 */
-	static public function splitSqlFile(&$ret, $sql) {
+	static public function splitSqlFile(&$ret, $sql): bool
+	{
 		$sql               = trim($sql);
 		$sql_len           = strlen($sql);
 		$char              = '';
@@ -277,11 +280,12 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 	/**
 	 * add a prefix.'_' to all tablenames in a query
 	 *
-	 * @param   string  $query  valid SQL query string
-	 * @param   string  $prefix prefix to add to all table names
-	 * @return  mixed   FALSE on failure
+	 * @param string $query  valid SQL query string
+	 * @param string $prefix prefix to add to all table names
+	 * @return  array|false   FALSE on failure
 	 */
-	static public function prefixQuery($query, $prefix) {
+	public static function prefixQuery(string $query, string $prefix): array|false
+	{
 		$pattern = "/^(INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
 		if (preg_match($pattern, $query, $matches) || preg_match($pattern2, $query, $matches)) {
@@ -295,12 +299,13 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 	/**
 	 * Determine if the SQL string is safe
 	 *
-	 * @see	ProtectorMySQLDatabase::checkSql()
-	 *
 	 * @param string $sql
 	 * @return bool
+	 *@see	ProtectorMySQLDatabase::checkSql()
+	 *
 	 */
-	static public function checkSQL($sql) {
+	public static function checkSQL(string $sql): bool
+	{
 		/* use Protector's db layer to prevent SQLi
 		 * Make sure Protector is loaded
 		 */
@@ -315,10 +320,11 @@ class icms_db_legacy_mysql_Utility implements icms_db_IUtility {
 				}
 			}
 		}
-		
+
 		/* Protector preload is not loaded, so we cannot check.
 		 * Or, the checks have succeeded and there are no detected injections
 		 * Return true */
 		return true;
 	}
 }
+\class_alias(Utility::class,'icms_db_legacy_mysql_Utility');
