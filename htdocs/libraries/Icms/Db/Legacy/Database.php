@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -43,6 +44,7 @@
  * @version		SVN: $Id: Database.php 12403 2014-01-26 21:35:08Z skenow $
  */
 
+namespace Icms\Db\Legacy;
 defined( 'ICMS_ROOT_PATH' ) or die();
 /**
  * Abstract base class for Database access classes
@@ -54,8 +56,8 @@ defined( 'ICMS_ROOT_PATH' ) or die();
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @author		Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
 */
-abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
-	
+abstract class Database implements IDatabase {
+
 	/**
 	 * Prefix for tables in the database
 	 * @var string
@@ -78,39 +80,42 @@ abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 	/**
 	 * Create a legacy database object
 	 *
-	 * @param string $connection		Database connection resource
+	 * @param string|null $connection		Database connection resource
 	 * @param string $allowWebChanges	set tp TRUE to allow inserts, updates or deletes
 	 * @return	void
 	 */
-	public function __construct($connection = NULL, $allowWebChanges = FALSE) {
+	public function __construct(?string $connection = NULL, bool $allowWebChanges = FALSE) {
 		$this->allowWebChanges = $allowWebChanges;
 	}
-	
+
 	/**
 	 * Setter for the logging class
-	 * @see icms_db_legacy_IDatabase::setLogger()
+	 * @see \Icms\Db\Legacy\IDatabase::setLogger()
 	 * @return	void
 	 */
-	public function setLogger($logger) {
+	public function setLogger($logger): void
+	{
 		$this->logger = $logger;
 	}
-	
+
 	/**
 	 * Setter for the table prefix
 	 *
-	 * @see icms_db_legacy_IDatabase::setPrefix()
+	 * @see \Icms\Db\Legacy\IDatabase::setPrefix()
 	 * @return	void
 	 */
-	public function setPrefix($value) {
+	public function setPrefix($value): void
+	{
 		$this->prefix = $value;
 	}
-	
+
 	/**
 	 * Prefix the database table name
-	 * @see icms_db_legacy_IDatabase::prefix()
+	 *
+	 * @see \Icms\Db\Legacy\IDatabase::prefix()
 	 * @return	string
 	 */
-	public function prefix($tablename='') {
+	public function prefix(string $tablename=''): string {
 		if ( $tablename != '' ) {
 			return $this->prefix .'_'. $tablename;
 		} else {
@@ -118,3 +123,4 @@ abstract class icms_db_legacy_Database implements icms_db_legacy_IDatabase {
 		}
 	}
 }
+\class_alias(Database::class, 'icms_db_legacy_Database');
