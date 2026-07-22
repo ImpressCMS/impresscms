@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Legacy interface for database classes
  *
@@ -13,6 +14,14 @@
  * @package	    Database
  */
 
+namespace Icms\Db\Legacy;
+
+use Exception;
+use Icms\Db\IConnection;
+use Icms\Db\IUtility;
+use Icms\Db\Legacy\Mysql\Utility;
+use PDO;
+
 /**
  * Create and interact with a database connection using PDO
  *
@@ -21,12 +30,13 @@
  * @package Database
  * @subpackage PDO
  */
-class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms_db_legacy_IDatabase {
+class PdoDatabase extends Database
+{
 
 	/**
 	 * The PDO connection that performs operations behind the scenes
 	 *
-	 * @var icms_db_IConnection
+	 * @var \Icms\Db\IConnection
 	 */
 	protected $pdo;
 
@@ -36,34 +46,38 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 * @var resource
 	 */
 	public $conn;
-	
+
 	/**
 	 * Row count of the most recent statement
 	 *
 	 * @var int
 	 */
-	protected $rowCount = 0;
+	protected int $rowCount = 0;
 
-	public function __construct($connection, $allowWebChanges = FALSE) {
-		parent::__construct($connection, $allowWebChanges);
+	public function __construct($connection, bool $allowWebChanges = false)
+	{
+		parent::__construct(null, $allowWebChanges);
 		$this->pdo = $connection;
-		$this->conn = & $this->pdo; // only for legacy support
+		$this->conn = $this->pdo; // only for legacy support
 	}
 
-	public function connect($selectdb = TRUE) {
+	public function connect(bool $selectdb = TRUE): bool
+	{
 		return TRUE;
 	}
 
-	public function close() {
+	public function close(): bool {
 		$this->pdo = NULL;
 		return TRUE;
 	}
 
-	public function quoteString($string) {
-		return $this->pdo->quote($string);
+	public function quoteString($str): string
+	{
+		return $this->pdo->quote($str);
 	}
 
-	public function quote($string) {
+	public function quote($string): string
+	{
 		return $this->pdo->quote($string);
 	}
 
@@ -71,50 +85,52 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		return $this->pdo->escape($string);
 	}
 
-	public function error() {
+	public function error(): string
+	{
 		$error = $this->pdo->errorInfo();
 		return $error [2];
 	}
 
-	public function errno() {
+	public function errno(): int {
 		$error = $this->pdo->errorInfo ();
 		return $error [1];
 	}
 
-	public function genId($sequence) {
+	public function genId(string $sequence): int
+	{
 		return 0; // will use auto_increment
 	}
 
-	public function query($sql, $limit = 0, $start = 0) {
-		if (! $this->allowWebChanges && strtolower(substr(trim($sql), 0, 6)) != 'select') {
+	public function query(string $sql, int $limit = 0, int $start = 0) {
+		if (! $this->allowWebChanges && stripos(trim($sql), 'select') !== 0) {
 			trigger_error(_CORE_DB_NOTALLOWEDINGET, E_USER_WARNING);
 			return FALSE;
 		}
 		return $this->queryF($sql, $limit, $start);
 	}
 
-	public function queryF($sql, $limit = 0, $start = 0) {
+	public function queryF(string $sql, int $limit = 0, int $start = 0) {
 		$result = FALSE;
 		/* Use Protector's db layer protection against possible SQLi
 		 * This needs to be done for legacy queries, since PDO only offers
 		 * SQLi protection when you use bindParam and bindValue, and then
 		 * use prepare() and execute() on the statement
 		 */
-		if (FALSE === icms_db_legacy_mysql_Utility::checkSQL($sql)) {
+		if (FALSE === Utility::checkSQL($sql)) {
 			return $result;
 		}
-		
+
 		if (!empty($limit)) {
 			$start = !empty($start) ? (int) $start . ',' : '';
 			$sql .= ' LIMIT ' . $start . (int) $limit;
 		}
 		try {
 			$result = $this->pdo->query($sql);
-			if ($result) { // added by claudia, ImpressCMS.org
+			if ($result) {
 				$this->rowCount = $result->rowCount();
-			} else { // added by claudia, ImpressCMS.org
-				$this->rowCount = FALSE; // added by claudia, ImpressCMS.org
-			} // added by claudia, ImpressCMS.org
+			} else {
+				$this->rowCount = FALSE;
+			}
 		} catch (Exception $e) {
 		}
 		return $result;
@@ -124,11 +140,13 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		return $this->pdo->lastInsertId();
 	}
 
-	public function getAffectedRows() {
+	public function getAffectedRows(): int
+	{
 		return $this->rowCount;
 	}
 
-	public function getFieldName($result, $offset) {
+	public function getFieldName($result, $offset): string
+	{
 		if ($result) {
 			$column = $result->getColumnMeta($offset);
 			return $column['name'];
@@ -137,7 +155,8 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function getFieldType($result, $offset) {
+	public function getFieldType($result, int $offset): string
+	{
 		if ($result) {
 			$column = $result->getColumnMeta($offset);
 			return $column['mysql:decl_type'];
@@ -146,7 +165,8 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function getFieldsNum($result) {
+	public function getFieldsNum($result): int
+	{
 		if ($result) {
 			return $result->columnCount();
 		} else {
@@ -154,7 +174,8 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function fetchRow($result) {
+	public function fetchRow($result): array
+	{
 		if ($result) {
 			return $result->fetch(PDO::FETCH_NUM);
 		} else {
@@ -162,7 +183,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function fetchArray($result) {
+	public function fetchArray($result): array {
 		if ($result) {
 			return $result->fetch(PDO::FETCH_ASSOC);
 		} else {
@@ -170,7 +191,7 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function fetchBoth($result) {
+	public function fetchBoth($result): array {
 		if ($result) {
 			return $result->fetch(PDO::FETCH_BOTH);
 		} else {
@@ -178,15 +199,16 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		}
 	}
 
-	public function getRowsNum($result) {
+	public function getRowsNum($result): int {
 		if ($result) {
 			return $result->rowCount();
 		} else {
-			return FALSE;
+			return 0;
 		}
 	}
 
-	public function freeRecordSet($result) {
+	public function freeRecordSet($result): bool
+	{
 		if ($result) {
 			$result->closeCursor();
 			return TRUE;
@@ -194,9 +216,9 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 			return FALSE;
 		}
 	}
-	
+
 	// Inseridas por Claudia fevereiro/2012, ImpressCMS.org
-	
+
 	/**
 	 * Executa uma sql e retorna o nro.
 	 * de linhas afetadas por update ou delete
@@ -204,12 +226,14 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 *
 	 * This is not a legacy method and should only be implemented in the new PDO class
 	 *
-	 * @todo this can be removed without breaking legacy db functionality
-	 *
 	 * @param string $sql
 	 * @return int - nro. de linhas afetadas ou false // number of rows affected, or FALSE
+	 *@todo this can be removed without breaking legacy db functionality
+	 *
 	 */
-	function exec($sql) {
+	public function exec(string $sql): ?int
+	{
+
 		/*
 		 $row = $this->pdo->exec($sql);
 		if ($row === FALSE) {
@@ -220,34 +244,9 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $sql));
 		return $row;
 		}
-		*/	}
-	
-	/**
-	 * Fetch a result row as an object
-	 *
-	 * This is not a legacy method and should only be implemented in the new PDO class
-	 *
-	 * @todo this can be removed without breaking legacy db functionality
-	 *
-	 * @param resource $result
-	 * @param string $class
-	 *        	O nome de classe para instanciar, definir as propriedades e retornar. Se n�o for especificado, um objeto stdClass � retornado.
-	 *        	The name of the class to instantiate, set the properties and return. If none is specified, a stdClass object returned.
-	 * @param array $params
-	 *        	Um array opcional de par�metros para passar para o construtor do objeto class_name .
-	 *        	An optional array of parameters to pass to the constructor for class_name objects.
-	 * @return object Inserida por Claudia // added by Claudia (ImpressCMS)
-	 */
-	function fetchObject($result, $class = 'stdClass', $params = array()) {
-		/*
-		 if ($result) {
-		return $result->fetchObject($class, $params);
-		} else {
-		return FALSE;
-		}
 		*/
 	}
-	
+
 	/**
 	 * perform queries from SQL dump file in a batch
 	 *
@@ -256,16 +255,18 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 	 *
 	 * @return bool FALSE if failed reading SQL file or TRUE if the file has been read and queries executed
 	 */
-	public function queryFromFile($file) {
+	public function queryFromFile(string $file): bool
+	{
 		if (FALSE !== ($fp = fopen($file, 'r'))) {
-			
+
 			$sql_queries = trim(fread($fp, filesize($file)));
-			icms_db_legacy_mysql_Utility::splitSqlFile($pieces, $sql_queries);
+			$pieces = [];
+			Utility::splitSqlFile($pieces, $sql_queries);
 			foreach ($pieces as $query) {
 				// [0] contains the prefixed query
 				// [4] contains unprefixed table name
-				$prefixed_query = icms_db_mysql_Utility::prefixQuery(trim($query), $this->prefix());
-				if ($prefixed_query != FALSE) {
+				$prefixed_query = Utility::prefixQuery(trim($query), $this->prefix());
+				if ($prefixed_query) {
 					$this->query($prefixed_query[0]);
 				}
 			}
@@ -274,20 +275,22 @@ class icms_db_legacy_PdoDatabase extends icms_db_legacy_Database implements icms
 		return FALSE;
 	}
 
-	function getConnection() {
+	function getConnection(): IConnection
+	{
 		return $this->pdo;
 	}
-	
+
 	/**
 	 * Retrieve the MySQL server version information
 	 *
-	 * @param obj $connection
+	 * @param IConnection|null $connection
 	 *        	MySQL database connection link
-	 * @return mixed
+	 * @return string
 	 */
-	public function getServerVersion($connection = NULL) {
+	public function getServerVersion(IConnection $connection = NULL): string {
 		if (NULL === $connection)
 			$connection = $this->pdo;
 		return $connection->getAttribute(PDO::ATTR_SERVER_VERSION);
 	}
 }
+\class_alias(PdoDatabase::class, 'icms_db_legacy_PdoDatabase');
