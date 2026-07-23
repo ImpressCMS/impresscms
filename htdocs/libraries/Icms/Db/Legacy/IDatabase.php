@@ -62,21 +62,23 @@ interface IDatabase {
 	 * Get a result row as an enumerated array
 	 *
 	 * @param resource $result
-	 * @return array the fetched rows
+	 * @return array the fetched rows, false when no row is available
 	 */
-	public function fetchRow($result): array;
+	public function fetchRow($result);
 	/**
 	 * Fetch a result row as an associative array
 	 *
-	 * @return array the fetched associative array
+	 * @param resource $result
+	 * @return array the fetched associative array, false when no row is available
 	 */
-	public function fetchArray($result): array;
+	public function fetchArray($result);
 	/**
 	 * Fetch a result row as an associative array and numerical array
 	 *
-	 * @return array the associative and numerical array
+	 * @param resource $result
+	 * @return array the associative and numerical array, false when no row is available
 	 */
-	public function fetchBoth($result): array;
+	public function fetchBoth($result);
 	/**
 	 * Get the ID generated from the previous INSERT operation
 	 *
@@ -89,7 +91,7 @@ interface IDatabase {
 	 * @param resource query result
 	 * @return int the number of rows in the resultset
 	 */
-	public function getRowsNum($result): int;
+	public function getRowsNum($result);
 	/**
 	 * Get number of affected rows
 	 *
@@ -140,8 +142,7 @@ interface IDatabase {
 	 * @param string $sql a valid MySQL query
 	 * @param int $limit number of records to return
 	 * @param int $start offset of first record to return
-	 * @return resource query result or FALSE if successful
-	 * or TRUE if successful and no result
+	 * @return mixed query result object/resource for result-set queries, TRUE if successful and no result-set, or FALSE if unsuccessful
 	 */
 	public function queryF(string $sql, int $limit = 0, int $start = 0);
 	/**
