@@ -109,6 +109,19 @@ class PdoDatabase extends Database
 		return $this->queryF($sql, $limit, $start);
 	}
 
+	/**
+	 * perform a query on the database
+	 *
+	 * Legacy compatibility contract:
+	 * - return a statement object for result-set queries
+	 * - return TRUE for successful non-result-set queries
+	 * - return FALSE on failure
+	 *
+	 * @param string $sql a valid MySQL query
+	 * @param int $limit number of records to return
+	 * @param int $start offset of first record to return
+	 * @return mixed
+	 */
 	public function queryF(string $sql, int $limit = 0, int $start = 0) {
 		$result = FALSE;
 		/* Use Protector's db layer protection against possible SQLi
@@ -128,10 +141,14 @@ class PdoDatabase extends Database
 			$result = $this->pdo->query($sql);
 			if ($result) {
 				$this->rowCount = $result->rowCount();
+				if ($result->columnCount() === 0) {
+					return TRUE;
+				}
 			} else {
-				$this->rowCount = FALSE;
+				$this->rowCount = 0;
 			}
 		} catch (Exception $e) {
+			$this->rowCount = 0;
 		}
 		return $result;
 	}
@@ -174,7 +191,7 @@ class PdoDatabase extends Database
 		}
 	}
 
-	public function fetchRow($result): array
+	public function fetchRow($result)
 	{
 		if ($result) {
 			return $result->fetch(PDO::FETCH_NUM);
@@ -183,7 +200,7 @@ class PdoDatabase extends Database
 		}
 	}
 
-	public function fetchArray($result): array {
+	public function fetchArray($result) {
 		if ($result) {
 			return $result->fetch(PDO::FETCH_ASSOC);
 		} else {
@@ -191,7 +208,7 @@ class PdoDatabase extends Database
 		}
 	}
 
-	public function fetchBoth($result): array {
+	public function fetchBoth($result) {
 		if ($result) {
 			return $result->fetch(PDO::FETCH_BOTH);
 		} else {
@@ -199,7 +216,7 @@ class PdoDatabase extends Database
 		}
 	}
 
-	public function getRowsNum($result): int {
+	public function getRowsNum($result) {
 		if ($result) {
 			return $result->rowCount();
 		} else {
