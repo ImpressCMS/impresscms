@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 // $Id: ObjectHandler.php 12313 2013-09-15 21:14:35Z skenow $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -56,11 +57,9 @@
  * @abstract
  */
 
-declare(strict_types=1);
-
 namespace Icms\Core;
 
-abstract class ObjectHandler {
+abstract class EntityHandler {
 
 	/**
 	 * holds referenced to {@link icms_db_legacy_Database} class object
@@ -78,8 +77,8 @@ abstract class ObjectHandler {
 	* @param object $db reference to the {@link icms_db_legacy_Database} object
 	* @access protected
 	*/
-	public function __construct(&$db) {
-		$this->db =& $db;
+	public function __construct($db) {
+		$this->db = $db;
 	}
 
 	/**
@@ -87,7 +86,7 @@ abstract class ObjectHandler {
 	 *
 	 * @abstract
 	 */
-	abstract public function &create();
+	abstract public function create();
 
 	/**
 	 * gets a value object
@@ -95,7 +94,7 @@ abstract class ObjectHandler {
 	 * @param int $int_id
 	 * @abstract
 	 */
-	abstract public function &get($int_id);
+	abstract public function get($int_id);
 
 	/**
 	 * insert/update object
@@ -103,7 +102,7 @@ abstract class ObjectHandler {
 	 * @param object $object
 	 * @abstract
 	 */
-	abstract public function insert(&$object);
+	abstract public function insert($object);
 
 	/**
 	 * delete object from database
@@ -111,8 +110,8 @@ abstract class ObjectHandler {
 	 * @param object $object
 	 * @abstract
 	 */
-	abstract public function delete(&$object);
+	abstract public function delete($object);
 
 }
 
-\class_alias(ObjectHandler::class, 'icms_core_ObjectHandler');
+\class_alias(EntityHandler::class, 'icms_core_ObjectHandler');
