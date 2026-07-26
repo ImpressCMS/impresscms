@@ -607,7 +607,7 @@ class Handler extends \icms_core_ObjectHandler {
 	 * @param bool $force
 	 * @return bool FALSE if failed.
 	 */
-	public function delete(&$obj, $force = false) {
+	public function delete($obj, $force = false) {
 		$eventResult = $this->executeEvent('beforeDelete', $obj);
 		if (!$eventResult) {
 			$obj->setErrors("An error occured during the BeforeDelete event");
@@ -719,7 +719,7 @@ class Handler extends \icms_core_ObjectHandler {
 	 * @param bool $checkObject check if the object is dirty and clean the attributes
 	 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 	 */
-	public function insert(&$obj, $force = false, $checkObject = true, $debug = false) {
+	public function insert($obj, $force = false, $checkObject = true, $debug = false) {
 		if ($checkObject != false) {
 			if (!is_object($obj)) {
 				return false;
@@ -882,7 +882,7 @@ class Handler extends \icms_core_ObjectHandler {
 	 * @param	bool	$checkObject
 	 * @param	bool	$debug
 	 */
-	public function insertD(&$obj, $force = false, $checkObject = true, $debug = false) {
+	public function insertD($obj, $force = false, $checkObject = true, $debug = false) {
 		return $this->insert($obj, $force, $checkObject, true);
 	}
 

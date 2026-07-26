@@ -27,12 +27,12 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @package     Data
  * @subpackage  Avatar
  */
-class Handler extends \Icms\Core\ObjectHandler
+class Handler extends \Icms\Core\EntityHandler
 {
     /**
      * Creates a new avatar object.
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $avatar = new Entity();
         if ($isNew) {
@@ -46,7 +46,7 @@ class Handler extends \Icms\Core\ObjectHandler
      *
      * @return mixed
      */
-    public function &get($id)
+    public function get($id)
     {
         $avatar = false;
         $id = (int) $id;
@@ -69,7 +69,7 @@ class Handler extends \Icms\Core\ObjectHandler
     /**
      * Inserts an avatar or updates an existing avatar.
      */
-    public function insert(&$avatar): bool
+    public function insert($avatar): bool
     {
         if (!is_a($avatar, Entity::class)) {
             return false;
@@ -133,7 +133,7 @@ class Handler extends \Icms\Core\ObjectHandler
     /**
      * Deletes an avatar.
      */
-    public function delete(&$avatar): bool
+    public function delete($avatar): bool
     {
         if (!is_a($avatar, Entity::class)) {
             return false;
@@ -161,7 +161,7 @@ class Handler extends \Icms\Core\ObjectHandler
      * @param object|null $criteria
      * @return array
      */
-    public function &getObjects($criteria = null, $id_as_key = false)
+    public function getObjects($criteria = null, $id_as_key = false)
     {
         $ret = [];
         $limit = $start = 0;
@@ -183,9 +183,9 @@ class Handler extends \Icms\Core\ObjectHandler
             $avatar->assignVars($myrow);
             $avatar->setUserCount((int) $myrow['count']);
             if (!$id_as_key) {
-                $ret[] =& $avatar;
+                $ret[] = $avatar;
             } else {
-                $ret[$myrow['avatar_id']] =& $avatar;
+                $ret[$myrow['avatar_id']] = $avatar;
             }
             unset($avatar);
         }
@@ -271,7 +271,7 @@ class Handler extends \Icms\Core\ObjectHandler
         if (isset($avatar_display)) {
             $criteria->add(new \icms_db_criteria_Item('avatar_display', (int) $avatar_display));
         }
-        $avatars =& $this->getObjects($criteria, true);
+        $avatars = $this->getObjects($criteria, true);
         $ret = ['blank.gif' => _NONE];
         foreach (array_keys($avatars) as $i) {
             $ret[$avatars[$i]->getVar('avatar_file')] = $avatars[$i]->getVar('avatar_name');
@@ -309,7 +309,7 @@ class Handler extends \Icms\Core\ObjectHandler
         $dirlist = \Icms\Core\Filesystem::getDirList(ICMS_ROOT_PATH . '/images/avatar/');
         if (count($dirlist) > 0) {
             foreach ($dirlist as $dir) {
-                $avatars[$dir] =& \Icms\Core\Filesystem::getFileList(
+                $avatars[$dir] = \Icms\Core\Filesystem::getFileList(
                     ICMS_ROOT_PATH . '/images/avatar/' . $dir . '/',
                     $dir . '/',
                     ['gif', 'jpg', 'png']
