@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -39,8 +40,14 @@
  * @author       http://www.xoops.org The XOOPS Project
  * @version      $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
+namespace Icms\Config\Item;
+use Icms\Config\Item\Entity;
+use icms_config_Item_Object;
+use Icms\Db\Criteria\Element;
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+	die("ImpressCMS root path not defined");
+}
 
 /**#@+
  * Config type
@@ -76,17 +83,17 @@ define('ICMS_CONF_PURIFIER', 14);
  * @package     Config
  * @subpackage  Item
  */
-class icms_config_Item_Handler extends icms_core_ObjectHandler {
+class Handler extends \Icms\Core\ObjectHandler {
 
 	/**
-	 * Create a new {@link icms_config_Item_Object}
+	 * Create a new {@link Entity}
 	 *
-	 * @see     icms_config_Item_Object
+	 * @see     Entity
 	 * @param	bool    $isNew  Flag the config as "new"?
 	 * @return	object  reference to the new config
 	 */
 	public function &create($isNew = true) {
-		$config = new icms_config_Item_Object();
+		$config = new Entity();
 		if ($isNew) {
 			$config->setNew();
             $config->setNewConfig();
@@ -111,7 +118,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
 				$myrow = $this->db->fetchArray($result);
-				$config = new icms_config_Item_Object();
+				$config = new Entity();
 				$config->setType($myrow["conf_valuetype"]);
 				$config->assignVars($myrow);
 			}
@@ -122,12 +129,12 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Insert a config to the database
 	 *
-	 * @param	object  &$config    {@link icms_config_Item_Object} object
+	 * @param	object  &$config    {@link Entity} object
 	 * @return  mixed   FALSE on fail.
 	 */
 	public function insert(&$config) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace this */
-		if (!is_a($config, 'icms_config_Item_Object')) {
+		if (!is_a($config, Entity::class)) {
 			return false;
 		}
 		if (!$config->isDirty()) {
@@ -208,8 +215,8 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	 * @return	bool    Successful?
 	 */
 	public function delete(&$config) {
-		/* As of PHP5.3.0, is_as() is no longer deprecated, there is no need to replace it */
-		if (!is_a($config, 'icms_config_Item_Object')) {
+		/* As of PHP5.3.0, is_a() is no longer deprecated, there is no need to replace it */
+		if (!is_a($config, Entity::class)) {
 			return false;
 		}
 		$sql = sprintf(
@@ -225,15 +232,15 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Get configs from the database
 	 *
-	 * @param	object  $criteria   {@link icms_db_criteria_Element}
+	 * @param	object  $criteria   {@link Icms\Db\Criteria\Element}
 	 * @param	bool    $id_as_key  return the config's id as key?
-	 * @return	array   Array of {@link icms_config_Item_Object} objects
+	 * @return	array   Array of {@link Entity} objects
 	 */
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('config');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, Element::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$sql .= ' ORDER BY conf_order ASC';
 			$limit = $criteria->getLimit();
@@ -244,7 +251,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 			return false;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$config = new icms_config_item_Object();
+			$config = new Entity();
 			$config->setType($myrow["conf_valuetype"]);
 			$config->assignVars($myrow);
 			if (!$id_as_key) {
@@ -267,7 +274,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('config');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, Element::class)) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		$result =& $this->db->query($sql);
@@ -277,5 +284,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 		list($count) = $this->db->fetchRow($result);
 		return $count;
 	}
+
 }
+class_alias(Handler::class,'icms_config_Item_Handler');
 
