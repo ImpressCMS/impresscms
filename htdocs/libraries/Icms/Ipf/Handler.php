@@ -199,8 +199,8 @@ class Handler extends \icms_core_ObjectHandler {
 
 	/**
 	 *
-	 * @param str $event
-	 * @param str $method
+	 * @param  $event
+	 * @param  $method
 	 */
 	public function addEventHook($event, $method) {
 		$this->_eventHooks[$event] = $method;
@@ -444,7 +444,7 @@ class Handler extends \icms_core_ObjectHandler {
 		foreach ($arrayObjects as $key => $object) {
 			$ret[$key] = $object->toArray();
 		}
-		if (count($ret > 0)) {
+		if (count($ret) > 0) {
 			return $ret;
 		} else {
 			return false;
