@@ -28,7 +28,7 @@ final class AliasesTest extends TestCase
             'Message'                 => ['Icms\\Core\\Message', 'icms_core_Message'],
             'MarkdownFilter'          => ['Icms\\Core\\MarkdownFilter', 'icms_core_MarkdownFilter'],
             'VersioncheckerInterface' => ['Icms\\Core\\VersioncheckerInterface', 'icms_core_VersioncheckerInterface'],
-            'ObjectHandler'           => ['Icms\\Core\\ObjectHandler', 'icms_core_ObjectHandler'],
+            'ObjectHandler'           => ['Icms\\Core\\EntityHandler', 'icms_core_ObjectHandler'],
             'Versionchecker'          => ['Icms\\Core\\Versionchecker', 'icms_core_Versionchecker'],
             'Versioncheckergithub'    => ['Icms\\Core\\Versioncheckergithub', 'icms_core_Versioncheckergithub'],
             'Versionchecker_RSS'      => ['Icms\\Core\\Versionchecker_RSS', 'icms_core_Versionchecker_RSS'],
