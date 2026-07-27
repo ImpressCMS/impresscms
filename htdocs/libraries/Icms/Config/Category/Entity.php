@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -27,41 +28,48 @@
 /**
  * Manage configuration categories
  *
- * @copyright	Copyright (c) 2000 XOOPS.org
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @copyright    Copyright (c) 2000 XOOPS.org
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @category	ICMS
- * @package		Config
- * @subpackage	Category
- * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
+ * @category    ICMS
+ * @package        Config
+ * @subpackage    Category
+ * @author        Kazumi Ono (aka onokazo)
+ * @version        SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
+
+namespace Icms\Config\Category;
+
+use Icms\Core;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * A category of configs
  *
- * @author		Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- * 				You should have received a copy of XOOPS_copyrights.txt with
- * 				this file. If not, you may obtain a copy from xoops.org
+ * @author        Kazumi Ono    <onokazu@xoops.org>
+ * @copyright    copyright (c) 2000-2003 XOOPS.org
+ *                You should have received a copy of XOOPS_copyrights.txt with
+ *                this file. If not, you may obtain a copy from xoops.org
  *
- * @category	ICMS
+ * @category    ICMS
  * @package     Config
- * @subpackage	Category
+ * @subpackage    Category
  */
-class icms_config_category_Object extends icms_core_Object {
+class Entity extends \Icms\Core\Entity
+{
 	/**
 	 * Constructor
 	 *
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		$this->initVar('confcat_id', XOBJ_DTYPE_INT, null);
 		$this->initVar('confcat_name', XOBJ_DTYPE_OTHER, null);
 		$this->initVar('confcat_order', XOBJ_DTYPE_INT, 0);
 	}
 }
+\class_alias(Entity::class, 'icms_config_category_Object');
 

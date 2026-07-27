@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -36,6 +37,7 @@
  * @author		Kazumi Ono (aka onokazo)
  * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\Config\Option;
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
@@ -51,7 +53,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     Config
  * @subpackage	Option
  */
-class icms_config_option_Object extends icms_core_Object {
+class Entity extends \Icms\Core\Entity {
 	/**
 	 * Constructor
 	 */
@@ -63,4 +65,4 @@ class icms_config_option_Object extends icms_core_Object {
 		$this->initVar('conf_id', XOBJ_DTYPE_INT, 0);
 	}
 }
-
+\class_alias(Entity::class, 'icms_config_option_Object');

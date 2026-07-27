@@ -23,9 +23,8 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-
 /**
- * Manage configuration categories
+ * Manage configuration options
  *
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -33,7 +32,7 @@
  *
  * @category	ICMS
  * @package		Config
- * @subpackage	Category
+ * @subpackage	Option
  * @author		Kazumi Ono (aka onokazo)
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
@@ -41,129 +40,126 @@
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * Configuration category handler class.
- *
+ * Configuration option handler class.
  * This class is responsible for providing data access mechanisms to the data source
- * of configuration category class objects.
+ * of configuration option class objects.
  *
- * @author  	Kazumi Ono <onokazu@xoops.org>
+ * @author  Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  * 				You should have received a copy of XOOPS_copyrights.txt with
  * 				this file. If not, you may obtain a copy from xoops.org
  *
  * @category	ICMS
  * @package     Config
- * @subpackage  Category
+ * @subpackage  Option
  */
-class icms_config_category_Handler extends icms_core_ObjectHandler {
+class icms_config_option_Handler extends icms_core_ObjectHandler {
 
 	/**
-	 * Create a new category
+	 * Create a new option
 	 *
-	 * @param	bool    $isNew  Flag the new object as "new"?
+	 * @param	bool    $isNew  Flag the option as "new"?
 	 *
-	 * @return	object  New {@link icms_config_category_Object}
-	 * @see htdocs/kernel/icms_core_ObjectHandler#create()
+	 * @return	object  {@link icms_config_option_Object}
 	 */
-	public function &create($isNew = true)	{
-		$confcat = new icms_config_category_Object();
+	public function &create($isNew = true) {
+		$confoption = new icms_config_option_Object();
 		if ($isNew) {
-			$confcat->setNew();
+			$confoption->setNew();
 		}
-		return $confcat;
+		return $confoption;
 	}
 
 	/**
-	 * Retrieve a {@link icms_config_category_Object}
+	 * Get an option from the database
 	 *
-	 * @param	int $id ConfigCategoryID to get
+	 * @param	int $id ID of the option
 	 *
-	 * @return	object|false  {@link icms_config_category_Object}, FALSE on fail
-	 * @see htdocs/kernel/icms_core_ObjectHandler#get($int_id)
+	 * @return	object  reference to the {@link icms_config_option_Object}, FALSE on fail
 	 */
 	public function &get($id) {
-		$confcat = false;
+		$confoption = false;
 		$id = (int) $id;
 		if ($id > 0) {
-			$sql = "SELECT * FROM " . $this->db->prefix('configcategory') . " WHERE confcat_id='" . $id . "'";
+			$sql = "SELECT * FROM " . $this->db->prefix('configoption') . " WHERE confop_id='" . $id . "'";
 			if (!$result = $this->db->query($sql)) {
-				return $confcat;
+				return $confoption;
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$confcat = new icms_config_category_Object();
-				$confcat->assignVars($this->db->fetchArray($result), false);
+				$confoption = new icms_config_option_Object();
+				$confoption->assignVars($this->db->fetchArray($result));
 			}
 		}
-		return $confcat;
+		return $confoption;
 	}
 
 	/**
-	 * Insert a {@link icms_config_category_Object} into the DataBase
+	 * Insert a new option in the database
 	 *
-	 * @param	object   &$confcat  {@link icms_config_category_Object}
-	 *
-	 * @return	bool    TRUE on success
-	 * @see htdocs/kernel/icms_core_ObjectHandler#insert($object)
+	 * @param	object  $confoption    reference to a {@link icms_config_option_Object}
+	 * @return	bool    TRUE if successfull.
 	 */
-	public function insert(&$confcat) {
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		 */
-		if (!is_a($confcat, 'icms_config_category_Object')) {
+	public function insert($confoption) {
+		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace it */
+		if (!is_a($confoption, 'icms_config_option_Object')) {
 			return false;
 		}
-		if (!$confcat->isDirty()) {
+		if (!$confoption->isDirty()) {
 			return true;
 		}
-		if (!$confcat->cleanVars()) {
+		if (!$confoption->cleanVars()) {
 			return false;
 		}
-		foreach ( $confcat->cleanVars as $k => $v) {
+		foreach ( $confoption->cleanVars as $k => $v) {
 			${$k} = $v;
 		}
-		if ($confcat->isNew()) {
-			$confcat_id = $this->db->genId('configcategory_confcat_id_seq');
+		if ($confoption->isNew()) {
+			$confop_id = $this->db->genId('configoption_confop_id_seq');
 			$sql = sprintf(
-				"INSERT INTO %s (confcat_id, confcat_name, confcat_order)
-				VALUES ('%u', %s, '%u')",
-				$this->db->prefix('configcategory'), (int) ($confcat_id), $this->db->quoteString($confcat_name), (int) ($confcat_order)
+				"INSERT INTO %s (confop_id, confop_name, confop_value, conf_id)
+				VALUES ('%u', %s, %s, '%u')",
+				$this->db->prefix('configoption'),
+				(int) $confop_id,
+				$this->db->quoteString($confop_name),
+				$this->db->quoteString($confop_value),
+				(int) $conf_id
 				);
 		} else {
 			$sql = sprintf(
-				"UPDATE %s SET confcat_name = %s, confcat_order = '%u'
-				WHERE confcat_id = '%u'",
-				$this->db->prefix('configcategory'), $this->db->quoteString($confcat_name), (int) ($confcat_order), (int) ($confcat_id));
+			"UPDATE %s SET confop_name = %s, confop_value = %s
+			WHERE confop_id = '%u'",
+			$this->db->prefix('configoption'),
+			$this->db->quoteString($confop_name),
+			$this->db->quoteString($confop_value),
+			(int) ($confop_id)
+			);
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
-		if (empty($confcat_id)) {
-			$confcat_id = $this->db->getInsertId();
+		if (empty($confop_id)) {
+			$confop_id = $this->db->getInsertId();
 		}
-		$confcat->assignVar('confcat_id', $confcat_id);
-		return $confcat_id;
+		$confoption->assignVar('confop_id', $confop_id);
+		return $confop_id;
 	}
 
 	/**
-	 * Delelete a {@link icms_config_category_Object}
+	 * Delete an option
 	 *
-	 * @param	object  &$confcat   {@link icms_config_category_Object}
-	 *
-	 * @return	bool    TRUE on success
-	 * @see htdocs/kernel/icms_core_ObjectHandler#delete($object)
+	 * @param	object  $confoption    reference to a {@link icms_config_option_Object}
+	 * @return	bool    TRUE if successful
 	 */
-	public function delete(&$confcat) {
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		 */
-		if (!is_a($confcat, 'icms_config_category_Object')) {
+	public function delete($confoption) {
+		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace it */
+		if (!is_a($confoption, 'icms_config_option_Object')) {
 			return false;
 		}
-
 		$sql = sprintf(
-			"DELETE FROM %s WHERE confcat_id = '%u'",
-			$this->db->prefix('configcategory'), (int) ($configcategory->getVar('confcat_id'))
+			"DELETE FROM %s WHERE confop_id = '%u'",
+			$this->db->prefix('configoption'),
+			(int) ($confoption->getVar('confop_id'))
 			);
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -172,23 +168,19 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Get some {@link icms_config_category_Object}s
+	 * Get some {@link icms_config_option_Object}s
 	 *
-	 * @param	object  $criteria   {@link icms_db_criteria_Element}
-	 * @param	bool    $id_as_key  Use the IDs as keys to the array?
+	 * @param	object  $criteria   {@link \Icms\Db\Criteria\Element}
+	 * @param	bool    $id_as_key  Use the IDs as array-keys?
 	 *
-	 * @return	array   Array of {@link icms_config_category_Object}s
+	 * @return	array
 	 */
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM ' . $this->db->prefix('configcategory');
+		$sql = 'SELECT * FROM ' . $this->db->prefix('configoption');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
-			$sort = !in_array($criteria->getSort(), array('confcat_id', 'confcat_name', 'confcat_order'))
-					? 'confcat_order'
-					: $criteria->getSort();
-			$sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
+			$sql .= ' ' . $criteria->renderWhere() . ' ORDER BY confop_id ' . $criteria->getOrder();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
@@ -197,14 +189,14 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$confcat = new icms_config_category_Object();
-			$confcat->assignVars($myrow, false);
+			$confoption = new icms_config_option_Object();
+			$confoption->assignVars($myrow);
 			if (!$id_as_key) {
-				$ret[] =& $confcat;
+				$ret[] =& $confoption;
 			} else {
-				$ret[$myrow['confcat_id']] =& $confcat;
+				$ret[$myrow['confop_id']] =& $confoption;
 			}
-			unset($confcat);
+			unset($confoption);
 		}
 		return $ret;
 	}
