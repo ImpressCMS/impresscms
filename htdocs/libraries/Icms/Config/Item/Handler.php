@@ -83,7 +83,7 @@ define('ICMS_CONF_PURIFIER', 14);
  * @package     Config
  * @subpackage  Item
  */
-class Handler extends \Icms\Core\ObjectHandler {
+class Handler extends \Icms\Core\EntityHandler {
 
 	/**
 	 * Create a new {@link Entity}
@@ -129,10 +129,10 @@ class Handler extends \Icms\Core\ObjectHandler {
 	/**
 	 * Insert a config to the database
 	 *
-	 * @param	object  &$config    {@link Entity} object
+	 * @param	object  $config    {@link Entity} object
 	 * @return  mixed   FALSE on fail.
 	 */
-	public function insert(&$config) {
+	public function insert($config) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace this */
 		if (!is_a($config, Entity::class)) {
 			return false;
@@ -211,10 +211,10 @@ class Handler extends \Icms\Core\ObjectHandler {
 	/**
 	 * Delete a config from the database
 	 *
-	 * @param	object  &$config    Config to delete
+	 * @param	object  $config    Config to delete
 	 * @return	bool    Successful?
 	 */
-	public function delete(&$config) {
+	public function delete($config) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated, there is no need to replace it */
 		if (!is_a($config, Entity::class)) {
 			return false;

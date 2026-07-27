@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -37,8 +38,13 @@
  * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
+namespace Icms\Config\Item;
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+use Icms\Core\DataFilter;
+
+if (!defined('ICMS_ROOT_PATH')) {
+	die("ImpressCMS root path not defined");
+}
 
 /**
  *
@@ -52,14 +58,14 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * 				You should have received a copy of XOOPS_copyrights.txt with
  * 				this file. If not, you may obtain a copy from xoops.org
  */
-class icms_config_Item_Object extends icms_core_Object {
+class Entity extends \Icms\Core\Entity {
 	/**
 	 * Config options
 	 *
 	 * @var	array
 	 * @access	private
 	 */
-	public $_confOptions = array();
+	private $confOptions = array();
 
 	/**
 	 * Constructor
@@ -67,6 +73,7 @@ class icms_config_Item_Object extends icms_core_Object {
 	 * @todo	Cannot set the data type of the conf_value on instantiation - the data type must be retrieved from the db.
 	 */
 	public function __construct() {
+
 		$this->initVar('conf_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('conf_modid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('conf_catid', XOBJ_DTYPE_INT, null, false);
@@ -100,11 +107,11 @@ class icms_config_Item_Object extends icms_core_Object {
 				break;
 
 			case 'textsarea':
-				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'text', 'output');
+				return DataFilter::checkVar($this->getVar('conf_value'), 'text', 'output');
 				break;
 
 			case 'textarea':
-				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'html', 'output');
+				return DataFilter::checkVar($this->getVar('conf_value'), 'html', 'output');
 			default:
 				return $this->getVar('conf_value', 'N');
 				break;
@@ -114,16 +121,16 @@ class icms_config_Item_Object extends icms_core_Object {
 	/**
 	 * Set a config value
 	 *
-	 * @param	mixed   &$value Value
+	 * @param	mixed   $value Value
 	 * @param	bool    $force_slash
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
 		if ($this->getVar('conf_formtype') == 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
             if (!is_int($value) && !empty($value)) {
-                $value = icms_core_DataFilter::checkVar($value, 'html', 'input');
+                $value = DataFilter::checkVar($value, 'html', 'input');
             }
 		} elseif ($this->getVar('conf_formtype') == 'textsarea' && $this->getVar('conf_valuetype') !== 'array') {
-			$value = icms_core_DataFilter::checkVar($value, 'text', 'input');
+			$value = DataFilter::checkVar($value, 'text', 'input');
 		} elseif ($this->getVar('conf_formtype') == 'password') {
 			$value = filter_var($value, FILTER_SANITIZE_URL);
 		} else {
@@ -160,7 +167,7 @@ class icms_config_Item_Object extends icms_core_Object {
 			}
 		} else {
 			if (is_object($option)) {
-				$this->_confOptions[] =& $option;
+				$this->confOptions[] =& $option;
 			}
 		}
 	}
@@ -171,7 +178,7 @@ class icms_config_Item_Object extends icms_core_Object {
 	 * @return	array   array of {@link icms_config_Item_ObjectOption}
 	 */
 	public function &getConfOptions() {
-		return $this->_confOptions;
+		return $this->confOptions;
 	}
 
 	/**
@@ -198,3 +205,4 @@ class icms_config_Item_Object extends icms_core_Object {
 		$this->vars['conf_value']['data_type'] = $types[$newType];
 	}
 }
+\class_alias(Entity::class,'icms_config_Item_Object');

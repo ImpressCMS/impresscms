@@ -112,9 +112,9 @@ class icms_config_Handler {
 	/**
 	 * Constructor
 	 *
-	 * @param	object  &$db    reference to database object
+	 * @param	object  $db    reference to database object
 	 */
-	public function __construct(&$db) {
+	public function __construct($db) {
 		$this->_cHandler = new icms_config_item_Handler($db);
 		$this->_oHandler = new icms_config_option_Handler($db);
 	}
@@ -148,10 +148,10 @@ class icms_config_Handler {
 	/**
 	 * insert a new config in the database
 	 *
-	 * @param	object  &$config    reference to the {@link icms_config_Item_Object}
+	 * @param	object  $config    reference to the {@link icms_config_Item_Object}
 	 * @return	true|false if inserting config succeeded or not
 	 */
-	public function insertConfig(&$config) {
+	public function insertConfig($config) {
 		if (!$this->_cHandler->insert($config)) {
 			return false;
 		}
@@ -176,10 +176,10 @@ class icms_config_Handler {
 	/**
 	 * Delete a config from the database
 	 *
-	 * @param	object  &$config    reference to a {@link icms_config_Item_Object}
+	 * @param	object  $config    reference to a {@link icms_config_Item_Object}
 	 * @return	true|false if deleting config item succeeded or not
 	 */
-	public function deleteConfig(&$config) {
+	public function deleteConfig($config) {
 		if (!$this->_cHandler->delete($config)) {
 			return false;
 		}
