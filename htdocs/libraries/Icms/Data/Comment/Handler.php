@@ -28,7 +28,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @package     Data
  * @subpackage  Comment
  */
-class Handler extends \Icms\Core\ObjectHandler
+class Handler extends \Icms\Core\EntityHandler
 {
     /**
      * Create a new comment entity.
@@ -69,7 +69,7 @@ class Handler extends \Icms\Core\ObjectHandler
     /**
      * Insert a comment into the database.
      */
-    public function insert(&$comment): bool
+    public function insert($comment): bool
     {
         if (!is_a($comment, Entity::class)) {
             return false;
@@ -158,7 +158,7 @@ class Handler extends \Icms\Core\ObjectHandler
     /**
      * Delete a comment from the database.
      */
-    public function delete(&$comment): bool
+    public function delete($comment): bool
     {
         if (!is_a($comment, Entity::class)) {
             return false;
@@ -314,7 +314,7 @@ class Handler extends \Icms\Core\ObjectHandler
     /**
      * Update a single field on a comment.
      */
-    public function updateByField(&$comment, $field_name, $field_value): bool
+    public function updateByField($comment, $field_name, $field_value): bool
     {
         $comment->unsetNew();
         $comment->setVar($field_name, $field_value);

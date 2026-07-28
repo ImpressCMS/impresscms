@@ -28,7 +28,7 @@ class Entity extends \Icms\Ipf\Entity
     /**
      * Constructor.
      */
-    public function __construct(&$handler)
+    public function __construct($handler)
     {
         parent::__construct($handler);
         $this->quickInitVar('fileid', XOBJ_DTYPE_INT, true);

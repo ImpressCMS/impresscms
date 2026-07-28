@@ -24,7 +24,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package     Data
  * @subpackage  Privmessage
  */
-class Handler extends \Icms\Core\ObjectHandler
+class Handler extends \Icms\Core\EntityHandler
 {
     /**
      * Create a new private message object.
@@ -62,7 +62,7 @@ class Handler extends \Icms\Core\ObjectHandler
     /**
      * Insert a message in the database.
      */
-    public function insert(&$pm, $force = false): bool
+    public function insert($pm, $force = false): bool
     {
         if (!is_a($pm, Entity::class)) {
             return false;
@@ -118,7 +118,7 @@ class Handler extends \Icms\Core\ObjectHandler
     /**
      * Delete from the database.
      */
-    public function delete(&$pm): bool
+    public function delete($pm): bool
     {
         if (!is_a($pm, Entity::class)) {
             return false;
@@ -180,7 +180,7 @@ class Handler extends \Icms\Core\ObjectHandler
     /**
      * Mark a message as read.
      */
-    public function setRead(&$pm): bool
+    public function setRead($pm): bool
     {
         if (!is_a($pm, Entity::class)) {
             return false;

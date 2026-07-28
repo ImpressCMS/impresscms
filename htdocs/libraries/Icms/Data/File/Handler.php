@@ -31,7 +31,7 @@ class Handler extends \Icms\Ipf\Handler
     /**
      * Constructor.
      */
-    public function __construct(&$db)
+    public function __construct($db)
     {
         parent::__construct($db, "data_file", "fileid", "caption", "desc", "icms");
     }

@@ -239,7 +239,7 @@ class Handler extends \Icms\Core\EntityHandler
      *
      * @return array|false
      */
-    public function getUser(&$avatar)
+    public function getUser($avatar)
     {
         $ret = [];
 

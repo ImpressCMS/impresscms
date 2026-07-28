@@ -28,7 +28,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  */
 class Entity extends \Icms\Ipf\Entity
 {
-    public function __construct(&$handler)
+    public function __construct($handler)
     {
         parent::__construct($handler);
 
