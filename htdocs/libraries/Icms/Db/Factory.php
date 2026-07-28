@@ -41,6 +41,8 @@ declare(strict_types=1);
 
 namespace Icms\Db;
 
+use Icms\Db\Legacy\PdoDatabase;
+
 /**
  * Establishes database class and connection
  *
@@ -147,7 +149,7 @@ abstract class Factory
 	 * @static
 	 * @return object Reference to the only instance of database class
 	 */
-	public static function instance()
+	public static function instance(): PdoDatabase
 	{
 		if (self::$xoopsInstance !== false) return self::$xoopsInstance;
 		$allowWebChanges = \defined('XOOPS_DB_PROXY') ? false : true;
@@ -155,7 +157,7 @@ abstract class Factory
 			if (self::$pdoInstance === null) {
 				self::pdoInstance();
 			}
-			self::$xoopsInstance = new \icms_db_legacy_PdoDatabase(self::$pdoInstance, $allowWebChanges);
+			self::$xoopsInstance = new \Icms\Db\Legacy\PdoDatabase(self::$pdoInstance, $allowWebChanges);
 		} else {
 			if (\defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
 				$class = XOOPS_DB_ALTERNATIVE;

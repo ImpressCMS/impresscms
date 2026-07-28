@@ -37,7 +37,7 @@ interface IUtility
 	 * @param  string  the sql commands
 	 * @return boolean always true
 	 */
-	static public function splitSqlFile(&$ret, string $sql): bool;
+	static public function splitSqlFile($ret, string $sql): bool;
 
 	/**
 	 * add a prefix.'_' to all tablenames in a query

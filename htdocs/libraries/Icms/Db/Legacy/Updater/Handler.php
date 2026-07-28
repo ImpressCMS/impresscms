@@ -402,7 +402,7 @@ class icms_db_legacy_updater_Handler {
 	 * @param object reference to Module Object
 	 * @return bool whether upgrade succeeded or not
 	 */
-	function moduleUpgrade(&$module, $tables_first=false) {
+	function moduleUpgrade($module, $tables_first=false) {
 		$dirname = $module->getVar('dirname');
 
 		//		ob_start();
