@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace Icms\Db\Mysql;
 
+use Icms\Db\IUtility;
+
 /**
  *
  *
@@ -32,7 +34,7 @@ namespace Icms\Db\Mysql;
  * @package		Database
  * @subpackage	MySQL
  */
-abstract class Utility implements \IUtility
+abstract class Utility implements IUtility
 {
 
 	/**
@@ -83,7 +85,7 @@ abstract class Utility implements \IUtility
 	 * @param  string  the sql commands
 	 * @return boolean always true
 	 */
-	static public function splitSqlFile(&$ret, string $sql): bool
+	static public function splitSqlFile($ret, string $sql): bool
 	{
 	}
 

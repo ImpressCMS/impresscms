@@ -1,4 +1,8 @@
 <?php
+declare(strict_types=1);
+
+namespace Icms\Db\Legacy\Mysql;
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -53,7 +57,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
+abstract class Database extends \Icms\Db\Legacy\Database {
 	/**
 	 * Database connection
 	 * @var resource
@@ -66,9 +70,10 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param bool $selectdb select the database now?
 	 * @return bool successful?
 	 */
-	public function connect($selectdb = true) {
+	public function connect(bool $selectdb = true): bool
+	{
 		defined('_CORE_MYSQL_DEPRECATED') || define('_CORE_MYSQL_DEPRECATED', 'The mysql extension is being deprecated as of PHP 5.5.0 (<a href="http://php.net/mysql_connect">PHP MySQL Extenstion</a>). Switch to PDO, instead');
-		icms_core_Debug::setDeprecated("PDO", _CORE_MYSQL_DEPRECATED);
+		\icms_core_Debug::setDeprecated("PDO", _CORE_MYSQL_DEPRECATED);
 		static $db_charset_set;
 
 		$this->allowWebChanges = ($_SERVER['REQUEST_METHOD'] != 'GET');
@@ -79,9 +84,9 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 		}
 
 		if (XOOPS_DB_PCONNECT == 1) {
-			$this->conn = @ mysql_pconnect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
+			$this->conn = @mysql_pconnect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
 		} else {
-			$this->conn = @ mysql_connect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
+			$this->conn = @mysql_connect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
 		}
 
 		if (!$this->conn) {
@@ -112,7 +117,8 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param string $sequence name of the sequence from which to get the next ID
 	 * @return int always 0, because mysql has support for autoincrement
 	 */
-	public function genId($sequence) {
+	public function genId(string $sequence): int
+	{
 		return 0; // will use auto_increment
 	}
 
@@ -122,7 +128,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param resource $result
 	 * @return array the fetched rows
 	 */
-	public function fetchRow($result) {
+	public function fetchRow($result): array {
 		return @ mysql_fetch_row($result);
 	}
 
@@ -131,7 +137,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 *
 	 * @return array the fetched associative array
 	 */
-	public function fetchArray($result) {
+	public function fetchArray($result): array {
 		return @ mysql_fetch_assoc($result);
 	}
 
@@ -140,7 +146,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 *
 	 * @return array the associative and numerical array
 	 */
-	public function fetchBoth($result) {
+	public function fetchBoth($result): array {
 		return @ mysql_fetch_array($result, MYSQL_BOTH);
 	}
 
@@ -149,7 +155,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 *
 	 * @return int
 	 */
-	public function getInsertId() {
+	public function getInsertId(): int {
 		return mysql_insert_id($this->conn);
 	}
 
@@ -159,7 +165,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param resource query result
 	 * @return int the number of rows in the resultset
 	 */
-	public function getRowsNum($result) {
+	public function getRowsNum($result): int {
 		return @ mysql_num_rows($result);
 	}
 
@@ -168,7 +174,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 *
 	 * @return int number of affected rows
 	 */
-	public function getAffectedRows() {
+	public function getAffectedRows(): int {
 		return mysql_affected_rows($this->conn);
 	}
 
@@ -176,7 +182,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * Closes MySQL connection
 	 *
 	 */
-	public function close() {
+	public function close(): void {
 		mysql_close($this->conn);
 	}
 
@@ -186,7 +192,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param resource query result
 	 * @return bool TRUE on success or FALSE on failure.
 	 */
-	public function freeRecordSet($result) {
+	public function freeRecordSet($result): bool {
 		return mysql_free_result($result);
 	}
 
@@ -195,7 +201,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 *
 	 * @return string Returns the error text from the last MySQL function, or '' (the empty string) if no error occurred.
 	 */
-	public function error() {
+	public function error(): string {
 		return @ mysql_error();
 	}
 
@@ -204,7 +210,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 *
 	 * @return int Returns the error number from the last MySQL function, or 0 (zero) if no error occurred.
 	 */
-	public function errno() {
+	public function errno(): int {
 		return @ mysql_errno();
 	}
 
@@ -214,7 +220,8 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param string $str unescaped string text
 	 * @return string escaped string text with single quotes around
 	 */
-	public function quoteString($str) {
+	public function quoteString($str): string
+	{
 		return $this->quote($str);
 		$str = "'" . str_replace('\\"', '"', addslashes($str)) . "'";
 		return $str;
@@ -226,10 +233,11 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param string $str unescaped string text
 	 * @return string escaped string text using mysql_real_escape_string
 	 */
-	public function quote($string) {
+	public function quote($string): string
+	{
 		return "'" . mysql_real_escape_string($string, $this->conn) . "'";
 	}
-	public function escape($string) {
+	public function escape($string): string {
 		return mysql_real_escape_string($string, $this->conn);
 	}
 	/**
@@ -241,7 +249,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @return resource query result or FALSE if successful
 	 * or TRUE if successful and no result
 	 */
-	public function queryF($sql, $limit = 0, $start = 0) {
+	public function queryF(string $sql, int $limit = 0, int $start = 0) {
 		if (!empty ($limit)) {
 			if (empty ($start)) {
 				$start = 0;
@@ -290,7 +298,8 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param int numerical field index
 	 * @return string the fieldname
 	 */
-	public function getFieldName($result, $offset) {
+	public function getFieldName($result, $offset): string
+	{
 		return mysql_field_name($result, $offset);
 	}
 
@@ -301,7 +310,7 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param int $offset numerical field index
 	 * @return string the fieldtype
 	 */
-	public function getFieldType($result, $offset) {
+	public function getFieldType($result, int $offset): string {
 		return mysql_field_type($result, $offset);
 	}
 
@@ -311,18 +320,19 @@ abstract class icms_db_legacy_mysql_Database extends icms_db_legacy_Database {
 	 * @param resource $result query result
 	 * @return int number of fields in the resultset
 	 */
-	public function getFieldsNum($result) {
+	public function getFieldsNum($result): int {
 		return mysql_num_fields($result);
 	}
-	
+
 	/**
 	 * Retrieve the MySQL server version information
 	 *
 	 * @param obj $connecton	A MySQL database connection link
 	 * @return string
 	 */
-	public function getServerVersion($connection = NULL) {
+	public function getServerVersion($connection = NULL): string {
 		if (NULL === $connection) $connection = $this->conn;
 		return mysql_get_server_info($connection);
 	}
 }
+\class_alias(Database::class, 'icms_db_legacy_mysql_Database');

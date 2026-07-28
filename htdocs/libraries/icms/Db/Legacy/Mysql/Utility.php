@@ -70,7 +70,7 @@ class Utility implements \Icms\Db\IUtility {
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
 	 */
-	static public function splitMySqlFile(&$ret, $sql) {
+	static public function splitMySqlFile($ret, $sql) {
 		$sql               = trim($sql);
 		$sql_len           = strlen($sql);
 		$char              = '';
@@ -178,7 +178,7 @@ class Utility implements \Icms\Db\IUtility {
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
 	 */
-	static public function splitSqlFile(&$ret, $sql): bool
+	static public function splitSqlFile($ret, $sql): bool
 	{
 		$sql               = trim($sql);
 		$sql_len           = strlen($sql);

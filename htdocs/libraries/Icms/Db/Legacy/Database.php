@@ -84,7 +84,8 @@ abstract class Database implements IDatabase {
 	 * @param string $allowWebChanges	set tp TRUE to allow inserts, updates or deletes
 	 * @return	void
 	 */
-	public function __construct(?string $connection = NULL, bool $allowWebChanges = FALSE) {
+	public function __construct($connection = null, bool $allowWebChanges = false)
+	{
 		$this->allowWebChanges = $allowWebChanges;
 	}
 

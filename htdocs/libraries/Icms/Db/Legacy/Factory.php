@@ -30,30 +30,38 @@
 /**
  * ImpressCMS Database Factory Class
  *
- * @category	ICMS
- * @package		Database
+ * @category    ICMS
+ * @package        Database
  * @author      Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
  *
  * @copyright   The ImpressCMS Project <http://www.impresscms.org>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @license        http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @version		SVN: $Id: Factory.php 12403 2014-01-26 21:35:08Z skenow $
+ * @version        SVN: $Id: Factory.php 12403 2014-01-26 21:35:08Z skenow $
  */
+
+namespace Icms\Db\Legacy;
+
+use \Icms\Db\Legacy;
+use icms_db_legacy_updater_Handler;
 
 /**
  * Creates a database connection
  *
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @since        XOOPS
+ * @author        http://www.xoops.org The XOOPS Project
+ * @copyright    copyright (c) 2000-2007 XOOPS.org
  */
-class icms_db_legacy_Factory extends icms_db_Factory {
+class Factory extends \Icms\Db\Factory
+{
 	/**
 	 * Constructor
 	 *
 	 * Makes nothing.
 	 */
-	protected function __construct() { /* Empty! */ }
+	protected function __construct()
+	{ /* Empty! */
+	}
 
 	/**
 	 * Get a reference to the only instance of database class and connects to DB
@@ -63,9 +71,9 @@ class icms_db_legacy_Factory extends icms_db_Factory {
 	 *
 	 * @static
 	 * @staticvar   object  The only instance of database class
-	 * @return      object  Reference to the only instance of database class
 	 */
-	static public function &instance() {
+	public static function instance(): PdoDatabase
+	{
 		static $instance;
 		if (!isset($instance)) {
 			$instance = parent::instance();
@@ -79,9 +87,9 @@ class icms_db_legacy_Factory extends icms_db_Factory {
 	 *
 	 * @static
 	 * @staticvar   object  The only instance of database class
-	 * @return      object  Reference to the only instance of database class
 	 */
-	static public function &getDatabase() {
+	public static function getDatabase(): PdoDatabase
+	{
 		static $database;
 		if (!isset($database)) {
 			$database = parent::instance();
@@ -92,12 +100,14 @@ class icms_db_legacy_Factory extends icms_db_Factory {
 	/**
 	 * Gets the databaseupdater object .
 	 *
-	 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+	 * @copyright    http://www.impresscms.org/ The ImpressCMS Project
 	 *
-	 * @return	object  @link icms_db_legacy_updater_Handler
+	 * @return    icms_db_legacy_updater_Handler
 	 * @static
 	 */
-	static public function getDatabaseUpdater() {
+	public static function getDatabaseUpdater(): icms_db_legacy_updater_Handler
+	{
 		return new icms_db_legacy_updater_Handler();
 	}
 }
+\class_alias(Factory::class, 'icms_db_legacy_Factory');
