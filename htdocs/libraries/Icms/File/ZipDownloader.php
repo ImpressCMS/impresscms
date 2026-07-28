@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -27,6 +28,7 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+namespace Icms\File;
 /**
  * Handles all functions related to downloading zipfiles within ImpressCMS
  *
@@ -46,7 +48,7 @@ defined('ICMS_ROOT_PATH') or exit();
  * @author		xoops.org
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_file_ZipDownloader extends icms_file_DownloadHandler {
+class ZipDownloader extends \Icms\File\DownloadHandler {
 	/**
 	 * Constructor
 	 *
@@ -56,7 +58,7 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler {
 	public function __construct($ext = '.zip', $mimyType = 'application/x-zip') {
 		$this->archiver = new icms_file_ZipFileHandler();
 		$this->ext      = trim($ext);
-		$this->mimeType = trim($mimyType);
+		$this->mimetype = trim($mimyType);
 	}
 
 	/**
@@ -92,23 +94,23 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler {
 	/**
 	 * Adds file data to the zip file
 	 *
-	 * @param	string    &$data        data array
+	 * @param	string    $data        data array
 	 * @param	string    $filename     filename to add the data to
 	 * @param	string    $time         timestamp
 	 */
-	public function addFileData(&$data, $filename, $time=0) {
+	public function addFileData($data, $filename, $time=0) {
 		$this->archiver->addFile($data, $filename, $time);
 	}
 
 	/**
 	 * Adds binary file data to the zip file
 	 *
-	 * @param	string    &$data        data array
+	 * @param	string    $data        data array
 	 * @param	string    $filename     filename to add the data to
 	 * @param	string    $time         timestamp
 	 */
-	public function addBinaryFileData(&$data, $filename, $time=0) {
-		self::addFileData($data, $filename, $time);
+	public function addBinaryFileData($data, $filename, $time=0) {
+		$this->addFileData($data, $filename, $time);
 	}
 
 	/**
@@ -122,3 +124,4 @@ class icms_file_ZipDownloader extends icms_file_DownloadHandler {
 		echo $this->archiver->file();
 	}
 }
+\class_alias(ZipDownloader::class, 'icms_file_ZipDownloader');

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  *
  */
@@ -75,7 +76,7 @@
 
  =======================================================================
  */
-
+namespace Icms\File;
 /**
  * tar Class
  *
@@ -90,7 +91,7 @@
  * @package     File
  *
  */
-class icms_file_TarFileHandler {
+class TarFileHandler {
 	/**#@+
 	 * Unprocessed Archive Information
 	 */
@@ -112,7 +113,6 @@ class icms_file_TarFileHandler {
 	 * Class Constructor -- Does nothing...
 	 */
 	public function __construct() {
-		return true;
 	}
 
 	/**
@@ -122,7 +122,7 @@ class icms_file_TarFileHandler {
 	 * @param	string  $bytestring
 	 *
 	 */
-	private function __computeUnsignedChecksum($bytestring) {
+	private function computeUnsignedChecksum($bytestring) {
 		$unsigned_chksum = '';
 		for ($i=0; $i<512; $i++) {
 			$unsigned_chksum += ord($bytestring[$i]);
@@ -143,7 +143,7 @@ class icms_file_TarFileHandler {
 	 * @return  string
 	 *
 	 */
-	private function __parseNullPaddedString($string) {
+	private function parseNullPaddedString($string) {
 		$position = strpos($string, chr(0));
 		return substr($string, 0, $position);
 	}
@@ -154,18 +154,19 @@ class icms_file_TarFileHandler {
 	 * @return  bool    always TRUE
 	 *
 	 */
-	private function __parseTar() {
+	private function parseTar() {
 		// Read Files from archive
 		$tar_length = strlen($this->tar_file);
 		$main_offset = 0;
 		$this->numFiles = 0;
 		while ($main_offset < $tar_length) {
 			// If we read a block of 512 nulls, we are at the end of the archive
-			if (substr($this->tar_file, $main_offset, 512) == str_repeat(chr(0), 512))
-			break;
+			if (substr($this->tar_file, $main_offset, 512) == str_repeat(chr(0), 512)) {
+				break;
+			}
 
 			// Parse file name
-			$file_name = self::__parseNullPaddedString(substr($this->tar_file, $main_offset, 100));
+			$file_name = $this->parseNullPaddedString(substr($this->tar_file, $main_offset, 100));
 
 			// Parse the file mode
 			$file_mode = substr($this->tar_file, $main_offset + 100, 8);
@@ -186,36 +187,25 @@ class icms_file_TarFileHandler {
 			$file_chksum = octdec(substr($this->tar_file, $main_offset + 148, 6));
 
 			// Parse user name
-			$file_uname = self::__parseNullPaddedString(substr($this->tar_file, $main_offset + 265, 32));
+			$file_uname = $this->parseNullPaddedString(substr($this->tar_file, $main_offset + 265, 32));
 
 			// Parse Group name
-			$file_gname = self::__parseNullPaddedString(substr($this->tar_file, $main_offset + 297, 32));
+			$file_gname = $this->parseNullPaddedString(substr($this->tar_file, $main_offset + 297, 32));
 
 			// Make sure our file is valid
-			if (self::__computeUnsignedChecksum(substr($this->tar_file, $main_offset, 512)) != $file_chksum) {
+			if ($this->computeUnsignedChecksum(substr($this->tar_file, $main_offset, 512)) != $file_chksum) {
 				return false;
 			}
 
 			// Parse File Contents
 			$file_contents		= substr($this->tar_file, $main_offset + 512, $file_size);
 
-			/*	### Unused Header Information ###
-				$activeFile["typeflag"]		= substr($this->tar_file,$main_offset + 156,1);
-				$activeFile["linkname"]		= substr($this->tar_file,$main_offset + 157,100);
-				$activeFile["magic"]		= substr($this->tar_file,$main_offset + 257,6);
-				$activeFile["version"]		= substr($this->tar_file,$main_offset + 263,2);
-				$activeFile["devmajor"]		= substr($this->tar_file,$main_offset + 329,8);
-				$activeFile["devminor"]		= substr($this->tar_file,$main_offset + 337,8);
-				$activeFile["prefix"]		= substr($this->tar_file,$main_offset + 345,155);
-				$activeFile["endheader"]	= substr($this->tar_file,$main_offset + 500,12);
-				*/
-
 			if ($file_size > 0) {
 				// Increment number of files
 				$this->numFiles++;
 
 				// Create us a new file in our array
-				$activeFile = &$this->files[];
+				$activeFile = $this->files;
 
 				// Asign Values
 				$activeFile["name"] = $file_name;
@@ -260,7 +250,7 @@ class icms_file_TarFileHandler {
 	 * @return  bool    always TRUE
 	 *
 	 */
-	private function __readTar($filename='') {
+	private function readTar($filename='') {
 		// Set the filename to load
 		if (!$filename) {
 			$filename = $this->filename;
@@ -282,7 +272,7 @@ class icms_file_TarFileHandler {
 		}
 
 		// Parse the TAR file
-		self::__parseTar();
+		$this->parseTar();
 
 		return true;
 	}
@@ -293,7 +283,7 @@ class icms_file_TarFileHandler {
 	 * @return  bool    always TRUE
 	 *
 	 */
-	private function __generateTAR() {
+	private function generateTAR() {
 		// Clear any data currently in $this->tar_file
 		unset($this->tar_file);
 
@@ -304,6 +294,7 @@ class icms_file_TarFileHandler {
 
 				// Generate tar header for this directory
 				// Filename, Permissions, UID, GID, size, Time, checksum, typeflag, linkname, magic, version, user name, group name, devmajor, devminor, prefix, end
+				$header = '';
 				$header .= str_pad($information["name"], 100, chr(0));
 				$header .= str_pad(decoct($information["mode"]), 7, "0", STR_PAD_LEFT) . chr(0);
 				$header .= str_pad(decoct($information["user_id"]), 7, "0", STR_PAD_LEFT) . chr(0);
@@ -323,7 +314,7 @@ class icms_file_TarFileHandler {
 				$header .= str_repeat(chr(0), 12);
 
 				// Compute header checksum
-				$checksum = str_pad(decoct(self::__computeUnsignedChecksum($header)), 6, "0", STR_PAD_LEFT);
+				$checksum = str_pad(decoct($this->computeUnsignedChecksum($header)), 6, "0", STR_PAD_LEFT);
 				for ($i=0; $i<6; $i++) {
 					$header[(148 + $i)] = substr($checksum, $i, 1);
 				}
@@ -362,9 +353,9 @@ class icms_file_TarFileHandler {
 				$header .= str_repeat(chr(0), 12);
 
 				// Compute header checksum
-				$checksum = str_pad(decoct(self::__computeUnsignedChecksum($header)), 6, "0", STR_PAD_LEFT);
+				$checksum = str_pad(decoct($this->computeUnsignedChecksum($header)), 6, "0", STR_PAD_LEFT);
 				for ($i=0; $i<6; $i++) {
-					$header[(148 + $i)] = substr($checksum, $i, 1);
+					$header[(148 + $i)] = $checksum[$i];
 				}
 				$header[154] = chr(0);
 				$header[155] = chr(32);
@@ -407,7 +398,7 @@ class icms_file_TarFileHandler {
 		$this->filename = $filename;
 
 		// Parse this file
-		self::__readTar();
+		$this->readTar();
 
 		return true;
 	}
@@ -422,7 +413,7 @@ class icms_file_TarFileHandler {
 		// If the tar file doesn't exist...
 		if (!file_exists($filename)) return false;
 
-		self::__readTar($filename);
+		$this->readTar($filename);
 
 		return true;
 	}
@@ -508,12 +499,13 @@ class icms_file_TarFileHandler {
 
 		// Add directory to processed data
 		$this->numDirectories++;
-		$activeDir = &$this->directories[];
+		$activeDir = $this->directories;
 		$activeDir["name"] = $dirname;
 		$activeDir["mode"] = $file_information["mode"];
 		$activeDir["time"] = $file_information["time"];
 		$activeDir["user_id"] = $file_information["uid"];
 		$activeDir["group_id"] = $file_information["gid"];
+		$checksum = '';
 		$activeDir["checksum"] = $checksum;
 
 		return true;
@@ -533,7 +525,7 @@ class icms_file_TarFileHandler {
 		}
 
 		// Make sure there are no other files in the archive that have this same filename
-		if (self::containsFile($filename)) {
+		if ($this->containsFile($filename)) {
 			return false;
 		}
 
@@ -615,7 +607,7 @@ class icms_file_TarFileHandler {
 		}
 
 		// Write tar to current file using specified gzip compression
-		self::toTar($this->filename, $this->isGzipped);
+		$this->toTar($this->filename, $this->isGzipped);
 
 		return true;
 	}
@@ -633,7 +625,7 @@ class icms_file_TarFileHandler {
 		}
 
 		// Encode processed files into TAR file format
-		self::__generateTar();
+		$this->generateTAR();
 
 		// GZ Compress the data if we need to
 		if ($useGzip) {
@@ -668,7 +660,7 @@ class icms_file_TarFileHandler {
 		}
 
 		// Encode processed files into TAR file format
-		self::__generateTar();
+		$this->generateTAR();
 
 		// GZ Compress the data if we need to
 		if ($useGzip) {
@@ -685,3 +677,5 @@ class icms_file_TarFileHandler {
 		return $file;
 	}
 }
+
+\class_alias(TarFileHandler::class, 'icms_file_TarFileHandler');
