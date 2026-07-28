@@ -56,10 +56,10 @@ class Logger {
 	/**
 	 * Get a reference to the only instance of this class
 	 *
-	 * @return  object icms_core_Logger  (@link icms_core_Logger) reference to the only instance
+	 * @return  \Icms\Core\Logger  reference to the only instance
 	 * @static
 	 */
-	public static function &instance() {
+	public static function instance() {
 		static $instance;
 		if (!isset( $instance )) {
 			$instance = new self();
@@ -91,7 +91,7 @@ class Logger {
 	 */
 	public function enableRendering() {
 		if (!$this->renderingEnabled) {
-			ob_start(array(&$this, 'render'));
+			ob_start(array($this, 'render'));
 			$this->renderingEnabled = true;
 		}
 	}

@@ -122,7 +122,7 @@ class Textsanitizer {
 	 * @param   string  $text
 	 * @return  string
 	 **/
-	public function makeClickable(&$text) {
+	public function makeClickable($text) {
 		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::makeClickable', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return \icms_core_DataFilter::makeClickable($text);
 	}
@@ -135,7 +135,7 @@ class Textsanitizer {
 	 *				  On FALSE, uses links to images.
 	 * @return  string
 	 **/
-	public function xoopsCodeDecode(&$text, $allowimage = 1) {
+	public function xoopsCodeDecode($text, $allowimage = 1) {
 		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::codeDecode', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return \icms_core_DataFilter::codeDecode($text, $allowimage);
 	}
@@ -249,7 +249,7 @@ class Textsanitizer {
 		//\icms_core_Debug::setDeprecated('\icms_core_DataFilter::checkVar - type = text or html, $options1 = input or output', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 
 		/* trigger all the events tied to the beforeDisplayTarea event */
-		\icms::$preload->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('beforeDisplayTarea', array($text, $html, $smiley, $xcode, $image, $br));
 
 		if ($html === 0){
 			$text = \icms_core_DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
@@ -258,7 +258,7 @@ class Textsanitizer {
 		}
 
 		/* trigger all events tied to the afterDisplayTarea event */
-		\icms::$preload->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('afterDisplayTarea', array($text, $html, $smiley, $xcode, $image, $br));
 		return $text;
 	}
 
@@ -280,7 +280,7 @@ class Textsanitizer {
 		//\icms_core_Debug::setDeprecated('\icms_core_DataFilter::checkVar - type = text or html, $options1 = input', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 
 		/* trigger all the events tied to the beforePreviewTarea event */
-		\icms::$preload->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('beforePreviewTarea', array($text, $html, $smiley, $xcode, $image, $br));
 
 		$text = \icms_core_DataFilter::stripSlashesGPC($text);
 
@@ -291,7 +291,7 @@ class Textsanitizer {
 		}
 
 		/* trigger all the events tied to the afterPreviewTarea event */
-		\icms::$preload->triggerEvent('afterPreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('afterPreviewTarea', array($text, $html, $smiley, $xcode, $image, $br));
 
 		return $text;
 	}
@@ -303,7 +303,7 @@ class Textsanitizer {
 	 * @return  string
 	 *
 	 **/
-	public function censorString(&$text) {
+	public function censorString($text) {
 		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::censorString', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return \icms_core_DataFilter::censorString($text);
 	}
@@ -481,7 +481,7 @@ class Textsanitizer {
 	 * @param unknown_type $smiley
 	 * @param unknown_type $xcode
 	 */
-	public function makeTareaData4Show(&$text, $html=0, $smiley=1, $xcode=1) {
+	public function makeTareaData4Show($text, $html=0, $smiley=1, $xcode=1) {
 		$text = $this->displayTarea($text, $html, $smiley, $xcode);
 		return $text;
 	}
@@ -505,7 +505,7 @@ class Textsanitizer {
 	 * @param unknown_type $smiley
 	 * @param unknown_type $xcode
 	 */
-	public function makeTareaData4Preview(&$text, $html=0, $smiley=1, $xcode=1) {
+	public function makeTareaData4Preview($text, $html=0, $smiley=1, $xcode=1) {
 		$text = $this->previewTarea($text, $html, $smiley, $xcode);
 		return $text;
 	}
@@ -634,7 +634,7 @@ class Textsanitizer {
 	 * @param	 string	$text	 purifies (lightly) and then syntax highlights the text
 	 * @return	string	$text	 the syntax highlighted text
 	 */
-	public function textsanitizer_syntaxhighlight(&$text) {
+	public function textsanitizer_syntaxhighlight($text) {
 		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::textsanitizer_syntaxhighlight', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return \icms_core_DataFilter::textsanitizer_syntaxhighlight($text);
 	}

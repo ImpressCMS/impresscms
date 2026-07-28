@@ -63,9 +63,9 @@ class OnlineHandler {
 	/**
 	 * Constructor
 	 *
-	 * @param	object  &$db    {@link XoopsHandlerFactory}
+	 * @param	object  $db    {@link XoopsHandlerFactory}
 	 */
-	public function __construct(&$db) {
+	public function __construct($db) {
 		$this->db =& $db;
 	}
 

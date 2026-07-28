@@ -76,6 +76,7 @@ abstract class EntityHandler {
 	*
 	* @param object $db reference to the {@link icms_db_legacy_Database} object
 	* @access protected
+	 * TODO: migrate the DB to use \Icms\Db\Database
 	*/
 	public function __construct($db) {
 		$this->db = $db;
