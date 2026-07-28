@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -27,6 +28,9 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+namespace Icms\File;
+use AllowDynamicProperties;
+
 /**
  * The Tar files downloader class
  *
@@ -49,7 +53,8 @@ defined('ICMS_ROOT_PATH') or exit();
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_file_TarDownloader extends icms_file_DownloadHandler {
+
+class TarDownloader extends \Icms\File\DownloadHandler {
 
 	/**
 	 * Constructor
@@ -58,9 +63,9 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 * @param string $mimyType  Mimetype
 	 **/
 	public function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip') {
-		$this->archiver = new icms_file_TarFileHandler();
+		$this->archiver = new \Icms\File\TarFileHandler();
 		$this->ext = trim($ext);
-		$this->mimeType = trim($mimyType);
+		$this->mimetype = trim($mimyType);
 	}
 
 	/**
@@ -108,7 +113,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 * @param   string  $filename   Name for the file in the archive
 	 * @param   integer $time
 	 **/
-	public function addFileData(&$data, $filename, $time=0) {
+	public function addFileData($data, $filename, $time=0) {
 		$dummyfile = ICMS_CACHE_PATH . '/dummy_' . time() . '.html';
 		$fp = fopen($dummyfile, 'w');
 		fwrite($fp, $data);
@@ -135,7 +140,7 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 	 * @param   string  $filename   Name for the file in the archive
 	 * @param   integer $time
 	 **/
-	public function addBinaryFileData(&$data, $filename, $time=0) {
+	public function addBinaryFileData($data, $filename, $time=0) {
 		$dummyfile = ICMS_CACHE_PATH . '/dummy_' . time() . '.html';
 		$fp = fopen($dummyfile, 'wb');
 		fwrite($fp, $data);
@@ -166,3 +171,5 @@ class icms_file_TarDownloader extends icms_file_DownloadHandler {
 		echo $this->archiver->toTarOutput($name . $this->ext, $gzip);
 	}
 }
+
+\class_alias(TarDownloader::class, 'icms_file_TarDownloader');

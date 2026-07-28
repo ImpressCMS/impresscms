@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -27,6 +28,7 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+namespace Icms\File;
 /**
  * The uploader class of media files
  *
@@ -85,7 +87,7 @@
  * @author      phppp
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_file_MediaUploadHandler {
+class MediaUploadHandler {
 
 	/**
 	 * @var bool Flag indicating if unrecognized mimetypes should be allowed (use with precaution ! may lead to security issues )
@@ -224,11 +226,11 @@ class icms_file_MediaUploadHandler {
 	 */
 	public function fetchMedia($media_name, $index = null) {
 		if (empty($this->extensionToMime)) {
-			self::setErrors(_ER_UP_MIMETYPELOAD);
+			$this->setErrors(_ER_UP_MIMETYPELOAD);
 			return false;
 		}
 		if (!isset($_FILES[$media_name])) {
-			self::setErrors(_ER_UP_FILENOTFOUND);
+			$this->setErrors(_ER_UP_FILENOTFOUND);
 			return false;
 		} elseif (is_array($_FILES[$media_name]['name']) && isset($index)) {
 			$index = (int) ($index);
@@ -253,19 +255,19 @@ class icms_file_MediaUploadHandler {
 		}
 		$this->errors = array();
 		if ( (int) ($this->mediaSize) < 0) {
-			self::setErrors(_ER_UP_INVALIDFILESIZE);
+			$this->setErrors(_ER_UP_INVALIDFILESIZE);
 			return false;
 		}
 		if ($this->mediaName == '') {
-			self::setErrors(_ER_UP_FILENAMEEMPTY);
+			$this->setErrors(_ER_UP_FILENAMEEMPTY);
 			return false;
 		}
-		if ($this->mediaTmpName == 'none' || !is_uploaded_file($this->mediaTmpName)) {
-			self::setErrors($this->getUploadErrorText($media_name['error']));
+		if ($this->mediaTmpName === 'none' || !is_uploaded_file($this->mediaTmpName)) {
+			$this->setErrors($this->getUploadErrorText($media_name['error']));
 			return false;
 		}
 		if ($this->mediaError > 0) {
-			self::setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));
+			$this->setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));
 			return false;
 		}
 		return true;
@@ -594,3 +596,4 @@ class icms_file_MediaUploadHandler {
 		}
 	}
 }
+\class_alias(MediaUploadHandler::class, 'icms_file_MediaUploadHandler');

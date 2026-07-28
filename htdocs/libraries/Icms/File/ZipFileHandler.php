@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Creates Zipfiles
  *
@@ -9,7 +10,7 @@
  * @package		Core
  * @version		SVN: $Id: ZipFileHandler.php 12310 2013-09-13 21:33:58Z skenow $
  */
-
+namespace Icms\File;
 /**
  * Zip file creation class.
  * Makes zip files.
@@ -36,7 +37,7 @@
  * @category	ICMS
  * @package     Core
  */
-class icms_file_ZipFileHandler {
+class ZipFileHandler {
 	/**
 	 * Array to store compressed data
 	 *
@@ -103,7 +104,7 @@ class icms_file_ZipFileHandler {
 	public function addFile($data, $name, $time = 0) {
 		$name     = str_replace('\\', '/', $name);
 
-		$dtime    = dechex(self::unix2DosTime($time));
+		$dtime    = dechex($this->unix2DosTime($time));
 		$hexdtime = '\x' . $dtime[6] . $dtime[7]
 		. '\x' . $dtime[4] . $dtime[5]
 		. '\x' . $dtime[2] . $dtime[3]
@@ -192,3 +193,5 @@ class icms_file_ZipFileHandler {
 	} // end of the 'file()' method
 
 } // end of the 'zipfile' class
+
+\class_alias(ZipFileHandler::class, 'icms_file_ZipFileHandler');
