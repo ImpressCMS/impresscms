@@ -62,7 +62,7 @@ include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
  * @category	ICMS
  * @package		Notification
  */
-class Handler extends \Icms\Core\ObjectHandler {
+class Handler extends \Icms\Core\EntityHandler {
 
 	/**
 	 * Create a {@link icms_data_notification_Object}
@@ -106,11 +106,11 @@ class Handler extends \Icms\Core\ObjectHandler {
 	/**
 	 * Inserts a notification(subscription) into database
 	 *
-	 * @param   object  &$notification
+	 * @param   object  $notification
 	 *
 	 * @return  bool
 	 **/
-	public function insert(&$notification) {
+	public function insert($notification) {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
@@ -145,11 +145,11 @@ class Handler extends \Icms\Core\ObjectHandler {
 	/**
 	 * Delete a {@link icms_data_notification_Object} from the database
 	 *
-	 * @param   object  &$notification {@link icms_data_notification_Object}
+	 * @param   object  $notification {@link icms_data_notification_Object}
 	 *
 	 * @return  bool
 	 **/
-	public function delete(&$notification) {
+	public function delete($notification) {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
@@ -677,13 +677,13 @@ class Handler extends \Icms\Core\ObjectHandler {
 	/**
 	 * Update
 	 *
-	 * @param   object  &$notification  {@link icms_data_notification_Object} object
+	 * @param   object  $notification  {@link icms_data_notification_Object} object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *
 	 * @return  bool
 	 **/
-	public function updateByField(&$notification, $field_name, $field_value) {
+	public function updateByField($notification, $field_name, $field_value) {
 		$notification->unsetNew();
 		$notification->setVar($field_name, $field_value);
 		return $this->insert($notification);
@@ -926,7 +926,7 @@ class Handler extends \Icms\Core\ObjectHandler {
 	 * @param  object $module	Module
 	 * @return bool
 	 **/
-	static public function eventEnabled(&$category, &$event, &$module) {
+	static public function eventEnabled($category, $event, $module) {
 		$mod_config = \icms::$config->getConfigsByCat(0,$module->getVar('mid'));
 
 		if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != array()) {
@@ -1029,7 +1029,7 @@ class Handler extends \Icms\Core\ObjectHandler {
 	 * @param  string $type	  The particular name to generate
 	 * return string
 	 **/
-	static public function generateConfig(&$category, &$event, $type) {
+	static public function generateConfig($category, $event, $type) {
 		switch ($type) {
 			case 'option_value':
 			case 'name':

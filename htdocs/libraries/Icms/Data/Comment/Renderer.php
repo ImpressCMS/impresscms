@@ -66,11 +66,11 @@ class Renderer {
 	/**
 	 * Constructor
 	 *
-	 * @param   object  &$tpl
+	 * @param   object  $tpl
 	 * @param   boolean $use_icons
 	 * @param   boolean $do_iconcheck
 	 */
-	private function __construct(&$tpl, $use_icons = TRUE, $do_iconcheck = FALSE) {
+	private function __construct($tpl, $use_icons = TRUE, $do_iconcheck = FALSE) {
 		$this->_tpl =& $tpl;
 		$this->_useIcons = $use_icons;
 		$this->_doIconCheck = $do_iconcheck;
@@ -90,7 +90,7 @@ class Renderer {
 	 * @param   boolean $do_iconcheck
 	 * @return
 	 */
-	static function &instance(&$tpl, $use_icons = TRUE, $do_iconcheck = FALSE) {
+	static function &instance($tpl, $use_icons = TRUE, $do_iconcheck = FALSE) {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new self($tpl, $use_icons, $do_iconcheck);
@@ -101,9 +101,9 @@ class Renderer {
 	/**
 	 * Accessor
 	 *
-	 * @param   object  &$comments_arr  array of {@link XoopsComment} objects
+	 * @param   object  $comments_arr  array of {@link XoopsComment} objects
 	 */
-	public function setComments(&$comments_arr) {
+	public function setComments($comments_arr) {
 		if (isset($this->_comments)) {
 			unset($this->_comments);
 		}
@@ -205,7 +205,7 @@ class Renderer {
 	/**
 	 * Render replies to a thread
 	 *
-	 * @param   array   &$thread
+	 * @param   array   $thread
 	 * @param   int     $key
 	 * @param   array   $replies
 	 * @param   string  $prefix
@@ -213,7 +213,7 @@ class Renderer {
 	 * @param   integer $depth
 	 * @param   string  $current_prefix
 	 */
-	private function _renderThreadReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0, $current_prefix = '') {
+	private function _renderThreadReplies($thread, $key, $replies, $prefix, $admin_view, $depth = 0, $current_prefix = '') {
 		if ($depth > 0) {
 			$simple_title = $thread[$key]['obj']->getVar('com_title');
 			if (FALSE != $this->_useIcons) {
@@ -313,7 +313,7 @@ class Renderer {
 	 * @param   bool    $admin_view
 	 * @param   integer $depth
 	 */
-	private function _renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0) {
+	private function _renderNestReplies($thread, $key, $replies, $prefix, $admin_view, $depth = 0) {
 		if ($depth > 0) {
 			if (FALSE != $this->_useIcons) {
 				$title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')) . '&nbsp;' . $thread[$key]['obj']->getVar('com_title');

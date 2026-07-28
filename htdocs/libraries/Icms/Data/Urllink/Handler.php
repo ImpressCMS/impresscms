@@ -32,7 +32,7 @@ class Handler extends \Icms\Ipf\Handler
      *
      * @param object $db database connection
      */
-    public function __construct(&$db)
+    public function __construct($db)
     {
         parent::__construct($db, "data_urllink", "urllinkid", "caption", "desc", "icms");
     }
