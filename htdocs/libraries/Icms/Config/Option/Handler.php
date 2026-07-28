@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -36,6 +37,7 @@
  * @author		Kazumi Ono (aka onokazo)
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
+namespace Icms\Config\Option;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
@@ -53,7 +55,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package     Config
  * @subpackage  Option
  */
-class icms_config_option_Handler extends icms_core_ObjectHandler {
+class Handler extends \Icms\Core\EntityHandler {
 
 	/**
 	 * Create a new option
@@ -62,8 +64,8 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return	object  {@link icms_config_option_Object}
 	 */
-	public function &create($isNew = true) {
-		$confoption = new icms_config_option_Object();
+	public function create($isNew = true) {
+		$confoption = new Entity();
 		if ($isNew) {
 			$confoption->setNew();
 		}
@@ -77,7 +79,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return	object  reference to the {@link icms_config_option_Object}, FALSE on fail
 	 */
-	public function &get($id) {
+	public function get($id) {
 		$confoption = false;
 		$id = (int) $id;
 		if ($id > 0) {
@@ -87,7 +89,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$confoption = new icms_config_option_Object();
+				$confoption = new Entity();
 				$confoption->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -102,7 +104,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	 */
 	public function insert($confoption) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace it */
-		if (!is_a($confoption, 'icms_config_option_Object')) {
+		if (!$confoption instanceof \Icms\Config\Option\Entity) {
 			return false;
 		}
 		if (!$confoption->isDirty()) {
@@ -148,12 +150,12 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Delete an option
 	 *
-	 * @param	object  $confoption    reference to a {@link icms_config_option_Object}
+	 * @param	object  $confoption    reference to a {@link \Icms\Config\Option\Entity}
 	 * @return	bool    TRUE if successful
 	 */
 	public function delete($confoption) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace it */
-		if (!is_a($confoption, 'icms_config_option_Object')) {
+		if (!$confoption instanceof \Icms\Config\Option\Entity) {
 			return false;
 		}
 		$sql = sprintf(
@@ -168,7 +170,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Get some {@link icms_config_option_Object}s
+	 * Get some {@link \Icms\Config\Option\Entity}s
 	 *
 	 * @param	object  $criteria   {@link \Icms\Db\Criteria\Element}
 	 * @param	bool    $id_as_key  Use the IDs as array-keys?
@@ -189,7 +191,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$confoption = new icms_config_option_Object();
+			$confoption = new Entity();
 			$confoption->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $confoption;
@@ -202,3 +204,4 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	}
 }
 
+\class_alias(Handler::class, 'icms_config_option_Handler');
