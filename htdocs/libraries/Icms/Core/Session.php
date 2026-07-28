@@ -148,8 +148,8 @@ class Session {
 	 *        Do we need this $db reference now we're using \icms::$xoopsDB?????
 	 *
 	 */
-	public function __construct(&$db) {
-		$this->db = &$db;
+	public function __construct($db) {
+		$this->db = $db;
 	}
 
 	/**

@@ -26,7 +26,7 @@ namespace Icms\Core;
 
 use HTMLPurifier;
 
-class HTMLFilter extends \icms_core_DataFilter {
+class HTMLFilter extends DataFilter {
 
 	/**
 	 * variable used by HTML Filter Library
@@ -117,7 +117,7 @@ class HTMLFilter extends \icms_core_DataFilter {
 			unset($fileList['ExtractStyleBlocks.php'], $fileList['YouTube.php']);
 			$fileList = array_values($fileList);
 
-			foreach ($fileList as &$val) {
+			foreach ($fileList as $val) {
 				$val = "HTMLPurifier_Filter_".substr($val, 0,strrpos($val,'.'));
 				$newObject = new $val;
 				$filterList[] = $newObject;

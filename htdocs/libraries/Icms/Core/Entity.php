@@ -245,7 +245,7 @@ class Entity {
 	 */
 	public function assignVar(string $key, $value): void {
 		if (isset($value) && isset($this->vars[$key])) {
-			$this->vars[$key]['value'] = &$value;
+			$this->vars[$key]['value'] = $value;
 		}
 	}
 
@@ -271,7 +271,7 @@ class Entity {
 	 */
 	public function setVar(string $key, $value, bool $not_gpc = false): void {
 		if (!empty($key) && isset($value) && isset($this->vars[$key])) {
-			$this->vars[$key]['value'] = &$value;
+			$this->vars[$key]['value'] = $value;
 			$this->vars[$key]['not_gpc'] = $not_gpc;
 			$this->vars[$key]['changed'] = true;
 			$this->setDirty();
@@ -642,7 +642,7 @@ class Entity {
 						break;
 				}
 			}
-			$this->cleanVars[$k] = &$cleanv;
+			$this->cleanVars[$k] = $cleanv;
 			unset($cleanv);
 		}
 		if (count($this->_errors) > 0) {

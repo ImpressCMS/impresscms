@@ -640,7 +640,7 @@ class Filesystem
 	 * Return value shape:
 	 * <code>
 	 * [
-	 *   'status'  => 'ok'|'skipped'|'novendor'|'error_copy',
+	 *   'status'  => 'ok'|'skipped'|'novendor'|'error_copy'|'error_composer',
 	 *   'message' => string,   // human-readable, suitable for admin UI / logs
 	 *   'warning' => string,   // non-fatal warning, e.g. source could not be deleted
 	 *   'src'     => string,   // resolved source path (for debugging)
@@ -655,6 +655,8 @@ class Filesystem
 	 *   'novendor'   – vendor found in neither location; no action taken.
 	 *   'error_copy' – copy failed (permissions, disk full, etc.); partial destination
 	 *                  cleaned up; manual remediation required.
+	 *   'error_composer' – vendor move state may be correct, but composer.json
+	 *                  could not be updated for the moved vendor directory.
 	 *
 	 * @param  string $rootPath   Absolute path to the web root  (ICMS_ROOT_PATH)
 	 * @param  string $trustPath  Absolute path to the trust path (ICMS_TRUST_PATH)
@@ -693,6 +695,17 @@ class Filesystem
 
 		// ── Source absent: vendor already lives only in the trust path ────────
 		if (!$srcExists) {
+			$composerConfigResult = self::updateComposerVendorDirConfig(
+				$rootPath,
+				$trustPath,
+			);
+			if ($composerConfigResult["status"] !== "ok") {
+				return $base + [
+					"status" => "error_composer",
+					"message" => $composerConfigResult["message"],
+				];
+			}
+
 			return $base + [
 				"status" => "skipped",
 				"message" => sprintf(
@@ -716,7 +729,19 @@ class Filesystem
 				$destHash !== false &&
 				$srcHash === $destHash
 			) {
-				// Identical copy already present – just remove the web-root original.
+				// Identical copy already present. Update composer.json first while the
+				// current request may still rely on classes from the source vendor tree.
+				$composerConfigResult = self::updateComposerVendorDirConfig(
+					$rootPath,
+					$trustPath,
+				);
+				if ($composerConfigResult["status"] !== "ok") {
+					return $base + [
+						"status" => "error_composer",
+						"message" => $composerConfigResult["message"],
+					];
+				}
+
 				self::deleteRecursive($src, true);
 				$warning = is_dir($src)
 					? sprintf(
@@ -894,6 +919,20 @@ class Filesystem
 			];
 		}
 
+		// Update composer.json while source vendor still exists. In this request,
+		// autoloaders may still point at the original web-root vendor directory.
+		$composerConfigResult = self::updateComposerVendorDirConfig(
+			$rootPath,
+			$trustPath,
+		);
+		if ($composerConfigResult["status"] !== "ok") {
+			return $base + [
+				"status" => "error_composer",
+				"message" => $composerConfigResult["message"],
+				"warning" => "",
+			];
+		}
+
 		// ── Delete the original from the web root ─────────────────────────────
 		self::deleteRecursive($src, true);
 
@@ -911,12 +950,238 @@ class Filesystem
 			"status" => "ok",
 			"message" => sprintf(
 				"Vendor directory successfully moved from the web root (%s) to the " .
-					"trust path (%s).",
+					"trust path (%s), and composer.json now points vendor-dir to '%s'.",
 				$src,
 				$dest,
+				$composerConfigResult["vendorDir"],
 			),
 			"warning" => $warning,
 		];
+	}
+
+	/**
+	 * Update root composer.json so Composer commands run from ICMS_ROOT_PATH use
+	 * the vendor directory in the trust path.
+	 *
+	 * @param string $rootPath
+	 * @param string $trustPath
+	 * @return array{status: string, message: string, vendorDir: string}
+	 */
+	private static function updateComposerVendorDirConfig(
+		string $rootPath,
+		string $trustPath,
+	): array {
+		$rootPath = rtrim(str_replace("\\", "/", $rootPath), "/");
+		$trustPath = rtrim(str_replace("\\", "/", $trustPath), "/");
+		$composerJsonPath = $rootPath . "/composer.json";
+		$targetVendorPath = $trustPath . "/vendor";
+
+		if (!is_file($composerJsonPath)) {
+			return [
+				"status" => "error",
+				"message" => sprintf(
+					"Composer configuration update failed: composer.json was not found at %s.",
+					$composerJsonPath,
+				),
+				"vendorDir" => "",
+			];
+		}
+
+		$composerJsonContents = file_get_contents($composerJsonPath);
+		if ($composerJsonContents === false) {
+			return [
+				"status" => "error",
+				"message" => sprintf(
+					"Composer configuration update failed: could not read %s.",
+					$composerJsonPath,
+				),
+				"vendorDir" => "",
+			];
+		}
+
+		try {
+			$vendorDir = self::resolveComposerVendorDir($rootPath, $targetVendorPath);
+			$updatedComposerJson = self::updateComposerJsonVendorDir(
+				$composerJsonContents,
+				$vendorDir,
+				$composerJsonPath,
+			);
+			if ($updatedComposerJson["status"] !== "ok") {
+				return [
+					"status" => "error",
+					"message" => $updatedComposerJson["message"],
+					"vendorDir" => "",
+				];
+			}
+			if (
+				file_put_contents(
+					$composerJsonPath,
+					$updatedComposerJson["contents"],
+				) === false
+			) {
+				return [
+					"status" => "error",
+					"message" => sprintf(
+						"Composer configuration update failed: could not write %s.",
+						$composerJsonPath,
+					),
+					"vendorDir" => "",
+				];
+			}
+		} catch (\Throwable $e) {
+			return [
+				"status" => "error",
+				"message" =>
+					"Composer configuration update failed: " . $e->getMessage(),
+				"vendorDir" => "",
+			];
+		}
+
+		return ["status" => "ok", "message" => "", "vendorDir" => $vendorDir];
+	}
+
+	/**
+	 * Resolve composer config.vendor-dir value using Composer internals when
+	 * available, with an internal fallback for environments where those classes
+	 * are not installed.
+	 */
+	private static function resolveComposerVendorDir(
+		string $rootPath,
+		string $targetVendorPath,
+	): string {
+		if (class_exists("\Composer\Util\Filesystem")) {
+			try {
+				$composerFs = new \Composer\Util\Filesystem();
+				return $composerFs->findShortestPath(
+					$rootPath,
+					$targetVendorPath,
+					true,
+					true,
+				);
+			} catch (\Throwable $e) {
+				// Fall through to internal calculation.
+			}
+		}
+
+		return self::findShortestPathFallback($rootPath, $targetVendorPath);
+	}
+
+	/**
+	 * Update composer.json config.vendor-dir. Prefer Composer's JsonManipulator
+	 * when available, otherwise use native JSON parsing.
+	 *
+	 * @return array{status: string, message: string, contents: string}
+	 */
+	private static function updateComposerJsonVendorDir(
+		string $composerJsonContents,
+		string $vendorDir,
+		string $composerJsonPath,
+	): array {
+		if (
+			class_exists("\Composer\Json\JsonManipulator") &&
+			class_exists("\Composer\Json\JsonFile")
+		) {
+			try {
+				$manipulator = new \Composer\Json\JsonManipulator(
+					$composerJsonContents,
+				);
+				if ($manipulator->addSubNode("config", "vendor-dir", $vendorDir)) {
+					$updatedComposerJson = $manipulator->getContents();
+					\Composer\Json\JsonFile::parseJson(
+						$updatedComposerJson,
+						$composerJsonPath,
+					);
+					return [
+						"status" => "ok",
+						"message" => "",
+						"contents" => $updatedComposerJson,
+					];
+				}
+			} catch (\Throwable $e) {
+				// Fall back to native JSON update logic below.
+			}
+		}
+
+		$decoded = json_decode($composerJsonContents, true);
+		if (!is_array($decoded)) {
+			return [
+				"status" => "error",
+				"message" =>
+					"Composer configuration update failed: composer.json contains invalid JSON (" .
+					json_last_error_msg() .
+					").",
+				"contents" => "",
+			];
+		}
+
+		if (!isset($decoded["config"]) || !is_array($decoded["config"])) {
+			$decoded["config"] = [];
+		}
+		$decoded["config"]["vendor-dir"] = $vendorDir;
+
+		$updatedComposerJson = json_encode(
+			$decoded,
+			JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES,
+		);
+		if ($updatedComposerJson === false) {
+			return [
+				"status" => "error",
+				"message" =>
+					"Composer configuration update failed: could not encode updated composer.json.",
+				"contents" => "",
+			];
+		}
+
+		return [
+			"status" => "ok",
+			"message" => "",
+			"contents" => $updatedComposerJson . "\n",
+		];
+	}
+
+	/**
+	 * Internal shortest-path fallback that returns a relative path from $from to
+	 * $to. If a relative path cannot be computed safely (e.g. different Windows
+	 * drive letters), it returns the absolute destination path.
+	 */
+	private static function findShortestPathFallback(
+		string $from,
+		string $to,
+	): string {
+		$from = rtrim(str_replace("\\", "/", $from), "/");
+		$to = rtrim(str_replace("\\", "/", $to), "/");
+
+		if ($from === $to) {
+			return ".";
+		}
+
+		$fromParts = explode("/", $from);
+		$toParts = explode("/", $to);
+
+		$fromRoot = strtolower($fromParts[0] ?? "");
+		$toRoot = strtolower($toParts[0] ?? "");
+		if (
+			preg_match('/^[a-z]:$/', $fromRoot) &&
+			preg_match('/^[a-z]:$/', $toRoot) &&
+			$fromRoot !== $toRoot
+		) {
+			return $to;
+		}
+
+		$max = min(count($fromParts), count($toParts));
+		$common = 0;
+		while (
+			$common < $max &&
+			strtolower($fromParts[$common]) === strtolower($toParts[$common])
+		) {
+			$common++;
+		}
+
+		$up = array_fill(0, count($fromParts) - $common, "..");
+		$down = array_slice($toParts, $common);
+		$relative = implode("/", array_merge($up, $down));
+
+		return $relative !== "" ? $relative : ".";
 	}
 
 	/**
