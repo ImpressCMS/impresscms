@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -34,7 +35,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 
 */
-declare(strict_types=1);
+
 
 namespace Icms\Form;
 
@@ -54,7 +55,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author     Kazumi Ono      <onokazu@xoops.org>
  * @copyright  copyright (c) 2000-2003 XOOPS.org
  */
-class Table extends Form
+class Table extends Base
 {
 	/**
 	 * Insert an empty row in the table to serve as a separator.
@@ -62,7 +63,7 @@ class Table extends Form
 	 * @param string $extra    HTML to be displayed in the empty row.
 	 * @param string $class    CSS class name for <td> tag.
 	 */
-	public function insertBreak(string $extra = '', string $class = ''): void
+	public function insertBreak(string|null $extra = '', string $class = ''): void
 	{
 		$class = ($class !== '') ? " class='$class'" : '';
 		// Fix for $extra tag not showing

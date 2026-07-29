@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -49,7 +50,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author     Kazumi Ono      <onokazu@xoops.org>
  * @copyright  copyright (c) 2000-2003 XOOPS.org
  */
-class Simple extends Form
+class Simple extends Base
 {
 	/**
 	 * This method is required - this method in the parent (abstract) class is also abstract
@@ -85,4 +86,4 @@ class Simple extends Form
 /**
  * Legacy class alias for backward compatibility
  */
-class_alias(Simple::class, 'icms_form_Simple');
+\class_alias(Simple::class, 'icms_form_Simple');

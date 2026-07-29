@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -27,6 +28,7 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+namespace Icms\Form;
 /**
  * Creates a form object (Base Class)
  *
@@ -42,9 +44,7 @@
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @version		$Id: form.php 19813 2010-07-13 23:49:13Z malanciault $
  */
-declare(strict_types=1);
 
-namespace Icms\Form;
 /**
  * Abstract base class for forms
  *
@@ -56,7 +56,7 @@ namespace Icms\Form;
  * @package  	Form
  * @subpackage	Base
  */
-abstract class Form
+abstract class Base
 {
 	/**#@+
 	 * @access  private
@@ -178,7 +178,7 @@ abstract class Form
 	/**
 	 * Add an element to the form
 	 *
-	 * @param Element|false|null  &$formElement   reference to a {@link Element}
+	 * @param Element|false|null  $formElement   reference to a {@link Element}
 	 * @param bool    $required       is this a "required" element?
 	 */
 	public function addElement(
@@ -363,7 +363,7 @@ abstract class Form
 	/**
 	 * make an element "required"
 	 *
-	 * @param Element  &$formElement   reference to a {@link Element}
+	 * @param Element  $formElement   reference to a {@link Element}
 	 */
 	public function setRequired(Element $formElement): void
 	{
@@ -450,10 +450,10 @@ abstract class Form
 	/**
 	 * Assign to Smarty form template instead of displaying directly
 	 *
-	 * @param Object &$tpl    reference to a {@link Smarty} object
+	 * @param Object $tpl    reference to a {@link Smarty} object
 	 * @see     Smarty
 	 */
-	public function assign(\Icms\Core\ObjectHandlerInterface &$tpl): void
+	public function assign($tpl): void
 	{
 		$i = -1;
 		$elements = [];
@@ -483,4 +483,4 @@ abstract class Form
 /**
  * Legacy class alias for backward compatibility
  */
-class_alias(Form::class, 'icms_form_Base');
+class_alias(Base::class, 'icms_form_Base');
