@@ -59,7 +59,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @version     $Id: groupperm.php 10090 2010-05-19 05:36:00Z $
  */
 
-class Groupperm
+class GroupPermission
 {
 	/**#@+
 	 * @access public
@@ -313,13 +313,13 @@ class Groupperm
 	}
 
 	/**
-	 * Get a groupperm object by permission name and group id
+	 * Get a GroupPermission object by permission name and group id
 	 *
 	 * @param string $permname permission name
 	 * @param int    $group    group id
-	 * @return Groupperm groupperm object
+	 * @return GroupPermission groupperm object
 	 */
-	public static function getInstance(string $permname, int $group = 0): Groupperm
+	public static function getInstance(string $permname, int $group = 0): GroupPermission
 	{
 		$obj = new self($permname, $group);
 		$result = $GLOBALS['_ICMS_DB']->query('SELECT id, ' . $obj->_permname . ', group_id, enabled, accesslevel FROM ' . ICMS_DB_PREFIX . 'icms_groupperm WHERE ' . $obj->_permname . ' = ' . $obj->_getDBQuoteValue($permname) . ' AND group_id = ' . $obj->_getDBQuoteValue($group));
@@ -338,7 +338,7 @@ class Groupperm
 	 * Get all groupperm objects for a given group
 	 *
 	 * @param int $group group id
-	 * @return Groupperm[] array of groupperm objects
+	 * @return Groupperm[] array of Grouppermission objects
 	 */
 	public static function getGroupPerms(int $group): array
 	{
@@ -398,7 +398,7 @@ class Groupperm
 	 * @param int $id groupperm id
 	 * @return Groupperm|null groupperm object or null if not found
 	 */
-	public static function getById(int $id): ?Groupperm
+	public static function getById(int $id)
 	{
 		$result = $GLOBALS['_ICMS_DB']->query('SELECT id, ' . $obj->_permname . ', group_id, enabled, accesslevel FROM ' . ICMS_DB_PREFIX . 'icms_groupperm WHERE id = ' . $obj->_getDBQuoteValue($id));
 		$row = $GLOBALS['_ICMS_DB']->fetchRow($result);
@@ -415,7 +415,7 @@ class Groupperm
 	/**
 	 * Get a list of all groupperm objects
 	 *
-	 * @return Groupperm[] array of groupperm objects
+	 * @return GroupPermission[] array of groupperm objects
 	 */
 	public static function getAll(): array
 	{
@@ -461,4 +461,4 @@ class Groupperm
 /**
  * Legacy class alias for backward compatibility
  */
-class_alias(Groupperm::class, 'icms_form_Groupperm');
+\class_alias(GroupPermission::class, 'icms_form_Groupperm');

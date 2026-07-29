@@ -359,7 +359,7 @@ abstract class Element
 	/**
 	 * Render custom javascript validation code
 	 *
-	 * @see Form::renderValidationJS
+	 * @see Base::renderValidationJS
 	 */
 	public function renderValidationJS(): string
 	{
