@@ -66,7 +66,7 @@ class EditorHandler {
 	 * @param	string	type
 	 */
 	public function __construct($type = '') {
-		$this->root_path = self::_getRootPath($type);
+		$this->root_path = $this->_getRootPath($type);
 		$this->_type = $type;
 	}
 
@@ -78,7 +78,7 @@ class EditorHandler {
 	 * @static
 	 * @staticvar   object
 	 */
-	static public function &getInstance($type = '') {
+	static public function getInstance($type = '') {
 		static $instances = array();
 		if (!isset($instances[$type])) {
 			$instances[$type] = new self($type);
@@ -92,7 +92,7 @@ class EditorHandler {
 	 * @param	string	$OnFailure  a pre-validated editor that will be used if the required editor is failed to create
 	 * @param	bool	$noHtml		dohtml disabled
 	 */
-	public function &get($name = "", $options = NULL, $noHtml = FALSE, $OnFailure = "") {
+	public function get($name = "", $options = NULL, $noHtml = FALSE, $OnFailure = "") {
 		if ($editor = $this->_loadEditor($name, $options)) {
 			return $editor;
 		}
@@ -110,7 +110,7 @@ class EditorHandler {
 	 * @param   bool    $noHtml   is this an editor with no html options?
 	 * @return  array   $_list    list of available editors that are allowed (through admin config)
 	 */
-	public function &getList($noHtml = FALSE) {
+	public function getList($noHtml = FALSE) {
 		static $list = null;
 		$cache_file = ICMS_CACHE_PATH . '/' . $this->_type . 'editor_list.php';
 
@@ -149,20 +149,20 @@ class EditorHandler {
 
 	/**
 	 * Render the editor
-	 * @param   string    &$editor    Reference to the editor object
+	 * @param   string    $editor    Reference to the editor object
 	 * @return  string    The rendered Editor string
 	 */
-	public function render(&$editor) {
+	public function render($editor) {
 		return $editor->render();
 	}
 
 	/**
 	 * Sets the config of the editor
 	 *
-	 * @param   string    &$editor    Reference to the editor object
+	 * @param   string    $editor    Reference to the editor object
 	 * @param   string    $options    Options in the configuration to set
 	 */
-	public function setConfig(&$editor, $options) {
+	public function setConfig($editor, $options) {
 		if (method_exists($editor, 'setConfig')) {
 			$editor->setConfig($options);
 		} else {
@@ -180,7 +180,7 @@ class EditorHandler {
 	 * @return  object                The loaded Editor object
 	 *
 	 */
-	public function &_loadEditor($name, $options = NULL) {
+	public function _loadEditor($name, $options = NULL) {
 		$editor = NULL;
 
 		if (empty($name)) {
