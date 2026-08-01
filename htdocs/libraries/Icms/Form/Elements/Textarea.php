@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,7 +29,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form password field
+ * Creates a textarea form attribut
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -36,145 +37,109 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version		$Id: Password.php 12313 2013-09-15 21:14:35Z skenow $
+ * @version		SVN: $Id: Textarea.php 12313 2013-09-15 21:14:35Z skenow $
  */
+
+namespace Icms\Form\Elements;
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * A password field
+ * A textarea
  *
  * @category	ICMS
- * @package 	Form
- * @subpackage 	Elements
+ * @package     Form
+ * @subpackage  Elements
  *
- * @author 		Kazumi Ono	<onokazu@xoops.org>
+ * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Password extends icms_form_Element {
+class Textarea extends \Icms\Form\Element {
 	/**
-	 * Size of the field.
-	 * @var 		int
+	 * number of columns
+	 * @var	int
 	 */
-	private $_size;
+	protected $_cols;
 
 	/**
-	 * Maximum length of the text
-	 * @var 		int
+	 * number of rows
+	 * @var	int
 	 */
-	private $_maxlength;
+	protected $_rows;
 
 	/**
-	 * Initial content of the field.
-	 * @var 		string
+	 * initial content
+	 * @var	string
 	 */
-	private $_value;
+	protected $_value;
 
 	/**
-	 * Turns off the browser autocomplete function.
-	 * @var 		boolean
-	 */
-	public  $autocomplete = false;
-
-	/**
-	 * Initial content of the field.
-	 * @var 		string
-	 */
-	private $_classname;
-
-	/**
-	 * Constructor
+	 * Constuctor
 	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$name		"name" attribute
-	 * @param	int		$size		Size of the field
-	 * @param	int		$maxlength	Maximum length of the text
-	 * @param	int		$value		Initial value of the field.
-	 * 							<b>Warning:</b> this is readable in cleartext in the page's source!
+	 * @param	string  $caption    caption
+	 * @param	string  $name       name
+	 * @param	string  $value      initial content
+	 * @param	int     $rows       number of rows
+	 * @param	int     $cols       number of columns
 	 */
-	public function __construct($caption, $name, $size, $maxlength, $value = '', $autocomplete = false, $classname = '') {
+	public function __construct($caption, $name, $value = "", $rows = 5, $cols = 50) {
 		$this->setCaption($caption);
 		$this->setName($name);
-		$this->_size = (int) ($size);
-		$this->_maxlength = (int) ($maxlength);
+		$this->_rows = (int) $rows;
+		$this->_cols = (int) $cols;
 		$this->setValue($value);
-		$this->autoComplete = !empty($autocomplete);
-		$this->setClassName($classname);
 	}
 
 	/**
-	 * Get the field size
+	 * get number of rows
 	 *
 	 * @return	int
 	 */
-	public function getSize() {
-		return $this->_size;
+	public function getRows() {
+		return $this->_rows;
 	}
 
 	/**
-	 * Get the max length
+	 * Get number of columns
 	 *
 	 * @return	int
 	 */
-	public function getMaxlength() {
-		return $this->_maxlength;
+	public function getCols() {
+		return $this->_cols;
 	}
 
 	/**
-	 * Get the "value" attribute
+	 * Get initial content
 	 *
-	 * @param	bool    $encode To sanitizer the text?
+	 * @param	bool    $encode To sanitize the text? Default value should be "true"; however we have to set "false" for backward compatibility
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+		return $encode ? htmlspecialchars($this->_value) : $this->_value;
 	}
 
 	/**
-	 * Set the initial value
+	 * Set initial content
 	 *
 	 * @param	$value	string
 	 */
-	public function setValue($value) {
+	public function setValue($value){
 		$this->_value = $value;
 	}
 
 	/**
-	 * Set the initial value
+	 * prepare HTML for output
 	 *
-	 * @param	$value	string
+	 * @return string HTML
 	 */
-	public function setClassName($classname) {
-		$this->_classname = $classname;
-	}
-
-	/**
-	 * Get the "class" attribute
-	 *
-	 * @param	bool    $encode To sanitizer the text?
-	 * @return	string
-	 */
-	public function getClassName($encode = false) {
-		return $encode ? htmlspecialchars($this->_classname, ENT_QUOTES) : $this->_classname;
-	}
-
-	/**
-	 * Prepare HTML for output
-	 *
-	 * @return	string	HTML
-	 */
-	public function render() {
-
-		$this->tpl = new icms_view_Tpl();
-		$this->tpl->assign('ele_name', $this->getName());
-		$this->tpl->assign('ele_class', $this->getClassName());
-		$this->tpl->assign('ele_id', $this->getName());
-		$this->tpl->assign('ele_size', $this->getSize());
-		$this->tpl->assign('ele_maxlength', $this->getMaxlength());
-		$this->tpl->assign('ele_value', $this->getValue());
-		$this->tpl->assign('ele_extra', $this->getExtra());
-		$this->tpl->assign('ele_autocomplete', $this->autoComplete);
-
-		$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_password_display.html';
-		return $this->tpl->fetch('db:' . $element_html_template);
+	public function render(): string
+	{
+		return "<textarea name='" . $this->getName()
+			. "' id='" . $this->getName() . '_tarea'
+			. "' rows='" . $this->getRows()
+			. "' cols='" . $this->getCols()
+			. "'" . $this->getExtra() . ">"
+			. $this->getValue()
+			. "</textarea>";
 	}
 }
+\class_alias(Textarea::class,'icms_form_elements_Textarea');

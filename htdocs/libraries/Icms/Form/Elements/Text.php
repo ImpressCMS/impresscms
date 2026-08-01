@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,7 +29,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form text label attribute
+ * Creates a textbox form field
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -36,13 +37,13 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version		$Id: Label.php 12313 2013-09-15 21:14:35Z skenow $
+ * @version		SVN: $Id: Text.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\Form\Elements;
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
-
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
- * A text label
+ * A simple text field
  *
  * @category	ICMS
  * @package     Form
@@ -51,29 +52,71 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Label extends icms_form_Element {
+class Text extends \Icms\Form\Element {
 	/**
-	 * Text
+	 * Size
+	 * @var	int
+	 */
+	private $_size;
+
+	/**
+	 * Maximum length of the text
+	 * @var	int
+	 */
+	private $_maxlength;
+
+	/**
+	 * Initial text
 	 * @var	string
 	 */
 	private $_value;
 
 	/**
+	 * Turns off the browser autocomplete function.
+	 * @var 		boolean
+	 */
+	public $autocomplete = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @param	string	$caption	Caption
-	 * @param	string	$value		Text
+	 * @param	string	$name       "name" attribute
+	 * @param	int		$size	    Size
+	 * @param	int		$maxlength	Maximum length of text
+	 * @param	string  $value      Initial text
 	 */
-	public function __construct($caption = "", $value = "", $name = "") {
+	public function __construct($caption, $name, $size, $maxlength, $value = '', $autocomplete = false) {
 		$this->setCaption($caption);
 		$this->setName($name);
-		$this->_value = $value;
+		$this->_size = (int) $size;
+		$this->_maxlength = (int) $maxlength;
+		$this->setValue($value);
+		$this->autoComplete = !empty($autocomplete);
 	}
 
 	/**
-	 * Get the "value" attribute
+	 * Get size
 	 *
-	 * @param	bool    $encode To sanitizer the text?
+	 * @return	int
+	 */
+	public function getSize() {
+		return $this->_size;
+	}
+
+	/**
+	 * Get maximum text length
+	 *
+	 * @return	int
+	 */
+	public function getMaxlength() {
+		return $this->_maxlength;
+	}
+
+	/**
+	 * Get initial content
+	 *
+	 * @param	bool    $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compat
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
@@ -81,12 +124,32 @@ class icms_form_elements_Label extends icms_form_Element {
 	}
 
 	/**
+	 * Set initial text value
+	 *
+	 * @param	$value  string
+	 */
+	public function setValue($value) {
+		$this->_value = $value;
+	}
+
+	/**
 	 * Prepare HTML for output
 	 *
-	 * @return	string
+	 * @return	string  HTML
 	 */
-	public function render() {
-		return $this->getValue();
+	public function render(): string
+	{
+		$this->tpl = new \Icms\View\Tpl();
+		$this->tpl->assign('ele_name', $this->getName());
+		$this->tpl->assign('ele_id', $this->getName());
+		$this->tpl->assign('ele_size', $this->getSize());
+		$this->tpl->assign('ele_maxlength', $this->getMaxlength());
+		$this->tpl->assign('ele_value', $this->getValue());
+		$this->tpl->assign('ele_extra', $this->getExtra());
+
+		$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_text_display.html';
+		return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
 
+\class_alias(Text::class, 'icms_form_elements_Text');

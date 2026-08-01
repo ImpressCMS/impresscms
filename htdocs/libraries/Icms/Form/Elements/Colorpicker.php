@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -42,7 +43,7 @@
  * @subpackage	Elements
  * @version		$Id: Colorpicker.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
+namespace Icms\Form\Elements;
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -57,7 +58,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Colorpicker extends icms_form_elements_Text {
+class Colorpicker extends \Icms\Form\Elements\Text {
 
 	/**
 	 * Constructor
@@ -65,15 +66,15 @@ class icms_form_elements_Colorpicker extends icms_form_elements_Text {
 	 * @param	string  $name     Name of the element
 	 * @param	string  $value    Value of the element
 	 */
-	public function __construct($caption, $name, $value = "#FFFFFF") {
+	public function __construct(string $caption, string $name, string $value = "#FFFFFF") {
 		parent::__construct($caption, $name, 9, 7, $value);
 	}
 
 	/**
 	 * Render the color picker
-	 * @return  $string	rendered color picker HTML
+	 * @return  string	rendered color picker HTML
 	 */
-	public function render() {
+		public function render(): string {
 		if (isset($GLOBALS ['xoTheme'])) {
 			$GLOBALS ['xoTheme']->addScript('include/color-picker.js');
 		} else {
@@ -88,7 +89,7 @@ class icms_form_elements_Colorpicker extends icms_form_elements_Text {
 	 *
 	 * @return	string	Element validation Javascript
 	 */
-	public function renderValidationJS() {
+	public function renderValidationJS(): string {
 		$eltname = $this->getName();
 		$eltcaption = $this->getCaption();
 		$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
@@ -98,3 +99,4 @@ class icms_form_elements_Colorpicker extends icms_form_elements_Text {
 	}
 
 }
+\class_alias(Colorpicker::class, 'icms_form_elements_Colorpicker');

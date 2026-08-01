@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,55 +29,70 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form editor object
+ * Creates a form file field
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- *
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		$Id: Editor.php 12313 2013-09-15 21:14:35Z skenow $
+ * @version		$Id: File.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\Form\Elements;
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH')or die("ImpressCMS root path not defined");
 
 /**
- * XoopsEditor hanlder
+ * Create a field for uploading a file
  *
- * @since		XOOPS
- * @author	D.J.
- * @copyright	copyright (c) 2000-2005 XOOPS.org
+ * @category	ICMS
+ * @package     Form
+ * @subpackage	Elements
  *
- * @todo		To be removed as this is not used anywhere in the core
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Editor extends icms_form_elements_Textarea {
-	var $editor;
+class File extends \Icms\Form\Element {
+	/**
+	 * Maximum size for an uploaded file
+	 * @var	int
+	 */
+	private $_maxFileSize;
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string  $caption    Caption
-	 * @param	string  $name       "name" attribute
-	 * @param	string  $value      Initial text
-	 * @param	array 	$configs     configures
-	 * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
-	 * @param	string  $OnFailure editor to be used if current one failed
+	 * @param	string	$caption		Caption
+	 * @param	string	$name			"name" attribute
+	 * @param	int		$maxfilesize	Maximum size for an uploaded file
 	 */
-	function __construct($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "")
-	{
-		parent::__construct($caption, $editor_configs["name"]);
-		$editor_handler = icms_plugins_EditorHandler::getInstance();
-		$this->editor =& $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
+	public function __construct($caption, $name, $maxfilesize = '4096000') {
+		$this->setCaption($caption);
+		$this->setName($name);
+		$this->_maxFileSize = (int) ($maxfilesize);
 	}
 
 	/**
-	 * Renders the editor
-	 * @return	string  the constructed html string for the editor
+	 * Get the maximum filesize
+	 *
+	 * @return	int
 	 */
-	function render()
+	public function getMaxFileSize() {
+		return $this->_maxFileSize;
+	}
+
+	/**
+	 * prepare HTML for output
+	 *
+	 * @return	string	HTML
+	 */
+	public function render(): string
 	{
-		return $this->editor->render();
+		$ele_name = $this->getName();
+		$ret  = "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />";
+		$ret .= "<input type='file' name='" . $ele_name . "' id='" . $ele_name . "'" . $this->getExtra() . " />";
+		$ret .= "<input type='hidden' name='xoops_upload_file[]' id='xoops_upload_file[]' value='" . $ele_name . "' />";
+		return $ret;
 	}
 }
+\class_alias(File::class,'icms_form_element_File');
