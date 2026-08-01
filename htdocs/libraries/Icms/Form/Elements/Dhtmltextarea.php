@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -37,7 +38,7 @@
  * @subpackage	Elements
  * @version		$Id: Dhtmltextarea.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
+namespace Icms\Form\Elements;
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -50,7 +51,9 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
+
+
+class Dhtmltextarea extends \Icms\Form\Elements\Textarea {
 	/**
 	 * Extended HTML editor definition
 	 *
@@ -80,7 +83,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 * @param	int	 $cols	   Number of columns
 	 * @param	string  $hiddentext Hidden Text
 	 */
-	public function __construct($caption, $name, $value, $rows=5, $cols=50, $hiddentext="xoopsHiddenText", $options = array()) {
+	public function __construct(string $caption, string $name, string $value, int $rows=5, int $cols=50, string $hiddentext="xoopsHiddenText", array $options = []) {
 		parent::__construct($caption, $name, $value, $rows, $cols);
 		$this->_hiddenText = $hiddentext;
 		global $icmsConfig;
@@ -119,7 +122,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 *
 	 * @return	string  HTML
 	 */
-	public function render() {
+		public function render(): string {
 		global $icmsConfigPlugins, $icmsConfigMultilang;
 		$editor = false;
 		if ($this->htmlEditor && is_object($this->htmlEditor)) {
@@ -236,7 +239,8 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 *
 	 * @return	mixed  rendered validation javascript or empty string
 	 */
-	public function renderValidationJS() {
+	public function renderValidationJS(): string
+	{
 		if ($this->htmlEditor && is_object($this->htmlEditor) && method_exists($this->htmlEditor, "renderValidationJS")) {
 			if (!isset($this->htmlEditor->isEnabled) || $this->htmlEditor->isEnabled) {
 				return $this->htmlEditor->renderValidationJS();
@@ -251,7 +255,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 	 * @return	string HTML
 	 */
 	private function _renderSmileys() {
-		$smiles =& icms_core_DataFilter::getSmileys();
+		$smiles = \Icms\Core\DataFilter::getSmileys();
 		$ret = '';
 		$count = count($smiles);
 		$ele_name = $this->getName();
@@ -262,4 +266,4 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		return $ret;
 	}
 }
-
+\class_alias(Dhtmltextarea::class, 'icms_form_elements_Dhtmltextarea');

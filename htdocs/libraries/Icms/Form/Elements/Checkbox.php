@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -37,7 +38,7 @@
  * @subpackage	Elements
  * @version	$Id: Checkbox.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
+namespace Icms\Form\Elements;
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -50,7 +51,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Checkbox extends icms_form_Element {
+class Checkbox extends \Icms\Form\Element {
 
 	/**
 	 * Unified checkbox options array
@@ -126,7 +127,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		$valuesToCheck = is_array($value) ? $value : array($value);
 
 		// Update checked state in unified options array
-		foreach ($this->_checkboxOptions as &$option) {
+		foreach ($this->_checkboxOptions as $option) {
 			$option['checked'] = in_array($option['value'], $valuesToCheck);
 		}
 
@@ -228,7 +229,8 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 *
 	 * @return    string
 	 */
-	public function render() {
+	public function render(): string
+	{
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue();
 		$ele_options = $this->getOptions();
@@ -291,3 +293,4 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 		}
 	}
 }
+\class_alias(Checkbox::class, 'icms_form_elements_Checkbox');

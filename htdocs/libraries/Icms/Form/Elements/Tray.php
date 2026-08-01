@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -38,7 +39,7 @@
  * @subpackage	Elements
  * @version	$Id: Tray.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
+namespace Icms\Form\Elements;
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -51,7 +52,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Tray extends icms_form_Element {
+class Tray extends \Icms\Form\Element {
 
 	/**
 	 * array of form element objects
@@ -90,7 +91,8 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 *
 	 * @return	bool true
 	 */
-	public function isContainer() {
+	public function isContainer(): bool
+	{
 		return true;
 	}
 
@@ -99,16 +101,17 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 *
 	 * @return	bool
 	 */
-	public function isRequired() {
+	public function isRequired(): bool
+	{
 		return !empty($this->_required);
 	}
 
 	/**
 	 * Add an element to the group
 	 *
-	 * @param	object  &$element    {@link icms_form_Element} to add
+	 * @param	object  $element    {@link icms_form_Element} to add
 	 */
-	public function addElement(&$formElement, $required = false) {
+	public function addElement($formElement, $required = false) {
 		$this->_elements[] =& $formElement;
 		if (!$formElement->isContainer()) {
 			if ($required) {
@@ -176,7 +179,8 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 *
 	 * @return	string  HTML output
 	 */
-	public function render() {
+	public function render(): string
+	{
 		$count = 0;
 		$ret = "";
 		foreach ($this->getElements() as $ele) {
@@ -194,3 +198,4 @@ class icms_form_elements_Tray extends icms_form_Element {
 		return $ret;
 	}
 }
+\class_alias(Tray::class, 'icms_form_elements_Tray');

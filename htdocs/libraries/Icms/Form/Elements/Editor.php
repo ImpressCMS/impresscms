@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,44 +29,55 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a form radiobutton attribute
+ * Creates a form editor object
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version		$Id: Radioyn.php 12313 2013-09-15 21:14:35Z skenow $
+ *
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @version		$Id: Editor.php 12313 2013-09-15 21:14:35Z skenow $
  */
-
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+namespace Icms\Form\Elements;
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
- * Yes/No radio buttons.
+ * XoopsEditor hanlder
  *
- * A pair of radio buttons labeled _YES and _NO with values 1 and 0
- * @category	ICMS
- * @package     Form
- * @subpackage  Elements
+ * @since		XOOPS
+ * @author	D.J.
+ * @copyright	copyright (c) 2000-2005 XOOPS.org
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @todo		To be removed as this is not used anywhere in the core
  */
-class icms_form_elements_Radioyn extends icms_form_elements_Radio {
+class Editor extends Textarea {
+	var $editor;
+
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	string	$value		Pre-selected value, can be "0" (No) or "1" (Yes)
-	 * @param	string	$yes		String for "Yes"
-	 * @param	string	$no			String for "No"
+	 * @param	string  $caption    Caption
+	 * @param	string  $name       "name" attribute
+	 * @param	string  $value      Initial text
+	 * @param	array 	$configs     configures
+	 * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
+	 * @param	string  $OnFailure editor to be used if current one failed
 	 */
-	public function __construct($caption, $name, $value = null, $yes = _YES, $no = _NO) {
-		parent::__construct($caption, $name, $value);
-		$this->addOption(1, '&nbsp;' . $yes . '&nbsp;');
-		$this->addOption(0, '&nbsp;' . $no);
+	function __construct($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "")
+	{
+		parent::__construct($caption, $editor_configs["name"]);
+		$editor_handler = \Icms\Plugins\EditorHandler::getInstance();
+		$this->editor =& $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
+	}
+
+	/**
+	 * Renders the editor
+	 * @return	string  the constructed html string for the editor
+	 */
+	function render(): string
+	{
+		return $this->editor->render();
 	}
 }
-

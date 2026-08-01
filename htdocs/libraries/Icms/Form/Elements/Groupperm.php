@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -36,6 +37,7 @@
  * @package		Form
  * @subpackage	Elements
  */
+namespace Icms\Form\Elements;
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
@@ -48,7 +50,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author		Kazumi Ono <onokazu@myweb.ne.jp>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Groupperm extends icms_form_Element {
+class Groupperm extends \Icms\Form\Element {
 	/**
 	 * Pre-selected value(s)
 	 *
@@ -86,7 +88,7 @@ class icms_form_elements_Groupperm extends icms_form_Element {
 	 * @param mixed $value A group ID or an array of group IDs
 	 * @access public
 	 */
-	function setValue($value) {
+	public function setValue($value): void {
 		if (is_array($value)) {
 			foreach ($value as $v) {
 				$this->setValue($v);
@@ -102,8 +104,8 @@ class icms_form_elements_Groupperm extends icms_form_Element {
 	 * @param array $optionTree
 	 * @access public
 	 */
-	function setOptionTree(& $optionTree) {
-		$this->_optionTree = & $optionTree;
+	function setOptionTree($optionTree) {
+		$this->_optionTree = $optionTree;
 	}
 
 	/**
@@ -112,7 +114,8 @@ class icms_form_elements_Groupperm extends icms_form_Element {
 	 * @return string
 	 * @access public
 	 */
-	function render() {
+	public function render(): string
+	{
 		$ele_name = $this->getName();
 		$ret = '<table class="outer"><tr><td class="odd"><table><tr>';
 		$cols = 1;
@@ -180,3 +183,4 @@ class icms_form_elements_Groupperm extends icms_form_Element {
 		}
 	}
 }
+\class_alias(Groupperm::class,'icms_form_element_groupperm');

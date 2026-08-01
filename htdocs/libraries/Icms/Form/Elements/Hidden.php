@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,34 +29,85 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
-* Creates a hidden token form attribute
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @category		ICMS
-* @package		Form
-* @subpackage	Elements
-* @version		$Id: Hiddentoken.php 12313 2013-09-15 21:14:35Z skenow $
-*/
+ * Creates a hidden form field
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @version		$Id: Hidden.php 12313 2013-09-15 21:14:35Z skenow $
+ */
+namespace Icms\Form\Elements;
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
 /**
- * A hidden token field
+ * A hidden field
  *
+ * @category	ICMS
+ * @package     Form
+ * @subpackage  Elements
  *
- * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Hiddentoken extends icms_form_elements_Hidden {
+class Hidden extends \Icms\Form\Element {
 
-  /**
-   * Constructor
-   *
-   * @param   string  $name       "name" attribute
-   * @param   int     $timeout    timeout variable for the createToken function
-   */
-  public function __construct($name = _CORE_TOKEN, $timeout = 0) {
-      parent::__construct($name . '_REQUEST', icms::$security->createToken($timeout, $name));
-  }
+	/**
+	 * Value
+	 * @var	string
+	 */
+	private $_value;
+
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$name	"name" attribute
+	 * @param	string	$value	"value" attribute
+	 */
+	public function __construct($name, $value) {
+		$this->setName($name);
+		$this->setHidden();
+		$this->setValue($value);
+		$this->setCaption("");
+	}
+
+	/**
+	 * Get the "value" attribute
+	 *
+	 * @param	bool    $encode To sanitizer the text?
+	 * @return	string
+	 */
+	public function getValue($encode = false) {
+		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+	}
+
+	/**
+	 * Sets the "value" attribute
+	 *
+	 */
+	public function setValue($value) {
+		$this->_value = $value;
+	}
+
+	/**
+	 * Prepare HTML for output
+	 *
+	 * @return	string	HTML
+	 */
+	public function render(): string {
+		if (is_array($this->getValue())) {
+			$ret = '';
+			foreach ($this->getValue() as $value){
+				$ret .= "<input type='hidden' name='" . $this->getName() . "[]' id='" . $this->getName() . "' value='" . $value . "' />\n";
+			}
+		} else {
+			$ret = "<input type='hidden' name='" . $this->getName() . "' id='" . $this->getName() . "' value='" . $this->getValue() . "' />";
+		}
+
+		return $ret;
+	}
 }
 
+\class_alias(Hidden::class,'icms_form_elements_Hidden');

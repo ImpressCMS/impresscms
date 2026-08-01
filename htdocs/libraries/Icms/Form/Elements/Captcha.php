@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Adding CAPTCHA
  *
@@ -16,7 +17,7 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		SVN: $Id: Captcha.php 10868 2010-12-11 12:02:57Z phoenyx $
  */
-
+namespace Icms\Form\Elements;
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /*
@@ -40,7 +41,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @subpackage	Elements
  *
  */
-class icms_form_elements_Captcha extends icms_form_Element {
+class Captcha extends \Icms\Form\Element {
 	private $_captchaHandler;
 
 	/**
@@ -84,10 +85,11 @@ class icms_form_elements_Captcha extends icms_form_Element {
 	 *
 	 * @see htdocs/libraries/icms/form/icms_form_Element::render()
 	 */
-	public function render() {
+		public function render(): string {
 		if (!$this->isHidden()) {
 			return $this->_captchaHandler->render();
 		}
 	}
 }
 
+\class_alias(Captcha::class, 'icms_form_elements_Captcha');

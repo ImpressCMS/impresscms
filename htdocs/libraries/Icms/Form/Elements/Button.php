@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -27,162 +28,106 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+namespace Icms\Form\Elements;
 /**
- * Creates a form radiobutton attribute (base class)
+ * Creates a button form attribut
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version		$Id: Radio.php 12313 2013-09-15 21:14:35Z skenow $
+ * @version	$Id: Button.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * A Group of radiobuttons
+ * A button
  *
  * @category	ICMS
- * @package		Form
- * @subpackage	Elements
+ * @package     Form
+ * @subpackage  Elements
  *
  * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Radio extends icms_form_Element {
+class Button extends \Icms\Form\Element {
 
 	/**
-	 * Array of Options
-	 * @var	array
-	 */
-	private $_options = array();
-
-	/**
-	 * Pre-selected value
+	 * Value
 	 * @var	string
+	 * @access	private
 	 */
-	private $_value = null;
+	private $_value;
 
 	/**
-	 * HTML to separate the elements
+	 * Type of the button. This could be either "button", "submit", or "reset"
 	 * @var	string
+	 * @access	private
 	 */
-	private $_delimeter;
+	private $_type;
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$name		"name" attribute
-	 * @param	string	$value		Pre-selected value
+	 * @param	string  $caption    Caption
+	 * @param	string  $name
+	 * @param	string  $value
+	 * @param	string  $type       Type of the button.
+	 * This could be either "button", "submit", or "reset"
 	 */
-	public function __construct($caption, $name, $value = null, $delimeter = "") {
+	public function __construct($caption, $name, $value = "", $type = "button") {
 		$this->setCaption($caption);
 		$this->setName($name);
-		if (isset($value)) {
-			$this->setValue($value);
-		}
-		$this->_delimeter = $delimeter;
+		$this->_type = $type;
+		$this->setValue($value);
 	}
 
 	/**
-	 * Get the "value" attribute
+	 * Get the initial value
 	 *
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return ($encode && $this->_value !== null)
-			? htmlspecialchars($this->_value, ENT_QUOTES)
-			: $this->_value;
+		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
 	}
 
 	/**
-	 * Set the pre-selected value
+	 * Set the initial value
 	 *
-	 * @param	$value	string
+	 * @return	string
 	 */
 	public function setValue($value) {
 		$this->_value = $value;
 	}
 
 	/**
-	 * Add an option
+	 * Get the type
 	 *
-	 * @param	string	$value	"value" attribute - This gets submitted as form-data.
-	 * @param	string	$name	"name" attribute - This is displayed. If empty, we use the "value" instead.
+	 * @return	string
 	 */
-	public function addOption($value, $name = "") {
-		if ($name != "") {
-			$this->_options[$value] = $name;
-		} else {
-			$this->_options[$value] = $value;
-		}
+	public function getType() {
+		return in_array(strtolower($this->_type), array("button", "submit", "reset")) ? $this->_type : "button";
 	}
 
 	/**
-	 * Adds multiple options
+	 * prepare HTML for output
 	 *
-	 * @param	array	$options	Associative array of value->name pairs.
+	 * @return	string
 	 */
-	function addOptionArray($options) {
-		if (is_array($options)) {
-			foreach ($options as $k => $v) {
-				$this->addOption($k, $v);
-			}
-		}
-	}
+		public function render(): string {
+	$this->tpl = new icms_view_Tpl();
+	$this->tpl->assign('type', $this->getType());
+	$this->tpl->assign('name', $this->getName());
+	$this->tpl->assign('id', $this->getName());
+	$this->tpl->assign('value', $this->getValue());
+	$this->tpl->assign('extra', $this->getExtra());
 
-	/**
-	 * Get an array with all the options
-	 *
-	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
-	 * @return	array   Associative array of value->name pairs
-	 */
-	function getOptions($encode = false) {
-		if (!$encode) {
-			return $this->_options;
-		}
-		$value = array();
-		foreach ($this->_options as $val => $name) {
-			$value[$encode ? htmlspecialchars($val, ENT_QUOTES) : $val]
-				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
-		}
-		return $value;
-	}
+	$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_button_display.html';
 
-	/**
-	 * Get the delimiter of this group
-	 *
-	 * @param	bool    $encode To sanitizer the text?
-	 * @return	string  The delimiter
-	 */
-	public function getDelimeter($encode = false) {
-		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
-	}
-
-	/**
-	 * Prepare HTML for output
-	 *
-	 * @return	string	HTML
-	 */
-	public function render() {
-		$ret = "";
-		$ele_name = $this->getName();
-		$ele_value = $this->getValue();
-		$ele_options = $this->getOptions();
-		$ele_extra = $this->getExtra();
-		$ele_delimeter = $this->getDelimeter();
-		foreach ($ele_options as $value => $name) {
-			$ret .= "<input type='radio' name='" . $ele_name . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
-			if ($value == $ele_value) {
-				$ret .= " checked='checked'";
-			}
-			$ret .= $ele_extra . " />" . $name . $ele_delimeter . "\n";
-		}
-		return $ret;
+	return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
-
+\class_alias(Button::class, 'icms_form_elements_Button');

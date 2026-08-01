@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,62 +29,101 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a button form attribut
+ * Creates a form password field
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version	$Id: Button.php 12313 2013-09-15 21:14:35Z skenow $
+ * @version		$Id: Password.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * A button
+ * A password field
  *
  * @category	ICMS
- * @package     Form
- * @subpackage  Elements
+ * @package 	Form
+ * @subpackage 	Elements
  *
- * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @author 		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Button extends icms_form_Element {
+class Password extends \Icms\Form\Element {
+	/**
+	 * Size of the field.
+	 * @var 		int
+	 */
+	private $_size;
 
 	/**
-	 * Value
-	 * @var	string
-	 * @access	private
+	 * Maximum length of the text
+	 * @var 		int
+	 */
+	private $_maxlength;
+
+	/**
+	 * Initial content of the field.
+	 * @var 		string
 	 */
 	private $_value;
 
 	/**
-	 * Type of the button. This could be either "button", "submit", or "reset"
-	 * @var	string
-	 * @access	private
+	 * Turns off the browser autocomplete function.
+	 * @var 		boolean
 	 */
-	private $_type;
+	public  $autocomplete = false;
+
+	/**
+	 * Initial content of the field.
+	 * @var 		string
+	 */
+	private $_classname;
 
 	/**
 	 * Constructor
 	 *
-	 * @param	string  $caption    Caption
-	 * @param	string  $name
-	 * @param	string  $value
-	 * @param	string  $type       Type of the button.
-	 * This could be either "button", "submit", or "reset"
+	 * @param	string	$caption	Caption
+	 * @param	string	$name		"name" attribute
+	 * @param	int		$size		Size of the field
+	 * @param	int		$maxlength	Maximum length of the text
+	 * @param	int		$value		Initial value of the field.
+	 * 							<b>Warning:</b> this is readable in cleartext in the page's source!
 	 */
-	public function __construct($caption, $name, $value = "", $type = "button") {
+	public function __construct($caption, $name, $size, $maxlength, $value = '', $autocomplete = false, $classname = '') {
 		$this->setCaption($caption);
 		$this->setName($name);
-		$this->_type = $type;
+		$this->_size = (int) ($size);
+		$this->_maxlength = (int) ($maxlength);
 		$this->setValue($value);
+		$this->autoComplete = !empty($autocomplete);
+		$this->setClassName($classname);
 	}
 
 	/**
-	 * Get the initial value
+	 * Get the field size
+	 *
+	 * @return	int
+	 */
+	public function getSize() {
+		return $this->_size;
+	}
+
+	/**
+	 * Get the max length
+	 *
+	 * @return	int
+	 */
+	public function getMaxlength() {
+		return $this->_maxlength;
+	}
+
+	/**
+	 * Get the "value" attribute
 	 *
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
@@ -95,36 +135,50 @@ class icms_form_elements_Button extends icms_form_Element {
 	/**
 	 * Set the initial value
 	 *
-	 * @return	string
+	 * @param	$value	string
 	 */
 	public function setValue($value) {
 		$this->_value = $value;
 	}
 
 	/**
-	 * Get the type
+	 * Set the initial value
 	 *
-	 * @return	string
+	 * @param	$value	string
 	 */
-	public function getType() {
-		return in_array(strtolower($this->_type), array("button", "submit", "reset")) ? $this->_type : "button";
+	public function setClassName($classname) {
+		$this->_classname = $classname;
 	}
 
 	/**
-	 * prepare HTML for output
+	 * Get the "class" attribute
 	 *
+	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	public function render() {
-	$this->tpl = new icms_view_Tpl();
-	$this->tpl->assign('type', $this->getType());
-	$this->tpl->assign('name', $this->getName());
-	$this->tpl->assign('id', $this->getName());
-	$this->tpl->assign('value', $this->getValue());
-	$this->tpl->assign('extra', $this->getExtra());
+	public function getClassName($encode = false) {
+		return $encode ? htmlspecialchars($this->_classname, ENT_QUOTES) : $this->_classname;
+	}
 
-	$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_button_display.html';
+	/**
+	 * Prepare HTML for output
+	 *
+	 * @return	string	HTML
+	 */
+		public function render(): string {
 
-	return $this->tpl->fetch('db:' . $element_html_template);
+		$this->tpl = new \Icms\View\Tpl();
+		$this->tpl->assign('ele_name', $this->getName());
+		$this->tpl->assign('ele_class', $this->getClassName());
+		$this->tpl->assign('ele_id', $this->getName());
+		$this->tpl->assign('ele_size', $this->getSize());
+		$this->tpl->assign('ele_maxlength', $this->getMaxlength());
+		$this->tpl->assign('ele_value', $this->getValue());
+		$this->tpl->assign('ele_extra', $this->getExtra());
+		$this->tpl->assign('ele_autocomplete', $this->autoComplete);
+
+		$element_html_template = $this->customTemplate ? $this->customTemplate : 'icms_form_elements_password_display.html';
+		return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
+\class_alias(Password::class,'icms_form_elements_Password');

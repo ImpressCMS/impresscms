@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,7 +29,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Creates a textarea form attribut
+ * Creates a form radiobutton attribute
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -36,106 +37,37 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version		SVN: $Id: Textarea.php 12313 2013-09-15 21:14:35Z skenow $
+ * @version		$Id: Radioyn.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\Form\Elements;
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * A textarea
+ * Yes/No radio buttons.
  *
+ * A pair of radio buttons labeled _YES and _NO with values 1 and 0
  * @category	ICMS
  * @package     Form
  * @subpackage  Elements
  *
- * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Textarea extends icms_form_Element {
+class Radioyn extends Radio {
 	/**
-	 * number of columns
-	 * @var	int
-	 */
-	protected $_cols;
-
-	/**
-	 * number of rows
-	 * @var	int
-	 */
-	protected $_rows;
-
-	/**
-	 * initial content
-	 * @var	string
-	 */
-	protected $_value;
-
-	/**
-	 * Constuctor
+	 * Constructor
 	 *
-	 * @param	string  $caption    caption
-	 * @param	string  $name       name
-	 * @param	string  $value      initial content
-	 * @param	int     $rows       number of rows
-	 * @param	int     $cols       number of columns
+	 * @param	string	$caption
+	 * @param	string	$name
+	 * @param	string	$value		Pre-selected value, can be "0" (No) or "1" (Yes)
+	 * @param	string	$yes		String for "Yes"
+	 * @param	string	$no			String for "No"
 	 */
-	public function __construct($caption, $name, $value = "", $rows = 5, $cols = 50) {
-		$this->setCaption($caption);
-		$this->setName($name);
-		$this->_rows = (int) $rows;
-		$this->_cols = (int) $cols;
-		$this->setValue($value);
-	}
-
-	/**
-	 * get number of rows
-	 *
-	 * @return	int
-	 */
-	public function getRows() {
-		return $this->_rows;
-	}
-
-	/**
-	 * Get number of columns
-	 *
-	 * @return	int
-	 */
-	public function getCols() {
-		return $this->_cols;
-	}
-
-	/**
-	 * Get initial content
-	 *
-	 * @param	bool    $encode To sanitize the text? Default value should be "true"; however we have to set "false" for backward compatibility
-	 * @return	string
-	 */
-	public function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value) : $this->_value;
-	}
-
-	/**
-	 * Set initial content
-	 *
-	 * @param	$value	string
-	 */
-	public function setValue($value){
-		$this->_value = $value;
-	}
-
-	/**
-	 * prepare HTML for output
-	 *
-	 * @return string HTML
-	 */
-	public function render(){
-		return "<textarea name='" . $this->getName()
-			. "' id='" . $this->getName() . '_tarea'
-			. "' rows='" . $this->getRows()
-			. "' cols='" . $this->getCols()
-			. "'" . $this->getExtra() . ">"
-			. $this->getValue()
-			. "</textarea>";
+	public function __construct($caption, $name, $value = null, $yes = _YES, $no = _NO) {
+		parent::__construct($caption, $name, $value);
+		$this->addOption(1, '&nbsp;' . $yes . '&nbsp;');
+		$this->addOption(0, '&nbsp;' . $no);
 	}
 }
 
+\class_alias(Radioyn::class,'icms_form_elements_Radioyn');
