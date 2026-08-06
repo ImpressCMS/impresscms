@@ -1,4 +1,8 @@
 <?php
+declare(strict_types=1);
+
+namespace Icms\Form\Elements\Captcha;
+
 /**
  * CAPTCHA class
  * Xoops Frameworks addon
@@ -20,7 +24,9 @@
  * @package		Form
  * @subpackage	Elements
  * @version		SVN: $Id: Object.php 12340 2013-09-22 04:11:09Z skenow $
+ *
  */
+
 
 icms_loadLanguageFile('core', 'captcha');
 /**
@@ -31,7 +37,7 @@ icms_loadLanguageFile('core', 'captcha');
  * @package		Form
  * @subpackage	Elements
  */
-class icms_form_elements_captcha_Object {
+class Entity {
 
 	public $active	= TRUE;
 	/** potential values: image, text */
@@ -56,7 +62,7 @@ class icms_form_elements_captcha_Object {
 	 * Creates instance of icms_form_elements_captcha_Object Object
 	 * @return  object Reference to the icms_form_elements_captcha_Object Object
 	 */
-	static public function &instance() {
+	public static function instance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new self();
@@ -88,7 +94,8 @@ class icms_form_elements_captcha_Object {
 	 *
 	 * @param string	$mode	if no mode is set, just verify current mode
 	 */
-	public function setMode($mode = NULL) {
+	public function setMode($mode = NULL)
+	{
 		if (!empty($mode) && in_array($mode, array("text", "image"))) {
 			$this->mode = $mode;
 
@@ -102,8 +109,12 @@ class icms_form_elements_captcha_Object {
 			$this->mode = "text";
 		} else {
 			$required_functions = array(
-				"imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle",
-				"imagejpeg", "imagedestroy", "imageftbbox"
+				"imagecreatetruecolor",
+				"imagecolorallocate",
+				"imagefilledrectangle",
+				"imagejpeg",
+				"imagedestroy",
+				"imageftbbox"
 			);
 			foreach ($required_functions as $func) {
 				if (!function_exists($func)) {
@@ -112,7 +123,6 @@ class icms_form_elements_captcha_Object {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -275,3 +285,4 @@ class icms_form_elements_captcha_Object {
 		return $form;
 	}
 }
+\class_alias(Entity::class, 'icms_form_elements_captcha_Object');
