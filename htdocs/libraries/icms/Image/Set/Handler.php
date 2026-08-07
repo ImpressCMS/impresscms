@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -42,6 +43,8 @@
 * @version	$Id: imageset.php 19775 2010-07-11 18:54:25Z malanciault $
 */
 
+namespace Icms\Image\Set;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -53,16 +56,16 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 * @author  Kazumi Ono <onokazu@xoops.org>
 * @copyright	Copyright (c) 2000 XOOPS.org
 */
-class icms_image_set_Handler extends XoopsObjectHandler {
+class Handler extends \Icms\Core\EntityHandler {
 
 	/**
 	 * Creates a new imageset
 	 *
 		 * @param bool $isNew is the new imageset new??
-		 * @return object $imgset {@link icms_image_set_Object} reference to the new imageset
+		 * @return object $imgset {@link Icms\Image\Set\Entity} reference to the new imageset
 	 **/
-	function & create($isNew = true) {
-		$imgset = new icms_image_set_Object();
+	public function create($isNew = true) {
+		$imgset = new Entity();
 		if ($isNew) {
 			$imgset->setNew();
 		}
@@ -70,13 +73,13 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 	}
 
 	/**
-	 * retrieve a specific {@link icms_image_set_Object}
+	 * retrieve a specific {@link Icms\Image\Set\Entity}
 	 *
-		 * @see icms_image_set_Object
+		 * @see Icms\Image\Set\Entity
 		 * @param integer $id imgsetID (imgset_id) of the imageset
-		 * @return object icms_image_set_Object reference to the image set
+		 * @return object Icms\Image\Set\Entity reference to the image set
 	 **/
-	function & get($id) {
+	public function get($id) {
 		$id = (int) $id;
 		$imgset = false;
 		if ($id > 0) {
@@ -86,7 +89,7 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$imgset = new icms_image_set_Object();
+				$imgset = new Entity();
 				$imgset->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -94,16 +97,14 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 	}
 
 	/**
-	 * Insert a new {@link icms_image_set_Object} into the database
+	 * Insert a new {@link Icms\Image\Set\Entity} into the database
 	 *
-		 * @param object icms_image_set_Object $imgset reference to the imageset to insert
+		 * @param object Icms\Image\Set\Entity $imgset reference to the imageset to insert
 		 * @return bool TRUE if succesful
 	 **/
-	function insert(& $imgset) {
-		/**
-		* @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		*/
-		if (!is_a($imgset, 'xoopsimageset')) {
+	public function insert($imgset) {
+
+		if (!$imgset instanceof \Icms\Image\Set\Entity) {
 			return false;
 		}
 
@@ -133,16 +134,14 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 	}
 
 	/**
-	 * delete an {@link icms_image_set_Object} from the database
+	 * delete an {@link Entity} from the database
 	 *
-		 * @param object icms_image_set_Object $imgset reference to the imageset to delete
+		 * @param object \Icms\Image\Set\Entity $imgset reference to the imageset to delete
 		 * @return bool TRUE if succesful
 	 **/
-	function delete(& $imgset) {
-		/**
-		* @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		*/
-		if (!is_a($imgset, 'xoopsimageset')) {
+	public function delete($imgset) {
+
+		if (!$imgset instanceof \Icms\Image\Set\Entity) {
 			return false;
 		}
 
@@ -156,16 +155,16 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 	}
 
 	/**
-	 * retrieve array of {@link icms_image_set_Object}s meeting certain conditions
-		 * @param object $criteria {@link CriteriaElement} with conditions for the imagesets
+	 * retrieve array of {@link Entity}s meeting certain conditions
+		 * @param object $criteria {@link \Icms\Db\Criteria\Element} with conditions for the imagesets
 		 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
-		 * @return array {@link icms_image_set_Object}s matching the conditions
+		 * @return array {@link Entity}s matching the conditions
 	 **/
-	function getObjects($criteria = null, $id_as_key = false) {
+	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array ();
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgset') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
-		if (isset ($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset ($criteria) && is_subclass_of($criteria, '\Icms\Db\Criteria\Element::class')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -175,7 +174,7 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$imgset = new icms_image_set_Object();
+			$imgset = new \Icms\Image\Set\Entity();
 			$imgset->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] = & $imgset;
@@ -188,7 +187,7 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 	}
 
 	/**
-	 * Links a {@link icms_image_set_Object} to a themeset (tplset)
+	 * Links a {@link Entity} to a themeset (tplset)
 		 * @param int $imgset_id image set id to link
 		 * @param int $tplset_name theme set to link
 		 * @return bool TRUE if succesful FALSE if unsuccesful
@@ -211,7 +210,7 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 	}
 
 	/**
-	 * Unlinks a {@link icms_image_set_Object} from a themeset (tplset)
+	 * Unlinks a {@link Entity} from a themeset (tplset)
 	 *
 		 * @param int $imgset_id image set id to unlink
 		 * @param int $tplset_name theme set to unlink
@@ -232,21 +231,21 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 	}
 
 	/**
-	 * get a list of {@link icms_image_set_Object}s matching certain conditions
+	 * get a list of {@link Entity}s matching certain conditions
 		 *
 		 * @param int $refid conditions to match
 		 * @param int $tplset conditions to match
-		 * @return array array of {@link icms_image_set_Object}s matching the conditions
+		 * @return array array of {@link Entity}s matching the conditions
 	 **/
 	function getList($refid = null, $tplset = null) {
-		$criteria = new CriteriaCompo();
+		$criteria = new \Icms\Db\Criteria\Compo();
 		if (isset ($refid)) {
-			$criteria->add(new Criteria('imgset_refid', (int) $refid));
+			$criteria->add(new \Icms\Db\Criteria\Item('imgset_refid', (int) $refid));
 		}
 		if (isset ($tplset)) {
-			$criteria->add(new Criteria('tplset_name', $tplset));
+			$criteria->add(new \Icms\Db\Criteria\Item('tplset_name', $tplset));
 		}
-		$imgsets = & $this->getObjects($criteria, true);
+		$imgsets = $this->getObjects($criteria, true);
 		$ret = array ();
 		foreach (array_keys($imgsets) as $i) {
 			$ret[$i] = $imgsets[$i]->getVar('imgset_name');
@@ -254,3 +253,4 @@ class icms_image_set_Handler extends XoopsObjectHandler {
 		return $ret;
 	}
 }
+\class_alias(Handler::class, 'icms_image_set_Handler');

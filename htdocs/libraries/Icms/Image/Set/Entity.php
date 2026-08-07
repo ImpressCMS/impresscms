@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -43,28 +44,32 @@
 * @version	    $Id: imageset.php 19775 2010-07-11 18:54:25Z malanciault $
 */
 
+namespace Icms\Image\Set;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * An imageset
  *
- * These sets are managed through a {@link icms_image_set_Handler} object
+ * These sets are managed through a {@link Icms\Image\Set\Handler} object
  *
  * @package     kernel
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_image_set_Object extends XoopsObject
+class Entity extends \Icms\Core\Entity
 {
-    /**
-     * Constructor
-     *
-     */
-  	function __construct() {
-  		$this->XoopsObject();
-  		$this->initVar('imgset_id', XOBJ_DTYPE_INT, null, false);
-  		$this->initVar('imgset_name', XOBJ_DTYPE_TXTBOX, null, true, 50);
-  		$this->initVar('imgset_refid', XOBJ_DTYPE_INT, 0, false);
-  	}
+	/**
+	 * Constructor
+	 *
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->initVar('imgset_id', XOBJ_DTYPE_INT, null, false);
+		$this->initVar('imgset_name', XOBJ_DTYPE_TXTBOX, null, true, 50);
+		$this->initVar('imgset_refid', XOBJ_DTYPE_INT, 0, false);
+	}
 }
+\class_alias(Entity::class, 'icms_image_set_Object');
