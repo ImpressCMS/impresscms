@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -36,6 +37,7 @@
  * @package		Image
  * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\Image;
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
@@ -46,7 +48,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_image_Object extends icms_core_Object {
+class Entity extends \Icms\Core\Entity {
 	/**
 	 * Info of Image file (width, height, bits, mimetype)
 	 *
@@ -98,3 +100,5 @@ class icms_image_Object extends icms_core_Object {
 		}
 	}
 }
+
+\class_alias(Entity::class, 'icms_image_Object');
