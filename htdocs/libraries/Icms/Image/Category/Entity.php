@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -37,13 +38,15 @@
  * @subpackage	Category
  * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\Image\Category;
+use Icms\Core;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * An image category
  *
- * These categories are managed through a {@link icms_image_category_Handler} object
+ * These categories are managed through a {@link Icms\Image\Category\Handler} object
 
  * @category	ICMS
  * @package     Image
@@ -51,8 +54,8 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_image_category_Object extends icms_core_Object {
-	private $_imageCount;
+class Entity extends \Icms\Core\Entity {
+	private int $_imageCount;
 
 	/**
 	 * Constructor
