@@ -24,6 +24,8 @@ final class AliasesTest extends TestCase
         return [
             'Image'       => ['Icms\\Image\\Entity', 'icms_image_Object'],
             'Image Handler'       => ['Icms\\Image\\Handler', 'icms_image_Handler'],
+            'Image Category Handler'       => ['Icms\\Image\\Category\\Handler', 'icms_image_category_Handler'],
+            'Image Category Entity'       => ['Icms\\Image\\Category\\Entity', 'icms_image_category_Object'],
 
         ];
     }

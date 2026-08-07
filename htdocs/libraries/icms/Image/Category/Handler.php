@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -37,10 +38,16 @@
  * @subpackage	Category
  * @version		SVN: $Id: Handler.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\Image\Category;
+
+use Icms\Core\EntityHandler;
+use Icms\Db\Criteria\Compo;
+use Icms\Db\Criteria\Element;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * Image caetgory handler class.
+ * Image category handler class.
  * This class is responsible for providing data access mechanisms to the data source
  * of image category class objects.
  *
@@ -50,16 +57,16 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_image_category_Handler extends icms_core_ObjectHandler {
+class Handler extends EntityHandler {
 
 	/**
 	 * Creates a new image category
 	 *
 	 * @param bool $isNew is the new image category new??
-	 * @return object $imgcat {@link icms_image_category_Object} reference to the new image category
+	 * @return Entity $imgcat {@link Entity} reference to the new image category
 	 **/
-	public function &create($isNew = true) {
-		$imgcat = new icms_image_category_Object();
+	public function create($isNew = true) {
+		$imgcat = new Entity();
 		if ($isNew) {
 			$imgcat->setNew();
 		}
@@ -67,13 +74,13 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * retrieve a specific {@link icms_image_category_Object}
+	 * retrieve a specific {@link Entity}
 	 *
-	 * @see icms_image_category_Object
+	 * @see Entity
 	 * @param integer $id imgcatID (imgcat_id) of the image category
-	 * @return object icms_image_category_Object reference to the image category
+	 * @return Entity|null reference to the image category
 	 **/
-	public function &get($id) {
+	public function get($id) {
 		$id = (int) ($id);
 		$imgcat = false;
 		if ($id > 0) {
@@ -83,7 +90,7 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$imgcat = new icms_image_category_Object();
+				$imgcat = new Entity();
 				$imgcat->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -91,16 +98,16 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Insert a new {@link icms_image_category_Object} into the database
+	 * Insert a new {@link Entity} into the database
 	 *
-	 * @param object icms_image_category_Object $imgcat reference to the image category to insert
+	 * @param object Entity $imgcat reference to the image category to insert
 	 * @return bool TRUE if succesful
 	 **/
-	public function insert(&$imgcat) {
+	public function insert($imgcat) {
 		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
 		 * and is compatible with more versions of PHP.  http://us2.php.net/manual/en/language.operators.type.php
 		 */
-		if (!is_a($imgcat, 'icms_image_category_Object')) {
+		if (!$imgcat instanceof Entity) {
 			return false;
 		}
 
@@ -155,16 +162,16 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * delete an {@link icms_image_category_Object} from the database
+	 * delete an {@link Entity} from the database
 	 *
-	 * @param object icms_image_category_Object $imgcat reference to the image category to delete
+	 * @param object Entity $imgcat reference to the image category to delete
 	 * @return bool TRUE if succesful
 	 **/
-	public function delete(&$imgcat) {
+	public function delete($imgcat) {
 		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
 		 * and is compatible with more versions of PHP. http://us2.php.net/manual/en/language.operators.type.php
 		 */
-		if (!is_a($imgcat, 'icms_image_category_Object')) {
+		if (!$imgcat instanceof Entity) {
 			return false;
 		}
 
@@ -176,17 +183,17 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * retrieve array of {@link icms_image_category_Object}s meeting certain conditions
-	 * @param object $criteria {@link icms_db_criteria_Element} with conditions for the image categories
+	 * retrieve array of {@link Entity}s meeting certain conditions
+	 * @param object $criteria {@link \Icms\Db\Criteria\Element} with conditions for the image categories
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
-	 * @return array {@link icms_image_category_Object}s matching the conditions
+	 * @return array {@link Entity}s matching the conditions
 	 **/
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT c.* FROM ' . $this->db->prefix('imagecategory') . ' c LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=c.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && $criteria instanceof \Icms\Db\Criteria\Element) {
 			$where = $criteria->render();
 			$sql .= ($where != '') ? ' AND ' . $where : '';
 			$limit = $criteria->getLimit();
@@ -198,7 +205,7 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$imgcat = new icms_image_category_Object();
+			$imgcat = new Entity();
 			$imgcat->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] = &$imgcat;
@@ -211,15 +218,15 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * get number of {@link icms_image_category_Object}s matching certain conditions
+	 * get number of {@link Entity}s matching certain conditions
 	 *
 	 * @param string $criteria conditions to match
-	 * @return int number of {@link icms_image_category_Object}s matching the conditions
+	 * @return int number of {@link Entity}s matching the conditions
 	 **/
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('imagecategory') . ' i LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && is_subclass_of($criteria, Element::class)) {
 			$where = $criteria->render();
 			$sql .= ($where != '') ? ' AND ' . $where : '';
 		}
@@ -231,30 +238,30 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * get a list of {@link icms_image_category_Object}s matching certain conditions
+	 * get a list of {@link Entity}s matching certain conditions
 	 * @param string $criteria conditions to match
-	 * @return array array of {@link icms_image_category_Object}s matching the conditions
+	 * @return array array of {@link Entity}s matching the conditions
 	 **/
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new Compo();
 		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
+			$criteriaTray = new Compo();
 			foreach ( $groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
+				$criteriaTray->add(new Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
 			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
+				$criteria->add(new Item('gperm_name', $perm));
+				$criteria->add(new Item('gperm_modid', 1));
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new icms_db_criteria_Item('imgcat_display', (int) ($display)));
+			$criteria->add(new Item('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
-			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
+			$criteria->add(new Item('imgcat_storetype', $storetype));
 		}
-		$categories = &$this->getObjects($criteria, true);
+		$categories = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($categories) as $i) {
 			$ret[$i] = $categories[$i]->getVar('imgcat_name');
@@ -274,27 +281,27 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 		* @return array  list of categories
 		*/
 	public function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id=null) {
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new Compo();
 		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new icms_db_criteria_Compo();
+			$criteriaTray = new Compo();
 			foreach ( $groups as $gid) {
-				$criteriaTray->add(new icms_db_criteria_Item('gperm_groupid', $gid), 'OR');
+				$criteriaTray->add(new Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
 			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
-				$criteria->add(new icms_db_criteria_Item('gperm_name', $perm));
-				$criteria->add(new icms_db_criteria_Item('gperm_modid', 1));
+				$criteria->add(new Item('gperm_name', $perm));
+				$criteria->add(new Item('gperm_modid', 1));
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new icms_db_criteria_Item('imgcat_display', (int) ($display)));
+			$criteria->add(new Item('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
-			$criteria->add(new icms_db_criteria_Item('imgcat_storetype', $storetype));
+			$criteria->add(new Item('imgcat_storetype', $storetype));
 		}
 		if ($imgcat_id === NULL ) $imgcat_id = 0;
-		$criteria->add(new icms_db_criteria_Item('imgcat_pid', $imgcat_id));
-		$categories = &$this->getObjects($criteria, true);
+		$criteria->add(new Item('imgcat_pid', $imgcat_id));
+		$categories = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach ( array_keys($categories) as $i) {
 			$ret[$i] = $categories[$i]->getVar('imgcat_name');
@@ -316,11 +323,11 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return string - full folder path or url
 	 */
-	function getCategFolder(&$imgcat, $full=true, $type='path') {
+	function getCategFolder($imgcat, $full=true, $type='path') {
 		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
 		 * and is compatible with more versions of PHP. http://us2.php.net/manual/en/language.operators.type.php
 		 */
-		if (!is_a($imgcat, 'icms_image_category_Object')) {
+		if (!$imgcat instanceof Entity) {
 			return false;
 		}
 		if ($imgcat->getVar('imgcat_pid') != 0) {
@@ -340,3 +347,4 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	}
 }
 
+\class_alias(Handler::class, 'icms_image_category_Handler');
