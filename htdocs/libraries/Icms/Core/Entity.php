@@ -336,7 +336,7 @@ class Entity {
 		$vars = array();
 		foreach ($keys as $key) {
 			if (isset($this->vars[$key])) {
-				if (is_object($this->vars[$key]) && is_a($this->vars[$key], 'icms_core_Object')) {
+				if (is_object($this->vars[$key]) && $this->vars[$key] instanceof Entity) {
 					if ($maxDepth) {
 						$vars[$key] = $this->vars[$key]->getValues(null, $format, $maxDepth - 1);
 					}
@@ -366,14 +366,14 @@ class Entity {
 					case 'show':
 					case 'e':
 					case 'edit':
-						return \icms_core_DataFilter::htmlSpecialchars($ret);
+						return DataFilter::htmlSpecialchars($ret);
 						break 1;
 
 					case 'p':
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						return \icms_core_DataFilter::htmlSpecialchars(\icms_core_DataFilter::stripSlashesGPC($ret));
+						return DataFilter::htmlSpecialchars(DataFilter::stripSlashesGPC($ret));
 						break 1;
 
 					case 'n':
@@ -394,18 +394,18 @@ class Entity {
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html && (!is_int($ret) && !empty($ret))) {
 							if ($br) { // have to use this whilst ever there's a zillion editors in the core
-								return \icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
+								return DataFilter::filterHTMLdisplay($ret, $xcode, $br);
 							} else {
-								return \icms_core_DataFilter::checkVar($ret, 'html', 'output');
+								return DataFilter::checkVar($ret, 'html', 'output');
 							}
 						} else {
-							return \icms_core_DataFilter::checkVar($ret, 'text', 'output');
+							return DataFilter::checkVar($ret, 'text', 'output');
 						}
 						break 1;
 
 					case 'e':
 					case 'edit':
-						return \icms_core_DataFilter::checkVar($ret, 'html', 'edit');
+						return DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
@@ -416,9 +416,9 @@ class Entity {
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-							return \icms_core_DataFilter::checkVar($ret, 'html', 'input');
+							return DataFilter::checkVar($ret, 'html', 'input');
 						} else {
-							return \icms_core_DataFilter::checkVar($ret, 'text', 'input');
+							return DataFilter::checkVar($ret, 'text', 'input');
 						}
 						break 1;
 
@@ -430,7 +430,7 @@ class Entity {
 							$ret = str_replace('<!-- filtered with htmlpurifier -->', '', $ret);
 						}
 
-						return htmlspecialchars(\icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -464,17 +464,17 @@ class Entity {
 
 					case 'e':
 					case 'edit':
-						return \icms_core_DataFilter::checkVar($ret, 'html', 'edit');
+						return DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
 					case 'preview':
-						return \icms_core_DataFilter::stripSlashesGPC($ret);
+						return DataFilter::stripSlashesGPC($ret);
 						break 1;
 
 					case 'f':
 					case 'formpreview':
-						return htmlspecialchars(\icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -547,9 +547,9 @@ class Entity {
 							break;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = \icms_core_DataFilter::stripSlashesGPC(\icms_core_DataFilter::censorString($cleanv));
+							$cleanv = DataFilter::stripSlashesGPC(DataFilter::censorString($cleanv));
 						} else {
-							$cleanv = \icms_core_DataFilter::censorString($cleanv);
+							$cleanv = DataFilter::censorString($cleanv);
 						}
 						break;
 
@@ -559,17 +559,17 @@ class Entity {
 							break;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = \icms_core_DataFilter::stripSlashesGPC($cleanv);
-							$cleanv = \icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
+							$cleanv = DataFilter::stripSlashesGPC($cleanv);
+							$cleanv = DataFilter::checkVar($cleanv, 'html', 'input');
 						} else {
-							// $cleanv = \icms_core_DataFilter::censorString($cleanv);
-							$cleanv = \icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
+							// $cleanv = DataFilter::censorString($cleanv);
+							$cleanv = DataFilter::checkVar($cleanv, 'html', 'input');
 						}
 						break;
 
 					case XOBJ_DTYPE_SOURCE:
 						if (!$v['not_gpc']) {
-							$cleanv = \icms_core_DataFilter::stripSlashesGPC($cleanv);
+							$cleanv = DataFilter::stripSlashesGPC($cleanv);
 						} else {
 							$cleanv = $cleanv;
 						}
@@ -593,12 +593,12 @@ class Entity {
 							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							break;
 						}
-						if ($cleanv != '' && !\icms_core_DataFilter::checkVar($cleanv, 'email')) {
+						if ($cleanv != '' && !DataFilter::checkVar($cleanv, 'email')) {
 							$this->setErrors(_CORE_DB_INVALIDEMAIL);
 							break;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = \icms_core_DataFilter::stripSlashesGPC($cleanv);
+							$cleanv = DataFilter::stripSlashesGPC($cleanv);
 						}
 						break;
 
@@ -611,7 +611,7 @@ class Entity {
 							$cleanv = 'http://' . $cleanv;
 						}
 						if (!$v['not_gpc']) {
-							$cleanv = \icms_core_DataFilter::stripSlashesGPC($cleanv);
+							$cleanv = DataFilter::stripSlashesGPC($cleanv);
 						}
 						break;
 
