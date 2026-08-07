@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -37,7 +38,13 @@
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+namespace Icms\Image;
+
+use Icms\Db\Criteria;
+
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 /**
  * Image handler class.
@@ -50,16 +57,16 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_image_Handler extends icms_core_ObjectHandler {
+class Handler extends \Icms\Core\EntityHandler {
 
 	/**
-	 * Create a new {@link icms_image_Object}
+	 * Create a new {@link \Icms\Image\Entity}
 	 *
 	 * @param   boolean $isNew  Flag the object as "new"
 	 * @return  object
 	 **/
-	public function &create($isNew = true) {
-		$image = new icms_image_Object();
+	public function create($isNew = true) {
+		$image = new Entity();
 		if ($isNew) {
 			$image->setNew();
 		}
@@ -67,13 +74,13 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Load a {@link icms_image_Object} object from the database
+	 * Load a {@link \Icms\Image\Entity} object from the database
 	 *
 	 * @param   int     $id     ID
 	 * @param   boolean $getbinary
-	 * @return  object  {@link icms_image_Object}, FALSE on fail
+	 * @return  object  {@link \Icms\Image\Entity}, FALSE on fail
 	 **/
-	public function &get($id, $getbinary=true) {
+	public function get($id, $getbinary=true) {
 		$image = false;
 		$id = (int) $id;
 		if ($id > 0) {
@@ -86,7 +93,7 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$image = new icms_image_Object();
+				$image = new Entity();
 				$image->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -96,14 +103,14 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Write a {@link icms_image_Object} object to the database
 	 *
-	 * @param   object  &$image {@link icms_image_Object}
+	 * @param   $image {@link \Icms\Image\Entity}
 	 * @return  bool
 	 **/
-	public function insert(&$image) {
+	public function insert($image) {
 		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
 		 * and is compatible with more versions of PHP. http://us2.php.net/manual/en/language.operators.type.php
 		 */
-		if (!is_a($image, 'icms_image_Object')) {
+		if (!is_a($image, Entity::class)) {
 			return false;
 		}
 
@@ -183,14 +190,14 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Delete an image from the database
 	 *
-	 * @param   object  &$image {@link icms_image_Object}
+	 * @param   \Icms\Image\Entity  $image {@link \Icms\Image\Entity}
 	 * @return  bool
 	 **/
-	public function delete(&$image) {
+	public function delete($image) {
 		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
 		 * and is compatible with more versions of PHP. http://us2.php.net/manual/en/language.operators.type.php
 		 */
-		if (!is_a($image, 'icms_image_Object')) {
+		if (!is_a($image, \Icms\Image\Entity::class)) {
 			return false;
 		}
 
@@ -205,15 +212,15 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Load {@link icms_image_Object}s from the database
+	 * Load {@link \Icms\Image\Entity} objects from the database
 	 *
-	 * @param null|icms_db_criteria_Item $criteria {@link icms_db_criteria_Element}
+	 * @param null|\Icms\Db\Criteria\Item $criteria {@link \Icms\Db\Criteria\Item}
 	 * @param bool $id_as_key Use the ID as key into the array
 	 * @param bool $getbinary Get binary image?
 	 * @param bool|string $sql  Extra sql (unused; only used for compatibility function signature)
 	 * @param bool $debug Debug mode?
 	 *
-	 * @return icms_image_Object[]
+	 * @return Entity[]
 	 */
 	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false, $sql = false, $debug = false) {
 		$ret = array();
@@ -223,7 +230,7 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 		} else {
 			$sql = "SELECT * FROM ".$this->db->prefix('image');
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && $criteria instanceof Element) {
 			$sql .= " ".$criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))
 					? 'image_weight'
@@ -233,14 +240,14 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 			$start = $criteria->getStart();
 		}
 		if ($debug) {
-			icms_core_Debug::message($sql);
+			\Icms\Core\Debug::message($sql);
 		}
 		$result = $this->db->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$image = new icms_image_Object();
+			$image = new \Icms\Image\Entity();
 			$image->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] = &$image;
@@ -255,45 +262,46 @@ class icms_image_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Count some images
 	 *
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
+	 * @param   object  $criteria   {@link \Icms\Db\Criteria\Element}
 	 * @return  int
 	 **/
-	public function getCount($criteria = null) {
+	public function getCount($criteria = null): int
+	{
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('image');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && $criteria instanceof \Icms\Db\Criteria\Element) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
-		if (!$result = &$this->db->query($sql)) {
+		if (!$result = $this->db->query($sql)) {
 			return 0;
 		}
-		list($count) = $this->db->fetchRow($result);
+		[$count] = $this->db->fetchRow($result);
 		return $count;
 	}
-	
+
 	/**
 	 * Get a list of images
 	 *
 	 * @param int|null $imgcat_id Image category ID
 	 * @param bool|null|int $image_display List only displayed images?
-	 * @param int $notinuse Not use param (only added for fixing Declaration of icms_image_Handler::getList($imgcat_id, $image_display = NULL, $notinuse1 = 0, $debug = false) should be compatible with icms_ipf_Handler::getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) error)
+	 * @param int $notinuse Not use param (only added for fixing Declaration of Handler::getList($imgcat_id, $image_display = NULL, $notinuse1 = 0, $debug = false) should be compatible with icms_ipf_Handler::getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) error)
 	 * @param bool $debug Enable debug mode?
 	 *
-	 * @return array Array of <a href='psi_element://icms_image_Object'>icms_image_Object</a> objects
+	 * @return array Array of \Icms\Image\Entity
 	 * objects
 	 *
 	 * @todo Do better fix here for declaration compatibility
 	 */
 	public function getList($imgcat_id = null, $image_display = 0, $notinuse = 0, $debug = false) {
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new \Icms\Db\Criteria\Compo();
 		if ($imgcat_id !== null) {
 			$criteria->add(
-				new icms_db_criteria_Item('imgcat_id', (int) ($imgcat_id))
+				new \Icms\Db\Criteria\Item('imgcat_id', (int) ($imgcat_id))
 			);
 		}
 		if ($image_display) {
-			$criteria->add(new icms_db_criteria_Item('image_display', (int) ($image_display)));
+			$criteria->add(new \Icms\Db\Criteria\Item('image_display', (int) ($image_display)));
 		}
-		$images = & $this->getObjects($criteria, false, true, false, true);
+		$images = $this->getObjects($criteria, false, true, false, true);
 		$ret = array();
 		foreach (array_keys($images) as $i) {
 			$ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');
