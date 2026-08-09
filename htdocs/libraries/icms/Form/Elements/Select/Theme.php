@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -23,21 +25,27 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+
+namespace Icms\Form\Elements\Select;
+
+use Icms\Form\Elements\Select as SelectElement;
+
+
 /**
  * Creates a form attribute which is able to select a theme
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ *
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
  * @version		SVN: $Id: Theme.php 12313 2013-09-15 21:14:35Z skenow $
  */
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
 
 /**
  * A select box with available themes
@@ -45,21 +53,24 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @category	ICMS
  * @package     Form
  * @subpackage  Elements
+ *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Theme extends icms_form_elements_Select {
+class Theme extends SelectElement
+{
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	mixed	$value	Pre-selected value (or array of them).
-	 * @param	int		$size	Number or rows. "1" makes a drop-down-list
+	 * @param	string $caption
+	 * @param string $name
+	 * @param	mixed $value Pre-selected value (or array of them).
+	 * @param	int $size Number or rows. "1" makes a drop-down-list
 	 */
-	public function __construct($caption, $name, $value = null, $size = 1) {
+	public function __construct(string $caption, string $name, ?string $value = null, int $size = 1) {
 		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(icms_view_theme_Factory::getThemesList());
+		$this->addOptionArray(\icms_view_theme_Factory::getThemesList());
 	}
 }
 
+\class_alias(Theme::class, 'icms_form_elements_select_Theme');

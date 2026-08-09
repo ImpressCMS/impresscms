@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -23,12 +25,15 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+
+namespace Icms\Form\Elements\Select;
+
+use Icms\Form\Elements\Select as SelectElement;
+
 /**
  * Creates a form attribute which is able to select a country
+ *
+ *  TODO Replace this with an externally managed Composer library
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -39,7 +44,10 @@
  * @version		$Id: Country.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
+
 /**
  * A select field with countries
  *
@@ -50,17 +58,18 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_select_Country extends icms_form_elements_Select {
+class Country extends SelectElement
+{
 	/**
 	 * Constructor
 	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$name       "name" attribute
-	 * @param	mixed	$value	    Pre-selected value (or array of them).
-	 *                              Legal are all 2-letter country codes (in capitals).
-	 * @param	int		$size	    Number or rows. "1" makes a drop-down-list
+	 * @param	string $caption Caption
+	 * @param string $name "name" attribute
+	 * @param	mixed $value Pre-selected value (or array of them).
+	 *                            Legal are all 2-letter country codes (in capitals).
+	 * @param	int $size Number or rows. "1" makes a drop-down-list
 	 */
-	public function __construct($caption, $name, $value = null, $size = 1) {
+	public function __construct(string $caption, string $name, ?string $value = null, int $size = 1) {
 		parent::__construct($caption, $name, $value, $size);
 		$this->addOptionArray(self::getCountryList());
 	}
@@ -68,11 +77,11 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 	/**
 	 * Gets list of countries
 	 *
-	 * @return  array	 $country_list   list of countries
+	 * @return array $country_list list of countries
 	 */
-	static public function getCountryList() {
+	static public function getCountryList(): array {
 		icms_loadLanguageFile('core', 'countries');
-		$country_list = array (
+		$country_list = array(
 			""   => "-",
 			"AD" => _COUNTRY_AD,
 			"AE" => _COUNTRY_AE,
@@ -125,7 +134,6 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"CN" => _COUNTRY_CN,
 			"CO" => _COUNTRY_CO,
 			"CR" => _COUNTRY_CR,
-		//	"CS" => _COUNTRY_CS,	transitionally reserved
 			"CU" => _COUNTRY_CU,
 			"CV" => _COUNTRY_CV,
 			"CX" => _COUNTRY_CX,
@@ -150,7 +158,6 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"FM" => _COUNTRY_FM,
 			"FO" => _COUNTRY_FO,
 			"FR" => _COUNTRY_FR,
-		//	"FX" => _COUNTRY_FX,	exceptionally reserved
 			"GA" => _COUNTRY_GA,
 			"GB" => _COUNTRY_GB,
 			"GD" => _COUNTRY_GD,
@@ -245,7 +252,6 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"NO" => _COUNTRY_NO,
 			"NP" => _COUNTRY_NP,
 			"NR" => _COUNTRY_NR,
-		//	"NT" => _COUNTRY_NT,	transitionally reserved
 			"NU" => _COUNTRY_NU,
 			"NZ" => _COUNTRY_NZ,
 			"OM" => _COUNTRY_OM,
@@ -286,7 +292,6 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"SR" => _COUNTRY_SR,
 			"SS" => _COUNTRY_SS,
 			"ST" => _COUNTRY_ST,
-		//	"SU" => _COUNTRY_SU,	exceptionally reserved
 			"SV" => _COUNTRY_SV,
 			"SX" => _COUNTRY_SX,
 			"SY" => _COUNTRY_SY,
@@ -302,7 +307,6 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"TM" => _COUNTRY_TM,
 			"TN" => _COUNTRY_TN,
 			"TO" => _COUNTRY_TO,
-		//	"TP" => _COUNTRY_TP,	transitionally reserved
 			"TR" => _COUNTRY_TR,
 			"TT" => _COUNTRY_TT,
 			"TV" => _COUNTRY_TV,
@@ -310,7 +314,7 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"TZ" => _COUNTRY_TZ,
 			"UA" => _COUNTRY_UA,
 			"UG" => _COUNTRY_UG,
-			"UK" => _COUNTRY_UK,	//  Not listed in ISO 3166
+			"UK" => _COUNTRY_UK,
 			"UM" => _COUNTRY_UM,
 			"US" => _COUNTRY_US,
 			"UY" => _COUNTRY_UY,
@@ -326,16 +330,14 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"WS" => _COUNTRY_WS,
 			"YE" => _COUNTRY_YE,
 			"YT" => _COUNTRY_YT,
-		//	"YU" => _COUNTRY_YU,	transitionally reserved
 			"ZA" => _COUNTRY_ZA,
 			"ZM" => _COUNTRY_ZM,
-		//	"ZR" => _COUNTRY_ZR,	transitionally reserved
 			"ZW" => _COUNTRY_ZW
 		);
 		asort($country_list);
 		reset($country_list);
 		return $country_list;
 	}
-	
 }
 
+\class_alias(Country::class, 'icms_form_elements_select_Country');

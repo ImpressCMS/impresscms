@@ -1,85 +1,85 @@
-<?php
+<?PHP
 declare(strict_types=1);
-
-namespace Icms\Form\Elements\Select;
-
-use Icms\Form\Elements\Select as SelectElement;
-
 /**
- * Create a form element to select an image
+ * Creates a form attribute which is able to select an image
  *
  * from Mastop Go2 module v1.0 for XOOPS
  *
- ### =============================================================
- ### Mastop InfoDigital - Paixão por Internet
- ### =============================================================
- ### Classe para Colocar as imagens da biblioteca em um Select
- ### =============================================================
- ### @author Developer: Fernando Santos (topet05), fernando@mastop.com.br
- ### @Copyright: Mastop InfoDigital � 2003-2007
- ### -------------------------------------------------------------
- ### www.mastop.com.br
- ### =============================================================
+### =============================================================
+### Mastop InfoDigital - Paixão por Internet
+### =============================================================
+### Classe para Colocar as imagens da biblioteca em um Select
+### =============================================================
+### @author Developer: Fernando Santos (topet05), fernando@mastop.com.br
+### @Copyright: Mastop InfoDigital � 2003-2007
+### -------------------------------------------------------------
+### www.mastop.com.br
+### =============================================================
  *
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @version		$Id: Image.php 12340 2013-09-22 04:11:09Z skenow $
  */
+
+namespace Icms\Form\Elements\Select;
+
+use Icms\Form\Elements\Select as SelectElement;
+use Icms\Db\Criteria\Compo, Icms\Db\Criteria\Element,Icms\Db\Criteria\Item;
+
 defined('ICMS_ROOT_PATH') or die();
 
-class Image extends SelectElement
-{
+/**
+ * Create a form element to select an image
+ *
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ */
+class Image extends SelectElement {
 	/**
 	 * OptGroup
-	 *
 	 * @var array
+	 * @access	private
 	 */
-	private array $_optgroups = [];
+	private $_optgroups = array();
+	private $_optgroupsID = array();
 
 	/**
-	 * OptGroup IDs
+	 * Construtor
 	 *
-	 * @var array
+	 * @param	string	$caption
+	 * @param	string	$name
+	 * @param	mixed	  $value	Value for the Select attribute
+	 * @param	string	$cat    Name of the Category
 	 */
-	private array $_optgroupsID = [];
-
-	/**
-	 * Constructor
-	 *
-	 * @param string    $caption  Form field caption
-	 * @param string    $name     Field name
-	 * @param mixed     $value    Value for the Select element
-	 * @param int|mixed $cat      Category number or array of categories
-	 */
-	public function __construct(string $caption, string $name, $value = null, $cat = null)
-	{
+	public function __construct($caption, $name, $value = NULL, $cat = NULL) {
 		parent::__construct($caption, $name, $value);
 		$this->addOptGroupArray($this->getImageList($cat));
 	}
 
 	/**
-	 * Adds an optgroup
+	 * Add one option group
 	 *
-	 * @param array  $value  Options in the group
-	 * @param string $name   Name of the option group
+	 * @param	string  $value  opções do Grupo
+	 * @param	string  $name   Nome do Grupo de opções
 	 */
-	public function addOptGroup(array $value = [], string $name = '&nbsp;'): void
-	{
+	public function addOptGroup($value = array(), $name = "&nbsp;") {
 		$this->_optgroups[$name] = $value;
 	}
 
 	/**
-	 * Adds multiple optgroups
+	 * Add multiple Option groups
 	 *
-	 * @param array $options Array with name->options
+	 * @param	array   $options    Array com nome->opções
 	 */
-	public function addOptGroupArray(array $options): void
-	{
-		if (!empty($options)) {
-			foreach ($options as $k => $v) {
+	public function addOptGroupArray($options) {
+		if (is_array($options)) {
+			foreach ($options as $k=>$v) {
 				$this->addOptGroup($v, $k);
 			}
 		}
@@ -88,172 +88,123 @@ class Image extends SelectElement
 	/**
 	 * Gets the image list
 	 *
-	 * @param int|mixed $cat Category number or array of categories
-	 * @return array         The imagelist array
+	 * @param    mixed     $cat    category number or array of categories
+	 * @return   string    $ret    The imagelist string
 	 */
-	public function getImageList($cat = null): array
-	{
-		$ret = [];
-
-		// Get current user
-		if (!\xoops_user_isLoggedIn()) {
-			$groups = [XOOPS_GROUP_ANONYMOUS];
+	public function getImageList($cat = NULL) {
+		$ret = array();
+		if (!is_object(\icms::$user)) {
+			$group = array(XOOPS_GROUP_ANONYMOUS);
 		} else {
-			/** @var \Icms\User\UserHandler $userHandler */
-			$userHandler = \Icms::getHandler('user');
-			$currentMember = $userHandler->get(\xoops_user_get_uid());
-			$groups = $currentMember->getGroups();
+			$group =& \icms::$user->getGroups();
 		}
-
-		/** @var \Icms\Image\CategoryHandler $imgcatHandler */
-		$imgcatHandler = \Icms::getHandler('image_category');
-		$catlist = $imgcatHandler->getList($groups, 'imgcat_read', 1);
-
-		// Filter categories if array provided
-		if (is_array($cat) && !empty($catlist)) {
-			foreach ($catlist as $k => $v) {
-				if (!in_array($k, $cat, true)) {
+		$imgcat_handler = \icms::handler('icms_image_category');
+		$catlist =& $imgcat_handler->getList($group, 'imgcat_read', 1);
+		if (is_array($cat) && count($catlist) > 0) {
+			foreach ($catlist as $k=>$v) {
+				if (!in_array($k, $cat)) {
 					unset($catlist[$k]);
 				}
 			}
 		} elseif (is_int($cat)) {
-			$catlist = array_key_exists($cat, $catlist) ? [$cat => $catlist[$cat]] : [];
+			$catlist = array_key_exists($cat, $catlist) ? array($cat=>$catlist[$cat]) : array();
 		}
 
-		/** @var \Icms\Image\ImageHandler $imageHandler */
-		$imageHandler = \Icms::getHandler('image');
-
-		foreach ($catlist as $cid => $imgcat) {
-			$this->_optgroupsID[$imgcat] = $cid;
-			$criteria = new \Icms\Db\Criteria_Compo(new \Icms\Db\Criteria_Item('imgcat_id', $cid));
-			$criteria->add(new \Icms\Db\Criteria_Item('image_display', 1));
-			$total = $imageHandler->getCount($criteria);
-
+		$image_handler = \icms::handler('icms_image');
+		foreach ($catlist as $k=>$v) {
+			$this->_optgroupsID[$v] = $k;
+			$criteria = new Compo(new Item('imgcat_id', $k));
+			$criteria->add(new Item('image_display', 1));
+			$total = $image_handler->getCount($criteria);
 			if ($total > 0) {
+				$imgcat = $imgcat_handler->get($k);
 				$storetype = $imgcat->getVar('imgcat_storetype');
-				if ($storetype === 'db') {
-					$images = $imageHandler->getObjects($criteria, false, true);
+				if ($storetype == 'db') {
+					$images = $image_handler->getObjects($criteria, FALSE, TRUE);
 				} else {
-					$images = $imageHandler->getObjects($criteria, false, false);
+					$images = $image_handler->getObjects($criteria, FALSE, FALSE);
 				}
-
 				foreach ($images as $i) {
-					if ($storetype === 'db') {
-						$ret[$imgcat]["/image.php?id=" . $i->getVar('image_id')] = $i->getVar('image_nicename');
+					if ($storetype == "db"){
+						$ret[$v]["/image.php?id=" . $i->getVar('image_id')] = $i->getVar('image_nicename');
 					} else {
-						$categPath = $imgcatHandler->getCategFolder($imgcat);
-						$categPath = str_replace(\Icms\Http\Uri::getBaseUrl(), '', $categPath);
-						$path = (substr($categPath, -1) !== '/') ? $categPath . '/' : $categPath;
-						$ret[$imgcat][$path . $i->getVar('image_name')] = $i->getVar('image_nicename');
+						$categ_path = $imgcat_handler->getCategFolder($imgcat);
+						$categ_path = str_replace(ICMS_ROOT_PATH, '', $categ_path);
+						$path = (substr($categ_path,-1) != '/') ? $categ_path . '/' : $categ_path;
+						$ret[$v][$path . $i->getVar('image_name')] = $i->getVar('image_nicename');
 					}
 				}
 			} else {
-				$ret[$imgcat] = '';
+				$ret[$v] = "";
 			}
 		}
-
 		return $ret;
 	}
 
 	/**
 	 * Get Optgroups
 	 *
-	 * @return array Array of optgroups
+	 * @return	array   Array of optgroups
 	 */
-	public function getOptGroups(): array
-	{
+	public function getOptGroups() {
 		return $this->_optgroups;
 	}
 
 	/**
 	 * Get OptgroupIDs
 	 *
-	 * @return array Array of optgroup IDs
+	 * @return	array   Array of optgroupids
 	 */
-	public function getOptGroupsID(): array
-	{
+	public function getOptGroupsID() {
 		return $this->_optgroupsID;
 	}
 
 	/**
-	 * Renders the HTML for the select form element
-	 *
-	 * @return string The constructed select form element HTML
+	 * Renders the HTML for the select form attribute
+	 * @return   string    $ret    the constructed select form attribute HTML
 	 */
 	public function render(): string
 	{
-		// Get current user
-		if (!\xoops_user_isLoggedIn()) {
-			$groups = [XOOPS_GROUP_ANONYMOUS];
+		if (!is_object(\icms::$user)) {
+			$group = array(XOOPS_GROUP_ANONYMOUS);
 		} else {
-			/** @var \Icms\User\UserHandler $userHandler */
-			$userHandler = \Icms::getHandler('user');
-			$currentMember = $userHandler->get(\xoops_user_get_uid());
-			$groups = $currentMember->getGroups();
+			$group = \icms::$user->getGroups();
 		}
-
-		/** @var \Icms\Image\CategoryHandler $imgcatHandler */
-		$imgcatHandler = \Icms::getHandler('image_category');
-		$catlist = $imgcatHandler->getList($groups, 'imgcat_write', 1);
-		$catlistTotal = count($catlist);
+		$imgcat_handler = \icms::handler('icms_image_category');
+		$catlist = $imgcat_handler->getList($group, 'imgcat_write', 1);
+		$catlist_total = count($catlist);
 		$optIds = $this->getOptGroupsID();
-
-		$addImageInput = '';
-		if ($catlistTotal > 0) {
-			$browseUrl = \Icms\Http\Uri::getBaseUrl() . 'modules/system/admin/images/browser.php';
-			$addImageInput = ' <input type="button" value="' . _ADDIMAGE
-				. '" onclick="window.open(\''
-				. htmlspecialchars($browseUrl, ENT_QUOTES) . '?target='
-				. htmlspecialchars($this->getName(), ENT_QUOTES) . '\',\'formImage\',\'resizable=yes,scrollbars=yes,width=985,height=470,left='
-				. '(screen.availWidth/2-492)+\',top='
-				. '(screen.availHeight/2-235)+\'");return false;">';
+		$ret = "<select onchange='if(this.options[this.selectedIndex].value != \"\"){ document.getElementById(\""
+			. $this->getName() . "_img\").src=\"" . ICMS_URL . "\"+this.options[this.selectedIndex].value;}else{document.getElementById(\"" . $this->getName() . "_img\").src=\""
+			. ICMS_URL . "/images/blank.gif\";}'  size='" . $this->getSize() . "'" . $this->getExtra() . "";
+		if ($this->isMultiple() != false) {
+			$ret .= " name='" . $this->getName() . "[]' id='" . $this->getName() . "[]' multiple='multiple'>\n";
+		} else {
+			$ret .= " name='" . $this->getName() . "' id='" . $this->getName() . "'>\n";
 		}
-
-		$imagem = null;
-
-		$selectHtml = '<select onchange=\'if(this.options[this.selectedIndex].value != "") {'
-			. 'document.getElementById("'
-			. $this->getName() . '_img").src="'
-			. \Icms\Http\Uri::getBaseUrl()
-			. 'this.options[this.selectedIndex].value;}else{'
-			. 'document.getElementById("'
-			. $this->getName() . '_img").src="'
-			. \Icms\Http\Uri::getBaseUrl()
-			. '/images/blank.gif";}\' size="'
-			. $this->getSize()
-			. '"'
-			. $this->getExtra()
-			. '>'
-			. '<option value="">';
-		$selectHtml .= _SELECT . '</option>';
-
+		$ret .= "<option value=''>" . _SELECT . "</option>\n";
 		foreach ($this->getOptGroups() as $nome => $valores) {
-			$selectHtml .= '<optgroup id="img_cat_'
-				. $optIds[$nome] . '" label="' . htmlspecialchars($nome, ENT_QUOTES) . '">';
+			$ret .= '\n<optgroup id="img_cat_' . $optIds[$nome] . '" label="' . $nome . '">';
 			if (is_array($valores)) {
 				foreach ($valores as $value => $name) {
-					$selectHtml .= '<option value="'
-						. htmlspecialchars($value, ENT_QUOTES)
-						. '"';
-					if (!empty($this->getValue()) && in_array($value, $this->getValue(), true)) {
-						$selectHtml .= ' selected="selected"';
+					$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+					if (count($this->getValue()) > 0 && in_array($value, $this->getValue())) {
+						$ret .= " selected='selected'";
 						$imagem = $value;
 					}
-					$selectHtml .= '>' . htmlspecialchars($name, ENT_QUOTES) . '</option>';
+					$ret .= ">" . $name . "</option>\n";
 				}
 			}
-			$selectHtml .= '</optgroup>';
+			$ret .= '</optgroup>\n';
 		}
-
-		$selectHtml .= '</select>';
-		$selectHtml .= $addImageInput;
-		$selectHtml .= '<br />';
-		$selectHtml .= '<img id="' . htmlspecialchars($this->getName() . '_img', ENT_QUOTES)
-			. '" src="'
-			. (!empty($imagem) ? \Icms\Http\Uri::getBaseUrl() . $imagem : \Icms\Http\Uri::getBaseUrl() . '/images/blank.gif')
-			. '">';
-
-		return $selectHtml;
+		$browse_url = ICMS_URL."/modules/system/admin/images/browser.php";
+		$ret .= "</select>";
+		$ret .= ($catlist_total > 0)
+			? " <input type='button' value='" . _ADDIMAGE . "' onclick=\"window.open('$browse_url?target=" . $this->getName() . "','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">"
+			: "" ;
+		$ret .= "<br /><img id='" . $this->getName() . "_img' src='" . ((!empty($imagem)) ? ICMS_URL.$imagem : ICMS_URL . "/images/blank.gif") . "'>";
+		return $ret;
 	}
 }
-class_alias(Image::class, 'icms_form_elements_select_Image');
+
+\class_alias(Image::class, 'icms_form_elements_select_Image');
