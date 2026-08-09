@@ -42,7 +42,8 @@ declare(strict_types=1);
 
 namespace Icms\Form\Elements\Select;
 
-use Icms\Form\Elements\Select as TrayElement;
+use Icms\Form\Elements\Tray;
+use Icms\Form\Elements\Select;
 
 /**
  * A select box with available editors
@@ -55,7 +56,7 @@ use Icms\Form\Elements\Select as TrayElement;
  * @author		phppp (D.J.)
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class Editor extends TrayElement
+class Editor extends Tray
 {
 	/**
 	 * Constructor
@@ -75,8 +76,8 @@ class Editor extends TrayElement
 
 		parent::__construct(_SELECT);
 
-		/** @var \Icms\Editor\EditorHandler $editorHandler */
-		$editorHandler = \Icms::getHandler('editor');
+		/** @var \Icms\Form\Elements\Editor $editorHandler */
+		$editorHandler = \icms::getHandler('editor');
 		$edtlist = $editorHandler->getListByType();
 
 		$optionSelect = new Select('', $name, $value);

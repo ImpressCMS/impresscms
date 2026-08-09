@@ -23,16 +23,16 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
 declare(strict_types=1);
 
 namespace Icms\Form\Elements\Select;
 
-use icms_form_elements_Label as Label;
-use icms_form_elements_Tray as Tray;
+use Icms\Core\Security;
+use Icms\Db\Criteria\Item;
+use Icms\Form\Elements\Label;
+use Icms\Form\Elements\Tray;
+
+
 use Icms\Form\Elements\Select as SelectElement;
 
 /**
@@ -42,12 +42,6 @@ use Icms\Form\Elements\Select as SelectElement;
  *
  * @copyright	ImpressCMS Project
  * @license		GNU General Public License (GPL)
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @author		Kazumi Ono <onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class User extends Tray
 {
@@ -70,11 +64,11 @@ class User extends Tray
 		bool $includeAnon = false,
 		$value = null,
 		int $size = 1,
-		bool $multiple = false,
-		bool $showRemoved = false,
-		bool $justRemoved = false
+	bool $multiple = false,
+	bool $showRemoved = false,
+	bool $justRemoved = false
 	)
-	{
+{
 		$limit = 200;
 		$selectElement = new SelectElement('', $name, $value, $size, $multiple);
 
@@ -84,7 +78,6 @@ class User extends Tray
 			$selectElement->addOption('0', $anonymous ?? 'Anonymous');
 		}
 
-		/** @var \Icms\Member\MemberHandler $memberHandler */
 		$memberHandler = \icms::handler('icms_member');
 		$userCount = $memberHandler->getUserCount();
 
@@ -95,10 +88,10 @@ class User extends Tray
 		$value = array_values(array_map('intval', $value));
 
 		// Build criteria for user list
-		$criteria = new \Icms\Db\Criteria_Compo();
+		$criteria = new \Icms\Db\Criteria\Compo();
 		if ($userCount > $limit && count($value) > 0) {
 			$criteria->add(
-				new \Icms\Db\Criteria_Item('uid', '(' . implode(',', $value) . ')', 'IN')
+				new Item('uid', '(' . implode(',', $value) . ')', 'IN')
 			);
 		} else {
 			$criteria->setLimit($limit);
@@ -107,9 +100,9 @@ class User extends Tray
 
 		// Exclude removed users unless requested
 		if (!$showRemoved) {
-			$criteria->add(new \Icms\Db\Criteria_Item('level', '-1', '!='));
+			$criteria->add(new Item('level', '-1', '!='));
 		} elseif ($showRemoved && $justRemoved) {
-			$criteria->add(new \Icms\Db\Criteria_Item('level', '-1'));
+			$criteria->add(new Item('level', '-1'));
 		}
 		$criteria->setOrder('ASC');
 
@@ -132,22 +125,22 @@ class User extends Tray
 			new Label(
 				'',
 				"<a href='#' onclick='var sel = xoopsGetElementById(\"" .
-				$name . ($multiple ? '[]' : '') . "\");" .
-				"for (var i = sel.options.length-1; i >= 0; i--) {" .
-				"if (!sel.options[i].selected) {sel.options[i] = null;}}" .
-				"; return false;'>" .
-				$this->gettext('_MA_USER_REMOVE') . "</a>"
+					$name . ($multiple ? '[]' : '') . "\");" .
+					"for (var i = sel.options.length-1; i >= 0; i--) {" .
+					"if (!sel.options[i].selected) {sel.options[i] = null;}}" .
+					"; return false;'>" .
+					$this->gettext('_MA_USER_REMOVE') . "</a>"
 			)
 		);
 		$actionTray->addElement(
 			new Label(
 				'',
 				"<a href='#' onclick='openWithSelfMain(\"" .
-				\Icms\Http\Uri::getBaseUrl() .
-				"/include/findusers.php?target={$name}&multiple={$multiple}&token={$this->getSecurityToken()}\", " .
-				"userselect, 800, 600, null); return false;' >" .
-				$this->gettext('_MA_USER_MORE') . "</a> " .
-				$jsAddUsers
+					\Icms\Http\Uri::getBaseUrl() .
+					"/include/findusers.php?target={$name}&multiple={$multiple}&token={$this->getSecurityToken()}\", " .
+					"userselect, 800, 600, null); return false;' >" .
+					$this->gettext('_MA_USER_MORE') . "</a> " .
+					$jsAddUsers
 			)
 		);
 
@@ -163,8 +156,7 @@ class User extends Tray
 	 * @param bool   $multiple Is multiple selection enabled?
 	 * @return string JavaScript code
 	 */
-	private function getAddUsersScript(string $name, bool $multiple): string
-	{
+	private function getAddUsersScript(string $name, bool $multiple): string {
 		return '<script type="text/javascript">
 				function addusers(opts){
 					var num = opts.substring(0, opts.indexOf(":"));
@@ -201,9 +193,9 @@ class User extends Tray
 	 *
 	 * @return string Security token
 	 */
-	private function getSecurityToken(): string
-	{
-		return \Xoops\Core\Security::getToken();
+	private function getSecurityToken(): string {
+		return (new Security())->createToken();
 	}
 }
-class_alias(User::class, 'icms_form_elements_select_User');
+
+\class_alias(User::class, 'icms_form_elements_select_User');
