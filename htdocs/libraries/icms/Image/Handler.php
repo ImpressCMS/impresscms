@@ -1,0 +1,312 @@
+<?php
+declare(strict_types=1);
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
+/**
+ * Manage images
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Image
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
+ */
+
+namespace Icms\Image;
+
+use Icms\Db\Criteria;
+
+if (!defined('ICMS_ROOT_PATH')) {
+    die("ImpressCMS root path not defined");
+}
+
+/**
+ * Image handler class.
+ *
+ * This class is responsible for providing data access mechanisms to the data source
+ * of image class objects.
+ *
+ * @category	ICMS
+ * @package		Image
+ * @author		Kazumi Ono 	<onokazu@xoops.org>
+ * @copyright	Copyright (c) 2000 XOOPS.org
+ */
+class Handler extends \Icms\Core\EntityHandler {
+
+	/**
+	 * Create a new {@link \Icms\Image\Entity}
+	 *
+	 * @param   boolean $isNew  Flag the object as "new"
+	 * @return  object
+	 **/
+	public function create($isNew = true) {
+		$image = new Entity();
+		if ($isNew) {
+			$image->setNew();
+		}
+		return $image;
+	}
+
+	/**
+	 * Load a {@link \Icms\Image\Entity} object from the database
+	 *
+	 * @param   int     $id     ID
+	 * @param   boolean $getbinary
+	 * @return  object  {@link \Icms\Image\Entity}, FALSE on fail
+	 **/
+	public function get($id, $getbinary=true) {
+		$image = false;
+		$id = (int) $id;
+		if ($id > 0) {
+			$sql = "SELECT i.*, b.image_body FROM "
+				. $this->db->prefix('image') . " i LEFT JOIN "
+				. $this->db->prefix('imagebody')
+				. " b ON b.image_id=i.image_id WHERE i.image_id='" . $id . "'";
+			if (!$result = $this->db->query($sql)) {
+				return $image;
+			}
+			$numrows = $this->db->getRowsNum($result);
+			if ($numrows == 1) {
+				$image = new Entity();
+				$image->assignVars($this->db->fetchArray($result));
+			}
+		}
+		return $image;
+	}
+
+	/**
+	 * Write a {@link icms_image_Object} object to the database
+	 *
+	 * @param   $image {@link \Icms\Image\Entity}
+	 * @return  bool
+	 **/
+	public function insert($image) {
+		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
+		 * and is compatible with more versions of PHP. http://us2.php.net/manual/en/language.operators.type.php
+		 */
+		if (!is_a($image, Entity::class)) {
+			return false;
+		}
+
+		if (!$image->isDirty()) {
+			return true;
+		}
+		if (!$image->cleanVars()) {
+			return false;
+		}
+		foreach ( $image->cleanVars as $k => $v) {
+			${$k} = $v;
+		}
+		if ($image->isNew()) {
+			$image_id = $this->db->genId('image_image_id_seq');
+			$sql = sprintf(
+				"INSERT INTO %s (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES ('%u', %s, %s, %s, '%u', '%u', '%u', '%u')",
+				$this->db->prefix('image'),
+				(int) $image_id,
+				$this->db->quoteString($image_name),
+				$this->db->quoteString($image_nicename),
+				$this->db->quoteString($image_mimetype),
+				time(),
+				(int) $image_display,
+				(int) $image_weight,
+				(int) $imgcat_id
+			);
+			if (!$result = $this->db->queryF($sql)) {
+				return false;
+			}
+			if (empty($image_id)) {
+				$image_id = $this->db->getInsertId();
+			}
+			if (isset($image_body) && $image_body != '') {
+				$sql = sprintf(
+					"INSERT INTO %s (image_id, image_body) VALUES ('%u', %s)",
+					$this->db->prefix('imagebody'),
+					(int) ($image_id),
+					$this->db->quoteString($image_body)
+				);
+				if (!$result = $this->db->queryF($sql)) {
+					$sql = sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), (int) ($image_id));
+					$this->db->query($sql);
+					return false;
+				}
+			}
+			$image->assignVar('image_id', $image_id);
+		} else {
+			$sql = sprintf(
+				"UPDATE %s SET image_name = %s, image_nicename = %s, image_display = '%u', image_weight = '%u', imgcat_id = '%u' WHERE image_id = '%u'",
+				$this->db->prefix('image'),
+				$this->db->quoteString($image_name),
+				$this->db->quoteString($image_nicename),
+				(int) $image_display,
+				(int) $image_weight,
+				(int) $imgcat_id,
+				(int) $image_id
+			);
+			if (!$result = $this->db->queryF($sql)) {
+				return false;
+			}
+			if (isset($image_body) && $image_body != '') {
+				$sql = sprintf(
+					"UPDATE %s SET image_body = %s WHERE image_id = '%u'",
+					$this->db->prefix('imagebody'),
+					$this->db->quoteString($image_body),
+					(int) $image_id
+				);
+				if (!$result = $this->db->queryF($sql)) {
+					$this->db->query(sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), (int) $image_id));
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Delete an image from the database
+	 *
+	 * @param   \Icms\Image\Entity  $image {@link \Icms\Image\Entity}
+	 * @return  bool
+	 **/
+	public function delete($image) {
+		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
+		 * and is compatible with more versions of PHP. http://us2.php.net/manual/en/language.operators.type.php
+		 */
+		if (!is_a($image, \Icms\Image\Entity::class)) {
+			return false;
+		}
+
+		$id = (int) ($image->getVar('image_id'));
+		$sql = sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), $id);
+		if (!$result = $this->db->query($sql)) {
+			return false;
+		}
+		$sql = sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('imagebody'), $id);
+		$this->db->query($sql);
+		return true;
+	}
+
+	/**
+	 * Load {@link \Icms\Image\Entity} objects from the database
+	 *
+	 * @param null|\Icms\Db\Criteria\Item $criteria {@link \Icms\Db\Criteria\Item}
+	 * @param bool $id_as_key Use the ID as key into the array
+	 * @param bool $getbinary Get binary image?
+	 * @param bool|string $sql  Extra sql (unused; only used for compatibility function signature)
+	 * @param bool $debug Debug mode?
+	 *
+	 * @return Entity[]
+	 */
+	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false, $sql = false, $debug = false) {
+		$ret = array();
+		$limit = $start = 0;
+		if ($getbinary) {
+			$sql = "SELECT i.*, b.image_body FROM ".$this->db->prefix('image')." i LEFT JOIN ".$this->db->prefix('imagebody')." b ON b.image_id=i.image_id";
+		} else {
+			$sql = "SELECT * FROM ".$this->db->prefix('image');
+		}
+		if (isset($criteria) && $criteria instanceof Element) {
+			$sql .= " ".$criteria->renderWhere();
+			$sort = !in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))
+					? 'image_weight'
+					: $criteria->getSort();
+			$sql .= " ORDER BY " . $sort . " " . $criteria->getOrder();
+			$limit = $criteria->getLimit();
+			$start = $criteria->getStart();
+		}
+		if ($debug) {
+			\Icms\Core\Debug::message($sql);
+		}
+		$result = $this->db->query($sql, $limit, $start);
+		if (!$result) {
+			return $ret;
+		}
+		while ($myrow = $this->db->fetchArray($result)) {
+			$image = new \Icms\Image\Entity();
+			$image->assignVars($myrow);
+			if (!$id_as_key) {
+				$ret[] = &$image;
+			} else {
+				$ret[$myrow['image_id']] = &$image;
+			}
+			unset($image);
+		}
+		return $ret;
+	}
+
+	/**
+	 * Count some images
+	 *
+	 * @param   object  $criteria   {@link \Icms\Db\Criteria\Element}
+	 * @return  int
+	 **/
+	public function getCount($criteria = null): int
+	{
+		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('image');
+		if (isset($criteria) && $criteria instanceof \Icms\Db\Criteria\Element) {
+			$sql .= ' '.$criteria->renderWhere();
+		}
+		if (!$result = $this->db->query($sql)) {
+			return 0;
+		}
+		[$count] = $this->db->fetchRow($result);
+		return $count;
+	}
+
+	/**
+	 * Get a list of images
+	 *
+	 * @param int|null $imgcat_id Image category ID
+	 * @param bool|null|int $image_display List only displayed images?
+	 * @param int $notinuse Not use param (only added for fixing Declaration of Handler::getList($imgcat_id, $image_display = NULL, $notinuse1 = 0, $debug = false) should be compatible with icms_ipf_Handler::getList($criteria = NULL, $limit = 0, $start = 0, $debug = false) error)
+	 * @param bool $debug Enable debug mode?
+	 *
+	 * @return array Array of \Icms\Image\Entity
+	 * objects
+	 *
+	 * @todo Do better fix here for declaration compatibility
+	 */
+	public function getList($imgcat_id = null, $image_display = 0, $notinuse = 0, $debug = false) {
+		$criteria = new \Icms\Db\Criteria\Compo();
+		if ($imgcat_id !== null) {
+			$criteria->add(
+				new \Icms\Db\Criteria\Item('imgcat_id', (int) ($imgcat_id))
+			);
+		}
+		if ($image_display) {
+			$criteria->add(new \Icms\Db\Criteria\Item('image_display', (int) ($image_display)));
+		}
+		$images = $this->getObjects($criteria, false, true, false, true);
+		$ret = array();
+		foreach (array_keys($images) as $i) {
+			$ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');
+		}
+		return $ret;
+	}
+}
+
