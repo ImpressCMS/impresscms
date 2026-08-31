@@ -24,12 +24,17 @@ use WideImage\WideImage;
 
 icms_loadLanguageFile('system', 'images', true);
 
+/* CSRF Token */
+if (!icms::$security->check()) {
+	die(implode('<br />', icms::$security->getErrors()));
+}
+
 $icmsTpl = new icms_view_Tpl();
 
 /* set get and post filters, if not strings */
-$filter_get = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str', 'image_path' => 'str', 'image_name' => 'str', 'image_weight' => 'int', 'image_display' => 'int', 'image_temp' => 'str', 'overwrite' => 'int');
+$filter_get = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str', 'csrf_token' => 'str');
 
-$filter_post = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str');
+$filter_post = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str', 'csrf_token' => 'str');
 
 /* set default values for variables */
 
@@ -263,5 +268,10 @@ foreach ($plugins_arr as $plugin_folder) {
 		unset($plugversion);
 	}
 }
+
+/* CSRF Token */
+echo icms::$security->getTokenHTML();
+$csrf_token = icms::$security->createToken();
+$icmsTpl->assign('csrf_token', $csrf_token);
 
 echo $icmsTpl->fetch(ICMS_LIBRARIES_PATH . '/image-editor/templates/image-editor.html');

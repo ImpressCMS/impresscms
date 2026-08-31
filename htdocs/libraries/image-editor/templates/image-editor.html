@@ -13,6 +13,10 @@
 </head>
 <body onresize="resizePanels();" onload="resizePanels();">
   <div id="pageContent">
+    {literal}
+    <!-- CSRF Token -->
+    <input type="hidden" name="csrf_token" value="<{$csrf_token}>">
+{/literal}
     <div id="dhtmlgoodies_xpPane">
 	  <div class="dhtmlgoodies_panel">
 	    <div>
@@ -72,16 +76,17 @@
 		      </tr>
 		    </table>
 		    </div>
-            <div id="cropButtonCell" colspan="2" align="center" style="margin-top:5px;">
-              <input type="button" onclick="save_edit()" value="<{$smarty.const._SUBMIT}>">
-              <input type="button" onclick="cancel_edit()" value="<{$smarty.const._CANCEL}>" />
-                  
-              <input type="hidden" id="soverwrite" value="1">
-              <input type="hidden" id="save_img_id" value="<{$image.id}>">
-              <input type="hidden" id="save_img_tempname" value="<{$image.name}>">
-              <input type="hidden" id="save_img_path" value="<{$image.path}>">
-              <input type="hidden" id="save_img_url" value="<{$image.url}>">
-            </div>
+             <div id="cropButtonCell" colspan="2" align="center" style="margin-top:5px;">
+               <input type="button" onclick="save_edit()" value="<{$smarty.const._SUBMIT}>" />
+               <input type="button" onclick="cancel_edit()" value="<{$smarty.const._CANCEL}>" />
+                   
+               <input type="hidden" id="soverwrite" value="1">
+               <input type="hidden" id="save_img_id" value="<{$image.id}>">
+               <input type="hidden" id="save_img_tempname" value="<{$image.name}>">
+               <input type="hidden" id="save_img_path" value="<{$image.path}>">
+               <input type="hidden" id="save_img_url" value="<{$image.url}>" />
+               <input type="hidden" name="csrf_token" value="<{$csrf_token}>">
+             </div>
           <!-- End content -->
         </div>		
       </div>

@@ -286,40 +286,45 @@
    
    var ScriptAjaxObjects = new Array();
    
-   function cancel_edit(){
-   	var ajaxIndex = cropScriptAjaxObjects.length;
-   	startProgressBar();
-   	cropScriptAjaxObjects[ajaxIndex] = new sack();
-   	var url = script_server_file + '?op=cancel&image_path=' + document.getElementById('save_img_path').value;
+    function cancel_edit(){
+    	var ajaxIndex = cropScriptAjaxObjects.length;
+    	startProgressBar();
+    	cropScriptAjaxObjects[ajaxIndex] = new sack();
+    	var url = script_server_file + '?op=cancel&image_path=' + document.getElementById('save_img_path').value + '&csrf_token=' + getCSRFToken();
 
-   	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
-   	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){
-   		eval(cropScriptAjaxObjects[ajaxIndex].response)
-   		cropScriptAjaxObjects[ajaxIndex] = false;
-   		hideProgressBar();
-   	};	// Specify function that will be executed after file has been found
-   	cropScriptAjaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function
-   }
-   
-   function save_edit(){
-   	var ajaxIndex = cropScriptAjaxObjects.length;
-   	startProgressBar();
-   	cropScriptAjaxObjects[ajaxIndex] = new sack();
-   	var url = script_server_file + '?op=save&image_id=' + document.getElementById('save_img_id').value
-   	+'&image_temp=' + document.getElementById('save_img_tempname').value
-   	+'&image_name=' + document.getElementById('save_img_name').value
-   	+'&image_weight=' + document.getElementById('save_img_weight').value
-   	+'&image_display=' + document.getElementById('save_img_display').value
-   	+'&overwrite=' + document.getElementById('soverwrite').value;
+    	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
+    	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){
+    		eval(cropScriptAjaxObjects[ajaxIndex].response)
+    		cropScriptAjaxObjects[ajaxIndex] = false;
+    		hideProgressBar();
+    	};	// Specify function that will be executed after file has been found
+    	cropScriptAjaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function
+    }
 
-   	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
-   	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){
-   		eval(cropScriptAjaxObjects[ajaxIndex].response)
-   		cropScriptAjaxObjects[ajaxIndex] = false;
-   		hideProgressBar();
-   	};	// Specify function that will be executed after file has been found
-   	cropScriptAjaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function
-   }
+    function save_edit(){
+    	var ajaxIndex = cropScriptAjaxObjects.length;
+    	startProgressBar();
+    	cropScriptAjaxObjects[ajaxIndex] = new sack();
+    	var url = script_server_file + '?op=save&image_id=' + document.getElementById('save_img_id').value
+    	+'&image_temp=' + document.getElementById('save_img_tempname').value
+    	+'&image_name=' + document.getElementById('save_img_name').value
+    	+'&image_weight=' + document.getElementById('save_img_weight').value
+    	+'&image_display=' + document.getElementById('save_img_display').value
+    	+'&overwrite=' + document.getElementById('soverwrite').value
+    	+'&csrf_token=' + getCSRFToken();
+
+    	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
+    	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){
+    		eval(cropScriptAjaxObjects[ajaxIndex].response)
+    		cropScriptAjaxObjects[ajaxIndex] = false;
+    		hideProgressBar();
+    	};	// Specify function that will be executed after file has been found
+    	cropScriptAjaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function
+    }
+
+    function getCSRFToken(){
+    	return document.getElementsByName('csrf_token')[0] ? document.getElementsByName('csrf_token')[0].value : '';
+    }
    
 function overpanel(value){
 	panel = document.getElementById('overpanel');
