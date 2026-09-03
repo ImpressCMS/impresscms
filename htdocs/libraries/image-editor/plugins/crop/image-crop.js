@@ -345,7 +345,8 @@ function cropScript_saveCrop(buttonObj)
 	+ '&width=' + document.getElementById('input_crop_width').value
 	+ '&height=' + document.getElementById('input_crop_height').value
 	+ '&percentSize=' + document.getElementById('crop_percent_size').value
-	+ '&save=1';
+	+ '&save=1'
+	+ '&csrf_token=' + getCSRFToken();
 
 	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){ cropScript_cropCompleted(ajaxIndex,buttonObj); };	// Specify function that will be executed after file has been found
@@ -365,7 +366,8 @@ function cropScript_cancelCrop(buttonObj)
 	+ '&width=' + document.getElementById('input_crop_width').value
 	+ '&height=' + document.getElementById('input_crop_height').value
 	+ '&percentSize=' + document.getElementById('crop_percent_size').value
-	+ '&cancel=1';
+	+ '&cancel=1'
+	+ '&csrf_token=' + getCSRFToken();
     
 	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){ cropScript_cropCompleted(ajaxIndex,buttonObj); };	// Specify function that will be executed after file has been found
@@ -377,7 +379,8 @@ function crop_delpreview(){
 	cropScriptAjaxObjects[ajaxIndex] = new sack();
 	var url = crop_script_server_file + '?image_path=' + document.getElementById('fimage_path').value
 	+ '&image_url=' + document.getElementById('fimage_url').value
-	+ '&delprev=1';
+	+ '&delprev=1'
+	+ '&csrf_token=' + getCSRFToken();
 
 	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){ 	

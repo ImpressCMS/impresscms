@@ -91,6 +91,7 @@
       <div id="imageContainer"><img src="<{$image.previewurl}>"></div>
     </div>
   </div>
+  <input type="hidden" name="csrf_token" id="csrf_token" value="<{$csrf_token}>" />
 
 <script type="text/javascript">
 initDhtmlgoodies_xpPane(Array('<{$smarty.const._IMGDETAILS}>'<{foreach item=plugin from=$plugins}>,'<div style="background:url(<{$icms_lib_url}>/image-editor/plugins/<{$plugin.folder}>/<{$plugin.icon}>) no-repeat center left; padding-left: 20px;"><{$plugin.name}></div>'<{/foreach}>,'<{$smarty.const._OPTIONS}>'),Array(true<{foreach item=plugin from=$plugins}>,false<{/foreach}>,true),Array());

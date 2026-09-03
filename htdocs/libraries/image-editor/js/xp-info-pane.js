@@ -285,12 +285,23 @@
    }
    
    var ScriptAjaxObjects = new Array();
+
+   function getCSRFToken()
+   {
+   	var csrfTokenField = document.getElementById('csrf_token');
+   	if (!csrfTokenField || !csrfTokenField.value) {
+   		return '';
+   	}
+
+   	return encodeURIComponent(csrfTokenField.value);
+   }
    
    function cancel_edit(){
    	var ajaxIndex = cropScriptAjaxObjects.length;
    	startProgressBar();
    	cropScriptAjaxObjects[ajaxIndex] = new sack();
-   	var url = script_server_file + '?op=cancel&image_path=' + document.getElementById('save_img_path').value;
+   	var url = script_server_file + '?op=cancel&image_path=' + document.getElementById('save_img_path').value
+   	+ '&csrf_token=' + getCSRFToken();
 
    	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
    	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){
@@ -310,7 +321,8 @@
    	+'&image_name=' + document.getElementById('save_img_name').value
    	+'&image_weight=' + document.getElementById('save_img_weight').value
    	+'&image_display=' + document.getElementById('save_img_display').value
-   	+'&overwrite=' + document.getElementById('soverwrite').value;
+   	+'&overwrite=' + document.getElementById('soverwrite').value
+   	+'&csrf_token=' + getCSRFToken();
 
    	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
    	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){

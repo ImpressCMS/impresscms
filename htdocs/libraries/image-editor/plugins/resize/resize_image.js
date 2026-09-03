@@ -8,7 +8,8 @@ function resize_preview(buttonObj){
 	var url = resize_script_server_file + '?image_path=' + xoopsGetElementById('fimage_path').value
 	+ '&image_url=' + xoopsGetElementById('fimage_url').value
 	+ '&width=' + xoopsGetElementById('resize_width').value
-	+ '&height=' + xoopsGetElementById('resize_height').value;
+	+ '&height=' + xoopsGetElementById('resize_height').value
+	+ '&csrf_token=' + getCSRFToken();
 
 	resizeScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	resizeScriptAjaxObjects[ajaxIndex].onCompletion = function(){ resizeCompleted(ajaxIndex,buttonObj); };	// Specify function that will be executed after file has been found
@@ -25,7 +26,8 @@ function resize_save(buttonObj)
 	+ '&image_url=' + xoopsGetElementById('fimage_url').value
 	+ '&width=' + xoopsGetElementById('resize_width').value
 	+ '&height=' + xoopsGetElementById('resize_height').value
-	+ '&save=1';
+	+ '&save=1'
+	+ '&csrf_token=' + getCSRFToken();
 
 	resizeScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	resizeScriptAjaxObjects[ajaxIndex].onCompletion = function(){ resizeCompleted(ajaxIndex,buttonObj); };	// Specify function that will be executed after file has been found
@@ -37,7 +39,8 @@ function resize_delpreview(){
 	resizeScriptAjaxObjects[ajaxIndex] = new sack();
 	var url = resize_script_server_file + '?image_path=' + xoopsGetElementById('fimage_path').value
 	+ '&image_url=' + xoopsGetElementById('fimage_url').value
-	+ '&delprev=1';
+	+ '&delprev=1'
+	+ '&csrf_token=' + getCSRFToken();
 
 	resizeScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	resizeScriptAjaxObjects[ajaxIndex].onCompletion = function(){ 	

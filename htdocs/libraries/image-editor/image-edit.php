@@ -27,11 +27,12 @@ icms_loadLanguageFile('system', 'images', true);
 $icmsTpl = new icms_view_Tpl();
 
 /* set get and post filters, if not strings */
-$filter_get = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str', 'image_path' => 'str', 'image_name' => 'str', 'image_weight' => 'int', 'image_display' => 'int', 'image_temp' => 'str', 'overwrite' => 'int');
+$filter_get = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str', 'image_path' => 'str', 'image_name' => 'str', 'image_weight' => 'int', 'image_display' => 'int', 'image_temp' => 'str', 'overwrite' => 'int', 'csrf_token' => 'str');
 
-$filter_post = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str');
+$filter_post = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str', 'csrf_token' => 'str');
 
 /* set default values for variables */
+$csrf_token = '';
 
 /* filter the user input */
 if (!empty($_GET)) {
@@ -73,6 +74,10 @@ if (!empty($target) && !empty($type)) {
 }
 
 if (!empty($op) && $op == 'cancel') {
+	if (!icms::$security->check(false, $csrf_token)) {
+		die(implode('<br />', icms::$security->getErrors()));
+	}
+
 	/* make sure the file is in the temp folder and prevent arbitrary deletes of any file */
 	$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
 	if (!empty($image_path) && strncmp(realpath($image_path), $image_path, strlen($valid_path)) == 0) {
@@ -109,6 +114,10 @@ if (!empty($op) && $op == 'cancel') {
 	exit();
 }
 if (!empty($op) && $op == 'save') {
+	if (!icms::$security->check(false, $csrf_token)) {
+		die(implode('<br />', icms::$security->getErrors()));
+	}
+
 	$simage_id = $image_id;
 	$simage_name = $image_name;
 	$simage_weight = $image_weight;
@@ -250,6 +259,8 @@ $img['ori_height'] = $orig_img->getHeight();
 $img['ori_size'] = icms_convert_size(filesize(ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $orig_img_name));
 
 $icmsTpl->assign('image', $img);
+$csrf_token = icms::$security->createToken();
+$icmsTpl->assign('csrf_token', $csrf_token);
 
 # Getting the plugins for the editor
 $plugins_arr = icms_core_Filesystem::getDirList(ICMS_LIBRARIES_PATH . '/image-editor/plugins');

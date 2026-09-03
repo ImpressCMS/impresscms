@@ -13,6 +13,10 @@ $xoopsOption['nodebug'] = 1;
 require_once '../../../../mainfile.php';
 use WideImage\WideImage;
 
+if (!icms::$security->check(false, filter_input(INPUT_GET, 'csrf_token', FILTER_SANITIZE_STRING))) {
+	die(implode('<br />', icms::$security->getErrors()));
+}
+
 /* 2 critical parameters must exist - and must be safe */
 $image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
 $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
