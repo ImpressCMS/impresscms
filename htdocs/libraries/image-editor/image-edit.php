@@ -24,6 +24,11 @@ use WideImage\WideImage;
 
 icms_loadLanguageFile('system', 'images', true);
 
+/* CSRF Token */
+if (!icms::$security->check()) {
+	die(implode('<br />', icms::$security->getErrors()));
+}
+
 $icmsTpl = new icms_view_Tpl();
 
 /* set get and post filters, if not strings */
@@ -274,5 +279,10 @@ foreach ($plugins_arr as $plugin_folder) {
 		unset($plugversion);
 	}
 }
+
+/* CSRF Token */
+echo icms::$security->getTokenHTML();
+$csrf_token = icms::$security->createToken();
+$icmsTpl->assign('csrf_token', $csrf_token);
 
 echo $icmsTpl->fetch(ICMS_LIBRARIES_PATH . '/image-editor/templates/image-editor.html');
