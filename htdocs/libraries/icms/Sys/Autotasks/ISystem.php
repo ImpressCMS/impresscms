@@ -8,6 +8,8 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @version		SVN: $Id:ISystem.php 19775 2010-07-11 18:54:25Z malanciault $
  */
+namespace Icms\Sys\Autotasks;
+
 /**
  * ImpressCMS AUTOTASKSs Library - icms_sys_autotasks_ISystem interface
  *
@@ -17,7 +19,7 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-interface icms_sys_autotasks_ISystem {
+interface ISystem {
 
 	/**
 	 * check if can run

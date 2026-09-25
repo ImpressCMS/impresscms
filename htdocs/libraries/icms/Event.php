@@ -1,4 +1,6 @@
 <?php
+namespace Icms;
+
 /**
  * icms_Event class definition
  *
@@ -9,7 +11,7 @@
  * @version		SVN: $Id$
  */
 
-class icms_Event {
+class Event {
 	/**
 	 * Registered event handlers
 	 * @var array
@@ -88,7 +90,7 @@ class icms_Event {
 			$cancancel = true;
 			$name = substr($name, 1);
 		}
-		$event = new icms_Event($namespace, $name, $source, $parameters, $cancancel);
+		$event = new \Icms\Event($namespace, $name, $source, $parameters, $cancancel);
 		array_unshift(self::$events, $event);
 		foreach (array("*", $name) as $handlers) {
 			if (isset(self::$handlers[$namespace][$handlers])) {

@@ -10,14 +10,16 @@
  * @author		MekDrop <mekdrop@gmail.com>
  * @version		SVN: $Id:System.php 19775 2010-07-11 18:54:25Z malanciault $
  */
+namespace Icms\Sys\Autotasks;
+
 /**
  *
  *
  * @category	ICMS
  * @package		Autotasks
  */
-abstract class icms_sys_autotasks_System
-implements icms_sys_autotasks_ISystem  {
+abstract class System
+implements \Icms\Sys\Autotasks\ISystem  {
 
 	/**
 	 *
