@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Icms\Messaging;
 
 // $Id: Handler.php 12313 2013-09-15 21:14:35Z skenow $

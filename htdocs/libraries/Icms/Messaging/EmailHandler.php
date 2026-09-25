@@ -11,8 +11,6 @@
  * @author      Jochen Bünagel (job@buennagel.com)
  */
 
-declare(strict_types=1);
-
 namespace Icms\Messaging;
 
 use PHPMailer\PHPMailer\PHPMailer;
