@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -65,7 +64,7 @@ class Entity extends \Icms\Core\Entity {
 	 * @var	array
 	 * @access	private
 	 */
-	private $confOptions = array();
+	public $_confOptions = array();
 
 	/**
 	 * Constructor
@@ -167,7 +166,7 @@ class Entity extends \Icms\Core\Entity {
 			}
 		} else {
 			if (is_object($option)) {
-				$this->confOptions[] =& $option;
+				$this->_confOptions[] =& $option;
 			}
 		}
 	}
@@ -178,7 +177,7 @@ class Entity extends \Icms\Core\Entity {
 	 * @return	array   array of {@link icms_config_Item_ObjectOption}
 	 */
 	public function &getConfOptions() {
-		return $this->confOptions;
+		return $this->_confOptions;
 	}
 
 	/**
