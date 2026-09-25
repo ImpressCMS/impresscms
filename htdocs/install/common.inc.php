@@ -196,56 +196,9 @@ unset($_icms_vendor_autoload);
  * VENDOR_MOVED session flag so this works even when the session flag is absent.
  */
 if ($_icms_vendor_from_trustpath) {
-	$__icms_fallback_lib = realpath(__DIR__ . "/../libraries");
-	if ($__icms_fallback_lib !== false) {
-		spl_autoload_register(
-			static function (string $class) use ($__icms_fallback_lib): void {
-				// Classmap: the bare "icms" abstract base class (libraries/icms.php)
-				if ($class === "icms") {
-					$file =
-						$__icms_fallback_lib . DIRECTORY_SEPARATOR . "icms.php";
-					if (is_file($file)) {
-						require_once $file;
-					}
-					return;
-				}
-
-				// PSR-0: icms_core_Password  →  libraries/icms/core/Password.php
-				if (strncmp($class, "icms_", 5) === 0) {
-					$file =
-						$__icms_fallback_lib .
-						DIRECTORY_SEPARATOR .
-						str_replace("_", DIRECTORY_SEPARATOR, $class) .
-						".php";
-					if (is_file($file)) {
-						require_once $file;
-					}
-					return;
-				}
-
-				// PSR-4: Icms\Core\Password  →  libraries/Icms/Core/Password.php
-				if (strncmp($class, "Icms\\", 5) === 0) {
-					$file =
-						$__icms_fallback_lib .
-						DIRECTORY_SEPARATOR .
-						"Icms" .
-						DIRECTORY_SEPARATOR .
-						str_replace(
-							"\\",
-							DIRECTORY_SEPARATOR,
-							substr($class, 5),
-						) .
-						".php";
-					if (is_file($file)) {
-						require_once $file;
-					}
-				}
-			},
-			true, // throw  (required SPL signature argument)
-			true, // prepend – run BEFORE Composer's broken autoloader
-		);
-	}
-	unset($__icms_fallback_lib);
+	// libraries/Autoloader.php resolves the "icms" kernel class, legacy icms_* names
+	// (via libraries/Icms/aliases.php) and Icms\ classes from htdocs/libraries.
+	require_once realpath(__DIR__ . "/../libraries") . "/Autoloader.php";
 }
 unset($_icms_vendor_from_trustpath);
 

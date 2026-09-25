@@ -124,47 +124,10 @@ unset($_icms_autoload);
 //   "icms_*"   (PSR-0 style)     →  libraries/<underscore/separated/path>.php
 //   "Icms\*"   (PSR-4 style)     →  libraries/Icms/<Namespace/Path>.php
 if ($_icms_autoload_from_trustpath) {
-	$_icms_root_lib = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "libraries";
-	spl_autoload_register(
-		static function (string $class) use ($_icms_root_lib): void {
-			// Classmap: bare "icms" abstract base class → libraries/icms.php
-			if ($class === "icms") {
-				$file = $_icms_root_lib . DIRECTORY_SEPARATOR . "icms.php";
-				if (is_file($file)) {
-					require_once $file;
-				}
-				return;
-			}
-			// PSR-0: icms_core_DataFilter → libraries/icms/core/DataFilter.php
-			if (strncmp($class, "icms_", 5) === 0) {
-				$file =
-					$_icms_root_lib .
-					DIRECTORY_SEPARATOR .
-					str_replace("_", DIRECTORY_SEPARATOR, $class) .
-					".php";
-				if (is_file($file)) {
-					require_once $file;
-				}
-				return;
-			}
-			// PSR-4: Icms\Core\DataFilter → libraries/Icms/Core/DataFilter.php
-			if (strncmp($class, "Icms\\", 5) === 0) {
-				$file =
-					$_icms_root_lib .
-					DIRECTORY_SEPARATOR .
-					"Icms" .
-					DIRECTORY_SEPARATOR .
-					str_replace("\\", DIRECTORY_SEPARATOR, substr($class, 5)) .
-					".php";
-				if (is_file($file)) {
-					require_once $file;
-				}
-			}
-		},
-		true, // throw  (required SPL signature argument)
-		true, // prepend – run BEFORE Composer's broken path resolution
-	);
-	unset($_icms_root_lib);
+	// libraries/Autoloader.php resolves the "icms" kernel class, legacy icms_* names
+	// (via libraries/Icms/aliases.php) and Icms\ classes from ICMS_ROOT_PATH. Loading it
+	// here guarantees it is registered even when vendor/ lives in the trust path.
+	require_once ICMS_ROOT_PATH . "/libraries/Autoloader.php";
 }
 unset($_icms_autoload_from_trustpath);
 
