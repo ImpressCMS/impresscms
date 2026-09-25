@@ -12,8 +12,6 @@
  * @version     SVN: $Id: Handler.php 12368 2013-11-17 04:04:28Z skenow $
  */
 
-declare(strict_types=1);
-
 namespace Icms\Preload;
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
