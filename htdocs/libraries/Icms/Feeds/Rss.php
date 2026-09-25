@@ -81,7 +81,7 @@ class Rss
         \icms::$logger->disableLogger();
 
         $xoopsOption['template_main'] = "db:system_rss.html";
-        $tpl = new \icms_view_Tpl();
+        $tpl = new \Icms\View\Tpl();
 
         $tpl->assign('channel_title', $this->title);
         $tpl->assign('channel_link', $this->url);
@@ -104,4 +104,3 @@ class Rss
     }
 }
 
-\class_alias(Rss::class, 'icms_feeds_Rss');

@@ -54,4 +54,3 @@ class Simplerss extends SimplePie
     }
 }
 
-\class_alias(Simplerss::class, 'icms_feeds_Simplerss');
