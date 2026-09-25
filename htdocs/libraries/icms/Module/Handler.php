@@ -37,6 +37,8 @@
  * @version	$Id: Handler.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
+namespace Icms\Module;
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
 
 /**
@@ -50,7 +52,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_module_Handler extends icms_core_ObjectHandler
+class Handler extends \Icms\Core\EntityHandler
 {
 	/**
 	 * holds an array of cached module references, indexed by module dirname
@@ -76,7 +78,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 	 */
 	public function &create($isNew = true)
 	{
-		$module = new icms_module_Object();
+		$module = new \Icms\Module\Entity();
 		if ($isNew) {
 			$module->setNew();
 		}
@@ -117,7 +119,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 				}
 				$numrows = $this->db->getRowsNum($result);
 				if ($numrows == 1) {
-					$module = new icms_module_Object();
+					$module = new \Icms\Module\Entity();
 					$myrow = $this->db->fetchArray($result);
 					$module->assignVars($myrow);
 					// load module config
@@ -166,7 +168,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$module = new icms_module_Object();
+				$module = new \Icms\Module\Entity();
 				$myrow = $this->db->fetchArray($result);
 				$module->assignVars($myrow);
 				// load module config
@@ -200,7 +202,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 			$module->getVar("hascomments") == 1 ||
 			$module->getVar("hasnotification") == 1
 		) {
-			$module->config = icms::$config->getConfigsByCat(
+			$module->config = \icms::$config->getConfigsByCat(
 				0,
 				$module->getVar("mid"),
 			);
@@ -214,7 +216,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 	 * @param   object  &$module reference to a {@link icms_module_Object}
 	 * @return  bool
 	 */
-	public function insert(&$module)
+	public function insert($module)
 	{
 		if (get_class($module) != "icms_module_Object") {
 			return false;
@@ -288,7 +290,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 	 * @param   object  &$module {@link icms_module_Object}
 	 * @return  bool
 	 */
-	public function delete(&$module)
+	public function delete($module)
 	{
 		if (get_class($module) != "icms_module_Object") {
 			return false;
@@ -404,7 +406,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$module = new icms_module_Object();
+			$module = new \Icms\Module\Entity();
 			$module->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] = $module;
@@ -479,7 +481,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 	public static function getAvailable()
 	{
 		$dirtyList = $cleanList = [];
-		$dirtyList = icms_core_Filesystem::getDirList(ICMS_MODULES_PATH . "/");
+		$dirtyList = \Icms\Core\Filesystem::getDirList(ICMS_MODULES_PATH . "/");
 		foreach ($dirtyList as $item) {
 			if (
 				file_exists(
@@ -508,9 +510,9 @@ class icms_module_Handler extends icms_core_ObjectHandler
 	 */
 	public static function getActive()
 	{
-		$module_handler = new self(icms::$xoopsDB);
-		$criteria = new icms_db_criteria_Compo(
-			new icms_db_criteria_Item("isactive", 1),
+		$module_handler = new self(\icms::$xoopsDB);
+		$criteria = new \Icms\Db\Criteria\Compo(
+			new \Icms\Db\Criteria\Item("isactive", 1),
 		);
 		return $module_handler->getList($criteria, true);
 	}
@@ -530,7 +532,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 			$url_arr = explode("/", strstr($_SERVER["PHP_SELF"], "/modules/"));
 			if (isset($url_arr[2])) {
 				/* @var $module icms_module_Object */
-				$module = icms::handler("icms_module")->getByDirname(
+				$module = \icms::handler("icms_module")->getByDirname(
 					$url_arr[2],
 					true,
 				);
@@ -558,25 +560,25 @@ class icms_module_Handler extends icms_core_ObjectHandler
 	 */
 	public static function checkModuleAccess($module, $inAdmin = false)
 	{
-		if ($inAdmin && !icms::$user) {
+		if ($inAdmin && !\icms::$user) {
 			return false;
 		}
 		/* @var $perm_handler icms_member_groupperm_Handler */
-		$perm_handler = icms::handler("icms_member_groupperm");
+		$perm_handler = \icms::handler("icms_member_groupperm");
 		if ($inAdmin) {
 			if (!$module) {
 				// We are in /admin.php
-				return icms::$user->isAdmin(-1);
+				return \icms::$user->isAdmin(-1);
 			} else {
 				return $perm_handler->checkRight(
 					"module_admin",
 					$module->getVar("mid"),
-					icms::$user->getGroups(),
+					\icms::$user->getGroups(),
 				);
 			}
 		} elseif ($module) {
-			$groups = icms::$user
-				? icms::$user->getGroups()
+			$groups = \icms::$user
+				? \icms::$user->getGroups()
 				: ICMS_GROUP_ANONYMOUS;
 			return $perm_handler->checkRight(
 				"module_read",
