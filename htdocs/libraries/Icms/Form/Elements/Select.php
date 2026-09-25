@@ -27,7 +27,6 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-declare(strict_types=1);
 namespace Icms\Form\Elements;
 
 use Icms\Form\Element;
@@ -98,11 +97,11 @@ class Select extends Element
      * @param bool $multiple Allow multiple selections?
      */
     public function __construct(
-        string $caption,
-        string $name,
+        $caption,
+        $name,
         $value = null,
-        int $size = 1,
-        bool $multiple = false
+        $size = 1,
+        $multiple = false
     ) {
         $this->setCaption($caption);
         $this->setName($name);
@@ -251,7 +250,3 @@ class Select extends Element
         return $ret;
     }
 }
-
-/**
- * Legacy class alias for backward compatibility
- */

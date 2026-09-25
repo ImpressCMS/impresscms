@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -119,7 +118,3 @@ class Theme extends Base
 		return $ret;
 	}
 }
-
-/**
- * Legacy class alias for backward compatibility
- */

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -62,7 +61,7 @@ class Date extends \Icms\Form\Elements\Text {
      * @param int		$size
      * @param int		$value
      */
-    public function __construct(string $caption, string $name, int $size = 15, int $value= 0) {
+    public function __construct($caption, $name, $size = 15, $value= 0) {
         $value = !is_numeric($value) ? time() : (int) ($value);
         parent::__construct($caption, $name, $size, 25, $value);
     }

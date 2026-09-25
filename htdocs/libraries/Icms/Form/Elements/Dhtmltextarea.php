@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -83,7 +82,7 @@ class Dhtmltextarea extends \Icms\Form\Elements\Textarea {
 	 * @param	int	 $cols	   Number of columns
 	 * @param	string  $hiddentext Hidden Text
 	 */
-	public function __construct(string $caption, string $name, string $value, int $rows=5, int $cols=50, string $hiddentext="xoopsHiddenText", array $options = []) {
+	public function __construct($caption, $name, $value, $rows=5, $cols=50, $hiddentext="xoopsHiddenText", $options = []) {
 		parent::__construct($caption, $name, $value, $rows, $cols);
 		$this->_hiddenText = $hiddentext;
 		global $icmsConfig;

@@ -1,5 +1,4 @@
 <?PHP
-declare(strict_types=1);
 /**
  * Creates a form attribute which is able to select an image
  *

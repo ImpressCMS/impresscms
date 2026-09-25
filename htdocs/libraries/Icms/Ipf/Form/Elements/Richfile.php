@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Form control creating a rich file element for an object derived from \icms_ipf_Object
  *
@@ -29,7 +28,7 @@ class Richfile extends \Icms\Form\Elements\Tray {
 	public function __construct($object, $key) {
 		parent::__construct($object->vars[$key]['form_caption'], "&nbsp;");
 		$fileObj = $object->getFileObj($key);
-		$module_handler = \icms::handler("\icms_module");
+		$module_handler = \icms::handler("icms_module");
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
 		if ($fileObj->getVar("url") != "") {

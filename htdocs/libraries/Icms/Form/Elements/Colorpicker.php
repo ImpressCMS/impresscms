@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -66,7 +65,7 @@ class Colorpicker extends \Icms\Form\Elements\Text {
 	 * @param	string  $name     Name of the element
 	 * @param	string  $value    Value of the element
 	 */
-	public function __construct(string $caption, string $name, string $value = "#FFFFFF") {
+	public function __construct($caption, $name, $value = "#FFFFFF") {
 		parent::__construct($caption, $name, 9, 7, $value);
 	}
 

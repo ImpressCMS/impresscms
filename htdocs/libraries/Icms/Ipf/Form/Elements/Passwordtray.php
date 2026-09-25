@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Form control creating 2 password textboxes to allow the user to enter twice his password, for an object derived from \icms_ipf_Object
  *

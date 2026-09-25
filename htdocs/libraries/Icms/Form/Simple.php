@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -72,6 +71,10 @@ class Simple extends Base
 			. "' method='" . $this->getMethod() . "'" . $this->getExtra()
 			. ">\n";
 		foreach ($this->getElements() as $ele) {
+			if (!is_object($ele)) {
+				$ret .= $ele;
+				continue;
+			}
 			if (!$ele->isHidden()) {
 				$ret .= "<strong>" . $ele->getCaption() . "</strong><br />" . $ele->render() . "<br />\n";
 			} else {
@@ -82,7 +85,3 @@ class Simple extends Base
 		return $ret;
 	}
 }
-
-/**
- * Legacy class alias for backward compatibility
- */

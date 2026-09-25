@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -68,7 +66,7 @@ class Matchoption extends SelectElement
 	 *                            {@link XOOPS_MATCH_EQUAL}, and {@link XOOPS_MATCH_CONTAIN}
 	 * @param	int $size Number of rows. "1" makes a drop-down-list
 	 */
-	public function __construct(string $caption, string $name, ?string $value = null, int $size = 1) {
+	public function __construct($caption, $name, $value = null, $size = 1) {
 		parent::__construct($caption, $name, $value, $size, false);
 		$this->addOption(XOOPS_MATCH_START, _STARTSWITH);
 		$this->addOption(XOOPS_MATCH_END, _ENDSWITH);

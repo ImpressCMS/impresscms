@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -127,9 +126,10 @@ class Checkbox extends \Icms\Form\Element {
 		$valuesToCheck = is_array($value) ? $value : array($value);
 
 		// Update checked state in unified options array
-		foreach ($this->_checkboxOptions as $option) {
+		foreach ($this->_checkboxOptions as &$option) {
 			$option['checked'] = in_array($option['value'], $valuesToCheck);
 		}
+		unset($option);
 
 		// Backward compatibility: also update _value array
 		$this->_value = $valuesToCheck;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -63,7 +62,7 @@ class Datetime extends \Icms\Form\Elements\Tray {
 	 * @param	string  $size       Size of the element
 	 * @param	string  $value      Value of the element
 	 */
-	public function __construct(string $caption, string $name, int $size = 15, int $value=0) {
+	public function __construct($caption, $name, $size = 15, $value=0) {
 		parent::__construct($caption, '&nbsp;');
 		$value = (int) ($value);
 		$value = ($value > 0) ? $value : time();

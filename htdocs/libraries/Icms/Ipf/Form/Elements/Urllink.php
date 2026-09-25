@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Form control creating an element to link and URL to an object derived from \icms_ipf_Object
  *
@@ -26,7 +25,7 @@ class Urllink extends \Icms\Form\Elements\Tray {
 	public function __construct($object, $key) {
 		parent::__construct($object->vars[$key]['form_caption'], "&nbsp;");
 		$urllinkObj = $object->getUrlLinkObj($key);
-		$module_handler = \icms::handler("\icms_module");
+		$module_handler = \icms::handler("icms_module");
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
 		$this->addElement(new \Icms\Form\Elements\Label("", _CO_ICMS_URLLINK_URL));

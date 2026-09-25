@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Form control creating an image upload element for an object derived from Icms\Ipf\Entity
  *
@@ -590,7 +589,7 @@ class Base extends \Icms\Form\Theme {
 			$eltcaption = trim($elt->getCaption());
 			$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
 			$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
-			if ($elt instanceof \Icms\Form\Elements\Radio) {
+			if (get_class($elt) === \Icms\Form\Elements\Radio::class) {
 				$js .= "var myOption = -1;";
 				$js .= "for (i=myform.{$eltname}.length-1; i > -1; i--) {
 					if (myform.{$eltname}[i].checked) {
@@ -615,7 +614,7 @@ class Base extends \Icms\Form\Theme {
 				if (hasSelections == FALSE) {
 					window.alert(\"{$eltmsg}\"); myform['{$eltname}[]'].options[0].focus(); return false; }\n";
 
-			} elseif ($elt instanceof \Icms\Form\Elements\Checkbox) {
+			} elseif (get_class($elt) === \Icms\Form\Elements\Checkbox::class) {
 				$js .= "var hasSelections = FALSE;";
 				//sometimes, there is an implicit '[]', sometimes not
 				if (strpos($eltname, '[') === FALSE) {
@@ -646,7 +645,7 @@ class Base extends \Icms\Form\Theme {
 		// Now, handle custom validation code
 		$elements = $this->getElements(TRUE);
 		foreach ($elements as $elt) {
-			if (method_exists($elt, 'renderValidationJS') && !($elt instanceof \Icms\Form\Elements\Checkbox)) {
+			if (method_exists($elt, 'renderValidationJS') && !(get_class($elt) === \Icms\Form\Elements\Checkbox::class)) {
 				if ($eltjs = $elt->renderValidationJS()) {
 					$js .= $eltjs . "\n";
 				}

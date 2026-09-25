@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -89,6 +88,10 @@ class Table extends Base
 			. ">\n<table border='0' width='100%'>\n";
 		$hidden = '';
 		foreach ($this->getElements() as $ele) {
+			if (!is_object($ele)) {
+				$ret .= $ele;
+				continue;
+			}
 			if (!$ele->isHidden()) {
 				$ret .= "<tr valign='top' align='" . _GLOBAL_LEFT . "'><td>" . $ele->getCaption();
 				if ($ele_desc = $ele->getDescription()) {
@@ -103,7 +106,3 @@ class Table extends Base
 		return $ret;
 	}
 }
-
-/**
- * Legacy class alias for backward compatibility
- */

@@ -150,9 +150,9 @@ abstract class Element
 	 *
 	 * @param string $name "name" attribute for the element
 	 */
-	public function setName(string $name): void
+	public function setName($name): void
 	{
-		$this->_name = trim($name);
+		$this->_name = trim((string) $name);
 	}
 
 	/**
@@ -164,7 +164,7 @@ abstract class Element
 	public function getName(bool $encode = true): string
 	{
 		if (false !== $encode) {
-			return str_replace('&', '&', htmlspecialchars((string) $this->_name, ENT_QUOTES));
+			return str_replace('&amp;', '&', htmlspecialchars((string) $this->_name, ENT_QUOTES));
 		}
 		return $this->_name;
 	}
@@ -174,9 +174,9 @@ abstract class Element
 	 *
 	 * @param string $key "accesskey" attribute for the element
 	 */
-	public function setAccessKey(string $key): void
+	public function setAccessKey($key): void
 	{
-		$this->_accesskey = trim($key);
+		$this->_accesskey = trim((string) $key);
 	}
 
 	/**
@@ -212,9 +212,9 @@ abstract class Element
 	 *
 	 * @param string $key "class" attribute for the element
 	 */
-	public function setClass(string $key): void
+	public function setClass($key): void
 	{
-		$class = trim($key);
+		$class = trim((string) $key);
 		if (!empty($class)) {
 			$this->_class[] = $class;
 		}
@@ -242,9 +242,9 @@ abstract class Element
 	 *
 	 * @param string $caption
 	 */
-	public function setCaption(string $caption): void
+	public function setCaption($caption): void
 	{
-		$this->_caption = trim($caption);
+		$this->_caption = trim((string) $caption);
 	}
 
 	/**
@@ -263,9 +263,9 @@ abstract class Element
 	 *
 	 * @param string $description
 	 */
-	public function setDescription(string $description): void
+	public function setDescription($description): void
 	{
-		$this->_description = trim($description);
+		$this->_description = trim((string) $description);
 	}
 
 	/**
@@ -351,7 +351,7 @@ abstract class Element
 		}
 		$value = [];
 		foreach ($this->_extra as $val) {
-			$value[] = str_replace('>', '>', str_replace('<', '<', $val));
+			$value[] = str_replace('>', '&gt;', str_replace('<', '&lt;', $val));
 		}
 		return empty($value) ? '' : ' ' . implode(' ', $value);
 	}
@@ -389,7 +389,3 @@ abstract class Element
 	 */
 	abstract public function render(): string;
 }
-
-/**
- * Legacy class alias for backward compatibility
- */

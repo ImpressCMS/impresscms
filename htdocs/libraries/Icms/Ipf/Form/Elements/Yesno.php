@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Form control creating a yesno radio button for an object derived from \icms_ipf_Object
  *

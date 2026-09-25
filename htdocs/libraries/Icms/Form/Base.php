@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -139,7 +138,7 @@ abstract class Base
 	 */
 	public function getTitle(bool $encode = false): string
 	{
-		return $encode ? htmlspecialchars($this->_title, ENT_QUOTES, \ICMS_CHARSET) : $this->_title;
+		return $encode ? htmlspecialchars($this->_title, ENT_QUOTES, \_CHARSET) : $this->_title;
 	}
 
 	/**
@@ -151,7 +150,7 @@ abstract class Base
 	 */
 	public function getName(bool $encode = true): string
 	{
-		return $encode ? htmlspecialchars($this->_name, ENT_QUOTES, \ICMS_CHARSET) : $this->_name;
+		return $encode ? htmlspecialchars($this->_name, ENT_QUOTES, \_CHARSET) : $this->_name;
 	}
 
 	/**
@@ -162,7 +161,7 @@ abstract class Base
 	 */
 	public function getAction(bool $encode = true): string
 	{
-		return $encode ? htmlspecialchars($this->_action, ENT_QUOTES, \ICMS_CHARSET) : $this->_action;
+		return $encode ? htmlspecialchars($this->_action, ENT_QUOTES, \_CHARSET) : $this->_action;
 	}
 
 	/**
@@ -178,14 +177,14 @@ abstract class Base
 	/**
 	 * Add an element to the form
 	 *
-	 * @param Element|false|null  $formElement   reference to a {@link Element}
+	 * @param Element|string|false|null  $formElement   reference to a {@link Element}
 	 * @param bool    $required       is this a "required" element?
 	 */
 	public function addElement(
-		Element|false|null $formElement,
+		Element|string|false|null $formElement,
 		bool $required = false
 	): void {
-		if ($formElement instanceof \Stringable) {
+		if (is_string($formElement)) {
 			$this->_elements[] = $formElement;
 		} elseif ($formElement instanceof Element) {
 			$this->_elements[] = $formElement;
@@ -274,7 +273,7 @@ abstract class Base
 	 * @param string $name   the "name" attribute of a form element
 	 * @param string $value  the "value" attribute of a form element
 	 */
-	public function setElementValue(string $name, string $value): void
+	public function setElementValue(string $name, $value): void
 	{
 		$ele = $this->getElementByName($name);
 		if ($ele instanceof Element && method_exists($ele, 'setValue')) {
@@ -306,9 +305,9 @@ abstract class Base
 	 *
 	 * @param string  $name   the "name" attribute of a form element
 	 * @param bool    $encode To sanitizer the text?
-	 * @return string|null  the "value" attribute assigned to a form element, null if not set
+	 * @return mixed  the "value" attribute assigned to a form element, null if not set
 	 */
-	public function getElementValue(string $name, bool $encode = false): ?string
+	public function getElementValue(string $name, bool $encode = false)
 	{
 		$ele = $this->getElementByName($name);
 		if ($ele instanceof Element && method_exists($ele, 'getValue')) {
@@ -356,8 +355,7 @@ abstract class Base
 	 */
 	public function getExtra(): string
 	{
-		$extra = '' !== implode('', $this->_extra);
-		return $extra;
+		return $this->_extra === [] ? '' : ' ' . implode(' ', $this->_extra);
 	}
 
 	/**
@@ -459,13 +457,13 @@ abstract class Base
 		$elements = [];
 		foreach ($this->getElements() as $ele) {
 			++$i;
-			if ($ele instanceof \Stringable) {
-				$elements[++$i]['body'] = $ele;
+			if (is_string($ele)) {
+				$elements[$i]['body'] = $ele;
 				continue;
 			}
 			$ele_name = $ele->getName();
 			$ele_description = $ele->getDescription();
-			$n = $ele_name !== '' ? $ele_name : ++$i;
+			$n = $ele_name !== '' ? $ele_name : $i;
 			$elements[$n]['name']       = $ele_name;
 			$elements[$n]['caption']    = $ele->getCaption();
 			$elements[$n]['body']       = $ele->render();
@@ -476,10 +474,6 @@ abstract class Base
 			}
 		}
 		$js = $this->renderValidationJS();
-		$tpl->assign($this->getName(), ['title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(), 'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().';".' . $this->getExtra(), 'javascript' => $js, 'elements' => $elements]);
+		$tpl->assign($this->getName(), ['title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(), 'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_' . $this->getName() . '(this);"' . $this->getExtra(), 'javascript' => $js, 'elements' => $elements]);
 	}
 }
-
-/**
- * Legacy class alias for backward compatibility
- */

@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -67,7 +65,7 @@ class Lang extends SelectElement
 	 *                            Legal is any name of a ICMS_ROOT_PATH."/language/" subdirectory.
 	 * @param	int $size Number of rows. "1" makes a drop-down-list.
 	 */
-	public function __construct(string $caption, string $name, ?string $value = null, int $size = 1) {
+	public function __construct($caption, $name, $value = null, $size = 1) {
 		parent::__construct($caption, $name, $value, $size);
 		$this->addOptionArray(Filesystem::getDirList(ICMS_ROOT_PATH."/language/"));
 	}

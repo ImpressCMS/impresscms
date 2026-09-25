@@ -23,8 +23,6 @@
  * @version SVN: $Id: config.php 12340 2013-09-22 04:11:09Z skenow $
  */
 
-declare(strict_types=1);
-
 $config = [
     'name' => 'icmscaptcha',
 ];
