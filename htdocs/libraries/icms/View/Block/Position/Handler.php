@@ -13,6 +13,8 @@
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
+namespace Icms\View\Block\Position;
+
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
@@ -22,7 +24,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @subpackage	Block
  *
  */
-class icms_view_block_position_Handler extends icms_ipf_Handler {
+class Handler extends \Icms\Ipf\Handler {
 
 	/**
 	 * Constructor
@@ -45,7 +47,7 @@ class icms_view_block_position_Handler extends icms_ipf_Handler {
 	 *
 	 * @return bool  the result of the insert action
 	 */
-	public function insert(& $obj, $force = false, $checkObject = true, $debug = false) {
+	public function insert($obj, $force = false, $checkObject = true, $debug = false) {
 		$obj->setVar('block_default', 0);
 		$obj->setVar('block_type', 'L');
 		return parent::insert($obj, $force, $checkObject, $debug);

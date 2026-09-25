@@ -38,6 +38,8 @@
  * @version		SVN: $Id: Handler.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
+namespace Icms\View\Template\File;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -51,7 +53,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @author		Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_view_template_file_Handler extends icms_core_ObjectHandler {
+class Handler extends \Icms\Core\EntityHandler {
 	private $_prefetch_cache = array();
 
 	/**
@@ -62,7 +64,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 	 * @return object icms_view_template_file_Object {@link icms_view_template_file_Object} reference to the new template
 	 **/
 	public function &create($isNew = true) {
-		$tplfile = new icms_view_template_file_Object();
+		$tplfile = new \Icms\View\Template\File\Entity();
 		if ($isNew) {
 			$tplfile->setNew();
 		}
@@ -93,7 +95,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$tplfile = new icms_view_template_file_Object();
+				$tplfile = new \Icms\View\Template\File\Entity();
 				$tplfile->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -132,7 +134,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 	 * @param object $tplfile {@link icms_view_template_file_Object} object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 **/
-	public function insert(&$tplfile) {
+	public function insert($tplfile) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
 		if (!is_a($tplfile, 'icms_view_template_file_Object')) {
 			return false;
@@ -252,7 +254,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 	 * @param object $tplfile {@link icms_view_template_file_Object} object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 **/
-	public function delete(&$tplfile) {
+	public function delete($tplfile) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
 		if (!is_a($tplfile, 'icms_view_template_file_Object')) {
 			return false;
@@ -292,7 +294,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$tplfile = new icms_view_template_file_Object();
+			$tplfile = new \Icms\View\Template\File\Entity();
 			$tplfile->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $tplfile;
@@ -356,28 +358,28 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 	 * @return  array $ret containing number of templates in the tpl_set or empty array if fails
 	 **/
 	public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false) {
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new \Icms\Db\Criteria\Compo();
 		if (isset($tplset)) {
-			$criteria->add(new icms_db_criteria_Item('tpl_tplset', $tplset));
+			$criteria->add(new \Icms\Db\Criteria\Item('tpl_tplset', $tplset));
 		}
 		if (isset($module)) {
-			$criteria->add(new icms_db_criteria_Item('tpl_module', $module));
+			$criteria->add(new \Icms\Db\Criteria\Item('tpl_module', $module));
 		}
 		if (isset($refid)) {
-			$criteria->add(new icms_db_criteria_Item('tpl_refid', $refid));
+			$criteria->add(new \Icms\Db\Criteria\Item('tpl_refid', $refid));
 		}
 		if (isset($file)) {
-			$criteria->add(new icms_db_criteria_Item('tpl_file', $file));
+			$criteria->add(new \Icms\Db\Criteria\Item('tpl_file', $file));
 		}
 		if (isset($type)) {
 			if (is_array($type)) {
-				$criteria2 = new icms_db_criteria_Compo();
+				$criteria2 = new \Icms\Db\Criteria\Compo();
 				foreach ( $type as $t) {
-					$criteria2->add(new icms_db_criteria_Item('tpl_type', $t), 'OR');
+					$criteria2->add(new \Icms\Db\Criteria\Item('tpl_type', $t), 'OR');
 				}
 				$criteria->add($criteria2);
 			} else {
-				$criteria->add(new icms_db_criteria_Item('tpl_type', $type));
+				$criteria->add(new \Icms\Db\Criteria\Item('tpl_type', $type));
 			}
 		}
 		return $this->getObjects($criteria, $getsource, false);
@@ -391,8 +393,8 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 	 * @return  bool true if exists, false if not
 	 **/
 	public function templateExists($tplname, $tplset_name) {
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('tpl_file', trim($tplname)));
-		$criteria->add(new icms_db_criteria_Item('tpl_tplset', trim($tplset_name)));
+		$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('tpl_file', trim($tplname)));
+		$criteria->add(new \Icms\Db\Criteria\Item('tpl_tplset', trim($tplset_name)));
 		if ($this->getCount($criteria) > 0) {
 			return true;
 		}
@@ -433,7 +435,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 		$result = $this->db->query($sql);
 		if (!$result) return false;
 		while ($myrow = $this->db->fetchArray($result)) {
-			$tplfile = new icms_view_template_file_Object();
+			$tplfile = new \Icms\View\Template\File\Entity();
 			$tplfile->assignVars($myrow);
 			$this->_prefetch_cache[] =& $tplfile;
 			unset($tplfile);

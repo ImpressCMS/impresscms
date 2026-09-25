@@ -38,6 +38,8 @@
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
+namespace Icms\View\Template\Set;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -52,7 +54,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		View
  * @subpackage	Template
  */
-class icms_view_template_set_Handler extends icms_core_ObjectHandler {
+class Handler extends \Icms\Core\EntityHandler {
 
 	/**
 	 * create a new templateset instance
@@ -62,7 +64,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	 * @return object icms_view_template_set_Object {@link icms_view_template_set_Object} reference to the new template
 	 **/
 	public function &create($isNew = true) {
-		$tplset = new icms_view_template_set_Object();
+		$tplset = new \Icms\View\Template\Set\Entity();
 		if ($isNew) {
 			$tplset->setNew();
 		}
@@ -87,7 +89,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$tplset = new icms_view_template_set_Object();
+				$tplset = new \Icms\View\Template\Set\Entity();
 				$tplset->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -112,7 +114,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$tplset = new icms_view_template_set_Object();
+				$tplset = new \Icms\View\Template\Set\Entity();
 				$tplset->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -126,7 +128,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	 * @param string $tplset_name of the tempateset to get
 	 * @return object icms_view_template_set_Object {@link icms_view_template_set_Object} reference to the new template
 	 **/
-	public function insert(&$tplset) {
+	public function insert($tplset) {
 		/* As of PHP5.3.0, is_as() is no longer deprecated */
 		if (!is_a($tplset, 'icms_view_template_set_Object')) {
 			return false;
@@ -185,7 +187,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	 * @param object $tplset {@link icms_view_template_set_Object} reference to the object of the tempateset to delete
 	 * @return object icms_view_template_set_Object {@link icms_view_template_set_Object} reference to the new template
 	 **/
-	public function delete(&$tplset) {
+	public function delete($tplset) {
 		/* As of PHP5.3.0, ia_a() is no longer deprecated */
 		if (!is_a($tplset, 'icms_view_template_set_Object')) {
 			return false;
@@ -228,7 +230,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$tplset = new icms_view_template_set_Object();
+			$tplset = new \Icms\View\Template\Set\Entity();
 			$tplset->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $tplset;

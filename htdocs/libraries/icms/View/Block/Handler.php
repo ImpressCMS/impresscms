@@ -38,6 +38,8 @@
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @version SVN: $Id: Handler.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\View\Block;
+
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
@@ -51,7 +53,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class icms_view_block_Handler extends icms_ipf_Handler {
+class Handler extends \Icms\Ipf\Handler {
 	private $block_positions;
 	private $modules_name;
 
@@ -72,7 +74,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	public function getBlockPositions($full = false) {
 		if (!is_array($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
-			$icms_blockposition_handler = icms::handler('icms_view_block_position');
+			$icms_blockposition_handler = \icms::handler('icms_view_block_position');
 			// $sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
 			// $result = $this->db->query($sql);
 			// while ($row = $this->db->fetchArray($result)) {
@@ -107,8 +109,8 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 */
 	public function getByModule($mid, $asObject = true) {
 		$mid = (int) $mid;
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('mid', $mid));
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('mid', $mid));
 		$ret = $this->getObjects($criteria, false, $asObject);
 		return $ret;
 	}
@@ -135,9 +137,9 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 			$tp = ($side == -2) ? 'L' : (($side == -6) ? 'C' : '');
 			if ($tp != '') {
 				$q_side = "";
-				$icms_blockposition_handler = icms::handler('icms_view_block_position');
-				$criteria = new icms_db_criteria_Compo();
-				$criteria->add(new icms_db_criteria_Item('block_type', $tp));
+				$icms_blockposition_handler = \icms::handler('icms_view_block_position');
+				$criteria = new \Icms\Db\Criteria\Compo();
+				$criteria->add(new \Icms\Db\Criteria\Item('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach ($blockpositions as $bp) {
 					$q_side .= "side='" . (int) $bp->getVar('id') . "' OR ";
@@ -172,8 +174,8 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 					while ($myrow = $this->db->fetchArray($result)) {
 						$blockids[] = $myrow['bid'];
 					}
-					$criteria = new icms_db_criteria_Compo();
-					$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+					$criteria = new \Icms\Db\Criteria\Compo();
+					$criteria->add(new \Icms\Db\Criteria\Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
 					$blocks = $this->getObjects($criteria, true, true);
 					foreach ($blocks as $block) {
 						$ret[$block->getVar("bid")] = $block->getVar("title");
@@ -365,7 +367,7 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * @param unknown_type $debug
 	 * @return unknown
 	 */
-	public function insert(&$obj, $force = false, $checkObject = true, $debug = false) {
+	public function insert($obj, $force = false, $checkObject = true, $debug = false) {
 		$new = $obj->isNew();
 		$obj->setVar('last_modified', time());
 		$obj->setVar('isactive', true);
@@ -453,8 +455,8 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 	 * @todo can be removed together with getAllByGroupModule and getNonGroupedBlocks. (used in theme_blocks)
 	 */
 	private function &getMultiple($blockids) {
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
 		$criteria->setSort('weight');
 		$ret = $this->getObjects($criteria, true, true);
 		$sql = "SELECT block_id, module_id, page_id FROM " . $this->db->prefix('block_module_link') . " WHERE block_id IN (" . implode(',', array_keys($ret)) . ") ORDER BY block_id";
@@ -476,15 +478,15 @@ class icms_view_block_Handler extends icms_ipf_Handler {
 		if ($funcNum < 1 || $moduleId < 1) {
 			return 0;
 		}
-		$criteria = new icms_db_criteria_Compo();
+		$criteria = new \Icms\Db\Criteria\Compo();
 		if (isset($showFunc)) {
 			// showFunc is set for more strict comparison
-			$criteria->add(new icms_db_criteria_Item('mid', $moduleId));
-			$criteria->add(new icms_db_criteria_Item('func_num', $funcNum));
-			$criteria->add(new icms_db_criteria_Item('show_func', $showFunc));
+			$criteria->add(new \Icms\Db\Criteria\Item('mid', $moduleId));
+			$criteria->add(new \Icms\Db\Criteria\Item('func_num', $funcNum));
+			$criteria->add(new \Icms\Db\Criteria\Item('show_func', $showFunc));
 		} else {
-			$criteria->add(new icms_db_criteria_Item('mid', $moduleId));
-			$criteria->add(new icms_db_criteria_Item('func_num', $funcNum));
+			$criteria->add(new \Icms\Db\Criteria\Item('mid', $moduleId));
+			$criteria->add(new \Icms\Db\Criteria\Item('func_num', $funcNum));
 		}
 		$count = $this->handler->getCount($criteria);
 		return $count;

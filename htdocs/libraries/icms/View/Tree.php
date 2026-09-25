@@ -38,6 +38,8 @@
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @version		SVN: $Id: Tree.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\View;
+
 /**
  * Class icms_view_Tree
  *
@@ -47,7 +49,7 @@
  * @author Kazumi Ono (AKA onokazu)
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_view_Tree {
+class Tree {
 	/** @var string table with parent-child structure */
 	public $table;
 	/** @var string name of unique id for records in table $table */
@@ -69,7 +71,7 @@ class icms_view_Tree {
 	 * @param $pid_name Name of the parent id field in the table
 	 **/
 	public function __construct($table_name, $id_name, $pid_name) {
-		$this->db =& icms_db_Factory::instance();
+		$this->db =& \Icms\Db\Factory::instance();
 		$this->table = $table_name;
 		$this->id = $id_name;
 		$this->pid = $pid_name;
@@ -88,7 +90,7 @@ class icms_view_Tree {
 		if (property_exists(__CLASS__, $name)) {
 			return $this->$name;
 		}
-		throw new RuntimeException("You tried to access a property $name that doesn't exist in " . __CLASS__);
+		throw new \RuntimeException("You tried to access a property $name that doesn't exist in " . __CLASS__);
 	}
 			
 	/**
@@ -197,7 +199,7 @@ class icms_view_Tree {
 			return $path;
 		}
 		list($parentid, $name) = $this->db->fetchRow($result);
-		$name = icms_core_DataFilter::htmlSpecialChars($name);
+		$name = \Icms\Core\DataFilter::htmlSpecialChars($name);
 		$path = '/' . $name . $path . '';
 		if ($parentid == 0) {
 			return $path;
@@ -242,7 +244,7 @@ class icms_view_Tree {
 			$arr = $this->getChildTreeArray($catid, $order);
 			foreach ($arr as $option) {
 				$option['prefix'] = str_replace(".", "--", $option['prefix']);
-				$catpath = $option['prefix'] . "&nbsp;" . icms_core_DataFilter::htmlSpecialChars($option[$title]);
+				$catpath = $option['prefix'] . "&nbsp;" . \Icms\Core\DataFilter::htmlSpecialChars($option[$title]);
 				if ($option[$this->id] == $preset_id) {
 					$sel = " selected='selected'";
 				}
@@ -271,7 +273,7 @@ class icms_view_Tree {
 			return $path;
 		}
 		list($parentid, $name) = $this->db->fetchRow($result);
-		$name = icms_core_DataFilter::htmlSpecialChars($name);
+		$name = \Icms\Core\DataFilter::htmlSpecialChars($name);
 		$path = '<a href="' . $funcURL . '&amp;' . $this->id . '=' . $sel_id . '">' . $name . '</a>' . $path . "";
 		if ($parentid == 0) {
 			return $path;

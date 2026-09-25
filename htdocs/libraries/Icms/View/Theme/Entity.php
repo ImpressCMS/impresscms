@@ -36,6 +36,8 @@
  * @package		View
  * @subpackage 	Theme
  */
+namespace Icms\View\Theme;
+
 /**
  *
  * Builds the theme components
@@ -45,7 +47,7 @@
  * @package		View
  * @subpackage	Theme
  */
-class icms_view_theme_Object {
+class Entity {
 	/**
 	 * The name of this theme
 	 * @public string
@@ -150,7 +152,7 @@ class icms_view_theme_Object {
 			? ICMS_MODULES_URL . '/system/themes/' . $this->folderName
 			: ICMS_THEME_URL . '/' . $this->folderName;
 
-		$this->template = new icms_view_Tpl();
+		$this->template = new \Icms\View\Tpl();
 		$this->template->currentTheme =& $this;
 		$this->template->assign_by_ref('xoTheme', $this);
 
@@ -166,9 +168,9 @@ class icms_view_theme_Object {
 				'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
 				'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 				'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-				'icms_dirname' => @icms::$module ? icms::$module->getVar('dirname') : 'system',
-				'icms_pagetitle' => isset(icms::$module) && is_object(icms::$module)
-						? icms::$module->getVar('name')
+				'icms_dirname' => @\icms::$module ? \icms::$module->getVar('dirname') : 'system',
+				'icms_pagetitle' => isset(\icms::$module) && is_object(\icms::$module)
+						? \icms::$module->getVar('name')
 						: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES)
 			)
 		);
@@ -183,16 +185,16 @@ class icms_view_theme_Object {
 			'xoops_slogan' => $this->template->get_template_vars('icms_slogan'),
 			'xoops_dirname' => $this->template->get_template_vars('icms_dirname'),
 		));
-		if (isset(icms::$user) && is_object(icms::$user)) {
+		if (isset(\icms::$user) && is_object(\icms::$user)) {
 			$this->template->assign(array(
 	        	'icms_isuser' => true,
-	        	'icms_userid' => icms::$user->getVar('uid'),
-	        	'icms_uname' => icms::$user->getVar('uname'),
-	        	'icms_isadmin' => icms::$user->isAdmin(),
+	        	'icms_userid' => \icms::$user->getVar('uid'),
+	        	'icms_uname' => \icms::$user->getVar('uname'),
+	        	'icms_isadmin' => \icms::$user->isAdmin(),
 	        	'xoops_isuser' => true,
-	        	'xoops_userid' => icms::$user->getVar('uid'),
-	        	'xoops_uname' => icms::$user->getVar('uname'),
-	        	'xoops_isadmin' => icms::$user->isAdmin(),
+	        	'xoops_userid' => \icms::$user->getVar('uid'),
+	        	'xoops_uname' => \icms::$user->getVar('uname'),
+	        	'xoops_isadmin' => \icms::$user->isAdmin(),
 				)
 			);
 		} else {
@@ -262,10 +264,10 @@ class icms_view_theme_Object {
 				$extra_string = $icmsConfig['language'];
 
 				// Generate group section
-				if (!@is_object(icms::$user)) {
+				if (!@is_object(\icms::$user)) {
 					$extra_string .= '|' . ICMS_GROUP_ANONYMOUS;
 				} else {
-					$groups = icms::$user->getGroups();
+					$groups = \icms::$user->getGroups();
 					sort($groups);
 					// Generate group string for non-anonymous groups,
 					// XOOPS_DB_PASS and XOOPS_DB_NAME (before we find better variables) are used to protect group sensitive contents
@@ -288,7 +290,7 @@ class icms_view_theme_Object {
 
 		if ($_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime) {
 			$template = $this->contentTemplate ? $this->contentTemplate : 'db:system_dummy.html';
-			$dirname = icms::$module->getVar('dirname', 'n');
+			$dirname = \icms::$module->getVar('dirname', 'n');
 
 			$this->template->caching = 2;
 			$this->template->cache_lifetime = $this->contentCacheLifetime;
@@ -300,7 +302,7 @@ class icms_view_theme_Object {
 			$this->contentCacheId = $this->generateCacheId($dirname . '|' . $uri);
 
 			if ($this->template->is_cached($template, $this->contentCacheId)) {
-				icms::$logger->addExtra($template, sprintf(_REGENERATES, $this->contentCacheLifetime));
+				\icms::$logger->addExtra($template, sprintf(_REGENERATES, $this->contentCacheLifetime));
 				$this->render(null, null, $template);
 				return true;
 			}
@@ -328,7 +330,7 @@ class icms_view_theme_Object {
 		if ($this->renderCount) {
 			return FALSE;
 		}
-		icms::$logger->startTime('Page rendering');
+		\icms::$logger->startTime('Page rendering');
 
 		// @internal: Lame fix to ensure the metas specified in the xoops config page don't appear twice
 		$old = array('robots', 'keywords', 'description', 'rating', 'author', 'copyright');
@@ -363,7 +365,7 @@ class icms_view_theme_Object {
 		$xheader = empty($xoopsOption['xoops_module_header'])
 			? $this->template->get_template_vars('xoops_module_header')
 			: $xoopsOption['xoops_module_header'];
-		if ($xheader != "") icms_core_Debug::setDeprecated('icms_module_header', sprintf(_CORE_REMOVE_IN_VERSION, "2.0"));
+		if ($xheader != "") \Icms\Core\Debug::setDeprecated('icms_module_header', sprintf(_CORE_REMOVE_IN_VERSION, "2.0"));
 		$header = ($header != "") ? $header : $xheader;
 		$this->template->assign('xoops_module_header', $header . "\n" . $this->renderOldMetas(NULL, TRUE));
 		$this->template->assign('icms_module_header', $header . "\n" . $this->renderOldMetas(NULL, TRUE));
@@ -380,7 +382,7 @@ class icms_view_theme_Object {
 		$xpagetitle = empty($xoopsOption['xoops_pagetitle'])
 			? $this->template->get_template_vars('xoops_pagetitle')
 			: $xoopsOption['xoops_pagetitle'];
-		if ($xpagetitle != "") icms_core_Debug::setDeprecated('icms_pagetitle', sprintf(_CORE_REMOVE_IN_VERSION, "2.0"));
+		if ($xpagetitle != "") \Icms\Core\Debug::setDeprecated('icms_pagetitle', sprintf(_CORE_REMOVE_IN_VERSION, "2.0"));
 		$pagetitle = ($pagetitle != "") ? $pagetitle : $xpagetitle;
 		$this->template->assign('xoops_pagetitle', $pagetitle);
 		$this->template->assign('icms_pagetitle', $pagetitle);
@@ -390,7 +392,7 @@ class icms_view_theme_Object {
 		$this->template->display($this->path . '/' . $this->canvasTemplate);
 
 		$this->renderCount++;
-		icms::$logger->stopTime('Page rendering');
+		\icms::$logger->stopTime('Page rendering');
 	}
 
 	/**#@+ @tasktype 20 Manipulating page meta-information*/
@@ -429,7 +431,7 @@ class icms_view_theme_Object {
 			$attributes = array();
 		}
 		if (!empty($src)) {
-			$attributes['src'] = icms::url($this->resourcePath($src));
+			$attributes['src'] = \icms::url($this->resourcePath($src));
 		}
 		if (!empty($content)) {
 			$attributes['_'] = $content;
@@ -456,7 +458,7 @@ class icms_view_theme_Object {
 			$attributes = array();
 		}
 		if (!empty($src)) {
-			$attributes['href'] = icms::url($this->resourcePath($src));
+			$attributes['href'] = \icms::url($this->resourcePath($src));
 		}
 		if (!isset($attributes['type'])) {
 			$attributes['type'] = 'text/css';

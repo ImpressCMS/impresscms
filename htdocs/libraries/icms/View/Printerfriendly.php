@@ -13,6 +13,8 @@
  * @version		$Id: Printerfriendly.php 11764 2012-07-01 03:10:47Z skenow $
  */
 
+namespace Icms\View;
+
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
 
 /**
@@ -22,7 +24,7 @@ defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
  * @subpackage	PrinterFriendly
  * @author The IcmsFactory <www.smartfactory.ca>
  */
-class icms_view_Printerfriendly {
+class Printerfriendly {
 
 	public $_title;
 	public $_dsc;
@@ -56,7 +58,7 @@ class icms_view_Printerfriendly {
 		 * @todo make the output XHTML compliant
 		 */
 
-		$this->_tpl = new icms_view_Tpl();
+		$this->_tpl = new \Icms\View\Tpl();
 
 		$this->_tpl->assign('icms_print_pageTitle', $this->_pageTitle ? $this->_pageTitle : $this->_title);
 		$this->_tpl->assign('icms_print_title', $this->_title);
@@ -64,7 +66,7 @@ class icms_view_Printerfriendly {
 		$this->_tpl->assign('icms_print_content', $this->_content);
 		$this->_tpl->assign('icms_print_width', $this->_width);
 
-		$current_url = icms::$urls['full'];
+		$current_url = \icms::$urls['full'];
 
 		$this->_tpl->assign('icms_print_currenturl', $current_url);
 		$this->_tpl->assign('icms_print_url', $this->url);

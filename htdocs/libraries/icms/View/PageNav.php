@@ -37,6 +37,8 @@
  * @subpackage	PageNav
  * @version	$Id: PageNav.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\View;
+
 /**
  * Class to facilitate navigation in a multi page document/list
  *
@@ -46,7 +48,7 @@
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_view_PageNav {
+class PageNav {
 
 	/**
 	 * @public int $total  Total of pages to show

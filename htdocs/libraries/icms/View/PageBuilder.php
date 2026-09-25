@@ -42,6 +42,8 @@
 /**
  * This file cannot be requested directly
  */
+namespace Icms\View;
+
 defined('ICMS_ROOT_PATH') or exit();
 
 /**
@@ -54,7 +56,7 @@ defined('ICMS_ROOT_PATH') or exit();
  * @copyright	Copyright (c) 2000 XOOPS.org
  * @author      Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class icms_view_PageBuilder {
+class PageBuilder {
 
 	/** */
 	public $theme = FALSE;
@@ -101,12 +103,12 @@ class icms_view_PageBuilder {
 	public function retrieveBlocks() {
 		global $xoops, $icmsConfig;
 
-		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$groups = is_object(\icms::$user) ? \icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		self::getPage();
 		$modid = self::$modid['module'] . '-' . self::$modid['page'];
 		$isStart = self::$modid['isStart'];
 
-		$icms_block_handler = icms::handler('icms_view_block');
+		$icms_block_handler = \icms::handler('icms_view_block');
 		$oldzones = $icms_block_handler->getBlockPositions();
 
 		foreach ($oldzones as $zone) {
@@ -116,19 +118,19 @@ class icms_view_PageBuilder {
 			$template =& $this->theme->template;
 			$backup = array($template->caching, $template->cache_lifetime);
 		} else {
-			$template = new icms_view_Tpl();
+			$template = new \Icms\View\Tpl();
 		}
 
 		/** moved here from buildBlocks to reduce redundant calls */
-		$gperm = icms::handler('icms_member_groupperm');
-		$ugroups = @is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$gperm = \icms::handler('icms_member_groupperm');
+		$ugroups = @is_object(\icms::$user) ? \icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$agroups = $gperm->getGroupIds('system_admin',  5); //XOOPS_SYSTEM_BLOCK constant not available?
 		$this->uagroups = array_intersect($ugroups, $agroups);
 		/** End of snippet */
 
 		$block_arr = $icms_block_handler->getAllByGroupModule($groups, $modid, $isStart, XOOPS_BLOCK_VISIBLE);
 		// prefetch blocks to reduce the amount of queries required in the later step of rendering
-		$tplfile_handler = icms::handler('icms_view_template_file');
+		$tplfile_handler = \icms::handler('icms_view_template_file');
 		$tplfile_handler->prefetchBlocks($block_arr);
 		foreach ($block_arr as $block) {
 			$side = $oldzones[$block->getVar('side', 'n')];
@@ -156,8 +158,8 @@ class icms_view_PageBuilder {
 
 		// getting the start module and page configured in the admin panel
 		if (is_array($icmsConfig['startpage'])) {
-			$member_handler = icms::handler('icms_member');
-			$group = $member_handler->getUserBestGroup((is_object(icms::$user) ? icms::$user->getVar('uid') : 0));
+			$member_handler = \icms::handler('icms_member');
+			$group = $member_handler->getUserBestGroup((is_object(\icms::$user) ? \icms::$user->getVar('uid') : 0));
 			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 		}
 
@@ -165,12 +167,12 @@ class icms_view_PageBuilder {
 
 		// setting the full and relative url of the actual page
 		$clean_request = filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
-		$fullurl = icms::$urls['http'] . icms::$urls['httphost'] . $clean_request;
+		$fullurl = \icms::$urls['http'] . \icms::$urls['httphost'] . $clean_request;
 		$url = substr(str_replace(ICMS_URL, '', $fullurl), 1);
 
-		$icms_page_handler = icms::handler('icms_data_page');
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_url', $fullurl));
-		if (!empty($url)) $criteria->add(new icms_db_criteria_Item('page_url', $url), 'OR');
+		$icms_page_handler = \icms::handler('icms_data_page');
+		$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('page_url', $fullurl));
+		if (!empty($url)) $criteria->add(new \Icms\Db\Criteria\Item('page_url', $url), 'OR');
 		$pages = $icms_page_handler->getCount($criteria);
 
 		if ($pages > 0) {
@@ -180,15 +182,15 @@ class icms_view_PageBuilder {
 			$purl = filter_var($page->getVar('page_url'), FILTER_SANITIZE_URL);
 			$mid = (int) $page->getVar('page_moduleid');
 			$pid = $page->getVar('page_id');
-			$module_handler = icms::handler('icms_module');
+			$module_handler = \icms::handler('icms_module');
 			$module = $module_handler->get($mid);
 			$dirname = $module->getVar('dirname');
 			$isStart = ($startMod == $mid.'-'.$pid);
 		} else {
 			// we don't have a sym-link for this page
-			if (is_object(icms::$module)) {
-				$mid = (int) icms::$module->getVar('mid');
-				$dirname = icms::$module->getVar('dirname');
+			if (is_object(\icms::$module)) {
+				$mid = (int) \icms::$module->getVar('mid');
+				$dirname = \icms::$module->getVar('dirname');
 				$isStart = (substr($_SERVER['PHP_SELF'], -9) == 'index.php' && $startMod == $dirname);
 			} else {
 				$mid = 1;
@@ -201,7 +203,7 @@ class icms_view_PageBuilder {
 		if ($isStart) {
 			self::$modid = array('module' => 0, 'page' => 1, 'isStart' => $isStart);
 		} else {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('page_status', 1));
+			$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$pid = 0;
 			foreach ($pages as $page) {
@@ -244,8 +246,8 @@ class icms_view_PageBuilder {
 		global $icmsConfigPersona;
 		$bid = $xobject->getVar('bid');
 		if ($icmsConfigPersona['editre_block'] == TRUE) {
-			if (icms::$user && count($this->uagroups) > 0) {
-				$url = base64_encode(str_replace(ICMS_URL, '', icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
+			if (\icms::$user && count($this->uagroups) > 0) {
+				$url = base64_encode(str_replace(ICMS_URL, '', \icms::$urls['http'] . $_SERVER['HTTP_HOST'] . filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)));
 				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $bid . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT .' '. _BLOCK_ID .' '. $bid .'" alt="' . _EDIT . '"  /></a>'
 					. '<button style="display: none;"><div id="ed_block_' . $bid . '">'
 					. "<a href='" . ICMS_MODULES_URL . "/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=" . $bid . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png' alt='" . _INVISIBLE . "'  /> " . _INVISIBLE . "</a><br />"
@@ -298,14 +300,14 @@ class icms_view_PageBuilder {
 		);
 
 		if (! $bcachetime || ! $template->is_cached($tplName, $cacheid)) {
-			icms::$logger->addBlock($xobject->getVar('name'));
+			\icms::$logger->addBlock($xobject->getVar('name'));
 			if (! ($bresult = $xobject->buildBlock())) {
 				return FALSE;
 			}
 			$template->assign('block', $bresult);
 			$block['content'] = $template->fetch($tplName, $cacheid);
 		} else {
-			icms::$logger->addBlock($xobject->getVar('name'), TRUE, $bcachetime);
+			\icms::$logger->addBlock($xobject->getVar('name'), TRUE, $bcachetime);
 			$block['content'] = $template->fetch($tplName, $cacheid);
 		}
 		return $block;

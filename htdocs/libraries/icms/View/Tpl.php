@@ -38,6 +38,8 @@
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @version		SVN: $Id: Tpl.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\View;
+
 if (!defined('SMARTY_DIR')) {
 	exit();
 }
@@ -55,7 +57,7 @@ require_once SMARTY_DIR . 'Smarty.class.php';
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_view_Tpl extends Smarty {
+class Tpl extends \Smarty {
 
 	public $left_delimiter = '<{';
 	public $right_delimiter = '}>';
@@ -63,7 +65,7 @@ class icms_view_Tpl extends Smarty {
 	public $template_dir = ICMS_THEME_PATH;
 	public $cache_dir = ICMS_CACHE_PATH;
 	public $compile_dir = ICMS_COMPILE_PATH;
-	public icms_view_theme_Object $currentTheme;
+	public \Icms\View\Theme\Entity $currentTheme;
 
 	public function __construct() {
 		global $icmsConfig;
@@ -78,9 +80,9 @@ class icms_view_Tpl extends Smarty {
 
 		if ($icmsConfig['debug_mode']) {
 			$this->debugging_ctrl = 'URL';
-			$groups = (is_object(icms::$user)) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-			$moduleid = (isset(icms::$module) && is_object(icms::$module)) ? icms::$module->getVar('mid') : 1;
-			$gperm_handler = icms::handler('icms_member_groupperm');
+			$groups = (is_object(\icms::$user)) ? \icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+			$moduleid = (isset(\icms::$module) && is_object(\icms::$module)) ? \icms::$module->getVar('mid') : 1;
+			$gperm_handler = \icms::handler('icms_member_groupperm');
 			if ($icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
 			}
@@ -159,12 +161,12 @@ class icms_view_Tpl extends Smarty {
 	 * @return  boolean
 	 **/
 	static public function template_touch($tpl_id) {
-		$tplfile_handler =& icms::handler('icms_view_template_file');
+		$tplfile_handler =& \icms::handler('icms_view_template_file');
 		$tplfile =& $tplfile_handler->get($tpl_id);
 
 		if (is_object($tplfile)) {
 			$file = $tplfile->getVar('tpl_file', 'n');
-			$tpl = new icms_view_Tpl();
+			$tpl = new \Icms\View\Tpl();
 			return $tpl->touch("db:$file");
 		}
 		return false;
@@ -180,11 +182,11 @@ class icms_view_Tpl extends Smarty {
 	 * @return
 	 **/
 	static public function template_clear_module_cache($mid) {
-		$icms_block_handler = icms::handler('icms_view_block');
+		$icms_block_handler = \icms::handler('icms_view_block');
 		$block_arr = $icms_block_handler->getByModule($mid);
 		$count = count($block_arr);
 		if ($count > 0) {
-			$xoopsTpl = new icms_view_Tpl();
+			$xoopsTpl = new \Icms\View\Tpl();
 			$xoopsTpl->caching = 2;
 			for ($i = 0; $i < $count; $i++) {
 				if ($block_arr[$i]->getVar('template') != '') {

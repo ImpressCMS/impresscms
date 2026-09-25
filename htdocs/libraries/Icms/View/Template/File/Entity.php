@@ -38,6 +38,8 @@
  * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
+namespace Icms\View\Template\File;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -49,7 +51,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		View
  * @subpackage	Template
  **/
-class icms_view_template_file_Object extends icms_core_Object {
+class Entity extends \Icms\Core\Entity {
 
 	/**
 	 * constructor
