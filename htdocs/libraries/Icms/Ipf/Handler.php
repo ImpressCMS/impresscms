@@ -785,7 +785,8 @@ class Handler extends \Icms\Core\EntityHandler {
 		}
 		$fieldsToStoreInDB = array();
 		foreach ($obj->cleanVars as $k => $v) {
-			if ($obj->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
+			// integer columns: also the timestamp types, so that an empty value is stored as 0 (strict SQL mode rejects '')
+			if (in_array($obj->vars[$k]['data_type'], array(XOBJ_DTYPE_INT, XOBJ_DTYPE_STIME, XOBJ_DTYPE_MTIME, XOBJ_DTYPE_LTIME, XOBJ_DTYPE_TIME_ONLY))) {
 				$cleanvars[$k] = (int) ($v);
 			} elseif (is_array($v)) {
 				$cleanvars[ $k ] = $this->db->quoteString( implode( ',', $v ) );
