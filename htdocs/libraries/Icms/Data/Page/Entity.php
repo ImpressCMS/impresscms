@@ -40,4 +40,3 @@ class Entity extends \Icms\Ipf\Entity
     }
 }
 
-\class_alias(Entity::class, 'icms_data_page_Object');

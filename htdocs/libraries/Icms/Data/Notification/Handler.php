@@ -277,12 +277,12 @@ class Handler extends \Icms\Core\EntityHandler {
 	* @return  mixed   array of objects or false
 	**/
 	public function &getNotification($module_id, $category, $item_id, $event, $user_id) {
-		$criteria = new \icms_db_criteria_Compo();
-		$criteria->add(new \icms_db_criteria_Item('not_modid', (int)$module_id));
-		$criteria->add(new \icms_db_criteria_Item('not_category', \icms::$xoopsDB->escape($category)));
-		$criteria->add(new \icms_db_criteria_Item('not_itemid', (int)$item_id));
-		$criteria->add(new \icms_db_criteria_Item('not_event', \icms::$xoopsDB->escape($event)));
-		$criteria->add(new \icms_db_criteria_Item('not_uid', (int)$user_id));
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('not_modid', (int)$module_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_itemid', (int)$item_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_event', \icms::$xoopsDB->escape($event)));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_uid', (int)$user_id));
 		$objects = $this->getObjects($criteria);
 		if (count($objects) == 1) {
 			return $objects[0];
@@ -303,12 +303,12 @@ class Handler extends \Icms\Core\EntityHandler {
 	 * return int  0 if not subscribe; non-zero if subscribed (boolean... sort of)
 	 */
 	public function isSubscribed($category, $item_id, $event, $module_id, $user_id) {
-		$criteria = new \icms_db_criteria_Compo();
-		$criteria->add(new \icms_db_criteria_Item('not_modid', (int)$module_id));
-		$criteria->add(new \icms_db_criteria_Item('not_category', \icms::$xoopsDB->escape($category)));
-		$criteria->add(new \icms_db_criteria_Item('not_itemid', (int)$item_id));
-		$criteria->add(new \icms_db_criteria_Item('not_event', \icms::$xoopsDB->escape($event)));
-		$criteria->add(new \icms_db_criteria_Item('not_uid', (int)$user_id));
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('not_modid', (int)$module_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_itemid', (int)$item_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_event', \icms::$xoopsDB->escape($event)));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_uid', (int)$user_id));
 		return $this->getCount($criteria);
 	}
 
@@ -340,7 +340,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		}
 
 		if (!isset($mode)) {
-			$user = new \icms_member_user_Object($user_id);
+			$user = new \Icms\Member\User\Entity($user_id);
 			$mode = $user->getVar('notify_mode');
 		}
 
@@ -375,7 +375,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 * @return array  Array of {@link icms_data_notification_Object} objects
 	 **/
 	public function getByUser($user_id) {
-		$criteria = new \icms_db_criteria_Item('not_uid', $user_id);
+		$criteria = new \Icms\Db\Criteria\Item('not_uid', $user_id);
 		return $this->getObjects($criteria, true);
 	}
 
@@ -389,13 +389,13 @@ class Handler extends \Icms\Core\EntityHandler {
 	* @return array    Array of {@link icms_data_notification_Object} objects
 	**/
 	public function getSubscribedEvents($category, $item_id, $module_id, $user_id) {
-		$criteria = new \icms_db_criteria_Compo();
-		$criteria->add(new \icms_db_criteria_Item('not_modid', (int) $module_id));
-		$criteria->add(new \icms_db_criteria_Item('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('not_modid', (int) $module_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_category', \icms::$xoopsDB->escape($category)));
 		if ($item_id) {
-			$criteria->add(new \icms_db_criteria_Item('not_itemid', (int) $item_id));
+			$criteria->add(new \Icms\Db\Criteria\Item('not_itemid', (int) $item_id));
 		}
-		$criteria->add(new \icms_db_criteria_Item('not_uid', (int)$user_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_uid', (int)$user_id));
 		$results = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($results) as $i) {
@@ -416,10 +416,10 @@ class Handler extends \Icms\Core\EntityHandler {
 	 * @return  array   Array of {@link icms_data_notification_Object} objects
 	 **/
 	public function getByItemId($module_id, $item_id, $order = null, $status = null) {
-		$criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('com_modid', (int) $module_id));
-		$criteria->add(new \icms_db_criteria_Item('com_itemid', (int) $item_id));
+		$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('com_modid', (int) $module_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('com_itemid', (int) $item_id));
 		if (isset($status)) {
-			$criteria->add(new \icms_db_criteria_Item('com_status', (int) $status));
+			$criteria->add(new \Icms\Db\Criteria\Item('com_status', (int) $status));
 		}
 		if (isset($order)) {
 			$criteria->setOrder($order);
@@ -493,20 +493,20 @@ class Handler extends \Icms\Core\EntityHandler {
 				$omit_user_id = 0;
 			}
 		}
-		$criteria = new \icms_db_criteria_Compo();
-		$criteria->add(new \icms_db_criteria_Item('not_modid', (int) $module_id));
-		$criteria->add(new \icms_db_criteria_Item('not_category', \icms::$xoopsDB->escape($category)));
-		$criteria->add(new \icms_db_criteria_Item('not_itemid', (int) $item_id));
-		$criteria->add(new \icms_db_criteria_Item('not_event', \icms::$xoopsDB->escape($event)));
-		$mode_criteria = new \icms_db_criteria_Compo();
-		$mode_criteria->add(new \icms_db_criteria_Item('not_mode', XOOPS_NOTIFICATION_MODE_SENDALWAYS), 'OR');
-		$mode_criteria->add(new \icms_db_criteria_Item('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE), 'OR');
-		$mode_criteria->add(new \icms_db_criteria_Item('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT), 'OR');
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('not_modid', (int) $module_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_itemid', (int) $item_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_event', \icms::$xoopsDB->escape($event)));
+		$mode_criteria = new \Icms\Db\Criteria\Compo();
+		$mode_criteria->add(new \Icms\Db\Criteria\Item('not_mode', XOOPS_NOTIFICATION_MODE_SENDALWAYS), 'OR');
+		$mode_criteria->add(new \Icms\Db\Criteria\Item('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE), 'OR');
+		$mode_criteria->add(new \Icms\Db\Criteria\Item('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT), 'OR');
 		$criteria->add($mode_criteria);
 		if (!empty($user_list)) {
-			$user_criteria = new \icms_db_criteria_Compo();
+			$user_criteria = new \Icms\Db\Criteria\Compo();
 			foreach ($user_list as $user) {
-				$user_criteria->add(new \icms_db_criteria_Item('not_uid', $user), 'OR');
+				$user_criteria->add(new \Icms\Db\Criteria\Item('not_uid', $user), 'OR');
 			}
 			$criteria->add($user_criteria);
 		}
@@ -578,7 +578,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 * @return  bool
 	 **/
 	public function unsubscribeByUser($user_id) {
-		$criteria = new \icms_db_criteria_Item('not_uid', (int)$user_id);
+		$criteria = new \Icms\Db\Criteria\Item('not_uid', (int)$user_id);
 		return $this->deleteAll($criteria);
 	}
 
@@ -607,17 +607,17 @@ class Handler extends \Icms\Core\EntityHandler {
 			$module_id = \icms::$module->getVar('mid');
 		}
 
-		$criteria = new \icms_db_criteria_Compo();
-		$criteria->add(new \icms_db_criteria_Item('not_modid', (int) $module_id));
-		$criteria->add(new \icms_db_criteria_Item('not_category', \icms::$xoopsDB->escape($category)));
-		$criteria->add(new \icms_db_criteria_Item('not_itemid', (int) $item_id));
-		$criteria->add(new \icms_db_criteria_Item('not_uid', (int) $user_id));
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('not_modid', (int) $module_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_itemid', (int) $item_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_uid', (int) $user_id));
 		if (!is_array($events)) {
 			$events = array($events);
 		}
-		$event_criteria = new \icms_db_criteria_Compo();
+		$event_criteria = new \Icms\Db\Criteria\Compo();
 		foreach ($events as $event) {
-			$event_criteria->add(new \icms_db_criteria_Item('not_event', \icms::$xoopsDB->escape($event)), 'OR');
+			$event_criteria->add(new \Icms\Db\Criteria\Item('not_event', \icms::$xoopsDB->escape($event)), 'OR');
 		}
 		$criteria->add($event_criteria);
 		return $this->deleteAll($criteria);
@@ -633,7 +633,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 * @return  bool
 	 **/
 	public function unsubscribeByModule($module_id) {
-		$criteria = new \icms_db_criteria_Item('not_modid', (int)$module_id);
+		$criteria = new \Icms\Db\Criteria\Item('not_modid', (int)$module_id);
 		return $this->deleteAll($criteria);
 	}
 
@@ -647,10 +647,10 @@ class Handler extends \Icms\Core\EntityHandler {
 	 * @return bool
 	 **/
 	public function unsubscribeByItem($module_id, $category, $item_id) {
-		$criteria = new \icms_db_criteria_Compo();
-		$criteria->add(new \icms_db_criteria_Item('not_modid', (int) $module_id));
-		$criteria->add(new \icms_db_criteria_Item('not_category', \icms::$xoopsDB->escape($category)));
-		$criteria->add(new \icms_db_criteria_Item('not_itemid', (int) $item_id));
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('not_modid', (int) $module_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_category', \icms::$xoopsDB->escape($category)));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_itemid', (int) $item_id));
 		return $this->deleteAll($criteria);
 	}
 
@@ -663,9 +663,9 @@ class Handler extends \Icms\Core\EntityHandler {
 	 * @param  int  $user_id  ID of the user being logged in
 	 **/
 	public function doLoginMaintenance($user_id) {
-		$criteria = new \icms_db_criteria_Compo();
-		$criteria->add(new \icms_db_criteria_Item('not_uid', (int) $user_id));
-		$criteria->add(new \icms_db_criteria_Item('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN));
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('not_uid', (int) $user_id));
+		$criteria->add(new \Icms\Db\Criteria\Item('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN));
 
 		$notifications = $this->getObjects($criteria, true);
 		foreach ($notifications as $n) {
@@ -1047,4 +1047,3 @@ class Handler extends \Icms\Core\EntityHandler {
 	}
 }
 
-\class_alias(Handler::class, 'icms_data_notification_Handler');

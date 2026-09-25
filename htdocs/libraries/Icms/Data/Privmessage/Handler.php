@@ -193,4 +193,3 @@ class Handler extends \Icms\Core\EntityHandler
     }
 }
 
-\class_alias(Handler::class, 'icms_data_privmessage_Handler');

@@ -149,7 +149,7 @@ class Renderer {
 	 */
 	public function renderThreadView($comment_id = 0, $admin_view = FALSE, $show_nav = TRUE) {
 		// construct comment tree
-		$xot = new \icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new \Icms\Ipf\Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 
 		if (FALSE != $this->_useIcons) {
@@ -260,7 +260,7 @@ class Renderer {
 	 * @param boolean $admin_view
 	 */
 	public function renderNestView($comment_id = 0, $admin_view = FALSE) {
-		$xot = new \icms_ipf_Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new \Icms\Ipf\Tree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 		if (FALSE != $this->_useIcons) {
 			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');
@@ -431,4 +431,3 @@ class Renderer {
 	}
 }
 
-\class_alias(Renderer::class, 'icms_data_comment_Renderer');

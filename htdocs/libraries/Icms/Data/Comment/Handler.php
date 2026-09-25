@@ -255,10 +255,10 @@ class Handler extends \Icms\Core\EntityHandler
      */
     public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0): array
     {
-        $criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('com_modid', (int) $module_id));
-        $criteria->add(new \icms_db_criteria_Item('com_itemid', (int) $item_id));
+        $criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('com_modid', (int) $module_id));
+        $criteria->add(new \Icms\Db\Criteria\Item('com_itemid', (int) $item_id));
         if (isset($status)) {
-            $criteria->add(new \icms_db_criteria_Item('com_status', (int) $status));
+            $criteria->add(new \Icms\Db\Criteria\Item('com_status', (int) $status));
         }
         if (isset($order)) {
             $criteria->setOrder($order);
@@ -275,10 +275,10 @@ class Handler extends \Icms\Core\EntityHandler
      */
     public function getCountByItemId($module_id, $item_id, $status = null): int
     {
-        $criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('com_modid', (int) $module_id));
-        $criteria->add(new \icms_db_criteria_Item('com_itemid', (int) $item_id));
+        $criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('com_modid', (int) $module_id));
+        $criteria->add(new \Icms\Db\Criteria\Item('com_itemid', (int) $item_id));
         if (isset($status)) {
-            $criteria->add(new \icms_db_criteria_Item('com_status', (int) $status));
+            $criteria->add(new \Icms\Db\Criteria\Item('com_status', (int) $status));
         }
         return $this->getCount($criteria);
     }
@@ -288,11 +288,11 @@ class Handler extends \Icms\Core\EntityHandler
      */
     public function getTopComments($module_id, $item_id, $order, $status = null): array
     {
-        $criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('com_modid', (int) $module_id));
-        $criteria->add(new \icms_db_criteria_Item('com_itemid', (int) $item_id));
-        $criteria->add(new \icms_db_criteria_Item('com_pid', 0));
+        $criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('com_modid', (int) $module_id));
+        $criteria->add(new \Icms\Db\Criteria\Item('com_itemid', (int) $item_id));
+        $criteria->add(new \Icms\Db\Criteria\Item('com_pid', 0));
         if (isset($status)) {
-            $criteria->add(new \icms_db_criteria_Item('com_status', (int) $status));
+            $criteria->add(new \Icms\Db\Criteria\Item('com_status', (int) $status));
         }
         $criteria->setOrder($order);
         return $this->getObjects($criteria);
@@ -303,10 +303,10 @@ class Handler extends \Icms\Core\EntityHandler
      */
     public function getThread($comment_rootid, $comment_id, $status = null): array
     {
-        $criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('com_rootid', (int) $comment_rootid));
-        $criteria->add(new \icms_db_criteria_Item('com_id', (int) $comment_id, '>='));
+        $criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('com_rootid', (int) $comment_rootid));
+        $criteria->add(new \Icms\Db\Criteria\Item('com_id', (int) $comment_id, '>='));
         if (isset($status)) {
-            $criteria->add(new \icms_db_criteria_Item('com_status', (int) $status));
+            $criteria->add(new \Icms\Db\Criteria\Item('com_status', (int) $status));
         }
         return $this->getObjects($criteria);
     }
@@ -326,8 +326,7 @@ class Handler extends \Icms\Core\EntityHandler
      */
     public function deleteByModule($module_id): bool
     {
-        return $this->deleteAll(new \icms_db_criteria_Item('com_modid', (int) $module_id));
+        return $this->deleteAll(new \Icms\Db\Criteria\Item('com_modid', (int) $module_id));
     }
 }
 
-\class_alias(Handler::class, 'icms_data_comment_Handler');

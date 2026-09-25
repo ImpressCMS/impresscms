@@ -263,13 +263,13 @@ class Handler extends \Icms\Core\EntityHandler
      */
     public function getList($avatar_type = null, $avatar_display = null): array
     {
-        $criteria = new \icms_db_criteria_Compo();
+        $criteria = new \Icms\Db\Criteria\Compo();
         if (isset($avatar_type)) {
             $avatar_type = ($avatar_type == 'C') ? 'C' : 'S';
-            $criteria->add(new \icms_db_criteria_Item('avatar_type', $avatar_type));
+            $criteria->add(new \Icms\Db\Criteria\Item('avatar_type', $avatar_type));
         }
         if (isset($avatar_display)) {
-            $criteria->add(new \icms_db_criteria_Item('avatar_display', (int) $avatar_display));
+            $criteria->add(new \Icms\Db\Criteria\Item('avatar_display', (int) $avatar_display));
         }
         $avatars = $this->getObjects($criteria, true);
         $ret = ['blank.gif' => _NONE];
@@ -322,4 +322,3 @@ class Handler extends \Icms\Core\EntityHandler
     }
 }
 
-\class_alias(Handler::class, 'icms_data_avatar_Handler');

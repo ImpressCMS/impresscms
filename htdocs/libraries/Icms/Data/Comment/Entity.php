@@ -63,4 +63,3 @@ class Entity extends \Icms\Core\Entity
     }
 }
 
-\class_alias(Entity::class, 'icms_data_comment_Object');

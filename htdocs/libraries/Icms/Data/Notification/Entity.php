@@ -62,7 +62,7 @@ class Entity extends \Icms\Core\Entity
         }
         $method = $user->getVar('notify_method');
 
-        $xoopsMailer = new \icms_messaging_Handler();
+        $xoopsMailer = new \Icms\Messaging\Handler();
         include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
         switch ($method) {
             case XOOPS_NOTIFICATION_METHOD_PM:
@@ -106,4 +106,3 @@ class Entity extends \Icms\Core\Entity
     }
 }
 
-\class_alias(Entity::class, 'icms_data_notification_Object');

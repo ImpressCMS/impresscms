@@ -81,4 +81,3 @@ class Entity extends \Icms\Ipf\Entity
     }
 }
 
-\class_alias(Entity::class, 'icms_data_urllink_Object');

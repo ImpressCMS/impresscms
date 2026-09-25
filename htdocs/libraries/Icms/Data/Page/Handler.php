@@ -51,14 +51,14 @@ class Handler extends \Icms\Ipf\Handler
             $value = [$value];
         }
         $module_handler = \icms::handler('icms_module');
-        $criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('hasmain', 1));
-        $criteria->add(new \icms_db_criteria_Item('isactive', 1));
+        $criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('hasmain', 1));
+        $criteria->add(new \Icms\Db\Criteria\Item('isactive', 1));
         $module_list =& $module_handler->getObjects($criteria);
         $mods = '';
         foreach ($module_list as $module) {
             $mods .= '<optgroup label="' . $module->getVar('name') . '">';
-            $criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('page_moduleid', $module->getVar('mid')));
-            $criteria->add(new \icms_db_criteria_Item('page_status', 1));
+            $criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('page_moduleid', $module->getVar('mid')));
+            $criteria->add(new \Icms\Db\Criteria\Item('page_status', 1));
             $pages =& $this->getObjects($criteria);
             $sel = '';
             if (in_array($module->getVar('mid') . '-0', $value)) {
@@ -79,8 +79,8 @@ class Handler extends \Icms\Ipf\Handler
         }
 
         $module = $module_handler->get(1);
-        $criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('page_moduleid', 1));
-        $criteria->add(new \icms_db_criteria_Item('page_status', 1));
+        $criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('page_moduleid', 1));
+        $criteria->add(new \Icms\Db\Criteria\Item('page_status', 1));
         $pages =& $this->getObjects($criteria);
         $cont = '';
         if (count($pages) > 0) {
@@ -117,4 +117,3 @@ class Handler extends \Icms\Ipf\Handler
     }
 }
 
-\class_alias(Handler::class, 'icms_data_page_Handler');

@@ -37,4 +37,3 @@ class Handler extends \Icms\Ipf\Handler
     }
 }
 
-\class_alias(Handler::class, 'icms_data_file_Handler');
