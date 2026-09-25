@@ -40,7 +40,7 @@ class Xoops extends Entity
      *
      * @param object $dao reference to dao object
      */
-    public function __construct(&$dao)
+    public function __construct($dao)
     {
         $this->_dao = $dao;
         $this->auth_method = 'xoops';
@@ -67,4 +67,3 @@ class Xoops extends Entity
     }
 }
 
-\class_alias(Xoops::class, 'icms_auth_Xoops');

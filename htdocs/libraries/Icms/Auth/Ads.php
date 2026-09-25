@@ -31,7 +31,7 @@ class Ads extends Ldap
     /**
      * Authentication Service constructor
      */
-    public function __construct(&$dao)
+    public function __construct($dao)
     {
         parent::__construct($dao);
     }
@@ -107,4 +107,3 @@ class Ads extends Ldap
     }
 }
 
-\class_alias(Ads::class, 'icms_auth_Ads');

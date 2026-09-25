@@ -81,4 +81,3 @@ class Factory
     }
 }
 
-\class_alias(Factory::class, 'icms_auth_Factory');

@@ -36,7 +36,7 @@ class Provisionning
      * @param object $auth_instance
      * @return object $provis_instance
      */
-    public static function &getInstance(&$auth_instance)
+    public static function &getInstance($auth_instance)
     {
         static $provis_instance;
         if (!isset($provis_instance)) {
@@ -50,9 +50,9 @@ class Provisionning
      *
      * @param object $auth_instance
      */
-    public function __construct(&$auth_instance)
+    public function __construct($auth_instance)
     {
-        $this->_auth_instance = &$auth_instance;
+        $this->_auth_instance = $auth_instance;
         global $icmsConfig, $icmsConfigAuth;
         foreach ($icmsConfigAuth as $key => $val) {
             $this->$key = $val;
@@ -72,7 +72,7 @@ class Provisionning
     public function geticms_member_user_Object($uname)
     {
         $member_handler = \icms::handler('icms_member');
-        $criteria = new \icms_db_criteria_Item('uname', $uname);
+        $criteria = new \Icms\Db\Criteria\Item('uname', $uname);
         $getuser = $member_handler->getUsers($criteria);
         if (count($getuser) == 1) {
             return $getuser[0];
@@ -159,7 +159,7 @@ class Provisionning
      * @param string $pwd Password of the user
      * @return object icms_member_user_Object {@link icms_member_user_Object}
      */
-    public function change(&$icmsUser, $datas, $uname, $pwd = null)
+    public function change($icmsUser, $datas, $uname, $pwd = null)
     {
         $ret = false;
         $member_handler = \icms::handler('icms_member');
@@ -181,4 +181,3 @@ class Provisionning
     }
 }
 
-\class_alias(Provisionning::class, 'icms_auth_Provisionning');

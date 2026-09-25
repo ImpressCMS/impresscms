@@ -34,7 +34,7 @@ class Entity
     /**
      * Authentication Service constructor
      */
-    public function __construct(&$dao)
+    public function __construct($dao)
     {
         $this->_dao = $dao;
     }
@@ -104,4 +104,3 @@ class Entity
     }
 }
 
-\class_alias(Entity::class, 'icms_auth_Object');

@@ -76,7 +76,7 @@ class Ldap extends Entity
     /**
      * Authentication Service constructor
      */
-    public function __construct(&$dao)
+    public function __construct($dao)
     {
         $this->_dao = $dao;
         //The config handler object allows us to look at the configuration options that are stored in the database
@@ -202,7 +202,7 @@ class Ldap extends Entity
      */
     public function loadicms_member_user_Object($userdn, $uname, $pwd = null)
     {
-        $provisHandler = \icms_auth_Provisionning::getInstance($this);
+        $provisHandler = \Icms\Auth\Provisionning::getInstance($this);
         $sr = ldap_read($this->_ds, $userdn, '(objectclass=*)');
         $entries = ldap_get_entries($this->_ds, $sr);
         if ($entries['count'] > 0) {
@@ -214,4 +214,3 @@ class Ldap extends Entity
     }
 }
 
-\class_alias(Ldap::class, 'icms_auth_Ldap');
