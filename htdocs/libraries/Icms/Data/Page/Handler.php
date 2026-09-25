@@ -13,8 +13,6 @@
  * @version     SVN: $Id: Handler.php 10619 2010-09-08 17:59:13Z malanciault $
  */
 
-declare(strict_types=1);
-
 namespace Icms\Data\Page;
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');

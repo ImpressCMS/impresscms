@@ -12,8 +12,6 @@
  * @version     $Id: Handler.php 10849 2010-12-05 18:46:02Z phoenyx $
  */
 
-declare(strict_types=1);
-
 namespace Icms\Data\Urllink;
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

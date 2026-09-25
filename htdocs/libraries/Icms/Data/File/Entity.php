@@ -1,47 +1,57 @@
 <?php
 /**
- * Manage files for users
+ * Richfile Object
  *
- * @category    ICMS
- * @package     Data
- * @subpackage  File
- * @author      marcan <marcan@impresscms.org>
- * @copyright   Copyright (c) 2007 The ImpressCMS Project <http://www.impresscms.org>
- * @version     SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @category	icms
+ * @package		data
+ * @subpackage	richfile
+ * @since		1.3
+ * @author		Phoenyx
+ * @version		$Id: Object.php 10851 2010-12-05 19:15:30Z phoenyx $
  */
-
-declare(strict_types=1);
 
 namespace Icms\Data\File;
 
-defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
-/**
- * File entity (formerly icms_data_file_Object).
- *
- * @category    ICMS
- * @package     Data
- * @subpackage  File
- */
-class Entity extends \Icms\Ipf\Entity
-{
-    /**
-     * Constructor.
-     */
-    public function __construct($handler)
-    {
-        parent::__construct($handler);
-        $this->quickInitVar('fileid', XOBJ_DTYPE_INT, true);
-        $this->quickInitVar('caption', XOBJ_DTYPE_TXTBOX);
-        $this->quickInitVar('description', XOBJ_DTYPE_TXTAREA);
-        $this->quickInitVar('url', XOBJ_DTYPE_TXTBOX);
-        $this->quickInitVar('item_id', XOBJ_DTYPE_INT);
-        $this->quickInitVar('module_id', XOBJ_DTYPE_INT);
-        $this->quickInitVar('date', XOBJ_DTYPE_LTIME);
-        $this->quickInitVar('uid', XOBJ_DTYPE_INT);
+class Entity extends \Icms\Ipf\Entity {
+	/**
+	 * constructor
+	 */
+    public function __construct() {
+        $this->quickInitVar("fileid", XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar("mid", XOBJ_DTYPE_INT, TRUE);
+		$this->quickInitVar("caption", XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar("description", XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar("url", XOBJ_DTYPE_TXTBOX, FALSE);
+	}
 
-        $this->setControl('description', 'dhtmltextarea');
-        $this->hideFieldFromForm(['item_id', 'module_id', 'date', 'uid']);
-    }
-}
+	/**
+	 * get value for variable
+	 *
+	 * @param string $key field name
+	 * @param string $format format
+	 * @return mixed value
+	 */
+	public function getVar($key, $format = "e"){
+		if (substr($key, 0, 4) == "url_") {
+			return parent::getVar("url", $format);
+		} elseif (substr($key, 0, 4) == "mid_") {
+			return parent::getVar("mid", $format);
+		} elseif(substr($key, 0, 8) == "caption_") {
+			return parent::getVar("caption", $format);
+		} elseif(substr($key, 0, 5) == "desc_") {
+			return parent::getVar("description", $format);
+		} else {
+			return parent::getVar($key, $format);
+		}
+	}
 
+	public function render() {
+		$url = str_replace("{ICMS_URL}", ICMS_URL , $this->getVar("url"));
+		$caption = $this->getVar("caption") != "" ? $this->getVar("caption") : $url;
+		return "<a href='" . $url . "' title='" . $this->getVar("description") . "' target='_blank'>" . $caption . "</a>";
+	}
+}

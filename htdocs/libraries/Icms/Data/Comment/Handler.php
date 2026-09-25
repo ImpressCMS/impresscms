@@ -12,8 +12,6 @@
  * @version     SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
-declare(strict_types=1);
-
 namespace Icms\Data\Comment;
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
