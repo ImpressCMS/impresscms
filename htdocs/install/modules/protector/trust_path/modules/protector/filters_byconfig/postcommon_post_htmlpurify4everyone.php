@@ -1,6 +1,4 @@
 <?php
-use \HTMLPurifier;
-
 class protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstract {
 	var $purifier;
 	var $method;

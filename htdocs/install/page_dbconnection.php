@@ -47,12 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
 	switch ($vars['DB_TYPE']) {
-		case 'mysql':
-			$func_connect = empty($vars['DB_PCONNECT'])?"mysql_connect":"mysql_pconnect";
-			if (!($link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true))) {
-				$error = ERR_NO_DBCONNECTION;
-			}
-			break;
 		case 'pdo.mysql':
 			try {
 				$dbh = new PDO('mysql:host=' . $vars['DB_HOST'],
@@ -73,19 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($
 	}
 }
 
-//so far, mysql extension has to exist and be loaded
 $connections = [];
-if (function_exists('mysql_connect') || function_exists('mysql_pconnect')) {
-	$connections['mysql'] = array('type' => 'mysql', 'name' => 'MySQL', 'selected' => 'selected');
-	$db_connection = $connections['mysql'];
-}
+$db_connection = null;
 // Fill with default values
 // check for PDO MySQL and select it, if it is available
 if (class_exists("PDO", false)) {
 	$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
-	if (isset($connections['mysql'])) {
-		$connections['mysql']['selected'] = '';
-	}
 	$connections['pdo'] = $db_connection;
 }
 
