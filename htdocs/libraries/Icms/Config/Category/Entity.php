@@ -71,5 +71,4 @@ class Entity extends \Icms\Core\Entity
 		$this->initVar('confcat_order', XOBJ_DTYPE_INT, 0);
 	}
 }
-\class_alias(Entity::class, 'icms_config_category_Object');
 

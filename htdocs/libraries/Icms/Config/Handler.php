@@ -36,6 +36,8 @@
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
+namespace Icms\Config;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -54,7 +56,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * 				- error handling
  * @access		public
  */
-class icms_config_Handler {
+class Handler {
 	static protected $instance;
 	/**
 	 * Initialize the config handler.
@@ -62,7 +64,7 @@ class icms_config_Handler {
 	 */
 	static public function service() {
 		if (isset(self::$instance)) return self::$instance;
-		$instance = icms::handler('icms_config');
+		$instance = \icms::handler('icms_config');
 		$configs = $instance->getConfigsByCat(
 			array(
 				ICMS_CONF, ICMS_CONF_USER, ICMS_CONF_METAFOOTER, ICMS_CONF_MAILER,
@@ -115,8 +117,8 @@ class icms_config_Handler {
 	 * @param	object  $db    reference to database object
 	 */
 	public function __construct($db) {
-		$this->_cHandler = new icms_config_item_Handler($db);
-		$this->_oHandler = new icms_config_option_Handler($db);
+		$this->_cHandler = new \Icms\Config\Item\Handler($db);
+		$this->_oHandler = new \Icms\Config\Option\Handler($db);
 	}
 
 	/**
@@ -140,7 +142,7 @@ class icms_config_Handler {
 	public function &getConfig($id, $withoptions = false) {
 		$config =& $this->_cHandler->get($id);
 		if ($withoptions == true) {
-			$config->setConfOptions($this->getConfigOptions(new icms_db_criteria_Item('conf_id', $id)));
+			$config->setConfOptions($this->getConfigOptions(new \Icms\Db\Criteria\Item('conf_id', $id)));
 		}
 		return $config;
 	}
@@ -186,7 +188,7 @@ class icms_config_Handler {
 		$options =& $config->getConfOptions();
 		$count = count($options);
 		if ($count == 0) {
-			$options = $this->getConfigOptions(new icms_db_criteria_Item('conf_id', $config->getVar('conf_id')));
+			$options = $this->getConfigOptions(new \Icms\Db\Criteria\Item('conf_id', $config->getVar('conf_id')));
 			$count = count($options);
 		}
 		if (is_array($options) && $count > 0) {
@@ -233,8 +235,8 @@ class icms_config_Handler {
 	 */
 	public function &getConfigsByCat($category, $module = 0) {
 		if (is_array($category)) {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
-			$criteria->add(new icms_db_criteria_Item('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
+			$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('conf_modid', (int) $module));
+			$criteria->add(new \Icms\Db\Criteria\Item('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach ( array_keys($configs) as $i) {
@@ -248,9 +250,9 @@ class icms_config_Handler {
 		} else {
 			if (!empty($this->_cachedConfigs[$module][$category]) ) return $this->_cachedConfigs[$module][$category];
 
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', (int) $module));
+			$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('conf_modid', (int) $module));
 			if (!empty($category)) {
-				$criteria->add(new icms_db_criteria_Item('conf_catid', (int) $category));
+				$criteria->add(new \Icms\Db\Criteria\Item('conf_catid', (int) $category));
 			}
 			$ret = array();
 			$configs = $this->getConfigs($criteria, true);
@@ -321,9 +323,9 @@ class icms_config_Handler {
 		if (!empty($this->_cachedConfigs[$conf_modid][$conf_catid])) {
 			return $this->_cachedConfigs[$conf_modid][$conf_catid];
 		} else {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('conf_modid', $conf_modid));
+			$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('conf_modid', $conf_modid));
 			if (empty($conf_catid)) {
-				$criteria->add(new icms_db_criteria_Item('conf_catid', $conf_catid));
+				$criteria->add(new \Icms\Db\Criteria\Item('conf_catid', $conf_catid));
 			}
 			$configs =& $this->_cHandler->getObjects($criteria);
 			$confcount = count($configs);

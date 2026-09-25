@@ -205,4 +205,3 @@ class Entity extends \Icms\Core\Entity {
 		$this->vars['conf_value']['data_type'] = $types[$newType];
 	}
 }
-\class_alias(Entity::class,'icms_config_Item_Object');

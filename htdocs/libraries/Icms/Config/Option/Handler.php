@@ -204,4 +204,3 @@ class Handler extends \Icms\Core\EntityHandler {
 	}
 }
 
-\class_alias(Handler::class, 'icms_config_option_Handler');

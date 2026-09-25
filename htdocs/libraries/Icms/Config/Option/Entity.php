@@ -65,4 +65,3 @@ class Entity extends \Icms\Core\Entity {
 		$this->initVar('conf_id', XOBJ_DTYPE_INT, 0);
 	}
 }
-\class_alias(Entity::class, 'icms_config_option_Object');
