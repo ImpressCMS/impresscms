@@ -114,6 +114,20 @@ class Entity extends \Icms\Core\Entity {
 	public function launch() {}
 
 	/**
+	 * Class name (lowercase) => file, for the classes of registered module class paths
+	 *
+	 * @var array<string, string>
+	 */
+	private static $moduleClassMap = array();
+
+	/**
+	 * Whether the module class autoloader has been registered
+	 *
+	 * @var bool
+	 */
+	private static $moduleAutoloaderRegistered = false;
+
+	/**
 	 * register class path with autoloader
 	 * notice: this function may not be used for the system module
 	 *
@@ -131,9 +145,8 @@ class Entity extends \Icms\Core\Entity {
 		// check if module is active (only if applicable)
 		if ($isactive !== NULL && $this->getVar("isactive") != (int) $isactive) return;
 
-		// register class path with the live Composer ClassLoader so that
-		// module classes (e.g. mod_content_ContentHandler) resolve via
-		// class_exists() without requiring a manual include_once.
+		// register the class path so that module classes (e.g. mod_content_ContentHandler)
+		// resolve via class_exists() without requiring a manual include_once.
 		if ($this->getVar("ipf")) {
 			$modname = ($this->getVar("modname") != "") ? $this->getVar("modname") : $this->getVar("dirname");
 			$this->registerModuleClassMap($class_path, "mod_" . $modname . "_");
@@ -143,8 +156,8 @@ class Entity extends \Icms\Core\Entity {
 	}
 
 	/**
-	 * Build a classmap from the PHP files found in $class_path and push it
-	 * into Composer's live ClassLoader.
+	 * Build a classmap from the PHP files found in $class_path and serve it
+	 * from a single SPL autoloader.
 	 *
 	 * Each "<BaseName>.php" in $class_path is mapped to "<prefix><BaseName>",
 	 * matching the ImpressCMS IPF convention where file ContentHandler.php
@@ -155,32 +168,23 @@ class Entity extends \Icms\Core\Entity {
 	 * @return void
 	 */
 	private function registerModuleClassMap($class_path, $prefix = "") {
-		$composerLoader = $this->getComposerClassLoader();
-		if (!$composerLoader) return;
 		$classMap = array();
 		foreach (glob($class_path . "/*.php") as $file) {
-			$classMap[$prefix . basename($file, ".php")] = $file;
+			$classMap[strtolower($prefix . basename($file, ".php"))] = $file;
 		}
-		if ($classMap) {
-			$composerLoader->addClassMap($classMap);
-		}
-	}
+		if (!$classMap) return;
 
-	/**
-	 * Locate the active Composer ClassLoader instance among registered
-	 * SPL autoloaders, or null if Composer is unavailable.
-	 *
-	 * @return \Composer\Autoload\ClassLoader|null
-	 */
-	private function getComposerClassLoader() {
-		if (!class_exists("Composer\\Autoload\\ClassLoader", false)) return null;
-		foreach (spl_autoload_functions() as $autoloader) {
-			if (is_array($autoloader) && isset($autoloader[0]) && is_object($autoloader[0])
-				&& $autoloader[0] instanceof Composer\Autoload\ClassLoader) {
-				return $autoloader[0];
-			}
+		self::$moduleClassMap = array_merge(self::$moduleClassMap, $classMap);
+
+		if (!self::$moduleAutoloaderRegistered) {
+			self::$moduleAutoloaderRegistered = true;
+			spl_autoload_register(static function ($class) {
+				$key = strtolower($class);
+				if (isset(self::$moduleClassMap[$key])) {
+					require_once self::$moduleClassMap[$key];
+				}
+			}, true, true);
 		}
-		return null;
 	}
 
 	/**
