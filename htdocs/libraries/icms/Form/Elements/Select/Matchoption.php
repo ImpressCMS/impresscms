@@ -77,4 +77,3 @@ class Matchoption extends SelectElement
 	}
 }
 
-\class_alias(Matchoption::class, 'icms_form_elements_select_Matchoption');

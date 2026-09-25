@@ -93,4 +93,3 @@ class Editor extends Tray
 		$this->addElement($optionSelect);
 	}
 }
-class_alias(Editor::class, 'icms_form_elements_select_Editor');

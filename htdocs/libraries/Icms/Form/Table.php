@@ -107,4 +107,3 @@ class Table extends Base
 /**
  * Legacy class alias for backward compatibility
  */
-class_alias(Table::class, 'icms_form_Table');

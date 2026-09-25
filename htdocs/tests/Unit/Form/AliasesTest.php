@@ -6,6 +6,8 @@
  * @package icms\tests
  */
 
+declare(strict_types=1);
+
 namespace Form;
 
 use Icms\Tests\Support\LegacyAliasAssertions;
@@ -30,10 +32,6 @@ final class AliasesTest extends TestCase
             'Theme Form'       => ['Icms\\Form\\Theme', 'icms_form_Theme'],
             'Button Form Element'       => ['Icms\\Form\\Elements\\Button', 'icms_form_elements_Button'],
             'Captcha Form Element'       => ['Icms\\Form\\Elements\\Captcha', 'icms_form_elements_Captcha'],
-            'Captcha Entity'       => ['Icms\\Form\\Elements\\Captcha\\Entity', 'icms_form_elements_captcha_Object'],
-            'Captcha Image'       => ['Icms\\Form\\Elements\\Captcha\\Image', 'icms_form_elements_captcha_Image'],
-            'Captcha Text'       => ['Icms\\Form\\Elements\\Captcha\\Text', 'icms_form_elements_captcha_Text'],
-            'Captcha ImageHandler' => ['Icms\\Form\\Elements\\Captcha\\ImageHandler', 'icms_form_elements_captcha_ImageHandler'],
             'Checkbox Form Element'       => ['Icms\\Form\\Elements\\Checkbox', 'icms_form_elements_Checkbox'],
             'Colorpicker Form Element'       => ['Icms\\Form\\Elements\\Colorpicker', 'icms_form_elements_Colorpicker'],
             'Date Form Element'       => ['Icms\\Form\\Elements\\Date', 'icms_form_elements_Date'],
@@ -51,13 +49,17 @@ final class AliasesTest extends TestCase
             'Select Form Element'       => ['Icms\\Form\\Elements\\Select', 'icms_form_elements_Select'],
             'Text Form Element'       => ['Icms\\Form\\Elements\\Text', 'icms_form_elements_Text'],
             'Tray Form Element'       => ['Icms\\Form\\Elements\\Tray', 'icms_form_elements_Tray'],
-            // Select folder classes - PSR-4 refactored with aliases
-            'Select Country'        => ['Icms\\Form\\Elements\\Select\\Country', 'icms_form_elements_select_Country'],
-            'Select Group'          => ['Icms\\Form\\Elements\\Select\\Group', 'icms_form_elements_select_Group'],
-            'Select Language'       => ['Icms\\Form\\Elements\\Select\\Lang', 'icms_form_elements_select_Lang'],
-            'Select Matchoption'    => ['Icms\\Form\\Elements\\Select\\Matchoption', 'icms_form_elements_select_Matchoption'],
-            'Select Theme'          => ['Icms\\Form\\Elements\\Select\\Theme', 'icms_form_elements_select_Theme'],
-            'Select Timezone'       => ['Icms\\Form\\Elements\\Select\\Timezone', 'icms_form_elements_select_Timezone'],
+            'Country Select Element'       => ['Icms\\Form\\Elements\\Select\\Country', 'icms_form_elements_select_Country'],
+            'Editor Select Element'       => ['Icms\\Form\\Elements\\Select\\Editor', 'icms_form_elements_select_Editor'],
+            'Group Select Element'       => ['Icms\\Form\\Elements\\Select\\Group', 'icms_form_elements_select_Group'],
+            'Image Select Element'       => ['Icms\\Form\\Elements\\Select\\Image', 'icms_form_elements_select_Image'],
+            'Language Select Element'       => ['Icms\\Form\\Elements\\Select\\Lang', 'icms_form_elements_select_Lang'],
+            'Matchoption Select Element'       => ['Icms\\Form\\Elements\\Select\\Matchoption', 'icms_form_elements_select_Matchoption'],
+            'Theme Select Element'       => ['Icms\\Form\\Elements\\Select\\Theme', 'icms_form_elements_select_Theme'],
+            'Timezone Select Element'       => ['Icms\\Form\\Elements\\Select\\Timezone', 'icms_form_elements_select_Timezone'],
+            'User Select Element'       => ['Icms\\Form\\Elements\\Select\\User', 'icms_form_elements_select_User'],
+
+
         ];
     }
 

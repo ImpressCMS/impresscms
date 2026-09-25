@@ -87,10 +87,9 @@ class Image {
     public function loadImage() {
         global $icmsConfigCaptcha;
         $rule = $icmsConfigCaptcha['captcha_casesensitive'] ? constant("ICMS_CAPTCHA_RULE_CASESENSITIVE") : constant("ICMS_CAPTCHA_RULE_CASEINSENSITIVE");
-        $ret = "<img id='captcha' src='" . ICMS_URL . "/libraries/icms/form/elements/captcha/img.php" . ' onclick="this.src="' . ICMS_URL . "/libraries/icms/form/elements/captcha/img.php?refresh="+Math.random()
+        $ret = "<img id='captcha' src='" . ICMS_URL . "/libraries/Icms/Form/Elements/Captcha/img.php" . ' onclick="this.src="' . ICMS_URL . "/libraries/Icms/Form/Elements/Captcha/img.php?refresh="+Math.random()
                 ."\" style='cursor: pointer;margin-left: auto;margin-right: auto;text-align:center;' alt='" . htmlspecialchars($rule, ENT_QUOTES) . "' />";
         return $ret;
     }
 }
 
-\class_alias(Image::class, 'icms_form_elements_captcha_Image');

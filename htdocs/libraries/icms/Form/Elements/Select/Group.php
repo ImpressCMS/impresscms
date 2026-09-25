@@ -79,4 +79,3 @@ class Group extends SelectElement
 	}
 }
 
-class_alias(Group::class, 'icms_form_elements_select_Group');

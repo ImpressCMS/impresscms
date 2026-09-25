@@ -461,4 +461,3 @@ class GroupPermission
 /**
  * Legacy class alias for backward compatibility
  */
-\class_alias(GroupPermission::class, 'icms_form_Groupperm');

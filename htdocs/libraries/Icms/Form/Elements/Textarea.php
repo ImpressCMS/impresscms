@@ -142,4 +142,3 @@ class Textarea extends \Icms\Form\Element {
 			. "</textarea>";
 	}
 }
-\class_alias(Textarea::class,'icms_form_elements_Textarea');

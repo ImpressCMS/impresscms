@@ -340,4 +340,3 @@ class Country extends SelectElement
 	}
 }
 
-\class_alias(Country::class, 'icms_form_elements_select_Country');

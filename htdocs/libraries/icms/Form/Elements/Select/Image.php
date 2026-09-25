@@ -207,4 +207,3 @@ class Image extends SelectElement {
 	}
 }
 
-\class_alias(Image::class, 'icms_form_elements_select_Image');

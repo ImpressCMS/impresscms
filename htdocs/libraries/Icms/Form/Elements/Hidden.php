@@ -110,4 +110,3 @@ class Hidden extends \Icms\Form\Element {
 	}
 }
 
-\class_alias(Hidden::class,'icms_form_elements_Hidden');

@@ -181,4 +181,3 @@ class Password extends \Icms\Form\Element {
 		return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
-\class_alias(Password::class,'icms_form_elements_Password');

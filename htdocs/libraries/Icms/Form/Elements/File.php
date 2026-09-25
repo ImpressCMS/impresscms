@@ -95,4 +95,3 @@ class File extends \Icms\Form\Element {
 		return $ret;
 	}
 }
-\class_alias(File::class,'icms_form_element_File');

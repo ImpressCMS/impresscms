@@ -255,4 +255,3 @@ class Select extends Element
 /**
  * Legacy class alias for backward compatibility
  */
-\class_alias(Select::class, 'icms_form_elements_Select');

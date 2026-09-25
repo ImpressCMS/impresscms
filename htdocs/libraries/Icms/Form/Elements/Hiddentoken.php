@@ -60,4 +60,3 @@ class Hiddentoken extends \Icms\Form\Elements\Hidden {
   }
 }
 
-\class_alias(Hiddentoken::class, '\Icms\Form\Elements\HiddenToken');

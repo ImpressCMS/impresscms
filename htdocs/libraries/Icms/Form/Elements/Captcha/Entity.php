@@ -151,8 +151,8 @@ class Entity {
 
 		// Skip CAPTCHA for group
 		//$gperm_handler = icms::handler('icms_member_groupperm');
-		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
+		$groups = is_object(\icms::$user) ? \icms::$user->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(\icms::$user)) {
 			$this->active = FALSE;
 		} elseif ($icmsConfigCaptcha['captcha_mode'] =='none') {
 			$this->active = FALSE;
@@ -171,8 +171,8 @@ class Entity {
 
 		$is_valid = FALSE;
 
-		$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(icms::$user)) {
+		$groups = is_object(\icms::$user) ? \icms::$user->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		if (array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object(\icms::$user)) {
 			$is_valid = TRUE;
 		} elseif (!empty($maxAttempts) && $_SESSION['icms_form_elements_captcha_Object_attempt_'.$sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
@@ -285,4 +285,3 @@ class Entity {
 		return $form;
 	}
 }
-\class_alias(Entity::class, 'icms_form_elements_captcha_Object');

@@ -59,7 +59,7 @@ class Captcha extends \Icms\Form\Element {
 			$numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null,
 			$backgroundnum = null
 	) {
-		$this->_captchaHandler = &Icms\Form\Elements\Captcha\Entity::instance();
+		$this->_captchaHandler = &\Icms\Form\Elements\Captcha\Entity::instance();
 		$this->_captchaHandler->init(
 			$name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum
 		);
@@ -92,4 +92,3 @@ class Captcha extends \Icms\Form\Element {
 	}
 }
 
-\class_alias(Captcha::class, 'icms_form_elements_Captcha');

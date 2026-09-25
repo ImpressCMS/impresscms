@@ -86,4 +86,3 @@ class Simple extends Base
 /**
  * Legacy class alias for backward compatibility
  */
-\class_alias(Simple::class, 'icms_form_Simple');

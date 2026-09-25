@@ -70,4 +70,3 @@ class Radioyn extends Radio {
 	}
 }
 
-\class_alias(Radioyn::class,'icms_form_elements_Radioyn');

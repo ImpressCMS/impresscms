@@ -123,4 +123,3 @@ class Theme extends Base
 /**
  * Legacy class alias for backward compatibility
  */
-\class_alias(Theme::class, 'icms_form_Theme');

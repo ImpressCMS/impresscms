@@ -152,4 +152,3 @@ class Text extends \Icms\Form\Element {
 	}
 }
 
-\class_alias(Text::class, 'icms_form_elements_Text');

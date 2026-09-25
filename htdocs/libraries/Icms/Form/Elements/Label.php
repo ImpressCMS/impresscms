@@ -92,4 +92,3 @@ class Label extends \Icms\Form\Element {
 	}
 }
 
-\class_alias(Label::class,'icms_form_elements_Label');

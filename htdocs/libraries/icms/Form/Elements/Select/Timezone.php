@@ -113,4 +113,3 @@ class Timezone extends SelectElement
 	}
 }
 
-\class_alias(Timezone::class, 'icms_form_elements_select_Timezone');

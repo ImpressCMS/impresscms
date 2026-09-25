@@ -88,4 +88,3 @@ class Date extends \Icms\Form\Elements\Text {
         return $result;
     }
 }
-\class_alias(Date::class, 'icms_form_elements_Date');

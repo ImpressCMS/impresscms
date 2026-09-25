@@ -393,4 +393,3 @@ abstract class Element
 /**
  * Legacy class alias for backward compatibility
  */
-class_alias(Element::class, 'icms_form_Element');

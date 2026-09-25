@@ -244,7 +244,7 @@ class Checkbox extends \Icms\Form\Element {
 			$this->setName($ele_name);
 		}
 
-		$this->tpl = new icms_view_Tpl();
+		$this->tpl = new \Icms\View\Tpl();
 		$this->tpl->assign('ele_name', $ele_name);
 		$this->tpl->assign('ele_id', $ele_name);
 		$this->tpl->assign('ele_value', $ele_value);
@@ -293,4 +293,3 @@ class Checkbox extends \Icms\Form\Element {
 		}
 	}
 }
-\class_alias(Checkbox::class, 'icms_form_elements_Checkbox');

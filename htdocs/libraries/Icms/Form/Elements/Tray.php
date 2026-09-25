@@ -198,4 +198,3 @@ class Tray extends \Icms\Form\Element {
 		return $ret;
 	}
 }
-\class_alias(Tray::class, 'icms_form_elements_Tray');

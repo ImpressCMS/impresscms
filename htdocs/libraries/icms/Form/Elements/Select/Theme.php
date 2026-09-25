@@ -69,8 +69,7 @@ class Theme extends SelectElement
 	 */
 	public function __construct(string $caption, string $name, ?string $value = null, int $size = 1) {
 		parent::__construct($caption, $name, $value, $size);
-		$this->addOptionArray(\icms_view_theme_Factory::getThemesList());
+		$this->addOptionArray(\Icms\View\Theme\Factory::getThemesList());
 	}
 }
 
-\class_alias(Theme::class, 'icms_form_elements_select_Theme');

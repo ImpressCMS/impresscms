@@ -110,4 +110,3 @@ class Text {
     }
 }
 
-\class_alias(Text::class, 'icms_form_elements_captcha_Text');

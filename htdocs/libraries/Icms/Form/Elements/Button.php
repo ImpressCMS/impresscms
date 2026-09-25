@@ -118,7 +118,7 @@ class Button extends \Icms\Form\Element {
 	 * @return	string
 	 */
 		public function render(): string {
-	$this->tpl = new icms_view_Tpl();
+	$this->tpl = new \Icms\View\Tpl();
 	$this->tpl->assign('type', $this->getType());
 	$this->tpl->assign('name', $this->getName());
 	$this->tpl->assign('id', $this->getName());
@@ -130,4 +130,3 @@ class Button extends \Icms\Form\Element {
 	return $this->tpl->fetch('db:' . $element_html_template);
 	}
 }
-\class_alias(Button::class, 'icms_form_elements_Button');

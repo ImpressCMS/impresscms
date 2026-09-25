@@ -187,7 +187,7 @@ abstract class Base
 	): void {
 		if ($formElement instanceof \Stringable) {
 			$this->_elements[] = $formElement;
-		} elseif ($formElement instanceof \Element) {
+		} elseif ($formElement instanceof Element) {
 			$this->_elements[] = $formElement;
 			if (!$formElement->isContainer()) {
 				if ($required) {
@@ -218,7 +218,7 @@ abstract class Base
 			$ret = [];
 			$count = count($this->_elements);
 			for ($i = 0; $i < $count; $i++) {
-				if ($this->_elements[$i] instanceof \Object) {
+				if ($this->_elements[$i] instanceof Element) {
 					if (!$this->_elements[$i]->isContainer()) {
 						$ret[] = $this->_elements[$i];
 					} else {
@@ -277,7 +277,7 @@ abstract class Base
 	public function setElementValue(string $name, string $value): void
 	{
 		$ele = $this->getElementByName($name);
-		if ($ele instanceof \Object && method_exists($ele, 'setValue')) {
+		if ($ele instanceof Element && method_exists($ele, 'setValue')) {
 			$ele->setValue($value);
 		}
 	}
@@ -311,7 +311,7 @@ abstract class Base
 	public function getElementValue(string $name, bool $encode = false): ?string
 	{
 		$ele = $this->getElementByName($name);
-		if ($ele instanceof \Object && method_exists($ele, 'getValue')) {
+		if ($ele instanceof Element && method_exists($ele, 'getValue')) {
 			return $ele->getValue($encode);
 		}
 		return null;
@@ -483,4 +483,3 @@ abstract class Base
 /**
  * Legacy class alias for backward compatibility
  */
-class_alias(Base::class, 'icms_form_Base');

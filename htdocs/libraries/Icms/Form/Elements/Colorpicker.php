@@ -99,4 +99,3 @@ class Colorpicker extends \Icms\Form\Elements\Text {
 	}
 
 }
-\class_alias(Colorpicker::class, 'icms_form_elements_Colorpicker');

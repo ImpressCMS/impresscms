@@ -183,4 +183,3 @@ class Groupperm extends \Icms\Form\Element {
 		}
 	}
 }
-\class_alias(Groupperm::class,'icms_form_element_groupperm');

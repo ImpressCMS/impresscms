@@ -187,4 +187,3 @@ class Radio extends \Icms\Form\Element {
 		return $ret;
 	}
 }
-\class_alias(Radio::class, 'icms_form_elements_Radio');

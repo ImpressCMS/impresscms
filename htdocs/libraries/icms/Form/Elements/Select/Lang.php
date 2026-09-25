@@ -73,4 +73,3 @@ class Lang extends SelectElement
 	}
 }
 
-class_alias(Lang::class, 'icms_form_elements_select_Lang');

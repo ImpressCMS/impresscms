@@ -198,4 +198,3 @@ class User extends Tray
 	}
 }
 
-\class_alias(User::class, 'icms_form_elements_select_User');

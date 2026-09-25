@@ -88,8 +88,8 @@ class Dhtmltextarea extends \Icms\Form\Elements\Textarea {
 		$this->_hiddenText = $hiddentext;
 		global $icmsConfig;
 
-		$groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
-		$moduleid = (is_object(icms::$module) && $name != 'com_text') ? icms::$module->getVar('mid') : 1;
+		$groups   = (is_object(\icms::$user)) ? \icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
+		$moduleid = (is_object(\icms::$module) && $name != 'com_text') ? \icms::$module->getVar('mid') : 1;
 
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $icmsConfig['editor_default']) {
 			$editor_default = $options['editor'];
@@ -97,7 +97,7 @@ class Dhtmltextarea extends \Icms\Form\Elements\Textarea {
 			$editor_default = $icmsConfig['editor_default'];
 		}
 
-		$gperm_handler = icms::handler('icms_member_groupperm');
+		$gperm_handler = \icms::handler('icms_member_groupperm');
 		if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)) {
 			include ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php";
 			$this->htmlEditor = array($editorversion['class'], ICMS_EDITOR_PATH . "/" . $editorversion['dirname'] . "/" . $editorversion['file']);
@@ -142,7 +142,7 @@ class Dhtmltextarea extends \Icms\Form\Elements\Textarea {
 			. "<img onmouseover='style.cursor=\"pointer\"' onclick='javascript:openWithSelfMain(\"" . ICMS_URL . "/modules/system/admin/images/browser.php?target=" . $ele_name . "&type=iman\",\"imgmanager\",985,470);' src='" . ICMS_URL . "/images/image.gif' alt='image' />&nbsp;";
 		$jscript = '';
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-			$extension = icms_core_DataFilter::loadExtension($key);
+			$extension = \Icms\Core\DataFilter::loadExtension($key);
 			$func = "render_{$key}";
 			if (function_exists($func)) {
 				@list($encode, $js) = $func($ele_name);
@@ -266,4 +266,3 @@ class Dhtmltextarea extends \Icms\Form\Elements\Textarea {
 		return $ret;
 	}
 }
-\class_alias(Dhtmltextarea::class, 'icms_form_elements_Dhtmltextarea');
