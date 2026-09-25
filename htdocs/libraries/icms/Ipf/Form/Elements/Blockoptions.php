@@ -18,7 +18,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Blockoptions extends \icms_form_elements_Tray {
+class Blockoptions extends \Icms\Form\Elements\Tray {
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
@@ -33,9 +33,8 @@ class Blockoptions extends \icms_form_elements_Tray {
 		\icms_loadLanguageFile($object->handler->getModuleDirname($object->getVar('mid', 'e')), 'blocks');
 
 		if (!function_exists($func)) return;
-		$visible_label = new \icms_form_elements_Label('', $func(explode('|', $object->getVar('options'))));
+		$visible_label = new \Icms\Form\Elements\Label('', $func(explode('|', $object->getVar('options'))));
 		$this->addElement($visible_label);
 	}
 }
 
-\class_alias(Blockoptions::class, 'icms_ipf_form_elements_Blockoptions');

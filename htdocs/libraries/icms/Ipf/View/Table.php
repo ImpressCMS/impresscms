@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Icms\Ipf\Entity Table Listing
  *
@@ -77,7 +76,7 @@ class Table {
 		$this->_objectHandler = $objectHandler;
 
 		if (!$criteria) {
-			$criteria = new \icms_db_criteria_Compo();
+			$criteria = new \Icms\Db\Criteria\Compo();
 		}
 		$this->_criteria = $criteria;
 		$this->_actions = $actions;
@@ -206,7 +205,7 @@ class Table {
 	 * @param $actions
 	 */
 	public function addWithSelectedActions($actions = array()) {
-		$this->addColumn(new \icms_ipf_view_Column('checked', 'center', 20, false, false, '&nbsp;'));
+		$this->addColumn(new \Icms\Ipf\View\Column('checked', 'center', 20, false, false, '&nbsp;'));
 		$this->_withSelectedActions = $actions;
 	}
 
@@ -609,22 +608,18 @@ class Table {
 
 		/* filter the user input - only allow specified variables */
 		if (!empty($_GET)) {
-			$clean_GET = \icms_core_DataFilter::checkVarArray($_GET, $filter_get, true);
-			if (is_array($clean_GET)) {
-				extract($clean_GET);
-			}
+			$clean_GET = \Icms\Core\DataFilter::checkVarArray($_GET, $filter_get, true);
+			extract($clean_GET);
 		}
 		if (!empty($_POST)) {
-			$clean_POST = \icms_core_DataFilter::checkVarArray($_POST, $filter_post, true);
-			if (is_array($clean_POST)) {
-				extract($clean_POST);
-			}
+			$clean_POST = \Icms\Core\DataFilter::checkVarArray($_POST, $filter_post, true);
+			extract($clean_POST);
 		}
 
-		$server_vars = \icms_core_DataFilter::checkVarArray($_SERVER, $filter_server, true);
+		$server_vars = \Icms\Core\DataFilter::checkVarArray($_SERVER, $filter_server, true);
 		$script_name = $server_vars['SCRIPT_NAME'];
 
-		$this->_tpl = new \icms_view_Tpl();
+		$this->_tpl = new \Icms\View\Tpl();
 
 		/**
 		 * We need access to the protected vars of the icms_ipf_Object for a few things in the table creation.
@@ -677,7 +672,7 @@ class Table {
 
 					$this->setCookie('filtersel2', $this->_filtersel2);
 					if ($this->_filtersel2 !== 'default') {
-						$this->_criteria->add(new \icms_db_criteria_Item($this->_filtersel, $this->_filtersel2));
+						$this->_criteria->add(new \Icms\Db\Criteria\Item($this->_filtersel, $this->_filtersel2));
 					}
 				}
 			}
@@ -685,13 +680,13 @@ class Table {
 		// Check if we have a quicksearch
 
 		if (!empty($$quicksearch)) {
-			$quicksearch_criteria = new \icms_db_criteria_Compo();
+			$quicksearch_criteria = new \Icms\Db\Criteria\Compo();
 			if (is_array($this->_quickSearch['fields'])) {
 				foreach ($this->_quickSearch['fields'] as $v) {
-					$quicksearch_criteria->add(new \icms_db_criteria_Item($v, '%' . $$quicksearch . '%', 'LIKE'), 'OR');
+					$quicksearch_criteria->add(new \Icms\Db\Criteria\Item($v, '%' . $$quicksearch . '%', 'LIKE'), 'OR');
 				}
 			} else {
-				$quicksearch_criteria->add(new \icms_db_criteria_Item($this->_quickSearch['fields'], '%' . $$quicksearch . '%', 'LIKE'));
+				$quicksearch_criteria->add(new \Icms\Db\Criteria\Item($this->_quickSearch['fields'], '%' . $$quicksearch . '%', 'LIKE'));
 			}
 			$this->_criteria->add($quicksearch_criteria);
 		}
@@ -729,7 +724,7 @@ class Table {
 			$new_get_array[] = "limitsel=" . $this->_limitsel;
 			$otherParams = implode('&', $new_get_array);
 
-			$pagenav = new \icms_view_PageNav($this->_objectHandler->getCount($this->_criteria), $this->_criteria->getLimit(), $this->_criteria->getStart(), 'start' . $this->_objectHandler->keyName, $otherParams);
+			$pagenav = new \Icms\View\PageNav($this->_objectHandler->getCount($this->_criteria), $this->_criteria->getLimit(), $this->_criteria->getStart(), 'start' . $this->_objectHandler->keyName, $otherParams);
 			$this->_tpl->assign('icms_pagenav', $pagenav->renderNav());
 		}
 		$this->renderOptionSelection($limitsArray, $params_of_the_options_sel);
@@ -836,4 +831,4 @@ class Table {
 	}
 }
 
-\class_alias(Table::class, 'icms_ipf_view_Table');
+

@@ -56,7 +56,7 @@ class Handler extends \Icms\Ipf\Handler {
 	public function getAllCategoriesArray($parentid=0, $perm_name=false, $sort = 'parentid', $order='ASC') {
 
 		if (!$this->allCategoriesObj) {
-			$criteria = new \icms_db_criteria_Compo();
+			$criteria = new \Icms\Db\Criteria\Compo();
 			$criteria->setSort($sort);
 			$criteria->setOrder($order);
 			$userIsAdmin = is_object(\icms::$user) && \icms::$user->isAdmin();
@@ -123,5 +123,4 @@ class Handler extends \Icms\Ipf\Handler {
 	}
 }
 
-\class_alias(Handler::class, 'icms_ipf_category_Handler');
 

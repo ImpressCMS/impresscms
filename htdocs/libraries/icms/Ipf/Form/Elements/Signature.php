@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Signature extends \icms_form_elements_Tray {
+class Signature extends \Icms\Form\Elements\Tray {
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
@@ -28,12 +28,11 @@ class Signature extends \icms_form_elements_Tray {
 		parent::__construct($var['form_caption'], '<br /><br />', $key . '_signature_tray');
 
 		\icms_loadLanguageFile('core', 'user');
-		$signature_textarea = new \icms_form_elements_Dhtmltextarea('', $key, $object->getVar($key, 'e'));
+		$signature_textarea = new \Icms\Form\Elements\Dhtmltextarea('', $key, $object->getVar($key, 'e'));
 		$this->addElement($signature_textarea);
-		$attach_checkbox = new \icms_form_elements_Checkbox('', 'attachsig', $object->getVar('attachsig', 'e'));
+		$attach_checkbox = new \Icms\Form\Elements\Checkbox('', 'attachsig', $object->getVar('attachsig', 'e'));
 		$attach_checkbox->addOption(1, _US_SHOWSIG);
 		$this->addElement($attach_checkbox);
 	}
 }
 
-\class_alias(Signature::class, 'icms_ipf_form_elements_Signature');

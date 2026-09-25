@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Language extends \icms_form_elements_select_Lang {
+class Language extends \Icms\Form\Elements\Select\Lang {
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
@@ -35,4 +35,3 @@ class Language extends \icms_form_elements_select_Lang {
 	}
 }
 
-\class_alias(Language::class, 'icms_ipf_form_elements_Language');

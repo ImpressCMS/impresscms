@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Page extends \icms_form_elements_Tray {
+class Page extends \Icms\Form\Elements\Tray {
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
@@ -26,7 +26,7 @@ class Page extends \icms_form_elements_Tray {
 	public function __construct($object, $key) {
 		\icms_loadLanguageFile('system', 'blocksadmin', TRUE);
 		parent::__construct(_AM_VISIBLEIN, ' ', $key . '_visiblein_tray');
-		$visible_label = new \icms_form_elements_Label('', '<select name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->getVar('visiblein')) . '</select>');
+		$visible_label = new \Icms\Form\Elements\Label('', '<select name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">' . $this->getPageSelOptions($object->getVar('visiblein')) . '</select>');
 		$this->addElement($visible_label);
 	}
 
@@ -42,14 +42,14 @@ class Page extends \icms_form_elements_Tray {
 			$value = array($value);
 		}
 		$module_handler = \icms::handler('icms_module');
-		$criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('hasmain', 1));
-		$criteria->add(new \icms_db_criteria_Item('isactive', 1));
+		$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('hasmain', 1));
+		$criteria->add(new \Icms\Db\Criteria\Item('isactive', 1));
 		$module_list = $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module){
 			$mods .= '<optgroup label="' . $module->getVar('name') . '">';
-			$criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('page_moduleid', $module->getVar('mid')));
-			$criteria->add(new \icms_db_criteria_Item('page_status', 1));
+			$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('page_moduleid', $module->getVar('mid')));
+			$criteria->add(new \Icms\Db\Criteria\Item('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$sel = '';
 			if (in_array($module->getVar('mid') . '-0', $value)){
@@ -68,8 +68,8 @@ class Page extends \icms_form_elements_Tray {
 		}
 
 		$module = $module_handler->get(1);
-		$criteria = new \icms_db_criteria_Compo(new \icms_db_criteria_Item('page_moduleid', 1));
-		$criteria->add(new \icms_db_criteria_Item('page_status', 1));
+		$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('page_moduleid', 1));
+		$criteria->add(new \Icms\Db\Criteria\Item('page_status', 1));
 		$pages = $icms_page_handler->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0){
@@ -104,4 +104,3 @@ class Page extends \icms_form_elements_Tray {
 	}
 }
 
-\class_alias(Page::class, 'icms_ipf_form_elements_Page');

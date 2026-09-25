@@ -87,11 +87,11 @@ class Handler {
 
 		$icmsModule =& $this->handler->getModuleInfo();
 
-		$criteria = new \icms_db_criteria_Compo();
-		$criteria->add(new \icms_db_criteria_Item('gperm_modid', $icmsModule->getVar('mid')));
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('gperm_modid', $icmsModule->getVar('mid')));
 
 		if ($gperm_name) {
-			$criteria->add(new \icms_db_criteria_Item('gperm_name', $gperm_name));
+			$criteria->add(new \Icms\Db\Criteria\Item('gperm_name', $gperm_name));
 		}
 
 		//Get group permissions handler
@@ -228,5 +228,4 @@ class Handler {
 	}
 }
 
-\class_alias(Handler::class, 'icms_ipf_permission_Handler');
 

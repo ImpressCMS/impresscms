@@ -20,7 +20,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * Please note that this form element will only work if the uploader is enabled in the handler!
  */
-class Richfile extends \icms_form_elements_Tray {
+class Richfile extends \Icms\Form\Elements\Tray {
 	/**
 	 * Constructor
 	 * @param	\icms_ipf_Object	$object	target object
@@ -33,30 +33,29 @@ class Richfile extends \icms_form_elements_Tray {
 		$module = $module_handler->getByDirname($object->handler->_moduleName);
 
 		if ($fileObj->getVar("url") != "") {
-			$this->addElement(new \icms_form_elements_Label("", _CO_ICMS_CURRENT_FILE . $fileObj->render() . "<br /><br />"));
+			$this->addElement(new \Icms\Form\Elements\Label("", _CO_ICMS_CURRENT_FILE . $fileObj->render() . "<br /><br />"));
 		}
 
 		if ($fileObj->isNew()) {
-			$this->addElement(new \icms_ipf_form_elements_Fileupload($fileObj, $key));
-			$this->addElement(new \icms_form_elements_Label("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
-			$this->addElement(new \icms_form_elements_Label("","<br />" . _CO_ICMS_URL_FILE));
-			$this->addElement(new \icms_ipf_form_elements_Text($fileObj, "url_" . $key));
+			$this->addElement(new \Icms\Ipf\Form\Elements\Fileupload($fileObj, $key));
+			$this->addElement(new \Icms\Form\Elements\Label("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
+			$this->addElement(new \Icms\Form\Elements\Label("","<br />" . _CO_ICMS_URL_FILE));
+			$this->addElement(new \Icms\Ipf\Form\Elements\Text($fileObj, "url_" . $key));
 		}
 
-		$this->addElement(new \icms_form_elements_Hidden("mid_" . $key, $module->getVar("mid")));
-		$this->addElement(new \icms_form_elements_Label("", "<br />" . _CO_ICMS_CAPTION));
-		$this->addElement(new \icms_ipf_form_elements_Text($fileObj, "caption_" . $key));
-		$this->addElement(new \icms_form_elements_Label("", "<br />" . _CO_ICMS_DESC));
-		$this->addElement(new \icms_ipf_form_elements_Text($fileObj, "desc_" . $key));
+		$this->addElement(new \Icms\Form\Elements\Hidden("mid_" . $key, $module->getVar("mid")));
+		$this->addElement(new \Icms\Form\Elements\Label("", "<br />" . _CO_ICMS_CAPTION));
+		$this->addElement(new \Icms\Ipf\Form\Elements\Text($fileObj, "caption_" . $key));
+		$this->addElement(new \Icms\Form\Elements\Label("", "<br />" . _CO_ICMS_DESC));
+		$this->addElement(new \Icms\Ipf\Form\Elements\Text($fileObj, "desc_" . $key));
 
 		if (!$fileObj->isNew()) {
-			$this->addElement(new \icms_form_elements_Label("", "<br />" . _CO_ICMS_CHANGE_FILE));
-			$this->addElement(new \icms_ipf_form_elements_Fileupload($fileObj, $key));
-			$this->addElement(new \icms_form_elements_Label("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
-			$this->addElement(new \icms_form_elements_Label("", "<br />" . _CO_ICMS_URL_FILE));
-			$this->addElement(new \icms_ipf_form_elements_Text($fileObj, "url_" . $key));
+			$this->addElement(new \Icms\Form\Elements\Label("", "<br />" . _CO_ICMS_CHANGE_FILE));
+			$this->addElement(new \Icms\Ipf\Form\Elements\Fileupload($fileObj, $key));
+			$this->addElement(new \Icms\Form\Elements\Label("", "<br /><br /><small>" . _CO_ICMS_URL_FILE_DSC . "</small>"));
+			$this->addElement(new \Icms\Form\Elements\Label("", "<br />" . _CO_ICMS_URL_FILE));
+			$this->addElement(new \Icms\Ipf\Form\Elements\Text($fileObj, "url_" . $key));
 		}
 	}
 }
 
-\class_alias(Richfile::class, 'icms_ipf_form_elements_Richfile');

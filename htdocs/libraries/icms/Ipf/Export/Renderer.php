@@ -214,5 +214,4 @@ class Renderer {
 	}
 }
 
-\class_alias(Renderer::class, 'icms_ipf_export_Renderer');
 

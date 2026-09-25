@@ -38,7 +38,7 @@ class File extends \icms_form_elements_File {
 	 *
 	 * @return	string	$ret  the constructed HTML
 	 */
-	public function render() {
+	public function render(): string {
 		$ret = '';
 		if ($this->_object->getVar($this->_key) != '') {
 			$ret .=	"<div>" . _CO_ICMS_CURRENT_FILE
@@ -54,4 +54,3 @@ class File extends \icms_form_elements_File {
 	}
 }
 
-\class_alias(File::class, 'icms_ipf_form_elements_File');

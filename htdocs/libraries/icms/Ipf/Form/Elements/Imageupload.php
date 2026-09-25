@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Imageupload extends \icms_ipf_form_elements_Upload {
+class Imageupload extends \Icms\Ipf\Form\Elements\Upload {
 	/**
 	 * Constructor
 	 * @param	object    $object     object to be passed (@todo : Which object?)
@@ -34,11 +34,10 @@ class Imageupload extends \icms_ipf_form_elements_Upload {
 	 *
 	 * @return	string	HTML
 	 */
-	public function render() {
+	public function render(): string {
 		return "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />
 		        <input type='file' name='" . $this->getName() . "' id='" . $this->getName() . "'" . $this->getExtra() . " />
 		        <input type='hidden' name='icms_upload_image[]' id='icms_upload_image[]' value='" . $this->getName() . "' />";
 	}
 }
 
-\class_alias(Imageupload::class, 'icms_ipf_form_elements_Imageupload');

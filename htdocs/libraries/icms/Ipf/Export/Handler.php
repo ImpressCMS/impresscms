@@ -124,5 +124,4 @@ class Handler {
 	}
 }
 
-\class_alias(Handler::class, 'icms_ipf_export_Handler');
 

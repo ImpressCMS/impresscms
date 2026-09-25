@@ -233,4 +233,3 @@ class Tree {
 
 }
 
-\class_alias(Tree::class, 'icms_ipf_Tree');

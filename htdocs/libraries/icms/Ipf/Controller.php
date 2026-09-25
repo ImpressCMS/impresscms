@@ -174,7 +174,7 @@ class Controller {
 		// Check if there were uploaded files
 		$uploaderResult = true;
 		if (isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file'])) {
-			$uploaderObj = new \icms_file_MediaUploadHandler($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
+			$uploaderObj = new \Icms\File\MediaUploadHandler($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
 			foreach ( $_FILES as $name=>$file_array) {
 				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), array_keys($icmsObj->vars))) {
 					if ($uploaderObj->fetchMedia($name)) {
@@ -236,7 +236,7 @@ class Controller {
 
 		if ($storeResult) {
 			if ($this->handler->getPermissions()) {
-				$icmspermissions_handler = new \icms_ipf_permission_Handler($this->handler);
+				$icmspermissions_handler = new \Icms\Ipf\Permission\Handler($this->handler);
 				$icmspermissions_handler->storeAllPermissionsForId($icmsObj->id());
 			}
 		}
@@ -378,7 +378,7 @@ class Controller {
 			if ($this->handler->_moduleName == 'system') {
 				$hiddens['fct'] = isset($_GET['fct']) ? $_GET['fct'] : false;
 			}
-			\icms_core_Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
+			\Icms\Core\Message::confirm($hiddens, xoops_getenv('SCRIPT_NAME'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
 			\icms_cp_footer();
 
@@ -418,7 +418,7 @@ class Controller {
 			}
 
 			ob_start();
-			\icms_core_Message::confirm(array(
+			\Icms\Core\Message::confirm(array(
 				'op' => $op,
 				$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 				'confirm' => 1,
@@ -646,4 +646,3 @@ class Controller {
 	}
 }
 
-\class_alias(Controller::class, 'icms_ipf_Controller');

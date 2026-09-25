@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Passwordtray extends \icms_form_elements_Tray {
+class Passwordtray extends \Icms\Form\Elements\Tray {
 	private $_key;
 
 	/**
@@ -32,15 +32,15 @@ class Passwordtray extends \icms_form_elements_Tray {
 		\icms_loadLanguageFile('core', 'user');
 		parent::__construct($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
 
-		$password_box1 = new \icms_form_elements_Password('', $key . '1', 10, 32, '', FALSE, "password_adv");
+		$password_box1 = new \Icms\Form\Elements\Password('', $key . '1', 10, 32, '', FALSE, "password_adv");
 		$this->addElement($password_box1);
 
 		$this->_key = $key;
 	}
 
-	public function render() {
+	public function render(): string {
 		// Use template-based rendering instead of direct HTML generation
-		$this->tpl = new \icms_view_Tpl();
+		$this->tpl = new \Icms\View\Tpl();
 
 		// Get rendered elements from parent tray
 		$tray_elements = array();
@@ -69,4 +69,3 @@ class Passwordtray extends \icms_form_elements_Tray {
 	}
 }
 
-\class_alias(Passwordtray::class, 'icms_ipf_form_elements_Passwordtray');

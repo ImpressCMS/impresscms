@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Parentcategory extends \icms_form_elements_Select {
+class Parentcategory extends \Icms\Form\Elements\Select {
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
@@ -27,12 +27,12 @@ class Parentcategory extends \icms_form_elements_Select {
 		$category_title_field = $object->handler->identifierName;
 
 		$addNoParent = isset($object->controls[$key]['addNoParent']) ? $object->controls[$key]['addNoParent'] : true;
-		$criteria = new \icms_db_criteria_Compo();
+		$criteria = new \Icms\Db\Criteria\Compo();
 		$criteria->setSort("weight, " . $category_title_field);
 		$category_handler = \icms_getModuleHandler('category', $object->handler->_moduleName);
 		$categories = $category_handler->getObjects($criteria);
 
-		$mytree = new \icms_ipf_Tree($categories, "category_id", "category_pid");
+		$mytree = new \Icms\Ipf\Tree($categories, "category_id", "category_pid");
 		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e'));
 
 		$ret = array();
@@ -74,4 +74,3 @@ class Parentcategory extends \icms_form_elements_Select {
 	}
 }
 
-\class_alias(Parentcategory::class, 'icms_ipf_form_elements_Parentcategory');

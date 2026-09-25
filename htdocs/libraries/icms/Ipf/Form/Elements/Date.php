@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Date extends \icms_form_elements_Date {
+class Date extends \Icms\Form\Elements\Date {
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
@@ -28,4 +28,3 @@ class Date extends \icms_form_elements_Date {
 	}
 }
 
-\class_alias(Date::class, 'icms_ipf_form_elements_Date');

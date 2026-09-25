@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Source extends \icms_form_elements_Textarea {
+class Source extends \Icms\Form\Elements\Textarea {
 	/*
 	 * Editor's class instance
 	 */
@@ -35,7 +35,7 @@ class Source extends \icms_form_elements_Textarea {
 
 		$control = $object->getControl($key);
 
-		$editor_handler = \icms_plugins_EditorHandler::getInstance('source');
+		$editor_handler = \Icms\Plugins\EditorHandler::getInstance('source');
 		$this->_editor = &$editor_handler->get($icmsConfig['sourceeditor_default'],
 			array('name' => $key,
 				'value' => $object->getVar($key, 'e'),
@@ -49,7 +49,7 @@ class Source extends \icms_form_elements_Textarea {
 	 * Renders the editor
 	 * @return	string  the constructed html string for the editor
 	 */
-	public function render() {
+	public function render(): string {
 		if ($this->_editor) {
 			return $this->_editor->render();
 		} else {
@@ -58,4 +58,3 @@ class Source extends \icms_form_elements_Textarea {
 	}
 }
 
-\class_alias(Source::class, 'icms_ipf_form_elements_Source');

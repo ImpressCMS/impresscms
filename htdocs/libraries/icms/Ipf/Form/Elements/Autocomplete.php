@@ -38,7 +38,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *  - use control parameter "delay" to specify the delay before the autocomplete function starts
  *    to work. Use with caution since it can result in high server load! (default: 500)
  */
-class Autocomplete extends \icms_form_elements_Text {
+class Autocomplete extends \Icms\Form\Elements\Text {
 	private $_file;
 
 	/**
@@ -62,7 +62,7 @@ class Autocomplete extends \icms_form_elements_Text {
 	 * @global	\icms_view_theme_Object	$xoTheme	theme object
 	 * @return	string					$ret		the constructed HTML
 	 */
-	public function render() {
+	public function render(): string {
 		global $xoTheme;
 
 		if (!is_file(ICMS_ROOT_PATH . "/" . $this->_file)) return parent::render();
@@ -91,4 +91,3 @@ class Autocomplete extends \icms_form_elements_Text {
 	}
 }
 
-\class_alias(Autocomplete::class, 'icms_ipf_form_elements_Autocomplete');

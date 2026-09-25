@@ -40,7 +40,7 @@ if (!defined('XOBJ_DTYPE_FORM_SECTION_CLOSE')) \define('XOBJ_DTYPE_FORM_SECTION_
  * @author marcan <marcan@smartfactory.ca>
  * @todo Properly identify and declare the visibility of vars and functions
  */
-class Entity extends \icms_core_Object {
+class Entity extends \Icms\Core\Entity {
 	public $_image_path;
 	public $_image_url;
 	public $seoEnabled = false;
@@ -79,7 +79,7 @@ class Entity extends \icms_core_Object {
 	 * @return boolean : TRUE if user has access, false if not
 	 */
 	public function accessGranted($perm_name) {
-		$icmspermissions_handler = new \icms_ipf_permission_Handler($this->handler);
+		$icmspermissions_handler = new \Icms\Ipf\Permission\Handler($this->handler);
 		return $icmspermissions_handler->accessGranted($perm_name, $this->id());
 	}
 
@@ -374,7 +374,7 @@ class Entity extends \icms_core_Object {
 	 * @see \icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
-		return new \icms_ipf_form_Base($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+		return new \Icms\Ipf\Form\Base($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 	}
 
 	/**
@@ -385,7 +385,7 @@ class Entity extends \icms_core_Object {
 	 * @see \icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	public function getSecureForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
-		$form = new \icms_ipf_form_Secure($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+		$form = new \Icms\Ipf\Form\Secure($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 
 		return $form;
 	}
@@ -400,7 +400,7 @@ class Entity extends \icms_core_Object {
 			$ret[$key] = $value;
 		}
 		if ($this->handler->identifierName != "") {
-			$controller = new \icms_ipf_Controller($this->handler);
+			$controller = new \Icms\Ipf\Controller($this->handler);
 			/**
 			 * Addition of some automatic value
 			 */
@@ -507,7 +507,7 @@ class Entity extends \icms_core_Object {
 			return false;
 		}
 
-		$icmspermissions_handler = new \icms_ipf_permission_Handler($this->handler);
+		$icmspermissions_handler = new \Icms\Ipf\Permission\Handler($this->handler);
 		$ret = $icmspermissions_handler->getGrantedGroups($group_perm, $this->id());
 
 		if (count($ret) == 0) {
@@ -594,7 +594,7 @@ class Entity extends \icms_core_Object {
 	 * @return string user side link to the object
 	 */
 	public function getAdminViewItemLink($onlyUrl = false) {
-		$controller = new \icms_ipf_Controller($this->handler);
+		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getAdminViewItemLink($this, $onlyUrl);
 	}
 
@@ -605,7 +605,7 @@ class Entity extends \icms_core_Object {
 	 * @return string user side link to the object
 	 */
 	public function getItemLink($onlyUrl = false) {
-		$controller = new \icms_ipf_Controller($this->handler);
+		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getItemLink($this, $onlyUrl);
 	}
 
@@ -616,7 +616,7 @@ class Entity extends \icms_core_Object {
 	 * @param $userSide
 	 */
 	public function getViewItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		$controller = new \icms_ipf_Controller($this->handler);
+		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getViewItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
@@ -627,7 +627,7 @@ class Entity extends \icms_core_Object {
 	 * @param bool $userSide
 	 */
 	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
-		$controller = new \icms_ipf_Controller($this->handler);
+		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getEditItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
@@ -638,14 +638,14 @@ class Entity extends \icms_core_Object {
 	 * @param bool $userSide
 	 */
 	public function getDeleteItemLink($onlyUrl = false, $withimage = false, $userSide = false) {
-		$controller = new \icms_ipf_Controller($this->handler);
+		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getDeleteItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
 	/**
 	 */
 	public function getPrintAndMailLink() {
-		$controller = new \icms_ipf_Controller($this->handler);
+		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getPrintAndMailLink($this);
 	}
 
@@ -708,7 +708,7 @@ class Entity extends \icms_core_Object {
 		global $icmsModuleConfig;
 
 		$ret = $this->getVar($key, 'n');
-		$myts = \icms_core_Textsanitizer::getInstance();
+		$myts = \Icms\Core\Textsanitizer::getInstance();
 
 		$control = isset($this->controls[$key]) ? $this->controls[$key] : false;
 		$form_editor = isset($control['form_editor']) ? $control['form_editor'] : 'textarea';
@@ -739,12 +739,12 @@ class Entity extends \icms_core_Object {
 		} else {
 			if ($html) {
 				if ($br) {
-					return \icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
+					return \Icms\Core\DataFilter::filterHTMLdisplay($ret, $xcode, $br);
 				} else {
-					return \icms_core_DataFilter::checkVar($ret, 'html', 'output');
+					return \Icms\Core\DataFilter::checkVar($ret, 'html', 'output');
 				}
 			} else {
-				return \icms_core_DataFilter::checkVar($ret, 'text', 'output');
+				return \Icms\Core\DataFilter::checkVar($ret, 'text', 'output');
 			}
 		}
 	}
@@ -762,7 +762,7 @@ class Entity extends \icms_core_Object {
 	 * @return mixed formatted value of the variable
 	 */
 	public function getVar($key, $format = 's') {
-		$myts = \icms_core_Textsanitizer::getInstance();
+		$myts = \Icms\Core\Textsanitizer::getInstance();
 
 		$ret = $this->vars[$key]['value'];
 
@@ -774,7 +774,7 @@ class Entity extends \icms_core_Object {
 					case 's':
 					case 'show':
 						// ML Hack by marcan
-						$ret = \icms_core_DataFilter::htmlSpecialChars($ret);
+						$ret = \Icms\Core\DataFilter::htmlSpecialChars($ret);
 
 						if (method_exists($myts, 'formatForML')) {
 							return $myts->formatForML($ret);
@@ -795,14 +795,14 @@ class Entity extends \icms_core_Object {
 
 					case 'e':
 					case 'edit':
-						return \icms_core_DataFilter::htmlSpecialChars($ret);
+						return \Icms\Core\DataFilter::htmlSpecialChars($ret);
 						break 1;
 
 					case 'p':
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						return \icms_core_DataFilter::htmlSpecialChars(\icms_core_DataFilter::stripSlashesGPC($ret));
+						return \Icms\Core\DataFilter::htmlSpecialChars(\Icms\Core\DataFilter::stripSlashesGPC($ret));
 						break 1;
 
 					case 'n':
@@ -907,18 +907,18 @@ class Entity extends \icms_core_Object {
 						}
 						if ($html && (!is_int($ret) && !empty($ret))) {
 							if ($br) { // have to use this whilst ever we have a zillion editors in the core
-								return \icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
+								return \Icms\Core\DataFilter::filterHTMLdisplay($ret, $xcode, $br);
 							} else {
-								return \icms_core_DataFilter::checkVar($ret, 'html', 'output');
+								return \Icms\Core\DataFilter::checkVar($ret, 'html', 'output');
 							}
 						} else {
-							return \icms_core_DataFilter::checkVar($ret, 'text', 'output');
+							return \Icms\Core\DataFilter::checkVar($ret, 'text', 'output');
 						}
 						break 1;
 
 					case 'e':
 					case 'edit':
-						return \icms_core_DataFilter::checkVar($ret, 'html', 'edit');
+						return \Icms\Core\DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
@@ -929,15 +929,15 @@ class Entity extends \icms_core_Object {
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						if ($html) {
-							return \icms_core_DataFilter::checkVar($ret, 'html', 'input');
+							return \Icms\Core\DataFilter::checkVar($ret, 'html', 'input');
 						} else {
-							return \icms_core_DataFilter::checkVar($ret, 'text', 'input');
+							return \Icms\Core\DataFilter::checkVar($ret, 'text', 'input');
 						}
 						break 1;
 
 					case 'f':
 					case 'formpreview':
-						return htmlspecialchars(\icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(\Icms\Core\DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -970,12 +970,12 @@ class Entity extends \icms_core_Object {
 
 					case 'p':
 					case 'preview':
-						return \icms_core_DataFilter::stripSlashesGPC($ret);
+						return \Icms\Core\DataFilter::stripSlashesGPC($ret);
 						break 1;
 
 					case 'f':
 					case 'formpreview':
-						return htmlspecialchars(\icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
+						return htmlspecialchars(\Icms\Core\DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 
 					case 'n':
@@ -1109,12 +1109,12 @@ class Entity extends \icms_core_Object {
 	 * @return content of the template if $fetchOnly or nothing if !$fetchOnly
 	 */
 	public function displaySingleObject($fetchOnly = false, $userSide = false, $actions = array(), $headerAsRow = true) {
-		$singleview = new \icms_ipf_view_Single($this, $userSide, $actions, $headerAsRow);
+		$singleview = new \Icms\Ipf\View\Single($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
 		foreach ($this->vars as $key => $var) {
 			if ($key != $this->handler->keyName && $var['displayOnSingleView']) {
 				$is_header = ($key == $this->handler->identifierName);
-				$singleview->addRow(new \icms_ipf_view_Row($key, false, $is_header));
+				$singleview->addRow(new \Icms\Ipf\View\Row($key, false, $is_header));
 			}
 		}
 
@@ -1271,4 +1271,3 @@ class Entity extends \icms_core_Object {
 	}
 }
 
-\class_alias(Entity::class, 'icms_ipf_Object');

@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Radio extends \icms_form_elements_Radio {
+class Radio extends \Icms\Form\Elements\Radio {
 
 	private $_delimeter = "&nbsp;";
 
@@ -76,4 +76,3 @@ class Radio extends \icms_form_elements_Radio {
 	}
 }
 
-\class_alias(Radio::class, 'icms_ipf_form_elements_Radio');

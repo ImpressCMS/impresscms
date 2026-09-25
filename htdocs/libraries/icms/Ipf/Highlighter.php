@@ -112,4 +112,3 @@ class Highlighter {
 	}
 }
 
-\class_alias(Highlighter::class, 'icms_ipf_Highlighter');

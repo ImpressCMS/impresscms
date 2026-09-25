@@ -18,7 +18,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Image extends \icms_form_elements_Tray {
+class Image extends \Icms\Form\Elements\Tray {
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
@@ -36,28 +36,27 @@ class Image extends \icms_form_elements_Tray {
 		}
 
 		if ($object->getVar($key, 'e') != '' && (substr($object->getVar($key, 'e'), 0, 4) == 'http' || substr($object->getVar($key, 'e'), 0, 10) == '{ICMS_URL}')) {
-			$this->addElement(new \icms_form_elements_Label('', "<img src='" . str_replace('{ICMS_URL}', ICMS_URL, $object->getVar($key, 'e')) . "' alt='' /><br/><br/>" ));
+			$this->addElement(new \Icms\Form\Elements\Label('', "<img src='" . str_replace('{ICMS_URL}', ICMS_URL, $object->getVar($key, 'e')) . "' alt='' /><br/><br/>" ));
 		} elseif ($object->getVar($key, 'e') != '') {
-			$this->addElement(new \icms_form_elements_Label('', "<a rel='lightbox' title='" . $object_imageurl . $object->getVar($key, 'e') 
+			$this->addElement(new \Icms\Form\Elements\Label('', "<a rel='lightbox' title='" . $object_imageurl . $object->getVar($key, 'e') 
 				. "' href='" . $object_imageurl . $object->getVar($key, 'e') 
 				. "' ><img class='acp_object_imageurl' src='" . $object_imageurl . $object->getVar($key, 'e') 
 				. "' alt='" . $object_imageurl . $object->getVar($key, 'e') . "' height='150' /></a><br/><br/>" ));
 		}
 
-		$this->addElement(new \icms_ipf_form_elements_Fileupload($object, $key));
+		$this->addElement(new \Icms\Ipf\Form\Elements\Fileupload($object, $key));
 
 		if (!isset($control['nourl']) || !$control['nourl']) {
-			$this->addElement(new \icms_form_elements_Label('<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
-			$this->addElement(new \icms_form_elements_Label('', '<br />' . _CO_ICMS_URL_FILE));
-			$this->addElement(new \icms_form_elements_Text('', 'url_'.$key, 50, 500));
+			$this->addElement(new \Icms\Form\Elements\Label('<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
+			$this->addElement(new \Icms\Form\Elements\Label('', '<br />' . _CO_ICMS_URL_FILE));
+			$this->addElement(new \Icms\Form\Elements\Text('', 'url_'.$key, 50, 500));
 		}
 		if (!$object->isNew()) {
-			$this->addElement(new \icms_form_elements_Label('', '<br /><br />'));
-			$delete_check = new \icms_form_elements_Checkbox('', 'delete_'.$key);
+			$this->addElement(new \Icms\Form\Elements\Label('', '<br /><br />'));
+			$delete_check = new \Icms\Form\Elements\Checkbox('', 'delete_'.$key);
 			$delete_check->addOption(1, '<span style="color:red;">'._CO_ICMS_DELETE.'</span>');
 			$this->addElement($delete_check);
 		}
 	}
 }
 
-\class_alias(Image::class, 'icms_ipf_form_elements_Image');

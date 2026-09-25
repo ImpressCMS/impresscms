@@ -226,5 +226,4 @@ class Handler {
 	}
 }
 
-\class_alias(Handler::class, 'icms_ipf_registry_Handler');
 

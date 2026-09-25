@@ -142,4 +142,3 @@ class Entity extends \Icms\Ipf\Seo\Entity {
 
 }
 
-\class_alias(Entity::class, 'icms_ipf_category_Object');

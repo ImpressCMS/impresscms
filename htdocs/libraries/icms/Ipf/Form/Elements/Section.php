@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Section extends \icms_form_Element {
+class Section extends \Icms\Form\Element {
 	/**
 	 * @var string
 	 * @access	private
@@ -68,10 +68,9 @@ class Section extends \icms_form_Element {
 	 *
 	 * @return	string
 	 */
-	public function render() {
-		if ($this->_close) return;
+	public function render(): string {
+		if ($this->_close) return '';
 		return $this->getValue();
 	}
 }
 
-\class_alias(Section::class, 'icms_ipf_form_elements_Section');

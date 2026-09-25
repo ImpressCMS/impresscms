@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Checkbox extends \icms_form_elements_Checkbox {
+class Checkbox extends \Icms\Form\Elements\Checkbox {
 
 	private $_delimeter = "&nbsp;";
 
@@ -78,7 +78,7 @@ class Checkbox extends \icms_form_elements_Checkbox {
 	 *
 	 * @return	string  the constructed input form element string
 	 */
-	public function render() {
+	public function render(): string {
 		// Use the parent class render method which uses the unified template
 		// This ensures both standard and IPF checkboxes use the same template
 		return parent::render();
@@ -90,7 +90,7 @@ class Checkbox extends \icms_form_elements_Checkbox {
 	 * @copyright	copyright (c) 2000-2003 XOOPS.org
 	 * @return	string    $js   the constructed javascript
 	 */
-	public function renderValidationJS() {
+	public function renderValidationJS(): string {
 		$js = "";
 		$js .= "var hasSelections = false;";
 		$eltname = $this->getName();
@@ -114,4 +114,3 @@ class Checkbox extends \icms_form_elements_Checkbox {
 	}
 }
 
-\class_alias(Checkbox::class, 'icms_ipf_form_elements_Checkbox');

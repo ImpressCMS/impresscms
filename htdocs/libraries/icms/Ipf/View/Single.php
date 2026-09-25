@@ -61,7 +61,7 @@ class Single {
 	 */
 	public function render($fetchOnly = false, $debug = false) {
 
-		$this->_tpl = new \icms_view_Tpl();
+		$this->_tpl = new \Icms\View\Tpl();
 		$vars = $this->_object->vars;
 		$icms_object_array = array();
 
@@ -113,5 +113,4 @@ class Single {
 	}
 }
 
-\class_alias(Single::class, 'icms_ipf_view_Single');
 

@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class Time extends \icms_form_elements_Select {
+class Time extends \Icms\Form\Elements\Select {
 	/**
 	 * Constructor
 	 * @param	object    $object   reference to targetobject (@link \icms_ipf_Object)
@@ -38,4 +38,3 @@ class Time extends \icms_form_elements_Select {
 	}
 }
 
-\class_alias(Time::class, 'icms_ipf_form_elements_Time');

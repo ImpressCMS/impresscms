@@ -110,5 +110,4 @@ class Column {
 	}
 }
 
-\class_alias(Column::class, 'icms_ipf_view_Column');
 

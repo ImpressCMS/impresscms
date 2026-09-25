@@ -17,7 +17,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
-class User extends \icms_form_elements_Select {
+class User extends \Icms\Form\Elements\Select {
 	private $_multiple = false;
 
 	/**
@@ -43,4 +43,3 @@ class User extends \icms_form_elements_Select {
 	}
 }
 
-\class_alias(User::class, 'icms_ipf_form_elements_User');

@@ -191,4 +191,3 @@ class Tree extends Table {
 	}
 }
 
-\class_alias(Tree::class, 'icms_ipf_view_Tree');

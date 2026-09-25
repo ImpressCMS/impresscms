@@ -78,5 +78,4 @@ class Row {
 	}
 }
 
-\class_alias(Row::class, 'icms_ipf_view_Row');
 
