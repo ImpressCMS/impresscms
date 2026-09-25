@@ -33,4 +33,3 @@ class Item
     }
 }
 
-\class_alias(Item::class, 'icms_preload_Item');

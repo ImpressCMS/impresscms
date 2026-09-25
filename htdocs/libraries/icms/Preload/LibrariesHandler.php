@@ -42,7 +42,7 @@ class LibrariesHandler
      */
     public function __construct()
     {
-        $librariesArray = \icms_core_Filesystem::getDirList(ICMS_LIBRARIES_PATH);
+        $librariesArray = \Icms\Core\Filesystem::getDirList(ICMS_LIBRARIES_PATH);
         foreach ($librariesArray as $library) {
             $library_boot_file = $this->getLibraryBootFilePath($library);
             if (file_exists($library_boot_file)) {
@@ -104,4 +104,3 @@ class LibrariesHandler
     }
 }
 
-\class_alias(LibrariesHandler::class, 'icms_preload_LibrariesHandler');

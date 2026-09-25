@@ -49,7 +49,7 @@ class Handler
      */
     public function __construct()
     {
-        $preloadFilesArray = str_replace('.php', '', \icms_core_Filesystem::getFileList(
+        $preloadFilesArray = str_replace('.php', '', \Icms\Core\Filesystem::getFileList(
             ICMS_PRELOAD_PATH,
             '',
             ['php']
@@ -101,7 +101,7 @@ class Handler
                     $preload_event = strtolower(str_replace('event', '', $method));
 
                     $callback = [$preloadItem, $method];
-                    \icms_Event::attach('icms', $preload_event, $callback);
+                    \Icms\Event::attach('icms', $preload_event, $callback);
                 }
             }
         }
@@ -125,7 +125,7 @@ class Handler
     public function triggerEvent(string $event, $array = []): void
     {
         $event = strtolower($event);
-        \icms_Event::trigger('icms', $event, null, $array);
+        \Icms\Event::trigger('icms', $event, null, $array);
     }
 
     /**
@@ -141,4 +141,3 @@ class Handler
     }
 }
 
-\class_alias(Handler::class, 'icms_preload_Handler');
