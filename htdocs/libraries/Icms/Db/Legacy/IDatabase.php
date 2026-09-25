@@ -15,7 +15,6 @@
  * @category    ICMS
  * @package	    Database
  */
-declare(strict_types=1);
 namespace Icms\Db\Legacy;
 
 interface IDatabase {

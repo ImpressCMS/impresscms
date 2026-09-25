@@ -37,8 +37,6 @@
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
-declare(strict_types=1);
-
 namespace Icms\Db;
 
 use Icms\Db\Legacy\PdoDatabase;
@@ -131,7 +129,7 @@ abstract class Factory
 		}
 		$driver = substr(\XOOPS_DB_TYPE, 4);
 		$dsn = $driver . ':' . \ICMS_DB_DSN;
-		$class = "\\Icms\\Db\\{$driver}\\Connection";
+		$class = "\\Icms\\Db\\" . ucfirst($driver) . "\\Connection";
 		if (!class_exists($class)) {
 			$class = "\Icms\Db\Connection";
 		}

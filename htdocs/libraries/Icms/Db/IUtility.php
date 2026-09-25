@@ -9,8 +9,6 @@
  * @package		Database
  */
 
-declare(strict_types=1);
-
 namespace Icms\Db;
 
 /**
@@ -37,7 +35,7 @@ interface IUtility
 	 * @param  string  the sql commands
 	 * @return boolean always true
 	 */
-	static public function splitSqlFile($ret, string $sql): bool;
+	static public function splitSqlFile(&$ret, $sql);
 
 	/**
 	 * add a prefix.'_' to all tablenames in a query
@@ -46,7 +44,7 @@ interface IUtility
 	 * @param  string  $prefix  prefix to add to all table names
 	 * @return false|string     FALSE on failure
 	 */
-	static public function prefixQuery(string $query, string $prefix);
+	static public function prefixQuery($query, $prefix);
 
 	/**
 	 * Determine if the SQL string is safe
@@ -54,7 +52,7 @@ interface IUtility
 	 * @param  string $sql
 	 * @return bool   TRUE if the string is safe
 	 */
-	static public function checkSQL(string $sql): bool;
+	static public function checkSQL($sql);
 
 }
 

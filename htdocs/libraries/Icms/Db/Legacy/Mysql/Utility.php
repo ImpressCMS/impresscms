@@ -39,8 +39,6 @@
  *
  * @version		SVN: $Id: Utility.php 12403 2014-01-26 21:35:08Z skenow $
  */
-declare(strict_types=1);
-
 namespace Icms\Db\Legacy\Mysql;
 /**
  * Provide some utility methods for databases
@@ -70,7 +68,7 @@ class Utility implements \Icms\Db\IUtility {
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
 	 */
-	static public function splitMySqlFile($ret, $sql) {
+	static public function splitMySqlFile(&$ret, $sql) {
 		$sql               = trim($sql);
 		$sql_len           = strlen($sql);
 		$char              = '';
@@ -178,7 +176,7 @@ class Utility implements \Icms\Db\IUtility {
 	 * @param   string   the sql commands
 	 * @return  boolean  always true
 	 */
-	static public function splitSqlFile($ret, $sql): bool
+	static public function splitSqlFile(&$ret, $sql): bool
 	{
 		$sql               = trim($sql);
 		$sql_len           = strlen($sql);
@@ -284,7 +282,7 @@ class Utility implements \Icms\Db\IUtility {
 	 * @param string $prefix prefix to add to all table names
 	 * @return  array|false   FALSE on failure
 	 */
-	public static function prefixQuery(string $query, string $prefix): array|false
+	public static function prefixQuery($query, $prefix): array|false
 	{
 		$pattern = "/^(INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
@@ -304,7 +302,7 @@ class Utility implements \Icms\Db\IUtility {
 	 *@see	ProtectorMySQLDatabase::checkSql()
 	 *
 	 */
-	public static function checkSQL(string $sql): bool
+	public static function checkSQL($sql): bool
 	{
 		/* use Protector's db layer to prevent SQLi
 		 * Make sure Protector is loaded

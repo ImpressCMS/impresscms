@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 namespace Icms\Db\Criteria;
 
 // $Id: Item.php 12313 2013-09-15 21:14:35Z skenow $
@@ -119,25 +117,13 @@ class Item extends Element
 		if (\in_array(\strtoupper($this->_operator), ['IS NULL', 'IS NOT NULL'], true)) {
 			$clause .= ' ' . $this->_operator;
 		} else {
-			$trimmedValue = \trim($this->_value);
-			if ($trimmedValue === '') {
+			if ('' === ($value = \trim($this->_value))) {
 				return '';
 			}
-
-			$isSimpleValue = \preg_match('/^[a-zA-Z0-9_.`-]*$/', $this->_value) === 1;
-			$valueLength = \strlen($this->_value);
-			$isBackticked = $valueLength >= 2
-				&& $this->_value[0] === '`'
-				&& $this->_value[$valueLength - 1] === '`';
-
-			if (\in_array(\strtoupper($this->_operator), ['IN', 'NOT IN'], true)) {
-				// IN / NOT IN expect a value list expression, e.g. "(1,2,3)".
-				$value = $trimmedValue;
-			} else {
-				$value = $isBackticked ? $this->_value : "'" . $trimmedValue . "'";
-				if (!$isBackticked) {
-					$value = "'" . $trimmedValue . "'";
-				} elseif (!$isSimpleValue) {
+			if (!\in_array(\strtoupper($this->_operator), ['IN', 'NOT IN'], true)) {
+				if ((\substr($value, 0, 1) != '`') && (\substr($value, -1) != '`')) {
+					$value = "'$value'";
+				} elseif (!\preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
 					$value = '``';
 				}
 			}
