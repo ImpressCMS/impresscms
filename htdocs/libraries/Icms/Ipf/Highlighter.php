@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * This file contains the keyhighlighter class that highlights the chosen keyword in the current output buffer.
  *

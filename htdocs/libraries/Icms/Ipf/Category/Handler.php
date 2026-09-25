@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Contains the basic classe for managing a category object based on Icms\Ipf\Entity
  *

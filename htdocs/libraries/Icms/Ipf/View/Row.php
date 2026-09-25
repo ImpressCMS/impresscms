@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Class representing a single row of a Icms\Ipf\View\Single
  *

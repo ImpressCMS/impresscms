@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * This class is responsible for providing operations to an object for managing the object's manipulation
  *
@@ -17,7 +16,6 @@ declare(strict_types=1);
 
 namespace Icms\Ipf;
 
-use Icms\Util\Timestamp;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
@@ -120,17 +118,14 @@ class Controller {
 				case XOBJ_DTYPE_MTIME:
 				case XOBJ_DTYPE_LTIME:
 					// check if this field's value is available in the POST array
-											// Normalize posted date/time values to integer timestamps using helper
-											$value = 0;
-											if (isset($_POST[$key]) && is_array($_POST[$key]) && isset($_POST[$key]['date'])) {
-												$datePart = $_POST[$key]['date'];
-												$timePart = isset($_POST[$key]['time']) ? (int) $_POST[$key]['time'] : 0;
-												$ts = Timestamp::toTimestamp($datePart);
-												$value = ($ts === 0) ? $timePart : ($ts + $timePart);
-											} else {
-												$raw = isset($_POST[$key]) ? $_POST[$key] : '';
-												$value = Timestamp::toTimestamp($raw);
-											}
+					if (isset($_POST[$key]) && is_array($_POST[$key]) && isset($_POST[$key]['date'])) {
+						$value = strtotime($_POST[$key]['date']) + (int) ($_POST[$key]['time'] ?? 0);
+					// in case the field is hidden, it's not formated so we can simply take the value and store it
+					} elseif (isset($_POST[$key]) && filter_var($_POST[$key], FILTER_VALIDATE_INT) == $_POST[$key]) {
+						$value = (int) $_POST[$key];
+					} else {
+						$value = strtotime((string) ($_POST[$key] ?? ''));
+					}
 					$icmsObj->setVar($key, $value);
 					break;
 

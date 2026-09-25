@@ -231,7 +231,7 @@ class Entity {
 	 * @param int $maxlength for XOBJ_DTYPE_TXTBOX type only
 	 * @param string $option does this data have any select options?
 	 */
-	public function initVar(string $key, int $data_type, $value = null, bool $required = false, ?int $maxlength = null, string $options = ''): void {
+	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = ''): void {
 		$this->vars[$key] = array('value' => $value, 'required' => $required, 'data_type' => $data_type, 'maxlength' => $maxlength, 'changed' => false, 'options' => $options);
 	}
 

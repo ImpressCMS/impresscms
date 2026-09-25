@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Icms\Ipf\Handler (legacy icms_ipf_Handler)
  *

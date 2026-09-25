@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Contains the basis classes for managing any objects derived from icms_ipf_Object
  *
@@ -117,7 +116,7 @@ class Entity extends \Icms\Core\Entity {
 	 * @param bool $persistent set to FALSE if this field is not to be saved in the database
 	 * @param bool $displayOnForm to be displayed on the form or not
 	 */
-	public function initVar(string $key, int $data_type, $value = null, bool $required = false, ?int $maxlength = null, string $options = '', $multilingual = false, $form_caption = '', $form_dsc = '', $sortby = false, $persistent = true, $displayOnForm = true): void {
+	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $multilingual = false, $form_caption = '', $form_dsc = '', $sortby = false, $persistent = true, $displayOnForm = true): void {
 		// url_ is reserved for files.
 		if (substr($key, 0, 4) == 'url_') {
 			trigger_error("Cannot use variable starting with 'url_'.");

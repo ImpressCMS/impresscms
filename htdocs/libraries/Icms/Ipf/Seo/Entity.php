@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Contains the basis classes for managing any SEO-enabled objects derived from Icms\Ipf\Entity
  *

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Contains the classes responsible for displaying a tree table filled with Icms\Ipf\Entity
  *
