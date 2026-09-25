@@ -77,7 +77,7 @@ class Entity extends \Icms\Core\Entity {
 	 * @param string $gperm_name name of the permission to test
 	 * @return boolean : TRUE if user has access, false if not
 	 */
-	public function accessGranted($perm_name) {
+	public function accessGranted(?string $perm_name = null) {
 		$icmspermissions_handler = new \Icms\Ipf\Permission\Handler($this->handler);
 		return $icmspermissions_handler->accessGranted($perm_name, $this->id());
 	}
@@ -592,7 +592,7 @@ class Entity extends \Icms\Core\Entity {
 	 * @param bool $onlyUrl wether or not to return a simple URL or a full <a> link
 	 * @return string user side link to the object
 	 */
-	public function getAdminViewItemLink($onlyUrl = false) {
+	public function getAdminViewItemLink(bool $onlyUrl = false) {
 		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getAdminViewItemLink($this, $onlyUrl);
 	}
@@ -603,7 +603,7 @@ class Entity extends \Icms\Core\Entity {
 	 * @param bool $onlyUrl wether or not to return a simple URL or a full <a> link
 	 * @return string user side link to the object
 	 */
-	public function getItemLink($onlyUrl = false) {
+	public function getItemLink(bool $onlyUrl = false) {
 		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getItemLink($this, $onlyUrl);
 	}
@@ -614,7 +614,7 @@ class Entity extends \Icms\Core\Entity {
 	 * @param $withimage
 	 * @param $userSide
 	 */
-	public function getViewItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
+	public function getViewItemLink(bool $onlyUrl = false, bool $withimage = true, bool $userSide = false) {
 		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getViewItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
@@ -625,7 +625,7 @@ class Entity extends \Icms\Core\Entity {
 	 * @param bool $withimage
 	 * @param bool $userSide
 	 */
-	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
+	public function getEditItemLink(bool $onlyUrl = false, bool $withimage = true, bool $userSide = false) {
 		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getEditItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
@@ -636,7 +636,7 @@ class Entity extends \Icms\Core\Entity {
 	 * @param bool $withimage
 	 * @param bool $userSide
 	 */
-	public function getDeleteItemLink($onlyUrl = false, $withimage = false, $userSide = false) {
+	public function getDeleteItemLink(bool $onlyUrl = false, bool $withimage = false, bool $userSide = false) {
 		$controller = new \Icms\Ipf\Controller($this->handler);
 		return $controller->getDeleteItemLink($this, $onlyUrl, $withimage, $userSide);
 	}

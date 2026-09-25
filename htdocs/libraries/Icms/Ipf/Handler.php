@@ -71,7 +71,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 * For example : "name" (this will be the category's name)
 	 * @var string
 	 */
-	public $identifierName;
+	public string $identifierName = '';
 
 	/**
 	 * Name of the field which will be use as a summary for the object
@@ -111,13 +111,13 @@ class Handler extends \Icms\Core\EntityHandler {
 	 * @var string
 	 * @todo	Rename using the proper naming convention (This is a public var)
 	 */
-	public $_moduleName;
+	public string $_moduleName = '';
 
 	public $uploadEnabled = false;
 
 	public $_uploadUrl;
 
-	public $_uploadPath;
+	public string $_uploadPath = '';
 
 	public $_allowedMimeTypes = 0;
 
