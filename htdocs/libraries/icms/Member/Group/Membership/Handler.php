@@ -38,6 +38,8 @@
  * @author		Kazumi Ono (aka onokazo)
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
+namespace Icms\Member\Group\Membership;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
@@ -51,7 +53,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		Member
  * @subpackage	GroupMembership
  */
-class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
+class Handler extends \Icms\Core\EntityHandler {
 	/**
 	 * create a new membership
 	 *
@@ -60,7 +62,7 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 * @see icms_core_ObjectHandler#create()
 	 */
 	public function &create($isNew = true) 	{
-		$mship = new icms_member_group_membership_Object();
+		$mship = new \Icms\Member\Group\Membership\Entity();
 		if ($isNew) {
 			$mship->setNew();
 		}
@@ -78,15 +80,15 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 		$id = (int) $id;
 		$mship = false;
 		if ($id > 0) {
-			$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('groups_users_link')
+			$sql = "SELECT * FROM " . \icms::$xoopsDB->prefix('groups_users_link')
 				. " WHERE linkid='" . $id . "'";
-			if (!$result = icms::$xoopsDB->query($sql)) {
+			if (!$result = \icms::$xoopsDB->query($sql)) {
 				return $mship;
 			}
-			$numrows = icms::$xoopsDB->getRowsNum($result);
+			$numrows = \icms::$xoopsDB->getRowsNum($result);
 			if ($numrows == 1) {
-				$mship = new icms_member_group_membership_Object();
-				$mship->assignVars(icms::$xoopsDB->fetchArray($result));
+				$mship = new \Icms\Member\Group\Membership\Entity();
+				$mship->assignVars(\icms::$xoopsDB->fetchArray($result));
 			}
 		}
 		return $mship;
@@ -99,7 +101,7 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 * @return bool TRUE if already in DB or successful, FALSE if failed
 	 * @see icms_core_ObjectHandler#insert($object)
 	 */
-	public function insert(&$mship) {
+	public function insert($mship) {
 		/* As of PHP5.3.0, is_a()is no longer deprecated and there is no need to replace it */
 		if (!is_a($mship, 'icms_member_group_membership_Object')) {
 			return false;
@@ -114,10 +116,10 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 			${$k} = $v;
 		}
 		if ($mship->isNew()) {
-			$linkid = icms::$xoopsDB->genId('groups_users_link_linkid_seq');
+			$linkid = \icms::$xoopsDB->genId('groups_users_link_linkid_seq');
 			$sql = sprintf(
 				"INSERT INTO %s (linkid, groupid, uid) VALUES ('%u', '%u', '%u')",
-				icms::$xoopsDB->prefix('groups_users_link'),
+				\icms::$xoopsDB->prefix('groups_users_link'),
 				(int) $linkid,
 				(int) $groupid,
 				(int) $uid
@@ -125,17 +127,17 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 		} else {
 			$sql = sprintf(
 				"UPDATE %s SET groupid = '%u', uid = '%u' WHERE linkid = '%u'",
-				icms::$xoopsDB->prefix('groups_users_link'),
+				\icms::$xoopsDB->prefix('groups_users_link'),
 				(int) $groupid,
 				(int) $uid,
 				(int) $linkid
 			);
 		}
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = \icms::$xoopsDB->query($sql)) {
 			return false;
 		}
 		if (empty($linkid)) {
-			$linkid = icms::$xoopsDB->getInsertId();
+			$linkid = \icms::$xoopsDB->getInsertId();
 		}
 		$mship->assignVar('linkid', $linkid);
 		return true;
@@ -148,7 +150,7 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 * @return bool FALSE if failed
 	 * @see icms_core_ObjectHandler#delete($object)
 	 */
-	public function delete(&$mship) {
+	public function delete($mship) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no reason to replace it */
 		if (!is_a($mship, 'icms_member_group_membership_Object')) {
 			return false;
@@ -156,10 +158,10 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 
 		$sql = sprintf(
 			"DELETE FROM %s WHERE linkid = '%u'",
-			icms::$xoopsDB->prefix('groups_users_link'),
+			\icms::$xoopsDB->prefix('groups_users_link'),
 			(int) $groupm->getVar('linkid')
 		);
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = \icms::$xoopsDB->query($sql)) {
 			return false;
 		}
 		return true;
@@ -175,18 +177,18 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('groups_users_link');
+		$sql = "SELECT * FROM " . \icms::$xoopsDB->prefix('groups_users_link');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
-		$result = icms::$xoopsDB->query($sql, $limit, $start);
+		$result = \icms::$xoopsDB->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
-			$mship = new icms_member_group_membership_Object();
+		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
+			$mship = new \Icms\Member\Group\Membership\Entity();
 			$mship->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $mship;
@@ -205,15 +207,15 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 * @return int
 	 */
 	public function getCount($criteria = null) {
-		$sql = "SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix('groups_users_link');
+		$sql = "SELECT COUNT(*) FROM " . \icms::$xoopsDB->prefix('groups_users_link');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 		}
-		$result = icms::$xoopsDB->query($sql);
+		$result = \icms::$xoopsDB->query($sql);
 		if (!$result) {
 			return 0;
 		}
-		list($count) = icms::$xoopsDB->fetchRow($result);
+		list($count) = \icms::$xoopsDB->fetchRow($result);
 		return $count;
 	}
 
@@ -224,11 +226,11 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 * @return bool
 	 */
 	public function deleteAll($criteria = null) {
-		$sql = "DELETE FROM " . icms::$xoopsDB->prefix('groups_users_link');
+		$sql = "DELETE FROM " . \icms::$xoopsDB->prefix('groups_users_link');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 		}
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = \icms::$xoopsDB->query($sql)) {
 			return false;
 		}
 		return true;
@@ -244,13 +246,13 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getGroupsByUser($uid) {
 		$ret = array();
-		$sql = "SELECT groupid FROM " . icms::$xoopsDB->prefix('groups_users_link')
+		$sql = "SELECT groupid FROM " . \icms::$xoopsDB->prefix('groups_users_link')
 			. " WHERE uid='" . (int) $uid . "'";
-		$result = icms::$xoopsDB->query($sql);
+		$result = \icms::$xoopsDB->query($sql);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
 			$ret[] = $myrow['groupid'];
 		}
 		return $ret;
@@ -268,13 +270,13 @@ class icms_member_group_membership_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getUsersByGroup($groupid, $limit=0, $start=0) {
 		$ret = array();
-		$sql = "SELECT uid FROM " . icms::$xoopsDB->prefix('groups_users_link')
+		$sql = "SELECT uid FROM " . \icms::$xoopsDB->prefix('groups_users_link')
 			. " WHERE groupid='" . (int) $groupid . "'";
-		$result = icms::$xoopsDB->query($sql, $limit, $start);
+		$result = \icms::$xoopsDB->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
 			$ret[] = $myrow['uid'];
 		}
 		return $ret;

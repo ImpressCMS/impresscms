@@ -38,6 +38,8 @@
  * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
+namespace Icms\Member\User;
+
 defined('ICMS_ROOT_PATH') or exit();
 
 /**
@@ -48,7 +50,7 @@ defined('ICMS_ROOT_PATH') or exit();
  * @package		Member
  * @subpackage	User
  */
-class icms_member_user_Object extends icms_core_Object {
+class Entity extends \Icms\Core\Entity {
 	/**
 	 * Array of groups that user belongs to
 	 * @var array
@@ -115,7 +117,7 @@ class icms_member_user_Object extends icms_core_Object {
 			if (is_array($id)) {
 				$this->assignVars($id);
 			} else {
-				$member_handler = icms::handler('icms_member');
+				$member_handler = \icms::handler('icms_member');
 				$user =& $member_handler->getUser($id);
 				foreach ($user->vars as $k => $v) {
 					$this->assignVar($k, $v['value']);
@@ -145,18 +147,18 @@ class icms_member_user_Object extends icms_core_Object {
 		$userid = (int) $userid;
 		$usereal = (int) $usereal;
 		if ($userid > 0) {
-			$member_handler = icms::handler('icms_member');
+			$member_handler = \icms::handler('icms_member');
 			$user =& $member_handler->getUser($userid);
 			if (is_object($user)) {
 				if ($usereal) {
 					$name = $user->getVar('name');
 					if ($name != '') {
-						return icms_core_DataFilter::htmlSpecialChars($name);
+						return \Icms\Core\DataFilter::htmlSpecialChars($name);
 					} else {
-						return icms_core_DataFilter::htmlSpecialChars($user->getVar('uname'));
+						return \Icms\Core\DataFilter::htmlSpecialChars($user->getVar('uname'));
 					}
 				} else {
-					return icms_core_DataFilter::htmlSpecialChars($user->getVar('uname'));
+					return \Icms\Core\DataFilter::htmlSpecialChars($user->getVar('uname'));
 				}
 			}
 		}
@@ -184,7 +186,7 @@ class icms_member_user_Object extends icms_core_Object {
 
 		if (!$icmsConfigUser['welcome_msg']) return true;
 
-		$xoopsMailer = new icms_messaging_Handler();
+		$xoopsMailer = new \Icms\Messaging\Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setBody($icmsConfigUser['welcome_msg_content']);
 		$xoopsMailer->assign('UNAME', $this->getVar('uname'));
@@ -193,7 +195,7 @@ class icms_member_user_Object extends icms_core_Object {
 		$xoopsMailer->setToEmails($user_email);
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, icms_core_DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
+		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, \Icms\Core\DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
 		if (!$xoopsMailer->send(true)) {
 			$this->setErrors(_US_WELCOMEMSGFAILED);
 			return false;
@@ -214,8 +216,8 @@ class icms_member_user_Object extends icms_core_Object {
 		global $icmsConfigUser, $icmsConfig;
 
 		if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group'])) {
-			$member_handler = icms::handler('icms_member');
-			$xoopsMailer = new icms_messaging_Handler();
+			$member_handler = \icms::handler('icms_member');
+			$xoopsMailer = new \Icms\Messaging\Handler();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('newuser_notify.tpl');
 			$xoopsMailer->assign('UNAME', $this->getVar('uname'));
@@ -242,7 +244,7 @@ class icms_member_user_Object extends icms_core_Object {
 	 */
 	public function &getGroups() {
 		if (empty($this->_groups)) {
-			$member_handler = icms::handler('icms_member');
+			$member_handler = \icms::handler('icms_member');
 			$this->_groups =& $member_handler->getGroupsByUser($this->getVar('uid'));
 		}
 		return $this->_groups;
@@ -266,7 +268,7 @@ class icms_member_user_Object extends icms_core_Object {
 		} elseif((int) $module_id < 1) {$module_id = 0;}
 
 		if (!isset($buffer[$module_id])) {
-			$moduleperm_handler = icms::handler('icms_member_groupperm');
+			$moduleperm_handler = \icms::handler('icms_member_groupperm');
 			$buffer[$module_id] = $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
 		}
 		return $buffer[$module_id];
@@ -298,9 +300,9 @@ class icms_member_user_Object extends icms_core_Object {
 	 */
 	public function isOnline() {
 		if (!isset($this->_isOnline)) {
-			$onlinehandler = icms::handler('icms_core_Online');
+			$onlinehandler = \icms::handler('icms_core_Online');
 			$this->_isOnline =
-				($onlinehandler->getCount(new icms_db_criteria_Item('online_uid', $this->getVar('uid'))) > 0)
+				($onlinehandler->getCount(new \Icms\Db\Criteria\Item('online_uid', $this->getVar('uid'))) > 0)
 				? true
 				: false;
 		}
@@ -322,7 +324,7 @@ class icms_member_user_Object extends icms_core_Object {
 		if (!$overwrite && is_file(ICMS_UPLOAD_PATH . '/' . $this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif') {
 			return ICMS_UPLOAD_URL . '/' . $this->getVar('user_avatar');
 		}
-		$ret =  icms::$urls['http'] . "www.gravatar.com/avatar/" . md5(strtolower($this->getVar('email', 'E'))) . "?d=identicon";
+		$ret =  \icms::$urls['http'] . "www.gravatar.com/avatar/" . md5(strtolower($this->getVar('email', 'E'))) . "?d=identicon";
 		if ($rating && $rating != '') {$ret .= "&amp;rating=" . $rating;}
 		if ($size && $size != '') {$ret .="&amp;size=" . $size;}
 		if ($default && $default != '') {$ret .= "&amp;default=" . urlencode($default);}

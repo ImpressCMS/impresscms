@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,41 +29,39 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Manage groups and memberships
+ * Manage groups
  *
- * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- *
- * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  * @category	ICMS
  * @package		Member
- * @subpackage	Groupperm
+ * @subpackage	Group
  * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
+
+namespace Icms\Member\Group;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * A group permission
+ * a group of users
  *
- * These permissions are managed through a {@link icms_member_groupperm_Handler} object
- * @category	ICMS
- * @package     Member
- * @subpackage	GroupPermission
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author		Kazumi Ono <onokazu@xoops.org>
  * @copyright	Copyright (c) 2000 XOOPS.org
+ * @category	ICMS
+ * @package		Member
+ * @subpackage	Group
  */
-class icms_member_groupperm_Object extends icms_core_Object {
+class Entity extends \Icms\Core\Entity {
 	/**
-	 * Constructor
-	 *
+	 * constructor
 	 */
-	function __construct() {
+	public function __construct() {
 		parent::__construct();
-		$this->initVar('gperm_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('gperm_groupid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('gperm_itemid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('gperm_modid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('gperm_name', XOBJ_DTYPE_OTHER, null, false);
+		$this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
+		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 100);
+		$this->initVar('description', XOBJ_DTYPE_TXTAREA, null, false);
+		$this->initVar('group_type', XOBJ_DTYPE_OTHER, null, false);
 	}
 }
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Manage memberships
  *
@@ -10,6 +11,7 @@
  * @author		Kazumi Ono (aka onokazo)
  * @version		SVN: $Id: Object.php 10326 2010-07-11 18:54:25Z malanciault $
  */
+namespace Icms\Member\Group\Membership;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
@@ -21,7 +23,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		Member
  * @subpackage	Group
  */
-class icms_member_group_membership_Object extends icms_core_Object {
+class Entity extends \Icms\Core\Entity {
 	/**
 	 * constructor
 	 */

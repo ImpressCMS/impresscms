@@ -28,35 +28,43 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 /**
- * Manage groups
+ * Manage groups and memberships
  *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
  * @license		LICENSE.txt
+ *
+ * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
  * @category	ICMS
  * @package		Member
- * @subpackage	Group
+ * @subpackage	Groupperm
  * @version		SVN: $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\Member\Groupperm;
+
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * a group of users
+ * A group permission
  *
- * @author		Kazumi Ono <onokazu@xoops.org>
- * @copyright	Copyright (c) 2000 XOOPS.org
+ * These permissions are managed through a {@link icms_member_groupperm_Handler} object
  * @category	ICMS
- * @package		Member
- * @subpackage	Group
+ * @package     Member
+ * @subpackage	GroupPermission
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	Copyright (c) 2000 XOOPS.org
  */
-class icms_member_group_Object extends icms_core_Object {
+class Entity extends \Icms\Core\Entity {
 	/**
-	 * constructor
+	 * Constructor
+	 *
 	 */
-	public function __construct() {
+	function __construct() {
 		parent::__construct();
-		$this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 100);
-		$this->initVar('description', XOBJ_DTYPE_TXTAREA, null, false);
-		$this->initVar('group_type', XOBJ_DTYPE_OTHER, null, false);
+		$this->initVar('gperm_id', XOBJ_DTYPE_INT, null, false);
+		$this->initVar('gperm_groupid', XOBJ_DTYPE_INT, null, false);
+		$this->initVar('gperm_itemid', XOBJ_DTYPE_INT, null, false);
+		$this->initVar('gperm_modid', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('gperm_name', XOBJ_DTYPE_OTHER, null, false);
 	}
 }
+

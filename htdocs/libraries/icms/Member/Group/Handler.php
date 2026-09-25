@@ -39,6 +39,8 @@
  * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
+namespace Icms\Member\Group;
+
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
@@ -51,7 +53,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package		Member
  * @subpackage	Group
  */
-class icms_member_group_Handler extends icms_core_ObjectHandler {
+class Handler extends \Icms\Core\EntityHandler {
 
 	/**
 	 * create a new {@link icms_member_group_Object} object
@@ -61,7 +63,7 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	 * @see icms_core_ObjectHandler#create()
 	 */
 	public function &create($isNew = true) {
-		$group = new icms_member_group_Object();
+		$group = new \Icms\Member\Group\Entity();
 		if ($isNew) {
 			$group->setNew();
 		}
@@ -79,14 +81,14 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 		$id = (int) $id;
 		$group = false;
 		if ($id > 0) {
-			$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('groups') . " WHERE groupid='" . $id . "'";
-			if (!$result = icms::$xoopsDB->query($sql)) {
+			$sql = "SELECT * FROM " . \icms::$xoopsDB->prefix('groups') . " WHERE groupid='" . $id . "'";
+			if (!$result = \icms::$xoopsDB->query($sql)) {
 				return $group;
 			}
-			$numrows = icms::$xoopsDB->getRowsNum($result);
+			$numrows = \icms::$xoopsDB->getRowsNum($result);
 			if ($numrows == 1) {
-				$group = new icms_member_group_Object();
-				$group->assignVars(icms::$xoopsDB->fetchArray($result));
+				$group = new \Icms\Member\Group\Entity();
+				$group->assignVars(\icms::$xoopsDB->fetchArray($result));
 			}
 		}
 		return $group;
@@ -99,7 +101,7 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	 * @return mixed ID of the group if inserted, FALSE if failed, TRUE if already present and unchanged.
 	 * @see icms_core_ObjectHandler#insert($object)
 	 */
-	public function insert(&$group) {
+	public function insert($group) {
 		/* As of PHP5.3.0, is_a()is no longer deprecated, so there is no reason to replace it */
 		if (!is_a($group, 'icms_member_group_Object')) {
 			return false;
@@ -114,30 +116,30 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 			${$k} = $v;
 		}
 		if ($group->isNew()) {
-			$groupid = icms::$xoopsDB->genId('group_groupid_seq');
+			$groupid = \icms::$xoopsDB->genId('group_groupid_seq');
 			$sql = sprintf("INSERT INTO %s (groupid, name, description, group_type)
 				VALUES ('%u', %s, %s, %s)",
-				icms::$xoopsDB->prefix('groups'),
+				\icms::$xoopsDB->prefix('groups'),
 				(int) $groupid,
-				icms::$xoopsDB->quoteString($name),
-				icms::$xoopsDB->quoteString($description),
-				icms::$xoopsDB->quoteString($group_type)
+				\icms::$xoopsDB->quoteString($name),
+				\icms::$xoopsDB->quoteString($description),
+				\icms::$xoopsDB->quoteString($group_type)
 			);
 		} else {
 			$sql = sprintf(
 				"UPDATE %s SET name = %s, description = %s, group_type = %s WHERE groupid = '%u'",
-				icms::$xoopsDB->prefix('groups'),
-				icms::$xoopsDB->quoteString($name),
-				icms::$xoopsDB->quoteString($description),
-				icms::$xoopsDB->quoteString($group_type),
+				\icms::$xoopsDB->prefix('groups'),
+				\icms::$xoopsDB->quoteString($name),
+				\icms::$xoopsDB->quoteString($description),
+				\icms::$xoopsDB->quoteString($group_type),
 				(int) $groupid
 			);
 		}
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = \icms::$xoopsDB->query($sql)) {
 			return false;
 		}
 		if (empty($groupid)) {
-			$groupid = icms::$xoopsDB->getInsertId();
+			$groupid = \icms::$xoopsDB->getInsertId();
 		}
 		$group->assignVar('groupid', $groupid);
 		return true;
@@ -150,17 +152,17 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	 * @return bool FALSE if failed
 	 * @see icms_core_ObjectHandler#delete($object)
 	 */
-	public function delete(&$group) {
+	public function delete($group) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
 		if (!is_a($group, 'icms_member_group_Object')) {
 			return false;
 		}
 		$sql = sprintf(
 			"DELETE FROM %s WHERE groupid = '%u'",
-			icms::$xoopsDB->prefix('groups'),
+			\icms::$xoopsDB->prefix('groups'),
 			(int) $group->getVar('groupid')
 		);
-		if (!$result = icms::$xoopsDB->query($sql)) {
+		if (!$result = \icms::$xoopsDB->query($sql)) {
 			return false;
 		}
 		return true;
@@ -176,18 +178,18 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = "SELECT * FROM " . icms::$xoopsDB->prefix('groups');
+		$sql = "SELECT * FROM " . \icms::$xoopsDB->prefix('groups');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
-		$result = icms::$xoopsDB->query($sql, $limit, $start);
+		$result = \icms::$xoopsDB->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;
 		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
-			$group = new icms_member_group_Object();
+		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
+			$group = new \Icms\Member\Group\Entity();
 			$group->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $group;

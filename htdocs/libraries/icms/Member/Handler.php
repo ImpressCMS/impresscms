@@ -38,6 +38,8 @@
  * @version		SVN: $Id: Handler.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
+namespace Icms\Member;
+
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
@@ -51,7 +53,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @category	ICMS
  * @package		Member
  */
-class icms_member_Handler {
+class Handler {
 
 	/**#@+
 	 * holds reference to group handler(DAO) class
@@ -82,9 +84,9 @@ class icms_member_Handler {
 	 *
 	 */
 	public function __construct(&$db) {
-		$this->_gHandler = new icms_member_group_Handler($db);
-		$this->_uHandler = new icms_member_user_Handler($db);
-		$this->_mHandler = new icms_member_group_membership_Handler($db);
+		$this->_gHandler = new \Icms\Member\Group\Handler($db);
+		$this->_uHandler = new \Icms\Member\User\Handler($db);
+		$this->_mHandler = new \Icms\Member\Group\Membership\Handler($db);
 		$this->db = &$db;
 	}
 
@@ -139,7 +141,7 @@ class icms_member_Handler {
 	 */
 	public function deleteGroup(&$group) {
 		$this->_gHandler->delete($group);
-		$this->_mHandler->deleteAll(new icms_db_criteria_Item('groupid', $group->getVar('groupid')));
+		$this->_mHandler->deleteAll(new \Icms\Db\Criteria\Item('groupid', $group->getVar('groupid')));
 		return true;
 	}
 
@@ -151,7 +153,7 @@ class icms_member_Handler {
 	 */
 	public function deleteUser(&$user) {
 		$this->_uHandler->delete($user);
-		$this->_mHandler->deleteAll(new icms_db_criteria_Item('uid', $user->getVar('uid')));
+		$this->_mHandler->deleteAll(new \Icms\Db\Criteria\Item('uid', $user->getVar('uid')));
 		return true;
 	}
 
@@ -251,11 +253,11 @@ class icms_member_Handler {
 	 * @return bool success?
 	 */
 	public function removeUsersFromGroup($group_id, $user_ids = array()) {
-		$criteria = new icms_db_criteria_Compo();
-		$criteria->add(new icms_db_criteria_Item('groupid', $group_id));
-		$criteria2 = new icms_db_criteria_Compo();
+		$criteria = new \Icms\Db\Criteria\Compo();
+		$criteria->add(new \Icms\Db\Criteria\Item('groupid', $group_id));
+		$criteria2 = new \Icms\Db\Criteria\Compo();
 		foreach ($user_ids as $uid) {
-			$criteria2->add(new icms_db_criteria_Item('uid', $uid), 'OR');
+			$criteria2->add(new \Icms\Db\Criteria\Item('uid', $uid), 'OR');
 		}
 		$criteria->add($criteria2);
 		return $this->_mHandler->deleteAll($criteria);
@@ -308,17 +310,17 @@ class icms_member_Handler {
 	}
 
 	public function icms_getLoginFromUserEmail($email = '') {
-		$table = new icms_db_legacy_updater_Table('users');
+		$table = new \Icms\Db\Legacy\Updater\Table('users');
 
 		if ($email !== '') {
 			if ($table->fieldExists('loginname')) {
-				$sql = icms::$xoopsDB->query("SELECT loginname, email FROM " . icms::$xoopsDB->prefix('users')
+				$sql = \icms::$xoopsDB->query("SELECT loginname, email FROM " . \icms::$xoopsDB->prefix('users')
 					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
 			} elseif ($table->fieldExists('login_name')) {
-				$sql = icms::$xoopsDB->query("SELECT login_name, email FROM " . icms::$xoopsDB->prefix('users')
+				$sql = \icms::$xoopsDB->query("SELECT login_name, email FROM " . \icms::$xoopsDB->prefix('users')
 					 . " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
 			}
-			list($uname, $email) = icms::$xoopsDB->fetchRow($sql);
+			list($uname, $email) = \icms::$xoopsDB->fetchRow($sql);
 		} else {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
@@ -333,7 +335,7 @@ class icms_member_Handler {
 	 */
 	public function loginUser($uname, $pwd) {
 
-		$icmspass = new icms_core_Password();
+		$icmspass = new \Icms\Core\Password();
 
 		if (strstr($uname, '@')) {
 			$uname = self::icms_getLoginFromUserEmail($uname);
@@ -346,15 +348,15 @@ class icms_member_Handler {
 
         $pwd = $icmspass->verifyPass($pwd, $uname);
 		
-		$table = new icms_db_legacy_updater_Table('users');
+		$table = new \Icms\Db\Legacy\Updater\Table('users');
 		if ($table->fieldExists('loginname')) {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
+			$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('loginname', $uname));
 		} elseif ($table->fieldExists('login_name')) {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
+			$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('login_name', $uname));
 		} else {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
+			$criteria = new \Icms\Db\Criteria\Compo(new \Icms\Db\Criteria\Item('uname', $uname));
 		}
-		$criteria->add(new icms_db_criteria_Item('pass', $pwd));
+		$criteria->add(new \Icms\Db\Criteria\Item('pass', $pwd));
 		$user = $this->_uHandler->getObjects($criteria, false);
 		if (!$user || count($user) != 1) {
 			$user = false;
@@ -405,7 +407,7 @@ class icms_member_Handler {
 	 * @return int
 	 */
 	public function getUserCountByGroup($group_id) {
-		return $this->_mHandler->getCount(new icms_db_criteria_Item('groupid', $group_id));
+		return $this->_mHandler->getCount(new \Icms\Db\Criteria\Item('groupid', $group_id));
 	}
 
 	/**
@@ -463,8 +465,8 @@ class icms_member_Handler {
 
 		$select = $asobject ? "u.*" : "u.uid";
 		$sql[] = "	SELECT DISTINCT {$select} "
-				. "	FROM " . icms::$xoopsDB->prefix("users") . " AS u"
-				. " LEFT JOIN " . icms::$xoopsDB->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
+				. "	FROM " . \icms::$xoopsDB->prefix("users") . " AS u"
+				. " LEFT JOIN " . \icms::$xoopsDB->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
 		if (! empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
@@ -482,12 +484,12 @@ class icms_member_Handler {
 		if ($criteria->getSort() != '') {
 			$sql_string .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 		}
-		if (! $result = icms::$xoopsDB->query($sql_string, $limit, $start)) {
+		if (! $result = \icms::$xoopsDB->query($sql_string, $limit, $start)) {
 			return $ret;
 		}
-		while ($myrow = icms::$xoopsDB->fetchArray($result)) {
+		while ($myrow = \icms::$xoopsDB->fetchArray($result)) {
 			if ($asobject) {
-				$user = new icms_member_user_Object();
+				$user = new \Icms\Member\User\Entity();
 				$user->assignVars($myrow);
 				if (! $id_as_key) {
 					$ret[] =& $user;
@@ -513,8 +515,8 @@ class icms_member_Handler {
 		$ret = 0;
 
 		$sql[] = "	SELECT COUNT(DISTINCT u.uid) "
-				. "	FROM " . icms::$xoopsDB->prefix("users") . " AS u"
-				. " LEFT JOIN " . icms::$xoopsDB->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
+				. "	FROM " . \icms::$xoopsDB->prefix("users") . " AS u"
+				. " LEFT JOIN " . \icms::$xoopsDB->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
 		if (! empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
@@ -523,10 +525,10 @@ class icms_member_Handler {
 			$sql[] = $criteria->render();
 		}
 		$sql_string = implode(" AND ", array_filter($sql));
-		if (! $result = icms::$xoopsDB->query($sql_string)) {
+		if (! $result = \icms::$xoopsDB->query($sql_string)) {
 			return $ret;
 		}
-		list($ret) = icms::$xoopsDB->fetchRow($result);
+		list($ret) = \icms::$xoopsDB->fetchRow($result);
 		return $ret;
 	}
 
@@ -551,12 +553,12 @@ class icms_member_Handler {
 		} else {
 			foreach ($groups as $group) {
 				$sql = 'SELECT COUNT(gperm_id) as total FROM '
-					. icms::$xoopsDB->prefix("group_permission")
+					. \icms::$xoopsDB->prefix("group_permission")
 					. ' WHERE gperm_groupid=' . $group;
-				if (! $result = icms::$xoopsDB->query($sql)) {
+				if (! $result = \icms::$xoopsDB->query($sql)) {
 					return $ret;
 				}
-				list($t) = icms::$xoopsDB->fetchRow($result);
+				list($t) = \icms::$xoopsDB->fetchRow($result);
 				$gperms[$group] = $t;
 			}
 			foreach ($gperms as $key => $val) {
