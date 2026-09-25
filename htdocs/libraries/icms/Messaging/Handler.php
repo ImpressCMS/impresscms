@@ -430,4 +430,3 @@ class Handler {
 
 }
 
-\class_alias(Handler::class, 'icms_messaging_Handler');

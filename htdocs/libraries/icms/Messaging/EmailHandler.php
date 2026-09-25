@@ -173,4 +173,3 @@ class EmailHandler extends PHPMailer
     }
 }
 
-\class_alias(EmailHandler::class, 'icms_messaging_EmailHandler');
