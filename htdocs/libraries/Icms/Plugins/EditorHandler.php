@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Icms\Plugins;
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');

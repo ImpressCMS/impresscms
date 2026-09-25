@@ -12,8 +12,6 @@
  * @version     $Id: Object.php 10817 2010-12-02 01:29:25Z skenow $
  */
 
-declare(strict_types=1);
-
 namespace Icms\Plugins;
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
