@@ -15,8 +15,6 @@
  * @version     SVN: $Id: Xoops.php 12313 2013-09-15 21:14:35Z skenow $
  */
 
-declare(strict_types=1);
-
 namespace Icms\Auth;
 
 /**
