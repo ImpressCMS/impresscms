@@ -53,15 +53,15 @@ class Handler
     public function getPluginsArray(string $path): array
     {
         $module_handler = \icms::handler('icms_module');
-        $criteria = new \icms_db_criteria_Compo();
-        $criteria->add(new \icms_db_criteria_Item('isactive', 1));
+        $criteria = new \Icms\Db\Criteria\Compo();
+        $criteria->add(new \Icms\Db\Criteria\Item('isactive', 1));
         $tempModulesObj = $module_handler->getObjects($criteria);
         $modulesObj = [];
         foreach ($tempModulesObj as $moduleObj) {
             $modulesObj[$moduleObj->getVar('dirname')] = $moduleObj;
         }
 
-        $aFiles = str_replace('.php', '', \icms_core_Filesystem::getFileList(
+        $aFiles = str_replace('.php', '', \Icms\Core\Filesystem::getFileList(
             ICMS_PLUGINS_PATH . '/' . $path . '/',
             '',
             ['php']
@@ -78,4 +78,3 @@ class Handler
     }
 }
 
-\class_alias(Handler::class, 'icms_plugins_Handler');

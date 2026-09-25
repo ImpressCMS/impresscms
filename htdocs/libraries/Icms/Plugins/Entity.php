@@ -70,4 +70,3 @@ class Entity
     }
 }
 
-\class_alias(Entity::class, 'icms_plugins_Object');

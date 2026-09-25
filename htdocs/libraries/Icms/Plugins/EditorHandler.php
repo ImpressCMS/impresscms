@@ -119,7 +119,7 @@ class EditorHandler {
 		} else {
 			$list = array();
 			$order = array();
-			$_list = \icms_core_Filesystem::getDirList($this->root_path . '/');
+			$_list = \Icms\Core\Filesystem::getDirList($this->root_path . '/');
 
 			foreach ($_list as $item) {
 				if (@include $this->root_path . '/' . $item . '/editor_registry.php') {
@@ -131,7 +131,7 @@ class EditorHandler {
 
 			array_multisort($order, $list);
 			$contents = "<?php\n return " . var_export($list, TRUE) . "\n?>";
-			\icms_core_Filesystem::writeFile($contents, $this->_type . 'editor_list', 'php', ICMS_CACHE_PATH);
+			\Icms\Core\Filesystem::writeFile($contents, $this->_type . 'editor_list', 'php', ICMS_CACHE_PATH);
 		}
 
 		$editors = array_keys($list);
@@ -223,4 +223,3 @@ class EditorHandler {
 	}
 }
 
-\class_alias(EditorHandler::class, 'icms_plugins_EditorHandler');
