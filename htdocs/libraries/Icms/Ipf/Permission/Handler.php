@@ -148,7 +148,7 @@ class Handler {
 	 */
 	public function storeAllPermissionsForId($id) {
 		foreach ($this->handler->getPermissions() as $permission) {
-			$this->saveItem_Permissions($_POST[$permission['perm_name']], $id, $permission['perm_name']);
+			$this->saveItem_Permissions($_POST[$permission['perm_name']] ?? array(), $id, $permission['perm_name']);
 		}
 	}
 
@@ -173,7 +173,7 @@ class Handler {
 		$gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
 
 		// Save the new permissions
-		if (count($groups) > 0) {
+		if (is_array($groups) && count($groups) > 0) {
 			foreach ($groups as $group_id) {
 				$gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);
 			}
