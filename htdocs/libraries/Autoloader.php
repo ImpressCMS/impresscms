@@ -34,42 +34,42 @@ if (!function_exists('icms_legacy_autoloader_register')) {
         $registered = true;
 
         $librariesDir = __DIR__;
-        $icmsDir = $librariesDir . DIRECTORY_SEPARATOR . 'icms';
+        $icmsDir = $librariesDir . DIRECTORY_SEPARATOR . 'Icms';
+        $legacyDir = $librariesDir . DIRECTORY_SEPARATOR . 'icms';
 
-        // Legacy name → modern PSR-4 class map for identifiers that were
-        // renamed (not just moved) during the refactor, e.g. when the modern
-        // class name is not a direct PascalCase transform of the legacy one.
-        $renameMap = [
-            'icms_core_Object'              => 'Icms\\Core\\Entity',
-            'icms_ipf_Object'               => 'Icms\\Ipf\\Entity',
-            'icms_ipf_category_Object'      => 'Icms\\Ipf\\Category\\Entity',
-            'icms_ipf_seo_Object'           => 'Icms\\Ipf\\Seo\\Entity',
-            'icms_data_avatar_Object'       => 'Icms\\Data\\Avatar\\Entity',
-            'icms_data_comment_Object'      => 'Icms\\Data\\Comment\\Entity',
-            'icms_data_file_Object'         => 'Icms\\Data\\File\\Entity',
-            'icms_data_notification_Object' => 'Icms\\Data\\Notification\\Entity',
-            'icms_data_page_Object'         => 'Icms\\Data\\Page\\Entity',
-            'icms_data_privmessage_Object'  => 'Icms\\Data\\Privmessage\\Entity',
-            'icms_data_urllink_Object'      => 'Icms\\Data\\Urllink\\Entity',
-            'icms_auth_Object'              => 'Icms\\Auth\\Entity',
-            'icms_plugins_Object'           => 'Icms\\Plugins\\Entity',
-        ];
+        // Legacy name => modern PSR-4 class, see Icms/aliases.php. Keys are
+        // lowercased because PHP class names are case-insensitive.
+        $aliases = [];
+        $legacyNames = [];
+        $aliasFile = $icmsDir . DIRECTORY_SEPARATOR . 'aliases.php';
+        if (is_file($aliasFile)) {
+            foreach (require $aliasFile as $legacy => $modern) {
+                $aliases[strtolower($legacy)] = $modern;
+                $legacyNames[strtolower($modern)][] = $legacy;
+            }
+        }
+
+        $exists = static fn (string $name): bool => class_exists($name, false)
+            || interface_exists($name, false)
+            || trait_exists($name, false);
 
         spl_autoload_register(
-            static function (string $class) use ($librariesDir, $icmsDir, $renameMap): void {
-                if (isset($renameMap[$class])) {
-                    $target = $renameMap[$class];
-                    if (class_exists($target, true) || interface_exists($target, true) || trait_exists($target, true)) {
-                        if (
-                            !class_exists($class, false)
-                            && !interface_exists($class, false)
-                            && !trait_exists($class, false)
-                        ) {
+            static function (string $class) use ($librariesDir, $icmsDir, $legacyDir, $aliases, $legacyNames, $exists): void {
+                $lower = strtolower($class);
+
+                // Legacy name: load the modern class, whose load registers the alias.
+                if (isset($aliases[$lower])) {
+                    $target = $aliases[$lower];
+                    if (
+                        class_exists($target, true) || interface_exists($target, true) || trait_exists($target, true)
+                    ) {
+                        if (!$exists($class)) {
                             class_alias($target, $class);
                         }
                     }
                     return;
                 }
+
                 // Classmap: bare "icms" abstract base class → libraries/icms.php
                 if ($class === 'icms') {
                     $file = $librariesDir . DIRECTORY_SEPARATOR . 'icms.php';
@@ -82,7 +82,7 @@ if (!function_exists('icms_legacy_autoloader_register')) {
                 // Legacy PSR-0 style names (icms_xxx_yyy) get routed to the
                 // modern Icms\Xxx\Yyy namespace when possible. If the modern
                 // class file exists, loading it will register the legacy
-                // alias via class_alias() at the foot of the file.
+                // alias through the map in Icms/aliases.php.
                 if (strncmp($class, 'icms_', 5) === 0) {
                     $parts = array_map('ucfirst', explode('_', substr($class, 5)));
                     $psr4Class = 'Icms\\' . implode('\\', $parts);
@@ -115,11 +115,16 @@ if (!function_exists('icms_legacy_autoloader_register')) {
                     return;
                 }
 
-                // PSR-4: Icms\Ipf\Handler → libraries/icms/Ipf/Handler.php
+                // PSR-4: Icms\Ipf\Handler → libraries/Icms/Ipf/Handler.php
                 if (strncmp($class, 'Icms\\', 5) === 0) {
                     $file = $icmsDir . DIRECTORY_SEPARATOR
                         . str_replace('\\', DIRECTORY_SEPARATOR, substr($class, 5))
                         . '.php';
+                    if (!is_file($file)) {
+                        $file = $legacyDir . DIRECTORY_SEPARATOR
+                            . str_replace('\\', DIRECTORY_SEPARATOR, substr($class, 5))
+                            . '.php';
+                    }
                     if (is_file($file)) {
                         require_once $file;
                         // If the file has not been refactored yet and only
@@ -139,6 +144,11 @@ if (!function_exists('icms_legacy_autoloader_register')) {
                                 || trait_exists($legacyName, false)
                             ) {
                                 class_alias($legacyName, $class);
+                            }
+                        }
+                        foreach ($legacyNames[$lower] ?? [] as $legacy) {
+                            if ($exists($class) && !$exists($legacy)) {
+                                class_alias($class, $legacy);
                             }
                         }
                     }

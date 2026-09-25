@@ -69,97 +69,10 @@ if (!function_exists('icms_loadLanguageFile')) {
     }
 }
 
-// -- Custom icms autoloader -----------------------------------------------
-// Mirror the routing implemented in htdocs/include/common.php so tests can
-// load legacy class names (icms_*) transparently through the PSR-4 namespace.
-$icmsRootLib = ICMS_LIBRARIES_PATH;
-$icmsRenameMap = [
-    'icms_core_Object'              => 'Icms\\Core\\Entity',
-    'icms_ipf_Object'               => 'Icms\\Ipf\\Entity',
-    'icms_ipf_category_Object'      => 'Icms\\Ipf\\Category\\Entity',
-    'icms_ipf_seo_Object'           => 'Icms\\Ipf\\Seo\\Entity',
-    'icms_data_avatar_Object'       => 'Icms\\Data\\Avatar\\Entity',
-    'icms_data_comment_Object'      => 'Icms\\Data\\Comment\\Entity',
-    'icms_data_file_Object'         => 'Icms\\Data\\File\\Entity',
-    'icms_data_notification_Object' => 'Icms\\Data\\Notification\\Entity',
-    'icms_data_page_Object'         => 'Icms\\Data\\Page\\Entity',
-    'icms_data_privmessage_Object'  => 'Icms\\Data\\Privmessage\\Entity',
-    'icms_data_urllink_Object'      => 'Icms\\Data\\Urllink\\Entity',
-    'icms_auth_Object'              => 'Icms\\Auth\\Entity',
-    'icms_plugins_Object'           => 'Icms\\Plugins\\Entity',
-];
-spl_autoload_register(
-    static function (string $class) use ($icmsRootLib, $icmsRenameMap): void {
-        if ($class === 'icms') {
-            $file = $icmsRootLib . DIRECTORY_SEPARATOR . 'icms.php';
-            if (is_file($file)) {
-                require_once $file;
-            }
-            return;
-        }
-        if (isset($icmsRenameMap[$class])) {
-            $target = $icmsRenameMap[$class];
-            if (class_exists($target, true) || interface_exists($target, true) || trait_exists($target, true)) {
-                if (!class_exists($class, false) && !interface_exists($class, false) && !trait_exists($class, false)) {
-                    class_alias($target, $class);
-                }
-            }
-            return;
-        }
-        if (strncmp($class, 'icms_', 5) === 0) {
-            $parts = array_map('ucfirst', explode('_', substr($class, 5)));
-            $psr4 = 'Icms\\' . implode('\\', $parts);
-            if ($psr4 !== $class && (class_exists($psr4, true) || interface_exists($psr4, true) || trait_exists($psr4, true))) {
-                if (!class_exists($class, false)
-                    && !interface_exists($class, false)
-                    && !trait_exists($class, false)
-                ) {
-                    class_alias($psr4, $class);
-                }
-                return;
-            }
-            // Guard against redeclare: the PSR-4 autoload above may have
-            // loaded a file that happened to declare this legacy class
-            // directly (classes not yet moved into the Icms\ namespace).
-            if (class_exists($class, false) || interface_exists($class, false) || trait_exists($class, false)) {
-                return;
-            }
-            $legacy = $icmsRootLib . DIRECTORY_SEPARATOR
-                . str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
-            if (is_file($legacy)) {
-                require_once $legacy;
-                return;
-            }
-        }
-        if (strncmp($class, 'Icms\\', 5) === 0) {
-            $file = $icmsRootLib . DIRECTORY_SEPARATOR . 'icms'
-                . DIRECTORY_SEPARATOR
-                . str_replace('\\', DIRECTORY_SEPARATOR, substr($class, 5))
-                . '.php';
-            if (is_file($file)) {
-                require_once $file;
-                // If the target file has not been refactored yet and only
-                // declares the legacy flat class name, alias the modern
-                // namespaced name to it so the autoload chain terminates
-                // and composer's PSR-4 loader does not re-include the same
-                // file via include() and trigger a redeclare.
-                if (!class_exists($class, false)
-                    && !interface_exists($class, false)
-                    && !trait_exists($class, false)
-                ) {
-                    $legacyName = 'icms_' . strtolower(str_replace('\\', '_', substr($class, 5)));
-                    if (class_exists($legacyName, false)
-                        || interface_exists($legacyName, false)
-                        || trait_exists($legacyName, false)
-                    ) {
-                        class_alias($legacyName, $class);
-                    }
-                }
-            }
-        }
-    },
-    true,
-    true,
-);
+// -- Legacy class name bridge ---------------------------------------------
+// libraries/Autoloader.php (composer "files") maps icms_* names through
+// libraries/Icms/aliases.php; make sure it is registered even when the
+// composer autoloader was generated without it.
+require_once ICMS_LIBRARIES_PATH . '/Autoloader.php';
 
-unset($icmsTestsHtdocs, $icmsTestsRepoRoot, $icmsTestsAutoloader, $icmsRootLib, $icmsRenameMap);
+unset($icmsTestsHtdocs, $icmsTestsRepoRoot, $icmsTestsAutoloader);

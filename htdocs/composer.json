@@ -53,10 +53,10 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Icms\\": "libraries/icms/"
+			"Icms\\": "libraries/Icms/"
 		},
 		"psr-0": {
-			"icms_": "libraries/"
+			"icms_": "libraries/icms/"
 		},
 		"classmap": [
 			"libraries/icms.php"
