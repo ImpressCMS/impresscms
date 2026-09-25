@@ -218,7 +218,7 @@ class Handler extends \Icms\Core\EntityHandler
 	 */
 	public function insert($module)
 	{
-		if (get_class($module) != "icms_module_Object") {
+		if (!($module instanceof \Icms\Module\Entity)) {
 			return false;
 		}
 		if (!$module->isDirty()) {
@@ -292,7 +292,7 @@ class Handler extends \Icms\Core\EntityHandler
 	 */
 	public function delete($module)
 	{
-		if (get_class($module) != "icms_module_Object") {
+		if (!($module instanceof \Icms\Module\Entity)) {
 			return false;
 		}
 

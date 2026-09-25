@@ -157,7 +157,7 @@ class Handler {
 	}
 
 	public function setFromUser(&$user) {
-		if (get_class($user) == "icms_member_user_Object") {
+		if ($user instanceof \Icms\Member\User\Entity) {
 			$this->fromUser =& $user;
 		}
 	}
@@ -403,7 +403,7 @@ class Handler {
 
 	public function setToUsers(&$user) {
 		if (!is_array($user)) {
-			if (get_class($user) == "icms_member_user_Object") {
+			if ($user instanceof \Icms\Member\User\Entity) {
 				array_push($this->toUsers, $user);
 			}
 		} else {
@@ -415,7 +415,7 @@ class Handler {
 
 	public function setToGroups($group) {
 		if (!is_array($group)) {
-			if (get_class($group) == "icms_member_group_Object") {
+			if ($group instanceof \Icms\Member\Group\Entity) {
 				$member_handler = \icms::handler('icms_member');
 				$this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
 			}
