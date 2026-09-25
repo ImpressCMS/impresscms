@@ -38,6 +38,8 @@
  * @subpackage	Legacy
  * @version	SVN: $Id: Proxy.php 12313 2013-09-15 21:14:35Z skenow $
  */
+namespace Icms\Db\Legacy\Mysql;
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
@@ -53,7 +55,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
-class icms_db_legacy_mysql_Proxy extends icms_db_legacy_mysql_Database {
+class Proxy extends \Icms\Db\Legacy\Mysql\Database {
 
 	/**
 	 * perform a query on the database

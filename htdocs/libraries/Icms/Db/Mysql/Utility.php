@@ -102,4 +102,3 @@ abstract class Utility implements IUtility
 
 }
 
-\class_alias(Utility::class, 'icms_db_mysql_Utility');

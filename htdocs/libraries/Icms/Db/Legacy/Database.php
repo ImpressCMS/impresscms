@@ -124,4 +124,3 @@ abstract class Database implements IDatabase {
 		}
 	}
 }
-\class_alias(Database::class, 'icms_db_legacy_Database');

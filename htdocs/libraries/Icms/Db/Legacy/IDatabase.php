@@ -182,4 +182,3 @@ interface IDatabase {
 	public function getFieldsNum($result): int;
 
 }
-\class_alias(IDatabase::class, 'icms_db_legacy_IDatabase');

@@ -192,4 +192,3 @@ class Item extends Element
 	}
 }
 
-\class_alias(Item::class, 'icms_db_criteria_Item');

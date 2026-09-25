@@ -12,6 +12,8 @@
  * @version $Id: Table.php 12310 2013-09-13 21:33:58Z skenow $
  * @link http://www.smartfactory.ca The SmartFactory
  */
+namespace Icms\Db\Legacy\Updater;
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * icms_db_legacy_updater_Table class
@@ -25,7 +27,7 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @author marcan <marcan@smartfactory.ca>
  * @link http://www.smartfactory.ca The SmartFactory
  */
-class icms_db_legacy_updater_Table {
+class Table {
 	/**
 	 * @var string $_name name of the table
 	 */
@@ -99,9 +101,9 @@ class icms_db_legacy_updater_Table {
 	 *
 	 */
 	function __construct($name) {
-		$this->db = icms::$xoopsDB;
+		$this->db = \icms::$xoopsDB;
 		/** For backward compat */
-		$this->_db = icms::$xoopsDB;
+		$this->_db = \icms::$xoopsDB;
 
 		$this->_name = $name;
 		$this->_data = array ();

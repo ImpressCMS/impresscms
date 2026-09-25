@@ -24,6 +24,8 @@
  * @author marcan <marcan@smartfactory.ca>
  * @link http://www.smartfactory.ca The SmartFactory
  */
+namespace Icms\Db\Legacy\Updater;
+
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
@@ -41,7 +43,7 @@ icms_loadLanguageFile('core', 'databaseupdater');
  * @author marcan <marcan@smartfactory.ca>
  * @link http://www.smartfactory.ca The SmartFactory
  */
-class icms_db_legacy_updater_Handler {
+class Handler {
 
 	var $_dbTypesArray;
 
@@ -61,8 +63,8 @@ class icms_db_legacy_updater_Handler {
 
 	function __construct() {
 		// backward compat
-		$this->_db = icms::$xoopsDB;
-		$this->db = icms::$xoopsDB;
+		$this->_db = \icms::$xoopsDB;
+		$this->db = \icms::$xoopsDB;
 
 		$this->_dbTypesArray[XOBJ_DTYPE_TXTBOX] = 'varchar(255)';
 		$this->_dbTypesArray[XOBJ_DTYPE_TXTAREA] = 'text';
@@ -261,7 +263,7 @@ class icms_db_legacy_updater_Handler {
 			return false;
 		}
 
-		$table = new icms_db_legacy_updater_Table($dirname . '_' . $item);
+		$table = new \Icms\Db\Legacy\Updater\Table($dirname . '_' . $item);
 		$object = $module_handler->create();
 		$objectVars = $object->getVars();
 
@@ -378,7 +380,7 @@ class icms_db_legacy_updater_Handler {
 	 */
 	function insertConfig($conf_catid, $conf_name, $conf_title, $conf_value, $conf_desc, $conf_formtype, $conf_valuetype, $conf_order) {
 		global $dbVersion;
-		$configitem_handler = icms::handler('icms_config_item');
+		$configitem_handler = \icms::handler('icms_config_item');
 		$configitemObj = $configitem_handler->create();
 		$configitemObj->setVar('conf_modid', 0);
 		$configitemObj->setVar('conf_catid', $conf_catid);
@@ -466,7 +468,7 @@ class icms_db_legacy_updater_Handler {
 		if (!$dirname) {
 			$dirname = icms_getCurrentModuleName();
 		}
-		$module_handler = icms::handler('icms_module');
+		$module_handler = \icms::handler('icms_module');
 		$module = $module_handler->getByDirname($dirname);
 		$module->setVar('dbversion', $newDBVersion);
 

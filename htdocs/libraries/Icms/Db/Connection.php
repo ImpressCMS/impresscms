@@ -55,14 +55,13 @@ class Connection extends \PDO implements IConnection
 
 		// trigger events for the debug console - see plugins/preloads/debug_mode.php
 		if ($result) {
-			\icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $query, 'errorno' => null, 'error' => null));
+			\Icms\Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $query, 'errorno' => null, 'error' => null));
 		} else {
 			$errorinfo = $this->errorInfo();
-			\icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $query, 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
+			\Icms\Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $query, 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
 		}
 
 		return $result;
 	}
 }
 
-\class_alias(Connection::class, 'icms_db_Connection');

@@ -189,5 +189,4 @@ abstract class Element
 	/**#@-*/
 }
 
-\class_alias(Element::class, 'icms_db_criteria_Element');
 

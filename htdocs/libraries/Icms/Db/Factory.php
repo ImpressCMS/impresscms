@@ -169,7 +169,7 @@ abstract class Factory
 			/* during a new installation, the icms object does not exist */
 			//self::$xoopsInstance->setLogger(\icms::$logger);
 			/* @todo remove the dependency on the logger class */
-			self::$xoopsInstance->setLogger(\icms_core_Logger::instance());
+			self::$xoopsInstance->setLogger(\Icms\Core\Logger::instance());
 			if (!self::$xoopsInstance->connect()) {
 				/* this requires that include/functions.php has been loaded */
 				\icms_loadLanguageFile('core', 'core');
@@ -181,4 +181,3 @@ abstract class Factory
 	}
 }
 
-\class_alias(Factory::class, 'icms_db_Factory');

@@ -327,4 +327,3 @@ class Utility implements \Icms\Db\IUtility {
 		return true;
 	}
 }
-\class_alias(Utility::class,'icms_db_legacy_mysql_Utility');

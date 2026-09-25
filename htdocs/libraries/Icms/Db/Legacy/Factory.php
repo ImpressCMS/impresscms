@@ -105,9 +105,8 @@ class Factory extends \Icms\Db\Factory
 	 * @return    icms_db_legacy_updater_Handler
 	 * @static
 	 */
-	public static function getDatabaseUpdater(): icms_db_legacy_updater_Handler
+	public static function getDatabaseUpdater(): \Icms\Db\Legacy\Updater\Handler
 	{
-		return new icms_db_legacy_updater_Handler();
+		return new \Icms\Db\Legacy\Updater\Handler();
 	}
 }
-\class_alias(Factory::class, 'icms_db_legacy_Factory');

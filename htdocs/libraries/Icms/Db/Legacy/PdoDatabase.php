@@ -310,4 +310,3 @@ class PdoDatabase extends Database
 		return $connection->getAttribute(PDO::ATTR_SERVER_VERSION);
 	}
 }
-\class_alias(PdoDatabase::class, 'icms_db_legacy_PdoDatabase');

@@ -165,4 +165,3 @@ class Compo extends Element
 	}
 }
 
-\class_alias(Compo::class, 'icms_db_criteria_Compo');

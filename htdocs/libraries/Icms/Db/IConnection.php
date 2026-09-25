@@ -15,4 +15,3 @@ interface IConnection
 
 }
 
-\class_alias(IConnection::class, 'icms_db_IConnection');

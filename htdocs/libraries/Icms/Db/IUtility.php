@@ -58,4 +58,3 @@ interface IUtility
 
 }
 
-\class_alias(IUtility::class, 'icms_db_IUtility');
