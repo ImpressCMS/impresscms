@@ -130,7 +130,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 **/
 	public function insert($tplset) {
 		/* As of PHP5.3.0, is_as() is no longer deprecated */
-		if (!is_a($tplset, 'icms_view_template_set_Object')) {
+		if (!($tplset instanceof \Icms\View\Template\Set\Entity)) {
 			return false;
 		}
 		if (!$tplset->isDirty()) {
@@ -189,7 +189,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 **/
 	public function delete($tplset) {
 		/* As of PHP5.3.0, ia_a() is no longer deprecated */
-		if (!is_a($tplset, 'icms_view_template_set_Object')) {
+		if (!($tplset instanceof \Icms\View\Template\Set\Entity)) {
 			return false;
 		}
 
@@ -220,7 +220,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('tplset');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere() . ' ORDER BY tplset_id';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -250,7 +250,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 **/
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('tplset');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {

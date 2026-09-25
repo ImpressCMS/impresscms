@@ -103,7 +103,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function insert($mship) {
 		/* As of PHP5.3.0, is_a()is no longer deprecated and there is no need to replace it */
-		if (!is_a($mship, 'icms_member_group_membership_Object')) {
+		if (!($mship instanceof \Icms\Member\Group\Membership\Entity)) {
 			return false;
 		}
 		if (!$mship->isDirty()) {
@@ -152,7 +152,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function delete($mship) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no reason to replace it */
-		if (!is_a($mship, 'icms_member_group_membership_Object')) {
+		if (!($mship instanceof \Icms\Member\Group\Membership\Entity)) {
 			return false;
 		}
 
@@ -178,7 +178,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM " . \icms::$xoopsDB->prefix('groups_users_link');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= " " . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -208,7 +208,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function getCount($criteria = null) {
 		$sql = "SELECT COUNT(*) FROM " . \icms::$xoopsDB->prefix('groups_users_link');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= " " . $criteria->renderWhere();
 		}
 		$result = \icms::$xoopsDB->query($sql);
@@ -227,7 +227,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function deleteAll($criteria = null) {
 		$sql = "DELETE FROM " . \icms::$xoopsDB->prefix('groups_users_link');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= " " . $criteria->renderWhere();
 		}
 		if (!$result = \icms::$xoopsDB->query($sql)) {

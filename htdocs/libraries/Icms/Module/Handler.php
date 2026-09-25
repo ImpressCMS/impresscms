@@ -394,7 +394,7 @@ class Handler extends \Icms\Core\EntityHandler
 		$sql = "SELECT * FROM " . $this->db->prefix("modules");
 		if (
 			isset($criteria) &&
-			is_subclass_of($criteria, "icms_db_criteria_Element")
+			($criteria instanceof \Icms\Db\Criteria\Element)
 		) {
 			$sql .= " " . $criteria->renderWhere();
 			$sql .= " ORDER BY weight " . $criteria->getOrder() . ", mid ASC";
@@ -433,7 +433,7 @@ class Handler extends \Icms\Core\EntityHandler
 		$sql = "SELECT COUNT(*) FROM " . $this->db->prefix("modules");
 		if (
 			isset($criteria) &&
-			is_subclass_of($criteria, "icms_db_criteria_Element")
+			($criteria instanceof \Icms\Db\Criteria\Element)
 		) {
 			$sql .= " " . $criteria->renderWhere();
 		}

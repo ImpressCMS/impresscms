@@ -106,7 +106,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function insert($perm) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
-		if (!is_a($perm, 'icms_member_groupperm_Object')) {
+		if (!($perm instanceof \Icms\Member\Groupperm\Entity)) {
 			return false;
 		}
 		if (!$perm->isDirty()) {
@@ -159,7 +159,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function delete($perm) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and does not need to be replaced */
-		if (!is_a($perm, 'icms_member_groupperm_Object')) {
+		if (!($perm instanceof \Icms\Member\Groupperm\Entity)) {
 			return false;
 		}
 		$sql = sprintf(
@@ -185,7 +185,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.\icms::$xoopsDB->prefix('group_permission');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -216,7 +216,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM '.\icms::$xoopsDB->prefix('group_permission');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		$result = \icms::$xoopsDB->query($sql);
@@ -236,7 +236,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function deleteAll($criteria = null) {
 		$sql = sprintf("DELETE FROM %s", \icms::$xoopsDB->prefix('group_permission'));
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result = \icms::$xoopsDB->query($sql)) {

@@ -358,7 +358,7 @@ class Handler extends \Icms\Core\EntityHandler {
 			$sql = 'SELECT * FROM ' . $this->table . " AS " . $this->_itemname;
 		}
 
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -390,7 +390,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	public function query($sql, $criteria, $force = false, $debug = false) {
 		$ret = array();
 
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
@@ -525,7 +525,7 @@ class Handler extends \Icms\Core\EntityHandler {
 			$sql .= ', ' . $this->getIdentifierName();
 		}
 		$sql .= ' FROM '.$this->table . " AS " . $this->_itemname;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -560,7 +560,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	public function getCount($criteria = null) {
 		$field = "";
 		$groupby = false;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			if ($criteria->groupby != "") {
 				$groupby = true;
 				$field = $criteria->groupby . ", "; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
@@ -576,7 +576,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		} else {
 			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->_itemname;
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->groupby != "") {
 				$sql .= $criteria->getGroupby();
@@ -726,6 +726,8 @@ class Handler extends \Icms\Core\EntityHandler {
 			/**
 			 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 			 */
+			// is_a() does not autoload: make sure a legacy class name alias is registered first
+			class_exists($this->className);
 			if (!is_a($obj, $this->className)) {
 				$obj->setErrors(get_class($obj) . ' Differs from ' . $this->className);
 				return false;
@@ -904,7 +906,7 @@ class Handler extends \Icms\Core\EntityHandler {
 			$set_clause .= $this->db->quoteString($fieldvalue);
 		}
 		$sql = 'UPDATE '.$this->table.' SET '.$set_clause;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (false != $force) {
@@ -926,7 +928,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 
 	public function deleteAll($criteria = NULL) {
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$rows = 0;
 			$objects = $this->getObjects($criteria);
 			foreach ($objects as $obj) {

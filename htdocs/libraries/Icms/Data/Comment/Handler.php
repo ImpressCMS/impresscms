@@ -180,7 +180,7 @@ class Handler extends \Icms\Core\EntityHandler
         $ret = [];
         $limit = $start = 0;
         $sql = 'SELECT * FROM ' . $this->db->prefix('xoopscomments');
-        if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+        if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
             $sql .= ' ' . $criteria->renderWhere();
             $sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'com_id';
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
@@ -210,7 +210,7 @@ class Handler extends \Icms\Core\EntityHandler
     public function getCount($criteria = null): int
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xoopscomments');
-        if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+        if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result =& $this->db->query($sql)) {
@@ -226,7 +226,7 @@ class Handler extends \Icms\Core\EntityHandler
     public function deleteAll($criteria = null): bool
     {
         $sql = 'DELETE FROM ' . $this->db->prefix('xoopscomments');
-        if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+        if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {

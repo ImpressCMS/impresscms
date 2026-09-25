@@ -150,7 +150,7 @@ class OnlineHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('online');
-		if (is_object($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (is_object($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -173,7 +173,7 @@ class OnlineHandler {
 	 */
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online');
-		if (is_object($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (is_object($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {

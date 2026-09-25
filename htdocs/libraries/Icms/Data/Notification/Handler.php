@@ -174,7 +174,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('xoopsnotifications');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'not_id';
 			$sql .= ' ORDER BY '.$sort.' '.$criteria->getOrder();
@@ -208,7 +208,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	**/
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('xoopsnotifications');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {
@@ -227,7 +227,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 **/
 	public function deleteAll($criteria = null) {
 		$sql = 'DELETE FROM '.$this->db->prefix('xoopsnotifications');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {
@@ -251,7 +251,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 {
 	 $set_clause = is_numeric($fieldvalue) ? $filedname.' = '.$fieldvalue : $filedname." = '".$fieldvalue."'";
 	 $sql = 'UPDATE '.$this->db->prefix('xoopsnotifications').' SET '.$set_clause;
-	 if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+	 if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 	 $sql .= ' '.$criteria->renderWhere();
 	 }
 	 if (!$result = $this->db->query($sql)) {

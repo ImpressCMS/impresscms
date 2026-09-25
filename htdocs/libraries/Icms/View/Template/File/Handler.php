@@ -111,7 +111,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 **/
 	public function loadSource(&$tplfile) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if (!is_a($tplfile, 'icms_view_template_file_Object')) {
+		if (!($tplfile instanceof \Icms\View\Template\File\Entity)) {
 			return false;
 		}
 
@@ -136,7 +136,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 **/
 	public function insert($tplfile) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if (!is_a($tplfile, 'icms_view_template_file_Object')) {
+		if (!($tplfile instanceof \Icms\View\Template\File\Entity)) {
 			return false;
 		}
 		if (!$tplfile->isDirty()) {
@@ -220,7 +220,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 **/
 	public function forceUpdate(&$tplfile) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if (!is_a($tplfile, 'icms_view_template_file_Object')) {
+		if (!($tplfile instanceof \Icms\View\Template\File\Entity)) {
 			return false;
 		}
 		if (!$tplfile->isDirty()) {
@@ -256,7 +256,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 **/
 	public function delete($tplfile) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if (!is_a($tplfile, 'icms_view_template_file_Object')) {
+		if (!($tplfile instanceof \Icms\View\Template\File\Entity)) {
 			return false;
 		}
 		$id = (int) ($tplfile->getVar('tpl_id'));
@@ -284,7 +284,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		} else {
 			$sql = "SELECT * FROM " . $this->db->prefix('tplfile');
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= " " . $criteria->renderWhere() . " ORDER BY tpl_refid";
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -314,7 +314,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 **/
 	public function getCount($criteria = null)	{
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('tplfile');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {

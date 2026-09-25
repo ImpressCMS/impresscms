@@ -109,7 +109,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function insert($user, $force = FALSE) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
-		if (!is_a($user, 'icms_member_user_Object')) {return FALSE;}
+		if (!($user instanceof \Icms\Member\User\Entity)) {return FALSE;}
 		if (!$user->isDirty()) {return TRUE;}
 		if (!$user->cleanVars()) {
 			return FALSE;
@@ -206,7 +206,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function delete($user, $force = FALSE) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
-		if (!is_a($user, 'icms_member_user_Object')) {return FALSE;}
+		if (!($user instanceof \Icms\Member\User\Entity)) {return FALSE;}
 		$pass = substr(md5(time()), 0, 8);
 		$sql = sprintf(
 			"UPDATE %s SET level = '-1', pass = '%s' WHERE uid = '%u'",
@@ -234,7 +234,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM " . $this->db->prefix('users');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= " " . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= " ORDER BY " . $criteria->getSort() . " " . $criteria->getOrder();
@@ -265,7 +265,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function getCount($criteria = NULL) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('users');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {$sql .= ' ' . $criteria->renderWhere();}
 		$result = $this->db->query($sql);
 		if (!$result) {return 0;}
 		list($count) = $this->db->fetchRow($result);
@@ -282,7 +282,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	public function deleteAll($criteria = NULL) {
 		$pass = substr(md5(time()), 0, 8);
 		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), $pass);
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= " " . $criteria->renderWhere();}
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {$sql .= " " . $criteria->renderWhere();}
 		if (!$result = $this->db->query($sql)) {return FALSE;}
 		return TRUE;
 	}
@@ -299,7 +299,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	public function updateAll($fieldname, $fieldvalue, $criteria = NULL) {
 		$set_clause = is_numeric($fieldvalue) ? $fieldname . ' = ' . $fieldvalue : $fieldname . ' = ' . $this->db->quoteString($fieldvalue);
 		$sql = 'UPDATE ' . $this->db->prefix('users') . ' SET ' . $set_clause;
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {$sql .= ' ' . $criteria->renderWhere();}
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {$sql .= ' ' . $criteria->renderWhere();}
 		if (!$result = $this->db->query($sql)) {return FALSE;}
 		return TRUE;
 	}

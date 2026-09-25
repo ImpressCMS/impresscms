@@ -135,7 +135,7 @@ class Handler extends \Icms\Core\EntityHandler
         $ret = [];
         $limit = $start = 0;
         $sql = 'SELECT * FROM ' . $this->db->prefix('priv_msgs');
-        if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+        if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
             $sql .= ' ' . $criteria->renderWhere();
             $sort = !in_array($criteria->getSort(), ['msg_id', 'msg_time', 'from_userid']) ? 'msg_id' : $criteria->getSort();
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
@@ -165,7 +165,7 @@ class Handler extends \Icms\Core\EntityHandler
     public function getCount($criteria = null): int
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('priv_msgs');
-        if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+        if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {

@@ -103,7 +103,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function insert($group) {
 		/* As of PHP5.3.0, is_a()is no longer deprecated, so there is no reason to replace it */
-		if (!is_a($group, 'icms_member_group_Object')) {
+		if (!($group instanceof \Icms\Member\Group\Entity)) {
 			return false;
 		}
 		if (!$group->isDirty()) {
@@ -154,7 +154,7 @@ class Handler extends \Icms\Core\EntityHandler {
 	 */
 	public function delete($group) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
-		if (!is_a($group, 'icms_member_group_Object')) {
+		if (!($group instanceof \Icms\Member\Group\Entity)) {
 			return false;
 		}
 		$sql = sprintf(
@@ -179,7 +179,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM " . \icms::$xoopsDB->prefix('groups');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+		if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 			$sql .= " " . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();

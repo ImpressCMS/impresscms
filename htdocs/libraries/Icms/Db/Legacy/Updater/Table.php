@@ -502,7 +502,7 @@ class Table {
 				$set_clause .= $this->_db->quoteString( $fieldvalue );
 			}
 			$sql = 'UPDATE '.$this->name().' SET '.$set_clause;
-			if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+			if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 				$sql .= ' '.$criteria->renderWhere();
 			}
 			if ($this->force) {
@@ -531,7 +531,7 @@ class Table {
 		$ret = true;
 		foreach ($this->getDeleteAll() as $item) {
 			$criteria = isset($item['criteria']) ? $item['criteria'] : null;
-			if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
+			if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
 				$sql = 'DELETE FROM '.$this->table;
 				$sql .= ' '.$criteria->renderWhere();
 				if ($this->force) {
