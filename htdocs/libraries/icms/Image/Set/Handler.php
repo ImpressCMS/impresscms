@@ -253,4 +253,3 @@ class Handler extends \Icms\Core\EntityHandler {
 		return $ret;
 	}
 }
-\class_alias(Handler::class, 'icms_image_set_Handler');

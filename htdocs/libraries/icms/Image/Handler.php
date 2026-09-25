@@ -230,7 +230,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		} else {
 			$sql = "SELECT * FROM ".$this->db->prefix('image');
 		}
-		if (isset($criteria) && $criteria instanceof Element) {
+		if (isset($criteria) && $criteria instanceof \Icms\Db\Criteria\Element) {
 			$sql .= " ".$criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))
 					? 'image_weight'

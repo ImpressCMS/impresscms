@@ -101,4 +101,3 @@ class Entity extends \Icms\Core\Entity {
 	}
 }
 
-\class_alias(Entity::class, 'icms_image_Object');

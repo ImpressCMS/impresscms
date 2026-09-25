@@ -43,6 +43,7 @@ namespace Icms\Image\Category;
 use Icms\Core\EntityHandler;
 use Icms\Db\Criteria\Compo;
 use Icms\Db\Criteria\Element;
+use Icms\Db\Criteria\Item;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
@@ -347,4 +348,3 @@ class Handler extends EntityHandler {
 	}
 }
 
-\class_alias(Handler::class, 'icms_image_category_Handler');

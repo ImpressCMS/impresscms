@@ -72,4 +72,3 @@ class Entity extends \Icms\Core\Entity
 		$this->initVar('imgset_refid', XOBJ_DTYPE_INT, 0, false);
 	}
 }
-\class_alias(Entity::class, 'icms_image_set_Object');
