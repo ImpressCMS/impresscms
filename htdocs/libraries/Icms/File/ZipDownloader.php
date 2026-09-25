@@ -56,7 +56,7 @@ class ZipDownloader extends \Icms\File\DownloadHandler {
 	 * @param	string    $mimyType    the mimytype (mimetype) of the file
 	 */
 	public function __construct($ext = '.zip', $mimyType = 'application/x-zip') {
-		$this->archiver = new icms_file_ZipFileHandler();
+		$this->archiver = new \Icms\File\ZipFileHandler();
 		$this->ext      = trim($ext);
 		$this->mimetype = trim($mimyType);
 	}
@@ -124,4 +124,3 @@ class ZipDownloader extends \Icms\File\DownloadHandler {
 		echo $this->archiver->file();
 	}
 }
-\class_alias(ZipDownloader::class, 'icms_file_ZipDownloader');

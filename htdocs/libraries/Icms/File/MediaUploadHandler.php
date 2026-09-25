@@ -197,7 +197,7 @@ class MediaUploadHandler {
 	 * @param   int     $maxHeight
 	 */
 	public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
-		$this->extensionToMime = icms_Utils::mimetypes() ;
+		$this->extensionToMime = \Icms\Utils::mimetypes() ;
 		if (!is_array($this->extensionToMime)) {
 			$this->extensionToMime = array();
 			return false;
@@ -517,7 +517,7 @@ class MediaUploadHandler {
 	 */
 	public function checkMimeType() {
 		$mimetypeHandler = icms_getModulehandler('mimetype', 'system');
-		$modulename = (isset(icms::$module) && is_object(icms::$module)) ? icms::$module->getVar('dirname') : 'system';
+		$modulename = (isset(\icms::$module) && is_object(\icms::$module)) ? \icms::$module->getVar('dirname') : 'system';
 		if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
 			self::setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
 			return false;
@@ -596,4 +596,3 @@ class MediaUploadHandler {
 		}
 	}
 }
-\class_alias(MediaUploadHandler::class, 'icms_file_MediaUploadHandler');

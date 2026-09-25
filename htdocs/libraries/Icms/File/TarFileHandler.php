@@ -678,4 +678,3 @@ class TarFileHandler {
 	}
 }
 
-\class_alias(TarFileHandler::class, 'icms_file_TarFileHandler');

@@ -172,4 +172,3 @@ class TarDownloader extends \Icms\File\DownloadHandler {
 	}
 }
 
-\class_alias(TarDownloader::class, 'icms_file_TarDownloader');

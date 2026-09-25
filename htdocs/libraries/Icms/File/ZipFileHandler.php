@@ -194,4 +194,3 @@ class ZipFileHandler {
 
 } // end of the 'zipfile' class
 
-\class_alias(ZipFileHandler::class, 'icms_file_ZipFileHandler');

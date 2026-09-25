@@ -133,4 +133,3 @@ abstract class DownloadHandler {
 	abstract public function download($name, $gzip = true);
 }
 
-\class_alias(DownloadHandler::class, 'icms_file_DownloadHandler');
