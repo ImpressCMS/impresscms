@@ -84,7 +84,7 @@ class Editor extends Tray
 		$querys = preg_replace('/editor=(.*?)\&/', '', $_SERVER['QUERY_STRING']);
 
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
-				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&' . htmlspecialchars($querys) . '\';
+				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&' . htmlspecialchars((string) $querys) . '\';
 			}"';
 
 		$optionSelect->setExtra($extra);

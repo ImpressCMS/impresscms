@@ -97,7 +97,7 @@ class Radio extends \Icms\Form\Element {
 	 */
 	public function getValue($encode = false) {
 		return ($encode && $this->_value !== null)
-			? htmlspecialchars($this->_value, ENT_QUOTES)
+			? htmlspecialchars((string) $this->_value, ENT_QUOTES)
 			: $this->_value;
 	}
 
@@ -149,8 +149,8 @@ class Radio extends \Icms\Form\Element {
 		}
 		$value = array();
 		foreach ($this->_options as $val => $name) {
-			$value[$encode ? htmlspecialchars($val, ENT_QUOTES) : $val]
-				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+			$value[$encode ? htmlspecialchars((string) $val, ENT_QUOTES) : $val]
+				= ($encode > 1) ? htmlspecialchars((string) $name, ENT_QUOTES) : $name;
 		}
 		return $value;
 	}
@@ -178,7 +178,7 @@ class Radio extends \Icms\Form\Element {
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
 		foreach ($ele_options as $value => $name) {
-			$ret .= "<input type='radio' name='" . $ele_name . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+			$ret .= "<input type='radio' name='" . $ele_name . "' value='" . htmlspecialchars((string) $value, ENT_QUOTES) . "'";
 			if ($value == $ele_value) {
 				$ret .= " checked='checked'";
 			}

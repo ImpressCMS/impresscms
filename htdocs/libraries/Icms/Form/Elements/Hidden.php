@@ -80,7 +80,7 @@ class Hidden extends \Icms\Form\Element {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+		return $encode ? htmlspecialchars((string) $this->_value, ENT_QUOTES) : $this->_value;
 	}
 
 	/**

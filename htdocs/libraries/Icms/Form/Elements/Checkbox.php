@@ -107,7 +107,7 @@ class Checkbox extends \Icms\Form\Element {
 		$checkedValues = array();
 		foreach ($this->_checkboxOptions as $option) {
 			if ($option['checked']) {
-				$checkedValues[] = $encode ? htmlspecialchars($option['value'], ENT_QUOTES) : $option['value'];
+				$checkedValues[] = $encode ? htmlspecialchars((string) $option['value'], ENT_QUOTES) : $option['value'];
 			}
 		}
 
@@ -177,8 +177,8 @@ class Checkbox extends \Icms\Form\Element {
 	public function getOptions($encode = false) {
 		$options = array();
 		foreach ($this->_checkboxOptions as $option) {
-			$val = $encode ? htmlspecialchars($option['value'], ENT_QUOTES) : $option['value'];
-			$name = ($encode > 1) ? htmlspecialchars($option['label'], ENT_QUOTES) : $option['label'];
+			$val = $encode ? htmlspecialchars((string) $option['value'], ENT_QUOTES) : $option['value'];
+			$name = ($encode > 1) ? htmlspecialchars((string) $option['label'], ENT_QUOTES) : $option['label'];
 			$options[$val] = $name;
 		}
 
@@ -204,8 +204,8 @@ class Checkbox extends \Icms\Form\Element {
 		$encodedOptions = array();
 		foreach ($this->_checkboxOptions as $option) {
 			$encodedOptions[] = array(
-				'value' => htmlspecialchars($option['value'], ENT_QUOTES),
-				'label' => htmlspecialchars($option['label'], ENT_QUOTES),
+				'value' => htmlspecialchars((string) $option['value'], ENT_QUOTES),
+				'label' => htmlspecialchars((string) $option['label'], ENT_QUOTES),
 				'checked' => $option['checked']
 			);
 		}

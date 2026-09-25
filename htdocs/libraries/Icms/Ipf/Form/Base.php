@@ -50,7 +50,7 @@ class Base extends \Icms\Form\Theme {
 			$form_action = xoops_getenv('SCRIPT_NAME');
 		}
 
-		parent::__construct( $form_caption , $form_name, $form_action);
+		parent::__construct((string) $form_caption, (string) $form_name, (string) $form_action);
 
 		$this->setExtra('enctype="multipart/form-data"');
 		$this->createElements();

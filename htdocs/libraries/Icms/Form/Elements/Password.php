@@ -129,7 +129,7 @@ class Password extends \Icms\Form\Element {
 	 * @return	string
 	 */
 	public function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+		return $encode ? htmlspecialchars((string) $this->_value, ENT_QUOTES) : $this->_value;
 	}
 
 	/**
@@ -157,7 +157,7 @@ class Password extends \Icms\Form\Element {
 	 * @return	string
 	 */
 	public function getClassName($encode = false) {
-		return $encode ? htmlspecialchars($this->_classname, ENT_QUOTES) : $this->_classname;
+		return $encode ? htmlspecialchars((string) $this->_classname, ENT_QUOTES) : $this->_classname;
 	}
 
 	/**

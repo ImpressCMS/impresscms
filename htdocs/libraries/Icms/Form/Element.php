@@ -164,7 +164,7 @@ abstract class Element
 	public function getName(bool $encode = true): string
 	{
 		if (false !== $encode) {
-			return str_replace('&', '&', htmlspecialchars($this->_name, ENT_QUOTES));
+			return str_replace('&', '&', htmlspecialchars((string) $this->_name, ENT_QUOTES));
 		}
 		return $this->_name;
 	}
@@ -204,7 +204,7 @@ abstract class Element
 				. htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES)
 				. '</span>' . htmlspecialchars(substr($str, $pos + 1), ENT_QUOTES);
 		}
-		return htmlspecialchars($str, ENT_QUOTES);
+		return htmlspecialchars((string) $str, ENT_QUOTES);
 	}
 
 	/**
@@ -232,7 +232,7 @@ abstract class Element
 		}
 		$class = [];
 		foreach ($this->_class as $c) {
-			$class[] = htmlspecialchars($c, ENT_QUOTES);
+			$class[] = htmlspecialchars((string) $c, ENT_QUOTES);
 		}
 		return implode(' ', $class);
 	}
@@ -255,7 +255,7 @@ abstract class Element
 	 */
 	public function getCaption(bool $encode = false): string
 	{
-		return $encode ? htmlspecialchars($this->_caption, ENT_QUOTES) : $this->_caption;
+		return $encode ? htmlspecialchars((string) $this->_caption, ENT_QUOTES) : $this->_caption;
 	}
 
 	/**
@@ -277,7 +277,7 @@ abstract class Element
 	public function getDescription(bool $encode = false): string
 	{
 		return $encode
-			? htmlspecialchars($this->_description, ENT_QUOTES)
+			? htmlspecialchars((string) $this->_description, ENT_QUOTES)
 			: $this->_description;
 	}
 

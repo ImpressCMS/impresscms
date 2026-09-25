@@ -187,7 +187,7 @@ class Image extends SelectElement {
 			$ret .= '\n<optgroup id="img_cat_' . $optIds[$nome] . '" label="' . $nome . '">';
 			if (is_array($valores)) {
 				foreach ($valores as $value => $name) {
-					$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+					$ret .= "<option value='" . htmlspecialchars((string) $value, ENT_QUOTES) . "'";
 					if (count($this->getValue()) > 0 && in_array($value, $this->getValue())) {
 						$ret .= " selected='selected'";
 						$imagem = $value;
