@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  *
  */
@@ -205,7 +204,7 @@ class TarFileHandler {
 				$this->numFiles++;
 
 				// Create us a new file in our array
-				$activeFile = $this->files;
+				$activeFile = &$this->files[];
 
 				// Asign Values
 				$activeFile["name"] = $file_name;
@@ -499,7 +498,7 @@ class TarFileHandler {
 
 		// Add directory to processed data
 		$this->numDirectories++;
-		$activeDir = $this->directories;
+		$activeDir = &$this->directories[];
 		$activeDir["name"] = $dirname;
 		$activeDir["mode"] = $file_information["mode"];
 		$activeDir["time"] = $file_information["time"];
