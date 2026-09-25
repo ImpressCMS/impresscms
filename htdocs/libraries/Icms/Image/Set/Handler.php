@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -164,7 +163,7 @@ class Handler extends \Icms\Core\EntityHandler {
 		$ret = array ();
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgset') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
-		if (isset ($criteria) && is_subclass_of($criteria, '\Icms\Db\Criteria\Element::class')) {
+		if (isset ($criteria) && $criteria instanceof \Icms\Db\Criteria\Element) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
