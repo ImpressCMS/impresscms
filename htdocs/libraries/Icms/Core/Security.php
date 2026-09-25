@@ -65,7 +65,7 @@ class Security {
 		if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$instance->checkReferer(XOOPS_DB_CHKREF)) {
 			define('XOOPS_DB_PROXY', 1);
 		}
-		\icms_Event::attach('icms', 'loadService-config', array($instance, 'checkBadips'));
+		\Icms\Event::attach('icms', 'loadService-config', array($instance, 'checkBadips'));
 		return $instance;
 	}
 
@@ -257,7 +257,7 @@ class Security {
 	 * @return string
 	 **/
 	public function getTokenHTML(string $name = _CORE_TOKEN): string {
-		$token = new \icms_form_elements_Hiddentoken($name);
+		$token = new \Icms\Form\Elements\Hiddentoken($name);
 		return $token->render();
 	}
 
@@ -292,4 +292,3 @@ class Security {
 	}
 }
 
-\class_alias(Security::class, 'icms_core_Security');

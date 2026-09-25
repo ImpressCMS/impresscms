@@ -171,4 +171,3 @@ class Message
 	}
 }
 
-\class_alias(Message::class, 'icms_core_Message');

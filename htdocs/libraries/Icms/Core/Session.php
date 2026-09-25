@@ -348,7 +348,7 @@ class Session {
 			$online_handler = \icms::handler('icms_core_Online');
 			$online_handler->destroy($uid);
 		}
-		\icms_Event::trigger('icms_core_Session', 'sessionClose', $this);
+		\Icms\Event::trigger('icms_core_Session', 'sessionClose', $this);
 		return;
 	}
 
@@ -382,7 +382,7 @@ class Session {
 		session_start();
 
 		self::removeExpiredCustomSession('xoopsUserId');
-		\icms_Event::trigger('icms_core_Session', 'sessionStart', $this);
+		\Icms\Event::trigger('icms_core_Session', 'sessionStart', $this);
 		return;
 	}
 
@@ -395,7 +395,7 @@ class Session {
 
 		$fingerprint = $this->mainSaltKey;
 
-		if (isset($ip) && \icms_core_DataFilter::checkVar($ip, 'ip', 'ipv4')) {
+		if (isset($ip) && \Icms\Core\DataFilter::checkVar($ip, 'ip', 'ipv4')) {
 			if ($securityLevel >= 1) {
 				$fingerprint .= $userAgent;
 			}
@@ -409,7 +409,7 @@ class Session {
 					$fingerprint .= $blocks[$i] . '.';
 				}
 			}
-		} elseif (isset($ip) && \icms_core_DataFilter::checkVar($ip, 'ip', 'ipv6')) {
+		} elseif (isset($ip) && \Icms\Core\DataFilter::checkVar($ip, 'ip', 'ipv6')) {
 			if ($securityLevel >= 1) {
 				$fingerprint .= $userAgent;
 			}
@@ -424,7 +424,7 @@ class Session {
 				}
 			}
 		} else {
-			\icms_core_Debug::message('ERROR (Session Fingerprint): Invalid IP format,
+			\Icms\Core\Debug::message('ERROR (Session Fingerprint): Invalid IP format,
 				IP must be a valid IPv4 or IPv6 format', false);
 			$fingerprint = '';
 			return $fingerprint;
@@ -445,7 +445,7 @@ class Session {
 		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s', \icms::$xoopsDB->prefix('session'), \icms::$xoopsDB->quoteString($sess_id));
 		if (false != $result = \icms::$xoopsDB->query($sql)) {
 			if (list($sess_data, $sess_ip) = \icms::$xoopsDB->fetchRow($result)) {
-				if ($this->ipv6securityLevel > 1 && \icms_core_DataFilter::checkVar($sess_ip, 'ip', 'ipv6')) {
+				if ($this->ipv6securityLevel > 1 && \Icms\Core\DataFilter::checkVar($sess_ip, 'ip', 'ipv6')) {
 					/**
 					 * also cover IPv6 localhost string
 					 */
@@ -458,7 +458,7 @@ class Session {
 					if ($remoteAddr === '' || strncmp($sess_ip, $remoteAddr, $pos)) {
 						$sess_data = '';
 					}
-				} elseif ($this->securityLevel > 1 && \icms_core_DataFilter::checkVar($sess_ip, 'ip', 'ipv4')) {
+				} elseif ($this->securityLevel > 1 && \Icms\Core\DataFilter::checkVar($sess_ip, 'ip', 'ipv4')) {
 					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
 
 					if ($remoteAddr === '' || strncmp($sess_ip, $remoteAddr, $pos)) {
@@ -522,4 +522,3 @@ class Session {
 	}
 }
 
-\class_alias(Session::class, 'icms_core_Session');

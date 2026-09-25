@@ -101,8 +101,8 @@ class Textsanitizer {
 	 * @return   array
 	 */
 	public function getSmileys($all = false) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::getSmileys', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::getSmileys($all);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::getSmileys', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::getSmileys($all);
 	}
 
 	/**
@@ -112,8 +112,8 @@ class Textsanitizer {
 	 * @return   string
 	 */
 	public function smiley($message) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::smiley', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::smiley($message);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::smiley', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::smiley($message);
 	}
 
 	/**
@@ -123,8 +123,8 @@ class Textsanitizer {
 	 * @return  string
 	 **/
 	public function makeClickable($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::makeClickable', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::makeClickable($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::makeClickable', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::makeClickable($text);
 	}
 
 	/**
@@ -136,8 +136,8 @@ class Textsanitizer {
 	 * @return  string
 	 **/
 	public function xoopsCodeDecode($text, $allowimage = 1) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::codeDecode', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::codeDecode($text, $allowimage);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::codeDecode', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::codeDecode($text, $allowimage);
 	}
 
 	/**
@@ -176,8 +176,8 @@ class Textsanitizer {
 	 * @return   string
 	 */
 	public function nl2Br($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::nl2Br', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::nl2Br($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::nl2Br', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::nl2Br($text);
 	}
 
 	/**
@@ -189,8 +189,8 @@ class Textsanitizer {
 	 * @return  string
 	 **/
 	public function addSlashes($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::addSlashes($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::addSlashes($text);
 	}
 
 	/**
@@ -202,8 +202,8 @@ class Textsanitizer {
 	 * @return   string
 	 **/
 	public function stripSlashesGPC($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::stripSlashesGPC($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::stripSlashesGPC($text);
 	}
 
 	/**
@@ -213,8 +213,8 @@ class Textsanitizer {
 	 * @return   string
 	 **/
 	public function htmlSpecialChars($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialchars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::htmlSpecialChars($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialchars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::htmlSpecialChars($text);
 	}
 
 	/**
@@ -224,13 +224,13 @@ class Textsanitizer {
 	 * @return  string
 	 **/
 	static public function undoHtmlSpecialChars($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::undoHtmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::undoHtmlSpecialChars($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::undoHtmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::undoHtmlSpecialChars($text);
 	}
 
 	public function icms_htmlEntities($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::htmlEntities', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::htmlEntities($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::htmlEntities', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::htmlEntities($text);
 	}
 
 	/**
@@ -252,9 +252,9 @@ class Textsanitizer {
 		\icms::$preload->triggerEvent('beforeDisplayTarea', array($text, $html, $smiley, $xcode, $image, $br));
 
 		if ($html === 0){
-			$text = \icms_core_DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
+			$text = \Icms\Core\DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
 		} else {
-			$text = \icms_core_DataFilter::filterHTMLdisplay($text, $xcode, $br);
+			$text = \Icms\Core\DataFilter::filterHTMLdisplay($text, $xcode, $br);
 		}
 
 		/* trigger all events tied to the afterDisplayTarea event */
@@ -282,12 +282,12 @@ class Textsanitizer {
 		/* trigger all the events tied to the beforePreviewTarea event */
 		\icms::$preload->triggerEvent('beforePreviewTarea', array($text, $html, $smiley, $xcode, $image, $br));
 
-		$text = \icms_core_DataFilter::stripSlashesGPC($text);
+		$text = \Icms\Core\DataFilter::stripSlashesGPC($text);
 
 		if ($html === 0) {
-			$text = \icms_core_DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
+			$text = \Icms\Core\DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
 		} else {
-			$text = \icms_core_DataFilter::filterHTMLdisplay($text, $xcode, $br);
+			$text = \Icms\Core\DataFilter::filterHTMLdisplay($text, $xcode, $br);
 		}
 
 		/* trigger all the events tied to the afterPreviewTarea event */
@@ -304,16 +304,16 @@ class Textsanitizer {
 	 *
 	 **/
 	public function censorString($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::censorString', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::censorString($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::censorString', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::censorString($text);
 	}
 
 	/**#@+
 	 * Sanitizing of [code] tag
 	 */
 	public function codePreConv($text, $xcode = 1) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::codePreConv', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::codePreConv($text, $xcode);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::codePreConv', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::codePreConv($text, $xcode);
 	}
 
 	/**
@@ -325,8 +325,8 @@ class Textsanitizer {
 	 * @return	string	$text	 the converted text
 	 */
 	public function codeConv($text, $xcode = 1, $image = 1) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::codeConv', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::codeConv($text, $xcode, $image);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::codeConv', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::codeConv($text, $xcode, $image);
 	}
 
 	/**
@@ -337,8 +337,8 @@ class Textsanitizer {
 	 * @return  string	$str	  The sanitized decoded string
 	 */
 	public function codeSanitizer($str, $image = 1) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::codeSanitizer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::codeSanitizer($str, $image);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::codeSanitizer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::codeSanitizer($str, $image);
 	}
 
 	##################### Deprecated Methods ######################
@@ -353,22 +353,22 @@ class Textsanitizer {
 	 * @param unknown_type $bbcode
 	 */
 	public function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::checkVar - type = text or html, $options1 = output', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::checkVar - type = text or html, $options1 = output', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		if ($allowhtml == 0)
 		{
-			$text = \icms_core_DataFilter::htmlSpecialChars($text);
+			$text = \Icms\Core\DataFilter::htmlSpecialChars($text);
 		} else {
-			$text = \icms_core_DataFilter::makeClickable($text);
+			$text = \Icms\Core\DataFilter::makeClickable($text);
 		}
 		if ($smiley == 1)
 		{
-			$text = \icms_core_DataFilter::smiley($text);
+			$text = \Icms\Core\DataFilter::smiley($text);
 		}
 		if ($bbcode == 1)
 		{
-			$text = \icms_core_DataFilter::codeDecode($text);
+			$text = \Icms\Core\DataFilter::codeDecode($text);
 		}
-		$text = \icms_core_DataFilter::nl2Br($text);
+		$text = \Icms\Core\DataFilter::nl2Br($text);
 		return $text;
 	}
 
@@ -382,23 +382,23 @@ class Textsanitizer {
 	 * @param $bbcode
 	 */
 	public function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
-		\icms_core_Debug::setDeprecated('icms_core_DataFilter->checkVar - type = text or html, options1 = input', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		\Icms\Core\Debug::setDeprecated('icms_core_DataFilter->checkVar - type = text or html, options1 = input', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$text = $this->oopsStripSlashesGPC($text);
 		if ($allowhtml == 0)
 		{
-			$text = \icms_core_DataFilter::htmlSpecialChars($text);
+			$text = \Icms\Core\DataFilter::htmlSpecialChars($text);
 		} else {
-			$text = \icms_core_DataFilter::makeClickable($text);
+			$text = \Icms\Core\DataFilter::makeClickable($text);
 		}
 		if ($smiley == 1)
 		{
-			$text = \icms_core_DataFilter::smiley($text);
+			$text = \Icms\Core\DataFilter::smiley($text);
 		}
 		if ($bbcode == 1)
 		{
-			$text = \icms_core_DataFilter::codeDecode($text);
+			$text = \Icms\Core\DataFilter::codeDecode($text);
 		}
-		$text = \icms_core_DataFilter::nl2Br($text);
+		$text = \Icms\Core\DataFilter::nl2Br($text);
 		return $text;
 	}
 
@@ -409,8 +409,8 @@ class Textsanitizer {
 	 * @param unknown_type $text
 	 */
 	public function makeTboxData4Save($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::addSlashes($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::addSlashes($text);
 	}
 
 	/**
@@ -421,8 +421,8 @@ class Textsanitizer {
 	 * @param $smiley
 	 */
 	public function makeTboxData4Show($text, $smiley=0) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::htmlSpecialChars($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::htmlSpecialChars($text);
 	}
 
 	/**
@@ -432,8 +432,8 @@ class Textsanitizer {
 	 * @param $text
 	 */
 	public function makeTboxData4Edit($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::htmlSpecialChars($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::htmlSpecialChars($text);
 	}
 
 	/**
@@ -444,9 +444,9 @@ class Textsanitizer {
 	 * @param $smiley
 	 */
 	public function makeTboxData4Preview($text, $smiley=0) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars and \icms_core_DataFilter::stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		$text = \icms_core_DataFilter::stripSlashesGPC($text);
-		return \icms_core_DataFilter::htmlSpecialChars($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars and \icms_core_DataFilter::stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$text = \Icms\Core\DataFilter::stripSlashesGPC($text);
+		return \Icms\Core\DataFilter::htmlSpecialChars($text);
 	}
 
 	/**
@@ -456,9 +456,9 @@ class Textsanitizer {
 	 * @param unknown_type $text
 	 */
 	public function makeTboxData4PreviewInForm($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars and \icms_core_DataFilter::stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		$text = \icms_core_DataFilter::stripSlashesGPC($text);
-		return \icms_core_DataFilter::htmlSpecialChars($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars and \icms_core_DataFilter::stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$text = \Icms\Core\DataFilter::stripSlashesGPC($text);
+		return \Icms\Core\DataFilter::htmlSpecialChars($text);
 	}
 
 	/**
@@ -468,8 +468,8 @@ class Textsanitizer {
 	 * @param $text
 	 */
 	public function makeTareaData4Save($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::addSlashes($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::addSlashes($text);
 	}
 
 	/**
@@ -493,8 +493,8 @@ class Textsanitizer {
 	 * @param $text
 	 */
 	public function makeTareaData4Edit($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::htmlSpecialChars($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::htmlSpecialChars($text);
 	}
 	/**
 	 * @deprecated	Use previewTarea, instead
@@ -518,9 +518,9 @@ class Textsanitizer {
 	 * @param str	$text
 	 */
 	public function makeTareaData4PreviewInForm($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::checkVar - type = text, options1 = input', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		$text = \icms_core_DataFilter::stripSlashesGPC($text);
-		return \icms_core_DataFilter::htmlSpecialChars($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::checkVar - type = text, options1 = input', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$text = \Icms\Core\DataFilter::stripSlashesGPC($text);
+		return \Icms\Core\DataFilter::htmlSpecialChars($text);
 	}
 
 	/**
@@ -529,8 +529,8 @@ class Textsanitizer {
 	 * @param 		$text
 	 */
 	public function makeTareaData4InsideQuotes($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::htmlSpecialChars($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::htmlSpecialChars($text);
 	}
 
 	/**
@@ -542,8 +542,8 @@ class Textsanitizer {
 	 * @param $text
 	 */
 	public function oopsStripSlashesGPC($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::stripSlashesGPC($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::stripSlashesGPC($text);
 	}
 
 	/**
@@ -555,8 +555,8 @@ class Textsanitizer {
 	 * @param unknown_type $text
 	 */
 	public function oopsStripSlashesRT($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::stripSlashesGPC($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::stripSlashesGPC($text);
 	}
 
 	/**
@@ -566,8 +566,8 @@ class Textsanitizer {
 	 * @param $text
 	 */
 	public function oopsAddSlashes($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::addSlashes($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::addSlashes($text);
 	}
 
 	/**
@@ -577,8 +577,8 @@ class Textsanitizer {
 	 * @param $text
 	 */
 	public function oopsHtmlSpecialChars($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::htmlSpecialChars($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::htmlSpecialChars($text);
 	}
 
 	/**
@@ -588,8 +588,8 @@ class Textsanitizer {
 	 * @param $text
 	 */
 	public function oopsNl2Br($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::nl2br', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::nl2br($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::nl2br', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::nl2br($text);
 	}
 	/**#@-*/
 	##################### Deprecated Methods ######################
@@ -601,8 +601,8 @@ class Textsanitizer {
 	 * @return	object  reference to the {@link icms_config_Item_Object}
 	 */
 	public function icmsCodeDecode_extended($text, $allowimage = 1) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::codeDecode_extended', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::codeDecode_extended($text, $allowimage);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::codeDecode_extended', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::codeDecode_extended($text, $allowimage);
 	}
 
 	/**
@@ -612,8 +612,8 @@ class Textsanitizer {
 	 * @return	bool
 	 */
 	public function icmsloadExtension($name) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::loadExtension', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::loadExtension($name);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::loadExtension', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::loadExtension($name);
 	}
 
 	/**
@@ -624,8 +624,8 @@ class Textsanitizer {
 	 * @return	array	 the return of the called function
 	 */
 	public function icmsExecuteExtension($name, $text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::executeExtension', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::executeExtension($name, $text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::executeExtension', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::executeExtension($name, $text);
 	}
 
 	/**
@@ -635,8 +635,8 @@ class Textsanitizer {
 	 * @return	string	$text	 the syntax highlighted text
 	 */
 	public function textsanitizer_syntaxhighlight($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::textsanitizer_syntaxhighlight', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::textsanitizer_syntaxhighlight($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::textsanitizer_syntaxhighlight', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::textsanitizer_syntaxhighlight($text);
 	}
 
 	/**
@@ -646,8 +646,8 @@ class Textsanitizer {
 	 * @return	string	$buffer   the highlighted text
 	 */
 	public function textsanitizer_php_highlight($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::textsanitizer_php_highlight', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::textsanitizer_php_highlight($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::textsanitizer_php_highlight', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::textsanitizer_php_highlight($text);
 	}
 
 	/**
@@ -657,9 +657,8 @@ class Textsanitizer {
 	 * @return	string	$code	 the highlighted text
 	 */
 	public function textsanitizer_geshi_highlight($text) {
-		\icms_core_Debug::setDeprecated('\icms_core_DataFilter::textsanitizer_geshi_highlight', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return \icms_core_DataFilter::textsanitizer_geshi_highlight($text);
+		\Icms\Core\Debug::setDeprecated('\icms_core_DataFilter::textsanitizer_geshi_highlight', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return \Icms\Core\DataFilter::textsanitizer_geshi_highlight($text);
 	}
 }
 
-\class_alias(Textsanitizer::class, 'icms_core_Textsanitizer');

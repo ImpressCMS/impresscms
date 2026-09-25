@@ -1159,4 +1159,3 @@ class Filesystem
 	}
 }
 
-\class_alias(Filesystem::class, 'icms_core_Filesystem');

@@ -262,4 +262,3 @@ class Versioncheckergithub extends Versionchecker implements VersioncheckerInter
 	}
 }
 
-\class_alias(Versioncheckergithub::class, 'icms_core_Versioncheckergithub');

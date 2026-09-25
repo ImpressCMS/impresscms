@@ -217,4 +217,3 @@ class HTMLFilter extends DataFilter {
 	}
 }
 
-\class_alias(HTMLFilter::class, 'icms_core_HTMLFilter');

@@ -115,4 +115,3 @@ abstract class EntityHandler {
 
 }
 
-\class_alias(EntityHandler::class, 'icms_core_ObjectHandler');

@@ -727,4 +727,3 @@ class Entity {
 	}
 }
 
-\class_alias(Entity::class, 'icms_core_Object');

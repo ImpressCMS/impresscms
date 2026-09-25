@@ -47,7 +47,7 @@ class Debug
     public static function vardump($var): void
     {
         if (class_exists('icms_core_Textsanitizer')) {
-            self::message(\icms_core_DataFilter::checkVar(var_export($var, true), 'text', 'output'));
+            self::message(\Icms\Core\DataFilter::checkVar(var_export($var, true), 'text', 'output'));
         } else {
             $var = var_export($var, true);
             $var = preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $var);
@@ -108,5 +108,4 @@ class Debug
     }
 }
 
-\class_alias(Debug::class, 'icms_core_Debug');
 

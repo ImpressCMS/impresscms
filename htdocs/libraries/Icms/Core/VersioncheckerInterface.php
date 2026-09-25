@@ -106,4 +106,3 @@ interface VersioncheckerInterface {
 	public function getLatest();
 }
 
-\class_alias(VersioncheckerInterface::class, 'icms_core_VersioncheckerInterface');

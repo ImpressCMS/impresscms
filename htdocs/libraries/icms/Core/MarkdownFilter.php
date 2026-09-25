@@ -16,7 +16,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Util\HtmlFilter as CommonMarkHtmlFilter;
 
-class MarkdownFilter extends \icms_core_DataFilter {
+class MarkdownFilter extends \Icms\Core\DataFilter {
 	/**
 	 * Render Markdown source as safe HTML.
 	 */
@@ -27,7 +27,7 @@ class MarkdownFilter extends \icms_core_DataFilter {
 
 		$rendered = self::getConverter()->convert($markdown)->getContent();
 
-		return \icms_core_HTMLFilter::filterHTML($rendered);
+		return \Icms\Core\HTMLFilter::filterHTML($rendered);
 	}
 
 	/**
@@ -47,4 +47,3 @@ class MarkdownFilter extends \icms_core_DataFilter {
 	}
 }
 
-\class_alias(MarkdownFilter::class, 'icms_core_MarkdownFilter');

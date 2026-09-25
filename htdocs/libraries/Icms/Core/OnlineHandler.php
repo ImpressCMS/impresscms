@@ -186,4 +186,3 @@ class OnlineHandler {
 	}
 }
 
-\class_alias(OnlineHandler::class, 'icms_core_OnlineHandler');

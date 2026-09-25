@@ -188,7 +188,7 @@ final class Password {
 	 */
 	private function _passExpired($uname) {
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
-		$table = new \icms_db_legacy_updater_Table('users');
+		$table = new \Icms\Db\Legacy\Updater\Table('users');
 
 		if ($table->fieldExists('loginname')) {
 			$sql = \icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE loginname = %s",
@@ -221,7 +221,7 @@ final class Password {
 	 * To be removed in future versions
 	 */
 	private function _getUserSalt($uname) {
-		$table = new \icms_db_legacy_updater_Table('users');
+		$table = new \Icms\Db\Legacy\Updater\Table('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
 		if ($table->fieldExists('loginname')) {
@@ -251,7 +251,7 @@ final class Password {
 	 * To be removed in future versions
 	 */
 	private function _getUserEncType($uname) {
-		$table = new \icms_db_legacy_updater_Table('users');
+		$table = new \Icms\Db\Legacy\Updater\Table('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
 		if($table->fieldExists('loginname')) {
@@ -283,7 +283,7 @@ final class Password {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
-		$table = new \icms_db_legacy_updater_Table('users');
+		$table = new \Icms\Db\Legacy\Updater\Table('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
 		if($table->fieldExists('loginname')) {
@@ -440,4 +440,3 @@ final class Password {
 	}
 }
 
-\class_alias(Password::class, 'icms_core_Password');

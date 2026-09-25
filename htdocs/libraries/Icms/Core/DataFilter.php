@@ -543,7 +543,7 @@ class DataFilter {
 		$html = self::codeDecode($html);
 		$html = self::codeConv($html, 1, 1);
 
-		$html = \icms_core_HTMLFilter::filterHTML($html);
+		$html = \Icms\Core\HTMLFilter::filterHTML($html);
 
 		$purified = strpos($html, '<!-- filtered with htmlpurifier -->');
 		if ($purified === false && $br == 1) {
@@ -581,7 +581,7 @@ class DataFilter {
 			$html = self::codeDecode($html);
 			$html = self::codeConv($html, 1, 1);
 
-			$html = \icms_core_HTMLFilter::filterHTML($html);
+			$html = \Icms\Core\HTMLFilter::filterHTML($html);
 
 			// $html .= '<!-- warning! output filtered only -->';
 
@@ -813,7 +813,7 @@ class DataFilter {
 		if ($imcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/sU";
 			$text = preg_replace_callback($patterns, function ($matches) use ($image) {
-				$code = \icms_core_DataFilter::codeSanitizer($matches[1], ($image != 0) ? 1 : 0);
+				$code = \Icms\Core\DataFilter::codeSanitizer($matches[1], ($image != 0) ? 1 : 0);
 				return '<div class="icmsCode">' . $code . '</div>';
 			}, $text);
 		}
@@ -1164,7 +1164,7 @@ class DataFilter {
 						foreach ($icmsConfigUser['bad_emails'] as $be) {
 							if ((!empty($be) && preg_match('/' . $be . '/i', $data))) return false;
 						}
-						$icmsStopSpammers = new \icms_core_StopSpammer();
+						$icmsStopSpammers = new \Icms\Core\StopSpammer();
 						if ($icmsStopSpammers->badEmail($data)) return false;
 					}
 				} else {
@@ -1356,4 +1356,3 @@ class DataFilter {
 	}
 }
 
-\class_alias(DataFilter::class, 'icms_core_DataFilter');

@@ -314,7 +314,7 @@ class Logger {
 	 * @access protected
 	 */
 	public function dump($mode = '') {
-		include ICMS_LIBRARIES_PATH . '/icms/Core/Logger_render.php';
+		include ICMS_LIBRARIES_PATH . '/Icms/Core/Logger_render.php';
 		return $ret;
 	}
 
@@ -408,4 +408,3 @@ class Logger {
 
 }
 
-\class_alias(Logger::class, 'icms_core_Logger');

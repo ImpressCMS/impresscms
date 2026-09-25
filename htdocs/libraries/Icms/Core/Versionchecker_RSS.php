@@ -36,7 +36,7 @@ class Versionchecker_RSS extends Versionchecker {
 	 */
 	public function check() {
 		// Create a new instance of the SimplePie object
-		$feed = new \icms_feeds_Simplerss();
+		$feed = new \Icms\Feeds\Simplerss();
 		$feed->set_feed_url($this->version_xml);
 		$feed->set_cache_duration(0);
 		$feed->set_autodiscovery_level(\SimplePie\SimplePie::LOCATOR_NONE);
@@ -104,4 +104,3 @@ class Versionchecker_RSS extends Versionchecker {
 	}
 }
 
-\class_alias(Versionchecker_RSS::class, 'icms_core_Versionchecker_RSS');

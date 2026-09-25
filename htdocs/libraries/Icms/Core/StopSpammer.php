@@ -120,4 +120,3 @@ class StopSpammer {
 	}
 }
 
-\class_alias(StopSpammer::class, 'icms_core_StopSpammer');
