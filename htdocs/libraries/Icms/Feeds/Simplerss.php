@@ -12,8 +12,6 @@
  * @version     $Id: Simplerss.php 12107 2012-11-08 15:22:12Z skenow $
  */
 
-declare(strict_types=1);
-
 namespace Icms\Feeds;
 
 use SimplePie\SimplePie;

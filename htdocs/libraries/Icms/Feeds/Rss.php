@@ -12,8 +12,6 @@
  * @version     $Id: Rss.php 12097 2012-10-28 21:01:59Z skenow $
  */
 
-declare(strict_types=1);
-
 namespace Icms\Feeds;
 
 defined('ICMS_ROOT_PATH') or exit();
