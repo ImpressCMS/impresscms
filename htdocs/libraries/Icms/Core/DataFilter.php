@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System //
 // Copyright (c) 2000 XOOPS.org //
@@ -467,11 +465,11 @@ class DataFilter {
 	 */
 	static public function filterTextareaInput($text) {
 		$text = is_scalar($text) ? (string) $text : '';
-		\icms::$preload->triggerEvent('beforeFilterTextareaInput', array($text));
+		\icms::$preload->triggerEvent('beforeFilterTextareaInput', array(&$text));
 
 		$text = self::htmlSpecialChars(strip_tags($text));
 
-		\icms::$preload->triggerEvent('afterFilterTextareaInput', array($text));
+		\icms::$preload->triggerEvent('afterFilterTextareaInput', array(&$text));
 
 		return $text;
 	}
@@ -490,7 +488,7 @@ class DataFilter {
 	static public function filterTextareaDisplay($text, $smiley = 1, $icode = 1, $image = 1, $br = 1) {
 		$text = is_scalar($text) ? (string) $text : '';
 		if($text) {
-			\icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array($text, $smiley, $icode, $image, $br));
+			\icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 
 			// neccessary for the time being until we rework the IPF & Data Object Types in 2.0
 
@@ -515,7 +513,7 @@ class DataFilter {
 			}
 			$text = self::codeConv($text, $icode, $image);
 
-			\icms::$preload->triggerEvent('afterFilterTextareaDisplay', array($text, $smiley, $icode, $image, $br));
+			\icms::$preload->triggerEvent('afterFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 			return $text;
 		}
 	}
@@ -534,7 +532,7 @@ class DataFilter {
 	 */
 	static public function filterHTMLinput($html, $smiley = 1, $icode = 1, $image = 1, $br = 0) {
 		$html = is_scalar($html) ? (string) $html : '';
-		\icms::$preload->triggerEvent('beforeFilterHTMLinput', array($html, 1, 1, 1, $br));
+		\icms::$preload->triggerEvent('beforeFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 
 		$html = str_replace('<!-- input filtered -->', '', $html);
 
@@ -552,7 +550,7 @@ class DataFilter {
 
 		$html .= '<!-- input filtered -->';
 
-		\icms::$preload->triggerEvent('afterFilterHTMLinput', array($html, 1, 1, 1, $br));
+		\icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, 1, 1, 1, $br));
 		return $html;
 	}
 
@@ -572,7 +570,7 @@ class DataFilter {
 		global $icmsConfig;
 		$html = is_scalar($html) ? (string) $html : '';
 
-		\icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array($html, 1, $br));
+		\icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
 
 		$ifiltered = strpos($html, '<!-- input filtered -->');
 		if ($ifiltered === false) {
@@ -617,7 +615,7 @@ class DataFilter {
 		$html = self::makeClickable($html);
 		$html = self::censorString($html);
 
-		\icms::$preload->triggerEvent('afterFilterHTMLdisplay', array($html, 1, $br));
+		\icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, 1, $br));
 		return $html;
 	}
 

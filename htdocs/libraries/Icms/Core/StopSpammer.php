@@ -15,8 +15,6 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		SVN: $Id: StopSpammer.php 12310 2013-09-13 21:33:58Z skenow $
  */
-declare(strict_types=1);
-
 namespace Icms\Core;
 
 /**

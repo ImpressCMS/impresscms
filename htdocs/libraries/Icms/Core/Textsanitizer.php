@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -249,7 +248,7 @@ class Textsanitizer {
 		//\icms_core_Debug::setDeprecated('\icms_core_DataFilter::checkVar - type = text or html, $options1 = input or output', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 
 		/* trigger all the events tied to the beforeDisplayTarea event */
-		\icms::$preload->triggerEvent('beforeDisplayTarea', array($text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		if ($html === 0){
 			$text = \Icms\Core\DataFilter::filterTextareaDisplay($text, $smiley, $xcode, $image, $br);
@@ -258,7 +257,7 @@ class Textsanitizer {
 		}
 
 		/* trigger all events tied to the afterDisplayTarea event */
-		\icms::$preload->triggerEvent('afterDisplayTarea', array($text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 		return $text;
 	}
 
@@ -280,7 +279,7 @@ class Textsanitizer {
 		//\icms_core_Debug::setDeprecated('\icms_core_DataFilter::checkVar - type = text or html, $options1 = input', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 
 		/* trigger all the events tied to the beforePreviewTarea event */
-		\icms::$preload->triggerEvent('beforePreviewTarea', array($text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		$text = \Icms\Core\DataFilter::stripSlashesGPC($text);
 
@@ -291,7 +290,7 @@ class Textsanitizer {
 		}
 
 		/* trigger all the events tied to the afterPreviewTarea event */
-		\icms::$preload->triggerEvent('afterPreviewTarea', array($text, $html, $smiley, $xcode, $image, $br));
+		\icms::$preload->triggerEvent('afterPreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		return $text;
 	}
@@ -481,7 +480,7 @@ class Textsanitizer {
 	 * @param unknown_type $smiley
 	 * @param unknown_type $xcode
 	 */
-	public function makeTareaData4Show($text, $html=0, $smiley=1, $xcode=1) {
+	public function makeTareaData4Show(&$text, $html=0, $smiley=1, $xcode=1) {
 		$text = $this->displayTarea($text, $html, $smiley, $xcode);
 		return $text;
 	}
@@ -505,7 +504,7 @@ class Textsanitizer {
 	 * @param unknown_type $smiley
 	 * @param unknown_type $xcode
 	 */
-	public function makeTareaData4Preview($text, $html=0, $smiley=1, $xcode=1) {
+	public function makeTareaData4Preview(&$text, $html=0, $smiley=1, $xcode=1) {
 		$text = $this->previewTarea($text, $html, $smiley, $xcode);
 		return $text;
 	}

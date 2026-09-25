@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 // $Id: Object.php 12313 2013-09-15 21:14:35Z skenow $
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System //

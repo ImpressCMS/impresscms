@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Class to Clean & Filter HTML for various uses.
  * Class uses external HTML Purifier for filtering.

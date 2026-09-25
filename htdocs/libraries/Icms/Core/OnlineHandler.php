@@ -47,8 +47,6 @@
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 
-declare(strict_types=1);
-
 namespace Icms\Core;
 
 class OnlineHandler {

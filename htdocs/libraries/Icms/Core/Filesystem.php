@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * A static class for file system functions
  *

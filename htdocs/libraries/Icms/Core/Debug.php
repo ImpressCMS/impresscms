@@ -14,8 +14,6 @@
  * @since       1.3
  */
 
-declare(strict_types=1);
-
 namespace Icms\Core;
 
 /**

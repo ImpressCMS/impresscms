@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Class used to determine if the core, or modules, need to be updated
  */
