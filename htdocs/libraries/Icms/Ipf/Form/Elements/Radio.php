@@ -44,7 +44,7 @@ class Radio extends \Icms\Form\Elements\Radio {
 			// let's find out if the method we need to call comes from an already defined object
 			if (isset($control['object'])) {
 				if (method_exists($control['object'], $control['method'])) {
-					if ($option_array = $control['object']->$control['method']()) {
+					if ($option_array = $control['object']->{$control['method']}()) {
 						// Adding the options array to the Radio element
 						$this->addOptionArray($option_array);
 					}
@@ -65,7 +65,7 @@ class Radio extends \Icms\Form\Elements\Radio {
 				// Checking if the specified method exists
 				if (method_exists($control_handler, $control['method'])) {
 					// TODO : How could I pass the parameters in the following call ...
-					if ($option_array = $control_handler->$control['method']()) {
+					if ($option_array = $control_handler->{$control['method']}()) {
 						// Adding the options array to the Radio element
 						$this->addOptionArray($option_array);
 					}

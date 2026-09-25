@@ -88,12 +88,12 @@ class PdoDatabase extends Database
 	public function error(): string
 	{
 		$error = $this->pdo->errorInfo();
-		return $error [2];
+		return (string) ($error[2] ?? '');
 	}
 
 	public function errno(): int {
 		$error = $this->pdo->errorInfo ();
-		return $error [1];
+		return (int) ($error[1] ?? 0);
 	}
 
 	public function genId(string $sequence): int

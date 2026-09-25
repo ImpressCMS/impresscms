@@ -40,7 +40,7 @@ class Checkbox extends \Icms\Form\Elements\Checkbox {
 			// let's find if the method we need to call comes from an already defined object
 			if (isset($control['object'])) {
 				if (method_exists($control['object'], $control['method'])) {
-					if ($option_array = $control['object']->$control['method']()) {
+					if ($option_array = $control['object']->{$control['method']}()) {
 						// Adding the options array to the select element
 						$this->addOptionArray($option_array);
 					}
