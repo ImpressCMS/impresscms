@@ -143,7 +143,7 @@ interface IDatabase {
 	 * @param int $start offset of first record to return
 	 * @return mixed query result object/resource for result-set queries, TRUE if successful and no result-set, or FALSE if unsuccessful
 	 */
-	public function queryF(string $sql, int $limit = 0, int $start = 0);
+	public function queryF(string $sql, ?int $limit = 0, ?int $start = 0);
 	/**
 	 * perform a query
 	 *
@@ -155,7 +155,7 @@ interface IDatabase {
 	 * @param int $start offset of first record to return
 	 *
 	 */
-	public function query(string $sql, int $limit = 0, int $start = 0);
+	public function query(string $sql, ?int $limit = 0, ?int $start = 0);
 	/**
 	 * Get field name
 	 *

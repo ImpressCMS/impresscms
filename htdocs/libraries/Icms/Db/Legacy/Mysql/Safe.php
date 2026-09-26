@@ -62,7 +62,7 @@ class Safe extends \Icms\Db\Legacy\Mysql\Database {
 	 * @return resource query result or FALSE if successful
 	 * or TRUE if successful and no result
 	 */
-	public function query(string $sql, int $limit = 0, int $start = 0) {
+	public function query(string $sql, ?int $limit = 0, ?int $start = 0) {
 		return $this->queryF($sql, $limit, $start);
 	}
 }

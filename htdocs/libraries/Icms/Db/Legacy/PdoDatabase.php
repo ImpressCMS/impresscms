@@ -101,7 +101,7 @@ class PdoDatabase extends Database
 		return 0; // will use auto_increment
 	}
 
-	public function query(string $sql, int $limit = 0, int $start = 0) {
+	public function query(string $sql, ?int $limit = 0, ?int $start = 0) {
 		if (! $this->allowWebChanges && stripos(trim($sql), 'select') !== 0) {
 			trigger_error(_CORE_DB_NOTALLOWEDINGET, E_USER_WARNING);
 			return FALSE;
@@ -122,7 +122,7 @@ class PdoDatabase extends Database
 	 * @param int $start offset of first record to return
 	 * @return mixed
 	 */
-	public function queryF(string $sql, int $limit = 0, int $start = 0) {
+	public function queryF(string $sql, ?int $limit = 0, ?int $start = 0) {
 		$result = FALSE;
 		/* Use Protector's db layer protection against possible SQLi
 		 * This needs to be done for legacy queries, since PDO only offers
