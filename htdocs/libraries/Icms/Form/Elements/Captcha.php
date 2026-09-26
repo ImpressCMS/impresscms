@@ -23,10 +23,10 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * Usage
  *
  * For form creation:
- * Add form element where proper: $form->addElement(new icms_form_elements_Captcha($caption, $name, $skipmember, ...);
+ * Add form element where proper: $form->addElement(new \Icms\Form\Elements\Captcha($caption, $name, $skipmember, ...);
  *
  * For verification:
- * $icmsCaptcha = icms_form_elements_captcha_Object::instance();
+ * $icmsCaptcha = \Icms\Form\Elements\Captcha\Entity::instance();
  * if (!$icmsCaptcha->verify()) {
  *   echo $icmsCaptcha->getMessage();
  *   ...
@@ -58,7 +58,7 @@ class Captcha extends \Icms\Form\Element {
 			$numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null,
 			$backgroundnum = null
 	) {
-		$this->_captchaHandler = &\Icms\Form\Elements\Captcha\Entity::instance();
+		$this->_captchaHandler = \Icms\Form\Elements\Captcha\Entity::instance();
 		$this->_captchaHandler->init(
 			$name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum
 		);

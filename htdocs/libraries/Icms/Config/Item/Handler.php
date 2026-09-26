@@ -41,7 +41,6 @@
  */
 namespace Icms\Config\Item;
 use Icms\Config\Item\Entity;
-use icms_config_Item_Object;
 use Icms\Db\Criteria\Element;
 
 if (!defined('ICMS_ROOT_PATH')) {
