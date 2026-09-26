@@ -247,7 +247,7 @@ abstract class Database extends \Icms\Db\Legacy\Database {
 	 * @return resource query result or FALSE if successful
 	 * or TRUE if successful and no result
 	 */
-	public function queryF(string $sql, int $limit = 0, int $start = 0) {
+	public function queryF(string $sql, ?int $limit = 0, ?int $start = 0) {
 		if (!empty ($limit)) {
 			if (empty ($start)) {
 				$start = 0;

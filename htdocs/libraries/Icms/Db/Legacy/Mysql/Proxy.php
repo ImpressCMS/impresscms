@@ -67,7 +67,7 @@ class Proxy extends \Icms\Db\Legacy\Mysql\Database {
 	 * @param int $start offset of first record to return
 	 * @return resource query result or FALSE if unsuccessful
 	 */
-	public function query(string $sql, int $limit = 0, int $start = 0) {
+	public function query(string $sql, ?int $limit = 0, ?int $start = 0) {
 		// Hack by marcan to track query count
 		global $smartfactory_query_count_activated, $smartfactory_query_count;
 		if (isset($smartfactory_query_count_activated) && $smartfactory_query_count_activated) {
