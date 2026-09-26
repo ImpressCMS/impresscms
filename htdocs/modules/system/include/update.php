@@ -38,6 +38,9 @@
  * @author		malanciault <marcan@impresscms.org)
  * @version		$Id: update.php 12313 2013-09-15 21:14:35Z skenow $
  */
+
+use Icms\Db\Legacy\Factory as icms_db_legacy_Factory;
+
 icms_loadLanguageFile("core", "databaseupdater");
 
 // this needs to be the latest db version - and the constant must start with the module's dirname
