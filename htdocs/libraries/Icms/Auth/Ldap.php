@@ -12,6 +12,8 @@
 
 namespace Icms\Auth;
 
+use Icms\Member\User\Entity as UserEntity;
+
 /**
  * Authentification class for standard LDAP Server V2 or V3 (formerly icms_auth_Ldap).
  *
@@ -132,7 +134,7 @@ class Ldap extends Entity
                 \icms::$session->enableRegenerateId = true;
                 \icms::$session->sessionOpen();
                 // We load the User database
-                return $this->loadicms_member_user_Object($userDN, $uname, $pwd);
+                return $this->loadUser($userDN, $uname, $pwd);
             } else {
                 \icms::$session->destroy(session_id());
                 $this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $userDN . ')');
@@ -174,10 +176,10 @@ class Ldap extends Entity
     }
 
     /**
-     * Load user from ImpressCMS Database
+     * Builds the LDAP search filter for a user.
      *
      * @param string $uname UserName
-     * @return object {@link icms_member_user_Object} icms_member_user_Object object
+     * @return string
      */
     public function getFilter($uname)
     {
@@ -196,9 +198,9 @@ class Ldap extends Entity
      * @param string $userdn
      * @param string $uname Username
      * @param string $pwd Password
-     * @return object {@link icms_member_user_Object} icms_member_user_Object object
+     * @return UserEntity|false|null
      */
-    public function loadicms_member_user_Object($userdn, $uname, $pwd = null)
+    public function loadUser($userdn, $uname, $pwd = null)
     {
         $provisHandler = \Icms\Auth\Provisionning::getInstance($this);
         $sr = ldap_read($this->_ds, $userdn, '(objectclass=*)');
@@ -206,7 +208,7 @@ class Ldap extends Entity
         if ($entries['count'] > 0) {
             $icmsUser = $provisHandler->sync($entries[0], $uname, $pwd);
         } else {
-            $this->setErrors(0, sprintf('loadicms_member_user_Object - ' . _AUTH_LDAP_CANT_READ_ENTRY, $userdn));
+            $this->setErrors(0, sprintf('loadUser - ' . _AUTH_LDAP_CANT_READ_ENTRY, $userdn));
         }
         return $icmsUser;
     }

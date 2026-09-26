@@ -11,6 +11,8 @@
 
 namespace Icms\Auth;
 
+use Icms\Member\User\Entity as UserEntity;
+
 /**
  * Authentification provisionning class (formerly icms_auth_Provisionning).
  *
@@ -65,9 +67,9 @@ class Provisionning
      * Return a User Object.
      *
      * @param string $uname Username of the user
-     * @return mixed icms_member_user_Object {@link icms_member_user_Object} or false if failed
+     * @return UserEntity|false
      */
-    public function geticms_member_user_Object($uname)
+    public function getUser($uname)
     {
         $member_handler = \icms::handler('icms_member');
         $criteria = new \Icms\Db\Criteria\Item('uname', $uname);
@@ -85,11 +87,11 @@ class Provisionning
      * @param array $datas Some Data
      * @param string $uname Username of the user
      * @param string $pwd Password of the user
-     * @return object icms_member_user_Object {@link icms_member_user_Object}
+     * @return UserEntity|false|null
      */
     public function sync($datas, $uname, $pwd = null)
     {
-        $icmsUser = $this->geticms_member_user_Object($uname);
+        $icmsUser = $this->getUser($uname);
         if (!$icmsUser) {
             // User Database not exists
             if ($this->ldap_provisionning) {
@@ -151,11 +153,11 @@ class Provisionning
     /**
      * Modify user information.
      *
-     * @param object $icmsUser reference to icms_member_user_Object Object
+     * @param UserEntity $icmsUser
      * @param array $datas Some Data
      * @param string $uname Username of the user
      * @param string $pwd Password of the user
-     * @return object icms_member_user_Object {@link icms_member_user_Object}
+     * @return UserEntity|false
      */
     public function change($icmsUser, $datas, $uname, $pwd = null)
     {

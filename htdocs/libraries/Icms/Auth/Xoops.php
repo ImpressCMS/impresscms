@@ -17,6 +17,8 @@
 
 namespace Icms\Auth;
 
+use Icms\Member\User\Entity as UserEntity;
+
 /**
  * Authentification class for Native XOOPS (formerly icms_auth_Xoops).
  *
@@ -49,7 +51,7 @@ class Xoops extends Entity
      *
      * @param string $uname
      * @param string $pwd
-     * @return object {@link icms_member_user_Object} icms_member_user_Object object
+     * @return UserEntity|false
      */
     public function authenticate($uname, $pwd = null)
     {

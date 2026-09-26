@@ -74,7 +74,7 @@ class Ads extends Ldap
                 // We load the User database
                 $dn = $this->getUserDN($uname);
                 if ($dn) {
-                    return $this->loadicms_member_user_Object($dn, $uname, $pwd);
+                    return $this->loadUser($dn, $uname, $pwd);
                 } else {
                     return false;
                 }
