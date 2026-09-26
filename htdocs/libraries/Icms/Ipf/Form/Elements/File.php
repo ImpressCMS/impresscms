@@ -16,7 +16,7 @@ namespace Icms\Ipf\Form\Elements;
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-class File extends \icms_form_elements_File {
+class File extends \Icms\Form\Elements\File {
 	private $_object;
 	private $_key;
 
