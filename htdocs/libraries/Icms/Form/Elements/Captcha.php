@@ -88,6 +88,8 @@ class Captcha extends \Icms\Form\Element {
 		if (!$this->isHidden()) {
 			return $this->_captchaHandler->render();
 		}
+
+		return '';
 	}
 }
 
