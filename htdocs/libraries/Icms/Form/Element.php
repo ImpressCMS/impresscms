@@ -72,7 +72,7 @@ abstract class Element
 	 *
 	 * @var string
 	 */
-	protected string $_name;
+	protected string $_name = '';
 
 	/**
 	 * caption of the element
