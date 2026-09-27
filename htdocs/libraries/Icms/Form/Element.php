@@ -63,6 +63,20 @@ abstract class Element
 	 */
 	public array $customValidationCode = [];
 
+	/**
+	 * Template used to render this element, overriding the default one
+	 *
+	 * @var ?string
+	 */
+	public ?string $customTemplate = null;
+
+	/**
+	 * Template engine instance used while rendering this element
+	 *
+	 * @var ?\Icms\View\Tpl
+	 */
+	protected ?\Icms\View\Tpl $tpl = null;
+
 	/**#@+
 	 * @access private
 	 */
