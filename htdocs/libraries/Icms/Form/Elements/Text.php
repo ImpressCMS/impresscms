@@ -91,7 +91,7 @@ class Text extends \Icms\Form\Element {
 		$this->_size = (int) $size;
 		$this->_maxlength = (int) $maxlength;
 		$this->setValue($value);
-		$this->autoComplete = !empty($autocomplete);
+		$this->autocomplete = !empty($autocomplete);
 	}
 
 	/**
