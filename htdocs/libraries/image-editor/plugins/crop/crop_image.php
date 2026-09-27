@@ -11,6 +11,16 @@
  */
 $xoopsOption['nodebug'] = 1;
 require_once '../../../../mainfile.php';
+
+if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGroups())) {
+	exit(_NOPERM);
+}
+
+$icmsModule = icms::handler('icms_module')->getByDirname('system');
+if (!is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+	exit(_NOPERM);
+}
+
 use WideImage\WideImage;
 
 /* 2 critical parameters must exist - and must be safe */
@@ -19,7 +29,7 @@ $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
 
 /* prevent remote file inclusion */
 $valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-if (!empty($image_path) && strncmp(realpath($image_path), $image_path, strlen($valid_path)) == 0) {
+if (!empty($image_path) && strncmp(realpath($image_path), $valid_path, strlen($valid_path)) == 0) {
 	$image_path = realpath($image_path);
 } else {
 	$image_path = null;
