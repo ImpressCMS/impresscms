@@ -29,11 +29,6 @@ use WideImage\WideImage;
 
 icms_loadLanguageFile('system', 'images', true);
 
-/* CSRF Token */
-if (!icms::$security->check()) {
-	die(implode('<br />', icms::$security->getErrors()));
-}
-
 $icmsTpl = new icms_view_Tpl();
 
 /* set get and post filters, if not strings */
@@ -83,6 +78,11 @@ if (!empty($target) && !empty($type)) {
 }
 
 if (!empty($op) && $op == 'cancel') {
+	/* CSRF Token */
+	if (!icms::$security->check(true, filter_input(INPUT_GET, 'csrf_token', FILTER_SANITIZE_STRING) ?: filter_input(INPUT_POST, 'csrf_token', FILTER_SANITIZE_STRING))) {
+		die(implode('<br />', icms::$security->getErrors()));
+	}
+
 	/* make sure the file is in the temp folder and prevent arbitrary deletes of any file */
 	$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
 	if (!empty($image_path) && strncmp(realpath($image_path), $valid_path, strlen($valid_path)) == 0) {
@@ -119,6 +119,11 @@ if (!empty($op) && $op == 'cancel') {
 	exit();
 }
 if (!empty($op) && $op == 'save') {
+	/* CSRF Token */
+	if (!icms::$security->check(true, filter_input(INPUT_GET, 'csrf_token', FILTER_SANITIZE_STRING) ?: filter_input(INPUT_POST, 'csrf_token', FILTER_SANITIZE_STRING))) {
+		die(implode('<br />', icms::$security->getErrors()));
+	}
+
 	$simage_id = $image_id;
 	$simage_name = $image_name;
 	$simage_weight = $image_weight;

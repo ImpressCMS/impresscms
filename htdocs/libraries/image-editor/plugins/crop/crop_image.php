@@ -21,6 +21,11 @@ if (!is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))
 	exit(_NOPERM);
 }
 
+/* CSRF Token */
+if (!icms::$security->check(false, filter_input(INPUT_GET, 'csrf_token', FILTER_SANITIZE_STRING))) {
+	die(implode('<br />', icms::$security->getErrors()));
+}
+
 use WideImage\WideImage;
 
 /* 2 critical parameters must exist - and must be safe */
