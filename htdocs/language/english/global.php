@@ -197,6 +197,7 @@ define("_SHORTDATESTRING","Y/n/j");
 //%%%%%		LANGUAGE SPECIFIC SETTINGS   %%%%%
 define('_CHARSET', 'utf-8');
 define('_LANGCODE', 'en');
+define('_INTL_LOCALE', 'en_US');
 
 // change 0 to 1 if this language is a multi-bytes language
 define("XOOPS_USE_MULTIBYTES", "0");

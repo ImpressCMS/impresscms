@@ -83,6 +83,9 @@ date_default_timezone_set(timezone_name_from_abbr("", $icmsConfig['default_TZ'] 
 
 // -- Include site-wide lang file
 icms_loadLanguageFile('core', 'global');
+if (defined('_INTL_LOCALE') && class_exists('Locale', false)) {
+	Locale::setDefault(_INTL_LOCALE);
+}
 icms_loadLanguageFile('core', 'core');
 icms_loadLanguageFile('system', 'common');
 @define('_GLOBAL_LEFT', @_ADM_USE_RTL == 1 ? 'right' : 'left');
