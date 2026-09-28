@@ -26,9 +26,10 @@ class IcmsPreloadKeepalive extends icms_preload_Item
 		 * and the keep‑alive endpoint as a data attribute.
 		 */
 		$keepaliveUrl = ICMS_URL . "/keepalive.php";
+		$scriptUrl = ICMS_URL . "/assets/js/keepalive.js";
 
 		$xoTheme->addScript(
-			"assets/js/keepalive.js",
+			$scriptUrl,
 			[
 				"id" => "keepalive-script",
 				"data-keepalive-url" => $keepaliveUrl,
