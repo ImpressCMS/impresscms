@@ -22,16 +22,16 @@ if (!is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))
 }
 
 /* CSRF Token */
-if (!icms::$security->check(false, filter_input(INPUT_GET, 'csrf_token', FILTER_SANITIZE_STRING))) {
+if (!icms::$security->check(false, htmlspecialchars((string) filter_input(INPUT_GET, 'csrf_token'), ENT_QUOTES))) {
 	die(implode('<br />', icms::$security->getErrors()));
 }
 
 use WideImage\WideImage;
 
 /* 3 critical parameters must exist - and must be safe */
-$image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
+$image_path = htmlspecialchars((string) filter_input(INPUT_GET, 'image_path'), ENT_QUOTES);
 $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
-$filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
+$filter = htmlspecialchars((string) filter_input(INPUT_GET, 'filter'), ENT_QUOTES);
 
 /* prevent remote file inclusion */
 $valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
@@ -63,7 +63,7 @@ $filters = array(
 	'IMG_FILTER_SMOOTH',
 	'IMG_FILTER_SEPIA');
 
-$filter = isset($_GET['filter']) ? filter_var($_GET['filter'], FILTER_SANITIZE_STRING) : null;
+$filter = isset($_GET['filter']) ? htmlspecialchars((string) $_GET['filter'], ENT_QUOTES) : null;
 if (!in_array($filter, $filters)) $filter = null;
 
 if (!isset($image_path) || !isset($image_url)) {

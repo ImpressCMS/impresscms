@@ -22,14 +22,14 @@ if (!is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))
 }
 
 /* CSRF Token */
-if (!icms::$security->check(false, filter_input(INPUT_GET, 'csrf_token', FILTER_SANITIZE_STRING))) {
+if (!icms::$security->check(false, htmlspecialchars((string) filter_input(INPUT_GET, 'csrf_token'), ENT_QUOTES))) {
 	die(implode('<br />', icms::$security->getErrors()));
 }
 
 use WideImage\WideImage;
 
 /* 2 critical parameters must exist - and must be safe */
-$image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
+$image_path = htmlspecialchars((string) filter_input(INPUT_GET, 'image_path'), ENT_QUOTES);
 $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
 
 /* prevent remote file inclusion */

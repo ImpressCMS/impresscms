@@ -79,7 +79,7 @@ if (!empty($target) && !empty($type)) {
 
 if (!empty($op) && $op == 'cancel') {
 	/* CSRF Token */
-	if (!icms::$security->check(true, filter_input(INPUT_GET, 'csrf_token', FILTER_SANITIZE_STRING) ?: filter_input(INPUT_POST, 'csrf_token', FILTER_SANITIZE_STRING))) {
+	if (!icms::$security->check(true, htmlspecialchars((string) filter_input(INPUT_GET, 'csrf_token'), ENT_QUOTES) ?: htmlspecialchars((string) filter_input(INPUT_POST, 'csrf_token'), ENT_QUOTES))) {
 		die(implode('<br />', icms::$security->getErrors()));
 	}
 
@@ -120,7 +120,7 @@ if (!empty($op) && $op == 'cancel') {
 }
 if (!empty($op) && $op == 'save') {
 	/* CSRF Token */
-	if (!icms::$security->check(true, filter_input(INPUT_GET, 'csrf_token', FILTER_SANITIZE_STRING) ?: filter_input(INPUT_POST, 'csrf_token', FILTER_SANITIZE_STRING))) {
+	if (!icms::$security->check(true, htmlspecialchars((string) filter_input(INPUT_GET, 'csrf_token'), ENT_QUOTES) ?: htmlspecialchars((string) filter_input(INPUT_POST, 'csrf_token'), ENT_QUOTES))) {
 		die(implode('<br />', icms::$security->getErrors()));
 	}
 
