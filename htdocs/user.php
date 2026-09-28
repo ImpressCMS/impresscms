@@ -41,24 +41,32 @@ include 'mainfile.php';
 
 $op = (isset($_GET['op'])) ? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING)) : ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'main');
 
-$redirect = (isset($_GET['xoops_redirect'])
-    ? $_GET['xoops_redirect']
-    : ((isset($_POST['xoops_redirect'])) ? $_POST['xoops_redirect'] : FALSE));
-
-$redirect = trim($redirect);
+$redirect = isset($_GET['xoops_redirect'])
+	? $_GET['xoops_redirect']
+	: (isset($_POST['xoops_redirect']) ? $_POST['xoops_redirect'] : '');
+$redirect = is_string($redirect) ? trim($redirect) : '';
 
 if ($redirect !== '') {
-    $redirect = htmlspecialchars($redirect, ENT_QUOTES);
+	$parts = parse_url($redirect);
+	$siteHost = parse_url(ICMS_URL, PHP_URL_HOST);
+	$isSafeRelative = $parts !== FALSE
+		&& !isset($parts['scheme'])
+		&& !isset($parts['host'])
+		&& strpos($redirect, '//') !== 0
+		&& strpos($redirect, '\\') === FALSE
+		&& !preg_match('/[\x00-\x1F\x7F]/', $redirect);
+	$isSameHost = $parts !== FALSE
+		&& isset($parts['scheme'], $parts['host'])
+		&& in_array(strtolower($parts['scheme']), array('http', 'https'), TRUE)
+		&& $siteHost !== NULL
+		&& strcasecmp($parts['host'], $siteHost) === 0
+		&& !preg_match('/[\x00-\x1F\x7F\\\\]/', $redirect);
 
-    if ($redirect === htmlspecialchars($_SERVER['REQUEST_URI'])) {
-        $redirect = ICMS_URL;
-    } elseif (strpos($redirect, '://') !== false) {
-        $host = parse_url(ICMS_URL, PHP_URL_HOST);
-        $redirectHost = parse_url($redirect, PHP_URL_HOST);
-        if ($redirectHost !== $host) {
-            $redirect = ICMS_URL;
-        }
-    }
+	if ((!$isSafeRelative && !$isSameHost) || $redirect === $_SERVER['REQUEST_URI']) {
+		$redirect = ICMS_URL;
+	} else {
+		$redirect = htmlspecialchars($redirect, ENT_QUOTES);
+	}
 }
 switch ($op) {
 	default:
