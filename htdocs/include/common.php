@@ -46,10 +46,8 @@ require_once ICMS_ROOT_PATH . "/include/constants.php";
 // Load Composer autoloader - prefer trust path location for security.
 // After installation, the vendor directory lives in ICMS_TRUST_PATH (outside
 // the web root).  Fall back to ICMS_ROOT_PATH for pre-install or legacy setups.
-$_icms_autoload_from_trustpath = false;
 if (file_exists(ICMS_TRUST_PATH . "/vendor/autoload.php")) {
 	$_icms_autoload = ICMS_TRUST_PATH . "/vendor/autoload.php";
-	$_icms_autoload_from_trustpath = true;
 } elseif (file_exists(ICMS_ROOT_PATH . "/vendor/autoload.php")) {
 	$_icms_autoload = ICMS_ROOT_PATH . "/vendor/autoload.php";
 } else {
@@ -81,92 +79,8 @@ if ($_icms_autoload === null) {
 	);
 }
 
-if ($_icms_autoload_from_trustpath) {
-	$_icms_bridge_path = ICMS_TRUST_PATH . "/libraries/Autoloader.php";
-	if (!is_file($_icms_bridge_path)) {
-		$_icms_bridge_dir = dirname($_icms_bridge_path);
-		if (is_dir($_icms_bridge_dir) || @mkdir($_icms_bridge_dir, 0775, true)) {
-			$_icms_bridge_content =
-				"<?php\nrequire_once " .
-				var_export(ICMS_ROOT_PATH . "/libraries/Autoloader.php", true) .
-				";\n";
-			@file_put_contents($_icms_bridge_path, $_icms_bridge_content);
-			unset($_icms_bridge_content);
-		}
-		unset($_icms_bridge_dir);
-	}
-	if (!is_file($_icms_bridge_path)) {
-		die(
-			"<h1>ImpressCMS - Trust path is not writable</h1>" .
-				"<p>Unable to create required file: <code>" .
-				htmlspecialchars($_icms_bridge_path, ENT_QUOTES, "UTF-8") .
-				"</code></p>" .
-				"<p>Grant write permissions to the trust path and reload this page.</p>"
-		);
-	}
-	unset($_icms_bridge_path);
-}
-
 require_once $_icms_autoload;
 unset($_icms_autoload);
-
-// When vendor lives in the trust path the Composer-generated autoloader files
-// compute $baseDir as dirname(dirname(__DIR__)) relative to trustpath/vendor/,
-// which resolves to trustpath/ instead of the web root.  Every icms_* class
-// lookup therefore targets trustpath/libraries/ – a directory that does not
-// exist because libraries/ always stays in ICMS_ROOT_PATH.
-//
-// Register a prepended SPL autoloader (runs before Composer's now-broken one)
-// that maps all three categories of ImpressCMS-native classes to the correct
-// ICMS_ROOT_PATH/libraries location:
-//
-//   "icms"     (classmap entry)  →  libraries/icms.php
-//   "icms_*"   (PSR-0 style)     →  libraries/<underscore/separated/path>.php
-//   "Icms\*"   (PSR-4 style)     →  libraries/icms/<Namespace/Path>.php
-if ($_icms_autoload_from_trustpath) {
-	$_icms_root_lib = ICMS_ROOT_PATH . DIRECTORY_SEPARATOR . "libraries";
-	spl_autoload_register(
-		static function (string $class) use ($_icms_root_lib): void {
-			// Classmap: bare "icms" abstract base class → libraries/icms.php
-			if ($class === "icms") {
-				$file = $_icms_root_lib . DIRECTORY_SEPARATOR . "icms.php";
-				if (is_file($file)) {
-					require_once $file;
-				}
-				return;
-			}
-			// PSR-0: icms_core_DataFilter → libraries/icms/core/DataFilter.php
-			if (strncmp($class, "icms_", 5) === 0) {
-				$file =
-					$_icms_root_lib .
-					DIRECTORY_SEPARATOR .
-					str_replace("_", DIRECTORY_SEPARATOR, $class) .
-					".php";
-				if (is_file($file)) {
-					require_once $file;
-				}
-				return;
-			}
-			// PSR-4: Icms\Core\DataFilter → libraries/icms/Core/DataFilter.php
-			if (strncmp($class, "Icms\\", 5) === 0) {
-				$file =
-					$_icms_root_lib .
-					DIRECTORY_SEPARATOR .
-					"icms" .
-					DIRECTORY_SEPARATOR .
-					str_replace("\\", DIRECTORY_SEPARATOR, substr($class, 5)) .
-					".php";
-				if (is_file($file)) {
-					require_once $file;
-				}
-			}
-		},
-		true, // throw  (required SPL signature argument)
-		true, // prepend – run BEFORE Composer's broken path resolution
-	);
-	unset($_icms_root_lib);
-}
-unset($_icms_autoload_from_trustpath);
 
 include_once ICMS_INCLUDE_PATH . "/functions.php";
 include_once ICMS_INCLUDE_PATH . "/debug_functions.php";

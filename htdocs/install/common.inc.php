@@ -72,7 +72,6 @@ include_once "./class/IcmsInstallWizard.php";
  * letting require_once throw an opaque fatal.
  */
 $_icms_vendor_autoload = null;
-$_icms_vendor_from_trustpath = false;
 
 // ── Step 1: resolve the trust path ───────────────────────────────────────────
 $_icms_trust_path = !empty($_SESSION["settings"]["TRUST_PATH"])
@@ -108,7 +107,6 @@ if (!empty($_icms_trust_path)) {
 
 	if (file_exists($_icms_candidate)) {
 		$_icms_vendor_autoload = $_icms_candidate;
-		$_icms_vendor_from_trustpath = true;
 	}
 	unset($_icms_candidate);
 }
@@ -147,107 +145,8 @@ if ($_icms_vendor_autoload === null) {
 
 unset($_icms_trust_path);
 
-if ($_icms_vendor_from_trustpath) {
-	$_icms_root_path = realpath(__DIR__ . "/..");
-	$_icms_bridge_path =
-		dirname(dirname($_icms_vendor_autoload)) . "/libraries/Autoloader.php";
-
-	if ($_icms_root_path !== false && !is_file($_icms_bridge_path)) {
-		$_icms_bridge_dir = dirname($_icms_bridge_path);
-		if (is_dir($_icms_bridge_dir) || @mkdir($_icms_bridge_dir, 0775, true)) {
-			$_icms_bridge_content =
-				"<?php\nrequire_once " .
-				var_export($_icms_root_path . "/libraries/Autoloader.php", true) .
-				";\n";
-			@file_put_contents($_icms_bridge_path, $_icms_bridge_content);
-			unset($_icms_bridge_content);
-		}
-		unset($_icms_bridge_dir);
-	}
-
-	if (!is_file($_icms_bridge_path)) {
-		header("Content-Type: text/plain; charset=utf-8");
-		echo "ImpressCMS Installer - Unable to prepare trust-path autoloader bridge\n\n";
-		echo "Expected file: " . $_icms_bridge_path . "\n";
-		echo "Please make sure the trust path is writable and retry.\n";
-		exit(1);
-	}
-
-	unset($_icms_root_path, $_icms_bridge_path);
-}
-
 require_once $_icms_vendor_autoload;
 unset($_icms_vendor_autoload);
-
-/*
- * After the vendor directory is moved to the trust path, the Composer-generated
- * autoloader files (vendor/composer/autoload_psr0.php, autoload_psr4.php,
- * autoload_classmap.php, autoload_static.php) contain paths derived from
- * dirname(dirname(__DIR__)) which now resolves to trustpath/ instead of htdocs/.
- * This means every lookup for icms_* / Icms\ classes targets trustpath/libraries,
- * which does not exist – the libraries folder always stays in htdocs/libraries.
- *
- * We register a prepended SPL autoloader (runs BEFORE Composer's now-broken one)
- * that maps icms_* (PSR-0 underscore convention), Icms\ (PSR-4 namespace
- * convention), and the bare "icms" classmap entry to the correct absolute path
- * of htdocs/libraries.
- *
- * The trigger is $_icms_vendor_from_trustpath (set above) rather than the
- * VENDOR_MOVED session flag so this works even when the session flag is absent.
- */
-if ($_icms_vendor_from_trustpath) {
-	$__icms_fallback_lib = realpath(__DIR__ . "/../libraries");
-	if ($__icms_fallback_lib !== false) {
-		spl_autoload_register(
-			static function (string $class) use ($__icms_fallback_lib): void {
-				// Classmap: the bare "icms" abstract base class (libraries/icms.php)
-				if ($class === "icms") {
-					$file =
-						$__icms_fallback_lib . DIRECTORY_SEPARATOR . "icms.php";
-					if (is_file($file)) {
-						require_once $file;
-					}
-					return;
-				}
-
-				// PSR-0: icms_core_Password  →  libraries/icms/core/Password.php
-				if (strncmp($class, "icms_", 5) === 0) {
-					$file =
-						$__icms_fallback_lib .
-						DIRECTORY_SEPARATOR .
-						str_replace("_", DIRECTORY_SEPARATOR, $class) .
-						".php";
-					if (is_file($file)) {
-						require_once $file;
-					}
-					return;
-				}
-
-				// PSR-4: Icms\Core\Password  →  libraries/icms/Core/Password.php
-				if (strncmp($class, "Icms\\", 5) === 0) {
-					$file =
-						$__icms_fallback_lib .
-						DIRECTORY_SEPARATOR .
-						"icms" .
-						DIRECTORY_SEPARATOR .
-						str_replace(
-							"\\",
-							DIRECTORY_SEPARATOR,
-							substr($class, 5),
-						) .
-						".php";
-					if (is_file($file)) {
-						require_once $file;
-					}
-				}
-			},
-			true, // throw  (required SPL signature argument)
-			true, // prepend – run BEFORE Composer's broken autoloader
-		);
-	}
-	unset($__icms_fallback_lib);
-}
-unset($_icms_vendor_from_trustpath);
 
 error_reporting(E_ALL);
 

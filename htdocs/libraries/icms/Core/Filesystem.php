@@ -164,6 +164,10 @@ class Filesystem
 			self::mkdir($dest, 0777, "");
 		}
 
+		if (!is_dir($dest)) {
+			return false;
+		}
+
 		// Loop through the folder
 		$dir = dir($source);
 		$success = true;
@@ -247,9 +251,20 @@ class Filesystem
 				continue;
 			}
 
-			if (!@unlink($dir . "/" . $obj)) {
-				self::deleteRecursive($dir . "/" . $obj, true);
+			$path = $dir . "/" . $obj;
+
+			if (is_link($path)) {
+				// Never descend into a symlinked directory; remove the link itself.
+				@unlink($path) || @rmdir($path);
+				continue;
 			}
+
+			if (is_dir($path)) {
+				self::deleteRecursive($path, true);
+				continue;
+			}
+
+			@unlink($path);
 		}
 
 		closedir($dh);
@@ -700,6 +715,7 @@ class Filesystem
 						"from the web root – nothing to do.",
 					$dest,
 				),
+				"warning" => self::finalizeTrustVendor($rootPath, $trustPath),
 			];
 		}
 
@@ -725,6 +741,7 @@ class Filesystem
 						$src,
 					)
 					: "";
+				$warning .= self::finalizeTrustVendor($rootPath, $trustPath);
 				return $base + [
 					"status" => "skipped",
 					"message" => sprintf(
@@ -907,6 +924,8 @@ class Filesystem
 			);
 		}
 
+		$warning .= self::finalizeTrustVendor($rootPath, $trustPath);
+
 		return $base + [
 			"status" => "ok",
 			"message" => sprintf(
@@ -917,6 +936,174 @@ class Filesystem
 			),
 			"warning" => $warning,
 		];
+	}
+
+	/**
+	 * Make a vendor directory that now lives in the trust path fully functional:
+	 * rewrite the generated autoloader so it finds the web-root libraries, and point
+	 * htdocs/composer.json at the trust path so that a later `composer update` run
+	 * from the site root writes there instead of recreating a public vendor folder.
+	 *
+	 * Idempotent. Returns an empty string on success, otherwise a warning message
+	 * (prefixed with a space so warnings can be concatenated).
+	 */
+	public static function finalizeTrustVendor(
+		string $rootPath,
+		string $trustPath,
+	): string {
+		$root = rtrim(str_replace("\\", "/", $rootPath), "/");
+		$trust = rtrim(str_replace("\\", "/", $trustPath), "/");
+		$warnings = [];
+
+		if (!self::rewriteVendorAutoloadBase("$trust/vendor", $root)) {
+			$warnings[] = sprintf(
+				"The autoloader files in %s/vendor/composer could not be updated. " .
+					"Run 'composer dump-autoload' from the site root.",
+				$trust,
+			);
+		}
+
+		if (!self::pointComposerJsonToTrust($root, $trust)) {
+			$warnings[] = sprintf(
+				"%s/composer.json could not be updated. Set config.vendor-dir to the " .
+					"vendor folder in your trust path before running composer.",
+				$root,
+			);
+		}
+
+		return $warnings === [] ? "" : " " . implode(" ", $warnings);
+	}
+
+	/**
+	 * Composer generates autoloader paths for the root package relative to the
+	 * vendor directory. When a vendor directory generated for htdocs/vendor is
+	 * moved elsewhere those paths must be re-based onto the web root.
+	 */
+	private static function rewriteVendorAutoloadBase(
+		string $vendor,
+		string $root,
+	): bool {
+		$composerDir = "$vendor/composer";
+		if (!is_dir($composerDir)) {
+			return false;
+		}
+
+		$fromVendor = self::relativePath($vendor, $root);
+		$fromComposer = self::relativePath($composerDir, $root);
+
+		$baseDirExpr = $fromVendor === null ?
+			var_export($root, true) :
+			"\$vendorDir . " . var_export("/$fromVendor", true);
+		$staticExpr = $fromComposer === null ?
+			var_export($root, true) :
+			"__DIR__ . " . var_export("/$fromComposer", true);
+
+		$success = true;
+
+		foreach (glob("$composerDir/autoload_*.php") ?: [] as $file) {
+			$code = @file_get_contents($file);
+			if ($code === false) {
+				$success = false;
+				continue;
+			}
+
+			$updated = str_replace(
+				"\$baseDir = dirname(\$vendorDir);",
+				"\$baseDir = $baseDirExpr;",
+				$code,
+			);
+			$updated = str_replace(
+				"__DIR__ . '/../..' . '/",
+				"$staticExpr . '/",
+				$updated,
+			);
+
+			if ($updated === $code) {
+				continue;
+			}
+
+			if (@file_put_contents($file, $updated) === false) {
+				$success = false;
+			}
+		}
+
+		return $success;
+	}
+
+	private static function pointComposerJsonToTrust(
+		string $root,
+		string $trust,
+	): bool {
+		$file = "$root/composer.json";
+		if (!is_file($file)) {
+			return true;
+		}
+
+		$code = @file_get_contents($file);
+		if ($code === false) {
+			return false;
+		}
+
+		$relTrust = self::relativePath($root, $trust) ?? $trust;
+		$values = [
+			"vendor-dir" => "$relTrust/vendor",
+			"cache-dir" => "$relTrust/cache/composer",
+		];
+
+		foreach ($values as $key => $value) {
+			$encoded = json_encode($value, JSON_UNESCAPED_SLASHES);
+			$code = preg_replace_callback(
+				'/("' . preg_quote($key, "/") . '"\s*:\s*)"[^"]*"/',
+				static fn(array $m): string => $m[1] . $encoded,
+				$code,
+			);
+		}
+
+		if ($code === null) {
+			return false;
+		}
+
+		return @file_put_contents($file, $code) !== false;
+	}
+
+	/**
+	 * Relative path from directory $from to directory $to, or null when none exists
+	 * (for example paths on different Windows drives).
+	 */
+	private static function relativePath(string $from, string $to): ?string
+	{
+		$split = static function (string $path): array {
+			$real = realpath($path);
+			$path = str_replace("\\", "/", $real !== false ? $real : $path);
+
+			return array_values(
+				array_filter(explode("/", $path), static fn($s) => $s !== ""),
+			);
+		};
+
+		$a = $split($from);
+		$b = $split($to);
+
+		$common = 0;
+		while (
+			isset($a[$common], $b[$common]) &&
+			(DIRECTORY_SEPARATOR === "\\" ?
+				strcasecmp($a[$common], $b[$common]) === 0 :
+				$a[$common] === $b[$common])
+		) {
+			$common++;
+		}
+
+		if ($common === 0) {
+			return null;
+		}
+
+		$parts = array_merge(
+			array_fill(0, count($a) - $common, ".."),
+			array_slice($b, $common),
+		);
+
+		return $parts === [] ? "." : implode("/", $parts);
 	}
 
 	/**
