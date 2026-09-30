@@ -11,89 +11,51 @@ class IcmsInstallWizard {
 	public string $secondlastpage = '';
 	public string $language = 'english';
 	public bool $no_php5 = false;
-	public bool $safe_mode = false;
+
+	/**
+	 * Wizard pages: page key => [name constant, title constant]
+	 */
+	private const PAGES = [
+		'langselect' => ['LANGUAGE_SELECTION', 'LANGUAGE_SELECTION_TITLE'],
+		'start' => ['INTRODUCTION', 'INTRODUCTION_TITLE'],
+		'modcheck' => ['CONFIGURATION_CHECK', 'CONFIGURATION_CHECK_TITLE'],
+		'pathsettings' => ['PATHS_SETTINGS', 'PATHS_SETTINGS_TITLE'],
+		'dbconnection' => ['DATABASE_CONNECTION', 'DATABASE_CONNECTION_TITLE'],
+		'dbsettings' => ['DATABASE_CONFIG', 'DATABASE_CONFIG_TITLE'],
+		'configsave' => ['CONFIG_SAVE', 'CONFIG_SAVE_TITLE'],
+		'tablescreate' => ['TABLES_CREATION', 'TABLES_CREATION_TITLE'],
+		'siteinit' => ['INITIAL_SETTINGS', 'INITIAL_SETTINGS_TITLE'],
+		'tablesfill' => ['DATA_INSERTION', 'DATA_INSERTION_TITLE'],
+		'modulesinstall' => ['MODULES_INSTALL', 'MODULES_INSTALL_TITLE'],
+		'end' => ['WELCOME', 'WELCOME_TITLE'],
+	];
+
+	/**
+	 * Page shown instead of the wizard when the PHP version is too old
+	 */
+	private const NO_PHP_PAGE = ['no_php5' => ['NO_PHP5', 'NO_PHP5_TITLE']];
 
 	public function xoInit(): bool {
 		if (!$this->checkAccess()) {
 			return false;
 		}
-		if (@empty($_SERVER['REQUEST_URI'])) {
-			$_SERVER['REQUEST_URI'] = htmlentities($_SERVER['PHP_SELF']);
+		if (empty($_SERVER['REQUEST_URI'])) {
+			$_SERVER['REQUEST_URI'] = htmlspecialchars($_SERVER['PHP_SELF'] ?? '', ENT_QUOTES);
 		}
 
-		if (PHP_VERSION_ID < 70400) {
-			$this->no_php5 = true;
-		}
-		/*
-		 * elseif (ini_get('safe_mode') == 1 || strtolower(ini_get('safe_mode')) == 'on') {
-		 * $this->safe_mode = true;
-		 * }
-		 */
+		$this->no_php5 = PHP_VERSION_ID < 70400;
 
 		// Load the main language file
-		$this->initLanguage(!@empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
+		$this->initLanguage(!empty($_COOKIE['xo_install_lang']) ? (string) $_COOKIE['xo_install_lang'] : 'english');
+
 		// Setup pages
-		if ($this->no_php5) {
-			$this->pages[] = 'no_php5';
-		} /*
-		 * elseif ($this->safe_mode) {
-		 * $this->pages[]= 'safe_mode';
-		 * }
-		 */
-		else {
-			$this->pages[] = 'langselect';
-			$this->pages[] = 'start';
-			$this->pages[] = 'modcheck';
-			$this->pages[] = 'pathsettings';
-			$this->pages[] = 'dbconnection';
-			$this->pages[] = 'dbsettings';
-			$this->pages[] = 'configsave';
-			$this->pages[] = 'tablescreate';
-			$this->pages[] = 'siteinit';
-			$this->pages[] = 'tablesfill';
-			$this->pages[] = 'modulesinstall';
-			$this->pages[] = 'end';
+		$pages = $this->no_php5 ? self::NO_PHP_PAGE : self::PAGES;
+		foreach ($pages as $page => [$nameConstant, $titleConstant]) {
+			$this->pages[] = $page;
+			$this->pagesNames[] = constant($nameConstant);
+			$this->pagesTitles[] = constant($titleConstant);
 		}
-
 		$this->lastpage = end($this->pages);
-
-		if ($this->no_php5) {
-			$this->pagesNames[] = NO_PHP5;
-		} elseif ($this->safe_mode) {
-			$this->pagesNames[] = SAFE_MODE;
-		} else {
-			$this->pagesNames[] = LANGUAGE_SELECTION;
-			$this->pagesNames[] = INTRODUCTION;
-			$this->pagesNames[] = CONFIGURATION_CHECK;
-			$this->pagesNames[] = PATHS_SETTINGS;
-			$this->pagesNames[] = DATABASE_CONNECTION;
-			$this->pagesNames[] = DATABASE_CONFIG;
-			$this->pagesNames[] = CONFIG_SAVE;
-			$this->pagesNames[] = TABLES_CREATION;
-			$this->pagesNames[] = INITIAL_SETTINGS;
-			$this->pagesNames[] = DATA_INSERTION;
-			$this->pagesNames[] = MODULES_INSTALL;
-			$this->pagesNames[] = WELCOME;
-		}
-
-		if ($this->no_php5) {
-			$this->pagesTitles[] = NO_PHP5_TITLE;
-		} elseif ($this->safe_mode) {
-			$this->pagesTitles[] = SAFE_MODE_TITLE;
-		} else {
-			$this->pagesTitles[] = LANGUAGE_SELECTION_TITLE;
-			$this->pagesTitles[] = INTRODUCTION_TITLE;
-			$this->pagesTitles[] = CONFIGURATION_CHECK_TITLE;
-			$this->pagesTitles[] = PATHS_SETTINGS_TITLE;
-			$this->pagesTitles[] = DATABASE_CONNECTION_TITLE;
-			$this->pagesTitles[] = DATABASE_CONFIG_TITLE;
-			$this->pagesTitles[] = CONFIG_SAVE_TITLE;
-			$this->pagesTitles[] = TABLES_CREATION_TITLE;
-			$this->pagesTitles[] = INITIAL_SETTINGS_TITLE;
-			$this->pagesTitles[] = DATA_INSERTION_TITLE;
-			$this->pagesTitles[] = MODULES_INSTALL_TITLE;
-			$this->pagesTitles[] = WELCOME_TITLE;
-		}
 
 		$this->setPage(0);
 		// Prevent client caching
@@ -104,18 +66,15 @@ class IcmsInstallWizard {
 
 	public function checkAccess(): bool {
 		if (INSTALL_USER && INSTALL_PASSWORD) {
-			if (!isset($_SERVER['PHP_AUTH_USER'])) {
+			$user = $_SERVER['PHP_AUTH_USER'] ?? null;
+			$password = $_SERVER['PHP_AUTH_PW'] ?? '';
+			if ($user === null) {
 				header('WWW-Authenticate: Basic realm="ImpressCMS Installer"');
-				header('HTTP/1.0 401 Unauthorized');
-				echo 'You can not access this ImpressCMS installer.';
-				return false;
 			}
-			if (INSTALL_USER && $_SERVER['PHP_AUTH_USER'] !== INSTALL_USER) {
-				header('HTTP/1.0 401 Unauthorized');
-				echo 'You can not access this ImpressCMS installer.';
-				return false;
-			}
-			if (INSTALL_PASSWD !== $_SERVER['PHP_AUTH_PW']) {
+			if ($user === null
+				|| !hash_equals(INSTALL_USER, (string) $user)
+				|| !hash_equals(INSTALL_PASSWORD, (string) $password)
+			) {
 				header('HTTP/1.0 401 Unauthorized');
 				echo 'You can not access this ImpressCMS installer.';
 				return false;
@@ -124,7 +83,7 @@ class IcmsInstallWizard {
 		return true;
 	}
 
-	public function loadLangFile($file) {
+	public function loadLangFile(string $file): void {
 		if (file_exists("./language/$this->language/$file.php")) {
 			include_once "./language/$this->language/$file.php";
 		} else {
@@ -132,7 +91,7 @@ class IcmsInstallWizard {
 		}
 	}
 
-	public function initLanguage($language) {
+	public function initLanguage(string $language): void {
 		$language = preg_replace('/[^A-Za-z]+/', '', $language);
 		if (!file_exists("./language/$language/install.php")) {
 			$language = 'english';
@@ -141,61 +100,65 @@ class IcmsInstallWizard {
 		$this->loadLangFile('install');
 	}
 
-	public function setPage($page): string {
-		/**
-		 * If server is PHP 4, display the php4 page and stop the install
-		 */
-		if ($this->no_php5 && $page != 'no_php5') {
+	/**
+	 * Sets the current page
+	 *
+	 * @param int|string $page Page index or page name
+	 * @return int|false The index of the current page or false if the page doesn't exist
+	 */
+	public function setPage($page) {
+		// If the PHP version is too old, display the no_php5 page and stop the install
+		if ($this->no_php5 && $page !== 'no_php5') {
 			header('location:page_no_php5.php');
 			exit();
 		}
-		/**
-		 * If server is in Safe Mode, display the safe_mode page and stop the install
-		 */
-		if ($this->safe_mode && $page !== 'safe_mode') {
-			header('location:page_safe_mode.php');
-			exit();
-		}
 
-		if ((int) $page && $page >= 0 && $page < count($this->pages)) {
-			$this->currentPageName = $this->pages[$page];
-			$this->currentPage = $page;
-		} elseif (false !== ($index = array_search($page, $this->pages, false))) {
-			$this->currentPageName = $page;
-			$this->currentPage = $index;
+		if (is_int($page) || (is_string($page) && ctype_digit($page))) {
+			$index = (int) $page;
+			if (!isset($this->pages[$index])) {
+				return false;
+			}
 		} else {
-			return false;
+			$index = array_search($page, $this->pages, true);
+			if ($index === false) {
+				return false;
+			}
 		}
-		return $this->currentPage;
+		$this->currentPageName = $this->pages[$index];
+		$this->currentPage = $index;
+		return $index;
 	}
 
 	public function baseLocation(): string {
-		$proto = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on')) ? 'https' : 'http';
-		$host = htmlentities($_SERVER['HTTP_HOST']);
-		$server_php_self = htmlentities($_SERVER['PHP_SELF']);
-		$base = substr($server_php_self, 0, strrpos($server_php_self, '/'));
+		$https = $_SERVER['HTTPS'] ?? '';
+		$proto = ($https !== '' && strtolower($https) !== 'off') ? 'https' : 'http';
+		$host = htmlspecialchars($_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost', ENT_QUOTES);
+		$server_php_self = htmlspecialchars($_SERVER['PHP_SELF'] ?? '', ENT_QUOTES);
+		$base = substr($server_php_self, 0, (int) strrpos($server_php_self, '/'));
 		return "$proto://$host$base";
 	}
 
+	/**
+	 * Gets the URI of a page
+	 *
+	 * @param int|string $page Page index, page name or a relative offset ('+1', '-2')
+	 */
 	public function pageURI($page): string {
-		if (!(int) $page[0]) {
-			if ($page[0] === '+') {
-				$page = $this->currentPage + substr($page, 1);
-			} elseif ($page[0] === '-') {
-				$page = $this->currentPage - substr($page, 1);
-			} else {
-				$page = (int) array_search($page, $this->pages, false);
-			}
+		if (is_string($page) && $page !== '' && ($page[0] === '+' || $page[0] === '-')) {
+			$index = $this->currentPage + (int) $page;
+		} elseif (is_int($page) || (is_string($page) && ctype_digit($page))) {
+			$index = (int) $page;
+		} else {
+			$index = (int) array_search($page, $this->pages, true);
 		}
-		$page = $this->pages[$page];
+		$page = $this->pages[$index] ?? $this->pages[0];
 		return $this->baseLocation() . "/page_$page.php";
 	}
 
-	public function redirectToPage($page, $status = 303, $message = 'See other') {
+	public function redirectToPage($page, int $status = 303, string $message = 'See other'): void {
 		$location = $this->pageURI($page);
-		$proto = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
+		$proto = !empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
 		header("$proto $status $message");
-		// header( "Status: $status $message" );
 		header("Location: $location");
 	}
 }

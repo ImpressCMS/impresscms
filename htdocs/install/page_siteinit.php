@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	if (!preg_match( "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'] )) {
 		$error = ERR_INVALID_EMAIL;
-	} elseif (@empty( $vars['adminlogin_name'] ) || @empty( $vars['adminname'] )  || @empty( $vars['adminlogin_name'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail'])) {
+	} elseif (empty( $vars['adminlogin_name'] ) || empty( $vars['adminname'] )  || empty( $vars['adminpass'] ) || empty( $vars['adminmail'])) {
 		$error = ERR_REQUIRED;
 	} elseif ($vars['adminpass'] != $vars['adminpass2']) {
 		$error = ERR_PASSWORD_MATCH;

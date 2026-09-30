@@ -149,6 +149,7 @@ define("ERR_PASSWORD_MATCH", "De 2 paswoorden komen niet overeen");
 define("ERR_NEED_WRITE_ACCESS", "De server moet schrijftoegang krijgen tot de volgende bestanden en mappen<br />(i.e. <em>chmod 777 map_naam</em> op een UNIX/LINUX server)"); // L72
 define("ERR_NO_DATABASE", "De databank kon niet aangemaakt worden. Contacteer uw serverbeheerder voor meer details."); // L31
 define("ERR_NO_DBCONNECTION", "Kon niet verbinden met de database server."); // L106
+define("ERR_NO_PDO_MYSQL", "The PDO MySQL extension (pdo_mysql) is not available. It is required to connect to the database.");
 define("ERR_WRITING_CONSTANT", "Waarde %s kon niet weggeschreven worden."); // L122
 
 define("ERR_COPY_MAINFILE", "Het distributiebestand kon niet gekopieerd worden naar mainfile.php");

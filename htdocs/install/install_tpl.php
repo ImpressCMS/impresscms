@@ -140,7 +140,7 @@ if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 						</button>
 					<?php } ?>
 					<?php if ($wizard->pages[$wizard->currentPage] == $wizard->secondlastpage) { ?>
-					<?php if (@$pageHasForm) { ?>
+					<?php if (!empty($pageHasForm)) { ?>
 					<button type="submit">
 						<?php } else { ?>
 						<button type="button" title="<?php echo BUTTON_NEXT; ?>" accesskey="n"
@@ -153,7 +153,7 @@ if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 							<?php } ?>
 						</button>
 						<?php } else if ($wizard->pages[$wizard->currentPage] != $wizard->lastpage) { ?>
-						<?php if (@$pageHasForm) { ?>
+						<?php if (!empty($pageHasForm)) { ?>
 						<button type="submit" title="<?php echo BUTTON_NEXT; ?>">
 							<?php } else { ?>
 							<button type="button" title="<?php echo BUTTON_NEXT; ?>" accesskey="n"

@@ -28,44 +28,34 @@ $pageHasHelp = true;
 $vars =& $_SESSION['settings'];
 
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
-if (!isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0' )) {
-	$keys = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT' );
-	foreach ( $keys as $k) {
-		$vars[ $k ] = defined( "XOOPS_$k" ) ? constant( "XOOPS_$k" ) : '';
+if (!isset($vars['DB_HOST']) || false !== strpos($_SERVER['HTTP_CACHE_CONTROL'] ?? '', 'max-age=0')) {
+	$keys = array('DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT');
+	foreach ($keys as $k) {
+		$vars[$k] = defined("XOOPS_$k") ? constant("XOOPS_$k") : '';
 	}
 	$vars['DB_PASS'] = '';
 }
 
+// The legacy mysql extension was removed from PHP, PDO MySQL is the only supported connection type
+$vars['DB_TYPE'] = 'pdo.mysql';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$params = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS' );
-	foreach ( $params as $name) {
-		$vars[$name] = $_POST[$name];
+	$params = array('DB_HOST', 'DB_USER', 'DB_PASS');
+	foreach ($params as $name) {
+		$vars[$name] = (string) ($_POST[$name] ?? '');
 	}
-	$vars['DB_PCONNECT'] = @$_POST['DB_PCONNECT'] ? 1 : 0;
+	$vars['DB_PCONNECT'] = !empty($_POST['DB_PCONNECT']) ? 1 : 0;
 }
 
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
-	switch ($vars['DB_TYPE']) {
-		case 'mysql':
-			$func_connect = empty($vars['DB_PCONNECT'])?"mysql_connect":"mysql_pconnect";
-			if (!($link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true))) {
-				$error = ERR_NO_DBCONNECTION;
-			}
-			break;
-		case 'pdo.mysql':
-			try {
-				$dbh = new PDO('mysql:host=' . $vars['DB_HOST'],
-					$vars['DB_USER'],
-					$vars['DB_PASS'],
-					array(
-						PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-						PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
-					));
-			} catch (PDOException $ex) {
-				$error = ERR_NO_DBCONNECTION;
-			}
-			break;
+$pdoAvailable = extension_loaded('pdo_mysql');
+if (!$pdoAvailable) {
+	$error = ERR_NO_PDO_MYSQL;
+} elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
+	try {
+		icms_install_db_connect($vars);
+	} catch (PDOException $ex) {
+		$error = ERR_NO_DBCONNECTION;
 	}
 	if (empty($error)) {
 		$wizard->redirectToPage('+1');
@@ -73,31 +63,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($vars['DB_HOST']) && !empty($
 	}
 }
 
-//so far, mysql extension has to exist and be loaded
-$connections = [];
-if (function_exists('mysql_connect') || function_exists('mysql_pconnect')) {
-	$connections['mysql'] = array('type' => 'mysql', 'name' => 'MySQL', 'selected' => 'selected');
-	$db_connection = $connections['mysql'];
-}
 // Fill with default values
-// check for PDO MySQL and select it, if it is available
-if (class_exists("PDO", false)) {
-	$db_connection = array('type' => 'pdo.mysql', 'name' => 'PDO MySQL', 'selected' => 'selected');
-	if (isset($connections['mysql'])) {
-		$connections['mysql']['selected'] = '';
-	}
-	$connections['pdo'] = $db_connection;
-}
-
-if (@empty($vars['DB_HOST'])) {
+if (empty($vars['DB_HOST'])) {
 	$vars = array_merge($vars, array(
-		'DB_TYPE'        => $db_connection['type'],
+		'DB_TYPE'        => 'pdo.mysql',
 		'DB_HOST'        => 'localhost',
 		'DB_USER'        => '',
 		'DB_PASS'        => '',
 		'DB_PCONNECT'    => 0,
 	));
-
 }
 
 
@@ -118,19 +92,12 @@ function xoFormField( $name, $value, $label, $help = '', $type='text') {
 
 ob_start();
 ?>
-<?php if (!empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty($error)) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 	<h3><?php echo LEGEND_CONNECTION; ?></h3>
 	<div class="blokSQL">
-		<div class="dbconn_line"><label> <?php echo LEGEND_DATABASE; ?><br />
-				<select size="2" name="DB_TYPE" class="db_select">
-					<?php
-					foreach ($connections as $option) {
-						$selected = "";
-						if (!empty($option['selected'])) $selected = " selected='selected'";
-						echo "<option value='" . $option['type'] . "'" . $selected . ">" . $option['name'] . "</option>";
-					}
-					?>
-				</select> </label>
+		<div class="dbconn_line">
+			<?php echo LEGEND_DATABASE; ?>: PDO MySQL
+			<input type="hidden" name="DB_TYPE" value="pdo.mysql" />
 			<div class='clear'>&nbsp;</div>
 		</div>
 		<div class="dbconn_line"><?php echo xoFormField( 'DB_HOST',    $vars['DB_HOST'],        DB_HOST_LABEL, DB_HOST_HELP ); ?>
@@ -144,7 +111,7 @@ ob_start();
 	<label> <?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?> <input
 			class="checkbox" type="checkbox" name="DB_PCONNECT" value="1"
 			onclick="alert('<?php echo htmlspecialchars( DB_PCONNECT_HELPS ); ?>');"
-			<?php echo $vars['DB_PCONNECT'] ? "'checked'" : ""; ?> />
+			<?php echo $vars['DB_PCONNECT'] ? "checked='checked'" : ""; ?> />
 		<div class="xoform-help"><?php echo htmlspecialchars( DB_PCONNECT_HELP ); ?></div>
 	</label>
 <?php

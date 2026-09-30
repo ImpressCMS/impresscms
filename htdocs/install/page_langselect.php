@@ -25,13 +25,13 @@ if (!defined( 'XOOPS_INSTALL' ) )	exit();
 $wizard->setPage( 'langselect' );
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$lang = htmlentities($_REQUEST['lang']);
+	$lang = (string) ($_POST['lang'] ?? '');
 
 	$languages = icms_core_Filesystem::getDirList( "./language/" );
 	if (!in_array($lang, $languages)) {
 		$lang = 'english';
 	}
-	setcookie( 'xo_install_lang', $lang, time() + 3600, '/', null );
+	setcookie('xo_install_lang', $lang, time() + 3600, '/');
 
 	$wizard->redirectToPage( '+1' );
 	exit();
@@ -45,6 +45,7 @@ $content = "";
 
 $languages = icms_core_Filesystem::getDirList( "./language/" );
 foreach ( $languages as $lang) {
+	$lang = htmlspecialchars($lang, ENT_QUOTES);
 	$sel = ( $lang == $wizard->language ) ? ' checked="checked"' : '';
 	$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../images/flags/$lang.gif\" alt=\"$lang\" /><br />$lang<br /> <input type=\"radio\" name=\"lang\" value=\"$lang\"$sel /></a></div>";
 }

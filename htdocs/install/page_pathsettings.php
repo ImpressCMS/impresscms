@@ -304,17 +304,17 @@ function genCreateTrustPathHtml($valid) {
 
 $ctrl = new PathStuffController();
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'checkrootpath') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && ($_GET['action'] ?? '') == 'checkrootpath') {
 	$ctrl->xoopsRootPath = $_GET['path'];
 	echo genRootCheckHtml( $ctrl->checkRootPath() );
 	exit();
 }
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'checktrustpath') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && ($_GET['action'] ?? '') == 'checktrustpath') {
 	$ctrl->xoopsTrustPath = $_GET['path'];
 	echo genTrustPathCheckHtml( $ctrl->checkTrustPath() );
 	exit();
 }
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'createtrustpath') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && ($_GET['action'] ?? '') == 'createtrustpath') {
 	$ctrl->xoopsTrustPath = $_GET['path'];
 	echo genCreateTrustPathHtml( $ctrl->createTrustPath() );
 	exit();

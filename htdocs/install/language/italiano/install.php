@@ -153,6 +153,7 @@ define("ERR_PASSWORD_MATCH", "Le due passwords non sono uguali");
 define("ERR_NEED_WRITE_ACCESS", "Il server deve avere accesso di scrittura sui seguenti files and cartelle <br />(ad es. <em>chmod 777 nome _cartella</em> su un UNIX/LINUX server)"); // L72
 define("ERR_NO_DATABASE", "Non &#232; possibile creare un database. Contattare l'amministratore del server per chiarimenti."); // L31
 define("ERR_NO_DBCONNECTION", "Non &#232; possibile connettersi al server database."); // L106
+define("ERR_NO_PDO_MYSQL", "The PDO MySQL extension (pdo_mysql) is not available. It is required to connect to the database.");
 define("ERR_WRITING_CONSTANT", "Tentativo di impostare la costante <b>%s</b> fallito."); // L122
 
 define("ERR_COPY_MAINFILE", "Non &#232; stato possibile copiare il file della distribuzione in mainfile.php");

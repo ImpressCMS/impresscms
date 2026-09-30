@@ -19,9 +19,8 @@
  * @param string $url the URL to be stripped.
  * @return string
  */
-function imcms_get_base_domain($url)
+function imcms_get_base_domain($url): string
 {
-	$debug = 0;
 	$base_domain = '';
 
 	// generic tlds (source: http://en.wikipedia.org/wiki/Generic_top-level_domain)
@@ -51,19 +50,23 @@ function imcms_get_base_domain($url)
      'eh','kp','me','rs','um','bv','gb','pm','sj','so','yt','su','tp','bu','cs','dd','zr');
 
 	// get domain
-	if (!$full_domain = imcms_get_url_domain($url)) {return $base_domain;}
+	if (!$full_domain = imcms_get_url_domain($url)) {
+		return $base_domain;
+	}
 
 	// break up domain, reverse
 	$DOMAIN = explode('.', $full_domain);
-	if ($debug) print_r($DOMAIN);
 	$DOMAIN = array_reverse($DOMAIN);
-	if ($debug) print_r($DOMAIN);
 
 	// first check for ip address
-	if (count($DOMAIN) == 4 && is_numeric($DOMAIN[0]) && is_numeric($DOMAIN[3])) {return $full_domain;}
+	if (count($DOMAIN) === 4 && is_numeric($DOMAIN[0]) && is_numeric($DOMAIN[3])) {
+		return $full_domain;
+	}
 
 	// if only 2 domain parts, that must be our domain
-	if (count($DOMAIN) <= 2) return $full_domain;
+	if (count($DOMAIN) <= 2) {
+		return $full_domain;
+	}
 
 	/*
 	 finally, with 3+ domain parts: obviously D0 is tld now,
@@ -71,7 +74,7 @@ function imcms_get_base_domain($url)
 	 if D0 = ctld && D1 = gtld && D2 != 'www', domain = D2.D1.D0 else if D0 = ctld && D1 = gtld && D2 == 'www',
 	 domain = D1.D0 else domain = D1.D0 - these rules are simplified below.
 	 */
-	if (in_array($DOMAIN[0], $C_TLD) && in_array($DOMAIN[1], $G_TLD) && $DOMAIN[2] != 'www')
+	if (in_array($DOMAIN[0], $C_TLD) && in_array($DOMAIN[1], $G_TLD) && $DOMAIN[2] !== 'www')
 	{
 		$full_domain = $DOMAIN[2].'.'.$DOMAIN[1].'.'.$DOMAIN[0];
 	} else {
@@ -89,12 +92,56 @@ function imcms_get_base_domain($url)
  * @param string $url the URL to be stripped.
  * @return string
  */
-function imcms_get_url_domain($url)
+function imcms_get_url_domain($url): string
 {
-	$domain = '';
-	$_URL = parse_url($url);
+	$_URL = parse_url((string) $url);
 
-	if (!empty($_URL) || !empty($_URL['host'])) {$domain = $_URL['host'];}
-	return $domain;
+	return $_URL['host'] ?? '';
+}
+
+/**
+ * Opens a PDO connection to the MySQL/MariaDB server using the settings stored by the installer.
+ *
+ * @param array $vars Installer settings (DB_HOST, DB_USER, DB_PASS and optionally DB_PCONNECT)
+ * @return PDO
+ * @throws PDOException If the connection could not be established
+ */
+function icms_install_db_connect(array $vars): PDO
+{
+	return new PDO(
+		'mysql:host=' . ($vars['DB_HOST'] ?? ''),
+		$vars['DB_USER'] ?? '',
+		$vars['DB_PASS'] ?? '',
+		[
+			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+			PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT']),
+		]
+	);
+}
+
+/**
+ * Replaces the value of a define() call in the given source code.
+ *
+ * @param string $content Source code
+ * @param string $constant Name of the constant
+ * @param string|int $value New value (written unquoted only for integers replacing an unquoted number, or when $raw is true)
+ * @param bool $raw Insert the value as is (for example to reference another constant)
+ * @return string|null The modified source code, or null if the constant was not found
+ */
+function icms_install_rewrite_define(string $content, string $constant, $value, bool $raw = false): ?string
+{
+	$pattern = '/define\(\s*([\'"])' . preg_quote($constant, '/') . '\1\s*,\s*(?:[0-9]+|([\'"])(.*?)\2)\s*\)/';
+	if (!preg_match($pattern, $content)) {
+		return null;
+	}
+	return preg_replace_callback($pattern, static function (array $matches) use ($constant, $value, $raw): string {
+		$isQuoted = ($matches[2] ?? '') !== '';
+		if ($raw || (is_int($value) && !$isQuoted)) {
+			$replacement = (string) $value;
+		} else {
+			$replacement = "'" . addcslashes((string) $value, "\\'") . "'";
+		}
+		return "define('$constant', $replacement)";
+	}, $content);
 }
 

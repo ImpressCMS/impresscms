@@ -28,55 +28,27 @@ $pageHasHelp = true;
 
 $vars = & $_SESSION ['settings'];
 
-switch ($vars['DB_TYPE']) {
-	case 'mysql':
-		$func_connect = empty($vars['DB_PCONNECT'])?"mysql_connect":"mysql_pconnect";
-		if (!($link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true))) {
-			$error = ERR_NO_DBCONNECTION;
-		}
-		break;
-	case 'pdo.mysql':
-		try {
-			$link = new PDO('mysql:host=' . $vars['DB_HOST'],
-					$vars['DB_USER'],
-					$vars['DB_PASS'],
-					array(
-							PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-							PDO::ATTR_PERSISTENT => !empty($vars['DB_PCONNECT'])
-					));
-		} catch (PDOException $ex) {
-			$error = ERR_NO_DBCONNECTION;
-		}
-		break;
-}
-
-if (isset($error)) {
-	$wizard->redirectToPage('-1', $error);
-	exit ();
+try {
+	$link = icms_install_db_connect($vars);
+} catch (PDOException $ex) {
+	$wizard->redirectToPage('-1');
+	exit();
 }
 
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
-if (!isset ($vars ['DB_NAME']) || false !== @strpos($_SERVER ['HTTP_CACHE_CONTROL'], 'max-age=0')) {
+if (!isset ($vars ['DB_NAME']) || false !== strpos($_SERVER['HTTP_CACHE_CONTROL'] ?? '', 'max-age=0')) {
 	$keys = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT');
 	foreach ($keys as $k) {
 		$vars [$k] = defined("XOOPS_$k")? constant ("XOOPS_$k"):'';
 	}
 }
 
-function exec_query($sql, $link) {
-	if ($link instanceof PDO) {
-		return $link->query($sql);
-	} else {
-		return mysql_query($sql, $link);
-	}
+function exec_query($sql, PDO $link) {
+	return $link->query($sql);
 }
 
 function fetch_assoc($result) {
-	if ($result instanceof PDOStatement) {
-		return $result->fetch(PDO::FETCH_ASSOC);
-	} else {
-		return mysql_fetch_assoc($result);
-	}
+	return $result->fetch(PDO::FETCH_ASSOC);
 }
 
 /**
@@ -92,8 +64,7 @@ function sanitize_database($database_name) {
 function quote_sql($sql) {
 	global $link;
 
-		return $link->quote($sql);
-
+	return $link->quote($sql);
 }
 
 function getDbCharsets($link) {
@@ -163,14 +134,8 @@ function validateDbCharset($link, &$charset, &$collation) {
 	return $error;
 }
 
-function getDBVersion($link) {
-	if ($link instanceof PDO) {
-		return $link->getAttribute(PDO::ATTR_SERVER_VERSION);
-	}
-	else
-	{
-	echo 'error getting DB version';
-	}
+function getDBVersion(PDO $link) {
+	return $link->getAttribute(PDO::ATTR_SERVER_VERSION);
 }
 
 function xoFormFieldCollation($name, $value, $label, $link, $charset, $help = '') {
@@ -189,7 +154,7 @@ function xoFormFieldCollation($name, $value, $label, $link, $charset, $help = ''
 	if ($help) {
 		$field .= '<div class="xoform-help">' . $help . "</div><div class='clear'>&nbsp;</div>\n";
 	}
-	$field .= "<select name='$name' id='$name'\">";
+	$field .= "<select name='$name' id='$name'>";
 
 	$collation_default = "";
 	$options = "";
@@ -201,7 +166,7 @@ function xoFormFieldCollation($name, $value, $label, $link, $charset, $help = ''
 		$options .= "<option value='{$key}'" . (($value == $key)?" selected='selected'":"") . ">{$key}</option>";
 	}
 	if ($collation_default) {
-		$field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty ($value))?" 'selected'":"") . ">{$collation_default} (Default)</option>";
+		$field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty ($value))?" selected='selected'":"") . ">{$collation_default} (Default)</option>";
 	}
 	$field .= $options;
 	$field .= "</select>";
@@ -218,18 +183,15 @@ function xoFormBlockCollation($name, $value, $label, $link, $charset, $help = ''
 }
 
 function select_db($db_name, $link) {
-	//if ($link instanceof PDO) {
-		try {
-			$link->exec("use `" . $db_name . '`;');
-			return true;
-		} catch (PDOException $ex) {
-			return false;
-		}
-	//}
-	//else return @mysql_select_db($db_name, $link);
+	try {
+		$link->exec("use `" . $db_name . '`;');
+		return true;
+	} catch (PDOException $ex) {
+		return false;
+	}
 }
 
-if ($_SERVER ['REQUEST_METHOD'] == 'GET' && isset ($_GET ['charset']) && @$_GET ['action'] == 'updateCollation') {
+if ($_SERVER ['REQUEST_METHOD'] == 'GET' && isset ($_GET ['charset']) && ($_GET['action'] ?? '') == 'updateCollation') {
 	echo xoFormFieldCollation('DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, $link, $_GET ['charset'],DB_COLLATION_HELP);
 	exit ();
 }
@@ -296,7 +258,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 	}
 }
 
-if (@empty ($vars ['DB_NAME'])) {
+if (empty($vars['DB_NAME'])) {
 	// Fill with default values
 	$vars = array_merge($vars, array('DB_NAME' => '', 'DB_CHARSET' => 'utf8mb4', 'DB_COLLATION' => '', 'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8), 'DB_SALT' => icms_core_Password::createSalt()));
 }
@@ -364,11 +326,11 @@ if (!empty ($error)) {
 			if (val == '') {
 				document.getElementById(id).style.display='none';
 			} else {
-				document.getElementById(id).style.display='display';
+				document.getElementById(id).style.display='block';
 			}
 			new Ajax.Updater(
 					id, '<?php
-							echo $_SERVER ['PHP_SELF'];
+							echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES);
 							?>',
 					{ method:'get',parameters:'action=updateCollation&charset='+val }
 			);
@@ -386,7 +348,7 @@ if (!empty ($error)) {
 			?> <?php
 			echo xoFormFieldCharset('DB_CHARSET', $vars ['DB_CHARSET'], DB_CHARSET_LABEL, $link, DB_CHARSET_HELP);
 			?> <?php
-			echo xoFormBlockCollation('DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, $link, $vars ['DB_CHARSET'], DB_COLLATION_HELP, );
+			echo xoFormBlockCollation('DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, $link, $vars ['DB_CHARSET'], DB_COLLATION_HELP);
 			?></fieldset>
 	</div>
 <?php

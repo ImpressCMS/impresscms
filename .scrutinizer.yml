@@ -44,7 +44,6 @@ filter:
         - htdocs/language/english/core.php
         - htdocs/language/english/mail.php
         - htdocs/libraries/tcpdf/tcpdf.php
-        - htdocs/install/page_safe_mode.php
         - htdocs/libraries/tcpdf/pdf417.php
         - htdocs/libraries/tcpdf/qrcode.php
         - htdocs/editors/tinymce/tinymce.php
@@ -111,7 +110,6 @@ filter:
         - htdocs/language/english/core.php
         - htdocs/language/english/mail.php
         - htdocs/libraries/tcpdf/tcpdf.php
-        - htdocs/install/page_safe_mode.php
         - htdocs/language/english/error.php
         - htdocs/language/english/theme.php
         - 'htdocs/libraries/paginationstyles/*'

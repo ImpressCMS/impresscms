@@ -35,6 +35,7 @@ if (!$dbm->isConnectable()) {
 	exit();
 }
 $process = '';
+$content = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$process = 'install';
 }
@@ -55,11 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$system_moduleObj = $module_handler->getByDirname('system');
 		xoops_module_update_system($system_moduleObj);
 
-		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
-		$anon_accessible_mods = isset($_POST['anon_accessible_mods']) ? $_POST['anon_accessible_mods'] : '';
+		$install_mods = $_POST['install_mods'] ?? '';
 		if (isset($_POST['install_mods'])) {
-			for ($i = 0; $i <= count($install_mods)-1;$i++) {
-				$content .= xoops_module_install($install_mods[$i]);
+			foreach ((array) $install_mods as $install_mod) {
+				$content .= xoops_module_install($install_mod);
 				impresscms_get_adminmenu();
 			}
 		} else {

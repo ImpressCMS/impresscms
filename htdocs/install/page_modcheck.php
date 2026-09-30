@@ -71,7 +71,7 @@ function imCheckRequirements()
 	$requirement['server_api']['status']=true;
 
 	$requirement['php_version']['description']=_PHP_VERSION;
-	if (version_compare( phpversion(), '7.0', '>=')) {
+	if (version_compare(PHP_VERSION, '7.4', '>=')) {
 		$requirement['php_version']['status']=1;
 	} else {
 		$requirement['php_version']['status']=0;
@@ -79,8 +79,9 @@ function imCheckRequirements()
 	$requirement['php_version']['result']=phpversion();
 
 	$requirement['mysql']['description']="MySQL Handler";
-	$requirement['mysql']['result']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? SUCCESS : FAILED;
-	$requirement['mysql']['status']=in_array("mysql",PDO::getAvailableDrivers(),TRUE) ? true : false;
+	$mysqlAvailable = extension_loaded('pdo') && in_array('mysql', PDO::getAvailableDrivers(), true);
+	$requirement['mysql']['result'] = $mysqlAvailable ? SUCCESS : FAILED;
+	$requirement['mysql']['status'] = $mysqlAvailable;
 
 	$requirement['session']['description']="Session Extension";
 	$requirement['session']['result']=extension_loaded( 'session' ) ? SUCCESS : FAILED;
@@ -95,14 +96,14 @@ function imCheckRequirements()
 	$requirement['curl']['status']=extension_loaded( 'curl' ) ? true : false;
 
 	$requirement['file_upload']['description']="File uploads";
-	$requirement['file_upload']['result']=xoDiagBoolSetting( 'file_uploads', true ) ? SUCCESS : FAILED;
-	$requirement['file_upload']['status']=xoDiagBoolSetting( 'file_uploads', true ) ? true : false;
+	$fileUploads = filter_var(ini_get('file_uploads'), FILTER_VALIDATE_BOOLEAN);
+	$requirement['file_upload']['result'] = $fileUploads ? SUCCESS : FAILED;
+	$requirement['file_upload']['status'] = $fileUploads;
 
 	$requirement['gd']['description']="GD Extension";
 	$requirement['gd']['result']=extension_loaded( 'GD' ) ? SUCCESS : FAILED;
 	$requirement['gd']['status']=extension_loaded( 'GD' ) ? true : false;
-	
-	
+
 	return $requirement;
 }
 
@@ -128,7 +129,7 @@ $requirements_array = imCheckRequirements();
 <h4><?php printf( PHP_EXTENSION, CHAR_ENCODING ); ?>:&nbsp; <?php
 $ext = array();
 if (extension_loaded( 'iconv' ) )		$ext[] = 'Iconv';
-if (extension_loaded( 'mb_string' ) )	$ext[] = 'MBString';
+if (extension_loaded('mbstring') )	$ext[] = 'MBString';
 if (empty($ext)) {
 	echo xoDiag( 0, NONE );
 } else {

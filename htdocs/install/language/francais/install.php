@@ -142,6 +142,7 @@ define("ERR_PASSWORD_MATCH", "Les deux mots de passe ne concordent pas");
 define("ERR_NEED_WRITE_ACCESS", "Le serveur doit avoir acc&egrave;s en &eacute;criture aux dossiers et fichiers suivants<br />(i.e. <em>chmod 777 nom_dossier</em> sur un syst&egrave;me UNIX/LINUX)"); // L72
 define("ERR_NO_DATABASE", "Impossible de cr&eacute;er la base de donn&eacute;es. Veuillez contacter votre h&eacute;bergeur pour plus de d&eacute;tails."); // L31
 define("ERR_NO_DBCONNECTION", "Impossible de se connecter à la base de donn&eacute;es."); // L106
+define("ERR_NO_PDO_MYSQL", "The PDO MySQL extension (pdo_mysql) is not available. It is required to connect to the database.");
 define("ERR_WRITING_CONSTANT", "&Eacute;chec &agrave; l'&eacute;criture de la constante %s."); // L122
 
 define("ERR_COPY_MAINFILE", "Impossible de copier le fichier de distribution dans mainfile.php");

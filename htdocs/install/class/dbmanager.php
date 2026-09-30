@@ -57,74 +57,68 @@ class db_manager {
 	}
 
 	public function isConnectable() {
-		return ($this->db->connect(false) != false) ? true : false;
+		return $this->db->connect(false) != false;
 	}
 
 	public function queryFromFile($sql_file_path) {
-		$tables = array();
-
-		if (!file_exists($sql_file_path)) {
+		if (!is_file($sql_file_path)) {
 			return false;
 		}
-		$sql_query = trim(fread(fopen($sql_file_path, 'r'), filesize($sql_file_path)));
+		$sql_query = file_get_contents($sql_file_path);
+		if ($sql_query === false) {
+			return false;
+		}
+		$sql_query = trim($sql_query);
+		$pieces = array();
 		icms_db_legacy_mysql_Utility::splitSqlFile($pieces, $sql_query);
 		$this->db->connect();
 		foreach ($pieces as $piece) {
 			$piece = trim($piece);
 			// [0] contains the prefixed query
+			// [1] contains the type of the query
 			// [4] contains unprefixed table name
 			$prefixed_query = icms_db_legacy_mysql_Utility::prefixQuery($piece, $this->db->prefix());
-			if ($prefixed_query != false) {
-				$table = $this->db->prefix($prefixed_query[4]);
-				if ($prefixed_query[1] === 'CREATE TABLE') {
-					if ($this->db->query($prefixed_query[0]) != false) {
-						if (! isset($this->s_tables['create'][$table])) {
-							$this->s_tables['create'][$table] = 1;
-						}
-					} else {
-						if (! isset($this->f_tables['create'][$table])) {
-							$this->f_tables['create'][$table] = 1;
-						}
-					}
-				}
-				elseif ($prefixed_query[1] == 'INSERT INTO') {
-					if ($this->db->query($prefixed_query[0]) != false) {
-						if (! isset($this->s_tables['insert'][$table])) {
-							$this->s_tables['insert'][$table] = $this->db->getAffectedRows();
-						} else {
-							$this->s_tables['insert'][$table] += $this->db->getAffectedRows();
-						}
-					} else {
-						if (! isset($this->f_tables['insert'][$table])) {
-							$this->f_tables['insert'][$table] = 1;
-						} else {
-							$this->f_tables['insert'][$table]++;
-						}
-					}
-				} elseif ($prefixed_query[1] == 'ALTER TABLE') {
-					if ($this->db->query($prefixed_query[0]) != false) {
-						if (! isset($this->s_tables['alter'][$table])) {
-							$this->s_tables['alter'][$table] = 1;
-						}
-					} else {
-						if (! isset($this->s_tables['alter'][$table])) {
-							$this->f_tables['alter'][$table] = 1;
-						}
-					}
-				} elseif ($prefixed_query[1] == 'DROP TABLE') {
-					if ($this->db->query('DROP TABLE '.$table) != false) {
-						if (! isset($this->s_tables['drop'][$table])) {
-							$this->s_tables['drop'][$table] = 1;
-						}
-					} else {
-						if (! isset($this->s_tables['drop'][$table])) {
-							$this->f_tables['drop'][$table] = 1;
-						}
-					}
-				}
+			if ($prefixed_query == false) {
+				continue;
+			}
+			$table = $this->db->prefix($prefixed_query[4]);
+			switch ($prefixed_query[1]) {
+				case 'CREATE TABLE':
+					$this->recordResult('create', $table, $this->db->query($prefixed_query[0]) != false);
+					break;
+				case 'INSERT INTO':
+					$success = $this->db->query($prefixed_query[0]) != false;
+					$this->recordResult('insert', $table, $success, $success ? $this->db->getAffectedRows() : 1);
+					break;
+				case 'ALTER TABLE':
+					$this->recordResult('alter', $table, $this->db->query($prefixed_query[0]) != false);
+					break;
+				case 'DROP TABLE':
+					$this->recordResult('drop', $table, $this->db->query('DROP TABLE ' . $table) != false);
+					break;
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Records the result of a query for the final report
+	 *
+	 * @param string $command create, insert, alter or drop
+	 * @param string $table Name of the (prefixed) table
+	 * @param bool $success Whether the query was successful
+	 * @param int $count Number of affected rows (used by inserts, which are accumulated)
+	 */
+	private function recordResult(string $command, string $table, bool $success, int $count = 1): void {
+		$results = &$this->s_tables;
+		if (!$success) {
+			$results = &$this->f_tables;
+		}
+		if ($command === 'insert') {
+			$results[$command][$table] = ($results[$command][$table] ?? 0) + $count;
+		} elseif (!isset($results[$command][$table])) {
+			$results[$command][$table] = 1;
+		}
 	}
 
 	public $successStrings = array(
@@ -145,7 +139,7 @@ class db_manager {
 		$commands = array( 'create', 'insert', 'alter', 'drop' );
 		$content = '<ul class="log">';
 		foreach ( $commands as $cmd) {
-			if (!@empty( $this->s_tables[$cmd] )) {
+			if (!empty($this->s_tables[$cmd])) {
 				foreach ( $this->s_tables[$cmd] as $key => $val) {
 					$content .= '<li class="success">';
 					$content .= ($cmd!='insert') ? sprintf( $this->successStrings[$cmd], $key ) : sprintf( $this->successStrings[$cmd], $val, $key );
@@ -154,7 +148,7 @@ class db_manager {
 			}
 		}
 		foreach ( $commands as $cmd) {
-			if (!@empty( $this->f_tables[$cmd] )) {
+			if (!empty($this->f_tables[$cmd])) {
 				foreach ( $this->f_tables[$cmd] as $key => $val) {
 					$content .= '<li class="failure">';
 					$content .= ($cmd!='insert') ? sprintf( $this->failureStrings[$cmd], $key ) : sprintf( $this->failureStrings[$cmd], $val, $key );
@@ -186,8 +180,6 @@ class db_manager {
 		$table = $this->db->prefix($table);
 		$query = 'INSERT INTO '.$table.' '.$query;
 		if (!$this->db->queryF($query)) {
-			//var_export($query);
-			//echo '<br />' . mysql_error() . '<br />';
 			if (!isset($this->f_tables['insert'][$table])) {
 				$this->f_tables['insert'][$table] = 1;
 			} else {
@@ -205,7 +197,7 @@ class db_manager {
 	}
 
 	public function isError() {
-		return (isset($this->f_tables)) ? true : false;
+		return !empty($this->f_tables);
 	}
 
 	public function tableExists($table) {
@@ -214,7 +206,7 @@ class db_manager {
 		if ($table != '') {
 			$this->db->connect();
 			$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix($table);
-			$ret = (false != $this->db->query($sql)) ? true : false;
+			$ret = false != $this->db->query($sql);
 		}
 		return $ret;
 	}

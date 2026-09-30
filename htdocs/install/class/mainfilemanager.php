@@ -47,92 +47,76 @@
  **/
 class mainfile_manager {
 
-	var $path = '../mainfile.php';
-	var $distfile = './templates/mainfile.dist.php';
-	var $rewrite = array();
+	public $path = '../mainfile.php';
+	public $distfile = './templates/mainfile.dist.php';
+	public $rewrite = array();
 
-	var $report = '';
-	var $error = false;
+	public $report = '';
+	public $error = false;
 
-	function  __construct() {
+	public function __construct() {
 	}
 
-	function setRewrite($def, $val) {
+	public function setRewrite($def, $val) {
 		$this->rewrite[$def] = $val;
 	}
 
-	function copyDistFile() {
-		if (! copy($this->distfile, $this->path)) {
-			$this->report .= _NGIMG.sprintf(_INSTALL_L126, "<b>".$this->path."</b>")."<br />\n";
+	public function copyDistFile() {
+		if (!copy($this->distfile, $this->path)) {
+			$this->report .= _NGIMG . sprintf(_INSTALL_L126, "<b>" . $this->path . "</b>") . "<br />\n";
 			$this->error = true;
 			return false;
 		}
-		$this->report .= _OKIMG.sprintf(_INSTALL_L125, "<b>".$this->path."</b>", "<b>".$this->distfile."</b>")."<br />\n";
+		$this->report .= _OKIMG . sprintf(_INSTALL_L125, "<b>" . $this->path . "</b>", "<b>" . $this->distfile . "</b>") . "<br />\n";
 		return true;
 	}
 
-	function doRewrite() {
+	public function doRewrite() {
 		clearstatcache();
-		if (! $file = fopen($this->path,"r")) {
+		$content = file_get_contents($this->path);
+		if ($content === false) {
 			$this->error = true;
 			return false;
 		}
-		$content = fread($file, filesize($this->path) );
-		fclose($file);
 
 		foreach ($this->rewrite as $key => $val) {
-			if (is_int($val) &&
-			preg_match("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/",$content)) {
-				if ($key == 'PROTECTOR1' || $key == 'PROTECTOR2') {
-					$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/", $val, $content);
-					$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
-					continue;
-				}
-				$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/"
-				, "define('".$key."', ".$val.")"
-				, $content);
-				$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
-			}
-			elseif (preg_match("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/",$content)) {
-				if ($key == 'PROTECTOR1' || $key == 'PROTECTOR2') {
-					$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/", $val, $content);
-					$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
-					continue;
-				}
-				$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/"
-				, "define('".$key."', '". str_replace( '$', '\$', addslashes( $val ) ) ."')"
-				, $content);
-				$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
+			if ($key === 'PROTECTOR1' || $key === 'PROTECTOR2') {
+				// the value is a complete statement which replaces the whole define() call
+				$pattern = '/define\(([\'"])' . preg_quote($key, '/') . '\1,\s*(?:[0-9]+|([\'"])(.*?)\2)\s*\)/';
+				$newContent = preg_match($pattern, $content)
+					? preg_replace_callback($pattern, static function () use ($val) {
+						return (string) $val;
+					}, $content)
+					: null;
 			} else {
-				$this->error = true;
-				$this->report .= _NGIMG.sprintf(_INSTALL_L122, "<b>$val</b>")."<br />\n";
+				$newContent = icms_install_rewrite_define($content, $key, $val);
 			}
+
+			if ($newContent === null) {
+				$this->error = true;
+				$this->report .= _NGIMG . sprintf(_INSTALL_L122, "<b>" . htmlspecialchars((string) $val) . "</b>") . "<br />\n";
+				continue;
+			}
+			$content = $newContent;
+			$this->report .= _OKIMG . sprintf(_INSTALL_L121, "<b>$key</b>", htmlspecialchars((string) $val)) . "<br />\n";
 		}
 
-		if (!$file = fopen($this->path,"w")) {
+		if (file_put_contents($this->path, $content) === false) {
 			$this->error = true;
 			return false;
 		}
-
-		if (fwrite($file,$content) == -1) {
-			fclose($file);
-			$this->error = true;
-			return false;
-		}
-
-		fclose($file);
 
 		return true;
 	}
 
-	function report() {
+	public function report() {
 		$content = "<table align='center'><tr><td align='left'>\n";
 		$content .= $this->report;
 		$content .= "</td></tr></table>\n";
 		return $content;
 	}
 
-	function error() {
+	public function error() {
 		return $this->error;
 	}
 }
