@@ -44,7 +44,7 @@ icms_loadLanguageFile("core", "databaseupdater");
 if (is_object(icms::$module)) {
 	define("SYSTEM_DB_VERSION", icms::$module->getDBVersion());
 } else {
-	define("SYSTEM_DB_VERSION", 48);
+	define("SYSTEM_DB_VERSION", 49);
 }
 
 /**
@@ -301,62 +301,33 @@ function xoops_module_update_system(
 	}
 	try {
 		if ($dbVersion < $newDbVersion) {
-			// Move the Composer vendor directory from the web root into the trust path.
-			// This keeps third-party library code out of the public web root, which is
-			// strongly recommended on shared hosting environments.
+			// Same routine as the installer's vendor step (install/page_movevendor.php):
+			// copy + verify + delete, then re-base the autoloader and composer.json.
 			//
-			// icms_core_Filesystem::moveVendorToTrust() uses copy+delete so it works
-			// safely across filesystem partitions (common on shared hosting where
-			// rename() would fail).  The return 'status' values are:
-			//   'ok'         – move succeeded (source removed or could not be removed → see 'warning')
-			//   'skipped'    – vendor already in trust path, or already moved in a previous run
-			//   'novendor'   – vendor not found in either location (pre-Composer upgrade)
-			//   'error_copy' – copy failed; upgrade is aborted so the admin can fix it
+			// The Composer autoloader of this request is already loaded from the web
+			// root, so its removal is deferred to the end of the request; otherwise
+			// vendor classes that are autoloaded later on would no longer be found.
 			$moveResult = icms_core_Filesystem::moveVendorToTrust(
 				ICMS_ROOT_PATH,
 				ICMS_TRUST_PATH,
+				true,
 			);
 
-			switch ($moveResult["status"]) {
-				case "ok":
-					echo "Vendor directory successfully moved to the trust path.<br />";
-					if (!empty($moveResult["warning"])) {
-						echo '<span style="color:orange;">' .
-							htmlspecialchars($moveResult["warning"]) .
-							"</span><br />";
-					}
-					break;
-
-				case "skipped":
-					echo "Vendor directory is already in the trust path &ndash; no action needed.<br />";
-					if (!empty($moveResult["warning"])) {
-						echo '<span style="color:orange;">' .
-							htmlspecialchars($moveResult["warning"]) .
-							"</span><br />";
-					}
-					break;
-
-				case "novendor":
-					// No vendor directory found anywhere – this is expected when upgrading
-					// from a very old version that pre-dates Composer support, or when the
-					// site was set up with vendor already in the trust path by other means.
-					echo "No vendor directory found in the web root &ndash; skipping move.<br />";
-					break;
-
-				case "error_copy":
-				default:
-					// A copy failure is fatal: if vendor ends up in the wrong place the
-					// autoloader will be broken after the upgrade.
-					$abortUpdate = true;
-					echo '<span style="color:red;">' .
-						"ERROR: Could not move the vendor directory to the trust path. " .
-						htmlspecialchars($moveResult["message"]) .
-						" Source: " .
-						htmlspecialchars($moveResult["src"]) .
-						" Destination: " .
-						htmlspecialchars($moveResult["dest"]) .
+			if (in_array($moveResult["status"], ["ok", "skipped", "novendor"], true)) {
+				echo htmlspecialchars($moveResult["message"], ENT_QUOTES) . "<br />";
+				if (!empty($moveResult["warning"])) {
+					echo '<span style="color:orange;">' .
+						htmlspecialchars($moveResult["warning"], ENT_QUOTES) .
 						"</span><br />";
-					break;
+				}
+			} else {
+				// A copy failure is fatal: the admin has to fix it (see the
+				// manual steps of the installer) and run the update again.
+				$abortUpdate = true;
+				echo '<span style="color:red;">' .
+					"ERROR: Could not move the vendor directory to the trust path. " .
+					nl2br(htmlspecialchars($moveResult["message"], ENT_QUOTES)) .
+					"</span><br />";
 			}
 
 			/* Finish up this portion of the db update */
@@ -371,7 +342,8 @@ function xoops_module_update_system(
 				) . "<br />";
 			}
 		}
-	} catch (Exception $e) {
+	} catch (Throwable $e) {
+		$abortUpdate = true;
 		echo $e->getMessage();
 	}
 

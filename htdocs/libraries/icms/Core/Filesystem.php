@@ -673,11 +673,16 @@ class Filesystem
 	 *
 	 * @param  string $rootPath   Absolute path to the web root  (ICMS_ROOT_PATH)
 	 * @param  string $trustPath  Absolute path to the trust path (ICMS_TRUST_PATH)
+	 * @param  bool   $deferSourceRemoval  Remove the web-root copy at the end of the
+	 *                request instead of immediately. Use this when the running request
+	 *                has already loaded the Composer autoloader from the web root, so
+	 *                classes that are still to be autoloaded do not disappear mid-request.
 	 * @return array{status: string, message: string, warning: string, src: string, dest: string}
 	 */
 	public static function moveVendorToTrust(
 		string $rootPath,
 		string $trustPath,
+		bool $deferSourceRemoval = false,
 	): array {
 		// Normalise: forward slashes, no trailing slash
 		$src = rtrim(str_replace("\\", "/", $rootPath), "/") . "/vendor";
@@ -685,6 +690,27 @@ class Filesystem
 
 		$srcExists = is_dir($src);
 		$destExists = is_dir($dest);
+
+		$removeSource = static function () use ($src, $deferSourceRemoval): string {
+			if ($deferSourceRemoval) {
+				register_shutdown_function(
+					static fn() => self::deleteRecursive($src, true),
+				);
+
+				return "";
+			}
+
+			self::deleteRecursive($src, true);
+
+			return is_dir($src) ?
+				sprintf(
+					"The vendor directory in the web root (%s) could not be removed. " .
+						"Please delete it manually via FTP/SFTP or your hosting file manager " .
+						"to prevent third-party library code from being web-accessible.",
+					$src,
+				) :
+				"";
+		};
 
 		$base = [
 			"warning" => "",
@@ -733,14 +759,7 @@ class Filesystem
 				$srcHash === $destHash
 			) {
 				// Identical copy already present – just remove the web-root original.
-				self::deleteRecursive($src, true);
-				$warning = is_dir($src)
-					? sprintf(
-						"The vendor directory in the web root (%s) could not be removed. " .
-							"Please delete it manually via FTP/SFTP or your hosting file manager.",
-						$src,
-					)
-					: "";
+				$warning = $removeSource();
 				$warning .= self::finalizeTrustVendor($rootPath, $trustPath);
 				return $base + [
 					"status" => "skipped",
@@ -912,17 +931,7 @@ class Filesystem
 		}
 
 		// ── Delete the original from the web root ─────────────────────────────
-		self::deleteRecursive($src, true);
-
-		$warning = "";
-		if (is_dir($src)) {
-			$warning = sprintf(
-				"The vendor directory in the web root (%s) could not be removed automatically. " .
-					"Please delete it manually via FTP/SFTP or your hosting file manager " .
-					"to prevent third-party library code from being web-accessible.",
-				$src,
-			);
-		}
+		$warning = $removeSource();
 
 		$warning .= self::finalizeTrustVendor($rootPath, $trustPath);
 
