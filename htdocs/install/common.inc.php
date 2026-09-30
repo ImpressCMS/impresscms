@@ -107,6 +107,27 @@ if (!empty($_icms_trust_path)) {
 
 	if (file_exists($_icms_candidate)) {
 		$_icms_vendor_autoload = $_icms_candidate;
+
+		/*
+		 * A vendor directory that was copied to the trust path by an earlier
+		 * version of the installer still has autoloader paths relative to the
+		 * web root; re-base them before the autoloader is used.
+		 */
+		$_icms_static = dirname($_icms_candidate) . "/composer/autoload_static.php";
+		if (
+			is_file($_icms_static) &&
+			strpos(
+				(string) file_get_contents($_icms_static),
+				"__DIR__ . '/../..' . '/libraries/",
+			) !== false
+		) {
+			require_once __DIR__ . "/../libraries/icms/Core/Filesystem.php";
+			\Icms\Core\Filesystem::finalizeTrustVendor(
+				realpath(__DIR__ . "/..") ?: __DIR__ . "/..",
+				$_icms_trust_path,
+			);
+		}
+		unset($_icms_static);
 	}
 	unset($_icms_candidate);
 }
