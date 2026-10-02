@@ -1,0 +1,84 @@
+<?php
+/**
+ * UrlLink Object
+ *
+ * @copyright   http://www.impresscms.org/ The ImpressCMS Project
+ * @license     http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @category    ICMS
+ * @package     Data
+ * @subpackage  Urllink
+ * @since       1.3
+ * @author      Phoenyx
+ * @version     $Id: Object.php 10849 2010-12-05 18:46:02Z phoenyx $
+ */
+
+declare(strict_types=1);
+
+namespace Icms\Data\Urllink;
+
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+
+/**
+ * UrlLink entity (formerly icms_data_urllink_Object).
+ *
+ * @category    ICMS
+ * @package     Data
+ * @subpackage  Urllink
+ */
+class Entity extends \Icms\Ipf\Entity
+{
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->quickInitVar("urllinkid", XOBJ_DTYPE_INT, true);
+        $this->quickInitVar("mid", XOBJ_DTYPE_INT, true);
+        $this->quickInitVar("caption", XOBJ_DTYPE_TXTBOX, false);
+        $this->quickInitVar("description", XOBJ_DTYPE_TXTBOX, false);
+        $this->quickInitVar("url", XOBJ_DTYPE_TXTBOX, false);
+        $this->quickInitVar("target", XOBJ_DTYPE_TXTBOX, true);
+
+        $this->setControl("target", [
+            "options" => [
+                "_self" => _CO_ICMS_URLLINK_SELF,
+                "_blank" => _CO_ICMS_URLLINK_BLANK,
+            ],
+        ]);
+    }
+
+    /**
+     * Get value for variable.
+     *
+     * @param  string $key    field name
+     * @param  string $format format
+     * @return mixed  value
+     */
+    public function getVar($key, $format = "e")
+    {
+        if (substr($key, 0, 4) == "url_") {
+            return parent::getVar("url", $format);
+        } elseif (substr($key, 0, 4) == "mid_") {
+            return parent::getVar("mid", $format);
+        } elseif (substr($key, 0, 8) == "caption_") {
+            return parent::getVar("caption", $format);
+        } elseif (substr($key, 0, 5) == "desc_") {
+            return parent::getVar("description", $format);
+        } else {
+            return parent::getVar($key, $format);
+        }
+    }
+
+    /**
+     * Generate html for clickable link.
+     */
+    public function render(): string
+    {
+        $ret  = "<a href='" . $this->getVar("url") . "' target='" . $this->getVar("target") . "' ";
+        $ret .= "title='" . $this->getVar("description") . "'>";
+        $ret .= $this->getVar("caption") . "</a>";
+        return $ret;
+    }
+}
+
+\class_alias(Entity::class, 'icms_data_urllink_Object');
