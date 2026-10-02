@@ -130,7 +130,7 @@ class ProtectorMySQLDatabase extends icms_db_legacy_mysql_Proxy {
 		}
 	}
 
-	function query($sql, $limit = 0, $start = 0) {
+	function query(string $sql, int $limit = 0, int $start = 0) {
 		$sql4check = substr($sql, 7);
 		foreach ($this->doubtful_needles as $needle) {
 			if (stristr($sql4check, $needle)) {

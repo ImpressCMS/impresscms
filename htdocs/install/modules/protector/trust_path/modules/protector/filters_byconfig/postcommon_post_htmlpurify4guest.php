@@ -16,7 +16,7 @@ class protector_postcommon_post_htmlpurify4guest extends ProtectorFilterAbstract
 			$this->method = 'htmlpurify';
 		} else {
 			// use HTMLPurifier inside Protector
-			require_once dirname(__DIR__) . '/library/HTMLPurifier.auto.php';
+
 			$config = HTMLPurifier_Config::createDefault();
 			$config->set('Cache', 'SerializerPath', ICMS_TRUST_PATH . '/modules/protector/configs');
 			$config->set('Core', 'Encoding', _CHARSET);
