@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Icms\Db\Mysql;
 
 /**
@@ -13,8 +15,6 @@ namespace Icms\Db\Mysql;
  * @subpackage	MySQL
  * @version
  */
-
-declare(strict_types=1);
 
 /**
  *

@@ -38,8 +38,7 @@ declare(strict_types=1);
  * @since 1.3
  * @author vaughan montgomery (vaughan@impresscms.org)
  * @author ImpressCMS Project
- * @copyright (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version SVN: $Id: DataFilter.php 12369 2013-11-24 00:04:20Z skenow $
+ * @copyright (c) 2007-2026 The ImpressCMS Project - www.impresscms.org
  */
 /**
  *
@@ -420,12 +419,14 @@ class DataFilter {
 	 * @return array
 	 */
 	static public function checkVarArray(array $input, array $filters, $strict = true) {
+		$output = array();
+
 		foreach (array_intersect_key($input, $filters) as $key => $value) {
 			$options[0] = $options[1] = '';
-			if (array_key_exists('options', $filters) && isset($filters[$key]['options'][0])) {
+			if (is_array($filters[$key]) && isset($filters[$key]['options'][0])) {
 				$options[0] = $filters[$key]['options'][0];
 			}
-			if (array_key_exists('options', $filters) && isset($filters[$key]['options'][1])) {
+			if (is_array($filters[$key]) && isset($filters[$key]['options'][1])) {
 				$options[1] = $filters[$key]['options'][1];
 			}
 			if (is_array($filters[$key])) {
@@ -491,7 +492,7 @@ class DataFilter {
 		if($text) {
 			\icms::$preload->triggerEvent('beforeFilterTextareaDisplay', array(&$text, $smiley, $icode, $image, $br));
 
-		// neccessary for the time being until we rework the IPF & Data Object Types in 2.0
+			// neccessary for the time being until we rework the IPF & Data Object Types in 2.0
 
 			$text = str_replace('<!-- input filtered -->', '', $text);
 			$text = str_replace('<!-- filtered with htmlpurifier -->', '', $text);
