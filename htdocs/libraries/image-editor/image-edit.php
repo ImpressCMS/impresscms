@@ -20,6 +20,11 @@ if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGr
 	exit(_NOPERM);
 }
 
+$icmsModule = icms::handler('icms_module')->getByDirname('system');
+if (!is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+	exit(_NOPERM);
+}
+
 use WideImage\WideImage;
 
 icms_loadLanguageFile('system', 'images', true);
@@ -27,9 +32,9 @@ icms_loadLanguageFile('system', 'images', true);
 $icmsTpl = new icms_view_Tpl();
 
 /* set get and post filters, if not strings */
-$filter_get = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str', 'image_path' => 'str', 'image_name' => 'str', 'image_weight' => 'int', 'image_display' => 'int', 'image_temp' => 'str', 'overwrite' => 'int');
+$filter_get = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str', 'csrf_token' => 'str');
 
-$filter_post = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str');
+$filter_post = array('image_id' => 'int', 'uniq' => 'str', 'type' => 'str', 'target' => 'str', 'op' => 'str', 'csrf_token' => 'str');
 
 /* set default values for variables */
 
@@ -73,9 +78,14 @@ if (!empty($target) && !empty($type)) {
 }
 
 if (!empty($op) && $op == 'cancel') {
+	/* CSRF Token */
+	if (!icms::$security->check(true, htmlspecialchars((string) filter_input(INPUT_GET, 'csrf_token'), ENT_QUOTES) ?: htmlspecialchars((string) filter_input(INPUT_POST, 'csrf_token'), ENT_QUOTES))) {
+		die(implode('<br />', icms::$security->getErrors()));
+	}
+
 	/* make sure the file is in the temp folder and prevent arbitrary deletes of any file */
 	$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-	if (!empty($image_path) && strncmp(realpath($image_path), $image_path, strlen($valid_path)) == 0) {
+	if (!empty($image_path) && strncmp(realpath($image_path), $valid_path, strlen($valid_path)) == 0) {
 		$image_path = realpath($image_path);
 	} else {
 		$image_path = NULL;
@@ -109,6 +119,11 @@ if (!empty($op) && $op == 'cancel') {
 	exit();
 }
 if (!empty($op) && $op == 'save') {
+	/* CSRF Token */
+	if (!icms::$security->check(true, htmlspecialchars((string) filter_input(INPUT_GET, 'csrf_token'), ENT_QUOTES) ?: htmlspecialchars((string) filter_input(INPUT_POST, 'csrf_token'), ENT_QUOTES))) {
+		die(implode('<br />', icms::$security->getErrors()));
+	}
+
 	$simage_id = $image_id;
 	$simage_name = $image_name;
 	$simage_weight = $image_weight;
@@ -263,5 +278,10 @@ foreach ($plugins_arr as $plugin_folder) {
 		unset($plugversion);
 	}
 }
+
+/* CSRF Token */
+echo icms::$security->getTokenHTML();
+$csrf_token = icms::$security->createToken();
+$icmsTpl->assign('csrf_token', $csrf_token);
 
 echo $icmsTpl->fetch(ICMS_LIBRARIES_PATH . '/image-editor/templates/image-editor.html');

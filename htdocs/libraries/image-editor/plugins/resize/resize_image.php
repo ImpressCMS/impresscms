@@ -11,16 +11,31 @@
  */
 $xoopsOption['nodebug'] = 1;
 require_once '../../../../mainfile.php';
+
+if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGroups())) {
+	exit(_NOPERM);
+}
+
+$icmsModule = icms::handler('icms_module')->getByDirname('system');
+if (!is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+	exit(_NOPERM);
+}
+
+/* CSRF Token */
+if (!icms::$security->check(false, htmlspecialchars((string) filter_input(INPUT_GET, 'csrf_token'), ENT_QUOTES))) {
+	die(implode('<br />', icms::$security->getErrors()));
+}
+
 use WideImage\WideImage;
 
 /* 3 critical parameters must exist - and must be safe */
-$image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
+$image_path = htmlspecialchars((string) filter_input(INPUT_GET, 'image_path'), ENT_QUOTES);
 $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
-$filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
+$filter = htmlspecialchars((string) filter_input(INPUT_GET, 'filter'), ENT_QUOTES);
 
 /* prevent remote file inclusion */
 $valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-if (!empty($image_path) && strncmp(realpath($image_path), $image_path, strlen($valid_path)) == 0) {
+if (!empty($image_path) && strncmp(realpath($image_path), $valid_path, strlen($valid_path)) == 0) {
 	$image_path = realpath($image_path);
 } else {
 	$image_path = null;

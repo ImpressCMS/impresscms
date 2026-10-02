@@ -24,18 +24,18 @@ use WideImage\WideImage;
  * no POST variables
  *
  */
-$file = filter_input(INPUT_GET, 'file', FILTER_SANITIZE_STRING);
+$file = htmlspecialchars((string) filter_input(INPUT_GET, 'file'), ENT_QUOTES);
 $resize = isset($_GET['resize']) ? (int) $_GET['resize'] : 1;
-$filter = isset($_GET['filter']) ? filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING) : NULL;
+$filter = isset($_GET['filter']) ? htmlspecialchars((string) filter_input(INPUT_GET, 'filter'), ENT_QUOTES) : NULL;
 $args = array();
 if (isset($_GET['arg1'])) {
-	$args[] = filter_input(INPUT_GET, 'arg1', FILTER_SANITIZE_STRING);
+	$args[] = htmlspecialchars((string) filter_input(INPUT_GET, 'arg1'), ENT_QUOTES);
 }
 if (isset($_GET['arg2'])) {
-	$args[] = filter_input(INPUT_GET, 'arg2', FILTER_SANITIZE_STRING);
+	$args[] = htmlspecialchars((string) filter_input(INPUT_GET, 'arg2'), ENT_QUOTES);
 }
 if (isset($_GET['arg3'])) {
-	$args[] = filter_input(INPUT_GET, 'arg3', FILTER_SANITIZE_STRING);
+	$args[] = htmlspecialchars((string) filter_input(INPUT_GET, 'arg3'), ENT_QUOTES);
 }
 
 $image_handler = icms::handler('icms_image');
