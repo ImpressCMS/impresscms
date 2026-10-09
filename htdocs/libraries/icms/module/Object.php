@@ -121,21 +121,13 @@ class icms_module_Object extends icms_core_Object {
 	 */
 	public function registerClassPath($isactive = NULL) {
 		if ($this->getVar("dirname") == "system") return;
-		$class_path = ICMS_ROOT_PATH . "/modules/" . $this->getVar("dirname") . "/class";
 
-		// check if class path exists
-		if (!is_dir($class_path)) return;
+		// With Composer autoloader, module classes are automatically loaded
+		// via the classmap configuration in composer.json
+		// No manual registration needed
 
 		// check if module is active (only if applicable)
 		if ($isactive !== NULL && $this->getVar("isactive") != (int) $isactive) return;
-
-		// register class path
-		if ($this->getVar("ipf")) {
-			$modname = ($this->getVar("modname") != "") ? $this->getVar("modname") : $this->getVar("dirname");
-			icms_Autoloader::register($class_path, "mod_" . $modname);
-		} else {
-			icms_Autoloader::register($class_path);
-		}
 	}
 
 	/**

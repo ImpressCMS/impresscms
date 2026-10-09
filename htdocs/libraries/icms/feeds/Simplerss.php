@@ -16,8 +16,7 @@
  * @version		$Id: Simplerss.php 12107 2012-11-08 15:22:12Z skenow $
  */
 
-include_once ICMS_LIBRARIES_PATH . '/simplepie/autoloader.php';
-include_once ICMS_LIBRARIES_PATH . '/simplepie/idn/idna_convert.class.php';
+use \SimplePie\SimplePie;
 
 class icms_feeds_Simplerss extends SimplePie {
 
