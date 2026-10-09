@@ -491,6 +491,7 @@ CREATE TABLE tplsource (
 
 CREATE TABLE users (
   `uid` mediumint(8) unsigned NOT NULL auto_increment,
+  `hash_uid` varchar(64) NOT NULL default '',
   `name` varchar(60) NOT NULL default '',
   `uname` varchar(255) NOT NULL default '',
   `email` varchar(255) NOT NULL default '',
@@ -528,7 +529,8 @@ CREATE TABLE users (
   `login_name` varchar(255) NOT NULL default '',
   PRIMARY KEY (`uid`),
   KEY `uname` (`uname`(10)),
-  UNIQUE KEY `login_name` (`login_name`(10))
+  UNIQUE KEY `login_name` (`login_name`(10)),
+  UNIQUE KEY `hash_uid` (`hash_uid`)
 );
 
 #

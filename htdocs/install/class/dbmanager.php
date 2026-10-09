@@ -186,8 +186,8 @@ class db_manager {
 		$table = $this->db->prefix($table);
 		$query = 'INSERT INTO '.$table.' '.$query;
 		if (!$this->db->queryF($query)) {
-			//var_export($query);
-			//echo '<br />' . mysql_error() . '<br />';
+			// var_export($query);
+			// echo '<br />' . mysql_error() . '<br />';
 			if (!isset($this->f_tables['insert'][$table])) {
 				$this->f_tables['insert'][$table] = 1;
 			} else {
