@@ -13,10 +13,7 @@
 </head>
 <body onresize="resizePanels();" onload="resizePanels();">
   <div id="pageContent">
-    {literal}
-    <!-- CSRF Token -->
     <input type="hidden" name="csrf_token" value="<{$csrf_token}>">
-{/literal}
     <div id="dhtmlgoodies_xpPane">
 	  <div class="dhtmlgoodies_panel">
 	    <div>
@@ -85,7 +82,6 @@
                <input type="hidden" id="save_img_tempname" value="<{$image.name}>">
                <input type="hidden" id="save_img_path" value="<{$image.path}>">
                <input type="hidden" id="save_img_url" value="<{$image.url}>" />
-               <input type="hidden" name="csrf_token" value="<{$csrf_token}>">
              </div>
           <!-- End content -->
         </div>		

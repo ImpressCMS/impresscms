@@ -3,37 +3,32 @@ $xoopsOption['nodebug'] = 1;
 if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGroups())) {
-	exit(_NOPERM);
-}
+require_once ICMS_LIBRARIES_PATH . '/image-editor/include/functions.php';
 
-$icmsModule = icms::handler('icms_module')->getByDirname('system');
-if (!is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
-	exit(_NOPERM);
-}
+icms_imageeditor_checkAccess();
 
 use WideImage\WideImage;
 
 /* prevent remote file inclusion / arbitrary file read */
-$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-$file = isset($_GET['file']) ? $_GET['file'] : '';
-if (!empty($file) && strncmp(realpath($file), $valid_path, strlen($valid_path)) == 0) {
-	$file = realpath($file);
-} else {
+$file = icms_imageeditor_tempPath(filter_input(INPUT_GET, 'file'));
+if ($file === null) {
 	exit(_NOPERM);
 }
 
 $resize = isset($_GET['resize']) ? (int) $_GET['resize'] : 1;
-$filter = isset($_GET['filter']) ? $_GET['filter'] : null;
+$filter = filter_input(INPUT_GET, 'filter');
+if (!in_array($filter, icms_imageeditor_filters(), true)) {
+	$filter = null;
+}
 $args = array();
 if (isset($_GET['arg1'])) {
-	$args[] = $_GET['arg1'];
+	$args[] = (int) $_GET['arg1'];
 }
 if (isset($_GET['arg2'])) {
-	$args[] = $_GET['arg2'];
+	$args[] = (int) $_GET['arg2'];
 }
 if (isset($_GET['arg3'])) {
-	$args[] = $_GET['arg3'];
+	$args[] = (int) $_GET['arg3'];
 }
 
 $img = WideImage::load($file);

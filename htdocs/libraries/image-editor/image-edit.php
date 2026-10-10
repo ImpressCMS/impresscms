@@ -16,14 +16,9 @@ if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-if (!is_object(icms::$user) || in_array(ICMS_GROUP_ANONYMOUS, icms::$user->getGroups())) {
-	exit(_NOPERM);
-}
+require_once ICMS_LIBRARIES_PATH . '/image-editor/include/functions.php';
 
-$icmsModule = icms::handler('icms_module')->getByDirname('system');
-if (!is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
-	exit(_NOPERM);
-}
+icms_imageeditor_checkAccess();
 
 use WideImage\WideImage;
 
@@ -78,40 +73,30 @@ if (!empty($target) && !empty($type)) {
 }
 
 if (!empty($op) && $op == 'cancel') {
-	/* CSRF Token */
-	if (!icms::$security->check(true, htmlspecialchars((string) filter_input(INPUT_GET, 'csrf_token'), ENT_QUOTES) ?: htmlspecialchars((string) filter_input(INPUT_POST, 'csrf_token'), ENT_QUOTES))) {
-		die(implode('<br />', icms::$security->getErrors()));
-	}
+	icms_imageeditor_checkToken(true);
 
 	/* make sure the file is in the temp folder and prevent arbitrary deletes of any file */
-	$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-	if (!empty($image_path) && strncmp(realpath($image_path), $valid_path, strlen($valid_path)) == 0) {
-		$image_path = realpath($image_path);
-	} else {
-		$image_path = NULL;
-	}
+	$valid_path = icms_imageeditor_tempFolder();
+	$image_dir = empty($image_path) ? false : realpath(dirname($image_path));
+	$temp_name = basename((string) $image_path);
 
-	if (file_exists($image_path)) {
-		@unlink($image_path);
-	}
+	if ($valid_path !== null && $image_dir === $valid_path && str_starts_with($temp_name, 'temp_')) {
+		$temp_files = array($temp_name, 'orig_' . substr($temp_name, 5));
 
-	$arr = explode('/', $image_path);
-	$arr[count($arr) - 1] = 'orig_' . substr($arr[count($arr) - 1], 5, strlen($arr[count($arr) - 1]));
-	$orig_img_path = implode('/', $arr);
+		$plugins_arr = icms_core_Filesystem::getDirList(ICMS_LIBRARIES_PATH . '/image-editor/plugins');
+		foreach ($plugins_arr as $plugin_folder) {
+			if (file_exists(ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php')) {
+				$temp_files[] = "{$plugin_folder}_{$temp_name}";
+			}
+		}
 
-	if (file_exists($orig_img_path)) {
-		@unlink($orig_img_path);
-	}
-
-	$plugins_arr = icms_core_Filesystem::getDirList(ICMS_LIBRARIES_PATH . '/image-editor/plugins');
-	foreach ($plugins_arr as $plugin_folder) {
-		if (file_exists(ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php')) {
-			$arr = explode('/', $image_path);
-			$arr[count($arr) - 1] = $plugin_folder . '_' . $arr[count($arr) - 1];
-			$temp_img_path = implode('/', $arr);
-			@unlink($image_path);
+		foreach ($temp_files as $temp_file) {
+			if (file_exists($valid_path . DIRECTORY_SEPARATOR . $temp_file)) {
+				@unlink($valid_path . DIRECTORY_SEPARATOR . $temp_file);
+			}
 		}
 	}
+
 	if (isset($_SESSION['icms_imanager'])) {
 		unset($_SESSION['icms_imanager']);
 	}
@@ -119,10 +104,8 @@ if (!empty($op) && $op == 'cancel') {
 	exit();
 }
 if (!empty($op) && $op == 'save') {
-	/* CSRF Token */
-	if (!icms::$security->check(true, htmlspecialchars((string) filter_input(INPUT_GET, 'csrf_token'), ENT_QUOTES) ?: htmlspecialchars((string) filter_input(INPUT_POST, 'csrf_token'), ENT_QUOTES))) {
-		die(implode('<br />', icms::$security->getErrors()));
-	}
+	/* not cleared here, the cancel_edit() call in the response still needs the token */
+	icms_imageeditor_checkToken(false);
 
 	$simage_id = $image_id;
 	$simage_name = $image_name;
@@ -279,9 +262,6 @@ foreach ($plugins_arr as $plugin_folder) {
 	}
 }
 
-/* CSRF Token */
-echo icms::$security->getTokenHTML();
-$csrf_token = icms::$security->createToken();
-$icmsTpl->assign('csrf_token', $csrf_token);
+$icmsTpl->assign('csrf_token', icms::$security->createToken());
 
 echo $icmsTpl->fetch(ICMS_LIBRARIES_PATH . '/image-editor/templates/image-editor.html');
