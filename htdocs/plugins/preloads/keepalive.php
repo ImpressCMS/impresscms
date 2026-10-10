@@ -1,23 +1,19 @@
 <?php
-// preload/keepalive.php
+// plugins/preloads/keepalive.php
 
 defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
 
 class IcmsPreloadKeepalive extends icms_preload_Item
 {
-	public function eventBeforeFooter()
+	public function eventBeforeFooter(): void
 	{
 		global $xoTheme;
-		/* ------------------------------------------------------------------
-		 *  Make sure a user object exists and is not a guest.
-		 * ------------------------------------------------------------------*/
-		// The core may still be booting, so icms::$user can be null.
-		// We guard against that before calling isGuest().
-		if (
-			!isset(icms::$user) || // no user object yet
-			!is_object(icms::$user) || // defensive – just in case
-			icms::$user->isGuest() // guest users are ignored
-		) {
+
+		if (!is_object(icms::$user)) {
+			return;
+		}
+
+		if (icms::$user->isGuest()) {
 			return;
 		}
 
@@ -25,26 +21,16 @@ class IcmsPreloadKeepalive extends icms_preload_Item
 			return;
 		}
 
-		/* ------------------------------------------------------------------
-		 * Register the external script, attaching a unique id
-		 * and the keep‑alive endpoint as a data attribute.
-		 */
-		$keepaliveUrl = ICMS_URL . "/keepalive.php";
-		$scriptUrl = ICMS_URL . "/assets/js/keepalive.js";
-
 		$xoTheme->addScript(
-			$scriptUrl,
+			ICMS_URL . "/assets/js/keepalive.js",
 			[
 				"id" => "keepalive-script",
-				"data-keepalive-url" => $keepaliveUrl,
-			],
-			"", // no inline content
-			"module",
-			0, // default weight
+				"data-keepalive-url" => ICMS_URL . "/keepalive.php",
+			]
 		);
 	}
 
-	public function eventAdminHeader()
+	public function eventAdminHeader(): void
 	{
 		$this->eventBeforeFooter();
 	}
