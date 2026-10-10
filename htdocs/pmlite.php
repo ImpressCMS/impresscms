@@ -63,8 +63,13 @@ xoops_header();
 if (icms::$user) {
 	if (isset($_POST['op']) && $_POST['op'] == "submit") {
 		if (!icms::$security->check()) {
-			$security_error = true;
+			echo "<br /><br /><div><h4>" . _PM_USERNOEXIST . "<br />"
+				. _PM_PLZTRYAGAIN . "</h4><br />";
+			echo implode('<br />', icms::$security->getErrors());
+			echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . "</a> ]</div>";
+			exit();
 		}
+
 		$res = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix("users")
 			. " WHERE uid='". (int) ($_POST['to_userid']) . "'");
 		list($count) = icms::$xoopsDB->fetchRow($res);
