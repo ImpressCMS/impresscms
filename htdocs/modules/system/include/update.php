@@ -44,7 +44,7 @@ icms_loadLanguageFile('core', 'databaseupdater');
 if (is_object(icms::$module)) {
 	define('SYSTEM_DB_VERSION', icms::$module->getDBVersion());
 } else {
-	define('SYSTEM_DB_VERSION', 48);
+	define('SYSTEM_DB_VERSION', 49);
 }
 
 /**
@@ -234,6 +234,32 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				$filetoremove = ICMS_ROOT_PATH . '/content.php';
 				icms_core_Filesystem::deleteFile($filetoremove);
 			}
+			/* Finish up this portion of the db update */
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
+		}
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
+	/* Begin upgrade to version 2.0.4 */
+	if (!$abortUpdate) $newDbVersion = 49;
+	try {
+		if ($dbVersion < $newDbVersion) {
+			// add the keepalive preference right after the session expiration preference, disabled on upgraded sites
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item('conf_modid', 0));
+			$criteria->add(new icms_db_criteria_Item('conf_name', 'session_expire'));
+			$sessionExpireConfig = icms::$config->getConfigs($criteria);
+			$keepaliveOrder = count($sessionExpireConfig) > 0
+				? (int) $sessionExpireConfig[0]->getVar('conf_order')
+				: 0;
+
+			$icmsDatabaseUpdater->insertConfig(ICMS_CONF, 'keepalive_enable', '_MD_AM_KEEPALIVE', '0','_MD_AM_KEEPALIVEDSC', 'yesno', 'int', $keepaliveOrder);
+
 			/* Finish up this portion of the db update */
 			if (!$abortUpdate) {
 				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');

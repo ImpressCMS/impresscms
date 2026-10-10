@@ -72,6 +72,10 @@ if (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') !== 'XMLHttpRequest') {
 
 require_once __DIR__ . "/mainfile.php";
 
+if (empty($icmsConfig['keepalive_enable'])) {
+	keepaliveReject(403, "Keepalive disabled");
+}
+
 if (!keepaliveRefererIsValid(xoops_getenv('HTTP_REFERER'))) {
 	keepaliveReject(403, "Invalid request");
 }

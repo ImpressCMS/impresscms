@@ -7,7 +7,11 @@ class IcmsPreloadKeepalive extends icms_preload_Item
 {
 	public function eventBeforeFooter(): void
 	{
-		global $xoTheme;
+		global $xoTheme, $icmsConfig;
+
+		if (empty($icmsConfig['keepalive_enable'])) {
+			return;
+		}
 
 		if (!is_object(icms::$user)) {
 			return;
