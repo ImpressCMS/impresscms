@@ -21,6 +21,10 @@ class IcmsPreloadKeepalive extends icms_preload_Item
 			return;
 		}
 
+		if (!is_object($xoTheme)) {
+			return;
+		}
+
 		/* ------------------------------------------------------------------
 		 * Register the external script, attaching a unique id
 		 * and the keep‑alive endpoint as a data attribute.

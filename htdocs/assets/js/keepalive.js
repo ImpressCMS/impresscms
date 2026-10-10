@@ -1,8 +1,8 @@
 /* keepalive.js */
 
 document.addEventListener("DOMContentLoaded", function () {
-	/* 1 minute in milliseconds */
-	const KEEPALIVE_INTERVAL = 1 * 60 * 1000;
+	/* 5 minutes in milliseconds */
+	const KEEPALIVE_INTERVAL = 5 * 60 * 1000;
 
 	/* Keepalive URL */
 	const scriptTag = document.getElementById("keepalive-script");
