@@ -16,9 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	let inflightController = null;
 
 	/* Periodic keepalive */
-	setInterval(function () {
-		sendKeepAlive();
-	}, KEEPALIVE_INTERVAL);
+	const intervalId = setInterval(sendKeepAlive, KEEPALIVE_INTERVAL);
 
 	/* Send keepalive request */
 	function sendKeepAlive() {
@@ -40,22 +38,18 @@ document.addEventListener("DOMContentLoaded", function () {
 			},
 		})
 			.then((response) => {
-				if (inflightController === controller) {
-					inflightController = null;
+				// Session is gone (logged out or expired): stop pinging
+				if (response.status === 401 || response.status === 403) {
+					clearInterval(intervalId);
 				}
-				if (!response.ok) {
-					throw new Error("HTTP " + response.status);
-				}
-				return response.json();
-			})
-			.then(function () {
-				// Consume response
 			})
 			.catch(() => {
+				// Ignore network errors and aborts
+			})
+			.finally(() => {
 				if (inflightController === controller) {
 					inflightController = null;
 				}
-				// Ignore errors
 			});
 	}
 });
