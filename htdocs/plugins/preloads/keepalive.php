@@ -26,7 +26,7 @@ class IcmsPreloadKeepalive extends icms_preload_Item
 		}
 
 		$xoTheme->addScript(
-			ICMS_URL . "/assets/js/keepalive.js",
+			"assets/js/keepalive.js",
 			[
 				"id" => "keepalive-script",
 				"data-keepalive-url" => ICMS_URL . "/keepalive.php",
