@@ -34,6 +34,8 @@ define("_MD_AM_SESSNAME","Naam sessie");
 define("_MD_AM_SESSNAMEDSC","De naam van de sessie (alleen geldig indien de <i>Gebruik eigen sessie</i> optie is ingeschakeld)");
 define("_MD_AM_SESSEXPIRE","Sessie duur");
 define("_MD_AM_SESSEXPIREDSC","Maximale duur van inactiviteit tijdens een sessie.<br />(alleen mogelijk indien <i>Gebruik PHP native sessie</i> is uitgeschakeld)");
+define("_MD_AM_KEEPALIVE","Sessies actief houden");
+define("_MD_AM_KEEPALIVEDSC","Selecteer ja om de sessie van ingelogde gebruikers actief te houden zolang ze een pagina van de site open hebben, zodat ze niet worden uitgelogd terwijl ze een lang bericht schrijven. Selecteer nee om sessies te laten verlopen na de ingestelde <i>Sessie duur</i>, ook als er nog een pagina open is.");
 define("_MD_AM_MYIP","Uw IP adres");
 define("_MD_AM_MYIPDSC","Dit IP adres zal niet meegeteld worden bij de reclame banners");
 define("_MD_AM_ALWDHTML","Toegestane HTML code in alle berichten");
