@@ -64,9 +64,6 @@ if ($redirect !== '') {
 
 	if ((!$isSafeRelative && !$isSameHost) || $redirect === $_SERVER['REQUEST_URI']) {
 		$redirect = ICMS_URL;
-	} else {
-		$redirect = htmlspecialchars($redirect, ENT_QUOTES);
-	}
 }
 switch ($op) {
 	default:
