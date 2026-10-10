@@ -1,9 +1,6 @@
 <?php
 // htdocs/keepalive.php
 
-// Bootstrap ImpressCMS
-require_once __DIR__ . "/mainfile.php";
-
 define('KEEPALIVE_MIN_INTERVAL', 60);
 
 /**
@@ -29,6 +26,23 @@ function keepaliveRespond(int $status, array $body, array $headers = []): void
 	exit();
 }
 
+/**
+ * Rejected requests must not extend the session, so the session is discarded
+ * without being written back (which would bump sess_updated).
+ *
+ * @param int $status
+ * @param string $error
+ * @param array<int, string> $headers
+ */
+function keepaliveReject(int $status, string $error, array $headers = []): void
+{
+	if (session_status() === PHP_SESSION_ACTIVE) {
+		session_abort();
+	}
+
+	keepaliveRespond($status, ["error" => $error], $headers);
+}
+
 function keepaliveRefererIsValid(string $referer): bool
 {
 	if ($referer === '') {
@@ -49,29 +63,31 @@ function keepaliveRefererIsValid(string $referer): bool
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-	keepaliveRespond(405, ["error" => "Method not allowed"], ["Allow: GET"]);
+	keepaliveReject(405, "Method not allowed", ["Allow: GET"]);
 }
 
-if (xoops_getenv('HTTP_X_REQUESTED_WITH') !== 'XMLHttpRequest') {
-	keepaliveRespond(400, ["error" => "Invalid request"]);
+if (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') !== 'XMLHttpRequest') {
+	keepaliveReject(400, "Invalid request");
 }
+
+require_once __DIR__ . "/mainfile.php";
 
 if (!keepaliveRefererIsValid(xoops_getenv('HTTP_REFERER'))) {
-	keepaliveRespond(403, ["error" => "Invalid request"]);
+	keepaliveReject(403, "Invalid request");
 }
 
 if (!is_object(icms::$user)) {
-	keepaliveRespond(403, ["error" => "Not authenticated"]);
+	keepaliveReject(403, "Not authenticated");
 }
 
 if (icms::$user->isGuest()) {
-	keepaliveRespond(403, ["error" => "Not authenticated"]);
+	keepaliveReject(403, "Not authenticated");
 }
 
 $keepaliveElapsed = time() - (int) ($_SESSION['keepalive_last'] ?? 0);
 if ($keepaliveElapsed < KEEPALIVE_MIN_INTERVAL) {
 	$keepaliveRetryAfter = KEEPALIVE_MIN_INTERVAL - $keepaliveElapsed;
-	keepaliveRespond(429, ["error" => "Too many requests"], ["Retry-After: {$keepaliveRetryAfter}"]);
+	keepaliveReject(429, "Too many requests", ["Retry-After: {$keepaliveRetryAfter}"]);
 }
 
 $_SESSION['keepalive_last'] = time();
