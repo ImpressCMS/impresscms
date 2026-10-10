@@ -10,6 +10,10 @@
  */
 include '../../../../mainfile.php';
 
+require_once ICMS_LIBRARIES_PATH . '/image-editor/include/functions.php';
+
+icms_imageeditor_checkAccess();
+
 use WideImage\WideImage;
 
 /*
@@ -24,25 +28,35 @@ use WideImage\WideImage;
  * no POST variables
  *
  */
-$file = filter_input(INPUT_GET, 'file', FILTER_SANITIZE_STRING);
+$file = basename((string) filter_input(INPUT_GET, 'file'));
 $resize = isset($_GET['resize']) ? (int) $_GET['resize'] : 1;
-$filter = isset($_GET['filter']) ? filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING) : NULL;
+$filter = filter_input(INPUT_GET, 'filter');
+if (!in_array($filter, icms_imageeditor_filters(), true)) {
+	$filter = NULL;
+}
 $args = array();
 if (isset($_GET['arg1'])) {
-	$args[] = filter_input(INPUT_GET, 'arg1', FILTER_SANITIZE_STRING);
+	$args[] = (int) $_GET['arg1'];
 }
 if (isset($_GET['arg2'])) {
-	$args[] = filter_input(INPUT_GET, 'arg2', FILTER_SANITIZE_STRING);
+	$args[] = (int) $_GET['arg2'];
 }
 if (isset($_GET['arg3'])) {
-	$args[] = filter_input(INPUT_GET, 'arg3', FILTER_SANITIZE_STRING);
+	$args[] = (int) $_GET['arg3'];
 }
 
 $image_handler = icms::handler('icms_image');
 $imgcat_handler = icms::handler('icms_image_category');
 
-$image = &$image_handler->getObjects(new icms_db_criteria_Item('image_name', $file), FALSE, TRUE);
-$imagecategory = &$imgcat_handler->get($image[0]->getVar('imgcat_id'));
+$image = $image_handler->getObjects(new icms_db_criteria_Item('image_name', $file), FALSE, TRUE);
+if (empty($image)) {
+	exit(_ERROR);
+}
+
+$imagecategory = $imgcat_handler->get($image[0]->getVar('imgcat_id'));
+if (!is_object($imagecategory)) {
+	exit(_ERROR);
+}
 
 $categ_path = $imgcat_handler->getCategFolder($imagecategory);
 $categ_url = $imgcat_handler->getCategFolder($imagecategory, 1, 'url');

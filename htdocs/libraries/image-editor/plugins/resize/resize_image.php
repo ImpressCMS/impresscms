@@ -11,27 +11,24 @@
  */
 $xoopsOption['nodebug'] = 1;
 require_once '../../../../mainfile.php';
+
+require_once ICMS_LIBRARIES_PATH . '/image-editor/include/functions.php';
+
+icms_imageeditor_checkAccess();
+icms_imageeditor_checkToken(false);
+
 use WideImage\WideImage;
 
 /* 3 critical parameters must exist - and must be safe */
-$image_path = filter_input(INPUT_GET, 'image_path', FILTER_SANITIZE_STRING);
+$image_path = icms_imageeditor_tempPath(filter_input(INPUT_GET, 'image_path'));
 $image_url = filter_input(INPUT_GET, 'image_url', FILTER_SANITIZE_URL);
-$filter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
-
-/* prevent remote file inclusion */
-$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-if (!empty($image_path) && strncmp(realpath($image_path), $image_path, strlen($valid_path)) == 0) {
-	$image_path = realpath($image_path);
-} else {
-	$image_path = null;
-}
 
 /* compare URL to ICMS_URL - it should be a full URL and within the domain, without traversal */
 $submitted_url = parse_url($image_url);
 $base_url = parse_url(ICMS_URL); // icms::$urls not available?
 if ($submitted_url['scheme'] != $base_url['scheme']) $image_url = null;
 if ($submitted_url['host'] != $base_url['host']) $image_url = null;
-if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . basename($image_path), PHP_URL_PATH)) $image_url = null;
+if ($submitted_url['path'] != parse_url(ICMS_IMANAGER_FOLDER_URL . '/temp/' . basename((string) $image_path), PHP_URL_PATH)) $image_url = null;
 
 if (!isset($image_path) || !isset($image_url)) {
 	echo "alert('" . _ERROR . "');";
@@ -62,9 +59,7 @@ if (!isset($image_path) || !isset($image_url)) {
 	$del = isset($_GET['delprev']) ? (int) $_GET['delprev'] : 0;
 
 	$img = WideImage::load($image_path);
-	$arr = explode('/', $image_path);
-	$arr[count($arr) - 1] = 'resize_' . $arr[count($arr) - 1];
-	$temp_img_path = implode('/', $arr);
+	$temp_img_path = dirname($image_path) . DIRECTORY_SEPARATOR . 'resize_' . basename($image_path);
 	$arr = explode('/', $image_url);
 	$arr[count($arr) - 1] = 'resize_' . $arr[count($arr) - 1];
 	$temp_img_url = implode('/', $arr);
