@@ -63,10 +63,11 @@ xoops_header();
 if (icms::$user) {
 	if (isset($_POST['op']) && $_POST['op'] == "submit") {
 		if (!icms::$security->check()) {
-			echo "<br /><br /><div><h4>" . _PM_USERNOEXIST . "<br />"
-				. _PM_PLZTRYAGAIN . "</h4><br />";
-			echo implode('<br />', icms::$security->getErrors());
+			echo "<br /><br /><div><h4>" . _PM_SECURITYERROR . "</h4><br />";
+			$errors = array_map('htmlspecialchars', icms::$security->getErrors());
+			echo implode('<br />', $errors) . "<br /><br />";
 			echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . "</a> ]</div>";
+			xoops_footer();
 			exit();
 		}
 
@@ -76,9 +77,6 @@ if (icms::$user) {
 		if ($count != 1) {
 			echo "<br /><br /><div><h4>" . _PM_USERNOEXIST . "<br />"
 				. _PM_PLZTRYAGAIN . "</h4><br />";
-			if (isset($security_error) && $security_error == true) {
-				echo implode('<br />', icms::$security->getErrors());
-			}
 			echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . "</a> ]</div>";
 		} else {
 			$pm_handler = icms::handler('icms_data_privmessage');
