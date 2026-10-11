@@ -29,12 +29,6 @@ $pageHasHelp = true;
 $vars = & $_SESSION ['settings'];
 
 switch ($vars['DB_TYPE']) {
-	case 'mysql':
-		$func_connect = empty($vars['DB_PCONNECT'])?"mysql_connect":"mysql_pconnect";
-		if (!($link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true))) {
-			$error = ERR_NO_DBCONNECTION;
-		}
-		break;
 	case 'pdo.mysql':
 		try {
 			$link = new PDO('mysql:host=' . $vars['DB_HOST'],
@@ -64,19 +58,11 @@ if (!isset ($vars ['DB_NAME']) || false !== @strpos($_SERVER ['HTTP_CACHE_CONTRO
 }
 
 function exec_query($sql, $link) {
-	if ($link instanceof PDO) {
-		return $link->query($sql);
-	} else {
-		return mysql_query($sql, $link);
-	}
+	return $link->query($sql);
 }
 
 function fetch_assoc($result) {
-	if ($result instanceof PDOStatement) {
-		return $result->fetch(PDO::FETCH_ASSOC);
-	} else {
-		return mysql_fetch_assoc($result);
-	}
+	return $result->fetch(PDO::FETCH_ASSOC);
 }
 
 /**
