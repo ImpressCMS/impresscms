@@ -1,0 +1,9 @@
+GET /admin.php
+status: 302
+content-type: text/html; charset=UTF-8
+location: http://{HOST}/user.php
+cache-control: no-store, no-cache, must-revalidate
+pragma: no-cache
+set-cookie: ICMSSESSION=*; path=/
+
+

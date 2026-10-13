@@ -1,22 +1,25 @@
 ## 1. Test infrastructure (D13)
 
-- [ ] 1.1 Create the implementation branch from `upstream/2.1-dev` and bring over the `openspec/` change. Do not bring the Laravel prototype code
-- [ ] 1.2 Create a minimal root `composer.json` with `require-dev`: `phpunit/phpunit` ^11, `symfony/browser-kit`, `symfony/http-client`, `symfony/process` and `symfony/phpunit-bridge` at `7.4.*`, plus `phpstan/phpstan`. Autoload-dev `"App\Tests\\": "tests/"`
-- [ ] 1.3 Create the root `phpunit.xml.dist` with the suites `Library` (`htdocs/tests/Unit`), `Unit`, `Integration`, `Functional` and `Http`, using strict settings that match `htdocs/phpunit.xml.dist`
-- [ ] 1.4 Implement `bin/test-db`: create schema `icms_test` from the install SQL files, call `make_groups()`/`make_data()` with fixed values, install the system module, and seed `webmaster` and `member`. Write a test `mainfile.php` and trust path under `var/test/`
-- [ ] 1.5 Verify that a scripted install yields a working site (the home page and admin login render). If it does not, switch to a committed SQL dump from a web install and document how to regenerate it
-- [ ] 1.6 Add DB snapshot/restore helpers (`mysqldump` once, re-import per test class) and a base `DatabaseTestCase`
-- [ ] 1.7 Implement the `ServerProcess` helper: free port, `php -S` with a configurable document root (`htdocs/` or `public/`) and router, readiness probe, teardown. Add `HttpTestCase` with a BrowserKit `HttpBrowser` and cookie jar, and login helpers for `webmaster` and `member`
-- [ ] 1.8 Add the `IsolatedLegacyTestCase` base (separate process per class) for `Integration` and `Functional` tests that boot legacy
-- [ ] 1.9 Add the traceability convention (`#[Group('spec:<capability>')]` with a `@scenario <name>` tag) and `bin/spec-coverage`, which lists spec scenarios without a matching test and exits non-zero on gaps
-- [ ] 1.10 Add `.github/workflows/tests.yml`: PHP matrix 8.2/8.3/8.4, MySQL 8.0 service, `bin/test-db`, then lint → `Library` (via `htdocs/` and root Composer) → `Unit` → `Integration` → `Functional` → `Http` → spec coverage → PHPStan
-- [ ] 1.11 Add a smoke test per suite (for example, `Http`: `GET /` on `htdocs/` returns 200) and confirm the workflow is green on plain `2.1-dev`
+- [x] 1.1 Create the implementation branch from `upstream/2.1-dev` and bring over the `openspec/` change. Do not bring the Laravel prototype code
+- [x] 1.2 Create a minimal root `composer.json` with `require-dev`: `phpunit/phpunit` ^11, `symfony/browser-kit`, `symfony/http-client`, `symfony/process` and `symfony/phpunit-bridge` at `7.4.*`, plus `phpstan/phpstan`. Autoload-dev `"App\Tests\\": "tests/"`
+- [x] 1.3 Create the root `phpunit.xml.dist` with the suites `Library` (`htdocs/tests/Unit`), `Unit`, `Integration`, `Functional` and `Http`, using strict settings that match `htdocs/phpunit.xml.dist`
+- [x] 1.4 Implement `bin/test-db`: create schema `icms_test` from the install SQL files, call `make_groups()`/`make_data()` with fixed values, install the system module, and seed `webmaster` and `member`. Write a test `mainfile.php` and trust path under `var/test/`
+  - The committed stub `htdocs/mainfile.php` honours `ICMS_MAINFILE` from the server environment (the installer overwrites the stub). The system module update moves `vendor/` into the trust path, so the test site gets its own `var/test/trust/vendor` and `htdocs/composer.json` is restored afterwards
+- [x] 1.5 Verify that a scripted install yields a working site (the home page and admin login render). If it does not, switch to a committed SQL dump from a web install and document how to regenerate it
+- [x] 1.6 Add DB snapshot/restore helpers (`mysqldump` once, re-import per test class) and a base `DatabaseTestCase`
+  - Implemented as a shadow schema (`icms_test_snapshot`, `CREATE TABLE … LIKE` + `INSERT … SELECT`) instead of `mysqldump`: no client binaries needed, restore takes about 0.6 s
+- [x] 1.7 Implement the `ServerProcess` helper: free port, `php -S` with a configurable document root (`htdocs/` or `public/`) and router, readiness probe, teardown. Add `HttpTestCase` with a BrowserKit `HttpBrowser` and cookie jar, and login helpers for `webmaster` and `member`
+- [x] 1.8 Add the `IsolatedLegacyTestCase` base (separate process per class) for `Integration` and `Functional` tests that boot legacy
+- [x] 1.9 Add the traceability convention (`#[Group('spec:<capability>')]` with a `@scenario <name>` tag) and `bin/spec-coverage`, which lists spec scenarios without a matching test and exits non-zero on gaps
+- [x] 1.10 Add `.github/workflows/tests.yml`: PHP matrix 8.2/8.3/8.4, MySQL 8.0 service, `bin/test-db`, then lint → `Library` (via `htdocs/` and root Composer) → `Unit` → `Integration` → `Functional` → `Http` → spec coverage → PHPStan
+- [x] 1.11 Add a smoke test per suite (for example, `Http`: `GET /` on `htdocs/` returns 200) and confirm the workflow is green on plain `2.1-dev`
+  - All suites pass locally; the GitHub Actions run happens on the first push
 
 ## 2. Characterization baseline (D12)
 
-- [ ] 2.1 Add `tests/Http/Characterization` with snapshot assertions parameterised by document root
-- [ ] 2.2 Define the URL corpus: one CSS/JS/image asset, `/`, `/user.php`, a login POST, `/admin.php` as anonymous, a non-existent path, a 302-plus-`exit()` script, a two-cookie response, and a system-module IPF admin list as webmaster
-- [ ] 2.3 Implement snapshot normalisation (mask security tokens, session ids, timestamps, ETags). Record the snapshots with `htdocs/` as document root and commit them
+- [x] 2.1 Add `tests/Http/Characterization` with snapshot assertions parameterised by document root
+- [x] 2.2 Define the URL corpus: one CSS/JS/image asset, `/`, `/user.php`, a login POST, `/admin.php` as anonymous, a non-existent path, a 302-plus-`exit()` script, a two-cookie response, and a system-module IPF admin list as webmaster
+- [x] 2.3 Implement snapshot normalisation (mask security tokens, session ids, timestamps, ETags). Record the snapshots with `htdocs/` as document root and commit them
 
 ## 3. Library seams in `Icms\` (D3, D6, D7, D9; framework-agnostic)
 

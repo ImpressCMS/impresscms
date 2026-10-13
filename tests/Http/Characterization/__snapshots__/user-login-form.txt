@@ -1,0 +1,194 @@
+GET /user.php
+status: 200
+content-type: text/html; charset=utf-8
+cache-control: private, no-cache
+pragma: no-cache
+x-frame-options: SAMEORIGIN
+set-cookie: ICMSSESSION=*; path=/
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<!-- Center block custom positioning -->
+			
+<!-- Theme name -->
+	
+<!-- Title and meta -->
+	<title>User Login : ImpressCMS Test Site</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="index,follow" />
+	<meta name="keywords" content="community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes" />
+	<meta name="description" content="ImpressCMS is a dynamic Object Oriented based open source portal script written in PHP." />
+	<meta name="rating" content="general" />
+	<meta name="author" content="ImpressCMS" />
+	<meta name="copyright" content="Copyright &amp;copy; 2007-2026" />
+	<meta name="generator" content="ImpressCMS" />
+
+<!-- Module Header -->
+
+<link rel="stylesheet" media="screen" href="http://{HOST}/plugins/textsanitizer/syntaxhighlightphp/syntaxhighlightphp.css" type="text/css" />
+<link rel="stylesheet" media="screen" href="http://{HOST}/plugins/textsanitizer/hiddencontent/hiddencontent.css" type="text/css" />
+<link rel="stylesheet" media="screen" href="http://{HOST}/libraries/jquery/ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" media="screen" href="http://{HOST}/libraries/jquery/jgrowl.css" type="text/css" />
+<link rel="stylesheet" href="http://{HOST}/libraries/jquery/colorbox/colorbox.css" type="text/css" />
+<script type="text/javascript" src="http://{HOST}/include/xoops.js"></script>
+<script type="text/javascript" src="http://{HOST}/include/linkexternal.js"></script>
+<script type="text/javascript" src="http://{HOST}/libraries/jquery/jquery.js"></script>
+<script type="text/javascript" src="http://{HOST}/libraries/jquery/ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://{HOST}/libraries/jquery/helptip.js"></script>
+<script src="http://{HOST}/libraries/jquery/colorbox/jquery.colorbox-min.js" type="text/javascript"></script>
+
+
+<!-- Favicon -->
+	<link rel="shortcut icon" type="image/ico" href="http://{HOST}/themes/iTheme/icons/favicon.ico" />
+	<link rel="icon" type="image/png" href="http://{HOST}/themes/iTheme/icons/icon.png" />
+
+<!-- Sheet Css -->
+	<link rel="stylesheet" type="text/css" media="all" href="http://{HOST}/themes/iTheme/style.css" />
+</head>
+
+<body id="system" class="en">
+<div id="xo-canvas" class="threecolumns-layout">
+	<!-- Header -->
+    <div id="xo-header">
+	    <div id="xo-headerlogo"><a href="http://{HOST}/" title=""><img src="http://{HOST}/themes/iTheme/img/logo.png" alt="ImpressCMS Test Site" /></a></div>
+	    <div id="xo-headerbanner">
+	<!-- Header menu (optional) -->
+	<div id="xo-globalnav">
+		  <a href="http://{HOST}" title="ImpressCMS Test Site">Home</a>
+		  <a href="#" title="Link 2">News</a>
+		  <a href="#" title="Link 3">Forum</a>
+		  <a href="#" title="Link 4">Gallery</a>
+		  <a href="#" title="Link 5">Movies</a>
+	</div>
+	</div>
+    </div>
+
+	<!-- Content -->
+	<div id="xo-canvas-content">
+		<div id="xo-canvas-columns">
+			<!-- Left column -->
+										
+	<div class="xo-blockszone x2-secondary xo-canvas-column" id="xo-canvas-leftcolumn">
+		<div class="xo-block system">
+		<div class="xo-blocktitle"><h3>Login</h3></div>		<div class="xo-blockcontent"><div id="block_login_form">
+  <form style="margin-top: 0px;" action="http://{HOST}/user.php" method="post">
+    <p>Username: </p>
+    <div><input type="text" class="uname" name="uname" size="12" value="" maxlength="25" /><br /></div>
+    <p>Password: </p>
+    <div><input type="password" name="pass" size="12" maxlength="32" /><br /></div>
+        <div><input type="hidden" name="xoops_redirect" value="/user.php" /></div>
+    <div><input type="hidden" name="op" value="login" /></div>
+    <div><input type="submit" value="User Login" /><br /></div>
+    
+  </form>
+</div>
+<br />
+<a href="http://{HOST}/user.php#lost" title="Lost Password?">Lost Password?</a>
+<br />
+<a href="http://{HOST}/register.php" title="Register now!">Register now!</a>
+</div>
+	</div>
+		<div class="xo-block system">
+		<div class="xo-blocktitle"><h3>Main Menu</h3></div>		<div class="xo-blockcontent"><div id="mainmenu">
+      <a class="menuTop actlink" href="http://{HOST}/" title="Home">Home</a>
+      <!-- start module menu loop -->
+            <!-- end module menu loop -->
+	  </div></div>
+	</div>
+		<div class="xo-block system">
+		<div class="xo-blocktitle"><h3>Themes</h3></div>		<div class="xo-blockcontent"><div style="text-align: center;">
+<form action="index.php" method="post">
+<div>
+	</div>
+</form>
+
+</div></div>
+	</div>
+		</div>
+									<!-- Center column / page -->
+			<div id="xo-page">
+				<!-- Top blocks -->
+								<!-- Module content -->
+								<div id="xo-content"><div style="position: relative;">
+	<div>
+		<fieldset style="padding: 10px;">
+			<legend style="font-weight: bold;">User Login</legend>
+<div id="icms_block_login_form">
+			<form action="user.php" method="post">
+		    	<div>Username: <input type="text" class="uname" name="uname" size="21" maxlength="25" value="" />
+		    	<br />
+			    <br /></div>
+		    	<div>Password: <input type="password" name="pass" size="21" maxlength="32" /><br /></div>
+			    			    <div><input type="hidden" name="op" value="login" /></div>
+		    	<div><input type="hidden" name="xoops_redirect" value="/user.php"/>
+			    <br />
+		    	<input type="submit" value="User Login" /></div>
+			</form>
+</div>
+			<a name="lost"></a>
+							<div style="text-align: right;">Not registered?  Click <a href="register.php">here</a>.<br /></div>
+					</fieldset>
+	</div>
+
+	<div>
+		<fieldset style="padding: 10px;">
+			<legend style="font-weight: bold;">Lost your password?</legend>
+			<div>
+				No problem. Simply enter the e-mail address we have on file for your account.
+			</div>
+			<form action="lostpass.php" method="post">
+				<div><br />Your Email:  <input type="text" name="email" size="26" maxlength="60" />&nbsp;&nbsp;<input type="hidden" name="op" value="mailpasswd" /><input type="hidden" name="t" value="{MD5}" />
+		    	<br />
+		    	<br />
+		     	<input type="submit" value="Send Password" /></div>
+			</form>
+		</fieldset>
+	</div>
+</div>
+</div>
+								<!-- Bottom blocks -->
+								<div class="xo-blockszone xo-lcrpageblocks" id="xo-page-bottomblocks">
+					
+
+	
+					
+
+	
+	<div class="xo-blockszone x2-secondary" id="xo-page-bottomcenterblocks">
+		<div class="xo-block system">
+		<div class="xo-blocktitle"><h3>Share this page!</h3></div>		<div class="xo-blockcontent"><a href="#" onclick="window.open('http://twitter.com/home?status='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes');return false;" rel="nofollow" title="bookmark at: Twitter"><img src="http://{HOST}/images/icons/social/twitter.gif" alt="bookmark at: Twitter"/></a>
+<a href="#" onclick="window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes');return false;" rel="nofollow" title="bookmark at: Facebook"><img src="http://{HOST}/images/icons/social/facebook.gif" alt="bookmark at: Facebook"/></a>
+<a href="#" onclick="window.open('http://del.icio.us/post?v=2&amp;url='+encodeURIComponent(location.href)+'&amp;notes=&amp;tags=&amp;title='+encodeURIComponent(document.title));return false;" rel="nofollow" title="bookmark at: Del.icio.us"><img src="http://{HOST}/images/icons/social/del.gif" alt="bookmark at: Del.icio.us"/></a>
+<a href="#" onclick="window.open('http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes');return false;" rel="nofollow" title="bookmark at: Ask"><img src="http://{HOST}/images/icons/social/ask.gif" alt="bookmark at: Ask"/></a>
+<a href="#" onclick="window.open('http://digg.com/submit?phase=2&amp;url='+encodeURIComponent(location.href)+'&amp;bodytext=&amp;tags=&amp;title='+encodeURIComponent(document.title));return false;" rel="nofollow" title="bookmark at: Digg"><img src="http://{HOST}/images/icons/social/digg.gif" alt="bookmark at: Digg"/></a>
+<a href="#" onclick="window.open('http://myweb2.search.yahoo.com/myresults/bookmarklet?t='+encodeURIComponent(document.title)+'&amp;d=&amp;tag=&amp;u='+encodeURIComponent(location.href));return false;" rel="nofollow" title="bookmark at: Reddit"><img src="http://{HOST}/images/icons/social/yahoo.gif" alt="bookmark at: Reddit"/></a>
+<a href="#" onclick="window.open('http://www.diigo.com/post?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;tag=&amp;comments=');return false;" rel="nofollow" title="bookmark at: Yahoo"><img src="http://{HOST}/images/icons/social/diigo.gif" alt="bookmark at: Yahoo"/></a>
+</div>
+	</div>
+		</div>
+					
+
+	
+				</div>
+							</div>
+			<!-- Right column -->
+										
+	<div class="xo-blockszone x2-secondary xo-canvas-column" id="xo-canvas-rightcolumn">
+		<div class="xo-block system">
+		<div class="xo-blocktitle"><h3>Search</h3></div>		<div class="xo-blockcontent"><form style="margin-top: 0px;" action="http://{HOST}/search.php" method="get">
+  <div><input type="text" name="query" size="14" /><input type="hidden" name="action" value="results" /><br /><input type="submit" value="Search" /></div>
+</form>
+<a href="http://{HOST}/search.php" title="Advanced Search">Advanced Search</a></div>
+	</div>
+		</div>
+								</div>
+	</div>
+</div>
+	<!-- Footer -->
+	<div id="xo-footer">
+	Powered by ImpressCMS &copy; 2007-2026 <a href="https://www.impresscms.org/" rel="external">The ImpressCMS Project</a>
+	</div>
+	</div>
+</body>
+</html>

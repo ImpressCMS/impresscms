@@ -3,3 +3,12 @@
 /.buildpath
 /.settings/
 /.homestead/
+/vendor/
+/var/
+/htdocs/vendor/
+/htdocs/var/
+/.phpunit.cache/
+/htdocs/templates_c/*
+!/htdocs/templates_c/index.html
+/htdocs/cache/*
+!/htdocs/cache/index.html
