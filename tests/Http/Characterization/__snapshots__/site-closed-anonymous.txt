@@ -1,0 +1,51 @@
+GET / (site closed, anonymous)
+status: 200
+content-type: text/html; charset=UTF-8
+cache-control: no-store, no-cache, must-revalidate
+pragma: no-cache
+set-cookie: ICMSSESSION=*; path=/
+
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-language" content="en" />
+<title>ImpressCMS Test Site</title>
+<link rel="stylesheet" type="text/css" media="all" href="http://{HOST}/icms.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="http://{HOST}/themes/iTheme/style.css" />
+</head>
+<body>
+<div id="xo-canvas">
+<!-- Start header -->
+    <div id="xo-header">
+	    <div id="xo-headerlogo"><a href="http://{HOST}/" title=""><img src="http://{HOST}/themes/iTheme/img/logo.png" alt="ImpressCMS Test Site" /></a></div>
+    </div>
+<!-- End header -->
+
+<!-- Start Main Content Area -->
+<!-- Start Main Content Area -->
+<div id="xo-canvas-content">
+
+<div id="xo-redirect">The site is currently closed for maintenance. Please come back later.</div>
+
+<div id="xo-siteclose-login">
+    <h2>User Login</h2>
+        <form action="http://{HOST}/user.php" method="post">
+            <div>
+                <label for="uname">Username: </label>
+                <input type="text" name="uname" maxlength="25" value="" />
+                <label for="pass">Password: </label>
+                <input type="password" name="pass" maxlength="32" />
+                <input type="hidden" name="xoops_redirect" value="/" />
+                <input type="hidden" name="xoops_login" value="1" />
+                <div class="button">
+                    <input type="submit" value="User Login" />
+                </div>
+            </div>
+        </form>
+</div>
+
+</div>
+
+</body>
+</html>
