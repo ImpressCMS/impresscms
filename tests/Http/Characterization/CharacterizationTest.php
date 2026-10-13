@@ -50,6 +50,8 @@ final class CharacterizationTest extends HttpTestCase
             'redirect-then-exit',
             'two-cookies',
             'ipf-admin-list-webmaster',
+            'site-closed-anonymous',
+            'site-closed-webmaster',
         ];
 
         return array_combine($cases, array_map(static fn (string $case): array => [$case], $cases));
@@ -105,6 +107,13 @@ final class CharacterizationTest extends HttpTestCase
                 $this->loggedInAsWebmaster()->request('GET', '/modules/system/admin.php?fct=userrank'),
                 false,
             ],
+            'site-closed-anonymous' => ['GET / (site closed, anonymous)', $this->closeSite()->request('GET', '/'), false],
+            // logged in before closing: the closed site only accepts its own login form
+            'site-closed-webmaster' => [
+                'GET / (site closed, webmaster)',
+                $this->loggedInAsWebmaster()->closeSite()->request('GET', '/'),
+                false,
+            ],
         };
     }
 
@@ -118,6 +127,13 @@ final class CharacterizationTest extends HttpTestCase
             'pass' => TestSite::WEBMASTER_PASS,
             'rememberme' => 'On',
         ], ['HTTP_REFERER' => static::url('/user.php')]);
+    }
+
+    private function closeSite(): self
+    {
+        TestSite::setConfig('closesite', '1');
+
+        return $this;
     }
 
     private function loggedInAsWebmaster(): self
