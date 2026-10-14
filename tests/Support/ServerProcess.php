@@ -44,6 +44,18 @@ final class ServerProcess
             : new self($root . '/htdocs', null, $env);
     }
 
+    /**
+     * The Symfony host (public/) in the test environment.
+     *
+     * @param array<string, string> $env for example ICMS_LEGACY_ROOT or APP_DEBUG
+     */
+    public static function forHost(array $env = []): self
+    {
+        $root = TestSite::repoRoot();
+
+        return new self($root . '/public', $root . '/public/index.php', $env + ['APP_ENV' => 'test', 'APP_DEBUG' => '0']);
+    }
+
     public static function configuredDocumentRoot(): string
     {
         $docroot = getenv('ICMS_TEST_DOCROOT') ?: 'htdocs';

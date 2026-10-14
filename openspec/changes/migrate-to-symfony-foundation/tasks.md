@@ -56,12 +56,13 @@
 
 ## 5. Bridge hardening (legacy-request-bridge spec, D10)
 
-- [ ] 5.1 Remove session start-up from the hydrator. Snapshot and restore `$_SESSION` only when a session was already active
-- [ ] 5.2 Reject `templates_c`, `cache`, PHP files under `uploads` and anything under the trust path with 404
-- [ ] 5.3 Add resolver tests for percent-encoded traversal, backslash traversal and symlinks pointing outside the legacy root
-- [ ] 5.4 Log bridge failures through Monolog. In non-debug mode, render a generic 500 page without paths, messages or captured output. Keep the detailed page only when `kernel.debug` is set
-- [ ] 5.5 Restore the output-buffer level, working directory and superglobals in `finally` and on the shutdown path. Add a test with unclosed nested buffers
-- [ ] 5.6 Add characterization cases for a login POST with a custom session name and the DB session handler, and for failure responses in debug and non-debug mode
+- [x] 5.1 Remove session start-up from the hydrator. Snapshot and restore `$_SESSION` only when a session was already active
+- [x] 5.2 Reject `templates_c`, `cache`, PHP files under `uploads` and anything under the trust path with 404
+- [x] 5.3 Add resolver tests for percent-encoded traversal, backslash traversal and symlinks pointing outside the legacy root
+- [x] 5.4 Log bridge failures through Monolog. In non-debug mode, render a generic 500 page without paths, messages or captured output. Keep the detailed page only when `kernel.debug` is set
+- [x] 5.5 Restore the output-buffer level, working directory and superglobals in `finally` and on the shutdown path. Add a test with unclosed nested buffers
+- [x] 5.6 Add characterization cases for a login POST with a custom session name and the DB session handler, and for failure responses in debug and non-debug mode
+  - Bridge mechanics are tested against `tests/Fixtures/legacy-root` (`ICMS_LEGACY_ROOT`); failure responses in debug and non-debug mode are asserted there rather than snapshotted, since `htdocs/` has no equivalent
 
 ## 6. Headless runtime in the host (D6)
 

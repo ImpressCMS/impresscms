@@ -52,6 +52,7 @@ final class CharacterizationTest extends HttpTestCase
             'ipf-admin-list-webmaster',
             'site-closed-anonymous',
             'site-closed-webmaster',
+            'login-post-custom-session',
         ];
 
         return array_combine($cases, array_map(static fn (string $case): array => [$case], $cases));
@@ -114,6 +115,11 @@ final class CharacterizationTest extends HttpTestCase
                 $this->loggedInAsWebmaster()->closeSite()->request('GET', '/'),
                 false,
             ],
+            'login-post-custom-session' => [
+                'POST /user.php (webmaster, session name MYSITE)',
+                $this->withCustomSessionName()->loginAsWebmaster(),
+                false,
+            ],
         };
     }
 
@@ -132,6 +138,14 @@ final class CharacterizationTest extends HttpTestCase
     private function closeSite(): self
     {
         TestSite::setConfig('closesite', '1');
+
+        return $this;
+    }
+
+    private function withCustomSessionName(): self
+    {
+        TestSite::setConfig('use_mysession', '1');
+        TestSite::setConfig('session_name', 'MYSITE');
 
         return $this;
     }

@@ -16,7 +16,8 @@ final class UsersTakeoverController
     #[Route(
         '/modules/system/admin.php',
         name: 'test_takeover_system_users',
-        condition: "request.query.get('fct') == 'users'",
+        // bridge tests that need this legacy URL themselves send X-Icms-Test-Takeover: off
+        condition: "request.query.get('fct') == 'users' and request.headers.get('X-Icms-Test-Takeover') != 'off'",
         env: 'test',
     )]
     public function __invoke(): Response

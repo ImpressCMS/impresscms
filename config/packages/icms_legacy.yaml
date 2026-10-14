@@ -1,7 +1,8 @@
 # Legacy ImpressCMS behind the Symfony host (legacy-request-bridge).
 parameters:
-    # htdocs/ of the ImpressCMS tree
-    icms.legacy.root: '%kernel.project_dir%/htdocs'
+    # htdocs/ of the ImpressCMS tree; ICMS_LEGACY_ROOT overrides it
+    icms.legacy.default_root: '%kernel.project_dir%/htdocs'
+    icms.legacy.root: '%env(default:icms.legacy.default_root:ICMS_LEGACY_ROOT)%'
     # executed for legacy-owned paths that do not exist
     icms.legacy.front_controller: 'index.php'
     # path prefixes that belong to Symfony and never fall through to legacy,

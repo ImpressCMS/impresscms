@@ -16,3 +16,10 @@ if (!is_file($autoloader)) {
 }
 require_once $autoloader;
 unset($autoloader);
+
+// The Http suite runs the host with APP_DEBUG=0, whose container is never
+// rebuilt when code or configuration change: start every run from a clean
+// test cache (only once, in the main PHPUnit process).
+if (!App\Tests\Support\Isolation::inChildProcess()) {
+    (new Symfony\Component\Filesystem\Filesystem())->remove(dirname(__DIR__) . '/var/cache/test');
+}
