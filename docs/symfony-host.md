@@ -34,7 +34,10 @@ and `openspec/changes/relocate-host-into-trust-path/`.
 In a repository checkout, the repository root is the trust path skeleton and
 `htdocs/` is the web root. `bin/build-dist` assembles `htdocs/trust_dist/` for a
 release package: the host files plus `vendor/`, installed without development
-packages. The `Icms\` library is not in `composer.json`, because the trust path
+packages. `bin/build-package` zips the web root of a commit, without
+`htdocs/tests`, together with that `trust_dist/` into
+`var/dist/impresscms-<version>-<commit>.zip`. The zip's contents go directly
+into a web root. The `Icms\` library is not in `composer.json`, because the trust path
 cannot name a web root that differs per site. `host.php`, `bin/console` and the
 test bootstrap register it from `<web root>/libraries/Autoloader.php`, which
 also resolves the legacy `icms_*` names.
