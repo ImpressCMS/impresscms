@@ -75,8 +75,11 @@ final class ServerProcess
         $this->port = self::freePort();
         // Production-like error handling: PHP errors go to the server log
         // (stderr), not into pages, independent of the local php.ini.
+        // php -S only exposes its environment (APP_ENV, APP_DEBUG, …) to
+        // Symfony through $_ENV, which php.ini-production's "GPCS" leaves empty.
         $command = [
             PHP_BINARY,
+            '-d', 'variables_order=EGPCS',
             '-d', 'display_errors=0',
             '-d', 'log_errors=1',
             '-d', 'error_reporting=' . E_ALL,

@@ -193,6 +193,11 @@ shows the current user to webmasters.
 | `ICMS_LEGACY_ROOT` | legacy root, default `htdocs/` |
 | `ICMS_TRUST_PATH` | the trust path, if it lies under the legacy root |
 
+Symfony reads these from `$_SERVER` and `$_ENV`, not with `getenv()`. PHP-FPM
+and Apache put configured variables in `$_SERVER`; `php -S` only in `$_ENV`,
+which needs `variables_order=EGPCS` (`php.ini-production` has `GPCS`).
+Without them the values in `.env` apply.
+
 ## Unsupported runtimes
 
 Long-running PHP runtimes (worker mode: FrankenPHP workers, RoadRunner, Swoole)
