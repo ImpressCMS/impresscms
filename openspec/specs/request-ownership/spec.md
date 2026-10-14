@@ -4,11 +4,15 @@
 Decides, for every incoming HTTP request, whether the new framework-based application or the legacy ImpressCMS application handles it. This lets functionality move to the new application one route at a time.
 ## Requirements
 ### Requirement: Single public entry point
-The system SHALL accept all HTTP requests through one public front controller. That front controller SHALL dispatch each request to the new application or to the legacy application.
+The system SHALL accept requests for the host through one entry point: `index.php` in the web root. That entry point SHALL receive `/` and `/index.php`, and every request that the web server routes to it, and dispatch each one to the new application or to the legacy application. Legacy scripts that the web server executes directly SHALL keep working, and SHALL share the session and identity with the new application.
 
 #### Scenario: Request reaches the front controller
-- **WHEN** any HTTP request arrives at the public document root
-- **THEN** the front controller handles it and exactly one of the two applications produces the response
+- **WHEN** an HTTP request is routed to the web root's `index.php`
+- **THEN** the host handles it and exactly one of the two applications produces the response
+
+#### Scenario: Directly executed legacy script
+- **WHEN** the web server executes `/user.php` directly, without routing it to `index.php`
+- **THEN** the legacy application responds as without the host, and a user logged in there is the authenticated identity of the new application on the next request
 
 ### Requirement: Explicitly registered routes are owned by the new application
 The system SHALL hand a request to the new application when its path and method match a route registered in the new application.
