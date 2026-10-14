@@ -34,4 +34,5 @@ define("_AM_CBCENTER_ADMIN","Admin Center Block - Center");
 define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
 define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
 define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");
+define('_AM_SYSTEM_BLOCKSPADMIN_CORE', 'Core position: it cannot be edited or deleted');
 ?>

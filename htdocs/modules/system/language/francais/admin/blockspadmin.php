@@ -32,4 +32,5 @@ define("_AM_CBBOTTOMRIGHT","Bloc central - bas droite");
 define("_AM_CBBOTTOM","Bloc central - bas");
 define("_AM_SUBMIT","Valider");
 
+define('_AM_SYSTEM_BLOCKSPADMIN_CORE', 'Core position: it cannot be edited or deleted');
 ?>

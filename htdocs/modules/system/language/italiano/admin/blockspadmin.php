@@ -34,4 +34,5 @@ define("_AM_CBCENTER_ADMIN","Blocco centrale amm. - Centro");
 define("_AM_CBBOTTOMLEFT_ADMIN","Blocco centrale amm. - Basso Sinistra");
 define("_AM_CBBOTTOMRIGHT_ADMIN","Blocco centrale amm. - Basso Destra");
 define("_AM_CBBOTTOM_ADMIN","Blocco centrale amm. - Basso");
+define('_AM_SYSTEM_BLOCKSPADMIN_CORE', 'Core position: it cannot be edited or deleted');
 ?>
