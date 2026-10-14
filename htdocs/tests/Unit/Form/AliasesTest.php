@@ -41,7 +41,7 @@ final class AliasesTest extends TestCase
             'File Form Element'       => ['Icms\\Form\\Elements\\File', 'icms_form_elements_File'],
             'GroupPerm Form Element'       => ['Icms\\Form\\Elements\\Groupperm', 'icms_form_elements_Groupperm'],
             'Hidden Form Element'       => ['Icms\\Form\\Elements\\Hidden', 'icms_form_elements_Hidden'],
-            'HiddenToken Form Element'       => ['Icms\\Form\\Elements\\HiddenToken', 'icms_form_elements_Hiddentoken'],
+            'HiddenToken Form Element'       => ['Icms\\Form\\Elements\\Hiddentoken', 'icms_form_elements_Hiddentoken'],
             'Label Form Element'       => ['Icms\\Form\\Elements\\Label', 'icms_form_elements_Label'],
             'Password Form Element'       => ['Icms\\Form\\Elements\\Password', 'icms_form_elements_Password'],
             'Radio Form Element'       => ['Icms\\Form\\Elements\\Radio', 'icms_form_elements_Radio'],

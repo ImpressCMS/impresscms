@@ -28,14 +28,14 @@ class AliasesTest extends TestCase
 			'Criteria Element'                   => ['Icms\\Db\\Criteria\\Element', 'icms_db_Criteria_Element'],
 			'Legacy Database'                   => ['Icms\\Db\\Legacy\\Database', 'icms_db_Legacy_Database'],
 			'Legacy DB Factory'                   => ['Icms\\Db\\Legacy\\Factory', 'icms_db_Legacy_Factory'],
-			'Legacy MySQL Database'                   => ['Icms\\Db\\Legacy\\MySQL\\Database', 'icms_db_Legacy_MySQL_Database'],
-			'Legacy MySQL Database Proxy'                   => ['Icms\\Db\\Legacy\\MySQL\\Proxy', 'icms_db_Legacy_MySQL_Proxy'],
-			'Legacy MySQL Database Safe'                   => ['Icms\\Db\\Legacy\\MySQL\\Safe', 'icms_db_Legacy_MySQL_Safe'],
-			'Legacy MySQL Database Utility'                   => ['Icms\\Db\\Legacy\\MySQL\\Utility', 'icms_db_Legacy_MySQL_Utility'],
+			'Legacy MySQL Database'                   => ['Icms\\Db\\Legacy\\Mysql\\Database', 'icms_db_Legacy_MySQL_Database'],
+			'Legacy MySQL Database Proxy'                   => ['Icms\\Db\\Legacy\\Mysql\\Proxy', 'icms_db_Legacy_MySQL_Proxy'],
+			'Legacy MySQL Database Safe'                   => ['Icms\\Db\\Legacy\\Mysql\\Safe', 'icms_db_Legacy_MySQL_Safe'],
+			'Legacy MySQL Database Utility'                   => ['Icms\\Db\\Legacy\\Mysql\\Utility', 'icms_db_Legacy_MySQL_Utility'],
 			'Legacy Updater Handler'                   => ['Icms\\Db\\Legacy\\Updater\\Handler', 'icms_db_Legacy_Updater_Handler'],
 			'Legacy Updater Table'                   => ['Icms\\Db\\Legacy\\Updater\\Table', 'icms_db_Legacy_Updater_Table'],
-			'MySQL Connection'                   => ['Icms\\Db\\MySQL\\Connection', 'icms_db_MySQL_Connection'],
-			'MySQL Utility'                   => ['Icms\\Db\\MySQL\\Utility', 'icms_db_MySQL_Utility'],
+			'MySQL Connection'                   => ['Icms\\Db\\Mysql\\Connection', 'icms_db_MySQL_Connection'],
+			'MySQL Utility'                   => ['Icms\\Db\\Mysql\\Utility', 'icms_db_MySQL_Utility'],
 
 			];
 	}
