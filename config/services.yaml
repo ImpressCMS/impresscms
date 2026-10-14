@@ -1,3 +1,9 @@
+imports:
+    # ImpressCMS services: their classes must not be loaded while the container
+    # is compiled (library files exit without ICMS_ROOT_PATH), so no autowiring
+    # or autoconfiguration there
+    - { resource: services/icms.yaml }
+
 services:
     _defaults:
         autowire: true
@@ -41,3 +47,4 @@ services:
     App\Legacy\LegacyRuntime:
         arguments:
             $mainfile: '%icms.legacy.root%/mainfile.php'
+

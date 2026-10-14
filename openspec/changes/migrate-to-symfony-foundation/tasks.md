@@ -80,11 +80,12 @@
 
 ## 8. Container exposure (D8)
 
-- [ ] 8.1 Register the lazy factory services `icms.db`, `icms.db.legacy`, `icms.config`, `icms.security`, `icms.logger`, `icms.session`, `icms.preload`, `icms.user` and `icms.module`, plus class aliases for autowiring (`Icms\Core\Security`, `Icms\Db\Legacy\PdoDatabase`, …)
-- [ ] 8.2 Implement `App\Legacy\HandlerLocator` (`icms.handlers`) that delegates to `icms::handler($name, true)` and throws `ServiceNotFoundException` on `false`
-- [ ] 8.3 Add the `#[IcmsHandler('name')]` controller argument resolver
-- [ ] 8.4 Tests: the container returns the same instance as `icms::$security`; a system-module IPF handler from the locator is the same instance as `icms::handler()`, whether it is looked up by the legacy or the modern class context; an unknown handler throws
-- [ ] 8.5 Characterization: an unmodified IPF module page renders identically, and `loadService-<name>` preload listeners still fire
+- [x] 8.1 Register the lazy factory services `icms.db`, `icms.db.legacy`, `icms.config`, `icms.security`, `icms.logger`, `icms.session`, `icms.preload`, `icms.user` and `icms.module`, plus class aliases for autowiring (`Icms\Core\Security`, `Icms\Db\Legacy\PdoDatabase`, …)
+- [x] 8.2 Implement `App\Legacy\HandlerLocator` (`icms.handlers`) that delegates to `icms::handler($name, true)` and throws `ServiceNotFoundException` on `false`
+- [x] 8.3 Add the `#[IcmsHandler('name')]` controller argument resolver
+  - `#[IcmsHandler]` extends Symfony's `#[Autowire]` (expression `service('icms.handlers').get(...)`), so the controller argument is resolved by the service value resolver and works in autowired constructors too. As an `Autowire` attribute it also stops the container compiler from loading the legacy parameter class, whose file exits without `ICMS_ROOT_PATH`; the `icms.*` definitions live in `config/services/icms.yaml` without autoconfiguration for the same reason
+- [x] 8.4 Tests: the container returns the same instance as `icms::$security`; a system-module IPF handler from the locator is the same instance as `icms::handler()`, whether it is looked up by the legacy or the modern class context; an unknown handler throws
+- [x] 8.5 Characterization: an unmodified IPF module page renders identically, and `loadService-<name>` preload listeners still fire
 
 ## 9. Event forwarding (D9)
 
