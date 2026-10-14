@@ -111,6 +111,67 @@ if (!function_exists('icms_host_trust_path')) {
 	}
 
 	/**
+	 * The script a request routed to index.php actually asked for, for sites
+	 * without a host: a web server at routing level 3 sends every PHP request
+	 * to index.php, which then runs that script itself, as the server would at
+	 * level 2. Null for index.php itself, paths that are not existing PHP
+	 * files of the web root, and paths that are never served.
+	 *
+	 * @param string $root the web root (ICMS_ROOT_PATH)
+	 */
+	function icms_host_requested_script(string $root): ?string
+	{
+		$path = rawurldecode((string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH));
+		$base = icms_host_base_path($root);
+		if ($base !== '' && str_starts_with($path, $base . '/')) {
+			$path = substr($path, strlen($base));
+		}
+		$relative = ltrim($path, '/');
+		if ($relative === '' || str_ends_with($relative, '/')) {
+			$relative .= 'index.php';
+		}
+
+		// the same paths as docs/server/ and htdocs/htaccess.txt never serve
+		if (
+			$relative === 'index.php'
+			|| !preg_match('/\.php$/i', $relative)
+			|| str_contains($relative, "\0")
+			|| preg_match('#(^|/)\.|(^|/)\.\.(/|$)|^(trust_dist|templates_c|cache|tests|uploads|plugins/waiting|libraries/tcpdf/tools|install/modules/protector/trust_path)(/|$)#i', $relative)
+		) {
+			return null;
+		}
+
+		$realRoot = realpath($root);
+		$script = realpath($root . '/' . $relative);
+		if ($realRoot === false || $script === false || !is_file($script) || !str_starts_with($script, $realRoot . DIRECTORY_SEPARATOR)) {
+			return null;
+		}
+
+		return $script;
+	}
+
+	/**
+	 * The URL path of the web root: '' for a site at the document root, or for
+	 * example '/cms'. Taken from the web root's place under DOCUMENT_ROOT, or,
+	 * for a web root outside it (an Apache Alias), from SCRIPT_NAME, which is
+	 * index.php for a rewritten request.
+	 *
+	 * @param string $root the web root (ICMS_ROOT_PATH)
+	 */
+	function icms_host_base_path(string $root): string
+	{
+		$realRoot = realpath($root);
+		$documentRoot = realpath((string) ($_SERVER['DOCUMENT_ROOT'] ?? ''));
+		if ($realRoot !== false && $documentRoot !== false && str_starts_with($realRoot . DIRECTORY_SEPARATOR, rtrim($documentRoot, '/\\') . DIRECTORY_SEPARATOR)) {
+			return rtrim(str_replace('\\', '/', substr($realRoot, strlen(rtrim($documentRoot, '/\\')))), '/');
+		}
+
+		$scriptName = str_replace('\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+
+		return str_ends_with($scriptName, '/index.php') ? rtrim(dirname($scriptName), '/') : '';
+	}
+
+	/**
 	 * The host's front controller in the trust path, or null when the site is
 	 * not installed or its trust path holds no host.
 	 *

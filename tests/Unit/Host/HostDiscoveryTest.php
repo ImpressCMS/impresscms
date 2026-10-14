@@ -102,6 +102,46 @@ final class HostDiscoveryTest extends TestCase
         self::assertSame($this->trust . '/host.php', icms_host_entry($this->root));
     }
 
+    /**
+     * @scenario Routing level 3 without a host
+     */
+    public function testTheScriptARewrittenRequestAskedForIsFound(): void
+    {
+        $this->touch($this->root . '/index.php');
+        $this->touch($this->root . '/user.php');
+        $this->touch($this->root . '/modules/news/index.php');
+        $this->touch($this->root . '/uploads/evil.php');
+        $this->touch($this->root . '/templates_c/compiled.php');
+        $this->touch($this->root . '/trust_dist/host.php');
+        $real = static fn (string $path): string => (string) realpath($path);
+        $server = $_SERVER;
+        try {
+            // a web root outside DOCUMENT_ROOT (an Alias): nginx and Apache at
+            // level 3 report index.php as SCRIPT_NAME
+            $_SERVER['DOCUMENT_ROOT'] = $this->dir . '/elsewhere';
+            $_SERVER['SCRIPT_NAME'] = '/cms/index.php';
+            $_SERVER['REQUEST_URI'] = '/cms/user.php?op=login';
+            self::assertSame($real($this->root . '/user.php'), icms_host_requested_script($this->root));
+            $_SERVER['REQUEST_URI'] = '/cms/modules/news/';
+            self::assertSame($real($this->root . '/modules/news/index.php'), icms_host_requested_script($this->root));
+
+            foreach (['/cms/', '/cms/index.php', '/cms/up', '/cms/missing.php', '/cms/uploads/evil.php', '/cms/templates_c/compiled.php',
+                '/cms/trust_dist/host.php', '/cms/modules/../user.php', '/cms/%2e%2e/outside.php', '/cms/.hidden.php'] as $uri) {
+                $_SERVER['REQUEST_URI'] = $uri;
+                self::assertNull(icms_host_requested_script($this->root), $uri);
+            }
+
+            // php -S with a router reports the requested path as SCRIPT_NAME
+            $_SERVER['SCRIPT_NAME'] = '/modules/news/index.php';
+            $_SERVER['DOCUMENT_ROOT'] = $this->root;
+            $_SERVER['REQUEST_URI'] = '/user.php';
+            self::assertSame('', icms_host_base_path($this->root));
+            self::assertSame($real($this->root . '/user.php'), icms_host_requested_script($this->root));
+        } finally {
+            $_SERVER = $server;
+        }
+    }
+
     public function testATrustPathInsideThePublicDirectoriesIsPublic(): void
     {
         self::assertTrue(icms_host_trust_path_is_public($this->root . '/trust_abc', $this->root));

@@ -52,6 +52,16 @@ if (!defined('ICMS_HOST_AUTOLOADED')) {
 		require $__icms_host;
 		exit;
 	}
+	// No host (not installed yet, or before the system module update): a web
+	// server that routes every PHP request here asked for another script.
+	if (null !== $__icms_host = icms_host_requested_script(__DIR__)) {
+		chdir(dirname($__icms_host));
+		$_SERVER['SCRIPT_FILENAME'] = $__icms_host;
+		$_SERVER['SCRIPT_NAME'] = $_SERVER['PHP_SELF'] = icms_host_base_path(__DIR__)
+			. str_replace('\\', '/', substr($__icms_host, strlen((string) realpath(__DIR__))));
+		require $__icms_host;
+		exit;
+	}
 	unset($__icms_host);
 }
 

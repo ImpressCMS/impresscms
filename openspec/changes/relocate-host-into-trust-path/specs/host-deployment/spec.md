@@ -26,6 +26,10 @@ The web root's `index.php` SHALL hand the request to the host when the host is i
 - **WHEN** the trust path contains no host and `GET /` arrives
 - **THEN** the legacy home page is rendered without the host
 
+#### Scenario: Routing level 3 without a host
+- **WHEN** the web server routes every `.php` request to `index.php`, the trust path contains no host, and `GET /user.php` arrives
+- **THEN** `index.php` runs `user.php` as the web server would have, and never runs a script in a directory that is never served
+
 #### Scenario: Trust path is read without executing mainfile.php
 - **WHEN** the entry point locates the trust path
 - **THEN** it reads `XOOPS_TRUST_PATH` from `mainfile.php` without including the file, and it follows `ICMS_MAINFILE` when `mainfile.php` is the uninstalled stub

@@ -56,6 +56,29 @@ final class HostDeploymentTest extends HttpTestCase
     }
 
     /**
+     * @scenario Routing level 3 without a host
+     */
+    public function testWithoutAHostIndexPhpRunsTheScriptARewrittenRequestAskedFor(): void
+    {
+        self::requireLocalServer();
+        if (ServerProcess::routing() !== 3) {
+            self::markTestSkipped('At level 2 the web server runs existing scripts itself.');
+        }
+        TestSite::removeTrustPathHost();
+        try {
+            $user = $this->request('GET', '/user.php');
+            $templates = $this->request('GET', '/templates_c/index.html');
+        } finally {
+            TestSite::writeTrustPathHost();
+        }
+
+        self::assertSame(200, $user->getStatusCode(), self::serverLog());
+        self::assertFalse(self::throughHost($user));
+        self::assertStringContainsString('name="uname"', $user->getContent(), 'user.php, not the home page');
+        self::assertStringNotContainsString('history.go', $templates->getContent(), 'never-served paths are not run');
+    }
+
+    /**
      * @scenario Symfony route through the fallback
      */
     public function testSymfonyRouteWithoutRewritingExistingScripts(): void
