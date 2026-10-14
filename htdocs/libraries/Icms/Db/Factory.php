@@ -72,6 +72,45 @@ abstract class Factory
 	static protected $xoopsInstance = false;
 
 	/**
+	 * Supplies the PDO connection instead of opening one, see setConnectionProvider()
+	 *
+	 * @var \Closure|null
+	 */
+	static protected $connectionProvider = null;
+
+	/**
+	 * Let a host application supply the database connection.
+	 *
+	 * The provider is called once, by the first pdoInstance() call, and must return a
+	 * \PDO that implements IConnection (see connectionClass()). pdoInstance() applies
+	 * the attributes it applies to its own connections, so icms::$db, icms::$xoopsDB
+	 * and every handler share the host's physical connection and transaction state.
+	 * Pass null to remove the provider. Without a provider nothing changes.
+	 *
+	 * @param \Closure|null $provider fn(): \PDO&IConnection
+	 * @throws \LogicException when the connection was already opened
+	 */
+	public static function setConnectionProvider(?\Closure $provider): void
+	{
+		if (self::$pdoInstance !== null) {
+			throw new \LogicException('The database connection is already open; set the connection provider before booting the services.');
+		}
+		self::$connectionProvider = $provider;
+	}
+
+	/**
+	 * The IConnection class for a PDO driver, for example "mysql"
+	 *
+	 * @param string $driver PDO driver name
+	 * @return string fully qualified class name extending \PDO
+	 */
+	public static function connectionClass(string $driver): string
+	{
+		$class = "\\Icms\\Db\\" . ucfirst($driver) . "\\Connection";
+		return class_exists($class) ? $class : "\Icms\Db\Connection";
+	}
+
+	/**
 	 * Instanciate the PDO compatible DB adapter (if appropriate).
 	 *
 	 * @copyright The ImpressCMS Project <http://www.impresscms.org>
@@ -82,6 +121,15 @@ abstract class Factory
 	{
 		if (self::$pdoInstance !== null) {
 			return self::$pdoInstance;
+		}
+		if (self::$connectionProvider !== null) {
+			$connection = (self::$connectionProvider)();
+			if (!$connection instanceof \PDO || !$connection instanceof IConnection) {
+				throw new \RuntimeException('The connection provider must return a \PDO that implements ' . IConnection::class . '.');
+			}
+			// the attributes pdoInstance() sets on its own connections
+			$connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_SILENT);
+			return self::$pdoInstance = $connection;
 		}
 		if (strpos(\XOOPS_DB_TYPE, 'pdo.') !== 0) {
 			return self::$pdoInstance = null;
@@ -129,10 +177,7 @@ abstract class Factory
 		}
 		$driver = substr(\XOOPS_DB_TYPE, 4);
 		$dsn = $driver . ':' . \ICMS_DB_DSN;
-		$class = "\\Icms\\Db\\" . ucfirst($driver) . "\\Connection";
-		if (!class_exists($class)) {
-			$class = "\Icms\Db\Connection";
-		}
+		$class = self::connectionClass($driver);
 		return self::$pdoInstance = new $class($dsn, \XOOPS_DB_USER, \XOOPS_DB_PASS, $options);
 	}
 	/**
@@ -151,7 +196,7 @@ abstract class Factory
 	{
 		if (self::$xoopsInstance !== false) return self::$xoopsInstance;
 		$allowWebChanges = \defined('XOOPS_DB_PROXY') ? false : true;
-		if (strpos(\XOOPS_DB_TYPE, 'pdo.') === 0) {
+		if (self::$connectionProvider !== null || strpos(\XOOPS_DB_TYPE, 'pdo.') === 0) {
 			if (self::$pdoInstance === null) {
 				self::pdoInstance();
 			}
