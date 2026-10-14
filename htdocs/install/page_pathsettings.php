@@ -62,12 +62,9 @@ class PathStuffController {
 
 			$docroot = resolveDocumentRoot();
 
-			// Next to the document root, not in it: the trust path holds the host and
-			// its libraries, and nginx or Caddy would serve a directory in the
-			// document root regardless of its .htaccess.
-			$parent = dirname(rtrim($docroot, '/'));
-			$this->xoopsTrustPath = ($parent !== rtrim($docroot, '/') && @is_writable($parent) ? $parent . '/' : $docroot)
-				. 'trust_' . substr( md5( time() ), 0, 15);
+			// resolveDocumentRoot() returns the folder above the document root, so
+			// the proposal lies next to the document root, outside it.
+			$this->xoopsTrustPath = $docroot . substr( md5( time() ), 0, 15);
 		}
 		if (isset( $_SESSION['settings']['URL'] )) {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
@@ -135,7 +132,7 @@ class PathStuffController {
 			$this->checkTrustPathPermissions();
 		}
 		$this->validUrl = !empty($this->xoopsUrl);
-		$this->publicTrustPath = icms_host_trust_path_is_public($this->xoopsTrustPath, $this->xoopsRootPath, resolveDocumentRoot());
+		$this->publicTrustPath = icms_host_trust_path_is_public($this->xoopsTrustPath, $this->xoopsRootPath, (string) ($_SERVER['DOCUMENT_ROOT'] ?? ''));
 		return ( $this->validRootPath && $this->validTrustPath && $this->validUrl && empty( $this->permErrors )
 			&& (!$this->publicTrustPath || $this->publicTrustPathConfirmed) );
 	}

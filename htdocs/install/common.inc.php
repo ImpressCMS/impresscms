@@ -62,7 +62,9 @@ require_once "../include/host.php";
 $_icms_trust_path = !empty($_SESSION["settings"]["TRUST_PATH"])
 	? $_SESSION["settings"]["TRUST_PATH"]
 	: icms_host_trust_path(dirname(__DIR__));
-$_icms_vendor_autoload = icms_host_vendor_autoload(dirname(__DIR__), $_icms_trust_path);
+$_icms_vendor_autoload = icms_host_vendor_autoload(dirname(__DIR__), $_icms_trust_path)
+	// a trust path changed after the host files were installed elsewhere
+	?? icms_host_vendor_autoload(dirname(__DIR__), icms_host_trust_path(dirname(__DIR__)));
 
 if ($_icms_vendor_autoload === null) {
 	header("Content-Type: text/plain; charset=utf-8");

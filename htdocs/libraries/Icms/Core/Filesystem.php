@@ -756,6 +756,11 @@ class Filesystem
 
 		// ── Activate: swap the verified copies in ──────────────────────────────
 		$activate = static function () use ($entries, $src, $dest, $root): string {
+			// Another run (or a cleanup) may have handled the copies in the meantime.
+			$entries = array_values(array_filter($entries, static fn(string $entry): bool => file_exists("$dest/$entry.new")));
+			if ($entries === []) {
+				return "";
+			}
 			$warnings = [];
 			$legacyVendor = is_dir("$dest/vendor") && !is_file("$dest/host.php");
 

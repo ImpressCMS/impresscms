@@ -54,7 +54,11 @@ foreach ($specFiles ?: [] as $file) {
 // -- Coverage claimed by tests ---------------------------------------------------
 /** @var array<string, array<string, list<string>>> $covered capability => [name => tests] */
 $covered = [];
-$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator("{$root}/tests", FilesystemIterator::SKIP_DOTS));
+// The root suites and the Library suite (htdocs/tests).
+$iterator = new AppendIterator();
+foreach (["{$root}/tests", "{$root}/htdocs/tests"] as $testDir) {
+    $iterator->append(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($testDir, FilesystemIterator::SKIP_DOTS)));
+}
 foreach ($iterator as $file) {
     if ($file->getExtension() !== 'php') {
         continue;

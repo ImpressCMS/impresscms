@@ -30,12 +30,14 @@ final class ServerProcess
 
     /**
      * @param array<string, string> $env
+     * @param array<string, string> $ini php.ini settings that override the defaults
      */
     public function __construct(
         private readonly string $documentRoot,
         private readonly ?string $router = null,
         private readonly array $env = [],
         private readonly ?string $externalBaseUri = null,
+        private readonly array $ini = [],
     ) {
     }
 
@@ -110,9 +112,11 @@ final class ServerProcess
             '-d', 'display_errors=0',
             '-d', 'log_errors=1',
             '-d', 'error_reporting=' . E_ALL,
-            '-S', '127.0.0.1:' . $this->port,
-            '-t', $this->documentRoot,
         ];
+        foreach ($this->ini as $name => $value) {
+            array_push($command, '-d', $name . '=' . $value);
+        }
+        array_push($command, '-S', '127.0.0.1:' . $this->port, '-t', $this->documentRoot);
         if ($this->router !== null) {
             $command[] = $this->router;
         }
@@ -120,7 +124,7 @@ final class ServerProcess
         $this->process = new Process(
             $command,
             $this->documentRoot,
-            ['ICMS_MAINFILE' => TestSite::mainfile()] + $this->env,
+            $this->env + ['ICMS_MAINFILE' => TestSite::mainfile()],
             null,
             null,
         );
