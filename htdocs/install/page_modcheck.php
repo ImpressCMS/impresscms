@@ -66,13 +66,9 @@ function xoDiagIfWritable( $path) {
 
 function imCheckComposer(): bool
 {
-	if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
-		return false;
-	}
-	if (!file_exists(__DIR__ . '/../vendor')) {
-		return false;
-	}
-	return true;
+	// common.inc.php already loaded it from the trust path, the staging
+	// directory trust_dist/ or the web root (see include/host.php)
+	return icms_host_vendor_autoload(dirname(__DIR__), $_SESSION['settings']['TRUST_PATH'] ?? null) !== null;
 }
 
 function imCheckRequirements()

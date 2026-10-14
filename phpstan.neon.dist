@@ -6,8 +6,14 @@ parameters:
     bootstrapFiles:
         # constants ImpressCMS defines at runtime
         - phpstan-bootstrap.php
+        # the Icms library and its legacy names (not in composer.json, see host.php)
+        - htdocs/libraries/Autoloader.php
+    scanDirectories:
+        - htdocs/libraries/Icms
     scanFiles:
         - htdocs/include/functions.php
+        - htdocs/include/host.php
+        - htdocs/libraries/icms.php
     # the legacy library's PHPDoc types are not reliable (icms::$user is null
     # for anonymous visitors, for example)
     treatPhpDocTypesAsCertain: false

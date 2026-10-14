@@ -639,479 +639,267 @@ class Filesystem
 	}
 	/* The above will be removed */
 
+	/** The staging directory in the web root that carries the host files of a release. */
+	public const TRUST_DISTRIBUTION_DIR = "trust_dist";
+
+	/** Trust path entries that belong to the site and are never replaced. */
+	private const TRUST_LOCAL_ENTRIES = ["var", ".env.local"];
+
 	/**
-	 * Move the Composer vendor directory from the web root into the trust path.
+	 * Install the Symfony host from the staging directory into the trust path.
 	 *
-	 * This is a cross-filesystem-safe operation: it uses copy + delete rather than
-	 * rename() so it works on shared hosting where the web root and trust path may
-	 * reside on different filesystems or partitions.
+	 * Every top-level entry of the staging directory (host.php, composer.json,
+	 * vendor/, src/, config/, …) is copied into the trust path as "<entry>.new"
+	 * and verified (same files, same sizes) before anything is replaced; a failed
+	 * copy therefore leaves the trust path as it was. Activation then swaps each
+	 * entry in, keeps var/ and .env.local, writes .env.local when it is missing,
+	 * empties var/cache, removes the trust-path autoloader stub of system
+	 * dbversion 49 and a web-root vendor/, and removes the staging directory.
+	 * A vendor/ without host.php next to it was moved there by dbversion 49; it
+	 * is kept as vendor.pre-50.
 	 *
-	 * Conflict policy: if vendor already exists in the trust path with DIFFERENT
-	 * contents (detected by comparing sha1 of autoload.php), the destination is
-	 * removed and overwritten with the source copy.  A 'warning' key is added to
-	 * the return value so the caller can surface this to the admin.
+	 * Copy + delete instead of rename(), because the web root and the trust path
+	 * may be on different filesystems.
 	 *
 	 * Return value shape:
 	 * <code>
 	 * [
-	 *   'status'  => 'ok'|'skipped'|'novendor'|'error_copy',
+	 *   'status'  => 'ok'|'skipped'|'nodist'|'error_dist'|'error_copy',
 	 *   'message' => string,   // human-readable, suitable for admin UI / logs
-	 *   'warning' => string,   // non-fatal warning, e.g. source could not be deleted
-	 *   'src'     => string,   // resolved source path (for debugging)
-	 *   'dest'    => string,   // resolved destination path (for debugging)
+	 *   'warning' => string,   // non-fatal problem, e.g. a leftover that could not be removed
+	 *   'src'     => string,   // staging directory
+	 *   'dest'    => string,   // trust path
 	 * ]
 	 * </code>
 	 *
-	 * Status meanings:
-	 *   'ok'         – copy succeeded; source removed (or removal failed → see 'warning').
-	 *   'skipped'    – nothing to do: vendor absent in web root and already in trust
-	 *                  path, or identical copy already in trust path.
-	 *   'novendor'   – vendor found in neither location; no action taken.
-	 *   'error_copy' – copy failed (permissions, disk full, etc.); partial destination
-	 *                  cleaned up; manual remediation required.
-	 *
-	 * @param  string $rootPath   Absolute path to the web root  (ICMS_ROOT_PATH)
-	 * @param  string $trustPath  Absolute path to the trust path (ICMS_TRUST_PATH)
-	 * @param  bool   $deferSourceRemoval  Remove the web-root copy at the end of the
-	 *                request instead of immediately. Use this when the running request
-	 *                has already loaded the Composer autoloader from the web root, so
-	 *                classes that are still to be autoloaded do not disappear mid-request.
+	 * @param  string $stagingPath the staging directory (<web root>/trust_dist)
+	 * @param  string $trustPath   ICMS_TRUST_PATH
+	 * @param  string $rootPath    ICMS_ROOT_PATH, recorded in .env.local
+	 * @param  bool   $deferActivation activate at the end of the request. Use this
+	 *                when the running request may still load classes from the trust
+	 *                path or the staging directory (the system module update and the
+	 *                installer); the copy and its verification still happen now.
 	 * @return array{status: string, message: string, warning: string, src: string, dest: string}
 	 */
-	public static function moveVendorToTrust(
-		string $rootPath,
+	public static function installTrustDistribution(
+		string $stagingPath,
 		string $trustPath,
-		bool $deferSourceRemoval = false,
+		string $rootPath,
+		bool $deferActivation = false,
 	): array {
-		// Normalise: forward slashes, no trailing slash
-		$src = rtrim(str_replace("\\", "/", $rootPath), "/") . "/vendor";
-		$dest = rtrim(str_replace("\\", "/", $trustPath), "/") . "/vendor";
+		$src = rtrim(str_replace("\\", "/", $stagingPath), "/");
+		$dest = rtrim(str_replace("\\", "/", $trustPath), "/");
+		$root = rtrim(str_replace("\\", "/", $rootPath), "/");
+		$base = ["warning" => "", "src" => $src, "dest" => $dest];
 
-		$srcExists = is_dir($src);
-		$destExists = is_dir($dest);
-
-		$removeSource = static function () use ($src, $deferSourceRemoval): string {
-			if ($deferSourceRemoval) {
-				register_shutdown_function(
-					static fn() => self::deleteRecursive($src, true),
-				);
-
-				return "";
-			}
-
-			self::deleteRecursive($src, true);
-
-			return is_dir($src) ?
-				sprintf(
-					"The vendor directory in the web root (%s) could not be removed. " .
-						"Please delete it manually via FTP/SFTP or your hosting file manager " .
-						"to prevent third-party library code from being web-accessible.",
-					$src,
-				) :
-				"";
-		};
-
-		$base = [
-			"warning" => "",
-			"src" => $src,
-			"dest" => $dest,
-		];
-
-		// ── Neither location has a vendor directory ───────────────────────────
-		if (!$srcExists && !$destExists) {
+		if (!is_dir($src)) {
+			return $base + (is_file("$dest/host.php")
+				? ["status" => "skipped", "message" => sprintf("The host is already installed in the trust path (%s).", $dest)]
+				: ["status" => "nodist", "message" => sprintf("No host files to install: %s does not exist.", $src)]);
+		}
+		if (!is_file("$src/host.php") || !is_file("$src/vendor/autoload.php")) {
 			return $base + [
-				"status" => "novendor",
+				"status" => "error_dist",
 				"message" => sprintf(
-					"No vendor directory found in web root (%s) or trust path (%s). " .
-						"If you are upgrading from a version that pre-dates Composer support " .
-						"this is expected – no action required.",
+					"%s is incomplete (host.php or vendor/autoload.php is missing). " .
+						"Upload the trust_dist directory of the ImpressCMS package again.",
 					$src,
-					$dest,
 				),
 			];
 		}
-
-		// ── Source absent: vendor already lives only in the trust path ────────
-		if (!$srcExists) {
+		if (!is_dir($dest) && !@mkdir($dest, 0775, true) && !is_dir($dest)) {
 			return $base + [
-				"status" => "skipped",
-				"message" => sprintf(
-					"Vendor directory is already in the trust path (%s) and absent " .
-						"from the web root – nothing to do.",
-					$dest,
-				),
-				"warning" => self::finalizeTrustVendor($rootPath, $trustPath),
+				"status" => "error_copy",
+				"message" => sprintf("The trust path (%s) does not exist and cannot be created.", $dest),
 			];
 		}
 
-		// ── Source exists: check whether destination holds identical content ──
-		if ($destExists) {
-			$destAutoload = $dest . "/autoload.php";
-			$srcHash = @sha1_file($src . "/autoload.php");
-			$destHash = file_exists($destAutoload)
-				? @sha1_file($destAutoload)
-				: false;
-
-			if (
-				$srcHash !== false &&
-				$destHash !== false &&
-				$srcHash === $destHash
-			) {
-				// Identical copy already present – just remove the web-root original.
-				$warning = $removeSource();
-				$warning .= self::finalizeTrustVendor($rootPath, $trustPath);
-				return $base + [
-					"status" => "skipped",
-					"message" => sprintf(
-						"An identical vendor directory already exists in the trust path (%s). " .
-							"The web-root copy has been removed.",
-						$dest,
-					),
-					"warning" => $warning,
-				];
-			}
-
-			// Different contents (or incomplete dest) – remove destination so we
-			// get a clean, authoritative copy from the source.
-			self::deleteRecursive($dest, true);
-		}
-
-		// ── Copy source → destination ─────────────────────────────────────────
 		@set_time_limit(300);
 
-		if (!self::copyRecursive($src, $dest)) {
-			// Copy failed – clean up any partial destination.
-			if (is_dir($dest)) {
-				self::deleteRecursive($dest, true);
+		// ── Copy every entry to <entry>.new and verify it ──────────────────────
+		$entries = [];
+		foreach (scandir($src) ?: [] as $entry) {
+			if ($entry === "." || $entry === ".." || $entry === "index.html" || in_array($entry, self::TRUST_LOCAL_ENTRIES, true)) {
+				continue;
 			}
-			return $base + [
-				"status" => "error_copy",
-				"message" => sprintf(
-					"Failed to copy the vendor directory from the web root (%s) to the " .
-						"trust path (%s). Please check that the trust path is writable and " .
-						"that there is sufficient disk space, then retry. " .
-						"Alternatively, copy the vendor directory manually via FTP/SFTP.",
-					$src,
-					$dest,
-				),
-			];
+			$entries[] = $entry;
 		}
 
-		// Verify the copy is complete and consistent:
-		// 1. autoload.php must exist in the destination.
-		// 2. Its SHA-1 must match the source (rules out a zero-byte or truncated file).
-		// 3. The total file count in dest must equal the source (rules out a partial tree).
-		$destAutoloadPath = $dest . "/autoload.php";
-		$srcAutoloadPath = $src . "/autoload.php";
-
-		$destAutoloadHash = file_exists($destAutoloadPath)
-			? @sha1_file($destAutoloadPath)
-			: false;
-		$srcAutoloadHash = file_exists($srcAutoloadPath)
-			? @sha1_file($srcAutoloadPath)
-			: false;
-
-		if (
-			$destAutoloadHash === false ||
-			$srcAutoloadHash === false ||
-			$destAutoloadHash !== $srcAutoloadHash
-		) {
-			self::deleteRecursive($dest, true);
-			return $base + [
-				"status" => "error_copy",
-				"message" => sprintf(
-					"The vendor copy to the trust path (%s) appears incomplete or corrupt " .
-						"(autoload.php is missing or does not match the source). " .
-						"The partial copy has been removed. " .
-						"Please retry or copy the vendor directory manually via FTP/SFTP.",
-					$dest,
-				),
-			];
-		}
-
-		// Count files recursively so that subdirectories at any depth are included.
-		// Filter out index.html files, as many shared hosting environments automatically
-		// create these in every directory for security (to prevent directory listing).
-		$srcFileCount = self::getFileCount($src, "", [], false, true);
-		$destFileCount = self::getFileCount($dest, "", [], false, true);
-
-		// Build relative-path sets BEFORE deleting the dest, so we can diff them.
-		$srcFiles = self::getRelativeFileSet($src);
-		$destFiles = self::getRelativeFileSet($dest);
-
-		// Filter out auto-generated index.html files before comparing, as they don't
-		// indicate a copy failure – they're added by hosting environments.
-		$filterIndexFiles = static function (array $files): array {
-			return array_filter(
-				$files,
-				static fn($f) => basename($f) !== "index.html",
-			);
+		$discard = static function () use ($entries, $dest): void {
+			foreach ($entries as $entry) {
+				self::removePath("$dest/$entry.new");
+			}
 		};
 
-		$srcFilesFiltered = $filterIndexFiles($srcFiles);
-		$destFilesFiltered = $filterIndexFiles($destFiles);
+		foreach ($entries as $entry) {
+			self::removePath("$dest/$entry.new");
+			$copied = is_dir("$src/$entry")
+				? self::copyRecursive("$src/$entry", "$dest/$entry.new")
+				: @copy("$src/$entry", "$dest/$entry.new");
+			$problem = $copied ? self::compareTrees("$src/$entry", "$dest/$entry.new") : "the copy failed";
+			if ($problem !== "") {
+				$discard();
+				return $base + [
+					"status" => "error_copy",
+					"message" => sprintf(
+						"Could not copy %s to the trust path (%s): %s. Nothing has been changed. " .
+							"Check that the trust path is writable and has enough free space, then run the update again, " .
+							"or upload the contents of %s to the trust path manually.",
+						$entry,
+						$dest,
+						$problem,
+						$src,
+					),
+				];
+			}
+		}
 
-		if (count($srcFilesFiltered) !== count($destFilesFiltered)) {
-			$onlyInSrc = array_values(
-				array_diff($srcFilesFiltered, $destFilesFiltered),
-			);
-			$onlyInDest = array_values(
-				array_diff($destFilesFiltered, $srcFilesFiltered),
-			);
+		// ── Activate: swap the verified copies in ──────────────────────────────
+		$activate = static function () use ($entries, $src, $dest, $root): string {
+			$warnings = [];
+			$legacyVendor = is_dir("$dest/vendor") && !is_file("$dest/host.php");
 
-			sort($onlyInSrc);
-			sort($onlyInDest);
+			foreach ($entries as $entry) {
+				$target = "$dest/$entry";
+				$previous = $entry === "vendor" && $legacyVendor ? "$dest/vendor.pre-50" : "$target.old";
+				self::removePath($previous);
+				if (file_exists($target) && !@rename($target, $previous)) {
+					$warnings[] = sprintf("%s could not be replaced; the new version is in %s.new.", $target, $target);
+					continue;
+				}
+				if (!@rename("$target.new", $target)) {
+					@rename($previous, $target);
+					$warnings[] = sprintf("%s.new could not be renamed to %s.", $target, $target);
+					continue;
+				}
+				if ($previous === "$target.old") {
+					self::removePath($previous);
+				}
+			}
 
-			// Summarise by top-level subdirectory (first path segment) so the list
-			// stays readable even when hundreds of files differ.
-			$summarise = static function (array $paths): string {
-				if (empty($paths)) {
-					return "(none)";
-				}
-				$byDir = [];
-				foreach ($paths as $p) {
-					$seg = strstr($p, "/", true);
-					$dir = $seg !== false ? $seg : "(root)";
-					$byDir[$dir] = ($byDir[$dir] ?? 0) + 1;
-				}
-				arsort($byDir);
-				$lines = [];
-				foreach ($byDir as $dir => $cnt) {
-					$lines[] = "  $dir/ → $cnt file(s)";
-				}
-				// Also show up to 20 concrete examples.
-				$examples = array_slice($paths, 0, 20);
-				$lines[] = "";
-				$lines[] = "First " . count($examples) . " example(s):";
-				foreach ($examples as $f) {
-					$lines[] = "  $f";
-				}
-				if (count($paths) > 20) {
-					$lines[] = "  … and " . (count($paths) - 20) . " more.";
-				}
-				return implode("\n", $lines);
-			};
+			$warnings[] = self::writeTrustEnvironment($dest, $root);
+			self::removePath("$dest/var/cache");
 
-			$detail = sprintf(
-				"\n\nFiles in SOURCE only (%d):\n%s" .
-					"\n\nFiles in DESTINATION only (%d):\n%s" .
-					"\n\ngetFileCount(src)=%d  getFileCount(dest)=%d" .
-					"\ncount(srcSet)=%d  count(destSet)=%d" .
-					"\ncount(srcSetFiltered)=%d  count(destSetFiltered)=%d" .
-					"\n(index.html files are excluded from the filtered counts, as they are " .
-					"commonly auto-generated by shared hosting environments)",
-				count($onlyInSrc),
-				$summarise($onlyInSrc),
-				count($onlyInDest),
-				$summarise($onlyInDest),
-				$srcFileCount,
-				$destFileCount,
-				count($srcFiles),
-				count($destFiles),
-				count($srcFilesFiltered),
-				count($destFilesFiltered),
-			);
+			// The stub that system dbversion 49 wrote for its re-based vendor/.
+			self::removePath("$dest/libraries/Autoloader.php");
+			if (is_dir("$dest/libraries") && (scandir("$dest/libraries") ?: []) === [".", ".."]) {
+				@rmdir("$dest/libraries");
+			}
 
-			self::deleteRecursive($dest, true);
+			if ($warnings === array_filter($warnings, static fn(string $w): bool => $w === "")) {
+				// Only once everything is in place: the staging directory is the
+				// fallback the site boots from until then.
+				foreach (["$src", "$root/vendor"] as $leftover) {
+					self::removePath($leftover);
+					if (file_exists($leftover)) {
+						$warnings[] = sprintf("%s could not be removed; delete it manually.", $leftover);
+					}
+				}
+			}
+
+			return implode(" ", array_filter($warnings, static fn(string $w): bool => $w !== ""));
+		};
+
+		if ($deferActivation) {
+			register_shutdown_function(static function () use ($activate): void {
+				$warning = $activate();
+				if ($warning !== "") {
+					error_log("ImpressCMS host installation: " . $warning);
+				}
+			});
+
 			return $base + [
-				"status" => "error_copy",
+				"status" => "ok",
 				"message" => sprintf(
-					"The vendor copy to the trust path (%s) appears incomplete " .
-						"(source has %d file(s) but destination has %d). " .
-						"The partial copy has been removed. " .
-						"Please retry or copy the vendor directory manually via FTP/SFTP." .
-						"%s",
+					"The host files have been copied to the trust path (%s) and are activated at the end of this request.",
 					$dest,
-					$srcFileCount,
-					$destFileCount,
-					$detail,
 				),
 			];
 		}
 
-		// ── Delete the original from the web root ─────────────────────────────
-		$warning = $removeSource();
-
-		$warning .= self::finalizeTrustVendor($rootPath, $trustPath);
+		$warning = $activate();
 
 		return $base + [
 			"status" => "ok",
-			"message" => sprintf(
-				"Vendor directory successfully moved from the web root (%s) to the " .
-					"trust path (%s).",
-				$src,
-				$dest,
-			),
+			"message" => sprintf("The host has been installed in the trust path (%s).", $dest),
 			"warning" => $warning,
 		];
 	}
 
 	/**
-	 * Make a vendor directory that now lives in the trust path fully functional:
-	 * rewrite the generated autoloader so it finds the web-root libraries, and point
-	 * htdocs/composer.json at the trust path so that a later `composer update` run
-	 * from the site root writes there instead of recreating a public vendor folder.
-	 *
-	 * Idempotent. Returns an empty string on success, otherwise a warning message
-	 * (prefixed with a space so warnings can be concatenated).
+	 * Write the trust path's .env.local when it is missing, or add the web root
+	 * to it: the site's own settings for the host (environment, secret, web root
+	 * for bin/console). Returns a warning, or an empty string.
 	 */
-	public static function finalizeTrustVendor(
-		string $rootPath,
-		string $trustPath,
-	): string {
-		$root = rtrim(str_replace("\\", "/", $rootPath), "/");
-		$trust = rtrim(str_replace("\\", "/", $trustPath), "/");
-		$warnings = [];
-
-		if (!self::rewriteVendorAutoloadBase("$trust/vendor", $root)) {
-			$warnings[] = sprintf(
-				"The autoloader files in %s/vendor/composer could not be updated. " .
-					"Run 'composer dump-autoload' from the site root.",
-				$trust,
-			);
-		}
-
-		if (!self::pointComposerJsonToTrust($root, $trust)) {
-			$warnings[] = sprintf(
-				"%s/composer.json could not be updated. Set config.vendor-dir to the " .
-					"vendor folder in your trust path before running composer.",
-				$root,
-			);
-		}
-
-		return $warnings === [] ? "" : " " . implode(" ", $warnings);
-	}
-
-	/**
-	 * Composer generates autoloader paths for the root package relative to the
-	 * vendor directory. When a vendor directory generated for htdocs/vendor is
-	 * moved elsewhere those paths must be re-based onto the web root.
-	 */
-	private static function rewriteVendorAutoloadBase(
-		string $vendor,
-		string $root,
-	): bool {
-		$composerDir = "$vendor/composer";
-		if (!is_dir($composerDir)) {
-			return false;
-		}
-
-		$fromVendor = self::relativePath($vendor, $root);
-		$fromComposer = self::relativePath($composerDir, $root);
-
-		$baseDirExpr = $fromVendor === null ?
-			var_export($root, true) :
-			"\$vendorDir . " . var_export("/$fromVendor", true);
-		$staticExpr = $fromComposer === null ?
-			var_export($root, true) :
-			"__DIR__ . " . var_export("/$fromComposer", true);
-
-		$success = true;
-
-		foreach (glob("$composerDir/autoload_*.php") ?: [] as $file) {
-			$code = @file_get_contents($file);
-			if ($code === false) {
-				$success = false;
-				continue;
-			}
-
-			$updated = str_replace(
-				"\$baseDir = dirname(\$vendorDir);",
-				"\$baseDir = $baseDirExpr;",
-				$code,
-			);
-			$updated = str_replace(
-				"__DIR__ . '/../..' . '/",
-				"$staticExpr . '/",
-				$updated,
-			);
-
-			if ($updated === $code) {
-				continue;
-			}
-
-			if (@file_put_contents($file, $updated) === false) {
-				$success = false;
-			}
-		}
-
-		return $success;
-	}
-
-	private static function pointComposerJsonToTrust(
-		string $root,
-		string $trust,
-	): bool {
-		$file = "$root/composer.json";
-		if (!is_file($file)) {
-			return true;
-		}
-
-		$code = @file_get_contents($file);
-		if ($code === false) {
-			return false;
-		}
-
-		$relTrust = self::relativePath($root, $trust) ?? $trust;
-		$values = [
-			"vendor-dir" => "$relTrust/vendor",
-			"cache-dir" => "$relTrust/cache/composer",
-		];
-
-		foreach ($values as $key => $value) {
-			$encoded = json_encode($value, JSON_UNESCAPED_SLASHES);
-			$code = preg_replace_callback(
-				'/("' . preg_quote($key, "/") . '"\s*:\s*)"[^"]*"/',
-				static fn(array $m): string => $m[1] . $encoded,
-				$code,
-			);
-		}
-
-		if ($code === null) {
-			return false;
-		}
-
-		return @file_put_contents($file, $code) !== false;
-	}
-
-	/**
-	 * Relative path from directory $from to directory $to, or null when none exists
-	 * (for example paths on different Windows drives).
-	 */
-	private static function relativePath(string $from, string $to): ?string
+	private static function writeTrustEnvironment(string $trust, string $root): string
 	{
-		$split = static function (string $path): array {
-			$real = realpath($path);
-			$path = str_replace("\\", "/", $real !== false ? $real : $path);
+		$file = "$trust/.env.local";
+		$rootLine = "ICMS_LEGACY_ROOT='" . str_replace("'", "", $root) . "'\n";
 
-			return array_values(
-				array_filter(explode("/", $path), static fn($s) => $s !== ""),
+		if (is_file($file)) {
+			$current = (string) @file_get_contents($file);
+			if (preg_match('/^ICMS_LEGACY_ROOT=/m', $current)) {
+				return "";
+			}
+			$written = @file_put_contents($file, rtrim($current, "\n") . "\n" . $rootLine);
+		} else {
+			$written = @file_put_contents(
+				$file,
+				"# Settings of this site for the ImpressCMS host, written by the installer\n" .
+					"# or the system module update. Kept by later updates.\n" .
+					"APP_ENV=prod\n" .
+					"APP_DEBUG=0\n" .
+					"APP_SECRET=" . bin2hex(random_bytes(32)) . "\n" .
+					$rootLine,
 			);
-		};
-
-		$a = $split($from);
-		$b = $split($to);
-
-		$common = 0;
-		while (
-			isset($a[$common], $b[$common]) &&
-			(DIRECTORY_SEPARATOR === "\\" ?
-				strcasecmp($a[$common], $b[$common]) === 0 :
-				$a[$common] === $b[$common])
-		) {
-			$common++;
 		}
 
-		if ($common === 0) {
-			return null;
+		return $written === false ? sprintf("%s could not be written.", $file) : "";
+	}
+
+	/**
+	 * Compare a copied file or directory tree with its source: same relative
+	 * file names (ignoring index.html files that hosting panels create) and same
+	 * file sizes. Returns a description of the first difference, or "".
+	 */
+	private static function compareTrees(string $source, string $copy): string
+	{
+		if (!is_dir($source)) {
+			return is_file($copy) && filesize($copy) === filesize($source) ? "" : "the copy of $source differs";
 		}
 
-		$parts = array_merge(
-			array_fill(0, count($a) - $common, ".."),
-			array_slice($b, $common),
+		$withoutIndex = static fn(array $files): array => array_values(
+			array_filter($files, static fn(string $f): bool => basename($f) !== "index.html"),
 		);
+		$sourceFiles = $withoutIndex(self::getRelativeFileSet($source));
+		$copiedFiles = $withoutIndex(self::getRelativeFileSet($copy));
 
-		return $parts === [] ? "." : implode("/", $parts);
+		if ($sourceFiles !== $copiedFiles) {
+			$missing = array_values(array_diff($sourceFiles, $copiedFiles));
+			return sprintf(
+				"%d of %d files are missing in the copy%s",
+				count($missing),
+				count($sourceFiles),
+				$missing === [] ? "" : " (for example " . $missing[0] . ")",
+			);
+		}
+		foreach ($sourceFiles as $file) {
+			if (filesize("$source/$file") !== filesize("$copy/$file")) {
+				return "$file differs from the original";
+			}
+		}
+
+		return "";
+	}
+
+	/** Remove a file or a directory tree, if it exists. */
+	private static function removePath(string $path): void
+	{
+		if (is_dir($path) && !is_link($path)) {
+			self::deleteRecursive($path, true);
+		} elseif (file_exists($path) || is_link($path)) {
+			@unlink($path);
+		}
 	}
 
 	/**

@@ -10,15 +10,16 @@ use App\Tests\Support\TestSite;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Request ownership end to end through public/index.php (the Symfony host).
+ * Request ownership end to end through the web root's index.php and the host.
  */
 #[Group('spec:request-ownership')]
 final class RequestOwnershipTest extends HttpTestCase
 {
     protected function setUp(): void
     {
-        if (ServerProcess::configuredDocumentRoot() !== 'public') {
-            self::markTestSkipped('Request ownership needs the Symfony host (ICMS_TEST_DOCROOT=public).');
+        // Routes that claim existing .php scripts need every request routed to index.php.
+        if (ServerProcess::routing() !== 3) {
+            self::markTestSkipped('Request ownership of existing scripts needs routing level 3 (ICMS_TEST_ROUTING=3).');
         }
         parent::setUp();
     }

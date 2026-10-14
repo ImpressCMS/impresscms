@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
  * Serves legacy assets and runs legacy scripts behind the host.
  *
  * A script run is split in three steps around the file-scope `require` in
- * public/index.php: prepare() hydrates the superglobals and opens an output
+ * host.php: prepare() hydrates the superglobals and opens an output
  * buffer, the script runs, and complete() or fail() turn the captured output,
  * status code and headers into a Response and restore the host's state. When
  * the script calls exit(), a shutdown function does the same.
@@ -32,6 +32,7 @@ final class LegacyBridge
         private readonly array $mimeTypes,
         private readonly bool $debug,
         private readonly LoggerInterface $logger,
+        private readonly string $frontController = '',
     ) {
     }
 
@@ -65,7 +66,7 @@ final class LegacyBridge
         $execution->hostExceptionHandler = self::currentExceptionHandler();
         ob_start();
 
-        // Scripts that call exit() or die() never return to public/index.php.
+        // Scripts that call exit() or die() never return to host.php.
         register_shutdown_function(function () use ($execution): void {
             if ($execution->completed) {
                 return;
@@ -92,7 +93,7 @@ final class LegacyBridge
         $handler = self::currentExceptionHandler();
         if ($handler !== null && $handler !== $execution->hostExceptionHandler) {
             try {
-                $handler(self::withoutHostFrames($exception, (string) ($execution->snapshot['_SERVER']['SCRIPT_FILENAME'] ?? '')));
+                $handler(self::withoutHostFrames($exception, $this->frontController));
             } catch (\Throwable $handlerFailure) {
                 return $this->finalize($execution, $handlerFailure);
             }
@@ -105,7 +106,8 @@ final class LegacyBridge
 
     /**
      * Without the host the script is the outermost file, so its stack traces end
-     * there; drop the frames of the host front controller that required it.
+     * there; drop the frame of the host front controller that required it and
+     * everything outside it (the host and the web root's index.php preamble).
      */
     private static function withoutHostFrames(\Throwable $exception, string $frontController): \Throwable
     {
@@ -115,11 +117,14 @@ final class LegacyBridge
         }
 
         $property = new \ReflectionProperty($exception instanceof \Exception ? \Exception::class : \Error::class, 'trace');
-        $trace = array_filter(
-            (array) $property->getValue($exception),
-            static fn (array $frame): bool => !isset($frame['file']) || realpath($frame['file']) !== $frontController,
-        );
-        $property->setValue($exception, array_values($trace));
+        $trace = [];
+        foreach ((array) $property->getValue($exception) as $frame) {
+            if (isset($frame['file']) && realpath($frame['file']) === $frontController) {
+                break;
+            }
+            $trace[] = $frame;
+        }
+        $property->setValue($exception, $trace);
 
         return $exception;
     }

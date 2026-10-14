@@ -19,9 +19,6 @@ final class SessionIdentityTest extends HttpTestCase
 {
     protected function setUp(): void
     {
-        if (ServerProcess::configuredDocumentRoot() !== 'public') {
-            self::markTestSkipped('Shared session and identity need the Symfony host (ICMS_TEST_DOCROOT=public).');
-        }
         TestSite::restoreSnapshot();
         parent::setUp();
     }

@@ -11,7 +11,7 @@ use Symfony\Component\Runtime\SymfonyRuntime;
 
 /**
  * SymfonyRuntime whose HTTP runner hands legacy scripts back to
- * public/index.php instead of running them inside the kernel.
+ * host.php instead of running them inside the kernel.
  */
 final class HostRuntime extends SymfonyRuntime
 {

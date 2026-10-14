@@ -331,3 +331,6 @@ define('_FCK_PRESENT_WARNING', 'FCKeditor is present - remove it from your serve
 
 define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE is selected as the default editor for at least 1 module - change it and then remove it from your server');
 define('_TinyMCE_PRESENT_WARNING', 'TinyMCE is present - remove it from your server');
+
+define('_TRUST_PATH_PUBLIC', 'WARNING: The trust path %s lies inside the web root or the document root. It holds the ImpressCMS host, its libraries and the secret settings of this site, and web servers such as nginx or Caddy serve it regardless of .htaccess files.<br />Move the folder outside the document root and update XOOPS_TRUST_PATH in mainfile.php.');
+define('_TRUST_DIST_PENDING', 'The host files of a new release are waiting in %s. Update the system module to install them into the trust path.');

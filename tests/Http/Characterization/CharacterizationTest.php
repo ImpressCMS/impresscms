@@ -14,14 +14,14 @@ use Symfony\Component\BrowserKit\Response;
  * Pins the observable behaviour of ImpressCMS for a fixed URL corpus.
  *
  * The snapshots in __snapshots__/ were recorded with `htdocs/` as document
- * root (direct deployment). The same snapshots must match with `public/`
- * (Symfony host) as document root, which proves that both deployment modes
- * behave the same (design D12).
+ * root before the host existed. They must match at routing level 2 (legacy
+ * scripts executed directly) and level 3 (every request through the host),
+ * and on every supported web server (ICMS_TEST_BASE_URL).
  *
  * Each case starts from a freshly restored database, because pages such as
  * the home page reflect earlier requests (online users, last login).
  *
- * Re-record with ICMS_UPDATE_SNAPSHOTS=1 and ICMS_TEST_DOCROOT=htdocs.
+ * Re-record with ICMS_UPDATE_SNAPSHOTS=1.
  */
 final class CharacterizationTest extends HttpTestCase
 {
@@ -68,9 +68,6 @@ final class CharacterizationTest extends HttpTestCase
 
         $file = self::SNAPSHOT_DIR . '/' . $case . '.txt';
         if (getenv('ICMS_UPDATE_SNAPSHOTS') === '1') {
-            if (ServerProcess::configuredDocumentRoot() !== 'htdocs') {
-                self::fail('Snapshots are recorded against htdocs/ only (ICMS_TEST_DOCROOT=htdocs).');
-            }
             @mkdir(self::SNAPSHOT_DIR, 0777, true);
             file_put_contents($file, $actual);
         }

@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Which application the kernel picks. Legacy-owned requests come back as the
- * marker for public/index.php; no legacy code runs in these tests.
+ * marker for host.php; no legacy code runs in these tests.
  */
 #[Group('spec:request-ownership')]
 final class RequestOwnershipTest extends WebTestCase

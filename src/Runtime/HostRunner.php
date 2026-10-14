@@ -22,7 +22,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 /**
  * Handles a request through the kernel. Symfony responses are sent right away;
  * for a legacy script the runner prepares the execution and leaves the
- * `require` to public/index.php, which runs it at file scope and then calls
+ * `require` to host.php, which runs it at file scope and then calls
  * completeLegacy() or failLegacy(). Both paths, and the exit() path, dispatch
  * kernel.response for the real response, send it and terminate the kernel.
  */

@@ -3,9 +3,9 @@
  * Minimal ImpressCMS environment for library tests.
  *
  * Defines the constants and procedural shims that bare class files need,
- * without booting the CMS. Shared by tests/bootstrap.php (direct htdocs/
- * deployment) and the root test suite, which loads it only for the Library
- * suite so that it does not clash with a real legacy boot.
+ * without booting the CMS. The root test suite loads it only for the Library
+ * suite (LibraryEnvironmentExtension), so that it does not clash with a real
+ * legacy boot.
  *
  * @package icms\tests
  */

@@ -103,9 +103,10 @@ class HTMLFilter extends DataFilter {
 		// Check bundled location first for backward compatibility
 		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
 
-		// Fall back to Composer location if bundled doesn't exist
-		if (!is_dir($dirPath)) {
-			$dirPath = ICMS_ROOT_PATH . '/vendor/ezyang/htmlpurifier/library/HTMLPurifier/Filter/';
+		// Fall back to the Composer package, wherever vendor/ lives (trust path,
+		// staging directory or web root)
+		if (!is_dir($dirPath) && class_exists(\HTMLPurifier::class)) {
+			$dirPath = dirname((string) (new \ReflectionClass(\HTMLPurifier::class))->getFileName()) . '/HTMLPurifier/Filter/';
 		}
 
 		$icmsConfigPurifier = \icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);

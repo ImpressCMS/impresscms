@@ -53,6 +53,25 @@ final class TestSite
     }
 
     /**
+     * "Install" the host in the test site's trust path: one-line stubs that
+     * require the repository's host.php and vendor/autoload.php, so the web
+     * root's index.php finds the host as on a real site.
+     */
+    public static function writeTrustPathHost(): void
+    {
+        $trust = self::trustPath();
+        @mkdir($trust . '/vendor', 0777, true);
+        file_put_contents($trust . '/host.php', "<?php\nrequire " . var_export(self::repoRoot() . '/host.php', true) . ";\n");
+        file_put_contents($trust . '/vendor/autoload.php', "<?php\nreturn require " . var_export(self::repoRoot() . '/vendor/autoload.php', true) . ";\n");
+    }
+
+    /** Remove the host from the test site's trust path (vendor/ stays). */
+    public static function removeTrustPathHost(): void
+    {
+        @unlink(self::trustPath() . '/host.php');
+    }
+
+    /**
      * $_SERVER entries a web server provides, for legacy code booted from the CLI.
      *
      * @return array<string, string>

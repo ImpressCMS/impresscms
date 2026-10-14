@@ -46,6 +46,7 @@ services:
         arguments:
             $mimeTypes: '%icms.legacy.mime_types%'
             $debug: '%kernel.debug%'
+            $frontController: '%kernel.project_dir%/host.php'
 
     App\Routing\ReservedPrefixLoader:
         arguments:

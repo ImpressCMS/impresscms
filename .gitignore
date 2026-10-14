@@ -19,3 +19,4 @@
 /config/reference.php
 # probe preload installed by tests/Http/ModuleBootTest.php
 /htdocs/plugins/preloads/zzicmstestprobe.php
+/htdocs/trust_dist/

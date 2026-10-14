@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
 /**
  * The Symfony host. ImpressCMS runs inside it: requests that no Symfony route
- * claims are executed by the legacy bridge (see public/index.php).
+ * claims are executed by the legacy bridge (see host.php).
  */
 final class Kernel extends BaseKernel
 {

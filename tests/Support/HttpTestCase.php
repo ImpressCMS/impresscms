@@ -51,7 +51,7 @@ abstract class HttpTestCase extends DatabaseTestCase
      */
     protected static function createServer(): ServerProcess
     {
-        return ServerProcess::forConfiguredDocumentRoot();
+        return ServerProcess::forSite();
     }
 
     protected static function url(string $path): string

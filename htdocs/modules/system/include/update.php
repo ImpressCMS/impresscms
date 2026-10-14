@@ -298,53 +298,58 @@ function xoops_module_update_system(
 		echo $e->getMessage();
 	}
 
-	/* Begin upgrade to version 2.0.0 (vendor move to trust path) */
+	/* Begin upgrade to version 2.0.0 (formerly: vendor move to trust path) */
+	// The vendor move of this step is part of step 50, which installs the host,
+	// vendor/ included, into the trust path; only the version is recorded here.
 	if (!$abortUpdate) {
 		$newDbVersion = 49;
 	}
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, "system");
+		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . "<br />";
+	}
+
+	/* Begin upgrade to version 2.1.0 (Symfony host in the trust path) */
+	if (!$abortUpdate) {
+		$newDbVersion = 50;
+	}
 	try {
-		if ($dbVersion < $newDbVersion) {
-			// Same routine as the installer's vendor step (install/page_movevendor.php):
-			// copy + verify + delete, then re-base the autoloader and composer.json.
-			//
-			// The Composer autoloader of this request is already loaded from the web
-			// root, so its removal is deferred to the end of the request; otherwise
-			// vendor classes that are autoloaded later on would no longer be found.
-			$moveResult = icms_core_Filesystem::moveVendorToTrust(
-				ICMS_ROOT_PATH,
+		// Every release ships the host in the staging directory trust_dist/, so the
+		// host is installed whenever that directory exists, not only once.
+		$stagingPath = ICMS_ROOT_PATH . "/" . icms_core_Filesystem::TRUST_DISTRIBUTION_DIR;
+		if (!$abortUpdate && ($dbVersion < $newDbVersion || is_dir($stagingPath))) {
+			// This request may still load classes from the trust path or the staging
+			// directory, so the verified copy is activated at the end of the request.
+			$installResult = icms_core_Filesystem::installTrustDistribution(
+				$stagingPath,
 				ICMS_TRUST_PATH,
+				ICMS_ROOT_PATH,
 				true,
 			);
 
-			if (in_array($moveResult["status"], ["ok", "skipped", "novendor"], true)) {
-				echo htmlspecialchars($moveResult["message"], ENT_QUOTES) . "<br />";
-				if (!empty($moveResult["warning"])) {
+			if (in_array($installResult["status"], ["ok", "skipped", "nodist"], true)) {
+				echo htmlspecialchars($installResult["message"], ENT_QUOTES) . "<br />";
+				if ($installResult["warning"] !== "") {
 					echo '<span style="color:orange;">' .
-						htmlspecialchars($moveResult["warning"], ENT_QUOTES) .
+						htmlspecialchars($installResult["warning"], ENT_QUOTES) .
 						"</span><br />";
 				}
 			} else {
-				// A copy failure is fatal: the admin has to fix it (see the
-				// manual steps of the installer) and run the update again.
+				// The trust path is unchanged; the admin fixes the cause (see the
+				// message) and runs the update again.
 				$abortUpdate = true;
 				echo '<span style="color:red;">' .
-					"ERROR: Could not move the vendor directory to the trust path. " .
-					nl2br(htmlspecialchars($moveResult["message"], ENT_QUOTES)) .
+					"ERROR: Could not install the host files into the trust path. " .
+					nl2br(htmlspecialchars($installResult["message"], ENT_QUOTES)) .
 					"</span><br />";
 			}
 
-			/* Finish up this portion of the db update */
-			if (!$abortUpdate) {
-				$icmsDatabaseUpdater->updateModuleDBVersion(
-					$newDbVersion,
-					"system",
-				);
-				echo sprintf(
-					_DATABASEUPDATER_UPDATE_OK,
-					icms_conv_nr2local($newDbVersion),
-				) . "<br />";
+			if (!$abortUpdate && $dbVersion < $newDbVersion) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, "system");
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . "<br />";
 			}
 		}
+		unset($stagingPath);
 	} catch (Throwable $e) {
 		$abortUpdate = true;
 		echo $e->getMessage();

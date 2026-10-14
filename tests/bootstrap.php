@@ -17,6 +17,10 @@ if (!is_file($autoloader)) {
 require_once $autoloader;
 unset($autoloader);
 
+// The Icms library comes from the web root, as in host.php: the trust path's
+// composer.json cannot name a web root, which differs per site.
+require_once dirname(__DIR__) . '/htdocs/libraries/Autoloader.php';
+
 // The Http suite runs the host with APP_DEBUG=0, whose container is never
 // rebuilt when code or configuration change: start every run from a clean
 // test cache (only once, in the main PHPUnit process).

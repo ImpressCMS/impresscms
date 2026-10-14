@@ -1,6 +1,6 @@
 {
 	"name": "impresscms/impresscms",
-	"description": "ImpressCMS - A dynamic and user-friendly Content Management System (Symfony host)",
+	"description": "ImpressCMS - A dynamic and user-friendly Content Management System (Symfony host, installed in the trust path)",
 	"type": "project",
 	"license": "GPL-2.0-only",
 	"homepage": "https://www.impresscms.org/",
@@ -42,15 +42,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"App\\": "src/",
-			"Icms\\": "htdocs/libraries/Icms/"
-		},
-		"classmap": [
-			"htdocs/libraries/icms.php"
-		],
-		"files": [
-			"htdocs/libraries/Autoloader.php"
-		]
+			"App\\": "src/"
+		}
 	},
 	"autoload-dev": {
 		"psr-4": {

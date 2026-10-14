@@ -50,157 +50,32 @@ require_once "include/functions.php";
 include_once "./class/IcmsInstallWizard.php";
 
 /*
- * Load the Composer autoloader.
+ * Load the Composer autoloader, from the first location that has one (see
+ * include/host.php): the trust path (once the host files are installed), the
+ * staging directory trust_dist/ shipped in the package, or the web root.
  *
- * The vendor directory starts in the web root (htdocs/vendor) but may have
- * been moved to the trust path by page_movevendor.php.  Rather than relying
- * on a session flag (which can be lost on session expiry or direct page
- * access), we probe both locations in priority order and use whichever one
- * actually exists on disk.
- *
- * Trust path resolution order (first non-empty value wins):
- *   1. $_SESSION['settings']['TRUST_PATH']  – set by page_pathsettings.php.
- *   2. XOOPS_TRUST_PATH extracted from ../mainfile.php via regex – available
- *      from page_configsave.php onward; this covers page_end.php where the
- *      session is often already cleared or expired.
- *
- * Autoloader probe order:
- *   1. <trustpath>/vendor/autoload.php  – used after the vendor move.
- *   2. <webroot>/vendor/autoload.php    – used before the move.
- *
- * If neither location has an autoload.php we emit a clear error instead of
- * letting require_once throw an opaque fatal.
+ * The trust path comes from the session (page_pathsettings.php) or, once it is
+ * written, from mainfile.php; this covers page_end.php, where the session is
+ * often already cleared or expired.
  */
-$_icms_vendor_autoload = null;
-$_icms_vendor_from_trustpath = false;
-
-// ── Step 1: resolve the trust path ───────────────────────────────────────────
+require_once "../include/host.php";
 $_icms_trust_path = !empty($_SESSION["settings"]["TRUST_PATH"])
 	? $_SESSION["settings"]["TRUST_PATH"]
-	: null;
+	: icms_host_trust_path(dirname(__DIR__));
+$_icms_vendor_autoload = icms_host_vendor_autoload(dirname(__DIR__), $_icms_trust_path);
 
-if ($_icms_trust_path === null) {
-	// Session is empty (expired, direct page access, or end-of-install cleanup).
-	// Try to read XOOPS_TRUST_PATH from the already-written mainfile.php.
-	$_icms_mainfile = __DIR__ . "/../mainfile.php";
-	if (file_exists($_icms_mainfile)) {
-		$_icms_mf_content = @file_get_contents($_icms_mainfile);
-		if (
-			$_icms_mf_content !== false &&
-			preg_match(
-				"/define\s*\(\s*['\"]XOOPS_TRUST_PATH['\"]\s*,\s*['\"]([^'\"]+)['\"]\s*\)/",
-				$_icms_mf_content,
-				$_icms_mf_match,
-			)
-		) {
-			$_icms_trust_path = $_icms_mf_match[1];
-		}
-		unset($_icms_mf_content, $_icms_mf_match);
-	}
-	unset($_icms_mainfile);
-}
-
-// ── Step 2: probe trust-path vendor first ────────────────────────────────────
-if (!empty($_icms_trust_path)) {
-	$_icms_candidate =
-		rtrim(str_replace("\\", "/", $_icms_trust_path), "/") .
-		"/vendor/autoload.php";
-
-	if (file_exists($_icms_candidate)) {
-		$_icms_vendor_autoload = $_icms_candidate;
-		$_icms_vendor_from_trustpath = true;
-	}
-	unset($_icms_candidate);
-}
-
-// ── Step 3: fall back to web-root vendor ─────────────────────────────────────
 if ($_icms_vendor_autoload === null) {
-	$_icms_candidate = __DIR__ . "/../vendor/autoload.php";
-	if (file_exists($_icms_candidate)) {
-		$_icms_vendor_autoload = $_icms_candidate;
-	}
-	unset($_icms_candidate);
-}
-
-// ── Step 4: nothing found – emit a human-readable error ──────────────────────
-if ($_icms_vendor_autoload === null) {
-	$__locations = [__DIR__ . "/../vendor/autoload.php"];
-	if (!empty($_icms_trust_path)) {
-		array_unshift(
-			$__locations,
-			rtrim(str_replace("\\", "/", $_icms_trust_path), "/") .
-				"/vendor/autoload.php",
-		);
-	}
 	header("Content-Type: text/plain; charset=utf-8");
 	echo "ImpressCMS Installer – Autoloader not found\n\n";
-	echo "The Composer autoloader (vendor/autoload.php) could not be found ";
-	echo "in any of the expected locations:\n";
-	foreach ($__locations as $__loc) {
-		echo "  • " . $__loc . "\n";
-	}
-	echo "\nIf you moved the vendor directory manually, make sure it exists ";
-	echo "at one of the paths listed above.\n";
-	unset($__locations);
+	echo "The Composer autoloader (vendor/autoload.php) could not be found. ";
+	echo "Upload the complete ImpressCMS package, including the trust_dist/ directory, and retry.\n";
 	exit(1);
 }
 
-unset($_icms_trust_path);
-
-if ($_icms_vendor_from_trustpath) {
-	$_icms_root_path = realpath(__DIR__ . "/..");
-	$_icms_bridge_path =
-		dirname(dirname($_icms_vendor_autoload)) . "/libraries/Autoloader.php";
-
-	if ($_icms_root_path !== false && !is_file($_icms_bridge_path)) {
-		$_icms_bridge_dir = dirname($_icms_bridge_path);
-		if (is_dir($_icms_bridge_dir) || @mkdir($_icms_bridge_dir, 0775, true)) {
-			$_icms_bridge_content =
-				"<?php\nrequire_once " .
-				var_export($_icms_root_path . "/libraries/Autoloader.php", true) .
-				";\n";
-			@file_put_contents($_icms_bridge_path, $_icms_bridge_content);
-			unset($_icms_bridge_content);
-		}
-		unset($_icms_bridge_dir);
-	}
-
-	if (!is_file($_icms_bridge_path)) {
-		header("Content-Type: text/plain; charset=utf-8");
-		echo "ImpressCMS Installer - Unable to prepare trust-path autoloader bridge\n\n";
-		echo "Expected file: " . $_icms_bridge_path . "\n";
-		echo "Please make sure the trust path is writable and retry.\n";
-		exit(1);
-	}
-
-	unset($_icms_root_path, $_icms_bridge_path);
-}
-
 require_once $_icms_vendor_autoload;
-unset($_icms_vendor_autoload);
-
-/*
- * After the vendor directory is moved to the trust path, the Composer-generated
- * autoloader files (vendor/composer/autoload_psr0.php, autoload_psr4.php,
- * autoload_classmap.php, autoload_static.php) contain paths derived from
- * dirname(dirname(__DIR__)) which now resolves to trustpath/ instead of htdocs/.
- * This means every lookup for icms_* / Icms\ classes targets trustpath/libraries,
- * which does not exist – the libraries folder always stays in htdocs/libraries.
- *
- * We register a prepended SPL autoloader (runs BEFORE Composer's now-broken one)
- * that maps icms_* (PSR-0 underscore convention), Icms\ (PSR-4 namespace
- * convention), and the bare "icms" classmap entry to the correct absolute path
- * of htdocs/libraries.
- *
- * The trigger is $_icms_vendor_from_trustpath (set above) rather than the
- * VENDOR_MOVED session flag so this works even when the session flag is absent.
- */
-if ($_icms_vendor_from_trustpath) {
-	// libraries/Autoloader.php resolves the "icms" kernel class, legacy icms_* names
-	// (via libraries/Icms/aliases.php) and Icms\ classes from htdocs/libraries.
-	require_once realpath(__DIR__ . "/../libraries") . "/Autoloader.php";
-}
-unset($_icms_vendor_from_trustpath);
+// The Icms\ library, its legacy icms_* names and the icms class, from the web root.
+require_once dirname(__DIR__) . "/libraries/Autoloader.php";
+unset($_icms_trust_path, $_icms_vendor_autoload);
 
 error_reporting(E_ALL);
 

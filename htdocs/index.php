@@ -39,6 +39,22 @@
  * @version		AVN: $Id: index.php 12313 2013-09-15 21:14:35Z skenow $
  **/
 
+/*
+ * Hand the request to the Symfony host when it is installed in the trust path.
+ * The host executes this file again for the home page, with
+ * ICMS_HOST_AUTOLOADED defined, so the code below then runs as usual.
+ */
+if (!defined('ICMS_HOST_AUTOLOADED')) {
+	require_once __DIR__ . '/include/host.php';
+	if (null !== $__icms_host = icms_host_entry(__DIR__)) {
+		$_SERVER['ICMS_LEGACY_ROOT'] = __DIR__;
+		$_SERVER['ICMS_TRUST_PATH'] = dirname($__icms_host);
+		require $__icms_host;
+		exit;
+	}
+	unset($__icms_host);
+}
+
 /** Need the mainfile */
 include "mainfile.php";
 

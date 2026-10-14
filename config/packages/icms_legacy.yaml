@@ -1,6 +1,7 @@
 # Legacy ImpressCMS behind the Symfony host (legacy-request-bridge).
 parameters:
-    # htdocs/ of the ImpressCMS tree; ICMS_LEGACY_ROOT overrides it
+    # the web root: passed by its index.php as ICMS_LEGACY_ROOT, named in
+    # .env.local for bin/console; htdocs/ in a development checkout
     icms.legacy.default_root: '%kernel.project_dir%/htdocs'
     icms.legacy.root: '%env(default:icms.legacy.default_root:ICMS_LEGACY_ROOT)%'
     # executed for legacy-owned paths that do not exist
@@ -9,10 +10,12 @@ parameters:
     # for example ['admin-next']; none by default
     icms.legacy.reserved_prefixes: []
     # directories never served or executed (relative to the legacy root, or
-    # absolute); ICMS_TRUST_PATH names the trust path if it is under the root
+    # absolute): the host's staging directory, and the trust path, which the web
+    # root's index.php passes as ICMS_TRUST_PATH, if it is under the root
     icms.legacy.non_public_paths:
         - 'templates_c'
         - 'cache'
+        - 'trust_dist'
         - '%env(default::ICMS_TRUST_PATH)%'
     # directories whose PHP files are never executed
     icms.legacy.script_free_paths:
