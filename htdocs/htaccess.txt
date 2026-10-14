@@ -1,4 +1,5 @@
-Options Multiviews
+# "+": keep the server's other options (rewriting needs FollowSymLinks or SymLinksIfOwnerMatch)
+Options +MultiViews
 
 # if you install in a subdirectory, be sure to include the entire path, relative to DocumentRoot
 # for example, ErrorDocument 404 /icms/error.php?e=404
@@ -34,6 +35,7 @@ ErrorDocument 505 /error.php?e=505
 # the site works too: / and /index.php then run through the host, every other
 # script runs directly (routing level 1).
 <IfModule mod_rewrite.c>
+	Options +SymLinksIfOwnerMatch
 	RewriteEngine On
 	# For a site in a subdirectory, for example /cms/:
 	#RewriteBase /cms/
