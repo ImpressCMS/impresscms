@@ -40,5 +40,7 @@ abstract class LegacyWebTestCase extends WebTestCase
         if (!defined('ICMS_HOST_AUTOLOADED')) {
             define('ICMS_HOST_AUTOLOADED', true);
         }
+        // replaced by the request when a test sends one through KernelBrowser
+        $_SERVER = array_replace($_SERVER, TestSite::webServerDefaults());
     }
 }

@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Legacy;
 
+use Doctrine\DBAL\Connection;
+use Icms\Db\Factory;
 use Icms\Kernel\Bootstrap;
+use Symfony\Component\DependencyInjection\Attribute\AutowireServiceClosure;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -36,10 +39,38 @@ final class LegacyRuntime
     /** @var array<string, list<\Closure(): void>> */
     private array $beforeStage = [];
 
+    /**
+     * @param (\Closure(): Connection)|null $connection the DBAL connection that owns
+     *                                                  the database link (design D7)
+     */
     public function __construct(
         private readonly string $mainfile,
         private readonly RequestStack $requestStack,
+        #[AutowireServiceClosure('doctrine.dbal.default_connection')]
+        private readonly ?\Closure $connection = null,
     ) {
+        if ($connection !== null) {
+            $this->beforeStage('services', $this->shareConnection(...));
+        }
+    }
+
+    /**
+     * Icms\Db\Factory takes its PDO from DBAL, so icms::$db, icms::$xoopsDB and
+     * every handler use DBAL's physical connection and transaction state.
+     */
+    private function shareConnection(): void
+    {
+        $connection = $this->connection;
+        try {
+            Factory::setConnectionProvider(static function () use ($connection): \PDO {
+                $pdo = $connection()->getNativeConnection();
+                assert($pdo instanceof \PDO);
+
+                return $pdo;
+            });
+        } catch (\LogicException) {
+            // legacy code in this process already opened its own connection
+        }
     }
 
     /**

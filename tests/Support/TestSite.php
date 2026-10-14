@@ -52,6 +52,27 @@ final class TestSite
         return self::varDir() . '/trust';
     }
 
+    /**
+     * $_SERVER entries a web server provides, for legacy code booted from the CLI.
+     *
+     * @return array<string, string>
+     */
+    public static function webServerDefaults(): array
+    {
+        return [
+            'HTTP_HOST' => '127.0.0.1',
+            'SERVER_NAME' => '127.0.0.1',
+            'SERVER_PORT' => '80',
+            'REQUEST_URI' => '/',
+            'SCRIPT_NAME' => '/index.php',
+            'PHP_SELF' => '/index.php',
+            'QUERY_STRING' => '',
+            'REMOTE_ADDR' => '127.0.0.1',
+            'REQUEST_METHOD' => 'GET',
+            'HTTP_USER_AGENT' => 'ImpressCMS test suite',
+        ];
+    }
+
     public static function isInstalled(): bool
     {
         return is_file(self::mainfile()) && is_file(self::varDir() . '/installed');

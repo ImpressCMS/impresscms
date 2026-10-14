@@ -73,9 +73,10 @@
 
 ## 7. Shared database connection (D7)
 
-- [ ] 7.1 Add `doctrine/dbal` ^4 and `doctrine/doctrine-bundle`, and an env processor that exposes `XOOPS_DB_*` after the `constants` stage
-- [ ] 7.2 Register the `Icms\Db\Factory` connection provider from `LegacyRuntime` before the `services` stage
-- [ ] 7.3 Integration test: begin a DBAL transaction, insert through a system-module IPF handler, read through DBAL, roll back, then assert the row is absent in both layers
+- [x] 7.1 Add `doctrine/dbal` ^4 and `doctrine/doctrine-bundle`, and an env processor that exposes `XOOPS_DB_*` after the `constants` stage
+  - `Appegacydbalicmsdriver` opens the connection as `icmsdbmysqlconnection` and keeps the legacy `errmode_silent`; `sharedconnection`/`sharedstatement` switch to `errmode_exception` for each dbal call. the env processor is `%env(icms_db:xoops_db_host)%` etc.
+- [x] 7.2 Register the `Icms\Db\Factory` connection provider from `LegacyRuntime` before the `services` stage
+- [x] 7.3 Integration test: begin a DBAL transaction, insert through a system-module IPF handler, read through DBAL, roll back, then assert the row is absent in both layers
 
 ## 8. Container exposure (D8)
 

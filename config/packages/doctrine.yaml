@@ -1,0 +1,15 @@
+# The ImpressCMS database, owned by DBAL and shared with the legacy layer
+# (design D7): the settings come from mainfile.php, and App\Legacy\Dbal\IcmsDriver
+# opens the connection as ImpressCMS' own PDO class.
+doctrine:
+    dbal:
+        driver_class: App\Legacy\Dbal\IcmsDriver
+        host: '%env(icms_db:XOOPS_DB_HOST)%'
+        port: '%env(icms_db:ICMS_DB_PORT)%'
+        dbname: '%env(icms_db:XOOPS_DB_NAME)%'
+        user: '%env(icms_db:XOOPS_DB_USER)%'
+        password: '%env(icms_db:XOOPS_DB_PASS)%'
+        charset: '%env(icms_db:XOOPS_DB_CHARSET)%'
+        # the connection is shared with legacy code, which issues DDL during
+        # module install/update: never wrap those in a DBAL transaction
+        logging: false

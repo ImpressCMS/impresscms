@@ -16,6 +16,8 @@
 		"ext-xml": "*",
 		"ext-zlib": "*",
 		"composer/composer": "^2.9",
+		"doctrine/dbal": "4.2",
+		"doctrine/doctrine-bundle": "2.13",
 		"ezyang/htmlpurifier": "^4.19",
 		"simplepie/simplepie": "^1.9",
 		"smottt/wideimage": "^1.1.4",
