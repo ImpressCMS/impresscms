@@ -64,11 +64,11 @@ $modversion = [
 	"image" => "images/system_slogo.png" /* for backward compatibility */,
 
 	/**  Development information */
-	"status_version" => "2.1.0",
-	"status" => "Beta",
-	"date" => "21 February 2026",
-	"author_word" => "Introduce Composer for autoloading",
-	"warning" => _CO_ICMS_WARNING_BETA,
+	"status_version" => "3.0.0",
+	"status" => "Alpha 1",
+	"date" => "14 October 2026",
+	"author_word" => "Symfony 7.4 host for ImpressCMS",
+	"warning" => _CO_ICMS_WARNING_ALPHA,
 
 	/**
 	 * Contributors
