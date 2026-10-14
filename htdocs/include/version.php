@@ -28,9 +28,9 @@ define("ICMS_VERSION_STATUS", 1);
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-// 1.5.0 RC = 107; new 2.0.0 Beta 3=110, new 2.0.0 RC = 111, new 2.0.1 final = 113, 2.0.2 beta=114, 2.0.2 RC = 115, 3.0.0 Alpha 1 = 131
+// 1.5.0 RC = 107; new 2.0.0 Beta 3=110, new 2.0.0 RC = 111, new 2.0.1 final = 113, 2.0.2 beta=114, 2.0.2 RC = 115, 3.0.0 Alpha 1 = 300 (2.x keeps the builds below 300)
 
-define("ICMS_VERSION_BUILD", 131);
+define("ICMS_VERSION_BUILD", 300);
 
 /**
  * Latest dbversion of the System Module
