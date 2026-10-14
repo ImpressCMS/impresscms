@@ -114,8 +114,9 @@
 
 ## 11. Cleanup and documentation
 
-- [ ] 11.1 Record in `docs/` that the Laravel prototype (branch `copilot/implement-phase-1-strangler-migration`) and its `migrate-basic-framework-to-laravel` change were superseded by this change
-- [ ] 11.2 Write `docs/symfony-host.md` covering request flow, bootstrap stages, library seams, container service ids, roles and unsupported runtimes
-- [ ] 11.3 Update `README.md` to describe both deployment modes: `public/` with the host, or `htdocs/` directly
-- [ ] 11.4 Configure the test suite to fail on Symfony deprecations triggered by `src/` (`SYMFONY_DEPRECATIONS_HELPER` or the PHPUnit bridge equivalent), so the host stays ready for a later move to the 8.4 LTS
-- [ ] 11.5 Run all suites (`Library`, `Unit`, `Integration`, `Functional`, `Http`) on both document roots, and run `bin/spec-coverage` with no gaps. Run PHPStan at level 6 on `src/` and the new `Icms\Kernel` classes with no errors
+- [x] 11.1 Record in `docs/` that the Laravel prototype (branch `copilot/implement-phase-1-strangler-migration`) and its `migrate-basic-framework-to-laravel` change were superseded by this change
+- [x] 11.2 Write `docs/symfony-host.md` covering request flow, bootstrap stages, library seams, container service ids, roles and unsupported runtimes
+- [x] 11.3 Update `README.md` to describe both deployment modes: `public/` with the host, or `htdocs/` directly
+- [x] 11.4 Configure the test suite to fail on Symfony deprecations triggered by `src/` (`SYMFONY_DEPRECATIONS_HELPER` or the PHPUnit bridge equivalent), so the host stays ready for a later move to the 8.4 LTS
+  - PHPUnit 11's own deprecation handling: `trigger_deprecation` is a deprecation trigger and CI runs `--fail-on-deprecation` with indirect deprecations ignored, so only deprecated APIs called from `src/` (and `IcmsKernel`) fail
+- [x] 11.5 Run all suites (`Library`, `Unit`, `Integration`, `Functional`, `Http`) on both document roots, and run `bin/spec-coverage` with no gaps. Run PHPStan at level 6 on `src/` and the new `Icms\Kernel` classes with no errors

@@ -19,7 +19,7 @@ final class LegacySessionAttributeBag extends AttributeBag
      */
     public function initialize(array &$attributes): void
     {
-        if (!isset($_SESSION) || !is_array($_SESSION)) {
+        if (!isset($_SESSION)) {
             $_SESSION = [];
         }
         $this->attributes = &$_SESSION;

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Routing;
 
 use App\LegacyBridge\LegacyBridge;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Routing\Exception\ExceptionInterface as RoutingException;
+use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -28,7 +30,8 @@ final class RouteOwnership
     private const PROBE_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
 
     public function __construct(
-        private readonly RouterInterface $router,
+        #[Autowire(service: 'router')]
+        private readonly RouterInterface&RequestMatcherInterface $router,
         private readonly LegacyBridge $bridge,
     ) {
     }

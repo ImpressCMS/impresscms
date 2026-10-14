@@ -61,7 +61,22 @@ For each type of website ImpressCMS offers different functionality with a collec
 
 ## Installation
 
-To install and use this package, transfer this package to your web server, putting the contents of the htdocs/ folder in your web root, and follow the steps of the installer.
+ImpressCMS can be deployed in two ways. Both run the same ImpressCMS and the same installer.
+
+### Directly from `htdocs/`
+
+Transfer this package to your web server, put the contents of the `htdocs/` folder in your web root (or point the web root at it), run `composer install` in `htdocs/` if the package has no `vendor/` folder, and follow the steps of the installer.
+
+### With the Symfony host (`public/`)
+
+Upload the whole repository and point the web root at `public/`. Every request then goes through `public/index.php`: new Symfony pages answer directly, and everything else is handled by ImpressCMS from `htdocs/`, which shares its database connection, session and logged-in user with Symfony.
+
+1. Run `composer install` in the repository root.
+2. Create `.env.local` with `APP_ENV=prod` and a random `APP_SECRET`.
+3. Rewrite all requests to `public/index.php` (Apache: `FallbackResource /index.php`; nginx: `try_files $uri /index.php$is_args$args;`).
+4. Open the site and follow the steps of the installer.
+
+See [docs/symfony-host.md](docs/symfony-host.md) for how the host works and how to add Symfony pages.
 
 More detailed installation instructions are available [on the ImpressCMS site](https://www.impresscms.org/modules/simplywiki/index.php?page=Installation)
 

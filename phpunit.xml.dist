@@ -40,6 +40,10 @@
             <directory>src</directory>
             <directory>htdocs/libraries/Icms/Kernel</directory>
         </include>
+        <!-- Symfony deprecations count against the code that calls the deprecated API -->
+        <deprecationTrigger>
+            <function>trigger_deprecation</function>
+        </deprecationTrigger>
     </source>
     <php>
         <ini name="error_reporting" value="-1"/>
@@ -48,7 +52,6 @@
         <server name="KERNEL_CLASS" value="App\Kernel"/>
         <env name="APP_ENV" value="test" force="true"/>
         <env name="APP_DEBUG" value="0"/>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
         <!-- Test database; override in the environment (CI sets these) -->
         <env name="ICMS_TEST_DB_HOST" value="127.0.0.1"/>
         <env name="ICMS_TEST_DB_PORT" value="3306"/>

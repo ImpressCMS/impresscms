@@ -499,6 +499,7 @@ final class Bootstrap
 		unset($xoopsOption);
 		$__icms_superglobals = ['GLOBALS', '_GET', '_POST', '_COOKIE', '_FILES', '_SERVER', '_ENV', '_REQUEST', '_SESSION'];
 
+		$__icms_previous = null;
 		if ($__icms_options !== []) {
 			$__icms_previous = $GLOBALS['xoopsOption'] ?? null;
 			$GLOBALS['xoopsOption'] = $__icms_options + (array) $__icms_previous;

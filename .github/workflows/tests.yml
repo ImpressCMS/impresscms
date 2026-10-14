@@ -100,7 +100,6 @@ jobs:
       - name: PHPStan
         run: vendor/bin/phpstan analyse --no-progress --memory-limit=1G
 
-      - name: Symfony deprecations in src/
-        run: vendor/bin/phpunit --testsuite Unit,Functional
-        env:
-          SYMFONY_DEPRECATIONS_HELPER: 'max[self]=0&verbose=1'
+      # keeps the host ready for the next Symfony LTS (design D1)
+      - name: No deprecations triggered by src/
+        run: vendor/bin/phpunit --testsuite Unit,Integration,Functional --fail-on-deprecation --display-deprecations
