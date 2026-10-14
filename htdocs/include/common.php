@@ -40,6 +40,10 @@
  */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
+// a readable page instead of a fatal error on a too old PHP version
+require_once ICMS_ROOT_PATH . "/include/requirements.php";
+icms_requirements_check(ICMS_ROOT_PATH);
+
 // The boot sequence lives in Icms\Kernel\Bootstrap (stages: constants, autoload,
 // services, output, language, themeSelection, siteState, module, online). It is
 // loaded explicitly because the autoloader is only set up by its second stage.

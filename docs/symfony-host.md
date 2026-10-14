@@ -299,7 +299,19 @@ from the web server, because servers pass environment variables differently
 
 ## Unsupported runtimes
 
-Long-running PHP runtimes are not supported: worker mode in FrankenPHP,
+**Older PHP versions.** `index.php`, `include/common.php` and the installer first
+run `include/requirements.php`. It reads the lowest PHP version that the
+installed packages accept from Composer's `vendor/composer/platform_check.php`,
+in the vendor directory in use: the trust path, then `trust_dist/`, then the web
+root. ImpressCMS does not keep its own minimum, so raising a package's PHP
+requirement raises the check too.
+- On an older PHP, the response is `htdocs/requirements.html` with status 503,
+  filled in with the running and the required version.
+- `requirements.php` is written in PHP 5.3 syntax so that it parses on the versions
+  it rejects. The `old-php` CI job serves the release package on PHP 5.6, 7.4 and
+  8.1 to prove that.
+
+**Long-running runtimes.** Long-running PHP runtimes are not supported: worker mode in FrankenPHP,
 RoadRunner and Swoole. `icms::` keeps request state in static properties, and
 legacy scripts run once per process.
 

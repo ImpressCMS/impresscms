@@ -93,3 +93,18 @@ The system SHALL refuse to serve or execute the staging directory and the trust 
 #### Scenario: Warning for a public trust path
 - **WHEN** a webmaster opens the admin dashboard of a site whose trust path lies under the web root
 - **THEN** a warning names the trust path and explains how to move it
+
+### Requirement: An unsupported PHP version gets a readable page
+The web root's `index.php`, every legacy script and every installer page SHALL check the running PHP version before loading code that needs a newer one. The minimum SHALL be the lowest PHP version that the installed Composer packages accept, as Composer records it in `vendor/composer/platform_check.php`. It SHALL NOT be a constant kept in ImpressCMS. When PHP is older, the response SHALL be `requirements.html` from the web root, with the running and the required version filled in, and status 503. The check SHALL parse and run on PHP versions older than the minimum.
+
+#### Scenario: PHP older than the packages need
+- **WHEN** a site whose Composer packages need PHP 8.2 runs on PHP 7.4 and `GET /`, `GET /user.php` or `GET /install/index.php` arrives
+- **THEN** the response is 503 with the requirements page, which names PHP 7.4 and PHP 8.2.0
+
+#### Scenario: Minimum version from Composer
+- **WHEN** the vendor directory in use is in the trust path, the staging directory or the web root
+- **THEN** the minimum comes from that directory's `composer/platform_check.php`, and without it no version is enforced
+
+#### Scenario: Supported PHP version
+- **WHEN** PHP is at least the minimum
+- **THEN** the request runs as usual

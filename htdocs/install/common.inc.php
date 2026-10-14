@@ -19,6 +19,10 @@
 define("INSTALL_USER", "");
 define("INSTALL_PASSWORD", "");
 
+// a readable page instead of a fatal error on a too old PHP version
+require_once dirname(__DIR__) . "/include/requirements.php";
+icms_requirements_check(dirname(__DIR__));
+
 // options for mainfile.php
 $xoopsOption["nocommon"] = true;
 define("XOOPS_INSTALL", 1);
@@ -62,9 +66,11 @@ require_once "../include/host.php";
 $_icms_trust_path = !empty($_SESSION["settings"]["TRUST_PATH"])
 	? $_SESSION["settings"]["TRUST_PATH"]
 	: icms_host_trust_path(dirname(__DIR__));
-$_icms_vendor_autoload = icms_host_vendor_autoload(dirname(__DIR__), $_icms_trust_path)
+$_icms_vendor_autoload = icms_host_vendor_autoload(dirname(__DIR__), $_icms_trust_path);
+if ($_icms_vendor_autoload === null) {
 	// a trust path changed after the host files were installed elsewhere
-	?? icms_host_vendor_autoload(dirname(__DIR__), icms_host_trust_path(dirname(__DIR__)));
+	$_icms_vendor_autoload = icms_host_vendor_autoload(dirname(__DIR__), icms_host_trust_path(dirname(__DIR__)));
+}
 
 if ($_icms_vendor_autoload === null) {
 	header("Content-Type: text/plain; charset=utf-8");

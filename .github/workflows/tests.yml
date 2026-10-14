@@ -153,3 +153,57 @@ jobs:
         run: |
           sudo tail -n 100 /var/log/nginx/error.log /var/log/apache2/error.log 2>/dev/null || true
           tail -n 100 var/log/test.log 2>/dev/null || true
+
+  old-php:
+    name: Requirements page on PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['5.6', '7.4', '8.1']
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: composer:v2
+
+      - name: Release package (bin/build-package)
+        run: |
+          php bin/build-package --output=var/dist/package.zip
+          mkdir -p var/site
+          unzip -q var/dist/package.zip -d var/site
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Every entry point answers with the requirements page
+        run: |
+          php -S 127.0.0.1:8090 -t var/site > var/php-server.log 2>&1 &
+          sleep 2
+          expect_page() {
+            local body status
+            body=$(curl -s -w '\n%{http_code}' "http://127.0.0.1:8090$1")
+            status=${body##*$'\n'}
+            if [ "$status" != 503 ] || ! grep -q "PHP $(php -r 'echo PHP_VERSION;')" <<<"$body" || ! grep -q 'PHP 8.2.0 or newer' <<<"$body"; then
+              echo "::error::$1 answered $status without the requirements page"
+              echo "$body" | head -20
+              return 1
+            fi
+            echo "$1: 503 with the requirements page"
+          }
+          failed=0
+          # not installed: the home page and the installer
+          for path in / /index.php /install/ /install/page_start.php; do expect_page "$path" || failed=1; done
+          # installed: legacy scripts through mainfile.php and include/common.php
+          mkdir -p var/trust
+          printf '%s\n' '<?php' "define('XOOPS_ROOT_PATH', '$PWD/var/site');" "define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);" \
+            "define('XOOPS_TRUST_PATH', '$PWD/var/trust');" "define('XOOPS_MAINFILE_INCLUDED', 1);" \
+            "if (!isset(\$xoopsOption['nocommon'])) { include ICMS_ROOT_PATH . '/include/common.php'; }" > var/site/mainfile.php
+          for path in / /user.php /modules/system/admin.php; do expect_page "$path" || failed=1; done
+          [ "$failed" = 0 ] || { cat var/php-server.log; exit 1; }

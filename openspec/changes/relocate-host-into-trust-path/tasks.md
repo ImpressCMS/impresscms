@@ -71,3 +71,10 @@
   - Done: a fresh installation through the web installer (level 2 with Herd's default driver; levels 2 and 3 with the ImpressCMS driver, login included), then 2.0.3 installed, the new files uploaded over it and the system module updated: host installed, `trust_dist/` removed, dbversion 50, legacy trust path entries kept
 - [x] 6.5 `bin/spec-coverage`, PHPStan, the deprecation check, and `openspec validate relocate-host-into-trust-path`
   - `bin/spec-coverage` also reads `htdocs/tests` (the `Filesystem` tests are Library tests)
+
+## 7. PHP version check
+
+- [x] 7.1 `htdocs/include/requirements.php`, in PHP 5.3 syntax: the minimum from Composer's `platform_check.php` of the vendor directory in use, and the requirements page with status 503. `include/host.php` reads the trust path and the vendor directory through it
+- [x] 7.2 Run the check first in `index.php`, `include/common.php` and `install/common.inc.php`
+- [x] 7.3 `htdocs/requirements.html`: a self-contained page, to be branded later
+- [x] 7.4 Unit tests, and a CI job that serves the package's web root with PHP 7.4 and 5.6

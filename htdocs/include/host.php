@@ -15,6 +15,8 @@
  * @since		2.1
  */
 
+require_once __DIR__ . '/requirements.php';
+
 if (!function_exists('icms_host_trust_path')) {
 	/**
 	 * The trust path recorded in the site's mainfile.php, or null when the site
@@ -27,30 +29,7 @@ if (!function_exists('icms_host_trust_path')) {
 	 */
 	function icms_host_trust_path(string $root): ?string
 	{
-		$read = static function (string $file): ?string {
-			$code = is_file($file) ? @file_get_contents($file) : false;
-			if (
-				$code === false
-				// at the start of a line: the mainfile template has a commented example
-				|| !preg_match("/^[ \\t]*define\s*\(\s*['\"]XOOPS_TRUST_PATH['\"]\s*,\s*'((?:[^'\\\\]|\\\\.)*)'\s*\)/m", $code, $m)
-				&& !preg_match("/^[ \\t]*define\s*\(\s*['\"]XOOPS_TRUST_PATH['\"]\s*,\s*\"([^\"\\\\$]*)\"\s*\)/m", $code, $m)
-			) {
-				return null;
-			}
-			$path = rtrim(str_replace(['\\\\', "\\'", '\\'], ['\\', "'", '/'], $m[1]), '/');
-
-			return $path === '' ? null : $path;
-		};
-
-		$path = $read(rtrim($root, '/\\') . '/mainfile.php');
-		if ($path === null) {
-			$mainfile = getenv('ICMS_MAINFILE');
-			if (is_string($mainfile) && $mainfile !== '') {
-				$path = $read($mainfile);
-			}
-		}
-
-		return $path;
+		return icms_mainfile_trust_path($root);
 	}
 
 	/**
@@ -63,21 +42,9 @@ if (!function_exists('icms_host_trust_path')) {
 	 */
 	function icms_host_vendor_autoload(string $root, ?string $trust): ?string
 	{
-		$root = rtrim(str_replace('\\', '/', $root), '/');
-		$candidates = [];
-		if ($trust !== null && $trust !== '') {
-			$candidates[] = rtrim(str_replace('\\', '/', $trust), '/') . '/vendor/autoload.php';
-		}
-		$candidates[] = $root . '/trust_dist/vendor/autoload.php';
-		$candidates[] = $root . '/vendor/autoload.php';
+		$vendor = icms_vendor_directory($root, $trust);
 
-		foreach ($candidates as $candidate) {
-			if (is_file($candidate)) {
-				return $candidate;
-			}
-		}
-
-		return null;
+		return $vendor === null ? null : $vendor . '/autoload.php';
 	}
 
 	/**
