@@ -66,10 +66,10 @@
 
 ## 6. Headless runtime in the host (D6)
 
-- [ ] 6.1 Implement `App\Legacy\LegacyRuntime` with an idempotent `bootTo(string $stage)` over `Icms\Kernel\Bootstrap` in headless mode
-- [ ] 6.2 Add the `#[RequiresLegacy(stage:)]` attribute and a `kernel.controller` listener that boots the runtime
-- [ ] 6.3 Map `SiteClosedException` to 503 and `NotInstalledException` to a redirect to `/install/`
-- [ ] 6.4 Tests: `/up` boots no legacy stage and opens no DB connection, a test route returns the configured `sitename` without theme output, and a closed site gives 503 without terminating the process
+- [x] 6.1 Implement `App\Legacy\LegacyRuntime` with an idempotent `bootTo(string $stage)` over `Icms\Kernel\Bootstrap` in headless mode
+- [x] 6.2 Add the `#[RequiresLegacy(stage:)]` attribute and a `kernel.controller` listener that boots the runtime
+- [x] 6.3 Map `SiteClosedException` to 503 and `NotInstalledException` to a redirect to `/install/`
+- [x] 6.4 Tests: `/up` boots no legacy stage and opens no DB connection, a test route returns the configured `sitename` without theme output, and a closed site gives 503 without terminating the process
 
 ## 7. Shared database connection (D7)
 

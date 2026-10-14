@@ -11,6 +11,7 @@ services:
             - '../src/LegacyBridge/LegacyResolution.php'
             - '../src/LegacyBridge/LegacyExecutionResponse.php'
             - '../src/LegacyBridge/PreparedLegacyExecution.php'
+            - '../src/Legacy/Attribute/'
 
     App\Controller\:
         resource: '../src/Controller/'
@@ -36,3 +37,7 @@ services:
             $prefixes: '%icms.legacy.reserved_prefixes%'
             $env: '%kernel.environment%'
         tags: ['routing.loader']
+
+    App\Legacy\LegacyRuntime:
+        arguments:
+            $mainfile: '%icms.legacy.root%/mainfile.php'
