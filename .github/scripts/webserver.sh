@@ -27,8 +27,12 @@ select_level() {
     fi
 }
 
-# The web server users must reach the checkout.
-sudo chmod o+rx "$HOME" "$(dirname "$repo")" "$repo"
+# The web server users must reach the checkout: every directory above it.
+dir=$repo
+while [ "$dir" != / ]; do
+    sudo chmod o+rx "$dir"
+    dir=$(dirname "$dir")
+done
 
 start_fpm() {
     if [ ! -x "/usr/sbin/php-fpm${php_version}" ]; then
