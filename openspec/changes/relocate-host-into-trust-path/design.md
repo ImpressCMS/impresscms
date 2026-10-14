@@ -11,7 +11,7 @@ ImpressCMS sites are deployed differently, as a web root (the contents of `htdoc
 - Protector's files;
 - since system dbversion 49, the Composer `vendor/` directory, which is moved there from the web root and re-based.
 
-The installer's default trust path is a random directory inside the document root.
+The installer's default trust path is a random directory next to the document root: `resolveDocumentRoot()` returns the document root's parent. Nothing stops an admin from entering a path inside it.
 
 ## Goals / Non-Goals
 
@@ -100,7 +100,7 @@ Step 49 becomes a no-op, because its vendor move is subsumed by step 50.
 Running the update again without a staging directory reports "already installed".
 
 ### D7. The trust path must not lie under the document root
-- **Installer default:** the parent of the document root, followed by a random directory name. Choosing a path under the document root requires an explicit confirmation.
+- **Installer:** the default stays next to the document root (it already was, see Context). A trust path under the web root or under `DOCUMENT_ROOT` requires an explicit confirmation.
 - **Admin warning:** `system_admin_blocks.php` warns on existing sites whose trust path is under `ICMS_ROOT_PATH` or the document root.
 - **Bridge:** it keeps refusing `ICMS_TRUST_PATH` under the legacy root, now taken from the preamble.
 - **Apache:** `<trust>/.htaccess` (deny) remains a second line of defence.

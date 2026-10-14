@@ -31,7 +31,12 @@ select_level() {
 sudo chmod o+rx "$HOME" "$(dirname "$repo")" "$repo"
 
 start_fpm() {
-    sudo apt-get install -y -qq "php${php_version}-fpm" > /dev/null
+    if [ ! -x "/usr/sbin/php-fpm${php_version}" ]; then
+        sudo add-apt-repository -y ppa:ondrej/php > /dev/null
+        sudo apt-get update -qq
+        sudo apt-get install -y -qq "php${php_version}-fpm" "php${php_version}-mysql" "php${php_version}-gd" \
+            "php${php_version}-intl" "php${php_version}-mbstring" "php${php_version}-xml" > /dev/null
+    fi
     # run as the checkout's owner: the host writes var/, legacy templates_c/ and cache/
     sudo sed -i -E "s/^(user|group) = .*/\1 = $(id -un)/; s/^listen\.owner = .*/listen.owner = www-data/; s/^listen\.group = .*/listen.group = www-data/" \
         "/etc/php/${php_version}/fpm/pool.d/www.conf"

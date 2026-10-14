@@ -61,20 +61,16 @@ For each type of website ImpressCMS offers different functionality with a collec
 
 ## Installation
 
-ImpressCMS can be deployed in two ways. Both run the same ImpressCMS and the same installer.
+1. Put the contents of the package's `htdocs/` folder in your web root, or point the web root at it.
+2. Open the site and follow the steps of the installer.
 
-### Directly from `htdocs/`
+The installer asks for a *trust path*: a folder outside the web root for everything that must not be public. It installs the Symfony host there from the package's `htdocs/trust_dist/` folder. That covers the application, its Composer libraries and the site's settings in `.env.local`.
 
-Transfer this package to your web server, put the contents of the `htdocs/` folder in your web root (or point the web root at it), run `composer install` in `htdocs/` if the package has no `vendor/` folder, and follow the steps of the installer.
+No web server configuration is needed. To let Symfony pages use clean URLs, or to run every page through the host, use `htdocs/htaccess.txt` (Apache) or the examples in [docs/server/](docs/server/) (nginx, FrankenPHP, Laravel Herd).
 
-### With the Symfony host (`public/`)
+**Upgrading** from 2.0.x or 2.1: upload the new files over your site, log in as webmaster and update the system module. The update installs the host into your trust path.
 
-Upload the whole repository and point the web root at `public/`. Every request then goes through `public/index.php`: new Symfony pages answer directly, and everything else is handled by ImpressCMS from `htdocs/`, which shares its database connection, session and logged-in user with Symfony.
-
-1. Run `composer install` in the repository root.
-2. Create `.env.local` with `APP_ENV=prod` and a random `APP_SECRET`.
-3. Rewrite all requests to `public/index.php` (Apache: `FallbackResource /index.php`; nginx: `try_files $uri /index.php$is_args$args;`).
-4. Open the site and follow the steps of the installer.
+**From a repository checkout:** run `composer install` in the repository root and `php bin/build-dist` to create `htdocs/trust_dist/`.
 
 See [docs/symfony-host.md](docs/symfony-host.md) for how the host works and how to add Symfony pages.
 

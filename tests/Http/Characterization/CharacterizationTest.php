@@ -73,11 +73,13 @@ final class CharacterizationTest extends HttpTestCase
         }
 
         self::assertFileExists($file, 'No snapshot recorded for ' . $case . '; run with ICMS_UPDATE_SNAPSHOTS=1.');
-        self::assertSame(
-            str_replace("\r\n", "\n", (string) file_get_contents($file)),
-            $actual,
-            "Response for {$case} differs from its snapshot." . self::serverLog(),
-        );
+        $expected = str_replace("\r\n", "\n", (string) file_get_contents($file));
+        if (str_starts_with($case, 'asset-') && static::$server->isExternal()) {
+            // A real web server serves static files itself, with its own MIME table.
+            $withoutType = static fn (string $transcript): string => (string) preg_replace('/^content-type: .*\n/m', '', $transcript);
+            [$expected, $actual] = [$withoutType($expected), $withoutType($actual)];
+        }
+        self::assertSame($expected, $actual, "Response for {$case} differs from its snapshot." . self::serverLog());
     }
 
     /**
