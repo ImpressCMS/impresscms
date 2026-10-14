@@ -10,12 +10,17 @@ parameters:
     # for example ['admin-next']; none by default
     icms.legacy.reserved_prefixes: []
     # directories never served or executed (relative to the legacy root, or
-    # absolute): the host's staging directory, and the trust path, which the web
-    # root's index.php passes as ICMS_TRUST_PATH, if it is under the root
+    # absolute): the same as in docs/server/ and htdocs/htaccess.txt, and the
+    # trust path, which the web root's index.php passes as ICMS_TRUST_PATH, if
+    # it is under the root
     icms.legacy.non_public_paths:
         - 'templates_c'
         - 'cache'
         - 'trust_dist'
+        - 'tests'
+        - 'plugins/waiting'
+        - 'libraries/tcpdf/tools'
+        - 'install/modules/protector/trust_path'
         - '%env(default::ICMS_TRUST_PATH)%'
     # directories whose PHP files are never executed
     icms.legacy.script_free_paths:

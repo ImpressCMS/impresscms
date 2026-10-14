@@ -12,6 +12,13 @@ concurrency:
   group: tests-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  ICMS_TEST_DB_HOST: 127.0.0.1
+  ICMS_TEST_DB_PORT: 3306
+  ICMS_TEST_DB_USER: root
+  ICMS_TEST_DB_PASS: root
+  ICMS_TEST_DB_NAME: icms_test
+
 jobs:
   tests:
     name: PHP ${{ matrix.php }}
@@ -34,13 +41,6 @@ jobs:
           --health-timeout=5s
           --health-retries=20
 
-    env:
-      ICMS_TEST_DB_HOST: 127.0.0.1
-      ICMS_TEST_DB_PORT: 3306
-      ICMS_TEST_DB_USER: root
-      ICMS_TEST_DB_PASS: root
-      ICMS_TEST_DB_NAME: icms_test
-
     steps:
       - uses: actions/checkout@v5
 
@@ -51,25 +51,16 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      - name: Install dependencies (root and htdocs)
-        run: |
-          composer install --no-interaction --no-progress --prefer-dist
-          composer install --no-interaction --no-progress --prefer-dist --working-dir=htdocs
-
-      - name: Lock files agree on shared packages
-        run: php bin/check-lock-alignment
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
 
       - name: Lint
         run: |
-          find src tests public config htdocs/libraries/Icms htdocs/include -name '*.php' -print0 \
+          find src tests config htdocs/libraries/Icms htdocs/include htdocs/install docs/server -name '*.php' -print0 \
             | xargs -0 -r -n 50 -P 4 php -l > /dev/null
-          for script in bin/* htdocs/mainfile.php; do php -l "$script" > /dev/null; done
+          for script in bin/* host.php htdocs/index.php htdocs/mainfile.php; do php -l "$script" > /dev/null; done
 
-      - name: Library suite (direct deployment, htdocs/ Composer)
-        working-directory: htdocs
-        run: vendor/bin/phpunit
-
-      - name: Library suite (host, root Composer)
+      - name: Library suite
         run: vendor/bin/phpunit --testsuite Library
 
       - name: Unit suite
@@ -84,15 +75,21 @@ jobs:
       - name: Functional suite
         run: vendor/bin/phpunit --testsuite Functional
 
-      - name: Http suite (document root htdocs/)
+      - name: Http suite (routing level 3, every request through the host)
         run: vendor/bin/phpunit --testsuite Http
         env:
-          ICMS_TEST_DOCROOT: htdocs
+          ICMS_TEST_ROUTING: 3
 
-      - name: Http suite (document root public/)
+      - name: Http suite (routing level 2, scripts executed directly)
         run: vendor/bin/phpunit --testsuite Http
         env:
-          ICMS_TEST_DOCROOT: public
+          ICMS_TEST_ROUTING: 2
+
+      - name: Upgrade from a site without the host (bin/build-dist)
+        run: |
+          php bin/build-dist
+          vendor/bin/phpunit tests/Http/HostUpgradeTest.php
+          test ! -e htdocs/trust_dist
 
       - name: Spec coverage
         run: php bin/spec-coverage
@@ -103,3 +100,56 @@ jobs:
       # keeps the host ready for the next Symfony LTS (design D1)
       - name: No deprecations triggered by src/
         run: vendor/bin/phpunit --testsuite Unit,Integration,Functional --fail-on-deprecation --display-deprecations
+
+  webservers:
+    name: ${{ matrix.server }}, routing level ${{ matrix.level }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        server: [apache, nginx, frankenphp]
+        level: [2, 3]
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: gd, intl, json, mbstring, mysqli, pdo_mysql, xml, zlib
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Test site
+        run: php bin/test-db
+
+      - name: Start ${{ matrix.server }} with docs/server/
+        run: bash .github/scripts/webserver.sh ${{ matrix.server }} ${{ matrix.level }}
+
+      - name: Http suite against ${{ matrix.server }}
+        run: vendor/bin/phpunit --testsuite Http
+        env:
+          ICMS_TEST_BASE_URL: http://127.0.0.1:8080
+          ICMS_TEST_ROUTING: ${{ matrix.level }}
+
+      - name: Server logs
+        if: failure()
+        run: |
+          sudo tail -n 100 /var/log/nginx/error.log /var/log/apache2/error.log 2>/dev/null || true
+          tail -n 100 var/log/test.log 2>/dev/null || true
