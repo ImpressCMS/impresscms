@@ -22,6 +22,25 @@ class Event {
 	 * @var array
 	 */
 	static protected $events = array();
+	/**
+	 * Receives every triggered event after the registered handlers, see setForwarder()
+	 * @var \Closure|null
+	 */
+	static protected $forwarder = null;
+
+	/**
+	 * Forward every triggered event to a host application.
+	 *
+	 * The forwarder is called by trigger() after the registered handlers, with the
+	 * same arguments and the event: fn(string $namespace, string $name, mixed $source,
+	 * array $parameters, \Icms\Event $event). Pass null to remove it. Without a
+	 * forwarder nothing changes.
+	 *
+	 * @param \Closure|null $forwarder
+	 */
+	static public function setForwarder(?\Closure $forwarder): void {
+		self::$forwarder = $forwarder;
+	}
 
 	/**
 	 * Returns information about a fired event.
@@ -99,6 +118,9 @@ class Event {
 					if ($cancancel && $event->canceled) break 2;
 				}
 			}
+		}
+		if (self::$forwarder !== null) {
+			(self::$forwarder)($namespace, $name, $source, $parameters, $event);
 		}
 		return array_shift(self::$events);
 	}
