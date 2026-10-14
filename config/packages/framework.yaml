@@ -10,6 +10,9 @@ framework:
         handler_id: ~
     php_errors:
         log: true
+    # the Symfony 8 default, set explicitly (deprecated to leave unset since 7.3)
+    property_info:
+        with_constructor_extractor: true
 
 when@test:
     framework:
