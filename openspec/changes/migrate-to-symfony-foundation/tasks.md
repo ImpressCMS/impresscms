@@ -96,13 +96,16 @@
 
 ## 10. Session and identity (D10, D11)
 
-- [ ] 10.1 Configure `framework.session` with the PHP bridge storage, and make sure `LegacyRuntime` runs `services` (`Icms\Core\Session::service()`) before any session access
-- [ ] 10.2 Implement `App\Security\IcmsUser` (id, uname, display name, groups; roles `ROLE_USER`, `ROLE_WEBMASTER`, `ROLE_GROUP_<id>`)
-- [ ] 10.3 Implement `App\Security\IcmsSessionAuthenticator` and an entry point that redirects to `/user.php?xoops_redirect=<url>`
-- [ ] 10.4 Implement `App\Security\ModulePermissionVoter` on top of `icms_member_groupperm`
-- [ ] 10.5 Add `#[RequiresLegacyToken]`, which validates `icms::$security->check()` on POST
-- [ ] 10.6 Add the demonstration route `/whoami` (`ROLE_WEBMASTER`, registered only in the `dev` and `test` environments)
-- [ ] 10.7 Tests:
+- [x] 10.1 Configure `framework.session` with the PHP bridge storage, and make sure `LegacyRuntime` runs `services` (`Icms\Core\Session::service()`) before any session access
+  - `Appegacyegacysessionfactory` (decorates `session.factory`) boots the `services` stage before creating the session and uses `legacysessionattributebag`, so `$session->get('xoopsuserid')` reads the impresscms entry itself instead of symfony's `_sf2_attributes`
+- [x] 10.2 Implement `App\Security\IcmsUser` (id, uname, display name, groups; roles `ROLE_USER`, `ROLE_WEBMASTER`, `ROLE_GROUP_<id>`)
+- [x] 10.3 Implement `App\Security\IcmsSessionAuthenticator` and an entry point that redirects to `/user.php?xoops_redirect=<url>`
+  - The firewall is lazy and therefore not stateless (SecurityBundle disables lazy for stateless firewalls): legacy pages never authenticate, and when a route asks for the user the authenticator re-reads `icms::$user` and clears a token restored from the session for anonymous visitors
+- [x] 10.4 Implement `App\Security\ModulePermissionVoter` on top of `icms_member_groupperm`
+  - Attributes `icms_perm:<name>`: without subject the right on the current module (module id 1 for the item), with an integer subject the item right in the current module
+- [x] 10.5 Add `#[RequiresLegacyToken]`, which validates `icms::$security->check()` on POST
+- [x] 10.6 Add the demonstration route `/whoami` (`ROLE_WEBMASTER`, registered only in the `dev` and `test` environments)
+- [x] 10.7 Tests:
   - a session value written by legacy is read by Symfony
   - a custom session name results in a single cookie
   - anonymous → redirect, non-webmaster → 403, webmaster → 200

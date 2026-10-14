@@ -27,6 +27,7 @@
 		"symfony/framework-bundle": "7.4.*",
 		"symfony/monolog-bundle": "^3.10",
 		"symfony/runtime": "7.4.*",
+		"symfony/security-bundle": "7.4.*",
 		"symfony/twig-bundle": "7.4.*",
 		"symfony/yaml": "7.4.*"
 	},

@@ -22,6 +22,8 @@ services:
             - '../src/LegacyBridge/{LegacyResolution,LegacyExecutionResponse,PreparedLegacyExecution,LegacyResponse,LegacyAssetResponse,SendsHeadersVerbatim}.php'
             - '../src/Legacy/Attribute/'
             - '../src/Legacy/LegacyEvent.php'
+            - '../src/Security/IcmsUser.php'
+            - '../src/Security/Attribute/'
             - '../src/DependencyInjection/'
             # DBAL driver parts, created by IcmsDriver, not services
             - '../src/Legacy/Dbal/{ErrorMode,IcmsDriver,SharedConnection,SharedStatement}.php'
