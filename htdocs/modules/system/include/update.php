@@ -309,6 +309,48 @@ function xoops_module_update_system(
 		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . "<br />";
 	}
 
+	/* Repair the HTML filter settings of sites installed with 2.0.x on PHP 8 */
+	// Their installer started the system module at dbversion 40 and ran step 42
+	// (update-13.php), which appends iframe to the allowed elements and attributes
+	// but read the lists as empty on PHP 8: only the iframe entries were left, so
+	// the filter removed every other tag (links and formatting in blocks, ...).
+	// The default lists are added back; entries the site added are kept.
+	if (!$abortUpdate && $dbVersion < 50) {
+		$purifierDefaults = [
+			'purifier_HTML_AllowedElements' => ['a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl',
+				'dt', 'em', 'font', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 's',
+				'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var'],
+			'purifier_HTML_AllowedAttributes' => ['a.class', 'a.href', 'a.id', 'a.name', 'a.rev', 'a.style', 'a.title', 'a.target', 'a.rel', 'abbr.title', 'acronym.title',
+				'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style',
+				'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id',
+				'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan',
+				'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan',
+				'th.style', 'th.valign', 'ul.style'],
+		];
+		$configTable = icms::$xoopsDB->prefix('config');
+		foreach ($purifierDefaults as $confName => $defaults) {
+			$result = icms::$xoopsDB->query("SELECT conf_value FROM `" . $configTable . "` WHERE conf_modid = 0 AND conf_name = '" . $confName . "'");
+			[$raw] = $result ? (icms::$xoopsDB->fetchRow($result) ?: [null]) : [null];
+			if ($raw === null) {
+				continue;
+			}
+			$current = @unserialize((string) $raw);
+			$current = is_array($current) ? $current : [];
+			// a site that removed the basic defaults on purpose keeps at least one of them
+			if (array_intersect(array_slice($defaults, 0, 2), $current) !== []) {
+				continue;
+			}
+			$repaired = array_values(array_unique(array_merge($defaults, $current)));
+			$icmsDatabaseUpdater->runQuery(
+				$sql = "UPDATE `" . $configTable . "` SET conf_value = " . icms::$xoopsDB->quoteString(serialize($repaired))
+					. " WHERE conf_modid = 0 AND conf_name = '" . $confName . "'",
+				sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $confName),
+				sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $confName),
+			);
+		}
+		unset($purifierDefaults, $configTable, $confName, $defaults, $result, $raw, $current, $repaired);
+	}
+
 	/* Begin upgrade to version 2.1.0 (Symfony host in the trust path) */
 	if (!$abortUpdate) {
 		$newDbVersion = 50;

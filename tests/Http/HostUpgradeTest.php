@@ -66,6 +66,27 @@ final class HostUpgradeTest extends HttpTestCase
         }
     }
 
+    /**
+     * @param list<string> $value
+     */
+    private function setConfig(string $name, array $value): void
+    {
+        TestSite::connection()
+            ->prepare('UPDATE ' . TestSite::table('config') . ' SET conf_value = ? WHERE conf_modid = 0 AND conf_name = ?')
+            ->execute([serialize($value), $name]);
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function config(string $name): array
+    {
+        $statement = TestSite::connection()->prepare('SELECT conf_value FROM ' . TestSite::table('config') . ' WHERE conf_modid = 0 AND conf_name = ?');
+        $statement->execute([$name]);
+
+        return (array) unserialize((string) $statement->fetchColumn());
+    }
+
     protected static function createServer(): ServerProcess
     {
         return new ServerProcess(
@@ -95,6 +116,9 @@ final class HostUpgradeTest extends HttpTestCase
     {
         TestSite::restoreSnapshot();
         TestSite::connection()->exec('UPDATE ' . TestSite::table('modules') . " SET dbversion = 48 WHERE dirname = 'system'");
+        // what the 2.0.x installer left on PHP 8: only the iframe entries
+        $this->setConfig('purifier_HTML_AllowedElements', ['iframe']);
+        $this->setConfig('purifier_HTML_AllowedAttributes', ['iframe.src', 'iframe.width', 'iframe.height']);
 
         // Before the update: legacy runs on the staging directory's dependencies,
         // without the host (/up is not a Symfony route yet: index.php shows the home page).
@@ -127,6 +151,13 @@ final class HostUpgradeTest extends HttpTestCase
             '50',
             (string) TestSite::connection()->query('SELECT dbversion FROM ' . TestSite::table('modules') . " WHERE dirname = 'system'")->fetchColumn(),
         );
+
+        // The HTML filter allows the default elements and attributes again.
+        $elements = $this->config('purifier_HTML_AllowedElements');
+        self::assertContains('a', $elements);
+        self::assertContains('strong', $elements);
+        self::assertContains('iframe', $elements, 'entries of the site are kept');
+        self::assertContains('a.href', $this->config('purifier_HTML_AllowedAttributes'));
 
         // The host now answers, in production mode from .env.local, and the
         // webmaster is still logged in.
