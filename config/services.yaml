@@ -1,0 +1,38 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Kernel.php'
+            - '../src/Runtime/'
+            - '../src/LegacyBridge/LegacyResolution.php'
+            - '../src/LegacyBridge/LegacyExecutionResponse.php'
+            - '../src/LegacyBridge/PreparedLegacyExecution.php'
+
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    App\LegacyBridge\LegacyScriptResolver:
+        arguments:
+            $legacyRoot: '%icms.legacy.root%'
+            $frontController: '%icms.legacy.front_controller%'
+            $assetExtensions: '%icms.legacy.asset_extensions%'
+            $nonPublicPaths: '%icms.legacy.non_public_paths%'
+            $scriptFreePaths: '%icms.legacy.script_free_paths%'
+
+    # fetched by App\Runtime\HostRunner
+    App\LegacyBridge\LegacyBridge:
+        public: true
+        arguments:
+            $mimeTypes: '%icms.legacy.mime_types%'
+            $debug: '%kernel.debug%'
+
+    App\Routing\ReservedPrefixLoader:
+        arguments:
+            $prefixes: '%icms.legacy.reserved_prefixes%'
+            $env: '%kernel.environment%'
+        tags: ['routing.loader']

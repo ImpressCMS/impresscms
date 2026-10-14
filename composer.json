@@ -18,7 +18,15 @@
 		"composer/composer": "^2.9",
 		"ezyang/htmlpurifier": "^4.19",
 		"simplepie/simplepie": "^1.9",
-		"smottt/wideimage": "^1.1.4"
+		"smottt/wideimage": "^1.1.4",
+		"symfony/console": "7.4.*",
+		"symfony/dotenv": "7.4.*",
+		"symfony/expression-language": "7.4.*",
+		"symfony/framework-bundle": "7.4.*",
+		"symfony/monolog-bundle": "^3.10",
+		"symfony/runtime": "7.4.*",
+		"symfony/twig-bundle": "7.4.*",
+		"symfony/yaml": "7.4.*"
 	},
 	"require-dev": {
 		"phpstan/phpstan": "^2.1",
@@ -31,6 +39,7 @@
 	},
 	"autoload": {
 		"psr-4": {
+			"App\\": "src/",
 			"Icms\\": "htdocs/libraries/Icms/"
 		},
 		"classmap": [

@@ -23,33 +23,36 @@
 
 ## 3. Library seams in `Icms\` (D3, D6, D7, D9; framework-agnostic)
 
-- [ ] 3.1 Guard the `vendor/autoload.php` include and the self-healing stub writer in `htdocs/include/common.php` and `icms::setup()` with `!defined('ICMS_HOST_AUTOLOADED')`
-- [ ] 3.2 Create `htdocs/libraries/Icms/Kernel/Bootstrap.php` with the stages `constants`, `autoload`, `services`, `output`, `language`, `themeSelection`, `siteState`, `module` and `online`, moved verbatim from `common.php`
-- [ ] 3.3 Add `Icms\Kernel\SiteClosedException` and `NotInstalledException`, and a headless mode in which `output` is skipped and `siteState` throws instead of including or exiting
-- [ ] 3.4 Reduce `htdocs/include/common.php` to running all stages in interactive mode. The characterization snapshots must stay unchanged
-- [ ] 3.5 Add `Icms\Db\Factory::setConnectionProvider(?\Closure)`. When it is set, `pdoInstance()` uses the provider's PDO and applies the existing attributes. Add a unit test for both paths
-- [ ] 3.6 Add `Icms\Event::setForwarder(?\Closure)`, called by `trigger()` after the native listeners, with a unit test that it is inert when unset
-- [ ] 3.7 Add the new classes to the alias/PSR-4 tests where applicable, and confirm that `htdocs/tests` stays green under `htdocs/composer.json`
-- [ ] 3.8 Package 3.1–3.6 as upstream-ready commits (one per seam)
+- [x] 3.1 Guard the `vendor/autoload.php` include and the self-healing stub writer in `htdocs/include/common.php` and `icms::setup()` with `!defined('ICMS_HOST_AUTOLOADED')`
+- [x] 3.2 Create `htdocs/libraries/Icms/Kernel/Bootstrap.php` with the stages `constants`, `autoload`, `services`, `output`, `language`, `themeSelection`, `siteState`, `module` and `online`, moved verbatim from `common.php`
+- [x] 3.3 Add `Icms\Kernel\SiteClosedException` and `NotInstalledException`, and a headless mode in which `output` is skipped and `siteState` throws instead of including or exiting
+- [x] 3.4 Reduce `htdocs/include/common.php` to running all stages in interactive mode. The characterization snapshots must stay unchanged
+- [x] 3.5 Add `Icms\Db\Factory::setConnectionProvider(?\Closure)`. When it is set, `pdoInstance()` uses the provider's PDO and applies the existing attributes. Add a unit test for both paths
+  - The provider must return a PDO that implements `IConnection` (`Factory::connectionClass()`), because the legacy layer calls `escape()`; the error mode stays `ERRMODE_SILENT` for legacy code (the DBAL side handles its own, see 7.x)
+- [x] 3.6 Add `Icms\Event::setForwarder(?\Closure)`, called by `trigger()` after the native listeners, with a unit test that it is inert when unset
+- [x] 3.7 Add the new classes to the alias/PSR-4 tests where applicable, and confirm that `htdocs/tests` stays green under `htdocs/composer.json`
+- [x] 3.8 Package 3.1–3.6 as upstream-ready commits (one per seam)
 
 ## 4. Root Composer and Symfony host (D1–D5)
 
-- [ ] 4.1 Extend the root `composer.json` from 1.2:
+- [x] 4.1 Extend the root `composer.json` from 1.2:
   - require `symfony/framework-bundle`, `runtime`, `yaml`, `monolog-bundle` and `twig-bundle` at `7.4.*`, plus the `htdocs/composer.json` requirements
   - set `php` to `>=8.2 <8.5`
   - autoload `"App\\": "src/"` and `"Icms\\": "htdocs/libraries/Icms/"`, the classmap `htdocs/libraries/icms.php`, and `files: htdocs/libraries/Autoloader.php`
-- [ ] 4.2 Keep `composer/composer` in the root `require` and verify it resolves against Symfony `7.4.*`
-- [ ] 4.3 Add a CI script that fails when a package shared by the root and `htdocs/` lock files resolves to different versions
-- [ ] 4.4 Run `htdocs/tests/Unit/AliasMapTest.php` and the alias tests under the root autoloader. Include a test where the modern name is referenced before the legacy name
-- [ ] 4.5 Create `src/Kernel.php`, `config/bundles.php`, `config/packages/framework.yaml`, `config/routes.yaml`, and `src/Controller/HealthController.php` (`GET /up`)
-- [ ] 4.6 Create `config/packages/icms_legacy.yaml` (legacy root, front controller, asset extensions, MIME map, reserved prefixes, non-public directories)
-- [ ] 4.7 Port `LegacyScriptResolver`, `LegacyResolution`, `PreparedLegacyExecution`, `LegacyRequestHydrator` and `LegacyBridge` from the prototype branch to `src/LegacyBridge/`
-- [ ] 4.8 Add the `LegacyBridgeController` catch-all route (priority -1000, all methods), which returns a `BinaryFileResponse` for assets and a `LegacyExecutionResponse` marker for scripts
-- [ ] 4.9 Add the reserved-prefix routes (priority -900) that throw `NotFoundHttpException`; none are configured by default
-- [ ] 4.10 Add a test route that claims `/modules/system/admin.php` with `condition` on `fct`. Test that the matching variant goes to Symfony and other variants stay legacy
-- [ ] 4.11 Add the `icms:routes:ownership <url>` console command, which reports the owner (route name, or legacy script/strategy)
-- [ ] 4.12 Implement the custom `symfony/runtime` runner and `public/index.php`. The runner defines `ICMS_HOST_AUTOLOADED`, `require`s marked scripts at file scope, finalises through `LegacyBridge`, dispatches `kernel.response` and calls `terminate()`. Give the `exit()` shutdown path the same finalisation
-- [ ] 4.13 Run the characterization suite with `public/` as document root. All snapshots must match
+- [x] 4.2 Keep `composer/composer` in the root `require` and verify it resolves against Symfony `7.4.*`
+- [x] 4.3 Add a CI script that fails when a package shared by the root and `htdocs/` lock files resolves to different versions
+- [x] 4.4 Run `htdocs/tests/Unit/AliasMapTest.php` and the alias tests under the root autoloader. Include a test where the modern name is referenced before the legacy name
+- [x] 4.5 Create `src/Kernel.php`, `config/bundles.php`, `config/packages/framework.yaml`, `config/routes.yaml`, and `src/Controller/HealthController.php` (`GET /up`)
+- [x] 4.6 Create `config/packages/icms_legacy.yaml` (legacy root, front controller, asset extensions, MIME map, reserved prefixes, non-public directories)
+- [x] 4.7 Port `LegacyScriptResolver`, `LegacyResolution`, `PreparedLegacyExecution`, `LegacyRequestHydrator` and `LegacyBridge` from the prototype branch to `src/LegacyBridge/`
+- [x] 4.8 Add the `LegacyBridgeController` catch-all route (priority -1000, all methods), which returns a `BinaryFileResponse` for assets and a `LegacyExecutionResponse` marker for scripts
+  - The catch-all accepts every method, so the router alone never answers 405; `AppRoutingRouteOwnership::allowedMethods()` re-matches the path with the other methods and the bridge controller throws `MethodNotAllowedHttpException`
+- [x] 4.9 Add the reserved-prefix routes (priority -900) that throw `NotFoundHttpException`; none are configured by default
+- [x] 4.10 Add a test route that claims `/modules/system/admin.php` with `condition` on `fct`. Test that the matching variant goes to Symfony and other variants stay legacy
+- [x] 4.11 Add the `icms:routes:ownership <url>` console command, which reports the owner (route name, or legacy script/strategy)
+- [x] 4.12 Implement the custom `symfony/runtime` runner and `public/index.php`. The runner defines `ICMS_HOST_AUTOLOADED`, `require`s marked scripts at file scope, finalises through `LegacyBridge`, dispatches `kernel.response` and calls `terminate()`. Give the `exit()` shutdown path the same finalisation
+  - `public/index.php` drives `AppRuntimeHostRuntime`/`HostRunner` itself (no generated `autoload_runtime.php`), so that the `require` happens at file scope. Legacy responses keep their raw header lines (`LegacyResponse`), and an exception that escapes a script goes to the exception handler the script installed, as without the host
+- [x] 4.13 Run the characterization suite with `public/` as document root. All snapshots must match
 
 ## 5. Bridge hardening (legacy-request-bridge spec, D10)
 

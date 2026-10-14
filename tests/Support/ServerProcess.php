@@ -40,7 +40,7 @@ final class ServerProcess
         $root = TestSite::repoRoot();
 
         return $docroot === 'public'
-            ? new self($root . '/public', $root . '/public/index.php', $env)
+            ? new self($root . '/public', $root . '/public/index.php', $env + ['APP_ENV' => 'test', 'APP_DEBUG' => '0'])
             : new self($root . '/htdocs', null, $env);
     }
 

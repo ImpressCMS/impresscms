@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Fails when a package locked in both composer.lock (Symfony host) and
+ * htdocs/composer.lock (direct deployment) resolves to different versions.
+ *
+ * Both deployment modes must run the same third-party code (design D3). To fix
+ * a drift, update the package in the lock file that is behind, for example
+ * `composer update symfony/console --working-dir=htdocs`.
+ *
+ * Usage: bin/check-lock-alignment
+ */
+
+declare(strict_types=1);
+
+$root = dirname(__DIR__);
+
+/**
+ * @return array<string, string> package => version
+ */
+$versions = static function (string $lockFile): array {
+    $lock = json_decode((string) file_get_contents($lockFile), true, 512, JSON_THROW_ON_ERROR);
+    $versions = [];
+    foreach (array_merge($lock['packages'] ?? [], $lock['packages-dev'] ?? []) as $package) {
+        $versions[$package['name']] = $package['version'];
+    }
+
+    return $versions;
+};
+
+$host = $versions($root . '/composer.lock');
+$direct = $versions($root . '/htdocs/composer.lock');
+
+$drift = [];
+foreach (array_intersect_key($host, $direct) as $name => $version) {
+    if ($direct[$name] !== $version) {
+        $drift[] = sprintf('  %-40s composer.lock %-12s htdocs/composer.lock %s', $name, $version, $direct[$name]);
+    }
+}
+
+$shared = count(array_intersect_key($host, $direct));
+if ($drift !== []) {
+    fwrite(STDERR, "Shared packages resolve to different versions:\n" . implode("\n", $drift) . "\n");
+    exit(1);
+}
+
+echo "{$shared} shared packages, all at the same version.\n";
