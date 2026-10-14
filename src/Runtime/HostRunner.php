@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Runtime;
 
+use App\Legacy\LegacyEventForwarder;
 use App\LegacyBridge\LegacyBridge;
 use App\LegacyBridge\LegacyExecutionResponse;
 use App\LegacyBridge\PreparedLegacyExecution;
@@ -61,6 +62,7 @@ final class HostRunner implements RunnerInterface
         }
         $resolution = $this->legacyMarker->resolution;
         $this->legacyMarker = null;
+        $this->container()->get(LegacyEventForwarder::class)->install();
 
         return $this->bridge()->prepare($this->request, $resolution, $this->finishLegacy(...));
     }

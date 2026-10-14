@@ -48,6 +48,7 @@ final class LegacyRuntime
         private readonly RequestStack $requestStack,
         #[AutowireServiceClosure('doctrine.dbal.default_connection')]
         private readonly ?\Closure $connection = null,
+        private readonly ?LegacyEventForwarder $events = null,
     ) {
         if ($connection !== null) {
             $this->beforeStage('services', $this->shareConnection(...));
@@ -89,6 +90,7 @@ final class LegacyRuntime
             // request (in a real request they already do; KernelBrowser does not
             // set them).
             $this->requestStack->getMainRequest()?->overrideGlobals();
+            $this->events?->install();
             $this->bootstrap = new Bootstrap(Bootstrap::MODE_HEADLESS, $this->mainfile);
         }
 

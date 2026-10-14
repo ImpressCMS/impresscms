@@ -89,9 +89,10 @@
 
 ## 9. Event forwarding (D9)
 
-- [ ] 9.1 Implement `App\Legacy\LegacyEvent` and the forwarder dispatching `icms.<namespace>.<name>`
-- [ ] 9.2 Install the forwarder only when the compiled container has listeners for `icms.*`
-- [ ] 9.3 Test: a Symfony listener on `icms.icms.loadService-db` is invoked once with the DB service, and preload listeners are unaffected
+- [x] 9.1 Implement `App\Legacy\LegacyEvent` and the forwarder dispatching `icms.<namespace>.<name>`
+- [x] 9.2 Install the forwarder only when the compiled container has listeners for `icms.*`
+  - `AppDependencyInjectionegacyeventlistenerspass` (after `registerlistenerspass`) hands the `icms.*` event names with listeners to `legacyeventforwarder`; it is installed before a headless boot and before a legacy script runs, and dispatches only those events
+- [x] 9.3 Test: a Symfony listener on `icms.icms.loadService-db` is invoked once with the DB service, and preload listeners are unaffected
 
 ## 10. Session and identity (D10, D11)
 

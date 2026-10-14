@@ -5,52 +5,54 @@ services:
 
     # -- ImpressCMS services in the container (design D8) ----------------------
     # Each returns the instance legacy code sees as icms::$<name>, booting
-    # legacy up to the stage that creates it.
+    # legacy up to the stage that creates it. Their class is `object` on purpose:
+    # the container dumper reflects service classes, and legacy class files exit
+    # unless ImpressCMS is booted. The aliases below carry the real types.
     icms.db:
-        class: Icms\Db\IConnection
+        class: object
         public: true
         factory: ['@App\Legacy\LegacyRuntime', 'service']
         arguments: ['db']
     icms.db.legacy:
-        class: Icms\Db\Legacy\PdoDatabase
+        class: object
         public: true
         factory: ['@App\Legacy\LegacyRuntime', 'service']
         arguments: ['xoopsDB']
     icms.config:
-        class: Icms\Config\Handler
+        class: object
         public: true
         factory: ['@App\Legacy\LegacyRuntime', 'service']
         arguments: ['config']
     icms.security:
-        class: Icms\Core\Security
+        class: object
         public: true
         factory: ['@App\Legacy\LegacyRuntime', 'service']
         arguments: ['security']
     icms.logger:
-        class: Icms\Core\Logger
+        class: object
         public: true
         factory: ['@App\Legacy\LegacyRuntime', 'service']
         arguments: ['logger']
     icms.session:
-        class: Icms\Core\Session
+        class: object
         public: true
         factory: ['@App\Legacy\LegacyRuntime', 'service']
         arguments: ['session']
     icms.preload:
-        class: Icms\Preload\Handler
+        class: object
         public: true
         factory: ['@App\Legacy\LegacyRuntime', 'service']
         arguments: ['preload']
     # the current user and module may be null (anonymous visitor, no module):
     # no autowiring aliases, fetch them from the container or LegacyRuntime
     icms.user:
-        class: Icms\Member\User\Entity
+        class: object
         public: true
         shared: false
         factory: ['@App\Legacy\LegacyRuntime', 'service']
         arguments: ['user']
     icms.module:
-        class: Icms\Module\Entity
+        class: object
         public: true
         shared: false
         factory: ['@App\Legacy\LegacyRuntime', 'service']

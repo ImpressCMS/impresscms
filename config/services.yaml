@@ -9,15 +9,22 @@ services:
         autowire: true
         autoconfigure: true
 
+    # Only real services here: an unusable definition makes the debug container
+    # dump build autowiring messages, which reflect every service class, legacy
+    # ones included, and legacy class files exit unless ImpressCMS is booted
+    # (tests/Unit/KernelBootTest).
     App\:
         resource: '../src/'
         exclude:
             - '../src/Kernel.php'
             - '../src/Runtime/'
-            - '../src/LegacyBridge/LegacyResolution.php'
-            - '../src/LegacyBridge/LegacyExecutionResponse.php'
-            - '../src/LegacyBridge/PreparedLegacyExecution.php'
+            # value objects and responses, not services
+            - '../src/LegacyBridge/{LegacyResolution,LegacyExecutionResponse,PreparedLegacyExecution,LegacyResponse,LegacyAssetResponse,SendsHeadersVerbatim}.php'
             - '../src/Legacy/Attribute/'
+            - '../src/Legacy/LegacyEvent.php'
+            - '../src/DependencyInjection/'
+            # DBAL driver parts, created by IcmsDriver, not services
+            - '../src/Legacy/Dbal/{ErrorMode,IcmsDriver,SharedConnection,SharedStatement}.php'
 
     App\Controller\:
         resource: '../src/Controller/'
@@ -48,3 +55,7 @@ services:
         arguments:
             $mainfile: '%icms.legacy.root%/mainfile.php'
 
+
+    # fetched by App\Runtime\HostRunner before a legacy script runs
+    App\Legacy\LegacyEventForwarder:
+        public: true
