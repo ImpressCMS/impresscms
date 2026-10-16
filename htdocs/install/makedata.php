@@ -278,6 +278,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'use_mysession', '_MD_AM_USEMYSESS', '0', '_MD_AM_USEMYSESSDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'session_name', '_MD_AM_SESSNAME', 'icms_session', '_MD_AM_SESSNAMEDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'session_expire', '_MD_AM_SESSEXPIRE', '15', '_MD_AM_SESSEXPIREDSC', 'textbox', 'int', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'keepalive_enable', '_MD_AM_KEEPALIVE', '1', '_MD_AM_KEEPALIVEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'debug_mode', '_MD_AM_DEBUGMODE', '0', '_MD_AM_DEBUGMODEDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_DEBUGMODE0', 0, $i)"
