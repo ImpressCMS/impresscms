@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__, 2) . '/mainfile.php';
 
+icms::$logger->disableLogger();
 header('Content-Type: application/json; charset=utf-8');
 
 function jsonOut(array $payload, int $code = 200): void {
