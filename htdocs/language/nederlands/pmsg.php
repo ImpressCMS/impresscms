@@ -19,6 +19,7 @@ define('_PM_REGISTERNOW', 'Registreer u nu!');
 define('_PM_GOBACK', 'Ga terug');
 define('_PM_USERNOEXIST', 'De geselecteerde gebruiker komt niet voor in onze database.');
 define('_PM_PLZTRYAGAIN', 'Controleer de gebruikersnaam en probeer het opnieuw.');
+define('_PM_SECURITYERROR', 'De beveiligingscontrole is mislukt. Laad de pagina opnieuw en probeer het nogmaals.');
 define('_PM_MESSAGEPOSTED', 'Bericht is geplaatst');
 define('_PM_CLICKHERE', 'Klik hier om uw privéberichten (pm) te bekijken');
 define('_PM_ORCLOSEWINDOW', 'Klik hier om het scherm te sluiten.');

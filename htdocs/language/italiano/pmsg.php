@@ -26,6 +26,7 @@ define("_PM_REGISTERNOW","Registrati adesso!");
 define("_PM_GOBACK","Indietro");
 define("_PM_USERNOEXIST","L'utente selezionato non esiste.");
 define("_PM_PLZTRYAGAIN","Controlla il nome e prova ancora.");
+define("_PM_SECURITYERROR","Controllo di sicurezza non riuscito. Ricarica la pagina e riprova.");
 define("_PM_MESSAGEPOSTED","Il tuo messaggio privato &egrave; stato inviato con successo!");
 define("_PM_CLICKHERE","Cliccando qui, &egrave; possibile visualizzare i propri messaggi privati.");
 define("_PM_ORCLOSEWINDOW","Oppure clicca qui per chiudere questa finestra.");
