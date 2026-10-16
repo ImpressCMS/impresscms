@@ -62,7 +62,8 @@ function filter_preview(buttonObj){
 	+ '&filter=' + xoopsGetElementById('filter').value
 	+ '&arg1=' + xoopsGetElementById('arg1').value
 	+ '&arg2=' + xoopsGetElementById('arg2').value
-	+ '&arg3=' + xoopsGetElementById('arg3').value;
+	+ '&arg3=' + xoopsGetElementById('arg3').value
+	+ '&csrf_token=' + getCSRFToken();
 
 	filterScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	filterScriptAjaxObjects[ajaxIndex].onCompletion = function(){ filterCompleted(ajaxIndex,buttonObj); };	// Specify function that will be executed after file has been found
@@ -81,7 +82,8 @@ function filter_save(buttonObj)
 	+ '&arg1=' + xoopsGetElementById('arg1').value
 	+ '&arg2=' + xoopsGetElementById('arg2').value
 	+ '&arg3=' + xoopsGetElementById('arg3').value
-	+ '&save=1';
+	+ '&save=1'
+	+ '&csrf_token=' + getCSRFToken();
 
 	filterScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	filterScriptAjaxObjects[ajaxIndex].onCompletion = function(){ filterCompleted(ajaxIndex,buttonObj); };	// Specify function that will be executed after file has been found
@@ -93,7 +95,8 @@ function filter_delpreview(){
 	filterScriptAjaxObjects[ajaxIndex] = new sack();
 	var url = filter_script_server_file + '?image_path=' + xoopsGetElementById('fimage_path').value
 	+ '&image_url=' + xoopsGetElementById('fimage_url').value
-	+ '&delprev=1';
+	+ '&delprev=1'
+	+ '&csrf_token=' + getCSRFToken();
 
 	filterScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	filterScriptAjaxObjects[ajaxIndex].onCompletion = function(){ 	

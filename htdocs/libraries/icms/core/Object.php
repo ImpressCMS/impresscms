@@ -437,14 +437,20 @@ class icms_core_Object {
 				break;
 
 			case XOBJ_DTYPE_ARRAY:
-				try {
-			        $ret = unserialize($data);
-			        if ($ret === false) {
-			            $ret = [];
-			        }
-			    } catch (\Throwable $e) {
-			        $ret = [];
-			    }
+				// the stored value is a serialized array (or already an array)
+				if (is_array($ret)) {
+					break;
+				}
+				if ($ret === null || $ret === '') {
+					$ret = [];
+					break;
+				}
+				$unserialized = @unserialize((string) $ret, ['allowed_classes' => false]);
+				if ($unserialized === false && (string) $ret !== 'b:0;') {
+					$ret = [];
+				} else {
+					$ret = $unserialized;
+				}
 				break;
 
 			case XOBJ_DTYPE_SOURCE:
