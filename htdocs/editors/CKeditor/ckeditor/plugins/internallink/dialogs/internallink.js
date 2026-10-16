@@ -4,6 +4,7 @@
         xhr.open('GET', url, true);
         xhr.onreadystatechange = function(){
             if(xhr.readyState === 4){
+                if(xhr.status !== 200){ cb(new Error('HTTP ' + xhr.status)); return; }
                 try{ cb(null, JSON.parse(xhr.responseText)); }catch(e){ cb(e); }
             }
         };
@@ -72,9 +73,10 @@
             if(!mod || !q || q.length < 3){ renderResults([]); return; }
             var selectedItems = [];
             if(itemsSel){
-                var itemsVal = itemsSel.getValue();
-                if(itemsVal && itemsVal.length){
-                    selectedItems = itemsVal.split(',').filter(function(x){ return x.length > 0; });
+                // getValue() of a multi-select only returns the first option; read all selected ones
+                var opts = itemsSel.getInputElement().$.options;
+                for(var i = 0; i < opts.length; i++){
+                    if(opts[i].selected && opts[i].value){ selectedItems.push(opts[i].value); }
                 }
             }
             var itemsParam = (mod !== ALL_VALUE && selectedItems.length > 0) ? '&items=' + encodeURIComponent(selectedItems.join(',')) : '';
