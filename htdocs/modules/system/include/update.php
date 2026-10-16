@@ -176,12 +176,12 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 					echo 'Removed' . $foldertoremove . '</br>';
 				}
 			}
-		}
 
-		/* Finish up this portion of the db update */
-		if (!$abortUpdate) {
-			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			/* Finish up this portion of the db update */
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
 		}
 	}
 	catch (Exception $e) {
