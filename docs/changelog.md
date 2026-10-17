@@ -1,4 +1,20 @@
 # ImpressCMS ChangeLog
+## ImpressCMS 2.0.4 Beta
+
+* Date : 17 October 2026
+* DB Version : 49
+* Build Version : 119
+
+### What's Changed
+* fix:Fix system module update resetting db version to 47 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1723
+* fix:Array values no longer read as empty (2.0.2/2.0.3) and repair the HTML filter's allowed lists by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1731
+* fix:Use lowercase table names for IPF objects by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1730
+* fix:Fix redirect logic after login by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1716
+* fix:Implement CSRF protection in image editing functionality by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1712
+* fix:Improve CSRF error handling in pmlite by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1711
+* feat:Keep-alive the session using a preloader (new preference `keepalive_enable`, disabled by default on upgraded sites) by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1686
+
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.3...v2.0.4
 ## ImpressCMS 2.0.3
 
 * Date : 12 April 2026
