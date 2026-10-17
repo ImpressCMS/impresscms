@@ -1,6 +1,6 @@
 (function() {
     CKEDITOR.plugins.add('internallink', {
-        icons: 'link',
+        icons: 'internallink',
         hidpi: true,
         init: function(editor) {
             var commandName = 'openInternalLinkDialog';

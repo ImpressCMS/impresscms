@@ -53,6 +53,9 @@
                     var items = cont.querySelectorAll('li');
                     items.forEach(function(el){ el.style.background = 'transparent'; });
                     li.style.background = '#d0e8f2';
+                    // Picking a result is the same as pressing OK
+                    var dlg = CKEDITOR.dialog.getCurrent();
+                    if(dlg){ dlg.getButton('ok').click(); }
                 };
                 var modLabel = item.moduleName || item.module || '';
                 li.textContent = modLabel ? (item.title + ' — [' + modLabel + ']') : item.title;
@@ -110,11 +113,13 @@
                                 var mod = modSel.getValue();
                                 // Handle "All Modules" special case: disable items selector
                                 var inputEl = itemsSel && itemsSel.getInputElement ? itemsSel.getInputElement().$ : null;
-                                if (mod === ALL_VALUE) {
+                                if (!mod || mod === ALL_VALUE) {
                                     itemsSel.clear();
                                     if (inputEl) { inputEl.disabled = true; }
+                                    itemsSel.getElement().hide();
                                 } else {
                                     if (inputEl) { inputEl.disabled = false; }
+                                    itemsSel.getElement().show();
                                     modules.forEach(function(m){
                                         if(m.dirname === mod && m.items){
                                             m.items.forEach(function(item){
@@ -158,6 +163,9 @@
                 var dialog = CKEDITOR.dialog.getCurrent();
                 var modSel = dialog.getContentElement('tab-basic', 'module_select');
                 var itemsSel = dialog.getContentElement('tab-basic', 'items_select');
+
+                // Content types are only relevant once a module is chosen
+                if(itemsSel) itemsSel.getElement().hide();
 
                 // Load modules once per open
                 var tokenParam = csrfToken ? '&token=' + encodeURIComponent(csrfToken) : '';
