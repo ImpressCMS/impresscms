@@ -14,7 +14,7 @@ CKEDITOR.editorConfig = function( config ) {
 	 * Basic Config (ANONYMOUS TOOLBAR)
 	 */
 	config.toolbar_Basic = [ [ 'Format', '-', 'Bold', 'Italic', '-',
-			'NumberedList', 'BulletedList', '-', 'Link', 'Unlink' ] ];
+			'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', 'InternalLink' ] ];
 
 	/*
 	 * Medium Config (REGISTERED TOOLBAR)
@@ -32,7 +32,7 @@ CKEDITOR.editorConfig = function( config ) {
 			[ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent',
 					'Blockquote' ],
 			[ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ],
-			[ 'Link', 'Unlink', 'Anchor' ], '/',
+			[ 'Link', 'Unlink', 'Anchor', 'InternalLink' ], '/',
 			[ 'Format', 'Font', 'FontSize' ], [ 'TextColor', 'BGColor' ], ];
 
 	/*
@@ -52,7 +52,7 @@ CKEDITOR.editorConfig = function( config ) {
 			[ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent',
 					'Blockquote' ],
 			[ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ],
-			[ 'Link', 'Unlink', 'Anchor' ], '/',
+			[ 'Link', 'Unlink', 'Anchor', 'InternalLink' ], '/',
 			[ 'Format', 'Font', 'FontSize' ], [ 'TextColor', 'BGColor' ],
 			[ 'Maximize', 'ShowBlocks' ], ];
 
@@ -77,4 +77,8 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.allowedContent = true;
 	config.versionCheck = false;
+
+		// Register the internal link plugin universally
+		config.extraPlugins = (config.extraPlugins ? config.extraPlugins + ',internallink' : 'internallink');
+
 };
