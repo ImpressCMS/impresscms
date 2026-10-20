@@ -33,6 +33,7 @@ final class RouteOwnership
         #[Autowire(service: 'router')]
         private readonly RouterInterface&RequestMatcherInterface $router,
         private readonly LegacyBridge $bridge,
+        private readonly ?Takeovers $takeovers = null,
     ) {
     }
 
@@ -96,12 +97,47 @@ final class RouteOwnership
             return ['owner' => 'symfony', 'route' => null, 'detail' => '405 Method Not Allowed (Allow: ' . implode(', ', $allowed) . ')'];
         }
 
+        $disabled = '';
+        if (null !== $takeover = $this->disabledTakeover($request)) {
+            $disabled = sprintf('; takeover "%s" of route %s is disabled (%s)', $takeover['key'], $takeover['route'], Takeovers::ENV);
+        }
+
         try {
             $resolution = $this->bridge->resolve($request);
         } catch (HttpExceptionInterface $e) {
-            return ['owner' => 'legacy', 'route' => $route, 'detail' => $e->getStatusCode() . ': ' . $e->getMessage()];
+            return ['owner' => 'legacy', 'route' => $route, 'detail' => $e->getStatusCode() . ': ' . $e->getMessage() . $disabled];
         }
 
-        return ['owner' => 'legacy', 'route' => $route, 'detail' => $resolution->scriptName . ' (' . $resolution->strategy . ')'];
+        return ['owner' => 'legacy', 'route' => $route, 'detail' => $resolution->scriptName . ' (' . $resolution->strategy . ')' . $disabled];
+    }
+
+    /**
+     * The disabled takeover that would otherwise claim a legacy-owned request.
+     *
+     * @return array{route: string, key: string}|null
+     */
+    public function disabledTakeover(Request $request): ?array
+    {
+        $takeovers = $this->takeovers;
+        if ($takeovers === null || $takeovers->disabledKeys() === []) {
+            return null;
+        }
+
+        try {
+            $route = (string) ($takeovers->whileAllEnabled(fn (): array => $this->router->matchRequest($request))['_route'] ?? '');
+        } catch (RoutingException) {
+            return null;
+        }
+        if (self::isLegacyRoute($route) || null === $definition = $this->router->getRouteCollection()->get($route)) {
+            return null;
+        }
+
+        foreach (Takeovers::keysInCondition($definition->getCondition()) as $key) {
+            if (!$takeovers->enabled($key)) {
+                return ['route' => $route, 'key' => $key];
+            }
+        }
+
+        return null;
     }
 }

@@ -43,13 +43,13 @@ class Column {
 	/**
 	 * Constructor
 	 *
-	 * @param unknown_type $keyname
-	 * @param str $align
-	 * @param unknown_type $width
-	 * @param unknown_type $customMethodForValue
-	 * @param unknown_type $param
-	 * @param unknown_type $customCaption
-	 * @param unknown_type $sortable
+	 * @param string $keyname
+	 * @param string $align
+	 * @param int|string|false $width
+	 * @param string|false $customMethodForValue
+	 * @param mixed $param
+	 * @param string|false $customCaption
+	 * @param bool $sortable
 	 */
 	public function __construct($keyname, $align = _GLOBAL_LEFT, $width = false, $customMethodForValue = false, $param = false, $customCaption = false, $sortable = true) {
 		$this->_keyname = $keyname;

@@ -9,7 +9,7 @@ The system SHALL derive one form field per entity variable that is shown in the 
 
 #### Scenario: Mimetype entity
 - **WHEN** a form is built for a mimetype entity
-- **THEN** it has the editable fields `extension`, `types`, `name` and `dirname` with the captions and descriptions the legacy form shows, plus `mimetypeid` as a hidden value
+- **THEN** it has the editable fields `extension`, `types`, `name` and `dirname` and the permission `use_extension`, with the captions and descriptions the legacy form shows, plus `mimetypeid` as a hidden value
 
 #### Scenario: Select-multi control with an item handler
 - **WHEN** a variable has the control `selectmulti` with `itemHandler` `icms_module` and method `getActive`

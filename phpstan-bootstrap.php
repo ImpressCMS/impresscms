@@ -10,4 +10,5 @@ define('ICMS_GROUP_ADMIN', 1);
 define('ICMS_GROUP_USERS', 2);
 define('ICMS_GROUP_ANONYMOUS', 3);
 define('_INTL_LOCALE', 'en_US');
-define('_ADM_USE_RTL', 0);
+define('ICMS_URL', 'http://localhost');
+define('_GLOBAL_LEFT', 'left');

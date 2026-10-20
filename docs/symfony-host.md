@@ -233,10 +233,12 @@ so never wrap it in a DBAL transaction.
 | `icms.user` | – | `icms::$user` (null for anonymous visitors) |
 | `icms.module` | – | `icms::$module` (may be null) |
 | `icms.handlers` | `App\Legacy\HandlerLocator` | handlers by legacy name (`icms_member`), PSR-4 class (`Icms\Member\Handler::class`) or `module:<dirname>/<name>` |
+| `icms.module_handlers` | `App\Legacy\ModuleHandlerLocator` | handlers of module classes, `get('<dirname>', '<name>')`: the instance `icms_getModuleHandler()` returns |
 
 Each service boots only the stage that creates it, and returns the very
 instance legacy code uses. Inject a single handler with
-`#[IcmsHandler('icms_data_page')]`.
+`#[IcmsHandler('icms_data_page')]`, a module's handler with
+`#[IcmsModuleHandler('system', 'mimetype')]`.
 
 Legacy class files exit unless ImpressCMS constants are defined, so the
 container compiler must never load them. In controllers and services,
@@ -244,6 +246,52 @@ type-hint a legacy class only together with `#[IcmsHandler]` or
 `#[Autowire(service: 'icms.security')]`: an `Autowire` attribute keeps the
 compiler from inspecting the type. Register only real services from `src/`.
 `tests/Unit/KernelBootTest` guards this.
+
+## Taking over an IPF admin page
+
+The mimetype administration of the system module
+(`modules/system/admin.php?fct=mimetype`) runs on Symfony:
+`App\Controller\System\MimetypeController`. The other IPF admin pages follow
+the same pattern. The controller owns the page logic; the output stays legacy
+(the Smarty content template, `Icms\Ipf\View\Table`, the IPF form HTML and the
+admin theme), so the page can be compared with the legacy one byte for byte.
+
+```php
+#[SystemAdminFunction('mimetype')]
+final class MimetypeController
+{
+    #[Route('/modules/system/admin.php', name: 'system_mimetype', methods: ['GET', 'POST'],
+        condition: "(request.request.has('fct') ? request.request.get('fct') : request.query.get('fct')) == 'mimetype'"
+            . " and service('icms_takeovers').enabled('system.mimetype')")]
+    public function __invoke(Request $request, #[IcmsModuleHandler('system', 'mimetype')] object $mimetypes): Response
+```
+
+| Piece | Does |
+|---|---|
+| route | claims the legacy URL; `fct` may come from the POST body (the delete confirmation posts it without a query string). The takeover key makes it switchable: `ICMS_TAKEOVERS_DISABLED=system.mimetype` serves the legacy page again (the rollback) |
+| `#[SystemAdminFunction('<fct>')]` | `App\Admin\SystemAdminContext` enters the function as `admin.php` does: the superglobals and working directory of `admin.php`, `ICMS_IN_ADMIN`, the full boot, `cp_functions.php`, the language files and constants. Denied visitors get the legacy denials: a redirect to the login page with "no permission" for visitors who do not administer the system module, `Location: admin.php` for administrators without the function's category right. `#[IsGranted('icms_system_admin:<fct>')]` applies the same rules elsewhere |
+| `#[IcmsModuleHandler('<dir>', '<name>')]` | the module's IPF handler, the instance legacy code in the same request gets |
+| `App\Admin\AdminPageRenderer` | `render('db:<template>.html', fn ($tpl) => …)` runs `icms_cp_header()`, your assignments, the template and `icms_cp_footer()`; `renderFragment()` wraps content that legacy echoes (`Icms\Core\Message::confirm()`) |
+| `App\Admin\LegacyRedirect` | `to($url, $delay, $message)`: `redirect_header()` without `exit()`, in both `use_custom_redirection` modes, and only to URLs on the site |
+| `App\Ipf\Form\IpfFormFactory` | a Symfony form from the entity's metadata (`IpfEntityType`): fields, captions, required and length rules, select options, the handler's permissions. It reads the legacy form's field names, so the legacy form HTML posts to it unchanged. Unsupported controls (uploads, editors, dates) raise `UnsupportedIpfControlException`; such pages stay legacy |
+| `App\Ipf\IpfPersister` | `save($form)`: the handler's `insert()` with its events, then the bound permission groups; `delete($entity)`: the handler's `delete()`, which removes the permissions |
+
+Output, status code and headers of the legacy calls are captured by
+`App\Admin\LegacyOutput`, as the bridge captures legacy scripts, so nothing
+exits and each header goes out once. Saving and deleting check the ImpressCMS
+token (`icms::$security->check()`) and render the edit form with
+`getSecureForm()`. The list's sort, filter and quick search forms post without a
+token, so `#[RequiresLegacyToken]` (every POST) is not used.
+
+To take over a page:
+
+1. Record its legacy behaviour first: a characterization test with the
+   takeover disabled (`tests/Http/System/MimetypeLegacyCharacterizationTest`),
+   database effects asserted directly.
+2. Write the controller with the pieces above, mirroring the legacy `op`
+   handling.
+3. Run the same tests against the takeover; only intended changes (the token)
+   may differ.
 
 ## Events
 
@@ -314,6 +362,7 @@ run with `APP_ENV=test`.
 | `ICMS_LEGACY_ROOT` | the web root. `index.php` passes it for web requests; `.env.local` names it for `bin/console`. The default is `htdocs/` in a checkout |
 | `ICMS_TRUST_PATH` | passed by `index.php`; refused by the bridge if it lies under the web root |
 | `ICMS_HERD_ROUTING` | `2` makes the Herd driver use routing level 2 |
+| `ICMS_TAKEOVERS_DISABLED` | comma-separated takeover keys, for example `system.mimetype`: those legacy pages are served by legacy again. Applies to the next request, without a cache clear. `icms:routes:ownership` names a disabled takeover |
 
 ### A development site
 
@@ -373,8 +422,9 @@ vendor/bin/phpstan analyse
 ```
 
 `bin/test-db` installs a scripted test site into the `icms_test` schema
-(`ICMS_TEST_DB_*` select the server), with the accounts `webmaster` and
-`member`. Its trust path `var/test/trust` holds one-line stubs for the
+(`ICMS_TEST_DB_*` select the server), with the accounts `webmaster`,
+`member`, and the system administrators `mediaadmin` (user ranks only) and
+`mimetypeadmin` (mimetypes only), and three fixture mimetypes. Its trust path `var/test/trust` holds one-line stubs for the
 repository's `host.php` and `vendor/`, so requests take the production path.
 
 The `Http` suite serves `htdocs/` with `php -S`:

@@ -21,6 +21,7 @@ services:
             # value objects and responses, not services
             - '../src/LegacyBridge/{LegacyResolution,LegacyExecutionResponse,PreparedLegacyExecution,LegacyResponse,LegacyAssetResponse,SendsHeadersVerbatim}.php'
             - '../src/Legacy/Attribute/'
+            - '../src/Admin/Attribute/'
             - '../src/Legacy/LegacyEvent.php'
             - '../src/Security/IcmsUser.php'
             - '../src/Security/Attribute/'

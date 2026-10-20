@@ -17,8 +17,15 @@ final class SnapshotNormalizer
     /** Headers whose values are part of the snapshot. */
     private const HEADERS = ['content-type', 'location', 'cache-control', 'pragma', 'x-frame-options'];
 
-    public function __construct(private readonly string $baseUri)
-    {
+    /**
+     * @param bool $stripTokens remove the ImpressCMS security token field
+     *                          (XOOPS_TOKEN_REQUEST) from the body, to compare a
+     *                          form with a legacy form that had none
+     */
+    public function __construct(
+        private readonly string $baseUri,
+        private readonly bool $stripTokens = false,
+    ) {
     }
 
     public function transcript(string $request, Response $response, bool $hashBody = false): string
@@ -36,6 +43,9 @@ final class SnapshotNormalizer
         }
 
         $body = $response->getContent();
+        if ($this->stripTokens) {
+            $body = (string) preg_replace('#[ \t]*<input type=(["\'])hidden\1 name=\1XOOPS_TOKEN_REQUEST\1[^>]*>\R?#', '', $body);
+        }
         $lines[] = '';
         $lines[] = $hashBody
             ? 'sha1: ' . sha1($body) . ' (' . strlen($body) . ' bytes)'

@@ -14,6 +14,7 @@ The page also has two security gaps worth closing during the move. The edit form
   - Access to a system admin function is checked with the same rules and denial behaviour as `modules/system/admin.php`.
 - Rendering stays legacy for now: the mimetype page keeps its Smarty template, its `Icms\Ipf\View\Table` list and the existing IPF form HTML, so the page looks and behaves the same.
 - **BREAKING (security hardening)**: saving and deleting a mimetype now require a valid ImpressCMS security token. A save or delete without one is rejected.
+- **BREAKING (validation)**: a save that leaves a required field empty, exceeds a maximum length or names an unknown option is rejected. Legacy validation skipped empty values, so it stored such mimetypes.
 
 ## Capabilities
 
@@ -34,7 +35,8 @@ The page also has two security gaps worth closing during the move. The edit form
   - a takeover registry used in route conditions
 - **Library (`Icms\`)**: no changes are expected. If one turns out to be needed, it stays an additive, inert seam, as in the foundation.
 - **Legacy files**: `htdocs/modules/system/admin/mimetype/main.php` stays in place as the fallback while the takeover is switched off. It is not deleted in this change.
-- **Behaviour**: unchanged for list, form and redirects (pinned by characterization snapshots). Changed only for token validation on save and delete.
+- **Behaviour**: unchanged for list, form, redirects and denials (pinned by characterization snapshots). Changed for token validation on save and delete, and for the validation of the submitted values.
+- **Dependencies**: `symfony/form` and `symfony/validator` 7.4.
 - **Out of scope**:
   - Twig rendering of IPF forms and tables
   - file upload and image controls

@@ -73,3 +73,11 @@ services:
             $runtime: '@App\Legacy\LegacyRuntime'
             $aliasMap: '%icms.legacy.root%/libraries/Icms/aliases.php'
     App\Legacy\HandlerLocator: '@icms.handlers'
+
+    # handlers of module classes, by module directory and name (design D10)
+    icms.module_handlers:
+        class: App\Legacy\ModuleHandlerLocator
+        public: true
+        arguments:
+            $runtime: '@App\Legacy\LegacyRuntime'
+    App\Legacy\ModuleHandlerLocator: '@icms.module_handlers'

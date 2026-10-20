@@ -8,10 +8,17 @@ parameters:
         - phpstan-bootstrap.php
         # the Icms library and its legacy names (not in composer.json, see host.php)
         - htdocs/libraries/Autoloader.php
+        # language constants (the English files; every language defines the same)
+        - htdocs/language/english/global.php
+        - htdocs/language/english/core.php
+        - htdocs/modules/system/language/english/common.php
+        - htdocs/modules/system/language/english/admin.php
+        - htdocs/modules/system/language/english/admin/mimetype.php
     scanDirectories:
         - htdocs/libraries/Icms
     scanFiles:
         - htdocs/include/functions.php
+        - htdocs/include/cp_functions.php
         - htdocs/include/host.php
         - htdocs/libraries/icms.php
     # the legacy library's PHPDoc types are not reliable (icms::$user is null
@@ -29,3 +36,5 @@ parameters:
         - ICMS_GROUP_ANONYMOUS
         - _INTL_LOCALE
         - _ADM_USE_RTL
+        - ICMS_URL
+        - _GLOBAL_LEFT

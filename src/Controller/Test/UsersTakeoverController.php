@@ -9,7 +9,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Test-only route that claims one variant of a legacy URL: the users page of
- * the system admin (`fct=users`). Other `fct` values stay legacy.
+ * the system admin (`fct=users`). Other `fct` values stay legacy. Its takeover
+ * key is `test.users` (ICMS_TAKEOVERS_DISABLED).
  */
 final class UsersTakeoverController
 {
@@ -17,7 +18,7 @@ final class UsersTakeoverController
         '/modules/system/admin.php',
         name: 'test_takeover_system_users',
         // bridge tests that need this legacy URL themselves send X-Icms-Test-Takeover: off
-        condition: "request.query.get('fct') == 'users' and request.headers.get('X-Icms-Test-Takeover') != 'off'",
+        condition: "request.query.get('fct') == 'users' and request.headers.get('X-Icms-Test-Takeover') != 'off' and service('icms_takeovers').enabled('test.users')",
         env: 'test',
     )]
     public function __invoke(): Response

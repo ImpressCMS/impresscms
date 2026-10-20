@@ -8,6 +8,8 @@
  *   (stubs for the repository's host.php and vendor/)
  * - runs the installer's table creation and data fill (make_groups/make_data)
  * - updates the system module, sets the site name, seeds `webmaster` and `member`
+ * - adds page fixtures: mimetypes and the system administrators `mediaadmin`
+ *   and `mimetypeadmin` (tests/Support/Install/install-fixtures.php)
  * - snapshots the schema into `<name>_snapshot` for per-class restores
  *
  * Connection settings come from ICMS_TEST_DB_HOST/PORT/USER/PASS/NAME.
@@ -122,6 +124,26 @@ try {
             'uname' => TestSite::MEMBER_UNAME,
             'pass' => TestSite::MEMBER_PASS,
             'email' => TestSite::MEMBER_EMAIL,
+        ],
+    ], JSON_THROW_ON_ERROR)]);
+
+    $stage('install-fixtures.php', [json_encode([
+        'mimetypes' => TestSite::MIMETYPES,
+        'admins' => [
+            [
+                'uname' => TestSite::MEDIAADMIN_UNAME,
+                'pass' => TestSite::MEDIAADMIN_PASS,
+                'email' => 'mediaadmin@example.test',
+                'group' => 'Media administrators',
+                'system_admin' => ['XOOPS_SYSTEM_URANK'],
+            ],
+            [
+                'uname' => TestSite::MIMETYPEADMIN_UNAME,
+                'pass' => TestSite::MIMETYPEADMIN_PASS,
+                'email' => 'mimetypeadmin@example.test',
+                'group' => 'Mimetype administrators',
+                'system_admin' => ['XOOPS_SYSTEM_MIMETYPES'],
+            ],
         ],
     ], JSON_THROW_ON_ERROR)]);
 } catch (RuntimeException $e) {
