@@ -440,6 +440,7 @@ class Entity {
 				break;
 
 			case XOBJ_DTYPE_ARRAY:
+				// the stored value is a serialized array (or already an array)
 				if (is_array($ret)) {
 					break;
 				}

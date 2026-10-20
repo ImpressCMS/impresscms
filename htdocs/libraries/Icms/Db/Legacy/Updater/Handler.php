@@ -267,6 +267,11 @@ class Handler {
 		$object = $module_handler->create();
 		$objectVars = $object->getVars();
 
+		$this->renameLegacyCaseTable($table, [
+			"{$dirname}_{$item}",
+			"{$dirname}_{$module_handler->_itemname}",
+		]);
+
 		if (!$table->exists()) {
 			// table was never created, let's do it
 			$structure = "";
@@ -313,9 +318,17 @@ class Handler {
 			}
 		} else {
 			$existingFieldsArray = $table->getExistingFieldsArray();
+			$existingNames = [];
+			foreach (array_keys($existingFieldsArray) as $existingName) {
+				$existingNames[strtolower($existingName)] = $existingName;
+			}
+
+			$persistentNames = [];
 			foreach($objectVars as $key=>$var) {
 				if ($var['persistent']) {
-					if (!isset($existingFieldsArray[$key])) {
+					$persistentNames[strtolower($key)] = true;
+					$existingName = $existingNames[strtolower($key)] ?? null;
+					if ($existingName === null) {
 						// the fiels does not exist, let's create it
 						$type = $this->getFieldTypeFromVar($var);
 						$default =  $this->getFieldDefaultFromVar($var);
@@ -327,7 +340,7 @@ class Handler {
 						$table->addNewField($key, "$type not null " . $extra);
 					} else {
 						// if field already exists, let's check if the definition is correct
-						$definition =  strtolower($existingFieldsArray[$key]);
+						$definition =  strtolower($existingFieldsArray[$existingName]);
 						$type = $this->getFieldTypeFromVar($var);
 
 						if ($key == $module_handler->keyName) {
@@ -344,17 +357,17 @@ class Handler {
 						if ($extra) {
 							$actual_definition .= " $extra";
 						}
-						if ($definition != $actual_definition) {
-							$table->addAlteredField($key, $actual_definition);
+						if ($definition != $actual_definition || $existingName !== $key) {
+							$table->addAlteredField($existingName, $actual_definition, $key);
 						}
 					}
 				}
 			}
 
 			// check to see if there are some unused fields left in the table
-			foreach ($existingFieldsArray as $key=>$v) {
-				if (!isset($objectVars[$key]) || !$objectVars[$key]['persistent']) {
-					$table->addDropedField($key);
+			foreach (array_keys($existingFieldsArray) as $existingName) {
+				if (!isset($persistentNames[strtolower($existingName)])) {
+					$table->addDropedField($existingName);
 				}
 			}
 
@@ -363,6 +376,39 @@ class Handler {
 				 * @todo trap the errors
 				 */
 			}
+		}
+	}
+
+	/**
+	 * Rename a table created with a mixed-case name to the lowercase name used by IPF
+	 *
+	 * @param Table $table table with the lowercase name
+	 * @param array<int, string> $legacyNames unprefixed names the table may have been created with
+	 */
+	private function renameLegacyCaseTable(Table $table, array $legacyNames): void {
+		if ($table->exists()) {
+			return;
+		}
+
+		$lowercaseName = strtolower($table->_name);
+		foreach (array_unique($legacyNames) as $legacyName) {
+			if ($legacyName === $lowercaseName) {
+				continue;
+			}
+
+			if (strtolower($legacyName) !== $lowercaseName) {
+				continue;
+			}
+
+			$prefixedName = $this->_db->prefix($legacyName);
+			$result = $this->_db->queryF("SHOW TABLES LIKE '{$prefixedName}'");
+			list($foundTable) = $this->_db->fetchRow($result);
+			if ($foundTable !== $prefixedName) {
+				continue;
+			}
+
+			$this->renameTable($legacyName, $lowercaseName, true);
+			return;
 		}
 	}
 

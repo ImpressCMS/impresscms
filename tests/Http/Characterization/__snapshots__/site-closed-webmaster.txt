@@ -54,6 +54,7 @@ x-frame-options: SAMEORIGIN
 	
 </script>
 <script src="http://{HOST}/libraries/jquery/colorbox/jquery.colorbox-min.js" type="text/javascript"></script>
+<script id="keepalive-script" data-keepalive-url="http://{HOST}/keepalive.php" src="http://{HOST}/assets/js/keepalive.js" type="text/javascript"></script>
 
 
 <!-- Favicon -->

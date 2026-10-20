@@ -116,7 +116,7 @@ class Table {
 	 *
 	 */
 	function name() {
-		return $this->_db->prefix($this->_name);
+		return $this->_db->prefix(strtolower($this->_name));
 	}
 
 	/**
@@ -130,9 +130,9 @@ class Table {
 	 */
 	function exists() {
 		$bRetVal = false;
-		$ret = $this->_db->queryF("SHOW TABLES FROM `" . XOOPS_DB_NAME . "` LIKE '" . $this->name() . "'");
+		$ret = $this->_db->queryF("SHOW TABLES LIKE '" . $this->name() . "'");
 		list ($m_table) = $this->_db->fetchRow($ret);
-		if ($m_table == strtolower($this->name())) $bRetVal = true;
+		if ($m_table !== null && strcasecmp($m_table, $this->name()) === 0) $bRetVal = true;
 		return $bRetVal;
 	}
 
@@ -532,7 +532,7 @@ class Table {
 		foreach ($this->getDeleteAll() as $item) {
 			$criteria = isset($item['criteria']) ? $item['criteria'] : null;
 			if (isset($criteria) && ($criteria instanceof \Icms\Db\Criteria\Element)) {
-				$sql = 'DELETE FROM '.$this->table;
+				$sql = 'DELETE FROM '.$this->name();
 				$sql .= ' '.$criteria->renderWhere();
 				if ($this->force) {
 					$result = $this->_db->queryF($sql);

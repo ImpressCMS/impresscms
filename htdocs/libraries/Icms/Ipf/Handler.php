@@ -167,10 +167,10 @@ class Handler extends \Icms\Core\EntityHandler {
 		// Todo: Autodect module
 		if ($modulename == '') {
 			$this->_moduleName = 'system';
-			$this->table = $db->prefix($itemname);
+			$this->table = $db->prefix(strtolower($itemname));
 		} else {
 			$this->_moduleName = $modulename;
-			$this->table = $db->prefix($modulename . "_" . $itemname);
+			$this->table = $db->prefix(strtolower("{$modulename}_{$itemname}"));
 		}
 		$this->keyName = $keyname;
 

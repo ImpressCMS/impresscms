@@ -922,7 +922,7 @@ function icms_getTablesArray($moduleName, $items)
 {
 	$ret = array();
 	if (is_array($items))
-	foreach($items as $item) {$ret[] = $moduleName.'_'.$item;}
+	foreach($items as $item) {$ret[] = strtolower("{$moduleName}_{$item}");}
 	return $ret;
 }
 
