@@ -68,13 +68,13 @@ define("_CAL_DSPFIRST", "Afficher %s en premier");
 define('_CAL_Far','Farvardin');
 define('_CAL_Ord','Ordibehest');
 define('_CAL_Kho','Khordad');
-define('_CAL_Tir','Tir');
+define('_CAL_TIR','Tir');
 define('_CAL_Mor','Mordad');
 define('_CAL_Sha','Shahrivar');
 define('_CAL_Meh','Mehr');
 define('_CAL_Aba','Aban');
 define('_CAL_Aza','Azar');
-define('_CAL_Dey','Day');
+define('_CAL_DEY','Day');
 define('_CAL_Bah','Bahman');
 define('_CAL_Esf','Esfand');
 define("_CAL_NUMS_ARRAY", "'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'"); // des valeurs numériques peuvent être différentes dans différentes langues
@@ -83,4 +83,16 @@ define("_CAL_TT_DATE_FORMAT", "%a, %b %e");
 define("_CAL_SUFFIX", "th");
 define('_CAL_AM_LONG','avant midi');
 define('_CAL_PM_LONG','après midi');
+
+define('_CAL_FARVARDIN','Farvardin');
+define('_CAL_ORDIBEHESHT','Ordibehest');
+define('_CAL_KHORDAD','Khordad');
+define('_CAL_MORDAD','Mordad');
+define('_CAL_SHAHRIVAR','Shahrivar');
+define('_CAL_MEHR','Mehr');
+define('_CAL_ABAN','Aban');
+define('_CAL_AZAR','Azar');
+define('_CAL_BAHMAN','Bahman');
+define('_CAL_ESFAND','Esfand');
+
 ?>

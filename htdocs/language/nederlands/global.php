@@ -214,7 +214,7 @@ define('_IMPRESSCMS_ADDONS','Toevoegingen');
 define('_IMPRESSCMS_WIKI','Wiki');
 define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Doneren!');
-define("_IMPRESSCMS_Support","Ondersteun het project !");
+define("_IMPRESSCMS_SUPPORT","Ondersteun het project !");
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project pagina');
 define('_IMPRESSCMS_ADMIN','Beheerpagina van');
 /** The default separator used in XoopsTree::getNicePathFromId */
@@ -336,3 +336,4 @@ define('_TinyMCE_PRESENT_WARNING', 'TinyMCE is aanwezig op de server - Verwijder
 
 define('_TRUST_PATH_PUBLIC', 'WAARSCHUWING: Het trust path %s ligt in de web root of de document root. Het bevat de ImpressCMS-host, zijn bibliotheken en de geheime instellingen van deze site, en webservers zoals nginx of Caddy serveren het ongeacht .htaccess-bestanden.<br />Verplaats de map buiten de document root en pas XOOPS_TRUST_PATH aan in mainfile.php.');
 define('_TRUST_DIST_PENDING', 'De hostbestanden van een nieuwe versie staan klaar in %s. Werk de systeemmodule bij om ze in het trust path te installeren.');
+

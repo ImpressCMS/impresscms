@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $ 
 //%%%%%%	File Name search.php 	%%%%%
 define("_SR_SEARCH","搜索");

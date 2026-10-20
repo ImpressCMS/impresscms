@@ -13,4 +13,10 @@ define("_AM_VERSION_WARNING_NOT_A_FINAL", 'Toutes les versions autres que "Final
 define("_AM_VERSION_YOUR_VERSION", 'Votre version de ImpressCMS est:');
 define("_AM_VERSION_LATEST_VERSION", 'La derni&egrave;re version de ImpressCMS est:');
 
+define("_AM_VERSION_OP_SYSTEM", 'Server\'s Operating System:');
+define("_AM_VERSION_MYSQL_SYSTEM", 'Your Database Version:');
+define("_AM_VERSION_PHP_SYSTEM", 'Your PHP Version:');
+define("_AM_VERSION_API_SYSTEM", 'Your API name:');
+define("_AM_VERSION_SYSTEM_INFO", 'Click here to view your System information');
+
 ?>

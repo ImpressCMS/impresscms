@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define('_MODABOUT_DEVELOPER_CONTRIBUTOR', '贡献者');
 define('_MODABOUT_DEVELOPER_CREDITS', '认证');

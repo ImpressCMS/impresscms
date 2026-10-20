@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 
 // RMV-NOTIFY
@@ -84,4 +84,7 @@ DEFINE('_NOT_MODE_SENDONCE', '只通知一遍');
 DEFINE('_NOT_MODE_SENDONCEPERLOGIN', '只通知一遍就不启用，直到下次登录');
 
 DEFINE('_NOT_NOTHINGTODELETE', '没有删除任何内容');
+
+define("_NOT_RUSUREDEL", "Are you sure you want to delete these notifications?");
+
 ?>

@@ -189,3 +189,5 @@ define('_US_MULTLOGIN', 'Het was niet mogelijk in te loggen op de website!! <br 
          - U heeft de website verlaten of uw browser afgesloten zonder uit te loggen.<br />
         </p>
         Wacht een paar minuten en probeer het nogmaals. Wanneer het probleem zich nog voordoet neem dan contact op met de beheerder van de website.');
+
+define('_US_NOTIFICATIONS', "Notifications");

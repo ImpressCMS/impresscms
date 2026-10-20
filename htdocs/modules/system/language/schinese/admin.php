@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%%	File Name  admin.php 	%%%%%
 //define('_MD_AM_CONFIG','系统设置');

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 // Blocks
 define("_MB_SYSTEM_ADMENU","管理员菜单");

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define("_MSC_YOURNAMEC","你的名字: ");
 define("_MSC_YOUREMAILC","电子邮箱: ");

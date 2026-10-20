@@ -233,3 +233,5 @@ define('_CORE_PASSLEVEL3', 'Buona');
 define('_CORE_PASSLEVEL4', 'Forte');
 define('DB_PCONNECT_HELP', "Le connessioni persistenti sono utili con connessioni internet lente. Non sono generalmente richieste per la maggior parte delle installazioni. Default è 'NO'. Scegli 'NO' se non sei sicuro"); // L69
 define("DB_PCONNECT_HELPS",  "Le connessioni persistenti sono utili con connessioni internet lente. Non sono generalmente richieste per la maggior parte delle installazioni."); // L69
+
+define("FILE_PERMISSIONS", "File Permissions");

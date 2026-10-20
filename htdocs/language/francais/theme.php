@@ -99,4 +99,7 @@ define("THEME_Community_DESC","Rejoinger la communauté ImpressCMS");
 define("THEME_ImpressCMS_DESC","Visiter le site pricipal ImpressCMS");
 define("THEME_FEEDS","Flux RSS");
 define("THEME_PARTNERS","Partenaires");
+
+define("THEME_REGISTERATION",'User Registration');
+
 ?>

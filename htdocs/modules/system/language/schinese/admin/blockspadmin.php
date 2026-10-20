@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 define("_AM_SBLEFT","Side Block - Left");
 define("_AM_SBRIGHT","Side Block - Right");
 define("_AM_CBLEFT","Center Block - Left");

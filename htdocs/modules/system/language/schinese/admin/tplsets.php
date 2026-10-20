@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%% Template Manager %%%%%
 define('_MD_TPLMAIN','模板设置管理');

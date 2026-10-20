@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
@@ -24,7 +24,7 @@ define("_MD_AM_NEWUNOTIFY","有新用户注册时发邮件通知?");
 define("_MD_AM_SELFDELETE","允许用户删除自己的帐户?");
 define("_MD_AM_SELFDELETEDSC","如果设为YES, 用户帐户便会新增一删除按钮");
 define("_MD_AM_LOADINGIMG","显示“上传中......图像吗?");
-Define("_Md_Am_Usegzip","启用gzip压缩?");
+Define("_MD_AM_USEGZIP","启用gzip压缩?");
 define("_MD_AM_UNAMELVL","选择用户名过滤等级");
 define("_MD_AM_STRICT","严格(仅能使用字母和数字)");
 define("_MD_AM_MEDIUM","中等");
@@ -688,5 +688,21 @@ define('_MD_AM_USERSETTINGS_DSC', '管理用户的注册。设置用户名长度
 define('_MD_AM_CENSOR_DSC', '管理站点中不允许使用的语言');
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM","允许自定义筛选器");
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC","允许自定义筛选器?<br /><br />如果启用，则可使用自定义的筛选器。<br />在此路径下'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
+
+define("_MD_AM_KEEPALIVE", "Keep sessions alive");
+define("_MD_AM_KEEPALIVEDSC", "Select yes to keep the session of logged-in users alive for as long as they have a page of the site open, so they are not logged out while writing a long post. Select no to let sessions expire after the session expiration time, even when a page is still open.");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAME", "Enable Safe Iframes");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC", "Whether or not to permit Iframes in documents, with a number of extra security features added to prevent script execution. You must add safe domains in Safe Iframes URLs before enabling!.");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP", "Safe Iframes URLs");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC", "A list of URLs that you want to allow to show iframe content on your site. This will be matched against an iframe URI. This is a relatively inflexible scheme, but works well enough for the most common use-case of iframes: embedded video. <br />Letting the site owner explicitly allow sites keeps unknown sites from showing iframes on your site with content you cannot control.<br /><br />
+    Here are some example values:<br /><br />
+
+    http://www.youtube.com/embed/ - Allow YouTube videos<br />
+    http://player.vimeo.com/video/ - Allow Vimeo videos<br />
+    http://www.youtube.com/embed/|http://player.vimeo.com/video/ - Allow both<br /><br />HTML Safe Iframe must be enabled for this to work.");
+define("_MD_AM_ENC_RIPEMD256", "RIPEMD 256");
+define("_MD_AM_ENC_RIPEMD320", "RIPEMD 320");
+define("_MD_AM_ENC_SNEFRU256", "Snefru 256");
+define("_MD_AM_ENC_GOST", "Gost");
 
 ?>

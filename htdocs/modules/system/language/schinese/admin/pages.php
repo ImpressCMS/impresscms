@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 ######################## Added in 1.2 ###################################
 define('_AM_SYSTEM_PAGES_TITLE','替代链接管理Symlink Manager');

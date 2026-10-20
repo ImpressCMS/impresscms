@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%		Time Zone	%%%%
 define("_TZ_GMTM12", "(GMT-12:00) Eniwetok, Kwajalein");

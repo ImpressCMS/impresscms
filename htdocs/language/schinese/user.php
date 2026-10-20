@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%%		File Name user.php 		%%%%%
 define('_US_NOTREGISTERED','没有注册?  点击 <a href="register.php">这里</a>开始注册');
@@ -185,3 +185,5 @@ define('_US_MULTLOGIN', '不能登录!! <br />
          - 在你关闭浏览器窗口时，没有登出<br />
         </p>
            请稍等并重试，如果还不能登录，请联系管理员');
+
+define('_US_NOTIFICATIONS', "Notifications");

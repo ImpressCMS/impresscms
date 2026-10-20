@@ -24,4 +24,14 @@ define('_MD_NOTFOUND','Aucun enregistrement trouv&eacute;');
 define('_MD_DELSTARTPAGE','Cette page est utilis&eacute;e comme page de d&eacute;marrage du site.<br />En premier changer ces param&egrave;tres <font color="red">(dans Pr&eacute;f&eacute;rences >> Param&egrave;tres g&eacute;n&eacute;raux)</font> puis essayez &agrave; nouveau.');
 define('_MD_MODDEACTIVE','Vous ne pouvez pas changer le statut de ce lien, car le module correspondant a ce lien est d&eacute;sactiv&eacute;.');
 
+define('_AM_SYSTEM_PAGES_TITLE','Symlink Manager');
+define('_AM_SYSTEM_PAGES_CREATE','Add new Symlink');
+define('_AM_SYSTEM_PAGES_EDIT','Edit Symlink');
+define('_AM_SYSTEM_PAGES_CREATED','Symlink Created!');
+define('_AM_SYSTEM_PAGES_MODIFIED','Symlink Modified!');
+define('_CO_SYSTEM_PAGES_PAGE_URL', 'Page URL');
+define('_CO_SYSTEM_PAGES_PAGE_TITLE', 'Title');
+define('_CO_SYSTEM_PAGES_PAGE_STATUS', 'Page status');
+define('_CO_SYSTEM_PAGES_PAGE_MODULEID','Module');
+
 ?>

@@ -26,3 +26,6 @@ define("_ER_UP_SUSPICIOUSREFUSED", "Immagine non affidabile: caricamento non acc
 define("_ER_UP_INVALIDFILENAME", "Nome file non valido");
 define("_ER_UP_FAILEDSAVEFILE", "Impossibile salvare il file in %s");
 
+define("_ER_UP_PARTIALLY", "The uploaded file was only partially uploaded.");
+define("_ER_UP_NO_TMP_DIR", "Missing a temporary folder. Please contact the administrator.");
+define("_ER_UP_CANT_WRITE", "Failed to write file to disk. Please contact the administrator.");

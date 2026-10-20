@@ -91,3 +91,4 @@ define ('_NOT_MODE_SENDONCEPERLOGIN', 'Un solo messaggio per tutte le notifiche 
 
 define ('_NOT_NOTHINGTODELETE', 'Nessun elemento da eliminare.');
 
+define("_NOT_RUSUREDEL", "Are you sure you want to delete these notifications?");

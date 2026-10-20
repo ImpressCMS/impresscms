@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%% Avatar Manager %%%%%
 define('_MD_AVATARMAN','头像管理');
