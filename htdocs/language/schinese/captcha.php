@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define("ICMS_CAPTCHA_CAPTION", "确认验证码");
 define("ICMS_CAPTCHA_INVALID_CODE", "无效验证码!");

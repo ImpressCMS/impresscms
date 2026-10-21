@@ -1,0 +1,162 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Create the ImpressCMS test site.
+ *
+ * - (re)creates the schema named by ICMS_TEST_DB_NAME (default `icms_test`)
+ * - writes var/test/mainfile.php and the trust path var/test/trust, with the host
+ *   (stubs for the repository's host.php and vendor/)
+ * - runs the installer's table creation and data fill (make_groups/make_data)
+ * - updates the system module, sets the site name, seeds `webmaster` and `member`
+ * - adds page fixtures: mimetypes and the system administrators `mediaadmin`
+ *   and `mimetypeadmin` (tests/Support/Install/install-fixtures.php)
+ * - snapshots the schema into `<name>_snapshot` for per-class restores
+ *
+ * Connection settings come from ICMS_TEST_DB_HOST/PORT/USER/PASS/NAME.
+ *
+ * Usage: bin/test-db
+ */
+
+declare(strict_types=1);
+
+use App\Tests\Support\TestSite;
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+$db = TestSite::dbConfig();
+$var = TestSite::varDir();
+$trust = TestSite::trustPath();
+
+// -- Files -----------------------------------------------------------------
+@unlink($var . '/installed');
+// a fresh trust path: nothing left over from earlier runs or layouts
+$remove = static function (string $path) use (&$remove): void {
+    if (is_dir($path) && !is_link($path)) {
+        foreach (new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS) as $item) {
+            $remove($item->getPathname());
+        }
+        rmdir($path);
+    } elseif (file_exists($path) || is_link($path)) {
+        unlink($path);
+    }
+};
+$remove($trust);
+foreach ([$var, $trust, "$trust/cache/htmlpurifier/HTML", "$trust/cache/htmlpurifier/CSS", "$trust/cache/htmlpurifier/URI", "$trust/cache/htmlpurifier/Test"] as $dir) {
+    if (!is_dir($dir) && !mkdir($dir, 0777, true) && !is_dir($dir)) {
+        fwrite(STDERR, "Cannot create {$dir}\n");
+        exit(1);
+    }
+}
+
+$template = (string) file_get_contents(TestSite::legacyRoot() . '/install/templates/mainfile.dist.php');
+$constants = [
+    'XOOPS_ROOT_PATH' => var_export(TestSite::legacyRoot(), true),
+    'XOOPS_TRUST_PATH' => var_export($trust, true),
+    // The test server runs on a free port, so the site URL follows the request.
+    'XOOPS_URL' => "'http://' . (isset(\$_SERVER['HTTP_HOST']) ? \$_SERVER['HTTP_HOST'] : '127.0.0.1')",
+    'XOOPS_DB_TYPE' => var_export('pdo.mysql', true),
+    'XOOPS_DB_CHARSET' => var_export('utf8mb4', true),
+    'XOOPS_DB_PREFIX' => var_export(TestSite::DB_PREFIX, true),
+    'XOOPS_DB_HOST' => var_export($db['host'], true),
+    'XOOPS_DB_USER' => var_export($db['user'], true),
+    'XOOPS_DB_PASS' => var_export($db['pass'], true),
+    'XOOPS_DB_NAME' => var_export($db['name'], true),
+    'XOOPS_DB_SALT' => var_export('icms-test-salt-not-secret', true),
+];
+foreach ($constants as $name => $expression) {
+    $count = 0;
+    $template = preg_replace(
+        "/^(\\s*)define\\(\\s*(['\"]){$name}\\2\\s*,\\s*(['\"]).*?\\3\\s*\\)/m",
+        "\$1define('{$name}', " . addcslashes($expression, '\\$') . ')',
+        $template,
+        1,
+        $count,
+    );
+    if ($count !== 1) {
+        fwrite(STDERR, "Cannot set {$name} in the mainfile template.\n");
+        exit(1);
+    }
+}
+$template = str_replace('// sdata#--#', "define('ICMS_DB_PORT', {$db['port']});", $template);
+file_put_contents(TestSite::mainfile(), $template);
+
+// The host "installed" in the trust path, as on a real site: one-line stubs for
+// the repository's host.php and vendor/, so requests take the production path
+// (index.php → <trust>/host.php) without a copy of vendor/.
+TestSite::writeTrustPathHost();
+
+// -- Schema ----------------------------------------------------------------
+$server = TestSite::serverConnection();
+$server->exec('DROP DATABASE IF EXISTS ' . TestSite::quoteIdentifier($db['name']));
+$server->exec('CREATE DATABASE ' . TestSite::quoteIdentifier($db['name']) . ' DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+unset($server);
+
+// -- Installer stages, each in its own process -----------------------------
+$stage = static function (string $script, array $arguments): void {
+    $command = array_merge([PHP_BINARY, __DIR__ . '/../tests/Support/Install/' . $script, TestSite::mainfile()], $arguments);
+    $process = proc_open($command, [1 => ['pipe', 'w'], 2 => ['pipe', 'w']], $pipes, TestSite::legacyRoot());
+    if (!is_resource($process)) {
+        throw new RuntimeException("Cannot start stage {$script}.");
+    }
+    $output = stream_get_contents($pipes[1]) . stream_get_contents($pipes[2]);
+    $status = proc_close($process);
+    echo $output;
+    // ImpressCMS' error handler renders an error page instead of failing the process.
+    if ($status !== 0 || str_contains($output, 'internal error') || preg_match('/(Fatal error|Warning|Notice|Deprecated): /', $output)) {
+        throw new RuntimeException("Stage {$script} failed.");
+    }
+};
+
+try {
+    $stage('install-data.php', [json_encode([
+        'uname' => TestSite::WEBMASTER_UNAME,
+        'login' => TestSite::WEBMASTER_UNAME,
+        'pass' => TestSite::WEBMASTER_PASS,
+        'email' => TestSite::WEBMASTER_EMAIL,
+    ], JSON_THROW_ON_ERROR)]);
+
+    $stage('install-system.php', [json_encode([
+        'config' => [
+            'sitename' => TestSite::SITE_NAME,
+            'adminmail' => TestSite::WEBMASTER_EMAIL,
+        ],
+        'member' => [
+            'uname' => TestSite::MEMBER_UNAME,
+            'pass' => TestSite::MEMBER_PASS,
+            'email' => TestSite::MEMBER_EMAIL,
+        ],
+    ], JSON_THROW_ON_ERROR)]);
+
+    $stage('install-fixtures.php', [json_encode([
+        'mimetypes' => TestSite::MIMETYPES,
+        'admins' => [
+            [
+                'uname' => TestSite::MEDIAADMIN_UNAME,
+                'pass' => TestSite::MEDIAADMIN_PASS,
+                'email' => 'mediaadmin@example.test',
+                'group' => 'Media administrators',
+                'system_admin' => ['XOOPS_SYSTEM_URANK'],
+            ],
+            [
+                'uname' => TestSite::MIMETYPEADMIN_UNAME,
+                'pass' => TestSite::MIMETYPEADMIN_PASS,
+                'email' => 'mimetypeadmin@example.test',
+                'group' => 'Mimetype administrators',
+                'system_admin' => ['XOOPS_SYSTEM_MIMETYPES'],
+            ],
+        ],
+    ], JSON_THROW_ON_ERROR)]);
+} catch (RuntimeException $e) {
+    $failure = $e->getMessage();
+}
+if (isset($failure)) {
+    fwrite(STDERR, $failure . "\n");
+    exit(1);
+}
+
+// -- Snapshot ----------------------------------------------------------------
+TestSite::clearLegacyCaches();
+TestSite::takeSnapshot();
+touch($var . '/installed');
+
+echo "Test site ready: schema {$db['name']} (snapshot " . TestSite::snapshotSchema() . "), mainfile " . TestSite::mainfile() . "\n";

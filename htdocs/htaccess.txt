@@ -1,4 +1,5 @@
-Options Multiviews
+# "+": keep the server's other options (rewriting needs FollowSymLinks or SymLinksIfOwnerMatch)
+Options +MultiViews
 
 # if you install in a subdirectory, be sure to include the entire path, relative to DocumentRoot
 # for example, ErrorDocument 404 /icms/error.php?e=404
@@ -27,3 +28,33 @@ ErrorDocument 502 /error.php?e=502
 ErrorDocument 503 /error.php?e=503
 ErrorDocument 504 /error.php?e=504
 ErrorDocument 505 /error.php?e=505
+
+# ----------------------------------------------------------------------------
+# ImpressCMS host (docs/symfony-host.md). Rename this file to .htaccess, or copy
+# the parts you need into your own .htaccess or virtual host. Without any of it
+# the site works too: / and /index.php then run through the host, every other
+# script runs directly (routing level 1).
+<IfModule mod_rewrite.c>
+	Options +SymLinksIfOwnerMatch
+	RewriteEngine On
+	# For a site in a subdirectory, for example /cms/:
+	#RewriteBase /cms/
+
+	# Never served: the host's staging directory, compiled templates, caches,
+	# tests, PHP files in uploads/, hidden files and folders, and directories
+	# that ImpressCMS protects with their own .htaccess.
+	RewriteRule ^(trust_dist|templates_c|cache|tests|plugins/waiting|libraries/tcpdf/tools|install/modules/protector/trust_path)(/|$) - [R=404,L]
+	RewriteRule ^uploads/.*\.php$ - [R=404,L]
+	RewriteRule (^|/)\. - [R=404,L]
+
+	RewriteRule ^index\.php$ - [L]
+
+	# Routing level 3: every PHP script runs through the host (the full
+	# strangler fig). Remove the # from the next line to enable it.
+	#RewriteRule \.php$ index.php [L]
+
+	# Routing level 2: unknown paths go to index.php (Symfony routes)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^ index.php [L]
+</IfModule>

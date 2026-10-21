@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define("_MAIL_MSGBODY", "不能发空信息.");
 define("_MAIL_FAILOPTPL", "不能打开模板文件.");

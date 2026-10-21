@@ -19,4 +19,9 @@ define("_ER_UP_INVALIDIMAGEFILE", "Ongeldig afbeeldingen bestand");
 define("_ER_UP_SUSPICIOUSREFUSED", "Uploaden verdachte afbeelding geweigerd");
 define("_ER_UP_INVALIDFILENAME", "Ongeldige bestandsnaam");
 define("_ER_UP_FAILEDSAVEFILE", "Mislukt om bestand op te slaan in %s");
+
+define("_ER_UP_PARTIALLY", "The uploaded file was only partially uploaded.");
+define("_ER_UP_NO_TMP_DIR", "Missing a temporary folder. Please contact the administrator.");
+define("_ER_UP_CANT_WRITE", "Failed to write file to disk. Please contact the administrator.");
+
 ?>

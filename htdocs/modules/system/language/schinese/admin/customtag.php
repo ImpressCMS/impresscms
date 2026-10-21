@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 
 define('_CO_ICMS_CUSTOMTAGS','自定义标签');

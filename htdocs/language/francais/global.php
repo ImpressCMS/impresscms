@@ -214,7 +214,7 @@ define('_IMPRESSCMS_ADDONS','Modules');
 define('_IMPRESSCMS_WIKI','Wiki');
 define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Faites un don!');
-define("_IMPRESSCMS_Support","Soutenir le projet !");
+define("_IMPRESSCMS_SUPPORT","Soutenir le projet !");
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge Projet');
 define('_IMPRESSCMS_ADMIN','Administration de');
 /** The default separator used in XoopsTree::getNicePathFromId */
@@ -298,7 +298,7 @@ define("_ELAPSE", "il y a %s");
 define('_VISIBLE', 'Visible');
 define('_UP', 'Haut');
 define('_DOWN', 'Bas');
-define('_CONFIGURE', 'Paramétriser');?>
+define('_CONFIGURE', 'Paramétriser');
 
 // Added in 1.2.2
 define('_CSSTIDY_VULN', 'ATTENTION: Le fichier %s est présent sur votre server. <br />Veuillez effaçer le fichier manuellement');
@@ -327,8 +327,12 @@ define("_FILTERS_MSG4","Filtre de sortie (HTMLPurifier): ");
 define("_OUTDATED_PHP", "Votre version actuelle de PHP (%s) n'est plus maintenu. Veuillez vous mettre à jour pour des raisons de sécurité!");
 
 // rajouté en 2.0.0
-define('_FCK_DEFAULT_WARNING', 'FCKeditor est l'éditeur par défaut pour au moins un de vos modules. Changez votre éditeur et effacez FCKEditor de votre serveur manuellement');
-define('_FCK_PRESENT_WARNING', 'FCKeditor est présent - veuillez l'effacer de votre serveur manuellement');
+define('_FCK_DEFAULT_WARNING', 'FCKeditor est l\'éditeur par défaut pour au moins un de vos modules. Changez votre éditeur et effacez FCKEditor de votre serveur manuellement');
+define('_FCK_PRESENT_WARNING', 'FCKeditor est présent - veuillez l\'effacer de votre serveur manuellement');
 
-define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE est l'éditeur par défaut pour au moins un de vos modules. Changez votre éditeur et effacez FCKEditor de votre serveur manuellement');
-define('_TinyMCE_PRESENT_WARNING', 'TinyMCE est présent - veuillez l'effacer de votre serveur manuellement');
+define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE est l\'éditeur par défaut pour au moins un de vos modules. Changez votre éditeur et effacez FCKEditor de votre serveur manuellement');
+define('_TinyMCE_PRESENT_WARNING', 'TinyMCE est présent - veuillez l\'effacer de votre serveur manuellement');
+
+define('_TRUST_PATH_PUBLIC', 'WARNING: The trust path %s lies inside the web root or the document root. It holds the ImpressCMS host, its libraries and the secret settings of this site, and web servers such as nginx or Caddy serve it regardless of .htaccess files.<br />Move the folder outside the document root and update XOOPS_TRUST_PATH in mainfile.php.');
+define('_TRUST_DIST_PENDING', 'The host files of a new release are waiting in %s. Update the system module to install them into the trust path.');
+

@@ -61,7 +61,18 @@ For each type of website ImpressCMS offers different functionality with a collec
 
 ## Installation
 
-To install and use this package, transfer this package to your web server, putting the contents of the htdocs/ folder in your web root, and follow the steps of the installer.
+1. Unzip the package into your web root (for example `public_html/`).
+2. Open the site and follow the steps of the installer.
+
+The installer asks for a *trust path*: a folder outside the web root for everything that must not be public. It installs the Symfony host there from the package's `trust_dist/` folder. That covers the application, its Composer libraries and the site's settings in `.env.local`.
+
+No web server configuration is needed. To let Symfony pages use clean URLs, or to run every page through the host, use `htdocs/htaccess.txt` (Apache) or the examples in [docs/server/](docs/server/) (nginx, FrankenPHP, Laravel Herd).
+
+**Upgrading** from 2.0.x or 2.1: upload the new files over your site, log in as webmaster and update the system module. The update installs the host into your trust path.
+
+**From a repository checkout:** run `composer install` in the repository root and `php bin/build-dist` to create `htdocs/trust_dist/`. To build a package for a hosting account, run `php bin/build-package`. It writes `var/dist/impresscms-<version>-<commit>.zip` from the last commit; unzip it straight into the web root.
+
+See [docs/symfony-host.md](docs/symfony-host.md) for how the host works and how to add Symfony pages.
 
 More detailed installation instructions are available [on the ImpressCMS site](https://www.impresscms.org/modules/simplywiki/index.php?page=Installation)
 

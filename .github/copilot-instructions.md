@@ -30,7 +30,6 @@ ImpressCMS is a community-developed PHP Content Management System (CMS) focused 
 │   ├── libraries/         # Core libraries
 │   │   ├── icms/          # ImpressCMS core classes
 │   │   ├── icms.php       # Main kernel/services manager class
-│   │   ├── smarty/        # Template engine
 │   │   ├── phpmailer/     # Email library
 │   │   └── [others]       # Various libraries
 │   ├── modules/           # Installable modules
@@ -44,7 +43,7 @@ ImpressCMS is a community-developed PHP Content Management System (CMS) focused 
 │   └── mainfile.php       # Configuration bootstrap
 └── upgrade/               # Version upgrade scripts
 ```
-Many subfolders in the `/htdocs/libraries` folder are third-party/vendor libraries (for example `smarty/`, `phpmailer/`, and similar), and those should generally not be modified except when upgrading or fixing vendored code. Some subdirectories, such as `icms/`, `image-editor/`, and `paginationstyles/`, contain ImpressCMS core code and are part of the project and may be changed as needed.
+Many subfolders in the `/htdocs/libraries` folder are third-party/vendor libraries (for example `phpmailer/` and similar; Smarty now comes from Composer), and those should generally not be modified except when upgrading or fixing vendored code. Some subdirectories, such as `icms/`, `image-editor/`, and `paginationstyles/`, contain ImpressCMS core code and are part of the project and may be changed as needed.
 ## Key Files to Know
 
 | File | Purpose |

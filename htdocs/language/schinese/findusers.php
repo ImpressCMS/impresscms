@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // formselectuser.php
 // $Id: blauer-fisch $
 define("_MA_USER_MORE", "搜索用户");

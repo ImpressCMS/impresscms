@@ -1608,9 +1608,12 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 	$module_basename = isset($module_basename) ? trim($module_basename) : $module_dir;
 	$name = (!isset($name)) ? $module_dir : trim($name);
 	if (!isset($handlers[$module_dir][$name])) {
-		$class = 'mod_' . $module_dir . '_' . ucfirst($name) . 'Handler';
-		if (class_exists($class)) {
-			$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
+		$modernClass = 'mod_' . $module_dir . '_' . ucfirst($name) . 'Handler';
+		$legacyClass = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
+		if (class_exists($modernClass)) {
+			$handlers[$module_dir][$name] = new $modernClass(icms::$xoopsDB);
+		} elseif (class_exists($legacyClass)) {
+			$handlers[$module_dir][$name] = new $legacyClass(icms::$xoopsDB);
 		} else {
 			if($module_dir !== 'system') {
 				if (!file_exists($hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/". ucfirst(strtolower($name)) ."Handler.php")) {
@@ -1620,9 +1623,10 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 				$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/admin/{$name}/class/{$name}.php";
 			}
 			if (file_exists($hnd_file)) {include_once $hnd_file;}
-			$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
-			if (class_exists($class)) {
-				$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
+			if (class_exists($modernClass)) {
+				$handlers[$module_dir][$name] = new $modernClass(icms::$xoopsDB);
+			} elseif (class_exists($legacyClass)) {
+				$handlers[$module_dir][$name] = new $legacyClass(icms::$xoopsDB);
 			}
 		}
 	}

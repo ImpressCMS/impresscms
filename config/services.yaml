@@ -1,0 +1,65 @@
+imports:
+    # ImpressCMS services: their classes must not be loaded while the container
+    # is compiled (library files exit without ICMS_ROOT_PATH), so no autowiring
+    # or autoconfiguration there
+    - { resource: services/icms.yaml }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    # Only real services here: an unusable definition makes the debug container
+    # dump build autowiring messages, which reflect every service class, legacy
+    # ones included, and legacy class files exit unless ImpressCMS is booted
+    # (tests/Unit/KernelBootTest).
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Kernel.php'
+            - '../src/Runtime/'
+            # value objects and responses, not services
+            - '../src/LegacyBridge/{LegacyResolution,LegacyExecutionResponse,PreparedLegacyExecution,LegacyResponse,LegacyAssetResponse,SendsHeadersVerbatim}.php'
+            - '../src/Legacy/Attribute/'
+            - '../src/Admin/Attribute/'
+            - '../src/Legacy/LegacyEvent.php'
+            - '../src/Security/IcmsUser.php'
+            - '../src/Security/Attribute/'
+            - '../src/DependencyInjection/'
+            # DBAL driver parts, created by IcmsDriver, not services
+            - '../src/Legacy/Dbal/{ErrorMode,IcmsDriver,SharedConnection,SharedStatement}.php'
+
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    App\LegacyBridge\LegacyScriptResolver:
+        arguments:
+            $legacyRoot: '%icms.legacy.root%'
+            $frontController: '%icms.legacy.front_controller%'
+            $assetExtensions: '%icms.legacy.asset_extensions%'
+            $nonPublicPaths: '%icms.legacy.non_public_paths%'
+            $scriptFreePaths: '%icms.legacy.script_free_paths%'
+
+    # fetched by App\Runtime\HostRunner
+    App\LegacyBridge\LegacyBridge:
+        public: true
+        arguments:
+            $mimeTypes: '%icms.legacy.mime_types%'
+            $debug: '%kernel.debug%'
+            $frontController: '%kernel.project_dir%/host.php'
+
+    App\Routing\ReservedPrefixLoader:
+        arguments:
+            $prefixes: '%icms.legacy.reserved_prefixes%'
+            $env: '%kernel.environment%'
+        tags: ['routing.loader']
+
+    App\Legacy\LegacyRuntime:
+        arguments:
+            $mainfile: '%icms.legacy.root%/mainfile.php'
+
+
+    # fetched by App\Runtime\HostRunner before a legacy script runs
+    App\Legacy\LegacyEventForwarder:
+        public: true

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 // FILE		::	plugins.php
 // AUTHOR	::	Ryuji AMANO <info@ryus.biz>

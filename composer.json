@@ -1,0 +1,78 @@
+{
+	"name": "impresscms/impresscms",
+	"description": "ImpressCMS - A dynamic and user-friendly Content Management System (Symfony host, installed in the trust path)",
+	"type": "project",
+	"license": "GPL-2.0-only",
+	"homepage": "https://www.impresscms.org/",
+	"require": {
+		"php": ">=8.2 <8.5",
+		"ext-gd": "*",
+		"ext-json": "*",
+		"ext-mbstring": "*",
+		"ext-mysqli": "*",
+		"ext-pcre": "*",
+		"ext-pdo": "*",
+		"ext-session": "*",
+		"ext-xml": "*",
+		"ext-zlib": "*",
+		"composer/composer": "^2.9",
+		"doctrine/dbal": "4.2",
+		"doctrine/doctrine-bundle": "2.13",
+		"ezyang/htmlpurifier": "^4.19",
+		"simplepie/simplepie": "^1.9",
+		"smarty/smarty": "2.6.33",
+		"smottt/wideimage": "^1.1.4",
+		"symfony/console": "7.4.*",
+		"symfony/dotenv": "7.4.*",
+		"symfony/expression-language": "7.4.*",
+		"symfony/form": "7.4.*",
+		"symfony/framework-bundle": "7.4.*",
+		"symfony/monolog-bundle": "^3.10",
+		"symfony/runtime": "7.4.*",
+		"symfony/security-bundle": "7.4.*",
+		"symfony/twig-bundle": "7.4.*",
+		"symfony/validator": "7.4.*",
+		"symfony/yaml": "7.4.*"
+	},
+	"require-dev": {
+		"phpstan/phpstan": "^2.1",
+		"phpunit/phpunit": "^11.5",
+		"symfony/browser-kit": "7.4.*",
+		"symfony/http-client": "7.4.*",
+		"symfony/mime": "7.4.*",
+		"symfony/phpunit-bridge": "7.4.*",
+		"symfony/process": "7.4.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"App\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"App\\Tests\\": "tests/",
+			"Icms\\Tests\\": "htdocs/tests/"
+		}
+	},
+	"config": {
+		"platform": {
+			"php": "8.2.0"
+		},
+		"policy": {
+			"advisories": {
+				"ignore": [
+					"smarty/smarty"
+				]
+			}
+		},
+		"sort-packages": true,
+		"allow-plugins": {
+			"*": false
+		}
+	},
+	"scripts": {
+		"test": "phpunit"
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true
+}

@@ -20,4 +20,9 @@ define("_ER_UP_INVALIDIMAGEFILE", "Fichier image invalide");
 define("_ER_UP_SUSPICIOUSREFUSED", "Refus de t&eacute;l&eacute;charger cette image suspecte");
 define("_ER_UP_INVALIDFILENAME", "Nom de fichier invalide");
 define("_ER_UP_FAILEDSAVEFILE", "Echec pour sauvegarder le fichier dans %s");
+
+define("_ER_UP_PARTIALLY", "The uploaded file was only partially uploaded.");
+define("_ER_UP_NO_TMP_DIR", "Missing a temporary folder. Please contact the administrator.");
+define("_ER_UP_CANT_WRITE", "Failed to write file to disk. Please contact the administrator.");
+
 ?>

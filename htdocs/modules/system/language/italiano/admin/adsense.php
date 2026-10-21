@@ -49,3 +49,5 @@ define('_CO_ICMS_ADSENSE_COLOR_TEXT', 'Colore testo');
 define('_CO_ICMS_ADSENSE_COLOR_TEXT_DSC', 'Il colore del testo dei tuoi ads');
 define('_CO_ICMS_ADSENSE_COLOR_URL', 'Colore URL');
 define('_CO_ICMS_ADSENSE_COLOR_URL_DSC', 'Il colore in cui gli ads url sono visualizzati');
+
+define('_CO_ICMS_ADSENSE_COLOR_BACKGROUND_DSC', 'The background color of your text ads');

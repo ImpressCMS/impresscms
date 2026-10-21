@@ -68,4 +68,7 @@ define('IMANAGER_SIZE', 'Taille');
 define('IMANAGER_ORIGINAL', 'Image Originale');
 define('IMANAGER_EDITED', 'Image adaptée');
 define('IMANAGER_FOLDER_NOT_WRITABLE', 'Ecriture par le serveur impossible dans le répertoire ');
+
+define('IMANAGER_NOPERM', 'You are not authorised to access this area!');
+
 ?>

@@ -31,4 +31,5 @@ define('_AM_CBCENTER_ADMIN', 'Admin Middenblok - midden');
 define('_AM_CBBOTTOMLEFT_ADMIN', 'Admin Middenblok - linksonder');
 define('_AM_CBBOTTOMRIGHT_ADMIN', 'Admin Middenblok - rechtsonder');
 define('_AM_CBBOTTOM_ADMIN', 'Admin Middenblok - onder');
+define('_AM_SYSTEM_BLOCKSPADMIN_CORE', 'Kernpositie: kan niet gewijzigd of verwijderd worden');
 ?>

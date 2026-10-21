@@ -1,0 +1,241 @@
+GET / (site closed, webmaster)
+status: 200
+content-type: text/html; charset=utf-8
+cache-control: private, no-cache
+pragma: no-cache
+x-frame-options: SAMEORIGIN
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<!-- Center block custom positioning -->
+			
+<!-- Theme name -->
+	
+<!-- Title and meta -->
+	<title>Make a lasting impression  : ImpressCMS Test Site</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="index,follow" />
+	<meta name="keywords" content="community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes" />
+	<meta name="description" content="ImpressCMS is a dynamic Object Oriented based open source portal script written in PHP." />
+	<meta name="rating" content="general" />
+	<meta name="author" content="ImpressCMS" />
+	<meta name="copyright" content="Copyright &amp;copy; 2007-2026" />
+	<meta name="generator" content="ImpressCMS" />
+
+<!-- Module Header -->
+
+<link rel="stylesheet" media="screen" href="http://{HOST}/plugins/textsanitizer/syntaxhighlightphp/syntaxhighlightphp.css" type="text/css" />
+<link rel="stylesheet" media="screen" href="http://{HOST}/plugins/textsanitizer/hiddencontent/hiddencontent.css" type="text/css" />
+<link rel="stylesheet" media="screen" href="http://{HOST}/libraries/jquery/ui/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" media="screen" href="http://{HOST}/libraries/jquery/jgrowl.css" type="text/css" />
+<link rel="stylesheet" href="http://{HOST}/libraries/jquery/colorbox/colorbox.css" type="text/css" />
+<script type="text/javascript" src="http://{HOST}/include/xoops.js"></script>
+<script type="text/javascript" src="http://{HOST}/include/linkexternal.js"></script>
+<script type="text/javascript" src="http://{HOST}/libraries/jquery/jquery.js"></script>
+<script type="text/javascript" src="http://{HOST}/libraries/jquery/ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://{HOST}/libraries/jquery/helptip.js"></script>
+<script type="text/javascript" src="http://{HOST}/libraries/jquery/jgrowl.js"></script>
+<script type="text/javascript">
+
+	if (!window.console || !console.firebug) {
+		var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd",
+					"time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+		window.console = {};
+
+		for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
+	}
+
+	(function($) {
+		$(document).ready(function() {
+			$.jGrowl("Thank you for logging in, webmaster.", {  life:5000 , position: "center", speed: "slow" });
+		});
+	})(jQuery);
+	
+</script>
+<script src="http://{HOST}/libraries/jquery/colorbox/jquery.colorbox-min.js" type="text/javascript"></script>
+<script id="keepalive-script" data-keepalive-url="http://{HOST}/keepalive.php" src="http://{HOST}/assets/js/keepalive.js" type="text/javascript"></script>
+
+
+<!-- Favicon -->
+	<link rel="shortcut icon" type="image/ico" href="http://{HOST}/themes/iTheme/icons/favicon.ico" />
+	<link rel="icon" type="image/png" href="http://{HOST}/themes/iTheme/icons/icon.png" />
+
+<!-- Sheet Css -->
+	<link rel="stylesheet" type="text/css" media="all" href="http://{HOST}/themes/iTheme/style.css" />
+</head>
+
+<body id="system" class="en">
+<div id="xo-canvas" class="threecolumns-layout">
+	<!-- Header -->
+    <div id="xo-header">
+	    <div id="xo-headerlogo"><a href="http://{HOST}/" title=""><img src="http://{HOST}/themes/iTheme/img/logo.png" alt="ImpressCMS Test Site" /></a></div>
+	    <div id="xo-headerbanner">
+	<!-- Header menu (optional) -->
+	<div id="xo-globalnav">
+		  <a href="http://{HOST}" title="ImpressCMS Test Site">Home</a>
+		  <a href="#" title="Link 2">News</a>
+		  <a href="#" title="Link 3">Forum</a>
+		  <a href="#" title="Link 4">Gallery</a>
+		  <a href="#" title="Link 5">Movies</a>
+	</div>
+	</div>
+    </div>
+
+	<!-- Content -->
+	<div id="xo-canvas-content">
+		<div id="xo-canvas-columns">
+			<!-- Left column -->
+										
+	<div class="xo-blockszone x2-secondary xo-canvas-column" id="xo-canvas-leftcolumn">
+		<div class="xo-block system">
+		<div class="xo-blocktitle"><h3>User Menu&nbsp;<a href="#" onclick="$('#ed_block_1').dialog('open'); return false;"><img src="http://{HOST}/images/kfaenza/actions/configure.png" title="Edit Block ID 1" alt="Edit"  /></a><button style="display: none;"><div id="ed_block_1"><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=1&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/button_cancel.png' alt='Invisible'  /> Invisible</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=1'> <img src='http://{HOST}/images/kfaenza/actions/editcopy.png' alt='Clone'  /> Clone</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=1'> <img src='http://{HOST}/images/kfaenza/actions/edit.png' alt='Edit'  /> Edit</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=1&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/up.png' alt='Up'  /> Up</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=1&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/down.png' alt='Down'  /> Down</a></div></button><script type="text/javascript">
+					$(function() {
+						$('#ed_block_1').dialog({
+							bgiframe: true,
+							//height: 140,
+							autoOpen: false,
+							modal: true
+						});
+					});
+					</script>
+				</h3></div>		<div class="xo-blockcontent"><div id="usermenu">
+              <a class="menuTop" href="http://{HOST}/admin.php" title="Administration Menu">Administration Menu</a>
+	    <a href="http://{HOST}/user.php" title="View Account">View Account</a>
+            <a href="http://{HOST}/notifications.php" title="Notifications">Notifications</a>
+              <a href="http://{HOST}/viewpmsg.php" title="Inbox">Inbox</a>
+            <a href="http://{HOST}/user.php?op=logout" title="Logout">Logout</a>
+</div></div>
+	</div>
+		<div class="xo-block system">
+		<div class="xo-blocktitle"><h3>Main Menu&nbsp;<a href="#" onclick="$('#ed_block_5').dialog('open'); return false;"><img src="http://{HOST}/images/kfaenza/actions/configure.png" title="Edit Block ID 5" alt="Edit"  /></a><button style="display: none;"><div id="ed_block_5"><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=5&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/button_cancel.png' alt='Invisible'  /> Invisible</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=5'> <img src='http://{HOST}/images/kfaenza/actions/editcopy.png' alt='Clone'  /> Clone</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=5'> <img src='http://{HOST}/images/kfaenza/actions/edit.png' alt='Edit'  /> Edit</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=5&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/up.png' alt='Up'  /> Up</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=5&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/down.png' alt='Down'  /> Down</a></div></button><script type="text/javascript">
+					$(function() {
+						$('#ed_block_5').dialog({
+							bgiframe: true,
+							//height: 140,
+							autoOpen: false,
+							modal: true
+						});
+					});
+					</script>
+				</h3></div>		<div class="xo-blockcontent"><div id="mainmenu">
+      <a class="menuTop actlink" href="http://{HOST}/" title="Home">Home</a>
+      <!-- start module menu loop -->
+            <!-- end module menu loop -->
+	  </div></div>
+	</div>
+		<div class="xo-block system">
+		<div class="xo-blocktitle"><h3>Themes&nbsp;<a href="#" onclick="$('#ed_block_12').dialog('open'); return false;"><img src="http://{HOST}/images/kfaenza/actions/configure.png" title="Edit Block ID 12" alt="Edit"  /></a><button style="display: none;"><div id="ed_block_12"><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=12&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/button_cancel.png' alt='Invisible'  /> Invisible</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=12'> <img src='http://{HOST}/images/kfaenza/actions/editcopy.png' alt='Clone'  /> Clone</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=12'> <img src='http://{HOST}/images/kfaenza/actions/edit.png' alt='Edit'  /> Edit</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=12&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/up.png' alt='Up'  /> Up</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=12&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/down.png' alt='Down'  /> Down</a></div></button><script type="text/javascript">
+					$(function() {
+						$('#ed_block_12').dialog({
+							bgiframe: true,
+							//height: 140,
+							autoOpen: false,
+							modal: true
+						});
+					});
+					</script>
+				</h3></div>		<div class="xo-blockcontent"><div style="text-align: center;">
+<form action="index.php" method="post">
+<div>
+	</div>
+</form>
+
+</div></div>
+	</div>
+		</div>
+									<!-- Center column / page -->
+			<div id="xo-page">
+				<!-- Top blocks -->
+								<div class="xo-blockszone xo-lrcpageblocks" id="xo-page-topblocks">
+					
+
+	
+					
+
+	
+					
+
+	
+	<div class="xo-blockszone x2-secondary" id="xo-page-topcenterblocks">
+		<div class="xo-block ">
+		<div class="xo-blocktitle"><h3>Welcome Webmaster !&nbsp;<a href="#" onclick="$('#ed_block_20').dialog('open'); return false;"><img src="http://{HOST}/images/kfaenza/actions/configure.png" title="Edit Block ID 20" alt="Edit"  /></a><button style="display: none;"><div id="ed_block_20"><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=20&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/button_cancel.png' alt='Invisible'  /> Invisible</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=20'> <img src='http://{HOST}/images/kfaenza/actions/editcopy.png' alt='Clone'  /> Clone</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=20'> <img src='http://{HOST}/images/kfaenza/actions/edit.png' alt='Edit'  /> Edit</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=20&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/up.png' alt='Up'  /> Up</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=20&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/down.png' alt='Down'  /> Down</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=del&amp;bid=20'> <img src='http://{HOST}/images/kfaenza/actions/editdelete.png' alt='Delete'  /> Delete</a></div></button><script type="text/javascript">
+					$(function() {
+						$('#ed_block_20').dialog({
+							bgiframe: true,
+							//height: 140,
+							autoOpen: false,
+							modal: true
+						});
+					});
+					</script>
+				</h3></div>		<div class="xo-blockcontent">Welcome to your new ImpressCMS powered website. If you haven't already, please delete the <strong>install</strong> folder from the server and ensure that <strong>mainfile.php</strong> is not writeable (chmod 444).<br /><br />To begin administering your new ImpressCMS powered website you can click the <strong>Administration</strong> Menu link located on the left of this page.<br /><br />You may want to begin by editing your website <strong>Preferences</strong>: In the admin panel, hover over the <strong>System</strong> dropdown and select <strong>Preferences.</strong><br /><br />Afterwards you can begin adding <strong>Modules</strong> and <strong>Themes</strong>.<br />Many of the available modules and themes for ImpressCMS, are available at the <a href="https://www.impresscms.org/modules/downloads" rel="external">Addons</a> section of the <a href="https://www.impresscms.org" rel="external">projects website</a>.<br /><br />You will also need to begin using <strong>Blocks</strong>. You can begin by removing this block. You can do this by navigating to System Admin &gt; Blocks, and the selecting "Webmasters" in the <strong>Groups</strong> select box. You will then be able to see the blocks available for the Webmasters group, which this block is!<br /><br />For more information about working with ImpressCMS, please use the links below.<br /><ul><li><a href="https://www.impresscms.org/modules/simplywiki/index.php?page=English#Using_ImpressCMS" rel="external">Using ImpressCMS</a></li><li><a href="https://www.impresscms.org/modules/simplywiki/index.php?page=English#Customizing_ImpressCMS" rel="external">Customizing ImpressCMS</a></li><li><a href="https://www.impresscms.org/modules/simplywiki/index.php?page=English#Developing_for_ImpressCMS" rel="external">Developing for ImpressCMS</a></li></ul><br />We warmly invite you to join <a href="https://www.impresscms.org/modules/iforum/" rel="external">The ImpressCMS Community</a> - Where you can make contributions, get help, help others, etc...</div>
+	</div>
+		</div>
+				</div>
+								<!-- Module content -->
+								<!-- Bottom blocks -->
+								<div class="xo-blockszone xo-lcrpageblocks" id="xo-page-bottomblocks">
+					
+
+	
+					
+
+	
+	<div class="xo-blockszone x2-secondary" id="xo-page-bottomcenterblocks">
+		<div class="xo-block system">
+		<div class="xo-blocktitle"><h3>Share this page!&nbsp;<a href="#" onclick="$('#ed_block_14').dialog('open'); return false;"><img src="http://{HOST}/images/kfaenza/actions/configure.png" title="Edit Block ID 14" alt="Edit"  /></a><button style="display: none;"><div id="ed_block_14"><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=14&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/button_cancel.png' alt='Invisible'  /> Invisible</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=14'> <img src='http://{HOST}/images/kfaenza/actions/editcopy.png' alt='Clone'  /> Clone</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=14'> <img src='http://{HOST}/images/kfaenza/actions/edit.png' alt='Edit'  /> Edit</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=14&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/up.png' alt='Up'  /> Up</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=14&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/down.png' alt='Down'  /> Down</a></div></button><script type="text/javascript">
+					$(function() {
+						$('#ed_block_14').dialog({
+							bgiframe: true,
+							//height: 140,
+							autoOpen: false,
+							modal: true
+						});
+					});
+					</script>
+				</h3></div>		<div class="xo-blockcontent"><a href="#" onclick="window.open('http://twitter.com/home?status='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes');return false;" rel="nofollow" title="bookmark at: Twitter"><img src="http://{HOST}/images/icons/social/twitter.gif" alt="bookmark at: Twitter"/></a>
+<a href="#" onclick="window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes');return false;" rel="nofollow" title="bookmark at: Facebook"><img src="http://{HOST}/images/icons/social/facebook.gif" alt="bookmark at: Facebook"/></a>
+<a href="#" onclick="window.open('http://del.icio.us/post?v=2&amp;url='+encodeURIComponent(location.href)+'&amp;notes=&amp;tags=&amp;title='+encodeURIComponent(document.title));return false;" rel="nofollow" title="bookmark at: Del.icio.us"><img src="http://{HOST}/images/icons/social/del.gif" alt="bookmark at: Del.icio.us"/></a>
+<a href="#" onclick="window.open('http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes');return false;" rel="nofollow" title="bookmark at: Ask"><img src="http://{HOST}/images/icons/social/ask.gif" alt="bookmark at: Ask"/></a>
+<a href="#" onclick="window.open('http://digg.com/submit?phase=2&amp;url='+encodeURIComponent(location.href)+'&amp;bodytext=&amp;tags=&amp;title='+encodeURIComponent(document.title));return false;" rel="nofollow" title="bookmark at: Digg"><img src="http://{HOST}/images/icons/social/digg.gif" alt="bookmark at: Digg"/></a>
+<a href="#" onclick="window.open('http://myweb2.search.yahoo.com/myresults/bookmarklet?t='+encodeURIComponent(document.title)+'&amp;d=&amp;tag=&amp;u='+encodeURIComponent(location.href));return false;" rel="nofollow" title="bookmark at: Reddit"><img src="http://{HOST}/images/icons/social/yahoo.gif" alt="bookmark at: Reddit"/></a>
+<a href="#" onclick="window.open('http://www.diigo.com/post?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;tag=&amp;comments=');return false;" rel="nofollow" title="bookmark at: Yahoo"><img src="http://{HOST}/images/icons/social/diigo.gif" alt="bookmark at: Yahoo"/></a>
+</div>
+	</div>
+		</div>
+					
+
+	
+				</div>
+							</div>
+			<!-- Right column -->
+										
+	<div class="xo-blockszone x2-secondary xo-canvas-column" id="xo-canvas-rightcolumn">
+		<div class="xo-block system">
+		<div class="xo-blocktitle"><h3>Search&nbsp;<a href="#" onclick="$('#ed_block_3').dialog('open'); return false;"><img src="http://{HOST}/images/kfaenza/actions/configure.png" title="Edit Block ID 3" alt="Edit"  /></a><button style="display: none;"><div id="ed_block_3"><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=3&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/button_cancel.png' alt='Invisible'  /> Invisible</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=3'> <img src='http://{HOST}/images/kfaenza/actions/editcopy.png' alt='Clone'  /> Clone</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=3'> <img src='http://{HOST}/images/kfaenza/actions/edit.png' alt='Edit'  /> Edit</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=3&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/up.png' alt='Up'  /> Up</a><br /><a href='http://{HOST}/modules/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=3&amp;rtn=Lw=='> <img src='http://{HOST}/images/kfaenza/actions/down.png' alt='Down'  /> Down</a></div></button><script type="text/javascript">
+					$(function() {
+						$('#ed_block_3').dialog({
+							bgiframe: true,
+							//height: 140,
+							autoOpen: false,
+							modal: true
+						});
+					});
+					</script>
+				</h3></div>		<div class="xo-blockcontent"><form style="margin-top: 0px;" action="http://{HOST}/search.php" method="get">
+  <div><input type="text" name="query" size="14" /><input type="hidden" name="action" value="results" /><br /><input type="submit" value="Search" /></div>
+</form>
+<a href="http://{HOST}/search.php" title="Advanced Search">Advanced Search</a></div>
+	</div>
+		</div>
+								</div>
+	</div>
+</div>
+	<!-- Footer -->
+	<div id="xo-footer">
+	Powered by ImpressCMS &copy; 2007-2026 <a href="https://www.impresscms.org/" rel="external">The ImpressCMS Project</a>
+	</div>
+	</div>
+</body>
+</html>

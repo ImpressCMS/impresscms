@@ -39,4 +39,10 @@ define("_DATABASEUPDATER_MSG_CONFIG_SCC", "La configurazione %s inserita con suc
 /* added in 1.3 */
 define( '_DATABASEUPDATER_MSG_FROM_112', "<code><h3>Hai aggiornato il tuo sito da ImpressCMS 1.1.x a ImpressCMS 1.2 e quindi <strong>devi installare il nuovo modulo Content</strong> per aggiornare il core del manager di contenuti. Sarai reindirizzato al processo di installazione fra 20 secondi. Se questo non succedesse clicka <a href='" . ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1'>qui</a>.</h3></code>" );
 define('_DATABASEUPDATER_MSG_DROPFIELD_ERR', 'Si è verificato un errore i campi specificati %1$s dalla tavola %2$s');
-define("_DATABASEUPDATER_MSG_DROPFIELD", 'Eliminato con successo il campo %1$s dalla tavola %2$s');
+
+define("_DATABASEUPDATER_MSG_DROP_TABLE", "Successfully dropped database table %s");
+define("_DATABASEUPDATER_MSG_DROP_TABLE_ERR", "Error dropping database table %s");
+define("_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL", "Query successful: %s");
+define("_DATABASEUPDATER_MSG_QUERY_FAILED", "Query failed: %s");
+define("_DATABASEUPDATER_MSG_RENAME_TABLE", 'Successfully renamed table %1$s to %2$s');
+define("_DATABASEUPDATER_MSG_RENAME_TABLE_ERR", "Error renaming table %s");

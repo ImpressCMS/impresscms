@@ -1,0 +1,8 @@
+GET /modules/system/admin.php?fct=mimetype (mediaadmin)
+status: 302
+content-type: text/html; charset=UTF-8
+location: http://{HOST}/admin.php
+cache-control: no-store, no-cache, must-revalidate
+pragma: no-cache
+
+

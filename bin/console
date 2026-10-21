@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use App\Kernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Dotenv\Dotenv;
+
+define('ICMS_HOST_AUTOLOADED', true);
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+$input = new ArgvInput();
+if (null !== $env = $input->getParameterOption(['--env', '-e'], null, true)) {
+    putenv('APP_ENV=' . $_SERVER['APP_ENV'] = $_ENV['APP_ENV'] = $env);
+}
+(new Dotenv())->bootEnv(dirname(__DIR__) . '/.env');
+
+// The Icms\ library from the web root, which .env.local names on an installed site.
+require_once rtrim((string) ($_SERVER['ICMS_LEGACY_ROOT'] ?? dirname(__DIR__) . '/htdocs'), '/\\') . '/libraries/Autoloader.php';
+
+$kernel = new Kernel((string) $_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
+exit((new Application($kernel))->run($input));

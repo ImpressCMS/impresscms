@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 // general
 define("THEME_UPTOP","返回顶部");

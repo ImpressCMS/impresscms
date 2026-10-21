@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%%	File Name  admin.php 	%%%%%
 define("_AD_NORIGHT","权限不足");

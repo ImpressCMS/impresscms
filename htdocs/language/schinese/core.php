@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Core constants
  *
@@ -60,3 +60,5 @@ define('_CORE_DEPRECATED_MSG', '%s 在 %s, 行 %u <br />');
 define('_CORE_DEPRECATED_CALLEDBY', 'Called by: ');
 define('_CORE_REMOVE_IN_VERSION', '在 %s 版中将被移除');
 define('_CORE_DEBUG', '调试');
+
+define('_CORE_DEVELOPER_DASHBOARD', 'Developer Dashboard');

@@ -43,4 +43,14 @@ define("_AM_EDPERM","Autoris&eacute; le choix de l'&eacute;diteur WYSIWYG dans l
 define("_AM_DEBUG_PERM","Autoris&eacute; le mode d&eacute;bugs dans les modules suivants");
 define("_AM_GROUPMANAGER_PERM","Autoris&eacute; le changement des permissions sur ces groupes");
 
+define('_MD_AM_ID', 'ID');
+define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
+define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
+define("_AM_CBLEFT_ADMIN","Admin Center Block - Left");
+define("_AM_CBRIGHT_ADMIN","Admin Center Block - Right");
+define("_AM_CBCENTER_ADMIN","Admin Center Block - Center");
+define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
+define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
+define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");
+
 ?>

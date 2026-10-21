@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define('_CM_TITLE','标题');
 define('_CM_MESSAGE','信息');

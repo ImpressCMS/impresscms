@@ -1,0 +1,94 @@
+GET /modules/system/admin.php?fct=mimetype (anonymous, use_custom_redirection 0)
+status: 200
+content-type: text/html; charset=utf-8
+cache-control: private, no-cache
+pragma: no-cache
+x-frame-options: SAMEORIGIN
+set-cookie: ICMSSESSION=*; path=/
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<!-- Center block custom positioning -->
+			
+<!-- Theme name -->
+	
+<!-- Title and meta -->
+	<title>Make a lasting impression  : ImpressCMS Test Site</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="index,follow" />
+	<meta name="keywords" content="community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes" />
+	<meta name="description" content="ImpressCMS is a dynamic Object Oriented based open source portal script written in PHP." />
+	<meta name="rating" content="general" />
+	<meta name="author" content="ImpressCMS" />
+	<meta name="copyright" content="Copyright &amp;copy; 2007-2026" />
+	<meta name="generator" content="ImpressCMS" />
+
+<!-- Module Header -->
+
+
+
+<!-- Favicon -->
+	<link rel="shortcut icon" type="image/ico" href="http://{HOST}/themes/iTheme/icons/favicon.ico" />
+	<link rel="icon" type="image/png" href="http://{HOST}/themes/iTheme/icons/icon.png" />
+
+<!-- Sheet Css -->
+	<link rel="stylesheet" type="text/css" media="all" href="http://{HOST}/themes/iTheme/style.css" />
+</head>
+
+<body id="system" class="en">
+<div id="xo-canvas">
+	<!-- Header -->
+    <div id="xo-header">
+	    <div id="xo-headerlogo"><a href="http://{HOST}/" title=""><img src="http://{HOST}/themes/iTheme/img/logo.png" alt="ImpressCMS Test Site" /></a></div>
+	    <div id="xo-headerbanner">
+	<!-- Header menu (optional) -->
+	<div id="xo-globalnav">
+		  <a href="http://{HOST}" title="ImpressCMS Test Site">Home</a>
+		  <a href="#" title="Link 2">News</a>
+		  <a href="#" title="Link 3">Forum</a>
+		  <a href="#" title="Link 4">Gallery</a>
+		  <a href="#" title="Link 5">Movies</a>
+	</div>
+	</div>
+    </div>
+
+	<!-- Content -->
+	<div id="xo-canvas-content">
+		<div id="xo-canvas-columns">
+			<!-- Left column -->
+													<!-- Center column / page -->
+			<div id="xo-page">
+				<!-- Top blocks -->
+								<!-- Module content -->
+								<div id="xo-content"><!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Refresh" content="3; url=http://{HOST}/user.php" />
+<title>ImpressCMS Test Site</title>
+<link rel="stylesheet" type="text/css" media="all" href="http://{HOST}/themes/iTheme/style.css" />
+</head>
+<body>
+<div style="text-align:center; background-color: #EBEBEB; border-top: 1px solid #FFFFFF; border-left: 1px solid #FFFFFF; border-right: 1px solid #AAAAAA; border-bottom: 1px solid #AAAAAA; font-weight: bold;">
+  <h4>Sorry, you don't have permission to access this area.</h4>
+  <p>If the page does not automatically reload, please click <a href="http://{HOST}/user.php">here</a></p>
+</div>
+<div id="icms-footer">
+		Powered by ImpressCMS &copy; 2007-2026 <a href="https://www.impresscms.org/" rel="external">The ImpressCMS Project</a>
+</div>
+</body>
+</html></div>
+								<!-- Bottom blocks -->
+							</div>
+			<!-- Right column -->
+												</div>
+	</div>
+</div>
+	<!-- Footer -->
+	<div id="xo-footer">
+	Powered by ImpressCMS &copy; 2007-2026 <a href="https://www.impresscms.org/" rel="external">The ImpressCMS Project</a>
+	</div>
+	</div>
+</body>
+</html>

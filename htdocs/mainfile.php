@@ -41,6 +41,16 @@
 /**
  *
  */
+// A site configuration outside the web root, named by the server environment
+// (used by the test suite). The installer replaces this whole file, so an
+// installed site never consults it.
+if (!defined('XOOPS_INSTALL') && is_string($_icms_mainfile = getenv('ICMS_MAINFILE')) && is_file($_icms_mainfile)) {
+	unset($_icms_mainfile);
+	include getenv('ICMS_MAINFILE');
+	return;
+}
+unset($_icms_mainfile);
+
 // ImpressCMS is not installed yet.
 if(! defined('XOOPS_INSTALL')){
     header('Location: install/index.php');

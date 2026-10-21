@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%%	Admin Module Name  Smilies 	%%%%%
 define('_AM_DBUPDATED','Database Updated Successfully!');

@@ -84,4 +84,7 @@ define ('_NOT_MODE_SENDONCE', 'Me pr&eacute;venir une seule fois');
 define ('_NOT_MODE_SENDONCEPERLOGIN', "Me pr&eacute;venir une fois et alors d&eacute;sactiver jusqu'&agrave; ce que je me connecte &agrave; nouveau");
 
 define ('_NOT_NOTHINGTODELETE', 'Il n\'y a rien &agrave; supprimer !');
+
+define("_NOT_RUSUREDEL", "Are you sure you want to delete these notifications?");
+
 ?>

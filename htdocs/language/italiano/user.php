@@ -190,3 +190,6 @@ define('_US_MULTLOGIN', 'Non è possibile fare il login sul sito!<br />
          - Hai lasciato il sito o chiuso la finestra del browser senza cliccare il bottone "Esci".<br />
         </p>
         Attendi alcuni minuti e prova ancora. Se il problema persiste contatta l\'amministratore del sito.');
+
+define('_US_LOGINNAME','Username');
+define('_US_NOTIFICATIONS', "Notifications");

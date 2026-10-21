@@ -11,3 +11,6 @@
 *.gif binary
 *.ico binary
 *.ttf binary
+# Executable scripts and recorded test snapshots keep LF everywhere.
+bin/* text eol=lf
+tests/Http/**/__snapshots__/*.txt text eol=lf

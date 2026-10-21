@@ -1,0 +1,3 @@
+# Twig renders new Symfony pages only; legacy pages keep Smarty.
+twig:
+    default_path: '%kernel.project_dir%/templates'

@@ -257,3 +257,8 @@ define('_COUNTRY_ZA', 'South Africa');
 define('_COUNTRY_ZM', 'Zambia');
 define('_COUNTRY_ZR', 'Zaire');	//  Not listed in ISO 3166
 define('_COUNTRY_ZW', 'Zimbabwe');
+
+define('_COUNTRY_BQ', 'Bonaire, St. Eustatius and Saba');
+define('_COUNTRY_JE', 'Jersey');
+define('_COUNTRY_SS', 'South Sudan');
+define('_COUNTRY_SX', 'Sint Maarten');

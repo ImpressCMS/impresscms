@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/precheck_functions.php';
 
-if (in_array('icms_db_legacy_Factory', get_declared_classes())) {
+if (in_array('Icms\Db\Legacy\icms_db_legacy_Factory', get_declared_classes())) {
 	require __DIR__ . '/postcheck.inc.php';
 	return;
 }

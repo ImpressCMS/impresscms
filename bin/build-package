@@ -1,0 +1,142 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Build the release package: a zip whose contents go straight into a hosting
+ * account's web root (public_html, www, ...).
+ *
+ * The package holds htdocs/ of a committed revision, without htdocs/tests, plus
+ * the host staging directory trust_dist/ built by bin/build-dist. Browsing to
+ * /install/ then installs the site; the installer copies trust_dist/ into the
+ * trust path the administrator picks. Uploading the package over an existing
+ * site and updating the system module upgrades it the same way.
+ *
+ * Usage: bin/build-package [--ref=<git ref>] [--output=<zip>] [--composer=<command>]
+ *   --ref       revision to package (default HEAD); uncommitted changes are never included
+ *   --output    the zip to write (default var/dist/impresscms-<version>-<commit>.zip)
+ *   --composer  the Composer command passed to bin/build-dist
+ */
+
+declare(strict_types=1);
+
+$root = str_replace('\\', '/', dirname(__DIR__));
+$ref = 'HEAD';
+$output = null;
+$composer = null;
+foreach (array_slice($argv, 1) as $arg) {
+    if (str_starts_with($arg, '--ref=')) {
+        $ref = substr($arg, 6);
+    } elseif (str_starts_with($arg, '--output=')) {
+        $output = str_replace('\\', '/', substr($arg, 9));
+    } elseif (str_starts_with($arg, '--composer=')) {
+        $composer = substr($arg, 11);
+    } else {
+        fwrite(STDERR, "Unknown argument {$arg}\n");
+        exit(2);
+    }
+}
+if (!class_exists(ZipArchive::class)) {
+    fwrite(STDERR, "The zip extension is required.\n");
+    exit(1);
+}
+
+$run = static function (string $command) use ($root): string {
+    $lines = [];
+    exec('git -C ' . escapeshellarg($root) . ' ' . $command, $lines, $status);
+    if ($status !== 0) {
+        fwrite(STDERR, "git {$command} failed.\n");
+        exit(1);
+    }
+    return trim(implode("\n", $lines));
+};
+$remove = static function (string $path) use (&$remove): void {
+    if (is_dir($path) && !is_link($path)) {
+        foreach (new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS) as $item) {
+            $remove($item->getPathname());
+        }
+        rmdir($path);
+    } elseif (file_exists($path) || is_link($path)) {
+        unlink($path);
+    }
+};
+
+$commit = $run('rev-parse --short ' . escapeshellarg($ref . '^{commit}'));
+
+// A clean export of the revision, with the line endings of the repository.
+$work = "{$root}/var/package";
+$remove($work);
+mkdir($work, 0777, true);
+$archive = "{$work}/source.zip";
+$run('-c core.autocrlf=false -c core.eol=lf archive --format=zip -o ' . escapeshellarg($archive) . ' ' . escapeshellarg($commit));
+$source = "{$work}/source";
+$zip = new ZipArchive();
+if ($zip->open($archive) !== true || !$zip->extractTo($source)) {
+    fwrite(STDERR, "Could not extract {$archive}\n");
+    exit(1);
+}
+$zip->close();
+unlink($archive);
+
+$command = escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg("{$source}/bin/build-dist")
+    . ($composer !== null ? ' ' . escapeshellarg("--composer={$composer}") : '');
+echo "> {$command}\n";
+passthru($command, $status);
+if ($status !== 0) {
+    exit($status);
+}
+
+$version = 'impresscms';
+if (preg_match('/define\("ICMS_VERSION_NAME",\s*"([^"]+)"\)/', (string) file_get_contents("{$source}/htdocs/include/version.php"), $m)) {
+    $version = strtolower(trim((string) preg_replace('/[^A-Za-z0-9.]+/', '-', $m[1]), '-'));
+}
+$output ??= "{$root}/var/dist/{$version}-{$commit}.zip";
+@mkdir(dirname($output), 0777, true);
+@unlink($output);
+
+// Development only: the library tests run from the repository.
+$excluded = ['tests'];
+
+$webRoot = "{$source}/htdocs";
+$zip = new ZipArchive();
+if ($zip->open($output, ZipArchive::CREATE | ZipArchive::EXCL) !== true) {
+    fwrite(STDERR, "Could not create {$output}\n");
+    exit(1);
+}
+$files = 0;
+$items = new RecursiveIteratorIterator(
+    new RecursiveCallbackFilterIterator(
+        new RecursiveDirectoryIterator($webRoot, FilesystemIterator::SKIP_DOTS),
+        static function (SplFileInfo $item) use ($webRoot, $excluded): bool {
+            $relative = substr(str_replace('\\', '/', $item->getPathname()), strlen($webRoot) + 1);
+            return !in_array($relative, $excluded, true);
+        },
+    ),
+    RecursiveIteratorIterator::SELF_FIRST,
+);
+foreach ($items as $item) {
+    $name = substr(str_replace('\\', '/', $item->getPathname()), strlen($webRoot) + 1);
+    if ($item->isDir()) {
+        $zip->addEmptyDir($name);
+        $zip->setExternalAttributesName($name . '/', ZipArchive::OPSYS_UNIX, 040755 << 16);
+    } else {
+        $zip->addFile($item->getPathname(), $name);
+        $zip->setExternalAttributesName($name, ZipArchive::OPSYS_UNIX, 0100644 << 16);
+        $files++;
+    }
+}
+if (!$zip->close()) {
+    fwrite(STDERR, "Could not write {$output}\n");
+    exit(1);
+}
+$remove($work);
+
+foreach (['index.php', 'mainfile.php', 'include/host.php', 'install/index.php', 'trust_dist/host.php', 'trust_dist/vendor/autoload.php'] as $required) {
+    $check = new ZipArchive();
+    $check->open($output);
+    if ($check->locateName($required) === false) {
+        fwrite(STDERR, "The package is incomplete: {$required} is missing.\n");
+        exit(1);
+    }
+    $check->close();
+}
+
+printf("Package ready: %s (%d files, %.1f MB)\n", $output, $files, filesize($output) / 1048576);

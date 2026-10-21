@@ -706,3 +706,14 @@ define("_MD_AM_ENC_RIPEMD256","RIPEMD 256");
 define("_MD_AM_ENC_RIPEMD320","RIPEMD 320");
 define("_MD_AM_ENC_SNEFRU256","Snefru 256");
 define("_MD_AM_ENC_GOST","Gost");
+
+define('_MD_AM_ADMINMLDSC', 'All informations will be send by this E-mail address. We recomend an address from your Web-Domain.');
+define("_MD_AM_LANGUAGEDSC", "Select your main language. If you activated the multilanguage, you can choice a language. And if you set in the multilanguage the language of your browser, than ImpressCMS will ignore this option.");
+define("_MD_AM_SELFDELETEDSC", "If you select YES, your users can find out a new button in the account with which the account can be deleted.");
+define("_MD_AM_KEEPALIVE", "Keep sessions alive");
+define("_MD_AM_KEEPALIVEDSC", "Select yes to keep the session of logged-in users alive for as long as they have a page of the site open, so they are not logged out while writing a long post. Select no to let sessions expire after the session expiration time, even when a page is still open.");
+define("_MD_AM_AVATARALLOWDSC", "If you allow this option, you can set more option for the avatars (with, height, size).");
+define('_MD_AM_USESSLDSC', 'Select YES only if you have a SSL certificate. If you like to use this option, please copy the right files from your downloaded ImpressCMS EXTRA folder in your root-path.');
+define('_MD_AM_DTPLSETDSC', 'If you like to select an other Template-Set as a default, you must create first a new clone in your system. After them you can set this clone as default.');
+define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC", "If you select YES, all visitors can see the profiles from your homepage. This is very usefull for a community, but maybe for the privacy not the best option.");
+define("_MD_AM_UNABLEENCCLOSED", "Database Update Failed, You can't change password encryption whilst the site is closed");

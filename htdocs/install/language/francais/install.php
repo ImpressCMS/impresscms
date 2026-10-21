@@ -216,3 +216,10 @@ define("_DEF_LANG_TAGS", 'en,fr,it,nl'); //Add local translation
 define("_DEF_LANG_NAMES", 'english,french,italian,dutch'); //Add local translation
 define("_LOCAL_LANG_NAMES", 'English,français,Italiano,Nederlands'); //Add local translation
 define("_EXT_DATE_FUNC", "0"); // changement de 0 à 1, si cette langue a une fonction étendue date
+
+define("ADMIN_DISPLAY_LABEL", "Admin Display Name");
+define("_CORE_PASSLEVEL1", "Too short");
+define("_CORE_PASSLEVEL2", "Weak");
+define("_CORE_PASSLEVEL3", "Good");
+define("_CORE_PASSLEVEL4", "Strong");
+define("FILE_PERMISSIONS", "File Permissions");

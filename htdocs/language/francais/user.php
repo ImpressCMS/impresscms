@@ -192,3 +192,6 @@ define('_US_MULTLOGIN', 'Impossible de vous connecter au site!! <br />
          - Vous avez laissé le site ou vous avez fermé votre navigateur sans utiliser le bouton \'Sortir\'.<br />
         </p>
         Re-essayez dans quelques minutes. En cas ou le problème persiste, veuillez contacter l\'administrateur du site.');
+
+define('_US_LOGINNAME','Username');
+define('_US_NOTIFICATIONS', "Notifications");

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
+         colors="true"
+         cacheDirectory="var/cache/phpunit"
+         executionOrder="depends,defects"
+         beStrictAboutOutputDuringTests="true"
+         failOnRisky="true"
+         failOnWarning="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnTestsThatTriggerNotices="true">
+    <testsuites>
+        <!-- Icms\ library tests, also runnable standalone via htdocs/phpunit.xml.dist -->
+        <testsuite name="Library">
+            <directory>htdocs/tests/Unit</directory>
+        </testsuite>
+        <!-- App\ classes with fakes; no database, no legacy boot -->
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <!-- Kernel and headless legacy boot, in-process; one process per test class -->
+        <testsuite name="Integration">
+            <directory>tests/Integration</directory>
+        </testsuite>
+        <!-- Symfony-owned routes via KernelBrowser; one process per test class -->
+        <testsuite name="Functional">
+            <directory>tests/Functional</directory>
+        </testsuite>
+        <!-- Real php -S server; everything that executes a legacy script -->
+        <testsuite name="Http">
+            <directory>tests/Http</directory>
+        </testsuite>
+    </testsuites>
+    <extensions>
+        <bootstrap class="App\Tests\Support\LibraryEnvironmentExtension"/>
+    </extensions>
+    <source restrictNotices="true" restrictWarnings="true" ignoreIndirectDeprecations="true">
+        <include>
+            <directory>src</directory>
+            <directory>htdocs/libraries/Icms/Kernel</directory>
+        </include>
+        <!-- Symfony deprecations count against the code that calls the deprecated API -->
+        <deprecationTrigger>
+            <function>trigger_deprecation</function>
+        </deprecationTrigger>
+    </source>
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <ini name="display_errors" value="1"/>
+        <ini name="memory_limit" value="512M"/>
+        <server name="KERNEL_CLASS" value="App\Kernel"/>
+        <env name="APP_ENV" value="test" force="true"/>
+        <env name="APP_DEBUG" value="0"/>
+        <!-- Test database; override in the environment (CI sets these) -->
+        <env name="ICMS_TEST_DB_HOST" value="127.0.0.1"/>
+        <env name="ICMS_TEST_DB_PORT" value="3306"/>
+        <env name="ICMS_TEST_DB_USER" value="root"/>
+        <env name="ICMS_TEST_DB_PASS" value=""/>
+        <env name="ICMS_TEST_DB_NAME" value="icms_test"/>
+    </php>
+</phpunit>

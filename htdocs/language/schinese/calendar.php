@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%		Time Zone	%%%%
 define("_CAL_SUNDAY", "星期天");

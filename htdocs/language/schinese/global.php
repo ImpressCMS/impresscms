@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%%	File Name mainfile.php 	%%%%%
 define('_PLEASEWAIT','请稍等');
@@ -213,7 +213,7 @@ define('_IMPRESSCMS_ADDONS','附加组件');
 define('_IMPRESSCMS_WIKI','维基');
 define('_IMPRESSCMS_BLOG','博客');
 define('_IMPRESSCMS_DONATE','捐赠!');
-define("_IMPRESSCMS_Support","支持该项目!");
+define("_IMPRESSCMS_SUPPORT","支持该项目!");
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge项目roject');
 define('_IMPRESSCMS_ADMIN','管理');
 /** The default separator used in icms_view_Tree::getNicePathFromId */
@@ -318,3 +318,17 @@ define("_OUTDATED_PHP", "Your current PHP version (%s) is no longer maintained. 
 // added in 1.5.0
 define('_TinyMCE_DEFAULT_WARNING', 'TinyMCE is selected as the default editor for at least 1 module - change it and then remove it from your server');
 define('_TinyMCE_PRESENT_WARNING', 'TinyMCE is present - remove it from your server');
+
+define('_TRUST_PATH_PUBLIC', 'WARNING: The trust path %s lies inside the web root or the document root. It holds the ImpressCMS host, its libraries and the secret settings of this site, and web servers such as nginx or Caddy serve it regardless of .htaccess files.<br />Move the folder outside the document root and update XOOPS_TRUST_PATH in mainfile.php.');
+define('_TRUST_DIST_PENDING', 'The host files of a new release are waiting in %s. Update the system module to install them into the trust path.');
+
+define("_BLOCK_ID", "Block ID");
+define('_IMPRESSCMS_PROJECT','Project Development');
+define("_FILTERS","Filters");
+define("_FILTER","Filter");
+define("_FILTERS_MSG1","Input Filter: ");
+define("_FILTERS_MSG2","Input Filter (HTMLPurifier): ");
+define("_FILTERS_MSG3","Output Filter: ");
+define("_FILTERS_MSG4","Output Filter (HTMLPurifier): ");
+define('_FCK_DEFAULT_WARNING', 'FCKeditor is selected as the default editor for at least 1 module - change it and then remove it from your server');
+define('_FCK_PRESENT_WARNING', 'FCKeditor is present - remove it from your server');

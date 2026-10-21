@@ -55,13 +55,20 @@ function xoDiagIfWritable( $path) {
 	if (!is_dir( $path )) {
 		if (file_exists( $path )) {
 			@chmod( $path, 0666 );
-			$error = !is_writeable( $path );
+			$error = !is_writable( $path );
 		}
 	} else {
 		@chmod( $path, 0777 );
-		$error = !is_writeable( $path );
+		$error = !is_writable( $path );
 	}
 	return xoDiag( $error ? -1 : 1, $error ? 'Not writable' : 'Writable' );
+}
+
+function imCheckComposer(): bool
+{
+	// common.inc.php already loaded it from the trust path, the staging
+	// directory trust_dist/ or the web root (see include/host.php)
+	return icms_host_vendor_autoload(dirname(__DIR__), $_SESSION['settings']['TRUST_PATH'] ?? null) !== null;
 }
 
 function imCheckRequirements()
@@ -101,8 +108,11 @@ function imCheckRequirements()
 	$requirement['gd']['description']="GD Extension";
 	$requirement['gd']['result']=extension_loaded( 'GD' ) ? SUCCESS : FAILED;
 	$requirement['gd']['status']=extension_loaded( 'GD' ) ? true : false;
-	
-	
+
+	$requirement['composer']['description']="Composer libraries available";
+	$requirement['composer']['result']=imCheckComposer() ? SUCCESS : FAILED;
+	$requirement['composer']['status']=imCheckComposer() ? true : false;
+
 	return $requirement;
 }
 
@@ -111,7 +121,7 @@ $requirements_array = imCheckRequirements();
 ?>
 <fieldset>
 <h3><?php echo REQUIREMENTS; ?></h3>
-<?php foreach($requirements_array as &$requirement)
+<?php foreach($requirements_array as $requirement)
 	 {
 	 ?>
 <h4><?php echo $requirement['description']; ?>:&nbsp; <?php echo xoDiag($requirement['status'], $requirement['result']); ?> <img

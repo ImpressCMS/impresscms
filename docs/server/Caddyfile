@@ -1,0 +1,25 @@
+# ImpressCMS on FrankenPHP (classic mode) or Caddy (docs/symfony-host.md).
+#
+# Adjust the site address and root (the web root: the contents of htdocs/).
+# Routing level 2 is active: php_server serves existing files and scripts
+# directly and sends unknown paths to index.php, and so to the host. For routing
+# level 3 (every PHP script through the host) remove the # in front of the two
+# lines that end in "# level 3".
+#
+# Do not enable FrankenPHP's worker mode: ImpressCMS keeps request state in
+# static properties. Caddy ignores .htaccess files: @never replaces them.
+
+example.test {
+	root * /var/www/impresscms
+
+	# Never served: the host's staging directory, compiled templates, caches,
+	# tests, PHP files in uploads/, hidden files and folders, and directories
+	# that ImpressCMS protects with their own .htaccess.
+	@never path_regexp ^/(trust_dist|templates_c|cache|tests|plugins/waiting|libraries/tcpdf/tools|install/modules/protector/trust_path)(/|$)|^/uploads/.*\.php$|/\.
+	respond @never 404
+
+	#@php path *.php            # level 3
+	#rewrite @php /index.php    # level 3
+
+	php_server
+}

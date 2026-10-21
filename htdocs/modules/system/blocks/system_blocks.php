@@ -591,6 +591,7 @@ function b_system_themes_show($options){
 	$block = array();
 	$block['theme_select'] = array();
 	$block['current_theme'] = $icmsConfig['theme_set'];
+	$block['theme_select'] = array();
 	foreach ($icmsConfig['theme_set_allowed'] as $theme) {
 		$imagefile = ICMS_THEME_URL . "/" . $theme . "/shot.gif";
 

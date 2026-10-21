@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%%	File Name  modulesadmin.php 	%%%%%
 define("_MD_AM_MODADMIN","模块管理");

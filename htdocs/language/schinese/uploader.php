@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define("_ER_UP_MIMETYPELOAD", "加载MIME类型定义时出错。");
 define("_ER_UP_FILENOTFOUND", "未发现文件");

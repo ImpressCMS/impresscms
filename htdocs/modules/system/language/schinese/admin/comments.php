@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%% Comment Manager %%%%%
 define('_MD_AM_COMMMAN','留言管理');

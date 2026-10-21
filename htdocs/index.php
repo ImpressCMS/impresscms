@@ -39,6 +39,36 @@
  * @version		AVN: $Id: index.php 12313 2013-09-15 21:14:35Z skenow $
  **/
 
+/*
+ * Hand the request to the Symfony host when it is installed in the trust path.
+ * The host executes this file again for the home page, with
+ * ICMS_HOST_AUTOLOADED defined, so the code below then runs as usual.
+ */
+if (!defined('ICMS_HOST_AUTOLOADED')) {
+	// first: a readable page instead of a fatal error on a too old PHP version
+	require_once __DIR__ . '/include/requirements.php';
+	icms_requirements_check(__DIR__);
+
+	require_once __DIR__ . '/include/host.php';
+	if (null !== $__icms_host = icms_host_entry(__DIR__)) {
+		$_SERVER['ICMS_LEGACY_ROOT'] = __DIR__;
+		$_SERVER['ICMS_TRUST_PATH'] = dirname($__icms_host);
+		require $__icms_host;
+		exit;
+	}
+	// No host (not installed yet, or before the system module update): a web
+	// server that routes every PHP request here asked for another script.
+	if (null !== $__icms_host = icms_host_requested_script(__DIR__)) {
+		chdir(dirname($__icms_host));
+		$_SERVER['SCRIPT_FILENAME'] = $__icms_host;
+		$_SERVER['SCRIPT_NAME'] = $_SERVER['PHP_SELF'] = icms_host_base_path(__DIR__)
+			. str_replace('\\', '/', substr($__icms_host, strlen((string) realpath(__DIR__))));
+		require $__icms_host;
+		exit;
+	}
+	unset($__icms_host);
+}
+
 /** Need the mainfile */
 include "mainfile.php";
 

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $	
 /**
  * $Id: databaseupdater.php 20490 2010-12-05 19:58:20Z skenow $
@@ -41,3 +41,11 @@ define("_DATABASEUPDATER_MSG_CONFIG_SCC", "成功地插入 %s 配置");
 define( '_DATABASEUPDATER_MSG_FROM_112', "<code><h3>已成功将ImpressCMS从1.1.x版更新至1.2版，<strong>必须安装新的内容模块</strong> 以同步更新核心内容管理器. 20秒后将重定向至安装步骤. 如果无响应，点击 <a href='" . ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1'>这里</a>.</h3></code>" );
 define('_DATABASEUPDATER_MSG_DROPFIELD_ERR', '出错！当从数据表 %2$s 移除特定表区 %1$s 时。');
 define("_DATABASEUPDATER_MSG_DROPFIELD", '已成功从数据表 %2$s 移除表区 %1$s ');
+
+define("_DATABASEUPDATER_UPDATE_ERR", "Errors updating to version %s");
+define("_DATABASEUPDATER_MSG_DROP_TABLE", "Successfully dropped database table %s");
+define("_DATABASEUPDATER_MSG_DROP_TABLE_ERR", "Error dropping database table %s");
+define("_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL", "Query successful: %s");
+define("_DATABASEUPDATER_MSG_QUERY_FAILED", "Query failed: %s");
+define("_DATABASEUPDATER_MSG_RENAME_TABLE", 'Successfully renamed table %1$s to %2$s');
+define("_DATABASEUPDATER_MSG_RENAME_TABLE_ERR", "Error renaming table %s");

@@ -86,4 +86,7 @@ define ('_NOT_MODE_SENDONCE', 'Stuur me slechts eenmalig een melding');
 define ('_NOT_MODE_SENDONCEPERLOGIN', 'Stel mij eenmalig op de hoogte totdat ik me opnieuw inlog');
 
 define ('_NOT_NOTHINGTODELETE', 'Niets aanwezig om te verwijderen.');
+
+define("_NOT_RUSUREDEL", "Are you sure you want to delete these notifications?");
+
 ?>

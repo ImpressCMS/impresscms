@@ -1,0 +1,83 @@
+services:
+    _defaults:
+        autowire: false
+        autoconfigure: false
+
+    # -- ImpressCMS services in the container (design D8) ----------------------
+    # Each returns the instance legacy code sees as icms::$<name>, booting
+    # legacy up to the stage that creates it. Their class is `object` on purpose:
+    # the container dumper reflects service classes, and legacy class files exit
+    # unless ImpressCMS is booted. The aliases below carry the real types.
+    icms.db:
+        class: object
+        public: true
+        factory: ['@App\Legacy\LegacyRuntime', 'service']
+        arguments: ['db']
+    icms.db.legacy:
+        class: object
+        public: true
+        factory: ['@App\Legacy\LegacyRuntime', 'service']
+        arguments: ['xoopsDB']
+    icms.config:
+        class: object
+        public: true
+        factory: ['@App\Legacy\LegacyRuntime', 'service']
+        arguments: ['config']
+    icms.security:
+        class: object
+        public: true
+        factory: ['@App\Legacy\LegacyRuntime', 'service']
+        arguments: ['security']
+    icms.logger:
+        class: object
+        public: true
+        factory: ['@App\Legacy\LegacyRuntime', 'service']
+        arguments: ['logger']
+    icms.session:
+        class: object
+        public: true
+        factory: ['@App\Legacy\LegacyRuntime', 'service']
+        arguments: ['session']
+    icms.preload:
+        class: object
+        public: true
+        factory: ['@App\Legacy\LegacyRuntime', 'service']
+        arguments: ['preload']
+    # the current user and module may be null (anonymous visitor, no module):
+    # no autowiring aliases, fetch them from the container or LegacyRuntime
+    icms.user:
+        class: object
+        public: true
+        shared: false
+        factory: ['@App\Legacy\LegacyRuntime', 'service']
+        arguments: ['user']
+    icms.module:
+        class: object
+        public: true
+        shared: false
+        factory: ['@App\Legacy\LegacyRuntime', 'service']
+        arguments: ['module']
+
+    Icms\Db\IConnection: '@icms.db'
+    Icms\Db\Legacy\PdoDatabase: '@icms.db.legacy'
+    Icms\Config\Handler: '@icms.config'
+    Icms\Core\Security: '@icms.security'
+    Icms\Core\Logger: '@icms.logger'
+    Icms\Core\Session: '@icms.session'
+    Icms\Preload\Handler: '@icms.preload'
+
+    icms.handlers:
+        class: App\Legacy\HandlerLocator
+        public: true
+        arguments:
+            $runtime: '@App\Legacy\LegacyRuntime'
+            $aliasMap: '%icms.legacy.root%/libraries/Icms/aliases.php'
+    App\Legacy\HandlerLocator: '@icms.handlers'
+
+    # handlers of module classes, by module directory and name (design D10)
+    icms.module_handlers:
+        class: App\Legacy\ModuleHandlerLocator
+        public: true
+        arguments:
+            $runtime: '@App\Legacy\LegacyRuntime'
+    App\Legacy\ModuleHandlerLocator: '@icms.module_handlers'

@@ -49,9 +49,9 @@ class SystemBlockspadmin extends icms_view_block_position_Object {
 	}
 
 	/**
-	 * getDeleteItemLink
+	 * getEditItemLink
 	 *
-	 * Overwrited Method
+	 * Overwrited Method: a lock instead of a link for core positions
 	 *
 	 * @param string $onlyUrl
 	 * @param boolean $withimage
@@ -59,7 +59,11 @@ class SystemBlockspadmin extends icms_view_block_position_Object {
 	 * @return string
 	 */
 	public function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false) {
-		if ($this->getVar('block_default') == 1) return "";
+		if ($this->getVar('block_default') == 1) {
+			// core positions cannot be edited or deleted: a lock in their actions column
+			return $onlyUrl ? "" : "<img src='" . ICMS_IMAGES_SET_URL . "/actions/lock.png' style='vertical-align: middle;' alt='"
+				. _AM_SYSTEM_BLOCKSPADMIN_CORE . "' title='" . _AM_SYSTEM_BLOCKSPADMIN_CORE . "' />";
+		}
 		return parent::getEditItemLink($onlyUrl, $withimage, $userSide);
 	}
 

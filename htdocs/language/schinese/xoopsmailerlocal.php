@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Localize the email functions
  * $Id: blauer-fisch $

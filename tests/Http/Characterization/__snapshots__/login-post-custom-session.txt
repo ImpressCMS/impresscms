@@ -1,0 +1,10 @@
+POST /user.php (webmaster, session name MYSITE)
+status: 302
+content-type: text/html; charset=UTF-8
+location: 
+cache-control: no-store, no-cache, must-revalidate
+pragma: no-cache
+set-cookie: MYSITE=*; path=/
+set-cookie: MYSITE=*; expires; httponly; max-age; path=/
+
+

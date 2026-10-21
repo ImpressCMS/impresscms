@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define("_CO_ICMS_AUTOTASKS_NAME", "任务名称");
 define("_CO_ICMS_AUTOTASKS_NAME_DSC", "输入任务名称.");

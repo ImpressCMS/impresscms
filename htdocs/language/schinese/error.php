@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 define("_ERR_SEARCH","搜索");
 define("_ERR_SEARCH_OUR_SITE","搜索我们的网站:");

@@ -659,4 +659,51 @@ define("_MD_AM_AUTOTASKS_USERDSC", "Systeem gebruiker om te gebruiken voor taak 
 //source editedit
 define("_MD_AM_SRCEDITOR_DEFAULT","Standaard broncode Editor");
 define("_MD_AM_SRCEDITOR_DEFAULT_DESC","Selecteer de standaard editor voor het aanpassen van de broncodes.");
+
+define('_MD_AM_ADMINMLDSC', 'All informations will be send by this E-mail address. We recomend an address from your Web-Domain.');
+define("_MD_AM_LANGUAGEDSC", "Select your main language. If you activated the multilanguage, you can choice a language. And if you set in the multilanguage the language of your browser, than ImpressCMS will ignore this option.");
+define("_MD_AM_SELFDELETEDSC", "If you select YES, your users can find out a new button in the account with which the account can be deleted.");
+define("_MD_AM_AVATARALLOWDSC", "If you allow this option, you can set more option for the avatars (with, height, size).");
+define('_MD_AM_USESSLDSC', 'Select YES only if you have a SSL certificate. If you like to use this option, please copy the right files from your downloaded ImpressCMS EXTRA folder in your root-path.');
+define('_MD_AM_DTPLSETDSC', 'If you like to select an other Template-Set as a default, you must create first a new clone in your system. After them you can set this clone as default.');
+define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC", "If you select YES, all visitors can see the profiles from your homepage. This is very usefull for a community, but maybe for the privacy not the best option.");
+define("_MD_AM_SMTPSECURE", "SMTP Secure Method");
+define("_MD_AM_SMTPSECUREDESC", "Authentication Method used for SMTPAuthentication. (default is ssl)");
+define("_MD_AM_SMTPAUTHPORT", "SMTP Port");
+define("_MD_AM_SMTPAUTHPORTDESC", "The Port use by your SMTP Mail server (default is 465)");
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT", "Enable IE Flash Compatibility");
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPATDSC", "If true, HTML Purifier will generate Internet Explorer compatibility code for all object code. This is highly recommended if you enable HTML.SafeObject.");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRN", "Allow FullScreen in Flash objects");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRNDSC", "If true, HTML Purifier will allow use of 'allowFullScreen' in embedded flash content when using HTML.SafeObject.");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINES", "Normalize Newlines");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC", "Whether or not to normalize newlines to the operating system default. When false, HTML Purifier will attempt to preserve mixed newline files.");
+define('_MD_AM_AUTHENTICATION_DSC', 'Manage security settings related to accessibility. Settings that will effect how users accounts are handled.');
+define('_MD_AM_AUTOTASKS_PREF_DSC', 'Preferences for the Auto Tasks system.');
+define('_MD_AM_CAPTCHA_DSC', 'Manage the settings used by captcha throughout your site.');
+define('_MD_AM_GENERAL_DSC', 'The primary settings page for basic information needed by the system.');
+define('_MD_AM_PURIFIER_DSC', 'HTMLPurifier is used to protect your site against common attack methods.');
+define('_MD_AM_MAILER_DSC', 'Configure how your site will handle mail.');
+define('_MD_AM_METAFOOTER_DSC', 'Manage your meta information and site footer as well as your crawler options.');
+define('_MD_AM_MULTILANGUAGE_DSC', 'Manage your sites Multi-language settings. Enable, and configure what languages are available and how they are triggered.');
+define('_MD_AM_PERSON_DSC', 'Personalize the system with custom logos and other settings.');
+define('_MD_AM_PLUGINS_DSC', 'Select which plugins are used and available to be used throughout your site.');
+define('_MD_AM_SEARCH_DSC', 'Manage how the search function operates for your users.');
+define('_MD_AM_USERSETTINGS_DSC', 'Manage how users register for your site. ser names length, formatting and password options.');
+define('_MD_AM_CENSOR_DSC', 'Manage the language that is not permitted on your site.');
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM", "Allow Custom Filters");
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC", "Allow Custom Filters?<br /><br />if enabled this will allow you to use custom filters located in;<br />'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAME", "Enable Safe Iframes");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC", "Whether or not to permit Iframes in documents, with a number of extra security features added to prevent script execution. You must add safe domains in Safe Iframes URLs before enabling!.");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP", "Safe Iframes URLs");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC", "A list of URLs that you want to allow to show iframe content on your site. This will be matched against an iframe URI. This is a relatively inflexible scheme, but works well enough for the most common use-case of iframes: embedded video. <br />Letting the site owner explicitly allow sites keeps unknown sites from showing iframes on your site with content you cannot control.<br /><br />
+    Here are some example values:<br /><br />
+
+    http://www.youtube.com/embed/ - Allow YouTube videos<br />
+    http://player.vimeo.com/video/ - Allow Vimeo videos<br />
+    http://www.youtube.com/embed/|http://player.vimeo.com/video/ - Allow both<br /><br />HTML Safe Iframe must be enabled for this to work.");
+define("_MD_AM_ENC_RIPEMD256", "RIPEMD 256");
+define("_MD_AM_ENC_RIPEMD320", "RIPEMD 320");
+define("_MD_AM_ENC_SNEFRU256", "Snefru 256");
+define("_MD_AM_ENC_GOST", "Gost");
+
 ?>

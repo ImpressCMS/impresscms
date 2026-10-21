@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $ 
 //%%%%%%	File Name readpmsg.php 	%%%%%
 define("_PM_DELETED","信息已被删除");

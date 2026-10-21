@@ -1,0 +1,19 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    http_method_override: false
+    handle_all_throwables: true
+    # ImpressCMS owns the session (design D10): Icms\Core\Session configures and
+    # starts it (App\Legacy\LegacySessionFactory boots it first), Symfony only
+    # bridges to it
+    session:
+        storage_factory_id: session.storage.factory.php_bridge
+        handler_id: ~
+    php_errors:
+        log: true
+    # the Symfony 8 default, set explicitly (deprecated to leave unset since 7.3)
+    property_info:
+        with_constructor_extractor: true
+
+when@test:
+    framework:
+        test: true

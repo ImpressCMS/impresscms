@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // $Id: blauer-fisch $
 //%%%%%%	Admin Module Name  Users 	%%%%%
 if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","数据库已更新!");}

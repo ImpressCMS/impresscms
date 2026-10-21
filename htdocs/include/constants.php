@@ -107,7 +107,6 @@ define('XOOPS_CACHE_PATH', ICMS_CACHE_PATH);
 define('XOOPS_EDITOR_PATH', ICMS_EDITOR_PATH);
 define('XOOPS_EDITOR_URL', ICMS_EDITOR_URL);
 /**#@-*/
-define('SMARTY_DIR', ICMS_LIBRARIES_PATH . '/smarty/');
 
 if (!defined('XOOPS_XMLRPC')) {
 	define('XOOPS_DB_CHKREF', 1);

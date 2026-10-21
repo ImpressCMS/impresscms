@@ -259,11 +259,8 @@ class XoopsXmlRpcDatetime extends XoopsXmlRpcTag
 
 	function XoopsXmlRpcDatetime($value)
 	{
-		if (!is_numeric($value)) {
-			$this->_value = strtotime($value);
-		} else {
-			$this->_value = (int) ($value);
-		}
+		// Use central timestamp normalizer to keep behavior consistent across the codebase.
+		$this->_value = \Icms\Util\Timestamp::toTimestamp($value);
 	}
 
 	function render()

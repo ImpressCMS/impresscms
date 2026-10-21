@@ -1,0 +1,128 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Spec-to-test traceability check.
+ *
+ * Every `#### Scenario: <name>` in an OpenSpec capability spec must be covered
+ * by at least one test method that carries
+ *
+ *     #[Group('spec:<capability>')]   (on the method or its class)
+ *
+ * and a doc comment line
+ *
+ *     @scenario <name>
+ *
+ * Specs are read from openspec/specs/ and from every active change under
+ * openspec/changes/ (archived changes are ignored). Lists uncovered scenarios
+ * and exits 1 when there are any; `--verbose` also lists covered ones.
+ *
+ * Usage: bin/spec-coverage [--verbose] [--change=<name>]
+ */
+
+declare(strict_types=1);
+
+$root = dirname(__DIR__);
+$verbose = in_array('--verbose', $argv, true);
+$change = null;
+foreach ($argv as $arg) {
+    if (str_starts_with($arg, '--change=')) {
+        $change = substr($arg, 9);
+    }
+}
+
+// -- Scenarios from the specs ----------------------------------------------------
+$specFiles = $change !== null
+    ? glob("{$root}/openspec/changes/{$change}/specs/*/spec.md")
+    : array_merge(
+        glob("{$root}/openspec/specs/*/spec.md") ?: [],
+        array_filter(
+            glob("{$root}/openspec/changes/*/specs/*/spec.md") ?: [],
+            static fn (string $f): bool => !str_contains(str_replace('\\', '/', $f), '/changes/archive/'),
+        ),
+    );
+
+/** @var array<string, array<string, string>> $scenarios capability => [name => file] */
+$scenarios = [];
+foreach ($specFiles ?: [] as $file) {
+    $capability = basename(dirname($file));
+    preg_match_all('/^####\s+Scenario:\s*(.+?)\s*$/m', (string) file_get_contents($file), $m);
+    foreach ($m[1] as $name) {
+        $scenarios[$capability][$name] = $file;
+    }
+}
+
+// -- Coverage claimed by tests ---------------------------------------------------
+/** @var array<string, array<string, list<string>>> $covered capability => [name => tests] */
+$covered = [];
+// The root suites and the Library suite (htdocs/tests).
+$iterator = new AppendIterator();
+foreach (["{$root}/tests", "{$root}/htdocs/tests"] as $testDir) {
+    $iterator->append(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($testDir, FilesystemIterator::SKIP_DOTS)));
+}
+foreach ($iterator as $file) {
+    if ($file->getExtension() !== 'php') {
+        continue;
+    }
+    $code = (string) file_get_contents($file->getPathname());
+    if (!str_contains($code, '@scenario')) {
+        continue;
+    }
+
+    $classPos = preg_match('/^\s*(?:final\s+|abstract\s+)*class\s+(\w+)/m', $code, $cm, PREG_OFFSET_CAPTURE) ? $cm[0][1] : 0;
+    $className = $cm[1][0] ?? $file->getBasename('.php');
+    $classGroups = specGroups(substr($code, 0, $classPos));
+
+    preg_match_all('/@scenario\s+(.+?)\s*$/m', $code, $sm, PREG_OFFSET_CAPTURE);
+    foreach ($sm[1] as [$name, $offset]) {
+        // The method attributes follow the doc comment, up to the function keyword.
+        $rest = substr($code, $offset);
+        $functionPos = preg_match('/function\s+(\w+)/', $rest, $fm, PREG_OFFSET_CAPTURE) ? $fm[0][1] : strlen($rest);
+        $method = $fm[1][0] ?? '?';
+        $groups = specGroups(substr($rest, 0, $functionPos)) ?: $classGroups;
+        if ($groups === []) {
+            fwrite(STDERR, "warning: {$className}::{$method} has @scenario {$name} but no #[Group('spec:...')]\n");
+        }
+        foreach ($groups as $capability) {
+            $covered[$capability][$name][] = "{$className}::{$method}";
+        }
+    }
+}
+
+// -- Report ------------------------------------------------------------------------
+$gaps = 0;
+$total = 0;
+ksort($scenarios);
+foreach ($scenarios as $capability => $names) {
+    foreach ($names as $name => $file) {
+        $total++;
+        if (isset($covered[$capability][$name])) {
+            if ($verbose) {
+                echo "  ok   {$capability}: {$name} <- " . implode(', ', $covered[$capability][$name]) . "\n";
+            }
+            continue;
+        }
+        $gaps++;
+        echo "  GAP  {$capability}: {$name}\n";
+    }
+}
+
+foreach ($covered as $capability => $names) {
+    foreach (array_keys($names) as $name) {
+        if (!isset($scenarios[$capability][$name])) {
+            fwrite(STDERR, "warning: tests reference unknown scenario {$capability}: {$name}\n");
+        }
+    }
+}
+
+printf("%d of %d scenarios covered.\n", $total - $gaps, $total);
+exit($gaps === 0 ? 0 : 1);
+
+/**
+ * @return list<string> capabilities named in #[Group('spec:<capability>')] attributes
+ */
+function specGroups(string $code): array
+{
+    preg_match_all('/Group\(\s*[\'"]spec:([a-z0-9-]+)[\'"]\s*\)/', $code, $m);
+
+    return array_values(array_unique($m[1]));
+}

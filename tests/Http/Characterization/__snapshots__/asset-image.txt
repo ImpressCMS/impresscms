@@ -1,0 +1,5 @@
+GET /images/arrow.gif
+status: 200
+content-type: image/gif
+
+sha1: 79eaa90325b14f2db4e26c4bcf5bb443cce373ac (69 bytes)

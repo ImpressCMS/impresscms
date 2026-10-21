@@ -1,0 +1,9 @@
+POST /user.php (webmaster, remember me)
+status: 200
+content-type: text/html; charset=UTF-8
+cache-control: no-store, no-cache, must-revalidate
+pragma: no-cache
+set-cookie: ICMSSESSION=*; path=/
+set-cookie: autologin_uname=*; expires; httponly; max-age; path=/
+
+This page cannot be displayed due to an internal error.<br/><br/>You can provide the following information to the administrators of this site to help them solve the problem:<br /><br />Error: Undefined constant "ICMS_DB_PASS"<br /><br /><div>File: {ROOT}/htdocs/include/checklogin.php</div><div>Line: 177</div><div>Backtrace:<br /></div>

@@ -57,4 +57,12 @@ define("_AM_NOUSERS", "Pas d'utilisateurs s&eacute;lectionn&eacute;s");
 define("_AM_CNRNU2","Le nouvel utilisateur n'a pas pu &ecirc;tre ajout&eacute; &agrave; des groupes: %s.");
 define('_AM_BADPWD','&Eacute;rreur ! dans le mot de passe, le mot de passe ne peut pas &ecirc;tre identique au nom d\'utilisateur.');
 
+define("_AM_LOGINNAME","Loginname");
+define("_AM_REMOVED_USERS","Removed Users");
+define("_AM_ADMIN_CAN_NOT_BE_DELETEED","Admin user cannot be deleted");
+define("_AM_USERS_DELETEED","deleted");
+define("_AM_COULD_NOT_DELETE","Could not delete");
+define("_AM_A_USER_WITH_THIS_EMAIL_ADDRESS","A user with this email address");
+define("_AM_ALREADY_EXISTS","already exists");
+
 ?>
