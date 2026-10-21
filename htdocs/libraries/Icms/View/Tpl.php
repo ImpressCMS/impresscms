@@ -40,13 +40,9 @@
  */
 namespace Icms\View;
 
-if (!defined('SMARTY_DIR')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-/**
- * Base class: Smarty template engine
- */
-require_once SMARTY_DIR . 'Smarty.class.php';
 
 /**
  * Template engine
@@ -74,7 +70,7 @@ class Tpl extends \Smarty {
 		$this->_compile_id = $this->compile_id;
 		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
 		$this->plugins_dir = array(
-			SMARTY_DIR . 'icms_plugins',
+			__DIR__ . '/Smarty/plugins',
 			SMARTY_DIR . 'plugins',
 		);
 

@@ -6,7 +6,6 @@ prepare:
       path: ".cs-ruleset.xml"
 
 exclude_patterns:
-  - "htdocs/libraries/smarty/"
   - "htdocs/libraries/wideimage/"
   - "htdocs/plugins/"
   - "htdocs/language/"

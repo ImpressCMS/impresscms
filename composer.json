@@ -20,6 +20,7 @@
 		"doctrine/doctrine-bundle": "2.13",
 		"ezyang/htmlpurifier": "^4.19",
 		"simplepie/simplepie": "^1.9",
+		"smarty/smarty": "2.6.33",
 		"smottt/wideimage": "^1.1.4",
 		"symfony/console": "7.4.*",
 		"symfony/dotenv": "7.4.*",
@@ -56,6 +57,13 @@
 	"config": {
 		"platform": {
 			"php": "8.2.0"
+		},
+		"policy": {
+			"advisories": {
+				"ignore": [
+					"smarty/smarty"
+				]
+			}
 		},
 		"sort-packages": true,
 		"allow-plugins": {
