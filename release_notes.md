@@ -1,9 +1,8 @@
-# ImpressCMS 2.0.4 Beta
+# ImpressCMS 2.0.4
 
 This release of ImpressCMS realizes the majority of the original scope of the 2.0 release, defined almost 10 years ago. The focus is on providing compatibility with newer version of PHP (PHP7.4 up until PHP 8.4) and code cleanup. Existing modules that are compatible with the newer PHP versions should still work, as long as they are not using any of the deprecated functions that have been removed in this release.  
 
-This version, ImpressCMS 2.0.4 beta, requires PHP 7.4 and above and includes security hardening (CSRF protection, login redirect validation), an optional session keep-alive and several bugfixes compared to the previous release. Because of this requirement, the only database connection type is PDO. If your site is using the MySQL connection type, you will need to switch prior to moving to this version. As a beta release, this version is intended for testing and evaluation before the final 2.0.4 release.
-
+This version, ImpressCMS 2.0.4, requires PHP 7.4 and above and includes security hardening (CSRF protection, login redirect validation), an optional session keep-alive and several bugfixes compared to the previous release. Because of this requirement, the only database connection type is PDO. If your site is using the MySQL connection type, you will need to switch prior to moving to this version.
 ## Installation
 
 Unzip the contents of the 'htdocs' folder in the root folder of your site, and go in a browser to the address of your site. ImpressCMS will detect that no configuration is present, and will start the installation procedure to help you setup your site on your webserver.

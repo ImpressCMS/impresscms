@@ -1,9 +1,9 @@
 # ImpressCMS ChangeLog
-## ImpressCMS 2.0.4 Beta
+## ImpressCMS 2.0.4
 
-* Date : 17 October 2026
+* Date : 24 October 2026
 * DB Version : 49
-* Build Version : 119
+* Build Version : 120
 
 ### What's Changed
 * fix:Fix system module update resetting db version to 47 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1723
@@ -14,6 +14,12 @@
 * fix:Improve CSRF error handling in pmlite by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1711
 * feat:Keep-alive the session using a preloader (new preference `keepalive_enable`, disabled by default on upgraded sites) by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1686
 * feat:Internal link endpoint and CKEditor 4 implementation by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1736
+* chore:Finalizing 2.0.4 release by @fiammybe
+
+### Previous Versions
+#### 2.0.4 Beta (Build 119)
+* Date : 17 October 2026
+* Changes from all beta fixes
 
 **Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.3...v2.0.4
 ## ImpressCMS 2.0.3

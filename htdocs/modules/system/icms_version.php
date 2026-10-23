@@ -65,8 +65,8 @@ $modversion = array(
 
 /**  Development information */
 	'status_version' => "2.0.4",
-	'status' => "Beta",
-	'date' => "17 October 2026",
+	'status' => "Final",
+	'date' => "24 October 2026",
 	'author_word' => "Security hardening, session keep-alive and bugfixes",
 	'warning' => _CO_ICMS_WARNING_FINAL,
 
