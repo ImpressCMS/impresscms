@@ -95,7 +95,7 @@ switch ($op) {
 			header('Location: ' . $redirect);
 			exit();
 		} else {
-			header('Location: ' . ICMS_URL . '/userinfo.php?uid=' . (int) icms::$user->getVar('uid'));
+			header('Location: ' . ICMS_URL . '/userinfo.php?uid=' . icms::$user->getVar('hash_uid'));
 			exit();
 		}
 		exit();
@@ -126,7 +126,7 @@ switch ($op) {
 			header('Location: ' . $redirect);
 			exit();
 		} else {
-			header('Location: ' . ICMS_URL . '/userinfo.php?uid=' . (int) icms::$user->getVar('uid'));
+			header('Location: ' . ICMS_URL . '/userinfo.php?uid=' . icms::$user->getVar('hash_uid'));
 			exit();
 		}
 		exit();
