@@ -659,4 +659,35 @@ define("_MD_AM_AUTOTASKS_USERDSC", "Systeem gebruiker om te gebruiken voor taak 
 //source editedit
 define("_MD_AM_SRCEDITOR_DEFAULT","Standaard broncode Editor");
 define("_MD_AM_SRCEDITOR_DEFAULT_DESC","Selecteer de standaard editor voor het aanpassen van de broncodes.");
+
+define("_MD_AM_AUTHENTICATION_DSC", "Beheer beveiligingsinstellingen met betrekking tot toegankelijkheid. Instellingen die bepalen hoe gebruikersaccounts worden behandeld.");
+define("_MD_AM_AUTOTASKS_PREF_DSC", "Voorkeuren voor het systeem voor automatische taken.");
+define("_MD_AM_CAPTCHA_DSC", "Beheer de instellingen die captcha gebruikt op je hele site.");
+define("_MD_AM_CENSOR_DSC", "Beheer de woorden en taal die niet zijn toegestaan op je site.");
+define("_MD_AM_GENERAL_DSC", "De hoofdinstellingenpagina met basisinformatie die het systeem nodig heeft.");
+define("_MD_AM_MAILER_DSC", "Configureer hoe je site met e-mail omgaat.");
+define("_MD_AM_METAFOOTER_DSC", "Beheer je metagegevens en de voettekst van de site, evenals je crawleropties.");
+define("_MD_AM_MULTILANGUAGE_DSC", "Beheer de meertalige instellingen van je site. Schakel in en configureer welke talen beschikbaar zijn en hoe ze worden geactiveerd.");
+define("_MD_AM_PERSON_DSC", "Personaliseer het systeem met eigen logo's en andere instellingen.");
+define("_MD_AM_PLUGINS_DSC", "Selecteer welke plugins gebruikt worden en beschikbaar zijn op je hele site.");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINES", "Nieuwe regels normaliseren");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC", "Of nieuwe regels genormaliseerd worden naar de standaard van het besturingssysteem. Indien uitgeschakeld probeert HTML Purifier bestanden met gemengde regeleinden te behouden.");
+define("_MD_AM_PURIFIER_DSC", "HTMLPurifier wordt gebruikt om je site te beschermen tegen veelvoorkomende aanvalsmethoden.");
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM", "Eigen filters toestaan");
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC", "Eigen filters toestaan?<br /><br />Indien ingeschakeld kun je eigen filters gebruiken die staan in;<br />'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRN", "Volledig scherm toestaan in Flash-objecten");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRNDSC", "Indien ingeschakeld staat HTML Purifier het gebruik van 'allowFullScreen' toe in ingebedde Flash-inhoud bij gebruik van HTML.SafeObject.");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAME", "Veilige iframes inschakelen");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC", "Of iframes in documenten zijn toegestaan, met extra beveiligingsmaatregelen om het uitvoeren van scripts te voorkomen. Voeg eerst veilige domeinen toe bij Veilige iframe-URL's voordat je dit inschakelt!");
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT", "IE Flash-compatibiliteit inschakelen");
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPATDSC", "Indien ingeschakeld genereert HTML Purifier compatibiliteitscode voor Internet Explorer voor alle objectcode. Dit wordt sterk aanbevolen als je HTML.SafeObject inschakelt.");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP", "Veilige iframe-URL's");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC", "Een lijst met URL's waarvan je iframe-inhoud op je site wilt toestaan. Deze wordt vergeleken met de URI van een iframe. Dit is een tamelijk onflexibel schema, maar werkt goed genoeg voor het meest voorkomende gebruik van iframes: ingebedde video. <br />Door sites expliciet toe te staan voorkom je dat onbekende sites iframes met inhoud die je niet kunt controleren op je site tonen.<br /><br />
+    Hier zijn enkele voorbeeldwaarden:<br /><br />
+    http://www.youtube.com/embed/ - YouTube-video's toestaan<br />
+    http://player.vimeo.com/video/ - Vimeo-video's toestaan<br />
+    http://www.youtube.com/embed/|http://player.vimeo.com/video/ - Beide toestaan<br /><br />Veilige iframes moeten ingeschakeld zijn om dit te laten werken.");
+define("_MD_AM_SEARCH_DSC", "Beheer hoe de zoekfunctie werkt voor je gebruikers.");
+define("_MD_AM_USERSETTINGS_DSC", "Beheer hoe gebruikers zich registreren op je site: lengte en opmaak van gebruikersnamen en wachtwoordopties.");
+
 ?>

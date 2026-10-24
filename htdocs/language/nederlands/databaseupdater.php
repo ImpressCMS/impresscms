@@ -43,4 +43,7 @@ define("_DATABASEUPDATER_MSG_CONFIG_SCC", "%s config succesvol ingevoegd<br />")
 define("_DATABASEUPDATER_MSG_RENAME_TABLE", 'Tabel %1$s succesvol hernoemd naar %2$s');
 define("_DATABASEUPDATER_MSG_RENAME_TABLE_ERR", "Fout bij het hernoemen van tabel %s");
 
+define("_DATABASEUPDATER_MSG_QUERY_FAILED", "Query mislukt: %s");
+define("_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL", "Query geslaagd: %s");
+
 ?>

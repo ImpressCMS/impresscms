@@ -45,3 +45,6 @@ define("_DATABASEUPDATER_MSG_DROPFIELD", '已成功从数据表 %2$s 移除表�
 // Added in 2.0.4
 define("_DATABASEUPDATER_MSG_RENAME_TABLE", '成功将表 %1$s 重命名为 %2$s');
 define("_DATABASEUPDATER_MSG_RENAME_TABLE_ERR", "重命名表 %s 时出错");
+
+define("_DATABASEUPDATER_MSG_QUERY_FAILED", "查询失败: %s");
+define("_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL", "查询成功: %s");

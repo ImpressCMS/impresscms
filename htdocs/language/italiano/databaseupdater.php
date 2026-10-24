@@ -44,3 +44,6 @@ define("_DATABASEUPDATER_MSG_DROPFIELD", 'Eliminato con successo il campo %1$s d
 // Added in 2.0.4
 define("_DATABASEUPDATER_MSG_RENAME_TABLE", 'Tabella %1$s rinominata in %2$s con successo');
 define("_DATABASEUPDATER_MSG_RENAME_TABLE_ERR", "Errore durante la ridenominazione della tabella %s");
+
+define("_DATABASEUPDATER_MSG_QUERY_FAILED", "Query non riuscita: %s");
+define("_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL", "Query riuscita: %s");
