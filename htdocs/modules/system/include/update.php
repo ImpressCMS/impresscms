@@ -269,6 +269,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	}
 	catch (Exception $e) {
 		echo $e->getMessage();
+	}
+
 	/* Repair the HTML filter's allowed elements and attributes */
 	// In 2.0.2 and 2.0.3 icms_core_Object::getVar() read every array value as an
 	// empty array. The installer of those releases starts the system module at
