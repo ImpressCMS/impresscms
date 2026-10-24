@@ -38,4 +38,9 @@ define("_DATABASEUPDATER_MSG_DB_VERSION_ERR", "Bijwerken van module dbversie nie
 define("_DATABASEUPDATER_LATESTVER", "Laatste database versie : <span class='currentVer'>%s</span><br />");
 define("_DATABASEUPDATER_MSG_CONFIG_ERR", "Niet mogelijk om config %s in te voegen<br />");
 define("_DATABASEUPDATER_MSG_CONFIG_SCC", "%s config succesvol ingevoegd<br />");
+
+// Added in 2.0.4
+define("_DATABASEUPDATER_MSG_RENAME_TABLE", 'Tabel %1$s succesvol hernoemd naar %2$s');
+define("_DATABASEUPDATER_MSG_RENAME_TABLE_ERR", "Fout bij het hernoemen van tabel %s");
+
 ?>
