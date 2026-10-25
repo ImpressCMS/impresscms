@@ -36,6 +36,22 @@ define("_MD_AM_SESSEXPIRE","Sessie duur");
 define("_MD_AM_SESSEXPIREDSC","Maximale duur van inactiviteit tijdens een sessie.<br />(alleen mogelijk indien <i>Gebruik PHP native sessie</i> is uitgeschakeld)");
 define("_MD_AM_KEEPALIVE","Sessies actief houden");
 define("_MD_AM_KEEPALIVEDSC","Selecteer ja om de sessie van ingelogde gebruikers actief te houden zolang ze een pagina van de site open hebben, zodat ze niet worden uitgelogd terwijl ze een lang bericht schrijven. Selecteer nee om sessies te laten verlopen na de ingestelde <i>Sessie duur</i>, ook als er nog een pagina open is.");
+
+// missing in this translation, which stopped the preferences pages
+define("_MD_AM_SMTPSECURE", "SMTP beveiligingsmethode");
+define("_MD_AM_SMTPSECUREDESC", "Beveiligingsmethode voor SMTP-authenticatie (standaard ssl).");
+define("_MD_AM_SMTPAUTHPORT", "SMTP-poort");
+define("_MD_AM_SMTPAUTHPORTDESC", "De poort van je SMTP-mailserver (standaard 465).");
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT", "IE Flash-compatibiliteit inschakelen");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRN", "Volledig scherm toestaan in Flash-objecten");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINES", "Regeleinden normaliseren");
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM", "Eigen filters toestaan");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAME", "Veilige iframes inschakelen");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP", "URL's voor veilige iframes");
+define("_MD_AM_ENC_RIPEMD256", "RIPEMD 256");
+define("_MD_AM_ENC_RIPEMD320", "RIPEMD 320");
+define("_MD_AM_ENC_SNEFRU256", "Snefru 256");
+define("_MD_AM_ENC_GOST", "Gost");
 define("_MD_AM_MYIP","Uw IP adres");
 define("_MD_AM_MYIPDSC","Dit IP adres zal niet meegeteld worden bij de reclame banners");
 define("_MD_AM_ALWDHTML","Toegestane HTML code in alle berichten");
