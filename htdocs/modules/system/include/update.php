@@ -277,6 +277,20 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		if ($dbVersion < $newDbVersion) {
 			// the system_modulecatalog table of the modulecatalog object is created by
 			// moduleUpgrade() above; the modules admin fills it from GitHub
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
+		}
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
+	/* Begin upgrade for trusted owners of GitHub modules */
+	if (!$abortUpdate) $newDbVersion = 51;
+	try {
+		if ($dbVersion < $newDbVersion) {
 			$criteria = new icms_db_criteria_Compo();
 			$criteria->add(new icms_db_criteria_Item('conf_modid', 0));
 			$criteria->add(new icms_db_criteria_Item('conf_name', 'module_trusted_owners'));
