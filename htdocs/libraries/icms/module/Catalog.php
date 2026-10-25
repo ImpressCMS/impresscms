@@ -370,7 +370,7 @@ class icms_module_Catalog {
 			'repo' => $repository['name'],
 			'dirname' => $repository['name'],
 			'description' => isset($repository['description']) ? (string) $repository['description'] : '',
-			'html_url' => $repository['html_url'],
+			'html_url' => self::githubUrl($repository['html_url']),
 			'stars' => isset($repository['stargazers_count']) ? (int) $repository['stargazers_count'] : 0,
 			'pushed_at' => isset($repository['pushed_at']) ? $repository['pushed_at'] : '',
 			'latest' => null
@@ -397,11 +397,21 @@ class icms_module_Catalog {
 			'version' => ltrim($release['tag_name'], 'vV'),
 			'name' => !empty($release['name']) ? $release['name'] : $release['tag_name'],
 			'published_at' => isset($release['published_at']) ? $release['published_at'] : '',
-			'html_url' => isset($release['html_url']) ? $release['html_url'] : '',
+			'html_url' => isset($release['html_url']) ? self::githubUrl($release['html_url']) : '',
 			'changelog' => isset($release['body']) ? (string) $release['body'] : '',
 			'download_url' => $download,
 			'prerelease' => !empty($release['prerelease'])
 		);
+	}
+
+	/**
+	 * Only keep links that point to github.com, so a link in the admin can never run script
+	 *
+	 * @param	string	$url
+	 * @return	string	the url, or '' when it is not a github.com url
+	 */
+	protected static function githubUrl($url) {
+		return strncmp((string) $url, 'https://github.com/', 19) === 0 ? (string) $url : '';
 	}
 
 	/**

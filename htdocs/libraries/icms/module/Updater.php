@@ -26,6 +26,12 @@ class icms_module_Updater {
 	/** Largest release zip that will be downloaded */
 	const MAX_DOWNLOAD_SIZE = 52428800;
 
+	/** Largest total size of the extracted release, against zip bombs */
+	const MAX_EXTRACTED_SIZE = 209715200;
+
+	/** Most files a release may hold */
+	const MAX_FILES = 20000;
+
 	/** Rows per INSERT when restoring a table */
 	const RESTORE_BATCH = 200;
 
@@ -159,9 +165,13 @@ class icms_module_Updater {
 			$this->errors[] = sprintf('Backup %s not found', $backupId);
 			return false;
 		}
+		if (!isset($backup['dirname']) || $this->safeDirname((string) $backup['dirname']) === false) {
+			return false;
+		}
 		$dir = $this->backupPath . '/' . $backup['id'];
 		$target = $this->modulesPath . '/' . $backup['dirname'];
-		$tables = array_unique(array_merge($backup['tables'], $backup['installed'] ? $currentTables : array()));
+		$tables = array_unique(array_merge((array) $backup['tables'], $backup['installed'] ? $currentTables : array()));
+		$tables = array_values(array_filter($tables, array($this, 'isModuleTable')));
 
 		try {
 			if ($backup['has_files']) {
@@ -244,7 +254,7 @@ class icms_module_Updater {
 			return null;
 		}
 		$backup = json_decode((string) file_get_contents($file), true);
-		return is_array($backup) ? $backup : null;
+		return is_array($backup) && isset($backup['id']) && $backup['id'] === $backupId ? $backup : null;
 	}
 
 	/**
@@ -388,11 +398,22 @@ class icms_module_Updater {
 		if ($zip->open($zipFile) !== true) {
 			throw new RuntimeException('The downloaded release is not a valid zip file');
 		}
+		if ($zip->numFiles > self::MAX_FILES) {
+			$zip->close();
+			throw new RuntimeException(sprintf('The release holds more than %d files', self::MAX_FILES));
+		}
+		$size = 0;
 		for ($i = 0; $i < $zip->numFiles; $i++) {
 			$name = str_replace('\\', '/', $zip->getNameIndex($i));
 			if ($name === '' || $name[0] === '/' || strpos($name, ':') !== false || in_array('..', explode('/', $name), true)) {
 				$zip->close();
 				throw new RuntimeException(sprintf('The release contains an unsafe path: %s', $name));
+			}
+			$stat = $zip->statIndex($i);
+			$size += $stat ? $stat['size'] : 0;
+			if ($size > self::MAX_EXTRACTED_SIZE) {
+				$zip->close();
+				throw new RuntimeException('The release is too large once extracted');
 			}
 		}
 		$this->makeDir($target);
@@ -672,6 +693,14 @@ class icms_module_Updater {
 		}
 		if (!is_dir($this->backupPath) || !is_writable($this->backupPath)) {
 			throw new RuntimeException(sprintf('The backup folder %s is not writable', $this->backupPath));
+		}
+		// the backups hold database contents: keep the web server from serving them,
+		// in case the trust path is inside the web root
+		if (!is_file($this->backupPath . '/.htaccess')) {
+			@file_put_contents($this->backupPath . '/.htaccess', "<IfModule mod_authz_core.c>\n\tRequire all denied\n</IfModule>\n<IfModule !mod_authz_core.c>\n\tDeny from all\n</IfModule>\n");
+		}
+		if (!is_file($this->backupPath . '/index.html')) {
+			@file_put_contents($this->backupPath . '/index.html', '<script>history.go(-1);</script>');
 		}
 	}
 
