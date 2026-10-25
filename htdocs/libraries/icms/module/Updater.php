@@ -298,7 +298,8 @@ class icms_module_Updater {
 			CURLOPT_PROTOCOLS => CURLPROTO_HTTPS,
 			CURLOPT_REDIR_PROTOCOLS => CURLPROTO_HTTPS,
 			CURLOPT_USERAGENT => 'ImpressCMS-ModuleUpdater/2.0',
-			CURLOPT_HTTPHEADER => array('Accept: application/octet-stream'),
+			// GitHub answers 415 on the source zipball when asked for application/octet-stream
+			CURLOPT_HTTPHEADER => array('Accept: */*'),
 			CURLOPT_CONNECTTIMEOUT => 10,
 			CURLOPT_TIMEOUT => 120,
 			CURLOPT_SSL_VERIFYPEER => true,
