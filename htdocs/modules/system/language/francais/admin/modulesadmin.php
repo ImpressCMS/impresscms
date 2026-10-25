@@ -90,5 +90,10 @@ define('_MD_AM_BACKUP_STATUS_OK', 'Updated');
 define('_MD_AM_BACKUP_STATUS_PENDING', 'Interrupted');
 define('_MD_AM_BACKUP_STATUS_FAILED', 'Failed, backup put back');
 define('_MD_AM_BACKUP_STATUS_ROLLEDBACK', 'Rolled back');
+define('_MD_AM_REMOVE', 'Delete from the site');
+define('_MD_AM_REMOVE_CONFIRM', 'Delete %1$s from the site? The folder %2$s and all backups of this module are deleted for good.');
+define('_MD_AM_REMOVE_DONE', '%s was deleted from the site.');
+define('_MD_AM_REMOVE_FAILED', 'Deleting %s failed.');
+define('_MD_AM_REMOVE_INSTALLED', '%s is installed. Uninstall it first.');
 
 ?>

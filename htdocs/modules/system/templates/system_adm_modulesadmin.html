@@ -117,6 +117,7 @@
       <td align='center'><{$module.status}></td>
       <td width='130px' align='center'>
         <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=install&module=<{$module.dirname}>"><img src="<{$xoops_url}>/modules/system/images/install.png" alt="<{$lang_install}>" title="<{$lang_install}>" /></a>
+        <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=remove&amp;module=<{$module.dirname|escape:'url'}>"><img src="<{$xoops_url}>/modules/system/images/delete.png" alt="<{$lang_remove}>" title="<{$lang_remove}>" /></a>
         <a href='javascript:openWithSelfMain("<{$xoops_url}>/modules/system/admin.php?fct=version&mid=<{$module.dirname}>","Info",300,230);'><img src="<{$xoops_url}>/modules/system/images/info.png" alt="<{$lang_info}>" title="<{$lang_info}>" /></a>
       </td>
     </tr>

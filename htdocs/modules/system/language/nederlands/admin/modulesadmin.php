@@ -171,3 +171,8 @@ define('_MD_AM_BACKUP_STATUS_OK', 'Bijgewerkt');
 define('_MD_AM_BACKUP_STATUS_PENDING', 'Onderbroken');
 define('_MD_AM_BACKUP_STATUS_FAILED', 'Mislukt, backup teruggezet');
 define('_MD_AM_BACKUP_STATUS_ROLLEDBACK', 'Teruggezet');
+define('_MD_AM_REMOVE', 'Verwijderen van de site');
+define('_MD_AM_REMOVE_CONFIRM', '%1$s verwijderen van de site? De map %2$s en alle backups van deze module worden definitief verwijderd.');
+define('_MD_AM_REMOVE_DONE', '%s is verwijderd van de site.');
+define('_MD_AM_REMOVE_FAILED', 'Verwijderen van %s is mislukt.');
+define('_MD_AM_REMOVE_INSTALLED', '%s is geïnstalleerd. Verwijder de installatie eerst.');

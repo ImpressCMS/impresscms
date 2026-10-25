@@ -74,6 +74,7 @@ function xoops_module_list($refreshCatalog = FALSE) {
 	$icmsAdminTpl->assign('lang_github_refresh', _MD_AM_GITHUB_REFRESH);
 	$icmsAdminTpl->assign('lang_github_install', _MD_AM_GITHUB_INSTALL);
 	$icmsAdminTpl->assign('lang_backups', _MD_AM_BACKUPS);
+	$icmsAdminTpl->assign('lang_remove', _MD_AM_REMOVE);
 
 	$catalog = new icms_module_Catalog();
 	$catalogModules = $catalog->getModules($refreshCatalog);

@@ -260,6 +260,39 @@ class icms_module_Updater {
 	}
 
 	/**
+	 * Remove a module from the site: its folder in the modules path and all its backups
+	 *
+	 * Only for modules that are not installed; the caller checks that.
+	 *
+	 * @param	string	$dirname
+	 * @return	bool
+	 */
+	public function removeModule($dirname) {
+		if ($this->safeDirname($dirname) === false) {
+			return false;
+		}
+		$target = $this->modulesPath . '/' . $dirname;
+		if (is_dir($target)) {
+			$this->invalidateOpcache($target);
+			icms_core_Filesystem::deleteRecursive($target);
+			clearstatcache();
+			if (is_dir($target)) {
+				$this->errors[] = sprintf('Could not delete %s; check the folder permissions', $target);
+				return false;
+			}
+			$this->messages[] = sprintf('Folder %s deleted', $target);
+		}
+		foreach ($this->getBackups($dirname) as $backup) {
+			if ($this->deleteBackup($backup['id'])) {
+				$this->messages[] = sprintf('Backup %s deleted', $backup['id']);
+			} else {
+				$this->errors[] = sprintf('Could not delete backup %s', $backup['id']);
+			}
+		}
+		return empty($this->errors);
+	}
+
+	/**
 	 * @param	bool	$ashtml
 	 * @return	mixed
 	 */

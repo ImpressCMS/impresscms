@@ -82,14 +82,14 @@ if (!empty($_POST)) {
 	extract($clean_POST);
 }
 
-if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok', 'refresh_catalog', 'github_update_ok', 'rollback_ok', 'delete_backup_ok'))) {
+if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok', 'refresh_catalog', 'github_update_ok', 'rollback_ok', 'delete_backup_ok', 'remove_ok'))) {
 	if (!icms::$security->check()) {
 		$op = 'list';
 	}
 }
 
 // module names are used in paths: only allow plain folder names for the GitHub operations
-if (in_array($op, array('github_update', 'github_update_ok')) && (!isset($module) || !is_string($module) || !preg_match('/^[A-Za-z0-9_-]+$/', $module))) {
+if (in_array($op, array('github_update', 'github_update_ok', 'remove', 'remove_ok')) && (!isset($module) || !is_string($module) || !preg_match('/^[A-Za-z0-9_-]+$/', $module))) {
 	$op = 'list';
 }
 
@@ -499,6 +499,30 @@ if ($op == 'delete_backup_ok') {
 		icms_core_Message::error(sprintf(_MD_AM_BACKUP_ROLLBACKFAIL, htmlspecialchars($backup, ENT_QUOTES)));
 	}
 	echo "<br /><a href='admin.php?fct=modulesadmin&amp;op=backups'>" . _MD_AM_BACKUPS . "</a>";
+	icms_cp_footer();
+	exit();
+}
+
+if ($op == 'remove' || $op == 'remove_ok') {
+	$installed = icms::handler('icms_module')->getByDirname($module);
+	$name = htmlspecialchars($module, ENT_QUOTES);
+	icms_cp_header();
+	if ((is_object($installed) && $installed->getVar('mid') > 0) || strtolower($module) === 'system') {
+		// installed modules are uninstalled first, the regular way
+		icms_core_Message::error(sprintf(_MD_AM_REMOVE_INSTALLED, $name));
+	} elseif ($op == 'remove') {
+		icms_core_Message::confirm(array('module' => $module, 'op' => 'remove_ok', 'fct' => 'modulesadmin'), 'admin.php',
+			sprintf(_MD_AM_REMOVE_CONFIRM, '<strong>' . $name . '</strong>', htmlspecialchars(ICMS_MODULES_PATH . '/' . $module, ENT_QUOTES)), _MD_AM_REMOVE);
+	} else {
+		$updater = xoops_module_github_updater();
+		if ($updater->removeModule($module)) {
+			icms_core_Message::result(sprintf(_MD_AM_REMOVE_DONE, $name));
+		} else {
+			icms_core_Message::error(sprintf(_MD_AM_REMOVE_FAILED, $name) . '<br />' . $updater->getErrors());
+		}
+		echo '<p>' . $updater->getMessages() . '</p>';
+	}
+	echo "<br /><a href='admin.php?fct=modulesadmin'>" . _MD_AM_BTOMADMIN . "</a>";
 	icms_cp_footer();
 	exit();
 }
