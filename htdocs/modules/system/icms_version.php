@@ -113,7 +113,8 @@ $modversion['object_items'] = [
 	 'autotasks',
 	 'customtag',
 	 'mimetype',
-	 'rating'];
+	 'rating',
+	 'modulecatalog'];
 
 /**
  * Install and update informations

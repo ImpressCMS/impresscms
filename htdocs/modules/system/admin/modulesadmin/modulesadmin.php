@@ -71,12 +71,7 @@ function xoops_module_list($refreshCatalog = FALSE) {
 	$icmsAdminTpl->assign('lang_installed', _MD_AM_INSTALLED);
 	$icmsAdminTpl->assign('lang_noninstall', _MD_AM_NONINSTALL);
 	$icmsAdminTpl->assign('lang_github_title', _MD_AM_GITHUB_TITLE);
-	$icmsAdminTpl->assign('lang_github_latest', _MD_AM_GITHUB_LATEST);
 	$icmsAdminTpl->assign('lang_github_refresh', _MD_AM_GITHUB_REFRESH);
-	$icmsAdminTpl->assign('lang_github_none', _MD_AM_GITHUB_NONE);
-	$icmsAdminTpl->assign('lang_github_description', _MD_AM_GITHUB_DESCRIPTION);
-	$icmsAdminTpl->assign('lang_github_norelease', _MD_AM_GITHUB_NORELEASE);
-	$icmsAdminTpl->assign('lang_github_view', _MD_AM_GITHUB_VIEW);
 	$icmsAdminTpl->assign('lang_github_install', _MD_AM_GITHUB_INSTALL);
 	$icmsAdminTpl->assign('lang_backups', _MD_AM_BACKUPS);
 
@@ -129,21 +124,7 @@ function xoops_module_list($refreshCatalog = FALSE) {
 		unset($module);
 	}
 
-	// modules on GitHub that are not in the modules folder yet
-	$present = array_map('strtolower', $dirlist);
-	foreach ($catalogModules as $key => $entry) {
-		if (in_array($key, $present)) {
-			continue;
-		}
-		$icmsAdminTpl->append('githubmodules', array(
-			'dirname' => $entry['dirname'],
-			'full_name' => $entry['full_name'],
-			'description' => $entry['description'],
-			'html_url' => $entry['html_url'],
-			'stars' => $entry['stars'],
-			'latest' => $entry['latest']
-		));
-	}
+	$icmsAdminTpl->assign('github_table', xoops_module_github_table($catalog, $catalogModules, $dirlist));
 
 	return $icmsAdminTpl->fetch('db:system_adm_modulesadmin.html');
 }
@@ -207,6 +188,47 @@ function xoops_module_backup_status($status) {
 		'rolledback' => _MD_AM_BACKUP_STATUS_ROLLEDBACK
 	);
 	return isset($labels[$status]) ? $labels[$status] : htmlspecialchars($status, ENT_QUOTES);
+}
+
+/**
+ * IPF table of the modules on GitHub that are not in the modules folder yet
+ *
+ * The table is a copy of the catalog, brought up to date when the catalog was fetched
+ * from GitHub during this request or when it is still empty.
+ *
+ * @param	icms_module_Catalog	$catalog
+ * @param	array	$catalogModules	the catalog's modules
+ * @param	array	$dirlist		module folders on disk
+ * @return	string
+ */
+function xoops_module_github_table(icms_module_Catalog $catalog, array $catalogModules, array $dirlist) {
+	$handler = icms_getModuleHandler('modulecatalog', 'system');
+	if ($catalog->isRefreshed() || ($catalogModules && $handler->getCount() == 0)) {
+		$handler->sync($catalogModules);
+	}
+
+	$criteria = new icms_db_criteria_Compo();
+	$present = array();
+	foreach ($dirlist as $dirname) {
+		if (preg_match('/^[A-Za-z0-9_-]+$/', $dirname)) {
+			$present[] = "'" . $dirname . "'";
+		}
+	}
+	if ($present) {
+		$criteria->add(new icms_db_criteria_Item('dirname', '(' . implode(',', $present) . ')', 'NOT IN'));
+	}
+
+	$table = new icms_ipf_view_Table($handler, $criteria, array());
+	$table->addColumn(new icms_ipf_view_Column('dirname', _GLOBAL_LEFT, 200, 'getRepositoryLink'));
+	$table->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT, FALSE, 'getDescriptionText'));
+	$table->addColumn(new icms_ipf_view_Column('latest_version', 'center', 100, 'getLatestLink'));
+	$table->addColumn(new icms_ipf_view_Column('published_at', 'center', 100, 'getPublishedDate'));
+	$table->addColumn(new icms_ipf_view_Column('stars', 'center', 60));
+	$table->addCustomAction('getInstallLink');
+	$table->addQuickSearch(array('dirname', 'full_name', 'description'));
+	$table->setDefaultSort('dirname');
+	$table->setDefaultOrder('ASC');
+	return $table->fetch();
 }
 
 /**

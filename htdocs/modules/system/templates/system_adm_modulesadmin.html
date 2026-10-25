@@ -125,32 +125,4 @@
 
 <br />
 <h2><{$lang_github_title}></h2>
-<table width='100%' border='0' class='outer' cellpadding='4' cellspacing='1'>
-  <tr align='center'>
-    <th><{$lang_module}></th>
-    <th><{$lang_github_description}></th>
-    <th><{$lang_github_latest}></th>
-    <th width='130px'><{$lang_action}></th>
-  </tr>
-  <{foreach item=module from=$githubmodules}>
-    <tr valign='middle' class="<{cycle values="even,odd"}>">
-      <td><b><{$module.dirname|escape}></b><br /><small><{$module.full_name|escape}></small></td>
-      <td><{$module.description|escape}></td>
-      <td align='center'>
-        <{if $module.latest}>
-          <a href="<{$module.latest.html_url|escape}>" rel="external"><{$module.latest.version|escape}></a>
-        <{else}>
-          <{$lang_github_norelease}>
-        <{/if}>
-      </td>
-      <td align='center'>
-        <{if $module.latest}>
-          <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=github_update&amp;module=<{$module.dirname|escape:'url'}>"><{$lang_github_install}></a><br />
-        <{/if}>
-        <a href="<{$module.html_url|escape}>" rel="external"><{$lang_github_view}></a>
-      </td>
-    </tr>
-  <{foreachelse}>
-    <tr class="even"><td colspan='4' align='center'><{$lang_github_none}></td></tr>
-  <{/foreach}>
-</table>
+<{$github_table}>

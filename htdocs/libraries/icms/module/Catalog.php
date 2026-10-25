@@ -52,6 +52,9 @@ class icms_module_Catalog {
 	/** @var bool a refresh was already attempted during this page request */
 	protected $refreshed = false;
 
+	/** @var bool the module list was fetched from GitHub during this page request */
+	protected $updated = false;
+
 	/**
 	 * @param	int		$ttl		seconds before the catalog is fetched again
 	 * @param	string	$cacheFile	file the catalog is cached in
@@ -136,6 +139,15 @@ class icms_module_Catalog {
 	}
 
 	/**
+	 * Was the module list fetched from GitHub during this page request?
+	 *
+	 * @return	bool
+	 */
+	public function isRefreshed() {
+		return $this->updated;
+	}
+
+	/**
 	 * When the catalog was last fetched from GitHub
 	 *
 	 * @return	int		unix timestamp, 0 if never
@@ -211,6 +223,7 @@ class icms_module_Catalog {
 		}
 
 		$this->cache['modules'] = $modules;
+		$this->updated = true;
 		$this->cache['fetched_at'] = time();
 		// after a partial refresh, try again in an hour instead of waiting the full lifetime
 		$this->cache['retry_after'] = empty($this->errors) ? 0 : time() + self::RETRY_DELAY;
