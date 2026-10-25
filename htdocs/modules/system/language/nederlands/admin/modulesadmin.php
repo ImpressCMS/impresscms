@@ -137,3 +137,15 @@ define('_MD_AM_GROUPPERM_DELETED', 'Groepsrechten verwijderd');
 define('_MD_AM_CONFIGOPTIONS_DELETE', 'Verwijderen module configuratie opties...');
 define('_MD_AM_CONFIGOPTION_DELETE_FAIL', 'FOUT: Kon configuratie opties niet verwijderen van de databank. Configuratie ID: %s');
 define('_MD_AM_CONFIGOPTION_DELETED', 'Configuratie gegevens verwijderd van de databank. Configuratie ID: %s');
+
+// Online module updates from GitHub
+define('_MD_AM_GITHUB_TITLE', 'Beschikbaar op GitHub');
+define('_MD_AM_GITHUB_LATEST', 'Laatste release');
+define('_MD_AM_GITHUB_NEWVERSION', 'Versie %s beschikbaar');
+define('_MD_AM_GITHUB_REFRESH', 'Nu op updates controleren');
+define('_MD_AM_GITHUB_CHECKED', 'Laatst gecontroleerd op GitHub: %s');
+define('_MD_AM_GITHUB_NEVERCHECKED', 'Nog niet gecontroleerd op GitHub');
+define('_MD_AM_GITHUB_NONE', 'Geen andere modules gevonden op GitHub');
+define('_MD_AM_GITHUB_DESCRIPTION', 'Omschrijving');
+define('_MD_AM_GITHUB_NORELEASE', 'Nog geen release');
+define('_MD_AM_GITHUB_VIEW', 'Bekijken op GitHub');

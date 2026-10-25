@@ -160,3 +160,14 @@ define('_MD_AM_CONFIGOPTIONS_DELETE', 'Deleting module config options...');
 define('_MD_AM_CONFIGOPTION_DELETE_FAIL', 'ERROR: Could not delete config data from the database. Config ID: %s');
 define('_MD_AM_CONFIGOPTION_DELETED', 'Config data deleted from the database. Config ID: %s');
 
+// Online module updates from GitHub
+define('_MD_AM_GITHUB_TITLE', 'Available on GitHub');
+define('_MD_AM_GITHUB_LATEST', 'Latest release');
+define('_MD_AM_GITHUB_NEWVERSION', 'Version %s available');
+define('_MD_AM_GITHUB_REFRESH', 'Check for updates now');
+define('_MD_AM_GITHUB_CHECKED', 'Last checked on GitHub: %s');
+define('_MD_AM_GITHUB_NEVERCHECKED', 'Not checked on GitHub yet');
+define('_MD_AM_GITHUB_NONE', 'No other modules found on GitHub');
+define('_MD_AM_GITHUB_DESCRIPTION', 'Description');
+define('_MD_AM_GITHUB_NORELEASE', 'No release yet');
+define('_MD_AM_GITHUB_VIEW', 'View on GitHub');

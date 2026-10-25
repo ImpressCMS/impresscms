@@ -37,7 +37,10 @@ class icms_module_Catalog {
 	/** @var int seconds before the catalog is fetched again */
 	protected $ttl;
 
-	/** @var array cache contents: fetched_at, blocked_until, responses (url => etag, body), modules */
+	/** Seconds to wait before retrying after a failed or partial refresh */
+	const RETRY_DELAY = 3600;
+
+	/** @var array cache contents: fetched_at, retry_after, blocked_until, responses (url => etag, body), modules */
 	protected $cache;
 
 	/** @var array */
@@ -45,6 +48,9 @@ class icms_module_Catalog {
 
 	/** @var array urls requested during the current refresh */
 	protected $requestedUrls = array();
+
+	/** @var bool a refresh was already attempted during this page request */
+	protected $refreshed = false;
 
 	/**
 	 * @param	int		$ttl		seconds before the catalog is fetched again
@@ -67,7 +73,7 @@ class icms_module_Catalog {
 	 * @return	array
 	 */
 	public function getModules($refresh = false) {
-		if ($refresh || $this->isExpired()) {
+		if (!$this->refreshed && ($refresh || $this->isExpired())) {
 			$this->refresh();
 		}
 		return $this->cache['modules'];
@@ -164,6 +170,7 @@ class icms_module_Catalog {
 	 * @return	bool
 	 */
 	public function refresh() {
+		$this->refreshed = true;
 		if ($this->cache['blocked_until'] > time()) {
 			$this->errors[] = sprintf('GitHub rate limit reached, retrying after %s', date('H:i', $this->cache['blocked_until']));
 			return false;
@@ -174,6 +181,7 @@ class icms_module_Catalog {
 		for ($page = 1; $page <= self::MAX_PAGES; $page++) {
 			$result = $this->request('/search/repositories?q=' . rawurlencode('topic:' . self::TOPIC) . '&sort=updated&per_page=100&page=' . $page);
 			if ($result === null) {
+				$this->cache['retry_after'] = time() + self::RETRY_DELAY;
 				$this->writeCache();
 				return false;
 			}
@@ -203,8 +211,9 @@ class icms_module_Catalog {
 		}
 
 		$this->cache['modules'] = $modules;
+		$this->cache['fetched_at'] = time();
 		// after a partial refresh, try again in an hour instead of waiting the full lifetime
-		$this->cache['fetched_at'] = empty($this->errors) ? time() : time() - max(0, $this->ttl - 3600);
+		$this->cache['retry_after'] = empty($this->errors) ? 0 : time() + self::RETRY_DELAY;
 		// forget the ETags of repositories that left the catalog
 		$this->cache['responses'] = array_intersect_key($this->cache['responses'], $this->requestedUrls);
 		$this->writeCache();
@@ -386,6 +395,9 @@ class icms_module_Catalog {
 	 * @return	bool
 	 */
 	protected function isExpired() {
+		if ($this->cache['retry_after'] > 0) {
+			return $this->cache['retry_after'] < time();
+		}
 		return $this->cache['fetched_at'] + $this->ttl < time();
 	}
 
@@ -393,7 +405,7 @@ class icms_module_Catalog {
 	 * @return	array
 	 */
 	protected function readCache() {
-		$cache = array('fetched_at' => 0, 'blocked_until' => 0, 'responses' => array(), 'modules' => array());
+		$cache = array('fetched_at' => 0, 'retry_after' => 0, 'blocked_until' => 0, 'responses' => array(), 'modules' => array());
 		if (is_file($this->cacheFile)) {
 			$data = json_decode((string) file_get_contents($this->cacheFile), true);
 			if (is_array($data)) {

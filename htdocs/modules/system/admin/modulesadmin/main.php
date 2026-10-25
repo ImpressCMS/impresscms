@@ -80,15 +80,15 @@ if (!empty($_POST)) {
 	extract($clean_POST);
 }
 
-if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
+if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok', 'refresh_catalog'))) {
 	if (!icms::$security->check()) {
 		$op = 'list';
 	}
 }
 
-if ($op == "list") {
+if ($op == "list" || $op == "refresh_catalog") {
 	icms_cp_header();
-	echo xoops_module_list();
+	echo xoops_module_list($op == "refresh_catalog");
 	icms_cp_footer();
 	exit();
 }

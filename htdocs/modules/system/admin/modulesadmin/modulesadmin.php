@@ -45,9 +45,10 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 /**
  * Logic and rendering for listing modules
  *
+ * @param	bool	$refreshCatalog	fetch the module catalog from GitHub, even when the cached one is still fresh
  * @return NULL Assigns content to the template
  */
-function xoops_module_list() {
+function xoops_module_list($refreshCatalog = FALSE) {
 	global $icmsAdminTpl, $icmsConfig;
 
 	$icmsAdminTpl->assign('lang_madmin', _MD_AM_MODADMIN);
@@ -69,6 +70,21 @@ function xoops_module_list() {
 	$icmsAdminTpl->assign('lang_install', _MD_AM_INSTALL);
 	$icmsAdminTpl->assign('lang_installed', _MD_AM_INSTALLED);
 	$icmsAdminTpl->assign('lang_noninstall', _MD_AM_NONINSTALL);
+	$icmsAdminTpl->assign('lang_github_title', _MD_AM_GITHUB_TITLE);
+	$icmsAdminTpl->assign('lang_github_latest', _MD_AM_GITHUB_LATEST);
+	$icmsAdminTpl->assign('lang_github_refresh', _MD_AM_GITHUB_REFRESH);
+	$icmsAdminTpl->assign('lang_github_none', _MD_AM_GITHUB_NONE);
+	$icmsAdminTpl->assign('lang_github_description', _MD_AM_GITHUB_DESCRIPTION);
+	$icmsAdminTpl->assign('lang_github_norelease', _MD_AM_GITHUB_NORELEASE);
+	$icmsAdminTpl->assign('lang_github_view', _MD_AM_GITHUB_VIEW);
+
+	$catalog = new icms_module_Catalog();
+	$catalogModules = $catalog->getModules($refreshCatalog);
+	$icmsAdminTpl->assign('github_checked', $catalog->getFetchedAt()
+		? sprintf(_MD_AM_GITHUB_CHECKED, formatTimestamp($catalog->getFetchedAt(), 'm'))
+		: _MD_AM_GITHUB_NEVERCHECKED);
+	$icmsAdminTpl->assign('github_errors', $catalog->getErrors());
+	$icmsAdminTpl->assign('github_token', icms::$security->getTokenHTML());
 
 	$module_handler = icms::handler('icms_module');
 	$installed_mods = $module_handler->getObjects();
@@ -90,6 +106,8 @@ function xoops_module_list() {
 			'last_update' => ($module->getVar('last_update') != 0) ? formatTimestamp($module->getVar('last_update'), 'm') : '&nbsp;',
 			'weight' => $module->getVar('weight'),
 			'support_site_url' => $module->getInfo('support_site_url'));
+		// compare with the version of the files on disk: those are what a download would replace
+		$mod['github'] = xoops_module_github_info($catalog, $module->getVar('dirname'), $module->getInfo('version'));
 		$icmsAdminTpl->append('modules', $mod);
 		$listed_mods[] = $module->getVar('dirname');
 	}
@@ -104,11 +122,50 @@ function xoops_module_list() {
 			continue;
 		}
 		$mod = array('dirname' => $module->getInfo('dirname'), 'name' => $module->getInfo('name'), 'image' => $module->getInfo('image'), 'version' => $module->getInfo('version'), 'status' => $module->getInfo('status'));
+		$mod['github'] = xoops_module_github_info($catalog, $file, $module->getInfo('version'));
 		$icmsAdminTpl->append('avmodules', $mod);
 		unset($module);
 	}
 
+	// modules on GitHub that are not in the modules folder yet
+	$present = array_map('strtolower', $dirlist);
+	foreach ($catalogModules as $key => $entry) {
+		if (in_array($key, $present)) {
+			continue;
+		}
+		$icmsAdminTpl->append('githubmodules', array(
+			'dirname' => $entry['dirname'],
+			'full_name' => $entry['full_name'],
+			'description' => $entry['description'],
+			'html_url' => $entry['html_url'],
+			'stars' => $entry['stars'],
+			'latest' => $entry['latest']
+		));
+	}
+
 	return $icmsAdminTpl->fetch('db:system_adm_modulesadmin.html');
+}
+
+/**
+ * GitHub information of a module for the modules list
+ *
+ * @param	icms_module_Catalog	$catalog
+ * @param	string	$dirname
+ * @param	string	$version	version of the module files
+ * @return	array|FALSE	repository url, latest release and whether it is newer; FALSE when the module is not on GitHub
+ */
+function xoops_module_github_info(icms_module_Catalog $catalog, $dirname, $version) {
+	$entry = $catalog->getModule($dirname);
+	if ($entry === NULL) {
+		return FALSE;
+	}
+	$hasUpdate = $catalog->hasUpdate($dirname, $version);
+	return array(
+		'html_url' => $entry['html_url'],
+		'latest' => $entry['latest'],
+		'has_update' => $hasUpdate,
+		'update_text' => $hasUpdate ? sprintf(_MD_AM_GITHUB_NEWVERSION, $entry['latest']['version']) : ''
+	);
 }
 
 /**

@@ -183,3 +183,15 @@ define('_MD_AM_GROUPPERM_DELETED', 'Permessi del gruppo cancellati');
 define('_MD_AM_CONFIGOPTIONS_DELETE', 'Opzioni di configurazione del modulo in corso di cancellazione ...');
 define('_MD_AM_CONFIGOPTION_DELETE_FAIL', 'ERRORE: non è stato possibile cancellare i dati di configurazione dal database. Configurazioni ID: %s');
 define('_MD_AM_CONFIGOPTION_DELETED', 'I dati di configurazione sono stati cancellati dal database. Config ID: %s');
+
+// Online module updates from GitHub
+define('_MD_AM_GITHUB_TITLE', 'Available on GitHub');
+define('_MD_AM_GITHUB_LATEST', 'Latest release');
+define('_MD_AM_GITHUB_NEWVERSION', 'Version %s available');
+define('_MD_AM_GITHUB_REFRESH', 'Check for updates now');
+define('_MD_AM_GITHUB_CHECKED', 'Last checked on GitHub: %s');
+define('_MD_AM_GITHUB_NEVERCHECKED', 'Not checked on GitHub yet');
+define('_MD_AM_GITHUB_NONE', 'No other modules found on GitHub');
+define('_MD_AM_GITHUB_DESCRIPTION', 'Description');
+define('_MD_AM_GITHUB_NORELEASE', 'No release yet');
+define('_MD_AM_GITHUB_VIEW', 'View on GitHub');
