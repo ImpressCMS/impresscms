@@ -176,3 +176,6 @@ define('_MD_AM_REMOVE_CONFIRM', '%1$s verwijderen van de site? De map %2$s en al
 define('_MD_AM_REMOVE_DONE', '%s is verwijderd van de site.');
 define('_MD_AM_REMOVE_FAILED', 'Verwijderen van %s is mislukt.');
 define('_MD_AM_REMOVE_INSTALLED', '%s is geïnstalleerd. Verwijder de installatie eerst.');
+
+// trusted owners of GitHub modules
+define('_MD_AM_GITHUB_OWNERS', 'Alleen modules van deze GitHub-eigenaars worden getoond: %s. <a href="%s">Wijzigen</a>');

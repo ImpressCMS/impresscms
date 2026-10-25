@@ -706,3 +706,7 @@ define("_MD_AM_ENC_RIPEMD256","RIPEMD 256");
 define("_MD_AM_ENC_RIPEMD320","RIPEMD 320");
 define("_MD_AM_ENC_SNEFRU256","Snefru 256");
 define("_MD_AM_ENC_GOST","Gost");
+
+// trusted owners of GitHub modules
+define("_MD_AM_TRUSTEDOWNERS", "Trusted GitHub owners for modules");
+define("_MD_AM_TRUSTEDOWNERSDSC", "GitHub accounts or organisations, separated by spaces, whose repositories with the topic <em>impresscms-module</em> are offered in the modules admin. Releases are installed as code on the site, so only add accounts you trust.");

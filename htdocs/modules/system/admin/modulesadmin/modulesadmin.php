@@ -83,6 +83,9 @@ function xoops_module_list($refreshCatalog = FALSE) {
 		: _MD_AM_GITHUB_NEVERCHECKED);
 	$icmsAdminTpl->assign('github_errors', $catalog->getErrors());
 	$icmsAdminTpl->assign('github_token', icms::$security->getTokenHTML());
+	$icmsAdminTpl->assign('github_owners', sprintf(_MD_AM_GITHUB_OWNERS,
+		htmlspecialchars(implode(', ', $catalog->getOwners()), ENT_QUOTES),
+		ICMS_MODULES_URL . '/system/admin.php?fct=preferences&amp;op=show&amp;confcat_id=' . ICMS_CONF));
 
 	$module_handler = icms::handler('icms_module');
 	$installed_mods = $module_handler->getObjects();
@@ -204,7 +207,10 @@ function xoops_module_backup_status($status) {
  */
 function xoops_module_github_table(icms_module_Catalog $catalog, array $catalogModules, array $dirlist) {
 	$handler = icms_getModuleHandler('modulecatalog', 'system');
-	if ($catalog->isRefreshed() || ($catalogModules && $handler->getCount() == 0)) {
+	// sync() only writes rows that changed, so a cached catalog costs one read; this also
+	// drops the rows of owners that are no longer trusted. An empty catalog that was not just
+	// fetched means the cache was cleared: keep the rows then
+	if ($catalogModules || $catalog->isRefreshed()) {
 		$handler->sync($catalogModules);
 	}
 
@@ -218,6 +224,16 @@ function xoops_module_github_table(icms_module_Catalog $catalog, array $catalogM
 	if ($present) {
 		$criteria->add(new icms_db_criteria_Item('dirname', '(' . implode(',', $present) . ')', 'NOT IN'));
 	}
+	// only trusted owners, also when the rows were stored before the owner list changed
+	$owners = new icms_db_criteria_Compo();
+	foreach ($catalog->getOwners() as $owner) {
+		// account names hold only letters, digits and dashes
+		$owners->add(new icms_db_criteria_Item('full_name', $owner . '/%', 'LIKE'), 'OR');
+	}
+	if (!$catalog->getOwners()) {
+		$owners->add(new icms_db_criteria_Item('catalogid', 0));
+	}
+	$criteria->add($owners);
 
 	$table = new icms_ipf_view_Table($handler, $criteria, array());
 	$table->addColumn(new icms_ipf_view_Column('dirname', _GLOBAL_LEFT, 200, 'getRepositoryLink'));

@@ -28,6 +28,9 @@ class icms_module_Catalog {
 	/** Maximum number of search result pages (100 repositories each) */
 	const MAX_PAGES = 3;
 
+	/** GitHub accounts trusted to publish modules, when the preference is not set */
+	const DEFAULT_OWNERS = 'ImpressCMS IPFModules fiammybe';
+
 	/** Stop calling GitHub when fewer requests than this remain in the current window */
 	const RATE_LIMIT_RESERVE = 5;
 
@@ -36,6 +39,9 @@ class icms_module_Catalog {
 
 	/** @var int seconds before the catalog is fetched again */
 	protected $ttl;
+
+	/** @var array lowercase GitHub accounts whose repositories are part of the catalog */
+	protected $owners;
 
 	/** Seconds to wait before retrying after a failed or partial refresh */
 	const RETRY_DELAY = 3600;
@@ -58,15 +64,69 @@ class icms_module_Catalog {
 	/**
 	 * @param	int		$ttl		seconds before the catalog is fetched again
 	 * @param	string	$cacheFile	file the catalog is cached in
+	 * @param	string	$owners		trusted GitHub accounts, separated by spaces or commas; the
+	 * 								'module_trusted_owners' preference when NULL
 	 */
-	public function __construct($ttl = 43200, $cacheFile = null) {
+	public function __construct($ttl = 43200, $cacheFile = null, $owners = null) {
 		$this->ttl = (int) $ttl;
 		$this->cacheFile = $cacheFile ?: ICMS_CACHE_PATH . '/github_module_catalog.json';
+		if ($owners === null) {
+			global $icmsConfig;
+			$owners = isset($icmsConfig['module_trusted_owners']) ? $icmsConfig['module_trusted_owners'] : self::DEFAULT_OWNERS;
+		}
+		$this->owners = self::parseOwners($owners);
 		$this->cache = $this->readCache();
 	}
 
 	/**
+	 * Turn a list of GitHub accounts into lowercase names, dropping anything that is not an account name
+	 *
+	 * @param	string	$owners	accounts separated by spaces, commas or semicolons
+	 * @return	array
+	 */
+	public static function parseOwners($owners) {
+		$ret = array();
+		foreach (preg_split('/[\s,;]+/', (string) $owners, -1, PREG_SPLIT_NO_EMPTY) as $owner) {
+			if (preg_match('/^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/', $owner)) {
+				$ret[] = strtolower($owner);
+			}
+		}
+		return array_values(array_unique($ret));
+	}
+
+	/**
+	 * GitHub accounts whose modules are offered
+	 *
+	 * @return	array	lowercase account names
+	 */
+	public function getOwners() {
+		return $this->owners;
+	}
+
+	/**
+	 * Position of an owner in the trusted list, lower is preferred
+	 *
+	 * @param	string	$owner
+	 * @return	int
+	 */
+	protected function ownerRank($owner) {
+		$rank = array_search(strtolower((string) $owner), $this->owners, true);
+		return $rank === false ? PHP_INT_MAX : $rank;
+	}
+
+	/**
+	 * @param	string	$owner
+	 * @return	bool
+	 */
+	protected function isTrusted($owner) {
+		return in_array(strtolower((string) $owner), $this->owners, true);
+	}
+
+	/**
 	 * Get all modules in the catalog, indexed by lowercase dirname
+	 *
+	 * Only repositories of trusted owners are returned: anyone can tag a repository with
+	 * the topic, and a release is installed as PHP code on the site.
 	 *
 	 * Every entry holds: full_name, owner, repo, dirname, description, html_url, stars,
 	 * pushed_at and latest (null when the repository has no release yet; otherwise
@@ -79,7 +139,13 @@ class icms_module_Catalog {
 		if (!$this->refreshed && ($refresh || $this->isExpired())) {
 			$this->refresh();
 		}
-		return $this->cache['modules'];
+		$ret = array();
+		foreach ($this->cache['modules'] as $key => $module) {
+			if (isset($module['owner']) && $this->isTrusted($module['owner'])) {
+				$ret[$key] = $module;
+			}
+		}
+		return $ret;
 	}
 
 	/**
@@ -205,12 +271,18 @@ class icms_module_Catalog {
 
 		$modules = array();
 		foreach ($repositories as $repository) {
-			if (!empty($repository['archived']) || !empty($repository['disabled'])) {
+			if (!empty($repository['archived']) || !empty($repository['disabled'])
+				|| !isset($repository['owner']['login']) || !$this->isTrusted($repository['owner']['login'])) {
 				continue;
 			}
 			$module = $this->parseRepository($repository);
 			$key = strtolower($module['dirname']);
-			$previous = isset($this->cache['modules'][$key]) ? $this->cache['modules'][$key] : null;
+			if (isset($modules[$key]) && $this->ownerRank($modules[$key]['owner']) <= $this->ownerRank($module['owner'])) {
+				// two trusted owners publish the same module: the owner listed first wins
+				continue;
+			}
+			$previous = isset($this->cache['modules'][$key]) && $this->cache['modules'][$key]['full_name'] === $module['full_name']
+				? $this->cache['modules'][$key] : null;
 
 			$release = $this->request('/repos/' . $module['full_name'] . '/releases/latest', true);
 			if ($release === null) {
@@ -223,6 +295,7 @@ class icms_module_Catalog {
 		}
 
 		$this->cache['modules'] = $modules;
+		$this->cache['owners'] = $this->owners;
 		$this->updated = true;
 		$this->cache['fetched_at'] = time();
 		// after a partial refresh, try again in an hour instead of waiting the full lifetime
@@ -421,6 +494,10 @@ class icms_module_Catalog {
 		if ($this->cache['retry_after'] > 0) {
 			return $this->cache['retry_after'] < time();
 		}
+		if ($this->cache['owners'] !== $this->owners) {
+			// the trusted owners changed since the last fetch
+			return true;
+		}
 		return $this->cache['fetched_at'] + $this->ttl < time();
 	}
 
@@ -428,7 +505,7 @@ class icms_module_Catalog {
 	 * @return	array
 	 */
 	protected function readCache() {
-		$cache = array('fetched_at' => 0, 'retry_after' => 0, 'blocked_until' => 0, 'responses' => array(), 'modules' => array());
+		$cache = array('fetched_at' => 0, 'retry_after' => 0, 'blocked_until' => 0, 'responses' => array(), 'modules' => array(), 'owners' => array());
 		if (is_file($this->cacheFile)) {
 			$data = json_decode((string) file_get_contents($this->cacheFile), true);
 			if (is_array($data)) {

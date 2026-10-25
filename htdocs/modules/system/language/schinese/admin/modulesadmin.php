@@ -198,3 +198,6 @@ define('_MD_AM_REMOVE_CONFIRM', 'Delete %1$s from the site? The folder %2$s and 
 define('_MD_AM_REMOVE_DONE', '%s was deleted from the site.');
 define('_MD_AM_REMOVE_FAILED', 'Deleting %s failed.');
 define('_MD_AM_REMOVE_INSTALLED', '%s is installed. Uninstall it first.');
+
+// trusted owners of GitHub modules
+define('_MD_AM_GITHUB_OWNERS', 'Only modules from these GitHub owners are shown: %s. <a href="%s">Change</a>');

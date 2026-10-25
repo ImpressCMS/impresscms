@@ -391,3 +391,7 @@ define("_MD_AM_SIGMAXLENGTHDSC","Nombre maximum de caract&egrave;res dans les si
 
 define("_MD_AM_USE_GOOGLE_ANA"," Activer Google Analytics ?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
+
+// trusted owners of GitHub modules
+define("_MD_AM_TRUSTEDOWNERS", "Trusted GitHub owners for modules");
+define("_MD_AM_TRUSTEDOWNERSDSC", "GitHub accounts or organisations, separated by spaces, whose repositories with the topic <em>impresscms-module</em> are offered in the modules admin. Releases are installed as code on the site, so only add accounts you trust.");

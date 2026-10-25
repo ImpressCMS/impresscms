@@ -277,6 +277,17 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		if ($dbVersion < $newDbVersion) {
 			// the system_modulecatalog table of the modulecatalog object is created by
 			// moduleUpgrade() above; the modules admin fills it from GitHub
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item('conf_modid', 0));
+			$criteria->add(new icms_db_criteria_Item('conf_name', 'module_trusted_owners'));
+			if (count(icms::$config->getConfigs($criteria)) == 0) {
+				$criteria = new icms_db_criteria_Compo();
+				$criteria->add(new icms_db_criteria_Item('conf_modid', 0));
+				$criteria->add(new icms_db_criteria_Item('conf_name', 'keepalive_enable'));
+				$keepaliveConfig = icms::$config->getConfigs($criteria);
+				$ownersOrder = count($keepaliveConfig) > 0 ? (int) $keepaliveConfig[0]->getVar('conf_order') + 1 : 0;
+				$icmsDatabaseUpdater->insertConfig(ICMS_CONF, 'module_trusted_owners', '_MD_AM_TRUSTEDOWNERS', icms_module_Catalog::DEFAULT_OWNERS, '_MD_AM_TRUSTEDOWNERSDSC', 'textbox', 'text', $ownersOrder);
+			}
 			if (!$abortUpdate) {
 				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
