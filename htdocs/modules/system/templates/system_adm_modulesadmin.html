@@ -5,6 +5,7 @@
   <input type='hidden' name='op' value='refresh_catalog' />
   <{$github_token}>
   <input type='submit' value='<{$lang_github_refresh}>' />
+  | <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=backups"><{$lang_backups}></a>
 </form>
 <{if $github_errors}>
   <div class="errorMsg"><{$github_errors}></div>
@@ -42,6 +43,7 @@
       <td align='center' valign="middle"><{$module.version}>
         <{if $module.github && $module.github.has_update}>
           <br /><a href="<{$module.github.latest.html_url|escape}>" rel="external" style="color: #ff0000; font-weight: bold;"><{$module.github.update_text|escape}></a>
+          <br /><a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=github_update&amp;module=<{$module.dirname|escape:'url'}>"><{$lang_github_install}></a>
         <{/if}>
       </td>
       <td align='center' valign="middle"><{$module.status}></td>
@@ -109,6 +111,7 @@
       <td align='center'><{$module.version}>
         <{if $module.github && $module.github.has_update}>
           <br /><a href="<{$module.github.latest.html_url|escape}>" rel="external" style="color: #ff0000; font-weight: bold;"><{$module.github.update_text|escape}></a>
+          <br /><a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=github_update&amp;module=<{$module.dirname|escape:'url'}>"><{$lang_github_install}></a>
         <{/if}>
       </td>
       <td align='center'><{$module.status}></td>
@@ -140,7 +143,12 @@
           <{$lang_github_norelease}>
         <{/if}>
       </td>
-      <td align='center'><a href="<{$module.html_url|escape}>" rel="external"><{$lang_github_view}></a></td>
+      <td align='center'>
+        <{if $module.latest}>
+          <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=github_update&amp;module=<{$module.dirname|escape:'url'}>"><{$lang_github_install}></a><br />
+        <{/if}>
+        <a href="<{$module.html_url|escape}>" rel="external"><{$lang_github_view}></a>
+      </td>
     </tr>
   <{foreachelse}>
     <tr class="even"><td colspan='4' align='center'><{$lang_github_none}></td></tr>

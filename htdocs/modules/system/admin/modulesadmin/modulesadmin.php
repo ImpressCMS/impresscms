@@ -77,6 +77,8 @@ function xoops_module_list($refreshCatalog = FALSE) {
 	$icmsAdminTpl->assign('lang_github_description', _MD_AM_GITHUB_DESCRIPTION);
 	$icmsAdminTpl->assign('lang_github_norelease', _MD_AM_GITHUB_NORELEASE);
 	$icmsAdminTpl->assign('lang_github_view', _MD_AM_GITHUB_VIEW);
+	$icmsAdminTpl->assign('lang_github_install', _MD_AM_GITHUB_INSTALL);
+	$icmsAdminTpl->assign('lang_backups', _MD_AM_BACKUPS);
 
 	$catalog = new icms_module_Catalog();
 	$catalogModules = $catalog->getModules($refreshCatalog);
@@ -144,6 +146,67 @@ function xoops_module_list($refreshCatalog = FALSE) {
 	}
 
 	return $icmsAdminTpl->fetch('db:system_adm_modulesadmin.html');
+}
+
+/**
+ * The updater that installs GitHub releases, with the catalog cached for the modules list
+ *
+ * @return icms_module_Updater
+ */
+function xoops_module_github_updater() {
+	return new icms_module_Updater(new icms_module_Catalog());
+}
+
+/**
+ * Run the regular module update and tell whether it succeeded
+ *
+ * Used after the files of an installed module were replaced, and again after a rollback
+ * to bring templates, blocks and config back in line with the restored files.
+ *
+ * @param	string	$dirname
+ * @return	bool
+ */
+function xoops_module_github_run_update($dirname) {
+	global $icmsGithubUpdateMessages;
+	$html = icms_module_update($dirname);
+	$icmsGithubUpdateMessages[] = $html;
+
+	// icms_module_update() only reports through its messages: look for its success line and failure lines
+	$okParts = explode('%s', _MD_AM_OKUPD);
+	$okMarker = strlen($okParts[0]) >= strlen(end($okParts)) ? $okParts[0] : end($okParts);
+	$failParts = explode('%s', _MD_AM_FAIL_EXEC);
+	return strpos($html, $okMarker) !== FALSE && strpos($html, $failParts[0]) === FALSE;
+}
+
+/**
+ * Tables the module files on disk declare
+ *
+ * @param	string	$dirname
+ * @return	array
+ */
+function xoops_module_github_tables($dirname) {
+	$module = icms::handler('icms_module')->create();
+	if (!$module->loadInfo($dirname, FALSE)) {
+		return array();
+	}
+	$tables = $module->getInfo('tables');
+	return is_array($tables) ? $tables : array();
+}
+
+/**
+ * Status of a backup, readable for administrators
+ *
+ * @param	string	$status
+ * @return	string
+ */
+function xoops_module_backup_status($status) {
+	$labels = array(
+		'ok' => _MD_AM_BACKUP_STATUS_OK,
+		'pending' => _MD_AM_BACKUP_STATUS_PENDING,
+		'failed' => _MD_AM_BACKUP_STATUS_FAILED,
+		'rolledback' => _MD_AM_BACKUP_STATUS_ROLLEDBACK
+	);
+	return isset($labels[$status]) ? $labels[$status] : htmlspecialchars($status, ENT_QUOTES);
 }
 
 /**
