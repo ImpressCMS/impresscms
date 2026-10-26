@@ -45,9 +45,10 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 /**
  * Logic and rendering for listing modules
  *
+ * @param	bool	$refreshCatalog	fetch the module catalog from GitHub, even when the cached one is still fresh
  * @return NULL Assigns content to the template
  */
-function xoops_module_list() {
+function xoops_module_list($refreshCatalog = FALSE) {
 	global $icmsAdminTpl, $icmsConfig;
 
 	$icmsAdminTpl->assign('lang_madmin', _MD_AM_MODADMIN);
@@ -69,6 +70,22 @@ function xoops_module_list() {
 	$icmsAdminTpl->assign('lang_install', _MD_AM_INSTALL);
 	$icmsAdminTpl->assign('lang_installed', _MD_AM_INSTALLED);
 	$icmsAdminTpl->assign('lang_noninstall', _MD_AM_NONINSTALL);
+	$icmsAdminTpl->assign('lang_github_title', _MD_AM_GITHUB_TITLE);
+	$icmsAdminTpl->assign('lang_github_refresh', _MD_AM_GITHUB_REFRESH);
+	$icmsAdminTpl->assign('lang_github_install', _MD_AM_GITHUB_INSTALL);
+	$icmsAdminTpl->assign('lang_backups', _MD_AM_BACKUPS);
+	$icmsAdminTpl->assign('lang_remove', _MD_AM_REMOVE);
+
+	$catalog = new icms_module_Catalog();
+	$catalogModules = $catalog->getModules($refreshCatalog);
+	$icmsAdminTpl->assign('github_checked', $catalog->getFetchedAt()
+		? sprintf(_MD_AM_GITHUB_CHECKED, formatTimestamp($catalog->getFetchedAt(), 'm'))
+		: _MD_AM_GITHUB_NEVERCHECKED);
+	$icmsAdminTpl->assign('github_errors', $catalog->getErrors());
+	$icmsAdminTpl->assign('github_token', icms::$security->getTokenHTML());
+	$icmsAdminTpl->assign('github_owners', sprintf(_MD_AM_GITHUB_OWNERS,
+		htmlspecialchars(implode(', ', $catalog->getOwners()), ENT_QUOTES),
+		ICMS_MODULES_URL . '/system/admin.php?fct=preferences&amp;op=show&amp;confcat_id=' . ICMS_CONF));
 
 	$module_handler = icms::handler('icms_module');
 	$installed_mods = $module_handler->getObjects();
@@ -90,6 +107,8 @@ function xoops_module_list() {
 			'last_update' => ($module->getVar('last_update') != 0) ? formatTimestamp($module->getVar('last_update'), 'm') : '&nbsp;',
 			'weight' => $module->getVar('weight'),
 			'support_site_url' => $module->getInfo('support_site_url'));
+		// compare with the version of the files on disk: those are what a download would replace
+		$mod['github'] = xoops_module_github_info($catalog, $module->getVar('dirname'), $module->getInfo('version'));
 		$icmsAdminTpl->append('modules', $mod);
 		$listed_mods[] = $module->getVar('dirname');
 	}
@@ -104,11 +123,151 @@ function xoops_module_list() {
 			continue;
 		}
 		$mod = array('dirname' => $module->getInfo('dirname'), 'name' => $module->getInfo('name'), 'image' => $module->getInfo('image'), 'version' => $module->getInfo('version'), 'status' => $module->getInfo('status'));
+		$mod['github'] = xoops_module_github_info($catalog, $file, $module->getInfo('version'));
 		$icmsAdminTpl->append('avmodules', $mod);
 		unset($module);
 	}
 
+	$icmsAdminTpl->assign('github_table', xoops_module_github_table($catalog, $catalogModules, $dirlist));
+
 	return $icmsAdminTpl->fetch('db:system_adm_modulesadmin.html');
+}
+
+/**
+ * The updater that installs GitHub releases, with the catalog cached for the modules list
+ *
+ * @return icms_module_Updater
+ */
+function xoops_module_github_updater() {
+	return new icms_module_Updater(new icms_module_Catalog());
+}
+
+/**
+ * Run the regular module update and tell whether it succeeded
+ *
+ * Used after the files of an installed module were replaced, and again after a rollback
+ * to bring templates, blocks and config back in line with the restored files.
+ *
+ * @param	string	$dirname
+ * @return	bool
+ */
+function xoops_module_github_run_update($dirname) {
+	global $icmsGithubUpdateMessages;
+	$html = icms_module_update($dirname);
+	$icmsGithubUpdateMessages[] = $html;
+
+	// icms_module_update() only reports through its messages: look for its success line and failure lines
+	$okParts = explode('%s', _MD_AM_OKUPD);
+	$okMarker = strlen($okParts[0]) >= strlen(end($okParts)) ? $okParts[0] : end($okParts);
+	$failParts = explode('%s', _MD_AM_FAIL_EXEC);
+	return strpos($html, $okMarker) !== FALSE && strpos($html, $failParts[0]) === FALSE;
+}
+
+/**
+ * Tables the module files on disk declare
+ *
+ * @param	string	$dirname
+ * @return	array
+ */
+function xoops_module_github_tables($dirname) {
+	$module = icms::handler('icms_module')->create();
+	if (!$module->loadInfo($dirname, FALSE)) {
+		return array();
+	}
+	$tables = $module->getInfo('tables');
+	return is_array($tables) ? $tables : array();
+}
+
+/**
+ * Status of a backup, readable for administrators
+ *
+ * @param	string	$status
+ * @return	string
+ */
+function xoops_module_backup_status($status) {
+	$labels = array(
+		'ok' => _MD_AM_BACKUP_STATUS_OK,
+		'pending' => _MD_AM_BACKUP_STATUS_PENDING,
+		'failed' => _MD_AM_BACKUP_STATUS_FAILED,
+		'rolledback' => _MD_AM_BACKUP_STATUS_ROLLEDBACK
+	);
+	return isset($labels[$status]) ? $labels[$status] : htmlspecialchars($status, ENT_QUOTES);
+}
+
+/**
+ * IPF table of the modules on GitHub that are not in the modules folder yet
+ *
+ * The table is a copy of the catalog, brought up to date when the catalog was fetched
+ * from GitHub during this request or when it is still empty.
+ *
+ * @param	icms_module_Catalog	$catalog
+ * @param	array	$catalogModules	the catalog's modules
+ * @param	array	$dirlist		module folders on disk
+ * @return	string
+ */
+function xoops_module_github_table(icms_module_Catalog $catalog, array $catalogModules, array $dirlist) {
+	$handler = icms_getModuleHandler('modulecatalog', 'system');
+	// sync() only writes rows that changed, so a cached catalog costs one read; this also
+	// drops the rows of owners that are no longer trusted. An empty catalog that was not just
+	// fetched means the cache was cleared: keep the rows then
+	if ($catalogModules || $catalog->isRefreshed()) {
+		$handler->sync($catalogModules);
+	}
+
+	$criteria = new icms_db_criteria_Compo();
+	$present = array();
+	foreach ($dirlist as $dirname) {
+		if (preg_match('/^[A-Za-z0-9_-]+$/', $dirname)) {
+			$present[] = "'" . $dirname . "'";
+		}
+	}
+	if ($present) {
+		$criteria->add(new icms_db_criteria_Item('dirname', '(' . implode(',', $present) . ')', 'NOT IN'));
+	}
+	// only trusted owners, also when the rows were stored before the owner list changed
+	$owners = new icms_db_criteria_Compo();
+	foreach ($catalog->getOwners() as $owner) {
+		// account names hold only letters, digits and dashes
+		$owners->add(new icms_db_criteria_Item('full_name', $owner . '/%', 'LIKE'), 'OR');
+	}
+	if (!$catalog->getOwners()) {
+		$owners->add(new icms_db_criteria_Item('catalogid', 0));
+	}
+	$criteria->add($owners);
+
+	$table = new icms_ipf_view_Table($handler, $criteria, array());
+	$table->addColumn(new icms_ipf_view_Column('dirname', _GLOBAL_LEFT, 200, 'getRepositoryLink'));
+	$table->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT, FALSE, 'getDescriptionText'));
+	$table->addColumn(new icms_ipf_view_Column('latest_version', 'center', 100, 'getLatestLink'));
+	$table->addColumn(new icms_ipf_view_Column('published_at', 'center', 100, 'getPublishedDate'));
+	$table->addColumn(new icms_ipf_view_Column('stars', 'center', 60));
+	$table->addCustomAction('getInstallLink');
+	$table->addQuickSearch(array('dirname', 'full_name', 'description'));
+	$table->setDefaultSort('dirname');
+	$table->setDefaultOrder('ASC');
+	return $table->fetch();
+}
+
+/**
+ * GitHub information of a module for the modules list
+ *
+ * @param	icms_module_Catalog	$catalog
+ * @param	string	$dirname
+ * @param	string	$version	version of the module files
+ * @return	array|FALSE	repository url, latest release and whether it is newer; FALSE when the module is not on GitHub
+ */
+function xoops_module_github_info(icms_module_Catalog $catalog, $dirname, $version) {
+	$entry = $catalog->getModule($dirname);
+	if ($entry === NULL) {
+		return FALSE;
+	}
+	$hasUpdate = $catalog->hasUpdate($dirname, $version);
+	return array(
+		'html_url' => $entry['html_url'],
+		'latest' => $entry['latest'],
+		'has_update' => $hasUpdate,
+		'update_text' => $hasUpdate ? sprintf(_MD_AM_GITHUB_NEWVERSION, $entry['latest']['version']) : ''
+	);
 }
 
 /**

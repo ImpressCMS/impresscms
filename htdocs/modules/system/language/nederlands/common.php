@@ -179,4 +179,6 @@ define('_CO_ICMS_ON', 'Aan');
 define('_CO_ICMS_OFF', 'Uit');
 define('_CO_ICMS_WARNING_ALPHA', 'Deze module komt zoals hij is, zonder welke garantie dan ook. De status van deze module is ALPHA, wat betekent dat hij nog steeds in actieve ontwikkeling is. Deze uitgave is alleen bedoelt voor <b>ontwikkeling en test doeleinden</b>, en wij raden u <b>ten zeerste</b> aan dat deze module niet wordt gebruikt binnen een actieve/online website of in een productieve omgeving.');
 define('_CO_ICMS_UPDATE_NEEDED', 'Uw systeemmodule dient te worden bijgewerkt');
+define('_CO_ICMS_URL_FILE', 'URL: ');
+define('_MD_AM_HELP_TIP', 'Helptekst bekijken');
 ?>

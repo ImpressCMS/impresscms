@@ -183,3 +183,45 @@ define('_MD_AM_GROUPPERM_DELETED', 'Permessi del gruppo cancellati');
 define('_MD_AM_CONFIGOPTIONS_DELETE', 'Opzioni di configurazione del modulo in corso di cancellazione ...');
 define('_MD_AM_CONFIGOPTION_DELETE_FAIL', 'ERRORE: non è stato possibile cancellare i dati di configurazione dal database. Configurazioni ID: %s');
 define('_MD_AM_CONFIGOPTION_DELETED', 'I dati di configurazione sono stati cancellati dal database. Config ID: %s');
+
+// Online module updates from GitHub
+define('_MD_AM_GITHUB_TITLE', 'Available on GitHub');
+define('_MD_AM_GITHUB_LATEST', 'Latest release');
+define('_MD_AM_GITHUB_NEWVERSION', 'Version %s available');
+define('_MD_AM_GITHUB_REFRESH', 'Check for updates now');
+define('_MD_AM_GITHUB_CHECKED', 'Last checked on GitHub: %s');
+define('_MD_AM_GITHUB_NEVERCHECKED', 'Not checked on GitHub yet');
+define('_MD_AM_GITHUB_DESCRIPTION', 'Description');
+define('_MD_AM_GITHUB_NORELEASE', 'No release yet');
+define('_MD_AM_GITHUB_REPOSITORY', 'Repository');
+define('_MD_AM_GITHUB_STARS', 'Stars');
+define('_MD_AM_GITHUB_PUBLISHED', 'Released');
+define('_MD_AM_GITHUB_INSTALL', 'Install from GitHub');
+define('_MD_AM_GITHUB_CONFIRM', 'Install %1$s %2$s from GitHub? The current files and tables are backed up first and put back if the update fails.');
+define('_MD_AM_GITHUB_INSTALLED_VERSION', 'Version of the files now: %s');
+define('_MD_AM_GITHUB_DONE', '%s was installed from GitHub.');
+define('_MD_AM_GITHUB_FAILED', 'Installing %s from GitHub failed. Nothing was changed, or the backup was put back.');
+define('_MD_AM_GITHUB_INSTALLNOW', 'The module files are in place. Install the module now to start using it.');
+define('_MD_AM_BACKUPS', 'Backups');
+define('_MD_AM_BACKUP_DATE', 'Date');
+define('_MD_AM_BACKUP_STATUS', 'Result');
+define('_MD_AM_BACKUP_ROLLBACK', 'Roll back');
+define('_MD_AM_BACKUP_DELETE', 'Delete');
+define('_MD_AM_BACKUP_NONE', 'No backups yet');
+define('_MD_AM_BACKUP_CONFIRM_ROLLBACK', 'Put %1$s version %2$s back from the backup of %3$s? Changes to the module data since then are lost.');
+define('_MD_AM_BACKUP_CONFIRM_DELETE', 'Delete the backup of %1$s from %2$s?');
+define('_MD_AM_BACKUP_ROLLEDBACK', '%s was rolled back.');
+define('_MD_AM_BACKUP_ROLLBACKFAIL', 'Rolling back %s failed.');
+define('_MD_AM_BACKUP_DELETED', 'The backup was deleted.');
+define('_MD_AM_BACKUP_STATUS_OK', 'Updated');
+define('_MD_AM_BACKUP_STATUS_PENDING', 'Interrupted');
+define('_MD_AM_BACKUP_STATUS_FAILED', 'Failed, backup put back');
+define('_MD_AM_BACKUP_STATUS_ROLLEDBACK', 'Rolled back');
+define('_MD_AM_REMOVE', 'Delete from the site');
+define('_MD_AM_REMOVE_CONFIRM', 'Delete %1$s from the site? The folder %2$s and all backups of this module are deleted for good.');
+define('_MD_AM_REMOVE_DONE', '%s was deleted from the site.');
+define('_MD_AM_REMOVE_FAILED', 'Deleting %s failed.');
+define('_MD_AM_REMOVE_INSTALLED', '%s is installed. Uninstall it first.');
+
+// trusted owners of GitHub modules
+define('_MD_AM_GITHUB_OWNERS', 'Only modules from these GitHub owners are shown: %s. <a href="%s">Change</a>');

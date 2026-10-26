@@ -49,6 +49,7 @@ icms_loadLanguageFile('system', 'blocksadmin', TRUE);
 
 /* default values */
 $op = 'list';
+$backup = '';
 
 /* Set filters */
 $filter_get = array();
@@ -63,6 +64,7 @@ $filter_post = array(
 	'module' => 'str',
 	'fct' => 'str',
 	'op' => 'str',
+	'backup' => 'str',
 	'confirm_submit' => 'str',
 	'confirm_back' => 'str'
 );
@@ -80,15 +82,20 @@ if (!empty($_POST)) {
 	extract($clean_POST);
 }
 
-if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
+if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok', 'refresh_catalog', 'github_update_ok', 'rollback_ok', 'delete_backup_ok', 'remove_ok'))) {
 	if (!icms::$security->check()) {
 		$op = 'list';
 	}
 }
 
-if ($op == "list") {
+// module names are used in paths: only allow plain folder names for the GitHub operations
+if (in_array($op, array('github_update', 'github_update_ok', 'remove', 'remove_ok')) && (!isset($module) || !is_string($module) || !preg_match('/^[A-Za-z0-9_-]+$/', $module))) {
+	$op = 'list';
+}
+
+if ($op == "list" || $op == "refresh_catalog") {
 	icms_cp_header();
-	echo xoops_module_list();
+	echo xoops_module_list($op == "refresh_catalog");
 	icms_cp_footer();
 	exit();
 }
@@ -333,6 +340,187 @@ if ($op == 'update_ok') {
 				echo $msg;
 			}
 		}
+	}
+	echo "<br /><a href='admin.php?fct=modulesadmin'>" . _MD_AM_BTOMADMIN . "</a>";
+	icms_cp_footer();
+	exit();
+}
+
+if ($op == 'github_update') {
+	$catalog = new icms_module_Catalog();
+	$entry = $catalog->getModule($module);
+	icms_cp_header();
+	if ($entry === NULL || empty($entry['latest'])) {
+		icms_core_Message::error(sprintf(_MD_AM_GITHUB_FAILED, htmlspecialchars($module, ENT_QUOTES)));
+	} else {
+		$current = icms::handler('icms_module')->create();
+		$msgs = sprintf(_MD_AM_GITHUB_CONFIRM, '<strong>' . htmlspecialchars($entry['dirname'], ENT_QUOTES) . '</strong>', htmlspecialchars($entry['latest']['version'], ENT_QUOTES));
+		if ($current->loadInfo($module, FALSE)) {
+			$msgs .= '<br /><br />' . sprintf(_MD_AM_GITHUB_INSTALLED_VERSION, htmlspecialchars($current->getInfo('version'), ENT_QUOTES));
+		}
+		if ($entry['latest']['changelog'] != '') {
+			$msgs .= '<div style="text-align:' . _GLOBAL_LEFT . '; font-weight: normal; max-height: 20em; overflow: auto;">'
+				. nl2br(htmlspecialchars($entry['latest']['changelog'], ENT_QUOTES)) . '</div>';
+		}
+		icms_core_Message::confirm(array('module' => $entry['dirname'], 'op' => 'github_update_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_GITHUB_INSTALL);
+	}
+	icms_cp_footer();
+	exit();
+}
+
+if ($op == 'github_update_ok') {
+	global $icmsGithubUpdateMessages;
+	$icmsGithubUpdateMessages = array();
+	$updater = xoops_module_github_updater();
+	$installed = icms::handler('icms_module')->getByDirname($module);
+	$isInstalled = is_object($installed) && $installed->getVar('mid') > 0;
+
+	$tables = array();
+	$version = '';
+	$files = icms::handler('icms_module')->create();
+	if ($files->loadInfo($module, FALSE)) {
+		$version = $files->getInfo('version');
+		if ($isInstalled && is_array($files->getInfo('tables'))) {
+			$tables = $files->getInfo('tables');
+		}
+	}
+
+	$result = $updater->update($module, $tables, $version,
+		$isInstalled ? 'xoops_module_github_run_update' : NULL,
+		'xoops_module_github_tables');
+
+	if ($isInstalled) {
+		$contents = impresscms_get_adminmenu();
+		xoops_module_write_admin_menu($contents);
+	}
+
+	icms_cp_header();
+	$name = htmlspecialchars($module, ENT_QUOTES);
+	if ($result !== FALSE) {
+		icms_core_Message::result(sprintf(_MD_AM_GITHUB_DONE, $name));
+	} else {
+		icms_core_Message::error(sprintf(_MD_AM_GITHUB_FAILED, $name) . '<br />' . $updater->getErrors());
+	}
+	echo '<p>' . $updater->getMessages() . '</p>';
+	foreach ($icmsGithubUpdateMessages as $msg) {
+		echo $msg;
+	}
+	if ($result !== FALSE && !$isInstalled) {
+		echo '<p>' . _MD_AM_GITHUB_INSTALLNOW . ' <a href="admin.php?fct=modulesadmin&amp;op=install&amp;module=' . urlencode($module) . '">' . _MD_AM_INSTALL . '</a></p>';
+	}
+	echo "<br /><a href='admin.php?fct=modulesadmin&amp;op=backups'>" . _MD_AM_BACKUPS . "</a> | <a href='admin.php?fct=modulesadmin'>" . _MD_AM_BTOMADMIN . "</a>";
+	icms_cp_footer();
+	exit();
+}
+
+if ($op == 'backups') {
+	$updater = xoops_module_github_updater();
+	icms_cp_header();
+	echo "<h4 style='text-align:" . _GLOBAL_LEFT . ";'>" . _MD_AM_BACKUPS . "</h4>"
+		. "<table width='100%' border='0' cellspacing='1' class='outer'>"
+		. "<tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _MD_AM_VERSION . "</th><th>" . _MD_AM_BACKUP_DATE . "</th><th>"
+		. _MD_AM_BACKUP_STATUS . "</th><th>" . _MD_AM_ACTION . "</th></tr>";
+	$backups = $updater->getBackups();
+	foreach ($backups as $i => $backup) {
+		$id = urlencode($backup['id']);
+		echo "<tr class='" . ($i % 2 ? 'odd' : 'even') . "' align='center'>"
+			. "<td>" . htmlspecialchars($backup['dirname'], ENT_QUOTES) . "</td>"
+			. "<td>" . htmlspecialchars($backup['version'] !== '' ? $backup['version'] : '-', ENT_QUOTES) . " &raquo; " . htmlspecialchars($backup['to_version'], ENT_QUOTES) . "</td>"
+			. "<td>" . formatTimestamp($backup['created'], 'm') . "</td>"
+			. "<td>" . xoops_module_backup_status($backup['status']) . "</td>"
+			. "<td><a href='admin.php?fct=modulesadmin&amp;op=rollback&amp;backup=" . $id . "'>" . _MD_AM_BACKUP_ROLLBACK . "</a>"
+			. " | <a href='admin.php?fct=modulesadmin&amp;op=delete_backup&amp;backup=" . $id . "'>" . _MD_AM_BACKUP_DELETE . "</a></td></tr>";
+	}
+	if (!$backups) {
+		echo "<tr class='even'><td colspan='5' align='center'>" . _MD_AM_BACKUP_NONE . "</td></tr>";
+	}
+	echo "</table><br /><a href='admin.php?fct=modulesadmin'>" . _MD_AM_BTOMADMIN . "</a>";
+	icms_cp_footer();
+	exit();
+}
+
+if ($op == 'rollback' || $op == 'delete_backup') {
+	$updater = xoops_module_github_updater();
+	$info = $updater->getBackup($backup);
+	icms_cp_header();
+	if ($info === NULL) {
+		icms_core_Message::error(sprintf(_MD_AM_BACKUP_ROLLBACKFAIL, htmlspecialchars($backup, ENT_QUOTES)));
+	} elseif ($op == 'rollback') {
+		$msgs = sprintf(_MD_AM_BACKUP_CONFIRM_ROLLBACK, '<strong>' . htmlspecialchars($info['dirname'], ENT_QUOTES) . '</strong>',
+			htmlspecialchars($info['version'], ENT_QUOTES), formatTimestamp($info['created'], 'm'));
+		icms_core_Message::confirm(array('backup' => $info['id'], 'op' => 'rollback_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_BACKUP_ROLLBACK);
+	} else {
+		$msgs = sprintf(_MD_AM_BACKUP_CONFIRM_DELETE, '<strong>' . htmlspecialchars($info['dirname'], ENT_QUOTES) . '</strong>', formatTimestamp($info['created'], 'm'));
+		icms_core_Message::confirm(array('backup' => $info['id'], 'op' => 'delete_backup_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_BACKUP_DELETE);
+	}
+	icms_cp_footer();
+	exit();
+}
+
+if ($op == 'rollback_ok') {
+	global $icmsGithubUpdateMessages;
+	$icmsGithubUpdateMessages = array();
+	$updater = xoops_module_github_updater();
+	$info = $updater->getBackup($backup);
+	$ok = FALSE;
+	if ($info !== NULL) {
+		$installed = icms::handler('icms_module')->getByDirname($info['dirname']);
+		$isInstalled = is_object($installed) && $installed->getVar('mid') > 0;
+		$ok = $updater->rollback($info['id'],
+			$isInstalled ? 'xoops_module_github_run_update' : NULL,
+			xoops_module_github_tables($info['dirname']));
+		if ($isInstalled) {
+			$contents = impresscms_get_adminmenu();
+			xoops_module_write_admin_menu($contents);
+		}
+	}
+	icms_cp_header();
+	$name = htmlspecialchars($info !== NULL ? $info['dirname'] : $backup, ENT_QUOTES);
+	if ($ok) {
+		icms_core_Message::result(sprintf(_MD_AM_BACKUP_ROLLEDBACK, $name));
+	} else {
+		icms_core_Message::error(sprintf(_MD_AM_BACKUP_ROLLBACKFAIL, $name) . '<br />' . $updater->getErrors());
+	}
+	echo '<p>' . $updater->getMessages() . '</p>';
+	foreach ($icmsGithubUpdateMessages as $msg) {
+		echo $msg;
+	}
+	echo "<br /><a href='admin.php?fct=modulesadmin&amp;op=backups'>" . _MD_AM_BACKUPS . "</a> | <a href='admin.php?fct=modulesadmin'>" . _MD_AM_BTOMADMIN . "</a>";
+	icms_cp_footer();
+	exit();
+}
+
+if ($op == 'delete_backup_ok') {
+	$updater = xoops_module_github_updater();
+	icms_cp_header();
+	if ($updater->deleteBackup($backup)) {
+		icms_core_Message::result(_MD_AM_BACKUP_DELETED);
+	} else {
+		icms_core_Message::error(sprintf(_MD_AM_BACKUP_ROLLBACKFAIL, htmlspecialchars($backup, ENT_QUOTES)));
+	}
+	echo "<br /><a href='admin.php?fct=modulesadmin&amp;op=backups'>" . _MD_AM_BACKUPS . "</a>";
+	icms_cp_footer();
+	exit();
+}
+
+if ($op == 'remove' || $op == 'remove_ok') {
+	$installed = icms::handler('icms_module')->getByDirname($module);
+	$name = htmlspecialchars($module, ENT_QUOTES);
+	icms_cp_header();
+	if ((is_object($installed) && $installed->getVar('mid') > 0) || strtolower($module) === 'system') {
+		// installed modules are uninstalled first, the regular way
+		icms_core_Message::error(sprintf(_MD_AM_REMOVE_INSTALLED, $name));
+	} elseif ($op == 'remove') {
+		icms_core_Message::confirm(array('module' => $module, 'op' => 'remove_ok', 'fct' => 'modulesadmin'), 'admin.php',
+			sprintf(_MD_AM_REMOVE_CONFIRM, '<strong>' . $name . '</strong>', htmlspecialchars(ICMS_MODULES_PATH . '/' . $module, ENT_QUOTES)), _MD_AM_REMOVE);
+	} else {
+		$updater = xoops_module_github_updater();
+		if ($updater->removeModule($module)) {
+			icms_core_Message::result(sprintf(_MD_AM_REMOVE_DONE, $name));
+		} else {
+			icms_core_Message::error(sprintf(_MD_AM_REMOVE_FAILED, $name) . '<br />' . $updater->getErrors());
+		}
+		echo '<p>' . $updater->getMessages() . '</p>';
 	}
 	echo "<br /><a href='admin.php?fct=modulesadmin'>" . _MD_AM_BTOMADMIN . "</a>";
 	icms_cp_footer();

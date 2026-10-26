@@ -137,3 +137,45 @@ define('_MD_AM_GROUPPERM_DELETED', 'Groepsrechten verwijderd');
 define('_MD_AM_CONFIGOPTIONS_DELETE', 'Verwijderen module configuratie opties...');
 define('_MD_AM_CONFIGOPTION_DELETE_FAIL', 'FOUT: Kon configuratie opties niet verwijderen van de databank. Configuratie ID: %s');
 define('_MD_AM_CONFIGOPTION_DELETED', 'Configuratie gegevens verwijderd van de databank. Configuratie ID: %s');
+
+// Online module updates from GitHub
+define('_MD_AM_GITHUB_TITLE', 'Beschikbaar op GitHub');
+define('_MD_AM_GITHUB_LATEST', 'Laatste release');
+define('_MD_AM_GITHUB_NEWVERSION', 'Versie %s beschikbaar');
+define('_MD_AM_GITHUB_REFRESH', 'Nu op updates controleren');
+define('_MD_AM_GITHUB_CHECKED', 'Laatst gecontroleerd op GitHub: %s');
+define('_MD_AM_GITHUB_NEVERCHECKED', 'Nog niet gecontroleerd op GitHub');
+define('_MD_AM_GITHUB_DESCRIPTION', 'Omschrijving');
+define('_MD_AM_GITHUB_NORELEASE', 'Nog geen release');
+define('_MD_AM_GITHUB_REPOSITORY', 'Repository');
+define('_MD_AM_GITHUB_STARS', 'Sterren');
+define('_MD_AM_GITHUB_PUBLISHED', 'Uitgebracht');
+define('_MD_AM_GITHUB_INSTALL', 'Installeren vanaf GitHub');
+define('_MD_AM_GITHUB_CONFIRM', '%1$s %2$s installeren vanaf GitHub? Eerst wordt een backup gemaakt van de huidige bestanden en tabellen, die teruggezet wordt als de update mislukt.');
+define('_MD_AM_GITHUB_INSTALLED_VERSION', 'Versie van de huidige bestanden: %s');
+define('_MD_AM_GITHUB_DONE', '%s is geïnstalleerd vanaf GitHub.');
+define('_MD_AM_GITHUB_FAILED', 'Installeren van %s vanaf GitHub is mislukt. Er is niets gewijzigd, of de backup is teruggezet.');
+define('_MD_AM_GITHUB_INSTALLNOW', 'De modulebestanden staan klaar. Installeer de module nu om ze te gebruiken.');
+define('_MD_AM_BACKUPS', 'Backups');
+define('_MD_AM_BACKUP_DATE', 'Datum');
+define('_MD_AM_BACKUP_STATUS', 'Resultaat');
+define('_MD_AM_BACKUP_ROLLBACK', 'Terugzetten');
+define('_MD_AM_BACKUP_DELETE', 'Verwijderen');
+define('_MD_AM_BACKUP_NONE', 'Nog geen backups');
+define('_MD_AM_BACKUP_CONFIRM_ROLLBACK', '%1$s versie %2$s terugzetten uit de backup van %3$s? Wijzigingen aan de modulegegevens sinds dan gaan verloren.');
+define('_MD_AM_BACKUP_CONFIRM_DELETE', 'De backup van %1$s van %2$s verwijderen?');
+define('_MD_AM_BACKUP_ROLLEDBACK', '%s is teruggezet.');
+define('_MD_AM_BACKUP_ROLLBACKFAIL', 'Terugzetten van %s is mislukt.');
+define('_MD_AM_BACKUP_DELETED', 'De backup is verwijderd.');
+define('_MD_AM_BACKUP_STATUS_OK', 'Bijgewerkt');
+define('_MD_AM_BACKUP_STATUS_PENDING', 'Onderbroken');
+define('_MD_AM_BACKUP_STATUS_FAILED', 'Mislukt, backup teruggezet');
+define('_MD_AM_BACKUP_STATUS_ROLLEDBACK', 'Teruggezet');
+define('_MD_AM_REMOVE', 'Verwijderen van de site');
+define('_MD_AM_REMOVE_CONFIRM', '%1$s verwijderen van de site? De map %2$s en alle backups van deze module worden definitief verwijderd.');
+define('_MD_AM_REMOVE_DONE', '%s is verwijderd van de site.');
+define('_MD_AM_REMOVE_FAILED', 'Verwijderen van %s is mislukt.');
+define('_MD_AM_REMOVE_INSTALLED', '%s is geïnstalleerd. Verwijder de installatie eerst.');
+
+// trusted owners of GitHub modules
+define('_MD_AM_GITHUB_OWNERS', 'Alleen modules van deze GitHub-eigenaars worden getoond: %s. <a href="%s">Wijzigen</a>');
