@@ -6,6 +6,7 @@
 * Build Version : 120
 
 ### What's Changed
+* deprecate:The XML-RPC library (`xmlrpc.php` and `libraries/xml/rpc`) is deprecated and will be removed in version 3.0
 * fix:Fix system module update resetting db version to 47 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1723
 * fix:Array values no longer read as empty (2.0.2/2.0.3) and repair the HTML filter's allowed lists by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1731
 * fix:Use lowercase table names for IPF objects by @skenow in https://github.com/ImpressCMS/impresscms/pull/1730
