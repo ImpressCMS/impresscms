@@ -524,38 +524,40 @@ function &icms_getModuleInfo($moduleName = false)
 function &icms_getModuleConfig($moduleName = false)
 {
 	static $icmsConfigs;
-	if(isset ($icmsConfigs[$moduleName]))
-	{
-		$ret = & $icmsConfigs[$moduleName];
-		return $ret;
-	}
-	global  $icmsModuleConfig;
-	if(!$moduleName)
-	{
-		if(isset(icms::$module) && is_object(icms::$module))
-		{
-			$icmsConfigs[icms::$module->getVar('dirname')] = & $icmsModuleConfig;
-			return $icmsConfigs[icms::$module->getVar('dirname')];
-		}
-	}
-	// if we still did not found the icmsModule, this is because there is none
-	if(!$moduleName)
-	{
-		$ret = false;
-		return $ret;
-	}
-	if(isset(icms::$module) && is_object(icms::$module) && icms::$module->getVar('dirname') == $moduleName) {$icmsConfigs[$moduleName] = & $icmsModuleConfig;}
-	else
-	{
-		$module = & icms_getModuleInfo($moduleName);
-		if(!is_object($module))
-		{
+	$currentModule = (isset(icms::$module) && is_object(icms::$module)) ? icms::$module : null;
+	if (!$moduleName) {
+		// if there is no current module, there is no config to return
+		if ($currentModule === null) {
 			$ret = false;
 			return $ret;
 		}
-		$hModConfig = icms::handler('icms_config');
-		$icmsConfigs[$moduleName] = & $hModConfig->getConfigsByCat(0, $module->getVar('mid'));
+		$moduleName = $currentModule->getVar('dirname');
 	}
+	if (isset($icmsConfigs[$moduleName])) {
+		$ret = & $icmsConfigs[$moduleName];
+		return $ret;
+	}
+	if ($currentModule !== null && $currentModule->getVar('dirname') == $moduleName) {
+		global $icmsModuleConfig;
+		// ImpressCMS 2 no longer sets the global $icmsModuleConfig, fall back to the module's own config
+		if (is_array($icmsModuleConfig)) {
+			$icmsConfigs[$moduleName] = & $icmsModuleConfig;
+			return $icmsConfigs[$moduleName];
+		}
+		if (is_array($currentModule->config)) {
+			$icmsConfigs[$moduleName] = & $currentModule->config;
+			return $icmsConfigs[$moduleName];
+		}
+		$module = $currentModule;
+	} else {
+		$module = & icms_getModuleInfo($moduleName);
+		if (!is_object($module)) {
+			$ret = false;
+			return $ret;
+		}
+	}
+	$hModConfig = icms::handler('icms_config');
+	$icmsConfigs[$moduleName] = $hModConfig->getConfigsByCat(0, $module->getVar('mid'));
 	return $icmsConfigs[$moduleName];
 }
 
