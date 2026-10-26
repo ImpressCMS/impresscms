@@ -36,4 +36,11 @@ define("_DATABASEUPDATER_LATESTVER", "Dernière version de la db : <span class='c
 define("_DATABASEUPDATER_MSG_CONFIG_ERR", "Impossible d'insérer configuration %s");
 define("_DATABASEUPDATER_MSG_CONFIG_SCC", "Configuration %s ajouté");
 
+// Added in 2.0.4
+define("_DATABASEUPDATER_MSG_RENAME_TABLE", 'Table %1$s renomm&eacute;e en %2$s avec succ&egrave;s');
+define("_DATABASEUPDATER_MSG_RENAME_TABLE_ERR", "Erreur lors du renommage de la table %s");
+
+define("_DATABASEUPDATER_MSG_QUERY_FAILED", "Requ&ecirc;te &eacute;chou&eacute;e : %s");
+define("_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL", "Requ&ecirc;te r&eacute;ussie : %s");
+
 ?>
