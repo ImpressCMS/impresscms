@@ -156,6 +156,7 @@ class SystemCustomtagHandler extends icms_ipf_Handler {
 	 * @param object $db
 	 */
 	public function __construct($db) {
+		icms_loadLanguageFile('system', 'customtag', true);
 		parent::__construct($db, 'customtag', 'customtagid', 'name', 'description', 'system');
 		$this->addPermission('view_customtag', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC);
 	}
