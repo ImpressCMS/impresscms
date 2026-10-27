@@ -30,6 +30,7 @@
  * @license      http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package      core
  * @since        XOOPS
+ * @deprecated    The XML-RPC endpoint will be removed in version 3.0
  * @author       http://www.xoops.org The XOOPS Project
  * @author       Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version      $Id: xmlrpc.php 12313 2013-09-15 21:14:35Z skenow $
@@ -37,6 +38,7 @@
 
 define('XOOPS_XMLRPC', 1);
 include './mainfile.php';
+icms_core_Debug::setDeprecated('xmlrpc.php', sprintf(_CORE_REMOVE_IN_VERSION, '3.0'));
 error_reporting(0);
 include_once ICMS_LIBRARIES_PATH . '/xml/rpc/xmlrpctag.php';
 include_once ICMS_LIBRARIES_PATH . '/xml/rpc/xmlrpcparser.php';

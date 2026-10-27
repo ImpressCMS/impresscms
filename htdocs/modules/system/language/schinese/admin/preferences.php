@@ -689,4 +689,16 @@ define('_MD_AM_CENSOR_DSC', '管理站点中不允许使用的语言');
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM","允许自定义筛选器");
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC","允许自定义筛选器?<br /><br />如果启用，则可使用自定义的筛选器。<br />在此路径下'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
 
+define("_MD_AM_KEEPALIVE", "保持会话活动");
+define("_MD_AM_KEEPALIVEDSC", "选择“是”可在已登录用户打开站点页面期间保持其会话有效，以免他们在撰写长篇内容时被注销。选择“否”则会话将在会话过期时间后过期，即使页面仍处于打开状态。");
+
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAME", "启用安全 Iframe");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC", "是否允许在文档中使用 Iframe，并附加多项额外的安全功能以防止脚本执行。启用前必须先在“安全 Iframe 网址”中添加安全的域名！");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP", "安全 Iframe 网址");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC", "允许在您的网站上显示 iframe 内容的网址列表，将与 iframe 的 URI 进行匹配。这种方式不够灵活，但足以应付 iframe 最常见的用途：嵌入视频。<br />由站长明确允许的站点，可避免未知站点在您的网站上显示您无法控制的 iframe 内容。<br /><br />
+    示例：<br /><br />
+    http://www.youtube.com/embed/ - 允许 YouTube 视频<br />
+    http://player.vimeo.com/video/ - 允许 Vimeo 视频<br />
+    http://www.youtube.com/embed/|http://player.vimeo.com/video/ - 两者都允许<br /><br />必须启用 HTML 安全 Iframe 才能生效。");
+
 ?>

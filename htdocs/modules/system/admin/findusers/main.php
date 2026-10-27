@@ -35,8 +35,8 @@
  * @license LICENSE.txt
  * @package Administration
  * @subpackage Users
- * @version SVN: $Id: main.php 12313 2013-09-15 21:14:35Z skenow $
  */
+
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
@@ -44,7 +44,16 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 /* set default values */
 $op = 'form';
 
-$filter_post = array();
+$filter_post = array(
+	'user_lastlog_more' => 'int',
+	'user_lastlog_less' => 'int',
+	'user_reg_more' => 'int',
+	'user_reg_less' => 'int',
+	'user_posts_more' => 'int',
+	'user_posts_less' => 'int',
+	'limit' => 'int',
+);
+
 $filter_get = array();
 
 if (!empty($_POST)) {
@@ -64,7 +73,7 @@ if ($op == "form") {
 	$member_handler = icms::handler('icms_member');
 	$acttotal = icms_conv_nr2local($member_handler->getUserCount(new icms_db_criteria_Item('level', 0, '>')));
 	$inacttotal = icms_conv_nr2local($member_handler->getUserCount(new icms_db_criteria_Item('level', 0)));
-	$group_select = new icms_form_elements_select_Group(_AM_GROUPS, "selgroups", NULL, FALSE, 5, TRUE);
+	$group_select = new icms_form_elements_select_Group(_AM_GROUPS, "selgroups", null, false, 5, true);
 	$uname_text = new icms_form_elements_Text("", "user_uname", 30, 60);
 	$uname_match = new icms_form_elements_select_Matchoption("", "user_uname_match");
 	$uname_tray = new icms_form_elements_Tray(_AM_UNAME, "&nbsp;");
@@ -132,7 +141,7 @@ if ($op == "form") {
 	$op_hidden = new icms_form_elements_Hidden("op", "submit");
 	$submit_button = new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit");
 
-	$form = new icms_form_Theme(_AM_FINDUS, "uesr_findform", "admin.php", 'post', TRUE);
+	$form = new icms_form_Theme(_AM_FINDUS, "uesr_findform", "admin.php", 'post', true);
 	$form->addElement($uname_tray);
 	$form->addElement($name_tray);
 	$form->addElement($login_name_tray);
@@ -266,8 +275,8 @@ if ($op == "form") {
 		}
 	}
 	if (!empty($user_url)) {
-		$url = formatURL(trim($user_url));
-		$criteria->add(new icms_db_criteria_Item('url', $url . '%', 'LIKE'));
+		$url = filter_var($user_url, FILTER_SANITIZE_URL);
+		$criteria->add(new icms_db_criteria_Item('url', '%' . $url . '%', 'LIKE'));
 	}
 	if (!empty($user_icq)) {
 		$match = (!empty($user_icq_match)) ? (int) $user_icq_match : XOOPS_MATCH_START;
@@ -448,7 +457,7 @@ if ($op == "form") {
 		$criteria->setOrder($order);
 		$criteria->setLimit($limit);
 		$criteria->setStart($start);
-		$foundusers = &$member_handler->getUsersByGroupLink($groups, $criteria, TRUE);
+		$foundusers = &$member_handler->getUsersByGroupLink($groups, $criteria, true);
 		$ucount = 0;
 		foreach (array_keys($foundusers) as $j) {
 			if ($ucount % 2 == 0) {
@@ -504,7 +513,7 @@ if ($op == "form") {
 					// regenerate token value
 					$hiddenform .= icms::$security->getTokenHTML() . "\n";
 				} else {
-					$hiddenform .= "<input type='hidden' name='" . icms_core_DataFilter::htmlSpecialChars($k) . "' value='" . icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($v)) . "' />\n";
+					$hiddenform .= "<input type='hidden' name='" . icms_core_DataFilter::htmlSpecialChars($k) . "' value='" . icms_core_DataFilter::htmlSpecialChars($v) . "' />\n";
 				}
 			}
 			if (!isset($limit)) {
@@ -547,4 +556,3 @@ if ($op == "form") {
 	redirect_header('admin.php?fct=findusers', 3, implode('<br />', icms::$security->getErrors()));
 }
 icms_cp_footer();
-

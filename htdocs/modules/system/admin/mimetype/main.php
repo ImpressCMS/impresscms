@@ -44,6 +44,7 @@ function editmimetype($showmenu = FALSE, $mimetypeid = 0) {
 	}
 }
 icms_loadLanguageFile('system', 'common');
+global $icmsAdminTpl, $icms_mimetype_handler;
 
 $icms_mimetype_handler = icms_getModuleHandler('mimetype');
 
@@ -82,16 +83,19 @@ switch ($op) {
 		break;
 
 	case "addmimetype":
+		global $icms_mimetype_handler;
 		$controller = new icms_ipf_Controller($icms_mimetype_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_MIMETYPE_CREATED, _CO_ICMS_MIMETYPE_MODIFIED);
 		break;
 
 	case "del":
+		global $icms_mimetype_handler;
 		$controller = new icms_ipf_Controller($icms_mimetype_handler);
 		$controller->handleObjectDeletion();
 		break;
 
 	default:
+		global $icmsAdminTpl, $icms_mimetype_handler;
 		icms_cp_header();
 
 		$objectTable = new icms_ipf_view_Table($icms_mimetype_handler);

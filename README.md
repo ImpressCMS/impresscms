@@ -15,8 +15,8 @@
 
 
 
-# ImpressCMS 2.0.1
-ImpressCMS is a community developed Content Management System build on PHP and MySQL.
+# ImpressCMS 2.0.4
+ImpressCMS is a community developed Content Management System build on PHP and MySQL with a focus on speed, support for multiple languages and security
 
 This tool makes maintaining a website as easy as writing a word document.
 
@@ -84,6 +84,22 @@ If you not sure how can be possible to work with Git or/and GitHub, try [interac
 ImpressCMS is built to work with multiple languages, for the user interface of the administration interface to the content managed on the site.
 
 We use Crowdin to manage our translations, please check out [https://impresscms.crowdin.com](https://impresscms.crowdin.com/u/projects/1)
+## Package creation
+`bin/build-package` builds a release zip with the contents of `htdocs/` in the root of the archive, ready to be uploaded to a web root.
+
+```bash
+php bin/build-package [--ref=<git ref>] [--output=<zip>]
+```
+
+- `--ref` is the revision to package. It defaults to `HEAD`, the commit your working directory is currently on.
+- `--output` is the zip file to write. It defaults to `var/dist/<version>-<commit>.zip`, for example `var/dist/impresscms-2.0.4-beta-ec86ae111.zip`. The version comes from `htdocs/include/version.php`.
+
+The script selects a **revision**, not a branch. The ref is resolved to a commit with `git rev-parse`, so a branch name, a tag or a commit hash all work (for example `--ref=2.0.x` or `--ref=v2.0.4_beta`). Only what is committed in that revision ends up in the package: uncommitted changes and files ignored by Git are never included. The short commit hash is part of the file name, so you can always see which commit a package was built from.
+
+Without `--ref` the script packages whatever branch is checked out. For a release, pass a tag or an explicit branch so the result does not depend on the current checkout.
+
+The PHP `zip` extension is required.
+
 ## License
 <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms?ref=badge_large"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FImpressCMS%2Fimpresscms.svg?type=large" alt="FOSSA Status" align="right" /></a>
 ImpressCMS is licensed right now in <a href="https://github.com/ImpressCMS/impresscms/blob/HEAD/LICENSE">GPL 2.0 license</a> but is depended on libraries that uses other compatible open source licenses.

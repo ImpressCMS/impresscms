@@ -42,6 +42,7 @@ function editautotasks($showmenu = FALSE, $autotasksid = 0, $clone = FALSE) {
 
 }
 icms_loadLanguageFile('system', 'common');
+global $icmsAdminTpl, $icms_autotasks_handler;
 
 $icms_autotasks_handler = icms_getModuleHandler('autotasks', 'system');
 
@@ -67,18 +68,20 @@ switch ($op) {
 		break;
 
 	case "addautotasks":
+		global $icms_autotasks_handler;
 		$controller = new icms_ipf_Controller($icms_autotasks_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_AUTOTASKS_CREATED, _CO_ICMS_AUTOTASKS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=autotasks');
 		break;
 
 	case "del":
+		global $icms_autotasks_handler;
 		$controller = new icms_ipf_Controller($icms_autotasks_handler);
 		$controller->handleObjectDeletion();
 
 		break;
 
 	default:
-
+		global $icmsAdminTpl, $icms_autotasks_handler;
 		icms_cp_header();
 
 		$objectTable = new icms_ipf_view_Table($icms_autotasks_handler, FALSE, array('edit'));

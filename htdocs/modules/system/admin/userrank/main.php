@@ -70,6 +70,7 @@ function edituserrank($showmenu = FALSE, $rank_id = 0, $clone = FALSE) {
 	}
 }
 
+global $icmsAdminTpl, $icms_userrank_handler;
 $icms_userrank_handler = icms_getModuleHandler("userrank", "system");
 
 /*
@@ -115,16 +116,19 @@ switch ($op) {
 		break;
 
 	case "adduserrank":
+		global $icms_userrank_handler;
 		$controller = new icms_ipf_Controller($icms_userrank_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_USERRANKS_CREATED, _CO_ICMS_USERRANKS_MODIFIED);
 		break;
 
 	case "del":
+		global $icms_userrank_handler;
 		$controller = new icms_ipf_Controller($icms_userrank_handler);
 		$controller->handleObjectDeletion();
 		break;
 
 	default:
+		global $icmsAdminTpl, $icms_userrank_handler;
 		icms_cp_header();
 		$objectTable = new icms_ipf_view_Table($icms_userrank_handler);
 		$objectTable->addColumn(new icms_ipf_view_Column("rank_title", _GLOBAL_LEFT, FALSE, "getRankTitle"));

@@ -26,6 +26,8 @@ class icms_core_Versionchecker {
 	 * @public $errors array
 	 */
 	public $errors = array();
+	public $installed = array();
+	public $latest = array();
 
 	/*
 	 * URL of the XML containing version information

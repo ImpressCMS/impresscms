@@ -83,12 +83,12 @@ try {
 		/** should we throw an exception? The old methods would set $abortUpdate and exit
 		 * if the steps weren't successful
 		 */
-	}
-
-	/* Finish up this portion of the update */
-	if (!$abortUpdate) {
-		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+	
+		/* Finish up this portion of the update */
+		if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+		}
 	}
 }
 

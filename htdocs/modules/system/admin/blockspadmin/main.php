@@ -41,6 +41,7 @@ function editblockposition($id = 0) {
 	$icmsAdminTpl->display('db:system_adm_blockspadmin.html');
 }
 
+global $icmsAdminTpl, $icms_blockposition_handler;
 $icms_blockposition_handler = icms_getModuleHandler('blockspadmin');
 
 $clean_op = '';
@@ -65,16 +66,19 @@ if (in_array($clean_op, $valid_op, TRUE)) {
 			break;
 
 		case "addblockposition":
+			global $icms_blockposition_handler;
 			$controller = new icms_ipf_Controller($icms_blockposition_handler);
 			$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSPADMIN_CREATED, _AM_SYSTEM_BLOCKSPADMIN_MODIFIED);
 			break;
 
 		case "del":
+			global $icms_blockposition_handler;
 			$controller = new icms_ipf_Controller($icms_blockposition_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		default:
+			global $icms_blockposition_handler;
 			icms_cp_header();
 			$objectTable = new icms_ipf_view_Table($icms_blockposition_handler, FALSE);
 			$objectTable->addColumn(new icms_ipf_view_Column('pname'), 'center');

@@ -40,6 +40,13 @@
  */
 icms_loadLanguageFile('core', 'databaseupdater');
 
+// this needs to be the latest db version - and the constant must start with the module's dirname
+if (is_object(icms::$module)) {
+	define('SYSTEM_DB_VERSION', icms::$module->getDBVersion());
+} else {
+	define('SYSTEM_DB_VERSION', 49);
+}
+
 /**
  * Automatic update of the system module
  *
@@ -107,7 +114,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 * This can be done before any specific upgrade tasks are started
 	 */
 	$icmsDatabaseUpdater->automaticUpgrade('icms_data', array('file', 'urllink'));
-
+	$icmsDatabaseUpdater->moduleUpgrade($module);
+	
 	/* Begin upgrade to version 2.0.0 beta 1 */
 	if (!$abortUpdate) $newDbVersion = 47;
 	try {
@@ -168,12 +176,12 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 					echo 'Removed' . $foldertoremove . '</br>';
 				}
 			}
-		}
 
-		/* Finish up this portion of the db update */
-		if (!$abortUpdate) {
-			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			/* Finish up this portion of the db update */
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
 		}
 	}
 	catch (Exception $e) {
@@ -226,16 +234,88 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				$filetoremove = ICMS_ROOT_PATH . '/content.php';
 				icms_core_Filesystem::deleteFile($filetoremove);
 			}
+			/* Finish up this portion of the db update */
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
 		}
 	}
 	catch (Exception $e) {
 		echo $e->getMessage();
 	}
-	/* Finish up this portion of the db update */
-	if (!$abortUpdate) {
-		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-		echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+
+	/* Begin upgrade to version 2.0.4 */
+	if (!$abortUpdate) $newDbVersion = 49;
+	try {
+		if ($dbVersion < $newDbVersion) {
+			// add the keepalive preference right after the session expiration preference, disabled on upgraded sites
+			$criteria = new icms_db_criteria_Compo();
+			$criteria->add(new icms_db_criteria_Item('conf_modid', 0));
+			$criteria->add(new icms_db_criteria_Item('conf_name', 'session_expire'));
+			$sessionExpireConfig = icms::$config->getConfigs($criteria);
+			$keepaliveOrder = count($sessionExpireConfig) > 0
+				? (int) $sessionExpireConfig[0]->getVar('conf_order')
+				: 0;
+
+			$icmsDatabaseUpdater->insertConfig(ICMS_CONF, 'keepalive_enable', '_MD_AM_KEEPALIVE', '0','_MD_AM_KEEPALIVEDSC', 'yesno', 'int', $keepaliveOrder);
+
+			/* Finish up this portion of the db update */
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
+		}
 	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
+	/* Repair the HTML filter's allowed elements and attributes */
+	// In 2.0.2 and 2.0.3 icms_core_Object::getVar() read every array value as an
+	// empty array. The installer of those releases starts the system module at
+	// dbversion 40, and step 42 (update-13.php) appends iframe to these lists: it
+	// read them as empty and saved only the iframe entries. 2.0.x itself then
+	// also read them as empty (no restriction), but a release that reads them
+	// correctly filters out every other tag. The default lists are added back;
+	// entries the site added are kept. Runs on every update, changes only lists
+	// that miss their basic defaults.
+	if (!$abortUpdate) {
+		$purifierDefaults = array(
+			'purifier_HTML_AllowedElements' => array('a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl',
+				'dt', 'em', 'font', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 's',
+				'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var'),
+			'purifier_HTML_AllowedAttributes' => array('a.class', 'a.href', 'a.id', 'a.name', 'a.rev', 'a.style', 'a.title', 'a.target', 'a.rel', 'abbr.title', 'acronym.title',
+				'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style',
+				'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id',
+				'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan',
+				'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan',
+				'th.style', 'th.valign', 'ul.style'),
+		);
+		$configTable = icms::$xoopsDB->prefix('config');
+		foreach ($purifierDefaults as $confName => $defaults) {
+			$result = icms::$xoopsDB->query("SELECT conf_value FROM `" . $configTable . "` WHERE conf_modid = 0 AND conf_name = '" . $confName . "'");
+			$row = $result ? icms::$xoopsDB->fetchRow($result) : false;
+			if (!$row) {
+				continue;
+			}
+			$current = @unserialize((string) $row[0], array('allowed_classes' => false));
+			$current = is_array($current) ? $current : array();
+			// a site that removed the basic defaults on purpose keeps at least one of them
+			if (array_intersect(array_slice($defaults, 0, 2), $current)) {
+				continue;
+			}
+			$repaired = array_values(array_unique(array_merge($defaults, $current)));
+			$icmsDatabaseUpdater->runQuery(
+				$sql = "UPDATE `" . $configTable . "` SET conf_value = " . icms::$xoopsDB->quoteString(serialize($repaired))
+					. " WHERE conf_modid = 0 AND conf_name = '" . $confName . "'",
+				sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $confName),
+				sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $confName)
+			);
+		}
+		unset($purifierDefaults, $configTable, $confName, $defaults, $result, $row, $current, $repaired);
+	}
+
 	/**
 	 * This portion of the upgrade must remain as the last section of code to execute
 	 * Place all release upgrade steps above this point

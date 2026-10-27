@@ -70,38 +70,15 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 	}
 
 	/**
-	 * prepare HTML for output
-	 * @author	    Kazumi Ono	<onokazu@xoops.org>
-	 * @copyright	copyright (c) 2000-2003 XOOPS.org
+	 * prepare HTML for output using unified template
+	 * Updated to use the same template as the standard checkbox class
 	 *
-	 * @return	string  $ret  the constructed input form element string
+	 * @return	string  the constructed input form element string
 	 */
 	public function render() {
-		$ret = "<div class='grouped'>";
-		$ele_name = $this->getName();
-		$ele_value = $this->getValue();
-		$ele_options = $this->getOptions();
-		$ele_extra = $this->getExtra();
-		$ele_delimeter = $this->getDelimeter();
-		if (count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]") {
-			$ele_name = $ele_name . "[]";
-			$this->setName($ele_name);
-		}
-		foreach ($ele_options as $value => $name) {
-			$ret .= "<span class='icms_checkboxoption'><input type='checkbox' name='" . $ele_name
-				. "' id='" . $ele_name . "_item_" . $value . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
-			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
-				$ret .= " checked='checked'";
-			}
-			$ret .= $ele_extra . " /><label for='" . $ele_name . "_item_" . $value . "'>" . $name . "</label></span>" . $ele_delimeter;
-		}
-		if (count($ele_options) > 1) {
-			$ret .= "<div class='icms_checkboxoption'><input type='checkbox' id='"
-				. $ele_name	. "_checkemall' class='checkemall' /><label for='"
-				. $ele_name . "_checkemall'>" . _CHECKALL . "</label></div>";
-		}
-		$ret .= "</div>";
-		return $ret;
+		// Use the parent class render method which uses the unified template
+		// This ensures both standard and IPF checkboxes use the same template
+		return parent::render();
 	}
 
 	/**
@@ -114,6 +91,7 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 		$js = "";
 		$js .= "var hasSelections = false;";
 		$eltname = $this->getName();
+		$eltcaption = $this->getCaption();
 		$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
 		$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
 		if (strpos($eltname, '[') === false) $eltname = $eltname . "[]";

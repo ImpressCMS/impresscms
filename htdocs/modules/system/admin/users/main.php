@@ -50,6 +50,7 @@ $op = '';
 $filter_post = array(
     'user_sig' => 'html',
     'bio'=> 'html',
+	'email' => 'email',
 );
 
 $filter_get = array(
@@ -59,11 +60,11 @@ $filter_get = array(
 if (!empty($_POST)) {
 	// in places where strict mode is not used for checkVarArray, make sure filter_ vars are not overwritten
 	if (isset($_POST['filter_get'])) unset ($_POST['filter_get']);
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, false);
     extract($clean_POST);
 }
 if (!empty($_GET)) {
-    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, false);
     extract($clean_GET);
 }
 
@@ -76,12 +77,12 @@ switch ($op) {
 		if (!icms::$security->check()) {
 			redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));
 		}
-		$user_avatar = $theme = NULL;
+		$user_avatar = $theme = null;
 		if (!isset($attachsig)) {
-			$attachsig = NULL;
+			$attachsig = null;
 		}
 		if (!isset($user_viewemail)) {
-			$user_viewemail = NULL;
+			$user_viewemail = null;
 		}
 
 		$groups = isset($_POST['groups']) ? $groups : array(XOOPS_GROUP_ANONYMOUS);
@@ -227,10 +228,10 @@ switch ($op) {
 						icms_cp_footer();
 						exit();
 					}
-					if ($password == $username || $password == icms_core_DataFilter::utf8_strrev($username, TRUE)
-						|| strripos($password, $username) === TRUE || $password == $login_name
-						|| $password == icms_core_Datafilter::utf8_strrev($login_name, TRUE)
-						|| strripos($password, $login_name) === TRUE
+					if ($password == $username || $password == icms_core_DataFilter::utf8_strrev($username, true)
+						|| strripos($password, $username) === true || $password == $login_name
+						|| $password == icms_core_Datafilter::utf8_strrev($login_name, true)
+						|| strripos($password, $login_name) === true
 					) {
 						icms_cp_header();
 						echo '<strong>' . _AM_BADPWD . '</strong>';

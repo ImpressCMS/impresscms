@@ -116,6 +116,13 @@ abstract class icms_form_Element {
 	 * @var	string
 	 */
 	private $_description = "";
+
+	/**
+	 * template for this field
+	 */
+	protected icms_view_Tpl $tpl;
+	protected string $customTemplate = "";
+
 	/**#@-*/
 
 	/**

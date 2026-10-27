@@ -36,13 +36,13 @@ function smarty_resource_db_timestamp($tpl_name, &$tpl_timestamp, &$smarty) {
 
 function smarty_resource_db_secure($tpl_name, &$smarty)
 {
-    // assume all templates are secure
-    return true;
+	// assume all templates are secure
+	return true;
 }
 
 function smarty_resource_db_trusted($tpl_name, &$smarty)
 {
-    // not used for templates
+	// not used for templates
 }
 
 function smarty_resource_db_tplinfo( $tpl_name ) {
@@ -74,8 +74,11 @@ function smarty_resource_db_tplinfo( $tpl_name ) {
 	$module = $tplobj->getVar( 'tpl_module', 'n' );
 	$type = $tplobj->getVar( 'tpl_type', 'n' );
 	$blockpath = ( $type == 'block' ) ? 'blocks/' : '';
-	// First, check for an overloaded version within the theme folder
-	$filepath = ICMS_THEME_PATH . "/$theme/modules/$module/$blockpath$tpl_name";
+	// First, check for an overloaded version within the selected theme folder (support both themes/ and modules/system/themes)
+	$themeBase = (is_dir(ICMS_MODULES_PATH . '/system/themes/' . $theme))
+		? ICMS_MODULES_PATH . '/system/themes/' . $theme
+		: ICMS_THEME_PATH . "/$theme";
+	$filepath = $themeBase . "/modules/$module/$blockpath$tpl_name";
 	if ( !file_exists( $filepath ) ) {
 		// If no custom version exists, get the tpl from its default location
 		$filepath = ICMS_ROOT_PATH . "/modules/$module/templates/$blockpath$tpl_name";
