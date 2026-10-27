@@ -1,0 +1,39 @@
+name: Attach Zipped Folder to Release
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  zip-and-attach:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout de repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: zip
+
+      # Maak de zip-bestandsnaam op basis van de tag
+      - name: Set zip filename
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: echo "ZIP_NAME=impresscms-${RELEASE_TAG}.zip" >> "$GITHUB_ENV"
+
+      - name: Build release package
+        run: php bin/build-package --output="var/dist/$ZIP_NAME"
+
+      # Upload asset naar release
+      - name: Upload asset to release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: var/dist/${{ env.ZIP_NAME }}
+          asset_name: ${{ env.ZIP_NAME }}
+          asset_content_type: application/zip
