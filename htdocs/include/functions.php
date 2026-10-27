@@ -1802,7 +1802,7 @@ function icms_random_str($numchar){
  */
 function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
 
-	icms::$module->displayAdminMenu( $currentoption, icms::$module->name() . ' | ' . $breadcrumb );
+	icms::$module->displayAdminMenu( $currentoption, icms::$module->getVar('name') . ' | ' . $breadcrumb );
 }
 
 /**
