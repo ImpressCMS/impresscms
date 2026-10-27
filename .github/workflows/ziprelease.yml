@@ -14,20 +14,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: zip
+
       # Maak de zip-bestandsnaam op basis van de tag
       - name: Set zip filename
-        run: echo "ZIP_NAME=impresscms-${{ github.event.release.tag_name }}.zip" >> $GITHUB_ENV
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: echo "ZIP_NAME=impresscms-${RELEASE_TAG}.zip" >> "$GITHUB_ENV"
 
-      # Zip de gewenste folder met de tag als bestandsnaam
-      - name: Zip folder
-        run: |
-          zip -r $ZIP_NAME htdocs
+      - name: Build release package
+        run: php bin/build-package --output="var/dist/$ZIP_NAME"
 
       # Upload asset naar release
       - name: Upload asset to release
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ${{ env.ZIP_NAME }}
+          asset_path: var/dist/${{ env.ZIP_NAME }}
           asset_name: ${{ env.ZIP_NAME }}
           asset_content_type: application/zip
