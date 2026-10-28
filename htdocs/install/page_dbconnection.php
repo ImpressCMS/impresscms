@@ -121,7 +121,16 @@ ob_start();
 <?php if (!empty( $error ) ) echo '<div class="x2-note error" role="alert">' . $error . "</div>\n"; ?>
 	<h3><?php echo LEGEND_CONNECTION; ?></h3>
 	<div class="blokSQL">
-		<div class="dbconn_line"><label for="DB_TYPE"><?php echo LEGEND_DATABASE; ?></label>
+		<div class="dbconn_line"><?php echo xoFormField( 'DB_HOST',    $vars['DB_HOST'],        DB_HOST_LABEL, DB_HOST_HELP ); ?>
+		</div>
+		<div class="dbconn_line"><?php echo xoFormField( 'DB_USER',    $vars['DB_USER'],        DB_USER_LABEL, DB_USER_HELP ); ?>
+		</div>
+		<div class="dbconn_line"><?php echo xoFormField( 'DB_PASS',	$vars['DB_PASS'],		DB_PASS_LABEL, DB_PASS_HELP, 'password' ); ?>
+		</div>
+	</div>
+
+	<details class="collapsible"<?php echo !empty($error) ? ' open' : ''; ?>><summary><?php echo ESS_ADVANCED; ?></summary><div class="collapsible__body">
+<div class="dbconn_line"><label for="DB_TYPE"><?php echo LEGEND_DATABASE; ?></label>
 				<select size="2" name="DB_TYPE" id="DB_TYPE" class="db_select">
 					<?php
 					foreach ($connections as $option) {
@@ -132,21 +141,14 @@ ob_start();
 					?>
 				</select>
 		</div>
-		<div class="dbconn_line"><?php echo xoFormField( 'DB_HOST',    $vars['DB_HOST'],        DB_HOST_LABEL, DB_HOST_HELP ); ?>
-		</div>
-		<div class="dbconn_line"><?php echo xoFormField( 'DB_USER',    $vars['DB_USER'],        DB_USER_LABEL, DB_USER_HELP ); ?>
-		</div>
-		<div class="dbconn_line"><?php echo xoFormField( 'DB_PASS',	$vars['DB_PASS'],		DB_PASS_LABEL, DB_PASS_HELP, 'password' ); ?>
-		</div>
-	</div>
-
-	<div class="dbconn_line">
+			<div class="dbconn_line">
 		<label class="checkbox-label" for="DB_PCONNECT">
 			<input class="checkbox" type="checkbox" id="DB_PCONNECT" name="DB_PCONNECT" value="1"
 				<?php echo $vars['DB_PCONNECT'] ? 'checked="checked"' : ''; ?> />
 			<?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?>
 		</label>
 		<div class="xoform-help"><?php echo htmlspecialchars( DB_PCONNECT_HELP ); ?></div>
+	</div></details>
 	</div>
 <?php
 $content = ob_get_contents();

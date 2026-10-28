@@ -673,6 +673,64 @@ body.show-help .xoform-help {
 	background: var(--info-bg);
 }
 
+.collapsible {
+	margin: 0 0 1rem;
+	border: 1px solid var(--border-soft);
+	border-radius: var(--radius);
+	background: var(--surface-alt);
+}
+
+.collapsible > summary {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	min-height: 2.75rem;
+	padding: 0.6rem 1rem;
+	font-weight: 600;
+	color: var(--link);
+	cursor: pointer;
+	list-style: none;
+}
+
+.collapsible > summary::-webkit-details-marker {
+	display: none;
+}
+
+.collapsible > summary::before {
+	content: "";
+	flex: none;
+	width: 0.55rem;
+	height: 0.55rem;
+	border-inline-end: 2px solid currentcolor;
+	border-bottom: 2px solid currentcolor;
+	transform: rotate(-45deg);
+	transition: transform 0.15s;
+}
+
+[dir="rtl"] .collapsible > summary::before {
+	transform: rotate(45deg);
+}
+
+.collapsible[open] > summary::before {
+	transform: rotate(45deg);
+}
+
+.collapsible > summary:hover {
+	color: var(--link-hover);
+}
+
+.collapsible__body {
+	padding: 0.25rem 1rem 1rem;
+}
+
+.collapsible__body > :last-child {
+	margin-bottom: 0;
+}
+
+.collapsible .collapsible {
+	background: var(--surface);
+}
+
 .sr-only {
 	position: absolute;
 	width: 1px;

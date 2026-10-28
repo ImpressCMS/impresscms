@@ -110,7 +110,10 @@ function imCheckRequirements()
 
 ob_start();
 $requirements_array = imCheckRequirements();
+$allOk = !in_array( false, array_map( 'boolval', array_column( $requirements_array, 'status' ) ), true );
 ?>
+<p class="x2-note<?php echo $allOk ? '' : ' error'; ?>"<?php echo $allOk ? '' : ' role="alert"'; ?>><?php echo $allOk ? ESS_SERVER_OK : ESS_SERVER_PROBLEM; ?></p>
+<details class="collapsible"<?php echo $allOk ? '' : ' open'; ?>><summary><?php echo ESS_SHOW_DETAILS; ?></summary><div class="collapsible__body">
 <fieldset>
 <legend><?php echo REQUIREMENTS; ?></legend>
 <ul class="status-list">
@@ -140,6 +143,7 @@ if (extension_loaded( 'xml' ) )		$ext[] = 'XML';
 		<?php echo empty($ext) ? xoDiag( 0, NONE ) : xoDiag( 1, implode( ', ', $ext ) ); ?></li>
 </ul>
 </fieldset>
+</div></details>
 <!--
 	<table class="diags">
 	<caption><?php echo FILE_PERMISSIONS; ?></caption>

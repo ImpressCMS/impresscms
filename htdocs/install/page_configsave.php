@@ -178,7 +178,8 @@ ob_start();
 
 echo READY_SAVE_MAINFILE;
 ?></p>
-<dl style="height: 200px; overflow: auto; border: 1px solid #D0D0D0">
+<details class="collapsible"><summary><?php echo ESS_SETTINGS_SUMMARY; ?></summary><div class="collapsible__body">
+<dl>
 <?php
 
 foreach ($vars as $k => $v) {
@@ -186,6 +187,7 @@ foreach ($vars as $k => $v) {
 }
 ?>
 </dl>
+</div></details>
 
 <?php
 $content = ob_get_contents();

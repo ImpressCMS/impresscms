@@ -139,6 +139,10 @@ class IcmsInstallWizard {
 		}
 		$this->language = $language;
 		$this->loadLangFile('install');
+		if (file_exists("./language/$language/essentials.php")) {
+			include_once "./language/$language/essentials.php";
+		}
+		include_once './language/english/essentials.php';
 	}
 
 	public function setPage($page): string {

@@ -54,7 +54,7 @@ $nextLabel = (isset($_POST['mod']) && $_POST['mod'] == 1 && $isSecondLastPage) ?
 	<script src="../libraries/jquery/jquery.js"></script>
 </head>
 <body>
-<a class="skip-link" href="#content"><?php echo defined('INSTALL_SKIP_TO_CONTENT') ? INSTALL_SKIP_TO_CONTENT : 'Skip to main content'; ?></a>
+<a class="skip-link" href="#content"><?php echo ESS_SKIP_TO_CONTENT; ?></a>
 
 <header class="site-header">
 	<div class="container site-header__inner">

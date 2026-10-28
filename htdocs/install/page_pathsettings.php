@@ -324,8 +324,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	return;
 }
 
+$pathsOk = $ctrl->validRootPath && $ctrl->validTrustPath && $ctrl->validUrl && empty( $ctrl->permErrors );
+
 ob_start();
 ?> <script type="text/javascript" src="pathsettings.js"></script>
+<?php if ($pathsOk) { ?>
+<p class="x2-note"><?php echo ESS_PATHS_OK; ?></p>
+<details class="collapsible"><summary><?php echo ESS_PATHS_REVIEW; ?></summary><div class="collapsible__body">
+<?php } ?>
 
 <div class="blokz">
 <fieldset>
@@ -357,7 +363,7 @@ ob_start();
 } ?>
 </ul>
 <button type="button" id="permrefresh"><?php echo BUTTON_REFRESH; ?></button>
-<?php } else { echo '<div id="rootperms">'.CHECKING_PERMISSIONS .'<br /><ul class="diags"><li class="success">'.ALL_PERM_OK.'</li></ul></div>';} ?>
+<?php } ?>
 
 </fieldset>
 <br />
@@ -379,6 +385,9 @@ ob_start();
 <?php
 }?></fieldset>
 </div>
+<?php if ($pathsOk) { ?>
+</div></details>
+<?php } ?>
 <?php
 $content = ob_get_contents();
 ob_end_clean();

@@ -98,3 +98,14 @@ function imcms_get_url_domain($url)
 	return $domain;
 }
 
+
+
+/**
+ * Wraps verbose output in a collapsible block. It stays closed unless something needs attention.
+ */
+function installCollapsible(string $html, string $summary, bool $open = false): string
+{
+	$attribute = $open ? ' open' : '';
+
+	return "<details class=\"collapsible\"$attribute><summary>$summary</summary><div class=\"collapsible__body\">$html</div></details>";
+}

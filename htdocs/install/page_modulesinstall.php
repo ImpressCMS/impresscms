@@ -55,20 +55,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$system_moduleObj = $module_handler->getByDirname('system');
 		xoops_module_update_system($system_moduleObj);
 
+		$log = '';
 		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
 		$anon_accessible_mods = isset($_POST['anon_accessible_mods']) ? $_POST['anon_accessible_mods'] : '';
 		if (isset($_POST['install_mods'])) {
 			for ($i = 0; $i <= count($install_mods)-1;$i++) {
-				$content .= xoops_module_install($install_mods[$i]);
+				$log .= xoops_module_install($install_mods[$i]);
 				impresscms_get_adminmenu();
 			}
 		} else {
-			$content .= _INSTALL_NO_PLUS_MOD;
+			$log .= _INSTALL_NO_PLUS_MOD;
 		}
 		//Install protector module by default if found.
 		//TODO: Insert Protector installation - leads to blank page as it is now.
 			if (file_exists(ICMS_ROOT_PATH . '/modules/protector/icms_version.php')) {
-				$content .= xoops_module_install('protector');
+				$log .= xoops_module_install('protector');
 				/*        	include_once "./class/mainfilemanager.php";
                  $mm = new mainfile_manager("../mainfile.php");
                  $mm->setRewrite('PROTECTOR1', 'include  XOOPS_TRUST_PATH.\'/modules/protector/include/precheck.inc.php\')' ;
@@ -79,7 +80,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 
 		$tables = array();
-		$content .= "<div style='height:auto;max-height:400px;overflow:auto;'>".$dbm->report()."</div>";
+		$log .= $dbm->report(false);
+		$problem = $dbm->hasFailures() || stripos($log, 'failed') !== false || stripos($log, 'error') !== false;
+		$content .= $problem ?
+			'<p class="x2-note error" role="alert">' . ESS_PROBLEMS . '</p>' :
+			'<p class="x2-note">' . ESS_ALL_DONE . '</p>';
+		$content .= installCollapsible($log, ESS_SHOW_DETAILS, $problem);
 	} else {
 		$wizard->redirectToPage( '+1' );
 		exit();

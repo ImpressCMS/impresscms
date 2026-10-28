@@ -30,5 +30,9 @@ $pageHasForm = false;
 
 $content = "";
 include "./language/$wizard->language/welcome.php";
+$splitAt = strpos( $content, '<h3' );
+if ($splitAt !== false) {
+	$content = substr( $content, 0, $splitAt ) . installCollapsible( substr( $content, $splitAt ), ESS_BEFORE_START );
+}
 
 include 'install_tpl.php';
