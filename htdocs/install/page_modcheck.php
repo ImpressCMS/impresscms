@@ -37,7 +37,9 @@ function xoDiag( $status = -1, $str = '') {
 	if (empty($str)) {
 		$str = $strings[$status];
 	}
-	return '<td class="' . $classes[$status] . '">' . $str . '</td>';
+	$badges = array( -1 => 'badge--error', 0 => 'badge--warning', 1 => 'badge--success' );
+	$icons = array( -1 => '&#10005;', 0 => '!', 1 => '&#10003;' );
+	return '<span class="badge ' . $badges[$status] . '"><span aria-hidden="true">' . $icons[$status] . '</span> ' . $str . '</span>';
 }
 function xoDiagBoolSetting( $name, $wanted = false, $severe = false) {
 	$setting = strtolower( ini_get( $name ) );
@@ -110,43 +112,33 @@ ob_start();
 $requirements_array = imCheckRequirements();
 ?>
 <fieldset>
-<h3><?php echo REQUIREMENTS; ?></h3>
-<?php foreach($requirements_array as &$requirement)
-	 {
-	 ?>
-<h4><?php echo $requirement['description']; ?>:&nbsp; <?php echo xoDiag($requirement['status'], $requirement['result']); ?> <img
-	src="img/<?php echo $requirement['status'] ? "yes" : "no"; ?>.png" alt="<?php echo $requirement['status'] ? SUCCESS : FAILED; ?>" class="rootimg" /></h4>
-<div class="clear">&nbsp;</div>
-		 <?php } ?>
+<legend><?php echo REQUIREMENTS; ?></legend>
+<ul class="status-list">
+<?php foreach($requirements_array as $requirement) { ?>
+	<li><span class="status-name"><?php echo $requirement['description']; ?></span>
+		<?php echo xoDiag($requirement['status'] ? 1 : -1, $requirement['result']); ?></li>
+<?php } ?>
+</ul>
 </fieldset>
 
 <fieldset>
-<h3><?php echo RECOMMENDED_EXTENSIONS; ?></h3>
+<legend><?php echo RECOMMENDED_EXTENSIONS; ?></legend>
 <p><?php echo RECOMMENDED_EXTENSIONS_MSG; ?></p>
-<div class="clear">&nbsp;</div>
-
-<h4><?php printf( PHP_EXTENSION, CHAR_ENCODING ); ?>:&nbsp; <?php
+<ul class="status-list">
+<?php
 $ext = array();
 if (extension_loaded( 'iconv' ) )		$ext[] = 'Iconv';
-if (extension_loaded( 'mb_string' ) )	$ext[] = 'MBString';
-if (empty($ext)) {
-	echo xoDiag( 0, NONE );
-} else {
-	echo xoDiag( 1, implode( ',', $ext ) );
-}
-?> <img src="img/yes.png" alt="Success" class="rootimg" /></h4>
-<div class="clear">&nbsp;</div>
-<h4><?php printf( PHP_EXTENSION, XML_PARSING ); ?>:&nbsp; <?php
+if (extension_loaded( 'mbstring' ) )	$ext[] = 'MBString';
+?>
+	<li><span class="status-name"><?php printf( PHP_EXTENSION, CHAR_ENCODING ); ?></span>
+		<?php echo empty($ext) ? xoDiag( 0, NONE ) : xoDiag( 1, implode( ', ', $ext ) ); ?></li>
+<?php
 $ext = array();
 if (extension_loaded( 'xml' ) )		$ext[] = 'XML';
-//if (extension_loaded( 'dom' ) )		$ext[] = 'DOM';
-if (empty($ext)) {
-	echo xoDiag( 0, NONE );
-} else {
-	echo xoDiag( 1, implode( ',', $ext ) );
-}
-?> <img src="img/yes.png" alt="Success" class="rootimg" /></h4>
-<div class="clear">&nbsp;</div>
+?>
+	<li><span class="status-name"><?php printf( PHP_EXTENSION, XML_PARSING ); ?></span>
+		<?php echo empty($ext) ? xoDiag( 0, NONE ) : xoDiag( 1, implode( ', ', $ext ) ); ?></li>
+</ul>
 </fieldset>
 <!--
 	<table class="diags">

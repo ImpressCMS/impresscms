@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$wizard->redirectToPage( '+1' );
 		exit();
 	}
-	if ($_POST['mod'] == 1) {
+	if (isset($_POST['mod']) && $_POST['mod'] == 1) {
 		/**
 		 * Automatically updating the system module before installing the selected modules
 		 * @since 1.3
@@ -89,15 +89,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$content .= '<div>'. _INSTALL_SELECT_MODS_INTRO .'</div>';
 	$content .= '<div class="dbconn_line">';
 	$content .= '<h3>'. _INSTALL_SELECT_MODULES.'</h3>';
-	$content .= '<div id="modinstall" name="install_mods[]">';
+	$content .= '<fieldset class="module-grid" id="modinstall"><legend class="sr-only">' . _INSTALL_SELECT_MODULES . '</legend>';
 	$langarr = icms_module_Handler::getAvailable();
 	foreach ($langarr as $lang) {
 		if ($lang == 'system' || $lang == 'protector') {
 			continue;
 		}
-		$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../modules/$lang/images/icon_small.png\" alt=\"$lang\" /><br />$lang <br /><input type=\"checkbox\" checked=\"checked\" name=\"install_mods[]\" value=\"$lang\" /></a></div>";
+		$moduleName = htmlspecialchars($lang, ENT_QUOTES);
+		$content .= "<label class=\"choice\"><img src=\"../modules/$moduleName/images/icon_small.png\" alt=\"\" /><span>$moduleName</span><input type=\"checkbox\" checked=\"checked\" name=\"install_mods[]\" value=\"$moduleName\" /></label>";
 	}
-	$content .= "</div><div class='clear'>&nbsp;</div>";
+	$content .= "</fieldset>";
 	$content .= '</div>';
 	$content .= '<input type="hidden" name="mod" value="1" />';
 }

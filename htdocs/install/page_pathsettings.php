@@ -344,7 +344,7 @@ ob_start();
 <div class="xoform-help"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
 <div class="clear">&nbsp;</div>
 <input type="text" name="ROOT_PATH" id="rootpath"
-	value="<?php echo $ctrl->xoopsRootPath; ?>" /> <span id="rootpathimg"><?php echo genRootCheckHtml( $ctrl->validRootPath ); ?></span>
+	value="<?php echo $ctrl->xoopsRootPath; ?>" /> <span id="rootpathimg" aria-live="polite"><?php echo genRootCheckHtml( $ctrl->validRootPath ); ?></span>
 <?php if ($ctrl->validRootPath && !empty( $ctrl->permErrors )) { ?>
 <div id="rootperms"><?php echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
 <ul class="diags">
@@ -355,8 +355,8 @@ ob_start();
 		echo '<li class="failure">' . sprintf( IS_NOT_WRITABLE, $path ) . '</li>';
 	}
 } ?>
-	<button type="button" id="permrefresh" /><?php echo BUTTON_REFRESH; ?></button>
 </ul>
+<button type="button" id="permrefresh"><?php echo BUTTON_REFRESH; ?></button>
 <?php } else { echo '<div id="rootperms">'.CHECKING_PERMISSIONS .'<br /><ul class="diags"><li class="success">'.ALL_PERM_OK.'</li></ul></div>';} ?>
 
 </fieldset>
@@ -369,7 +369,7 @@ ob_start();
 <div class="xoform-help"><?php echo _INSTALL_TRUST_PATH_HELP; ?></div>
 <div class="clear">&nbsp;</div>
 <input type="text" name="TRUST_PATH" id="trustpath"
-	value="<?php echo $ctrl->xoopsTrustPath; ?>" /> <span id="trustpathimg"><?php echo genTrustPathCheckHtml( $ctrl->validTrustPath ); ?></span>
+	value="<?php echo $ctrl->xoopsTrustPath; ?>" /> <span id="trustpathimg" aria-live="polite"><?php echo genTrustPathCheckHtml( $ctrl->validTrustPath ); ?></span>
 <?php if (!$ctrl->validTrustPath && $ctrl->xoopsTrustPath != '') { ?>
 <div id="trustperms">
 <p><?php echo TRUST_PATH_VALIDATE . '</p>'; ?>

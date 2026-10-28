@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$wizard->redirectToPage('+1');
 		exit();
 	}
-	$content = '<p class="errorMsg">' . $error . '</p>';
+	$content = '<p class="errorMsg" role="alert">' . $error . '</p>';
 	include 'install_tpl.php';
 	exit();
 }
