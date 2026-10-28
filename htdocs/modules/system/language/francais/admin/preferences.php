@@ -391,3 +391,39 @@ define("_MD_AM_SIGMAXLENGTHDSC","Nombre maximum de caract&egrave;res dans les si
 
 define("_MD_AM_USE_GOOGLE_ANA"," Activer Google Analytics ?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
+
+define("_MD_AM_KEEPALIVE", "Garder les sessions actives");
+define("_MD_AM_KEEPALIVEDSC", "S&eacute;lectionnez oui pour maintenir active la session des utilisateurs connect&eacute;s tant qu'ils ont une page du site ouverte, afin qu'ils ne soient pas d&eacute;connect&eacute;s pendant la r&eacute;daction d'un long message. S&eacute;lectionnez non pour laisser les sessions expirer apr&egrave;s la dur&eacute;e d'expiration de session, m&ecirc;me si une page est encore ouverte.");
+
+define("_MD_AM_AUTHENTICATION_DSC", "G&eacute;rez les param&egrave;tres de s&eacute;curit&eacute; li&eacute;s &agrave; l'accessibilit&eacute;. Ces param&egrave;tres d&eacute;terminent la fa&ccedil;on dont les comptes utilisateurs sont g&eacute;r&eacute;s.");
+define("_MD_AM_AUTOTASKS_PREF_DSC", "Pr&eacute;f&eacute;rences du syst&egrave;me de t&acirc;ches automatiques.");
+define("_MD_AM_CAPTCHA", "Param&egrave;tres du captcha");
+define("_MD_AM_CAPTCHA_DSC", "G&eacute;rez les param&egrave;tres du captcha utilis&eacute; sur l'ensemble de votre site.");
+define("_MD_AM_CENSOR_DSC", "G&eacute;rez le langage non autoris&eacute; sur votre site.");
+define("_MD_AM_GENERAL_DSC", "La page de param&egrave;tres principale pour les informations de base n&eacute;cessaires au syst&egrave;me.");
+define("_MD_AM_MAILER_DSC", "Configurez la fa&ccedil;on dont votre site g&egrave;re le courrier.");
+define("_MD_AM_METAFOOTER_DSC", "G&eacute;rez vos m&eacute;tadonn&eacute;es et le pied de page du site, ainsi que les options pour les robots d'indexation.");
+define("_MD_AM_MULTILANGUAGE_DSC", "G&eacute;rez les param&egrave;tres multilingues de votre site. Activez et configurez les langues disponibles et la fa&ccedil;on dont elles sont d&eacute;clench&eacute;es.");
+define("_MD_AM_PERSON_DSC", "Personnalisez le syst&egrave;me avec des logos personnalis&eacute;s et d'autres param&egrave;tres.");
+define("_MD_AM_PLUGINS", "Gestionnaire de plugins");
+define("_MD_AM_PLUGINS_DSC", "S&eacute;lectionnez les plugins utilis&eacute;s et disponibles sur l'ensemble de votre site.");
+define("_MD_AM_PURIFIER", "Param&egrave;tres de HTMLPurifier");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINES", "Normaliser les retours &agrave; la ligne");
+define("_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC", "Indique si les retours &agrave; la ligne sont normalis&eacute;s selon le syst&egrave;me d'exploitation. Si d&eacute;sactiv&eacute;, HTML Purifier tentera de pr&eacute;server les fichiers aux retours &agrave; la ligne mixtes.");
+define("_MD_AM_PURIFIER_DSC", "HTMLPurifier sert &agrave; prot&eacute;ger votre site contre les m&eacute;thodes d'attaque courantes.");
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM", "Autoriser les filtres personnalis&eacute;s");
+define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC", "Autoriser les filtres personnalis&eacute;s ?<br /><br />Si activ&eacute;, vous pourrez utiliser des filtres personnalis&eacute;s situ&eacute;s dans ;<br />'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRN", "Autoriser le plein &eacute;cran dans les objets Flash");
+define("_MD_AM_PURIFIER_HTML_FLASHFULLSCRNDSC", "Si activ&eacute;, HTML Purifier autorisera 'allowFullScreen' dans le contenu Flash int&eacute;gr&eacute; avec HTML.SafeObject.");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAME", "Activer les iframes s&eacute;curis&eacute;es");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC", "Autorise ou non les iframes dans les documents, avec des mesures de s&eacute;curit&eacute; suppl&eacute;mentaires pour emp&ecirc;cher l'ex&eacute;cution de scripts. Ajoutez d'abord des domaines s&ucirc;rs dans les URL d'iframes s&eacute;curis&eacute;es avant d'activer !");
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT", "Activer la compatibilit&eacute; Flash pour IE");
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPATDSC", "Si activ&eacute;, HTML Purifier g&eacute;n&egrave;re du code de compatibilit&eacute; Internet Explorer pour tout le code d'objet. Fortement recommand&eacute; si vous activez HTML.SafeObject.");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP", "URL d'iframes s&eacute;curis&eacute;es");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC", "Liste des URL dont vous autorisez l'affichage du contenu d'iframe sur votre site. Elle est compar&eacute;e &agrave; l'URI de l'iframe. Ce sch&eacute;ma est peu flexible, mais suffisant pour le cas d'usage le plus courant des iframes : la vid&eacute;o int&eacute;gr&eacute;e. <br />Autoriser explicitement des sites emp&ecirc;che les sites inconnus d'afficher sur votre site des iframes dont vous ne contr&ocirc;lez pas le contenu.<br /><br />
+    Exemples de valeurs :<br /><br />
+    http://www.youtube.com/embed/ - Autoriser les vid&eacute;os YouTube<br />
+    http://player.vimeo.com/video/ - Autoriser les vid&eacute;os Vimeo<br />
+    http://www.youtube.com/embed/|http://player.vimeo.com/video/ - Autoriser les deux<br /><br />Les iframes s&eacute;curis&eacute;es doivent &ecirc;tre activ&eacute;es pour que cela fonctionne.");
+define("_MD_AM_SEARCH_DSC", "G&eacute;rez le fonctionnement de la recherche pour vos utilisateurs.");
+define("_MD_AM_USERSETTINGS_DSC", "G&eacute;rez l'inscription des utilisateurs sur votre site : longueur et format des noms d'utilisateur, options de mot de passe.");
