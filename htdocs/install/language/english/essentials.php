@@ -11,3 +11,6 @@ defined('ESS_ALL_DONE') or define('ESS_ALL_DONE', "Completed successfully.");
 defined('ESS_PROBLEMS') or define('ESS_PROBLEMS', "Something went wrong. See the details below.");
 defined('ESS_SETTINGS_SUMMARY') or define('ESS_SETTINGS_SUMMARY', "Show the settings that will be saved");
 defined('ESS_SKIP_TO_CONTENT') or define('ESS_SKIP_TO_CONTENT', "Skip to main content");
+defined('ESS_INSTALLING') or define('ESS_INSTALLING', "Installing");
+defined('ESS_INSTALLING_TITLE') or define('ESS_INSTALLING_TITLE', "Installing ImpressCMS");
+defined('ESS_RETRY') or define('ESS_RETRY', "Try again");

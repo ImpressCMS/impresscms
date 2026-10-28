@@ -32,11 +32,17 @@ if (!defined('XOOPS_INSTALL')) exit();
 
 $wizard->setPage('configsave');
 $pageHasForm = true;
+$retryLabel = ESS_RETRY;
 $pageHasHelp = false;
 
 $vars = &$_SESSION['settings'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (empty($vars['ROOT_PATH'])) {
+	$wizard->redirectToPage('pathsettings');
+	exit();
+}
+
+if (!empty($vars['ROOT_PATH'])) {
 	$error = '';
 	// let's try and put the db info in the trust path
 	$sdata_file_name = md5($vars['ROOT_PATH'] . time()) . '.php';

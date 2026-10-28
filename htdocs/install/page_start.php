@@ -20,19 +20,5 @@
 require_once 'common.inc.php';
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
-icms_core_Filesystem::chmod("../modules", 0777);
-icms_core_Filesystem::chmod("../mainfile.php", 0777);
-icms_core_Filesystem::chmod("../uploads", 0777);
-icms_core_Filesystem::chmod("../templates_c", 0777);
-icms_core_Filesystem::chmod("../cache", 0777);
-$wizard->setPage( 'start' );
-$pageHasForm = false;
-
-$content = "";
-include "./language/$wizard->language/welcome.php";
-$splitAt = strpos( $content, '<h3' );
-if ($splitAt !== false) {
-	$content = substr( $content, 0, $splitAt ) . installCollapsible( substr( $content, $splitAt ), ESS_BEFORE_START );
-}
-
-include 'install_tpl.php';
+$wizard->redirectToPage( 'modcheck' );
+exit();

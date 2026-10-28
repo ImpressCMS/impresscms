@@ -31,7 +31,7 @@ include "modulesadmin.php";
 $dbm = new db_manager();
 
 if (!$dbm->isConnectable()) {
-	$wizard->redirectToPage( '-3' );
+	$wizard->redirectToPage( 'dbconnection' );
 	exit();
 }
 $process = '';

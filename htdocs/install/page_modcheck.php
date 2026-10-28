@@ -26,6 +26,16 @@ $requirements_array = array();
 $wizard->setPage( 'modcheck' );
 $pageHasForm = false;
 
+icms_core_Filesystem::chmod("../modules", 0777);
+icms_core_Filesystem::chmod("../mainfile.php", 0777);
+icms_core_Filesystem::chmod("../uploads", 0777);
+icms_core_Filesystem::chmod("../templates_c", 0777);
+icms_core_Filesystem::chmod("../cache", 0777);
+
+$content = "";
+include "./language/$wizard->language/welcome.php";
+$welcomeContent = $content;
+
 $diagsOK = false;
 
 function xoDiag( $status = -1, $str = '') {
@@ -144,6 +154,7 @@ if (extension_loaded( 'xml' ) )		$ext[] = 'XML';
 </ul>
 </fieldset>
 </div></details>
+<?php echo installCollapsible( $welcomeContent, ESS_BEFORE_START ); ?>
 <!--
 	<table class="diags">
 	<caption><?php echo FILE_PERMISSIONS; ?></caption>

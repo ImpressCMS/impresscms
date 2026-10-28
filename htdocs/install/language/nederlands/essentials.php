@@ -11,3 +11,6 @@ defined('ESS_ALL_DONE') or define('ESS_ALL_DONE', "Succesvol voltooid.");
 defined('ESS_PROBLEMS') or define('ESS_PROBLEMS', "Er ging iets mis. Bekijk de details hieronder.");
 defined('ESS_SETTINGS_SUMMARY') or define('ESS_SETTINGS_SUMMARY', "Toon de instellingen die worden opgeslagen");
 defined('ESS_SKIP_TO_CONTENT') or define('ESS_SKIP_TO_CONTENT', "Ga naar de hoofdinhoud");
+defined('ESS_INSTALLING') or define('ESS_INSTALLING', "Installeren");
+defined('ESS_INSTALLING_TITLE') or define('ESS_INSTALLING_TITLE', "ImpressCMS wordt geinstalleerd");
+defined('ESS_RETRY') or define('ESS_RETRY', "Opnieuw proberen");

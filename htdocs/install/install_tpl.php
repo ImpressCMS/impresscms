@@ -3,7 +3,6 @@
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
  which is considered copyrighted (c) material of the original comment or credit authors.
-
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -28,19 +27,34 @@ defined('XOOPS_INSTALL') or die();
 if (isset($_COOKIE['xo_install_lang'])) {
 	$icmsConfig['language'] = htmlentities($_COOKIE['xo_install_lang']);
 }
-
 $isRtl = defined('_ADM_USE_RTL') && _ADM_USE_RTL;
-$totalPages = count($wizard->pages);
-$stepNumber = $wizard->currentPage + 1;
+$navSteps = $wizard->navigationSteps();
+$totalPages = count($navSteps);
+$currentStep = 0;
+foreach ($navSteps as $k => $navStep) {
+	if ($wizard->currentPage >= $navStep['first'] && $wizard->currentPage <= $navStep['last']) {
+		$currentStep = $k;
+	}
+}
+$stepNumber = $currentStep + 1;
 $progressPercent = (int) round($stepNumber / $totalPages * 100);
 $isLastPage = $wizard->pages[$wizard->currentPage] === $wizard->lastpage;
-$isSecondLastPage = $wizard->pages[$wizard->currentPage] === $wizard->secondlastpage;
+$lastAutoIndex = 0;
+foreach ($wizard->pages as $index => $pageName) {
+	if ($wizard->isAutoPage($index)) {
+		$lastAutoIndex = $index;
+	}
+}
+$prevIndex = $wizard->currentPage - 1;
+while ($prevIndex > 0 && $wizard->isAutoPage($prevIndex)) {
+	$prevIndex--;
+}
+$canGoBack = $wizard->currentPage != 0 && !$isLastPage && $wizard->currentPage <= $lastAutoIndex;
 $langCode = defined('_LANGCODE') ? _LANGCODE : 'en';
 $stepLabel = sprintf('%s %d%s%d', INSTALL_STEP, $stepNumber, INSTALL_OUTOF, $totalPages);
 $pageTitle = $wizard->pagesTitles[$wizard->currentPage];
 $wizardTitle = sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION);
-$nextLabel = (isset($_POST['mod']) && $_POST['mod'] == 1 && $isSecondLastPage) ? BUTTON_FINISH : BUTTON_NEXT;
-
+$nextLabel = $retryLabel ?? BUTTON_NEXT;
 ?><!DOCTYPE html>
 <html lang="<?php echo htmlspecialchars($langCode); ?>" dir="<?php echo $isRtl ? 'rtl' : 'ltr'; ?>">
 <head>
@@ -55,7 +69,6 @@ $nextLabel = (isset($_POST['mod']) && $_POST['mod'] == 1 && $isSecondLastPage) ?
 </head>
 <body>
 <a class="skip-link" href="#content"><?php echo ESS_SKIP_TO_CONTENT; ?></a>
-
 <header class="site-header">
 	<div class="container site-header__inner">
 		<img class="site-header__logo" src="img/logo.png" alt="ImpressCMS" width="170" height="34">
@@ -66,27 +79,33 @@ $nextLabel = (isset($_POST['mod']) && $_POST['mod'] == 1 && $isSecondLastPage) ?
 	</div>
 	<div class="progress" role="presentation"><div class="progress__bar" style="width: <?php echo $progressPercent; ?>%"></div></div>
 </header>
-
 <div class="container layout">
 	<nav class="steps" aria-label="<?php echo INSTALL_H3_STEPS; ?>">
-		<p class="steps__summary"><?php echo $stepLabel; ?>: <strong><?php echo $wizard->pagesNames[$wizard->currentPage]; ?></strong></p>
+		<p class="steps__summary"><?php echo $stepLabel; ?>: <strong><?php echo $navSteps[$currentStep]['label']; ?></strong></p>
 		<h2 class="steps__title"><?php echo INSTALL_H3_STEPS; ?></h2>
 		<ol class="steps__list">
-			<?php foreach ($wizard->pages as $k => $page) {
-				$name = $wizard->pagesNames[$k];
-				if ($k == $wizard->currentPage) {
-					echo '<li class="steps__item is-current"><span class="steps__label" aria-current="step">' . $name . '</span></li>' . "\n";
+			<?php foreach ($navSteps as $k => $navStep) {
+				$name = $navStep['label'];
+				if ($k == $currentStep) {
+					echo '<li class="steps__item is-current"><span class="steps__label" aria-current="step">' . $name . '</span></li>' . "
+";
 					continue;
 				}
-				if ($k > $wizard->currentPage) {
-					echo '<li class="steps__item is-upcoming"><span class="steps__label">' . $name . '</span></li>' . "\n";
+				if ($k > $currentStep) {
+					echo '<li class="steps__item is-upcoming"><span class="steps__label">' . $name . '</span></li>' . "
+";
 					continue;
 				}
-				echo '<li class="steps__item is-done"><a class="steps__label" href="' . $wizard->pageURI($page) . '">' . $name . '</a></li>' . "\n";
+				if ($wizard->isAutoPage($navStep['first']) || $wizard->currentPage > $lastAutoIndex) {
+					echo '<li class="steps__item is-done"><span class="steps__label">' . $name . '</span></li>' . "
+";
+					continue;
+				}
+				echo '<li class="steps__item is-done"><a class="steps__label" href="' . $wizard->pageURI($wizard->pages[$navStep['first']]) . '">' . $name . '</a></li>' . "
+";
 			} ?>
 		</ol>
 	</nav>
-
 	<main id="content" class="card" tabindex="-1">
 		<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post" class="card__form">
 			<div class="page" id="<?php echo $wizard->currentPageName; ?>">
@@ -104,10 +123,9 @@ $nextLabel = (isset($_POST['mod']) && $_POST['mod'] == 1 && $isSecondLastPage) ?
 					<?php echo $content; ?>
 				</div>
 			</div>
-
 			<div class="actions" id="buttons">
-				<?php if ($wizard->currentPage != 0 && !$isLastPage) { ?>
-					<a class="btn btn--secondary prev" href="<?php echo $wizard->pageURI('-1'); ?>">
+				<?php if ($canGoBack) { ?>
+					<a class="btn btn--secondary prev" href="<?php echo $wizard->pageURI($wizard->pages[$prevIndex]); ?>">
 						<svg aria-hidden="true" focusable="false" class="icon-dir" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
 						<?php echo BUTTON_PREVIOUS; ?>
 					</a>
@@ -131,11 +149,9 @@ $nextLabel = (isset($_POST['mod']) && $_POST['mod'] == 1 && $isSecondLastPage) ?
 		</form>
 	</main>
 </div>
-
 <footer class="site-footer">
 	<div class="container"><?php echo INSTALL_COPYRIGHT; ?></div>
 </footer>
-
 <script>
 	(function () {
 		var helpButton = document.getElementById('help_button');
