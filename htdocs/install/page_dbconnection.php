@@ -148,8 +148,8 @@ ob_start();
 			<?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?>
 		</label>
 		<div class="xoform-help"><?php echo htmlspecialchars( DB_PCONNECT_HELP ); ?></div>
-	</div></details>
 	</div>
+	</div></details>
 <?php
 $content = ob_get_contents();
 ob_end_clean();
