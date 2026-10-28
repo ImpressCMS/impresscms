@@ -4,20 +4,22 @@
  */
 
 :root {
-	--bg: #f3f6fb;
+	--bg: #f6f4ef;
 	--surface: #ffffff;
-	--surface-alt: #f6f8fc;
-	--text: #1b2433;
-	--text-muted: #4a5568;
-	--border: #c3ccda;
-	--border-soft: #e2e8f1;
-	--primary: #1a56b8;
-	--primary-hover: #123f8c;
-	--primary-contrast: #ffffff;
-	--focus: #0b3d91;
-	--header-bg: #0f2a52;
+	--surface-alt: #faf8f3;
+	--text: #2b2b2b;
+	--text-muted: #555555;
+	--border: #8c8c8c;
+	--border-soft: #e5e1d8;
+	--link: #8a5a00;
+	--link-hover: #5f3d00;
+	--primary: #f0a800;
+	--primary-hover: #d99700;
+	--primary-contrast: #242424;
+	--focus: #1f1f1f;
+	--header-bg: #3a3a3a;
 	--header-text: #ffffff;
-	--header-muted: #c9d6ee;
+	--header-muted: #dcdcdc;
 	--success-bg: #e6f6ea;
 	--success-border: #1e7a38;
 	--success-text: #14532d;
@@ -27,28 +29,30 @@
 	--danger-bg: #fde8e8;
 	--danger-border: #b42318;
 	--danger-text: #7a1a12;
-	--info-bg: #e8f0fd;
-	--info-border: #1a56b8;
+	--info-bg: #fdf3d3;
+	--info-border: #d99700;
 	--radius: 10px;
-	--shadow: 0 1px 2px rgb(15 42 82 / 8%), 0 8px 24px rgb(15 42 82 / 8%);
+	--shadow: 0 1px 2px rgb(40 40 40 / 8%), 0 8px 24px rgb(40 40 40 / 8%);
 	--font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	--mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--bg: #0e1522;
-		--surface: #172033;
-		--surface-alt: #1d2940;
-		--text: #e8edf6;
-		--text-muted: #b4c0d4;
-		--border: #5a6a85;
-		--border-soft: #2b3a56;
-		--primary: #7db0ff;
-		--primary-hover: #a7c9ff;
-		--primary-contrast: #07162e;
+		--bg: #1c1c1c;
+		--surface: #262626;
+		--surface-alt: #2e2e2e;
+		--text: #efefef;
+		--text-muted: #c2c2c2;
+		--border: #8a8a8a;
+		--border-soft: #404040;
+		--link: #f5b82e;
+		--link-hover: #ffd16b;
+		--primary: #f5b82e;
+		--primary-hover: #ffd16b;
+		--primary-contrast: #1a1a1a;
 		--focus: #ffd166;
-		--header-bg: #0a1220;
+		--header-bg: #151515;
 		--success-bg: #12301d;
 		--success-border: #4ade80;
 		--success-text: #c6f6d5;
@@ -58,8 +62,8 @@
 		--danger-bg: #3c1717;
 		--danger-border: #ff8a80;
 		--danger-text: #ffd2cd;
-		--info-bg: #172a4d;
-		--info-border: #7db0ff;
+		--info-bg: #3a3016;
+		--info-border: #f5b82e;
 		--shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 30%);
 	}
 }
@@ -93,12 +97,12 @@ img {
 }
 
 a {
-	color: var(--primary);
+	color: var(--link);
 	text-underline-offset: 0.15em;
 }
 
 a:hover {
-	color: var(--primary-hover);
+	color: var(--link-hover);
 }
 
 :focus-visible {
@@ -179,7 +183,7 @@ a:hover {
 
 .progress__bar {
 	height: 100%;
-	background: #7db0ff;
+	background: var(--primary);
 	transition: width 0.4s ease;
 }
 
@@ -418,19 +422,19 @@ button {
 
 .btn--secondary:hover {
 	border-color: var(--primary);
-	color: var(--primary);
+	color: var(--link);
 }
 
 .btn--ghost {
 	background: transparent;
 	border-color: transparent;
-	color: var(--primary);
+	color: var(--link);
 	padding-inline: 0.75rem;
 }
 
 .btn--ghost:hover {
 	background: var(--info-bg);
-	color: var(--primary-hover);
+	color: var(--link-hover);
 }
 
 [dir="rtl"] .icon-dir {
@@ -444,7 +448,7 @@ button {
 	border: 2px solid var(--primary);
 	border-radius: 8px;
 	background: var(--surface);
-	color: var(--primary);
+	color: var(--link);
 	font-weight: 600;
 	cursor: pointer;
 }
@@ -960,7 +964,7 @@ td {
 }
 
 .site-footer a {
-	color: var(--primary);
+	color: var(--link);
 }
 
 /* Tablet and below: collapse the steps into a compact summary */
