@@ -141,7 +141,16 @@ class db_manager {
 	);
 
 
-	public function report() {
+	public function hasFailures(): bool {
+		foreach ( array( 'create', 'insert', 'alter', 'drop' ) as $cmd) {
+			if (!@empty( $this->f_tables[$cmd] )) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function report(bool $wrap = true) {
 		$commands = array( 'create', 'insert', 'alter', 'drop' );
 		$content = '<ul class="log">';
 		foreach ( $commands as $cmd) {
@@ -163,7 +172,14 @@ class db_manager {
 			}
 		}
 		$content .= '</ul>';
-		return $content;
+		if (!$wrap) {
+			return $content;
+		}
+		$hasFailures = $this->hasFailures();
+		$status = $hasFailures ?
+			'<p class="x2-note error" role="alert">' . ESS_PROBLEMS . '</p>' :
+			'<p class="x2-note">' . ESS_ALL_DONE . '</p>';
+		return $status . installCollapsible( $content, ESS_SHOW_DETAILS, $hasFailures );
 	}
 
 	public function query($sql) {

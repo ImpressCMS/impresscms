@@ -31,7 +31,7 @@ include "modulesadmin.php";
 $dbm = new db_manager();
 
 if (!$dbm->isConnectable()) {
-	$wizard->redirectToPage( '-3' );
+	$wizard->redirectToPage( 'dbconnection' );
 	exit();
 }
 $process = '';
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$wizard->redirectToPage( '+1' );
 		exit();
 	}
-	if ($_POST['mod'] == 1) {
+	if (isset($_POST['mod']) && $_POST['mod'] == 1) {
 		/**
 		 * Automatically updating the system module before installing the selected modules
 		 * @since 1.3
@@ -55,20 +55,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$system_moduleObj = $module_handler->getByDirname('system');
 		xoops_module_update_system($system_moduleObj);
 
+		$log = '';
 		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
 		$anon_accessible_mods = isset($_POST['anon_accessible_mods']) ? $_POST['anon_accessible_mods'] : '';
 		if (isset($_POST['install_mods'])) {
 			for ($i = 0; $i <= count($install_mods)-1;$i++) {
-				$content .= xoops_module_install($install_mods[$i]);
+				$log .= xoops_module_install($install_mods[$i]);
 				impresscms_get_adminmenu();
 			}
 		} else {
-			$content .= _INSTALL_NO_PLUS_MOD;
+			$log .= _INSTALL_NO_PLUS_MOD;
 		}
 		//Install protector module by default if found.
 		//TODO: Insert Protector installation - leads to blank page as it is now.
 			if (file_exists(ICMS_ROOT_PATH . '/modules/protector/icms_version.php')) {
-				$content .= xoops_module_install('protector');
+				$log .= xoops_module_install('protector');
 				/*        	include_once "./class/mainfilemanager.php";
                  $mm = new mainfile_manager("../mainfile.php");
                  $mm->setRewrite('PROTECTOR1', 'include  XOOPS_TRUST_PATH.\'/modules/protector/include/precheck.inc.php\')' ;
@@ -79,7 +80,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
 
 		$tables = array();
-		$content .= "<div style='height:auto;max-height:400px;overflow:auto;'>".$dbm->report()."</div>";
+		$log .= $dbm->report(false);
+		$problem = $dbm->hasFailures() || stripos($log, 'failed') !== false || stripos($log, 'error') !== false;
+		$content .= $problem ?
+			'<p class="x2-note error" role="alert">' . ESS_PROBLEMS . '</p>' :
+			'<p class="x2-note">' . ESS_ALL_DONE . '</p>';
+		$content .= installCollapsible($log, ESS_SHOW_DETAILS, $problem);
 	} else {
 		$wizard->redirectToPage( '+1' );
 		exit();
@@ -89,15 +95,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$content .= '<div>'. _INSTALL_SELECT_MODS_INTRO .'</div>';
 	$content .= '<div class="dbconn_line">';
 	$content .= '<h3>'. _INSTALL_SELECT_MODULES.'</h3>';
-	$content .= '<div id="modinstall" name="install_mods[]">';
+	$content .= '<fieldset class="module-grid" id="modinstall"><legend class="sr-only">' . _INSTALL_SELECT_MODULES . '</legend>';
 	$langarr = icms_module_Handler::getAvailable();
 	foreach ($langarr as $lang) {
 		if ($lang == 'system' || $lang == 'protector') {
 			continue;
 		}
-		$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../modules/$lang/images/icon_small.png\" alt=\"$lang\" /><br />$lang <br /><input type=\"checkbox\" checked=\"checked\" name=\"install_mods[]\" value=\"$lang\" /></a></div>";
+		$moduleName = htmlspecialchars($lang, ENT_QUOTES);
+		$content .= "<label class=\"choice\"><img src=\"../modules/$moduleName/images/icon_small.png\" alt=\"\" /><span>$moduleName</span><input type=\"checkbox\" checked=\"checked\" name=\"install_mods[]\" value=\"$moduleName\" /></label>";
 	}
-	$content .= "</div><div class='clear'>&nbsp;</div>";
+	$content .= "</fieldset>";
 	$content .= '</div>';
 	$content .= '<input type="hidden" name="mod" value="1" />';
 }

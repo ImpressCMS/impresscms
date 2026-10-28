@@ -19,8 +19,9 @@ require_once 'common.inc.php';
 if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 $wizard->setPage( 'tablesfill' );
-$pageHasForm = false;
+$pageHasForm = true;
 $pageHasHelp = false;
+$retryLabel = ESS_RETRY;
 
 $vars =& $_SESSION['settings'];
 
@@ -40,9 +41,9 @@ if (!$res) {
 list ( $count ) = $dbm->db->fetchRow( $res );
 $process = $count ? '' : 'insert';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (true) {
 	if (!$process) {
-		$wizard->redirectToPage( '+0' );
+		$wizard->redirectToPage( '+1' );
 		exit();
 	}
 	include_once './makedata.php';
@@ -62,12 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$result = $dbm->queryFromFile('./language/' . $language . '/'. $driver . '.lang.data.sql');
 	$group = make_groups( $dbm );
 	$result = make_data( $dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $group );
+	if (!$dbm->hasFailures()) {
+		$wizard->redirectToPage( '+1' );
+		exit();
+	}
 	$content = $dbm->report();
-} else {
-	$msg = $process ? READY_INSERT_DATA : DATA_ALREADY_INSERTED;
-	$pageHasForm = $process ? true : false;
-
-	$content = "<p class='x2-note'>$msg</p>";
 }
 
 include 'install_tpl.php';

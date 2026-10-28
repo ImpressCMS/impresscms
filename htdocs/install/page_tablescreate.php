@@ -42,6 +42,7 @@ if (defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH != '') {
 $wizard->setPage( 'tablescreate' );
 $pageHasForm = true;
 $pageHasHelp = false;
+$retryLabel = ESS_RETRY;
 
 $vars =& $_SESSION['settings'];
 
@@ -49,7 +50,7 @@ include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
 if (!$dbm->isConnectable()) {
-	$wizard->redirectToPage( '-3' );
+	$wizard->redirectToPage( 'dbconnection' );
 	exit();
 }
 $process = '';
@@ -57,7 +58,7 @@ if (!$dbm->tableExists( 'users' )) {
 	$process = 'create';
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (true) {
 	// If there's nothing to do: switch to next page
 	if (empty( $process )) {
 		$wizard->redirectToPage( '+1' );
@@ -71,6 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$driver = XOOPS_DB_TYPE;
 	}
 	$result = $dbm->queryFromFile( './sql/' . $driver . '.structure.sql' );
+	if (!$dbm->hasFailures()) {
+		$wizard->redirectToPage( '+1' );
+		exit();
+	}
 	$content = $dbm->report();
 	include 'install_tpl.php';
 	exit();

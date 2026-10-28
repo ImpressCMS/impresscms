@@ -32,11 +32,17 @@ if (!defined('XOOPS_INSTALL')) exit();
 
 $wizard->setPage('configsave');
 $pageHasForm = true;
+$retryLabel = ESS_RETRY;
 $pageHasHelp = false;
 
 $vars = &$_SESSION['settings'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (empty($vars['ROOT_PATH'])) {
+	$wizard->redirectToPage('pathsettings');
+	exit();
+}
+
+if (!empty($vars['ROOT_PATH'])) {
 	$error = '';
 	// let's try and put the db info in the trust path
 	$sdata_file_name = md5($vars['ROOT_PATH'] . time()) . '.php';
@@ -167,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$wizard->redirectToPage('+1');
 		exit();
 	}
-	$content = '<p class="errorMsg">' . $error . '</p>';
+	$content = '<p class="errorMsg" role="alert">' . $error . '</p>';
 	include 'install_tpl.php';
 	exit();
 }
@@ -178,7 +184,8 @@ ob_start();
 
 echo READY_SAVE_MAINFILE;
 ?></p>
-<dl style="height: 200px; overflow: auto; border: 1px solid #D0D0D0">
+<details class="collapsible"><summary><?php echo ESS_SETTINGS_SUMMARY; ?></summary><div class="collapsible__body">
+<dl>
 <?php
 
 foreach ($vars as $k => $v) {
@@ -186,6 +193,7 @@ foreach ($vars as $k => $v) {
 }
 ?>
 </dl>
+</div></details>
 
 <?php
 $content = ob_get_contents();
