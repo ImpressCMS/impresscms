@@ -1,0 +1,106 @@
+name: Tests
+
+on:
+  push:
+    branches: [main, '2.*']
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.2', '8.3', '8.4']
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+    env:
+      ICMS_TEST_DB_HOST: 127.0.0.1
+      ICMS_TEST_DB_PORT: 3306
+      ICMS_TEST_DB_USER: root
+      ICMS_TEST_DB_PASS: root
+      ICMS_TEST_DB_NAME: icms_test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: gd, intl, json, mbstring, mysqli, pdo_mysql, xml, zlib
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies (root and htdocs)
+        run: |
+          composer install --no-interaction --no-progress --prefer-dist
+          composer install --no-interaction --no-progress --prefer-dist --working-dir=htdocs
+
+      - name: Lock files agree on shared packages
+        run: php bin/check-lock-alignment
+
+      - name: Lint
+        run: |
+          find src tests public config htdocs/libraries/Icms htdocs/include -name '*.php' -print0 \
+            | xargs -0 -r -n 50 -P 4 php -l > /dev/null
+          for script in bin/* htdocs/mainfile.php; do php -l "$script" > /dev/null; done
+
+      - name: Library suite (direct deployment, htdocs/ Composer)
+        working-directory: htdocs
+        run: vendor/bin/phpunit
+
+      - name: Library suite (host, root Composer)
+        run: vendor/bin/phpunit --testsuite Library
+
+      - name: Unit suite
+        run: vendor/bin/phpunit --testsuite Unit
+
+      - name: Test site
+        run: php bin/test-db
+
+      - name: Integration suite
+        run: vendor/bin/phpunit --testsuite Integration
+
+      - name: Functional suite
+        run: vendor/bin/phpunit --testsuite Functional
+
+      - name: Http suite (document root htdocs/)
+        run: vendor/bin/phpunit --testsuite Http
+        env:
+          ICMS_TEST_DOCROOT: htdocs
+
+      - name: Http suite (document root public/)
+        run: vendor/bin/phpunit --testsuite Http
+        env:
+          ICMS_TEST_DOCROOT: public
+
+      - name: Spec coverage
+        run: php bin/spec-coverage
+
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --no-progress --memory-limit=1G
+
+      - name: Symfony deprecations in src/
+        run: vendor/bin/phpunit --testsuite Unit,Functional
+        env:
+          SYMFONY_DEPRECATIONS_HELPER: 'max[self]=0&verbose=1'

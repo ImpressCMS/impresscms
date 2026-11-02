@@ -1,0 +1,5 @@
+GET /include/xoops.js
+status: 200
+content-type: application/javascript
+
+sha1: 304000eeeb7312a4b8a50d1e9db1d2332bacceb6 (17696 bytes)

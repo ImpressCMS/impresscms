@@ -1,0 +1,9 @@
+POST /user.php (webmaster)
+status: 302
+content-type: text/html; charset=UTF-8
+location: 
+cache-control: no-store, no-cache, must-revalidate
+pragma: no-cache
+set-cookie: ICMSSESSION=*; path=/
+
+
