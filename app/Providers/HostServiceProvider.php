@@ -8,6 +8,7 @@ use App\LegacyBridge\LegacyBridge;
 use App\LegacyBridge\LegacyRequestHydrator;
 use App\LegacyBridge\LegacyScriptResolver;
 use App\Routing\RequestConditionValidator;
+use App\Testing\TestServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Routing\Route;
 use Illuminate\Support\ServiceProvider;
@@ -38,6 +39,10 @@ final class HostServiceProvider extends ServiceProvider
         ));
 
         $this->registerRouteConditions();
+
+        if ($this->app->environment('test')) {
+            $this->app->register(TestServiceProvider::class);
+        }
     }
 
     public function boot(): void

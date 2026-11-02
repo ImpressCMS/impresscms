@@ -30,3 +30,10 @@ parameters:
         - ICMS_GROUP_ANONYMOUS
         - _INTL_LOCALE
         - _ADM_USE_RTL
+        - XOOPS_DB_HOST
+        - XOOPS_DB_NAME
+        - XOOPS_DB_USER
+        - XOOPS_DB_PASS
+        - XOOPS_DB_PREFIX
+        - XOOPS_DB_CHARSET
+        - XOOPS_DB_PCONNECT

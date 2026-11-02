@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Runtime;
 
 use App\Http\HostKernel;
+use App\Legacy\LegacyEventForwarder;
 use App\LegacyBridge\LegacyBridge;
 use App\LegacyBridge\LegacyExecutionResponse;
 use App\LegacyBridge\PreparedLegacyExecution;
@@ -45,6 +46,8 @@ final class HostRunner
 
             return null;
         }
+
+        $this->app->make(LegacyEventForwarder::class)->install();
 
         return $this->bridge()->prepare($request, $response->resolution, $this->finishLegacy(...));
     }

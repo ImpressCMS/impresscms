@@ -63,6 +63,50 @@ Time to first green `Http` snapshot: not reached yet.
 - **L11 Identity.** `Auth::viaRequest()` plus `Gate::before()` cover the ImpressCMS user, groups and module permissions with less ceremony than a Symfony authenticator and voter. Laravel has no role concept, so `ROLE_*` became abilities.
 - **L16 Tests.** Orchestra Testbench is meant for packages, and it would not load lara-3's `bootstrap/app.php`. Laravel's own `Foundation\Testing\TestCase` is the right tool for an application. As with `KernelBrowser`, Laravel's test client never reaches the file-scope runner, so the `Http` suite stays the only way to test legacy execution.
 
+### Phases 1–2: test infrastructure, characterization, seams (2026-11-02)
+
+- The Symfony variant's commits `2faac47a9`, `86f94663b` (minus its `openspec/` hunk), `98555bb46`, `e01c18bd0`, `a498cc573`, `42c344408`, `e3bbb613e` and `ff813c6c3` were cherry-picked without a conflict or a change. **No seam had to change for Laravel.** One later library fix from the Symfony variant's final commit (`94141e7cf`, an uninitialised variable in `Bootstrap`, found there by PHPStan) is a separate commit.
+- The test infrastructure depends on no framework (PHPUnit, Symfony BrowserKit and Process as tools), so it carried over as is. That is a property of how the Symfony variant built it, not of either framework.
+
+### Phase 3: the host and the bridge (2026-11-02)
+
+**Fitted naturally**
+- *File scope.* Laravel's front controller is a plain script; `require` at file scope needs no runtime component. Symfony needed a custom `symfony/runtime` runner (`HostRuntime`, `HostRunner`).
+- *HttpFoundation underneath.* `Illuminate\Http\Request` and every response are HttpFoundation objects, so the resolver, the hydrator, `LegacyResponse`, `SendsHeadersVerbatim` and `BinaryFileResponse` for assets are the same in substance as on Symfony. The bridge's unit tests from the Symfony variant ran against the Laravel classes unchanged except for one test.
+- *Tests.* `Illuminate\Foundation\Testing\TestCase` needed no configuration: its default `createApplication()` found `bootstrap/app.php`.
+- *First green.* All 37 `Http` tests, including every characterization snapshot, passed through `public/` on the first run.
+
+**Worked against the framework**
+1. `Router::fallback()` is GET only; an `any` route marked `->fallback()` is needed.
+2. No 405 with an all-method catch-all: the same re-match in the bridge controller as on Symfony.
+3. No route condition on the query. A route validator appended to the static `Route::$validators` plus two macros (`whereQuery()`, `matching()`); `when()` was taken by the `Conditionable` trait.
+4. `route:cache` silently drops that condition: the compiled matcher never runs route validators. The host refuses cached routes. Symfony compiles conditions into its cached matcher.
+5. `withRouting(web:)` puts the routes into the `web` group (cookie encryption, Laravel session, CSRF); `withRouting(using:)` instead.
+6. `TrimStrings` and `ConvertEmptyStringsToNull` are global by default and rewrite input that a takeover controller must see as legacy did; removed.
+7. Laravel 12 registers `/storage/{path}` routes for the local disk by default, which claim URL space; turned off in `config/filesystems.php`.
+8. `HandleExceptions` sets `error_reporting(-1)`, turns notices into exceptions and renders fatal errors at shutdown. `forgetApp()` (public, intended for tests) makes it inert; PHP's settings are recorded in `public/index.php` before Laravel boots.
+9. `RequestHandled` is dispatched inside `Kernel::handle()` with no separate method, so `HostKernel` repeats the parent's `handle()` body to skip it for the marker.
+10. For a JSON body Laravel's `Request` replaces the POST bag with the decoded JSON; the hydrator keeps `$_POST` empty then, as PHP does.
+
+Laravel's docblocks are narrower than its behaviour: `Kernel::handle()`, `terminate()` and `RequestHandled` document `Illuminate\Http\Response`, while the router passes any Symfony response (files, the marker). PHPStan with Larastan needed two `@phpstan-ignore` lines for that. PHPStan 2.1 prints advice for AI agents not to add such ignores; they stay, with the reason in the comment.
+
+**Environment, not framework**: `composer.bat` on Windows runs through `cmd`, which strips `^` from a constraint (`^12.70` became `12.70`).
+
+### Phase 4: shared runtime (2026-11-02)
+
+**Fitted naturally**
+- *Database.* `db.connector.mysql` (a container binding per driver) supplies ImpressCMS' PDO class, `Connection::resolverFor('mysql')` the shared connection, and `DatabaseManager::extend('icms')` completes the configuration from `mainfile.php` at connect time. Three documented extension points; Symfony needed a custom DBAL driver, a driver-connection middleware, a statement wrapper and an env var processor.
+- *Table prefix.* Laravel's connection prefix is ImpressCMS' prefix: `DB::table('users')` is `icms_users`.
+- *Container.* Laravel compiles no container, so registering `icms.*` bindings never loads a legacy class file; Symfony needed `class: object` definitions and an `#[Autowire]` subclass to avoid that. Contextual attributes (`#[IcmsHandler('icms_data_page')]`) are a direct equivalent of `#[IcmsHandler]` and resolve before the parameter's class is reflected.
+- *Middleware with parameters* (`icms.legacy:siteState`) reads well as the equivalent of `#[RequiresLegacy(stage:)]`, although it lives in the route file instead of on the controller.
+
+**Worked against the framework**
+11. Laravel's MySQL connector changes the shared connection unless told otherwise: emulated prepares off (native types for legacy, `LIMIT ?` with strings fails) and `SET NAMES`/`sql_mode`/`time_zone` from configuration. The `icms` connection restores PDO's defaults and sets none of those keys, and puts the charset into the DSN.
+12. The skeleton defaults session, cache and queue to the `database` driver. The redirector resolves the session store for every `response()`/`redirect()` helper, so a 404 page booted legacy and opened the connection; `artisan` (and Larastan, which boots the application) did the same through the cache. Overridden to `array`, `file` and `sync`.
+13. The shared connection must refuse `reconnect()`; Laravel would otherwise open a second physical connection after a lost connection.
+
+**Neutral**: no compiled listener map, so the event forwarder is always installed and checks `hasListeners()` per event. String-named events cannot be auto-discovered. Test-only listeners need a provider registered from code, where Symfony has `#[When(env: 'test')]`.
+
 ## Where the comparison is unfair
 
 - **The design existed.** The Symfony variant discovered the ImpressCMS constraints (file scope, `exit()`, `ERRMODE_SILENT`, `IConnection`, headless denials, `QUERY_STRING` sorting, header semantics). lara-3 starts from its specs, implementation notes and tests, so Laravel is spared that discovery. Raw effort figures therefore favour Laravel. The comparison is fair on the questions "how much host code" and "how much fighting the framework", less so on "how long".

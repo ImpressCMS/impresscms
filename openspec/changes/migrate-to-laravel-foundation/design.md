@@ -56,14 +56,21 @@ The host uses Laravel's own skeleton layout, because measuring how naturally a f
 | `config/packages/*.yaml`, `config/services.yaml` | `config/*.php`, service providers in `app/Providers/` |
 | `config/routes.yaml`, attributes | `routes/web.php`, `routes/console.php` |
 | `bin/console` | `artisan` |
-| `var/cache`, `var/log` | `var/` via `useStoragePath(var)`: `var/framework/cache`, `var/framework/views`, `var/logs` |
+| `var/cache`, `var/log` | `var/` via `useStoragePath(var)`: `var/framework/cache`, `var/framework/views`, `var/log/<env>.log` |
+| `.env` (defaults) + `.env.local` | `.env.local` only (`loadEnvironmentFrom('.env.local')`); the defaults live in `config/*.php` as `env('X', default)` |
+
+Laravel reads one environment file. Variables that already exist in `$_SERVER`, `$_ENV` or `getenv()` win over it (its repository is immutable and includes a `$_SERVER` adapter), so values that the entry point puts into `$_SERVER` take precedence without extra code. Symfony needed `.env` for its defaults; Laravel keeps them in the configuration files.
+
+The environment names stay those of the Symfony variant (`prod`, `test`), so the reused test support and log names apply unchanged; Laravel's convention is `production` and `testing`. Laravel's own test helpers treat only `testing` specially (for example `runningUnitTests()`), and the host does not rely on them.
+
+Laravel 12 serves the `local` filesystem disk under `/storage/{path}` by default, which claims part of the shared URL space. `config/filesystems.php` turns that off (`serve: false`).
 
 `bootstrap/cache/` (Laravel's compiled `services.php`, `packages.php` and optional config/route caches) stays where Laravel expects it. Moving it needs `APP_*_CACHE` environment variables that must exist before `.env` is read (`Application::normalizeCachePath()`), which the "no server environment" rule of the relocation forbids. In the relocation the installer replaces `bootstrap/` wholesale, which clears that cache as well.
 
 ### L3. Single Composer root (Symfony: D3)
 Taken over unchanged: the root `composer.json` requires `laravel/framework` plus the `htdocs/composer.json` requirements, maps `Icms\` to `htdocs/libraries/Icms/`, classmaps `htdocs/libraries/icms.php`, loads `htdocs/libraries/Autoloader.php` through `files`, and drops the PSR-0 `icms_` mapping. `public/index.php` defines `ICMS_HOST_AUTOLOADED`. `composer/composer` stays a runtime requirement and must resolve against the Symfony 7.x components that Laravel 12 pulls in.
 
-**Global helper functions.** `laravel/framework` registers 175 global helpers through Composer `files` (`app()`, `config()`, `e()`, `url()`, `redirect()`, `collect()`, `report()`, …), and legacy defines global functions without `function_exists()` guards, so a collision would be a fatal "cannot redeclare". The 871 function names declared under `htdocs/` were compared with Laravel's helper names: the only match is `report`, which is a method of the installer's `mainfile_manager`, not a global function. There is no collision today. A unit test keeps that check (Laravel helper names versus `function` declarations in `htdocs/`), because third-party modules can still collide; that risk is documented in `docs/laravel-host.md`.
+**Global helper functions.** Composer `files` entries load 175 guarded global helpers, 99 of them from `laravel/framework` (`app()`, `config()`, `e()`, `url()`, `redirect()`, `collect()`, `report()`, …) and the rest from its dependencies (Termwind, Laravel Prompts, Symfony, Guzzle, Ramsey UUID). Legacy defines global functions without `function_exists()` guards, so a collision would be a fatal "cannot redeclare". The 871 function names declared under `htdocs/` were compared with the helper names: the only match is `report`, which is a method of the installer's `mainfile_manager`, not a global function. There is no collision today. `GlobalHelperCollisionTest` keeps that check (helper names versus global `function` declarations in `htdocs/`, found with the tokenizer), because third-party modules can still collide; that risk is documented in `docs/laravel-host.md`.
 
 ### L4. Legacy fallback: catch-all route marked as fallback; no prefix; query conditions through a route validator (Symfony: D4) — *approved 2026-11-02*
 The bridge route is
@@ -72,16 +79,19 @@ The bridge route is
 Route::any('{path}', LegacyBridgeController::class)->where('path', '.*')->fallback()->name('icms.legacy');
 ```
 
-registered last in `routes/web.php`, outside every middleware group. `Router::fallback()` itself cannot be used: it registers `GET` only (`Router.php:241`), so POSTs to legacy scripts would 404. `->fallback()` on an `any` route makes the router try it after all other routes (`RouteCollection::matchAgainstRoutes()`).
+registered last in `routes/web.php`. `Router::fallback()` itself cannot be used: it registers `GET` only (`Router.php:241`), so POSTs to legacy scripts would 404. `->fallback()` on an `any` route makes the router try it after all other routes (`RouteCollection::matchAgainstRoutes()`). `routes/web.php` is loaded through `withRouting(using:)`, because `withRouting(web:)` wraps the file in the `web` middleware group (L10).
 
 - **405/Allow.** Laravel answers 405 only when *no* route matches the method (`checkForAlternateVerbs()`); the all-method catch-all always matches, so `POST /up` would reach legacy. The bridge controller therefore re-checks the path against the routes of the other methods (the same logic as `checkForAlternateVerbs()`, which is protected) and throws `MethodNotAllowedHttpException` with `Allow`. This is the same workaround the Symfony bridge needed (task 4.8 there).
-- **Claiming legacy URLs by query.** Laravel routes match on method, scheme, host and path only; there is no equivalent of Symfony's `condition` expression. lara-3 adds one route validator (`App\Routing\QueryValidator`, appended to `Route::$validators`) and a macro:
+- **Claiming legacy URLs by query.** Laravel routes match on method, scheme, host and path only; there is no equivalent of Symfony's `condition` expression. lara-3 adds one route validator (`App\Routing\RequestConditionValidator`, appended to `Route::$validators`) and two macros:
 
   ```php
-  Route::get('/modules/system/admin.php', UsersController::class)->whereQuery(['fct' => 'users']);
+  Route::get('/modules/system/admin.php', UsersController::class)
+      ->whereQuery(['fct' => 'users'])            // required query parameters
+      ->matching(TakeoverEnabled::class);         // App\Routing\RouteCondition, resolved from the container
   ```
 
-  The condition is stored as plain data in the route action (`icms_query`), so `route:cache` keeps working (closures in route actions other than `uses` cannot be cached). `.php` paths need nothing special.
+  Both are stored as plain data in the route action (`icms_query`, `icms_conditions`). The second macro cannot be called `when()`: `Route` uses the `Conditionable` trait, which already defines it. `.php` paths need nothing special.
+- **No route cache.** Laravel's compiled matcher (`route:cache`, `CompiledRouteCollection::match()`) matches with Symfony's `CompiledUrlMatcher` and never runs route validators, and `Route::toSymfonyRoute()` passes no condition. With cached routes every `whereQuery()` route would claim *all* variants of its URL, silently. `HostServiceProvider` therefore refuses to serve HTTP requests when routes are cached, with a message that says to run `route:clear`. Symfony compiles its `condition` expressions into the cached matcher, so its takeovers survive `cache:warmup`. For the few routes of the host, uncached matching costs little.
 - **Reserved prefixes**: `Route::any('<prefix>/{rest?}', fn () => abort(404))->where('rest', '.*')`, registered before the fallback, from `config('icms.legacy.reserved_prefixes')`; none by default.
 - **`icms:routes:ownership <url> [--method=]`** is an artisan command that runs `Router::getRoutes()->match()` on a synthetic request (so the query validator applies) and prints the route name, or the legacy script and strategy.
 - **Laravel's built-in `/up`** (`withRouting(health: '/up')`) renders an HTML view; the spec requires `text/plain` `ok`, so the host defines its own route and does not use `health:`.
@@ -89,25 +99,30 @@ registered last in `routes/web.php`, outside every middleware group. `Router::fa
 *Alternatives*: `Route::fallback()` (GET only, rejected); a global middleware that bridges before routing (rejected: it bypasses routing, so ownership and 405 would be hand-made); a 404 renderer in `withExceptions()` (rejected for the same reason as D4: exceptions as control flow, and it would also bridge 404s raised by Laravel controllers).
 
 ### L5. Legacy scripts run at file scope, from `public/index.php`, around a host HTTP kernel (Symfony: D5)
-Laravel has no `symfony/runtime`; the front controller is a plain script, which makes file-scope execution straightforward. `public/index.php` does what `Application::handleRequest()` does, with one addition:
+Laravel has no `symfony/runtime`; the front controller is a plain script, which makes file-scope execution straightforward. `public/index.php` does what `Application::handleRequest()` does, through `App\Runtime\HostRunner`, with one addition:
 
 ```php
-$kernel = $app->make(HttpKernel::class);
-$response = $kernel->handle($request = Request::capture());
-if ($response instanceof LegacyExecutionResponse) {
-    $bridge = $app->make(LegacyBridge::class);
-    $bridge->begin($response);           // superglobals, cwd, ob level, shutdown function
-    require $response->script();         // file scope
-    $response = $bridge->complete();     // output, status, raw header lines → LegacyResponse
+$__icms_runner = new HostRunner(require_once dirname(__DIR__) . '/bootstrap/app.php');
+if (null !== $__icms_execution = $__icms_runner->handle(Request::capture())) {   // marker → prepared script
+    try {
+        require $__icms_execution->script();                                       // file scope
+        $__icms_runner->completeLegacy($__icms_execution);
+    } catch (\Throwable $__icms_exception) {
+        $__icms_runner->failLegacy($__icms_execution, $__icms_exception);
+    }
 }
-$response->send();
-$kernel->terminate($request, $response);
 ```
 
 - **Kernel events.** Laravel has no `kernel.response` event; response post-processing happens in middleware, which already ran on the marker. `App\Http\HostKernel` (bound in place of `Illuminate\Foundation\Http\Kernel` in `bootstrap/app.php`) skips the `RequestHandled` event for the marker and dispatches it for the completed response, so tooling that listens to it (logging, Telescope, Debugbar) sees the real response. `terminate()` receives the real response. The bridge route has no route middleware, so nothing is lost.
-- **`exit()`**: a shutdown function registered by `begin()` completes, sends and terminates the same way.
-- **Error handling.** Laravel's `HandleExceptions` bootstrapper sets `error_reporting(-1)`, turns every reported PHP error into an `ErrorException` and registers its own shutdown handler for fatal errors. Legacy scripts produce notices and warnings that must not become exceptions before legacy installs its own handler (`Icms\Core\Logger`). `begin()` therefore restores `error_reporting` to the `php.ini` value and PHP's default error and exception handlers for the duration of the script, and the shutdown function owns fatal errors of legacy scripts. An exception escaping a script goes to the handler the script installed, as on the Symfony host.
-- **Input middleware.** Laravel's default global middleware `TrimStrings` and `ConvertEmptyStringsToNull` rewrite request input. They are removed globally (`$middleware->remove([...])`), so a Laravel controller that takes over a legacy URL sees the same input as the legacy script did; the hydrator never writes Laravel-modified input into the superglobals.
+- **`exit()`**: a shutdown function registered by `LegacyBridge::prepare()` completes, sends and terminates the same way.
+- **Error handling.** Laravel's `HandleExceptions` bootstrapper sets `error_reporting(-1)` and `display_errors=Off`, turns every reported PHP error into an `ErrorException` and registers its own shutdown handler for fatal errors. Legacy scripts produce notices and warnings that must not become exceptions before legacy installs its own handler (`Icms\Core\Logger`). Therefore:
+  - `public/index.php` records PHP's own `error_reporting` and `display_errors` (`App\Runtime\PhpEnvironment::capture()`) before Laravel boots;
+  - `prepare()` makes Laravel's handlers inert with `HandleExceptions::forgetApp()` (its closures check the static application and return `false` without it), clears the error and exception handlers and restores the recorded settings;
+  - `finalize()` puts the previous handlers back, as part of restoring the process state; Laravel's stay inert for the rest of the request;
+  - the bridge's shutdown function owns fatal errors of legacy scripts.
+
+  An exception escaping a script goes to the handler the script installed, as on the Symfony host.
+- **Input.** Laravel's default global middleware `TrimStrings` and `ConvertEmptyStringsToNull` rewrite request input. They are removed globally (`$middleware->remove([...])`), so a Laravel controller that takes over a legacy URL sees the same input as the legacy script did. The hydrator fills the superglobals from the request, as the Symfony bridge does, with one Laravel-specific exception: for a JSON body Laravel's `Request` replaces its POST bag with the decoded JSON, which PHP never puts into `$_POST`, so `$_POST` stays empty then.
 
 *Alternatives*: running the script inside a `Fiber` suspended from the controller, so that middleware post-processing applies (rejected: an `exit()` while a fiber is suspended, and fatal errors, make finalisation unreliable); `require` inside the controller with `extract($GLOBALS)` (rejected for the reason of D5).
 
@@ -119,9 +134,13 @@ The library side is taken over unchanged (stages, headless mode, `SiteClosedExce
 - `withExceptions()` renders `SiteClosedException` as 503 and `NotInstalledException` as a redirect to `/install/`.
 
 ### L7. Database: Laravel owns the connection; `Icms\Db\Factory` takes its PDO (Symfony: D7) — *approved 2026-11-02*
-`config/database.php` defines the connection `icms` (driver `mysql`) from the `XOOPS_DB_*` constants, read lazily through the `constants` stage. `LegacyRuntime` installs `Icms\Db\Factory::setConnectionProvider(fn () => DB::connection('icms')->getPdo())` before the `services` stage. Two Laravel extension points make this fit without touching Laravel internals:
+`config/database.php` defines the default connection `icms` (driver `mysql`). Host, database, credentials, table prefix (`XOOPS_DB_PREFIX . '_'`, so `DB::table('users')` is `icms_users`) and charset come from the `XOOPS_DB_*` constants when the connection is first opened: `DatabaseManager::extend('icms', …)`, keyed by the connection name, boots the `constants` stage and hands the completed configuration to Laravel's own `ConnectionFactory`. That is the equivalent of the Symfony variant's env var processor. `LegacyRuntime` installs `Icms\Db\Factory::setConnectionProvider(fn () => DB::connection('icms')->getPdo())` before the `services` stage. Two Laravel extension points make this fit without touching Laravel internals:
 - **Connector**: the binding `db.connector.mysql` (`ConnectionFactory::createConnector()`) supplies `App\Database\IcmsMySqlConnector`, whose `createPdoConnection()` instantiates the class from `Icms\Db\Factory::connectionClass()` instead of `PDO`, because the legacy layer calls `escape()` on it (the same constraint as Symfony task 3.5).
 - **Connection**: `Connection::resolverFor('mysql', …)` supplies `App\Database\SharedMySqlConnection`, which switches the shared PDO to `ERRMODE_EXCEPTION` for each Laravel query (`run()`) and restores the legacy `ERRMODE_SILENT` afterwards, and which refuses `reconnect()`. A Laravel reconnect would open a second physical connection that legacy never sees, so a lost connection becomes an error.
+
+**Session state of the shared connection.** Laravel's MySQL connector changes the connection unless told not to: its default PDO options switch emulated prepares off (values would come back as native ints, and `LIMIT ?` with string bindings fails), and the `charset`, `collation`, `strict`/`modes`, `timezone` and `isolation_level` settings send `SET` statements. The `icms` connection therefore sets PDO's own defaults (`ATTR_EMULATE_PREPARES => true`) and none of those settings, so legacy sees the connection it would have opened itself. The charset goes into the DSN (`dsn_charset`), as ImpressCMS puts it there, because PDO escapes with the charset of the handshake, which `SET NAMES` does not change.
+
+**Laravel defaults that would use it.** Laravel 12's skeleton defaults the session, cache and queue drivers to `database`. With `icms` as the default connection, resolving any of them would boot legacy and connect, and the session store is resolved by the redirector, which every `response()`/`redirect()` helper builds, so even a 404 page did that. `config/session.php` (until L10), `config/cache.php` (`file`) and `config/queue.php` (`sync`) override them.
 
 There is one physical connection and one transaction state: a `DB::transaction()` covers inserts through IPF handlers. Laravel's own transaction counter does not see transactions that legacy starts directly on the PDO, as with DBAL. Legacy DDL (module install/update) commits implicitly; host code never wraps it in a transaction.
 
@@ -129,12 +148,13 @@ There is one physical connection and one transaction state: a `DB::transaction()
 
 ### L8. Container: lazy bindings plus a handler locator; handler injection through contextual attributes (Symfony: D8)
 `App\Providers\IcmsServiceProvider` registers `icms.db`, `icms.db.legacy`, `icms.config`, `icms.security`, `icms.logger`, `icms.session` and `icms.preload` as `singleton()` closures over `LegacyRuntime::service('<name>')`, plus `alias()`es to their classes for autowiring. `icms.user` and `icms.module` are `bind()` (not shared), because legacy reassigns `icms::$user` and `icms::$module` during a request (login, module launch); every resolution then returns the current instance.
-- `icms.handlers` is `App\Legacy\HandlerLocator`, a PSR-11 container over `icms::handler($name, true)` that throws `Illuminate\Container\EntryNotFoundException` on `false`.
+- `icms.handlers` is `App\Legacy\HandlerLocator`, a PSR-11 container over `icms::handler($name, true)` that throws `Illuminate\Container\EntryNotFoundException` (PSR-11 `NotFoundExceptionInterface`) on `false`. It accepts legacy names, PSR-4 handler classes (through `aliases.php`) and `module:<dirname>/<name>` for `icms_getModuleHandler()`.
+- Unlike the Symfony container, Laravel's container compiles nothing and reflects a binding only when it is resolved, so no `class: object` trick is needed to keep legacy class files from loading at build time.
 - The equivalent of `#[IcmsHandler('icms_member')]` is a Laravel **contextual attribute** (`Illuminate\Contracts\Container\ContextualAttribute`, as `#[Config]` and `#[CurrentUser]`): `#[IcmsHandler('icms_member')] Handler $members` in a controller method or constructor. The route dispatcher resolves contextual attributes *before* it touches the parameter's class (`ResolvesRouteDependencies::transformDependency()`), so the legacy class file, which exits without `ICMS_ROOT_PATH`, is not loaded early. The Symfony variant needed an `#[Autowire]` subclass for the same reason.
 - `#[IcmsModuleHandler]` belongs to the pilot.
 
 ### L9. Events: forward `Icms\Event` to the Laravel dispatcher (Symfony: D9)
-The `setForwarder()` seam is reused. The forwarder dispatches `App\Legacy\LegacyEvent` under the string name `icms.<namespace>.<name>`, only when `Dispatcher::hasListeners()` is true for that name or a wildcard (`icms.*`). Laravel has no compiled container that knows the listener names in advance (Symfony's `LegacyEventListenersPass`); the check runs per event and is a hash lookup. String-named events cannot be auto-discovered (`withEvents(discover:)` works from typed `handle()` methods), so listeners are registered with `Event::listen()` in a provider.
+The `setForwarder()` seam is reused. `App\Legacy\LegacyEventForwarder` dispatches `App\Legacy\LegacyEvent` under the string name `icms.<namespace>.<name>`, only when `Dispatcher::hasListeners()` is true for that name or a wildcard (`icms.*`). It is installed before the `constants` stage of a headless boot and before a legacy script runs. Laravel has no compiled container that knows the listener names in advance (Symfony's `LegacyEventListenersPass`), so the forwarder is always installed and the check runs per event; it is a hash lookup. String-named events cannot be auto-discovered (`withEvents(discover:)` works from typed `handle()` methods), so listeners are registered with `Event::listen()` in a provider; test-only listeners live in `App\Testing\TestServiceProvider`, which `HostServiceProvider` registers in the `test` environment (Symfony: `#[When(env: 'test')]`).
 
 ### L10. Session: ImpressCMS owns the session; a Laravel `Store` over `$_SESSION` (Symfony: D10) — *approved 2026-11-02*
 Laravel's session never uses PHP's native session: `Illuminate\Session\Store` reads and writes its own handler and `StartSession` sets its own cookie. There is no equivalent of Symfony's `php_bridge` storage. lara-3 provides one:
