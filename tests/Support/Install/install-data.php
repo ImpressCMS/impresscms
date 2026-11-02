@@ -4,8 +4,8 @@
  *
  * Runs the same steps as the web installer's "tablescreate" and "tablesfill"
  * pages: structure SQL, data SQL, English language data, make_groups() and
- * make_data(). Runs in its own process with the direct-deployment (htdocs/)
- * autoloader, exactly as the installer does.
+ * make_data(). Runs in its own process with the autoloader the installer
+ * finds (include/host.php): the test site's trust path stub.
  *
  * Usage: php install-data.php <mainfile> <json fixture>
  */
@@ -17,7 +17,9 @@ define('XOOPS_INSTALL', 1);
 require $mainfile;
 
 chdir(ICMS_ROOT_PATH . '/install');
-require ICMS_ROOT_PATH . '/vendor/autoload.php';
+require ICMS_ROOT_PATH . '/include/host.php';
+require icms_host_vendor_autoload(ICMS_ROOT_PATH, ICMS_TRUST_PATH);
+require ICMS_ROOT_PATH . '/libraries/Autoloader.php';
 include_once ICMS_ROOT_PATH . '/include/version.php';
 include_once ICMS_ROOT_PATH . '/include/functions.php';
 require_once './include/functions.php';

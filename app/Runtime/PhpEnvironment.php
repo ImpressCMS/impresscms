@@ -6,7 +6,7 @@ namespace App\Runtime;
 
 /**
  * The PHP error settings as the web server started the request, captured in
- * public/index.php before Laravel's HandleExceptions bootstrapper sets
+ * host.php before Laravel's HandleExceptions bootstrapper sets
  * error_reporting(-1) and display_errors=Off. Legacy scripts run with these
  * settings, as they would without the host.
  */

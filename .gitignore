@@ -13,3 +13,4 @@
 /htdocs/cache/*
 !/htdocs/cache/index.html
 /.env.local
+/htdocs/trust_dist/

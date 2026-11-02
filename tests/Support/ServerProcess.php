@@ -8,13 +8,20 @@ use RuntimeException;
 use Symfony\Component\Process\Process;
 
 /**
- * A `php -S` server on a free local port for the Http suite.
+ * The web server for the Http suite.
  *
- * Serves either `htdocs/` (direct deployment) or `public/` (Laravel host)
- * with the test site's mainfile (ICMS_MAINFILE) in its environment.
+ * Normally a `php -S` server on a free local port that serves the web root
+ * `htdocs/`, with the test site's mainfile (ICMS_MAINFILE) in its environment;
+ * its index.php hands requests to the host in the test site's trust path. The
+ * routing level comes from ICMS_TEST_ROUTING:
  *
- * With ICMS_TEST_BASE_URL the suite tests an already running server instead,
- * for example Herd serving this checkout; it counts as the host (`public`).
+ * - `3` (default): every request goes to index.php (php -S router), as with
+ *   the level 3 rewrite rules of docs/server/;
+ * - `2`: existing files are served or executed directly and unknown paths go
+ *   to index.php (php -S without router), as with a fallback rule.
+ *
+ * With ICMS_TEST_BASE_URL the suite tests an already running server instead
+ * (Apache, nginx or FrankenPHP with the configuration from docs/server/).
  */
 final class ServerProcess
 {
@@ -23,58 +30,61 @@ final class ServerProcess
 
     /**
      * @param array<string, string> $env
+     * @param array<string, string> $ini php.ini settings that override the defaults
      */
     public function __construct(
         private readonly string $documentRoot,
         private readonly ?string $router = null,
         private readonly array $env = [],
         private readonly ?string $externalBaseUri = null,
+        private readonly array $ini = [],
     ) {
     }
 
     /**
-     * The server for the document root selected by ICMS_TEST_DOCROOT
-     * (`htdocs`, the default, or `public`).
+     * The test site: the server at ICMS_TEST_BASE_URL, or `php -S` on htdocs/
+     * at the routing level of ICMS_TEST_ROUTING.
      *
      * @param array<string, string> $env
      */
-    public static function forConfiguredDocumentRoot(array $env = []): self
+    public static function forSite(array $env = []): self
     {
-        $docroot = self::configuredDocumentRoot();
         $root = TestSite::repoRoot();
         if (null !== $external = self::externalBaseUri()) {
-            return new self($root . '/public', null, [], $external);
+            return new self($root . '/htdocs', null, [], $external);
         }
 
-        return $docroot === 'public'
-            ? new self($root . '/public', $root . '/public/index.php', $env + ['APP_ENV' => 'test', 'APP_DEBUG' => '0'])
-            : new self($root . '/htdocs', null, $env);
+        return new self(
+            $root . '/htdocs',
+            self::routing() === 3 ? $root . '/htdocs/index.php' : null,
+            $env + ['APP_ENV' => 'test', 'APP_DEBUG' => '0'],
+        );
     }
 
     /**
-     * The host (public/) in the test environment.
+     * The host with another web root (the bridge fixtures), every request
+     * routed to it.
      *
-     * @param array<string, string> $env for example ICMS_LEGACY_ROOT or APP_DEBUG
+     * @param array<string, string> $env for example APP_DEBUG
      */
-    public static function forHost(array $env = []): self
+    public static function forLegacyRoot(string $legacyRoot, array $env = []): self
     {
-        $root = TestSite::repoRoot();
-
-        return new self($root . '/public', $root . '/public/index.php', $env + ['APP_ENV' => 'test', 'APP_DEBUG' => '0']);
+        return new self(
+            $legacyRoot,
+            TestSite::repoRoot() . '/tests/Support/legacy-root-router.php',
+            ['ICMS_LEGACY_ROOT' => $legacyRoot] + $env + ['APP_ENV' => 'test', 'APP_DEBUG' => '0'],
+        );
     }
 
-    public static function configuredDocumentRoot(): string
+    /** The routing level of the test server: 2 or 3 (ICMS_TEST_ROUTING). */
+    public static function routing(): int
     {
-        if (self::externalBaseUri() !== null) {
-            return 'public';
+        $level = getenv('ICMS_TEST_ROUTING') ?: '3';
+        if (!in_array($level, ['2', '3'], true)) {
+            throw new RuntimeException("ICMS_TEST_ROUTING must be 2 or 3, got '{$level}'.");
         }
 
-        $docroot = getenv('ICMS_TEST_DOCROOT') ?: 'htdocs';
-        if (!in_array($docroot, ['htdocs', 'public'], true)) {
-            throw new RuntimeException("ICMS_TEST_DOCROOT must be 'htdocs' or 'public', got '{$docroot}'.");
-        }
-
-        return $docroot;
+        return (int) $level;
     }
 
     /** The external server under test (ICMS_TEST_BASE_URL), if any. */
@@ -99,9 +109,11 @@ final class ServerProcess
             '-d', 'display_errors=0',
             '-d', 'log_errors=1',
             '-d', 'error_reporting=' . E_ALL,
-            '-S', '127.0.0.1:' . $this->port,
-            '-t', $this->documentRoot,
         ];
+        foreach ($this->ini as $name => $value) {
+            array_push($command, '-d', $name . '=' . $value);
+        }
+        array_push($command, '-S', '127.0.0.1:' . $this->port, '-t', $this->documentRoot);
         if ($this->router !== null) {
             $command[] = $this->router;
         }
@@ -109,7 +121,7 @@ final class ServerProcess
         $this->process = new Process(
             $command,
             $this->documentRoot,
-            ['ICMS_MAINFILE' => TestSite::mainfile()] + $this->env,
+            $this->env + ['ICMS_MAINFILE' => TestSite::mainfile()],
             null,
             null,
         );
@@ -144,6 +156,11 @@ final class ServerProcess
     public function baseUri(): string
     {
         return $this->externalBaseUri ?? 'http://127.0.0.1:' . $this->port;
+    }
+
+    public function isExternal(): bool
+    {
+        return $this->externalBaseUri !== null;
     }
 
     public function documentRoot(): string

@@ -14,6 +14,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Bootstrap\LoadConfiguration;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
@@ -76,6 +77,18 @@ $app = Application::configure(basePath: dirname(__DIR__))
 
 $app->useStoragePath($app->basePath('var'));
 $app->loadEnvironmentFrom('.env.local');
+
+// The Icms\ library from the web root, which the trust path's composer.json cannot
+// name: the web root comes from index.php or, for artisan, from .env.local (design L21).
+$app->afterBootstrapping(LoadConfiguration::class, static function (Application $app): void {
+    $autoloader = rtrim((string) config('icms.legacy.root'), '/\\') . '/libraries/Autoloader.php';
+    if (! is_file($autoloader)) {
+        return;
+    }
+
+    require_once $autoloader;
+});
+
 $app->singleton(HttpKernelContract::class, HostKernel::class);
 
 return $app;

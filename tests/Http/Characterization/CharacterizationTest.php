@@ -14,14 +14,14 @@ use Symfony\Component\BrowserKit\Response;
  * Pins the observable behaviour of ImpressCMS for a fixed URL corpus.
  *
  * The snapshots in __snapshots__/ were recorded with `htdocs/` as document
- * root (direct deployment). The same snapshots must match with `public/`
- * (Laravel host) as document root, which proves that both deployment modes
- * behave the same (design D12).
+ * root before the host existed. They must match at routing level 2 (legacy
+ * scripts executed directly) and level 3 (every request through the host),
+ * and on every supported web server (ICMS_TEST_BASE_URL).
  *
  * Each case starts from a freshly restored database, because pages such as
  * the home page reflect earlier requests (online users, last login).
  *
- * Re-record with ICMS_UPDATE_SNAPSHOTS=1 and ICMS_TEST_DOCROOT=htdocs.
+ * Re-record with ICMS_UPDATE_SNAPSHOTS=1.
  */
 final class CharacterizationTest extends HttpTestCase
 {
@@ -68,19 +68,18 @@ final class CharacterizationTest extends HttpTestCase
 
         $file = self::SNAPSHOT_DIR . '/' . $case . '.txt';
         if (getenv('ICMS_UPDATE_SNAPSHOTS') === '1') {
-            if (ServerProcess::configuredDocumentRoot() !== 'htdocs') {
-                self::fail('Snapshots are recorded against htdocs/ only (ICMS_TEST_DOCROOT=htdocs).');
-            }
             @mkdir(self::SNAPSHOT_DIR, 0777, true);
             file_put_contents($file, $actual);
         }
 
         self::assertFileExists($file, 'No snapshot recorded for ' . $case . '; run with ICMS_UPDATE_SNAPSHOTS=1.');
-        self::assertSame(
-            str_replace("\r\n", "\n", (string) file_get_contents($file)),
-            $actual,
-            "Response for {$case} differs from its snapshot." . self::serverLog(),
-        );
+        $expected = str_replace("\r\n", "\n", (string) file_get_contents($file));
+        if (str_starts_with($case, 'asset-') && static::$server->isExternal()) {
+            // A real web server serves static files itself, with its own MIME table.
+            $withoutType = static fn (string $transcript): string => (string) preg_replace('/^content-type: .*\n/m', '', $transcript);
+            [$expected, $actual] = [$withoutType($expected), $withoutType($actual)];
+        }
+        self::assertSame($expected, $actual, "Response for {$case} differs from its snapshot." . self::serverLog());
     }
 
     /**

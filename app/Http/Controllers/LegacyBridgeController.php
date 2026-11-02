@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 /**
  * The fallback route: every request that no Laravel route claims is legacy
  * ImpressCMS. Assets are served here; scripts are only resolved and handed
- * to public/index.php, which runs them at file scope.
+ * to host.php, which runs them at file scope.
  */
 final class LegacyBridgeController
 {

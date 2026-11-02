@@ -14,7 +14,7 @@ use Throwable;
 
 /**
  * Laravel's HTTP kernel, except that RequestHandled is not dispatched for the
- * legacy marker: the real response only exists after public/index.php has run
+ * legacy marker: the real response only exists after host.php has run
  * the script at file scope, and handled() dispatches it then (design L5).
  *
  * handle() repeats the parent's body, because the event dispatch is not a

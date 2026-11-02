@@ -11,7 +11,7 @@
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnTestsThatTriggerNotices="true">
     <testsuites>
-        <!-- Icms\ library tests, also runnable standalone via htdocs/phpunit.xml.dist -->
+        <!-- Icms\ library tests -->
         <testsuite name="Library">
             <directory>htdocs/tests/Unit</directory>
         </testsuite>

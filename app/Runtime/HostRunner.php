@@ -18,7 +18,7 @@ use Throwable;
 /**
  * Handles a request through the kernel. Laravel responses are sent right
  * away; for a legacy script the runner prepares the execution and leaves the
- * `require` to public/index.php, which runs it at file scope and then calls
+ * `require` to host.php, which runs it at file scope and then calls
  * completeLegacy() or failLegacy(). Both, and the exit() path, dispatch
  * RequestHandled for the real response, send it and terminate the kernel.
  */

@@ -7,7 +7,8 @@ declare(strict_types=1);
  */
 return [
     'legacy' => [
-        // htdocs/ of the ImpressCMS tree
+        // the web root: passed by its index.php as ICMS_LEGACY_ROOT, named in
+        // .env.local for artisan; htdocs/ in a development checkout
         'root' => env('ICMS_LEGACY_ROOT', base_path('htdocs')),
 
         // executed for legacy-owned paths that do not exist
@@ -16,11 +17,13 @@ return [
         // path prefixes that never fall through to legacy, for example ['admin-next']
         'reserved_prefixes' => env('APP_ENV') === 'test' ? ['admin-next'] : [],
 
-        // directories never served or executed (relative to the legacy root,
-        // or absolute); ICMS_TRUST_PATH names the trust path if it is under the root
+        // directories never served or executed (relative to the legacy root, or
+        // absolute): the host's staging directory, and the trust path, which the web
+        // root's index.php passes as ICMS_TRUST_PATH, if it is under the root
         'non_public_paths' => [
             'templates_c',
             'cache',
+            'trust_dist',
             env('ICMS_TRUST_PATH', ''),
         ],
 

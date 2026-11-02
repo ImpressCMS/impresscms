@@ -21,7 +21,7 @@ use Throwable;
  * Serves legacy assets and runs legacy scripts behind the host.
  *
  * A script run is split in three steps around the file-scope `require` in
- * public/index.php: prepare() hydrates the superglobals, hands error handling
+ * host.php: prepare() hydrates the superglobals, hands error handling
  * back to PHP and opens an output buffer; the script runs; complete() or
  * fail() turn the captured output, status code and headers into a response
  * and restore the host's state. When the script calls exit(), a shutdown
@@ -75,7 +75,7 @@ final class LegacyBridge
         self::suspendHostErrorHandling();
         ob_start();
 
-        // scripts that call exit() or die() never return to public/index.php
+        // scripts that call exit() or die() never return to host.php
         register_shutdown_function(function () use ($execution): void {
             if ($execution->completed) {
                 return;

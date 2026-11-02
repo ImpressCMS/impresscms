@@ -16,3 +16,7 @@ if (!is_file($autoloader)) {
 }
 require_once $autoloader;
 unset($autoloader);
+
+// The Icms library comes from the web root, as in host.php: the trust path's
+// composer.json cannot name a web root, which differs per site.
+require_once dirname(__DIR__) . '/htdocs/libraries/Autoloader.php';
