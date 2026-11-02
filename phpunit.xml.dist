@@ -23,7 +23,7 @@
         <testsuite name="Integration">
             <directory>tests/Integration</directory>
         </testsuite>
-        <!-- Symfony-owned routes via KernelBrowser; one process per test class -->
+        <!-- Laravel-owned routes via Laravel's test client; one process per test class when legacy boots -->
         <testsuite name="Functional">
             <directory>tests/Functional</directory>
         </testsuite>
@@ -37,7 +37,7 @@
     </extensions>
     <source restrictNotices="true" restrictWarnings="true" ignoreIndirectDeprecations="true">
         <include>
-            <directory>src</directory>
+            <directory>app</directory>
             <directory>htdocs/libraries/Icms/Kernel</directory>
         </include>
     </source>

@@ -33,18 +33,7 @@ abstract class IsolatedLegacyTestCase extends DatabaseTestCase
             define('ICMS_HOST_AUTOLOADED', true);
         }
 
-        $_SERVER = array_replace($_SERVER, [
-            'HTTP_HOST' => '127.0.0.1',
-            'SERVER_NAME' => '127.0.0.1',
-            'SERVER_PORT' => '80',
-            'REQUEST_URI' => '/',
-            'SCRIPT_NAME' => '/index.php',
-            'PHP_SELF' => '/index.php',
-            'QUERY_STRING' => '',
-            'REMOTE_ADDR' => '127.0.0.1',
-            'REQUEST_METHOD' => 'GET',
-            'HTTP_USER_AGENT' => 'ImpressCMS test suite',
-        ]);
+        $_SERVER = array_replace($_SERVER, TestSite::webServerDefaults());
     }
 
     /**

@@ -1,0 +1,48 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Routing;
+
+use Illuminate\Contracts\Container\Container;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Matching\ValidatorInterface;
+use Illuminate\Routing\Route;
+
+/**
+ * Route validator for the conditions that Laravel routes cannot express:
+ * required query parameters (`whereQuery()`) and RouteCondition classes
+ * (`matching()`). Both are stored as plain data in the route action.
+ *
+ * Laravel's compiled route matcher (`route:cache`) does not run route
+ * validators, so the host refuses cached routes (HostServiceProvider).
+ */
+final class RequestConditionValidator implements ValidatorInterface
+{
+    public const QUERY = 'icms_query';
+    public const CONDITIONS = 'icms_conditions';
+
+    public function __construct(private readonly Container $container)
+    {
+    }
+
+    public function matches(Route $route, Request $request): bool
+    {
+        $query = $request->query->all();
+        foreach ((array) $route->getAction(self::QUERY) as $name => $value) {
+            if (($query[$name] ?? null) !== (string) $value) {
+                return false;
+            }
+        }
+
+        foreach ((array) $route->getAction(self::CONDITIONS) as $condition) {
+            /** @var RouteCondition $instance */
+            $instance = $this->container->make($condition);
+            if (! $instance->matches($request)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}

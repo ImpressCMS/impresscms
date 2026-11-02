@@ -1,6 +1,6 @@
 {
 	"name": "impresscms/impresscms",
-	"description": "ImpressCMS - A dynamic and user-friendly Content Management System (Symfony host)",
+	"description": "ImpressCMS - A dynamic and user-friendly Content Management System (Laravel host)",
 	"type": "project",
 	"license": "GPL-2.0-only",
 	"homepage": "https://www.impresscms.org/",
@@ -17,10 +17,12 @@
 		"ext-zlib": "*",
 		"composer/composer": "^2.9",
 		"ezyang/htmlpurifier": "^4.19",
+		"laravel/framework": "^12.70",
 		"simplepie/simplepie": "^1.9",
 		"smottt/wideimage": "^1.1.4"
 	},
 	"require-dev": {
+		"larastan/larastan": "^3.13",
 		"phpstan/phpstan": "^2.1",
 		"phpunit/phpunit": "^11.5",
 		"symfony/browser-kit": "7.4.*",
@@ -31,6 +33,7 @@
 	},
 	"autoload": {
 		"psr-4": {
+			"App\\": "app/",
 			"Icms\\": "htdocs/libraries/Icms/"
 		},
 		"classmap": [

@@ -2,7 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: [main, '2.*']
+    branches: [main, '2.*', 'lara-*']
   pull_request:
 
 permissions:
@@ -61,9 +61,9 @@ jobs:
 
       - name: Lint
         run: |
-          find src tests public config htdocs/libraries/Icms htdocs/include -name '*.php' -print0 \
+          find app bootstrap config routes public tests htdocs/libraries/Icms htdocs/include -name '*.php' -print0 \
             | xargs -0 -r -n 50 -P 4 php -l > /dev/null
-          for script in bin/* htdocs/mainfile.php; do php -l "$script" > /dev/null; done
+          for script in artisan bin/* htdocs/mainfile.php; do php -l "$script" > /dev/null; done
 
       - name: Library suite (direct deployment, htdocs/ Composer)
         working-directory: htdocs
@@ -100,7 +100,6 @@ jobs:
       - name: PHPStan
         run: vendor/bin/phpstan analyse --no-progress --memory-limit=1G
 
-      - name: Symfony deprecations in src/
-        run: vendor/bin/phpunit --testsuite Unit,Functional
-        env:
-          SYMFONY_DEPRECATIONS_HELPER: 'max[self]=0&verbose=1'
+      # deprecated APIs called from app/ (phpunit.xml.dist <source>; indirect ones are ignored)
+      - name: Deprecations in app/
+        run: vendor/bin/phpunit --testsuite Unit,Functional --fail-on-deprecation
