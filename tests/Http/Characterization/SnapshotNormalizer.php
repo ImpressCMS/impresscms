@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Http\Characterization;
 
+use App\Tests\Support\ServerProcess;
 use App\Tests\Support\TestSite;
 use Symfony\Component\BrowserKit\Response;
 
@@ -21,6 +22,21 @@ final class SnapshotNormalizer
     {
     }
 
+    /**
+     * nginx's `charset utf-8` (Herd's default) appends a charset to types such
+     * as application/javascript that PHP sent without one. That is the web
+     * server's doing, not the application's, so it is ignored for external
+     * servers (ICMS_TEST_BASE_URL).
+     */
+    private static function withoutServerCharset(string $name, string $value): string
+    {
+        if ($name !== 'content-type' || ServerProcess::externalBaseUri() === null) {
+            return $value;
+        }
+
+        return $value === 'application/javascript; charset=utf-8' ? 'application/javascript' : $value;
+    }
+
     public function transcript(string $request, Response $response, bool $hashBody = false): string
     {
         $lines = [$request, 'status: ' . $response->getStatusCode()];
@@ -28,7 +44,7 @@ final class SnapshotNormalizer
         $headers = array_change_key_case($response->getHeaders(), CASE_LOWER);
         foreach (self::HEADERS as $name) {
             foreach ((array) ($headers[$name] ?? []) as $value) {
-                $lines[] = $name . ': ' . $this->text((string) $value);
+                $lines[] = $name . ': ' . $this->text(self::withoutServerCharset($name, (string) $value));
             }
         }
         foreach ((array) ($headers['set-cookie'] ?? []) as $cookie) {
@@ -76,10 +92,27 @@ final class SnapshotNormalizer
         $host = (string) parse_url($this->baseUri, PHP_URL_HOST);
         $port = (string) parse_url($this->baseUri, PHP_URL_PORT);
 
-        $rules = [
-            // the test server listens on a random port
-            '#' . preg_quote($host . ':' . $port, '#') . '#' => '{HOST}',
-            '#(?<![\w.])' . preg_quote($host, '#') . '(?![\w.:])#' => '{HOSTNAME}',
+        // the test server listens on a random port: {HOST} is host and port
+        // (URLs), {HOSTNAME} the host alone (cookie domains). An external server
+        // (ICMS_TEST_BASE_URL) may have no port; then URLs tell them apart
+        $hostRules = $port === ''
+            ? [
+                '#(?<=//)' . preg_quote($host, '#') . '(?![\w.:])#' => '{HOST}',
+                '#(?<![\w./])' . preg_quote($host, '#') . '(?![\w.:])#' => '{HOSTNAME}',
+            ]
+            : [
+                '#' . preg_quote("{$host}:{$port}", '#') . '#' => '{HOST}',
+                '#(?<![\w.])' . preg_quote($host, '#') . '(?![\w.:])#' => '{HOSTNAME}',
+            ];
+
+        // bin/test-db installs the site as this host; installed data names it
+        $installHost = TestSite::webServerDefaults()['HTTP_HOST'];
+        if ($installHost !== $host) {
+            $hostRules['#(?<![\w./])' . preg_quote($installHost, '#') . '(?![\w.:])#'] = '{HOSTNAME}';
+            $hostRules['#(?<=//)' . preg_quote($installHost, '#') . '(?![\w.:])#'] = '{HOSTNAME}';
+        }
+
+        $rules = $hostRules + [
             // session ids
             '#\b(ICMSSESSION|icms_session|PHPSESSID)=[A-Za-z0-9,-]+#' => '$1={SESSION}',
             // security tokens and other md5/sha1 values

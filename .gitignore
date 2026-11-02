@@ -12,3 +12,4 @@
 !/htdocs/templates_c/index.html
 /htdocs/cache/*
 !/htdocs/cache/index.html
+/.env.local

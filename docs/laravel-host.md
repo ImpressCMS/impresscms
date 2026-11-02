@@ -272,6 +272,27 @@ vendor/bin/phpstan analyse
 ```
 
 The `Http` suite and its snapshots are those of the Symfony host. They must
-pass with `htdocs/` and with `public/` as document root. Laravel's test client
+pass with `htdocs/` and with `public/` as document root.
+
+With `ICMS_TEST_BASE_URL` the suite tests an already running server instead,
+for example Laravel Herd serving a checkout. Herd's Laravel driver serves
+`public/` and sends every other request to `public/index.php`, so no driver of
+our own is needed. Install that checkout's test site into its own schema and
+name it for both the site and the tests:
+
+```bash
+ICMS_TEST_DB_NAME=lara3 php bin/test-db
+ICMS_TEST_DB_NAME=lara3 ICMS_TEST_BASE_URL=http://lara3.test vendor/bin/phpunit --testsuite Http
+```
+
+with `.env.local` in that checkout:
+
+```
+APP_ENV=test
+APP_DEBUG=0
+ICMS_MAINFILE=<checkout>/var/test/mainfile.php
+```
+
+The bridge fixture tests need a `php -S` of their own and are skipped then. Laravel's test client
 never reaches the file-scope runner, so everything that executes a legacy
 script is tested over HTTP.

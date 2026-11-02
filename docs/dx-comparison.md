@@ -131,6 +131,16 @@ Laravel's docblocks are narrower than its behaviour: `Kernel::handle()`, `termin
 
 **Debuggability.** Every failure in this phase was found from `var/log/test.log`, whose stack traces named the Laravel class that caused it. Laravel's exception messages were clear (`Route [login] not defined`, `Please provide a valid cache path`); the cause was in each case a default that assumes a Laravel-owned application.
 
+### Interlude: PHP 8.3 and Herd (2026-11-02)
+
+- **PHP 8.3.36**: every suite passes with `php -S` (the same counts as on 8.2.35). PHP 8.4 is still untested locally.
+- **Herd** (`http://lara3.test`, nginx and PHP 8.3, a clone of `lara-3` with its own schema `lara3`): Herd's own Laravel driver serves `public/` and sends everything else to `public/index.php`, which amounts to routing level 3 without any configuration. The Http suite runs against it with `ICMS_TEST_BASE_URL`: 49 tests, no failure. 12 are skipped: the bridge fixture tests, which need a `php -S` of their own.
+- Getting there found one host bug and two test artefacts:
+  - *Host*: the bridge removed only the stack frame whose file was `SCRIPT_FILENAME`. Under Herd that is Valet's `server.php`, which `require`s `public/index.php`, so a legacy error page listed `public/index.php (43)`. The bridge now cuts the trace at the real front controller (`public_path('index.php')`), dropping Herd's frames below it as well.
+  - *Test*: the snapshot normalizer assumed a port in the base URL (`{HOST}` = host and port, `{HOSTNAME}` = host). Without a port it now tells URLs and cookie domains apart, and masks the host that `bin/test-db` installs the site under (`127.0.0.1`), which installed data repeats.
+  - *Server*: Herd's nginx (`charset utf-8`) appends `; charset=utf-8` to `application/javascript`. The normalizer ignores that for external servers only; the host's own header is unchanged.
+- The Symfony variant added `ICMS_TEST_BASE_URL` in its relocation and tested Apache, nginx and FrankenPHP in CI, all with a port; Herd was documented there but not part of CI. The same frame and normalizer issues would likely have shown there under Herd, so they are not counted as Laravel workarounds.
+
 ## Where the comparison is unfair
 
 - **The design existed.** The Symfony variant discovered the ImpressCMS constraints (file scope, `exit()`, `ERRMODE_SILENT`, `IConnection`, headless denials, `QUERY_STRING` sorting, header semantics). lara-3 starts from its specs, implementation notes and tests, so Laravel is spared that discovery. Raw effort figures therefore favour Laravel. The comparison is fair on the questions "how much host code" and "how much fighting the framework", less so on "how long".

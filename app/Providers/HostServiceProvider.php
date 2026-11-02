@@ -36,6 +36,7 @@ final class HostServiceProvider extends ServiceProvider
             config('icms.legacy.mime_types'),
             (bool) config('app.debug'),
             $app->make(LoggerInterface::class),
+            $app->publicPath('index.php'),
         ));
 
         $this->registerRouteConditions();
