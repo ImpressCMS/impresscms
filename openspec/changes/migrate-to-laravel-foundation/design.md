@@ -65,7 +65,7 @@ Taken over unchanged: the root `composer.json` requires `laravel/framework` plus
 
 **Global helper functions.** `laravel/framework` registers 175 global helpers through Composer `files` (`app()`, `config()`, `e()`, `url()`, `redirect()`, `collect()`, `report()`, …), and legacy defines global functions without `function_exists()` guards, so a collision would be a fatal "cannot redeclare". The 871 function names declared under `htdocs/` were compared with Laravel's helper names: the only match is `report`, which is a method of the installer's `mainfile_manager`, not a global function. There is no collision today. A unit test keeps that check (Laravel helper names versus `function` declarations in `htdocs/`), because third-party modules can still collide; that risk is documented in `docs/laravel-host.md`.
 
-### L4. Legacy fallback: catch-all route marked as fallback; no prefix; query conditions through a route validator (Symfony: D4) — **proposed, awaiting approval**
+### L4. Legacy fallback: catch-all route marked as fallback; no prefix; query conditions through a route validator (Symfony: D4) — *approved 2026-11-02*
 The bridge route is
 
 ```php
@@ -118,7 +118,7 @@ The library side is taken over unchanged (stages, headless mode, `SiteClosedExce
 - Resolving any `icms.*` service boots the needed stage, so `/up` never boots legacy.
 - `withExceptions()` renders `SiteClosedException` as 503 and `NotInstalledException` as a redirect to `/install/`.
 
-### L7. Database: Laravel owns the connection; `Icms\Db\Factory` takes its PDO (Symfony: D7) — **proposed, awaiting approval**
+### L7. Database: Laravel owns the connection; `Icms\Db\Factory` takes its PDO (Symfony: D7) — *approved 2026-11-02*
 `config/database.php` defines the connection `icms` (driver `mysql`) from the `XOOPS_DB_*` constants, read lazily through the `constants` stage. `LegacyRuntime` installs `Icms\Db\Factory::setConnectionProvider(fn () => DB::connection('icms')->getPdo())` before the `services` stage. Two Laravel extension points make this fit without touching Laravel internals:
 - **Connector**: the binding `db.connector.mysql` (`ConnectionFactory::createConnector()`) supplies `App\Database\IcmsMySqlConnector`, whose `createPdoConnection()` instantiates the class from `Icms\Db\Factory::connectionClass()` instead of `PDO`, because the legacy layer calls `escape()` on it (the same constraint as Symfony task 3.5).
 - **Connection**: `Connection::resolverFor('mysql', …)` supplies `App\Database\SharedMySqlConnection`, which switches the shared PDO to `ERRMODE_EXCEPTION` for each Laravel query (`run()`) and restores the legacy `ERRMODE_SILENT` afterwards, and which refuses `reconnect()`. A Laravel reconnect would open a second physical connection that legacy never sees, so a lost connection becomes an error.
@@ -136,7 +136,7 @@ There is one physical connection and one transaction state: a `DB::transaction()
 ### L9. Events: forward `Icms\Event` to the Laravel dispatcher (Symfony: D9)
 The `setForwarder()` seam is reused. The forwarder dispatches `App\Legacy\LegacyEvent` under the string name `icms.<namespace>.<name>`, only when `Dispatcher::hasListeners()` is true for that name or a wildcard (`icms.*`). Laravel has no compiled container that knows the listener names in advance (Symfony's `LegacyEventListenersPass`); the check runs per event and is a hash lookup. String-named events cannot be auto-discovered (`withEvents(discover:)` works from typed `handle()` methods), so listeners are registered with `Event::listen()` in a provider.
 
-### L10. Session: ImpressCMS owns the session; a Laravel `Store` over `$_SESSION` (Symfony: D10) — **proposed, awaiting approval**
+### L10. Session: ImpressCMS owns the session; a Laravel `Store` over `$_SESSION` (Symfony: D10) — *approved 2026-11-02*
 Laravel's session never uses PHP's native session: `Illuminate\Session\Store` reads and writes its own handler and `StartSession` sets its own cookie. There is no equivalent of Symfony's `php_bridge` storage. lara-3 provides one:
 - `App\Session\IcmsSessionStore extends Store`. `start()` boots the `services` stage (so `Icms\Core\Session::service()` has set the name, lifetime and DB handler and started the session) and binds the attribute array to `$_SESSION` by reference. `getId()`/`getName()` return PHP's. `save()` only ages flash data; PHP's handler writes at shutdown. `migrate()`/`invalidate()` use `session_regenerate_id()`. Laravel's own keys (`_token`, `_flash`, `_previous`) live next to ImpressCMS' keys; no legacy code under `htdocs/` uses a session key starting with `_`.
 - `App\Http\Middleware\StartIcmsSession` replaces `StartSession`: it sets the store on the request, but sets no cookie, because PHP has already sent ImpressCMS' cookie. That keeps the "no second session cookie" scenario.

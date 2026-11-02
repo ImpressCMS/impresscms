@@ -4,7 +4,7 @@ Task groups follow the numbering of `migrate-to-symfony-foundation/tasks.md`, so
 
 - [x] 0.1 Create branch `lara-3` from `89bc13930` (the parent of `7d22797d0`)
 - [x] 0.2 Write this change (proposal, design, specs, tasks) and start `docs/dx-comparison.md`
-- [ ] 0.3 Get approval for L4 (fallback route), L7 (database owner) and L10 (session bridge)
+- [x] 0.3 Get approval for L4 (fallback route), L7 (database owner) and L10 (session bridge)
 
 ## 1. Test infrastructure (L16; Symfony 1.x)
 
