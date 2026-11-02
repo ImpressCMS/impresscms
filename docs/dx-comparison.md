@@ -41,8 +41,8 @@ Symfony figures come from the commits on `pre-3`. Its suite timings and lookups 
 | 3 Seams | `bcde82acc` … `06168341e`, `229818d92` | — | 4 seams reused, **none changed**; 1 fix taken over | — | 0 |
 | 3 Host and bridge | `568249bbc` | 31 files, +1719 | — | 10 (1–10) | 6 |
 | 4 Shared runtime | `d419ba149` | 22 files, +784 | — | 3 (11–13) | 5 |
-| 5 Session and identity | see `git log` | 17 files, +661 −10 | — | 6 (14–19) | 4 |
-| Total, foundation | | 70 files touched, about +3150 | 4 | 19 | 24 |
+| 5 Session and identity | `9043e0c48` | 17 files, +661 −10 | — | 6 (14–19) | 4 |
+| Total, foundation | `89bc13930..9043e0c48` | 59 files, +3154 (Symfony: 59 files, +3006) | 4 | 19 | 24 |
 
 The Symfony variant did not count its workarounds. Its task notes name about seven of the same kind: the 405 re-match, the custom runtime runner, the DBAL driver with error-mode switching, the `#[Autowire]` subclass, the listener compiler pass, the decorated session factory with its attribute bag, and the token clearing in the lazy firewall. The host code figures include `config/` and `routes/` on both sides (YAML there, PHP here), but not tests.
 
