@@ -36,6 +36,11 @@ class PathStuffController {
 
 	var $permErrors = array();
 
+	/** The trust path lies under the web root or the document root. */
+	var $publicTrustPath = false;
+	/** The admin confirmed a trust path under the document root anyway. */
+	var $publicTrustPathConfirmed = false;
+
 	function __construct() {
 		if (isset( $_SESSION['settings']['ROOT_PATH'] )) {
 			$this->xoopsRootPath = $_SESSION['settings']['ROOT_PATH'];
@@ -57,6 +62,8 @@ class PathStuffController {
 
 			$docroot = resolveDocumentRoot();
 
+			// resolveDocumentRoot() returns the folder above the document root, so
+			// the proposal lies next to the document root, outside it.
 			$this->xoopsTrustPath = $docroot . substr( md5( time() ), 0, 15);
 		}
 		if (isset( $_SESSION['settings']['URL'] )) {
@@ -107,6 +114,7 @@ class PathStuffController {
 				}
 				$this->xoopsTrustPath = $request['TRUST_PATH'];
 			}
+			$this->publicTrustPathConfirmed = !empty($request['TRUST_PATH_PUBLIC_OK']);
 			if (isset( $request['URL'] )) {
 				if (substr( $request['URL'], -1 ) == '/') {
 					$request['URL'] = substr( $request['URL'], 0, -1 );
@@ -124,7 +132,9 @@ class PathStuffController {
 			$this->checkTrustPathPermissions();
 		}
 		$this->validUrl = !empty($this->xoopsUrl);
-		return ( $this->validRootPath && $this->validTrustPath && $this->validUrl && empty( $this->permErrors ) );
+		$this->publicTrustPath = icms_host_trust_path_is_public($this->xoopsTrustPath, $this->xoopsRootPath, (string) ($_SERVER['DOCUMENT_ROOT'] ?? ''));
+		return ( $this->validRootPath && $this->validTrustPath && $this->validUrl && empty( $this->permErrors )
+			&& (!$this->publicTrustPath || $this->publicTrustPathConfirmed) );
 	}
 
 	/**
@@ -370,6 +380,12 @@ ob_start();
 <div class="clear">&nbsp;</div>
 <input type="text" name="TRUST_PATH" id="trustpath"
 	value="<?php echo $ctrl->xoopsTrustPath; ?>" /> <span id="trustpathimg"><?php echo genTrustPathCheckHtml( $ctrl->validTrustPath ); ?></span>
+<?php if ($ctrl->publicTrustPath) { ?>
+<div id="trustpublic" class="errorMsg">
+<p><?php echo TRUST_PATH_PUBLIC_WARNING; ?></p>
+<label><input type="checkbox" name="TRUST_PATH_PUBLIC_OK" value="1"<?php echo $ctrl->publicTrustPathConfirmed ? ' checked="checked"' : ''; ?> /> <?php echo TRUST_PATH_PUBLIC_CONFIRM; ?></label>
+</div>
+<?php } ?>
 <?php if (!$ctrl->validTrustPath && $ctrl->xoopsTrustPath != '') { ?>
 <div id="trustperms">
 <p><?php echo TRUST_PATH_VALIDATE . '</p>'; ?>

@@ -119,17 +119,18 @@ abstract class icms
 		];
 		self::$paths["themes"] = [ICMS_THEME_PATH, ICMS_THEME_URL];
 
-		// Use Composer's autoloader - prefer trust path location for security.
-		// After installation the vendor directory lives in ICMS_TRUST_PATH (outside
-		// the web root).  Fall back to ICMS_ROOT_PATH for pre-install or legacy setups.
-		// A host application that already loaded a single autoloader for the whole
-		// process defines ICMS_HOST_AUTOLOADED; a second vendor tree must not load.
+		// Use Composer's autoloader from the trust path, the staging directory or
+		// the web root (see include/host.php); Icms\Kernel\Bootstrap normally loaded
+		// it already. A host application that already loaded a single autoloader for
+		// the whole process defines ICMS_HOST_AUTOLOADED; a second vendor tree must not load.
 		if (!defined("ICMS_HOST_AUTOLOADED")) {
-			$_icms_autoload = file_exists(ICMS_TRUST_PATH . "/vendor/autoload.php")
-				? ICMS_TRUST_PATH . "/vendor/autoload.php"
-				: ICMS_ROOT_PATH . "/vendor/autoload.php";
-			require_once $_icms_autoload;
+			require_once ICMS_ROOT_PATH . "/include/host.php";
+			$_icms_autoload = icms_host_vendor_autoload(ICMS_ROOT_PATH, ICMS_TRUST_PATH);
+			if ($_icms_autoload !== null) {
+				require_once $_icms_autoload;
+			}
 			unset($_icms_autoload);
+			require_once ICMS_ROOT_PATH . "/libraries/Autoloader.php";
 		}
 
 		register_shutdown_function([__CLASS__, "shutdown"]);

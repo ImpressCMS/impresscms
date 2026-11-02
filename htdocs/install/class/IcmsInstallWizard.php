@@ -150,6 +150,8 @@ class IcmsInstallWizard
 		}
 		$this->language = $language;
 		$this->loadLangFile("install");
+		// the host setup page's strings (English when a language has none)
+		$this->loadLangFile("host");
 	}
 
 	public function setPage($page): string

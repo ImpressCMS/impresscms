@@ -173,18 +173,11 @@ final class Bootstrap
 		// A host application that already loaded a single autoloader for the whole
 		// process defines ICMS_HOST_AUTOLOADED; then no second vendor tree is loaded.
 		if (!defined("ICMS_HOST_AUTOLOADED")) {
-			// Load Composer autoloader - prefer trust path location for security.
-			// After installation, the vendor directory lives in ICMS_TRUST_PATH (outside
-			// the web root).  Fall back to ICMS_ROOT_PATH for pre-install or legacy setups.
-			$_icms_autoload_from_trustpath = false;
-			if (file_exists(ICMS_TRUST_PATH . "/vendor/autoload.php")) {
-				$_icms_autoload = ICMS_TRUST_PATH . "/vendor/autoload.php";
-				$_icms_autoload_from_trustpath = true;
-			} elseif (file_exists(ICMS_ROOT_PATH . "/vendor/autoload.php")) {
-				$_icms_autoload = ICMS_ROOT_PATH . "/vendor/autoload.php";
-			} else {
-				$_icms_autoload = null;
-			}
+			// The trust path's vendor/ (installed host), else the staging directory's
+			// (uploaded, not yet installed by the system module update), else the
+			// web root's (sites from before the host).
+			require_once ICMS_ROOT_PATH . "/include/host.php";
+			$_icms_autoload = icms_host_vendor_autoload(ICMS_ROOT_PATH, ICMS_TRUST_PATH);
 
 			if ($_icms_autoload === null) {
 				die(
@@ -192,74 +185,24 @@ final class Bootstrap
 						"<p>The Composer autoloader (<code>vendor/autoload.php</code>) could not be located in any of the expected paths:</p>" .
 						"<ul>" .
 						"<li><code>" .
-						htmlspecialchars(
-							ICMS_TRUST_PATH . "/vendor/autoload.php",
-							ENT_QUOTES,
-							"UTF-8",
-						) .
+						htmlspecialchars(ICMS_TRUST_PATH . "/vendor/autoload.php", ENT_QUOTES, "UTF-8") .
 						"</code></li>" .
 						"<li><code>" .
-						htmlspecialchars(
-							ICMS_ROOT_PATH . "/vendor/autoload.php",
-							ENT_QUOTES,
-							"UTF-8",
-						) .
+						htmlspecialchars(ICMS_ROOT_PATH . "/trust_dist/vendor/autoload.php", ENT_QUOTES, "UTF-8") .
 						"</code></li>" .
 						"</ul>" .
-						"<p>To resolve this, run <code>composer install</code> inside the ImpressCMS root directory, " .
-						"or re-upload a complete ImpressCMS package that includes the <code>vendor/</code> directory.</p>"
+						"<p>To resolve this, re-upload a complete ImpressCMS package, which includes the <code>trust_dist/</code> directory, " .
+						"and run the update of the system module.</p>"
 				);
-			}
-
-			if ($_icms_autoload_from_trustpath) {
-				$_icms_bridge_path = ICMS_TRUST_PATH . "/libraries/Autoloader.php";
-				if (!is_file($_icms_bridge_path)) {
-					$_icms_bridge_dir = dirname($_icms_bridge_path);
-					if (is_dir($_icms_bridge_dir) || @mkdir($_icms_bridge_dir, 0775, true)) {
-						$_icms_bridge_content =
-							"<?php\nrequire_once " .
-							var_export(ICMS_ROOT_PATH . "/libraries/Autoloader.php", true) .
-							";\n";
-						@file_put_contents($_icms_bridge_path, $_icms_bridge_content);
-						unset($_icms_bridge_content);
-					}
-					unset($_icms_bridge_dir);
-				}
-				if (!is_file($_icms_bridge_path)) {
-					die(
-						"<h1>ImpressCMS - Trust path is not writable</h1>" .
-							"<p>Unable to create required file: <code>" .
-							htmlspecialchars($_icms_bridge_path, ENT_QUOTES, "UTF-8") .
-							"</code></p>" .
-							"<p>Grant write permissions to the trust path and reload this page.</p>"
-					);
-				}
-				unset($_icms_bridge_path);
 			}
 
 			require_once $_icms_autoload;
 			unset($_icms_autoload);
 
-			// When vendor lives in the trust path the Composer-generated autoloader files
-			// compute $baseDir as dirname(dirname(__DIR__)) relative to trustpath/vendor/,
-			// which resolves to trustpath/ instead of the web root.  Every icms_* class
-			// lookup therefore targets trustpath/libraries/ – a directory that does not
-			// exist because libraries/ always stays in ICMS_ROOT_PATH.
-			//
-			// Register a prepended SPL autoloader (runs before Composer's now-broken one)
-			// that maps all three categories of ImpressCMS-native classes to the correct
-			// ICMS_ROOT_PATH/libraries location:
-			//
-			//   "icms"     (classmap entry)  →  libraries/icms.php
-			//   "icms_*"   (PSR-0 style)     →  libraries/<underscore/separated/path>.php
-			//   "Icms\*"   (PSR-4 style)     →  libraries/Icms/<Namespace/Path>.php
-			if ($_icms_autoload_from_trustpath) {
-				// libraries/Autoloader.php resolves the "icms" kernel class, legacy icms_* names
-				// (via libraries/Icms/aliases.php) and Icms\ classes from ICMS_ROOT_PATH. Loading it
-				// here guarantees it is registered even when vendor/ lives in the trust path.
-				require_once ICMS_ROOT_PATH . "/libraries/Autoloader.php";
-			}
-			unset($_icms_autoload_from_trustpath);
+			// The Icms\ library, its legacy icms_* names (libraries/Icms/aliases.php) and
+			// the "icms" class come from the web root: the trust path's composer.json
+			// cannot name a web root, which differs per site.
+			require_once ICMS_ROOT_PATH . "/libraries/Autoloader.php";
 		}
 
 		self::includeInGlobalScope(ICMS_INCLUDE_PATH . "/functions.php");

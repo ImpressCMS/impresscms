@@ -49,6 +49,14 @@ function b_system_admin_warnings_show() {
 	if (!is_dir(XOOPS_TRUST_PATH)) {
 		array_push($block['msg'], icms_core_Message::error(_TRUST_PATH_HELP));
 	}
+	require_once ICMS_INCLUDE_PATH . '/host.php';
+	if (is_dir(ICMS_TRUST_PATH) && icms_host_trust_path_is_public(ICMS_TRUST_PATH, ICMS_ROOT_PATH, (string) ($_SERVER['DOCUMENT_ROOT'] ?? ''))) {
+		array_push($block['msg'], icms_core_Message::error(sprintf(_TRUST_PATH_PUBLIC, htmlspecialchars(ICMS_TRUST_PATH, ENT_QUOTES)), '', FALSE));
+	}
+	if (is_dir(ICMS_ROOT_PATH . '/' . icms_core_Filesystem::TRUST_DISTRIBUTION_DIR)) {
+		array_push($block['msg'], icms_core_Message::error('<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'
+			. sprintf(_TRUST_DIST_PENDING, htmlspecialchars(ICMS_ROOT_PATH . '/' . icms_core_Filesystem::TRUST_DISTRIBUTION_DIR, ENT_QUOTES)) . '</a>', '', FALSE));
+	}
 	$sql1 = "SELECT conf_modid FROM `" . icms::$xoopsDB->prefix('config') . "` WHERE conf_name = 'dos_skipmodules'";
 	if ($result1 = icms::$xoopsDB->query($sql1)) {
 		list($modid) = icms::$xoopsDB->FetchRow($result1);
