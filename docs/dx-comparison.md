@@ -31,6 +31,7 @@ Symfony figures come from the commits on `pre-3`. Its suite timings and lookups 
 | 4 Events | `467ae9f59` | 9 files, +188 −13 | — |
 | 5 Session and identity | `d97c195cc` | 14 files, +544 −2 | — |
 | Total, foundation | `89bc13930..94141e7cf` | 59 files, +3006 (47 files in `src/`) | 4 seams |
+| 6 Relocation into the trust path | `517edf176..1ea034406` | 13 files, +127 −68 | legacy: 26 files, +880 −974 |
 
 ### lara-3
 
@@ -43,6 +44,7 @@ Symfony figures come from the commits on `pre-3`. Its suite timings and lookups 
 | 4 Shared runtime | `d419ba149` | 22 files, +784 | — | 3 (11–13) | 5 |
 | 5 Session and identity | `9043e0c48` | 17 files, +661 −10 | — | 6 (14–19) | 4 |
 | Total, foundation | `89bc13930..9043e0c48` | 59 files, +3154 (Symfony: 59 files, +3006) | 4 | 19 | 24 |
+| 6 Relocation into the trust path | `553d0011c`, `64ceb9b75`, `3139b6d94`, `ffb5311e2` | 13 files, +104 −59 (Symfony: 13 files, +127 −68) | legacy taken over; 1 file adapted | 0 | 3 |
 
 The Symfony variant did not count its workarounds. Its task notes name about seven of the same kind: the 405 re-match, the custom runtime runner, the DBAL driver with error-mode switching, the `#[Autowire]` subclass, the listener compiler pass, the decorated session factory with its attribute bag, and the token clearing in the lazy firewall. The host code figures include `config/` and `routes/` on both sides (YAML there, PHP here), but not tests.
 
@@ -140,6 +142,32 @@ Laravel's docblocks are narrower than its behaviour: `Kernel::handle()`, `termin
   - *Test*: the snapshot normalizer assumed a port in the base URL (`{HOST}` = host and port, `{HOSTNAME}` = host). Without a port it now tells URLs and cookie domains apart, and masks the host that `bin/test-db` installs the site under (`127.0.0.1`), which installed data repeats.
   - *Server*: Herd's nginx (`charset utf-8`) appends `; charset=utf-8` to `application/javascript`. The normalizer ignores that for external servers only; the host's own header is unchanged.
 - The Symfony variant added `ICMS_TEST_BASE_URL` in its relocation and tested Apache, nginx and FrankenPHP in CI, all with a port; Herd was documented there but not part of CI. The same frame and normalizer issues would likely have shown there under Herd, so they are not counted as Laravel workarounds.
+
+### Phase 6: relocation into the trust path (2026-11-02)
+
+Change `relocate-laravel-host-into-trust-path`, design L17–L24.
+
+**What carried over.** The relocation is mostly about ImpressCMS deployment, not about the framework: `include/host.php`, the `index.php` preamble, `installTrustDistribution()`, the installer page, update step 50, the dashboard warning, `htaccess.txt`, `docs/server/` and the test support. The legacy diffs of the Symfony commits `98f7b467d`, `eb4bf8477`, `a7268a413`, `49333b28a` and `133b36e0a` applied without a conflict (`htdocs/` was identical apart from the lock file). The test support needed six small conflict resolutions, all in lines that phase 5 had already changed for `ICMS_TEST_BASE_URL`.
+
+**Where the library names the framework.** `installTrustDistribution()` writes the host's `.env.local` and empties its caches. Symfony wrote `APP_SECRET` and emptied `var/cache`; Laravel needs `APP_KEY=base64:…` and `var/framework/{cache,views}`, and its `bootstrap/cache` is emptied because `bootstrap/` is replaced as a whole. Both variants have this coupling in the same place; it is now two constants and one line.
+
+**Fitted naturally**
+- *Front controller.* `public/index.php` became `host.php` with two changed lines (the `php -S` fix-up names the web root's `index.php`). The trace cut of phase 5 (Herd's `server.php`) already covered the preamble and the test stub; Symfony had to add it in this phase.
+- *Configuration without the server environment.* Laravel's environment repository is immutable and reads `$_SERVER` first, so the preamble's `$_SERVER` entries win over `.env.local` without code. Symfony's `Dotenv` behaves the same. `HostUpgradeTest` (PHP with `variables_order=GPCS`, nothing but `.env.local`) passed on its first run.
+- *The test-only host marker* is a `RequestHandled` listener. Phase 3's `HostKernel` dispatches that event for the real legacy response, so the marker sees Laravel and legacy responses alike, as Symfony's `kernel.response` listener does.
+- *Static analysis caught a real bug.* The first version registered the `Icms\` library in `afterLoadingEnvironment()` with `env('ICMS_LEGACY_ROOT')`. Larastan reported `env()` outside `config/`: with a cached configuration Laravel skips `.env.local`, so `artisan` on an installed site would not have found the library. It now runs after `LoadConfiguration` with `config('icms.legacy.root')`.
+
+**Different, not worse**
+- *Registering the `Icms\` library.* Symfony's `bin/console` calls `Dotenv::bootEnv()` itself before the kernel exists and can then require `libraries/Autoloader.php`; `host.php`, the console and the test bootstrap each do so. In Laravel the environment is loaded by a bootstrapper inside the application, so the library is registered in one place, `bootstrap/app.php`, through `afterBootstrapping(LoadConfiguration::class)`, a documented hook. One place instead of three.
+- *Herd.* In phase 5 Herd's Laravel driver served `public/` (level 3 without configuration). That driver recognises `artisan` plus `public/index.php` only, so a web root is now served by Herd's basic driver (level 2), or at level 3 by the ImpressCMS driver from `docs/server/herd/`, as on Symfony. The Laravel host lost its Herd advantage with `public/`; that is the price of the shared deployment model, not of Laravel.
+
+**Worked against the framework**: nothing in this phase.
+
+**Measurements**
+- Host code: 13 files, +104 −59 (Symfony: 13 files, +127 −68). The legacy, server and test changes are shared and not counted.
+- `bin/build-dist`: 25 s, `htdocs/trust_dist/` 30.6 MB in 6950 files (Laravel 12 and the legacy dependencies, `--no-dev --classmap-authoritative`). The Symfony size was not recorded.
+- Suites on PHP 8.2.35 (Windows 11, MySQL 8.0.36): `Library` 422 tests, `Unit` 46, `Integration` 29, `Functional` 12, `Http` 60 at level 3 (255 s, 3 skipped) and at level 2 (241 s, 24 skipped: the tests that need every request routed through the host), `HostUpgradeTest` 57 s. `bin/spec-coverage` 60 of 60 scenarios.
+- Lookups (3): `Application::afterLoadingEnvironment()`/`afterBootstrapping()`, the default adapters of `Env::getRepository()`, the `serves()` rule of Herd's `LaravelValetDriver` and `.valet-env.php` in Herd's `ValetDriver`.
 
 ## Where the comparison is unfair
 

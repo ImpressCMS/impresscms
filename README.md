@@ -61,18 +61,20 @@ For each type of website ImpressCMS offers different functionality with a collec
 
 ## Installation
 
-To install and use this package, transfer this package to your web server, putting the contents of the htdocs/ folder in your web root, and follow the steps of the installer.
+1. Put the contents of the package's `htdocs/` folder in your web root, or point the web root at it.
+2. Open the site and follow the steps of the installer.
+
+The installer asks for a *trust path*: a folder outside the web root for everything that must not be public. It installs the Laravel host there from the package's `htdocs/trust_dist/` folder. That covers the application, its Composer libraries and the site's settings in `.env.local`.
+
+No web server configuration is needed. To let Laravel pages use clean URLs, or to run every page through the host, use `htdocs/htaccess.txt` (Apache) or the examples in [docs/server/](docs/server/) (nginx, FrankenPHP, Laravel Herd).
+
+**Upgrading** from 2.0.x or 2.1: upload the new files over your site, log in as webmaster and update the system module. The update installs the host into your trust path.
+
+**From a repository checkout:** run `composer install` in the repository root and `php bin/build-dist` to create `htdocs/trust_dist/`.
+
+This branch (lara-3) runs ImpressCMS inside a Laravel 12 application, to compare it with the Symfony host of ImpressCMS pre-3. See [docs/laravel-host.md](docs/laravel-host.md) for how the host works and [docs/dx-comparison.md](docs/dx-comparison.md) for the comparison.
 
 More detailed installation instructions are available [on the ImpressCMS site](https://www.impresscms.org/modules/simplywiki/index.php?page=Installation)
-
-### lara-3: the Laravel host
-
-This branch (lara-3) runs ImpressCMS inside a Laravel 12 application, to compare it with the Symfony host of ImpressCMS pre-3. A checkout can be served in two ways:
-
-- `htdocs/` as document root: ImpressCMS as before, without the host;
-- `public/` as document root, after `composer install` in the repository root: the Laravel host, which runs Laravel routes and hands every other request to ImpressCMS.
-
-See [docs/laravel-host.md](docs/laravel-host.md) and [docs/dx-comparison.md](docs/dx-comparison.md).
 
 ## Do you need any help?
 
