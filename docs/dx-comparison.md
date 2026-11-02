@@ -2,7 +2,7 @@
 
 lara-3 rebuilds the strangler-fig migration of ImpressCMS that was first built on Symfony 7.4 LTS, from the same commit (`89bc13930`), with the same specs, scenarios, snapshots and phase order. This log records how the two frameworks compare on that identical task. It is written while the work happens, not afterwards.
 
-The decisions are numbered `L<n>` in `openspec/changes/migrate-to-laravel-foundation/design.md` (and the follow-up changes); `D<n>` refers to the Symfony designs.
+The decisions are numbered `L<n>` in `openspec/changes/archive/2026-11-02-migrate-to-laravel-foundation/design.md` (and the follow-up changes); `D<n>` refers to the Symfony designs.
 
 ## How this is measured
 

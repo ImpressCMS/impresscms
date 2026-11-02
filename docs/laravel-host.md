@@ -9,7 +9,7 @@ Laravel one at a time while modules, themes and the `icms::` API keep working.
 This is **lara-3**, the Laravel counterpart of the Symfony host of ImpressCMS
 pre-3 (`docs/symfony-host.md` on that branch). It exists to compare the two
 frameworks on the same task; the comparison is in `docs/dx-comparison.md`.
-The design is in `openspec/changes/migrate-to-laravel-foundation/`.
+The design is in `openspec/changes/archive/2026-11-02-migrate-to-laravel-foundation/`.
 
 In this stage the host lives in the repository root, next to `htdocs/`, and
 `public/` is its document root. The move into the trust path follows, as it did
