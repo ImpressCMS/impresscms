@@ -30,7 +30,8 @@ abstract class LegacyFixtureTestCase extends TestCase
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-        if (ServerProcess::configuredDocumentRoot() !== 'public') {
+        // the fixtures need a php -S of their own, with the fixture tree as legacy root
+        if (ServerProcess::configuredDocumentRoot() !== 'public' || ServerProcess::externalBaseUri() !== null) {
             return;
         }
 
@@ -48,7 +49,7 @@ abstract class LegacyFixtureTestCase extends TestCase
     protected function setUp(): void
     {
         if (static::$server === null) {
-            self::markTestSkipped('Bridge tests run against the host (ICMS_TEST_DOCROOT=public).');
+            self::markTestSkipped('Bridge tests run against the host (ICMS_TEST_DOCROOT=public), without ICMS_TEST_BASE_URL.');
         }
         $this->browser = new HttpBrowser(HttpClient::create(['timeout' => 30]), null, new CookieJar());
         $this->browser->followRedirects(false);

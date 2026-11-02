@@ -12,6 +12,9 @@ use Symfony\Component\Process\Process;
  *
  * Serves either `htdocs/` (direct deployment) or `public/` (Laravel host)
  * with the test site's mainfile (ICMS_MAINFILE) in its environment.
+ *
+ * With ICMS_TEST_BASE_URL the suite tests an already running server instead,
+ * for example Herd serving this checkout; it counts as the host (`public`).
  */
 final class ServerProcess
 {
@@ -25,6 +28,7 @@ final class ServerProcess
         private readonly string $documentRoot,
         private readonly ?string $router = null,
         private readonly array $env = [],
+        private readonly ?string $externalBaseUri = null,
     ) {
     }
 
@@ -38,6 +42,9 @@ final class ServerProcess
     {
         $docroot = self::configuredDocumentRoot();
         $root = TestSite::repoRoot();
+        if (null !== $external = self::externalBaseUri()) {
+            return new self($root . '/public', null, [], $external);
+        }
 
         return $docroot === 'public'
             ? new self($root . '/public', $root . '/public/index.php', $env + ['APP_ENV' => 'test', 'APP_DEBUG' => '0'])
@@ -58,6 +65,10 @@ final class ServerProcess
 
     public static function configuredDocumentRoot(): string
     {
+        if (self::externalBaseUri() !== null) {
+            return 'public';
+        }
+
         $docroot = getenv('ICMS_TEST_DOCROOT') ?: 'htdocs';
         if (!in_array($docroot, ['htdocs', 'public'], true)) {
             throw new RuntimeException("ICMS_TEST_DOCROOT must be 'htdocs' or 'public', got '{$docroot}'.");
@@ -66,9 +77,17 @@ final class ServerProcess
         return $docroot;
     }
 
+    /** The external server under test (ICMS_TEST_BASE_URL), if any. */
+    public static function externalBaseUri(): ?string
+    {
+        $url = getenv('ICMS_TEST_BASE_URL');
+
+        return is_string($url) && $url !== '' ? rtrim($url, '/') : null;
+    }
+
     public function start(float $timeout = 15.0): void
     {
-        if ($this->process?->isRunning()) {
+        if ($this->externalBaseUri !== null || $this->process?->isRunning()) {
             return;
         }
 
@@ -124,7 +143,7 @@ final class ServerProcess
 
     public function baseUri(): string
     {
-        return 'http://127.0.0.1:' . $this->port;
+        return $this->externalBaseUri ?? 'http://127.0.0.1:' . $this->port;
     }
 
     public function documentRoot(): string
