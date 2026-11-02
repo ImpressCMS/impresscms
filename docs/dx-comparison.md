@@ -34,16 +34,23 @@ Symfony figures come from the commits on `pre-3`. Its suite timings and lookups 
 
 ### lara-3
 
-| Phase | Host code | Library seams (changed?) | Workarounds | Suite time | Lookups |
+| Phase | Commit | Host code | Library seams | Workarounds | Lookups |
 |---|---|---|---|---|---|
-| 0 Plan | — | — | — | — | 9 (see below) |
-| 1–2 Test infrastructure, characterization | | | | | |
-| 3 Seams | | | | | |
-| 3 Host and bridge | | | | | |
-| 4 Shared runtime | | | | | |
-| 5 Session and identity | | | | | |
+| 0 Plan | `eeb0ed7db` | — | — | — | 9 |
+| 1–2 Test infrastructure, characterization | `d7db54160`, `09b7bdb2d`, `12ee144b5` | — | — | — | 0 |
+| 3 Seams | `bcde82acc` … `06168341e`, `229818d92` | — | 4 seams reused, **none changed**; 1 fix taken over | — | 0 |
+| 3 Host and bridge | `568249bbc` | 31 files, +1719 | — | 10 (1–10) | 6 |
+| 4 Shared runtime | `d419ba149` | 22 files, +784 | — | 3 (11–13) | 5 |
+| 5 Session and identity | see `git log` | 17 files, +661 −10 | — | 6 (14–19) | 4 |
+| Total, foundation | | 70 files touched, about +3150 | 4 | 19 | 24 |
 
-Time to first green `Http` snapshot: not reached yet.
+The Symfony variant did not count its workarounds. Its task notes name about seven of the same kind: the 405 re-match, the custom runtime runner, the DBAL driver with error-mode switching, the `#[Autowire]` subclass, the listener compiler pass, the decorated session factory with its attribute bag, and the token clearing in the lazy firewall. The host code figures include `config/` and `routes/` on both sides (YAML there, PHP here), but not tests.
+
+**Suite times** at the end of phase 5 (Windows 11, PHP 8.2.35, MySQL 8.0.36, sequential): `Library` 2 s (413 tests), `Unit` 6 s (39), `Integration` 38 s (26), `Functional` 20 s (12), `Http` on `htdocs/` 103 s (49, of which 31 need the host and are skipped) and on `public/` 173 s (49). Against plain `2.1-dev` the `Http` suite took 66 s for 13 tests. Process isolation dominates `Integration` and `Functional`: every test class boots Laravel and legacy in a new process. One unexplained 10-minute `Http` run occurred while a second suite ran against the same database; it did not recur in isolation.
+
+**Time to the first green `Http` snapshot**: about 35 minutes of wall-clock time from installing `laravel/framework` to all 37 `Http` tests passing through `public/`, on the first full run. That figure profits most from the existing design (see below).
+
+**Framework lookups** (Laravel source or docs), after phase 0: phase 3 `CompiledRouteCollection::match()`, `Route::getValidators()`/`toSymfonyRoute()`, the traits of `Route`, `HandleExceptions::forwardsTo()`/`forgetApp()`, `Http\Kernel` properties, the default routes in `route:list`; phase 4 `MySqlConnector::configureConnection()`/`getHostDsn()`, `Connector::$options`, `DatabaseManager::makeConnection()`, `RoutingServiceProvider::registerRedirector()`, `CacheManager` (through a Larastan trace); phase 5 `Session\Store`, `SessionManager::callCustomCreator()`, `Authenticate::redirectTo()`, the order in `Exceptions\Handler::render()`.
 
 ## Log
 
@@ -106,6 +113,23 @@ Laravel's docblocks are narrower than its behaviour: `Kernel::handle()`, `termin
 13. The shared connection must refuse `reconnect()`; Laravel would otherwise open a second physical connection after a lost connection.
 
 **Neutral**: no compiled listener map, so the event forwarder is always installed and checks `hasListeners()` per event. String-named events cannot be auto-discovered. Test-only listeners need a provider registered from code, where Symfony has `#[When(env: 'test')]`.
+
+### Phase 5: session and identity (2026-11-02)
+
+**Fitted naturally**
+- *Identity.* `Auth::viaRequest('icms', …)` is a complete guard in five lines; `#[CurrentUser]` injects the user. Symfony needed an authenticator with an entry point, a user provider and a passport.
+- *Permissions.* One `Gate::before()` callback covers webmaster, group and module permissions, with `can:` middleware on routes. A Symfony voter is a class per attribute family; both are similar in size.
+- *Token.* One middleware, as one listener on Symfony.
+
+**Worked against the framework**
+14. `SessionManager::extend()` wraps a custom driver's handler in Laravel's own `Store`, so a store over `$_SESSION` cannot be registered that way; the `session` binding is replaced by a subclass with `createIcmsDriver()`. Symfony has a native-session bridge (`php_bridge`) and needed only a factory decorator and an attribute bag.
+15. `StartSession` sets Laravel's own cookie and saves through Laravel's handler; `StartIcmsSession` replaces it, inside an `icms` group that replaces `web` (whose `EncryptCookies` and `ValidateCsrfToken` do not fit either).
+16. Guests denied by `can:` get 403 in Laravel; Symfony sends them to the entry point. Two `withExceptions()` render callbacks restore that, without Laravel's guest redirect, which would write `url.intended` into ImpressCMS' `$_SESSION`.
+17. The `auth` middleware computes `route('login')` before anything renders, so `redirectGuestsTo()` must be set even though its target is not used.
+18. A headless boot inside a Laravel route ran under Laravel's error handler: one legacy warning (`QUERY_STRING` missing under `php -S`) became a 500. Each stage now runs with PHP's own error handling until ImpressCMS installs its handler. Symfony's production error handler only logged the warning.
+19. The default compiled-view path is `realpath(storage_path('framework/views'))`, empty until the directory exists; the first error page failed with "Please provide a valid cache path". `config/view.php` passes the plain path.
+
+**Debuggability.** Every failure in this phase was found from `var/log/test.log`, whose stack traces named the Laravel class that caused it. Laravel's exception messages were clear (`Route [login] not defined`, `Please provide a valid cache path`); the cause was in each case a default that assumes a Laravel-owned application.
 
 ## Where the comparison is unfair
 

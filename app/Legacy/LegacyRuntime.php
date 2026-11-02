@@ -67,7 +67,7 @@ final class LegacyRuntime
                     $hook();
                 }
 
-                $this->bootstrap->run($name);
+                $this->runStage($name);
             }
 
             if ($name === $stage) {
@@ -106,6 +106,34 @@ final class LegacyRuntime
         $this->bootTo($stage);
 
         return \icms::${$name};
+    }
+
+    /**
+     * Laravel's error handler turns every warning into an exception; legacy
+     * boot code has warnings, and installs its own handler (Icms\Core\Logger)
+     * only during `services`. Until then PHP handles them, as without the
+     * host. A stage that installs a handler keeps it, as legacy expects.
+     */
+    private function runStage(string $name): void
+    {
+        $phpHandling = static fn (): bool => false;
+        set_error_handler($phpHandling);
+
+        try {
+            $this->bootstrap?->run($name);
+        } finally {
+            if (self::currentErrorHandler() === $phpHandling) {
+                restore_error_handler();
+            }
+        }
+    }
+
+    private static function currentErrorHandler(): ?callable
+    {
+        $handler = set_error_handler(null);
+        restore_error_handler();
+
+        return $handler;
     }
 
     /**

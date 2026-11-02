@@ -65,6 +65,15 @@ To install and use this package, transfer this package to your web server, putti
 
 More detailed installation instructions are available [on the ImpressCMS site](https://www.impresscms.org/modules/simplywiki/index.php?page=Installation)
 
+### lara-3: the Laravel host
+
+This branch (lara-3) runs ImpressCMS inside a Laravel 12 application, to compare it with the Symfony host of ImpressCMS pre-3. A checkout can be served in two ways:
+
+- `htdocs/` as document root: ImpressCMS as before, without the host;
+- `public/` as document root, after `composer install` in the repository root: the Laravel host, which runs Laravel routes and hands every other request to ImpressCMS.
+
+See [docs/laravel-host.md](docs/laravel-host.md) and [docs/dx-comparison.md](docs/dx-comparison.md).
+
 ## Do you need any help?
 
 You can find our official documentation at [our wiki](https://www.impresscms.org/modules/simplywiki/).

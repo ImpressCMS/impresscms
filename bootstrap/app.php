@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
+use App\Auth\LoginRedirect;
 use App\Console\Commands\RoutesOwnershipCommand;
 use App\Http\HostKernel;
 use App\Http\Middleware\RequiresLegacy;
+use App\Http\Middleware\RequiresLegacyToken;
+use App\Http\Middleware\StartIcmsSession;
 use Icms\Kernel\NotInstalledException;
 use Icms\Kernel\SiteClosedException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,6 +21,9 @@ use Illuminate\Foundation\Http\Middleware\TrimStrings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 $app = Application::configure(basePath: dirname(__DIR__))
     // No `web:` file: Laravel would wrap it in the `web` group (cookie
@@ -29,7 +37,18 @@ $app = Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(static function (Middleware $middleware): void {
         // A route that takes over a legacy URL must see the input legacy saw.
         $middleware->remove([TrimStrings::class, ConvertEmptyStringsToNull::class]);
-        $middleware->alias(['icms.legacy' => RequiresLegacy::class]);
+        $middleware->alias([
+            'icms.legacy' => RequiresLegacy::class,
+            'icms.token' => RequiresLegacyToken::class,
+        ]);
+        // instead of `web`: ImpressCMS' session, no cookie encryption, no Laravel CSRF (designs L10, L12)
+        $middleware->group('icms', [
+            StartIcmsSession::class,
+            ShareErrorsFromSession::class,
+            SubstituteBindings::class,
+        ]);
+        // `auth` computes this target up front; it would default to route('login')
+        $middleware->redirectGuestsTo(static fn (Request $request): string => LoginRedirect::url($request));
     })
     ->withExceptions(static function (Exceptions $exceptions): void {
         // A headless boot stops where legacy would exit (design L6).
@@ -43,6 +62,15 @@ $app = Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(static fn (NotInstalledException $e, Request $request): RedirectResponse => new RedirectResponse(
             "{$request->getBasePath()}/install/",
         ));
+        // anonymous visitors who are denied log in through ImpressCMS (design L11)
+        $exceptions->render(static fn (AuthenticationException $e, Request $request): RedirectResponse => LoginRedirect::for($request));
+        $exceptions->render(static function (AccessDeniedHttpException $e, Request $request): ?RedirectResponse {
+            if (! $e->getPrevious() instanceof AuthorizationException) {
+                return null;
+            }
+
+            return auth()->guest() ? LoginRedirect::for($request) : null;
+        });
     })
     ->create();
 

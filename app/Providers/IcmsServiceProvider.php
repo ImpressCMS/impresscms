@@ -4,23 +4,28 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Auth\IcmsPermissions;
+use App\Auth\IcmsUser;
 use App\Database\IcmsMySqlConnector;
 use App\Database\SharedMySqlConnection;
 use App\Legacy\HandlerLocator;
 use App\Legacy\LegacyEventForwarder;
 use App\Legacy\LegacyRuntime;
+use App\Session\IcmsSessionManager;
 use Icms\Db\Factory;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Connection;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use LogicException;
 use PDO;
 
 /**
- * The ImpressCMS runtime in the Laravel container (design L6–L9): the headless
- * bootstrap, the shared database connection, the icms:: services, the
- * handlers and the event forwarding.
+ * The ImpressCMS runtime in the Laravel container (design L6–L11): the
+ * headless bootstrap, the shared database connection, the icms:: services,
+ * the handlers, the event forwarding, the session and the identity.
  */
 final class IcmsServiceProvider extends ServiceProvider
 {
@@ -83,6 +88,24 @@ final class IcmsServiceProvider extends ServiceProvider
         $this->app->alias('icms.handlers', HandlerLocator::class);
 
         $this->registerDatabase();
+
+        // the `icms` session driver is a Store of its own (IcmsSessionManager)
+        $this->app->singleton('session', static fn (Application $app): IcmsSessionManager => new IcmsSessionManager($app));
+    }
+
+    public function boot(): void
+    {
+        $app = $this->app;
+
+        // the module context is part of the permissions, so boot through `module`
+        Auth::viaRequest('icms', static function () use ($app): ?IcmsUser {
+            $app->make(LegacyRuntime::class)->bootTo('module');
+            $user = $app->make('icms.user');
+
+            return is_object($user) ? IcmsUser::fromLegacy($user) : null;
+        });
+
+        Gate::before(static fn (?IcmsUser $user, string $ability, array $arguments = []): ?bool => $app->make(IcmsPermissions::class)->check($user, $ability, $arguments));
     }
 
     /**

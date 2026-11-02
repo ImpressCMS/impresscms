@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\LegacyBridgeController;
+use App\Http\Controllers\WhoamiController;
 use App\Routing\RouteOwnership;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,12 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/up', HealthController::class)->name('up');
+
+if (app()->environment('local', 'test')) {
+    Route::get('/whoami', WhoamiController::class)
+        ->middleware(['icms', 'auth', 'can:webmaster'])
+        ->name('whoami');
+}
 
 if (app()->environment('test')) {
     require __DIR__ . '/test.php';

@@ -91,18 +91,25 @@ Task groups follow the numbering of `migrate-to-symfony-foundation/tasks.md`, so
 
 ## 10. Session and identity (L10–L12; Symfony 10.x)
 
-- [ ] 10.1 `IcmsSessionStore`, `StartIcmsSession` and the `icms` middleware group; `services` boots before any session access
-- [ ] 10.2 `App\Auth\IcmsUser` (id, uname, display name, groups)
-- [ ] 10.3 `Auth::viaRequest('icms')` guard; `redirectGuestsTo()` → `/user.php?xoops_redirect=<url>`
-- [ ] 10.4 Gates: `webmaster`, `icms_group:<id>`, `icms_perm:<name>` (module permission, item permission with an integer subject)
-- [ ] 10.5 Middleware `icms.token`: validates `icms::$security->check()` on POST
-- [ ] 10.6 Demonstration route `/whoami` (`auth:icms`, `can:webmaster`), only in `local` and `testing`
-- [ ] 10.7 Tests: legacy-written session value read by Laravel; a custom session name gives one cookie; anonymous → redirect, member → 403, webmaster → 200; logout → anonymous; token accepted once, rejected on replay
+- [x] 10.1 `IcmsSessionStore`, `StartIcmsSession` and the `icms` middleware group; `services` boots before any session access
+  - `SessionManager::extend()` wraps a custom driver's handler in its own `Store`, so `App\Session\IcmsSessionManager` replaces the `session` binding. The store boots nothing when it is created (the redirector resolves it for every response helper), only on `start()`
+- [x] 10.2 `App\Auth\IcmsUser` (id, uname, display name, groups)
+- [x] 10.3 `Auth::viaRequest('icms')` guard; denied guests → `/user.php?xoops_redirect=<url>`
+  - Guests denied by `auth` or by `can:` are redirected by two `withExceptions()` render callbacks (`App\Auth\LoginRedirect`), not by Laravel's guest redirect, which writes `url.intended` into the session. `redirectGuestsTo()` is still set, because `auth` computes `route('login')` up front
+- [x] 10.4 Gates: `webmaster`, `icms_group:<id>`, `icms_perm:<name>` (module permission, item permission with an integer subject)
+  - One `Gate::before()` callback (`App\Auth\IcmsPermissions`) for `webmaster`, `icms_group:<id>` and `icms_perm:<name>`
+- [x] 10.5 Middleware `icms.token`: validates `icms::$security->check()` on POST
+  - Boots the `language` stage: the token messages are language constants
+- [x] 10.6 Demonstration route `/whoami` (`icms`, `auth`, `can:webmaster`), only in `local` and `test`
+- [x] 10.7 Tests: legacy-written session value read by Laravel; a custom session name gives one cookie; anonymous → redirect, member → 403, webmaster → 200; logout → anonymous; token accepted once, rejected on replay
+  - The `Http` test is the Symfony variant's, reused. A headless boot under Laravel's error handler turned a legacy warning into a 500; `LegacyRuntime` now runs each stage with PHP's own error handling until ImpressCMS installs its handler
 
 ## 11. Documentation and verification (Symfony 11.x)
 
-- [ ] 11.1 `docs/laravel-host.md` in the structure of `docs/symfony-host.md` (request flow, stages, seams, container ids, abilities, unsupported runtimes)
-- [ ] 11.2 Update `README.md`: `public/` with the host, or `htdocs/` directly
-- [ ] 11.3 Fail the suite on Laravel deprecations triggered from `app/`
-- [ ] 11.4 Run all suites and `bin/spec-coverage` with no gaps; PHPStan level 6 on `app/` and `Icms\Kernel`
-- [ ] 11.5 Update `docs/dx-comparison.md` with the measurements of phases 1–5 and the DX summary in `design.md`
+- [x] 11.1 `docs/laravel-host.md` in the structure of `docs/symfony-host.md` (request flow, stages, seams, container ids, abilities, unsupported runtimes)
+- [x] 11.2 Update `README.md`: `public/` with the host, or `htdocs/` directly
+- [x] 11.3 Fail the suite on Laravel deprecations triggered from `app/`
+  - CI runs `Unit` and `Functional` with `--fail-on-deprecation`; `<source>` is `app/` and indirect deprecations are ignored
+- [x] 11.4 Run all suites and `bin/spec-coverage` with no gaps; PHPStan level 6 on `app/` and `Icms\Kernel`
+  - 42 of 42 scenarios covered; PHPStan level 6 with Larastan on `app/`, `bootstrap/`, `config/`, `routes/`, `public/` and `Icms\Kernel`
+- [x] 11.5 Update `docs/dx-comparison.md` with the measurements of phases 1–5 and the DX summary in `design.md`

@@ -131,7 +131,8 @@ The library side is taken over unchanged (stages, headless mode, `SiteClosedExce
 - `App\Legacy\LegacyRuntime` is a singleton with an idempotent `bootTo(string $stage)`.
 - The equivalent of `#[RequiresLegacy(stage: …)]` is the route middleware alias `icms.legacy:<stage>` (`->middleware('icms.legacy:language')`). Laravel 12 has no controller or route attributes for middleware; middleware with parameters is the idiom.
 - Resolving any `icms.*` service boots the needed stage, so `/up` never boots legacy.
-- `withExceptions()` renders `SiteClosedException` as 503 and `NotInstalledException` as a redirect to `/install/`.
+- `withExceptions()` renders `SiteClosedException` as 503 and `NotInstalledException` as a redirect to `/install/`, and does not report them.
+- **Errors during a headless boot.** Laravel's `HandleExceptions` turns the warnings of legacy boot code (for example a missing `QUERY_STRING` under `php -S`) into exceptions, until ImpressCMS installs its own handler during `services`. `LegacyRuntime` runs each stage with a handler that leaves errors to PHP, and removes it afterwards unless the stage installed a handler on top of it, which legacy then keeps, as on the Symfony host.
 
 ### L7. Database: Laravel owns the connection; `Icms\Db\Factory` takes its PDO (Symfony: D7) — *approved 2026-11-02*
 `config/database.php` defines the default connection `icms` (driver `mysql`). Host, database, credentials, table prefix (`XOOPS_DB_PREFIX . '_'`, so `DB::table('users')` is `icms_users`) and charset come from the `XOOPS_DB_*` constants when the connection is first opened: `DatabaseManager::extend('icms', …)`, keyed by the connection name, boots the `constants` stage and hands the completed configuration to Laravel's own `ConnectionFactory`. That is the equivalent of the Symfony variant's env var processor. `LegacyRuntime` installs `Icms\Db\Factory::setConnectionProvider(fn () => DB::connection('icms')->getPdo())` before the `services` stage. Two Laravel extension points make this fit without touching Laravel internals:
@@ -159,6 +160,8 @@ The `setForwarder()` seam is reused. `App\Legacy\LegacyEventForwarder` dispatche
 ### L10. Session: ImpressCMS owns the session; a Laravel `Store` over `$_SESSION` (Symfony: D10) — *approved 2026-11-02*
 Laravel's session never uses PHP's native session: `Illuminate\Session\Store` reads and writes its own handler and `StartSession` sets its own cookie. There is no equivalent of Symfony's `php_bridge` storage. lara-3 provides one:
 - `App\Session\IcmsSessionStore extends Store`. `start()` boots the `services` stage (so `Icms\Core\Session::service()` has set the name, lifetime and DB handler and started the session) and binds the attribute array to `$_SESSION` by reference. `getId()`/`getName()` return PHP's. `save()` only ages flash data; PHP's handler writes at shutdown. `migrate()`/`invalidate()` use `session_regenerate_id()`. Laravel's own keys (`_token`, `_flash`, `_previous`) live next to ImpressCMS' keys; no legacy code under `htdocs/` uses a session key starting with `_`.
+- The store must not boot anything when it is *created*: Laravel resolves the session store for every redirector (L7), also for error pages. Only `start()` boots.
+- `SessionManager::extend()` cannot register it: a custom creator must return a session *handler*, which the manager wraps in its own `Store`. `App\Session\IcmsSessionManager` therefore replaces the `session` binding and provides the driver as `createIcmsDriver()`; `config/session.php` selects `icms`.
 - `App\Http\Middleware\StartIcmsSession` replaces `StartSession`: it sets the store on the request, but sets no cookie, because PHP has already sent ImpressCMS' cookie. That keeps the "no second session cookie" scenario.
 - Laravel's `web` group is not used: it also contains `EncryptCookies` (which would hide ImpressCMS' unencrypted cookies from Laravel code) and `ValidateCsrfToken` (L12). lara-3 defines an `icms` group: `StartIcmsSession`, `ShareErrorsFromSession`, `SubstituteBindings`.
 - Legacy-owned requests are untouched: the bridge never starts or names a session (bridge spec).
@@ -168,11 +171,12 @@ Laravel's session never uses PHP's native session: `Illuminate\Session\Store` re
 ### L11. Identity: a request guard plus gates (Symfony: D11)
 - `Auth::viaRequest('icms', …)` (a `RequestGuard`) wraps `icms::$user` after booting the `module` stage in `App\Auth\IcmsUser implements Authenticatable` (id, uname, display name, groups). No user provider is needed, because login, logout and autologin stay in ImpressCMS; `IcmsUser` refuses `getAuthPassword()` and the remember token.
 - Roles become abilities: the `auth:icms` middleware for "logged in", `Gate::define('webmaster')` for `ICMS_GROUP_ADMIN`, and a `Gate::before()` callback for the patterns `icms_group:<id>` and `icms_perm:<name>` (module permission through `icms_member_groupperm`, with the same subject rules as the Symfony voter). `can:webmaster` on a route.
-- Denials: anonymous → `redirectGuestsTo()` to `/user.php?xoops_redirect=<url>`; authenticated → `AuthorizationException` → 403. The legacy denials of system admin pages (redirect to `user.php`, `Location: admin.php`) belong to the pilot's admin context, as in the Symfony variant.
-- Demonstration route `/whoami` (`auth:icms`, `can:webmaster`), registered only in `local` and `testing`.
+- Denials: anonymous → `/user.php?xoops_redirect=<url>`; authenticated → 403. Laravel splits this in two places: `auth` throws `AuthenticationException`, and `can:` throws `AuthorizationException` also for guests (which Symfony sends to the entry point). `withExceptions()` renders both as the login redirect for guests (`App\Auth\LoginRedirect`). Laravel's own guest redirect is not used, because `Redirector::guest()` stores `url.intended` in the session, which is ImpressCMS' `$_SESSION`; `redirectGuestsTo()` is still set, because the `auth` middleware computes its target up front and would fail on the missing `login` route.
+- The guard boots the `module` stage, because module permissions need the current module. The legacy denials of system admin pages (redirect to `user.php`, `Location: admin.php`) belong to the pilot's admin context, as in the Symfony variant.
+- Demonstration route `/whoami` (`icms`, `auth`, `can:webmaster`), registered only in `local` and `test`.
 
 ### L12. CSRF: the ImpressCMS token is leading (Symfony: D11, `#[RequiresLegacyToken]`)
-Laravel's `ValidateCsrfToken` is not used (L10). The route middleware `icms.token` validates `icms::$security->check()` on POST and is the equivalent of `#[RequiresLegacyToken]`. Laravel's `@csrf` and `csrf_token()` are not used by the host.
+Laravel's `ValidateCsrfToken` is not used (L10). The route middleware `icms.token` boots the `language` stage (the token messages are language constants) and validates `icms::$security->check()` on POST; it is the equivalent of `#[RequiresLegacyToken]`. Laravel's `@csrf` and `csrf_token()` are not used by the host.
 
 ### L13. Laravel idioms that stay unused
 Eloquent, `Model`s and Blade compete with IPF, `icms::` and Smarty and are not used for legacy data or legacy pages. Host code reaches legacy data through the query builder on the `icms` connection or through IPF handlers. Facades are used in providers and routes (`Route`, `Event`, `Gate`, `Auth`), where they are idiomatic; classes in `app/` receive their dependencies by constructor injection, so they stay testable without the application. The DX log records each place where an idiom stays unused and what it costs.
@@ -192,18 +196,23 @@ The suites, locations, isolation rules and the `spec:` traceability are those of
 
 ## DX summary
 
-Kept in `docs/dx-comparison.md`; the summary per phase is updated here at the end of the change.
+The full log, with measurements, is `docs/dx-comparison.md`. Per decision, after implementation:
 
-| # | Fit | Note |
+| # | Fit with Laravel | Compared with Symfony |
 |---|---|---|
-| L1 | worse | Laravel 12 is security-only from the start; yearly majors raise the PHP baseline |
-| L3 | neutral | 175 global helpers, no collision with legacy today |
-| L4 | worse | `Router::fallback()` is GET only; no query conditions, needs a custom validator |
-| L5 | better / mixed | plain front controller makes file scope easy; no response event, `HandleExceptions` must be suspended |
-| L7 | good | `db.connector.*` and `Connection::resolverFor()` are clean extension points |
-| L8 | better | contextual attributes match `#[IcmsHandler]` directly |
-| L10 | worse | no native-session bridge; a custom `Store`, middleware and group are needed |
-| L11 | good | `Auth::viaRequest()` and `Gate::before()` fit ImpressCMS groups with little code |
+| L1 | worse | Laravel 12 is security-only from the start (until 2027-02-24); yearly majors raise the PHP minimum. Symfony 7.4 LTS runs until November 2029 |
+| L2 | good | one environment file, defaults in `config/*.php`, `$_SERVER` wins natively; but the skeleton claims `/storage/{path}` |
+| L3 | neutral | 175 guarded global helpers; no collision with legacy today, a test keeps it so |
+| L4 | worse | `Router::fallback()` is GET only; no query conditions (validator + macros); `route:cache` silently drops them, so it is refused |
+| L5 | mixed | a plain front controller makes file scope easy (Symfony needed a runtime runner); no response event, and `HandleExceptions` must be made inert |
+| L6 | good / mixed | middleware with parameters replaces the attribute; legacy boot warnings needed a temporary PHP error handler |
+| L7 | good | `db.connector.*`, `Connection::resolverFor()` and `DatabaseManager::extend()` fit; but the connector changes session state by default, and the skeleton's `database` drivers boot legacy |
+| L8 | better | no compiled container to protect; contextual attributes match `#[IcmsHandler]` directly |
+| L9 | neutral | no compiled listener map; a per-event check instead |
+| L10 | worse | no native-session bridge; a custom `Store`, a replaced `SessionManager`, a middleware and a group instead of `web` |
+| L11 | good / mixed | `Auth::viaRequest()` and `Gate::before()` are short; guest denials need two render callbacks, and Laravel's guest redirect would write into `$_SESSION` |
+| L12 | neutral | one middleware, as one listener on Symfony |
+| L16 | good | `Foundation\Testing\TestCase` needs no configuration; Testbench does not apply to an application |
 
 ## Risks / Trade-offs
 
