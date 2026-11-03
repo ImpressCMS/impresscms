@@ -271,6 +271,31 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		echo $e->getMessage();
 	}
 
+	/* Begin upgrade to version 2.0.4 (strict SQL mode fix) */
+	if (!$abortUpdate) $newDbVersion = 50;
+	try {
+		if ($dbVersion < $newDbVersion) {
+			// user_sig and bio had no default, which made every registration fail under STRICT_TRANS_TABLES
+			$usersTable = icms::$xoopsDB->prefix('users');
+			foreach (array('user_sig' => 'text', 'bio' => 'tinytext') as $column => $type) {
+				$icmsDatabaseUpdater->runQuery(
+					"ALTER TABLE `" . $usersTable . "` MODIFY `" . $column . "` " . $type . " NULL DEFAULT NULL",
+					sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $column),
+					sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $column)
+				);
+			}
+
+			/* Finish up this portion of the db update */
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
+		}
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
 	/* Repair the HTML filter's allowed elements and attributes */
 	// In 2.0.2 and 2.0.3 icms_core_Object::getVar() read every array value as an
 	// empty array. The installer of those releases starts the system module at
