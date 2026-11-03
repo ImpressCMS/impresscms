@@ -35,6 +35,10 @@
 - [x] 6.2 `docs/laravel-host.md`: layout, request flow from `htdocs/index.php`, routing levels per server, configuration, upgrade; `README.md`
 - [x] 6.3 CI: one `composer install`; the Http suite at levels 2 and 3; `bin/build-dist` and the upgrade test; the `webservers` job
   - Not run: nothing has been pushed
-- [ ] 6.4 Verify on the Herd site `lara3.test`: levels 2 and 3, a fresh installation through the web installer, and an upgrade
+- [x] 6.4 Verify on the Herd site `lara3.test`: levels 2 and 3, a fresh installation through the web installer, and an upgrade
+  - Level 2 only: the site is linked to `htdocs/` and served by a basic-derived site driver; level 3 needs the driver in `docs/server/herd/`, which was not installed
+  - Http suite at level 2: 57 of 60 green at first. The snapshot normalizer now drops backtrace frames outside the checkout (Valet's `server.php`). `testStagingDirectoryIsNeverServed` and `testExampleConfigurationOfAWebServer` fail, correctly: that driver denies nothing
+  - Web installer: trust path proposed next to the document root, host installed from `trust_dist/`, `.env.local` written, `/up` answered in `prod` and `artisan` works in the trust path
+  - Upgrade: the same site with dbversion 48 and without host and `vendor/` in the trust path boots from `trust_dist/vendor`; the admin is sent to the system module update, which installs the host and reaches dbversion 50
 - [x] 6.5 `bin/spec-coverage`, PHPStan, the deprecation check, `openspec validate relocate-laravel-host-into-trust-path`
 - [x] 6.6 DX log

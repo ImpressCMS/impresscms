@@ -140,7 +140,9 @@ confirmation otherwise, and the admin dashboard warns about it.
 
 Herd's own Laravel driver only recognises a directory with `artisan` and
 `public/index.php`. An ImpressCMS web root has neither, so without the driver
-above Herd serves it with its basic driver, which is level 2.
+above Herd serves it with its basic driver, which is level 2. That driver, and
+a site driver derived from it, denies nothing: `trust_dist/`, `templates_c/`
+and `cache/` are then public, and `trust_dist/host.php` can be executed.
 
 ## Installation and upgrade
 

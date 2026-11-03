@@ -138,6 +138,9 @@ final class SnapshotNormalizer
             $text,
         );
 
+        // backtrace frames outside the checkout belong to the web server, such as Valet's server.php
+        $text = (string) preg_replace('#(?<=<br />)(?!\{ROOT\})[^<>{\n]+\.php \(\d+\)\r?\n<br />#', '', $text);
+
         $text = (string) preg_replace(array_keys($rules), array_values($rules), $text);
 
         return rtrim(str_replace("\r\n", "\n", $text));

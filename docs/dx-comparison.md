@@ -168,6 +168,7 @@ Change `relocate-laravel-host-into-trust-path`, design L17–L24.
 - `bin/build-dist`: 25 s, `htdocs/trust_dist/` 30.6 MB in 6950 files (Laravel 12 and the legacy dependencies, `--no-dev --classmap-authoritative`). The Symfony size was not recorded.
 - Suites on PHP 8.2.35 (Windows 11, MySQL 8.0.36): `Library` 422 tests, `Unit` 46, `Integration` 29, `Functional` 12, `Http` 60 at level 3 (255 s, 3 skipped) and at level 2 (241 s, 24 skipped: the tests that need every request routed through the host), `HostUpgradeTest` 57 s. `bin/spec-coverage` 60 of 60 scenarios.
 - Lookups (3): `Application::afterLoadingEnvironment()`/`afterBootstrapping()`, the default adapters of `Env::getRepository()`, the `serves()` rule of Herd's `LaravelValetDriver` and `.valet-env.php` in Herd's `ValetDriver`.
+- Herd (`lara3.test`, PHP 8.3.36, level 2 with a basic-derived site driver, 2026-11-03): a fresh installation through the web installer and an upgrade from dbversion 48 both install the host without manual steps. The `Http` suite needed one test fix (Valet's `server.php` as a backtrace frame in a snapshot) and fails twice by design, because that driver serves `trust_dist/` and `templates_c/`. Framework-independent: the same holds for the Symfony host.
 
 ## Where the comparison is unfair
 
