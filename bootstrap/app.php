@@ -8,6 +8,7 @@ use App\Http\HostKernel;
 use App\Http\Middleware\RequiresLegacy;
 use App\Http\Middleware\RequiresLegacyToken;
 use App\Http\Middleware\StartIcmsSession;
+use App\Http\Middleware\SystemAdminFunction;
 use Icms\Kernel\NotInstalledException;
 use Icms\Kernel\SiteClosedException;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -41,6 +42,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'icms.legacy' => RequiresLegacy::class,
             'icms.token' => RequiresLegacyToken::class,
+            'icms.admin' => SystemAdminFunction::class,
         ]);
         // instead of `web`: ImpressCMS' session, no cookie encryption, no Laravel CSRF (designs L10, L12)
         $middleware->group('icms', [

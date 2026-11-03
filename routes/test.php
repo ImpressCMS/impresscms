@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Test\IdentityTestController;
 use App\Http\Controllers\Test\LegacyConfigurationController;
 use App\Http\Controllers\Test\LegacyHandlerController;
+use App\Http\Controllers\Test\SystemAdminAccessController;
 use App\Http\Controllers\Test\TakeoverNotSuppressed;
 use App\Http\Controllers\Test\UsersTakeoverController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,10 @@ Route::get('/_test/legacy/sitename', LegacyConfigurationController::class)
 Route::get('/_test/legacy/handler', LegacyHandlerController::class)
     ->middleware('icms.legacy:module')
     ->name('test.legacy.handler');
+
+Route::get('/_test/system-admin/{fct}', SystemAdminAccessController::class)
+    ->middleware('icms.legacy:siteState')
+    ->name('test.system_admin_access');
 
 Route::middleware('icms')->controller(IdentityTestController::class)->group(static function (): void {
     Route::get('/_test/identity', 'identity')->name('test.identity');
