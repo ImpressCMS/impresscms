@@ -690,4 +690,25 @@ define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC", "Een lijst met URL's waarvan j
 define("_MD_AM_SEARCH_DSC", "Beheer hoe de zoekfunctie werkt voor je gebruikers.");
 define("_MD_AM_USERSETTINGS_DSC", "Beheer hoe gebruikers zich registreren op je site: lengte en opmaak van gebruikersnamen en wachtwoordopties.");
 
+define("_MD_AM_CAPTCHA_RECAPTCHA", "Google reCAPTCHA");
+define("_MD_AM_CAPTCHA_TURNSTILE", "Cloudflare Turnstile");
+define("_MD_AM_CAPTCHA_HONEYPOT", "Alleen honeypot (onzichtbaar)");
+define("_MD_AM_CAPTCHA_HONEYPOT_ON", "Onzichtbare honeypot-bescherming toevoegen?");
+define("_MD_AM_CAPTCHA_HONEYPOT_ONDSC", "Voegt naast de gekozen captcha een verborgen veld en een minimale invultijd toe aan elk beveiligd formulier.");
+define("_MD_AM_CAPTCHA_HONEYPOT_TIME", "Honeypot: minimum aantal seconden voor een formulier verzonden mag worden");
+define("_MD_AM_CAPTCHA_HONEYPOT_TIMEDSC", "Formulieren die sneller verzonden worden, worden als spam beschouwd.");
+define("_MD_AM_CAPTCHA_RECAPTCHA_VERSION", "reCAPTCHA-versie");
+define("_MD_AM_CAPTCHA_RECAPTCHA_VERSIONDSC", "De versie moet overeenkomen met het type sleutels dat je op google.com/recaptcha/admin aanmaakte.");
+define("_MD_AM_CAPTCHA_RECAPTCHA_V2", "v2 (selectievakje)");
+define("_MD_AM_CAPTCHA_RECAPTCHA_V3", "v3 (onzichtbaar, score)");
+define("_MD_AM_CAPTCHA_RECAPTCHA_SITEKEY", "reCAPTCHA-sitesleutel");
+define("_MD_AM_CAPTCHA_RECAPTCHA_SITEKEYDSC", "Publieke sleutel die in het formulier getoond wordt. Zonder site- en geheime sleutel wordt de ingebouwde tekstcaptcha gebruikt.");
+define("_MD_AM_CAPTCHA_RECAPTCHA_SECRET", "reCAPTCHA-geheime sleutel");
+define("_MD_AM_CAPTCHA_RECAPTCHA_SECRETDSC", "Privésleutel om het antwoord op de server te controleren.");
+define("_MD_AM_CAPTCHA_RECAPTCHA_THRESHOLD", "reCAPTCHA v3 minimumscore");
+define("_MD_AM_CAPTCHA_RECAPTCHA_THRESHOLDDSC", "Een getal tussen 0.0 (bot) en 1.0 (mens). Bezoekers met een lagere score worden geweigerd. Enkel voor v3.");
+define("_MD_AM_CAPTCHA_TURNSTILE_SITEKEY", "Turnstile-sitesleutel");
+define("_MD_AM_CAPTCHA_TURNSTILE_SITEKEYDSC", "Publieke sleutel die in het formulier getoond wordt. Zonder site- en geheime sleutel wordt de ingebouwde tekstcaptcha gebruikt.");
+define("_MD_AM_CAPTCHA_TURNSTILE_SECRET", "Turnstile-geheime sleutel");
+define("_MD_AM_CAPTCHA_TURNSTILE_SECRETDSC", "Privésleutel om het antwoord op de server te controleren.");
 ?>

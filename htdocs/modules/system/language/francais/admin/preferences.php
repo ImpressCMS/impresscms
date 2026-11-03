@@ -427,3 +427,25 @@ define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC", "Liste des URL dont vous autor
     http://www.youtube.com/embed/|http://player.vimeo.com/video/ - Autoriser les deux<br /><br />Les iframes s&eacute;curis&eacute;es doivent &ecirc;tre activ&eacute;es pour que cela fonctionne.");
 define("_MD_AM_SEARCH_DSC", "G&eacute;rez le fonctionnement de la recherche pour vos utilisateurs.");
 define("_MD_AM_USERSETTINGS_DSC", "G&eacute;rez l'inscription des utilisateurs sur votre site : longueur et format des noms d'utilisateur, options de mot de passe.");
+
+define("_MD_AM_CAPTCHA_RECAPTCHA", "Google reCAPTCHA");
+define("_MD_AM_CAPTCHA_TURNSTILE", "Cloudflare Turnstile");
+define("_MD_AM_CAPTCHA_HONEYPOT", "Honeypot only (invisible)");
+define("_MD_AM_CAPTCHA_HONEYPOT_ON", "Add invisible honeypot protection?");
+define("_MD_AM_CAPTCHA_HONEYPOT_ONDSC", "Adds a hidden field and a minimum fill-in time to every protected form, next to the chosen captcha.");
+define("_MD_AM_CAPTCHA_HONEYPOT_TIME", "Honeypot: minimum seconds before a form may be submitted");
+define("_MD_AM_CAPTCHA_HONEYPOT_TIMEDSC", "Forms submitted faster than this are treated as spam.");
+define("_MD_AM_CAPTCHA_RECAPTCHA_VERSION", "reCAPTCHA version");
+define("_MD_AM_CAPTCHA_RECAPTCHA_VERSIONDSC", "The version must match the type of the keys created at google.com/recaptcha/admin.");
+define("_MD_AM_CAPTCHA_RECAPTCHA_V2", "v2 (checkbox)");
+define("_MD_AM_CAPTCHA_RECAPTCHA_V3", "v3 (invisible, score)");
+define("_MD_AM_CAPTCHA_RECAPTCHA_SITEKEY", "reCAPTCHA site key");
+define("_MD_AM_CAPTCHA_RECAPTCHA_SITEKEYDSC", "Public key shown in the form. Without site and secret key the built-in text captcha is used instead.");
+define("_MD_AM_CAPTCHA_RECAPTCHA_SECRET", "reCAPTCHA secret key");
+define("_MD_AM_CAPTCHA_RECAPTCHA_SECRETDSC", "Private key used to verify the answer on the server.");
+define("_MD_AM_CAPTCHA_RECAPTCHA_THRESHOLD", "reCAPTCHA v3 minimum score");
+define("_MD_AM_CAPTCHA_RECAPTCHA_THRESHOLDDSC", "A number between 0.0 (bot) and 1.0 (human). Visitors scoring lower are refused. Only used by v3.");
+define("_MD_AM_CAPTCHA_TURNSTILE_SITEKEY", "Turnstile site key");
+define("_MD_AM_CAPTCHA_TURNSTILE_SITEKEYDSC", "Public key shown in the form. Without site and secret key the built-in text captcha is used instead.");
+define("_MD_AM_CAPTCHA_TURNSTILE_SECRET", "Turnstile secret key");
+define("_MD_AM_CAPTCHA_TURNSTILE_SECRETDSC", "Private key used to verify the answer on the server.");

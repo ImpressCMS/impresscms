@@ -13,3 +13,6 @@ define("ICMS_CAPTCHA_REFRESH", "Se il codice non è abbastanza comprensibile, se
 
 // For text mode
 define("ICMS_CAPTCHA_RULE_TEXT", "Inserisci il risultato di questa espressione");
+
+define("ICMS_CAPTCHA_TOOFAST", "The form was submitted too quickly, please try again.");
+define("ICMS_CAPTCHA_SERVICE_UNREACHABLE", "The verification service could not be reached, please try again later.");

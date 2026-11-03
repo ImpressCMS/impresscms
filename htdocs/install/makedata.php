@@ -548,7 +548,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CAPTCHA_OFF', 'none', $i)"
 			. ", (" . $ci++ . ", '_MD_AM_CAPTCHA_IMG', 'image', $i)"
-			. ", (" . $ci++ . ", '_MD_AM_CAPTCHA_TXT', 'text', $i)");
+			. ", (" . $ci++ . ", '_MD_AM_CAPTCHA_TXT', 'text', $i)"
+			. ", (" . $ci++ . ", '_MD_AM_CAPTCHA_RECAPTCHA', 'recaptcha', $i)"
+			. ", (" . $ci++ . ", '_MD_AM_CAPTCHA_TURNSTILE', 'turnstile', $i)"
+			. ", (" . $ci++ . ", '_MD_AM_CAPTCHA_HONEYPOT', 'honeypot', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '".addslashes(serialize(array('2')))."', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', " . $p++ . ")"
@@ -568,7 +571,19 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			. ", (" . $ci++ . ", '_MD_AM_RANDOM', '100', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', " . $p++ . ")");
+		. ", (" . ++$i . ", 0, $c, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'captcha_honeypot', '_MD_AM_CAPTCHA_HONEYPOT_ON', '1', '_MD_AM_CAPTCHA_HONEYPOT_ONDSC', 'yesno', 'int', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'captcha_honeypot_mintime', '_MD_AM_CAPTCHA_HONEYPOT_TIME', '3', '_MD_AM_CAPTCHA_HONEYPOT_TIMEDSC', 'textbox', 'int', " . $p++ . ")");
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_recaptcha_version', '_MD_AM_CAPTCHA_RECAPTCHA_VERSION', 'v2', '_MD_AM_CAPTCHA_RECAPTCHA_VERSIONDSC', 'select', 'text', " . $p++ . ")");
+	// Insert data for Config Options in selection field. (must be placed before //$i++)
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CAPTCHA_RECAPTCHA_V2', 'v2', $i)"
+			. ", (" . $ci++ . ", '_MD_AM_CAPTCHA_RECAPTCHA_V3', 'v3', $i)");
+	// ----------
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_recaptcha_sitekey', '_MD_AM_CAPTCHA_RECAPTCHA_SITEKEY', '', '_MD_AM_CAPTCHA_RECAPTCHA_SITEKEYDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'captcha_recaptcha_secret', '_MD_AM_CAPTCHA_RECAPTCHA_SECRET', '', '_MD_AM_CAPTCHA_RECAPTCHA_SECRETDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'captcha_recaptcha_threshold', '_MD_AM_CAPTCHA_RECAPTCHA_THRESHOLD', '0.5', '_MD_AM_CAPTCHA_RECAPTCHA_THRESHOLDDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'captcha_turnstile_sitekey', '_MD_AM_CAPTCHA_TURNSTILE_SITEKEY', '', '_MD_AM_CAPTCHA_TURNSTILE_SITEKEYDSC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'captcha_turnstile_secret', '_MD_AM_CAPTCHA_TURNSTILE_SECRET', '', '_MD_AM_CAPTCHA_TURNSTILE_SECRETDSC', 'textbox', 'text', " . $p++ . ")");
 
 	// Data for Config Category 12 (Text Sanitizer Plugin Settings)
 	$c=12; // sets config category id

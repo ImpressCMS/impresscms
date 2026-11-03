@@ -10,6 +10,8 @@ define("ICMS_CAPTCHA_RULE_CASESENSITIVE", "Le code est sensible");
 define("ICMS_CAPTCHA_RULE_CASEINSENSITIVE", "Le code est peu sensible");
 define("ICMS_CAPTCHA_REFRESH", "Si le code n'est pas suffisamment clair, Merci de cliquer sur l'image pour rafra&icirc;chir");
 
-// mode texte 
+// mode texte
 define("ICMS_CAPTCHA_RULE_TEXT", "Entrez le r&eacute;sultat de l'expression");
+define("ICMS_CAPTCHA_TOOFAST", "The form was submitted too quickly, please try again.");
+define("ICMS_CAPTCHA_SERVICE_UNREACHABLE", "The verification service could not be reached, please try again later.");
 ?>
