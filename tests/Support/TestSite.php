@@ -26,6 +26,24 @@ final class TestSite
     public const MEMBER_UNAME = 'member';
     public const MEMBER_PASS = 'member-test-pass';
     public const MEMBER_EMAIL = 'member@example.test';
+    /** Administrator of the system module with the `system_admin` right for user ranks only. */
+    public const MEDIAADMIN_UNAME = 'mediaadmin';
+    public const MEDIAADMIN_PASS = 'mediaadmin-test-pass';
+    /** Administrator of the system module with the `system_admin` right for mimetypes. */
+    public const MIMETYPEADMIN_UNAME = 'mimetypeadmin';
+    public const MIMETYPEADMIN_PASS = 'mimetypeadmin-test-pass';
+
+    /**
+     * Fixture mimetypes, created after the installer's defaults; `use_extension`
+     * lists the groups holding that permission.
+     *
+     * @var list<array{extension: string, types: string, name: string, dirname: list<string>, use_extension: list<int>}>
+     */
+    public const MIMETYPES = [
+        ['extension' => 'icmsa', 'types' => 'application/x-icms-alpha', 'name' => 'ICMS Fixture Alpha', 'dirname' => ['system'], 'use_extension' => [1, 2]],
+        ['extension' => 'icmsb', 'types' => 'application/x-icms-beta', 'name' => 'ICMS Fixture Beta', 'dirname' => ['system'], 'use_extension' => [1]],
+        ['extension' => 'icmsc', 'types' => 'application/x-icms-gamma text/x-icms-gamma', 'name' => 'ICMS Fixture Gamma', 'dirname' => [], 'use_extension' => [1, 2, 3]],
+    ];
 
     public static function repoRoot(): string
     {

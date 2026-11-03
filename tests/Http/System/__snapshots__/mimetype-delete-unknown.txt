@@ -1,0 +1,8 @@
+GET /modules/system/admin.php?fct=mimetype&op=del&mimetypeid=9999 (webmaster)
+status: 302
+content-type: text/html; charset=UTF-8
+location: http://{HOST}
+cache-control: no-store, no-cache, must-revalidate
+pragma: no-cache
+
+
