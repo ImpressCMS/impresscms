@@ -51,3 +51,4 @@
 - [x] 8.1 "Taking over an IPF admin page" in `docs/laravel-host.md`, and `ICMS_TAKEOVERS_DISABLED` in its configuration table
 - [x] 8.2 DX log: phase 7 baseline (Symfony `05285172c`) and the Laravel figures, with forms and validation as a separate point
 - [x] 8.3 `bin/spec-coverage` without gaps; all suites at routing levels 2 and 3; PHPStan and the deprecation check
+  - Also on Herd (`lara3.test`, PHP 8.3): level 2 with the site's own driver, level 3 with the driver from `docs/server/herd/` as `LocalValetDriver.php`; CI not run (nothing pushed)

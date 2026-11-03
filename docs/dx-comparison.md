@@ -205,6 +205,7 @@ Change `ipf-on-laravel-mimetype-pilot`, design L25–L35. Symfony: `4a2aabb76`, 
 - Host code: 25 files, +1648 −6 (Symfony: 24 files, +1594 −5). Tests: 30 files, +4300 −5 (Symfony: 30 files, +4328 −4), most of it the shared snapshots.
 - Lookups (3): `RouteCollection::addToCollections()` and `Router::setRoutes()`, `Illuminate\Container\Attributes\Config`, wildcard keys in custom validation messages.
 - Suites on PHP 8.2.35 (Windows 11, MySQL 8.0.36), from a fresh test site: `Library` 422 tests (2 s), `Unit` 60 (5 s), `Integration` 36 (49 s), `Functional` 18 (19 s), `Http` 114 at level 3 (425 s, 3 skipped) and at level 2 (385 s, 30 skipped), deprecation check 78 tests, `bin/spec-coverage` 88 of 88 scenarios, PHPStan level 6 without errors. One earlier full run had two `IpfFormsTest` failures that did not recur in four later runs; their cause was not found.
+- Herd (`lara3.test`, PHP 8.3.36, 2026-11-03). Level 2 with the site's basic-derived driver: `Http` 114 tests, 51 skipped, 2 failures by design (that driver serves `trust_dist/` and `templates_c/`); `admin.php` runs directly there, so the takeover is not reached. Level 3 with `docs/server/herd/ImpressCmsValetDriver.php` as the site's `LocalValetDriver.php` (no global Herd change): `Http` 114 tests green, 41 skipped (among them the 20 rollback cases, which need their own server). In the browser the list and the create form come from the `system.mimetype` route, the form with a security token.
 
 ## Where the comparison is unfair
 
