@@ -67,7 +67,9 @@ final class HostServiceProvider extends ServiceProvider
      */
     private function registerRouteConditions(): void
     {
-        Route::$validators = [...Route::getValidators(), new RequestConditionValidator($this->app)];
+        // static: replaced, so a later application (each test) does not run with an earlier container
+        $others = array_filter(Route::getValidators(), static fn (object $validator): bool => ! $validator instanceof RequestConditionValidator);
+        Route::$validators = [...$others, new RequestConditionValidator($this->app)];
 
         Route::macro('whereQuery', function (array $parameters): Route {
             /** @var Route $this */
