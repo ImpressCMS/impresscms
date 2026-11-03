@@ -8,7 +8,7 @@ use App\Admin\AdminPageRenderer;
 use App\Admin\LegacyRedirect;
 use App\Ipf\Form\IpfFormFactory;
 use App\Ipf\IpfPersister;
-use App\Legacy\Attributes\IcmsModuleHandler;
+use App\Legacy\Attributes\IcmsHandler;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -40,7 +40,7 @@ final class MimetypeController
     ) {
     }
 
-    public function __invoke(Request $request, #[IcmsModuleHandler('system', 'mimetype')] object $mimetypes): Response
+    public function __invoke(Request $request, #[IcmsHandler('module:system/mimetype')] object $mimetypes): Response
     {
         // main.php: `op` and `mimetypeid` from the query string, overridden by the POST body
         $op = (string) $request->request->get('op', (string) $request->query->get('op', ''));

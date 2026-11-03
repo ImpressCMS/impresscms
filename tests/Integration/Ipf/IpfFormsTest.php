@@ -9,7 +9,6 @@ use App\Ipf\Form\IpfFormFactory;
 use App\Ipf\Form\UnsupportedIpfControlException;
 use App\Ipf\IpfPersister;
 use App\Legacy\LegacyRuntime;
-use App\Legacy\ModuleHandlerLocator;
 use App\Tests\Support\LegacyAppTestCase;
 use App\Tests\Support\TestSite;
 use Illuminate\Http\Request;
@@ -202,7 +201,7 @@ final class IpfFormsTest extends LegacyAppTestCase
 
     private function mimetypes(): object
     {
-        return $this->app->make(ModuleHandlerLocator::class)->get('system', 'mimetype');
+        return $this->app->make('icms.handlers')->get('module:system/mimetype');
     }
 
     private function forms(): IpfFormFactory

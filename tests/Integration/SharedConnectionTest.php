@@ -41,7 +41,7 @@ final class SharedConnectionTest extends LegacyAppTestCase
     {
         $count = $this->connection->table('users')->count();
 
-        self::assertSame(2, $count, 'webmaster and member in ' . TestSite::table('users'));
+        self::assertSame(4, $count, 'webmaster, member, mediaadmin and mimetypeadmin in ' . TestSite::table('users'));
     }
 
     /**

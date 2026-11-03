@@ -59,14 +59,21 @@ legacy `icms_*` names.
    (`App\Runtime\PhpEnvironment`) before Laravel changes them, and hands the
    request to `App\Runtime\HostRunner`.
 2. The router decides. Laravel routes have no fixed prefix. A route can claim
-   an existing legacy URL, including `.php` paths, and with `whereQuery()` or
-   `matching()` only some variants of it:
+   an existing legacy URL, including `.php` paths, and with `whereQuery()`,
+   `whereInput()` (the POST body, else the query) or `matching()` only some
+   variants of it. `takeover('<key>')` makes it switchable
+   (`ICMS_TAKEOVERS_DISABLED`):
 
    ```php
    Route::get('/modules/system/admin.php', UsersController::class)
        ->whereQuery(['fct' => 'users'])
-       ->matching(TakeoverEnabled::class);   // an App\Routing\RouteCondition
+       ->matching(TakeoverEnabled::class)   // an App\Routing\RouteCondition
+       ->takeover('system.users');
    ```
+
+   Several routes may claim the same URL: `App\Routing\VariantRouteCollection`
+   keeps them all, in the order they were registered, where Laravel's own
+   collection keeps only the last route of a method and URI.
 
    Unclaimed requests reach `App\Http\Controllers\LegacyBridgeController`,
    an all-method route marked as fallback. Paths that a Laravel route serves
@@ -279,6 +286,53 @@ reflects a type only when it resolves it, and resolves contextual attributes
 before the type, so this is safe; a bare legacy type hint without the attribute
 is not.
 
+## Taking over an IPF admin page
+
+The mimetype administration of the system module
+(`modules/system/admin.php?fct=mimetype`) runs on Laravel:
+`App\Http\Controllers\System\MimetypeController`. The other IPF admin pages
+follow the same pattern. The controller owns the page logic; the output stays
+legacy (the Smarty content template, `Icms\Ipf\View\Table`, the IPF form HTML
+and the admin theme), so the page can be compared with the legacy one byte for
+byte.
+
+```php
+Route::match(['GET', 'POST'], '/modules/system/admin.php', MimetypeController::class)
+    ->whereInput(['fct' => 'mimetype'])
+    ->takeover('system.mimetype')
+    ->middleware('icms.admin:mimetype')
+    ->name('system.mimetype');
+
+public function __invoke(Request $request, #[IcmsHandler('module:system/mimetype')] object $mimetypes): Response
+```
+
+| Piece | Does |
+|---|---|
+| route | claims the legacy URL; `whereInput()` because the delete confirmation posts `fct` without a query string. `takeover()` makes it switchable: `ICMS_TAKEOVERS_DISABLED=system.mimetype` serves the legacy page again (the rollback) |
+| middleware `icms.admin:<fct>` | `App\Admin\SystemAdminContext` enters the function as `admin.php` does: the superglobals and working directory of `admin.php`, `ICMS_IN_ADMIN`, the full boot, `cp_functions.php`, the language files and constants. Denied visitors get the legacy denials: a redirect to the login page with "no permission" for visitors who do not administer the system module, `Location: admin.php` for administrators without the function's category right. Do not combine it with `auth`: resolving the user launches the module, which exits for those visitors. `App\Admin\SystemAdminAccess::isGranted()` applies the same rules elsewhere |
+| `#[IcmsHandler('module:<dir>/<name>')]` | the module's IPF handler, the instance `icms_getModuleHandler()` gives legacy code in the same request (see *Container services*) |
+| `App\Admin\AdminPageRenderer` | `render('db:<template>.html', fn ($tpl) => …)` runs `icms_cp_header()`, your assignments, the template and `icms_cp_footer()`; `renderFragment()` wraps content that legacy echoes (`Icms\Core\Message::confirm()`) |
+| `App\Admin\LegacyRedirect` | `to($url, $delay, $message)`: `redirect_header()` without `exit()`, in both `use_custom_redirection` modes, and only to URLs on the site |
+| `App\Ipf\Form\IpfFormFactory` | `for($entity)` builds an `IpfForm` from the entity's metadata: fields, captions, required and length rules, select options, the handler's permissions (`ControlMap`). `submit($request)` validates the top-level keys the legacy form posts with Laravel's validator, in the legacy wording (`_XOBJ_ERR_REQUIRED`), and applies them to the entity. Unsupported controls (uploads, editors, dates) raise `UnsupportedIpfControlException`; such pages stay legacy |
+| `App\Ipf\IpfPersister` | `save($form)`: the handler's `insert()` with its events, then the bound permission groups; `delete($entity)`: the handler's `delete()`, which removes the permissions |
+
+Output, status code and headers of the legacy calls are captured by
+`App\Admin\LegacyOutput`, as the bridge captures legacy scripts, so nothing
+exits and each header goes out once. Saving and deleting check the ImpressCMS
+token (`icms::$security->check()`) and render the edit form with
+`getSecureForm()`. The list's sort, filter and quick search forms post without
+a token, so `icms.token` (every POST) is not used.
+
+To take over a page:
+
+1. Record its legacy behaviour first: a characterization test with the
+   takeover disabled (`tests/Http/System/MimetypeLegacyCharacterizationTest`),
+   database effects asserted directly.
+2. Write the controller with the pieces above, mirroring the legacy `op`
+   handling.
+3. Run the same tests against the takeover; only intended changes (the token)
+   may differ.
+
 ## Events
 
 Legacy events are dispatched to Laravel listeners as `icms.<namespace>.<name>`,
@@ -339,6 +393,7 @@ puts the web root and the trust path there for every web request.
 | `ICMS_LEGACY_ROOT` | the web root. Set by `index.php` for web requests; in `.env.local` for `artisan`; `htdocs/` in a checkout |
 | `ICMS_TRUST_PATH` | set by `index.php`; refused by the bridge if it lies under the web root |
 | `ICMS_HERD_ROUTING` | `2` switches the Herd driver to routing level 2 |
+| `ICMS_TAKEOVERS_DISABLED` | comma-separated takeover keys, for example `system.mimetype`: those routes no longer match, and legacy serves their URLs (the rollback). Read through `config()`; after a manual `php artisan config:cache`, run `php artisan config:clear` when you change it |
 
 The host changes these Laravel defaults:
 

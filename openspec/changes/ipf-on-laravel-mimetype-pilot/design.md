@@ -102,11 +102,15 @@ As Symfony D8: `save(IpfForm $form)` calls `handler->insert($entity)` (handler e
 ### L33. Tokens only on state-changing operations
 `icms.token` validates every POST, and the table's filter and quick-search forms post without a token, so it is not used. `save` and the confirmed `delete` call `icms::$security->check()` and answer a missing or invalid token with `LegacyRedirect` and `_CORE_TOKENINVALID` plus `icms::$security->getErrors()`. The edit form is built with `getSecureForm()`.
 
-### L34. Module handlers: `App\Legacy\ModuleHandlerLocator` and `#[IcmsModuleHandler]`
-`ModuleHandlerLocator::get('system', 'mimetype')` delegates to `icms_getModuleHandler()`, so legacy code in the same request shares the instance, and throws the PSR-11 `EntryNotFoundException` of `HandlerLocator` when it returns `false`. `#[IcmsModuleHandler('system', 'mimetype')]` is a contextual attribute like `#[IcmsHandler]`, so a controller method receives the handler as a parameter.
+### L34. Module handlers: `#[IcmsHandler('module:system/mimetype')]`
+The foundation's `HandlerLocator` (`icms.handlers`, L8) already resolves `module:<dir>/<name>` through `icms_getModuleHandler()`, so legacy code in the same request shares the instance, and its contextual attribute `#[IcmsHandler]` injects it into a controller method. Symfony D10 added a separate `ModuleHandlerLocator` and attribute; Laravel needs nothing new. (A first version duplicated them before this was noticed; it was removed.)
 
 ### L35. Characterization first, from the Symfony corpus
 The fixture mimetypes, the two system administrators and the `tests/Http/System` corpus with its snapshots are taken over from the Symfony pilot, adapted to the Laravel file names. `MimetypeLegacyCharacterizationTest` starts `php -S` with `ICMS_TAKEOVERS_DISABLED=system.mimetype` and must reproduce the snapshots on legacy first. It is skipped against an external server, whose environment the test cannot set (`749b01d28`). `MimetypeCharacterizationTest` runs the same corpus against the takeover. `HostMarker` adds `X-Test-Icms-Route` with the route name in the `test` environment, so the tests can tell that the takeover answered. Database effects (rows, `group_permission`) are asserted directly.
+
+### L36. Several routes per URL: `App\Routing\VariantRouteCollection`
+Found during implementation. Laravel's `RouteCollection` stores one route per method, domain and URI, so a second route for the same URL replaces the first. Every system admin function is `/modules/system/admin.php`, so the test takeover of `fct=users` removed the mimetype takeover for GET and HEAD. `VariantRouteCollection` overrides the protected `addToCollections()` and gives a route whose key is taken a key of its own, after the existing ones; `HostServiceProvider` installs it with `Router::setRoutes()` before any route is added. The router then tries the routes of a URL in the order they were registered, and the route validator (`whereQuery()`, `whereInput()`, `takeover()`) picks one.
+*Alternative*: one route for `admin.php` that dispatches on `fct` to registered functions. Rejected: it would give every system admin page one middleware stack, and takeovers of other URLs would still need their own routes.
 
 ## Risks / Trade-offs
 
@@ -125,3 +129,11 @@ The fixture mimetypes, the two system administrators and the `tests/Http/System`
 4. Document "Taking over an IPF admin page" in `docs/laravel-host.md`, and the DX in `docs/dx-comparison.md`.
 
 **Rollback**: add `system.mimetype` to `ICMS_TAKEOVERS_DISABLED` in `<trust>/.env.local` (and run `php artisan config:clear` if the configuration was cached). The legacy page serves again.
+
+## Implementation Notes
+
+- **`fct` precedence (L26).** `whereInput()` first let the query string win; `admin.php` extracts `$_POST` after `$_GET`, so the body wins, as in Symfony's route condition.
+- **Route validators (L26).** `Route::$validators` is static. The foundation appended its validator per application, so in the `Functional` suite (an application per test) a stale validator ran with a flushed container. It is now replaced instead of appended.
+- **Messages (L31).** The validator's messages are the legacy wording (`_XOBJ_ERR_REQUIRED`, `_XOBJ_ERR_SHORTERTHAN`) as custom messages, so they equal Symfony's and the legacy validation's.
+- **Module handlers (L34).** No new code: `#[IcmsHandler('module:system/mimetype')]`.
+- **Tests (L35).** The corpus matched the legacy page unchanged before any host code existed, and the takeover on its first complete run. The test-only access probe (`/_test/system-admin/{fct}`) calls `SystemAdminAccess::isGranted()` at the `siteState` stage, without the module launch.

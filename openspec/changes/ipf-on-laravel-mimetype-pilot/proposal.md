@@ -30,7 +30,7 @@ The page has two security gaps that the move closes: the edit form carries no CS
   - `app/Ipf/` (form building and validation, persister)
   - `app/Admin/` (admin context and access, renderer, legacy redirects)
   - `app/Http/Controllers/System/MimetypeController.php`
-  - `app/Legacy/ModuleHandlerLocator.php` and a contextual attribute
+  - module handlers through the existing `icms.handlers` (`module:<dir>/<name>`)
   - route macros for takeover keys and `fct` from query or body, `icms:routes:ownership` reporting disabled takeovers
 - **Library (`Icms\`)**: no behavioural change. The docblock fix in `Icms\Ipf\View\Column` from the Symfony pilot is taken over for PHPStan.
 - **Legacy files**: `htdocs/modules/system/admin/mimetype/main.php` stays as the fallback.
