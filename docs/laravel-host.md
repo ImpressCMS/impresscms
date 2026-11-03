@@ -18,7 +18,7 @@ A site consists of two directories, as ImpressCMS sites always have:
   configuration.
 
 The designs are in `openspec/changes/archive/2026-11-02-migrate-to-laravel-foundation/`
-and `openspec/changes/relocate-laravel-host-into-trust-path/`.
+and `openspec/changes/archive/2026-11-03-relocate-laravel-host-into-trust-path/`.
 
 ## Layout
 
