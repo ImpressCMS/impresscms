@@ -416,7 +416,8 @@ first run `include/requirements.php`. It reads the lowest PHP version that the
 installed packages accept from Composer's `vendor/composer/platform_check.php`,
 in the vendor directory in use: the trust path, then `trust_dist/`, then the web
 root. ImpressCMS keeps no minimum of its own, so a package that raises its PHP
-requirement (Laravel 12: PHP 8.2) raises the check too.
+requirement (Laravel 12: PHP 8.2) raises the check too. The host is tested on
+PHP 8.2, 8.3 and 8.4.
 - On an older PHP, the response is `htdocs/requirements.html` with status 503,
   filled in with the running and the required version.
 - `requirements.php` is written in PHP 5.3 syntax, so that it parses on the

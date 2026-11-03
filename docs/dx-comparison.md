@@ -33,6 +33,7 @@ Symfony figures come from the commits on `pre-3`. Its suite timings and lookups 
 | Total, foundation | `89bc13930..94141e7cf` | 59 files, +3006 (47 files in `src/`) | 4 seams |
 | 6 Relocation into the trust path | `517edf176..1ea034406` | 13 files, +127 −68 | legacy: 26 files, +880 −974 |
 | 7 IPF pilot (mimetype admin page) | `4a2aabb76`, `05285172c`, `749b01d28` | 24 files, +1594 −5 | 1 docblock fix |
+| 8 Package, version, PHP check | `14b359a1d`, `aa17bb4e0`, `b68b51871`, `15abf518c` | `bin/build-package` +142 | legacy: requirements page |
 
 ### lara-3
 
@@ -47,6 +48,7 @@ Symfony figures come from the commits on `pre-3`. Its suite timings and lookups 
 | Total, foundation | `89bc13930..9043e0c48` | 59 files, +3154 (Symfony: 59 files, +3006) | 4 | 19 | 24 |
 | 6 Relocation into the trust path | `553d0011c`, `64ceb9b75`, `3139b6d94`, `ffb5311e2` | 13 files, +104 −59 (Symfony: 13 files, +127 −68) | legacy taken over; 1 file adapted | 0 | 3 |
 | 7 IPF pilot (mimetype admin page) | `bd0d07697..36300628c` | 25 files, +1648 −6 (Symfony: 24 files, +1594 −5) | none; the docblock fix taken over | 2 (20–21) | 3 |
+| 8 Package, version, PHP check | `a11d72c04..acce20909` | `bin/build-package` +143 (Symfony: +142) | requirements page taken over; 1 PHP 8.4 fix | 0 | 0 |
 
 The Symfony variant did not count its workarounds. Its task notes name about seven of the same kind: the 405 re-match, the custom runtime runner, the DBAL driver with error-mode switching, the `#[Autowire]` subclass, the listener compiler pass, the decorated session factory with its attribute bag, and the token clearing in the lazy firewall. The host code figures include `config/` and `routes/` on both sides (YAML there, PHP here), but not tests.
 
@@ -207,6 +209,19 @@ Change `ipf-on-laravel-mimetype-pilot`, design L25–L35. Symfony: `4a2aabb76`, 
 - Suites on PHP 8.2.35 (Windows 11, MySQL 8.0.36), from a fresh test site: `Library` 422 tests (2 s), `Unit` 60 (5 s), `Integration` 36 (49 s), `Functional` 18 (19 s), `Http` 114 at level 3 (425 s, 3 skipped) and at level 2 (385 s, 30 skipped), deprecation check 78 tests, `bin/spec-coverage` 88 of 88 scenarios, PHPStan level 6 without errors. One earlier full run had two `IpfFormsTest` failures that did not recur in four later runs; their cause was not found.
 - Herd (`lara3.test`, PHP 8.3.36, 2026-11-03). Level 2 with the site's basic-derived driver: `Http` 114 tests, 51 skipped, 2 failures by design (that driver serves `trust_dist/` and `templates_c/`); `admin.php` runs directly there, so the takeover is not reached. Level 3 with `docs/server/herd/ImpressCmsValetDriver.php` as the site's `LocalValetDriver.php` (no global Herd change): `Http` 114 tests green, 41 skipped (among them the 20 rollback cases, which need their own server). In the browser the list and the create form come from the `system.mimetype` route, the form with a security token.
 
+### Phase 8: documentation and the Alpha package (2026-11-03)
+
+Symfony: `14b359a1d` (`bin/build-package`), `aa17bb4e0` and `b68b51871` (version), `15abf518c` (requirements page).
+
+**What carried over, unchanged.** All four commits are framework-neutral. `bin/build-package` needed one line (`lara-3` in the zip name); the version is the same 3.0.0 Alpha 1, build 300, with the system module naming the Laravel 12 host (both presented). The requirements page reads the minimum from Composer's `platform_check.php`, so it needed no change for Laravel: Laravel 12 and its Symfony 7 components need PHP 8.2.0, the same minimum as the Symfony host. Its requirement went straight into `openspec/specs/host-deployment`, because the relocation change was already archived.
+
+**Results**
+- Package: `var/dist/impresscms-3.0.0-alpha-1-lara-3-98b2276af.zip`, 10 198 files, 31.1 MB; no `tests/`, no development packages, no generated Laravel manifests.
+- Served from the unzipped package on Herd's PHP builds: 7.4, 8.0 and 8.1 answer 503 with the requirements page on `/`, `/index.php`, `/install/` and `/install/page_start.php`, and, with an installed `mainfile.php`, on `/`, `/user.php` and `/modules/system/admin.php`; 8.2.35, 8.3.36 and 8.4.27 redirect to the installer of "ImpressCMS 3.0.0 Alpha 1" without errors in the server log.
+- PHP 8.4.27, the first full run on it: `Library` 422, `Unit` 65, `Integration` 36, `Functional` 18, `Http` 114 at level 3 (525 s) and at level 2 (451 s), deprecation check 83 tests, all green. Two fixes were needed, neither in the host: `Icms\Db\Legacy\PdoDatabase::getServerVersion()` marked its parameter nullable implicitly, which 8.4 deprecates (`bin/test-db` stops on the notice; CI's production `php.ini` hides it), and PDO reports `ATTR_EMULATE_PREPARES` as `true` instead of `1` since 8.4, which one test compared by type. Both concern the Symfony variant equally.
+- Host code: `bin/build-package` only (+143); legacy and tests: 8 files, +301 −49, plus the 8.4 fix, all framework-neutral.
+- Workarounds 0; lookups 0.
+
 ## Where the comparison is unfair
 
 - **The design existed.** The Symfony variant discovered the ImpressCMS constraints (file scope, `exit()`, `ERRMODE_SILENT`, `IConnection`, headless denials, `QUERY_STRING` sorting, header semantics). lara-3 starts from its specs, implementation notes and tests, so Laravel is spared that discovery. Raw effort figures therefore favour Laravel. The comparison is fair on the questions "how much host code" and "how much fighting the framework", less so on "how long".
@@ -216,4 +231,26 @@ Change `ipf-on-laravel-mimetype-pilot`, design L25–L35. Symfony: `4a2aabb76`, 
 
 ## Conclusion
 
-Written at the end of the IPF pilot, per criterion, without a preference fixed in advance.
+Written at the end of phase 8, per criterion, from the figures and the log above. "Better" means: less host code, fewer workarounds or less risk for this task, a strangler fig around a legacy application the framework does not own.
+
+| Criterion | Laravel 12 (lara-3) | Symfony 7.4 (pre-3) | Better fit |
+|---|---|---|---|
+| Host code, `89bc13930` to the pilot and `bin/build-package` | 78 files, +4992 | 81 files, +4818 | equal (3.6 % apart) |
+| Library seams | the same 4, none changed | 4 | equal |
+| Framework workarounds | 21, counted as they happened | about 7 named in the task notes, not counted | Symfony |
+| Lookups | 30 | not recorded | — |
+| File-scope execution of legacy scripts | plain front controller, no runtime | custom `symfony/runtime` runner | Laravel |
+| Routing over legacy URLs | query and body conditions, takeover switch and several routes per URL are host code (route validator, macros, `VariantRouteCollection`); route caching refused | `condition:` expressions, several routes per URL natively; compiled routes allowed | Symfony |
+| Session and identity | the largest workarounds: own `Store`, own session middleware, own middleware group instead of `web` (6 workarounds) | native-session bridge (`php_bridge`), authenticator and voter | Symfony |
+| Database, container, events | documented extension points (`db.connector.*`, `resolverFor()`), contextual attributes, `RequestHandled` | custom DBAL driver, `#[Autowire]` subclass, compiler pass | Laravel |
+| Validation | rule arrays with custom messages | constraints per field | Laravel, slightly |
+| Forms | no form component: field set, binding and mapping are host code (+695 lines) | Form component, `FormType` and data mapper (+535 lines, two packages) | Symfony |
+| Tests and tooling | Laravel's `TestCase` for routes; Larastan found one real bug (phase 6); the static route validators found a stale-container bug (phase 7) | `KernelBrowser`, `WebTestCase` | equal |
+| Deployment (trust path, installer, upgrade, package, PHP check) | identical; framework-neutral | identical | equal |
+| Support period | Laravel 12: security fixes until 2027-02-24, no LTS; yearly majors raise the PHP minimum (13 needs 8.3) | 7.4 LTS until November 2029 | Symfony |
+
+**Where Laravel was easier.** Running legacy at file scope, sharing the database connection, exposing legacy services and handlers in the container, and the admin context as route middleware. These are one-time costs, paid in phases 3, 4 and 7.
+
+**Where Laravel was harder.** Everything in which Laravel assumes it owns the application: its session, cookies and CSRF (the `web` group), its routes (one route per method and URI, no conditions on the query string, static validators, a compiled matcher that ignores conditions) and its forms (none). The routing limits matter most for the strangler fig, because every further takeover of a legacy URL goes through them; they are solved now, but they are host code to maintain against a framework that does not plan for them.
+
+**Overall.** Both hosts run ImpressCMS with the same behaviour, pinned by the same snapshots, with the same amount of code. Laravel needed more workarounds, three times as many as Symfony named, and they sit in routing and session, the two areas every migrated page uses. Together with the support period (Laravel 12 leaves security support in February 2027, Symfony 7.4 LTS in November 2029), the comparison favours Symfony for this migration. Laravel's advantages would weigh more for new, Laravel-owned parts next to ImpressCMS than for a host around it. The figures are not neutral in one respect: lara-3 started from Symfony's design and tests (see *Where the comparison is unfair*), which makes Laravel's effort look smaller than a first implementation would have been.
