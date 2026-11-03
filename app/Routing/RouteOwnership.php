@@ -29,6 +29,7 @@ final class RouteOwnership
     public function __construct(
         private readonly Router $router,
         private readonly LegacyBridge $bridge,
+        private readonly Takeovers $takeovers,
     ) {
     }
 
@@ -101,6 +102,31 @@ final class RouteOwnership
             return ['owner' => 'legacy', 'route' => $route, 'detail' => "{$e->getStatusCode()}: {$e->getMessage()}"];
         }
 
-        return ['owner' => 'legacy', 'route' => $route, 'detail' => "{$resolution->scriptName} ({$resolution->strategy})"];
+        $detail = "{$resolution->scriptName} ({$resolution->strategy})";
+        $disabled = $this->disabledTakeover($request);
+        if ($disabled !== null) {
+            $detail = "{$detail}; takeover {$disabled['key']} disabled (route {$disabled['route']})";
+        }
+
+        return ['owner' => 'legacy', 'route' => $route, 'detail' => $detail];
+    }
+
+    /**
+     * The switched-off takeover that would serve a legacy-owned request.
+     *
+     * @return array{
+     *     key: string,
+     *     route: string
+     * }|null
+     */
+    private function disabledTakeover(Request $request): ?array
+    {
+        $route = $this->takeovers->ignoringSwitch(fn () => $this->router->getRoutes()->match($request));
+        $key = $route->getAction(RequestConditionValidator::TAKEOVER);
+        if (! is_string($key)) {
+            return null;
+        }
+
+        return ['key' => $key, 'route' => (string) $route->getName()];
     }
 }

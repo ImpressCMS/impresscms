@@ -8,6 +8,7 @@ use App\LegacyBridge\LegacyBridge;
 use App\LegacyBridge\LegacyRequestHydrator;
 use App\LegacyBridge\LegacyScriptResolver;
 use App\Routing\RequestConditionValidator;
+use App\Routing\Takeovers;
 use App\Testing\TestServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Routing\Route;
@@ -39,6 +40,8 @@ final class HostServiceProvider extends ServiceProvider
             $app->basePath('host.php'),
         ));
 
+        $this->app->singleton(Takeovers::class);
+
         $this->registerRouteConditions();
 
         if ($this->app->environment('test')) {
@@ -58,7 +61,8 @@ final class HostServiceProvider extends ServiceProvider
     }
 
     /**
-     * Route::whereQuery(['fct' => 'users']) and Route::matching(Condition::class),
+     * Route::whereQuery(['fct' => 'users']), Route::whereInput(['fct' => 'mimetype']),
+     * Route::matching(Condition::class) and Route::takeover('system.mimetype'),
      * evaluated by RequestConditionValidator.
      */
     private function registerRouteConditions(): void
@@ -72,9 +76,23 @@ final class HostServiceProvider extends ServiceProvider
             return $this;
         });
 
+        Route::macro('whereInput', function (array $parameters): Route {
+            /** @var Route $this */
+            $this->action[RequestConditionValidator::INPUT] = $parameters + ($this->action[RequestConditionValidator::INPUT] ?? []);
+
+            return $this;
+        });
+
         Route::macro('matching', function (string $condition): Route {
             /** @var Route $this */
             $this->action[RequestConditionValidator::CONDITIONS][] = $condition;
+
+            return $this;
+        });
+
+        Route::macro('takeover', function (string $key): Route {
+            /** @var Route $this */
+            $this->action[RequestConditionValidator::TAKEOVER] = $key;
 
             return $this;
         });

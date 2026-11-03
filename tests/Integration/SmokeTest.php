@@ -21,6 +21,6 @@ final class SmokeTest extends IsolatedLegacyTestCase
         [$count] = $db->fetchRow($result);
 
         self::assertSame(TestSite::dbConfig()['name'], XOOPS_DB_NAME);
-        self::assertSame(2, (int) $count, 'webmaster and member');
+        self::assertSame(4, (int) $count, 'webmaster, member, mediaadmin and mimetypeadmin');
     }
 }

@@ -17,6 +17,6 @@ final class SmokeTest extends DatabaseTestCase
         TestSite::restoreSnapshot();
 
         $count = (int) $pdo->query('SELECT COUNT(*) FROM ' . TestSite::table('users'))->fetchColumn();
-        self::assertSame(2, $count);
+        self::assertSame(4, $count, 'webmaster, member, mediaadmin and mimetypeadmin');
     }
 }

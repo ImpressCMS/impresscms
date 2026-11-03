@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/modules/system/admin.php', UsersTakeoverController::class)
     ->whereQuery(['fct' => 'users'])
     ->matching(TakeoverNotSuppressed::class)
+    ->takeover('test.users')
     ->name('test.takeover.system_users');
 
 Route::get('/_test/legacy/sitename', LegacyConfigurationController::class)

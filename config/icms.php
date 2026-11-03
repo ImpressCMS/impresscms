@@ -6,6 +6,11 @@ declare(strict_types=1);
  * Legacy ImpressCMS behind the Laravel host (legacy-request-bridge).
  */
 return [
+    // takeovers of legacy URLs switched off, for example ICMS_TAKEOVERS_DISABLED=system.mimetype
+    'takeovers' => [
+        'disabled' => array_values(array_filter(array_map('trim', explode(',', (string) env('ICMS_TAKEOVERS_DISABLED', ''))))),
+    ],
+
     'legacy' => [
         // the web root: passed by its index.php as ICMS_LEGACY_ROOT, named in
         // .env.local for artisan; htdocs/ in a development checkout
