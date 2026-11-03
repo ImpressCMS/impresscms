@@ -34,7 +34,8 @@ final class SharedConnectionTest extends LegacyAppTestCase
         self::assertSame($pdo, \icms::$xoopsDB->conn);
         self::assertInstanceOf(\Icms\Db\Mysql\Connection::class, $pdo, "ImpressCMS' own PDO class");
         self::assertSame(\PDO::ERRMODE_SILENT, $pdo->getAttribute(\PDO::ATTR_ERRMODE), 'legacy error mode');
-        self::assertSame(1, $pdo->getAttribute(\PDO::ATTR_EMULATE_PREPARES), "PDO's default, as ImpressCMS has it");
+        // 1 before PHP 8.4, true since
+        self::assertTrue((bool) $pdo->getAttribute(\PDO::ATTR_EMULATE_PREPARES), "PDO's default, as ImpressCMS has it");
     }
 
     public function testTablePrefixIsTheLegacyPrefix(): void

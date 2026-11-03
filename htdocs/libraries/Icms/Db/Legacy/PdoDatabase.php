@@ -304,7 +304,7 @@ class PdoDatabase extends Database
 	 *        	MySQL database connection link
 	 * @return string
 	 */
-	public function getServerVersion(IConnection $connection = NULL): string {
+	public function getServerVersion(?IConnection $connection = NULL): string {
 		if (NULL === $connection)
 			$connection = $this->pdo;
 		return $connection->getAttribute(PDO::ATTR_SERVER_VERSION);
