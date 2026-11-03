@@ -45,6 +45,10 @@
  * ICMS_HOST_AUTOLOADED defined, so the code below then runs as usual.
  */
 if (!defined('ICMS_HOST_AUTOLOADED')) {
+	// first: a readable page instead of a fatal error on a too old PHP version
+	require_once __DIR__ . '/include/requirements.php';
+	icms_requirements_check(__DIR__);
+
 	require_once __DIR__ . '/include/host.php';
 	if (null !== $__icms_host = icms_host_entry(__DIR__)) {
 		$_SERVER['ICMS_LEGACY_ROOT'] = __DIR__;

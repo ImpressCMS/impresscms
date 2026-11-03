@@ -42,7 +42,10 @@ and `openspec/changes/archive/2026-11-03-relocate-laravel-host-into-trust-path/`
 In a repository checkout, the repository root is the trust path skeleton and
 `htdocs/` is the web root. `bin/build-dist` assembles `htdocs/trust_dist/` for a
 release package: the host files plus `vendor/`, installed without development
-packages. The `Icms\` library is not in `composer.json`, because the trust path
+packages. `bin/build-package` zips the web root of a commit, without
+`htdocs/tests`, together with that `trust_dist/` into
+`var/dist/impresscms-<version>-lara-3-<commit>.zip`. The zip's contents go
+directly into a web root. The `Icms\` library is not in `composer.json`, because the trust path
 cannot name a web root that differs per site. `bootstrap/app.php` registers it
 from `<web root>/libraries/Autoloader.php` as soon as the configuration is
 loaded, for web requests and `artisan` alike; that file also resolves the
@@ -408,7 +411,19 @@ The host changes these Laravel defaults:
 
 ## Unsupported runtimes
 
-Long-running runtimes are not supported: Laravel Octane on Swoole, RoadRunner
+**Older PHP versions.** `index.php`, `include/common.php` and the installer
+first run `include/requirements.php`. It reads the lowest PHP version that the
+installed packages accept from Composer's `vendor/composer/platform_check.php`,
+in the vendor directory in use: the trust path, then `trust_dist/`, then the web
+root. ImpressCMS keeps no minimum of its own, so a package that raises its PHP
+requirement (Laravel 12: PHP 8.2) raises the check too.
+- On an older PHP, the response is `htdocs/requirements.html` with status 503,
+  filled in with the running and the required version.
+- `requirements.php` is written in PHP 5.3 syntax, so that it parses on the
+  versions it rejects. The `old-php` CI job serves the release package on PHP
+  5.6, 7.4 and 8.1 to prove that.
+
+**Long-running runtimes.** Long-running runtimes are not supported: Laravel Octane on Swoole, RoadRunner
 or FrankenPHP worker mode. Octane resets Laravel's state between requests, but
 not what legacy keeps per process: constants from `mainfile.php`, the `icms::`
 statics, static caches such as `icms_getModuleHandler()`'s, and output and
