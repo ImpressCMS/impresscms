@@ -452,7 +452,7 @@ define("_MD_AM_JALALICAL","Uitgebreide kalender met Jalali gebruiken?");
 define("_MD_AM_JALALICALDSC","Door dit te selecteren, gebruikt u een uitgebreide kalender in formulieren.<br />Houd er rekening mee dat deze kalender mogelijk niet correct werkt met alle browsers.");
 define("_MD_AM_NOMAILPROTECT","Geen");
 define("_MD_AM_GDMAILPROTECT","GD beveiliging");
-define("_MD_AM_REMAILPROTECT","her-Captcha");
+define("_MD_AM_REMAILPROTECT","Captcha (klik om te tonen)");
 define("_MD_AM_RECPRVKEY","her-Captcha privé api code");
 define("_MD_AM_RECPRVKEY_DESC","");
 define("_MD_AM_RECPUBKEY","her-Captcha publieke api code");

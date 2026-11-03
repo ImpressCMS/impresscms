@@ -16,3 +16,6 @@ define("ICMS_CAPTCHA_RULE_TEXT", "Inserisci il risultato di questa espressione")
 
 define("ICMS_CAPTCHA_TOOFAST", "The form was submitted too quickly, please try again.");
 define("ICMS_CAPTCHA_SERVICE_UNREACHABLE", "The verification service could not be reached, please try again later.");
+
+define("ICMS_CAPTCHA_MAILHIDE_REVEAL", "Show email address");
+define("ICMS_CAPTCHA_MAILHIDE_INVALID", "This email address link is not valid.");

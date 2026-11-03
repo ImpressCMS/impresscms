@@ -13,4 +13,6 @@ define("ICMS_CAPTCHA_REFRESH", "Is de code onduidelijk, klik dan op de afbeeldin
 define("ICMS_CAPTCHA_RULE_TEXT", "Vul de weergegeven code uit de afbeelding in");
 define("ICMS_CAPTCHA_TOOFAST", "Het formulier werd te snel verzonden, probeer opnieuw.");
 define("ICMS_CAPTCHA_SERVICE_UNREACHABLE", "De verificatiedienst is niet bereikbaar, probeer later opnieuw.");
+define("ICMS_CAPTCHA_MAILHIDE_REVEAL", "E-mailadres tonen");
+define("ICMS_CAPTCHA_MAILHIDE_INVALID", "Deze e-maillink is niet geldig.");
 ?>

@@ -322,6 +322,9 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				$addCaptchaOptions($versionId, array('v2' => '_MD_AM_CAPTCHA_RECAPTCHA_V2', 'v3' => '_MD_AM_CAPTCHA_RECAPTCHA_V3'));
 			}
 
+			// the reCAPTCHA v1 Mailhide keys are obsolete: the email protection now uses the captcha preferences
+			icms::$xoopsDB->queryF("DELETE FROM {$configTable} WHERE conf_modid=0 AND conf_catid=" . ICMS_CONF_PERSONA . " AND conf_name IN ('recprvkey', 'recpubkey')");
+
 			/* Finish up this portion of the db update */
 			if (!$abortUpdate) {
 				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
