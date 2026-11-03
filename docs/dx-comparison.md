@@ -32,6 +32,7 @@ Symfony figures come from the commits on `pre-3`. Its suite timings and lookups 
 | 5 Session and identity | `d97c195cc` | 14 files, +544 −2 | — |
 | Total, foundation | `89bc13930..94141e7cf` | 59 files, +3006 (47 files in `src/`) | 4 seams |
 | 6 Relocation into the trust path | `517edf176..1ea034406` | 13 files, +127 −68 | legacy: 26 files, +880 −974 |
+| 7 IPF pilot (mimetype admin page) | `4a2aabb76`, `05285172c`, `749b01d28` | 24 files, +1594 −5 | 1 docblock fix |
 
 ### lara-3
 
@@ -45,6 +46,7 @@ Symfony figures come from the commits on `pre-3`. Its suite timings and lookups 
 | 5 Session and identity | `9043e0c48` | 17 files, +661 −10 | — | 6 (14–19) | 4 |
 | Total, foundation | `89bc13930..9043e0c48` | 59 files, +3154 (Symfony: 59 files, +3006) | 4 | 19 | 24 |
 | 6 Relocation into the trust path | `553d0011c`, `64ceb9b75`, `3139b6d94`, `ffb5311e2` | 13 files, +104 −59 (Symfony: 13 files, +127 −68) | legacy taken over; 1 file adapted | 0 | 3 |
+| 7 IPF pilot (mimetype admin page) | `bd0d07697..36300628c` | 25 files, +1648 −6 (Symfony: 24 files, +1594 −5) | none; the docblock fix taken over | 2 (20–21) | 3 |
 
 The Symfony variant did not count its workarounds. Its task notes name about seven of the same kind: the 405 re-match, the custom runtime runner, the DBAL driver with error-mode switching, the `#[Autowire]` subclass, the listener compiler pass, the decorated session factory with its attribute bag, and the token clearing in the lazy firewall. The host code figures include `config/` and `routes/` on both sides (YAML there, PHP here), but not tests.
 
@@ -169,6 +171,40 @@ Change `relocate-laravel-host-into-trust-path`, design L17–L24.
 - Suites on PHP 8.2.35 (Windows 11, MySQL 8.0.36): `Library` 422 tests, `Unit` 46, `Integration` 29, `Functional` 12, `Http` 60 at level 3 (255 s, 3 skipped) and at level 2 (241 s, 24 skipped: the tests that need every request routed through the host), `HostUpgradeTest` 57 s. `bin/spec-coverage` 60 of 60 scenarios.
 - Lookups (3): `Application::afterLoadingEnvironment()`/`afterBootstrapping()`, the default adapters of `Env::getRepository()`, the `serves()` rule of Herd's `LaravelValetDriver` and `.valet-env.php` in Herd's `ValetDriver`.
 - Herd (`lara3.test`, PHP 8.3.36, level 2 with a basic-derived site driver, 2026-11-03): a fresh installation through the web installer and an upgrade from dbversion 48 both install the host without manual steps. The `Http` suite needed one test fix (Valet's `server.php` as a backtrace frame in a snapshot) and fails twice by design, because that driver serves `trust_dist/` and `templates_c/`. Framework-independent: the same holds for the Symfony host.
+
+### Phase 7: IPF pilot, the mimetype admin page (2026-11-03)
+
+Change `ipf-on-laravel-mimetype-pilot`, design L25–L35. Symfony: `4a2aabb76`, `05285172c`, `749b01d28`.
+
+**What carried over.** The four specs, the fixtures (three mimetypes, `mediaadmin`, `mimetypeadmin`) and the 20-case characterization corpus with its snapshots applied without a conflict. The legacy page matched all 20 snapshots on lara-3 unchanged, so both branches start from identical legacy behaviour. The admin pieces are about ImpressCMS, not the framework: `LegacyOutput`, `AdminPageRenderer`, `LegacyRedirect`, `SystemAdminAccess` and `SystemAdminContext` were ported almost line for line; only the types of the response and the request differ (both are Symfony HttpFoundation classes in Laravel too). With the controller in place, all 20 snapshots matched byte for byte on the first run that reached the controller.
+
+**Fitted naturally**
+- *Admin context as middleware.* `icms.admin:<fct>` is route middleware with a parameter, Laravel's place for a precondition that may answer instead of the controller. Symfony needed an attribute, a `kernel.controller` listener ordered before `RequiresLegacyListener`, and `kernel.finish_request` to restore the superglobals; here `try`/`finally` around `$next()` does that.
+- *Configuration injection.* `#[Config('icms.legacy.root')]` on a constructor parameter, the counterpart of `#[Autowire('%…%')]`.
+- *Module handlers needed nothing new.* The foundation's `HandlerLocator` already resolves `module:<dir>/<name>` through `icms_getModuleHandler()`, so the controller takes `#[IcmsHandler('module:system/mimetype')]`. Symfony added a `ModuleHandlerLocator` and an attribute in this phase. (A first Laravel version duplicated them before the existing support was noticed; it was removed.)
+- *Validation rules.* The rules of a variable are a short array (`sometimes`, `required`, `string`, `max:255`, `in:…` on `dirname.*`), with the legacy wording (`_XOBJ_ERR_REQUIRED`, `_XOBJ_ERR_SHORTERTHAN`) as custom messages. `sometimes` gives `postDataToObject()`'s "only the submitted keys" in one word; Symfony needs `submit($data, false)` plus a data mapper that skips unsubmitted children.
+
+**Forms and validation (the assignment's question)**
+- Laravel has no form component. What Symfony's Form component provides — a field tree, binding, data mapping, the unnamed root form, extra fields — is host code here: `IpfField` (a value object), `IpfForm` (binding, validation, writing) and `IpfFormFactory` (the field set). `ControlMap` and the value mapping exist on both sides. Forms and persistence: Laravel 7 files, +695 (`app/Ipf`); Symfony 6 files, +535 (`src/Ipf`), plus `symfony/form` and `symfony/validator` as new dependencies. Laravel needs no new package.
+- A `FormRequest` was considered and rejected (design L31): it validates when it is resolved, which does not fit one route that dispatches on `op`; its failure path (redirect back with session errors) and `authorize()` would both be replaced; and its rules come from runtime metadata, not from the request class. A `FormRequest` fits a later Blade page with a route per action. What remains of Laravel's validation stack is the validator, which `IpfForm` uses directly.
+- Error messages: Laravel's defaults ("The :attribute field is required.") differ from the legacy wording; the custom messages make them equal to Symfony's, at the same cost (one message per rule).
+- Net: validation is simpler in Laravel, form handling is more work, because there is no form layer to build on. For pages that keep the legacy IPF form HTML, as here, the missing layer costs about one class (`IpfForm`). For a future Blade rendering it would cost more: Symfony's form theming has no Laravel counterpart.
+
+**Worked against the framework**
+20. Laravel's `RouteCollection` stores one route per method, domain and URI; a second route for the same URL replaces the first. Every system admin function is `/modules/system/admin.php`, so the test takeover of `fct=users` silently removed the mimetype takeover for GET and HEAD (POST survived, so the bridge answered 405). `App\Routing\VariantRouteCollection` overrides the protected `addToCollections()` and is installed with `Router::setRoutes()` before any route is added. Symfony's router keys routes by name and has no such limit. The foundation never registered two takeovers of one URL, so phase 3 did not show it.
+21. Route validators are a static, process-wide list (`Route::$validators`). Phase 3 appended its validator per application, so in the `Functional` suite (an application per test) the first, stale validator ran with a flushed container ("Target [Config\Repository] is not instantiable"). It is now replaced instead of appended.
+
+**Choices that differ from Symfony**
+- `ICMS_TAKEOVERS_DISABLED` is read through `config()` (presented, design L26). With a cached configuration a change needs `php artisan config:clear`; Symfony reads it at runtime and needs no cache clear. The host never caches its configuration itself.
+- The access probe for tests is a test route around `SystemAdminAccess::isGranted()`, not a Gate ability: the Gate would resolve the user through the guard, which launches the module and exits for denied visitors (design L28). Symfony found the same with its voter on the page path and kept the voter only for other uses.
+
+**Bugs found by the tests**
+- `whereInput()` first let the query string win over the POST body; `admin.php` extracts `$_POST` after `$_GET`, as Symfony's condition had it. Fixed, with a test.
+
+**Measurements**
+- Host code: 25 files, +1648 −6 (Symfony: 24 files, +1594 −5). Tests: 30 files, +4300 −5 (Symfony: 30 files, +4328 −4), most of it the shared snapshots.
+- Lookups (3): `RouteCollection::addToCollections()` and `Router::setRoutes()`, `Illuminate\Container\Attributes\Config`, wildcard keys in custom validation messages.
+- Suites on PHP 8.2.35 (Windows 11, MySQL 8.0.36), from a fresh test site: `Library` 422 tests (2 s), `Unit` 60 (5 s), `Integration` 36 (49 s), `Functional` 18 (19 s), `Http` 114 at level 3 (425 s, 3 skipped) and at level 2 (385 s, 30 skipped), deprecation check 78 tests, `bin/spec-coverage` 88 of 88 scenarios, PHPStan level 6 without errors. One earlier full run had two `IpfFormsTest` failures that did not recur in four later runs; their cause was not found.
 
 ## Where the comparison is unfair
 
