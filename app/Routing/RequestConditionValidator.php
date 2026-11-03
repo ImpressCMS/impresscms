@@ -11,8 +11,8 @@ use Illuminate\Routing\Route;
 
 /**
  * Route validator for the conditions that Laravel routes cannot express:
- * required query parameters (`whereQuery()`), parameters from the query or
- * else the POST body (`whereInput()`), RouteCondition classes (`matching()`)
+ * required query parameters (`whereQuery()`), parameters from the POST body or
+ * else the query (`whereInput()`), RouteCondition classes (`matching()`)
  * and switchable takeovers (`takeover()`). They are stored as plain data in
  * the route action.
  *
@@ -39,10 +39,10 @@ final class RequestConditionValidator implements ValidatorInterface
             }
         }
 
-        // as modules/system/admin.php reads `fct`: the query string, else the body
+        // as modules/system/admin.php reads `fct`: the body extracted over the query string
         $body = $request->request->all();
         foreach ((array) $route->getAction(self::INPUT) as $name => $value) {
-            if (($query[$name] ?? $body[$name] ?? null) !== (string) $value) {
+            if (($body[$name] ?? $query[$name] ?? null) !== (string) $value) {
                 return false;
             }
         }

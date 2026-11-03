@@ -52,15 +52,33 @@ final class TakeoverSwitchTest extends TestCase
         self::assertStringContainsString('takeover test.users disabled (route test.takeover.system_users)', Artisan::output());
     }
 
-    public function testInputParameterMatchesTheQueryOrElseTheBody(): void
+    /**
+     * admin.php extracts `fct` from the POST body over the query string.
+     */
+    public function testInputParameterMatchesTheBodyOrElseTheQuery(): void
     {
         Route::post('/_test/input.php', static fn (): string => 'host: input')
             ->whereInput(['fct' => 'mimetype']);
 
         self::assertSame('host: input', $this->post('/_test/input.php', ['fct' => 'mimetype'])->getContent());
-        self::assertSame('host: input', $this->post('/_test/input.php?fct=mimetype', ['fct' => 'other'])->getContent());
-        self::assertInstanceOf(LegacyExecutionResponse::class, $this->post('/_test/input.php?fct=other', ['fct' => 'mimetype'])->baseResponse);
+        self::assertSame('host: input', $this->post('/_test/input.php?fct=mimetype')->getContent());
+        self::assertSame('host: input', $this->post('/_test/input.php?fct=other', ['fct' => 'mimetype'])->getContent());
+        self::assertInstanceOf(LegacyExecutionResponse::class, $this->post('/_test/input.php?fct=mimetype', ['fct' => 'other'])->baseResponse);
         self::assertInstanceOf(LegacyExecutionResponse::class, $this->post('/_test/input.php')->baseResponse);
+    }
+
+    /**
+     * Laravel's RouteCollection would keep only the last route of a method
+     * and URI (VariantRouteCollection).
+     */
+    public function testTakeoversOfTheSameUrlAreAllKept(): void
+    {
+        Route::get('/modules/system/admin.php', static fn (): string => 'host: probe')
+            ->whereQuery(['fct' => 'probe']);
+
+        self::assertSame('host: probe', $this->get('/modules/system/admin.php?fct=probe')->getContent());
+        self::assertSame('host: system users', $this->get(self::URL)->getContent());
+        self::assertInstanceOf(LegacyExecutionResponse::class, $this->get('/modules/system/admin.php?fct=preferences')->baseResponse);
     }
 
     public function testDisabledKeysAreTrimmed(): void

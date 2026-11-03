@@ -18,3 +18,5 @@ define('XOOPS_DB_PASS', '');
 define('XOOPS_DB_PREFIX', 'icms');
 define('XOOPS_DB_CHARSET', 'utf8mb4');
 define('XOOPS_DB_PCONNECT', 0);
+define('ICMS_URL', 'http://localhost');
+define('_GLOBAL_LEFT', 'left');

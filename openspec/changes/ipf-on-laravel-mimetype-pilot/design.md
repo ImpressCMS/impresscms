@@ -37,7 +37,7 @@ Route::match(['GET', 'POST'], '/modules/system/admin.php', MimetypeController::c
     ->middleware('icms.admin:mimetype')
     ->name('system.mimetype');
 ```
-- `whereInput()` is a new route macro next to `whereQuery()`. It matches a parameter from the query string, or from the POST body when the query lacks it, as `admin.php` reads `fct`. The delete confirmation posts `fct` only in the body.
+- `whereInput()` is a new route macro next to `whereQuery()`. It matches a parameter from the POST body, or from the query string when the body lacks it, as `admin.php` extracts `fct` from `$_POST` after `$_GET`. The delete confirmation posts `fct` only in the body.
 - `takeover()` stores the key in the route action. `App\Routing\Takeovers` decides with `config('icms.takeovers.disabled')`, which `config/icms.php` reads from `ICMS_TAKEOVERS_DISABLED` (comma-separated) in `<trust>/.env.local`. `RequestConditionValidator` consults it while matching, so a disabled takeover falls through to the legacy bridge. `icms:routes:ownership` names a disabled takeover.
 - The controller is invokable and dispatches on `op` with the legacy precedence (GET, overridden by POST, filtered as in `main.php`) to `list`, `edit`, `save` and `delete`.
 

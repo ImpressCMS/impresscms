@@ -9,6 +9,7 @@ use App\LegacyBridge\LegacyRequestHydrator;
 use App\LegacyBridge\LegacyScriptResolver;
 use App\Routing\RequestConditionValidator;
 use App\Routing\Takeovers;
+use App\Routing\VariantRouteCollection;
 use App\Testing\TestServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Routing\Route;
@@ -42,6 +43,8 @@ final class HostServiceProvider extends ServiceProvider
 
         $this->app->singleton(Takeovers::class);
 
+        // before any route is added: takeovers share URIs (VariantRouteCollection)
+        $this->app->make('router')->setRoutes(new VariantRouteCollection());
         $this->registerRouteConditions();
 
         if ($this->app->environment('test')) {

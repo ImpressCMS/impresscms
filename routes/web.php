@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\LegacyBridgeController;
+use App\Http\Controllers\System\MimetypeController;
 use App\Http\Controllers\WhoamiController;
 use App\Routing\RouteOwnership;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,12 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/up', HealthController::class)->name('up');
+
+Route::match(['GET', 'POST'], '/modules/system/admin.php', MimetypeController::class)
+    ->whereInput(['fct' => 'mimetype'])
+    ->takeover(MimetypeController::TAKEOVER)
+    ->middleware('icms.admin:mimetype')
+    ->name(MimetypeController::ROUTE);
 
 if (app()->environment('local', 'test')) {
     Route::get('/whoami', WhoamiController::class)
