@@ -1,4 +1,4 @@
-name: Attach Zipped Folder to Release
+name: Attach Production Distribution Zipfile to Release
 
 on:
   release:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout de repository
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -20,7 +20,7 @@ jobs:
           php-version: '8.4'
           extensions: zip
 
-      # Maak de zip-bestandsnaam op basis van de tag
+      # Derive the zip-filename based on the tag
       - name: Set zip filename
         env:
           RELEASE_TAG: ${{ github.event.release.tag_name }}
@@ -29,7 +29,7 @@ jobs:
       - name: Build release package
         run: php bin/build-package --output="var/dist/$ZIP_NAME"
 
-      # Upload asset naar release
+      # Upload asset to the release
       - name: Upload asset to release
         uses: actions/upload-release-asset@v1
         with:
