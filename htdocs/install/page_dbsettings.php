@@ -355,7 +355,7 @@ ob_start();
 
 <?php
 if (!empty ($error)) {
-	echo '<div class="x2-note error">' . htmlentities($error) . "</div>\n";
+	echo '<div class="x2-note error" role="alert">' . htmlentities($error) . "</div>\n";
 }
 ?>
 	<script type="text/javascript" src="prototype.js"></script>
@@ -379,7 +379,9 @@ if (!empty ($error)) {
 			<h3><?php echo LEGEND_DATABASE; ?></h3>
 			<?php
 			echo xoFormField('DB_NAME', sanitize_database($vars ['DB_NAME']), DB_NAME_LABEL, 255, DB_NAME_HELP);
-			?> <?php
+			?>
+			<details class="collapsible"><summary><?php echo ESS_ADVANCED; ?></summary><div class="collapsible__body">
+			<?php
 			echo xoFormField('DB_PREFIX', $vars ['DB_PREFIX'], DB_PREFIX_LABEL, 10, DB_PREFIX_HELP);
 			?> <?php
 			echo xoFormField('DB_SALT', $vars ['DB_SALT'], DB_SALT_LABEL, 255, DB_SALT_HELP);
@@ -387,7 +389,8 @@ if (!empty ($error)) {
 			echo xoFormFieldCharset('DB_CHARSET', $vars ['DB_CHARSET'], DB_CHARSET_LABEL, $link, DB_CHARSET_HELP);
 			?> <?php
 			echo xoFormBlockCollation('DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, $link, $vars ['DB_CHARSET'], DB_COLLATION_HELP, );
-			?></fieldset>
+			?>
+			</div></details></fieldset>
 	</div>
 <?php
 $content = ob_get_contents();

@@ -118,21 +118,9 @@ function xoFormField( $name, $value, $label, $help = '', $type='text') {
 
 ob_start();
 ?>
-<?php if (!empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty( $error ) ) echo '<div class="x2-note error" role="alert">' . $error . "</div>\n"; ?>
 	<h3><?php echo LEGEND_CONNECTION; ?></h3>
 	<div class="blokSQL">
-		<div class="dbconn_line"><label> <?php echo LEGEND_DATABASE; ?><br />
-				<select size="2" name="DB_TYPE" class="db_select">
-					<?php
-					foreach ($connections as $option) {
-						$selected = "";
-						if (!empty($option['selected'])) $selected = " selected='selected'";
-						echo "<option value='" . $option['type'] . "'" . $selected . ">" . $option['name'] . "</option>";
-					}
-					?>
-				</select> </label>
-			<div class='clear'>&nbsp;</div>
-		</div>
 		<div class="dbconn_line"><?php echo xoFormField( 'DB_HOST',    $vars['DB_HOST'],        DB_HOST_LABEL, DB_HOST_HELP ); ?>
 		</div>
 		<div class="dbconn_line"><?php echo xoFormField( 'DB_USER',    $vars['DB_USER'],        DB_USER_LABEL, DB_USER_HELP ); ?>
@@ -141,12 +129,27 @@ ob_start();
 		</div>
 	</div>
 
-	<label> <?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?> <input
-			class="checkbox" type="checkbox" name="DB_PCONNECT" value="1"
-			onclick="alert('<?php echo htmlspecialchars( DB_PCONNECT_HELPS ); ?>');"
-			<?php echo $vars['DB_PCONNECT'] ? "'checked'" : ""; ?> />
+	<details class="collapsible"<?php echo !empty($error) ? ' open' : ''; ?>><summary><?php echo ESS_ADVANCED; ?></summary><div class="collapsible__body">
+<div class="dbconn_line"><label for="DB_TYPE"><?php echo LEGEND_DATABASE; ?></label>
+				<select size="2" name="DB_TYPE" id="DB_TYPE" class="db_select">
+					<?php
+					foreach ($connections as $option) {
+						$selected = "";
+						if (!empty($option['selected'])) $selected = " selected='selected'";
+						echo "<option value='" . $option['type'] . "'" . $selected . ">" . $option['name'] . "</option>";
+					}
+					?>
+				</select>
+		</div>
+			<div class="dbconn_line">
+		<label class="checkbox-label" for="DB_PCONNECT">
+			<input class="checkbox" type="checkbox" id="DB_PCONNECT" name="DB_PCONNECT" value="1"
+				<?php echo $vars['DB_PCONNECT'] ? 'checked="checked"' : ''; ?> />
+			<?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?>
+		</label>
 		<div class="xoform-help"><?php echo htmlspecialchars( DB_PCONNECT_HELP ); ?></div>
-	</label>
+	</div>
+	</div></details>
 <?php
 $content = ob_get_contents();
 ob_end_clean();
