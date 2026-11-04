@@ -42,7 +42,7 @@ class icms_ipf_form_elements_Radio extends icms_form_elements_Radio {
 			// let's find out if the method we need to call comes from an already defined object
 			if (isset($control['object'])) {
 				if (method_exists($control['object'], $control['method'])) {
-					if ($option_array = $control['object']->$control['method']()) {
+					if ($option_array = $control['object']->{$control['method']}()) {
 						// Adding the options array to the Radio element
 						$this->addOptionArray($option_array);
 					}
@@ -50,7 +50,7 @@ class icms_ipf_form_elements_Radio extends icms_form_elements_Radio {
 			} else {
 				// finding the itemHandler; if none, let's take the itemHandler of the $object
 				if (isset($control['itemHandler'])) {
-					if (!$control['module']) {
+					if (empty($control['module'])) {
 						// Creating the specified core object handler
 						$control_handler = icms::handler($control['itemHandler']);
 					} else {
@@ -63,7 +63,7 @@ class icms_ipf_form_elements_Radio extends icms_form_elements_Radio {
 				// Checking if the specified method exists
 				if (method_exists($control_handler, $control['method'])) {
 					// TODO : How could I pass the parameters in the following call ...
-					if ($option_array = $control_handler->$control['method']()) {
+					if ($option_array = $control_handler->{$control['method']}()) {
 						// Adding the options array to the Radio element
 						$this->addOptionArray($option_array);
 					}
