@@ -44,7 +44,7 @@ icms_loadLanguageFile('core', 'databaseupdater');
 if (is_object(icms::$module)) {
 	define('SYSTEM_DB_VERSION', icms::$module->getDBVersion());
 } else {
-	define('SYSTEM_DB_VERSION', 49);
+	define('SYSTEM_DB_VERSION', 50);
 }
 
 /**
@@ -259,6 +259,71 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				: 0;
 
 			$icmsDatabaseUpdater->insertConfig(ICMS_CONF, 'keepalive_enable', '_MD_AM_KEEPALIVE', '0','_MD_AM_KEEPALIVEDSC', 'yesno', 'int', $keepaliveOrder);
+
+			/* Finish up this portion of the db update */
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
+		}
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
+	/* Begin upgrade to version 2.0.5: pluggable captcha providers */
+	if (!$abortUpdate) $newDbVersion = 50;
+	try {
+		if ($dbVersion < $newDbVersion) {
+			// a fresh install already seeds these items, so only add what is missing
+			$configTable = icms::$xoopsDB->prefix('config');
+			$optionTable = icms::$xoopsDB->prefix('configoption');
+			$captchaConfigId = function ($name) use ($configTable) {
+				$result = icms::$xoopsDB->query("SELECT conf_id FROM {$configTable} WHERE conf_modid=0 AND conf_catid=" . ICMS_CONF_CAPTCHA . " AND conf_name=" . icms::$xoopsDB->quoteString($name));
+				$row = $result ? icms::$xoopsDB->fetchArray($result) : false;
+
+				return $row ? (int) $row['conf_id'] : 0;
+			};
+			$addCaptchaOptions = function ($configId, array $options) use ($optionTable) {
+				foreach ($options as $value => $label) {
+					$result = icms::$xoopsDB->query("SELECT confop_id FROM {$optionTable} WHERE conf_id={$configId} AND confop_value=" . icms::$xoopsDB->quoteString($value));
+					if ($result && icms::$xoopsDB->fetchArray($result)) {
+						continue;
+					}
+					icms::$xoopsDB->queryF("INSERT INTO {$optionTable} (confop_id, confop_name, confop_value, conf_id) VALUES (NULL, '{$label}', '{$value}', {$configId})");
+				}
+			};
+
+			$modeId = $captchaConfigId('captcha_mode');
+			if ($modeId > 0) {
+				$addCaptchaOptions($modeId, array('recaptcha' => '_MD_AM_CAPTCHA_RECAPTCHA', 'turnstile' => '_MD_AM_CAPTCHA_TURNSTILE', 'honeypot' => '_MD_AM_CAPTCHA_HONEYPOT'));
+			}
+
+			$captchaItems = array(
+				array('captcha_honeypot', '_MD_AM_CAPTCHA_HONEYPOT_ON', '1', '_MD_AM_CAPTCHA_HONEYPOT_ONDSC', 'yesno', 'int'),
+				array('captcha_honeypot_mintime', '_MD_AM_CAPTCHA_HONEYPOT_TIME', '3', '_MD_AM_CAPTCHA_HONEYPOT_TIMEDSC', 'textbox', 'int'),
+				array('captcha_recaptcha_version', '_MD_AM_CAPTCHA_RECAPTCHA_VERSION', 'v2', '_MD_AM_CAPTCHA_RECAPTCHA_VERSIONDSC', 'select', 'text'),
+				array('captcha_recaptcha_sitekey', '_MD_AM_CAPTCHA_RECAPTCHA_SITEKEY', '', '_MD_AM_CAPTCHA_RECAPTCHA_SITEKEYDSC', 'textbox', 'text'),
+				array('captcha_recaptcha_secret', '_MD_AM_CAPTCHA_RECAPTCHA_SECRET', '', '_MD_AM_CAPTCHA_RECAPTCHA_SECRETDSC', 'textbox', 'text'),
+				array('captcha_recaptcha_threshold', '_MD_AM_CAPTCHA_RECAPTCHA_THRESHOLD', '0.5', '_MD_AM_CAPTCHA_RECAPTCHA_THRESHOLDDSC', 'textbox', 'text'),
+				array('captcha_turnstile_sitekey', '_MD_AM_CAPTCHA_TURNSTILE_SITEKEY', '', '_MD_AM_CAPTCHA_TURNSTILE_SITEKEYDSC', 'textbox', 'text'),
+				array('captcha_turnstile_secret', '_MD_AM_CAPTCHA_TURNSTILE_SECRET', '', '_MD_AM_CAPTCHA_TURNSTILE_SECRETDSC', 'textbox', 'text'),
+			);
+			$order = 11;
+			foreach ($captchaItems as $item) {
+				if ($captchaConfigId($item[0]) === 0) {
+					$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, $item[0], $item[1], $item[2], $item[3], $item[4], $item[5], $order);
+				}
+				$order++;
+			}
+
+			$versionId = $captchaConfigId('captcha_recaptcha_version');
+			if ($versionId > 0) {
+				$addCaptchaOptions($versionId, array('v2' => '_MD_AM_CAPTCHA_RECAPTCHA_V2', 'v3' => '_MD_AM_CAPTCHA_RECAPTCHA_V3'));
+			}
+
+			// the reCAPTCHA v1 Mailhide keys are obsolete: the email protection now uses the captcha preferences
+			icms::$xoopsDB->queryF("DELETE FROM {$configTable} WHERE conf_modid=0 AND conf_catid=" . ICMS_CONF_PERSONA . " AND conf_name IN ('recprvkey', 'recpubkey')");
 
 			/* Finish up this portion of the db update */
 			if (!$abortUpdate) {

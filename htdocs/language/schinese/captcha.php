@@ -12,4 +12,8 @@ define("ICMS_CAPTCHA_REFRESH", "点击图片刷新.");
 
 // For text mode
 define("ICMS_CAPTCHA_RULE_TEXT", "请输入验证码");
+define("ICMS_CAPTCHA_TOOFAST", "The form was submitted too quickly, please try again.");
+define("ICMS_CAPTCHA_SERVICE_UNREACHABLE", "The verification service could not be reached, please try again later.");
+define("ICMS_CAPTCHA_MAILHIDE_REVEAL", "Show email address");
+define("ICMS_CAPTCHA_MAILHIDE_INVALID", "This email address link is not valid.");
 ?>

@@ -31,10 +31,9 @@ switch ($op) {
 		if (!icms::$security->check()) {
 			$stop .= implode('<br />', icms::$security->getErrors()) . "<br />";
 		}
-		$icmsCaptcha = icms_form_elements_captcha_Object::instance();
-		if (! $icmsCaptcha->verify()) {
-			$stop .= $icmsCaptcha->getMessage() . '<br />';
-
+		$captchaResult = icms_captcha_Manager::instance()->verify();
+		if (!$captchaResult->isValid()) {
+			$stop .= $captchaResult->getMessage() . '<br />';
 		}
 		if (!icms_core_DataFilter::checkVar($email, 'email')) {
 			$stop .= _US_INVALIDMAIL . '<br />';
