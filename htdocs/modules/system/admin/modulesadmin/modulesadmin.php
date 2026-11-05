@@ -184,7 +184,7 @@ function icms_module_github_tables($dirname) {
  * @param	string	$status
  * @return	string
  */
-function xoops_module_backup_status($status) {
+function icms_module_backup_status($status) {
 	$labels = array(
 		'ok' => _MD_AM_BACKUP_STATUS_OK,
 		'pending' => _MD_AM_BACKUP_STATUS_PENDING,

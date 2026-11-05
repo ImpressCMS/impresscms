@@ -427,7 +427,7 @@ if ($op == 'backups') {
 			. "<td>" . htmlspecialchars($backup['dirname'], ENT_QUOTES) . "</td>"
 			. "<td>" . htmlspecialchars($backup['version'] !== '' ? $backup['version'] : '-', ENT_QUOTES) . " &raquo; " . htmlspecialchars($backup['to_version'], ENT_QUOTES) . "</td>"
 			. "<td>" . formatTimestamp($backup['created'], 'm') . "</td>"
-			. "<td>" . xoops_module_backup_status($backup['status']) . "</td>"
+			. "<td>" . icms_module_backup_status($backup['status']) . "</td>"
 			. "<td><a href='admin.php?fct=modulesadmin&amp;op=rollback&amp;backup=" . $id . "'>" . _MD_AM_BACKUP_ROLLBACK . "</a>"
 			. " | <a href='admin.php?fct=modulesadmin&amp;op=delete_backup&amp;backup=" . $id . "'>" . _MD_AM_BACKUP_DELETE . "</a></td></tr>";
 	}
