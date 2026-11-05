@@ -108,7 +108,7 @@ function xoops_module_list($refreshCatalog = FALSE) {
 			'weight' => $module->getVar('weight'),
 			'support_site_url' => $module->getInfo('support_site_url'));
 		// compare with the version of the files on disk: those are what a download would replace
-		$mod['github'] = xoops_module_github_info($catalog, $module->getVar('dirname'), $module->getInfo('version'));
+		$mod['github'] = icms_module_github_info($catalog, $module->getVar('dirname'), $module->getInfo('version'));
 		$icmsAdminTpl->append('modules', $mod);
 		$listed_mods[] = $module->getVar('dirname');
 	}
@@ -123,12 +123,12 @@ function xoops_module_list($refreshCatalog = FALSE) {
 			continue;
 		}
 		$mod = array('dirname' => $module->getInfo('dirname'), 'name' => $module->getInfo('name'), 'image' => $module->getInfo('image'), 'version' => $module->getInfo('version'), 'status' => $module->getInfo('status'));
-		$mod['github'] = xoops_module_github_info($catalog, $file, $module->getInfo('version'));
+		$mod['github'] = icms_module_github_info($catalog, $file, $module->getInfo('version'));
 		$icmsAdminTpl->append('avmodules', $mod);
 		unset($module);
 	}
 
-	$icmsAdminTpl->assign('github_table', xoops_module_github_table($catalog, $catalogModules, $dirlist));
+	$icmsAdminTpl->assign('github_table', icms_module_github_table($catalog, $catalogModules, $dirlist));
 
 	return $icmsAdminTpl->fetch('db:system_adm_modulesadmin.html');
 }
@@ -138,7 +138,7 @@ function xoops_module_list($refreshCatalog = FALSE) {
  *
  * @return icms_module_Updater
  */
-function xoops_module_github_updater() {
+function icms_module_github_updater() {
 	return new icms_module_Updater(new icms_module_Catalog());
 }
 
@@ -151,7 +151,7 @@ function xoops_module_github_updater() {
  * @param	string	$dirname
  * @return	bool
  */
-function xoops_module_github_run_update($dirname) {
+function icms_module_github_run_update($dirname) {
 	global $icmsGithubUpdateMessages;
 	$html = icms_module_update($dirname);
 	$icmsGithubUpdateMessages[] = $html;
@@ -169,7 +169,7 @@ function xoops_module_github_run_update($dirname) {
  * @param	string	$dirname
  * @return	array
  */
-function xoops_module_github_tables($dirname) {
+function icms_module_github_tables($dirname) {
 	$module = icms::handler('icms_module')->create();
 	if (!$module->loadInfo($dirname, FALSE)) {
 		return array();
@@ -205,7 +205,7 @@ function xoops_module_backup_status($status) {
  * @param	array	$dirlist		module folders on disk
  * @return	string
  */
-function xoops_module_github_table(icms_module_Catalog $catalog, array $catalogModules, array $dirlist) {
+function icms_module_github_table(icms_module_Catalog $catalog, array $catalogModules, array $dirlist) {
 	$handler = icms_getModuleHandler('modulecatalog', 'system');
 	// sync() only writes rows that changed, so a cached catalog costs one read; this also
 	// drops the rows of owners that are no longer trusted. An empty catalog that was not just
@@ -256,7 +256,7 @@ function xoops_module_github_table(icms_module_Catalog $catalog, array $catalogM
  * @param	string	$version	version of the module files
  * @return	array|FALSE	repository url, latest release and whether it is newer; FALSE when the module is not on GitHub
  */
-function xoops_module_github_info(icms_module_Catalog $catalog, $dirname, $version) {
+function icms_module_github_info(icms_module_Catalog $catalog, $dirname, $version) {
 	$entry = $catalog->getModule($dirname);
 	if ($entry === NULL) {
 		return FALSE;
@@ -996,6 +996,7 @@ function xoops_module_uninstall($dirname) {
 		$ret = '<code>' . implode('<br />', $msgs);
 		return $ret;
 	}
+
 }
 
 /**
@@ -1554,4 +1555,3 @@ function icms_module_update($dirname) {
 	$ret = '<code>' . implode('<br />', $msgs);
 	return $ret;
 }
-

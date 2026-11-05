@@ -371,7 +371,7 @@ if ($op == 'github_update') {
 if ($op == 'github_update_ok') {
 	global $icmsGithubUpdateMessages;
 	$icmsGithubUpdateMessages = array();
-	$updater = xoops_module_github_updater();
+	$updater = icms_module_github_updater();
 	$installed = icms::handler('icms_module')->getByDirname($module);
 	$isInstalled = is_object($installed) && $installed->getVar('mid') > 0;
 
@@ -386,8 +386,8 @@ if ($op == 'github_update_ok') {
 	}
 
 	$result = $updater->update($module, $tables, $version,
-		$isInstalled ? 'xoops_module_github_run_update' : NULL,
-		'xoops_module_github_tables');
+		$isInstalled ? 'icms_module_github_run_update' : NULL,
+		'icms_module_github_tables');
 
 	if ($isInstalled) {
 		$contents = impresscms_get_adminmenu();
@@ -414,7 +414,7 @@ if ($op == 'github_update_ok') {
 }
 
 if ($op == 'backups') {
-	$updater = xoops_module_github_updater();
+	$updater = icms_module_github_updater();
 	icms_cp_header();
 	echo "<h4 style='text-align:" . _GLOBAL_LEFT . ";'>" . _MD_AM_BACKUPS . "</h4>"
 		. "<table width='100%' border='0' cellspacing='1' class='outer'>"
@@ -440,7 +440,7 @@ if ($op == 'backups') {
 }
 
 if ($op == 'rollback' || $op == 'delete_backup') {
-	$updater = xoops_module_github_updater();
+	$updater = icms_module_github_updater();
 	$info = $updater->getBackup($backup);
 	icms_cp_header();
 	if ($info === NULL) {
@@ -460,15 +460,15 @@ if ($op == 'rollback' || $op == 'delete_backup') {
 if ($op == 'rollback_ok') {
 	global $icmsGithubUpdateMessages;
 	$icmsGithubUpdateMessages = array();
-	$updater = xoops_module_github_updater();
+	$updater = icms_module_github_updater();
 	$info = $updater->getBackup($backup);
 	$ok = FALSE;
 	if ($info !== NULL) {
 		$installed = icms::handler('icms_module')->getByDirname($info['dirname']);
 		$isInstalled = is_object($installed) && $installed->getVar('mid') > 0;
 		$ok = $updater->rollback($info['id'],
-			$isInstalled ? 'xoops_module_github_run_update' : NULL,
-			xoops_module_github_tables($info['dirname']));
+			$isInstalled ? 'icms_module_github_run_update' : NULL,
+			icms_module_github_tables($info['dirname']));
 		if ($isInstalled) {
 			$contents = impresscms_get_adminmenu();
 			xoops_module_write_admin_menu($contents);
@@ -491,7 +491,7 @@ if ($op == 'rollback_ok') {
 }
 
 if ($op == 'delete_backup_ok') {
-	$updater = xoops_module_github_updater();
+	$updater = icms_module_github_updater();
 	icms_cp_header();
 	if ($updater->deleteBackup($backup)) {
 		icms_core_Message::result(_MD_AM_BACKUP_DELETED);
@@ -514,7 +514,7 @@ if ($op == 'remove' || $op == 'remove_ok') {
 		icms_core_Message::confirm(array('module' => $module, 'op' => 'remove_ok', 'fct' => 'modulesadmin'), 'admin.php',
 			sprintf(_MD_AM_REMOVE_CONFIRM, '<strong>' . $name . '</strong>', htmlspecialchars(ICMS_MODULES_PATH . '/' . $module, ENT_QUOTES)), _MD_AM_REMOVE);
 	} else {
-		$updater = xoops_module_github_updater();
+		$updater = icms_module_github_updater();
 		if ($updater->removeModule($module)) {
 			icms_core_Message::result(sprintf(_MD_AM_REMOVE_DONE, $name));
 		} else {
