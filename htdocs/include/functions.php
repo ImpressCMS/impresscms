@@ -2161,22 +2161,39 @@ function icms_need_do_br($moduleName=false) {
  *
  * Adds the notification script and stylesheet to the theme and an inline call that shows the
  * message once the page is loaded. The message is passed as JSON, so quotes or markup in it
- * cannot break out of the script. Messages that contain the heading produced by
- * icms_core_Object::getHtmlErrors() are shown as errors.
+ * cannot break out of the script.
+ *
+ * The markup in the message is filtered with the site's HTML filter (HTMLPurifier). The filter
+ * returns the text unchanged when the purifier is disabled and only appends its marker when it
+ * ran, so without the marker the message is shown as plain text instead. Messages that contain
+ * the heading produced by icms_core_Object::getHtmlErrors() are shown as errors.
  *
  * @param icms_view_theme_Object $xoTheme the theme the assets are added to
  * @param string $message the message (may contain simple markup)
  */
 function icms_addRedirectMessage($xoTheme, $message)
 {
+	$message = (string)$message;
+	$marker = '<!-- filtered with htmlpurifier -->';
+
+	$filtered = icms_core_HTMLFilter::filterHTML($message);
+	$purified = strpos($filtered, $marker) !== false;
+	if ($purified) {
+		$text = str_replace($marker, '', $filtered);
+	} else {
+		$text = preg_replace('#<(script|style)\b.*?</\1>#is', '', $message);
+		$text = preg_replace('#<br\s*/?>|</?(?:h[1-6]|p|li)\b[^>]*>#i', "\n", $text);
+		$text = trim(preg_replace("/\n{2,}/", "\n", strip_tags($text)));
+	}
+
 	$flags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT;
-	$options = array('type' => (strpos($message, '<h4>') !== false) ? 'error' : 'info', 'html' => true);
+	$options = array('type' => (strpos($message, '<h4>') !== false) ? 'error' : 'info', 'html' => $purified);
 	$labels = array('close' => defined('_CLOSE') ? _CLOSE : 'Close');
 
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/notify/notify.css', array('media' => 'screen'));
 	$xoTheme->addScript(ICMS_LIBRARIES_URL . '/notify/notify.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript('', array('type' => 'text/javascript'), 'document.addEventListener("DOMContentLoaded", function () {'
 		. ' icms.notify.labels = ' . json_encode($labels, $flags) . ';'
-		. ' icms.notify(' . json_encode((string)$message, $flags) . ', ' . json_encode($options, $flags) . ');'
+		. ' icms.notify(' . json_encode($text, $flags) . ', ' . json_encode($options, $flags) . ');'
 		. ' });');
 }

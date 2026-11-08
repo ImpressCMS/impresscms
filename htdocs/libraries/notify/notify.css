@@ -48,6 +48,7 @@
 .icms-notify__item--success .icms-notify__icon { color: var(--icms-notify-success); }
 .icms-notify__item--error .icms-notify__icon { color: var(--icms-notify-error); }
 
+.icms-notify__body--text { white-space: pre-line; }
 .icms-notify__body > :first-child { margin-block-start: 0; }
 .icms-notify__body > :last-child { margin-block-end: 0; }
 .icms-notify__body h3, .icms-notify__body h4 { margin: 0 0 .25rem; font-size: 1em; font-weight: 700; color: inherit; }

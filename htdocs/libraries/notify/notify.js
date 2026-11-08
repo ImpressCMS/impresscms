@@ -6,8 +6,9 @@
  *  - type     'error' is announced assertively (role="alert") and stays until dismissed.
  *  - timeout  auto-dismiss delay in ms; 0 = stay until dismissed. Default: 0 for errors, 8000 otherwise.
  *             The timer is paused while the pointer or keyboard focus is inside the message.
- *  - html     false (default): the message is shown as text. true: a small allow-list of
- *             formatting tags is kept (no attributes), everything else is stripped.
+ *  - html     false (default): the message is shown as text. true: the message is inserted as
+ *             HTML and must already be filtered by the caller (on the server, the redirect
+ *             message goes through icms_core_HTMLFilter::filterHTML()).
  *
  * Messages are placed in live regions that exist before the message is added, so that
  * screen readers announce them. Escape dismisses the most recent message.
@@ -17,8 +18,6 @@
 
 	var icms = window.icms = window.icms || {};
 
-	var ALLOWED = { B: 1, STRONG: 1, I: 1, EM: 1, BR: 1, P: 1, UL: 1, OL: 1, LI: 1, H3: 1, H4: 1, CODE: 1, SPAN: 1 };
-	var DROP = { SCRIPT: 1, STYLE: 1, IFRAME: 1, OBJECT: 1, EMBED: 1, TEMPLATE: 1 };
 	var ICONS = { info: 'ℹ', success: '✓', error: '⚠' };
 	var DEFAULT_TIMEOUT = 8000;
 	var SHOW_DELAY = 100;
@@ -50,35 +49,13 @@
 		return regions;
 	}
 
-	/** Copy `source` into `target`, keeping only allow-listed tags and no attributes. */
-	function sanitizeInto(source, target) {
-		Array.prototype.slice.call(source.childNodes).forEach(function (node) {
-			if (node.nodeType === 3) {
-				target.appendChild(document.createTextNode(node.nodeValue));
-			} else if (node.nodeType === 1) {
-				var tag = node.tagName.toUpperCase();
-				if (DROP[tag]) {
-					return;
-				}
-				if (ALLOWED[tag]) {
-					var el = document.createElement(tag.toLowerCase());
-					sanitizeInto(node, el);
-					target.appendChild(el);
-				} else {
-					sanitizeInto(node, target);
-				}
-			}
-		});
-	}
-
 	function fillBody(body, message, html) {
-		if (!html) {
+		if (html) {
+			body.innerHTML = message;
+		} else {
 			body.textContent = message;
-			return;
+			body.classList.add('icms-notify__body--text');
 		}
-		var tpl = document.createElement('template');
-		tpl.innerHTML = message;
-		sanitizeInto(tpl.content, body);
 	}
 
 	function notify(message, options) {
