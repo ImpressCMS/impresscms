@@ -2155,3 +2155,28 @@ function icms_need_do_br($moduleName=false) {
 		return true;
 	}
 }
+
+/**
+ * Show a redirect message with icms.notify (libraries/notify)
+ *
+ * Adds the notification script and stylesheet to the theme and an inline call that shows the
+ * message once the page is loaded. The message is passed as JSON, so quotes or markup in it
+ * cannot break out of the script. Messages that contain the heading produced by
+ * icms_core_Object::getHtmlErrors() are shown as errors.
+ *
+ * @param icms_view_theme_Object $xoTheme the theme the assets are added to
+ * @param string $message the message (may contain simple markup)
+ */
+function icms_addRedirectMessage($xoTheme, $message)
+{
+	$flags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT;
+	$options = array('type' => (strpos($message, '<h4>') !== false) ? 'error' : 'info', 'html' => true);
+	$labels = array('close' => defined('_CLOSE') ? _CLOSE : 'Close');
+
+	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/notify/notify.css', array('media' => 'screen'));
+	$xoTheme->addScript(ICMS_LIBRARIES_URL . '/notify/notify.js', array('type' => 'text/javascript'));
+	$xoTheme->addScript('', array('type' => 'text/javascript'), 'document.addEventListener("DOMContentLoaded", function () {'
+		. ' icms.notify.labels = ' . json_encode($labels, $flags) . ';'
+		. ' icms.notify(' . json_encode((string)$message, $flags) . ', ' . json_encode($options, $flags) . ');'
+		. ' });');
+}
