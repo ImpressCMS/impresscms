@@ -12,7 +12,6 @@
 
 defined('ICMS_ROOT_PATH') or exit();
 
-global $icmsTheme;
 global $icmsConfig;
 icms_loadLanguageFile('core', 'calendar');
 function dateFormatTojQueryUIDatePickerFormat($dateFormat) {
@@ -30,7 +29,7 @@ $dateFormatTojQueryUIDatePickerFormat = dateFormatTojQueryUIDatePickerFormat(_SH
 define('_DATEFORMATCHANGED', $dateFormatTojQueryUIDatePickerFormat);
 
 if (_LANGCODE  !== 'en' && file_exists (ICMS_ROOT_PATH.'/language/'.$icmsConfig['language']."/datepicker-" ._LANGCODE. ".js")) {
-    $icmsTheme->addScript(ICMS_URL . "/language/" .$icmsConfig['language']. "/datepicker-" ._LANGCODE. ".js",  array("type" => "text/javascript"));
+    icms_form_elements_Date::addCalendarScript(ICMS_URL . "/language/" .$icmsConfig['language']. "/datepicker-" ._LANGCODE. ".js");
 }
 
 
@@ -49,4 +48,4 @@ showAnim: "slideDown"
 $(".ui-datepicker-trigger").attr("alt", "' ._CALENDAR. '").attr("title", "' ._CALENDAR. '");
 });';
 
-$icmsTheme->addScript("", array("type" => "text/javascript"), $src);
+icms_form_elements_Date::addCalendarScript("", $src);

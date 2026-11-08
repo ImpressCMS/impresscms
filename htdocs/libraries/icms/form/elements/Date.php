@@ -53,6 +53,33 @@ class icms_form_elements_Date extends icms_form_elements_Text {
 
 
     /**
+     * Calendar scripts that could not be added to the theme yet
+     *
+     * @var string
+     */
+    private static $pendingScripts = '';
+
+    /**
+     * Add a calendar script to the theme
+     *
+     * A form can be built before the page header has created the theme. The
+     * script is then printed with the field instead.
+     *
+     * @param string $url	the script's URL, or an empty string for an inline script
+     * @param string $src	the inline script
+     */
+    public static function addCalendarScript($url, $src = '') {
+        global $icmsTheme;
+        if (is_object($icmsTheme)) {
+            $icmsTheme->addScript($url, array('type' => 'text/javascript'), $src);
+        } elseif ($url !== '') {
+            self::$pendingScripts .= '<script type="text/javascript" src="' . $url . '"></script>';
+        } else {
+            self::$pendingScripts .= '<script type="text/javascript">' . $src . '</script>';
+        }
+    }
+
+    /**
      * Constructor
      *
      * @param string	$caption
@@ -81,6 +108,8 @@ class icms_form_elements_Date extends icms_form_elements_Text {
         }
 
         $result = "<input type='text' class='datepick'  name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date(_SHORTDATESTRING, $ele_value)."'".$this->getExtra()." />";
+        $result .= self::$pendingScripts;
+        self::$pendingScripts = '';
 
         return $result;
     }

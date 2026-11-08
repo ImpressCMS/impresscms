@@ -12,9 +12,9 @@
 
 defined('ICMS_ROOT_PATH') or exit();
 
-global $icmsConfig, $icmsTheme;
+global $icmsConfig;
 icms_loadLanguageFile('core', 'calendar');
-$icmsTheme->addScript(ICMS_URL . "/libraries/jalalijscalendar/jquery.ui.datepicker-cc-fa.js", array("type" => "text/javascript"));
+icms_form_elements_Date::addCalendarScript(ICMS_URL . "/libraries/jalalijscalendar/jquery.ui.datepicker-cc-fa.js");
 
 function dateFormatTojQueryUIDatePickerFormat($dateFormat) {
     $chars = array(
@@ -44,4 +44,4 @@ showAnim: "slideDown"
 $(".ui-datepicker-trigger").attr("alt", "' ._CALENDAR. '").attr("title", "' ._CALENDAR. '");
 });';
 
-$icmsTheme->addScript("", array("type" => "text/javascript"), $src);
+icms_form_elements_Date::addCalendarScript("", $src);
