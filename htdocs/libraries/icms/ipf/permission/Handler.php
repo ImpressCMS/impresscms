@@ -146,7 +146,8 @@ class icms_ipf_permission_Handler {
 	 */
 	public function storeAllPermissionsForId($id) {
 		foreach ($this->handler->getPermissions() as $permission) {
-			$this->saveItem_Permissions($_POST[$permission['perm_name']], $id, $permission['perm_name']);
+			// a multi-select with nothing selected is not posted: no group has the permission
+			$this->saveItem_Permissions($_POST[$permission['perm_name']] ?? array(), $id, $permission['perm_name']);
 		}
 	}
 
@@ -171,8 +172,8 @@ class icms_ipf_permission_Handler {
 		$gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
 
 		// Save the new permissions
-		if (count($groups) > 0) {
-			foreach ($groups as $group_id) {
+		if (!empty($groups)) {
+			foreach ((array) $groups as $group_id) {
 				$gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);
 			}
 		}
