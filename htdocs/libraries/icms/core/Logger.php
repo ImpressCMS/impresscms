@@ -193,7 +193,7 @@ class icms_core_Logger {
 	 * @param Exception $exception
 	 */
 	public function handleException($exception) {
-		// durable record, independent of debug mode; the page output below is unchanged
+		// durable record, independent of debug mode
 		if ($exception instanceof Throwable) {
 			icms_core_EventLog::logThrowable($exception, 'php.exception.uncaught', 'php', icms_core_EventLog::CRITICAL, array(), true);
 		}
@@ -205,6 +205,11 @@ class icms_core_Logger {
 		if (substr($errstr, 0, '8') == 'notrace:') {
 			$trace = false;
 			$errstr = substr($errstr, 8);
+		}
+		if ($trace && !$this->showErrorDetails()) {
+			// the details are in the event log; the reference identifies the record
+			echo sprintf(_CORE_PAGENOTDISPLAYED, icms_core_EventLog::requestId());
+			exit();
 		}
 		echo sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 		if ($trace) {
@@ -251,6 +256,12 @@ class icms_core_Logger {
 
 			icms_loadLanguageFile('core', 'core');
 
+			if ($trace && !$this->showErrorDetails()) {
+				// the details are in the event log; the reference identifies the record
+				echo sprintf(_CORE_PAGENOTDISPLAYED, icms_core_EventLog::requestId());
+				exit();
+			}
+
 			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 			echo $errortext;
 			if ($trace && function_exists('debug_backtrace')) {
@@ -267,6 +278,20 @@ class icms_core_Logger {
 			}
 			exit();
 		}
+	}
+
+	/**
+	 * Whether error messages and backtraces may be shown on the page
+	 *
+	 * Only when debug mode is on. Otherwise visitors only get a reference to the record in the event log,
+	 * because messages and traces can reveal paths, queries and credentials.
+	 * Messages prefixed with 'notrace:' are written for visitors and are always shown.
+	 *
+	 * @return bool
+	 */
+	private function showErrorDetails() {
+		global $icmsConfig;
+		return isset($icmsConfig['debug_mode']) && in_array((int) $icmsConfig['debug_mode'], array(1, 2), true);
 	}
 
 	/**
