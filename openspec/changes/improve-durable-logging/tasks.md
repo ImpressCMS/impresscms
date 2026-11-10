@@ -24,20 +24,20 @@
 
 ## 4. Documentation
 
-- [ ] 4.1 Operator guide: location, permissions, rotation/retention, disk-full fallback, PHP-FPM/web-server logs, pre-bootstrap limits
-- [ ] 4.2 Describe the behavior changes of update runs in `docs/logging.md` (release notes are written at release time)
+- [x] 4.1 Operator guide: location, permissions, rotation/retention, disk-full fallback, PHP-FPM/web-server logs, pre-bootstrap limits
+- [x] 4.2 Describe the behavior changes of update runs in `docs/logging.md` (release notes are written at release time)
 
 ## 5. Verification (manual; 2.0 has no test suite)
 
 Checked with CLI harnesses on PHP 7.4 and 8.4 (EventLog, Logger handlers, DB connection classes against local MySQL). Still to do on a real 2.0 site: 5.2 to 5.5, 5.8 and 5.9.
 
-- [ ] 5.1 `php -l` on every changed file with `php74` and `php84`
+- [x] 5.1 `php -l` on every changed file with `php74` and `php84`
 - [ ] 5.2 Debug-off request with an uncaught exception: record present, response generic
 - [ ] 5.3 Failed DB connection: one record, no credentials
 - [ ] 5.4 Forced migration step failure: failure recorded, no success record, retry works
 - [ ] 5.5 Missing preload and missing theme file: records name the component
-- [ ] 5.6 Shutdown fatal: critical record present
-- [ ] 5.7 Unwritable file sink: fallback to `error_log`, request unaffected
+- [x] 5.6 Shutdown fatal: critical record present
+- [x] 5.7 Unwritable file sink: fallback to `error_log`, request unaffected
 - [ ] 5.8 Search log output for passwords, tokens, cookies, SQL and bound values: none
 - [ ] 5.9 Debug mode on: console output and `ICMS_LOGGING_HOOK` unchanged
 
