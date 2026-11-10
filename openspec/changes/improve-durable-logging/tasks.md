@@ -6,6 +6,7 @@
 - [x] 1.4 Call early init from `include/common.php` before `icms::setup()`; add shutdown fatal detection
 - [x] 1.5 Integrate `icms_core_Logger::handleError`/`handleException` with the event log without duplicate handlers or changed debug output
 - [x] 1.6 Document `ICMS_LOG_FILE`, `ICMS_LOG_LEVEL` in `install/templates/mainfile.dist.php`
+- [x] 1.7 Show a generic error page with a log reference when debug mode is off (uncaught exceptions and E_USER_ERROR)
 
 ## 2. Upgrade path
 
@@ -32,7 +33,7 @@
 Checked with CLI harnesses on PHP 7.4 and 8.4 and on a 2.0.4 test site (PHP 8.2, debug mode off) with temporary scripts that were removed afterwards. The remaining items need an admin session.
 
 - [x] 5.1 `php -l` on every changed file with `php74` and `php84`
-- [ ] 5.2 Debug-off request with an uncaught exception: record present (verified); the existing exception page still shows the message, file and line, so "response generic" is open (see design)
+- [x] 5.2 Debug-off request with an uncaught exception: record present, response generic
 - [x] 5.3 Failed DB connection: one record, no credentials
 - [ ] 5.4 Forced migration step failure: failure recorded, no success record, retry works (updater level verified; the full module update screen needs an admin session)
 - [x] 5.5 Missing preload and missing theme file: records name the component

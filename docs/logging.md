@@ -63,9 +63,10 @@ Failures before ImpressCMS code runs are only visible in PHP's or the web server
 
 Failures of `PDOStatement::execute()` in modules that use prepared statements directly are not reported by the core; failed `prepare()`, `exec()` and `query()` calls are.
 
-## Changes in update behavior
+## Changes in behavior
 
 - A step of the system module update that throws an exception, or a table update that fails, now stops the remaining steps and the database version is not advanced past it. The update reports an error, and running the update again repeats the failed step. Previously the exception message was shown, later steps still ran and could advance the version, so the failed step was never retried.
 - The system module update function and the module update screen now report failure instead of success when a step failed, and the failure details are shown.
 - A module update (`moduleUpgrade`) that had a failed table update no longer advances that module's database version.
 - Obsolete files that could not be removed during the update are logged as warnings but do not stop the update.
+- Without debug mode, the page for an uncaught exception or a fatal user error no longer shows the message, file and backtrace. It shows only a reference, which is the `request_id` of the record in the event log. With debug mode on the details are shown as before. Messages meant for visitors (prefixed with `notrace:`, such as "Unable to connect to database") stay visible.
