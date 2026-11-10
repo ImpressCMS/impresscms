@@ -27,15 +27,6 @@ $pageHasHelp = true;
 
 $vars =& $_SESSION['settings'];
 
-// Load config values from mainfile.php constants if 1st invocation, or reload has been asked
-if (!isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0' )) {
-	$keys = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT' );
-	foreach ( $keys as $k) {
-		$vars[ $k ] = defined( "XOOPS_$k" ) ? constant( "XOOPS_$k" ) : '';
-	}
-	$vars['DB_PASS'] = '';
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$params = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS' );
 	foreach ( $params as $name) {
@@ -89,15 +80,13 @@ if (class_exists("PDO", false)) {
 	$connections['pdo'] = $db_connection;
 }
 
-if (@empty($vars['DB_HOST'])) {
-	$vars = array_merge($vars, array(
-		'DB_TYPE'        => $db_connection['type'],
-		'DB_HOST'        => 'localhost',
-		'DB_USER'        => '',
-		'DB_PASS'        => '',
-		'DB_PCONNECT'    => 0,
-	));
-
+// Fill what the preset file did not provide
+$vars += array('DB_TYPE' => '', 'DB_HOST' => '', 'DB_USER' => '', 'DB_PASS' => '', 'DB_PCONNECT' => 0);
+if ($vars['DB_TYPE'] === '') {
+	$vars['DB_TYPE'] = $db_connection['type'];
+}
+if ($vars['DB_HOST'] === '') {
+	$vars['DB_HOST'] = 'localhost';
 }
 
 

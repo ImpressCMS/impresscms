@@ -36,6 +36,7 @@ include_once '../include/functions.php';
 // installer common functions
 require_once 'include/functions.php';
 include_once './class/IcmsInstallWizard.php';
+include_once './class/IcmsInstallPreset.php';
 
 require_once '../libraries/icms/Autoloader.php';
 icms_Autoloader::setup();
@@ -54,3 +55,5 @@ session_start();
 if (!@is_array($_SESSION['settings'])) {
 	$_SESSION['settings'] = array();
 }
+
+$wizard->initPreset(new IcmsInstallPreset(__DIR__ . '/preset.php'));

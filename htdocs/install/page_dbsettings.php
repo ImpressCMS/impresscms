@@ -55,14 +55,6 @@ if (isset($error)) {
 	exit ();
 }
 
-// Load config values from mainfile.php constants if 1st invocation, or reload has been asked
-if (!isset ($vars ['DB_NAME']) || false !== @strpos($_SERVER ['HTTP_CACHE_CONTROL'], 'max-age=0')) {
-	$keys = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT');
-	foreach ($keys as $k) {
-		$vars [$k] = defined("XOOPS_$k")? constant ("XOOPS_$k"):'';
-	}
-}
-
 function exec_query($sql, $link) {
 	if ($link instanceof PDO) {
 		return $link->query($sql);
@@ -155,6 +147,9 @@ function validateDbCharset($link, &$charset, &$collation) {
 		$error = sprintf(ERR_INVALID_DBCHARSET, $charset);
 	} else {
 		$collations = getDbCollations($link, $charset);
+		if ($collation === '' && ($default = array_search(1, $collations, true)) !== false) {
+			$collation = $default;
+		}
 		if (!isset ($collations [$collation])) {
 			$error = sprintf(ERR_INVALID_DBCOLLATION, $collation);
 		}
@@ -252,9 +247,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 			if (!$result) {
 				$error = ERR_NO_DATABASE;
 			} else {
-				$error = sprintf(DATABASE_CREATED, sanitize_database($vars ['DB_NAME']));
 				$db_exist = true;
-
 			}
 		} else {
 			$db_exist = true;
@@ -296,9 +289,12 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && !empty ($vars ['DB_NAME'])) {
 	}
 }
 
-if (@empty ($vars ['DB_NAME'])) {
-	// Fill with default values
-	$vars = array_merge($vars, array('DB_NAME' => '', 'DB_CHARSET' => 'utf8mb4', 'DB_COLLATION' => '', 'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8), 'DB_SALT' => icms_core_Password::createSalt()));
+// Fill what the preset file did not provide
+$defaults = array('DB_NAME' => '', 'DB_CHARSET' => 'utf8mb4', 'DB_COLLATION' => '', 'DB_PREFIX' => 'i' . substr(md5(time()), 0, 8), 'DB_SALT' => icms_core_Password::createSalt());
+foreach ($defaults as $key => $default) {
+	if (!isset ($vars [$key]) || (@empty ($vars ['DB_NAME']) && $vars [$key] === '')) {
+		$vars [$key] = $default;
+	}
 }
 
 function xoFormField($name, $value, $label, $maxlength, $help = '') {

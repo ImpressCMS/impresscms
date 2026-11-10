@@ -14,3 +14,5 @@ defined('ESS_SKIP_TO_CONTENT') or define('ESS_SKIP_TO_CONTENT', "Skip to main co
 defined('ESS_INSTALLING') or define('ESS_INSTALLING', "Installing");
 defined('ESS_INSTALLING_TITLE') or define('ESS_INSTALLING_TITLE', "Installing ImpressCMS");
 defined('ESS_RETRY') or define('ESS_RETRY', "Try again");
+defined('ESS_PRESET_NOTE') or define('ESS_PRESET_NOTE', "Some steps were completed using the preset file (install/preset.php). Use the step list to review them.");
+defined('ESS_PRESET_WARNING') or define('ESS_PRESET_WARNING', "Preset file:");
