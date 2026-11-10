@@ -29,17 +29,17 @@
 
 ## 5. Verification (manual; 2.0 has no test suite)
 
-Checked with CLI harnesses on PHP 7.4 and 8.4 (EventLog, Logger handlers, DB connection classes against local MySQL). Still to do on a real 2.0 site: 5.2 to 5.5, 5.8 and 5.9.
+Checked with CLI harnesses on PHP 7.4 and 8.4 and on a 2.0.4 test site (PHP 8.2, debug mode off) with temporary scripts that were removed afterwards. The remaining items need an admin session.
 
 - [x] 5.1 `php -l` on every changed file with `php74` and `php84`
-- [ ] 5.2 Debug-off request with an uncaught exception: record present, response generic
-- [ ] 5.3 Failed DB connection: one record, no credentials
-- [ ] 5.4 Forced migration step failure: failure recorded, no success record, retry works
-- [ ] 5.5 Missing preload and missing theme file: records name the component
+- [ ] 5.2 Debug-off request with an uncaught exception: record present (verified); the existing exception page still shows the message, file and line, so "response generic" is open (see design)
+- [x] 5.3 Failed DB connection: one record, no credentials
+- [ ] 5.4 Forced migration step failure: failure recorded, no success record, retry works (updater level verified; the full module update screen needs an admin session)
+- [x] 5.5 Missing preload and missing theme file: records name the component
 - [x] 5.6 Shutdown fatal: critical record present
 - [x] 5.7 Unwritable file sink: fallback to `error_log`, request unaffected
-- [ ] 5.8 Search log output for passwords, tokens, cookies, SQL and bound values: none
-- [ ] 5.9 Debug mode on: console output and `ICMS_LOGGING_HOOK` unchanged
+- [x] 5.8 Search log output for passwords, tokens, cookies, SQL and bound values: none
+- [ ] 5.9 Debug mode on: console output and `ICMS_LOGGING_HOOK` unchanged (page renders and warnings are logged; the console is only shown to admins, so it needs an admin session)
 
 ## 6. Follow-up release: security events (opt-in)
 
