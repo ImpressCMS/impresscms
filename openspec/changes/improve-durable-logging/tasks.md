@@ -9,8 +9,8 @@
 
 ## 2. Upgrade path
 
-- [ ] 2.1 Operation ID generation and cross-request persistence for `upgrade/index.php`
-- [ ] 2.2 Log start/step/result/completion in the legacy upgrade runner
+- [x] 2.1 Operation ID generation and cross-request persistence for `upgrade/index.php`
+- [x] 2.2 Log start/step/result/completion in the legacy upgrade runner
 - [ ] 2.3 Instrument `modules/system/include/update.php` migrations with verified results
 - [ ] 2.4 Instrument `modulesadmin.php` module update (module, old/new DB version, failures)
 - [ ] 2.5 Instrument `icms_db_legacy_updater_Handler` operations
