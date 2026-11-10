@@ -13,7 +13,7 @@
 - [x] 2.2 Log start/step/result/completion in the legacy upgrade runner
 - [ ] 2.3 Instrument `modules/system/include/update.php` migrations with verified results
 - [ ] 2.4 Instrument `modulesadmin.php` module update (module, old/new DB version, failures)
-- [ ] 2.5 Instrument `icms_db_legacy_updater_Handler` operations
+- [x] 2.5 Instrument `icms_db_legacy_updater_Handler` operations
 - [ ] 2.6 Stop reporting success after swallowed exceptions or ignored failures; preserve retry behaviour; note changes in release notes
 
 ## 3. Runtime failures
