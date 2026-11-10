@@ -105,6 +105,12 @@ abstract class icms {
 	static protected $handlers;
 
 	/**
+	 * Name of the last service that was loaded successfully, for the event log
+	 * @var string
+	 */
+	static protected $lastService = '';
+
+	/**
 	 * Initialize ImpressCMS before bootstrap
 	 */
 	static public function setup() {
@@ -123,6 +129,8 @@ abstract class icms {
 	 * @return void
 	 */
 	static public function boot() {
+		icms_core_EventLog::log(icms_core_EventLog::DEBUG, 'bootstrap.started', 'bootstrap', 'info');
+
 		// We just hardcode the preload first, as we need to trigger an event
 		self::$preload = icms_preload_Handler::getInstance();
 		self::$preload->triggerEvent('startCoreBoot');
@@ -143,7 +151,17 @@ abstract class icms {
 	 * @return object
 	 */
 	static public function loadService($name, $factory, $args = array()) {
-			self::$$name = self::create($factory, $args);
+			try {
+				self::$$name = self::create($factory, $args);
+			} catch (Throwable $e) {
+				// name the failing service and the last one that started, then let the exception continue as before
+				icms_core_EventLog::logThrowable($e, 'bootstrap.service.failed', 'bootstrap', icms_core_EventLog::CRITICAL, array(
+					'service' => (string) $name, 'last_service' => self::$lastService,
+				));
+				throw $e;
+			}
+			self::$lastService = (string) $name;
+			icms_core_EventLog::log(icms_core_EventLog::DEBUG, 'bootstrap.service.loaded', 'bootstrap', 'success', array('service' => (string) $name));
 			icms_Event::trigger('icms', 'loadService', null, array('name' => $name, 'service' => self::$$name));
 			icms_Event::trigger('icms', 'loadService-' . $name, null, array('name' => $name, 'service' => self::$$name));
 	}
@@ -159,7 +177,16 @@ abstract class icms {
 	static public function launchModule() {
 		$module_handler = icms::handler("icms_module");
 		$modules = $module_handler->getObjects();
-		foreach ($modules as $module) $module->registerClassPath(TRUE);
+		foreach ($modules as $module) {
+			try {
+				$module->registerClassPath(TRUE);
+			} catch (Throwable $e) {
+				icms_core_EventLog::logThrowable($e, 'module.launch.failed', 'module', icms_core_EventLog::ERROR, array(
+					'module' => (string) $module->getVar('dirname'), 'step' => 'registerClassPath',
+				));
+				throw $e;
+			}
+		}
 
 		$isAdmin = (defined('ICMS_IN_ADMIN') && (int)ICMS_IN_ADMIN);
 		self::loadService('module', array('icms_module_Handler', 'service'), array($isAdmin));

@@ -387,7 +387,18 @@ class icms_view_theme_Object {
 
 		// Do not cache the main (theme.html) template output
 		$this->template->caching = 0;
-		$this->template->display($this->path . '/' . $this->canvasTemplate);
+		$themeContext = array('theme' => (string) $this->folderName, 'template' => (string) $this->canvasTemplate);
+		if (!is_file($this->path . '/' . $this->canvasTemplate)) {
+			icms_core_EventLog::log(icms_core_EventLog::ERROR, 'theme.render.failed', 'theme', 'failure', $themeContext + array(
+				'reason' => 'canvas template not found',
+			));
+		}
+		try {
+			$this->template->display($this->path . '/' . $this->canvasTemplate);
+		} catch (Throwable $e) {
+			icms_core_EventLog::logThrowable($e, 'theme.render.failed', 'theme', icms_core_EventLog::ERROR, $themeContext);
+			throw $e;
+		}
 
 		$this->renderCount++;
 		icms::$logger->stopTime('Page rendering');

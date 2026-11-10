@@ -84,7 +84,20 @@ class icms_preload_Handler {
 		} else {
 			$filepath = ICMS_PRELOAD_PATH . "/$filename.php";
 		}
-		include_once $filepath;
+		if (!is_file($filepath)) {
+			icms_core_EventLog::log(icms_core_EventLog::ERROR, 'preload.load.failed', 'preload', 'failure', array(
+				'preload' => (string) $filename, 'module' => (string) $module, 'file' => $filepath, 'reason' => 'file not found',
+			));
+		}
+
+		try {
+			include_once $filepath;
+		} catch (Throwable $e) {
+			icms_core_EventLog::logThrowable($e, 'preload.load.failed', 'preload', icms_core_EventLog::ERROR, array(
+				'preload' => (string) $filename, 'module' => (string) $module, 'reason' => 'file could not be loaded',
+			));
+			throw $e;
+		}
 
 		$classname = $this->getClassName($filename);
 

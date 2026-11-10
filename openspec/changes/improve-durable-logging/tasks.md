@@ -18,9 +18,9 @@
 
 ## 3. Runtime failures
 
-- [ ] 3.1 Bootstrap milestones and failed/last-started service in `icms::setup()`/`boot()`
+- [x] 3.1 Bootstrap milestones and failed/last-started service in `icms::setup()`/`boot()`
 - [ ] 3.2 DB connection, `query()`, `exec()` and `prepare()` failures without duplicates and without SQL/values
-- [ ] 3.3 Preload, module launch and theme rendering failure records
+- [x] 3.3 Preload, module launch and theme rendering failure records
 
 ## 4. Documentation
 
