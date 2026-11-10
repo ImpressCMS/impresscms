@@ -27,6 +27,7 @@ defined('XOOPS_INSTALL') or die();
 if (isset($_COOKIE['xo_install_lang'])) {
 	$icmsConfig['language'] = htmlentities($_COOKIE['xo_install_lang']);
 }
+$wizard->markShown();
 $isRtl = defined('_ADM_USE_RTL') && _ADM_USE_RTL;
 $navSteps = $wizard->navigationSteps();
 $totalPages = count($navSteps);
@@ -46,10 +47,22 @@ foreach ($wizard->pages as $index => $pageName) {
 	}
 }
 $prevIndex = $wizard->currentPage - 1;
-while ($prevIndex > 0 && $wizard->isAutoPage($prevIndex)) {
+while ($prevIndex >= 0 && ($wizard->isAutoPage($prevIndex) || $wizard->isSkipped($prevIndex))) {
 	$prevIndex--;
 }
-$canGoBack = $wizard->currentPage != 0 && !$isLastPage && $wizard->currentPage <= $lastAutoIndex;
+$canGoBack = $prevIndex >= 0 && !$isLastPage && $wizard->currentPage <= $lastAutoIndex;
+$presetNotes = array();
+if ($wizard->hasPreset()) {
+	foreach ($wizard->pages as $index => $pageName) {
+		if ($wizard->isSkipped($index)) {
+			$presetNotes = array(ESS_PRESET_NOTE);
+			break;
+		}
+	}
+	foreach ($wizard->preset->getWarnings() as $warning) {
+		$presetNotes[] = ESS_PRESET_WARNING . ' ' . $warning;
+	}
+}
 $langCode = defined('_LANGCODE') ? _LANGCODE : 'en';
 $stepLabel = sprintf('%s %d%s%d', INSTALL_STEP, $stepNumber, INSTALL_OUTOF, $totalPages);
 $pageTitle = $wizard->pagesTitles[$wizard->currentPage];
@@ -101,7 +114,8 @@ $nextLabel = $retryLabel ?? BUTTON_NEXT;
 ";
 					continue;
 				}
-				echo '<li class="steps__item is-done"><a class="steps__label" href="' . $wizard->pageURI($wizard->pages[$navStep['first']]) . '">' . $name . '</a></li>' . "
+				$review = $wizard->isSkipped($navStep['first']) ? '?review=1' : '';
+				echo '<li class="steps__item is-done"><a class="steps__label" href="' . $wizard->pageURI($wizard->pages[$navStep['first']]) . $review . '">' . $name . '</a></li>' . "
 ";
 			} ?>
 		</ol>
@@ -120,6 +134,9 @@ $nextLabel = $retryLabel ?? BUTTON_NEXT;
 					<?php } ?>
 				</div>
 				<div class="page__body">
+					<?php foreach ($presetNotes as $note) { ?>
+						<p class="x2-note" role="status"><?php echo htmlspecialchars($note); ?></p>
+					<?php } ?>
 					<?php echo $content; ?>
 				</div>
 			</div>

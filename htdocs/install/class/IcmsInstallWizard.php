@@ -14,6 +14,8 @@ class IcmsInstallWizard {
 	public bool $safe_mode = false;
 	/** @var array<int, string> pages that run on arrival and move on by themselves */
 	public array $autoPages = array('configsave', 'tablescreate', 'tablesfill');
+	public ?IcmsInstallPreset $preset = null;
+	private bool $presetSubmit = false;
 
 	public function xoInit(): bool {
 		if (!$this->checkAccess()) {
@@ -169,7 +171,89 @@ class IcmsInstallWizard {
 		} else {
 			return false;
 		}
+		$this->submitFromPreset();
 		return $this->currentPage;
+	}
+
+	/**
+	 * Loads the optional preset file. Needs the session to be started.
+	 */
+	public function initPreset(IcmsInstallPreset $preset): void {
+		$this->preset = $preset;
+		$this->importPreset();
+	}
+
+	private function importPreset(): void {
+		if ($this->preset === null || !$this->preset->isActive() || isset($_SESSION['preset'])) {
+			return;
+		}
+		$_SESSION['preset'] = array('tried' => array(), 'shown' => array());
+		$this->preset->importInto($_SESSION);
+	}
+
+	/**
+	 * Starts over: empties the session, then applies the preset again.
+	 */
+	public function resetSession(): void {
+		$_SESSION = array();
+		$this->importPreset();
+	}
+
+	public function hasPreset(): bool {
+		return $this->preset !== null && $this->preset->isActive();
+	}
+
+	/**
+	 * Marks the page as claimed by the preset the first time it is requested. The preset is only
+	 * tried once per page, so a page that fails validation is shown instead of looping.
+	 */
+	public function presetClaim(string $page): bool {
+		if (!$this->hasPreset() || !isset($_SESSION['preset']) || ($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET'
+			|| isset($_GET['review']) || isset($_GET['action']) || !empty($_SESSION['preset']['tried'][$page])) {
+			return false;
+		}
+		$_SESSION['preset']['tried'][$page] = true;
+		return true;
+	}
+
+	/**
+	 * When the preset holds every value for the current page, handle the request as if the
+	 * user had submitted that page's form with those values.
+	 */
+	private function submitFromPreset(): void {
+		if (!$this->preset?->covers($this->currentPageName) || !$this->presetClaim($this->currentPageName)) {
+			return;
+		}
+		$form = $this->preset->formFor($this->currentPageName);
+		$_POST = $form;
+		$_REQUEST = array_merge($_REQUEST, $form);
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		// the core only allows database writes for POST requests coming from the site itself
+		if (empty($_SERVER['HTTP_REFERER'])) {
+			$_SERVER['HTTP_REFERER'] = $this->baseLocation() . '/page_' . $this->currentPageName . '.php';
+		}
+		$this->presetSubmit = true;
+	}
+
+	/**
+	 * @return bool true while the current request was built from the preset
+	 */
+	public function isPresetSubmit(): bool {
+		return $this->presetSubmit;
+	}
+
+	/**
+	 * A page the preset completed on its own and the user never saw.
+	 */
+	public function isSkipped(int $index): bool {
+		$page = $this->pages[$index] ?? '';
+		return !empty($_SESSION['preset']['tried'][$page]) && empty($_SESSION['preset']['shown'][$page]);
+	}
+
+	public function markShown(): void {
+		if (isset($_SESSION['preset'])) {
+			$_SESSION['preset']['shown'][$this->currentPageName] = true;
+		}
 	}
 
 	public function baseLocation(): string {

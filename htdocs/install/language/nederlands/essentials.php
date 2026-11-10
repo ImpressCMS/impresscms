@@ -14,3 +14,5 @@ defined('ESS_SKIP_TO_CONTENT') or define('ESS_SKIP_TO_CONTENT', "Ga naar de hoof
 defined('ESS_INSTALLING') or define('ESS_INSTALLING', "Installeren");
 defined('ESS_INSTALLING_TITLE') or define('ESS_INSTALLING_TITLE', "ImpressCMS wordt geinstalleerd");
 defined('ESS_RETRY') or define('ESS_RETRY', "Opnieuw proberen");
+defined('ESS_PRESET_NOTE') or define('ESS_PRESET_NOTE', "Enkele stappen zijn voltooid met het presetbestand (install/preset.php). Gebruik de stappenlijst om ze te bekijken.");
+defined('ESS_PRESET_WARNING') or define('ESS_PRESET_WARNING', "Presetbestand:");

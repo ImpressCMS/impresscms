@@ -85,6 +85,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$content .= $problem ?
 			'<p class="x2-note error" role="alert">' . ESS_PROBLEMS . '</p>' :
 			'<p class="x2-note">' . ESS_ALL_DONE . '</p>';
+		if (!$problem && $wizard->isPresetSubmit()) {
+			$wizard->redirectToPage( '+1' );
+			exit();
+		}
 		$content .= installCollapsible($log, ESS_SHOW_DETAILS, $problem);
 	} else {
 		$wizard->redirectToPage( '+1' );

@@ -121,6 +121,10 @@ function imCheckRequirements()
 ob_start();
 $requirements_array = imCheckRequirements();
 $allOk = !in_array( false, array_map( 'boolval', array_column( $requirements_array, 'status' ) ), true );
+if ($allOk && $wizard->presetClaim( 'modcheck' )) {
+	$wizard->redirectToPage( '+1' );
+	exit();
+}
 ?>
 <p class="x2-note<?php echo $allOk ? '' : ' error'; ?>"<?php echo $allOk ? '' : ' role="alert"'; ?>><?php echo $allOk ? ESS_SERVER_OK : ESS_SERVER_PROBLEM; ?></p>
 <details class="collapsible"<?php echo $allOk ? '' : ' open'; ?>><summary><?php echo ESS_SHOW_DETAILS; ?></summary><div class="collapsible__body">
