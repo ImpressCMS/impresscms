@@ -39,7 +39,7 @@ Exceptions and failures during migrations that are currently echoed or ignored S
 - **THEN** it starts a new operation ID and can complete successfully
 
 ### Requirement: Upgrade logging independent of debug mode
-Upgrade events SHALL be written whether debug mode is on or off, and SHALL NOT include SQL text, bound values or credentials.
+Upgrade events SHALL be written whether debug mode is on or off and regardless of the severity threshold, and SHALL NOT include SQL text, bound values or credentials.
 
 #### Scenario: Debug off during upgrade
 - **WHEN** an upgrade runs with debug mode off

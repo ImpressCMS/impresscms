@@ -5,7 +5,7 @@
 - [ ] 1.3 Implement per-request rate limiting with a suppressed-count record
 - [ ] 1.4 Call early init from `include/common.php` before `icms::setup()`; add shutdown fatal detection
 - [ ] 1.5 Integrate `icms_core_Logger::handleError`/`handleException` with the event log without duplicate handlers or changed debug output
-- [ ] 1.6 Document `ICMS_LOG_FILE`, `ICMS_LOG_LEVEL`, `ICMS_LOG_ACTIVITY` in `install/templates/mainfile.dist.php`
+- [ ] 1.6 Document `ICMS_LOG_FILE`, `ICMS_LOG_LEVEL` in `install/templates/mainfile.dist.php`
 
 ## 2. Upgrade path
 
@@ -19,15 +19,17 @@
 ## 3. Runtime failures
 
 - [ ] 3.1 Bootstrap milestones and failed/last-started service in `icms::setup()`/`boot()`
-- [ ] 3.2 DB connection, prepare, execute and `exec()` failures without duplicates and without SQL/values
+- [ ] 3.2 DB connection, `query()`, `exec()` and `prepare()` failures without duplicates and without SQL/values
 - [ ] 3.3 Preload, module launch and theme rendering failure records
 
 ## 4. Documentation
 
 - [ ] 4.1 Operator guide: location, permissions, rotation/retention, disk-full fallback, PHP-FPM/web-server logs, pre-bootstrap limits
-- [ ] 4.2 Add entry to `release_notes.md`
+- [ ] 4.2 Describe the behavior changes of update runs in `docs/logging.md` (release notes are written at release time)
 
 ## 5. Verification (manual; 2.0 has no test suite)
+
+Checked with CLI harnesses on PHP 7.4 and 8.4 (EventLog, Logger handlers, DB connection classes against local MySQL). Still to do on a real 2.0 site: 5.2 to 5.5, 5.8 and 5.9.
 
 - [ ] 5.1 `php -l` on every changed file with `php74` and `php84`
 - [ ] 5.2 Debug-off request with an uncaught exception: record present, response generic

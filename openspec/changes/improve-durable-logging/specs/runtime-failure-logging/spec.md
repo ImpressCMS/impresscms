@@ -8,14 +8,14 @@ The system SHALL record bootstrap milestones at verbose level and, when a servic
 - **THEN** a record identifies the failing service and the last started service
 
 ### Requirement: Database failure reporting
-The system SHALL record failed database connections and failed operations on every execution path (direct queries, prepared statements and `exec()`), with the error code and an operation identifier, without duplicating events already reported for the same failure.
+The system SHALL record failed database connections and failed operations on the connection execution paths (`query()`, `exec()` and `prepare()`; failures of `PDOStatement::execute()` are out of scope), with the error code and an operation identifier, without duplicating events already reported for the same failure.
 
 #### Scenario: Connection failure
 - **WHEN** the connection to the database fails
 - **THEN** one `error` record is written with the driver error code and no connection string or credentials
 
-#### Scenario: Prepared statement failure
-- **WHEN** a prepared statement fails to execute
+#### Scenario: Prepare failure
+- **WHEN** preparing a statement fails
 - **THEN** exactly one record is written for the failure
 
 ### Requirement: Component loading failures
