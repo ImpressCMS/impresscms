@@ -30,17 +30,17 @@
 
 ## 5. Verification (manual; 2.0 has no test suite)
 
-Checked with CLI harnesses on PHP 7.4 and 8.4 and on a 2.0.4 test site (PHP 8.2, debug mode off) with temporary scripts that were removed afterwards. The remaining items need an admin session.
+Checked with CLI harnesses on PHP 7.4 and 8.4 and on two 2.0.4 test sites (PHP 8.2) with temporary scripts and a temporary forced failure, all removed afterwards. On simplecart.test as admin: a forced exception in the system update step 49 left the database version at 48 with failed events, an error page and no success record; the retry updated to 49 with completed events; the debug console rendered with debug mode on.
 
 - [x] 5.1 `php -l` on every changed file with `php74` and `php84`
 - [x] 5.2 Debug-off request with an uncaught exception: record present, response generic
 - [x] 5.3 Failed DB connection: one record, no credentials
-- [ ] 5.4 Forced migration step failure: failure recorded, no success record, retry works (updater level verified; the full module update screen needs an admin session)
+- [x] 5.4 Forced migration step failure: failure recorded, no success record, retry works
 - [x] 5.5 Missing preload and missing theme file: records name the component
 - [x] 5.6 Shutdown fatal: critical record present
 - [x] 5.7 Unwritable file sink: fallback to `error_log`, request unaffected
 - [x] 5.8 Search log output for passwords, tokens, cookies, SQL and bound values: none
-- [ ] 5.9 Debug mode on: console output and `ICMS_LOGGING_HOOK` unchanged (page renders and warnings are logged; the console is only shown to admins, so it needs an admin session)
+- [x] 5.9 Debug mode on: console output and `ICMS_LOGGING_HOOK` unchanged
 
 ## 6. Follow-up release: security events (opt-in)
 
