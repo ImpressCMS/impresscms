@@ -46,6 +46,10 @@ include_once ICMS_INCLUDE_PATH . "/functions.php";
 include_once ICMS_INCLUDE_PATH . "/debug_functions.php";
 include_once ICMS_INCLUDE_PATH . "/version.php";
 
+// -- Start the durable event log before anything that can fail (preloads, services); it only needs mainfile constants
+require_once ICMS_LIBRARIES_PATH . "/icms/core/EventLog.php";
+icms_core_EventLog::init();
+
 if (!isset($xoopsOption)) $xoopsOption = array();
 
 // load core language file before the initialization of the boot sequence

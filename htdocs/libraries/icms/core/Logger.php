@@ -193,6 +193,11 @@ class icms_core_Logger {
 	 * @param Exception $exception
 	 */
 	public function handleException($exception) {
+		// durable record, independent of debug mode; the page output below is unchanged
+		if ($exception instanceof Throwable) {
+			icms_core_EventLog::logThrowable($exception, 'php.exception.uncaught', 'php', icms_core_EventLog::CRITICAL, array(), true);
+		}
+
 		icms_loadLanguageFile('core', 'core');
 
 		$errstr = $exception->getMessage();
@@ -227,6 +232,9 @@ class icms_core_Logger {
 	 * @param  string  $errline
 	 */
 	public function handleError($errno, $errstr, $errfile, $errline) {
+		// durable record, independent of debug mode (it applies its own error_reporting and @ handling)
+		icms_core_EventLog::logPhpError($errno, $errstr, $errfile, $errline);
+
 		$errstr = $this->sanitizePath($errstr);
 		$errfile = $this->sanitizePath($errfile);
 		if ($this->activated && ( $errno & error_reporting() )) {
