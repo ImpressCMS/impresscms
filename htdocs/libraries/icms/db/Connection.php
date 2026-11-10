@@ -50,6 +50,45 @@ class icms_db_Connection extends PDO implements icms_db_IConnection {
 		} else {
 			$errorinfo = $this->errorInfo();
 			icms_Event::trigger('icms_db_IConnection', 'execute', $this, array('sql' => $args[0], 'errorno' => $errorinfo[1], 'error' => $errorinfo[2]));
+			// durable record of the failure without the SQL, see icms_core_EventLog
+			icms_core_EventLog::logDatabaseFailure('db.query', $errorinfo);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Executes an SQL statement and returns the number of affected rows, logging a failure
+	 *
+	 * @see PDO::exec()
+	 * @param string $statement
+	 * @return int|false
+	 */
+	#[\ReturnTypeWillChange]
+	public function exec($statement) {
+		$result = parent::exec($statement);
+		if ($result === false) {
+			icms_core_EventLog::logDatabaseFailure('db.exec', $this->errorInfo());
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Prepares a statement, logging a failure
+	 *
+	 * Failures of PDOStatement::execute() are not reported here.
+	 *
+	 * @see PDO::prepare()
+	 * @param string $query
+	 * @param array $options
+	 * @return PDOStatement|false
+	 */
+	#[\ReturnTypeWillChange]
+	public function prepare($query, $options = array()) {
+		$result = parent::prepare($query, $options);
+		if ($result === false) {
+			icms_core_EventLog::logDatabaseFailure('db.prepare', $this->errorInfo());
 		}
 
 		return $result;
