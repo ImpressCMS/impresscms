@@ -1,12 +1,9 @@
 <?php
 /**
- * Adding CAPTCHA
+ * CAPTCHA form element
  *
- * Currently there are two types of CAPTCHA forms, text and image
- * The default mode is "text", it can be changed in the priority:
- * 1 If mode is set through icms_form_elements_Captcha::setMode(), take it
- * 2 Elseif mode is set though captcha/config.php, take it
- * 3 Else, take "text"
+ * The challenge itself is delegated to the provider chosen in the captcha_mode
+ * preference, see \Icms\Captcha\Manager.
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -14,7 +11,6 @@
  * @package		Form
  * @subpackage	Elements
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: Captcha.php 10868 2010-12-11 12:02:57Z phoenyx $
  */
 namespace Icms\Form\Elements;
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -23,13 +19,12 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * Usage
  *
  * For form creation:
- * Add form element where proper: $form->addElement(new \Icms\Form\Elements\Captcha($caption, $name, $skipmember, ...);
+ * $form->addElement(new \Icms\Form\Elements\Captcha($caption, $name));
  *
  * For verification:
- * $icmsCaptcha = \Icms\Form\Elements\Captcha\Entity::instance();
- * if (!$icmsCaptcha->verify()) {
- *   echo $icmsCaptcha->getMessage();
- *   ...
+ * $result = \Icms\Captcha\Manager::instance()->verify();
+ * if (!$result->isValid()) {
+ *   echo $result->getMessage();
  * }
  */
 /**
@@ -41,55 +36,36 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  *
  */
 class Captcha extends \Icms\Form\Element {
-	private $_captchaHandler;
 
 	/**
-	 * @param string	$caption	Caption of the form element, default value is defined in captcha/language/
-	 * @param string	$name		Name for the input box
-	 * @param boolean	$skipmember	Skip CAPTCHA check for members
-	 * @param int		$numchar	Number of characters in image mode, and input box size for text mode
-	 * @param int		$minfontsize	Minimum font-size of characters in image mode
-	 * @param int		$maxfontsize	Maximum font-size of characters in image mode
-	 * @param int		$backgroundtype	Background type in image mode: 0 - bar; 1 - circle; 2 - line; 3 - rectangle; 4 - ellipse; 5 - polygon; 100 - generated from files
-	 * @param int		$backgroundnum	Number of background images in image mode
+	 * @param string $caption Caption of the form element, default value is defined in language/captcha.php
+	 * @param string $name Name of the input box
 	 *
+	 * The remaining arguments are accepted for backwards compatibility only,
+	 * the preferences of the captcha category decide how the challenge looks.
 	 */
 	public function __construct($caption = '', $name = 'icmscaptcha', $skipmember = null,
 			$numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null,
 			$backgroundnum = null
 	) {
-		$this->_captchaHandler = \Icms\Form\Elements\Captcha\Entity::instance();
-		$this->_captchaHandler->init(
-			$name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum
-		);
-		if (!$this->_captchaHandler->active) {
+		$this->setName($name);
+
+		if (!\Icms\Captcha\Manager::instance()->isActive()) {
 			$this->setHidden();
-		} else {
-			$caption = !empty($caption) ? $caption : $this->_captchaHandler->getCaption();
-			$this->setCaption($caption);
+			return;
 		}
+
+		$this->setCaption(!empty($caption) ? $caption : ICMS_CAPTCHA_CAPTION);
 	}
 
 	/**
-	 * Sets the Config
-	 * @param   string $name Config Name
-	 * @param   string $val Config Value
-	 * @return  object reference to the icms_form_elements_captcha_Object Object (@link icms_form_elements_captcha_Object)
+	 * @see \Icms\Form\Element::render()
 	 */
-	public function setConfig($name, $val) {
-		return $this->_captchaHandler->setConfig($name, $val);
-	}
-
-	/**
-	 *
-	 * @see htdocs/libraries/icms/form/icms_form_Element::render()
-	 */
-		public function render(): string {
-		if (!$this->isHidden()) {
-			return $this->_captchaHandler->render();
+	public function render(): string {
+		if ($this->isHidden()) {
+			return '';
 		}
 
-		return '';
+		return \Icms\Captcha\Manager::instance()->render($this->getName(false));
 	}
 }
-

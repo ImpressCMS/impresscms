@@ -132,10 +132,9 @@ switch ($op) {
 			$stop .= implode('<br />', icms::$security->getErrors()) . "<br />";
 		}
 		if ($icmsConfigUser['use_captcha'] == 1) {
-			$icmsCaptcha = icms_form_elements_captcha_Object::instance();
-			if (! $icmsCaptcha->verify()) {
-				$stop .= $icmsCaptcha->getMessage() . '<br />';
-
+			$captchaResult = \Icms\Captcha\Manager::instance()->verify();
+			if (!$captchaResult->isValid()) {
+				$stop .= $captchaResult->getMessage() . '<br />';
 			}
 		}
 

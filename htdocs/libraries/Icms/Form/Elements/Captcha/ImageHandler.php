@@ -1,15 +1,13 @@
 <?php
 /**
- * Image Creation script
- * Xoops Frameworks addon
+ * Image Creation class for the image captcha
  *
  * based on Frameworks::captcha by Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * Originated from DuGris' SecurityImage <http://www.dugris.info>
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license 	http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since		XOOPS
- *
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
@@ -17,146 +15,56 @@
 
 namespace Icms\Form\Elements\Captcha;
 
-/**
- * Captcha Image Handler
- *
- * @author		modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @category	ICMS
- * @package		Form
- * @subpackage	Elements
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
 class ImageHandler {
-	//var $mode = "gd"; // GD or bmp
-	private $code;
-	public $invalid = FALSE;
 
-	private $font;
-	private $spacing;
-	private $width;
-	private $height;
+	private string $code = '';
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		if (empty($_SESSION['icms_form_elements_captcha_Object_name'])) {
-			$this->invalid = TRUE;
-		}
+	private string $font = '';
 
-		if (!extension_loaded('gd')) {
-			$this->mode = "bmp";
-		} else {
-			$required_functions = array("imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle", "imagejpeg", "imagedestroy", "imageftbbox");
-			foreach ($required_functions as $func) {
-				if (!function_exists($func)) {
-					$this->mode = "bmp";
-					break;
-				}
-			}
-		}
-	}
+	private int $spacing = 0;
+
+	private int $width = 0;
+
+	private int $height = 0;
+
+	private ?\GdImage $image = null;
 
 	/**
-	 * Loads the captcha image
+	 * Create a new code, remember it in the session and send the image
 	 */
-	public function loadImage() {
+	public function loadImage(): void {
 		$this->createCode();
-		$this->setCode();
-		$this->createImage();
+
+		$session =& \Icms\Captcha\Manager::session();
+		$session['image'] = $this->code;
+
+		$this->createImageGd();
 	}
 
-	/**
-	 * Creates the Captcha Code
-	 */
-	public function createCode() {
-		global $icmsConfigCaptcha;
-		if ($this->invalid) {
-			return;
-		}
+	public function createCode(): void {
+		$length = $this->setting('captcha_num_chars', 4);
+		$skipCharacters = \Icms\Captcha\Manager::config('captcha_skip_characters', array());
+		$code = '';
 
-		if ($this->mode == "bmp") {
-			$icmsConfigCaptcha['captcha_num_chars'] = 4;
-			$this->code = rand(pow(10, $icmsConfigCaptcha['captcha_num_chars'] - 1), (int) (str_pad("9", $icmsConfigCaptcha['captcha_num_chars'], "9")));
-		} else {
-			$raw_code = md5(uniqid(mt_rand(), 1));
-			if (isset($icmsConfigCaptcha['captcha_skip_characters'])) {
-				$valid_code = str_replace($icmsConfigCaptcha['captcha_skip_characters'], "", $raw_code);
-				$this->code = substr($valid_code, 0, $icmsConfigCaptcha['captcha_num_chars']);
-			} else {
-				$this->code = substr($raw_code, 0, $icmsConfigCaptcha['captcha_num_chars']);
-			}
-			if (!$icmsConfigCaptcha['captcha_casesensitive']) {
-				$this->code = strtoupper($this->code);
-			}
+		while (strlen($code) < $length) {
+			$code .= str_replace((array) $skipCharacters, '', bin2hex(random_bytes(8)));
 		}
+		$code = substr($code, 0, $length);
+
+		$this->code = \Icms\Captcha\Manager::config('captcha_casesensitive', 0) ? $code : strtoupper($code);
 	}
 
-	/**
-	 * Sets the Captcha code
-	 */
-	public function setCode() {
-		if ($this->invalid) {
-			return;
-		}
-
-		$_SESSION['icms_form_elements_captcha_Object_sessioncode'] = strval($this->code);
-		$maxAttempts = (int) @$_SESSION['icms_form_elements_captcha_Object_maxattempts'];
-
-		// Increase the attempt records on refresh
-		if (!empty($maxAttempts)) {
-			$_SESSION['icms_form_elements_captcha_Object_attempt_' . $_SESSION['icms_form_elements_captcha_Object_name']]++;
-			if ($_SESSION['icms_form_elements_captcha_Object_attempt_' . $_SESSION['icms_form_elements_captcha_Object_name']] > $maxAttempts) {
-				$this->invalid = TRUE;
-			}
-		}
-	}
-
-	/**
-	 * Creates the Captcha Image File
-	 * @param   string $file filename of the Captcha image
-	 * @return  object  The created image @todo is this an object?
-	 */
-	public function createImage($file = "") {
-		if ($this->invalid) {
-			header("Content-type: image/gif");
-			readfile(ICMS_ROOT_PATH . "/images/subject/icon2.gif");
-			return;
-		}
-		if ($this->mode == "bmp") {
-			return $this->createImageBmp();
-		} else {
-			return $this->createImageGd();
-		}
-	}
-
-	/**
-	 * Create CAPTCHA iamge with GD
-	 * Originated from DuGris' SecurityImage
-	 * @param   string $file filename of the Captcha image
-	 */
-	//  --------------------------------------------------------------------------- //
-	// Class : SecurityImage 1.5													//
-	// Author: DuGris aka L. Jen <http://www.dugris.info>							//
-	// Email : DuGris@wanadoo.fr													//
-	// Licence: GNU																	//
-	// Project: The XOOPS Project													//
-	//  --------------------------------------------------------------------------- //
-	public function createImageGd($file = "") {
-
+	public function createImageGd(): void {
 		$this->loadFont();
 		$this->setImageSize();
 
-		$this->oImage = imagecreatetruecolor($this->width, $this->height);
-		$background = imagecolorallocate($this->oImage, 255, 255, 255);
-		imagefilledrectangle($this->oImage, 0, 0, $this->width, $this->height, $background);
+		$this->image = imagecreatetruecolor($this->width, $this->height);
+		$background = imagecolorallocate($this->image, 255, 255, 255);
+		imagefilledrectangle($this->image, 0, 0, $this->width, $this->height, $background);
 
-		global $icmsConfigCaptcha;
-		switch ($icmsConfigCaptcha['captcha_background_type']) {
-			default:
-			case 0:
-				$this->drawBars();
-				break;
-
+		switch ((int) \Icms\Captcha\Manager::config('captcha_background_type', 0)) {
 			case 1:
 				$this->drawCircles();
 				break;
@@ -180,249 +88,174 @@ class ImageHandler {
 			case 100:
 				$this->createFromFile();
 				break;
+
+			default:
+				$this->drawBars();
 		}
+
 		$this->drawBorder();
 		$this->drawCode();
-		if (empty($file)) {
-			header("Content-type: image/jpeg");
-			imagejpeg($this->oImage);
-		} else {
-			imagejpeg($this->oImage, ICMS_CACHE_PATH . "/captcha/" . $file . ".jpg");
+
+		while (ob_get_level() > 0) {
+			ob_end_clean();
 		}
-		imagedestroy($this->oImage);
+		header('Content-type: image/jpeg');
+		header('Cache-Control: no-store, no-cache, must-revalidate');
+		imagejpeg($this->image);
+		imagedestroy($this->image);
+	}
+
+	private function setting(string $key, int $default): int {
+		$value = (int) \Icms\Captcha\Manager::config($key, $default);
+
+		return $value > 0 ? $value : $default;
 	}
 
 	/**
-	 * Gets list of Captcha items (Internal Function)
-	 * @param   string $name directory name to look in
-	 * @param   string $extension extension of the files to look for
-	 * @return  array  array of Captcha items
+	 * @return string[] files of a subfolder of this directory
 	 */
-	public function _getList($name, $extension = "") {
-		$items = array();
+	private function listFiles(string $folder, string $pattern): array {
+		$files = glob(__DIR__ . "/{$folder}/*.{$pattern}", GLOB_BRACE);
 
-		$file_path = "{$name}";
-		$files = \Icms\Core\Filesystem::getFileList($file_path);
-		foreach ($files as $item) {
-			if (empty($extension) || preg_match("/(\.{$extension})$/i", $item)) {
-				$items[] = $item;
+		return $files === false ? array() : $files;
+	}
+
+	private function loadFont(): void {
+		$fonts = $this->listFiles('Fonts', 'ttf');
+		$this->font = $fonts[array_rand($fonts)];
+	}
+
+	private function setImageSize(): void {
+		$maxCharWidth = 0;
+		$maxCharHeight = 0;
+		$fontSize = $this->setting('captcha_fontsize_max', 12);
+		$length = $this->setting('captcha_num_chars', 4);
+
+		for ($angle = -30; $angle <= 30; $angle += 5) {
+			for ($ascii = 65; $ascii <= 90; $ascii++) {
+				$details = imageftbbox($fontSize, $angle, $this->font, chr($ascii));
+				$maxCharWidth = max($maxCharWidth, abs($details[0] + $details[2]));
+				$maxCharHeight = max($maxCharHeight, abs($details[1] + $details[5]));
 			}
 		}
-		if (function_exists("mod_createCacheFile")) {
-			mod_createCacheFile($items, "captcha_{$name}", "captcha");
-		}
-		return $items;
+
+		$this->height = (int) ceil($maxCharHeight) + 2;
+		$this->spacing = (int) ceil($maxCharWidth);
+		$this->width = (int) ceil(($length * $maxCharWidth) + ($this->spacing / 2));
 	}
 
-	/**
-	 * Loads the Captcha font
-	 */
-	public function loadFont() {
-		$fonts = $this->_getList("fonts", "ttf");
-		$this->font = "fonts/" . $fonts[array_rand($fonts)];
-	}
+	private function createFromFile(): void {
+		$backgrounds = $this->listFiles('Backgrounds', '{gif,jpg,png}');
+		$background = null;
 
-	/**
-	 * Sets the Captcha image size
-	 */
-	public function setImageSize() {
-		$MaxCharWidth = 0;
-		$MaxCharHeight = 0;
-		$oImage = imagecreatetruecolor(100, 100);
-		$text_color = imagecolorallocate($oImage, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
-		global $icmsConfigCaptcha;
-		$FontSize = $icmsConfigCaptcha['captcha_fontsize_max'];
-		for ($Angle = -30; $Angle <= 30; $Angle++) {
-			for ($i = 65; $i <= 90; $i++) {
-				$CharDetails = imageftbbox($FontSize, $Angle, $this->font, chr($i), array());
-				$_MaxCharWidth  = abs($CharDetails[0] + $CharDetails[2]);
-				if ($_MaxCharWidth > $MaxCharWidth) {
-					$MaxCharWidth = $_MaxCharWidth;
-				}
-				$_MaxCharHeight  = abs($CharDetails[1] + $CharDetails[5]);
-				if ($_MaxCharHeight > $MaxCharHeight) {
-					$MaxCharHeight = $_MaxCharHeight;
-				}
-			}
+		if (!empty($backgrounds)) {
+			$file = $backgrounds[array_rand($backgrounds)];
+			$background = match (@getimagesize($file)[2] ?? 0) {
+				IMAGETYPE_GIF => imagecreatefromgif($file),
+				IMAGETYPE_JPEG => imagecreatefromjpeg($file),
+				IMAGETYPE_PNG => imagecreatefrompng($file),
+				default => false,
+			};
 		}
-		imagedestroy($oImage);
 
-		$this->height = $MaxCharHeight + 2;
-		$this->spacing = (int) (($icmsConfigCaptcha['captcha_num_chars'] * $MaxCharWidth) / $icmsConfigCaptcha['captcha_num_chars']);
-		$this->width = ($icmsConfigCaptcha['captcha_num_chars'] * $MaxCharWidth) + ($this->spacing/2);
-	}
-
-	/**
-	 * Returns random background
-	 *
-	 * @return array Random Background
-	 */
-	public function loadBackground() {
-		$RandBackground = NULL;
-		if ($backgrounds = $this->_getList("backgrounds", "(gif|jpg|png)")) {
-			$RandBackground = "backgrounds/" . $backgrounds[array_rand($backgrounds)];
-		}
-		return $RandBackground;
-	}
-
-	/**
-	 * Draws Image background
-	 */
-	public function createFromFile() {
-		if ($RandImage = $this->loadBackground()) {
-			$ImageType = @getimagesize($RandImage);
-			switch (@$ImageType[2]) {
-				case 1:
-					$BackgroundImage = imagecreatefromgif($RandImage);
-					break;
-
-				case 2:
-					$BackgroundImage = imagecreatefromjpeg($RandImage);
-					break;
-
-				case 3:
-					$BackgroundImage = imagecreatefrompng($RandImage);
-					break;
-			}
-		}
-		if (!empty($BackgroundImage)) {
-			imagecopyresized($this->oImage, $BackgroundImage, 0, 0, 0, 0, imagesx($this->oImage), imagesy($this->oImage), imagesx($BackgroundImage), imagesy($BackgroundImage));
-			imagedestroy($BackgroundImage);
-		} else {
+		if (!$background) {
 			$this->drawBars();
+			return;
+		}
+
+		imagecopyresized(
+			$this->image, $background, 0, 0, 0, 0,
+			imagesx($this->image), imagesy($this->image), imagesx($background), imagesy($background)
+		);
+		imagedestroy($background);
+	}
+
+	private function drawCode(): void {
+		$length = strlen($this->code);
+		$minSize = $this->setting('captcha_fontsize_min', 10);
+		$maxSize = max($minSize, $this->setting('captcha_fontsize_max', 12));
+
+		for ($i = 0; $i < $length; $i++) {
+			$color = imagecolorallocate($this->image, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
+			$angle = ($i % 2) ? mt_rand(-30, -10) : mt_rand(10, 30);
+			$fontSize = mt_rand($minSize, $maxSize);
+
+			$details = imageftbbox($fontSize, $angle, $this->font, $this->code[$i]);
+			$charHeight = abs($details[1] + $details[5]);
+
+			$x = (int) round(($this->spacing / 2) + ($i * $this->spacing));
+			$y = (int) round(2 + ($this->height / 2) + ($charHeight / 4));
+
+			imagefttext($this->image, $fontSize, $angle, $x, $y, $color, $this->font, $this->code[$i]);
 		}
 	}
 
-	/**
-	 * Draw Captcha Code
-	 */
-	public function drawCode() {
-		global $icmsConfigCaptcha;
-		for ($i = 0; $i < $icmsConfigCaptcha['captcha_num_chars'] ; $i++) {
-			// select random greyscale colour
-			$text_color = imagecolorallocate($this->oImage, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
+	private function drawBorder(): void {
+		$shade = mt_rand(50, 150);
+		$color = imagecolorallocate($this->image, $shade, $shade, $shade);
+		imagerectangle($this->image, 0, 0, $this->width - 1, $this->height - 1, $color);
+	}
 
-			// write text to image
-			$Angle = mt_rand(10, 30);
-			if (($i % 2)) {
-				$Angle = mt_rand(-10, -30);
+	private function backgroundColor(): int {
+		return imagecolorallocate($this->image, mt_rand(190, 255), mt_rand(190, 255), mt_rand(190, 255));
+	}
+
+	private function drawCircles(): void {
+		for ($i = 0; $i < $this->setting('captcha_background_num', 50); $i++) {
+			imagefilledellipse(
+				$this->image, mt_rand(0, max(0, $this->width - 10)), mt_rand(0, max(0, $this->height - 3)),
+				mt_rand(10, 20), mt_rand(20, 30), $this->backgroundColor()
+			);
+		}
+	}
+
+	private function drawLines(): void {
+		for ($i = 0; $i < $this->setting('captcha_background_num', 50); $i++) {
+			imageline(
+				$this->image, mt_rand(0, $this->width), mt_rand(0, $this->height),
+				mt_rand(0, $this->width), mt_rand(0, $this->height), $this->backgroundColor()
+			);
+		}
+	}
+
+	private function drawRectangles(): void {
+		for ($i = 0; $i < $this->setting('captcha_background_num', 50); $i++) {
+			imagefilledrectangle(
+				$this->image, mt_rand(0, $this->width), mt_rand(0, $this->height),
+				mt_rand(0, $this->width), mt_rand(0, $this->height), $this->backgroundColor()
+			);
+		}
+	}
+
+	private function drawBars(): void {
+		for ($y = 0; $y <= $this->height; $y += 3) {
+			imageline($this->image, 0, $y, $this->width, $y, $this->backgroundColor());
+		}
+
+		for ($x = 0; $x <= $this->width; $x += 3) {
+			imageline($this->image, $x, 0, $x, $this->height, $this->backgroundColor());
+		}
+	}
+
+	private function drawEllipses(): void {
+		for ($i = 0; $i < $this->setting('captcha_background_num', 50); $i++) {
+			imageellipse(
+				$this->image, mt_rand(0, $this->width), mt_rand(0, $this->height),
+				mt_rand(0, $this->width), mt_rand(0, $this->height), $this->backgroundColor()
+			);
+		}
+	}
+
+	private function drawPolygons(): void {
+		$points = max(3, $this->setting('captcha_polygon_point', 3));
+
+		for ($i = 0; $i < $this->setting('captcha_background_num', 50); $i++) {
+			$coordinates = array();
+			for ($j = 0; $j < $points; $j++) {
+				$coordinates[] = mt_rand(0, $this->width);
+				$coordinates[] = mt_rand(0, $this->height);
 			}
-
-			// select random font size
-			$FontSize = mt_rand($icmsConfigCaptcha['captcha_fontsize_min'], $icmsConfigCaptcha['captcha_fontsize_max']);
-
-			$CharDetails = imageftbbox($FontSize, $Angle, $this->font, $this->code[$i], array());
-			$CharHeight = abs($CharDetails[1] + $CharDetails[5]);
-
-			// calculate character starting coordinates
-			$posX = ($this->spacing/2) + ($i * $this->spacing);
-			$posY = 2 + ($this->height / 2) + ($CharHeight / 4);
-
-			imagefttext($this->oImage, $FontSize, $Angle, $posX, $posY, $text_color, $this->font, $this->code[$i], array());
-		}
-	}
-
-	/**
-	 * Draw Captcha Border
-	 */
-	public function drawBorder() {
-		$rgb = rand(50, 150);
-		$border_color = imagecolorallocate($this->oImage, $rgb, $rgb, $rgb);
-		imagerectangle($this->oImage, 0, 0, $this->width-1, $this->height-1, $border_color);
-	}
-
-	/**
-	 * Draw Captcha Circles background
-	 */
-	public function drawCircles() {
-		global $icmsConfigCaptcha;
-		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
-			$randomcolor = imagecolorallocate($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
-			imagefilledellipse($this->oImage, mt_rand(0,$this->width-10), mt_rand(0,$this->height-3), mt_rand(10,20), mt_rand(20,30),$randomcolor);
-		}
-	}
-
-	/**
-	 * Draw Captcha Lines background
-	 */
-	public function drawLines() {
-		global $icmsConfigCaptcha;
-		for ($i = 0; $i < $icmsConfigCaptcha['captcha_background_num']; $i++) {
-			$randomcolor = imagecolorallocate($this->oImage, mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
-			imageline($this->oImage, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
-		}
-	}
-
-	/**
-	 * Draw Captcha Rectangles background
-	 */
-	public function drawRectangles() {
-		global $icmsConfigCaptcha;
-		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
-			$randomcolor = imagecolorallocate($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
-			imagefilledrectangle($this->oImage, mt_rand(0,$this->width), mt_rand(0,$this->height), mt_rand(0, $this->width), mt_rand(0,$this->height),  $randomcolor);
-		}
-	}
-
-	/**
-	 * Draw Captcha Bars background
-	 */
-	public function drawBars() {
-		for ($i= 0 ; $i <= $this->height;) {
-			$randomcolor = imagecolorallocate($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
-			imageline($this->oImage, 0, $i, $this->width, $i, $randomcolor);
-			$i = $i + 2.5;
-		}
-		for ($i = 0;$i <= $this->width;) {
-			$randomcolor = imagecolorallocate($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
-			imageline($this->oImage, $i, 0, $i, $this->height, $randomcolor);
-			$i = $i + 2.5;
-		}
-	}
-
-	/**
-	 * Draw Captcha Ellipses background
-	 */
-	public function drawEllipses() {
-		global $icmsConfigCaptcha;
-		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
-			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
-			imageellipse($this->oImage, mt_rand(0,$this->width), mt_rand(0,$this->height), mt_rand(0,$this->width), mt_rand(0,$this->height), $randomcolor);
-		}
-	}
-
-	/**
-	 * Draw Captcha polygons background
-	 */
-	public function drawPolygons() {
-		global $icmsConfigCaptcha;
-		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
-			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
-			$coords = array();
-			for ($j=1; $j <= $icmsConfigCaptcha['captcha_polygon_point']; $j++) {
-				$coords[] = mt_rand(0,$this->width);
-				$coords[] = mt_rand(0,$this->height);
-			}
-			imagefilledpolygon($this->oImage, $coords, $icmsConfigCaptcha['captcha_polygon_point'], $randomcolor);
-		}
-	}
-
-	/**
-	 *  Create CAPTCHA iamge with BMP
-	 *  @TODO
-	 * @param   string $file filename
-	 * @return  string $image he image that was created from bmp file
-	 */
-
-	public function createImageBmp($file = "") {
-		$image = "";
-
-		if (empty($file)) {
-			header("Content-type: image/bmp");
-			echo $image;
-		} else {
-			return $image;
+			imagefilledpolygon($this->image, $coordinates, $this->backgroundColor());
 		}
 	}
 }
-
