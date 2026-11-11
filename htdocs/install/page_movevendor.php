@@ -173,7 +173,7 @@ function previewMoveVendor(string $srcVendor, string $destVendor): array
 function buildPreviewHtml(
 	array $preview,
 	string $srcVendor,
-	string $destVendor,
+	string $destVendor
 ): string {
 	$isError = in_array($preview["status"], ["novendor"], true);
 	$msgClass = $isError ? "errorMsg" : "x2-note";

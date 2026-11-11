@@ -61,7 +61,7 @@ if (is_object(icms::$module)) {
 function xoops_module_update_system(
 	&$module,
 	$oldversion = null,
-	$dbVersion = null,
+	$dbVersion = null
 ) {
 	global $xoTheme;
 
