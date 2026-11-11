@@ -13,12 +13,12 @@ include 'mainfile.php';
 include ICMS_ROOT_PATH . '/header.php';
 
 $token = (string) ($_REQUEST['c'] ?? '');
-$email = icms_captcha_Mailhide::decode($token);
+$email = \Icms\Captcha\Mailhide::decode($token);
 if ($email === null || !icms_core_DataFilter::checkVar($email, 'email')) {
 	redirect_header(ICMS_URL, 3, ICMS_CAPTCHA_MAILHIDE_INVALID);
 }
 
-$captcha = icms_captcha_Manager::instance();
+$captcha = \Icms\Captcha\Manager::instance();
 $revealed = false;
 $message = '';
 

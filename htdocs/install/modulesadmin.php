@@ -17,6 +17,9 @@
 /**
  *
  */
+
+use Icms\Db\Legacy\Factory as icms_db_legacy_Factory;
+
 icms_loadLanguageFile('system', 'modulesadmin', true);
 
 function xoops_module_install($dirname) {

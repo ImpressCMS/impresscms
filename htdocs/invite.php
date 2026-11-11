@@ -31,7 +31,7 @@ switch ($op) {
 		if (!icms::$security->check()) {
 			$stop .= implode('<br />', icms::$security->getErrors()) . "<br />";
 		}
-		$captchaResult = icms_captcha_Manager::instance()->verify();
+		$captchaResult = \Icms\Captcha\Manager::instance()->verify();
 		if (!$captchaResult->isValid()) {
 			$stop .= $captchaResult->getMessage() . '<br />';
 		}

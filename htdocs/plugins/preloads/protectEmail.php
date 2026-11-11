@@ -89,10 +89,10 @@ class IcmsPreloadProtectEmail extends icms_preload_Item {
 					$patterns[] = '/' . $email . '/';
 					$replacements[] = "<img style='vertical-align:middle;' class='email_protect' src='" . ICMS_URL . "/include/protection.php?p=" . base64_encode(urlencode($email)) . "'>";
 				} elseif ($protection_type == 2  // reveal the address behind the captcha
-					&& icms_captcha_Mailhide::isAvailable()
+					&& \Icms\Captcha\Mailhide::isAvailable()
 				) {
 					$patterns[] = '/' . preg_quote($email, '/') . '/';
-					$replacements[] = icms_captcha_Mailhide::link($email);
+					$replacements[] = \Icms\Captcha\Mailhide::link($email);
 				}
 			}
 			$_smarty_results = preg_replace($patterns, $replacements, $_smarty_results);
