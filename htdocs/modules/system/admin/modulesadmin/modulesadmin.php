@@ -149,7 +149,7 @@ function xoops_module_install($dirname) {
 		'tplset',
 		'tplsource',
 		'xoopsnotifications',
-);
+	);
 	$module_handler = icms::handler('icms_module');
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module = &$module_handler->create();
@@ -630,7 +630,7 @@ function xoops_module_uninstall($dirname) {
 		'tplset',
 		'tplsource',
 		'xoopsnotifications',
-);
+	);
 
 	$db = &icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');

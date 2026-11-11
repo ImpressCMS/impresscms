@@ -1608,9 +1608,12 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 	$module_basename = isset($module_basename) ? trim($module_basename) : $module_dir;
 	$name = (!isset($name)) ? $module_dir : trim($name);
 	if (!isset($handlers[$module_dir][$name])) {
-		$class = 'mod_' . $module_dir . '_' . ucfirst($name) . 'Handler';
-		if (class_exists($class)) {
-			$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
+		$modernClass = 'mod_' . $module_dir . '_' . ucfirst($name) . 'Handler';
+		$legacyClass = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
+		if (class_exists($modernClass)) {
+			$handlers[$module_dir][$name] = new $modernClass(icms::$xoopsDB);
+		} elseif (class_exists($legacyClass)) {
+			$handlers[$module_dir][$name] = new $legacyClass(icms::$xoopsDB);
 		} else {
 			if($module_dir !== 'system') {
 				if (!file_exists($hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/". ucfirst(strtolower($name)) ."Handler.php")) {
@@ -1620,9 +1623,10 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 				$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/admin/{$name}/class/{$name}.php";
 			}
 			if (file_exists($hnd_file)) {include_once $hnd_file;}
-			$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
-			if (class_exists($class)) {
-				$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
+			if (class_exists($modernClass)) {
+				$handlers[$module_dir][$name] = new $modernClass(icms::$xoopsDB);
+			} elseif (class_exists($legacyClass)) {
+				$handlers[$module_dir][$name] = new $legacyClass(icms::$xoopsDB);
 			}
 		}
 	}
@@ -1802,7 +1806,7 @@ function icms_random_str($numchar){
  */
 function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
 
-	icms::$module->displayAdminMenu( $currentoption, icms::$module->name() . ' | ' . $breadcrumb );
+	icms::$module->displayAdminMenu( $currentoption, icms::$module->getVar('name') . ' | ' . $breadcrumb );
 }
 
 /**
@@ -2166,9 +2170,9 @@ function icms_need_do_br($moduleName=false) {
  * The markup in the message is filtered with the site's HTML filter (HTMLPurifier). The filter
  * returns the text unchanged when the purifier is disabled and only appends its marker when it
  * ran, so without the marker the message is shown as plain text instead. Messages that contain
- * the heading produced by icms_core_Object::getHtmlErrors() are shown as errors.
+ * the heading produced by \Icms\Core\Entity::getHtmlErrors() are shown as errors.
  *
- * @param icms_view_theme_Object $xoTheme the theme the assets are added to
+ * @param \Icms\View\Theme\Entity $xoTheme the theme the assets are added to
  * @param string $message the message (may contain simple markup)
  */
 function icms_addRedirectMessage($xoTheme, $message)
@@ -2176,7 +2180,7 @@ function icms_addRedirectMessage($xoTheme, $message)
 	$message = (string)$message;
 	$marker = '<!-- filtered with htmlpurifier -->';
 
-	$filtered = icms_core_HTMLFilter::filterHTML($message);
+	$filtered = \Icms\Core\HTMLFilter::filterHTML($message);
 	$purified = strpos($filtered, $marker) !== false;
 	if ($purified) {
 		$text = str_replace($marker, '', $filtered);
@@ -2187,8 +2191,8 @@ function icms_addRedirectMessage($xoTheme, $message)
 	}
 
 	$flags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT;
-	$options = array('type' => (strpos($message, '<h4>') !== false) ? 'error' : 'info', 'html' => $purified);
-	$labels = array('close' => defined('_CLOSE') ? _CLOSE : 'Close');
+	$options = ['type' => (strpos($message, '<h4>') !== false) ? 'error' : 'info', 'html' => $purified];
+	$labels = ['close' => defined('_CLOSE') ? _CLOSE : 'Close'];
 
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/notify/notify.css', array('media' => 'screen'));
 	$xoTheme->addScript(ICMS_LIBRARIES_URL . '/notify/notify.js', array('type' => 'text/javascript'));
