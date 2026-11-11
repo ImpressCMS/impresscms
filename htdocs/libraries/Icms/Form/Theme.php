@@ -62,7 +62,7 @@ class Theme extends Base
 	 * @param string $extra    HTML to be displayed in the empty row.
 	 * @param string $class    CSS class name for <td> tag
 	 */
-	public function insertBreak(string|null $extra = '', string $class = ''): void
+	public function insertBreak(?string $extra = '', string $class = ''): void
 	{
 		$class = ($class !== '') ? " class='$class'" : '';
 		// Fix for $extra tag not showing
