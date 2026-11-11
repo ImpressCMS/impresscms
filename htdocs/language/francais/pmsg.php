@@ -21,6 +21,7 @@ define("_PM_REGISTERNOW","Inscrivez-vous maintenant !");
 define("_PM_GOBACK","Retour");
 define("_PM_USERNOEXIST","Le membre s&eacute;lectionn&eacute; n'existe pas dans la base de donn&eacute;es.");
 define("_PM_PLZTRYAGAIN","Merci de v&eacute;rifier le nom et de recommencer.");
+define("_PM_SECURITYERROR","La v&eacute;rification de s&eacute;curit&eacute; a &eacute;chou&eacute;. Merci de recharger la page et de recommencer.");
 define("_PM_MESSAGEPOSTED","Votre message a &eacute;t&eacute; post&eacute;");
 define("_PM_CLICKHERE","Vous pouvez cliquer ici pour voir vos messages priv&eacute;s");
 define("_PM_ORCLOSEWINDOW","Ou cliquer ici pour fermer cette fen&ecirc;tre.");

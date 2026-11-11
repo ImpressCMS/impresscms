@@ -3,3 +3,6 @@
 /.buildpath
 /.settings/
 /.homestead/
+
+# Build output
+/var/

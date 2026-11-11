@@ -706,3 +706,6 @@ define("_MD_AM_ENC_RIPEMD256","RIPEMD 256");
 define("_MD_AM_ENC_RIPEMD320","RIPEMD 320");
 define("_MD_AM_ENC_SNEFRU256","Snefru 256");
 define("_MD_AM_ENC_GOST","Gost");
+
+define("_MD_AM_KEEPALIVE", "Mantieni attive le sessioni");
+define("_MD_AM_KEEPALIVEDSC", "Seleziona s&igrave; per mantenere attiva la sessione degli utenti connessi finch&eacute; hanno una pagina del sito aperta, in modo che non vengano disconnessi mentre scrivono un messaggio lungo. Seleziona no per far scadere le sessioni dopo il tempo di scadenza della sessione, anche se una pagina &egrave; ancora aperta.");

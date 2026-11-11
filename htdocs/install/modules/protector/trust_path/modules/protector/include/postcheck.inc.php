@@ -7,5 +7,5 @@ if (!defined('PROTECTOR_PRECHECK_INCLUDED')) {
 }
 
 define('PROTECTOR_POSTCHECK_INCLUDED', 1);
-if (!class_exists('icms_db_legacy_Factory')) return;
+if (!class_exists('Icms\Db\Legacy\icms_db_legacy_Factory')) return;
 protector_postcommon();

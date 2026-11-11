@@ -1,4 +1,51 @@
 # ImpressCMS ChangeLog
+## ImpressCMS 2.0.4
+
+* Date : 24 October 2026
+* DB Version : 49
+* Build Version : 120
+
+### What's Changed
+* deprecate:The XML-RPC library (`xmlrpc.php` and `libraries/xml/rpc`) is deprecated and will be removed in version 3.0
+* fix:Fix system module update resetting db version to 47 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1723
+* fix:Array values no longer read as empty (2.0.2/2.0.3) and repair the HTML filter's allowed lists by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1731
+* fix:Use lowercase table names for IPF objects by @skenow in https://github.com/ImpressCMS/impresscms/pull/1730
+* fix:Fix redirect logic after login by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1716
+* fix:Implement CSRF protection in image editing functionality by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1712
+* fix:Improve CSRF error handling in pmlite by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1711
+* feat:Keep-alive the session using a preloader (new preference `keepalive_enable`, disabled by default on upgraded sites) by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1686
+* feat:Internal link endpoint and CKEditor 4 implementation by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1736
+* chore:Finalizing 2.0.4 release by @fiammybe
+
+### Previous Versions
+#### 2.0.4 Beta (Build 119)
+* Date : 17 October 2026
+* Changes from all beta fixes
+
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.3...v2.0.4
+## ImpressCMS 2.0.3
+
+* Date : 12 April 2026
+* DB Version : 48
+* Build Version : 118
+
+### What's Changed
+* fix:the DB update to v48 is now correctly positioned by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1619
+* fix:Correct condition in previewTarea by @skenow in https://github.com/ImpressCMS/impresscms/pull/1664
+* feat:Add conditional rendering for theme selection selector by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1669
+* feat:Add default escape characters to icms_core_DataFilter::addSlashes for backwards compatibility by @Copilot in https://github.com/ImpressCMS/impresscms/pull/1675
+* feat:Add copilot agent instructions by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1690
+* Fix:1687 remove unnecessary comment in admin tpl by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1692
+* Feat:Add locale constants to translation files to improve date and time display by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1691
+* fix:apply deterministic refactor of regex patterns to counter ReDoS by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1671
+* chore:Finalizing 2.0.3 release by @fiammybe
+
+### Previous Versions
+#### 2.0.3 Beta (Build 117)
+* Date : 05 April 2026
+* Changes from all beta fixes
+
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.2...v2.0.3
 ## ImpressCMS 2.0.2
 
 * Date : 01 October 2025

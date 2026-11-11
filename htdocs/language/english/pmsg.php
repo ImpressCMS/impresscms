@@ -21,6 +21,7 @@ define("_PM_REGISTERNOW","Register Now!");
 define("_PM_GOBACK","Go Back");
 define("_PM_USERNOEXIST","The selected user doesn't exist in the database.");
 define("_PM_PLZTRYAGAIN","Please check the name and try again.");
+define("_PM_SECURITYERROR","Security check failed. Please reload the page and try again.");
 define("_PM_MESSAGEPOSTED","Your message has been posted");
 define("_PM_CLICKHERE","You can click here to view your private messages");
 define("_PM_ORCLOSEWINDOW","Or click here to close this window.");
