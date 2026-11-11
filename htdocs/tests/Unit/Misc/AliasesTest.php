@@ -32,6 +32,7 @@ final class AliasesTest extends TestCase
         ];
     }
 
+    /** @dataProvider aliasProvider */
     #[DataProvider('aliasProvider')]
     public function testLegacyAliasResolvesToModernClass(string $modern, string $legacy): void
     {

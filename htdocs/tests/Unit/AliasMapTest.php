@@ -31,6 +31,7 @@ final class AliasMapTest extends TestCase
         return $cases;
     }
 
+    /** @dataProvider aliasProvider */
     #[DataProvider('aliasProvider')]
     public function testModernClassIsDeclaredInItsPsr4File(string $legacy, string $modern): void
     {
