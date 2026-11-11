@@ -80,7 +80,7 @@ if (!empty($op) && $op == 'cancel') {
 	$image_dir = empty($image_path) ? false : realpath(dirname($image_path));
 	$temp_name = basename((string) $image_path);
 
-	if ($valid_path !== null && $image_dir === $valid_path && str_starts_with($temp_name, 'temp_')) {
+	if ($valid_path !== null && $image_dir === $valid_path && strpos($temp_name, 'temp_') === 0) {
 		$temp_files = array($temp_name, 'orig_' . substr($temp_name, 5));
 
 		$plugins_arr = icms_core_Filesystem::getDirList(ICMS_LIBRARIES_PATH . '/image-editor/plugins');
