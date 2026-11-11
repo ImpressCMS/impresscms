@@ -3,26 +3,23 @@
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="tests/bootstrap.php"
          colors="true"
-         cacheDirectory="var/cache/phpunit"
          executionOrder="depends,defects"
          beStrictAboutOutputDuringTests="true"
          failOnRisky="true"
-         failOnWarning="true"
-         displayDetailsOnTestsThatTriggerWarnings="true"
-         displayDetailsOnTestsThatTriggerNotices="true">
+         failOnWarning="true">
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
         </testsuite>
     </testsuites>
-    <source restrictDeprecations="true" restrictNotices="true" restrictWarnings="true">
+    <coverage>
         <include>
             <directory>libraries/icms</directory>
         </include>
         <exclude>
             <directory>libraries/icms/plugins/Editors</directory>
         </exclude>
-    </source>
+    </coverage>
     <php>
         <ini name="error_reporting" value="-1"/>
         <ini name="display_errors" value="1"/>
