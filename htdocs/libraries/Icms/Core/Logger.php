@@ -195,6 +195,11 @@ class Logger {
 	 * @param Exception $exception
 	 */
 	public function handleException($exception) {
+		// durable record, independent of debug mode
+		if ($exception instanceof \Throwable) {
+			\Icms\Core\EventLog::logThrowable($exception, 'php.exception.uncaught', 'php', \Icms\Core\EventLog::CRITICAL, [], true);
+		}
+
 		\icms_loadLanguageFile('core', 'core');
 
 		$errstr = $exception->getMessage();
@@ -202,6 +207,11 @@ class Logger {
 		if (substr($errstr, 0, 8) == 'notrace:') {
 			$trace = false;
 			$errstr = substr($errstr, 8);
+		}
+		if ($trace && !$this->showErrorDetails()) {
+			// the details are in the event log; the reference identifies the record
+			echo sprintf(_CORE_PAGENOTDISPLAYED, \Icms\Core\EventLog::requestId());
+			exit();
 		}
 		echo sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 		if ($trace) {
@@ -229,6 +239,9 @@ class Logger {
 	 * @param  string  $errline
 	 */
 	public function handleError($errno, $errstr, $errfile, $errline) {
+		// durable record, independent of debug mode (it applies its own error_reporting and @ handling)
+		\Icms\Core\EventLog::logPhpError($errno, $errstr, $errfile, $errline);
+
 		$errstr = $this->sanitizePath($errstr);
 		$errfile = $this->sanitizePath($errfile);
 		if ($this->activated && ( $errno & error_reporting() )) {
@@ -244,6 +257,12 @@ class Logger {
 			}
 
 			\icms_loadLanguageFile('core', 'core');
+
+			if ($trace && !$this->showErrorDetails()) {
+				// the details are in the event log; the reference identifies the record
+				echo sprintf(_CORE_PAGENOTDISPLAYED, \Icms\Core\EventLog::requestId());
+				exit();
+			}
 
 			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 			echo $errortext;
@@ -261,6 +280,20 @@ class Logger {
 			}
 			exit();
 		}
+	}
+
+	/**
+	 * Whether error messages and backtraces may be shown on the page
+	 *
+	 * Only when debug mode is on. Otherwise visitors only get a reference to the record in the event log,
+	 * because messages and traces can reveal paths, queries and credentials.
+	 * Messages prefixed with 'notrace:' are written for visitors and are always shown.
+	 *
+	 * @return bool
+	 */
+	private function showErrorDetails() {
+		global $icmsConfig;
+		return isset($icmsConfig['debug_mode']) && in_array((int) $icmsConfig['debug_mode'], array(1, 2), true);
 	}
 
 	/**

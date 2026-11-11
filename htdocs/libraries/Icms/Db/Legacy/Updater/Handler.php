@@ -61,6 +61,35 @@ class Handler {
 	 */
 	var $_messages = array();
 
+	/**
+	 * Failed steps recorded since this handler was created
+	 *
+	 * @var array<int, array<string, mixed>>
+	 */
+	private $failures = array();
+
+	/**
+	 * Records a failed update step and writes it to the durable event log
+	 *
+	 * @param string $step identifies the failed step, for example "runQuery" or "updateTable"
+	 * @param array $context allowlisted event log context, for example table or module
+	 */
+	public function recordFailure($step, array $context = array()) {
+		$context['step'] = (string) $step;
+		if (!isset($context['errno']) && is_object($this->_db)) {
+			$context['errno'] = (int) $this->_db->errno();
+		}
+		$this->failures[] = $context;
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::ERROR, 'upgrade.step.failed', 'upgrade', 'failure', $context);
+	}
+
+	/**
+	 * @return bool true if a step failed since this handler was created
+	 */
+	public function hasFailures() {
+		return count($this->failures) > 0;
+	}
+
 	function __construct() {
 		// backward compat
 		$this->_db = \icms::$xoopsDB;
@@ -105,6 +134,7 @@ class Handler {
 		}
 
 		if (!$ret) {
+			$this->recordFailure('runQuery');
 			$this->_messages[] =  "&nbsp;&nbsp;$badmsg";
 			return false;
 		} else {
@@ -132,6 +162,7 @@ class Handler {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
+			$this->recordFailure('renameTable', array('table' => $from));
 			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE_ERR, $from);
 			return false;
 		} else {
@@ -181,6 +212,9 @@ class Handler {
 		// If table has updateAll items, update the table
 		if ($table->getUpdateAll()) {
 			$ret = $table->updateAll() && $ret;
+		}
+		if (!$ret) {
+			$this->recordFailure('updateTable', array('table' => $table->name()));
 		}
 		return $ret;
 	}
@@ -462,14 +496,12 @@ class Handler {
 		$textlatestversion = sprintf(_DATABASEUPDATER_LATESTVER, $newDbVersion);
 		$this->_messages[] =  $textcurrentversion;
 		$this->_messages[] =  $textlatestversion;
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::INFO, 'upgrade.module.started', 'upgrade', 'info', array(
+			'module' => $dirname, 'from_version' => (int) $dbVersion, 'to_version' => (int) $newDbVersion,
+		));
 		if(!$tables_first){
 			if ($newDbVersion > $dbVersion) {
-				for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
-					$upgrade_function = $dirname . '_db_upgrade_' . $i;
-					if (function_exists($upgrade_function)) {
-						$upgrade_function();
-					}
-				}
+				$this->runDbUpgradeFunctions($dirname, $dbVersion, $newDbVersion);
 			}
 		}
 		$this->_messages[] =  _DATABASEUPDATER_UPDATE_UPDATING_DATABASE;
@@ -489,17 +521,49 @@ class Handler {
 			*/
 		if($tables_first){
 			if ($newDbVersion > $dbVersion) {
-				for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
-					$upgrade_function = $dirname . '_db_upgrade_' . $i;
-					if (function_exists($upgrade_function)) {
-						$upgrade_function();
-					}
-				}
+				$this->runDbUpgradeFunctions($dirname, $dbVersion, $newDbVersion);
 			}
 		}
 
-		$this->updateModuleDBVersion($newDbVersion, $dirname);
-		return true;
+		// a failed step must not advance the database version, so the next update run repeats it
+		if ($this->hasFailures()) {
+			\Icms\Core\EventLog::audit(\Icms\Core\EventLog::ERROR, 'upgrade.module.failed', 'upgrade', 'failure', array(
+				'module' => $dirname, 'from_version' => (int) $dbVersion, 'to_version' => (int) $newDbVersion,
+			));
+			return false;
+		}
+
+		return $this->updateModuleDBVersion($newDbVersion, $dirname);
+	}
+
+	/**
+	 * Runs the {dirname}_db_upgrade_{n} functions of a module for each database version in the range
+	 *
+	 * An exception is logged and thrown again, so callers see the same behavior as before.
+	 *
+	 * @param string $dirname dirname of the module
+	 * @param int $dbVersion current database version
+	 * @param int $newDbVersion target database version
+	 */
+	private function runDbUpgradeFunctions($dirname, $dbVersion, $newDbVersion) {
+		for ($i = $dbVersion + 1; $i <= $newDbVersion; $i++) {
+			$upgrade_function = $dirname . '_db_upgrade_' . $i;
+			if (!function_exists($upgrade_function)) {
+				continue;
+			}
+			try {
+				$upgrade_function();
+			} catch (\Throwable $e) {
+				$this->failures[] = array('step' => $upgrade_function);
+				\Icms\Core\EventLog::logThrowable($e, 'upgrade.step.failed', 'upgrade', \Icms\Core\EventLog::ERROR, array(
+					'module' => $dirname, 'step' => $upgrade_function, 'to_version' => (int) $i,
+				), true);
+				throw $e;
+			}
+			\Icms\Core\EventLog::audit(\Icms\Core\EventLog::INFO, 'upgrade.step.completed', 'upgrade', 'success', array(
+				'module' => $dirname, 'step' => $upgrade_function, 'to_version' => (int) $i,
+			));
+		}
 	}
 
 	/**
@@ -516,12 +580,19 @@ class Handler {
 		}
 		$module_handler = \icms::handler('icms_module');
 		$module = $module_handler->getByDirname($dirname);
+		$oldDBVersion = (int) $module->getVar('dbversion');
 		$module->setVar('dbversion', $newDBVersion);
 
 		if (!$module_handler->insert($module)) {
 			$module->setErrors(_DATABASEUPDATER_MSG_DB_VERSION_ERR);
+			$this->recordFailure('updateModuleDBVersion', array(
+				'module' => $dirname, 'from_version' => $oldDBVersion, 'to_version' => (int) $newDBVersion,
+			));
 			return false;
 		}
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::INFO, 'upgrade.module.version', 'upgrade', 'success', array(
+			'module' => $dirname, 'from_version' => $oldDBVersion, 'to_version' => (int) $newDBVersion,
+		));
 		return true;
 
 	}

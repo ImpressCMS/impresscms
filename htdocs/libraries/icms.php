@@ -108,6 +108,12 @@ abstract class icms
 	protected static $handlers;
 
 	/**
+	 * Name of the last service that was loaded successfully, for the event log
+	 * @var string
+	 */
+	protected static $lastService = "";
+
+	/**
 	 * Initialize ImpressCMS before bootstrap
 	 */
 	public static function setup()
@@ -138,6 +144,8 @@ abstract class icms
 	 */
 	public static function boot()
 	{
+		\Icms\Core\EventLog::log(\Icms\Core\EventLog::DEBUG, "bootstrap.started", "bootstrap", "info");
+
 		// We just hardcode the preload first, as we need to trigger an event
 		self::$preload = icms_preload_Handler::getInstance();
 		self::$preload->triggerEvent("startCoreBoot");
@@ -159,7 +167,20 @@ abstract class icms
 	 */
 	public static function loadService($name, $factory, $args = [])
 	{
-		self::$$name = self::create($factory, $args);
+		try {
+			self::$$name = self::create($factory, $args);
+		} catch (Throwable $e) {
+			// name the failing service and the last one that started, then let the exception continue as before
+			\Icms\Core\EventLog::logThrowable($e, "bootstrap.service.failed", "bootstrap", \Icms\Core\EventLog::CRITICAL, [
+				"service" => (string) $name,
+				"last_service" => self::$lastService,
+			]);
+			throw $e;
+		}
+		self::$lastService = (string) $name;
+		\Icms\Core\EventLog::log(\Icms\Core\EventLog::DEBUG, "bootstrap.service.loaded", "bootstrap", "success", [
+			"service" => (string) $name,
+		]);
 		icms_Event::trigger("icms", "loadService", null, [
 			"name" => $name,
 			"service" => self::$$name,
@@ -183,7 +204,15 @@ abstract class icms
 		$module_handler = icms::handler("icms_module");
 		$modules = $module_handler->getObjects();
 		foreach ($modules as $module) {
-			$module->registerClassPath(true);
+			try {
+				$module->registerClassPath(true);
+			} catch (Throwable $e) {
+				\Icms\Core\EventLog::logThrowable($e, "module.launch.failed", "module", \Icms\Core\EventLog::ERROR, [
+					"module" => (string) $module->getVar("dirname"),
+					"step" => "registerClassPath",
+				]);
+				throw $e;
+			}
 		}
 
 		$isAdmin = defined("ICMS_IN_ADMIN") && (int) ICMS_IN_ADMIN;

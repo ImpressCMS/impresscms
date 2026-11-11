@@ -135,6 +135,9 @@ include_once ICMS_INCLUDE_PATH . "/functions.php";
 include_once ICMS_INCLUDE_PATH . "/debug_functions.php";
 include_once ICMS_INCLUDE_PATH . "/version.php";
 
+// -- Start the durable event log before anything that can fail (preloads, services); it only needs mainfile constants
+\Icms\Core\EventLog::init();
+
 if (!isset($xoopsOption)) {
 	$xoopsOption = [];
 }

@@ -98,6 +98,13 @@ if (!defined("XOOPS_MAINFILE_INCLUDED")) {
 	// Example: define('ICMS_LOGGING_HOOK', XOOPS_ROOT_PATH . '/modules/foobar/logging_hook.php');
 	define('ICMS_LOGGING_HOOK', '');
 
+	// (optional) Durable event log. One JSON record per line, independent of debug mode and of the database.
+	// By default records go to PHP's error log. To write to a file instead, set an absolute path OUTSIDE the web root.
+	// Example: define('ICMS_LOG_FILE', XOOPS_TRUST_PATH . '/logs/icms-events.log');
+	//define('ICMS_LOG_FILE', '');
+	// Minimum severity that is written: debug, info, notice, warning (default), error or critical.
+	//define('ICMS_LOG_LEVEL', 'warning');
+
 	define("XOOPS_GROUP_ADMIN", "1");
 	define("XOOPS_GROUP_USERS", "2");
 	define("XOOPS_GROUP_ANONYMOUS", "3");

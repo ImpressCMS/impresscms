@@ -86,7 +86,20 @@ class Handler
         } else {
             $filepath = ICMS_PRELOAD_PATH . "/$filename.php";
         }
-        include_once $filepath;
+        if (!is_file($filepath)) {
+            \Icms\Core\EventLog::log(\Icms\Core\EventLog::ERROR, 'preload.load.failed', 'preload', 'failure', [
+                'preload' => (string) $filename, 'module' => (string) $module, 'file' => $filepath, 'reason' => 'file not found',
+            ]);
+        }
+
+        try {
+            include_once $filepath;
+        } catch (\Throwable $e) {
+            \Icms\Core\EventLog::logThrowable($e, 'preload.load.failed', 'preload', \Icms\Core\EventLog::ERROR, [
+                'preload' => (string) $filename, 'module' => (string) $module, 'reason' => 'file could not be loaded',
+            ]);
+            throw $e;
+        }
 
         $classname = $this->getClassName($filename);
 

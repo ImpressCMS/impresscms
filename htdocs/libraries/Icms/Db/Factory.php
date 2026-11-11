@@ -133,7 +133,15 @@ abstract class Factory
 		if (!class_exists($class)) {
 			$class = "\Icms\Db\Connection";
 		}
-		return self::$pdoInstance = new $class($dsn, \XOOPS_DB_USER, \XOOPS_DB_PASS, $options);
+		try {
+			return self::$pdoInstance = new $class($dsn, \XOOPS_DB_USER, \XOOPS_DB_PASS, $options);
+		} catch (\PDOException $e) {
+			// the message and DSN may contain credentials: only the driver error code is logged
+			\Icms\Core\EventLog::log(\Icms\Core\EventLog::CRITICAL, 'db.connect.failed', 'database', 'failure', [
+				'operation' => 'db.connect', 'errno' => (string) $e->getCode(), 'class' => $class,
+			]);
+			throw $e;
+		}
 	}
 	/**
 	 * Get a reference to the only instance of database class and connects to DB
@@ -169,6 +177,9 @@ abstract class Factory
 			/* @todo remove the dependency on the logger class */
 			self::$xoopsInstance->setLogger(\Icms\Core\Logger::instance());
 			if (!self::$xoopsInstance->connect()) {
+				\Icms\Core\EventLog::log(\Icms\Core\EventLog::CRITICAL, 'db.connect.failed', 'database', 'failure', array(
+					'operation' => 'db.connect', 'class' => $class,
+				));
 				/* this requires that include/functions.php has been loaded */
 				\icms_loadLanguageFile('core', 'core');
 				trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);

@@ -72,12 +72,42 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
 		$op = '';
 	}
 	if (empty( $op )) {
+		// a new check starts a new upgrade operation
+		unset( $_SESSION['icms_upgrade_operation'] );
 		include_once 'check_version.php';
 	} else {
+		// correlate the events of all requests of this upgrade run with one operation ID kept in the session
+		$operationId = isset( $_SESSION['icms_upgrade_operation'] ) ? (string) $_SESSION['icms_upgrade_operation'] : '';
+		if (!\Icms\Core\EventLog::resumeOperation( $operationId )) {
+			$_SESSION['icms_upgrade_operation'] = \Icms\Core\EventLog::beginOperation();
+			\Icms\Core\EventLog::audit( \Icms\Core\EventLog::INFO, 'upgrade.started', 'upgrade', 'info', array(
+				'count' => count( $_SESSION['xoops_upgrade'] ),
+			) );
+		}
+
 		$next = array_shift( $_SESSION['xoops_upgrade'] );
 		printf( '<h2>' . _PERFORMING_UPGRADE . '</h2>', $next );
-		$upgrader = include_once "$next/index.php";
-		$res = $upgrader->apply();
+		\Icms\Core\EventLog::audit( \Icms\Core\EventLog::INFO, 'upgrade.step.started', 'upgrade', 'info', array( 'step' => $next ) );
+		try {
+			$upgrader = include_once "$next/index.php";
+			$res = $upgrader->apply();
+		} catch (Throwable $e) {
+			// keep the failed step queued so a retry repeats it, and let the logger show the exception as before
+			array_unshift( $_SESSION['xoops_upgrade'], $next );
+			\Icms\Core\EventLog::logThrowable( $e, 'upgrade.step.failed', 'upgrade', \Icms\Core\EventLog::ERROR, array( 'step' => $next ), true );
+			throw $e;
+		}
+		if (!$res) {
+			// not finished yet: the step stays queued and is repeated on reload
+			\Icms\Core\EventLog::audit( \Icms\Core\EventLog::WARNING, 'upgrade.step.incomplete', 'upgrade', 'failure', array( 'step' => $next ) );
+		} else {
+			\Icms\Core\EventLog::audit( \Icms\Core\EventLog::INFO, 'upgrade.step.completed', 'upgrade', 'success', array( 'step' => $next ) );
+			if (empty( $_SESSION['xoops_upgrade'] )) {
+				\Icms\Core\EventLog::audit( \Icms\Core\EventLog::INFO, 'upgrade.completed', 'upgrade', 'success' );
+				unset( $_SESSION['icms_upgrade_operation'] );
+				\Icms\Core\EventLog::endOperation();
+			}
+		}
 		if (!$res) {
 			array_unshift( $_SESSION['xoops_upgrade'], $next );
 			echo '<a id="link-next" href="index.php?action=next">' . _RELOAD . '</a>';

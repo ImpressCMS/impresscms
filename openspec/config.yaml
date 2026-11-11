@@ -1,0 +1,31 @@
+schema: spec-driven
+
+context: |
+  Project: ImpressCMS 2.0.x (legacy icms_* underscore classes, PHP 7.4 to 8.4, no composer, no test suite).
+  Language: write artifacts, code, commits, issues and PRs in English.
+  Core changes need explicit approval before implementation.
+  Verification is php -l (php74 and php84) plus manual testing.
+
+rules:
+  tasks:
+    - Group tasks by sub-component so each group can become one reviewable commit
+    - Order groups foundation first, then the code that uses it, then documentation and release notes
+    - Reference task numbers (for example 1.1-1.3) so commit messages can cite them
+
+operations:
+  apply:
+    guidance:
+      - Commit in logically grouped commits, one per sub-component, so a human reviewer can follow them one by one
+      - One commit is one coherent change that is understandable on its own; do not mix refactors, formatting or unrelated fixes with functional changes
+      - Order commits foundation first (new class or helper), then its users, then documentation and release notes
+      - Every commit must work on its own, so php -l passes and the site does not break after each individual commit
+      - Group by task group from tasks.md and split a group further when it is too large for one review
+      - Keep OpenSpec artifacts (proposal, design, specs, tasks, config) in their own commit, separate from code
+      - Write commit messages in English, conventional-commits style (feat:, fix:, docs:, chore:); the title says what changes, the body says why and which tasks (for example 1.1-1.3) are included
+      - Tick completed tasks in tasks.md in the same commit that implements them
+      - Stage selectively (git add -p or per file) and check git diff --staged before each commit so nothing else is included
+      - Never use --no-verify, never amend or force-push existing commits, never commit credentials or debug files
+      - Show the proposed commit plan (list of commits with files) first and wait for approval before committing; do not push
+  archive:
+    guidance:
+      - Summarize the archive outcome before finishing

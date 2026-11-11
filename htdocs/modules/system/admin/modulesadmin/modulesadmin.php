@@ -953,6 +953,16 @@ function icms_module_update($dirname) {
 	// Save current version for use in the update function
 	$prev_version = $module->getVar('version');
 	$prev_dbversion = $module->getVar('dbversion');
+
+	// correlate all events of this module update; $updateFailed is set by every step whose result is a failure
+	$updateFailed = FALSE;
+	$startedOperation = (\Icms\Core\EventLog::operationId() === NULL);
+	if ($startedOperation) {
+		\Icms\Core\EventLog::beginOperation();
+	}
+	\Icms\Core\EventLog::audit(\Icms\Core\EventLog::INFO, 'upgrade.update.started', 'upgrade', 'info', array(
+		'module' => $dirname, 'from_version' => (int) $prev_dbversion,
+	));
 	/**
 	 * http://www.php.net/manual/en/language.oop5.paamayim-nekudotayim.php
 	 *
@@ -976,6 +986,10 @@ function icms_module_update($dirname) {
 	}
 
 	if (!$module_handler->insert($module)) {
+		$updateFailed = TRUE;
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::ERROR, 'upgrade.step.failed', 'upgrade', 'failure', array(
+			'module' => $dirname, 'step' => 'module_data', 'errno' => (int) icms::$xoopsDB->errno(),
+		));
 		$msgs[] = sprintf('<p>' . _MD_AM_UPDATE_FAIL . '</p>', $module->getVar('name'));
 	} else {
 		$newmid = $module->getVar('mid');
@@ -1364,34 +1378,63 @@ function icms_module_update($dirname) {
 		if (FALSE !== $update_script && trim($update_script) != '') {
 			include_once ICMS_MODULES_PATH . '/' . $dirname . '/' . trim($update_script);
 
-			$is_IPF = $module->getInfo('object_items');
-			if (!empty($is_IPF)) {
-				$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
-				$icmsDatabaseUpdater->moduleUpgrade($module, TRUE);
-				array_merge($msgs, $icmsDatabaseUpdater->_messages);
-			}
+			try {
+				$is_IPF = $module->getInfo('object_items');
+				if (!empty($is_IPF)) {
+					$icmsDatabaseUpdater = icms_db_legacy_Factory::getDatabaseUpdater();
+					if (!$icmsDatabaseUpdater->moduleUpgrade($module, TRUE)) {
+						$updateFailed = TRUE;
+					}
+					array_merge($msgs, $icmsDatabaseUpdater->_messages);
+				}
 
-			if (function_exists('xoops_module_update_' . $ModName)) {
-				$func = 'xoops_module_update_' . $ModName;
-				if (!$func($module, $prev_version, $prev_dbversion)) {
-					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
-				} else {
-					$msgs[] = $module->messages;
-					$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
+				$func = '';
+				if (function_exists('xoops_module_update_' . $ModName)) {
+					$func = 'xoops_module_update_' . $ModName;
+				} elseif (function_exists('icms_module_update_' . $ModName)) {
+					$func = 'icms_module_update_' . $ModName;
 				}
-			} elseif (function_exists('icms_module_update_' . $ModName)) {
-				$func = 'icms_module_update_' . $ModName;
-				if (!$func($module, $prev_version, $prev_dbversion)) {
-					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
-				} else {
-					$msgs[] = $module->messages;
-					$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
+
+				if ($func !== '') {
+					if (!$func($module, $prev_version, $prev_dbversion)) {
+						$updateFailed = TRUE;
+						\Icms\Core\EventLog::audit(\Icms\Core\EventLog::ERROR, 'upgrade.step.failed', 'upgrade', 'failure', array(
+							'module' => $dirname, 'step' => $func,
+						));
+						// the update function reports the reason in its messages
+						if (!empty($module->messages)) {
+							$msgs[] = $module->messages;
+						}
+						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, '<strong>' . $func . '</strong>');
+					} else {
+						$msgs[] = $module->messages;
+						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, '<strong>' . $func . '</strong>');
+					}
 				}
+			} catch (Throwable $e) {
+				\Icms\Core\EventLog::logThrowable($e, 'upgrade.update.failed', 'upgrade', \Icms\Core\EventLog::ERROR, array('module' => $dirname), TRUE);
+				if ($startedOperation) {
+					\Icms\Core\EventLog::endOperation();
+				}
+				throw $e;
 			}
 		}
 
-		$msgs[] = '</code><p>' . sprintf(_MD_AM_OKUPD, '<strong>' . $module->getVar('name') . '</strong>') . '</p>';
+		if (!$updateFailed) {
+			$msgs[] = '</code><p>' . sprintf(_MD_AM_OKUPD, '<strong>' . $module->getVar('name') . '</strong>') . '</p>';
+		}
 	}
+
+	if ($updateFailed) {
+		$msgs[] = '</code>';
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::ERROR, 'upgrade.update.failed', 'upgrade', 'failure', array('module' => $dirname));
+	} else {
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::INFO, 'upgrade.update.completed', 'upgrade', 'success', array('module' => $dirname));
+	}
+	if ($startedOperation) {
+		\Icms\Core\EventLog::endOperation();
+	}
+
 	$ret = '<code>' . implode('<br />', $msgs);
 	return $ret;
 }
