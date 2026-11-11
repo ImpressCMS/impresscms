@@ -76,7 +76,7 @@ function xoops_module_list($refreshCatalog = FALSE) {
 	$icmsAdminTpl->assign('lang_backups', _MD_AM_BACKUPS);
 	$icmsAdminTpl->assign('lang_remove', _MD_AM_REMOVE);
 
-	$catalog = new icms_module_Catalog();
+	$catalog = new \Icms\Module\Catalog();
 	$catalogModules = $catalog->getModules($refreshCatalog);
 	$icmsAdminTpl->assign('github_checked', $catalog->getFetchedAt()
 		? sprintf(_MD_AM_GITHUB_CHECKED, formatTimestamp($catalog->getFetchedAt(), 'm'))
@@ -136,10 +136,10 @@ function xoops_module_list($refreshCatalog = FALSE) {
 /**
  * The updater that installs GitHub releases, with the catalog cached for the modules list
  *
- * @return icms_module_Updater
+ * @return \Icms\Module\Updater
  */
 function icms_module_github_updater() {
-	return new icms_module_Updater(new icms_module_Catalog());
+	return new \Icms\Module\Updater(new \Icms\Module\Catalog());
 }
 
 /**
@@ -200,12 +200,12 @@ function icms_module_backup_status($status) {
  * The table is a copy of the catalog, brought up to date when the catalog was fetched
  * from GitHub during this request or when it is still empty.
  *
- * @param	icms_module_Catalog	$catalog
+ * @param	\Icms\Module\Catalog	$catalog
  * @param	array	$catalogModules	the catalog's modules
  * @param	array	$dirlist		module folders on disk
  * @return	string
  */
-function icms_module_github_table(icms_module_Catalog $catalog, array $catalogModules, array $dirlist) {
+function icms_module_github_table(\Icms\Module\Catalog $catalog, array $catalogModules, array $dirlist) {
 	$handler = icms_getModuleHandler('modulecatalog', 'system');
 	// sync() only writes rows that changed, so a cached catalog costs one read; this also
 	// drops the rows of owners that are no longer trusted. An empty catalog that was not just
@@ -251,12 +251,12 @@ function icms_module_github_table(icms_module_Catalog $catalog, array $catalogMo
 /**
  * GitHub information of a module for the modules list
  *
- * @param	icms_module_Catalog	$catalog
+ * @param	\Icms\Module\Catalog	$catalog
  * @param	string	$dirname
  * @param	string	$version	version of the module files
  * @return	array|FALSE	repository url, latest release and whether it is newer; FALSE when the module is not on GitHub
  */
-function icms_module_github_info(icms_module_Catalog $catalog, $dirname, $version) {
+function icms_module_github_info(\Icms\Module\Catalog $catalog, $dirname, $version) {
 	$entry = $catalog->getModule($dirname);
 	if ($entry === NULL) {
 		return FALSE;
@@ -308,7 +308,7 @@ function xoops_module_install($dirname) {
 		'tplset',
 		'tplsource',
 		'xoopsnotifications',
-);
+	);
 	$module_handler = icms::handler('icms_module');
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module = &$module_handler->create();
@@ -789,7 +789,7 @@ function xoops_module_uninstall($dirname) {
 		'tplset',
 		'tplsource',
 		'xoopsnotifications',
-);
+	);
 
 	$db = &icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');

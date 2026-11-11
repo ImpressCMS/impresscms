@@ -347,7 +347,7 @@ if ($op == 'update_ok') {
 }
 
 if ($op == 'github_update') {
-	$catalog = new icms_module_Catalog();
+	$catalog = new \Icms\Module\Catalog();
 	$entry = $catalog->getModule($module);
 	icms_cp_header();
 	if ($entry === NULL || empty($entry['latest'])) {

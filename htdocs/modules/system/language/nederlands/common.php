@@ -181,4 +181,3 @@ define('_CO_ICMS_WARNING_ALPHA', 'Deze module komt zoals hij is, zonder welke ga
 define('_CO_ICMS_UPDATE_NEEDED', 'Uw systeemmodule dient te worden bijgewerkt');
 define('_CO_ICMS_URL_FILE', 'URL: ');
 define('_MD_AM_HELP_TIP', 'Helptekst bekijken');
-?>

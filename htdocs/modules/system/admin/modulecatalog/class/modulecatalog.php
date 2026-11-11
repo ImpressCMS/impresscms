@@ -2,7 +2,7 @@
 /**
  * Modules available on GitHub
  *
- * The rows are a read-only copy of icms_module_Catalog, so the modules admin can show
+ * The rows are a read-only copy of \Icms\Module\Catalog, so the modules admin can show
  * them in an IPF table with sorting, filtering and paging.
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
@@ -118,7 +118,7 @@ class SystemModulecatalogHandler extends icms_ipf_Handler {
 	/**
 	 * Make the table match the catalog: add new repositories, update changed ones, remove those that left
 	 *
-	 * @param	array	$modules	icms_module_Catalog::getModules()
+	 * @param	array	$modules	\Icms\Module\Catalog::getModules()
 	 * @return	bool
 	 */
 	public function sync(array $modules) {
