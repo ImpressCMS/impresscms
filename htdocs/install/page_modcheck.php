@@ -67,13 +67,24 @@ function xoDiagIfWritable( $path) {
 	if (!is_dir( $path )) {
 		if (file_exists( $path )) {
 			@chmod( $path, 0666 );
-			$error = !is_writeable( $path );
+			$error = !is_writable( $path );
 		}
 	} else {
 		@chmod( $path, 0777 );
-		$error = !is_writeable( $path );
+		$error = !is_writable( $path );
 	}
 	return xoDiag( $error ? -1 : 1, $error ? 'Not writable' : 'Writable' );
+}
+
+function imCheckComposer(): bool
+{
+	if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
+		return false;
+	}
+	if (!file_exists(__DIR__ . '/../vendor')) {
+		return false;
+	}
+	return true;
 }
 
 function imCheckRequirements()
@@ -113,8 +124,11 @@ function imCheckRequirements()
 	$requirement['gd']['description']="GD Extension";
 	$requirement['gd']['result']=extension_loaded( 'GD' ) ? SUCCESS : FAILED;
 	$requirement['gd']['status']=extension_loaded( 'GD' ) ? true : false;
-	
-	
+
+	$requirement['composer']['description']="Composer libraries available";
+	$requirement['composer']['result']=imCheckComposer() ? SUCCESS : FAILED;
+	$requirement['composer']['status']=imCheckComposer() ? true : false;
+
 	return $requirement;
 }
 

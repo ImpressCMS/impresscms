@@ -37,6 +37,8 @@
  * @version	$Id: dbmanager.php 12329 2013-09-19 13:53:36Z skenow $
  */
 
+use Icms\Db\Legacy\Factory as icms_db_legacy_Factory;
+
 /**
  * database manager for XOOPS installer
  *
