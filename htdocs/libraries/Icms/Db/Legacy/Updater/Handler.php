@@ -382,10 +382,10 @@ class Handler {
 	/**
 	 * Rename a table created with a mixed-case name to the lowercase name used by IPF
 	 *
-	 * @param icms_db_legacy_updater_Table $table table with the lowercase name
+	 * @param Table $table table with the lowercase name
 	 * @param array<int, string> $legacyNames unprefixed names the table may have been created with
 	 */
-	private function renameLegacyCaseTable(icms_db_legacy_updater_Table $table, array $legacyNames): void {
+	private function renameLegacyCaseTable(Table $table, array $legacyNames): void {
 		if ($table->exists()) {
 			return;
 		}
