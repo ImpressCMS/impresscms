@@ -144,6 +144,10 @@ class Handler extends \Icms\Core\EntityHandler {
 			$dataToSave['last_login'] = 0;
 			$dataToSave['user_regdate'] = time();
 
+			foreach (['user_sig', 'bio'] as $textColumn) {
+				$dataToSave[$textColumn] ??= $this->db->quoteString('');
+			}
+
 			$sql = 'INSERT INTO `' . $this->db->prefix('users') . '`(';
 			$first = true;
 			foreach (array_keys($dataToSave) as $columnName) {

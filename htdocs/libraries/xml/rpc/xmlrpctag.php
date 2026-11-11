@@ -34,12 +34,15 @@
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
+ * @deprecated The XML-RPC library will be removed in version 3.0
  * @package	XML
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
  * @version	$Id: xmlrpctag.php 19118 2010-03-27 17:46:23Z skenow $
  */
+
+icms_core_Debug::setDeprecated('XML-RPC library (xmlrpctag.php)', sprintf(_CORE_REMOVE_IN_VERSION, '3.0'));
 
 class XoopsXmlRpcDocument
 {

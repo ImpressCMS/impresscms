@@ -49,3 +49,7 @@ define("_DATABASEUPDATER_MSG_DROP_TABLE_ERR", "Error dropping database table %s"
 // Added in 1.3.2
 define("_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL", "Query successful: %s");
 define("_DATABASEUPDATER_MSG_QUERY_FAILED", "Query failed: %s");
+
+// Added in 2.0.4
+define("_DATABASEUPDATER_MSG_RENAME_TABLE", 'Successfully renamed table %1$s to %2$s');
+define("_DATABASEUPDATER_MSG_RENAME_TABLE_ERR", "Error renaming table %s");

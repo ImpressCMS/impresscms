@@ -20,6 +20,7 @@ define("_PM_REGISTERNOW","现在注册!");
 define("_PM_GOBACK","返回");
 define("_PM_USERNOEXIST","数据库中找不到所选的用户");
 define("_PM_PLZTRYAGAIN","请检查用户名，再试一次");
+define("_PM_SECURITYERROR","安全检查失败，请刷新页面后重试。");
 define("_PM_MESSAGEPOSTED","信息已发布");
 define("_PM_CLICKHERE","点击这里查看你的私人信息");
 define("_PM_ORCLOSEWINDOW","点击这里关闭本窗口");

@@ -9,6 +9,22 @@ Legend :
   -  a constant was removed OR a whole file was removed
   #  Directory / Folders guide
 
+ImpressCMS 2.0.4
+===
+language/databaseupdater.php
+----------------------------
+ + _DATABASEUPDATER_MSG_RENAME_TABLE
+ + _DATABASEUPDATER_MSG_RENAME_TABLE_ERR
+
+language/pmsg.php
+-----------------
+ + _PM_SECURITYERROR
+
+modules/system/language/admin/preferences.php
+---------------------------------------------
+ + _MD_AM_KEEPALIVE
+ + _MD_AM_KEEPALIVEDSC
+
 ImpressCMS 1.4.3
 ===
 finish.php

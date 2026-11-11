@@ -922,7 +922,7 @@ function icms_getTablesArray($moduleName, $items)
 {
 	$ret = array();
 	if (is_array($items))
-	foreach($items as $item) {$ret[] = $moduleName.'_'.$item;}
+	foreach($items as $item) {$ret[] = strtolower("{$moduleName}_{$item}");}
 	return $ret;
 }
 
@@ -1806,7 +1806,7 @@ function icms_random_str($numchar){
  */
 function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
 
-	icms::$module->displayAdminMenu( $currentoption, icms::$module->name() . ' | ' . $breadcrumb );
+	icms::$module->displayAdminMenu( $currentoption, icms::$module->getVar('name') . ' | ' . $breadcrumb );
 }
 
 /**
