@@ -158,6 +158,7 @@ function xoops_module_install($dirname) {
 		$module->setVar('weight', 1);
 		$error = FALSE;
 		$errs = array();
+		$created_tables = array();
 		$sqlfile = &$module->getInfo('sqlfile');
 		$msgs = array();
 		$msgs[] = '<h4 style="text-align:' . _GLOBAL_LEFT . ';margin-bottom: 0px;border-bottom: dashed 1px #000000;">' . _MD_AM_INSTALLING . $module->getInfo('name') . '</h4>';
@@ -236,7 +237,7 @@ function xoops_module_install($dirname) {
 				foreach ($created_tables as $ct) {
 					$db->query("DROP TABLE " . $db->prefix($ct));
 				}
-				$ret = "<p>" . sprintf(_MD_AM_FAILINS, "<strong>" . $module->name() . "</strong>") . "&nbsp;" . _MD_AM_ERRORSC . "<br />";
+				$ret = "<p>" . sprintf(_MD_AM_FAILINS, "<strong>" . $module->getVar('name') . "</strong>") . "&nbsp;" . _MD_AM_ERRORSC . "<br />";
 				$ret .= " - " . implode("<br /> - ", $errs) . "<br /></p>";
 				unset($module, $created_tables, $errs, $msgs);
 				return $ret;

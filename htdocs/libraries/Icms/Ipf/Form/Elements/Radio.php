@@ -52,7 +52,7 @@ class Radio extends \Icms\Form\Elements\Radio {
 			} else {
 				// finding the itemHandler; if none, let's take the itemHandler of the $object
 				if (isset($control['itemHandler'])) {
-					if (!$control['module']) {
+					if (empty($control['module'])) {
 						// Creating the specified core object handler
 						$control_handler = \icms::handler($control['itemHandler']);
 					} else {
