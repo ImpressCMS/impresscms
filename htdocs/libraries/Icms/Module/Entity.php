@@ -282,11 +282,21 @@ class Entity extends \Icms\Core\Entity {
 	 * Load the admin menu for the module
 	 */
 	public function loadAdminMenu() {
-		if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
-			$this->adminmenu = &$adminmenu;
+		// The menu file is included once per request, but several objects of the
+		// same module can ask for it (the admin menu cache and icms::$module), so
+		// keep what it defined for the next object.
+		static $menus = [];
+
+		$file = ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
+		if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists($file)) {
+			if (!isset($menus[$file])) {
+				$adminmenu = $headermenu = null;
+				include_once $file;
+				$menus[$file] = [$adminmenu, $headermenu];
+			}
+			list($this->adminmenu, $headermenu) = $menus[$file];
 			if (isset($headermenu)) {
-				$this->adminheadermenu = &$headermenu;
+				$this->adminheadermenu = $headermenu;
 			}
 		}
 	}
@@ -392,7 +402,7 @@ class Entity extends \Icms\Core\Entity {
 			'adminmenu' => $this->getAdminMenu(),
 			'current' => $currentoption,
 			'breadcrumb' => $breadcrumb,
-			'headermenucount' => count($this->getAdminHeaderMenu()),
+			'headermenucount' => count((array) $this->getAdminHeaderMenu()),
 			'submenus' => $submenus,
 			'currentsub' => $currentsub,
 			'submenuscount' => count($submenus)));
