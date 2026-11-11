@@ -29,7 +29,7 @@ $dateFormatTojQueryUIDatePickerFormat = dateFormatTojQueryUIDatePickerFormat(_SH
 define('_DATEFORMATCHANGED', $dateFormatTojQueryUIDatePickerFormat);
 
 if (_LANGCODE  !== 'en' && file_exists (ICMS_ROOT_PATH.'/language/'.$icmsConfig['language']."/datepicker-" ._LANGCODE. ".js")) {
-    icms_form_elements_Date::addCalendarScript(ICMS_URL . "/language/" .$icmsConfig['language']. "/datepicker-" ._LANGCODE. ".js");
+    \Icms\Form\Elements\Date::addCalendarScript(ICMS_URL . "/language/" .$icmsConfig['language']. "/datepicker-" ._LANGCODE. ".js");
 }
 
 
@@ -48,4 +48,4 @@ showAnim: "slideDown"
 $(".ui-datepicker-trigger").attr("alt", "' ._CALENDAR. '").attr("title", "' ._CALENDAR. '");
 });';
 
-icms_form_elements_Date::addCalendarScript("", $src);
+\Icms\Form\Elements\Date::addCalendarScript("", $src);
