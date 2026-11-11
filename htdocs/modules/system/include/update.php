@@ -38,13 +38,16 @@
  * @author		malanciault <marcan@impresscms.org)
  * @version		$Id: update.php 12313 2013-09-15 21:14:35Z skenow $
  */
-icms_loadLanguageFile('core', 'databaseupdater');
+
+use Icms\Db\Legacy\Factory as icms_db_legacy_Factory;
+
+icms_loadLanguageFile("core", "databaseupdater");
 
 // this needs to be the latest db version - and the constant must start with the module's dirname
 if (is_object(icms::$module)) {
-	define('SYSTEM_DB_VERSION', icms::$module->getDBVersion());
+	define("SYSTEM_DB_VERSION", icms::$module->getDBVersion());
 } else {
-	define('SYSTEM_DB_VERSION', 49);
+	define("SYSTEM_DB_VERSION", 50);
 }
 
 /**
@@ -54,11 +57,13 @@ if (is_object(icms::$module)) {
  *
  * @param string $path absolute path of the file or folder that should be gone
  */
-function system_update_verify_removed($path) {
+function system_update_verify_removed($path)
+{
 	if (file_exists($path)) {
-		icms_core_EventLog::audit(icms_core_EventLog::WARNING, 'upgrade.cleanup.failed', 'upgrade', 'failure', array(
-			'module' => 'system', 'file' => $path,
-		));
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::WARNING, "upgrade.cleanup.failed", "upgrade", "failure", [
+			"module" => "system",
+			"file" => $path,
+		]);
 	}
 }
 
@@ -70,23 +75,39 @@ function system_update_verify_removed($path) {
  * @param int $dbVersion The database version
  * @return mixed
  */
-function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = null) {
+function xoops_module_update_system(
+	&$module,
+	$oldversion = null,
+	$dbVersion = null,
+) {
 	global $xoTheme;
 
 	$from_112 = $abortUpdate = false;
 
-	$oldversion = $module->getVar('version');
+	$oldversion = $module->getVar("version");
 	if ($oldversion < 120) {
-		$result = icms::$xoopsDB->query("SELECT t1.tpl_id FROM " . icms::$xoopsDB->prefix('tplfile') . " t1, " . icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
+		$result = icms::$xoopsDB->query(
+			"SELECT t1.tpl_id FROM " .
+				icms::$xoopsDB->prefix("tplfile") .
+				" t1, " .
+				icms::$xoopsDB->prefix("tplfile") .
+				" t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id",
+		);
 
-		$tplids = array ();
-		while (list($tplid) = icms::$xoopsDB->fetchRow($result)) {
+		$tplids = [];
+		while ([$tplid] = icms::$xoopsDB->fetchRow($result)) {
 			$tplids[] = $tplid;
 		}
 
 		if (count($tplids) > 0) {
-			$tplfile_handler = icms::handler('icms_view_template_file');
-			$duplicate_files = $tplfile_handler->getObjects(new icms_db_criteria_Item('tpl_id', "(" . implode(',', $tplids) . ")", "IN"));
+			$tplfile_handler = icms::handler("icms_view_template_file");
+			$duplicate_files = $tplfile_handler->getObjects(
+				new icms_db_criteria_Item(
+					"tpl_id",
+					"(" . implode(",", $tplids) . ")",
+					"IN",
+				),
+			);
 
 			if (count($duplicate_files) > 0) {
 				foreach (array_keys($duplicate_files) as $i) {
@@ -102,11 +123,19 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$dbVersion = $module->getDBVersion();
 	$newDbVersion = (int) $dbVersion;
-	icms_core_EventLog::audit(icms_core_EventLog::INFO, 'upgrade.module.started', 'upgrade', 'info', array(
-		'module' => 'system', 'from_version' => (int) $dbVersion, 'to_version' => (int) ICMS_SYSTEM_DBVERSION,
-	));
-	echo sprintf(_DATABASEUPDATER_CURRENTVER, icms_conv_nr2local($dbVersion)) . '<br />';
-	echo "<code>" . sprintf(_DATABASEUPDATER_UPDATE_TO, icms_conv_nr2local(ICMS_SYSTEM_DBVERSION)) . "<br />";
+	\Icms\Core\EventLog::audit(\Icms\Core\EventLog::INFO, "upgrade.module.started", "upgrade", "info", [
+		"module" => "system",
+		"from_version" => (int) $dbVersion,
+		"to_version" => (int) ICMS_SYSTEM_DBVERSION,
+	]);
+	echo sprintf(_DATABASEUPDATER_CURRENTVER, icms_conv_nr2local($dbVersion)) .
+		"<br />";
+	echo "<code>" .
+		sprintf(
+			_DATABASEUPDATER_UPDATE_TO,
+			icms_conv_nr2local(ICMS_SYSTEM_DBVERSION),
+		) .
+		"<br />";
 
 	/**
 	 * DEVELOPER, PLEASE NOTE !!!
@@ -127,105 +156,130 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$CleanWritingFolders = false;
 
 	/* check for previous release's upgrades - dbversion < this major release's initial version */
-	if ($dbVersion < 46) include 'update-14.php';
+	if ($dbVersion < 46) {
+		include "update-14.php";
+	}
 
 	/* Begin automatic upgrades available with IPF-compliant objects
 	 * This can be done before any specific upgrade tasks are started
 	 */
-	$icmsDatabaseUpdater->automaticUpgrade('icms_data', array('file', 'urllink'));
+	$icmsDatabaseUpdater->automaticUpgrade("icms_data", ["file", "urllink"]);
 	$icmsDatabaseUpdater->moduleUpgrade($module);
 	// a failed table update must not advance the database version, so the next run repeats it
 	if ($icmsDatabaseUpdater->hasFailures()) {
 		$abortUpdate = true;
 	}
-	
+
 	/* Begin upgrade to version 2.0.0 beta 1 */
-	if (!$abortUpdate) $newDbVersion = 47;
+	if (!$abortUpdate) {
+		$newDbVersion = 47;
+	}
 	try {
 		if (!$abortUpdate && $dbVersion < $newDbVersion) {
-
 			// Remove all the legacy files that are were removed in 1.5.0
 			// TODO: make a generic file removal function.
 			// Remove the 'deprecated' files in the root and all OpenID related files
 
-			$removeFolders_150 =[
-				ICMS_ROOT_PATH . '/kernel',
-				ICMS_ROOT_PATH . '/class'];
+			$removeFolders_150 = [
+				ICMS_ROOT_PATH . "/kernel",
+				ICMS_ROOT_PATH . "/class",
+			];
 
-			$removeOpenIDfiles =[
-				ICMS_ROOT_PATH . '/modules/system/templates/system_openid.html',
-				ICMS_ROOT_PATH . '/try_auth.php',
-				ICMS_ROOT_PATH . '/finish_auth.php',
-				ICMS_ROOT_PATH . '/libraries/icms/auth/Openid.php'
+			$removeOpenIDfiles = [
+				ICMS_ROOT_PATH . "/modules/system/templates/system_openid.html",
+				ICMS_ROOT_PATH . "/try_auth.php",
+				ICMS_ROOT_PATH . "/finish_auth.php",
+				ICMS_ROOT_PATH . "/libraries/icms/auth/Openid.php",
 			];
-			$removeOpenIDfolders = [
-				ICMS_ROOT_PATH . '/libraries/phpopenid'
-			];
+			$removeOpenIDfolders = [ICMS_ROOT_PATH . "/libraries/phpopenid"];
 
 			// Determine if FCKeditor is in use and remove it if it is not
 			//$config_handler = icms::handler('icms_config');
 			$criteria = new icms_db_criteria_Compo();
-			$criteria->add(new icms_db_criteria_Item('conf_value', 'FCKeditor'));
+			$criteria->add(
+				new icms_db_criteria_Item("conf_value", "FCKeditor"),
+			);
 			$config = icms::$config->getConfigs($criteria);
 			$confcount = count($config);
 
 			if ($confcount == 0) {
-				icms_core_Filesystem::deleteRecursive(ICMS_EDITOR_PATH . '/FCKeditor', true);
+				icms_core_Filesystem::deleteRecursive(
+					ICMS_EDITOR_PATH . "/FCKeditor",
+					true,
+				);
 			}
 
 			// Determine if TinyMCE is in use and remove it if it is not
 			$criteria = new icms_db_criteria_Compo();
-			$criteria->add(new icms_db_criteria_Item('conf_value', 'tinymce'));
+			$criteria->add(new icms_db_criteria_Item("conf_value", "tinymce"));
 			$config = icms::$config->getConfigs($criteria);
 			$confcount = count($config);
 
 			if ($confcount == 0) {
-				icms_core_Filesystem::deleteRecursive(ICMS_EDITOR_PATH . '/tinymce', true);
+				icms_core_Filesystem::deleteRecursive(
+					ICMS_EDITOR_PATH . "/tinymce",
+					true,
+				);
 			}
 
 			// first, remove the files and the folders that contain deprecated classes.
 			foreach ($removeFolders_150 as $foldertoremove) {
-				echo icms_core_Filesystem::deleteRecursive($foldertoremove, true). '</br>';
+				echo icms_core_Filesystem::deleteRecursive(
+					$foldertoremove,
+					true,
+				) . "</br>";
 				system_update_verify_removed($foldertoremove);
 			}
 
 			// Third, check if openID is configured as login method. If not, remove.
-			if(!defined('ICMS_INCLUDE_OPENID')) {
+			if (!defined("ICMS_INCLUDE_OPENID")) {
 				foreach ($removeOpenIDfiles as $filetoremove) {
 					icms_core_Filesystem::deleteFile($filetoremove);
 					system_update_verify_removed($filetoremove);
-					echo 'Removed '. $filetoremove . '</br>';
+					echo "Removed " . $filetoremove . "</br>";
 				}
 				foreach ($removeOpenIDfolders as $foldertoremove) {
-					icms_core_Filesystem::deleteRecursive($foldertoremove, true);
+					icms_core_Filesystem::deleteRecursive(
+						$foldertoremove,
+						true,
+					);
 					system_update_verify_removed($foldertoremove);
-					echo 'Removed'. $foldertoremove . '</br>';
+					echo "Removed" . $foldertoremove . "</br>";
 				}
 			}
-
-			/* Finish up this portion of the db update */
-			if (!$abortUpdate) {
-				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
-			}
 		}
-	}
-	catch (Throwable $e) {
+
+		/* Finish up this portion of the db update */
+		if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion(
+				$newDbVersion,
+				"system",
+			);
+			echo sprintf(
+				_DATABASEUPDATER_UPDATE_OK,
+				icms_conv_nr2local($newDbVersion),
+			) . "<br />";
+		}
+	} catch (\Throwable $e) {
 		// do not continue with later steps: they would advance the database version past this failed step
 		$abortUpdate = true;
-		icms_core_EventLog::logThrowable($e, 'upgrade.step.failed', 'upgrade', icms_core_EventLog::ERROR, array(
-			'module' => 'system', 'step' => 'system_db_update', 'to_version' => (int) $newDbVersion,
-		), true);
+		\Icms\Core\EventLog::logThrowable($e, "upgrade.step.failed", "upgrade", \Icms\Core\EventLog::ERROR, [
+			"module" => "system",
+			"step" => "system_db_update",
+			"to_version" => (int) $newDbVersion,
+		], true);
 		echo $e->getMessage();
 	}
 
 	/* Begin upgrade to version 2.0.0 beta 2 */
-	if (!$abortUpdate) $newDbVersion = 48;
+	if (!$abortUpdate) {
+		$newDbVersion = 48;
+	}
 	try {
 		/* things specific to this release */
 		if (!$abortUpdate && $dbVersion < $newDbVersion) {
 			// remove old banners tables
-			$tablestodrop = ['banner', 'bannerclient', 'bannerfinish'];
+			$tablestodrop = ["banner", "bannerclient", "bannerfinish"];
 			foreach ($tablestodrop as $table) {
 				$tableObj = new icms_db_legacy_updater_Table($table);
 				if ($tableObj->exists()) {
@@ -234,10 +288,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			}
 
 			// remove unused config itmes
-			$itemstoremove = ['banners', 'auth_openid'];
+			$itemstoremove = ["banners", "auth_openid"];
 			foreach ($itemstoremove as $item) {
 				$criteria = new icms_db_criteria_Compo();
-				$criteria->add(new icms_db_criteria_Item('conf_name', $item));
+				$criteria->add(new icms_db_criteria_Item("conf_name", $item));
 				$config = icms::$config->getConfigs($criteria);
 				if (count($config) > 0) {
 					icms::$config->deleteConfig($config[0]);
@@ -245,8 +299,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			}
 
 			// remove columns from the users table
-			$tabletoupdate = 'users';
-			$columnstoremove = ['openid', 'user_viewoid'];
+			$tabletoupdate = "users";
+			$columnstoremove = ["openid", "user_viewoid"];
 			$table = new icms_db_legacy_updater_Table($tabletoupdate);
 			foreach ($columnstoremove as $column) {
 				if ($table->fieldExists($column)) {
@@ -258,26 +312,33 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			}
 
 			// remove the content.php file if the module is not installed
-			$module_handler = icms::handler('icms_module');
+			$module_handler = icms::handler("icms_module");
 			$installed_mods = $module_handler->getList();
 
-			if (!in_array('content', $installed_mods)) {
-				$filetoremove = ICMS_ROOT_PATH . '/content.php';
+			if (!in_array("content", $installed_mods)) {
+				$filetoremove = ICMS_ROOT_PATH . "/content.php";
 				icms_core_Filesystem::deleteFile($filetoremove);
 			}
 			/* Finish up this portion of the db update */
 			if (!$abortUpdate) {
-				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+				$icmsDatabaseUpdater->updateModuleDBVersion(
+					$newDbVersion,
+					"system",
+				);
+				echo sprintf(
+					_DATABASEUPDATER_UPDATE_OK,
+					icms_conv_nr2local($newDbVersion),
+				) . "<br />";
 			}
 		}
-	}
-	catch (Throwable $e) {
+	} catch (\Throwable $e) {
 		// do not continue with later steps: they would advance the database version past this failed step
 		$abortUpdate = true;
-		icms_core_EventLog::logThrowable($e, 'upgrade.step.failed', 'upgrade', icms_core_EventLog::ERROR, array(
-			'module' => 'system', 'step' => 'system_db_update', 'to_version' => (int) $newDbVersion,
-		), true);
+		\Icms\Core\EventLog::logThrowable($e, "upgrade.step.failed", "upgrade", \Icms\Core\EventLog::ERROR, [
+			"module" => "system",
+			"step" => "system_db_update",
+			"to_version" => (int) $newDbVersion,
+		], true);
 		echo $e->getMessage();
 	}
 
@@ -303,12 +364,72 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			}
 		}
 	}
-	catch (Throwable $e) {
+	catch (\Throwable $e) {
 		// do not continue with later steps: they would advance the database version past this failed step
 		$abortUpdate = true;
-		icms_core_EventLog::logThrowable($e, 'upgrade.step.failed', 'upgrade', icms_core_EventLog::ERROR, array(
-			'module' => 'system', 'step' => 'system_db_update', 'to_version' => (int) $newDbVersion,
-		), true);
+		\Icms\Core\EventLog::logThrowable($e, "upgrade.step.failed", "upgrade", \Icms\Core\EventLog::ERROR, [
+			"module" => "system",
+			"step" => "system_db_update",
+			"to_version" => (int) $newDbVersion,
+		], true);
+		echo $e->getMessage();
+	}
+
+	/* Begin upgrade to version 2.1.0 (vendor move to trust path) */
+	if (!$abortUpdate) {
+		$newDbVersion = 50;
+	}
+	try {
+		if (!$abortUpdate && $dbVersion < $newDbVersion) {
+			// Same routine as the installer's vendor step (install/page_movevendor.php):
+			// copy + verify + delete, then re-base the autoloader and composer.json.
+			//
+			// The Composer autoloader of this request is already loaded from the web
+			// root, so its removal is deferred to the end of the request; otherwise
+			// vendor classes that are autoloaded later on would no longer be found.
+			$moveResult = icms_core_Filesystem::moveVendorToTrust(
+				ICMS_ROOT_PATH,
+				ICMS_TRUST_PATH,
+				true,
+			);
+
+			if (in_array($moveResult["status"], ["ok", "skipped", "novendor"], true)) {
+				echo htmlspecialchars($moveResult["message"], ENT_QUOTES) . "<br />";
+				if (!empty($moveResult["warning"])) {
+					echo '<span style="color:orange;">' .
+						htmlspecialchars($moveResult["warning"], ENT_QUOTES) .
+						"</span><br />";
+				}
+			} else {
+				// A copy failure is fatal: the admin has to fix it (see the
+				// manual steps of the installer) and run the update again.
+				$abortUpdate = true;
+				echo '<span style="color:red;">' .
+					"ERROR: Could not move the vendor directory to the trust path. " .
+					nl2br(htmlspecialchars($moveResult["message"], ENT_QUOTES)) .
+					"</span><br />";
+			}
+
+			/* Finish up this portion of the db update */
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion(
+					$newDbVersion,
+					"system",
+				);
+				echo sprintf(
+					_DATABASEUPDATER_UPDATE_OK,
+					icms_conv_nr2local($newDbVersion),
+				) . "<br />";
+			}
+		}
+	} catch (\Throwable $e) {
+		// do not continue with later steps: they would advance the database version past this failed step
+		$abortUpdate = true;
+		\Icms\Core\EventLog::logThrowable($e, "upgrade.step.failed", "upgrade", \Icms\Core\EventLog::ERROR, [
+			"module" => "system",
+			"step" => "system_db_update",
+			"to_version" => (int) $newDbVersion,
+		], true);
 		echo $e->getMessage();
 	}
 
@@ -367,19 +488,32 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	echo "</code>";
 	if ($abortUpdate) {
-		icms_core_EventLog::audit(icms_core_EventLog::ERROR, 'upgrade.module.failed', 'upgrade', 'failure', array(
-			'module' => 'system', 'from_version' => (int) $dbVersion, 'to_version' => (int) ICMS_SYSTEM_DBVERSION,
-		));
-		icms_core_Message::error(sprintf(_DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local($newDbVersion)), _DATABASEUPDATER_UPDATE_DB, TRUE);
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::ERROR, "upgrade.module.failed", "upgrade", "failure", [
+			"module" => "system",
+			"from_version" => (int) $dbVersion,
+			"to_version" => (int) ICMS_SYSTEM_DBVERSION,
+		]);
+		icms_core_Message::error(
+			sprintf(
+				_DATABASEUPDATER_UPDATE_ERR,
+				icms_conv_nr2local($newDbVersion),
+			),
+			_DATABASEUPDATER_UPDATE_DB,
+			true,
+		);
 	} else {
-		icms_core_EventLog::audit(icms_core_EventLog::INFO, 'upgrade.module.completed', 'upgrade', 'success', array(
-			'module' => 'system', 'from_version' => (int) $dbVersion, 'to_version' => (int) ICMS_SYSTEM_DBVERSION,
-		));
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::INFO, "upgrade.module.completed", "upgrade", "success", [
+			"module" => "system",
+			"from_version" => (int) $dbVersion,
+			"to_version" => (int) ICMS_SYSTEM_DBVERSION,
+		]);
 	}
 	if ($from_112 && !$abortUpdate) {
 		/* will this work anymore? It depends on having the content module as part of the release */
 		echo _DATABASEUPDATER_MSG_FROM_112;
-		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
+		echo '<script>setTimeout("window.location.href=\'' .
+			ICMS_MODULES_URL .
+			'/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
 	}
 
 	$feedback = ob_get_clean();
@@ -389,10 +523,13 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		echo $feedback;
 	}
 
-	$foldersCleaned = icms_core_Filesystem::cleanFolders(array (
-		'templates_c' => ICMS_COMPILE_PATH . "/",
-		'cache' => ICMS_CACHE_PATH . "/"
-	), $CleanWritingFolders);
+	$foldersCleaned = icms_core_Filesystem::cleanFolders(
+		[
+			"templates_c" => ICMS_COMPILE_PATH . "/",
+			"cache" => ICMS_CACHE_PATH . "/",
+		],
+		$CleanWritingFolders,
+	);
 
 	// report a failed update to the caller instead of success
 	return $foldersCleaned && !$abortUpdate;

@@ -149,7 +149,7 @@ function xoops_module_install($dirname) {
 		'tplset',
 		'tplsource',
 		'xoopsnotifications',
-);
+	);
 	$module_handler = icms::handler('icms_module');
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module = &$module_handler->create();
@@ -630,7 +630,7 @@ function xoops_module_uninstall($dirname) {
 		'tplset',
 		'tplsource',
 		'xoopsnotifications',
-);
+	);
 
 	$db = &icms_db_Factory::instance();
 	$module_handler = icms::handler('icms_module');
@@ -956,11 +956,11 @@ function icms_module_update($dirname) {
 
 	// correlate all events of this module update; $updateFailed is set by every step whose result is a failure
 	$updateFailed = FALSE;
-	$startedOperation = (icms_core_EventLog::operationId() === NULL);
+	$startedOperation = (\Icms\Core\EventLog::operationId() === NULL);
 	if ($startedOperation) {
-		icms_core_EventLog::beginOperation();
+		\Icms\Core\EventLog::beginOperation();
 	}
-	icms_core_EventLog::audit(icms_core_EventLog::INFO, 'upgrade.update.started', 'upgrade', 'info', array(
+	\Icms\Core\EventLog::audit(\Icms\Core\EventLog::INFO, 'upgrade.update.started', 'upgrade', 'info', array(
 		'module' => $dirname, 'from_version' => (int) $prev_dbversion,
 	));
 	/**
@@ -987,7 +987,7 @@ function icms_module_update($dirname) {
 
 	if (!$module_handler->insert($module)) {
 		$updateFailed = TRUE;
-		icms_core_EventLog::audit(icms_core_EventLog::ERROR, 'upgrade.step.failed', 'upgrade', 'failure', array(
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::ERROR, 'upgrade.step.failed', 'upgrade', 'failure', array(
 			'module' => $dirname, 'step' => 'module_data', 'errno' => (int) icms::$xoopsDB->errno(),
 		));
 		$msgs[] = sprintf('<p>' . _MD_AM_UPDATE_FAIL . '</p>', $module->getVar('name'));
@@ -1398,7 +1398,7 @@ function icms_module_update($dirname) {
 				if ($func !== '') {
 					if (!$func($module, $prev_version, $prev_dbversion)) {
 						$updateFailed = TRUE;
-						icms_core_EventLog::audit(icms_core_EventLog::ERROR, 'upgrade.step.failed', 'upgrade', 'failure', array(
+						\Icms\Core\EventLog::audit(\Icms\Core\EventLog::ERROR, 'upgrade.step.failed', 'upgrade', 'failure', array(
 							'module' => $dirname, 'step' => $func,
 						));
 						// the update function reports the reason in its messages
@@ -1412,9 +1412,9 @@ function icms_module_update($dirname) {
 					}
 				}
 			} catch (Throwable $e) {
-				icms_core_EventLog::logThrowable($e, 'upgrade.update.failed', 'upgrade', icms_core_EventLog::ERROR, array('module' => $dirname), TRUE);
+				\Icms\Core\EventLog::logThrowable($e, 'upgrade.update.failed', 'upgrade', \Icms\Core\EventLog::ERROR, array('module' => $dirname), TRUE);
 				if ($startedOperation) {
-					icms_core_EventLog::endOperation();
+					\Icms\Core\EventLog::endOperation();
 				}
 				throw $e;
 			}
@@ -1427,12 +1427,12 @@ function icms_module_update($dirname) {
 
 	if ($updateFailed) {
 		$msgs[] = '</code>';
-		icms_core_EventLog::audit(icms_core_EventLog::ERROR, 'upgrade.update.failed', 'upgrade', 'failure', array('module' => $dirname));
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::ERROR, 'upgrade.update.failed', 'upgrade', 'failure', array('module' => $dirname));
 	} else {
-		icms_core_EventLog::audit(icms_core_EventLog::INFO, 'upgrade.update.completed', 'upgrade', 'success', array('module' => $dirname));
+		\Icms\Core\EventLog::audit(\Icms\Core\EventLog::INFO, 'upgrade.update.completed', 'upgrade', 'success', array('module' => $dirname));
 	}
 	if ($startedOperation) {
-		icms_core_EventLog::endOperation();
+		\Icms\Core\EventLog::endOperation();
 	}
 
 	$ret = '<code>' . implode('<br />', $msgs);

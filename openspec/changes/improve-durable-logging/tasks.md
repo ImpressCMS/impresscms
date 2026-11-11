@@ -1,6 +1,6 @@
 ## 1. Event log foundation
 
-- [x] 1.1 Add `icms_core_EventLog` with sink selection, JSON line format, level threshold, request ID, re-entrancy guard and fallback to `error_log`
+- [x] 1.1 Add `Icms\Core\EventLog` with sink selection, JSON line format, level threshold, request ID, re-entrancy guard and fallback to `error_log`
 - [x] 1.2 Implement sanitizer (credentials, paths, truncation) and context allowlist
 - [x] 1.3 Implement per-request rate limiting with a suppressed-count record
 - [x] 1.4 Call early init from `include/common.php` before `icms::setup()`; add shutdown fatal detection
