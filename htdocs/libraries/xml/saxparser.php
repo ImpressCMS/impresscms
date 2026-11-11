@@ -167,10 +167,7 @@ class SaxParser
 	{
 		xml_parser_free($this->parser);
 
-		if (!method_exists($this, '__destruct')) {
-			unset($this);
-		}
-		else {
+		if (method_exists($this, '__destruct')) {
 			$this->__destruct();
 		}
 	}
