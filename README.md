@@ -88,15 +88,16 @@ We use Crowdin to manage our translations, please check out [https://impresscms.
 `bin/build-package` builds a release zip with the contents of `htdocs/` in the root of the archive, ready to be uploaded to a web root.
 
 ```bash
-php bin/build-package [--ref=<git ref>] [--output=<zip>]
+php bin/build-package [--from=<git ref>] [--to=<git ref>] [--output=<zip>]
 ```
 
-- `--ref` is the revision to package. It defaults to `HEAD`, the commit your working directory is currently on.
-- `--output` is the zip file to write. It defaults to `var/dist/<version>-<commit>.zip`, for example `var/dist/impresscms-2.0.4-beta-ec86ae111.zip`. The version comes from `htdocs/include/version.php`.
+- `--to` is the revision to package (`--ref` is an alias). It defaults to `HEAD`, the commit your working directory is currently on.
+- `--from` is an optional base revision. When given, the zip only contains the files added or modified between `--from` and `--to`, for example `php bin/build-package --from=v2.0.2 --to=v2.0.4`. Files deleted in that range are not packaged but listed in `DELETED-FILES.txt` in the root of the zip and printed by the script.
+- `--output` is the zip file to write. It defaults to `var/dist/<version>-<commit>.zip`, for example `var/dist/impresscms-2.0.4-beta-ec86ae111.zip`, or `var/dist/<version>-<from>-to-<commit>.zip` with `--from`. The version comes from `htdocs/include/version.php`.
 
-The script selects a **revision**, not a branch. The ref is resolved to a commit with `git rev-parse`, so a branch name, a tag or a commit hash all work (for example `--ref=2.0.x` or `--ref=v2.0.4_beta`). Only what is committed in that revision ends up in the package: uncommitted changes and files ignored by Git are never included. The short commit hash is part of the file name, so you can always see which commit a package was built from.
+The script selects a **revision**, not a branch. The ref is resolved to a commit with `git rev-parse`, so a branch name, a tag or a commit hash all work (for example `--to=2.0.x` or `--to=v2.0.4_beta`). Only what is committed in that revision ends up in the package: uncommitted changes and files ignored by Git are never included. The short commit hash is part of the file name, so you can always see which commit a package was built from.
 
-Without `--ref` the script packages whatever branch is checked out. For a release, pass a tag or an explicit branch so the result does not depend on the current checkout.
+Without `--to` the script packages whatever branch is checked out. For a release, pass a tag or an explicit branch so the result does not depend on the current checkout.
 
 The PHP `zip` extension is required.
 
