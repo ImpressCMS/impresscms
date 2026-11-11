@@ -50,6 +50,7 @@ class AliasesTest extends TestCase
 	 * @covers \Icms\Db\IConnection
 	 * @covers \Icms\Db\IUtility
 	 */
+	/** @dataProvider provider */
 	#[DataProvider('provider')]
 	public function testAlias(string $alias, string $modern): void
 	{
