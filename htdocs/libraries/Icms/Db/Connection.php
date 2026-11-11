@@ -43,7 +43,8 @@ class Connection extends \PDO implements IConnection
 	 * @param mixed $fetchModeArgs
 	 * @return \PDOStatement|false
 	 */
-	public function query(string $query, ?int $fetchMode = null, mixed ...$fetchModeArgs): \PDOStatement|false
+	#[\ReturnTypeWillChange]
+	public function query(string $query, ?int $fetchMode = null, ...$fetchModeArgs)
 	{
 		if ($fetchMode === null) {
 			$result = parent::query($query);

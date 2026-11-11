@@ -54,7 +54,7 @@ class Filesystem
 		$target,
 		$mode = 0777,
 		$base = ICMS_ROOT_PATH,
-		$metachars = [],
+		$metachars = []
 	) {
 		if (is_dir($target)) {
 			return true;
@@ -455,7 +455,7 @@ class Filesystem
 	public static function getDirList(
 		$dirname,
 		array $ignore = ["cvs", "_darcs", ".svn"],
-		$hideDot = true,
+		$hideDot = true
 	) {
 		$dirList = [];
 		$iterator = new \DirectoryIterator($dirname);
@@ -490,7 +490,7 @@ class Filesystem
 		$dirname,
 		$prefix = "",
 		array $extension = [],
-		$hideDot = false,
+		$hideDot = false
 	) {
 		if (!is_dir($dirname)) {
 			return [];
@@ -526,7 +526,7 @@ class Filesystem
 		$contents,
 		$filename,
 		$extension = "",
-		$location = ICMS_TRUST_PATH,
+		$location = ICMS_TRUST_PATH
 	) {
 		if ($extension == "") {
 			$extension = "php";
@@ -559,7 +559,7 @@ class Filesystem
 		$prefix = "",
 		array $extension = [],
 		$hideDot = false,
-		bool $recursive = false,
+		bool $recursive = false
 	): int {
 		if (!$recursive) {
 			return count(
@@ -609,7 +609,7 @@ class Filesystem
 	public static function getImgList(
 		$dirname,
 		$prefix = "",
-		$extension = ["gif", "jpg", "png"],
+		$extension = ["gif", "jpg", "png"]
 	) {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
@@ -617,7 +617,7 @@ class Filesystem
 	public static function getFontList(
 		$dirname,
 		$prefix = "",
-		$extension = ["ttf"],
+		$extension = ["ttf"]
 	) {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
@@ -625,7 +625,7 @@ class Filesystem
 	public static function getPhpFiles(
 		$dirname,
 		$prefix = "",
-		$extension = ["php"],
+		$extension = ["php"]
 	) {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
@@ -633,7 +633,7 @@ class Filesystem
 	public static function getHtmlFiles(
 		$dirname,
 		$prefix = "",
-		$extension = ["htm", "html", "xhtml"],
+		$extension = ["htm", "html", "xhtml"]
 	) {
 		return self::getFileList($dirname, $prefix, $extension);
 	}
@@ -681,7 +681,7 @@ class Filesystem
 	public static function moveVendorToTrust(
 		string $rootPath,
 		string $trustPath,
-		bool $deferSourceRemoval = false,
+		bool $deferSourceRemoval = false
 	): array {
 		// Normalise: forward slashes, no trailing slash
 		$src = rtrim(str_replace("\\", "/", $rootPath), "/") . "/vendor";
@@ -957,7 +957,7 @@ class Filesystem
 	 */
 	public static function finalizeTrustVendor(
 		string $rootPath,
-		string $trustPath,
+		string $trustPath
 	): string {
 		$root = rtrim(str_replace("\\", "/", $rootPath), "/");
 		$trust = rtrim(str_replace("\\", "/", $trustPath), "/");
@@ -989,7 +989,7 @@ class Filesystem
 	 */
 	private static function rewriteVendorAutoloadBase(
 		string $vendor,
-		string $root,
+		string $root
 	): bool {
 		$composerDir = "$vendor/composer";
 		if (!is_dir($composerDir)) {
@@ -1040,7 +1040,7 @@ class Filesystem
 
 	private static function pointComposerJsonToTrust(
 		string $root,
-		string $trust,
+		string $trust
 	): bool {
 		$file = "$root/composer.json";
 		if (!is_file($file)) {

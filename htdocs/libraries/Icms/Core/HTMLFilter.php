@@ -99,7 +99,7 @@ class HTMLFilter extends DataFilter {
 	 *
 	 * @return	object	array list of filter objects
 	 */
-	private static function getCustomFilterList(): array|string {
+	private static function getCustomFilterList() {
 		// Check bundled location first for backward compatibility
 		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
 

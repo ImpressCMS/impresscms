@@ -69,7 +69,8 @@ function icms_imageeditor_tempPath(?string $path): ?string
 		return null;
 	}
 
-	if (!str_starts_with($realPath, $tempFolder . DIRECTORY_SEPARATOR)) {
+	$tempPrefix = $tempFolder . DIRECTORY_SEPARATOR;
+	if (strncmp($realPath, $tempPrefix, strlen($tempPrefix)) !== 0) {
 		return null;
 	}
 

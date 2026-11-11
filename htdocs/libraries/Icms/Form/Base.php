@@ -181,7 +181,7 @@ abstract class Base
 	 * @param bool    $required       is this a "required" element?
 	 */
 	public function addElement(
-		Element|string|false|null $formElement,
+		$formElement,
 		bool $required = false
 	): void {
 		if (is_string($formElement)) {
