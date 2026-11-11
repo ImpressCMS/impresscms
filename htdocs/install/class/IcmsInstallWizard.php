@@ -13,6 +13,8 @@ class IcmsInstallWizard
 	public string $language = "english";
 	public bool $no_php5 = false;
 	public bool $safe_mode = false;
+	/** @var array<int, string> pages that run on arrival and move on by themselves */
+	public array $autoPages = array('configsave', 'tablescreate', 'tablesfill');
 
 	public function xoInit(): bool
 	{
@@ -45,20 +47,20 @@ class IcmsInstallWizard
 		 * elseif ($this->safe_mode) {
 		 * $this->pages[]= 'safe_mode';
 		 * }
-		 */ else {
-			$this->pages[] = "langselect";
-			$this->pages[] = "start";
-			$this->pages[] = "modcheck";
-			$this->pages[] = "pathsettings";
-			$this->pages[] = "movevendor";
-			$this->pages[] = "dbconnection";
-			$this->pages[] = "dbsettings";
-			$this->pages[] = "configsave";
-			$this->pages[] = "tablescreate";
-			$this->pages[] = "siteinit";
-			$this->pages[] = "tablesfill";
-			$this->pages[] = "modulesinstall";
-			$this->pages[] = "end";
+		 */
+		else {
+			$this->pages[] = 'langselect';
+			$this->pages[] = 'modcheck';
+			$this->pages[] = 'pathsettings';
+			$this->pages[] = 'movevendor';
+			$this->pages[] = 'dbconnection';
+			$this->pages[] = 'dbsettings';
+			$this->pages[] = 'siteinit';
+			$this->pages[] = 'configsave';
+			$this->pages[] = 'tablescreate';
+			$this->pages[] = 'tablesfill';
+			$this->pages[] = 'modulesinstall';
+			$this->pages[] = 'end';
 		}
 
 		$this->lastpage = end($this->pages);
@@ -69,16 +71,15 @@ class IcmsInstallWizard
 			$this->pagesNames[] = SAFE_MODE;
 		} else {
 			$this->pagesNames[] = LANGUAGE_SELECTION;
-			$this->pagesNames[] = INTRODUCTION;
 			$this->pagesNames[] = CONFIGURATION_CHECK;
 			$this->pagesNames[] = PATHS_SETTINGS;
 			$this->pagesNames[] = MOVE_VENDOR;
 			$this->pagesNames[] = DATABASE_CONNECTION;
 			$this->pagesNames[] = DATABASE_CONFIG;
-			$this->pagesNames[] = CONFIG_SAVE;
-			$this->pagesNames[] = TABLES_CREATION;
 			$this->pagesNames[] = INITIAL_SETTINGS;
-			$this->pagesNames[] = DATA_INSERTION;
+			$this->pagesNames[] = ESS_INSTALLING;
+			$this->pagesNames[] = ESS_INSTALLING;
+			$this->pagesNames[] = ESS_INSTALLING;
 			$this->pagesNames[] = MODULES_INSTALL;
 			$this->pagesNames[] = WELCOME;
 		}
@@ -89,16 +90,15 @@ class IcmsInstallWizard
 			$this->pagesTitles[] = SAFE_MODE_TITLE;
 		} else {
 			$this->pagesTitles[] = LANGUAGE_SELECTION_TITLE;
-			$this->pagesTitles[] = INTRODUCTION_TITLE;
 			$this->pagesTitles[] = CONFIGURATION_CHECK_TITLE;
 			$this->pagesTitles[] = PATHS_SETTINGS_TITLE;
 			$this->pagesTitles[] = MOVE_VENDOR_TITLE;
 			$this->pagesTitles[] = DATABASE_CONNECTION_TITLE;
 			$this->pagesTitles[] = DATABASE_CONFIG_TITLE;
-			$this->pagesTitles[] = CONFIG_SAVE_TITLE;
-			$this->pagesTitles[] = TABLES_CREATION_TITLE;
 			$this->pagesTitles[] = INITIAL_SETTINGS_TITLE;
-			$this->pagesTitles[] = DATA_INSERTION_TITLE;
+			$this->pagesTitles[] = ESS_INSTALLING_TITLE;
+			$this->pagesTitles[] = ESS_INSTALLING_TITLE;
+			$this->pagesTitles[] = ESS_INSTALLING_TITLE;
 			$this->pagesTitles[] = MODULES_INSTALL_TITLE;
 			$this->pagesTitles[] = WELCOME_TITLE;
 		}
@@ -149,7 +149,11 @@ class IcmsInstallWizard
 			$language = "english";
 		}
 		$this->language = $language;
-		$this->loadLangFile("install");
+		$this->loadLangFile('install');
+		if (file_exists("./language/$language/essentials.php")) {
+			include_once "./language/$language/essentials.php";
+		}
+		include_once './language/english/essentials.php';
 	}
 
 	public function setPage($page): string
@@ -217,8 +221,30 @@ class IcmsInstallWizard
 		return "$proto://$host$base";
 	}
 
-	public function pageURI($page): string
-	{
+	public function isAutoPage(int $index): bool {
+		return isset($this->pages[$index]) && in_array($this->pages[$index], $this->autoPages, true);
+	}
+
+	/**
+	 * Steps as shown in the navigation: consecutive automatic pages count as one step.
+	 *
+	 * @return array<int, array{label: string, first: int, last: int}>
+	 */
+	public function navigationSteps(): array {
+		$steps = array();
+		foreach ($this->pages as $index => $page) {
+			$isAuto = $this->isAutoPage($index);
+			$last = count($steps) - 1;
+			if ($isAuto && $last >= 0 && $this->isAutoPage($steps[$last]['last'])) {
+				$steps[$last]['last'] = $index;
+				continue;
+			}
+			$steps[] = array('label' => $this->pagesNames[$index], 'first' => $index, 'last' => $index);
+		}
+		return $steps;
+	}
+
+	public function pageURI($page): string {
 		if (!(int) $page[0]) {
 			if ($page[0] === "+") {
 				$page = $this->currentPage + substr($page, 1);
