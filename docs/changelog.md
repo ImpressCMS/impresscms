@@ -1,4 +1,10 @@
 # ImpressCMS ChangeLog
+## ImpressCMS 2.0.5
+
+### What's Changed
+* fix: replace jGrowl (broken with jQuery 3) with the dependency-free, accessible `icms.notify` (`libraries/notify/`), based on #1761
+* deprecate: `$.jGrowl()` is kept as a compatibility shim, but is deprecated and will be removed in 3.0; it filters the HTML of the message (unlike jGrowl); use `icms.notify()` instead
+
 ## ImpressCMS 2.0.4
 
 * Date : 24 October 2026
