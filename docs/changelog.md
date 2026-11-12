@@ -1,11 +1,10 @@
 # ImpressCMS ChangeLog
 
 ## ImpressCMS 2.0.5 Alpha
-
-* Date : 11 November 2026
+* Date : 12 November 2026
 * DB Version : 49
 * Build Version : 121
-## What's Changed
+### What's Changed
 * deprecate: XML-RPC library (removal in 3.0) by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1749
 * Fix/dutch language constants by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1753
 * fix: load customtag admin language file in handler constructor by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1751
@@ -13,9 +12,12 @@
 * fix: allow registration under strict SQL mode by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1757
 * fix: icms_adminMenu() fatal on PHP 8 and missing _MD_AM_HELP_TIP translations by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1752
 * feat: build-package can package only changed files between two revisions by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1765
+* fix: replace jGrowl (broken with jQuery 3) with the dependency-free, accessible `icms.notify` (`libraries/notify/`), based on #1761
+* deprecate: `$.jGrowl()` is kept as a compatibility shim, but is deprecated and will be removed in 3.0; it filters the HTML of the message (unlike jGrowl); use `icms.notify()` instead
 
 **Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.4...v2.0.5-alpha
 
+### Previous Versions
 ## ImpressCMS 2.0.4
 
 * Date : 24 October 2026
@@ -33,7 +35,6 @@
 * feat:Internal link endpoint and CKEditor 4 implementation by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1736
 * chore:Finalizing 2.0.4 release by @fiammybe
 
-### Previous Versions
 #### 2.0.4 Beta (Build 119)
 * Date : 17 October 2026
 * Changes from all beta fixes
