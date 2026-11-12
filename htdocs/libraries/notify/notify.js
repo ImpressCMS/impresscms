@@ -141,12 +141,63 @@
 	});
 
 	/**
+	 * Minimal allowlist HTML sanitizer, used by the deprecated $.jGrowl() shim, whose callers
+	 * pass HTML that has not been filtered on the server. The markup is parsed in an inert
+	 * document (no scripts run, no resources load); elements and attributes that are not on the
+	 * allowlist are removed, and links only keep http(s), mailto and relative URLs.
+	 * Unknown elements are replaced by their text content.
+	 */
+	var ALLOWED_TAGS = { A: 1, B: 1, BR: 1, EM: 1, I: 1, STRONG: 1, U: 1, P: 1, SPAN: 1, UL: 1, OL: 1, LI: 1, H3: 1, H4: 1, CODE: 1 };
+	var DROP_WITH_CONTENT = { SCRIPT: 1, STYLE: 1, IFRAME: 1, OBJECT: 1, EMBED: 1, TEMPLATE: 1, NOSCRIPT: 1, TEXTAREA: 1, SELECT: 1 };
+	var SAFE_URL = /^(?:https?:|mailto:|[^:]*$)/i;
+
+	function sanitizeNode(parent) {
+		Array.prototype.slice.call(parent.childNodes).forEach(function (node) {
+			if (node.nodeType === 3) {
+				return;
+			}
+			if (node.nodeType !== 1 || DROP_WITH_CONTENT[node.tagName]) {
+				parent.removeChild(node);
+				return;
+			}
+			sanitizeNode(node);
+			if (!ALLOWED_TAGS[node.tagName]) {
+				while (node.firstChild) {
+					parent.insertBefore(node.firstChild, node);
+				}
+				parent.removeChild(node);
+				return;
+			}
+			Array.prototype.slice.call(node.attributes).forEach(function (attr) {
+				var name = attr.name.toLowerCase();
+				var ok = node.tagName === 'A' && (name === 'href' || name === 'title');
+				if (ok && name === 'href') {
+					ok = SAFE_URL.test(attr.value.replace(/[\u0000-\u0020\u007f-\u009f]/g, ''));
+				}
+				if (!ok) {
+					node.removeAttribute(attr.name);
+				}
+			});
+			if (node.tagName === 'A' && node.hasAttribute('href')) {
+				node.setAttribute('rel', 'noopener noreferrer');
+			}
+		});
+	}
+
+	function sanitizeHTML(html) {
+		var doc = new DOMParser().parseFromString('<body>' + html, 'text/html');
+		sanitizeNode(doc.body);
+		return doc.body.innerHTML;
+	}
+
+	/**
 	 * Compatibility shim for the removed jGrowl plugin.
 	 *
 	 * @deprecated since 2.0.5, will be removed in ImpressCMS 3.0. Use icms.notify() instead.
 	 *
 	 * Maps the commonly used jGrowl options: life -> timeout, sticky -> timeout 0.
-	 * As in jGrowl, the message is inserted as HTML, so the caller must filter it.
+	 * Unlike jGrowl, the HTML of the message is filtered (see sanitizeHTML()): only simple
+	 * formatting, lists and safe links are kept; scripts, event handlers and other markup are removed.
 	 * Other jGrowl options (position, speed, header, theme, ...) are ignored.
 	 */
 	function bindJGrowl($) {
@@ -155,7 +206,7 @@
 		}
 		$.jGrowl = function (message, options) {
 			options = options || {};
-			var mapped = { html: options.html !== false };
+			var mapped = { html: true };
 			if (options.sticky) {
 				mapped.timeout = 0;
 			} else if (typeof options.life === 'number') {
@@ -167,11 +218,12 @@
 			if (window.console && window.console.warn) {
 				window.console.warn('$.jGrowl() is deprecated and will be removed in ImpressCMS 3.0. Use icms.notify() instead.');
 			}
-			return notify(message, mapped);
+			return notify(sanitizeHTML(String(message)), mapped);
 		};
 	}
 	bindJGrowl(window.jQuery);
 	document.addEventListener('DOMContentLoaded', function () { bindJGrowl(window.jQuery); });
 
 	icms.notify = notify;
+	icms.notify.sanitize = sanitizeHTML;
 })(window, document);
