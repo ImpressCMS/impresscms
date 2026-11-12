@@ -1,10 +1,23 @@
 # ImpressCMS ChangeLog
-## ImpressCMS 2.0.5
 
+## ImpressCMS 2.0.5 Alpha
+* Date : 12 November 2026
+* DB Version : 49
+* Build Version : 121
 ### What's Changed
+* deprecate: XML-RPC library (removal in 3.0) by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1749
+* Fix/dutch language constants by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1753
+* fix: load customtag admin language file in handler constructor by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1751
+* feat:create automatic distro package zip on release by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1750
+* fix: allow registration under strict SQL mode by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1757
+* fix: icms_adminMenu() fatal on PHP 8 and missing _MD_AM_HELP_TIP translations by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1752
+* feat: build-package can package only changed files between two revisions by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1765
 * fix: replace jGrowl (broken with jQuery 3) with the dependency-free, accessible `icms.notify` (`libraries/notify/`), based on #1761
 * deprecate: `$.jGrowl()` is kept as a compatibility shim, but is deprecated and will be removed in 3.0; it filters the HTML of the message (unlike jGrowl); use `icms.notify()` instead
 
+**Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.4...v2.0.5-alpha
+
+### Previous Versions
 ## ImpressCMS 2.0.4
 
 * Date : 24 October 2026
@@ -12,7 +25,6 @@
 * Build Version : 120
 
 ### What's Changed
-* deprecate:The XML-RPC library (`xmlrpc.php` and `libraries/xml/rpc`) is deprecated and will be removed in version 3.0
 * fix:Fix system module update resetting db version to 47 by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1723
 * fix:Array values no longer read as empty (2.0.2/2.0.3) and repair the HTML filter's allowed lists by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1731
 * fix:Use lowercase table names for IPF objects by @skenow in https://github.com/ImpressCMS/impresscms/pull/1730
@@ -23,7 +35,6 @@
 * feat:Internal link endpoint and CKEditor 4 implementation by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1736
 * chore:Finalizing 2.0.4 release by @fiammybe
 
-### Previous Versions
 #### 2.0.4 Beta (Build 119)
 * Date : 17 October 2026
 * Changes from all beta fixes
