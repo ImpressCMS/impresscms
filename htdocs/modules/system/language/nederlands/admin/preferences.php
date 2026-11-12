@@ -676,6 +676,10 @@ define("_MD_AM_AUTOTASKS_USERDSC", "Systeem gebruiker om te gebruiken voor taak 
 define("_MD_AM_SRCEDITOR_DEFAULT","Standaard broncode Editor");
 define("_MD_AM_SRCEDITOR_DEFAULT_DESC","Selecteer de standaard editor voor het aanpassen van de broncodes.");
 
+// trusted owners of GitHub modules
+define("_MD_AM_TRUSTEDOWNERS", "Vertrouwde GitHub-eigenaars voor modules");
+define("_MD_AM_TRUSTEDOWNERSDSC", "GitHub-accounts of -organisaties, gescheiden door spaties, waarvan de repositories met het topic <em>impresscms-module</em> in het modulebeheer worden aangeboden. Releases worden als code op de site geïnstalleerd, dus voeg alleen accounts toe die je vertrouwt.");
+
 define("_MD_AM_AUTHENTICATION_DSC", "Beheer beveiligingsinstellingen met betrekking tot toegankelijkheid. Instellingen die bepalen hoe gebruikersaccounts worden behandeld.");
 define("_MD_AM_AUTOTASKS_PREF_DSC", "Voorkeuren voor het systeem voor automatische taken.");
 define("_MD_AM_CAPTCHA_DSC", "Beheer de instellingen die captcha gebruikt op je hele site.");

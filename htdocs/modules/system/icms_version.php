@@ -134,6 +134,7 @@ $modversion["object_items"] = [
 	"customtag",
 	"mimetype",
 	"rating",
+	"modulecatalog",
 ];
 
 /**

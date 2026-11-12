@@ -577,6 +577,23 @@ CREATE TABLE system_mimetype (
 );
 
 #
+# Table structure for table `system_modulecatalog`
+#
+
+CREATE TABLE system_modulecatalog (
+  `catalogid` int(11) NOT NULL auto_increment,
+  `dirname` varchar(255) NOT NULL default '',
+  `full_name` varchar(255) NOT NULL default '',
+  `description` text NOT NULL,
+  `html_url` varchar(255) NOT NULL default '',
+  `stars` int(11) NOT NULL default 0,
+  `latest_version` varchar(255) NOT NULL default '',
+  `latest_url` varchar(255) NOT NULL default '',
+  `published_at` varchar(255) NOT NULL default '',
+  PRIMARY KEY (`catalogid`)
+);
+
+#
 # Table structure for table `system_adsense`
 #
 

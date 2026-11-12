@@ -689,6 +689,10 @@ define('_MD_AM_CENSOR_DSC', '管理站点中不允许使用的语言');
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM","允许自定义筛选器");
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC","允许自定义筛选器?<br /><br />如果启用，则可使用自定义的筛选器。<br />在此路径下'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
 
+// trusted owners of GitHub modules
+define("_MD_AM_TRUSTEDOWNERS", "Trusted GitHub owners for modules");
+define("_MD_AM_TRUSTEDOWNERSDSC", "GitHub accounts or organisations, separated by spaces, whose repositories with the topic <em>impresscms-module</em> are offered in the modules admin. Releases are installed as code on the site, so only add accounts you trust.");
+
 define("_MD_AM_KEEPALIVE", "保持会话活动");
 define("_MD_AM_KEEPALIVEDSC", "选择“是”可在已登录用户打开站点页面期间保持其会话有效，以免他们在撰写长篇内容时被注销。选择“否”则会话将在会话过期时间后过期，即使页面仍处于打开状态。");
 

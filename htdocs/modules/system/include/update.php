@@ -47,7 +47,7 @@ icms_loadLanguageFile("core", "databaseupdater");
 if (is_object(icms::$module)) {
 	define("SYSTEM_DB_VERSION", icms::$module->getDBVersion());
 } else {
-	define("SYSTEM_DB_VERSION", 50);
+	define("SYSTEM_DB_VERSION", 52);
 }
 
 /**
@@ -373,6 +373,51 @@ function xoops_module_update_system(
 		}
 	} catch (Throwable $e) {
 		$abortUpdate = true;
+		echo $e->getMessage();
+	}
+
+	/* Begin upgrade for online module updates */
+	if (!$abortUpdate) {
+		$newDbVersion = 51;
+	}
+	try {
+		if ($dbVersion < $newDbVersion) {
+			// the system_modulecatalog table of the modulecatalog object is created by
+			// moduleUpgrade() above; the modules admin fills it from GitHub
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
+		}
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
+	/* Begin upgrade for trusted owners of GitHub modules */
+	if (!$abortUpdate) {
+		$newDbVersion = 52;
+	}
+	try {
+		if ($dbVersion < $newDbVersion) {
+			$criteria = new \Icms\Db\Criteria\Compo();
+			$criteria->add(new \Icms\Db\Criteria\Item('conf_modid', 0));
+			$criteria->add(new \Icms\Db\Criteria\Item('conf_name', 'module_trusted_owners'));
+			if (count(icms::$config->getConfigs($criteria)) == 0) {
+				$criteria = new \Icms\Db\Criteria\Compo();
+				$criteria->add(new \Icms\Db\Criteria\Item('conf_modid', 0));
+				$criteria->add(new \Icms\Db\Criteria\Item('conf_name', 'keepalive_enable'));
+				$keepaliveConfig = icms::$config->getConfigs($criteria);
+				$ownersOrder = count($keepaliveConfig) > 0 ? (int) $keepaliveConfig[0]->getVar('conf_order') + 1 : 0;
+				$icmsDatabaseUpdater->insertConfig(ICMS_CONF, 'module_trusted_owners', '_MD_AM_TRUSTEDOWNERS', \Icms\Module\Catalog::DEFAULT_OWNERS, '_MD_AM_TRUSTEDOWNERSDSC', 'textbox', 'text', $ownersOrder);
+			}
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
+		}
+	}
+	catch (Exception $e) {
 		echo $e->getMessage();
 	}
 

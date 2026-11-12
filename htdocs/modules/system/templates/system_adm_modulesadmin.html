@@ -1,4 +1,15 @@
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/modulesadmin/images/modulesadmin_big.png)"><{$lang_madmin}></div><br />
+<form action='admin.php' method='post' style="text-align: <{$smarty.const._GLOBAL_RIGHT}>;">
+  <small><{$github_checked}></small>
+  <input type='hidden' name='fct' value='modulesadmin' />
+  <input type='hidden' name='op' value='refresh_catalog' />
+  <{$github_token}>
+  <input type='submit' value='<{$lang_github_refresh}>' />
+  | <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=backups"><{$lang_backups}></a>
+</form>
+<{if $github_errors}>
+  <div class="errorMsg"><{$github_errors}></div>
+<{/if}>
 <h2><{$lang_installed}></h2>
 <form action='admin.php' method='post' name='moduleadmin' id='moduleadmin'>
 <table width="100%" cellpadding="4" cellspacing="1" border="0" class="outer">
@@ -29,7 +40,12 @@
         </div>
         <input type="hidden" name="oldname[<{$module.mid}>]" value="<{$module.title}>" />
       </td>
-      <td align='center' valign="middle"><{$module.version}></td>
+      <td align='center' valign="middle"><{$module.version}>
+        <{if $module.github && $module.github.has_update}>
+          <br /><a href="<{$module.github.latest.html_url|escape}>" rel="external" style="color: #ff0000; font-weight: bold;"><{$module.github.update_text|escape}></a>
+          <br /><a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=github_update&amp;module=<{$module.dirname|escape:'url'}>"><{$lang_github_install}></a>
+        <{/if}>
+      </td>
       <td align='center' valign="middle"><{$module.status}></td>
       <td align='center' valign="middle"><{$module.last_update}></td>
       <td align='center' valign="middle">
@@ -92,12 +108,23 @@
         <div id="modlogo" style="padding: 2px;"><img src="<{$xoops_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" alt="<{$module.name}>" border="0" />&nbsp;</div>
 	    <div id="modlogo" style="padding-top: 10px;"> <b><{$lang_modulename}>: </b><{$module.name}><br /> </div>
       </td>
-      <td align='center'><{$module.version}></td>
+      <td align='center'><{$module.version}>
+        <{if $module.github && $module.github.has_update}>
+          <br /><a href="<{$module.github.latest.html_url|escape}>" rel="external" style="color: #ff0000; font-weight: bold;"><{$module.github.update_text|escape}></a>
+          <br /><a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=github_update&amp;module=<{$module.dirname|escape:'url'}>"><{$lang_github_install}></a>
+        <{/if}>
+      </td>
       <td align='center'><{$module.status}></td>
       <td width='130px' align='center'>
         <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=install&module=<{$module.dirname}>"><img src="<{$xoops_url}>/modules/system/images/install.png" alt="<{$lang_install}>" title="<{$lang_install}>" /></a>
+        <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=remove&amp;module=<{$module.dirname|escape:'url'}>"><img src="<{$xoops_url}>/modules/system/images/delete.png" alt="<{$lang_remove}>" title="<{$lang_remove}>" /></a>
         <a href='javascript:openWithSelfMain("<{$xoops_url}>/modules/system/admin.php?fct=version&mid=<{$module.dirname}>","Info",300,230);'><img src="<{$xoops_url}>/modules/system/images/info.png" alt="<{$lang_info}>" title="<{$lang_info}>" /></a>
       </td>
     </tr>
   <{/foreach}>
 </table>
+
+<br />
+<h2><{$lang_github_title}></h2>
+<p><small><{$github_owners}></small></p>
+<{$github_table}>

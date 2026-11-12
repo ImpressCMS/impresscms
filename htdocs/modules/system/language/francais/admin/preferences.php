@@ -392,6 +392,10 @@ define("_MD_AM_SIGMAXLENGTHDSC","Nombre maximum de caract&egrave;res dans les si
 define("_MD_AM_USE_GOOGLE_ANA"," Activer Google Analytics ?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
 
+// trusted owners of GitHub modules
+define("_MD_AM_TRUSTEDOWNERS", "Trusted GitHub owners for modules");
+define("_MD_AM_TRUSTEDOWNERSDSC", "GitHub accounts or organisations, separated by spaces, whose repositories with the topic <em>impresscms-module</em> are offered in the modules admin. Releases are installed as code on the site, so only add accounts you trust.");
+
 define("_MD_AM_KEEPALIVE", "Garder les sessions actives");
 define("_MD_AM_KEEPALIVEDSC", "S&eacute;lectionnez oui pour maintenir active la session des utilisateurs connect&eacute;s tant qu'ils ont une page du site ouverte, afin qu'ils ne soient pas d&eacute;connect&eacute;s pendant la r&eacute;daction d'un long message. S&eacute;lectionnez non pour laisser les sessions expirer apr&egrave;s la dur&eacute;e d'expiration de session, m&ecirc;me si une page est encore ouverte.");
 
