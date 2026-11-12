@@ -1,0 +1,76 @@
+/* icms.notify - theme hooks: override these custom properties in a theme stylesheet */
+.icms-notify {
+	--icms-notify-bg: #fff;
+	--icms-notify-fg: #1f2933;
+	--icms-notify-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .18);
+	--icms-notify-info: #1d4ed8;
+	--icms-notify-success: #15803d;
+	--icms-notify-error: #b91c1c;
+	--icms-notify-error-bg: #fef2f2;
+	--icms-notify-error-fg: #7f1d1d;
+
+	position: fixed;
+	inset-block-start: 1rem;
+	inset-inline: 0;
+	z-index: 10000;
+	margin-inline: auto;
+	width: min(34rem, calc(100vw - 2rem));
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+	pointer-events: none;
+}
+.icms-notify__region { display: flex; flex-direction: column; gap: .5rem; }
+
+.icms-notify__item {
+	pointer-events: auto;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: start;
+	gap: .75rem;
+	padding: .875rem 1rem;
+	background: var(--icms-notify-bg);
+	color: var(--icms-notify-fg);
+	border-radius: .5rem;
+	border-inline-start: .35rem solid var(--icms-notify-info);
+	box-shadow: var(--icms-notify-shadow);
+	font-size: .95rem;
+	line-height: 1.4;
+	animation: icms-notify-in .2s ease-out;
+}
+.icms-notify__item--success { border-inline-start-color: var(--icms-notify-success); }
+.icms-notify__item--error {
+	border-inline-start-color: var(--icms-notify-error);
+	background: var(--icms-notify-error-bg);
+	color: var(--icms-notify-error-fg);
+}
+.icms-notify__icon { font-weight: 700; line-height: 1.4; color: var(--icms-notify-info); }
+.icms-notify__item--success .icms-notify__icon { color: var(--icms-notify-success); }
+.icms-notify__item--error .icms-notify__icon { color: var(--icms-notify-error); }
+
+.icms-notify__body--text { white-space: pre-line; }
+.icms-notify__body > :first-child { margin-block-start: 0; }
+.icms-notify__body > :last-child { margin-block-end: 0; }
+.icms-notify__body h3, .icms-notify__body h4 { margin: 0 0 .25rem; font-size: 1em; font-weight: 700; color: inherit; }
+
+.icms-notify__close {
+	appearance: none;
+	background: transparent;
+	border: 0;
+	border-radius: .25rem;
+	color: inherit;
+	cursor: pointer;
+	font-size: 1.4rem;
+	line-height: 1;
+	padding: .1rem .4rem;
+}
+.icms-notify__close:hover { background: rgba(0, 0, 0, .08); }
+.icms-notify__close:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+@keyframes icms-notify-in {
+	from { opacity: 0; transform: translateY(-.5rem); }
+	to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.icms-notify__item { animation: none; }
+}

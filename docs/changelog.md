@@ -13,6 +13,8 @@
 * fix: allow registration under strict SQL mode by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1757
 * fix: icms_adminMenu() fatal on PHP 8 and missing _MD_AM_HELP_TIP translations by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1752
 * feat: build-package can package only changed files between two revisions by @fiammybe in https://github.com/ImpressCMS/impresscms/pull/1765
+* fix: replace jGrowl (broken with jQuery 3) with the dependency-free, accessible `icms.notify` (`libraries/notify/`), based on #1761
+* deprecate: `$.jGrowl()` is kept as a compatibility shim, but is deprecated and will be removed in 3.0; use `icms.notify()` instead
 
 **Full Changelog**: https://github.com/ImpressCMS/impresscms/compare/v2.0.4...v2.0.5-alpha
 
