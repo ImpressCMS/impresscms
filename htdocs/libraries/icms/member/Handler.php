@@ -132,6 +132,20 @@ class icms_member_Handler {
 	}
 
 	/**
+	 * retrieve a user by hash_uid
+	 *
+	 * @param string $hash_uid for the user
+	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the user
+	 */
+
+	public function &getUserHash($hash_uid) {
+		if (! isset($this->_members[$hash_uid])) {
+			$this->_members[$hash_uid] = & $this->_uHandler->getHash($hash_uid);
+		}
+		return $this->_members[$hash_uid];
+	}
+
+	/**
 	 * delete a group
 	 *
 	 * @param object $group {@link icms_member_group_Object} reference to the group to delete
