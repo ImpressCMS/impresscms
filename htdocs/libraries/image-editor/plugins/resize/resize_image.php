@@ -60,9 +60,8 @@ if (!isset($image_path) || !isset($image_url)) {
 
 	$img = WideImage::load($image_path);
 	$temp_img_path = dirname($image_path) . DIRECTORY_SEPARATOR . 'resize_' . basename($image_path);
-	$arr = explode('/', $image_url);
-	$arr[count($arr) - 1] = 'resize_' . $arr[count($arr) - 1];
-	$temp_img_url = implode('/', $arr);
+	// build the preview URL from the validated temp file, never from the raw request parameter
+	$temp_img_url = ICMS_IMANAGER_FOLDER_URL . '/temp/resize_' . rawurlencode(basename($image_path));
 
 	if ($del) {
 		@unlink($temp_img_path);
@@ -86,7 +85,7 @@ if (!isset($image_path) || !isset($image_url)) {
 		}
 		echo 'window.location.reload( true );';
 	} else {
-		echo "var w = window.open('" . $temp_img_url . "','resize_image_preview','width=" . ($width + 20) . ",height=" . ($height + 20) . ",resizable=yes');";
+		echo "var w = window.open(" . json_encode($temp_img_url, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) . ",'resize_image_preview','width=" . ($width + 20) . ",height=" . ($height + 20) . ",resizable=yes');";
 		echo "w.onunload = function (){resize_delpreview();}";
 	}
 }
