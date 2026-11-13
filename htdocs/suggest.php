@@ -10,51 +10,86 @@
  **/
 include 'mainfile.php';
 icms::$logger->disableLogger();
-if (isset($_POST['queryString'])) {
-	$queryString = icms::$xoopsDB->escape($_POST['queryString']);
 
-	// Is the string length greater than 2?
-	if (strlen($queryString) > 2) {
-		$sql = "SELECT * FROM ".icms::$xoopsDB->prefix("autosearch_list")." s INNER JOIN "
-			. icms::$xoopsDB->prefix("autosearch_cat") . " c ON s.cat_id = c.cid WHERE name LIKE '%"
-			. $queryString . "%' ORDER BY cat_id LIMIT 8";
-		$query = icms::$xoopsDB->query($sql);
-		$num_results = icms::$xoopsDB->getRowsNum($query);
+/**
+ * Only the administration quick search uses this script, so it is limited to
+ * administrators of the system module.
+ */
+function icms_suggest_isAdmin(): bool
+{
+	if (!is_object(icms::$user)) {
+		return false;
+	}
 
-		echo "<ul id='searchresults'>";
-		if ($query) {
-			if ($num_results < 1) {
-				echo "<li><a href='javascript:void(0);'>
-					<img src='" . ICMS_IMAGES_SET_URL . "/actions/exit.png' alt='no results found' />
-					<span class='searchheading'>Sorry</span>
-					<span class='searchdesc'>No results were found that matched your query. Please try again.</span></a></li>";
-			} else {
-				$catid = 0;
-				while ($result = icms::$xoopsDB->fetchArray($query)) {
-					echo '<li><a href="' . ICMS_URL . $result['url'] . '">';
-					echo '<img src="'.ICMS_URL.$result['img'].'" alt="" />';
+	$systemModule = icms::handler('icms_module')->getByDirname('system');
+	if (!is_object($systemModule)) {
+		return false;
+	}
 
-					$name = $result['name'];
-					if (strlen($name) > 35) {
-						$name = substr($name, 0, 35) . "...";
-					}
-					echo '<span class="searchheading">'.$name.'</span>';
-
-					$description = $result['desc'];
-					if (strlen($description) > 80) {
-						$description = substr($description, 0, 80) . "...";
-					}
-					echo '<span class="searchdesc">'.$description.'</span></a></li>';
-				}
-			}
-			echo '<li><span class="seperator"><a href="http://www.impresscms.org" rel="external">ImpressCMS Project</a></span><br /></li>';
-		} else {
-			echo '<li>ERROR: There was a problem with the query.</li>';
-		}
-		echo "</ul>";
-	} else {
-		// Dont do anything.
-	} // There is a queryString.
-} else {
-	echo 'There should be no direct access to this script!';
+	return (bool) icms::$user->isAdmin($systemModule->getVar('mid'));
 }
+
+function icms_suggest_escape(string $value): string
+{
+	return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
+
+function icms_suggest_truncate(string $value, int $length): string
+{
+	if (mb_strlen($value) <= $length) {
+		return $value;
+	}
+
+	return mb_substr($value, 0, $length) . '...';
+}
+
+if (!isset($_POST['queryString'])) {
+	echo 'There should be no direct access to this script!';
+	exit;
+}
+
+if (!icms_suggest_isAdmin()) {
+	http_response_code(403);
+	exit;
+}
+
+$queryString = trim((string) $_POST['queryString']);
+
+// Is the string length greater than 2?
+if (mb_strlen($queryString) <= 2) {
+	exit;
+}
+
+$like = '%' . addcslashes($queryString, '\%_') . '%';
+$sql = 'SELECT s.name, s.img, s.`desc`, s.url FROM `' . XOOPS_DB_PREFIX . '_autosearch_list` s'
+	. ' INNER JOIN `' . XOOPS_DB_PREFIX . '_autosearch_cat` c ON s.cat_id = c.cid'
+	. ' WHERE s.name LIKE ? ORDER BY s.cat_id LIMIT 8';
+$statement = icms::$db->prepare($sql);
+$executed = $statement && $statement->execute(array($like));
+
+echo "<ul id='searchresults'>";
+
+if (!$executed) {
+	echo '<li>ERROR: There was a problem with the query.</li>';
+	echo '</ul>';
+	exit;
+}
+
+$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+if (empty($results)) {
+	echo "<li><a href='javascript:void(0);'>
+		<img src='" . ICMS_IMAGES_SET_URL . "/actions/exit.png' alt='no results found' />
+		<span class='searchheading'>Sorry</span>
+		<span class='searchdesc'>No results were found that matched your query. Please try again.</span></a></li>";
+}
+
+foreach ($results as $result) {
+	echo '<li><a href="' . icms_suggest_escape(ICMS_URL . $result['url']) . '">';
+	echo '<img src="' . icms_suggest_escape(ICMS_URL . $result['img']) . '" alt="" />';
+	echo '<span class="searchheading">' . icms_suggest_escape(icms_suggest_truncate((string) $result['name'], 35)) . '</span>';
+	echo '<span class="searchdesc">' . icms_suggest_escape(icms_suggest_truncate((string) $result['desc'], 80)) . '</span></a></li>';
+}
+
+echo '<li><span class="seperator"><a href="http://www.impresscms.org" rel="external">ImpressCMS Project</a></span><br /></li>';
+echo '</ul>';
