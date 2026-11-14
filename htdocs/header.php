@@ -39,6 +39,8 @@
  */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
+use Icms\View\RedirectMessage;
+
 icms::$logger->stopTime('Module init');
 icms::$logger->startTime('ICMS output init');
 
@@ -99,7 +101,7 @@ $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/ui/jquery-ui.min.js', array('t
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/helptip.js', array('type' => 'text/javascript'));
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/ui/jquery-ui.min.css', array('media' => 'screen'));
 if (!empty($_SESSION['redirect_message'])) {
-	icms_addRedirectMessage($xoTheme, $_SESSION['redirect_message']);
+	RedirectMessage::addToTheme($xoTheme, $_SESSION['redirect_message']);
 	unset($_SESSION['redirect_message']);
 }
 

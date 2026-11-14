@@ -47,6 +47,8 @@
  * Be sure this is accessed correctly
  */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
+
+use Icms\View\RedirectMessage;
 /**
  * Creates constant indicating this file has been loaded
  */
@@ -130,7 +132,7 @@ function icms_cp_header() {
 	// JQuery UI Dialog
 	$xoTheme->addScript(ICMS_URL . '/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
 	if (!empty($_SESSION['redirect_message'])) {
-		icms_addRedirectMessage($xoTheme, $_SESSION['redirect_message']);
+		RedirectMessage::addToTheme($xoTheme, $_SESSION['redirect_message']);
 		unset($_SESSION['redirect_message']);
 	}
 	$xoTheme->addScript(ICMS_URL . '/libraries/jquery/ui/jquery-ui.min.js', array('type' => 'text/javascript'));
