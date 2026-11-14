@@ -95,8 +95,21 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 		}
 
 		$gperm_handler = icms::handler('icms_member_groupperm');
-		if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)) {
-			include ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php";
+		$editorDir = ICMS_EDITOR_PATH . "/" . $editor_default;
+		$versionFile = '';
+		if (file_exists($editorDir . "/icms_version.php")) {
+			$versionFile = $editorDir . "/icms_version.php";
+		} elseif (file_exists($editorDir . "/xoops_version.php")) {
+			$versionFile = $editorDir . "/xoops_version.php";
+			icms_loadLanguageFile('core', 'core');
+			icms_core_Debug::setDeprecated(
+				"editors/{$editor_default}/xoops_version.php, use icms_version.php instead",
+				sprintf(_CORE_REMOVE_IN_VERSION, '3.0')
+			);
+		}
+
+		if ($versionFile !== '' && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)) {
+			include $versionFile;
 			$this->htmlEditor = array($editorversion['class'], ICMS_EDITOR_PATH . "/" . $editorversion['dirname'] . "/" . $editorversion['file']);
 		}
 
