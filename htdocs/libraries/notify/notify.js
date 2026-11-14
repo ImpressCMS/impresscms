@@ -8,10 +8,20 @@
  *             The timer is paused while the pointer or keyboard focus is inside the message.
  *  - html     false (default): the message is shown as text. true: the message is inserted as
  *             HTML and must already be filtered by the caller (on the server, the redirect
- *             message goes through icms_core_HTMLFilter::filterHTML()).
+ *             message goes through Icms\Core\HTMLFilter::filterHTML()).
  *
  * Messages are placed in live regions that exist before the message is added, so that
  * screen readers announce them. Escape dismisses the most recent message.
+ *
+ * Markup (styled in notify.css):
+ *
+ *   #icmsNotify
+ *     div[role=status]                 live region for info and success messages
+ *     div[role=alert]                  live region for errors
+ *       div[data-type=info|success|error]    one message
+ *         span                         icon
+ *         div[data-text]               message (data-text: shown as plain text)
+ *         button                       close button
  */
 (function (window, document) {
 	'use strict';
@@ -29,15 +39,13 @@
 			return regions;
 		}
 		var root = document.createElement('div');
-		root.className = 'icms-notify';
+		root.id = 'icmsNotify';
 
 		var polite = document.createElement('div');
-		polite.className = 'icms-notify__region';
 		polite.setAttribute('role', 'status');
 		polite.setAttribute('aria-live', 'polite');
 
 		var assertive = document.createElement('div');
-		assertive.className = 'icms-notify__region';
 		assertive.setAttribute('role', 'alert');
 		assertive.setAttribute('aria-live', 'assertive');
 
@@ -54,7 +62,7 @@
 			body.innerHTML = message;
 		} else {
 			body.textContent = message;
-			body.classList.add('icms-notify__body--text');
+			body.setAttribute('data-text', '');
 		}
 	}
 
@@ -66,20 +74,17 @@
 		var r = ensureRegions();
 
 		var item = document.createElement('div');
-		item.className = 'icms-notify__item icms-notify__item--' + type;
+		item.setAttribute('data-type', type);
 
 		var icon = document.createElement('span');
-		icon.className = 'icms-notify__icon';
 		icon.setAttribute('aria-hidden', 'true');
 		icon.textContent = ICONS[type];
 
 		var body = document.createElement('div');
-		body.className = 'icms-notify__body';
 		fillBody(body, String(message), options.html === true);
 
 		var close = document.createElement('button');
 		close.type = 'button';
-		close.className = 'icms-notify__close';
 		close.setAttribute('aria-label', labels.close);
 		close.innerHTML = '<span aria-hidden="true">×</span>';
 
@@ -134,7 +139,8 @@
 		if (e.key !== 'Escape' || !regions) {
 			return;
 		}
-		var items = regions.root.querySelectorAll('.icms-notify__item');
+		var items = Array.prototype.slice.call(regions.polite.children)
+			.concat(Array.prototype.slice.call(regions.assertive.children));
 		if (items.length) {
 			items[items.length - 1]._icmsDismiss();
 		}
