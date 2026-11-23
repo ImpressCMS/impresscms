@@ -169,19 +169,48 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 	}
 
 	/**
-	 * Extract the numeric version (and optional pre-release suffix) from a version name
-	 * e.g. "ImpressCMS 2.0.4 Final" -> "2.0.4", "v2.0.5-beta.1" -> "2.0.5-beta.1",
-	 * "ImpressCMS 2.0.5 Alpha" -> "2.0.5-alpha"
+	 * Extract a normalised version number from a version name, so it can be passed to version_compare()
+	 *
+	 * Handles optional prefixes ("ImpressCMS ", "v"), build metadata ("+build.5") and suffixes:
+	 *  - stable markers (final, stable, release, ga) are dropped
+	 *  - alpha/a, beta/b, rc, dev are kept (lowercase, full name) with optional number
+	 *  - patch/pl/p are normalised to "pl"
+	 *
+	 * Examples:
+	 *  "ImpressCMS 2.0.4 Final" -> "2.0.4"
+	 *  "v2.0.4"                 -> "2.0.4"
+	 *  "ImpressCMS 2.0.5 Alpha" -> "2.0.5-alpha"
+	 *  "v2.1.0-RC.2"            -> "2.1.0-rc2"
+	 *  "2.0.5b1"                -> "2.0.5-beta1"
+	 *  "2.0.4-patch1+build.7"   -> "2.0.4-pl1"
+	 *
+	 * @param string $name
+	 * @return string
 	 */
 	private function extractVersionNumber(string $name): string {
-		if (!preg_match('/(\d+(?:\.\d+)*)(?:[-_ ]?(alpha|beta|rc|dev)[.\-_ ]?(\d*))?/i', $name, $m)) {
+		$pattern = '/(\d+(?:\.\d+)*)'
+			. '(?:[-_.\s]*(alpha|beta|patch|final|stable|release|rc|dev|pl|ga|a|b|p)(?![a-z])[-_.\s]*(\d*))?/i';
+		if (!preg_match($pattern, $name, $m)) {
 			return trim($name);
 		}
+
 		$version = $m[1];
-		if (!empty($m[2])) {
-			$version .= '-' . strtolower($m[2]) . $m[3];
+		if (empty($m[2])) {
+			return $version;
 		}
-		return $version;
+
+		$map = array(
+			'a' => 'alpha', 'alpha' => 'alpha',
+			'b' => 'beta', 'beta' => 'beta',
+			'rc' => 'rc', 'dev' => 'dev',
+			'p' => 'pl', 'pl' => 'pl', 'patch' => 'pl',
+			'final' => '', 'stable' => '', 'release' => '', 'ga' => '',
+		);
+		$suffix = $map[strtolower($m[2])];
+		if ($suffix === '') {
+			return $version;
+		}
+		return $version . '-' . $suffix . $m[3];
 	}
 
     public function getLatestVersionName() : string {
