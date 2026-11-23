@@ -92,9 +92,9 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 		if (!empty($github_data) && is_array($github_data)) {
 		    $latest_release = $github_data;
 			// Populate the latest array with the new structure
-			$this->latest['version_name'] = $latest_release['name'];
+			$this->latest['version_name'] = !empty($latest_release['name']) ? $latest_release['name'] : $latest_release['tag_name'];
 			$this->latest['build'] = $latest_release['id'];
-			$this->latest['status'] = 10; // Assume final for GitHub releases
+			$this->latest['status'] = 10; // Only final releases are selected by get_latest()
 			$this->latest['url'] = isset($latest_release['assets'][0]) ? $latest_release['assets'][0]['browser_download_url'] : $latest_release['html_url'];
 			$this->latest['changelog'] = $latest_release['body'];
 
@@ -119,8 +119,9 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 
 	private function get_latest($owner = 'ImpressCMS', $repo = 'impresscms')
 	{
-		//$url= $this->version_url;
-		$url = "https://api.github.com/repos/$owner/$repo/releases/latest";
+		// Fetch the list of releases (not /releases/latest, which is based on creation date
+		// and could return an older branch's patch release as "latest")
+		$url = "https://api.github.com/repos/$owner/$repo/releases?per_page=100";
 
 		// Call the GitHub API
 		$ch = curl_init();
@@ -149,8 +150,38 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 	        return array();
 	    }
 
-		// Return release or empty array if decode failed
-		return $release ? $release : array();
+		if (!is_array($release)) {
+			return array();
+		}
+
+		return $this->selectHighestFinalRelease($release);
+	}
+
+	/**
+	 * Select the release with the highest version number, ignoring drafts and pre-releases
+	 *
+	 * @param array $releases Releases as returned by the GitHub API
+	 * @return array The selected release or an empty array if there is none
+	 */
+	private function selectHighestFinalRelease(array $releases): array
+	{
+		$best = array();
+		$bestVersion = '';
+		foreach ($releases as $release) {
+			if (!is_array($release) || !empty($release['draft']) || !empty($release['prerelease'])) {
+				continue;
+			}
+			$version = $this->extractVersionNumber((string)($release['tag_name'] ?? ''));
+			// skip tags without a numeric version
+			if (!preg_match('/^\d/', $version)) {
+				continue;
+			}
+			if ($bestVersion === '' || version_compare($version, $bestVersion, '>')) {
+				$best = $release;
+				$bestVersion = $version;
+			}
+		}
+		return $best;
 	}
 	public function getLatestVersionNumber() : string {
 		$versionName = $this->getLatestVersionName();
