@@ -446,6 +446,169 @@ class SystemAdsenseHandler extends \Icms\Ipf\Handler
 }
 ```
 
+### 2.9 Site-brede preloads en events
+
+Preloads worden **event listeners die bij het compileren ontdekt worden**. Daarbovenop komt een brug die
+het bestaande preload-contract intact laat. De voorgestelde API's (`EventDispatcher`, `HttpKernel`-events,
+`#[AsEventListener]`, compiler passes, `DirectoryResource`) zijn stabiel sinds Symfony 6.x/7.x en dus ook
+bruikbaar in 8.x. Wat Symfony 8.2 specifiek wijzigt, is niet nagekeken.
+
+#### Hoe preloads nu werken
+
+- **Ontdekking per request.** `Icms\Preload\Handler::__construct()` (`libraries/Icms/Preload/Handler.php`)
+  leest bij elk request `plugins/preloads/` uit met `DirectoryIterator`
+  (`Core\Filesystem::getFileList()`). Daar is geen sortering zichtbaar, dus de volgorde hangt af van het
+  bestandssysteem. Elk bestand wordt ge-include't. Voor een klasse `IcmsPreload<Naam>` wordt elke methode
+  die met `event` begint gekoppeld aan het event in kleine letters
+  (`eventFinishCoreBoot` → `finishcoreboot`).
+- **Twee stijlen naast elkaar:**
+  - `IcmsPreloadX extends icms_preload_Item` met `eventXxx()`-methodes: adsense, autotasks, customtag,
+    googleanalytics, keepalive, protectEmail, protector, userinfo.
+  - Bestanden die bij het includen `::setup()` aanroepen en zelf `icms_Event::attach()` doen:
+    `bootstrap.php`, `autologin.php`, `debug_mode.php`, `multilanguage.php`. Die gebruiken ook
+    `loadService-*` en de wildcard `'*'`.
+- **Modulepreloads** via `global $icmsOnDemandPreload` en `modules/<dir>/preload/`.
+- **Het contract voor callbacks** is `($params, \Icms\Event $event)`:
+  - `params` bevat vaak **referenties**. Zo doet `Core/Textsanitizer.php:251`
+    `triggerEvent('beforeDisplayTarea', [&$text, …])`, en past `protectEmail` `$array[0]` aan. Een preload
+    is dus soms ook een **filter**.
+  - Een eventnaam die met `*` begint, maakt het event annuleerbaar (`$event->canceled`).
+- **Momenten in de opstart.** `startCoreBoot` vuurt in `icms::boot()` vóór er één service bestaat;
+  `protector` draait daar zijn precheck, nog vóór de DB. Verder `finishCoreBoot`, `startOutputInit`
+  (`header.php:69`), `beforeFooter` (`footer.php:60`) en domein-events (tekstfilters, `adminHeader`,
+  `afterSaveSystemAdminPreferencesItems`).
+
+#### De ICMS-events op de Symfony-levenscyclus
+
+| ICMS-event | Moment in Symfony | Toelichting |
+|---|---|---|
+| `startCoreBoot` | Eigen event `icms.core.start_boot`, dat `Kernel::boot()` vuurt **direct na `initializeContainer()`** en vóór er services opgehaald worden | Symfony zelf heeft geen event vóór de container. Omdat services lazy zijn, is er op dit moment nog geen DB: dat gedrag van `protector` blijft behouden. |
+| `loadService[-x]` | BC-laag in `boot()` (zie 1.4) | Blijft vuren terwijl de boot-services in de vaste volgorde opgehaald worden. |
+| `finishCoreBoot` | `kernel.request` met hoge prioriteit (bv. 512), of een eigen `icms.core.finish_boot` aan het eind van de boot | Hier zitten nu de meeste listeners: protector-postcheck, autotasks, userinfo, … |
+| `startOutputInit`, `beforeFooter`, `adminHeader` | Eigen events die de **theme-renderer** vuurt, eventueel vanuit `kernel.view` | Het zijn momenten in de rendering, geen momenten in de kernel. |
+| Uitvoer bewerken (Smarty-resultaat, e-mailadressen beveiligen op paginaniveau) | `kernel.response` | Netter dan output buffering. |
+| Domein-events (`beforeDisplayTarea`, `afterFilterHTMLdisplay`, `afterSaveSystemAdminPreferencesItems`, …) | Eigen **getypeerde event-klassen**, gedispatcht via `EventDispatcherInterface` | Niet gekoppeld aan de levenscyclus. |
+| Autotasks bij een paginabezoek (`finishCoreBoot` + `exit(0)` in `plugins/preloads/autotasks.php`) | **`kernel.terminate`** | Functionele winst: de taken draaien nadat de response naar de bezoeker verstuurd is (`fastcgi_finish_request`). `exit()` in een listener breekt de response en de terminate-fase, dus die moet eruit. |
+
+#### Ontdekken bij het compileren
+
+Een compiler pass, of de `build()` van een `IcmsCoreBundle`, scant bij het compileren:
+
+- `ICMS_PRELOAD_PATH`, voor de site-brede preloads;
+- `modules/<dir>/preload/` van de **actieve** modules. Welke modules actief zijn, haal je bij het
+  compileren liever niet uit de DB. Beter is een manifest dat module-install en -activatie wegschrijven,
+  bv. `cache/modules.php`.
+
+Per preload-klasse van de eerste stijl:
+
+```php
+foreach ((new \ReflectionClass($class))->getMethods() as $m) {
+    if (!str_starts_with($m->name, 'event')) continue;
+    $legacy = strtolower(substr($m->name, 5));            // 'finishcoreboot'
+    $container->register("icms.preload.$file.$legacy", LegacyPreloadListener::class)
+        ->setArguments([new Reference("icms.preload.$file"), $m->name])
+        ->addTag('kernel.event_listener', [
+            'event'    => LegacyEventMap::toSymfony($legacy),  // 'icms.core.finish_boot'
+            'method'   => '__invoke',
+            'priority' => $priorityFromFileOrder,           // vaste, alfabetische volgorde
+        ]);
+}
+$container->addResource(new DirectoryResource(ICMS_PRELOAD_PATH, '/\.php$/'));
+```
+
+De `eventXxx()`-methodes verwachten `($params, $event)` en geen Symfony-event-object. Daarom tag je niet
+het preload-object zelf, maar een `LegacyPreloadListener`-wrapper met het preload-object en de
+methodenaam als argumenten.
+
+Wat dit oplevert:
+
+- **`DirectoryResource`** past precies bij het model "een bestand in `plugins/preloads` zetten". In
+  debug-modus bouwt de container zichzelf opnieuw op zodra er een bestand bijkomt. In productie gebeurt
+  dat bij een cache-reset, via een admin-actie of module-install.
+- De preload-klassen worden **lazy services**: geen `include` en geen `new` per request meer voor preloads
+  waarvan het event niet vuurt.
+- De volgorde wordt **deterministisch**, via prioriteiten.
+- Functionele extra: preloads per stuk **aan- en uitzetten** via een parameter (`icms.preloads.disabled`),
+  zodat de compiler pass ze overslaat. Vandaag moet je daarvoor het bestand verwijderen.
+
+#### De brug tussen `Icms\Event` en de `EventDispatcher`
+
+`Icms\Event` blijft bestaan als façade, zodat de `setup()`-stijl, modules en
+`icms::$preload->triggerEvent()` blijven werken.
+
+```php
+final class LegacyEvent extends \Symfony\Contracts\EventDispatcher\Event
+{
+    public array $parameters;
+    public function __construct(
+        public readonly string $namespace,
+        public readonly string $name,
+        public readonly mixed $source,
+        array &$parameters,
+        public readonly bool $canCancel,
+    ) { $this->parameters = &$parameters; }   // referenties blijven werken
+}
+
+// Icms\Event::trigger() → dispatcher
+$e = new LegacyEvent($ns, $name, $source, $params, $cancancel);
+$this->wildcard->call($e);                         // '*'-listeners: Symfony kent geen wildcards
+$this->dispatcher->dispatch($e, LegacyEventMap::toSymfony("$ns.$name"));
+
+// Icms\Event::attach() → runtime-listener (toegestaan op EventDispatcher)
+$this->dispatcher->addListener(LegacyEventMap::toSymfony("$ns.$name"),
+    fn (LegacyEvent $e) => $callback($e->parameters, $e->legacyView()));
+```
+
+- **Annuleren** (`*`-prefix, `$event->canceled = true`) wordt `stopPropagation()`, alleen als
+  `canCancel` aan staat.
+- **Wildcards (`'*'`)**: `bootstrap.php` gebruikt die voor `backwardCompatibility`. Symfony heeft dat
+  niet, dus de brug houdt zelf een kleine lijst bij en roept die vóór de dispatch aan.
+- **Referenties**: omdat `LegacyEvent` de parameters by reference vasthoudt, blijft
+  `$array[0] = convertEmail($array[0])` in `protectEmail` de originele tekst wijzigen.
+
+#### Volgorde in `Kernel::boot()`
+
+1. `initializeContainer()`. Die is gecompileerd, dus goedkoop.
+2. Legacy preloads van de `setup()`-stijl includen. Hun `attach()` gaat nu naar `addListener()`. Dit moet
+   **vóór** stap 3 en 4 gebeuren, want ze luisteren naar `loadService-*`.
+3. `icms.core.start_boot` dispatchen. `protector` precheck draait hier, nog zonder DB.
+4. De boot-services eager ophalen in de huidige volgorde en `loadService-*` vuren (BC).
+5. `icms.core.finish_boot` dispatchen, of dat overlaten aan `kernel.request` als ImpressCMS volledig via
+   `HttpKernel` draait.
+
+#### De doelvorm voor nieuwe preloads
+
+```php
+#[AsEventListener]
+final class ProtectEmailListener
+{
+    public function __construct(private ConfigProvider $config) {}
+
+    public function __invoke(TextDisplayFiltered $event): void
+    {
+        if ($this->config->get('user', 'protect_email')) {
+            $event->text = $this->convert($event->text);
+        }
+    }
+}
+```
+
+- **Getypeerde events** (`TextDisplayFiltered` met een `public string $text`) vervangen de positionele
+  arrays met referenties (`$array[0]` = tekst, `[1]` = html, …).
+- De listener krijgt zijn afhankelijkheden in de constructor, in plaats van `global $icmsConfig` en
+  `icms_getModuleHandler()`.
+- Voor BC vuurt de brug voor elk getypeerd event ook de oude naam, met een `LegacyEvent` waarvan
+  `parameters[0]` een referentie is naar `$event->text`.
+
+#### Aandachtspunten
+
+- **Cron en CLI:** preloads die op `finishCoreBoot` rekenen, draaien vandaag ook bij CLI-scripts die
+  `common.php` laden. In Symfony horen die bij `ConsoleEvents::COMMAND`, of je dispatcht
+  `icms.core.finish_boot` in beide kernels.
+- **Preloads die bij het includen code uitvoeren** (de `setup()`-stijl) blijven een uitzondering: ze
+  moeten elk request ge-include't worden. Migreer ze als eerste naar `#[AsEventListener]`, want het zijn
+  er maar vier.
+
 ---
 
 ## 3. Migratiepad
@@ -457,6 +620,7 @@ Elke fase is los te releasen, BC-neutraal en sluit aan bij de PSR-4-refactor in 
 |---|---|---|---|
 | **DI-0** | `composer.json`: `php: ">=8.4 <9.0"`, `symfony/dependency-injection`, `symfony/config`, `symfony/deprecation-contracts`. **Let op:** `htdocs/composer.json` staat nu op `>=7.4 <8.5` en recente commits (#1772, #1773) herstelden net PHP 7.4-compatibiliteit. Dat moet eerst een expliciete beslissing worden (zie 3.1). | Hosting < 8.4 valt af | — |
 | **DI-1** | `Icms\Kernel`: container bouwen, dumpen en cachen. `icms::$services["boot"]` 1-op-1 omzetten naar service-definities met de bestaande factories. `icms::boot()` vult de statische properties vanuit de container; nieuw: `icms::container(): ContainerInterface`. De `loadService`-events blijven vuren. | Geen | DI-0 |
+| **DI-1b** | Preloads en events (2.9): `symfony/event-dispatcher`; `Icms\Event` wordt een façade over de dispatcher (`LegacyEvent`, wildcard-lijst, annuleren via `stopPropagation()`); compiler pass die `plugins/preloads/` en modulepreloads scant met `DirectoryResource`; modulemanifest `cache/modules.php`; vaste boot-volgorde in `Kernel::boot()`. Autotasks verhuizen naar `kernel.terminate`. | Geen voor preloads die de façade gebruiken; de volgorde van preloads wordt deterministisch (alfabetisch) | DI-1 |
 | **DI-2** | `HandlerLocator` + `LegacyHandlerFactory`; `icms::handler()` en `icms_getModuleHandler()` delegeren eraan. | Geen (zelfde naamconventies, zelfde caching-semantiek) | DI-1 |
 | **DI-3** | Kleine services toevoegen: `RequestContext`, `CurrentUser`, `ModuleContext`, `PermissionService`, `Redirector`, `TemplateProvider`. `Ipf\Permission\Handler` en `Ipf\Registry\Handler` worden dunne wrappers rond die services. | Geen | DI-1 |
 | **DI-4** | `HandlerServices` + setter `#[Required]` + lazy fallback in `Ipf\Handler`; `#[AsEntityHandler]` + compiler pass; laden van module-`config/services.php`; cache-invalidatie bij module-install/update. | Geen; opt-in voor modules | DI-2, DI-3 |
