@@ -1,14 +1,14 @@
 # Dependency Injection voor Core en IPF — analyse en voorstel
 
 **Status:** voorstel, nog geen code gewijzigd
-**Uitgangspunten:** PHP 8.4, `symfony/dependency-injection` (7.x) als container, BC blijft een harde eis
+**Uitgangspunten:** PHP 8.4 als ondergrens (zie 3.1), `symfony/dependency-injection` (7.4 LTS of 8.x) als container, BC blijft een harde eis
 **Scope:** `htdocs/libraries/Icms/Core/` (vooral `Entity`, `EntityHandler`), `htdocs/libraries/Icms/Ipf/` (Entity, Handler, Controller, subhandlers, Form, View) en de handler-loaders `icms::handler()` en `icms_getModuleHandler()`.
 
 ---
 
 ## 1. Inventaris: hoe komen klassen nu aan hun afhankelijkheden?
 
-### 1.1 De vijf mechanismen
+### 1.1 De mechanismen
 
 | Mechanisme | Voorbeeld | Waar |
 |---|---|---|
@@ -67,6 +67,92 @@ niet in de constructors maar in alles wat *daarna* via `icms::`, globals en `new
    als Symfony-service gedefinieerd worden; er is een factory tussen nodig die eerst een variabele maakt.
    Objecten by-reference doorgeven heeft sinds PHP 5 geen zin meer; de `&` moet op termijn weg, maar dat
    is een BC-breuk voor subklassen die de handtekening overnemen (LSP-check).
+
+### 1.4 Mapping van `icms::` naar Symfony DI
+
+Conceptueel lijkt `icms::` sterk op een Symfony-container. In de uitvoering zit het verschil:
+`icms::` lost alles **op tijdens het request**, met **namen als sleutel** en met **statische, globale
+toegang**. Symfony lost alles op **tijdens het compileren**, met **types als sleutel**, en zonder globale
+toegang.
+
+| `icms::` vandaag | Symfony-equivalent | Verschil |
+|---|---|---|
+| `icms::$services["boot"]` = `naam => [[Klasse, 'methode'], $args]` (`libraries/icms.php:13-23`) | Service-definitie met een factory: `$s->set(Logger::class)->factory([Logger::class, 'instance'])->args([...])` | Bijna 1-op-1. Dit is het deel dat het meest op een container lijkt. |
+| `icms::create('\\Klasse', $args)`, via `ReflectionClass::newInstanceArgs()` | Gewone definitie `$s->set(Klasse::class)->args([...])` of autowiring | Symfony genereert bij het compileren gewone code (`new Klasse(...)`): geen reflectie per request. |
+| `icms::boot()` maakt **alle** boot-services meteen aan | Services zijn standaard **lazy**: ze worden pas gebouwd bij het eerste gebruik | Gedragsverschil, zie "boot-volgorde" hieronder. |
+| `"optional" => []` | Geen echte tegenhanger. In Symfony is elke service "optioneel" tot iemand ze vraagt | — |
+| `icms::$logger`, `icms::$db`, … (`public static`) | `$container->get(Logger::class)` op een **public** service, of beter: constructor-injectie | Symfony kent bewust geen statische toegang. Het dichtst erbij liggen Laravel-facades, niet Symfony. |
+| Gedeelde instantie (de static property zelf) | `shared: true`, de standaard | Gelijk. |
+| `icms::loadService()` **na** `boot()` (`launchModule()`; `include/cp_header.php:22` laadt `module` opnieuw met `admin=true`) | Een **synthetic service**: `$s->set('icms.module')->synthetic()`, en tijdens het request `$container->set('icms.module', $module)` | Na het compileren kun je in Symfony alleen synthetic services nog zetten. `icms::` laat elke service op elk moment overschrijven. |
+| Event `loadService` / `loadService-<naam>` (`icms::loadService()`) | Afhankelijk van wat de listener doet: (a) een **configurator** (`->configurator([...])`), (b) een **decorator** (`->decorate(...)`), (c) een **compiler pass** | `icms::` reageert *tijdens het request* op het aanmaken van een object. Symfony configureert *vooraf*. |
+| `icms::handler($naam)`: zoekt een klasse op naamconventie, include't bestanden, `new $class(self::$xoopsDB)`, cachet in `self::$handlers` | **Autowiring op type** voor vaste afhankelijkheden. Voor opzoeken op naam: een **`ServiceLocator`** (`tagged_locator('icms.handler', indexAttribute: 'name')`) | Symfony kent alle handlers vooraf (bestanden scannen met `load()`, of attributen). `icms::` ontdekt ze per request op het bestandssysteem. |
+| `icms::handler($naam, $optional = true)` | `$container->has()` / `service(...)->nullOnInvalid()` / `?Type $x = null` met autowiring | Gelijkaardig. |
+| `icms_getModuleHandler($item, $dir)` | Dezelfde `ServiceLocator`, met ID's als `icms.handler.<dir>.<item>` | Idem. |
+| `icms::$paths`, `ICMS_ROOT_PATH`, `ICMS_URL`, … | **Parameters**: `%icms.root_path%`, of `env(...)` vanuit `mainfile.php` | Parameters liggen vast bij het compileren; constanten liggen vast bij de start van het request. Voor paden komt dat op hetzelfde neer. |
+| `icms::$urls` (afgeleid van `$_SERVER`) | **Geen** container-waarde, maar `RequestStack` / `Request` | Per request: hoort niet in een gedeelde, gecompileerde container. |
+| `icms::$user` | `Security::getUser()` / `TokenStorage`: een service die de gebruiker *aanbiedt* | Symfony injecteert nooit de gebruiker zelf, alleen een provider. |
+| `icms::setup()` (autoload, paden, shutdown) | De constructor van `Kernel` en `public/index.php` | — |
+| `icms::boot()` | `Kernel::boot()`, met daarin `initializeContainer()` | — |
+| `icms::launchModule()` + `$module->registerClassPath()` | De bundles die de kernel registreert (`registerBundles()`) en hun `build()`/`boot()` | Een module ≈ een bundle. Module-install ≈ `cache:clear`. |
+| Preloads + `icms_Event::attach/trigger` | `EventDispatcher` + `#[AsEventListener]` | `startCoreBoot`/`finishCoreBoot` komen ruwweg overeen met kernel-events. Symfony heeft geen events *tijdens* het bouwen van services. |
+| `icms::shutdown()` | `kernel.terminate` / `Kernel::terminate()` | — |
+
+#### Drie plaatsen waar de mapping niet triviaal is
+
+**1. Het `loadService`-event wordt écht gebruikt, met neveneffecten die van de volgorde afhangen.**
+
+- `libraries/Icms/Core/Security.php:67`: `Security::service()` koppelt `checkBadips` aan
+  `loadService-config`. De bad-IP-check draait dus *omdat* de config later geladen wordt.
+- `plugins/preloads/multilanguage.php:26` hangt aan `loadService-session`.
+- `plugins/preloads/bootstrap.php` start timers als de logger aangemaakt wordt.
+
+Met lazy services in Symfony bestaat het moment "service wordt aangemaakt" niet meer op een voorspelbaar
+punt. Gewoon omzetten werkt dus niet. Aanpak:
+
+- Het eigenlijke werk (bad-IP-check, taal initialiseren, timers) verhuizen naar **expliciete events** in
+  de boot-volgorde, zoals `icms.boot.config_loaded` of een `kernel.request`-equivalent.
+- `icms::loadService()` in de BC-laag de oude `loadService-*`-events **laten blijven vuren** wanneer
+  `boot()` de static properties vult vanuit de container. Preloads van derden blijven dan werken.
+- Voor services die echt bij het aanmaken geconfigureerd moeten worden: een `configurator`.
+
+**2. Boot is nu eager en heeft neveneffecten.**
+`Security::service()` doet `checkSuperglobals()` en kan `XOOPS_DB_PROXY` definiëren nog vóór de DB
+bestaat. Met een lazy container hangt dat ervan af wie Security als eerste opvraagt. In de BC-laag moet
+`boot()` de boot-services daarom expliciet in de huidige volgorde ophalen (`$container->get(...)` voor
+elk). Dat behoudt het gedrag; luiheid win je pas later, per service.
+
+**3. Runtime-overschrijven versus een immutabele container.**
+`include/cp_header.php:22` vervangt de `module`-service midden in het request door een admin-variant.
+In Symfony mag dat alleen met een synthetic service. Netter is een `ModuleContext`-service met een setter
+(`setCurrent($module, admin: true)`): de container blijft immutabel, de toestand zit in een gewoon object.
+Hetzelfde patroon geldt voor `$user` en `$urls`.
+
+#### Concrete vertaling
+
+```php
+// Nu: libraries/icms.php
+"logger" => [["icms_core_Logger", "instance"], []],
+"config" => [["icms_config_Handler", "service"], []],
+
+// Symfony: config/services.php
+$s->set(\Icms\Core\Logger::class)
+    ->factory([\Icms\Core\Logger::class, 'instance'])->public();
+$s->set(\Icms\Config\Handler::class)
+    ->factory([\Icms\Config\Handler::class, 'service'])->public();
+$s->set(\Icms\Module\ModuleContext::class)->public();   // vervangt runtime-loadService('module')
+
+// BC-laag in icms::boot()
+foreach (self::BOOT_ORDER as $name => $id) {          // huidige volgorde bewaren
+    self::$$name = self::$container->get($id);        // eager, zoals nu
+    icms_Event::trigger('icms', 'loadService', null, ['name' => $name, 'service' => self::$$name]);
+    icms_Event::trigger('icms', "loadService-$name", null, ['name' => $name, 'service' => self::$$name]);
+}
+```
+
+Samengevat: de **definities** van `icms::$services` vertalen bijna mechanisch. Wat werk vraagt, zijn
+de **runtime-gewoonten** rond die definities: services aanmaken met events, ze tijdens het request
+overschrijven, en ze op naam en conventie ontdekken. Die gewoonten verdwijnen niet; ze verhuizen naar
+expliciete events, context-services en een `ServiceLocator`.
 
 ---
 
@@ -369,7 +455,7 @@ Elke fase is los te releasen, BC-neutraal en sluit aan bij de PSR-4-refactor in 
 
 | Fase | Inhoud | BC-impact | Afhankelijk van |
 |---|---|---|---|
-| **DI-0** | `composer.json`: `php: ">=8.2"`, `symfony/dependency-injection`, `symfony/config`, `symfony/deprecation-contracts`. **Let op:** `htdocs/composer.json` staat nu op `>=7.4 <8.5` en recente commits (#1772, #1773) herstelden net PHP 7.4-compatibiliteit. Dat moet eerst een expliciete beslissing worden. | Hosting < 8.2 valt af | — |
+| **DI-0** | `composer.json`: `php: ">=8.4 <9.0"`, `symfony/dependency-injection`, `symfony/config`, `symfony/deprecation-contracts`. **Let op:** `htdocs/composer.json` staat nu op `>=7.4 <8.5` en recente commits (#1772, #1773) herstelden net PHP 7.4-compatibiliteit. Dat moet eerst een expliciete beslissing worden (zie 3.1). | Hosting < 8.4 valt af | — |
 | **DI-1** | `Icms\Kernel`: container bouwen, dumpen en cachen. `icms::$services["boot"]` 1-op-1 omzetten naar service-definities met de bestaande factories. `icms::boot()` vult de statische properties vanuit de container; nieuw: `icms::container(): ContainerInterface`. De `loadService`-events blijven vuren. | Geen | DI-0 |
 | **DI-2** | `HandlerLocator` + `LegacyHandlerFactory`; `icms::handler()` en `icms_getModuleHandler()` delegeren eraan. | Geen (zelfde naamconventies, zelfde caching-semantiek) | DI-1 |
 | **DI-3** | Kleine services toevoegen: `RequestContext`, `CurrentUser`, `ModuleContext`, `PermissionService`, `Redirector`, `TemplateProvider`. `Ipf\Permission\Handler` en `Ipf\Registry\Handler` worden dunne wrappers rond die services. | Geen | DI-1 |
@@ -381,6 +467,93 @@ Elke fase is los te releasen, BC-neutraal en sluit aan bij de PSR-4-refactor in 
 **Testen per fase:** de bestaande `tests/Unit/*/AliasesTest.php` blijven groen. Een `ContainerTest`
 compileert de container zonder databank (DB als synthetic of lazy service) en controleert dat alle
 publieke services resolven. Per geëxtraheerde service komen unit-tests met mocks (zie 2.8).
+
+### 3.1 DI-0: keuze van de PHP-ondergrens
+
+**Advies: PHP 8.4 als ondergrens.** Je wint het meest bij 8.4, en de extra moeite ten opzichte van 8.2
+is klein.
+
+#### Levensduur: de grootste winst
+
+| Ondergrens | Security-support PHP tot | Symfony-lijn die je kunt gebruiken |
+|---|---|---|
+| 8.2 | **31 dec 2026** | 7.4 LTS |
+| 8.3 | 31 dec 2027 | 7.4 LTS |
+| 8.4 | 31 dec 2028 | 7.4 LTS **én 8.x** (Symfony 8 vraagt PHP 8.4) |
+
+Een ondergrens van 8.2 ligt op het moment van de release al (bijna) buiten support. Met 8.3 koop je één
+jaar. Alleen 8.4 laat je de nieuwste Symfony-lijn gebruiken, zodat je niet later een tweede keer moet
+migreren. Hetzelfde geldt grotendeels voor PHPUnit: de recentste majors vragen ook 8.3 of 8.4 (het exacte
+versienummer per major is nog te controleren). Dat is meteen het moment om `phpunit ^9.6` uit
+`htdocs/composer.json` gelijk te trekken met de `^11` uit `REFACTOR_NOTES.md`.
+
+#### Wat 8.3 toevoegt boven 8.2
+
+- **`#[\Override]`**: de belangrijkste voor deze codebase. Er zijn diepe overervingsketens
+  (`Core\Entity` → `Ipf\Entity` → module-entity, en `EntityHandler` → `Ipf\Handler` → module-handler).
+  `REFACTOR_NOTES.md` vermeldt al LSP-fouten in `initVar()`, `setErrors()` en `fetchObjects()`. Met
+  `#[\Override]` faalt een override die zijn parent niet meer raakt luid, in plaats van stil.
+- **Getypeerde klasseconstanten** (`const string TYPE = ...`): handig om de `XOBJ_DTYPE_*`-constanten
+  om te vormen naar een enum of getypeerde constanten. Die worden nu dubbel en met `if (!defined())`
+  gedefinieerd.
+- **Dynamisch ophalen van klasseconstanten** (`$class::{$name}`): vervangt `constant("$class::$name")`
+  in de code die op naamconventies leunt.
+- `json_validate()`, `mb_str_pad()`, en `php -l` op meerdere bestanden tegelijk: dat laatste helpt de
+  refactor-scripts.
+
+Functioneel merkt een eindgebruiker hier weinig van. Het is vooral winst in correctheid tijdens de
+refactor.
+
+#### Wat 8.4 toevoegt: direct relevant voor IPF en DI
+
+- **Native lazy objects** (`ReflectionClass::newLazyGhost/newLazyProxy`):
+  - De Symfony-container kan zware services, zoals DB, sessie en config, lazy maken zonder gegenereerde
+    proxyklassen. Vandaag instantieert `icms::boot()` alle boot-services altijd.
+  - Hetzelfde mechanisme kan ook **handlers lazy** maken. De `LegacyHandlerFactory` en de fallback via
+    `icms::container()` (2.4) worden zo goedkoop.
+  - Later kun je zelfs entities lazy hydrateren, bijvoorbeeld voor gerelateerde objecten.
+- **Asymmetrische zichtbaarheid** (`public private(set)`). `Ipf\Handler` heeft 20 `public`-properties
+  (`$keyName`, `$_moduleName`, `$className`, `$table`, …) die modules lezen, maar die nooit van
+  buitenaf gewijzigd mogen worden. Met `public private(set)` blijft het lezen BC-compatibel, en schrijven
+  wordt verboden. Dat lukt anders alleen met een BC-breuk via getters.
+- **Property hooks**. Op termijn kun je het `getVar()`/`setVar()`/`vars[]`-systeem van `Core\Entity`
+  gedeeltelijk vervangen door echte getypeerde properties met hooks voor sanitizing en formattering. Een
+  `$entity->title` die de IDE kent, in plaats van `getVar('title', 's')`. Dat is de grootste DX-winst op
+  lange termijn, maar wel een grote verbouwing.
+- **`#[\Deprecated]`**: precies wat fase DI-6 nodig heeft. `icms::handler()`, `icms_getModuleHandler()`
+  en de oude constructors krijgen een deprecatie op engine-niveau, die IDE's en PHPStan ook tonen. Zelf
+  `trigger_deprecation()` aanroepen is dan niet meer nodig.
+- **`new Foo()->bar()` zonder haakjes, `array_find()`/`array_any()`/`array_all()`, `mb_trim()`**:
+  kleine leesbaarheidswinst.
+- **Nieuwe HTML5-DOM-API** (`Dom\HTMLDocument`): relevant voor `HTMLFilter` en `Metagen`, die nu met
+  regex of de oude DOM-parser werken.
+
+#### Kosten die je sowieso al hebt
+
+Deze kosten heb je ook bij een ondergrens van 8.2, omdat `composer.json` 8.4 vandaag al toelaat:
+
+- **58× `trigger_error(..., E_USER_ERROR)`**: dat is in 8.4 deprecated, onder andere in
+  `icms_getModuleHandler()`. Moet hoe dan ook vervangen worden door exceptions.
+- **Impliciet nullable parameters** (`Foo $x = null`): deprecated in 8.4. Eén geval in `libraries/Icms`;
+  modules kunnen er meer hebben.
+- **Dynamische properties** (deprecated sinds 8.2): er staat maar één `#[AllowDynamicProperties]` in de
+  codebase. Legacy entity- en module-code die properties aanmaakt zonder ze te declareren, komt hoe dan
+  ook boven.
+
+Wat 8.3 of 8.4 als ondergrens *extra* kost, is dus vooral **hosting-compatibiliteit**. Eind 2026 bieden
+de gangbare shared hosts 8.3 en 8.4 aan. Hosts die op 8.1 of 8.2 blijven hangen, zitten toch al buiten
+security-support.
+
+#### Conclusie
+
+- **8.2** is te kort: het ligt bijna meteen buiten support.
+- **8.3** geeft `#[\Override]` en één jaar extra, maar sluit Symfony 8 uit.
+- **8.4** geeft lazy objects, asymmetrische zichtbaarheid en `#[\Deprecated]`. Alle drie zijn direct
+  bruikbaar in het DI-migratiepad (2.4, DI-6) en voor de publieke properties van `Ipf\Handler`. Je kunt er
+  bovendien de Symfony 7.4 LTS **of** de Symfony 8-lijn mee gebruiken.
+
+Daarnaast de bovengrens `<8.5` in `composer.json` loslaten of naar `<9.0` zetten. PHP 8.5 is al uit, en
+een harde bovengrens blokkeert gebruikers die nu al upgraden.
 
 ---
 
@@ -394,7 +567,7 @@ publieke services resolven. Per geëxtraheerde service komen unit-tests met mock
 | **Expliciete afhankelijkheden.** De constructor vertelt wat een klasse nodig heeft. Nu staan ze verspreid over ±150 plaatsen in `Ipf/` (zie 1.2). | **By-reference-constructors** (22 stuks) vergen een factory-laag (1.3); de container kan ze niet rechtstreeks bouwen. |
 | **Vervangbaarheid.** `decorate()` laat modules core-gedrag (bv. permissies) uitbreiden zonder preload-trucs. | **Gecompileerde cache = extra bewegend onderdeel.** Invalidatie bij module-install/update, schrijfrechten op `ICMS_CACHE_PATH`, multi-site-installaties met gedeelde code. Een verouderde container geeft moeilijk te begrijpen fouten. |
 | **Performance neutraal tot licht positief.** Een gedumpte container is een gewone PHP-klasse met één methode per service, opcache-vriendelijk. Services worden lazy aangemaakt, terwijl `icms::boot()` nu alle boot-services altijd instantieert. | **Bootstrap-kost bij een koude cache.** `ContainerBuilder` + reflectie + module-scans kost honderden ms. Dat is aanvaardbaar bij install, maar niet als de cache per ongeluk vaak geleegd wordt. |
-| **Sluit aan op het ecosysteem.** PSR-11, Symfony-componenten (events, http-foundation, console) worden daarna goedkoop. | **Extra dependencies** (~4 pakketten) en de PHP 8.2+-eis van Symfony 7. Dat botst met de huidige `>=7.4`-belofte. |
+| **Sluit aan op het ecosysteem.** PSR-11, Symfony-componenten (events, http-foundation, console) worden daarna goedkoop. | **Extra dependencies** (~4 pakketten) en een hogere PHP-ondergrens (8.4 aanbevolen, zie 3.1). Dat botst met de huidige `>=7.4`-belofte. |
 | **Bestaand concept.** `icms::$services` + `loadService()` is al een containerpatroon; DI formaliseert het eerder dan het te vervangen. | **Request-scope is lastig.** User, module en request zijn mutable globale toestand die tijdens de boot verandert (`launchModule()` na `boot()`). Providers lossen dat op, maar wie per ongeluk een *waarde* injecteert, krijgt stille bugs. |
 | **LSP en strikte types** worden afgedwongen door constructor-handtekeningen. Dat sluit aan bij `declare(strict_types=1)` uit de PSR-4-refactor. | **Entities blijven half.** Ze blijven via `$this->handler` aan services komen (service-locator-light). Echte DI op entities is niet zinvol, maar het resultaat is minder "zuiver" dan in Symfony/Doctrine. |
 
@@ -419,7 +592,7 @@ publieke services resolven. Per geëxtraheerde service komen unit-tests met mock
 | Werk (modules) | verplicht | opt-in | geen |
 | Leercurve | hoog | laag tot middel | geen |
 | Performance | 0/+ | 0/+ | 0 |
-| PHP-eis | 8.2+ | 8.2+ | ongewijzigd |
+| PHP-eis | 8.4+ | 8.4+ | ongewijzigd |
 | Toekomstvastheid | ++ | + | − |
 
 ---
@@ -440,8 +613,8 @@ Concreet:
 4. **De grootste winst per uur werk** zit in DI-3 en DI-5: `Controller` en `View\Table` loskoppelen van
    superglobals en `Permission\Handler` van `icms::$user`. Dat is meteen testbare code. Begin daar, na de
    minimale container uit DI-1.
-5. **Eerst beslissen:** de PHP-ondergrens. Symfony DI 7 vraagt PHP 8.2+, terwijl `composer.json` nu
-   `>=7.4` belooft. Zonder die beslissing is DI-0 niet uitvoerbaar. Een alternatief is Symfony DI 5.4
+5. **Eerst beslissen:** de PHP-ondergrens. Advies: 8.4 (zie 3.1), terwijl `composer.json` nu `>=7.4`
+   belooft. Zonder die beslissing is DI-0 niet uitvoerbaar. Een alternatief is Symfony DI 5.4
    (PHP 7.2+, maar end-of-life), en dat wordt afgeraden.
 
 Niet doen is verdedigbaar voor een project in onderhoudsmodus. Maar de PSR-4-refactor
