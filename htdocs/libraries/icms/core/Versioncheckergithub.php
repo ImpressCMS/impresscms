@@ -157,8 +157,7 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 		if (empty($versionName)) {
 			return '';
 		}
-		// Remove 'v' prefix if present (e.g., "v2.0.1" -> "2.0.1")
-		return trim(ltrim($versionName, 'v'));
+		return $this->extractVersionNumber($versionName);
 	}
 
 	public function getInstalledVersionNumber() : string {
@@ -166,8 +165,23 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 		if (empty($versionName)) {
 			return '';
 		}
-		// Remove "ImpressCMS " prefix if present (e.g., "ImpressCMS 2.0.1" -> "2.0.1")
-		return trim(str_replace('ImpressCMS ', '', $versionName));
+		return $this->extractVersionNumber($versionName);
+	}
+
+	/**
+	 * Extract the numeric version (and optional pre-release suffix) from a version name
+	 * e.g. "ImpressCMS 2.0.4 Final" -> "2.0.4", "v2.0.5-beta.1" -> "2.0.5-beta.1",
+	 * "ImpressCMS 2.0.5 Alpha" -> "2.0.5-alpha"
+	 */
+	private function extractVersionNumber(string $name): string {
+		if (!preg_match('/(\d+(?:\.\d+)*)(?:[-_ ]?(alpha|beta|rc|dev)[.\-_ ]?(\d*))?/i', $name, $m)) {
+			return trim($name);
+		}
+		$version = $m[1];
+		if (!empty($m[2])) {
+			$version .= '-' . strtolower($m[2]) . $m[3];
+		}
+		return $version;
 	}
 
     public function getLatestVersionName() : string {
