@@ -609,6 +609,140 @@ final class ProtectEmailListener
   moeten elk request ge-include't worden. Migreer ze als eerste naar `#[AsEventListener]`, want het zijn
   er maar vier.
 
+### 2.10 De meegeleverde preloads: wat kan weg, wat wordt standaard-Symfony
+
+Uit de 13 meegeleverde preloads in `htdocs/plugins/preloads/` blijkt dat **geen enkele preload het
+preload-mechanisme nodig heeft**. Ze vallen allemaal in drie categorieën, en voor elk daarvan heeft
+Symfony een standaardoplossing:
+
+- **dingen die de opstart beïnvloeden:** debug, timers, taal, autologin, protector;
+- **tekstfilters:** adsense, customtag, protectEmail;
+- **templatedata en scripts:** userinfo, adsense, customtag, GA, keepalive.
+
+#### Per preload
+
+| Preload | Wat het doet | Symfony-aanpak | Oordeel |
+|---|---|---|---|
+| `bootstrap.php` | Logger-timers starten bij `loadService(logger)` en stoppen bij `finishCoreBoot`. Ook een `'*'`-listener `backwardCompatibility()` die alleen `return true` doet. | `Stopwatch` + WebProfiler: in debug-modus worden kernel-fases en listeners automatisch gemeten. | **Weglaten.** De wildcard-listener is een no-op die bij elk event aangeroepen wordt. |
+| `debug_mode.php` | Bij `loadService(config)`: `error_reporting()` aanpassen, de logger-weergave aanzetten, query-listeners koppelen. | `kernel.debug` / `APP_DEBUG`, `ErrorHandler`, WebProfiler, Monolog. Queries via een DBAL-middleware of een decorator op de DB-service. `$xoopsOption['nodebug']` wordt `$profiler->disable()`. | **Vervangen.** De listener op `icms_db_IConnection`/`prepare` is dood: geen enkele DB-klasse triggert `prepare`, alleen `execute`. |
+| `multilanguage.php` | Bij `loadService(session)`: de taal kiezen uit `Accept-Language`, `?lang=`, een cookie of de sessie, en daarmee `global $icmsConfig['language']` overschrijven. | `framework.enabled_locales`, `set_locale_from_accept_language`, `Request::getPreferredLanguage()`, een eigen `LocaleListener` op `kernel.request` (cookie/sessie), `LocaleSwitcher` + Translation. | **Vervangen.** Bevat een bug: in de cookie-tak `$langs[$_GET['lang']]` terwijl `$_GET['lang']` daar niet gezet is. |
+| `autologin.php` | Luistert naar `sessionStart`/`sessionClose`. Cookie `autologin_pass` = `datum:md5(wachtwoordhash . DB_PASS . prefix . datum)`, en POST-requests omleiden via `session_confirm.php`. | **`remember_me`** in de security-firewall: een signature-cookie met de wachtwoordhash, ondertekend met `kernel.secret`, of persistente tokens. | **Vervangen**, met voorrang: de md5-constructie met het DB-wachtwoord als sleutel is zwak. `stripSlashesGPC()` is sinds het verdwijnen van magic quotes (PHP 5.4) een no-op. De cookie wordt ook gezet in `include/checklogin.php:176` en gelezen door protector: die moeten mee. |
+| `protector.php` | Bij `startCoreBoot` en `finishCoreBoot` de pre- en postcheck van de Protector-module includen vanuit `ICMS_TRUST_PATH`. | `kernel.request`-listener met hoge prioriteit, **in de Protector-module zelf**. Deels te vervangen door `RateLimiter` en firewall-regels, de rest door een WAF vóór de applicatie. | **Behouden als listener, verhuizen naar de module.** Het hoort niet in de core-preloads. |
+| `autotasks.php` | Pseudo-cron bij elk paginabezoek (`finishCoreBoot`, eventueel `exit(0)`). Bij het opslaan van voorkeuren de taakplanner herstarten. | **Symfony Scheduler** + Messenger (echte cron of `messenger:consume`). Voor hosting zonder cron: een listener op `kernel.terminate`. De herstart wordt een listener op een getypeerd `ConfigSaved`-event. | **Vervangen.** `exit()` in een listener moet sowieso weg. |
+| `adsense.php` | (a) taalbestand laden bij `finishCoreBoot`, (b) `[adsense]…[/adsense]` vervangen na het weergeven van tekst, (c) **bij elke pagina** alle adsenses uit de DB halen, renderen en aan Smarty toewijzen. | (a) Translator, lazy. (b) Een getagde **tekstfilter-service** (`icms.text_filter`) of een Twig-filter. (c) Een Twig-functie `adsense('tag')` die lazy laadt. | **Vervangen.** Bespaart een query + rendering per pagina. |
+| `customtag.php` | Hetzelfde patroon als adsense, maar *vóór* het weergeven van tekst. `replaceTagDeterministic()` is copy-paste van adsense. | Idem: één gedeelde `BBTagReplacer`, twee getagde filters met prioriteit (customtag vóór, adsense na). | **Vervangen.** De dubbele code wordt één service. |
+| `protectEmail.php` | E-mailadressen in gefilterde tekst vervangen door een afbeelding of reCAPTCHA Mailhide. | Een tekstfilter-service, of `kernel.response` voor de hele pagina. | **Vervangen en opkuisen.** De Mailhide-tak vraagt `mcrypt_encrypt`, dat sinds PHP 7.2 verwijderd is, en de dienst bestaat niet meer: die tak is dood. Ook bug: `$email` gaat zonder `preg_quote()` in regexen. |
+| `userinfo.php` | Bij elke pagina alle uservars kopiëren naar `$xoopsTpl['user']`, met daarbij een COUNT-query op ongelezen privéberichten. | Twig-global **`app.user`**, standaard aanwezig. Ongelezen berichten via een lazy Twig-functie `unread_messages()`. | **Vervangen.** Eén query per pagina minder. |
+| `googleanalytics.php` | GA-scripts toevoegen aan het theme bij `beforeFooter`. | Twig-template-include in het basislayout (`{% if ga_id %}…{% endif %}`), met de config als Twig-global. | **Vervangen.** De `UA-`-fallback is dood (Universal Analytics verwerkt sinds juli 2023 geen data meer), en de `else`-tak doet `echo 'error getting icmsConfigMetaFooter'`, ook als GA gewoon **uit** staat. |
+| `keepalive.php` | Script toevoegen voor ingelogde gebruikers, in de footer en de admin-header. | Een conditie in het template: `{% if is_granted('IS_AUTHENTICATED') %}` + AssetMapper. | **Vervangen** door een templateconditie. |
+
+#### Welke onderdelen van het mechanisme nog gebruikt worden
+
+| Onderdeel | Gebruik in de core | Oordeel |
+|---|---|---|
+| `eventXxx()`-naamconventie | 9 preloads | Vervangen door `#[AsEventListener]`. De conventie blijft alleen in de BC-brug voor third-party preloads. |
+| Koppelen bij het includen (`setup()`-stijl) | 4 preloads: bootstrap, autologin, debug_mode, multilanguage | **Weglaten.** Alle vier verdwijnen naar standaard-Symfony (zie de tabel hierboven). |
+| `loadService-*`-events | bootstrap (logger), debug_mode (config), multilanguage (session), `Core/Security.php:67` (config) | In de core **niet meer nodig**: elk gebruik heeft een vervanger. Alleen nog vuren voor BC. |
+| Wildcard `'*'` | Alleen de no-op in bootstrap | **Weglaten.** De wildcard-lijst in de brug uit 2.9 kan weg, of blijft beperkt tot een deprecation-pad voor derden. |
+| Annuleerbare events (`*`-prefix, `$event->canceled`) | **Nergens** gebruikt | **Weglaten.** Wie het toch nodig heeft, gebruikt `stopPropagation()`. |
+| `Event::current()`, `Event::detach()` | **Nergens** gebruikt | **Weglaten.** |
+| `$icmsOnDemandPreload` | Wordt **nergens** gezet | **Weglaten.** |
+| `modules/<dir>/preload/` | Geen enkele core-module heeft zo'n map | Alleen in de BC-brug voor third-party modules. Nieuw: listeners in de `services.php` van de module. |
+| Parameters by reference (`[&$text, …]`) | protectEmail, adsense, customtag (tekstfilters); autotasks (voorkeuren) | Vervangen door **getypeerde, muteerbare events**. Voor tekst nog beter: een expliciete filterketen (zie hieronder). |
+| `icms_preload_Item` (lege basisklasse) en `Preload\Handler::getInstance()` | Alle preloads van de eerste stijl | **Weglaten.** Listeners zijn gewone services. |
+| Events in de DB-laag (`icms_db_IConnection`/`execute`) | Alleen debug_mode | Vervangen door een decorator of middleware op de DB-service. Dan hoeft niet elke query meer een event aan te maken. |
+| Events rond de sessie (`sessionStart`/`sessionClose`) | Alleen autologin | Wegvallen met `remember_me`. |
+
+#### Tekstfilters: een filterketen in plaats van events
+
+De paren `before/afterDisplayTarea`, `…PreviewTarea`, `…FilterHTMLdisplay`, `…FilterHTMLinput`,
+`…FilterTextareaDisplay` en `…FilterTextareaInput` (samen 12 trigger-plaatsen in `Textsanitizer` en
+`DataFilter`) zijn in feite een **pijplijn**: elke listener krijgt de tekst, wijzigt die en geeft ze door.
+Dat is de taak van een expliciete filterketen, niet van events.
+
+```php
+enum TextStage: string
+{
+    case BeforeDisplay = 'before_display';
+    case AfterDisplay  = 'after_display';
+    case BeforePreview = 'before_preview';
+    case AfterPreview  = 'after_preview';
+    // … input-varianten
+}
+
+#[AutoconfigureTag('icms.text_filter')]
+interface TextFilter
+{
+    /** @return list<TextStage> */
+    public static function stages(): array;
+    public function filter(string $text, TextContext $ctx): string;   // ctx: html, smiley, xcode, image, br
+}
+
+final class TextFilterChain
+{
+    /** @param iterable<TextFilter> $filters gesorteerd op prioriteit */
+    public function __construct(
+        #[AutowireIterator('icms.text_filter', defaultPriorityMethod: 'priority')]
+        private iterable $filters,
+        private LegacyEventBridge $legacy,          // BC: oude eventnamen blijven vuren
+    ) {}
+
+    public function apply(TextStage $stage, string $text, TextContext $ctx): string
+    {
+        foreach ($this->filters as $filter) {
+            if (in_array($stage, $filter::stages(), true)) {
+                $text = $filter->filter($text, $ctx);
+            }
+        }
+        return $this->legacy->filterText($stage, $text, $ctx);   // [&$text, …] voor oude preloads
+    }
+}
+```
+
+- **Customtag** (`BeforeDisplay`, `BeforePreview`) en **adsense** (`AfterDisplay`, `AfterPreview`)
+  delen één `BBTagReplacer` in plaats van twee kopieën van `replaceTagDeterministic()`.
+- **ProtectEmail** wordt een filter op `AfterDisplay`, of verhuist naar `kernel.response` als het voor
+  de hele pagina moet gelden.
+- `Textsanitizer::displayTarea()` en `DataFilter::filterHTMLdisplay()` roepen
+  `$chain->apply(TextStage::…, $text, $ctx)` aan in plaats van `icms::$preload->triggerEvent(...)`.
+- De volgorde ligt vast via prioriteiten. Een filter is een gewone service met constructor-injectie,
+  dus geen `global $icmsConfigPersona` meer.
+
+#### Templatedata: Twig-globals en lazy functies
+
+`startOutputInit` en `beforeFooter` dienen nu vooral om variabelen en scripts in Smarty te duwen,
+vaak met een DB-query bij elke pagina (userinfo, adsense, customtag). Met Twig worden dat globals
+(`app.user`, config) en lazy functies (`adsense('tag')`, `customtag('naam')`, `unread_messages()`):
+de query loopt alleen als het template de waarde echt gebruikt. Als Smarty blijft, komt er één
+getagde `TemplateContextProvider` die de renderer ophaalt.
+
+#### Gevolg voor de BC-brug uit 2.9
+
+De brug wordt kleiner. **Wildcards, annuleren, `current()`/`detach()` en on-demand preloads hoeven er
+niet in.** Wat overblijft:
+
+- de `eventXxx()`-conventie en `attach()` voor third-party preloads;
+- de oude eventnamen voor tekstfilters, met een `LegacyEvent` waarvan `parameters[0]` een referentie is
+  naar de tekst in de keten;
+- `loadService-*` zolang derden erop rekenen.
+
+Na deze opkuis blijven er maar een paar echte event-listeners in de core over: protector (in de
+module), autotasks (`kernel.terminate` / Scheduler) en het herstarten van autotasks bij een
+`ConfigSaved`-domeinevent.
+
+#### Bugs in de huidige preloads
+
+Deze bugs moeten ook zonder Symfony opgelost worden:
+
+- `googleanalytics.php` zet `error getting icmsConfigMetaFooter` in elke pagina zodra GA uit staat.
+- `multilanguage.php` leest `$_GET['lang']` in een tak waar alleen de cookie gezet is.
+- `protectEmail.php` mist `preg_quote()` en heeft een dode mcrypt/Mailhide-tak.
+- `debug_mode.php` luistert naar `prepare`, maar niemand triggert dat event.
+- `bootstrap.php` heeft een no-op wildcard-listener.
+
+Los daarvan verdient de autologin-cookie (md5 met het DB-wachtwoord als sleutel) een eigen
+security-review, ook los van de DI-migratie.
+
 ---
 
 ## 3. Migratiepad
@@ -620,7 +754,7 @@ Elke fase is los te releasen, BC-neutraal en sluit aan bij de PSR-4-refactor in 
 |---|---|---|---|
 | **DI-0** | `composer.json`: `php: ">=8.4 <9.0"`, `symfony/dependency-injection`, `symfony/config`, `symfony/deprecation-contracts`. **Let op:** `htdocs/composer.json` staat nu op `>=7.4 <8.5` en recente commits (#1772, #1773) herstelden net PHP 7.4-compatibiliteit. Dat moet eerst een expliciete beslissing worden (zie 3.1). | Hosting < 8.4 valt af | — |
 | **DI-1** | `Icms\Kernel`: container bouwen, dumpen en cachen. `icms::$services["boot"]` 1-op-1 omzetten naar service-definities met de bestaande factories. `icms::boot()` vult de statische properties vanuit de container; nieuw: `icms::container(): ContainerInterface`. De `loadService`-events blijven vuren. | Geen | DI-0 |
-| **DI-1b** | Preloads en events (2.9): `symfony/event-dispatcher`; `Icms\Event` wordt een façade over de dispatcher (`LegacyEvent`, wildcard-lijst, annuleren via `stopPropagation()`); compiler pass die `plugins/preloads/` en modulepreloads scant met `DirectoryResource`; modulemanifest `cache/modules.php`; vaste boot-volgorde in `Kernel::boot()`. Autotasks verhuizen naar `kernel.terminate`. | Geen voor preloads die de façade gebruiken; de volgorde van preloads wordt deterministisch (alfabetisch) | DI-1 |
+| **DI-1b** | Preloads en events (2.9, 2.10): `symfony/event-dispatcher`; `Icms\Event` wordt een façade over de dispatcher (`LegacyEvent`; geen wildcards, annuleren, `current()`/`detach()` of on-demand preloads); compiler pass die `plugins/preloads/` en modulepreloads scant met `DirectoryResource`; modulemanifest `cache/modules.php`; vaste boot-volgorde in `Kernel::boot()`. Autotasks verhuizen naar `kernel.terminate`. `TextFilterChain` vervangt de tekstfilter-events; de vier `setup()`-preloads verdwijnen naar standaard-Symfony. | Geen voor preloads die de façade gebruiken; de volgorde van preloads wordt deterministisch (alfabetisch) | DI-1 |
 | **DI-2** | `HandlerLocator` + `LegacyHandlerFactory`; `icms::handler()` en `icms_getModuleHandler()` delegeren eraan. | Geen (zelfde naamconventies, zelfde caching-semantiek) | DI-1 |
 | **DI-3** | Kleine services toevoegen: `RequestContext`, `CurrentUser`, `ModuleContext`, `PermissionService`, `Redirector`, `TemplateProvider`. `Ipf\Permission\Handler` en `Ipf\Registry\Handler` worden dunne wrappers rond die services. | Geen | DI-1 |
 | **DI-4** | `HandlerServices` + setter `#[Required]` + lazy fallback in `Ipf\Handler`; `#[AsEntityHandler]` + compiler pass; laden van module-`config/services.php`; cache-invalidatie bij module-install/update. | Geen; opt-in voor modules | DI-2, DI-3 |
