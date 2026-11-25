@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: second-site-debug-on-other-port
+expected_outcome: |
+  A second independent site on port 8081 with a separate database name and debug_mode enabled, while the existing 8080 site and its database keep working.

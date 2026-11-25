@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: live-install-for-branch-testing
+expected_outcome: |
+  A running local ImpressCMS site served directly from the checkout's htdocs (so edits are live), installed through the full installer, with an admin account that can log in. The reply gives the URL and admin credentials and warns not to commit the rewritten htdocs/mainfile.php.
