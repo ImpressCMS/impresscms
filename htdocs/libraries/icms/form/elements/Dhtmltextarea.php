@@ -103,7 +103,7 @@ class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
 			$versionFile = $editorDir . "/xoops_version.php";
 			icms_loadLanguageFile('core', 'core');
 			icms_core_Debug::setDeprecated(
-				"editors/{$editor_default}/xoops_version.php, use icms_version.php instead",
+				"editors/{$editor_default}/icms_version.php",
 				sprintf(_CORE_REMOVE_IN_VERSION, '3.0')
 			);
 		}
