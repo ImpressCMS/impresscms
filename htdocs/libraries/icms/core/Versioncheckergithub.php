@@ -92,9 +92,9 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 		if (!empty($github_data) && is_array($github_data)) {
 		    $latest_release = $github_data;
 			// Populate the latest array with the new structure
-			$this->latest['version_name'] = $latest_release['name'];
+			$this->latest['version_name'] = !empty($latest_release['name']) ? $latest_release['name'] : $latest_release['tag_name'];
 			$this->latest['build'] = $latest_release['id'];
-			$this->latest['status'] = 10; // Assume final for GitHub releases
+			$this->latest['status'] = 10; // Only final releases are selected by get_latest()
 			$this->latest['url'] = isset($latest_release['assets'][0]) ? $latest_release['assets'][0]['browser_download_url'] : $latest_release['html_url'];
 			$this->latest['changelog'] = $latest_release['body'];
 
@@ -119,8 +119,9 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 
 	private function get_latest($owner = 'ImpressCMS', $repo = 'impresscms')
 	{
-		//$url= $this->version_url;
-		$url = "https://api.github.com/repos/$owner/$repo/releases/latest";
+		// Fetch the list of releases (not /releases/latest, which is based on creation date
+		// and could return an older branch's patch release as "latest")
+		$url = "https://api.github.com/repos/$owner/$repo/releases?per_page=100";
 
 		// Call the GitHub API
 		$ch = curl_init();
@@ -149,16 +150,45 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 	        return array();
 	    }
 
-		// Return release or empty array if decode failed
-		return $release ? $release : array();
+		if (!is_array($release)) {
+			return array();
+		}
+
+		return $this->selectHighestFinalRelease($release);
+	}
+
+	/**
+	 * Select the release with the highest version number, ignoring drafts and pre-releases
+	 *
+	 * @param array $releases Releases as returned by the GitHub API
+	 * @return array The selected release or an empty array if there is none
+	 */
+	private function selectHighestFinalRelease(array $releases): array
+	{
+		$best = array();
+		$bestVersion = '';
+		foreach ($releases as $release) {
+			if (!is_array($release) || !empty($release['draft']) || !empty($release['prerelease'])) {
+				continue;
+			}
+			$version = $this->extractVersionNumber((string)($release['tag_name'] ?? ''));
+			// skip tags without a numeric version
+			if (!preg_match('/^\d/', $version)) {
+				continue;
+			}
+			if ($bestVersion === '' || version_compare($version, $bestVersion, '>')) {
+				$best = $release;
+				$bestVersion = $version;
+			}
+		}
+		return $best;
 	}
 	public function getLatestVersionNumber() : string {
 		$versionName = $this->getLatestVersionName();
 		if (empty($versionName)) {
 			return '';
 		}
-		// Remove 'v' prefix if present (e.g., "v2.0.1" -> "2.0.1")
-		return trim(ltrim($versionName, 'v'));
+		return $this->extractVersionNumber($versionName);
 	}
 
 	public function getInstalledVersionNumber() : string {
@@ -166,8 +196,52 @@ class icms_core_Versioncheckergithub extends icms_core_Versionchecker implements
 		if (empty($versionName)) {
 			return '';
 		}
-		// Remove "ImpressCMS " prefix if present (e.g., "ImpressCMS 2.0.1" -> "2.0.1")
-		return trim(str_replace('ImpressCMS ', '', $versionName));
+		return $this->extractVersionNumber($versionName);
+	}
+
+	/**
+	 * Extract a normalised version number from a version name, so it can be passed to version_compare()
+	 *
+	 * Handles optional prefixes ("ImpressCMS ", "v"), build metadata ("+build.5") and suffixes:
+	 *  - stable markers (final, stable, release, ga) are dropped
+	 *  - alpha/a, beta/b, rc, dev are kept (lowercase, full name) with optional number
+	 *  - patch/pl/p are normalised to "pl"
+	 *
+	 * Examples:
+	 *  "ImpressCMS 2.0.4 Final" -> "2.0.4"
+	 *  "v2.0.4"                 -> "2.0.4"
+	 *  "ImpressCMS 2.0.5 Alpha" -> "2.0.5-alpha"
+	 *  "v2.1.0-RC.2"            -> "2.1.0-rc2"
+	 *  "2.0.5b1"                -> "2.0.5-beta1"
+	 *  "2.0.4-patch1+build.7"   -> "2.0.4-pl1"
+	 *
+	 * @param string $name
+	 * @return string
+	 */
+	private function extractVersionNumber(string $name): string {
+		$pattern = '/(\d+(?:\.\d+)*)'
+			. '(?:[-_.\s]*(alpha|beta|patch|final|stable|release|rc|dev|pl|ga|a|b|p)(?![a-z])[-_.\s]*(\d*))?/i';
+		if (!preg_match($pattern, $name, $m)) {
+			return trim($name);
+		}
+
+		$version = $m[1];
+		if (empty($m[2])) {
+			return $version;
+		}
+
+		$map = array(
+			'a' => 'alpha', 'alpha' => 'alpha',
+			'b' => 'beta', 'beta' => 'beta',
+			'rc' => 'rc', 'dev' => 'dev',
+			'p' => 'pl', 'pl' => 'pl', 'patch' => 'pl',
+			'final' => '', 'stable' => '', 'release' => '', 'ga' => '',
+		);
+		$suffix = $map[strtolower($m[2])];
+		if ($suffix === '') {
+			return $version;
+		}
+		return $version . '-' . $suffix . $m[3];
 	}
 
     public function getLatestVersionName() : string {
