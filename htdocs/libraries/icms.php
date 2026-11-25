@@ -312,9 +312,10 @@ abstract class icms {
 
 			$clean_SERVER = icms_core_DataFilter::checkVarArray($_SERVER, $filters, false);
 
-			$phpself = $clean_SERVER['SCRIPT_NAME'];
-			$httphost = $clean_SERVER['HTTP_HOST'];
-			$querystring = $clean_SERVER['QUERY_STRING'];
+			/* Not every SAPI sets all of these (e.g. php -S omits QUERY_STRING when empty) */
+			$phpself = $clean_SERVER['SCRIPT_NAME'] ?? '';
+			$httphost = $clean_SERVER['HTTP_HOST'] ?? '';
+			$querystring = $clean_SERVER['QUERY_STRING'] ?? '';
 			if ($querystring != '' ) {
 				$querystring = '?' . $querystring;
 			}
@@ -328,7 +329,7 @@ abstract class icms {
 			self::$urls['full'] = $currenturl;
 
 			$previouspage = '';
-			if (array_key_exists('HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER'])) {
+			if (isset($clean_SERVER['HTTP_REFERER'])) {
 				self::$urls['previouspage'] = $clean_SERVER['HTTP_REFERER'];
 			}
 			//self::$urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
