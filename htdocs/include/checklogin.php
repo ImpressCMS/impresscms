@@ -163,21 +163,11 @@ if (FALSE != $user) {
 		$_SESSION['xoopsUserTheme'] = $user_theme;
 	}
 
-	// autologin hack V3.1 GIJ (set cookie)
-	$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
-	$icms_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH :
-	preg_replace( '?http://[^/]+(/.*)$?' , "$1" , ICMS_URL );
-
-	if ($icms_cookie_path == ICMS_URL) $icms_cookie_path = '/';
-
+	// remember me: issue a random, server-side revocable token
+	icms_auth_Autologin::revokeCurrent();
 	if (!empty($_POST['rememberme'])) {
-		$expire = time() + (defined('ICMS_AUTOLOGIN_LIFETIME') ? ICMS_AUTOLOGIN_LIFETIME : 604800) ; // 1 week default
-		icms_setCookieVar('autologin_uname', $user->getVar('login_name'), $expire);
-		$Ynj = date('Y-n-j') ;
-		icms_setCookieVar('autologin_pass', $Ynj . ':' . md5($user->getVar('pass') . ICMS_DB_PASS . ICMS_DB_PREFIX . $Ynj),
-			$expire);
+		icms_auth_Autologin::issue($user);
 	}
-	// end of autologin hack V3.1 GIJ
 
 	// Perform some maintenance of notification records
 	$notification_handler = icms::handler('icms_data_notification');

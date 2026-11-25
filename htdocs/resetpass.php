@@ -86,5 +86,8 @@ if (!icms::$user) {
 		exit();
 	}
 	unset($pass);
+	// password changed: invalidate all remember-me tokens
+	icms_auth_Autologin::revokeAll(icms::$user->getVar('uid'));
+	icms_auth_Autologin::clearCookie();
 	redirect_header('user.php', 3, sprintf(_US_PWDRESET, icms::$user->getVar('uname')), FALSE);
 }

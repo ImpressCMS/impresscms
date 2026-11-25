@@ -152,11 +152,8 @@ class Protector {
 				setcookie(session_name(), '', time() - 3600, '/', '', 0);
 			}
 
-			// clear autologin cookie
-			$xoops_cookie_path = defined('ICMS_COOKIE_PATH') ? ICMS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
-			if ($xoops_cookie_path == ICMS_URL) $xoops_cookie_path = '/';
-			setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0);
-			setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);
+			// clear autologin (remember me) cookie
+			setcookie('icms_autologin', '', time() - 3600, '/', '', 0);
 		}
 
 		if ($redirect_to_top) {
@@ -835,7 +832,7 @@ class Protector {
 		$uri4sql = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
 		if (empty($ip4sql) || $ip4sql == '') return true;
 
-		$victim_uname = empty($_COOKIE['autologin_uname']) ? filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_STRING) : filter_input(INPUT_COOKIE, 'autologin_uname', FILTER_SANITIZE_STRING);
+		$victim_uname = empty($_POST['uname']) ? 'autologin' : filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_STRING);
 		// some UA send 'deleted' as a value of the deleted cookie.
 		if ($victim_uname == 'deleted') return;
 		$mal4sql = addslashes("BRUTE FORCE: $victim_uname");
@@ -930,7 +927,7 @@ class Protector {
 			}
 
 			// security bug of class/criteria.php 2005/6/27
-			if ($_POST['uname'] === '0' || $_COOKIE['autologin_pass'] === '0') {
+			if (isset($_POST['uname']) && $_POST['uname'] === '0') {
 				$this->output_log('CRITERIA');
 				exit();
 			}

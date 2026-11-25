@@ -152,6 +152,7 @@ class icms_member_Handler {
 	public function deleteUser(&$user) {
 		$this->_uHandler->delete($user);
 		$this->_mHandler->deleteAll(new icms_db_criteria_Item('uid', $user->getVar('uid')));
+		icms_auth_Autologin::revokeAll($user->getVar('uid'));
 		return true;
 	}
 

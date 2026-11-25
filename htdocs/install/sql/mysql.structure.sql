@@ -427,6 +427,22 @@ CREATE TABLE session (
 # --------------------------------------------------------
 
 #
+# Table structure for table `autologin_tokens`
+#
+
+CREATE TABLE autologin_tokens (
+  `selector` char(24) NOT NULL default '',
+  `validator_hash` char(64) NOT NULL default '',
+  `uid` mediumint(8) unsigned NOT NULL default '0',
+  `expires` int(10) unsigned NOT NULL default '0',
+  `created` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY (`selector`),
+  KEY `uid` (`uid`),
+  KEY `expires` (`expires`)
+);
+# --------------------------------------------------------
+
+#
 # Table structure for table `smiles`
 #
 

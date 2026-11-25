@@ -286,6 +286,15 @@ switch ($op) {
 				/** Include the footer file to complete page rendering */
 				include ICMS_ROOT_PATH . '/footer.php';
 			} else {
+				if ($password != '') {
+					// password changed: invalidate all remember-me tokens, keep this device remembered
+					$hadToken = icms_auth_Autologin::hasCookie();
+					icms_auth_Autologin::revokeAll($edituser->getVar('uid'));
+					icms_auth_Autologin::clearCookie();
+					if ($hadToken && $edituser->getVar('uid') == icms::$user->getVar('uid')) {
+						icms_auth_Autologin::issue($edituser);
+					}
+				}
 				redirect_header('userinfo.php?uid=' . $uid, 1, _US_PROFUPDATED);
 			}
 			exit();

@@ -43,7 +43,7 @@ function protector_postcommon() {
 		$can_ban = count(@array_intersect(icms::$user->getGroups(), @unserialize(@$conf['bip_except']))) ? false : true;
 	} else {
 		// login failed check
-		if ((!empty($_POST['uname']) && !empty($_POST['pass'])) || (!empty($_COOKIE['autologin_uname']) && !empty($_COOKIE['autologin_pass']))) {
+		if ((!empty($_POST['uname']) && !empty($_POST['pass'])) || !empty($_COOKIE['icms_autologin'])) {
 			$protector->check_brute_force();
 		}
 		$uid = 0;

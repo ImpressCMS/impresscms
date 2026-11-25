@@ -41,4 +41,4 @@ define('ICMS_VERSION_BUILD', 116);
  * So, developers, everytime you add an upgrade block in system/include/update.php to upgrade something in the DB,
  * please also change this constant
  */
-define('ICMS_SYSTEM_DBVERSION', 48);
+define('ICMS_SYSTEM_DBVERSION', 49);

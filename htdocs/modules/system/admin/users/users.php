@@ -317,6 +317,10 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 			echo $edituser->getHtmlErrors();
 			icms_cp_footer();
 		} else {
+			if ($pass2 != '') {
+				// password changed: invalidate all remember-me tokens
+				icms_auth_Autologin::revokeAll($edituser->getVar('uid'));
+			}
 			if ($groups != array()) {
 				$oldgroups = $edituser->getGroups();
 				//If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array

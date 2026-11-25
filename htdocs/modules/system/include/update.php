@@ -245,6 +245,35 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		echo $e->getMessage();
 	}
 
+	/* Begin upgrade to version 2.0.4 - secure remember-me tokens */
+	if (!$abortUpdate) $newDbVersion = 49;
+	try {
+		if ($dbVersion < $newDbVersion) {
+			$table = new icms_db_legacy_updater_Table('autologin_tokens');
+			if (!$table->exists()) {
+				$table->setStructure("`selector` char(24) NOT NULL default '',
+					`validator_hash` char(64) NOT NULL default '',
+					`uid` mediumint(8) unsigned NOT NULL default '0',
+					`expires` int(10) unsigned NOT NULL default '0',
+					`created` int(10) unsigned NOT NULL default '0',
+					PRIMARY KEY (`selector`),
+					KEY `uid` (`uid`),
+					KEY `expires` (`expires`)");
+				if (!$table->createTable()) {
+					$abortUpdate = TRUE;
+				}
+			}
+			/* Finish up this portion of the db update */
+			if (!$abortUpdate) {
+				$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+				echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+			}
+		}
+	}
+	catch (Exception $e) {
+		echo $e->getMessage();
+	}
+
 	/**
 	 * This portion of the upgrade must remain as the last section of code to execute
 	 * Place all release upgrade steps above this point

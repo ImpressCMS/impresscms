@@ -113,6 +113,8 @@ if (empty($getuser)) {
 			include 'footer.php';
 			exit();
 		}
+		// password changed: invalidate all remember-me tokens
+		icms_auth_Autologin::revokeAll($getuser[0]->getVar('uid'));
 		redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), false);
 
 	// If no Code, send it
