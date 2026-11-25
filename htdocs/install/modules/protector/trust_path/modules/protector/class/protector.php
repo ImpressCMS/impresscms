@@ -98,10 +98,43 @@ class Protector {
 		return $instance;
 	}
 
+	/**
+	 * Runs a query with bound parameters on the PDO connection
+	 *
+	 * @param string $sql
+	 * @param array<int, mixed> $params
+	 * @return PDOStatement|false false when the query could not be executed
+	 */
+	protected function executePrepared(string $sql, array $params = array())
+	{
+		$statement = icms::$db->prepare($sql);
+		if (! $statement) {
+			return false;
+		}
+
+		if (! $statement->execute($params)) {
+			return false;
+		}
+
+		return $statement;
+	}
+
+	/**
+	 * Returns a server variable as an unfiltered string, capped to the column length (255)
+	 * The value is only ever passed as a bound parameter and escaped on output.
+	 */
+	protected function serverValue(string $name): string
+	{
+		return substr((string) filter_input(INPUT_SERVER, $name, FILTER_UNSAFE_RAW), 0, 255);
+	}
+
 	function updateConfIntoDb($name, $value) {
 		$constpref = '_MI_' . strtoupper($this->mydirname);
 
-		icms::$xoopsDB->queryF("UPDATE `" . icms::$xoopsDB->prefix("config") . "` SET `conf_value`='" . addslashes($value) . "' WHERE `conf_title` like '" . $constpref . "%' AND `conf_name`='" . addslashes($name) . "' LIMIT 1");
+		$this->executePrepared(
+			'UPDATE `' . icms::$xoopsDB->prefix('config') . '` SET `conf_value` = ? WHERE `conf_title` LIKE ? AND `conf_name` = ? LIMIT 1',
+			array((string) $value, $constpref . '%', (string) $name)
+		);
 		$this->updateConfFromDB();
 	}
 
@@ -188,7 +221,7 @@ class Protector {
 
 		// this is not reliable - and we need to filter
 		$ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
-		$agent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_STRING);
+		$agent = $this->serverValue('HTTP_USER_AGENT');
 		// --
 
 		if ($unique_check) {
@@ -200,7 +233,10 @@ class Protector {
 			}
 		}
 
-		icms::$xoopsDB->queryF("INSERT INTO " . XOOPS_DB_PREFIX . "_" . $this->mydirname . "_log SET ip='" . $ip . "',agent='" . $agent . "',type='" . addslashes($type) . "',description='" . addslashes($this->message) . "',uid='" . (int) $uid . "',timestamp=NOW()");
+		$this->executePrepared(
+			'INSERT INTO `' . XOOPS_DB_PREFIX . '_' . $this->mydirname . '_log` SET ip = ?, agent = ?, type = ?, description = ?, uid = ?, timestamp = NOW()',
+			array((string) $ip, $agent, (string) $type, (string) $this->message, (int) $uid)
+		);
 		$this->_logged = true;
 		return true;
 	}
@@ -715,11 +751,13 @@ class Protector {
 		if ($this->_done_dos) return true;
 
 		$ip4sql = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
-		$uri4sql = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
+		$uri4sql = $this->serverValue('REQUEST_URI');
 		if (empty($ip4sql) || $ip4sql == '') return true;
 
+		$accessTable = XOOPS_DB_PREFIX . '_' . $this->mydirname . '_access';
+
 		// gargage collection
-		$result = icms::$xoopsDB->queryF("DELETE FROM " . icms::$xoopsDB->prefix($this->mydirname . "_access") . " WHERE expire < UNIX_TIMESTAMP()");
+		$result = icms::$db->exec('DELETE FROM `' . $accessTable . '` WHERE expire < UNIX_TIMESTAMP()');
 
 		// for older versions before updating this module
 		if ($result === false) {
@@ -728,24 +766,25 @@ class Protector {
 		}
 
 		// sql for recording access log (INSERT should be placed after SELECT)
-		$sql4insertlog = "INSERT INTO " . icms::$xoopsDB->prefix($this->mydirname . "_access") . " SET ip='$ip4sql',request_uri='$uri4sql',expire=UNIX_TIMESTAMP()+'" . (int) $this->_conf['dos_expire'] . "'";
+		$sql4insertlog = 'INSERT INTO `' . $accessTable . '` SET ip = ?, request_uri = ?, expire = UNIX_TIMESTAMP() + ?';
+		$params4insertlog = array($ip4sql, $uri4sql, (int) $this->_conf['dos_expire']);
 
 		// bandwidth limitation
 		if (@$this->_conf['bwlimit_count'] >= 10) {
-			$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix($this->mydirname . "_access"));
-			list($bw_count) = icms::$xoopsDB->fetchRow($result);
+			$result = $this->executePrepared('SELECT COUNT(*) FROM `' . $accessTable . '`');
+			$bw_count = $result ? (int) $result->fetchColumn() : 0;
 			if ($bw_count > $this->_conf['bwlimit_count']) {
 				$this->write_file_bwlimit(time() + $this->_conf['dos_expire']);
 			}
 		}
 
 		// F5 attack check (High load & same URI)
-		$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix($this->mydirname . "_access") . " WHERE ip='$ip4sql' AND request_uri='$uri4sql'");
-		list($f5_count) = icms::$xoopsDB->fetchRow($result);
+		$result = $this->executePrepared('SELECT COUNT(*) FROM `' . $accessTable . '` WHERE ip = ? AND request_uri = ?', array($ip4sql, $uri4sql));
+		$f5_count = $result ? (int) $result->fetchColumn() : 0;
 		if ($f5_count > $this->_conf['dos_f5count']) {
 
 			// delayed insert
-			icms::$xoopsDB->queryF($sql4insertlog);
+			$this->executePrepared($sql4insertlog, $params4insertlog);
 
 			// extends the expires of the IP with 5 minutes at least (pending)
 			// $result = icms::$xoopsDB->queryF( "UPDATE ".icms::$xoopsDB->prefix($this->mydirname."_access")." SET expire=UNIX_TIMESTAMP()+300 WHERE ip='$ip4sql' AND expire<UNIX_TIMESTAMP()+300" ) ;
@@ -788,11 +827,11 @@ class Protector {
 		}
 
 		// Crawler check (High load & different URI)
-		$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix($this->mydirname . "_access") . " WHERE ip='$ip4sql'");
-		list($crawler_count) = icms::$xoopsDB->fetchRow($result);
+		$result = $this->executePrepared('SELECT COUNT(*) FROM `' . $accessTable . '` WHERE ip = ?', array($ip4sql));
+		$crawler_count = $result ? (int) $result->fetchColumn() : 0;
 
 		// delayed insert
-		icms::$xoopsDB->queryF($sql4insertlog);
+		$this->executePrepared($sql4insertlog, $params4insertlog);
 
 		if ($crawler_count > $this->_conf['dos_crcount']) {
 
@@ -832,33 +871,36 @@ class Protector {
 	//
 	function check_brute_force() {
 		$ip4sql = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
-		$uri4sql = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING);
+		$uri4sql = $this->serverValue('REQUEST_URI');
 		if (empty($ip4sql) || $ip4sql == '') return true;
 
-		$victim_uname = empty($_COOKIE['autologin_uname']) ? filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_STRING) : filter_input(INPUT_COOKIE, 'autologin_uname', FILTER_SANITIZE_STRING);
+		$victim_uname = empty($_COOKIE['autologin_uname']) ? filter_input(INPUT_POST, 'uname', FILTER_UNSAFE_RAW) : filter_input(INPUT_COOKIE, 'autologin_uname', FILTER_UNSAFE_RAW);
+		$victim_uname = (string) $victim_uname;
 		// some UA send 'deleted' as a value of the deleted cookie.
 		if ($victim_uname == 'deleted') return;
-		$mal4sql = addslashes("BRUTE FORCE: $victim_uname");
+		$mal4sql = substr("BRUTE FORCE: $victim_uname", 0, 255);
+
+		$accessTable = XOOPS_DB_PREFIX . '_' . $this->mydirname . '_access';
 
 		// gargage collection
-		$result = icms::$xoopsDB->queryF("DELETE FROM " . icms::$xoopsDB->prefix($this->mydirname . "_access") . " WHERE expire < UNIX_TIMESTAMP()");
-
-		// sql for recording access log (INSERT should be placed after SELECT)
-		$sql4insertlog = "INSERT INTO " . icms::$xoopsDB->prefix($this->mydirname . "_access") . " SET ip='$ip4sql',request_uri='$uri4sql',malicious_actions='$mal4sql',expire=UNIX_TIMESTAMP()+600";
+		icms::$db->exec('DELETE FROM `' . $accessTable . '` WHERE expire < UNIX_TIMESTAMP()');
 
 		// count check
-		$result = icms::$xoopsDB->query("SELECT COUNT(*) FROM " . icms::$xoopsDB->prefix($this->mydirname . "_access") . " WHERE ip='$ip4sql' AND malicious_actions like 'BRUTE FORCE:%'");
-		list($bf_count) = icms::$xoopsDB->fetchRow($result);
+		$result = $this->executePrepared('SELECT COUNT(*) FROM `' . $accessTable . '` WHERE ip = ? AND malicious_actions LIKE ?', array($ip4sql, 'BRUTE FORCE:%'));
+		$bf_count = $result ? (int) $result->fetchColumn() : 0;
 		if ($bf_count > $this->_conf['bf_count']) {
 			$this->register_bad_ips(time() + $this->_conf['banip_time0']);
 			$this->last_error_type = 'BruteForce';
-			$this->message .= "Trying to login as '" . addslashes($victim_uname) . "' found.\n";
+			$this->message .= "Trying to login as '" . $victim_uname . "' found.\n";
 			$this->output_log('BRUTE FORCE', 0, true, 1);
 			$ret = $this->call_filter('bruteforce_overrun');
 			if ($ret == false) exit();
 		}
 		// delayed insert
-		icms::$xoopsDB->queryF($sql4insertlog);
+		$this->executePrepared(
+			'INSERT INTO `' . $accessTable . '` SET ip = ?, request_uri = ?, malicious_actions = ?, expire = UNIX_TIMESTAMP() + 600',
+			array($ip4sql, $uri4sql, $mal4sql)
+		);
 	}
 
 	function _spam_check_point_recursive($val) {
@@ -890,7 +932,7 @@ class Protector {
 		$this->_spam_check_point_recursive($_POST);
 
 		if ($this->_spamcount_uri >= $points4deny) {
-			$this->message .= filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_STRING) . " SPAM POINT: $this->_spamcount_uri\n";
+			$this->message .= $this->serverValue('REQUEST_URI') . " SPAM POINT: $this->_spamcount_uri\n";
 			$this->output_log('URI SPAM', $uid, false, 128);
 			$ret = $this->call_filter('spamcheck_overrun');
 			if ($ret == false) exit();
